@@ -53,7 +53,7 @@ class WSRepo {
     }}
     
 #-------------------------------------------------------
-
+    
 #-------------------------------------------------------------------
     public function productList($user, $list_type = null) {
         switch ($list_type) {
@@ -77,24 +77,6 @@ class WSRepo {
             ORDER BY uih.count DESC"
                                 )->setParameters(array('user_id' => $user->getId()));
                 break;
-            case 'latest':
-                $query = $this->em
-                                ->createQuery("
-            SELECT p.id product_id, p.name, p.description,p.description,
-            ct.target as target,ct.name as clothing_type ,
-            pc.image as product_image,
-            r.id as retailer_id, r.title as retailer_title, 
-            b.id as brand_id, b.name as brand_name
-            FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.product_colors pc            
-            JOIN p.brand b
-            LEFT JOIN p.retailer r
-            JOIN p.clothing_type ct
-            
-            WHERE p.gender=:gender AND p.disabled=0 AND p.displayProductColor!=''  
-            ORDER BY p.id DESC"
-                                )->setParameters(array('gender' => $user->getGender()))->setMaxResults(10);
-                break;
             case 'favourite':
                 $query = $this->em
                                 ->createQuery("
@@ -116,6 +98,7 @@ class WSRepo {
                       )->setParameters(array('user_id' => $user->getId()));
                 break;
             default:
+                #by default it gets the latest 10 records
                 $query = $this->em
                                 ->createQuery("
             SELECT p.id product_id, p.name, p.description,p.description,
@@ -127,12 +110,11 @@ class WSRepo {
             JOIN p.product_colors pc            
             JOIN p.brand b
             LEFT JOIN p.retailer r
-            JOIN p.user_item_try_history uih
             JOIN p.clothing_type ct
             
-            WHERE uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
-            ORDER BY uih.count DESC"
-                                )->setParameters(array('user_id' => $user->getId()));
+            WHERE p.gender=:gender AND p.disabled=0 AND p.displayProductColor!=''  
+            ORDER BY p.id DESC"
+                                )->setParameters(array('gender' => $user->getGender()))->setMaxResults(10);
                 break;
         };
         try {
