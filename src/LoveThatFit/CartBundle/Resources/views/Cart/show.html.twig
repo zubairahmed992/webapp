@@ -25,20 +25,32 @@
     {% endif %}
 
 <script type="text/javascript">
-
-    $(document).ready(function() {
-        $('#cart').validate({ // initialize plugin within DOM ready
-            // other options,
-            rules: {
-                'qty[]': {
-                    required: true,
-                    min:1,
-                    number: true
-                }
+    function updateCart(cart_id,qty,price){
+        if(qty == 0){
+            alert("Quantity can not be 0");
+            return false;
+        }
+        if(isNaN(qty)){
+            alert("Quantity should be number");
+            return false;
+        }
+        if(qty.indexOf(".") !== -1){
+            alert("decimal values not allowed in Quantity");
+            return false;
+        }
+        $.ajax({
+            type: "GET",
+            url: "update_qty_ajax/"+cart_id +"/"+qty ,
+            success: function(data){
+                $('#subtotal_'+cart_id).html(qty*price);
+                $('#grand_total').html(data);
+            },
+            failure: function(errMsg) {
+                alert(errMsg);
             }
         });
+    }
 
-    });
 </script>
     <table width="745" border="1" class="cart_tbl" cellpadding="0" cellspacing="0">
         <tr>
@@ -51,7 +63,7 @@
             <td>Actions</td>
 
         </tr>
-        <form method="post" action="{{ path('cart_basket_update')}}" id="cart" onsubmit="return validates();">
+
             {% for c in cart %}
             <tr>
                 <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
@@ -60,11 +72,11 @@
                 <td align="center" >
                     <input type="hidden" name="id[]" value="{{ c.id }}">
                     <input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> 
-                    <input id="quantity_box" type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" > 
-                    <input id="update_btn" type="image" title="Update Quantity" src="{{ asset('bundles/lovethatfit/site/images/update_icon.png') }}" >             
+                    <input id="qty_{{ c.id }}" type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" >
+                    <input id="update_btn" type="image" onclick="updateCart({{ c.id }},$('#qty_'+{{ c.id }}).val(),{{ c.productItem.price }})" title="Update Quantity" src="{{ asset('bundles/lovethatfit/site/images/update_icon.png') }}" >
                 </td>
                 <td align="center">${{ c.productItem.price}}</td>
-                <td align="center">${{ c.productItem.price * c.qty}}</td>
+                <td align="center">$<span id="subtotal_{{ c.id }}">{{ c.productItem.price * c.qty}}</span></td>
 
                 <td align="center">
                     <ul class="cart_act" >
@@ -94,7 +106,7 @@
                     
                     <div class="cart_total">
                     <div style="float:left;"> Total:</div>
-                    <div style="float:left; margin-left: 10px;"><strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></div>
+                    <div style="float:left; margin-left: 10px;"><strong>$<span id="grand_total"> {{ grand_total }}</span><input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></div>
                     </div>
                 </td></tr>
             {% endif %}
@@ -117,7 +129,6 @@
                 </tr>
             {% endif %}
 
-        </form>
     </table>
 
 {% endblock %}

@@ -75,4 +75,13 @@ class CartController extends Controller
 		return $this->redirect($this->getRequest()->headers->get('referer'));
 	  }
 	}
+  //------------------------------Update Cart Quantity by Ajax ------------------------------------------------------------
+
+  public function updateQtyAjaxAction($id,$qty) {
+	$this->get('cart.helper.cart')->updateCartAjax($id,$qty);
+	$user = $this->get('security.context')->getToken()->getUser();
+	$get_total = $this->get('cart.helper.cart')->getCart($user);
+	$grand_total = array_sum($get_total["total"]);
+	return new Response($grand_total);
+  }
 }

@@ -24,7 +24,7 @@ class OrderController extends Controller
 	  //echo "<pre>";
 	  //print_r($user_addresses);
 	  //die;
-	  $form = $this->createForm(new BillingShippingType($billing_shipping_info), $entity);
+	  $form = $this->createForm(new BillingShippingType($billing_shipping_info,$user), $entity);
 	  return $this->render('LoveThatFitCartBundle:Orders:billing_and_shipping.html.twig', array(
 		'order_amount' => $order_amount,
 		'user_addresses' => $billing_user_addresses,

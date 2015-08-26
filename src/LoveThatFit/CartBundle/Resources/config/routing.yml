@@ -52,6 +52,12 @@ user_profile_order_list:
     pattern:  /profile/order/{page_number}/{sort}
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:index,page_number: 1, sort:id}
 
+cart_update_ajax:
+    pattern:  /cart/update_qty_ajax/{id}/{qty}
+    defaults: { _controller: LoveThatFitCartBundle:Cart:updateQtyAjax}
+    requirements:
+        _method:  GET
+
 
 
 

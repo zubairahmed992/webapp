@@ -93,6 +93,13 @@ class CartHelper {
 		$this->save($cart);
 	  }
   }
+  //-------- update Quantity of Cart Ajax for item already in cart ----------------------------------------////////////
+  public function updateCartAjax($id,$qty) {
+	  $cart=$this->findCartById($id);
+	  $cart->setQty($qty);
+	  $this->save($cart);
+	  return true;
+  }
 #------------------------------Get Cart by User--------------------------------#
   public function getCart($user){
 	$cart_array=array();
