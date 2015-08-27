@@ -104,7 +104,7 @@ class PaymentController extends Controller
 	  $remove_user_car = $this->get('cart.helper.cart')->removeUserCart($user);
 	  ######### Mail Code ###########
 	  $entity = $this->get('cart.helper.order')->find($order_id);
-	  //$this->get('mail_helper')->sendOrderConfirmationEmail($user,$entity);
+	  $this->get('mail_helper')->sendOrderConfirmationEmail($user,$entity);
 	  ########## End Mail Code ########
 	  $session->set('billing_shipping_info', '');
 	  $session->set('order_amount', '');

@@ -20,7 +20,7 @@ class MailHelper {
         $this->templating = $templating;
     }
 
-    private function sendEmail($from, $to, $body, $subject = '', $user, $reset_link = '') {
+    private function sendEmail($from, $to, $body, $subject = '', $user,$order, $reset_link = '') {
 
         $message = \Swift_Message::newInstance()
                 ->setSubject($subject)
@@ -28,7 +28,7 @@ class MailHelper {
                 ->setTo($to)
                 ->setContentType("text/html")
                 ->setBody(
-                $this->templating->render($body, array('entity' => $user, 'reset_link' => $reset_link)));
+                $this->templating->render($body, array('entity' => $user, 'reset_link' => $reset_link , 'order' => $order)));
         try {
             $this->mailer->send($message);
         } catch (\Swift_TransportException $e) {
@@ -51,7 +51,7 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration.html.twig";
-        $subject = 'LoveThatFit: Thank you for registering with us. ';
+        $subject = 'SelfieStyler: Thank you for registering with us. ';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $subject, $user);
         
@@ -62,7 +62,7 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/parent_registration.html.twig";
-        $subject = 'LoveThatFit: Thank you for registering parent email. ';
+        $subject = 'SelfieStyler: Thank you for registering parent email. ';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $subject, $user);
         
@@ -73,21 +73,21 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/password_reset.html.twig";
-        $subject = 'LoveThatFit: Password Reset';
+        $subject = 'SelfieStyler: Password Reset';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $subject, $user, $reset_link);
         
     }
 
-	public function sendOrderConfirmationEmail($user) {
+	public function sendOrderConfirmationEmail($user,$order) {
 
 	  $from = $this->conf['parameters']['mailer_user'];
 	  //$to = $user->getEmail();
 	  $to = "ovais.rafique@centricsource.com";
 	  $body = "LoveThatFitAdminBundle::email/order_receipt.html.twig";
-	  $subject = 'LoveThatFit: Thank you for the order. ';
+	  $subject = 'SelfieStyler: Thank you for the order. ';
 	  //return 'emailing is currently disabled';
-	  return $this->sendEmail($from, $to, $body, $subject, $user);
+	  return $this->sendEmail($from, $to, $body, $subject, $user,$order);
 
 	}
 

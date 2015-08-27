@@ -15,7 +15,7 @@
 <div>      
     <h1 style="float:left;">Order Details</h1>
      <div class="btn_wrapper">     
-      <a href="{{ path('admin_order',{'page_number':page_number}) }}" class="btn">back</a>      <a href="{{ path('admin_user_detail_show', {'id': order.Id}) }}" class="btn">User Detail</a>
+      <a href="{{ path('admin_order',{'page_number':page_number}) }}" class="btn">back</a>      <a href="{{ path('admin_user_detail_show', {'id': order.user.Id}) }}" class="btn">User Detail</a>
       </div>
       <div class="clearfix"></div>   
             <div id="detail_wrapper">
@@ -124,7 +124,7 @@
                                         <div class="span3">
                                             </div>
                                     </div>
-                                    {% for c in user_order.userOrder %}
+                                    {% for c in user_order.userOrderDetail %}
                                         <div class="span8">
                                             <div class="span3">Order ID</div>
                                             <div class="span3">{{ order_id }}</div>
