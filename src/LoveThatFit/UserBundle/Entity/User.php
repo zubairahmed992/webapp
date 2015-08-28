@@ -1693,7 +1693,7 @@ class User implements UserInterface, \Serializable {
     }
  #---------------------------------------------------
   #---------------------------------------------------
-  public function toArray($all=false){
+  public function toArray($all=false, $base_path=null){
 
 	$obj = array();
 
@@ -1706,6 +1706,7 @@ class User implements UserInterface, \Serializable {
 	$obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;
 	$obj['auth_token'] = $this->getAuthToken();
 	$obj['auth_token_web_service'] = $this->getAuthTokenWebService();
+        $obj['path']= $base_path . $this->getDirWebPath();
 	if($all){
 	  $obj['image'] = $this->getImage();
 	  $obj['avatar'] = $this->getAvatar();
@@ -1720,7 +1721,7 @@ class User implements UserInterface, \Serializable {
 
   }
 
-  public function toDataArray($key=true,$device_type=null){
+  public function toDataArray($key=true,$device_type=null, $base_path=null){
 	if($key){
 	  $device_specs=$this->getDeviceSpecs($device_type);
 	  return array(
@@ -1763,7 +1764,7 @@ class User implements UserInterface, \Serializable {
 
 		'image' => $this->image,
 		'avatar' => $this->avatar,
-		'path' => $this->getUploadDir(),
+		'path' => $base_path . $this->getDirWebPath(),
 		'body_type' =>$this->measurement? $this->measurement->getBodyTypes():'',
 		'body_shape' => $this->measurement?$this->measurement->getBodyShape():'',
 		'bra_size' =>$this->measurement?$this->measurement->getBraSize():'',
