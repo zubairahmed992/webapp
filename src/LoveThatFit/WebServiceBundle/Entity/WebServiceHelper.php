@@ -20,7 +20,7 @@ class WebServiceHelper {
             if ($this->container->get('webservice.helper.user')->matchPassword($user, $request_array['password'])) {
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
-                    $response_array['user'] = $user->toDataArray(true, $request_array['deviceType']);
+                    $response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -43,8 +43,7 @@ class WebServiceHelper {
         $user = $this->findUserByAuthToken($request_array['auth_token']);
         $data = array();
         if ($user) {
-            $data['user'] = $user->toDataArray(true, $request_array['device_type']);
-            $data['user']['path'] = $request_array['base_path'] . $data['user']['path'] . '/';
+            $data['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
             return $this->response_array(true, 'member found', true, $data);
         } else {
             return $this->response_array(false, 'Member not found');
@@ -78,7 +77,7 @@ class WebServiceHelper {
 
             #--- 5) Device
             $user_device = $this->createUserDeviceWithParams($request_array, $user);
-            $detail_array = array_merge($user->toArray(true), $measurement->toArray(), $user_device->toArray());
+            $detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
@@ -91,7 +90,7 @@ class WebServiceHelper {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $this->setUserMeasurementWithParams($ra, $user);
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray()));        
+        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true,null, $ra['base_path'])));        
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
@@ -99,7 +98,7 @@ class WebServiceHelper {
          if ($user) {
              $user = $this->setUserWithParams($user, $ra);
              $this->container->get('user.helper.user')->saveUser($user);             
-             return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true)));
+             return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true,$ra['base_path'])));
         } else {
             return $this->response_array(false, 'Member not found');
         }
@@ -369,8 +368,7 @@ class WebServiceHelper {
 
             $this->container->get('user.helper.user')->saveUser($user);
             $userinfo = array();
-            $userinfo['user'] = $user->toDataArray(true, $ra['device_type']);
-            $userinfo['user']['path'] = $ra['base_path'];
+            $userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);            
             return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
         } else {
             return $this->response_array(false, 'member not found');
