@@ -91,16 +91,21 @@ function chk_dress_applied_loaded(prod_type_applied){
 
     </script> 
 
-    <div class="prod_row_{{product.id}}" id="">
+    <div class="prod_row_{{product.id}}" id="item">
      
     
                  <div class="prod_handle" onclick="update_size_color_blk(this)">
                      <div class="handle_inner" onclick="set_select_color('{{product.clothingType.target|lower}}');">  
                    <div class="lft_col">
-                       <div class="small_thumb">
+                       
+                       <div class="small_thumb_{{productItem.id}}">
+                      <!-- <div class="small_thumb">-->
    <img  onclick="" class="small_thumb_img prod_{{product.clothingType.target|lower}} ui-draggable" src="{{asset(productColor.ImagePaths['web'])}}" >    
    <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
                     </div>
+                    
+                   
+                    
                     </div>
                      <div class="rgt_col">
                       <h3>{{product.Name}}</h3>
@@ -110,6 +115,7 @@ function chk_dress_applied_loaded(prod_type_applied){
                  </div>
                     
                <div class="prod_applied_detail">
+                    
                    
      <div id="hdn_imp_data">
      <span class="current_product_type">{{product.clothingType.target|lower}}</span>
@@ -203,6 +209,7 @@ function chk_dress_applied_loaded(prod_type_applied){
                                             
                                             
                                            </span>
+                 <!-- <a href="#" class="add-to-cart" title="{{productItem.id}}">bac</a>-->
                                         <form method="post" action="{{ path('cart_basket')}}">   <input type="hidden" name="item_id" value="{{ productItem.id }}"> <span class="cart_prod"><input type="image" title="Add item to the cart"  src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}" style="border:0px"></span>
 
                                         </form>

@@ -119,7 +119,7 @@
                     
                     <div class="cart_total">
                     <div style="float:left;"> Total:</div>
-                    <div style="float:left; margin-left: 10px;"><strong>$<span id="grand_total"> {{ grand_total }}</span><input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></div>
+                    <div style="float:left; margin-left: 10px;"><strong>$<span id="grand_total"> {{ grand_total }}</span> </strong></div>
                     </div>
                 </td></tr>
             {% endif %}
@@ -131,11 +131,16 @@
                     <a href="{{path('inner_site_index')}}" class="update_btn">Continue Shopping</a>                   
                    
                     
-                    <form action="{{ path('order_default')}}" method="post">
+                    <form action="{{ path('cart_basket_update')}}" method="post">
+                        <input type="hidden" name="order_amount" value="{{ grand_total }}">
                     
                     
-                    <input style="margin-left:0px" class="checkout_btn" type="submit" name="checkout" value="Proceed to Checkout"></td></tr>
-          </form>
+                    <input style="margin-left:0px" class="checkout_btn" type="submit" name="checkout" value="Proceed to Checkout">
+                    
+                      </form>
+                    
+                    </td></tr>
+        
                 
                 {% else %}
                 <tr>

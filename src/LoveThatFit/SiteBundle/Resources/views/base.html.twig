@@ -3,14 +3,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{{app_detail.name}}</title>
+        
         <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/lovethatfit/site/css/main_1.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/lovethatfit/site/css/product_detail_css.css') }}" rel="stylesheet" type="text/css" />
+         <!--<link href="{{ asset('bundles/lovethatfit/site/css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />-->
+        
+        
+        
+        
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery_and_jqueryui.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/custom.js') }}"></script>  
          <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/modernizr.min.js') }}"></script>
+        <!-- <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/prefixfree.min.js') }}"></script>-->
         
         
        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/index.js') }}"></script>
@@ -30,6 +37,67 @@
 
                       <script type="text/javascript"> 
 $(document).ready(function($) {
+    
+   
+   /*
+    
+        jQuery('.add-to-cart').live('click', function(){
+              //  alert("The paragraph was clicked.");
+                var title = jQuery(this).attr("title");
+                
+      
+               
+   
+                
+        var cart = $('#myprofile');
+        var imgtodrag = $(".small_thumb_"+title).find("img").eq(0);
+        if (imgtodrag) {
+            var imgclone = imgtodrag.clone()
+                .offset({
+                top: imgtodrag.offset().top,
+                left: imgtodrag.offset().left
+            })
+                .css({
+                'opacity': '0.5',
+                    'position': 'absolute',
+                    'height': '150px',
+                    'width': '150px',
+                    'z-index': '100'
+            })
+                .appendTo($('body'))
+                .animate({
+                'top': cart.offset().top + 10,
+                    'left': cart.offset().left + 10,
+                    'width': 75,
+                    'height': 75
+            }, 1000, 'easeInOutExpo');
+            
+            setTimeout(function () {
+                cart.effect("", {
+                    times: 2
+                }, 200);
+            }, 1500);
+
+            imgclone.animate({
+                'width': 0,
+                    'height': 0
+            }, function () {
+                $(this).detach();
+            });
+        }    
+    
+   
+    });
+    
+    */
+    
+   
+    
+    
+    
+    
+    
+    
     jQuery('.example1demo').live('click', function(){
         newwindow=window.open($(this).attr('href'),'','height=500,width=500');
         if (window.focus) {newwindow.focus()}
