@@ -22,8 +22,10 @@ class CartController extends Controller
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
 	  return $this->redirect($this->generateUrl('cart_show'));
 	}
-	public function basketajaxAction($item_id){
-	  $user = $this->get('security.context')->getToken()->getUser();
+	public function basketajaxAction(Request $request){
+          $decoded  = $request->request->all();
+          $item_id = $decoded["item_id"];
+          $user = $this->get('security.context')->getToken()->getUser();
 	  $qty = 1;
 	  $cart=$user->getCart();
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);

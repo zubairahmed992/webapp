@@ -15,7 +15,7 @@ cart_basket_update:
     defaults: { _controller: LoveThatFitCartBundle:Cart:basketupdate}
 
 cart_basket_ajax:
-    pattern:  /cart/basketajax/{item_id}
+    pattern:  /cart/basketajax
     defaults: { _controller: LoveThatFitCartBundle:Cart:basketajax}
     requirements:
         _method:  POST
