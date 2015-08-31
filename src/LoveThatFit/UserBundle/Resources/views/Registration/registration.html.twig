@@ -9,7 +9,13 @@
 <script>
     
 
-jQuery(document).ready(function ($) { 
+jQuery(document).ready(function ($) {
+    
+    
+   
+  if (jQuery('ul.with_sep').length < 3) {
+  $('ul.with_sep').css('width', '110px'); 
+  }
 
      var typingTimer;    //timer identifier
      var doneTypingInterval = 1000;  //time in ms, 5 second for example

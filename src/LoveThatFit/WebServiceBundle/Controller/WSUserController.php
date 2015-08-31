@@ -8,13 +8,15 @@ class WSUserController extends Controller {
      
     
     private function process_request(){
-        return $this->get('webservice.helper')->processRequest($this->getRequest());        
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
+        $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+        return $decoded;        
     }
 #~~~~~~~~~~~~~~~~~~~ ws_user_Login   /ws/login
 
     public function loginAction() {
         $decoded  = $this->process_request();                         
-        $user_info = $this->get('webservice.helper')->loginService($decoded);                
+        $user_info = $this->get('webservice.helper')->loginService($decoded);             
         return new Response($user_info);
     }
 
@@ -28,8 +30,7 @@ class WSUserController extends Controller {
 #~~~~~~~~~~~~~~~~~~~ ws_user_detail   /ws/user_detail
 
     public function detailAction() {
-        $decoded  = $this->process_request();                         
-        $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+        $decoded  = $this->process_request();                                 
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
         return new Response($json_data);
     }
@@ -117,6 +118,7 @@ class WSUserController extends Controller {
     public function profileUpdateAction() {       
        return new response($this->container->get('webservice.helper')->updateProfile($this->process_request()));
     }    
-
+    
+   
 }
 

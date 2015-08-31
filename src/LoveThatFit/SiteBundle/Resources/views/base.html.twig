@@ -38,8 +38,17 @@
                       <script type="text/javascript"> 
 $(document).ready(function($) {
     
+    
+    
    
-   /*
+
+  /*
+       
+   
+
+    
+   
+  
     
         jQuery('.add-to-cart').live('click', function(){
               //  alert("The paragraph was clicked.");
@@ -84,13 +93,29 @@ $(document).ready(function($) {
             }, function () {
                 $(this).detach();
             });
-        }    
+        } 
+        
+        
+        
+        
+    var id = $(this).attr('id');               
+    var dataString = 'id='+ id ;
+    var parent = $(this);
+        //alert (data);
+        $.ajax({
+            type: "POST",
+            url: "{{ path('cart_basket')}}",
+            data:  dataString,
+            cache: false,           
+            success: function(response) { //Your treatment
+   }
+   });
     
    
     });
     
+  
     */
-    
    
     
     
