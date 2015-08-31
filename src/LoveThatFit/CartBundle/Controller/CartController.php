@@ -29,7 +29,7 @@ class CartController extends Controller
 	  $qty = 1;
 	  $cart=$user->getCart();
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
-	  $getCounterResult = $this->get('cart.helper.cart')->countCartItems($user);
+	  $getCounterResult = $this->get('cart.helper.cart')->countCartItemsByQuantity($user);
 	  return new Response($getCounterResult["counter"]);
 	}
   	public function basketupdateAction(Request $request){
