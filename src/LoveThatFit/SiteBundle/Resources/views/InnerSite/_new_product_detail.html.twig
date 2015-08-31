@@ -209,8 +209,12 @@ function chk_dress_applied_loaded(prod_type_applied){
                                             
                                             
                                            </span>
-                 <!-- <a href="#" class="add-to-cart" title="{{productItem.id}}">bac</a>-->
-                                        <form method="post" action="{{ path('cart_basket')}}">   <input type="hidden" name="item_id" value="{{ productItem.id }}"> <span class="cart_prod"><input type="image" title="Add item to the cart"  src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}" style="border:0px"></span>
+               <!--  <a href="#" class="add-to-cart" id="{{ productItem.id }}" title="{{productItem.id}}">bac</a>-->
+                  
+                  
+                                       <form method="post" action="{{ path('cart_basket')}}">   
+                                            <input type="hidden" name="item_id" value="{{ productItem.id }}"> 
+                                            <span class="cart_prod"><input type="image" title="Add item to the cart"  src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}" style="border:0px"></span>
 
                                         </form>
                                     </div>
@@ -227,3 +231,6 @@ function chk_dress_applied_loaded(prod_type_applied){
                             </div>
                            <!--/.prod_row--></div>
     
+       
+
+

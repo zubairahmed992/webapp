@@ -20,7 +20,7 @@ class CartRepository extends EntityRepository
       c.product_item = :ProductItem
       and c.user = :user_id
       ")->setParameters(array('ProductItem' => $product_item_id,'user_id' => $user_id)) ;
-	echo $query->getSQL();
+
 	try {
 	  return $query->getResult();
 	} catch (\Doctrine\ORM\NoResultException $e) {

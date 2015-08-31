@@ -14,6 +14,12 @@ cart_basket_update:
     pattern:  /cart/basketupdate
     defaults: { _controller: LoveThatFitCartBundle:Cart:basketupdate}
 
+cart_basket_ajax:
+    pattern:  /cart/basketajax/{item_id}
+    defaults: { _controller: LoveThatFitCartBundle:Cart:basketajax}
+    requirements:
+        _method:  POST
+
 cart_show:
     pattern:  /cart/show
     defaults: { _controller: LoveThatFitCartBundle:Cart:show}
@@ -29,6 +35,10 @@ order_default:
 order_save_billing:
     pattern:  /billing/save
     defaults: { _controller: LoveThatFitCartBundle:Order:savebilling}
+
+preview_address:
+    pattern:  /preview
+    defaults: { _controller: LoveThatFitCartBundle:Order:previewaddress}
 
 order_address:
     pattern:  /order/get_address/{address_id}
