@@ -69,6 +69,10 @@ class CartHelper {
   public function countCartItems($user){
 	return $this->repo->countCartByUser($user);
   }
+  #------------------------------Count Items cart by user id amd Quantity--------------------------------#
+  public function countCartItemsByQuantity($user){
+	return $this->repo->countCartByUserQuantity($user);
+  }
 #------------------------------ Get Cart Grand Total--------------------------------#
 //  public function getCartGrandTotal($decoded){
 //		print_r($decoded);die;

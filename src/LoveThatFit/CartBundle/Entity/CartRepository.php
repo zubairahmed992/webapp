@@ -90,4 +90,16 @@ class CartRepository extends EntityRepository
 	}
   }
 
+  public function countCartByUserQuantity($user){
+	$record = $this->getEntityManager()
+	  ->createQuery("SELECT COUNT(c.qty) as counter FROM LoveThatFitCartBundle:Cart c
+                    WHERE c.user = :user")
+	  ->setParameters(array('user' => $user));
+	try {
+	  return $record->getSingleResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
+
 }

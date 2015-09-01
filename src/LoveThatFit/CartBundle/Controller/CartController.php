@@ -22,12 +22,15 @@ class CartController extends Controller
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
 	  return $this->redirect($this->generateUrl('cart_show'));
 	}
-	public function basketajaxAction($item_id){
+	public function basketajaxAction(Request $request){
+	  $decoded  = $request->request->all();
+	  $item_id = $decoded["item_id"];
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  $qty = 1;
 	  $cart=$user->getCart();
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
-	  return new Response($item_id);
+	  $getCounterResult = $this->get('cart.helper.cart')->countCartItemsByQuantity($user);
+	  return new Response($getCounterResult["counter"]);
 	}
   	public function basketupdateAction(Request $request){
 	  $decoded  = $request->request->all();
