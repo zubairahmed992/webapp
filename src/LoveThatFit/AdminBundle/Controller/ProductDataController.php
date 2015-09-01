@@ -357,4 +357,22 @@ class ProductDataController extends Controller {
                     ))   
                 ->getForm();
     }
+    
+    ###########################################################################
+    
+    public function importIndexAction() {
+        $products = $this->get('admin.helper.product')->getListWithPagination();        
+        return $this->render('LoveThatFitAdminBundle:ProductData:import_index.html.twig', array(
+                    'products' => $products,                    
+                )
+        );
+    }
+    #-------------------------------------------------------
+    public function showCurrentAction($product_id) {
+        $product = $this->get('admin.helper.product')->find($product_id);        
+        return $this->render('LoveThatFitAdminBundle:ProductData:_db_values.html.twig', array(
+                    'product' => $product,                    
+                )
+        );
+    }
 }

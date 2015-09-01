@@ -1326,4 +1326,38 @@ class Product {
     {
         return $this->retailer_reference_id;
     }
+    
+     public function toArray(){
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'brand_id' => $this->brand->getId(),            
+            'brand_name' => $this->brand->getName(),            
+            'retailer_id' => $this->retailer?$this->retailer->getId():$this->retailer,            
+            'retailer_name' => $this->retailer?$this->retailer->getName():$this->retailer,            
+            'styling_type' => $this->styling_type,
+            'neckline' => $this->neckline,
+            'sleeve_styling' => $this->sleeve_styling,
+            'rise' => $this->rise,
+            'hem_length' => $this->hem_length,
+            'stretch_type' => $this->stretch_type,            
+            'horizontal_stretch'=> $this->horizontal_stretch,
+            'vertical_stretch'=> $this->vertical_stretch,
+            'fabric_weight' => $this->fabric_weight,
+            'structural_detail' => $this->structural_detail,            
+            'fit_type' => $this->fit_type,
+            'layering' => $this->layering,
+            'fit_priority'=> $this->fit_priority,
+            'fabric_content'=> $this->fabric_content,
+            'garment_detail'=> $this->garment_detail,
+            'size_title_type' => $this->size_title_type,   
+            'body_type'=> "Regular",
+            'description' => $this->description,
+            'clothing_type_id' => $this->clothing_type->getId(),
+            'clothing_type' => $this->clothing_type->getName(),
+            'target' => $this->clothing_type->getTarget(),
+            'layering' => $this->layering,            
+            
+        );
+    }
 }

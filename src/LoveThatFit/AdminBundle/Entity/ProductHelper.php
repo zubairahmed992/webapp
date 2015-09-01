@@ -202,7 +202,7 @@ class ProductHelper{
 
     //-------------------------------------------------------
 
-    public function getListWithPagination($page_number, $sort) {
+    public function getListWithPagination($page_number = 0, $sort = 'id') {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $limit = $pagination_constants["constants"]["pagination"]["limit"];
@@ -1202,5 +1202,22 @@ public function breakFileName($request_array,$product_id){
     public function productSync($gender, $formated_date){
        return $this->repo->newproductListingWebService($gender,$formated_date);
     }  
+     #----------------------------------------------------
     
+    public function productToArray($product_id) {
+        $product = $this->find($product_id);
+        $p = $product->toArray();
+        foreach ($product->getProductSizes() as $ps) {
+            $p['sizes'][$p->getTitle()] = $p->toArray();
+            foreach ($ps->getProductSizeMeasurements() as $psm) {
+                $p['sizes'][$p->getTitle()][$psm->getTitle()] = $psm->toArray();
+            }
+        }
+       foreach ($product->getProductColors() as $pc) {
+            $p['colors'][$pc->getTitle()] = $pc->toArray();
+            
+        }
+    
+        return $p;
+    }  
 }

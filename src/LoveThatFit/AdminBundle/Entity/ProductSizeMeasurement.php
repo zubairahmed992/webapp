@@ -500,4 +500,23 @@ class ProductSizeMeasurement
     {
         return $this->fit_model_measurement;
     }
+    
+    public function toArray() {
+        return array(
+            'title' => $this->title,
+            'garment_measurement_flat' => $this->garment_measurement_flat,
+            'max_body_measurement' => $this->max_body_measurement,
+            'vertical_stretch' => $this->vertical_stretch,
+            'horizontal_stretch' => $this->horizontal_stretch,
+            'stretch_type_percentage' => $this->stretch_type_percentage,
+            'ideal_body_size_high' => $this->ideal_body_size_high,
+            'ideal_body_size_low' => $this->ideal_body_size_low,
+            'garment_measurement_stretch_fit' => $this->garment_measurement_stretch_fit,
+            'min_body_measurement' => $this->min_body_measurement,
+            'fit_model_measurement' => $this->fit_model_measurement,
+            'grade_rule' => $this->grade_rule,
+            'min_calculated' => $this->min_calculated,
+            'max_calculated' => $this->max_calculated,
+        );
+    }
 }

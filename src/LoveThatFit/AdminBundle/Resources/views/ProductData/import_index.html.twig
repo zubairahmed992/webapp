@@ -1,0 +1,13 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block body %}
+Products:
+<select>
+    <option value="0">Select</option>
+    {% for p in products.products %}
+    <option value="{{p.id}}">{{p.id ~'-'~p.name}}</option>
+    {% endfor %}
+</select>
+    
+{% endblock %}
+

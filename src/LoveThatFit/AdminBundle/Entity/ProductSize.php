@@ -307,4 +307,13 @@ class ProductSize
     {
         return $this->index_value;
     }
+    
+    function toArray(){
+        return array(
+            'id'=>  $this->id,
+            'title'=> $this->title,
+            'body_type'=>  $this->body_type,
+            'index_value'=>  $this->index_value,
+        );    
+    }
 }

@@ -572,4 +572,12 @@ public function setSizeTitles($sizes)
     {
         return $this->product_color_views;
     }
+    #---------------------------------------------
+    public function toArray() {
+        return array('id' => $this->id,
+            'title' => $this->title,
+            'pattern' => $this->pattern,
+            'image' => $this->image,
+        );
+    }
 }
