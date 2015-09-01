@@ -747,7 +747,7 @@ private function calculate_fitindex($fp_specs){
     
     public function getRecommendedFromStrippedFeedBack($striped_fb) {
         foreach ($striped_fb['feedback'] as $size => $specs) {     
-            if ($specs['recommended']==true){
+            if (array_key_exists('recommendation', $specs) && $specs['recommended']==true){
                 return $specs;
             }
         }        
