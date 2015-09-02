@@ -5774,6 +5774,13 @@ background-color:#fff;
      padding-bottom: 10px;
     }
     
+    
+    
+    .cart_tbl tr:nth-last-child(2) td {
+      border-bottom: 0px;
+     padding-bottom: 10px;   
+    }
+    
     .cart_act{
         padding:5px 0px 0px 0px;
         margin:0px 0px 0px 0px;
