@@ -369,10 +369,8 @@ class ProductDataController extends Controller {
     }
     #-------------------------------------------------------
     public function showCurrentAction($product_id) {
+        $pcsv = new ProductCSVDataUploader(null);                
         $product = $this->get('admin.helper.product')->find($product_id);        
-        return $this->render('LoveThatFitAdminBundle:ProductData:_db_values.html.twig', array(
-                    'product' => $product,                    
-                )
-        );
+        return new Response(json_encode($pcsv->DBProductToArray($product)));
     }
 }

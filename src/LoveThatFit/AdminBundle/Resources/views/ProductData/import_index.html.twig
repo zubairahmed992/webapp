@@ -1,13 +1,35 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block body %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
 Products:
-<select>
+<select id='ddl_product'>
     <option value="0">Select</option>
     {% for p in products.products %}
     <option value="{{p.id}}">{{p.id ~'-'~p.name}}</option>
     {% endfor %}
 </select>
-    
+    <script>
+$(document).ready(function(){
+      $('#ddl_product').click(function (event){
+    event.preventDefault(); 
+    var product_id = $("#ddl_product").val();                    
+    if(product_id!=0){
+     var compare_url = "../show/" + product_id;         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {           
+           window.open(compare_url);
+        }
+     })   
+    }
+    return false; //for good measure
+     
+});
+
+});  
+</script>
 {% endblock %}
 

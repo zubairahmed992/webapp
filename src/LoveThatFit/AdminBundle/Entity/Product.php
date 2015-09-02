@@ -1331,10 +1331,12 @@ class Product {
         return array(
             'id' => $this->id,
             'name' => $this->name,
+            'gender' => $this->gender,            
+            'control_number' => $this->control_number,
             'brand_id' => $this->brand->getId(),            
             'brand_name' => $this->brand->getName(),            
             'retailer_id' => $this->retailer?$this->retailer->getId():$this->retailer,            
-            'retailer_name' => $this->retailer?$this->retailer->getName():$this->retailer,            
+            'retailer_name' => $this->retailer?$this->retailer->getTitle():$this->retailer,            
             'styling_type' => $this->styling_type,
             'neckline' => $this->neckline,
             'sleeve_styling' => $this->sleeve_styling,
@@ -1350,14 +1352,12 @@ class Product {
             'fit_priority'=> $this->fit_priority,
             'fabric_content'=> $this->fabric_content,
             'garment_detail'=> $this->garment_detail,
-            'size_title_type' => $this->size_title_type,   
-            'body_type'=> "Regular",
+            'size_title_type' => $this->size_title_type,               
             'description' => $this->description,
             'clothing_type_id' => $this->clothing_type->getId(),
             'clothing_type' => $this->clothing_type->getName(),
             'target' => $this->clothing_type->getTarget(),
-            'layering' => $this->layering,            
-            
+            'layering' => $this->layering,                        
         );
     }
 }

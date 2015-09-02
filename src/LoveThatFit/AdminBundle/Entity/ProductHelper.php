@@ -1208,9 +1208,9 @@ public function breakFileName($request_array,$product_id){
         $product = $this->find($product_id);
         $p = $product->toArray();
         foreach ($product->getProductSizes() as $ps) {
-            $p['sizes'][$p->getTitle()] = $p->toArray();
+            $p['sizes'][$ps->getTitle()] = $ps->toArray();
             foreach ($ps->getProductSizeMeasurements() as $psm) {
-                $p['sizes'][$p->getTitle()][$psm->getTitle()] = $psm->toArray();
+                $p['sizes'][$ps->getTitle()][$psm->getTitle()] = $psm->toArray();
             }
         }
        foreach ($product->getProductColors() as $pc) {

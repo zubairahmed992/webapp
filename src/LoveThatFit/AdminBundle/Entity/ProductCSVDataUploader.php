@@ -387,6 +387,34 @@ class ProductCSVDataUploader {
       private function removePercent($str){
         return str_replace('%', '', $str);
     }
+    #--------------------------------------------
+    
+      public function DBProductToArray($product) {        
+        $p = $product->toArray();
+        unset($p['id']);
+        unset($p['brand_id']);
+        unset($p['retailer_id']);
+        unset($p['clothing_type_id']);
+        unset($p['garment_detail']);
+        unset($p['description']);
+        unset($p['target']);
+        
+        $p['garment_name'] = $p['name']; unset($p['name']);
+        $p['style'] = $p['control_number']; unset($p['control_number']);
+        /*
+        foreach ($product->getProductSizes() as $ps) {
+            $p['sizes'][$ps->getTitle()] = $ps->toArray();
+            foreach ($ps->getProductSizeMeasurements() as $psm) {
+                $p['sizes'][$ps->getTitle()][$psm->getTitle()] = $psm->toArray();
+            }
+        }
+       foreach ($product->getProductColors() as $pc) {
+            $p['colors'][$pc->getTitle()] = $pc->toArray();
+            
+        }
+    */
+        return $p;
+    }  
 }
 
 ?>
