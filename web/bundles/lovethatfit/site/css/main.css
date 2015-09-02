@@ -1667,8 +1667,8 @@ ul.prod_wrapper{
 }
 .prod_wrapper li h3 {
     visibility: hidden;
-    min-height: 40px;
-    max-height: 40px;
+    min-height: 50px;
+    max-height: 50px;
     font-size: 0.8em;
 }
 .prod_wrapper li:hover h3 {
