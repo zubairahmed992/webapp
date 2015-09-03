@@ -208,7 +208,7 @@ public function imagesUrlAction(){
 #----------------------Registration--------------------------------------------#
  public function registrationCreateAction() {
         $request_array = $this->process_request();
-        $user_info = $this->get('webservice.helper.user')->registerWithReqestArray($request,$request_array);
+        $user_info = $this->get('webservice.helper.user')->registerWithReqestArray($this->getRequest(),$request_array);
         return new response(json_encode($user_info));
     }    
     

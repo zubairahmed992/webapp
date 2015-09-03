@@ -57,12 +57,25 @@
     <td width="165"><span><strong>min measurement</strong></span></td>
     <td width="165"><span><strong>fit model</strong></span></td>
   </tr>
+  
 {% for size,key in product.sizes %}
+  {% set first = true %}
   <tr>
       <td colspan="9" style="margin-top:5px;"><span><strong>{{size}}</strong></span></td>
   </tr>   
    {%for ps,keys in key %} 
    {% if (ps!='key')%}  
+  
+    {% if (first == true )%}  
+  <tr>
+        {% set first = false %}
+          <td></td>
+   {%for pss,keys in keys %}        
+    <td>{{pss}}</td>
+    
+    {%endfor%}                                    
+    </tr>
+    {%endif%}
   <tr>
     <td><span><strong>{{ps}}</strong></span></td>  
     {%endif%}
