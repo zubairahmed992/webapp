@@ -370,7 +370,7 @@ if(chk_no_img_path == true){
   
   
   var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
-  alert(user_shoulder_width);
+  //alert(user_shoulder_width);
   //alert(dv_per_inch_px);
   user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
   
