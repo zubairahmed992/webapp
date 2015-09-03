@@ -3,96 +3,80 @@
 <li class="active"> Product CSV / Preview</li>
 {% endblock %}        
 {% block body %}        
-    <table width="1024" border="0">
-        <tr>
-            <td colspan="2"><h3>Product Detail</h3>
-            </td>
-        </tr>      
- {%for p,key in product%}         
-        {% if (p!='product_color' and p!='fabric_content'  and p!='fit_priority' and p!='sizes')%}
-        <tr>
-            <td  colspan="2"> <b> {{p}} :</b> &nbsp; {{key}}</td>
-        </tr>  
-        {% endif%}
-{%endfor%}    
-<tr>
-            <td colspan="2">
-                <b>Colors: </b> &nbsp;
+<table width="1024" border="0">
+    <tr>
+        <td colspan="2"><h3>Product Detail</h3>
+        </td>
+    </tr>      
+        {%for p,key in product%}         
+            {% if (p!='product_color' and p!='fabric_content'  and p!='fit_priority' and p!='sizes')%}
+    <tr>
+        <td  colspan="2"> <b> {{p}} :</b> &nbsp; {{key}}</td>
+    </tr>  
+            {% endif%}
+        {%endfor%}    
+    <tr>
+        <td colspan="2">
+            <b>Colors: </b> &nbsp;
             {% for pc,key in product.product_color %}
-                    <span>{{key}}</span>  &nbsp;|&nbsp;
+                <span>{{key}}</span>  &nbsp;|&nbsp;
             {%endfor%}        
-            </td>            
-        </tr>
-<tr>
-            <td colspan="2">
-                <b>Fit Priority</b>  &nbsp;&nbsp;
+        </td>            
+    </tr>
+    <tr>
+        <td colspan="2">
+            <b>Fit Priority</b>  &nbsp;&nbsp;
             {%for fp,key in product.fit_priority %}
-                    <span><span><b> {{fp}} :</b> </span>  <span>{{key}}</span>  </span>    &nbsp;|&nbsp;
+                <span><span><b> {{fp}} :</b> </span>  <span>{{key}}</span>  </span>    &nbsp;|&nbsp;
             {%endfor%}        
-            </td>            
-        </tr>       
-        <tr>
-            <td colspan="2">
-                <span><strong>Fabric content:</strong></span>
+        </td>            
+    </tr>       
+    <tr>
+        <td colspan="2">
+            <span><strong>Fabric content:</strong></span>
             {%for fc,key in product.fabric_content%}
-                    <span><span><b> {{fc}} :</b> </span>  <span>{{key}}</span>  </span>  
+                <span><span><b> {{fc}} :</b> </span>  <span>{{key}}</span>  </span>  
             {%endfor%}        
-            </td>            
-        </tr>
-        <tr>
-            <td colspan="2"><span><strong>Product Sizes:</strong></span>
-            </td>
-        </tr>
-<tr>
-  <td colspan="2">
- <table width="1213" border="1">
- <tr>
-    <td width="203"></td>
-    <td width="115"><span><strong>garment flat</strong></span></td>
-    <td width="172"><span><strong>stretch percentage</strong></span></td>
-    <td width="133"><span><strong>stretch fit</strong></span></td>
-    <td width="169"><span><strong>max measurement</strong></span></td>
-    <td width="110"><span><strong>ideal high</strong></span></td>
-    <td width="112"><span><strong>ideal low</strong></span></td>
-    <td width="165"><span><strong>min measurement</strong></span></td>
-    <td width="165"><span><strong>fit model</strong></span></td>
-  </tr>
-  
+        </td>            
+    </tr>
+    <tr>
+        <td colspan="2"><span><strong>Product Sizes:</strong></span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="1213" border="1">
+
 {% for size,key in product.sizes %}
-  {% set first = true %}
-  <tr>
-      <td colspan="9" style="margin-top:5px;"><span><strong>{{size}}</strong></span></td>
-  </tr>   
+  {% set first = true %}                  
    {%for ps,keys in key %} 
-   {% if (ps!='key')%}  
-  
-    {% if (first == true )%}  
-  <tr>
-        {% set first = false %}
-          <td></td>
-   {%for pss,keys in keys %}        
-    <td>{{pss}}</td>
-    
-    {%endfor%}                                    
-    </tr>
+    {% if (ps!='key')%}  
+        {% if (first == true )%}  
+            {% set first = false %}
+                <tr>
+                        <td><strong>{{size}}</strong></td>
+            {%for pss,keys in keys %}        
+                        <td><strong>{{pcsv.getTitle(pss)}}</strong></td>
+            {%endfor%}                                    
+                    </tr>
+        {%endif%}
+                    <tr>
+                        <td><span><strong>{{ps}}</strong></span></td>  
     {%endif%}
-  <tr>
-    <td><span><strong>{{ps}}</strong></span></td>  
-    {%endif%}
-   {%for pss,keys in keys %}        
-    <td>{{keys}}</td>
+   
+    {%for pss,keys in keys %}        
+                        <td>{{keys}}</td>
     {%endfor%}                                    
-    </tr>
-    
- {%endfor%}
-  </td>  
-  </tr>
-         <tr><td colspan="9" style="height:20px;"></td></tr>                       
+                    </tr>
+   {%endfor%}
+            </td>  
+        </tr>
+        <tr><td colspan="11" style="height:20px;"></td></tr>                       
     </strong></td>
 </tr>
 {%endfor%}    
- </table>
-    </strong></td>
+</table>
+</strong></td>
 </tr>
 
 </table>

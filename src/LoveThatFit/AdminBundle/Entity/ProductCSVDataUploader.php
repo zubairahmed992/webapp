@@ -15,7 +15,9 @@ class ProductCSVDataUploader {
     private $previous_row;
     private $path;
     private $clothing_type_index;
-
+    private $db_product;
+    
+    
 //--------------------------------------------------------------------
     public function __construct($path) {
         $this->path = $path;
@@ -408,7 +410,7 @@ class ProductCSVDataUploader {
             foreach ($ps->getProductSizeMeasurements() as $psm) {
                 $p['sizes'][$ps->getTitle()][$psm->getTitle()] = $psm->toArray();
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['title']);
-                    $p['sizes'][$ps->getTitle()][$psm->getTitle()]['maximam_body_measurement'] = $p['sizes'][$ps->getTitle()][$psm->getTitle()]['max_body_measurement'];
+                    $p['sizes'][$ps->getTitle()][$psm->getTitle()]['maximum_body_measurement'] = $p['sizes'][$ps->getTitle()][$psm->getTitle()]['max_body_measurement'];
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['max_body_measurement']);
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['horizontal_stretch']);
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['vertical_stretch']);
@@ -425,9 +427,46 @@ class ProductCSVDataUploader {
        foreach ($product->getProductColors() as $pc) {
             array_push($p['product_color'],$pc->getTitle());
         }
-    
+        $this->db_product=$p;
         return $p;
     }  
+    public function getTitle($str){
+        switch ($str){
+          case 'garment_measurement_flat':
+              return 'Garment Flat';
+              break;
+          case 'ideal_body_size_high':
+              return 'Ideal High';
+              break;
+          case 'ideal_body_size_low':
+              return 'Ideal Low';
+              break;
+          case 'garment_measurement_stretch_fit':
+              return 'Stretched';
+              break;
+          case 'min_body_measurement':
+              return 'Min';
+              break;
+          case 'grade_rule':
+              return 'Grade Rule';
+              break;
+          case 'min_calculated':
+              return 'Min Calc';
+              break;
+          case 'max_calculated':
+              return 'Max Calc';
+              break;
+          case 'maximum_body_measurement':
+              return 'Max';
+              break;
+          case 'fit_model':
+              return 'Fit Model';
+              break;
+          default:
+              return $str;
+              break;
+        };
+    }
 }
 
 ?>
