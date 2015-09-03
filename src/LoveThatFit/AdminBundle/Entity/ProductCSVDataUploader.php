@@ -401,18 +401,31 @@ class ProductCSVDataUploader {
         
         $p['garment_name'] = $p['name']; unset($p['name']);
         $p['style'] = $p['control_number']; unset($p['control_number']);
-        /*
+        $p['fit_priority'] = json_decode($p['fit_priority']); 
+        $p['fabric_content'] = json_decode($p['fabric_content']); 
+        
         foreach ($product->getProductSizes() as $ps) {
-            $p['sizes'][$ps->getTitle()] = $ps->toArray();
             foreach ($ps->getProductSizeMeasurements() as $psm) {
                 $p['sizes'][$ps->getTitle()][$psm->getTitle()] = $psm->toArray();
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['title']);
+                    $p['sizes'][$ps->getTitle()][$psm->getTitle()]['maximam_body_measurement'] = $p['sizes'][$ps->getTitle()][$psm->getTitle()]['max_body_measurement'];
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['max_body_measurement']);
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['horizontal_stretch']);
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['vertical_stretch']);
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['stretch_type_percentage']);
+                    $p['sizes'][$ps->getTitle()][$psm->getTitle()]['fit_model'] = $p['sizes'][$ps->getTitle()][$psm->getTitle()]['fit_model_measurement'];
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['fit_model_measurement']);
+                    
+                    
+                    unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['vertical_stretch']);
             }
         }
+        
+       $p['product_color']= array();
        foreach ($product->getProductColors() as $pc) {
-            $p['colors'][$pc->getTitle()] = $pc->toArray();
-            
+            array_push($p['product_color'],$pc->getTitle());
         }
-    */
+    
         return $p;
     }  
 }
