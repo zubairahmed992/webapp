@@ -1,7 +1,9 @@
 {% extends 'LoveThatFitUserBundle::base_mask_marker.html.twig' %}
 
 {% block mask_marker_view %}
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker.js') }}" canvas="canv_mask"></script>
+<!--<script type="text/paperscript" src="{#{ asset('bundles/lovethatfit/site/js/mask_marker_6.js') }#}" canvas="canv_mask"></script>-->
+
+<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker.js?asdsf') }}" canvas="canv_mask"></script>
 
 <script>
     function me_triggered(){
@@ -74,9 +76,14 @@
 
 
 
-
-
+{% if (device_type == "iphone5")%}
 <div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+{% endif %}
+{% if (device_type == "iphone6")%}
+<div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas></div>
+{% endif %}
+
+
 
 
 
@@ -99,9 +106,7 @@
 <input id="rgt_arm_ref" type="text" value="M146.813,100.852c11.753,3.33,11.383,22.141,14.962,48.269c0.523,3.559,0.811,10.811,3.926,26.468c2.568,24.191,4.297,18.982,4.571,65.666c3.014,12.91,12.935,25.821-2.017,35.107c-1.756,1.131-13.129,11.084-4.68-10.356c-0.65-2.259-5.317-14.769-2.377-24.778c-0.454-1.316-6.086-15.189-14.012-62.175c-2.641-19.414-2.148-18.767-2.986-26.381c-0.148-1.718-3.127-21.49-4.414-21.489L146.813,100.852z"/>
 
 -->
-<script>
-	
-	</script>
+
 
 <script type="text/paperscript" canvas="canvas-1">
 var raster = new Raster('fff.jpg');	

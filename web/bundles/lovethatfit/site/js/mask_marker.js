@@ -10,6 +10,8 @@ hitOptions = {
 
 
 
+
+
 change_x_pos_diff = 0;
 change_y_pos_diff = 0;
 inc_ratio = 1;
@@ -29,7 +31,7 @@ dv_user_px_h = parseInt($("#dv_user_px_height").attr("value"));
 dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
 dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
 dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
-dv_type = parseInt($("#dv_type").attr("value"));
+dv_type = $("#dv_type").attr("value");
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
 dv_edit_type = $("#dv_edit_type").attr("value");
 
@@ -38,9 +40,35 @@ dv_gap_top = 26;
 dv_gap_bottom = 32;
 
 //Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
-fixed_px_inch_ratio = 6.891;
+//fixed_px_inch_ratio = 6.891;
 
-
+//iPhone5 and 6 px per inch
+if(dv_type == "iphone5"){
+    fixed_px_inch_ratio = 6.891;
+    scr_width = 160;
+    but_x_adj = 294;
+    scr_height = 568;
+    
+    // adjusting 66.666% value of top empty area ----- 26/3*2 = 17.333
+    adj_btm_fix = 17.333;
+    
+    diff_dv = 31 + adj_btm_fix;
+    
+    
+}
+if(dv_type == "iphone6"){
+    fixed_px_inch_ratio = 8.094;
+    scr_width = 187.5;
+    but_x_adj = 349;
+    scr_height = 667;
+    
+    // adjusting 66.666% value of top empty area -----  /3*2 = 17.333
+    adj_btm_fix = 30.50;
+    
+    diff_dv = 38 + adj_btm_fix;
+    
+    
+}
 //////// From JS file
 
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
@@ -221,11 +249,11 @@ user_image.on('load', function() {
     //alert(user_image.getPixel(180, 230));
 });
 
-user_image.position = new Point(160,568/2);
+user_image.position = new Point(scr_width,scr_height/2);
 
 
 
-user_image.pivot = new Point(0,(568/2) - dv_gap_bottom);
+user_image.pivot = new Point(0,(scr_height/2) - dv_gap_bottom);
 
 
 //alert(user_image.bounds.bottomCenter);
@@ -258,7 +286,7 @@ if(chk_no_img_path == true){
    
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
    
-   mid_area_path.position = new Point(160,537);
+   mid_area_path.position = new Point(scr_width, scr_height - diff_dv);
    
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
    
@@ -342,8 +370,11 @@ if(chk_no_img_path == true){
   
   
   var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
+  alert(user_shoulder_width);
   //alert(dv_per_inch_px);
   user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
+  
+  
   
   //alert(dv_per_inch_px);
   
@@ -570,7 +601,7 @@ path_com.opacity = 0.85;
         
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         
-        d_adj_path.position = new Point(-100,538);
+        d_adj_path.position = new Point(-100,scr_height - diff_dv);
         
         //default_shape.visible = false;
         
@@ -713,36 +744,36 @@ but_crop_icon.position = new Point(26, 332 + an_inc);
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
 var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
 
-scr1_but_hiw_icon.position = new Point(294, 24 + an_inc);
+scr1_but_hiw_icon.position = new Point(but_x_adj, 24 + an_inc);
 
 var hand_cursor_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/hand_cursor_icon.png";
 var hand_cursor_icon = new Raster(hand_cursor_icon_url);
 
-hand_cursor_icon.position = new Point(294, 24 + an_inc);
+hand_cursor_icon.position = new Point(but_x_adj, 24 + an_inc);
 hand_cursor_icon.visible = false;
 
 var edit_shape_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/edit_shape_icon.png";
 var edit_shape_icon = new Raster(edit_shape_icon_url);
 
-edit_shape_icon.position = new Point(294, 24 + an_inc);
+edit_shape_icon.position = new Point(but_x_adj, 24 + an_inc);
 edit_shape_icon.visible = false;
 
 
 var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/camera_icon.png";
 var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 
-scr1_but_camera_icon.position = new Point(294, 68 + an_inc);
+scr1_but_camera_icon.position = new Point(but_x_adj, 68 + an_inc);
 
 var scr1_but_reset_url = curr_path_prefix + "bundles/lovethatfit/site/images/reset_btn.png";
 var scr1_but_reset = new Raster(scr1_but_reset_url);
 
-scr1_but_reset.position = new Point(38, 550);
+scr1_but_reset.position = new Point(38, scr_height - 18);
 
 
 var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_next_btn.png";
 var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
 
-scr1_but_save_icon.position = new Point(281, 550);
+scr1_but_save_icon.position = new Point(but_x_adj - 13, scr_height - 18);
 
 
 
@@ -1013,7 +1044,7 @@ function onMouseDown(event) {
                         if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                            
                            
-                           main_layer.pivot = new Point(160,538);
+                           main_layer.pivot = new Point(scr_width,scr_height - diff_dv);
                            //pos_main_layer = main_layer.position;
                            //alert(main_layer.position);
                            
@@ -1816,11 +1847,11 @@ function onMouseDrag(event) {
                 
 	} else if (curr_view == "zoomed" && hand_cursor == true) {
             //alert(this.type);
-                if(change_x_pos_diff + event.delta.x >= -160 && change_x_pos_diff + event.delta.x <= 160){
+                if(change_x_pos_diff + event.delta.x >= -scr_width && change_x_pos_diff + event.delta.x <= scr_width){
                     main_layer.position.x += event.delta.x;
                     change_x_pos_diff += event.delta.x;
                 }
-                if(change_y_pos_diff + event.delta.y >= -50 && change_y_pos_diff + event.delta.y <= 550){
+                if(change_y_pos_diff + event.delta.y >= -50 && change_y_pos_diff + event.delta.y <= scr_height - diff_dv){
                     main_layer.position.y += event.delta.y;
                     change_y_pos_diff += event.delta.y;
                 }
