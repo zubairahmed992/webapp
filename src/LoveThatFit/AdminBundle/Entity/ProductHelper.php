@@ -342,7 +342,15 @@ public function findProductItemByUser($user_id, $page_number, $limit){
     #---------------------------------------------------
     //               Methods Product listing on index page
     #---------------------------------------------------
-    
+    public function idNameList() {
+        $products=$this->repo->findAllProduct(0, 0,'name');        
+        $pa=array();
+        foreach ($products as $p) {
+            $pa[$p->getId()]=$p->getName();
+        }
+        return $pa;
+   }   
+
     public function listByType($options) {        
         $list="";
         

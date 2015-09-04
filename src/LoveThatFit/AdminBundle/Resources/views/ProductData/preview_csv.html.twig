@@ -54,9 +54,9 @@
         {% if (first == true )%}  
             {% set first = false %}
                 <tr>
-                        <td><strong>{{size}}</strong></td>
+                    <td style="background-color: #CCC"><strong>{{size}}</strong></td>
             {%for pss,keys in keys %}        
-                        <td><strong>{{pcsv.getTitle(pss)}}</strong></td>
+                        <td style="background-color: #CCC"><strong>{{pcsv.getTitle(pss)}}</strong></td>
             {%endfor%}                                    
                     </tr>
         {%endif%}

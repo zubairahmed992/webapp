@@ -189,8 +189,10 @@ class ProductDataController extends Controller {
 #-----------------------Form Upload CSV File------------------#
 
     public function csvIndexAction() {
+        $products = $this->get('admin.helper.product')->getListWithPagination();                
         $form = $this->getCsvUploadForm();
-        return $this->render('LoveThatFitAdminBundle:ProductData:import_csv.html.twig', array('form' => $form->createView())
+        return $this->render('LoveThatFitAdminBundle:ProductData:import_csv.html.twig', array('form' => $form->createView(),
+            'products' => $products,)
         );
     }
 
@@ -198,9 +200,14 @@ class ProductDataController extends Controller {
     public function csvUploadAction(Request $request) {
         $form = $this->getCsvUploadForm();
         $form->bindRequest($request);
-        
+        $product_id=$form->get('products')->getData();        
         $preview_only = $form->get('preview')->getData();
         $raw_only = $form->get('raw')->getData();
+        ##############################
+        if($product_id)
+        {return new Response($product_id);}
+        else{return new Response('empty');}
+        ########################################
         
         $file = $form->get('csvfile');
         $filename = $file->getData();
@@ -345,7 +352,12 @@ class ProductDataController extends Controller {
     }
     #------------------------------------------------------
     private function getCsvUploadForm(){
+        $products= $this->get('admin.helper.product')->idNameList();        
            return $this->createFormBuilder()
+                ->add('products','choice', array( 
+                     'choices' => $products,
+                    'required' => false,
+                    'empty_value' => 'Select Styling Type',))
                 ->add('csvfile', 'file')                     
                 ->add('preview', 'checkbox', array(
                   'label'     => 'preview only',
@@ -371,7 +383,7 @@ class ProductDataController extends Controller {
     public function showCurrentAction($product_id) {
         $pcsv = new ProductCSVDataUploader(null);                
         $product = $this->get('admin.helper.product')->find($product_id);        
-        #return new Response(json_encode($pcsv->DBProductToArray($product)));
+        return new Response(json_encode($pcsv->DBProductToArray($product)));
         return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->DBProductToArray($product), 'pcsv'=>$pcsv));        
     }
 }

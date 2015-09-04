@@ -11,10 +11,21 @@ Products:
     <option value="{{p.id}}">{{p.id ~'-'~p.name}}</option>
     {% endfor %}
 </select>
+<input type="button" id="btn_hit_product" value='compare'><br>
+
     <script>
 $(document).ready(function(){
-      $('#ddl_product').click(function (event){
+      $('#ddl_product').change(function (event){
     event.preventDefault(); 
+    var product_id = $("#ddl_product").val();                    
+    if(product_id!=0){
+        alert(product_id);
+    }
+    return false;      
+});
+
+//---------------------------------------------
+   $('#btn_hit_product').click(function (event){
     var product_id = $("#ddl_product").val();                    
     if(product_id!=0){
      var compare_url = "../show/" + product_id;         
@@ -25,9 +36,8 @@ $(document).ready(function(){
         }
      })   
     }
-    return false; //for good measure
-     
-});
+    return false;
+    });
 
 });  
 </script>

@@ -430,6 +430,7 @@ class ProductCSVDataUploader {
         $this->db_product=$p;
         return $p;
     }  
+    #-----------------------------------------------
     public function getTitle($str){
         switch ($str){
           case 'garment_measurement_flat':
@@ -467,6 +468,33 @@ class ProductCSVDataUploader {
               break;
         };
     }
+    #-----------------------------------------------
+    
+    public function compare_product($db, $csv) {
+        $db['gender'] == $csv['gender'] ? $db['gender_csv'] =$db['gender']:'';
+        $db['brand_name'] == $csv['brand_name'] ? $db['brand_name_csv'] =$csv['brand_name']  : '';
+        $db['retailer_name'] == $csv['retailer_name'] ? $db['retailer_name_csv']=$csv['retailer_name'] : '';
+        $db['styling_type'] == $csv['styling_type'] ? $db['styling_type_csv'] = $csv['styling_type'] : '';
+        $db['neckline'] == $csv['neckline'] ? $db['neckline_csv'] = $csv['neckline']  : '';
+        $db['sleeve_styling'] == $csv['sleeve_styling'] ? $db['sleeve_styling_csv'] = $csv['sleeve_styling'] : '';
+        $db['rise'] == $csv['rise'] ? $db['rise_csv'] = $csv['rise']: '';
+        $db['hem_length'] == $csv['hem_length'] ?$db['hem_length_csv'] = $csv['hem_length']:'';
+        $db['stretch_type'] == $csv['stretch_type'] ? $db['stretch_type_csv'] =  $csv['stretch_type']:'';
+        $db['horizontal_stretch'] == $csv['horizontal_stretch'] ?$db['horizontal_stretch_csv'] =  $csv['horizontal_stretch']:'';
+        $db['vertical_stretch'] == $csv['vertical_stretch'] ? $db['vertical_stretch_csv'] = $csv['vertical_stretch']:'';
+        $db['fabric_weight'] == $csv['fabric_weight'] ? $db['fabric_weight_csv'] = $csv['fabric_weight']:'';
+        $db['structural_detail'] == $csv['structural_detail'] ? $db['structural_detail_csv'] =  $csv['structural_detail']:'';
+        $db['fit_type'] == $csv['fit_type'] ? $db['fit_type_csv'] =  $csv['fit_type']:'';
+        $db['layering'] == $csv['layering'] ? $db['layering_csv'] =  $csv['layering']:'';
+        $db['size_title_type'] == $csv['size_title_type'] ? $db['size_title_type_csv'] =  $csv['size_title_type']:'';
+        $db['clothing_type'] == $csv['clothing_type'] ? $db['clothing_type_csv'] =  $csv['clothing_type']:'';
+        $db['garment_name'] == $csv['garment_name'] ? $db['garment_name_csv'] =  $csv['garment_name']:'';
+        $db['style'] == $csv['style'] ? $db['style_csv'] =  $csv['style']:'';
+        $db['fit_priority'] == $csv['fit_priority'] ? $db['fit_priority_csv'] =  $csv['fit_priority']:'';
+        $db['fabric_content'] == $csv['fabric_content'] ? $db['fabric_content_csv'] =  $csv['fabric_content']:'';
+        return $db;
+    }
+
 }
 
 ?>
