@@ -405,6 +405,8 @@ class ProductCSVDataUploader {
         $p['style'] = $p['control_number']; unset($p['control_number']);
         $p['fit_priority'] = json_decode($p['fit_priority']); 
         $p['fabric_content'] = json_decode($p['fabric_content']); 
+        $p['neck_line'] = $p['neckline']; unset($p['neckline']);
+        $p['layring'] = $p['layering']; unset($p['layering']);
         
         foreach ($product->getProductSizes() as $ps) {
             foreach ($ps->getProductSizeMeasurements() as $psm) {
@@ -494,7 +496,222 @@ class ProductCSVDataUploader {
         $db['fabric_content'] == $csv['fabric_content'] ? $db['fabric_content_csv'] =  $csv['fabric_content']:'';
         return $db;
     }
-
+    
+    public function compare_product_detail() {
+     
+    $a = array(
+            "central_front_waist" => array(
+                "garment_measurement_flat" => "13.50",
+                "garment_measurement_stretch_fit" => "13.50",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "back_waist" => array(
+                "garment_measurement_flat" => "14.00",
+                "garment_measurement_stretch_fit" => "14.00",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "waist_to_hip" => array(
+                "garment_measurement_flat" => "8.00",
+                "garment_measurement_stretch_fit" => "8.00",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "hem_length" => array(
+                "garment_measurement_flat" => "25.73",
+                "garment_measurement_stretch_fit" => "25.73",
+                "grade_rule" => "0.13",
+                "min_calculated" => "30.14",
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => "31.12",
+                "fit_model" => "31.36",
+                "ideal_body_size_high" => "31.61",
+                "ideal_body_size_high" => 0,
+                "max_calculated" => "32.59"
+            ),
+            "arm_length" => array(
+                "garment_measurement_flat" => "24.00",
+                "garment_measurement_stretch_fit" => "24.00",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "bust" => array(
+                "garment_measurement_flat" => "35.00",
+                "garment_measurement_stretch_fit" => "38.19",
+                "grade_rule" => "1.00",
+                "min_calculated" => "30.51",
+                "min_body_measurement" => "30.51",
+                "ideal_body_size_low" => "32.31",
+                "fit_model" => "32.76",
+                "ideal_body_size_high" => "33.21",
+                "ideal_body_size_high" => "35.00",
+                "max_calculated" => "35.00"
+            ),
+            "waist" => array(
+                "garment_measurement_flat" => "28.50",
+                "garment_measurement_stretch_fit" => "31.09",
+                "grade_rule" => "1.00",
+                "min_calculated" => "22.80",
+                "min_body_measurement" => "22.80",
+                "ideal_body_size_low" => "24.55",
+                "fit_model" => "24.99",
+                "ideal_body_size_high" => "25.43",
+                "ideal_body_size_high" => "25.87",
+                "max_calculated" => "27.18"
+            ),
+            "shoulder_across_front" => array(
+                "garment_measurement_flat" => "16.00",
+                "garment_measurement_stretch_fit" => "17.46",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "shoulder_across_back" => array(
+                "garment_measurement_flat" => "16.50",
+                "garment_measurement_stretch_fit" => "18.00",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "shoulder_height" => array(
+                "garment_measurement_flat" => "5.00",
+                "garment_measurement_stretch_fit" => "5.46",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            )            
+        );
+    
+      $b = array(
+            "waist_to_hip" => array(
+                "garment_measurement_flat" => "8.00",
+                "garment_measurement_stretch_fit" => "8.00",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "arm_length" => array(
+                "garment_measurement_flat" => "24.00",
+                "garment_measurement_stretch_fit" => "24.00",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+           
+            "waist" => array(
+                "garment_measurement_flat" => "28.50",
+                "garment_measurement_stretch_fit" => "31.09",
+                "grade_rule" => "1.00",
+                "min_calculated" => "22.80",
+                "min_body_measurement" => "22.80",
+                "ideal_body_size_low" => "24.55",
+                "fit_model" => "24.99",
+                "ideal_body_size_high" => "25.43",
+                "ideal_body_size_high" => "25.87",
+                "max_calculated" => "27.18"
+            ),
+            "hip" => array(
+                "garment_measurement_flat" => "36.00",
+                "garment_measurement_stretch_fit" => "39.28",
+                "grade_rule" => "1.00",
+                "min_calculated" => "32.40",
+                "min_body_measurement" => "32.40",
+                "ideal_body_size_low" => "34.20",
+                "fit_model" => "34.65",
+                "ideal_body_size_high" => "35.10",
+                "ideal_body_size_high" => "36.90",
+                "max_calculated" => "36.90"
+            ),
+          
+            "knee" => array(
+                "garment_measurement_flat" => "18.00",
+                "garment_measurement_stretch_fit" => "19.64",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "calf" => array(
+                "garment_measurement_flat" => "18.00",
+                "garment_measurement_stretch_fit" => "19.64",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            ),
+            "ankle" => array(
+                "garment_measurement_flat" => "18.50",
+                "garment_measurement_stretch_fit" => "20.18",
+                "grade_rule" => 0,
+                "min_calculated" => 0,
+                "min_body_measurement" => 0,
+                "ideal_body_size_low" => 0,
+                "fit_model" => 0,
+                "ideal_body_size_high" => 0,
+                "ideal_body_size_high" => 0,
+                "max_calculated" => 0
+            )
+        );
+      return array_diff_key($b,$a);
+    }
 }
 
 ?>

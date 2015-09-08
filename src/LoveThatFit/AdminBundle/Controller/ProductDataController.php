@@ -197,7 +197,54 @@ class ProductDataController extends Controller {
     }
 
 #------------------------------------------------------------#
-    public function csvUploadAction(Request $request) {
+      public function csvUploadAction(Request $request) {
+        $form = $this->getCsvUploadForm();
+        $form->bindRequest($request);
+        $product_id=$form->get('products')->getData();        
+        $preview_only = $form->get('preview')->getData();
+        $raw_only = $form->get('raw')->getData();
+                
+        $file = $form->get('csvfile');
+        $filename = $file->getData();
+        $pcsv = new ProductCSVDataUploader($filename);        
+        
+        
+        ##############################
+        $db_product = null;
+        if($product_id){ 
+            $product = $this->get('admin.helper.product')->find($product_id);                
+            $db_product =  $pcsv->DBProductToArray($product);
+        }
+        
+        return $this->render('LoveThatFitAdminBundle:ProductData:preview_db.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv, 'db_product'=>$db_product));        
+        ########################################
+        
+        if ($preview_only){
+            $product = $this->get('admin.helper.product')->find($product_id);        
+            $data = $pcsv->read();
+            return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv, 'db_product'=>$pcsv->DBProductToArray($product)));        
+            
+        }elseif ($raw_only){
+            $data = $pcsv->read();
+            return new Response(json_encode($data));
+        }else{
+            $data = $pcsv->read();
+            $ar = $this->savecsvdata($pcsv, $data);
+        }
+        #$data = $pcsv->map();
+        #return new Response(json_encode($data));
+        if ($ar['success']==false) {
+            $this->get('session')->setFlash('warning',$ar['msg']);
+        } else {
+            $this->get('session')->setFlash('success',$ar['msg']);
+        }
+        
+        return $this->render('LoveThatFitAdminBundle:ProductData:import_csv.html.twig', array('form' => $form->createView(),'product'=>$ar['obj'])
+        );
+        
+    }
+    
+    public function _csvUploadAction(Request $request) {
         $form = $this->getCsvUploadForm();
         $form->bindRequest($request);
         $product_id=$form->get('products')->getData();        
@@ -381,7 +428,10 @@ class ProductDataController extends Controller {
     }
     #-------------------------------------------------------
     public function showCurrentAction($product_id) {
+        
         $pcsv = new ProductCSVDataUploader(null);                
+        return new Response(json_encode($pcsv->compare_product_detail()));
+        
         $product = $this->get('admin.helper.product')->find($product_id);        
         return new Response(json_encode($pcsv->DBProductToArray($product)));
         return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->DBProductToArray($product), 'pcsv'=>$pcsv));        

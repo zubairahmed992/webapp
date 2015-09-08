@@ -1,0 +1,103 @@
+ {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active"> Product Preview Changes</li>
+{% endblock %}        
+{% block body %}        
+<style>
+.diff_in{
+    color: red; 
+    font-weight: bold;
+}
+.h_bold{
+    background-color: #CCC;
+    font-weight: bold;
+}
+.v_bold{
+    background-color: #EEE;
+    font-weight: bold;
+}
+    </style>
+<table width="1024" border="0">
+    <tr>
+        <td colspan="2"><h3>Product Preview Changes</h3>
+        </td>
+    </tr>      
+        {%for p,key in db_product%}         
+            {% if (p!='product_color' and p!='fabric_content'  and p!='fit_priority' and p!='sizes')%}
+    <tr>
+        <td  colspan="2"> <b> {{p}} :</b> &nbsp; {{key==null?'null':key}} <span class="diff_in">{{product[p]|lower != key|lower? ' | '~product[p]}}</span></td>
+    </tr>  
+            {% endif%}
+        {%endfor%}    
+    <tr>
+        <td colspan="2">
+            <b>Colors: </b> &nbsp;
+            {% for pc,key in db_product.product_color %}
+                <span>{{key}}</span>  &nbsp;|&nbsp;
+            {%endfor%}        
+        </td>            
+    </tr>
+    <tr>
+        <td colspan="2">
+            <b>Fit Priority</b>  &nbsp;&nbsp;
+            {%for fp,key in db_product.fit_priority %}
+                <span><span><b> {{fp}} :</b> </span>  <span>{{key}}</span>  </span>    &nbsp;|&nbsp;
+            {%endfor%}        
+        </td>            
+    </tr>       
+    <tr>
+        <td colspan="2">
+            <span><strong>Fabric content:</strong></span>
+            {%for fc,key in db_product.fabric_content%}
+                <span><span><b> {{fc}} :</b> </span>  <span>{{key}}</span>  </span>  
+            {%endfor%}        
+        </td>            
+    </tr>
+    <tr>
+        <td colspan="2"><span><strong>Product Sizes:</strong></span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table width="1213" border="1">
+
+{% for ps_k, ps_v in db_product.sizes %}
+  {% set first = true %}                  
+   {%for psfp_k, psfp_v in ps_v %} 
+        {% if (psfp_k!='key')%}  
+            {% if (first == true )%}  
+                {% set first = false %}
+                <tr>
+                    <td class="h_bold">{{ps_k}}</td>
+                {%for psfpm_k, psfpm_v in psfp_v %}        
+                    <td class="h_bold">{{pcsv.getTitle(psfpm_k)}}</td>
+                {%endfor%}                                    
+                </tr>
+            {%endif%}
+                <tr>
+                    <td class="v_bold">{{psfp_k}}</td>  
+                {%for psfpm_k, psfpm_v in psfp_v %}        
+                    <td>{{psfpm_v==null?'null':psfpm_v}} 
+                        {% if product['sizes'][ps_k] is defined and product['sizes'][ps_k][psfp_k] is defined and  product['sizes'][ps_k][psfp_k][psfpm_k] is defined  %}                            
+                            <span class="diff_in">
+                                {{product['sizes'][ps_k][psfp_k][psfpm_k] != psfpm_v? ' | '~product['sizes'][ps_k][psfp_k][psfpm_k]}}
+                            </span>
+                        {%endif%}
+                    </td>
+                {%endfor%}                                    
+                </tr>
+        {%endif%}
+    {%endfor%}
+            </td>  
+        </tr>
+        <tr><td colspan="11" style="height:20px;"></td></tr>                       
+    </strong></td>
+</tr>
+{%endfor%}    
+</table>
+</strong></td>
+</tr>
+
+</table>
+
+{% endblock %}
