@@ -323,12 +323,12 @@ class ProductCSVDataUploader {
     
     #===================================================================
     
-    public function fillProduct($data){
+    public function fillProduct($data, $product=null){
         #$retailer=$this->get('admin.helper.retailer')->findOneByName($this->product['retailer_name']);        
         #$clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($this->product['clothing_type']));
         #$brand=$this->get('admin.helper.brand')->findOneByName($this->product['retailer_name']);
         #$data=$this->product;
-        $product=new Product;
+        $product==null?new Product:$product;
         #$product->setBrand($brand);
         #$product->setClothingType($clothingType);
         #$product->setRetailer($retailer);
@@ -340,6 +340,7 @@ class ProductCSVDataUploader {
         $product->setUpdatedAt(new \DateTime('now'));
         $product->setGender($data['gender']);
         $product->setStylingType($data['styling_type']);
+        $product->setControlNumber($data['style']);
         $product->setNeckline($data['neck_line']);
         $product->setSleeveStyling($data['sleeve_styling']);
         $product->setRise($data['rise']);
@@ -392,6 +393,7 @@ class ProductCSVDataUploader {
     #--------------------------------------------
     
       public function DBProductToArray($product) {        
+          if (!$product) return null;
         $p = $product->toArray();
         unset($p['id']);
         unset($p['brand_id']);

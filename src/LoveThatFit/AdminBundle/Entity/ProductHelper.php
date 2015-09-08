@@ -124,8 +124,7 @@ class ProductHelper{
 
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
-
-            $entity->upload();
+            #$entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
 

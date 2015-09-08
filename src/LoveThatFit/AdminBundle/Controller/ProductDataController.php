@@ -208,28 +208,27 @@ class ProductDataController extends Controller {
         $filename = $file->getData();
         $pcsv = new ProductCSVDataUploader($filename);        
         
-        
-        ##############################
-        $db_product = null;
-        if($product_id){ 
-            $product = $this->get('admin.helper.product')->find($product_id);                
-            $db_product =  $pcsv->DBProductToArray($product);
-        }
-        
-        return $this->render('LoveThatFitAdminBundle:ProductData:preview_db.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv, 'db_product'=>$db_product));        
         ########################################
         
-        if ($preview_only){
-            $product = $this->get('admin.helper.product')->find($product_id);        
-            $data = $pcsv->read();
-            return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv, 'db_product'=>$pcsv->DBProductToArray($product)));        
-            
+        if ($preview_only) {
+            if ($product_id) {
+                $product = $this->get('admin.helper.product')->find($product_id);
+                $db_product = $pcsv->DBProductToArray($product);                
+                return $this->render('LoveThatFitAdminBundle:ProductData:preview_db.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv, 'db_product' => $db_product));
+            } else {
+                return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv));
+            }
         }elseif ($raw_only){
             $data = $pcsv->read();
             return new Response(json_encode($data));
         }else{
-            $data = $pcsv->read();
-            $ar = $this->savecsvdata($pcsv, $data);
+            if ($product_id) {
+                $product = $this->get('admin.helper.product')->find($product_id);                
+                $ar = $this->updateProduct($pcsv, $product);
+            } else {
+                $ar = $this->savecsvdata($pcsv);
+            }
+            
         }
         #$data = $pcsv->map();
         #return new Response(json_encode($data));
@@ -243,46 +242,7 @@ class ProductDataController extends Controller {
         );
         
     }
-    
-    public function _csvUploadAction(Request $request) {
-        $form = $this->getCsvUploadForm();
-        $form->bindRequest($request);
-        $product_id=$form->get('products')->getData();        
-        $preview_only = $form->get('preview')->getData();
-        $raw_only = $form->get('raw')->getData();
-        ##############################
-        if($product_id)
-        {return new Response($product_id);}
-        else{return new Response('empty');}
-        ########################################
-        
-        $file = $form->get('csvfile');
-        $filename = $file->getData();
-        $pcsv = new ProductCSVDataUploader($filename);        
-        
-        if ($preview_only){
-            $data = $pcsv->read();
-            return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv));        
-            
-        }elseif ($raw_only){
-            $data = $pcsv->read();
-            return new Response(json_encode($data));
-        }else{
-            $data = $pcsv->read();
-            $ar = $this->savecsvdata($pcsv, $data);
-        }
-        #$data = $pcsv->map();
-        #return new Response(json_encode($data));
-        if ($ar['success']==false) {
-            $this->get('session')->setFlash('warning',$ar['msg']);
-        } else {
-            $this->get('session')->setFlash('success',$ar['msg']);
-        }
-        
-        return $this->render('LoveThatFitAdminBundle:ProductData:import_csv.html.twig', array('form' => $form->createView(),'product'=>$ar['obj'])
-        );
-        
-    }
+  
 #------------------------------------------------------------#
     public function csvReadAction(Request $request) {
         $form = $this->getCsvUploadForm();
@@ -295,8 +255,8 @@ class ProductDataController extends Controller {
     }
 
     //------------------------------------------------------
-    private function savecsvdata($pcsv, $data) {
-
+    private function savecsvdata($pcsv) {
+        $data = $pcsv->read();
         $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
         $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
@@ -324,6 +284,39 @@ class ProductDataController extends Controller {
             #----
             $this->addProductSizesFromArray($product, $data);
             $this->addProductColorsFromArray($product, $data); 
+            $return_ar['obj'] = $product;             
+            $return_ar['msg'] = 'Product successfully added';            
+            $return_ar['success'] = true;
+        }
+        return $return_ar;
+    }
+    
+    private function updateProduct($pcsv, $product) {
+        $data = $pcsv->read();
+        $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
+        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
+        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
+        $return_ar = array();
+        $return_ar['msg'] = '';
+        $return_ar['obj'] = null;
+        if ($data['gender'] == Null) {
+            $return_ar['msg'] = 'Gender did not match or provided';
+            $return_ar['success'] = false;
+        }elseif ($clothingType == Null) {
+            $return_ar['msg'] = "Clothing Type did not match";
+            $return_ar['success'] = false;
+        } elseif ($brand == Null) {
+            $return_ar['msg'] = 'Brand name did not match';
+            $return_ar['success'] = false;
+        }  else{
+            
+            
+            $product = $pcsv->fillProduct($data, $product);
+            $product->setBrand($brand);
+            $product->setClothingType($clothingType);
+            $product->setRetailer($retailer);
+            $this->get('admin.helper.product')->update($product);
+            
             $return_ar['obj'] = $product;             
             $return_ar['msg'] = 'Product successfully added';            
             $return_ar['success'] = true;
