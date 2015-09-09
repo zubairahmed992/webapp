@@ -68,6 +68,7 @@ class ProductSizeHelper {
      public function save($entity) {
             $this->em->persist($entity);
             $this->em->flush();
+            return $entity;
     }
     public function checkAttributes($attributes, $size_measurements) {
         $all_size_measurements = array();

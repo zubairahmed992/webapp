@@ -5,7 +5,15 @@
 {% block body %}        
 <style>
 .diff_in{
-    color: red; 
+    color: #b94a48; 
+    font-weight: bold;
+}
+.additions{
+    color: #0044cc; 
+    font-weight: bold;
+}
+.deletions{
+    color: #cd0a0a; 
     font-weight: bold;
 }
 .h_bold{
@@ -20,6 +28,7 @@
 <table width="1024" border="0">
     <tr>
         <td colspan="2"><h3>Product Preview Changes</h3>
+            <span class="diff_in">changed</span>&nbsp;|&nbsp;<span class="additions">added</span>&nbsp;|&nbsp;<span class="deletions">removed</span>
         </td>
     </tr>      
         {%for p,key in db_product%}         
@@ -31,10 +40,17 @@
         {%endfor%}    
     <tr>
         <td colspan="2">
-            <b>Colors: </b> &nbsp;
-            {% for pc,key in db_product.product_color %}
-                <span>{{key}}</span>  &nbsp;|&nbsp;
-            {%endfor%}        
+            <b>Colors: </b> &nbsp;              
+            {% for pc, st in pcsv.compare_color_array(db_product.product_color,product.product_color) %}
+            {%if st==1%}    
+                <span class="additions">{{pc}}</span>
+            {%elseif st==-1%}    
+                <span class="deletions">{{pc}}</span>
+            {%else%}
+                <span>{{pc}}</span>
+            {%endif%}    
+             &nbsp;|&nbsp;
+            {%endfor%}                  
         </td>            
     </tr>
     <tr>

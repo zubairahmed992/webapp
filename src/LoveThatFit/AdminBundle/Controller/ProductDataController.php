@@ -214,6 +214,9 @@ class ProductDataController extends Controller {
             if ($product_id) {
                 $product = $this->get('admin.helper.product')->find($product_id);
                 $db_product = $pcsv->DBProductToArray($product);                
+                $csv_product = $pcsv->read();                
+                #return new Response(json_encode($pcsv->compare_color_array($db_product['product_color'], $csv_product['product_color'])));
+                
                 return $this->render('LoveThatFitAdminBundle:ProductData:preview_db.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv, 'db_product' => $db_product));
             } else {
                 return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv));
@@ -316,7 +319,8 @@ class ProductDataController extends Controller {
             $product->setClothingType($clothingType);
             $product->setRetailer($retailer);
             $this->get('admin.helper.product')->update($product);
-            
+            $this->updateProductSizesFromArray($product, $data);
+            $this->updateProductColorsFromArray($product, $data); 
             $return_ar['obj'] = $product;             
             $return_ar['msg'] = 'Product successfully added';            
             $return_ar['success'] = true;
@@ -326,13 +330,24 @@ class ProductDataController extends Controller {
     #------------------------------------------------------------
     private function addProductColorsFromArray($product, $data) {
         $em = $this->getDoctrine()->getManager();
-
         foreach ($data['product_color'] as $c) {
             $pc = new ProductColor;
             $pc->setTitle(strtolower($c));
             $pc->setProduct($product);
             $em->persist($pc);
             $em->flush();
+        }
+        return;
+    }
+    private function updateProductColorsFromArray($product, $data) {        
+        foreach ($data['product_color'] as $c) {
+            $pc=$this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($c), $product->getId());            
+            if($pc==null){
+                $pc = new ProductColor;
+                $pc->setProduct($product);                
+            }
+            $pc->setTitle(strtolower($c));            
+            $this->get('admin.helper.productcolor')->save($pc);            
         }
         return;
     }
@@ -348,6 +363,23 @@ class ProductDataController extends Controller {
                 $em->persist($ps);
                 $em->flush();
                 $this->addProductSizeMeasurementFromArray($ps, $value);
+            }
+        }
+        return $product;
+    }
+    private function updateProductSizesFromArray($product, $data) {
+        foreach ($data['sizes'] as $key => $value) {
+            if ($this->sizeMeasurementsAvailable($value)) {
+                
+                $ps=$this->get('admin.helper.productsizes')->findSizeByProductTitle($key, $product->getId());
+                if($ps==null){
+                    $ps = new ProductSize;
+                    $ps->setTitle($key);
+                    $ps->setProduct($product);                
+                }
+                $ps->setBodyType($data['body_type']);                
+               $ps = $this->get('admin.helper.productsizes')->save($ps);
+                $this->updateProductSizeMeasurementFromArray($ps, $value);
             }
         }
         return $product;
@@ -387,6 +419,36 @@ class ProductDataController extends Controller {
             $em->flush();
             }
             
+        }
+        return;
+    }
+     
+    private function updateProductSizeMeasurementFromArray($size, $data) {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($data as $key => $value) {
+            if($key!='key'){
+            #$psm=$this->get('admin.helper.productsizemeasurement')->findByFitPoint($size->getId(), $key);
+            $psm=null;    
+             if($psm==null){
+                 $psm = new ProductSizeMeasurement;
+                 $psm->setTitle($key);
+                 $psm->setProductSize($size);
+             }
+            
+            array_key_exists('garment_measurement_flat',$value)?$psm->setGarmentMeasurementFlat($value['garment_measurement_flat']):null;
+            array_key_exists('stretch_type_percentage',$value)?$psm->setStretchTypePercentage($value['stretch_type_percentage']):null;
+            array_key_exists('garment_measurement_stretch_fit',$value)?$psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']):null;
+            $psm->setMaxBodyMeasurement($value['maximum_body_measurement']);
+            $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
+            $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
+            $psm->setMinBodyMeasurement($value['min_body_measurement']);
+            $psm->setFitModelMeasurement($value['fit_model']);
+            $psm->setMaxCalculated($value['max_calculated']);
+            $psm->setMinCalculated($value['min_calculated']);
+            $psm->setGradeRule($value['grade_rule']);
+            $em->persist($psm);
+            $em->flush();
+            }            
         }
         return;
     }

@@ -48,10 +48,10 @@ class ProductCSVDataUploader {
     private function readProduct($data) {
         switch ($this->row) {
             case 0:
-                $this->product['garment_name'] = $data[1];
-                $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
-                $this->product['brand_name'] = $data[10]; #~~~~~ Brand
-                $this->product['style'] = $data[7]; #~~~~~ Style
+                $this->product['garment_name'] = strtolower($data[1]);
+                $this->product['retailer_name'] = strtolower($data[4]); #~~~~~ Retailer
+                $this->product['brand_name'] = strtolower($data[10]); #~~~~~ Brand
+                $this->product['style'] = strtolower($data[7]); #~~~~~ Style
                 $this->readSize($data);
                 break;
             case 1:
@@ -220,7 +220,7 @@ class ProductCSVDataUploader {
         $i = 1;
         $this->product['product_color'] = array();
         while (strlen($data[$i]) > 0 && $i <= 11) {
-            array_push($this->product['product_color'], $data[$i]);
+            array_push($this->product['product_color'], strtolower($data[$i]));
             $i = $i + 1;
         }
     }
@@ -434,6 +434,27 @@ class ProductCSVDataUploader {
         $this->db_product=$p;
         return $p;
     }  
+    
+    public function csv_added_colors($db,$csv){
+        return array_diff($csv, $db);
+    }
+
+    public function compare_color_array($db,$csv){         
+         $added = array_diff($csv, $db);
+         $deleted = array_diff($db,$csv);
+         $combined=array_unique(array_merge($csv,$db));
+         $final=array();
+         foreach($combined as $c=>$v){
+             if(in_array($v, $added)){
+                 $final[$v]=1;
+             }elseif(in_array($v, $deleted)){
+                 $final[$v]=-1;
+             }else{
+                 $final[$v]=0;
+             }             
+         }
+         return $final;
+    }
     #-----------------------------------------------
     public function getTitle($str){
         switch ($str){
