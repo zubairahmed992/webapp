@@ -427,8 +427,7 @@ class ProductDataController extends Controller {
         $em = $this->getDoctrine()->getManager();
         foreach ($data as $key => $value) {
             if($key!='key'){
-            #$psm=$this->get('admin.helper.productsizemeasurement')->findByFitPoint($size->getId(), $key);
-            $psm=null;    
+            $psm=$size->fitpointMeasurements($key);    
              if($psm==null){
                  $psm = new ProductSizeMeasurement;
                  $psm->setTitle($key);

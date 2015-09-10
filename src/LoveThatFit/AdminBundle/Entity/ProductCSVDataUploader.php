@@ -328,7 +328,10 @@ class ProductCSVDataUploader {
         #$clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($this->product['clothing_type']));
         #$brand=$this->get('admin.helper.brand')->findOneByName($this->product['retailer_name']);
         #$data=$this->product;
-        $product==null?new Product:$product;
+        
+        if(!$product){
+            $product=new Product();    
+        }
         #$product->setBrand($brand);
         #$product->setClothingType($clothingType);
         #$product->setRetailer($retailer);

@@ -316,4 +316,14 @@ class ProductSize
             'index_value'=>  $this->index_value,
         );    
     }
+    
+    
+   public function fitpointMeasurements($fit_point) {
+       foreach($this->product_size_measurements as $psm){
+           if($fit_point==$psm->getTitle()){
+               return $psm;
+           }
+       }
+       return;
+    }
 }
