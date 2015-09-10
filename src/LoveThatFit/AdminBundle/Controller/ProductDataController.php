@@ -433,7 +433,6 @@ class ProductDataController extends Controller {
                  $psm->setTitle($key);
                  $psm->setProductSize($size);
              }
-            
             array_key_exists('garment_measurement_flat',$value)?$psm->setGarmentMeasurementFlat($value['garment_measurement_flat']):null;
             array_key_exists('stretch_type_percentage',$value)?$psm->setStretchTypePercentage($value['stretch_type_percentage']):null;
             array_key_exists('garment_measurement_stretch_fit',$value)?$psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']):null;
@@ -458,7 +457,7 @@ class ProductDataController extends Controller {
                 ->add('products','choice', array( 
                      'choices' => $products,
                     'required' => false,
-                    'empty_value' => 'Select Styling Type',))
+                    'empty_value' => 'Select Product',))
                 ->add('csvfile', 'file')                     
                 ->add('preview', 'checkbox', array(
                   'label'     => 'preview only',
@@ -482,12 +481,9 @@ class ProductDataController extends Controller {
     }
     #-------------------------------------------------------
     public function showCurrentAction($product_id) {
-        
-        $pcsv = new ProductCSVDataUploader(null);                
-        return new Response(json_encode($pcsv->compare_product_detail()));
-        
+        $pcsv = new ProductCSVDataUploader(null);
         $product = $this->get('admin.helper.product')->find($product_id);        
-        return new Response(json_encode($pcsv->DBProductToArray($product)));
+        #return new Response(json_encode($pcsv->DBProductToArray($product)));
         return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->DBProductToArray($product), 'pcsv'=>$pcsv));        
     }
 }
