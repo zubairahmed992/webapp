@@ -11,21 +11,26 @@ Products:
     <option value="{{p.id}}">{{p.id ~'-'~p.name}}</option>
     {% endfor %}
 </select>
-<input type="button" id="btn_hit_product" value='compare'><br>
-
+<span id='db_controls' style="display: none">
+<a href="#" id="a_db_product_preview" >preview</a>&nbsp;|&nbsp;
+<a href="#" id="a_db_product_json" >json</a>
+</span>
     <script>
 $(document).ready(function(){
       $('#ddl_product').change(function (event){
     event.preventDefault(); 
     var product_id = $("#ddl_product").val();                    
-    if(product_id!=0){
-        alert(product_id);
+    if(product_id==0){
+    $("#db_controls").hide();            
+    }else{
+        $("#db_controls").show();        
     }
     return false;      
 });
 
 //---------------------------------------------
-   $('#btn_hit_product').click(function (event){
+   $('#a_db_product_preview').click(function (event){
+        event.preventDefault();
     var product_id = $("#ddl_product").val();                    
     if(product_id!=0){
      var compare_url = "../show/" + product_id;         

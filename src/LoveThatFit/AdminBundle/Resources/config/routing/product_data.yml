@@ -19,14 +19,22 @@ admin_product_data_show_current:
 admin_product_data_csv_index:
     pattern:  /admin/product_data/csv/index
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvIndex }  
-    
-admin_product_data_csv_upload:
-   pattern:  /admin/product_data/csv/upload
-   defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvUpload }  
    
 admin_product_data_csv_read:
     pattern:  /admin/product_data/csv/read
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvRead }
 
+admin_product_data_db_show:
+    pattern:  /admin/product_data/db/show/{product_id}/{json}
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:show }
     
+admin_product_data_csv_show:
+    pattern:  /admin/product_data/db/show/{json}
+
+admin_product_data_compare_show:
+    pattern:  /admin/product_data/compare/show
+    
+admin_product_data_csv_upload:
+   pattern:  /admin/product_data/csv/upload
+   defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvUpload }  
           
