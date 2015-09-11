@@ -52,12 +52,22 @@
             </table>
 
     <table width="700" border="0" >
+       {% if(counter == 0) %}
         <tr><td>
                 <h1>Customer Detail</h1><br>
                 Name:{{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
             </td></tr>
 
             <tr><td>Address:{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
+        {% else %}
+            <tr><td>
+                    <h1>Customer Detail</h1><br>
+                    Name:{{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}
+                </td></tr>
+            <tr><td>Address:{{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
+
+
+        {% endif %}
     </table>
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">
@@ -68,9 +78,9 @@
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
         <script language="javascript" type="text/javascript">
             var clientToken = "{{ token }}";
-            $('#pay').click(function() {
-                $(this).hide();
-            });
+//            $('#pay').click(function() {
+//
+//            });
             braintree.setup(clientToken, "dropin", {
                 container: "payment-form",
                 paymentMethodNonceReceived: function (event, nonce) {

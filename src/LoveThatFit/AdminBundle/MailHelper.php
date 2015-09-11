@@ -80,7 +80,7 @@ class MailHelper {
         
     }
 
-	public function sendOrderConfirmationEmail($user,$order) {
+	public function sendOrderConfirmationEmail($user,$order,$cart) {
 
 	  $from = $this->conf['parameters']['mailer_user'];
 	  //$to = $user->getEmail();
@@ -88,29 +88,29 @@ class MailHelper {
 	  $body = "LoveThatFitAdminBundle::email/order_receipt.html.twig";
 	  $subject = 'SelfieStyler: Thank you for the order. ';
 	  //return 'emailing is currently disabled';
-	   $message = \Swift_Message::newInstance()
-                ->setSubject($subject)
-                ->setFrom($from)
-                ->setTo($to)
-                ->setContentType("text/html")
-                ->setBody(
-                $this->templating->render($body, array('entity' => $user, 'reset_link' => '' , 'order' => $order)));
-        try {
-            $this->mailer->send($message);
-        } catch (\Swift_TransportException $e) {
-            $result = array(
-                false,
-                'There was a problem sending email: ' . $e->getMessage()
-            );
-            return $result;
-        }
 
-        $result = array(
-            true,
-            'email has been sent.'
-        );
-        return $result;
+	  $message = \Swift_Message::newInstance()
+		->setSubject($subject)
+		->setFrom($from)
+		->setTo($to)
+		->setContentType("text/html")
+		->setBody(
+		  $this->templating->render($body, array('entity' => $user, 'reset_link' => '', 'order' => $order, 'cart'=>$cart)));
+	  try {
+		$this->mailer->send($message);
+	  } catch (\Swift_TransportException $e) {
+		$result = array(
+		  false,
+		  'There was a problem sending email: ' . $e->getMessage()
+		);
+		return $result;
+	  }
 
+	  $result = array(
+		true,
+		'email has been sent.'
+	  );
+	  return $result;
 	}
 
 }

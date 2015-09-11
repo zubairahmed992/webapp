@@ -36,15 +36,26 @@ order_save_billing:
     pattern:  /billing/save
     defaults: { _controller: LoveThatFitCartBundle:Order:savebilling}
 
+order_update_address:
+    pattern:  /save_address
+    defaults: { _controller: LoveThatFitCartBundle:Order:saveAddress}
+
 preview_address:
     pattern:  /preview
     defaults: { _controller: LoveThatFitCartBundle:Order:previewaddress}
 
 order_address:
     pattern:  /order/get_address/{address_id}
-    defaults: { _controller: LoveThatFitCartBundle:Order:getaddress}
+    defaults: { _controller: LoveThatFitCartBundle:Order:getAddress}
     requirements:
         _method:  GET
+
+order_change_address:
+    pattern:  /order/change_address/{bill}
+    defaults: { _controller: LoveThatFitCartBundle:Order:changeaddress}
+    requirements:
+        _method:  GET
+
 
 payment_default:
     pattern:  /payment
@@ -67,7 +78,3 @@ cart_update_ajax:
     defaults: { _controller: LoveThatFitCartBundle:Cart:updateQtyAjax}
     requirements:
         _method:  GET
-
-
-
-

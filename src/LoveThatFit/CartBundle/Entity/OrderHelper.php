@@ -1,11 +1,15 @@
 <?php
 
 namespace LoveThatFit\CartBundle\Entity;
+use Doctrine\ORM\Query\Expr\Literal;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
+use Braintree_Configuration;
+use Braintree_ClientToken;
+use Braintree_Transaction;
 
 class OrderHelper {
 
@@ -35,7 +39,7 @@ class OrderHelper {
         $this->class = $class;
         $this->repo = $em->getRepository($class);
     }
-//------------------------------- Add to Cart clicked -----------------------------------------------------///////////
+//------------------------------- When user does payment and add addres from screen 1 -----------------------------------------------------///////////
 	public function saveBillingShipping($decoded,$user) {
 	  	$billing = $decoded["billing"];
 	  	$user_billing_shipping_info = $this->createNew();
@@ -64,7 +68,34 @@ class OrderHelper {
 		return $this->save($user_billing_shipping_info);
 
 	}
+//------------------------------- When user does payment and select addres from screen 2 -----------------------------------------------------///////////
+  public function saveBillingShippingDefaultAddress($billing_address,$shipping_address,$user,$order_amount) {
+	$user_billing_shipping_info = $this->createNew();
+	$user_billing_shipping_info->setUser($user);
+	$user_billing_shipping_info->setBillingFirstName($billing_address["first_name"]);
+	$user_billing_shipping_info->setBillingLastName($billing_address["last_name"]);
+	$user_billing_shipping_info->setBillingAddress1($billing_address["address1"]);
+	$user_billing_shipping_info->setBillingAddress2($billing_address["address2"]);
+	$user_billing_shipping_info->setBillingPhone($billing_address["phone"]);
+	$user_billing_shipping_info->setBillingCity($billing_address["city"]);
+	$user_billing_shipping_info->setBillingPostCode($billing_address["postcode"]);
+	$user_billing_shipping_info->setBillingCountry($billing_address["country"]);
+	$user_billing_shipping_info->setBillingState($billing_address["state"]);
 
+	$user_billing_shipping_info->setShippingFirstName($shipping_address["first_name"]);
+	$user_billing_shipping_info->setShippingLastName($shipping_address["last_name"]);
+	$user_billing_shipping_info->setShippingAddress1($shipping_address["address1"]);
+	$user_billing_shipping_info->setShippingAddress2($shipping_address["address2"]);
+	$user_billing_shipping_info->setShippingPhone($shipping_address["phone"]);
+	$user_billing_shipping_info->setShippingCity($shipping_address["city"]);
+	$user_billing_shipping_info->setShippingPostCode($shipping_address["postcode"]);
+	$user_billing_shipping_info->setShippingCountry($shipping_address["country"]);
+	$user_billing_shipping_info->setShippingState($shipping_address["state"]);
+	$user_billing_shipping_info->setOrderStatus('Pending');
+	$user_billing_shipping_info->setOrderAmount($order_amount);
+	return $this->save($user_billing_shipping_info);
+
+  }
 #------------------------------Find cart by id--------------------------------#
   public function findCartById($id){
 	return $this->repo->find($id);

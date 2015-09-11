@@ -47,6 +47,10 @@ class CartController extends Controller
 		}else{
 		  $session = $this->getRequest()->getSession();
 		  $session->set('order_amount', $order_amount);
+		  $default_billing_address = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,'1');
+		  $default_shipping_address = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,'0');
+		  $session->set('billing_address', $default_billing_address);
+		  $session->set('shipping_address', $default_shipping_address);
 		  return $this->redirect($this->generateUrl('order_default'));
 		}
 	  }else{
@@ -58,13 +62,13 @@ class CartController extends Controller
 	public function showAction(){
 		$user = $this->get('security.context')->getToken()->getUser();
 		$cart=$user->getCart();
-		$get_total = $this->get('cart.helper.cart')->getCart($user);
-		if(count($get_total) == 0)
-		{
-		  $grand_total=0;
-		}else{
-		  $grand_total = array_sum($get_total["total"]);
-		}
+	  $grand_total = $this->get('cart.helper.cart')->getCart($user);
+//		if(count($get_total) == 0)
+//		{
+//		  $grand_total=0;
+//		}else{
+//		  $grand_total = array_sum($get_total["total"]);
+//		}
 	  $getCounterResult = $this->get('cart.helper.cart')->countCartItems($user);
 		return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
 			'cart' => $cart,
@@ -90,8 +94,7 @@ class CartController extends Controller
   public function updateQtyAjaxAction($id,$qty) {
 	$this->get('cart.helper.cart')->updateCartAjax($id,$qty);
 	$user = $this->get('security.context')->getToken()->getUser();
-	$get_total = $this->get('cart.helper.cart')->getCart($user);
-	$grand_total = array_sum($get_total["total"]);
+	$grand_total = $this->get('cart.helper.cart')->getCart($user);
 	return new Response($grand_total);
   }
 }

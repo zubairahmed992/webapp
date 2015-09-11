@@ -122,7 +122,7 @@
                         <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">Qty</font></td>
                     </tr>
 
-                    {% for c in order.userOrderDetail %}
+                    {% for c in cart %}
                         <tr>
                             <td width="450">
                                 <table border="0" cellspacing="0" cellpadding="0" width="450">
@@ -132,7 +132,7 @@
                                         <td>
                                             <table cellpadding="0" cellspacing="0">
                                                 <tr>
-                                                    <td style="border:1px solid #ccc; width:82px;"><img width="72" src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                                                    <td style="border:1px solid #ccc; width:82px;"><img width="72" src="http://selfiestyler.com:81{{ asset(c.productItem.productColor.webPath) }}"></td>
                                                 </tr>
                                             </table>
                                         </td>

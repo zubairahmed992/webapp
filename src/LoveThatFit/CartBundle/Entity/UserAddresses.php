@@ -4,6 +4,7 @@ namespace LoveThatFit\CartBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * UserAddresses
  *
@@ -82,9 +83,14 @@ class UserAddresses
     private $state;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="postcode", type="string", length=255)
+     * @var integer
+	 * @ORM\Column(name="postcode", type="integer", length=20)
+	 * @Assert\Range(
+	 * min = "4",
+	 * max = "6",
+	 * minMessage = "Postal Code must contain at least 4 characters",
+	 * maxMessage = "Postal Code cannot be longer than than {{ limit }} characters long",
+     * )
      */
     private $postcode;
 
@@ -96,10 +102,16 @@ class UserAddresses
     private $country;
 
 	/**
-	 * @var boolean $is_billing
-	 * @ORM\Column(name="is_billing", type="boolean", nullable=false , options={"default":"0"})
+	 * @var boolean $billing_default
+	 * @ORM\Column(name="billing_default", type="boolean", nullable=true , options={"default":"0"})
 	 */
-	private $is_billing;
+	private $billing_default;
+
+	/**
+	 * @var boolean $shipping_default
+	 * @ORM\Column(name="shipping_default", type="boolean", nullable=true , options={"default":"0"})
+	 */
+	private $shipping_default;
 
 
     /**
@@ -276,7 +288,7 @@ class UserAddresses
     /**
      * Set postcode
      *
-     * @param string $postcode
+     * @param integer $postcode
      * @return UserAddresses
      */
     public function setPostcode($postcode)
@@ -318,28 +330,51 @@ class UserAddresses
     {
         return $this->country;
     }
+
 	/**
-	 * Set is_billing
+	 * Set billing_default
 	 *
-	 * @param string $is_billing
+	 * @param string $billing_default
 	 * @return UserAddresses
 	 */
-	public function setIsBilling($is_billing)
+	public function setBillingDefault($billing_default)
 	{
-	  $this->is_billing = $is_billing;
+	  $this->billing_default = $billing_default;
 	}
 
 	/**
-	 * Get is_billing
+	 * Get billing_default
 	 *
 	 * @return string
 	 */
-	public function getIsBilling()
+	public function getBillingDefault()
 	{
-	  return (bool)$this->is_billing;
+	  return (bool)$this->billing_default;
+	}
+
+
+	/**
+	 * Set shipping_default
+	 *
+	 * @param string $shipping_default
+	 * @return UserAddresses
+	 */
+	public function setShippingDefault($shipping_default)
+	{
+	  $this->shipping_default = $shipping_default;
 	}
 
 	/**
+	 * Get shipping_default
+	 *
+	 * @return string
+	 */
+	public function getShippingDefault()
+	{
+	  return (bool)$this->shipping_default;
+	}
+
+  /**
 	 * Set user
 	 *
 	 * @param \LoveThatFit\UserBundle\Entity\User $user
@@ -377,6 +412,8 @@ class UserAddresses
 	  $obj['postcode'] = $this->getPostcode();
 	  $obj['country'] = $this->getCountry();
 	  $obj['user'] = $this->getUser();
+	  $obj['billing_default'] = $this->getBillingDefault();
+	  $obj['shipping_default'] = $this->getShippingDefault();
 	  return $obj;
 
 	}

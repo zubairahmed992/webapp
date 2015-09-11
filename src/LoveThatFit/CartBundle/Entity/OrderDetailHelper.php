@@ -36,8 +36,8 @@ class OrderDetailHelper {
         $this->repo = $em->getRepository($class);
     }
 ///------------------------------- Add to Cart clicked -----------------------------------------------------///////////
-  public function saveOrderDetail($user_cart,$order_id) {
-	$user_order=$this->container->get('cart.helper.order')->find($order_id);
+  public function saveOrderDetail($user_cart,$user_order) {
+	//$user_order=$this->container->get('cart.helper.order')->find($order_id);
 	for($i=0;$i<count($user_cart["price"]);$i++){
 	  $product_item=$this->container->get('admin.helper.productitem')->find($user_cart["item_id"][$i]);
 	  $item_description = $product_item->getProduct()->getBrand()->getName()." ".$product_item->getProduct()->getName()." ".$product_item->getproductColor()->getTitle()." ".$product_item->getproductSize()->getTitle();

@@ -39,3 +39,9 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\CartBundle\Entity\UserAddresses
             container: "@service_container"
+
+     cart.helper.payment:
+        class: LoveThatFit\CartBundle\Entity\PaymentHelper
+        arguments:
+            container: "@service_container"
+

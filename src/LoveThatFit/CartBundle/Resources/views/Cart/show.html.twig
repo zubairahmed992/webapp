@@ -51,6 +51,7 @@
                 $('#quantity_update_'+cart_id).hide();
                 $('#subtotal_'+cart_id).html(qty*price);
                 $('#grand_total').html(data);
+                $('#order_amount').val(data);
             },
             failure: function(errMsg) {
                 alert(errMsg);
@@ -132,7 +133,7 @@
                    
                     
                     <form action="{{ path('cart_basket_update')}}" method="post">
-                        <input type="hidden" name="order_amount" value="{{ grand_total }}">
+                        <input type="hidden" id="order_amount" name="order_amount" value="{{ grand_total }}">
                     
                     
                     <input style="margin-left:0px" class="checkout_btn" type="submit" name="checkout" value="Proceed to Checkout">

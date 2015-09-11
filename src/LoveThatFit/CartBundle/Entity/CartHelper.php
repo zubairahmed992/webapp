@@ -111,7 +111,13 @@ class CartHelper {
 	  	$cart_array['price'][]=$ci->getProductItem()->getPrice();
 	  	$cart_array['total'][]=$ci->getProductItem()->getPrice()*$ci->getQty();
 	}
-	return $cart_array;
+	if(count($cart_array) == 0)
+	{
+	  $grand_total=0;
+	}else{
+	  $grand_total = array_sum($cart_array["total"]);
+	}
+	return $grand_total;
   }
 #------------------------------Get Formatted Cart Data by User--------------------------------#
   public function getFormattedCart($user){

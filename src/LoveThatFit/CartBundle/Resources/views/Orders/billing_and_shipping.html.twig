@@ -32,42 +32,42 @@
          }
 
      }
-     function getUserDetail(address,is_billing){
-         $.ajax({
-             type: "GET",
-             url: "order/get_address/" + address[address.selectedIndex].value,
-             success: function(data){
-                 var u_obj = JSON.parse(data);
-                 if(is_billing == 1){
-                 $('#billing_billing_first_name').val(u_obj.first_name);
-                 $('#billing_billing_last_name').val(u_obj.last_name);
-                 $('#billing_billing_address1').val(u_obj.address1);
-                 $('#billing_billing_address2').val(u_obj.address2);
-                 $('#billing_billing_phone').val(u_obj.phone);
-                 $('#billing_billing_city').val(u_obj.city);
-                 $('#billing_billing_postcode').val(u_obj.postcode);
-                 $('#billing_billing_country').val(u_obj.country);
-                 $('#billing_billing_state').val(u_obj.state);
-                 $('#bill_info').val('0');
-                 //replace_all_user_data(data);
-                 }else{
-                 $('#billing_shipping_first_name').val(u_obj.first_name);
-                 $('#billing_shipping_last_name').val(u_obj.last_name);
-                 $('#billing_shipping_address1').val(u_obj.address1);
-                 $('#billing_shipping_address2').val(u_obj.address2);
-                 $('#billing_shipping_phone').val(u_obj.phone);
-                 $('#billing_shipping_city').val(u_obj.city);
-                 $('#billing_shipping_postcode').val(u_obj.postcode);
-                 $('#billing_shipping_country').val(u_obj.country);
-                 $('#billing_shipping_state').val(u_obj.state);
-                 $('#ship_info').val('0');
-                 }
-             },
-             failure: function(errMsg) {
-                 alert(errMsg);
-             }
-         });
-     }
+//     function getUserDetail(address,is_billing){
+//         $.ajax({
+//             type: "GET",
+//             url: "order/get_address/" + address[address.selectedIndex].value,
+//             success: function(data){
+//                 var u_obj = JSON.parse(data);
+//                 if(is_billing == 1){
+//                 $('#billing_billing_first_name').val(u_obj.first_name);
+//                 $('#billing_billing_last_name').val(u_obj.last_name);
+//                 $('#billing_billing_address1').val(u_obj.address1);
+//                 $('#billing_billing_address2').val(u_obj.address2);
+//                 $('#billing_billing_phone').val(u_obj.phone);
+//                 $('#billing_billing_city').val(u_obj.city);
+//                 $('#billing_billing_postcode').val(u_obj.postcode);
+//                 $('#billing_billing_country').val(u_obj.country);
+//                 $('#billing_billing_state').val(u_obj.state);
+//                 $('#bill_info').val('0');
+//                 //replace_all_user_data(data);
+//                 }else{
+//                 $('#billing_shipping_first_name').val(u_obj.first_name);
+//                 $('#billing_shipping_last_name').val(u_obj.last_name);
+//                 $('#billing_shipping_address1').val(u_obj.address1);
+//                 $('#billing_shipping_address2').val(u_obj.address2);
+//                 $('#billing_shipping_phone').val(u_obj.phone);
+//                 $('#billing_shipping_city').val(u_obj.city);
+//                 $('#billing_shipping_postcode').val(u_obj.postcode);
+//                 $('#billing_shipping_country').val(u_obj.country);
+//                 $('#billing_shipping_state').val(u_obj.state);
+//                 $('#ship_info').val('0');
+//                 }
+//             },
+//             failure: function(errMsg) {
+//                 alert(errMsg);
+//             }
+//         });
+//     }
 
 
     </script>
@@ -119,12 +119,12 @@
                                     <td> 
                                         
                                         
-                                      <select name="addresses" class="address_focus" id="addresses" style="width:250px ;" onchange="getUserDetail(this,'1');">
-                                    <option value="">Select From Saved Address</option>
-                                    {% for c in user_addresses %}
-                                    <option value="{{ c.id }}">{{ c.address1 }}</option>
-                                    {% endfor %}
-                                    </select>
+                                      {#<select name="addresses" class="address_focus" id="addresses" style="width:250px ;" onchange="getUserDetail(this,'1');">#}
+                                    {#<option value="">Select From Saved Address</option>#}
+                                    {#{% for c in user_addresses %}#}
+                                    {#<option value="{{ c.id }}">{{ c.address1 }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
                                     </td>                       
                                 
                                 
@@ -216,12 +216,12 @@
                                 <tr>
                                     
                                     <td>
-                                        <select name="addresses2" class="address_focus" id="addresses2" style="width:250px ;" onchange="getUserDetail(this,'0');">
-                                            <option value="">Select From Saved Address</option>
-                                            {% for c in shipping_addresses %}
-                                                <option value="{{ c.id }}">{{ c.address1 }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        {#<select name="addresses2" class="address_focus" id="addresses2" style="width:250px ;" onchange="getUserDetail(this,'0');">#}
+                                            {#<option value="">Select From Saved Address</option>#}
+                                            {#{% for c in shipping_addresses %}#}
+                                                {#<option value="{{ c.id }}">{{ c.address1 }}</option>#}
+                                            {#{% endfor %}#}
+                                        {#</select>#}
                                     </td>
                                     
                                     <td>
