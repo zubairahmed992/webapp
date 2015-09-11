@@ -461,8 +461,8 @@ class WebServiceHelper {
                 'color_id' => $pc->getId(),
                 'product_id' => $product->getId(),
                 'title' => $pc->getTitle(),
-                'image' => $pc->getImage(),
-                'pattern' => $pc->getPattern(),
+                'image' => $pc->getImage()==null?'no-data':$pc->getImage(),
+                'pattern' => $pc->getPattern()==null?'no-data':$pc->getPattern(),
                 'recommended' => $default_color_id == $pc->getId() ? true : false,
             );
         }
@@ -479,8 +479,8 @@ class WebServiceHelper {
                 'product_id' => $product->getId(),
                 'color_id' => $pc_id,
                 'size_id' => $ps_id,
-                'sku' => $pi->getSku() == null ? '0' : $pi->getSku(),
-                'image' => $pi->getImage(),
+                'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
+                'image' => $pi->getImage()==null?'no-data':$pi->getImage(),
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
             );
         }
