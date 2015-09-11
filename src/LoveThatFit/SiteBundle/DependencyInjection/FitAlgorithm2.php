@@ -773,6 +773,8 @@ private function calculate_fitindex($fp_specs){
                 }else{
                     $sizes[$key]['recommended'] = false;
                 }
+            }else{
+                    $sizes[$key]['recommended'] = false;
             }
             if (array_key_exists('fit_points', $sizes[$key])) {
                 $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
