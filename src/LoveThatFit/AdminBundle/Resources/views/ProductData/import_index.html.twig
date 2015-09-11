@@ -3,18 +3,27 @@
 {% block body %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-
-Products:
-<select id='ddl_product'>
-    <option value="0">Select</option>
+<div>
+    Products:
+    <select id='ddl_product'>
+        <option value="0">Select</option>
     {% for p in products.products %}
-    <option value="{{p.id}}">{{p.id ~'-'~p.name}}</option>
+        <option value="{{p.id}}">{{p.id ~'-'~p.name}}</option>
     {% endfor %}
-</select>
-<span id='db_controls' style="display: none">
-<a href="#" id="a_db_product_preview" >preview</a>&nbsp;|&nbsp;
-<a href="#" id="a_db_product_json" >json</a>
-</span>
+    </select>
+    <span id='db_controls' style="display: none">
+        <a href="#" id="a_db_product_preview" >preview</a>&nbsp;|&nbsp;
+        <a href="#" id="a_db_product_json" >json</a>
+    </span>
+</div>
+<div>
+    upload CSV file:<br>
+    <input type="file" id="csv_file">
+    <span id='csv_controls' style="display: none">
+        <a href="#" id="a_csv_product_preview" >preview</a>&nbsp;|&nbsp;
+        <a href="#" id="a_csv_product_json" >json</a>
+    </span>
+</div>
     <script>
 $(document).ready(function(){
       $('#ddl_product').change(function (event){
@@ -32,17 +41,82 @@ $(document).ready(function(){
    $('#a_db_product_preview').click(function (event){
         event.preventDefault();
     var product_id = $("#ddl_product").val();                    
-    if(product_id!=0){
-     var compare_url = "../show/" + product_id;         
-     $.ajax({
-        url: compare_url
-        ,success: function(response) {           
-           window.open(compare_url);
-        }
-     })   
+    if(product_id!=0){        
+        preview_data("../db_show/" + product_id);
     }
     return false;
     });
+
+//---------------------------------------------
+   $('#a_db_product_json').click(function (event){
+        event.preventDefault();
+    var product_id = $("#ddl_product").val();                    
+    if(product_id!=0){                 
+        preview_data("../db_show/" + product_id + '/json');
+    }
+    return false;
+    });
+//---------------------------------------------
+   $('#a_csv_product_json').click(function (event){
+        event.preventDefault();    
+        upload_csv(true);
+        return false;
+    });
+    $('#a_csv_product_preview').click(function (event){
+        event.preventDefault();    
+        upload_csv(false);
+        return false;
+    });
+    
+//---------------------------------------------
+$("#csv_file").change(function() {
+        if($("#csv_file").val()==''){
+            $("#csv_controls").hide();            
+        }else{
+            $("#csv_controls").show();        
+        }
+    });
+//--------------------------------------------    
+ function preview_data(compare_url){
+    $.ajax({
+           url: compare_url
+           ,success: function(response) {           
+              window.open(compare_url);
+           }
+        });   
+        return false;
+}   
+//-----------------------------------------------------------        
+function upload_csv(json){            
+        
+        input_file = document.getElementById('csv_file');
+        data= new FormData();
+        data.append("csv_file", input_file.files[0]);
+        data.append("json",json);
+        
+        $.ajax({
+                 type: "POST",
+                 url: "../csv_show",
+                 data: data,  
+                 processData: false,
+                 contentType: false,
+                 enctype: 'multipart/form-data',
+                 success: function(data){
+                    var win=window.open('about:blank');
+                    with(win.document)
+                    {
+                      open();
+                      str = JSON.stringify(data, null, 2);
+                      str = str.split("\\").join("");
+                      write(str);
+                      close();
+                    }                
+                  },
+                 failure: function(errMsg) {
+                     alert(errMsg);
+                 }
+              });    
+}
 
 });  
 </script>

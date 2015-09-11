@@ -214,7 +214,7 @@ class ProductDataController extends Controller {
             if ($product_id) {
                 $product = $this->get('admin.helper.product')->find($product_id);
                 $db_product = $pcsv->DBProductToArray($product);                
-                $csv_product = $pcsv->read();                
+                #$csv_product = $pcsv->read();                
                 #return new Response(json_encode($pcsv->compare_color_array($db_product['product_color'], $csv_product['product_color'])));
                 
                 return $this->render('LoveThatFitAdminBundle:ProductData:preview_db.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv, 'db_product' => $db_product));
@@ -480,10 +480,24 @@ class ProductDataController extends Controller {
         );
     }
     #-------------------------------------------------------
-    public function showCurrentAction($product_id) {
+    public function dbProductShowAction($product_id, $json=false) {
         $pcsv = new ProductCSVDataUploader(null);
         $product = $this->get('admin.helper.product')->find($product_id);        
-        #return new Response(json_encode($pcsv->DBProductToArray($product)));
-        return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->DBProductToArray($product), 'pcsv'=>$pcsv));        
+        if($json){
+            return new Response(json_encode($pcsv->DBProductToArray($product)));    
+        }else{
+            return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->DBProductToArray($product), 'pcsv'=>$pcsv));        
+        }
+    }
+    #-------------------------------------------------------
+    public function csvProductShowAction() {
+        
+        $decoded = $this->getRequest()->request->all();
+        $pcsv = new ProductCSVDataUploader($_FILES["csv_file"]["tmp_name"]);
+        if($decoded['json']=='true'){                    
+            return new Response(json_encode($pcsv->read()));
+        }else{
+            return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv));        
+        }
     }
 }
