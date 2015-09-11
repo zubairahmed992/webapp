@@ -90,28 +90,38 @@ function chk_dress_applied_loaded(prod_type_applied){
 
 
     </script> 
+    
+   
 
     <div class="prod_row_{{product.id}}" id="item">
      
     
-                 <div class="prod_handle" onclick="update_size_color_blk(this)">
-                     <div class="handle_inner" onclick="set_select_color('{{product.clothingType.target|lower}}');">  
-                   <div class="lft_col">
-                       
-                       <div class="small_thumb_{{productItem.id}}">
-                      <!-- <div class="small_thumb">-->
-   <img  onclick="" class="small_thumb_img prod_{{product.clothingType.target|lower}} ui-draggable" src="{{asset(productColor.ImagePaths['web'])}}" >    
-   <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
-                    </div>
-                    
-                   
-                    
-                    </div>
-                     <div class="rgt_col">
-                      <h3>{{product.Name}}</h3>
-                     </div>
-                     </div>
+                 <div class="prod_handle" onclick="update_size_color_blk(this)">                    
+                                          
                      
+                     <div class="handle_inner" onclick="set_select_color('{{product.clothingType.target|lower}}');">  
+                   
+                       
+                             
+                            <div class="product_title">{{product.Name}}</div>
+                            <div class="product_price_new"><a href="#" class="add-to-cart" id="{{ productItem.id }}" title="{{productItem.id}}"><span>$10</span></a></div>
+                            
+                            <div style="clear:both;"></div>
+                            <div class="sepr"></div>
+                             <div style="clear:both;"></div>
+                    
+                    
+                     </div>
+                            
+                            <div class="but_remove_prod" onclick="remove_prod_details(this)">X</div>
+                       
+                  
+                  
+                                      <!--   <form method="post" action="{{ path('cart_basket')}}">   
+                                            <input type="hidden" name="item_id" value="{{ productItem.id }}"> 
+                                            <span class="cart_prod"><input type="image" title="Add item to the cart"  src="{{ asset('bundles/lovethatfit/site/images/shopping_bag_icon.png') }}" style="border:0px; background:none;"></span>
+
+                                        </form>-->
                  </div>
                     
                <div class="prod_applied_detail">
@@ -180,44 +190,20 @@ function chk_dress_applied_loaded(prod_type_applied){
      </div>     
      </div>        
                                 
-<div class="but_remove_prod" onclick="remove_prod_details(this)"><img onclick="" src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
-                      <div class="lft_col">
-                          <div class="prod_price">
-          <a  onclick="get_compare_list('{{productItem.id}}')" href="javascript:void(0)" id="comapre_product">Compare</a>
-          <span id="comapre_url{{productItem.id}}" style="display:none; ">{{path('compare_product_add',{'item_id':productItem.id})}}</span> 
-                          </div>                                   
-                                    <div class="action_icons">
-                                        <span class="fav_prod">
-                                            <span style="display:none;"> <a href="{{path('compare_product_add',{'item_id':productItem.id})}}">Comp</a></span>
-                                            {% if productItem and productItem%}
-                            {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-  <div class="like_icon1_{{productItem.id}}" style="">
-<a href="javascript:void(0);" onclick="lovedItems({{productItem.id}})" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
-<span id="ajax_product_loved_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span>  
-</div>  
 
-                            {%else%}
-<div id="like_icon_{{productItem.id}}" >
-<a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like" >
-<img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
-<span id="ajax_product_love_url{{productItem.id}}" style="display:none;" on>{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
-</div>
-                            {%endif%}
-           <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
-           <a class="fitting_alerts_feeback_{{product.id}}" style="display: none;">{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}</a>
-              {% endif %}
-                                            
-                                            
-                                           </span>
-              <!--  <a href="#" class="add-to-cart" id="{{ productItem.id }}" title="{{productItem.id}}">bac</a>-->
-                  
-                  
-                                       <form method="post" action="{{ path('cart_basket')}}">   
-                                            <input type="hidden" name="item_id" value="{{ productItem.id }}"> 
-                                            <span class="cart_prod"><input type="image" title="Add item to the cart"  src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}" style="border:0px"></span>
+                   
 
-                                        </form>
-                                    </div>
+<div class="lft_col">
+                          
+                          
+                          <div class="small_thumb_{{productItem.id}}">
+                      <!-- <div class="small_thumb">-->
+   <img  onclick="" class="small_thumb_img prod_{{product.clothingType.target|lower}} ui-draggable prod_thumb" src="{{asset(productColor.ImagePaths['web'])}}" >    
+   <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
+                    </div>
+                          
+                          
+                        
                                 </div>
                                 <div class="rgt_col">
                                     
@@ -228,6 +214,52 @@ function chk_dress_applied_loaded(prod_type_applied){
                                         <span class="bolder">Tip:</span> Try Size 4.
                                     </div>-->
                                 </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                        
+                                        <div class="interact_wrap" id="interact_wrap_{{product.id}}">
+                                            
+                                           <div class="prod_price">
+          <a  onclick="get_compare_list('{{productItem.id}}')" href="javascript:void(0)" id="comapre_product">
+                  <img src="{{asset('bundles/lovethatfit/site/images/compare_icon_new.png')}}">
+          </a>
+          <span id="comapre_url{{productItem.id}}" style="display:none; ">{{path('compare_product_add',{'item_id':productItem.id})}}</span> 
+                          </div>                                   
+                                    <div class="action_icons">
+                                        
+                                        <span class="fav_prod">
+                                            <span style="display:none;"> <a href="{{path('compare_product_add',{'item_id':productItem.id})}}">Comp</a></span>
+                                            {% if productItem and productItem%}
+                            {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
+  <div class="like_icon1_{{productItem.id}}" style="">
+<a href="javascript:void(0);" onclick="lovedItems({{productItem.id}})" title="Loved/Liked" class="liked_icon_clicked_new">
+    <img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
+<span id="ajax_product_loved_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span>  
+</div>  
+
+                            {%else%}
+<div id="like_icon_{{productItem.id}}" >
+<a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like" class="liked_icon_new">
+</a>
+<span id="ajax_product_love_url{{productItem.id}}" style="display:none;" on>{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
+</div>
+                            {%endif%}
+           <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
+           <a class="fitting_alerts_feeback_{{product.id}}" style="display: none;">{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}</a>
+              {% endif %}
+                                            
+                                            
+                                           </span>
+                  
+                  <div class="wishlist_icon" >
+            
+                  </div>
+                                    </div>   
+                                           
+                                        </div> 
+                  <div id="{{product.id}}" class="handle_inner_new"></div>    
+                                       
+                                        
                             </div>
                            <!--/.prod_row--></div>
     

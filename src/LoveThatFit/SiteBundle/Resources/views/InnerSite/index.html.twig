@@ -715,8 +715,8 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     }
                     if(curr_prod_type == "dress"){
                      //alert("Dress");
-                        if($("#prod_accordion").find("#prod_type_dress_hlder")){
-                           $("#prod_accordion").find("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
+                        if($("#prod_accordion").find("#prod_type_dress_hlder")){                           
+                           $("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
                            $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                            $("#remove_dress_prod_id").attr("value",curr_prod_item_id);
                            //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
@@ -819,6 +819,13 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     
                     $(main_container_hldr + ' .prod_handle').html($(new_prod_details).find('.prod_handle').html());
                     $(main_container_hldr + ' .prod_applied_detail').html($(new_prod_details).find('.prod_applied_detail').html());
+                    $('.prod_applied_detail > .rgt_col').hide();
+                    $('.fitting_alerts_ul').hide();
+                   $('.prod_applied_detail div:nth-child(6)').removeClass('handle_inner_new');
+                    $('.prod_applied_detail div:nth-child(6)').addClass('handle_inner_open');
+                    
+                     
+                    $('.interact_wrap').css({'position':'absolute','left':'80px','top':'12px'}); 
                     $(main_select_color).html($(new_prod_details).find('.hldr_of_size_color').html());
                     $(main_container_hldr).fadeIn(300, function(){$( "#prod_accordion" ).accordion("refresh");});
                     $("#prod_accordion" ).accordion("refresh");
@@ -1285,15 +1292,18 @@ var scroll_heighting = 506;
     });
 });
 
-function accordianCall(){   
-    $("#prod_accordion").accordion({
-      collapsible: true,
-      heightStyle: "content",
-      header: "> div > div.prod_handle"
-    });
-  }
+function accordian(){   
+$("#prod_accordion").accordion({
+ collapsible: false,
+ heightStyle: "content",
+ header: "> div > div.prod_handle"
+});
+ $('#prod_accordion .ui-accordion-content').show();
+ }
+ 
+
   
-accordianCall();
+accordian();
 
 function updateSizeColorCombo(product_id){
     new_product_control(false,product_id,7,this.value) 

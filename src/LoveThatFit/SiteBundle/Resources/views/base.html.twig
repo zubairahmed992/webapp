@@ -38,13 +38,64 @@
                       <script type="text/javascript"> 
 $(document).ready(function($) {
     
+   
+    
     
     
    
+    
+   $( ".handle_inner_new" ).live('click', function(){        
+   var uid = jQuery(this).attr("id");    
+   $('#'+uid+".handle_inner_new").css({'position':'absolute','right':'-2px','bottom':'0px'});
+   
+        $("#fitting_alerts_ul_"+uid).fadeOut(200);
+             
+        $( "#fitting_alerts_ul_"+uid).slideUp( 200, function() {
+    
+               $('.prod_applied_detail > .rgt_col').show();
+             $('#interact_wrap_'+uid).fadeOut(100);
+              $('#interact_wrap_'+uid).fadeIn(300);
+             $('#interact_wrap_'+uid).css({'position':'absolute','left':'80px','top':'12px'});             
+             $( '#'+uid+".handle_inner_new" ).switchClass( "handle_inner_new", "handle_inner_open"); 
+             $( '#'+uid+".handle_inner_new" ).addClass( "handle_inner_open");
+            
+       
+       
+  });
+});
+
+$( ".handle_inner_open" ).live('click', function(){        
+   var uid = jQuery(this).attr("id");    
+   $('#'+uid+".handle_inner_open").css({'position':'absolute','right':'-2px','bottom':'0px'});
+  
+        $('.rgt_col').show(); 
+        $('#interact_wrap_'+uid).fadeOut(100);
+              $('#interact_wrap_'+uid).fadeIn(300);
+             $('#interact_wrap_'+uid).css({'position':'','left':'0px','top':'0px'});
+        
+        $("#fitting_alerts_ul_"+uid).fadeIn(600);
+        $( "#fitting_alerts_ul_"+uid).slideDown( 200, function() {
+    
+                
+           
+             
+             
+             
+             
+             $( ".prod_applied_detail").append($("<span class='abc'></span>"));
+             $( '#'+uid+".handle_inner_open" ).switchClass( "handle_inner_open", "handle_inner_new"); 
+             $( '#'+uid+".handle_inner_open" ).addClass( "handle_inner_new");
+            
+       
+       
+  });
+});
+
+
 
   
        
-   /*
+  
 
     
    
@@ -117,7 +168,6 @@ $(document).ready(function($) {
   
     
    
-    */
     
     
     
