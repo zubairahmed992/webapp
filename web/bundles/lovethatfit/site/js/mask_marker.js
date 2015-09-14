@@ -53,21 +53,41 @@ if(dv_type == "iphone5"){
     adj_btm_fix = 17.333;
     
     diff_dv = 31 + adj_btm_fix;
+    dv_iPhone6 = false;
     
+    def_mask_x_pos = -100;
     
 }
 if(dv_type == "iphone6"){
-    fixed_px_inch_ratio = 8.094;
-    scr_width = 187.5;
-    but_x_adj = 349;
-    scr_height = 667;
-    
-    // adjusting 66.666% value of top empty area -----  /3*2 = 17.333
-    adj_btm_fix = 30.50;
-    
-    diff_dv = 38 + adj_btm_fix;
-    
-    
+          //      fixed_px_inch_ratio = 8.094;
+                dv_iPhone6 = true;
+                scr_width = 187.5;
+                but_x_adj = 349;
+                scr_height = 667;
+
+                // adjusting 66.666% value of top empty area -----  /3*2 = 17.333
+
+                //adj_btm_fix = 30.50;
+                adj_btm_fix = 0;
+
+                diff_dv = 38 + adj_btm_fix;
+  
+  
+          
+            fixed_px_inch_ratio = 6.891;
+            
+            def_mask_x_pos = -60;
+            
+            
+       //     scr_width = 160;
+        //    but_x_adj = 294;
+        //    scr_height = 568;
+
+            // adjusting 66.666% value of top empty area ----- 26/3*2 = 17.333
+      //      adj_btm_fix = 17.333;
+
+       //     diff_dv = 31 + adj_btm_fix;
+          
 }
 //////// From JS file
 
@@ -465,7 +485,10 @@ if(chk_no_img_path == true){
 
 
     mid_area_path.scale(inc_ratio, p_user_height);
-    mid_area_path.scale(inc_ratio, 1.01);
+    
+    //One percent adjustment
+    //mid_area_path.scale(inc_ratio, 1.01);
+    
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
     
     mid_area_path.segments[41].point.y += 22;
@@ -477,8 +500,10 @@ if(chk_no_img_path == true){
     mid_area_path.segments[30].handleIn = handleIn_30;
 
 
-    
-
+if(dv_iPhone6){    
+//    alert("its 6....");
+    mid_area_path.scale(1.174,1.174);
+}
 
 
 
@@ -490,6 +515,8 @@ $("#hip_height").attr("value", mid_area_path.segments[21].point.y);
 
     $("#mask_x").attr("value", mid_area_path.position.x);
     $("#mask_y").attr("value", mid_area_path.position.y);
+    
+    
     
     
    }
@@ -601,7 +628,9 @@ path_com.opacity = 0.85;
         
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         
-        d_adj_path.position = new Point(-100,scr_height - diff_dv);
+        d_adj_path.position = new Point(def_mask_x_pos,scr_height - diff_dv);
+        
+        //alert(d_adj_path.position + "5454");
         
         //default_shape.visible = false;
         
@@ -633,7 +662,7 @@ path_com.opacity = 0.85;
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         d_adj_path.opacity = 0.5;
         
-        d_adj_path.position.x = -100;
+        d_adj_path.position.x = def_mask_x_pos;
         d_adj_path.visible = false;
         
     }

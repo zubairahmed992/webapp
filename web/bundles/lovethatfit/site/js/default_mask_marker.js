@@ -32,11 +32,14 @@ if(liquid_mask.device_type == "iphone5"){
     adj_btm_fix = 13 + 3.83;
 }
 if(liquid_mask.device_type == "iphone6"){
-    fixed_px_inch_ratio = 8.094;
+    //fixed_px_inch_ratio = 8.094;
+    
+    fixed_px_inch_ratio = 6.891;
     
     // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
     // 4.49 is 1% value
-    adj_btm_fix = 15.333 + 4.49;
+    //adj_btm_fix = 15.333 + 4.49;
+    adj_btm_fix = 0;
 }
 //////// From JS file
 chk_no_img_path = true;
@@ -246,6 +249,8 @@ if(chk_no_img_path == true){
     mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
     
+    
+    
 }
     
     
@@ -268,6 +273,12 @@ if(chk_no_img_path == true){
         mid_area_path.segments[30].handleIn = handleIn_30;
     }
     if (liquid_mask.device_type == "iphone6"){
+      
+      //
+      //,New fix
+      mid_area_path.scale(1.174,1.174);
+      
+      
       //mid_area_path.scale(0.9, 0.9);
       mid_area_path.scale(0.748, 0.748);
       //One percent adjustment
