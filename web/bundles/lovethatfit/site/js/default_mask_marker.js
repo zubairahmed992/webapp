@@ -29,7 +29,7 @@ if(liquid_mask.device_type == "iphone5"){
     
     // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
     // 3.83 is 1% value
-    adj_btm_fix = 13 + 3.83;
+    adj_btm_fix = (13 + 3.83)-3;
 }
 if(liquid_mask.device_type == "iphone6"){
     //fixed_px_inch_ratio = 8.094;
