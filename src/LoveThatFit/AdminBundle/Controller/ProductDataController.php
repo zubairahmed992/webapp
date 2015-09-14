@@ -500,4 +500,10 @@ class ProductDataController extends Controller {
             return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read(), 'pcsv'=>$pcsv));        
         }
     }
+    #-------------------------------------------------------
+    public function fooAction() {
+        $decoded = $this->getRequest()->request->all();        
+        return new Response(json_encode($decoded));
+        
+    }
 }

@@ -12,23 +12,39 @@
     {% endfor %}
     </select>
     <span id='db_controls' style="display: none">
-        <a href="#" id="a_db_product_preview" >preview</a>&nbsp;|&nbsp;
-        <a href="#" id="a_db_product_json" >json</a>
+        <a href="#" id="a_db_product_preview" >Preview</a>&nbsp;|&nbsp;
+        <a href="#" id="a_db_product_json" >JSON</a>
     </span>
 </div>
 <div>
     upload CSV file:<br>
     <input type="file" id="csv_file">
     <span id='csv_controls' style="display: none">
-        <a href="#" id="a_csv_product_preview" >preview</a>&nbsp;|&nbsp;
-        <a href="#" id="a_csv_product_json" >json</a>
+        <a href="#" id="a_csv_product_preview" >Preview</a>&nbsp;|&nbsp;
+        <a href="#" id="a_csv_product_json" >JSON</a><br>
+        <input type="button" id="btn_upload" value="upload">
+        <a href="#" id="a_csv_product_compare_preview" hidden="true" >Compare & Preview</a>
     </span>
+    
 </div>
     <script>
 $(document).ready(function(){
-      $('#ddl_product').change(function (event){
+   
+   
+   function show_compare_link(){
+        var product_id = $("#ddl_product").val();
+        
+        if(product_id!=0 && $("#csv_file").val()!=''){        
+            $('#a_csv_product_compare_preview').show()    
+        }else{
+            $('#a_csv_product_compare_preview').hide()    
+        }
+    }
+    
+    $('#ddl_product').change(function (event){
     event.preventDefault(); 
-    var product_id = $("#ddl_product").val();                    
+    var product_id = $("#ddl_product").val();      
+    show_compare_link();
     if(product_id==0){
     $("#db_controls").hide();            
     }else{
@@ -59,17 +75,24 @@ $(document).ready(function(){
 //---------------------------------------------
    $('#a_csv_product_json').click(function (event){
         event.preventDefault();    
-        upload_csv(true);
+        csv_show(true);
         return false;
     });
     $('#a_csv_product_preview').click(function (event){
         event.preventDefault();    
-        upload_csv(false);
+        csv_show(false);
+        return false;
+    });
+      
+      $('#btn_upload').click(function (event){
+        event.preventDefault();    
+        foo();
         return false;
     });
     
 //---------------------------------------------
 $("#csv_file").change(function() {
+        show_compare_link();
         if($("#csv_file").val()==''){
             $("#csv_controls").hide();            
         }else{
@@ -87,16 +110,31 @@ $("#csv_file").change(function() {
         return false;
 }   
 //-----------------------------------------------------------        
-function upload_csv(json){            
-        
+
+
+function csv_show(json){
         input_file = document.getElementById('csv_file');
         data= new FormData();
         data.append("csv_file", input_file.files[0]);
-        data.append("json",json);
-        
+        data.append("json",json);        
+        return upload_csv("../csv_show", data);
+}
+
+function foo(){
+        data= new FormData();
+        var product_id = $("#ddl_product").val();                    
+        if(product_id!=0){                             
+            data.append("product_id",product_id);
+        }
+        data.append("json",true);                
+        return upload_csv("../foo", data);
+}
+//-----------------------------------------------------------   
+
+function upload_csv(url, data){            
         $.ajax({
                  type: "POST",
-                 url: "../csv_show",
+                 url: url,
                  data: data,  
                  processData: false,
                  contentType: false,
@@ -105,10 +143,8 @@ function upload_csv(json){
                     var win=window.open('about:blank');
                     with(win.document)
                     {
-                      open();
-                      str = JSON.stringify(data, null, 2);
-                      str = str.split("\\").join("");
-                      write(str);
+                      open();                     
+                      write(data);
                       close();
                     }                
                   },

@@ -34,8 +34,9 @@ admin_product_data_csv_read:
     
 
 
-admin_product_data_compare_show:
-    pattern:  /admin/product_data/compare/show
+admin_product_data_foo:
+    pattern:  /admin/product_data/foo
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:foo }  
     
 admin_product_data_csv_upload:
    pattern:  /admin/product_data/csv_upload
