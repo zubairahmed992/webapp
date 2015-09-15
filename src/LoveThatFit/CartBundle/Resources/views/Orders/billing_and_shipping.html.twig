@@ -89,7 +89,7 @@
             {#<a href="{{path('cart_show')}}" class="btn">back</a>#}
         {#</div>#}
         <div class="clearfix"></div>
-        <form action="{{ path('order_save_billing') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+        <form action="{{ path('save_addresses') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
             {{ form_errors(form) }}
 
             <div id="detail_wrapper" class="detail_wrap">

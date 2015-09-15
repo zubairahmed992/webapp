@@ -49,9 +49,16 @@ class OrderController extends Controller
 	  if($counter["counter"] == 0){
 		return $this->redirect($this->generateUrl('order_default'));
 	  }
+	  if($bill == 'billing'){
+		$bill_desc='1';
+	  }else{
+		$bill_desc='2';
+	  }
+
 	  $user_addresses = $this->get('cart.helper.userAddresses')->getAllAddresses($user);
 
-	  $default_address = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,$bill);
+	  $default_address = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,$bill_desc);
+
 
 
 	  $form = $this->createForm(new Address($default_address,$user), $entity);
@@ -59,7 +66,7 @@ class OrderController extends Controller
 		'form' => $form->createView(),
 	  	'user_addresses' => $user_addresses,
 		'default_address' => $default_address,
-		 'is_bill' => $bill,
+		 'is_bill' => $bill_desc,
 		 'address_counter' => $counter["counter"]
 	  ));
 	}

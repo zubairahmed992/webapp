@@ -64,20 +64,33 @@
        {% if(counter == 0) %}
         <tr><td>
 
-                <h1 class="cart_hd">Address Info</h1>
+                <h1 class="cart_hd">Billing Info</h1>
 
                 {{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
             </td></tr>
 
-            <tr><td>{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
+            <tr><td>{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a class="edt_icon_add" href="{{ path('order_default')}}"></a></td></tr>
+           <tr><td>
+
+                   <h1 class="cart_hd">Shipping Info</h1>
+
+                   {{ billing_shipping_info.billing.shipping_first_name  }} {{ billing_shipping_info.billing.shipping_last_name  }}
+               </td></tr>
+
+           <tr><td>{{ billing_shipping_info.billing.shipping_address1 }} {{ billing_shipping_info.billing.shipping_state }} {{ billing_shipping_info.billing.shipping_city }} {{ billing_shipping_info.billing.shipping_country }} {{ billing_shipping_info.billing.shipping_postcode }} <a class="edt_icon_add" href="{{ path('order_default')}}"></a></td></tr>
         {% else %}
             <tr><td>
-                    <h1 class="cart_hd">Address Info</h1>
+                    <h1 class="cart_hd">Billing Info</h1>
 
                     {{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}
                 </td></tr>
             <tr><td>{{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_add"></a></td></tr>
+            <tr><td>
+                    <h1 class="cart_hd">Shipping Info</h1>
 
+                    {{ shipping_user_addresses.first_name  }} {{ shipping_user_addresses.last_name  }}
+                </td></tr>
+            <tr><td>{{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_add"></a></td></tr>
 
         {% endif %}
     </table>

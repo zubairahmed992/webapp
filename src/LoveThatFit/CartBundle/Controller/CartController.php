@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartController extends Controller
 {
-  	public function basketAction(Request $request){
+  	public function addAction(Request $request){
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  $decoded  = $request->request->all();
 	  $item_id = $decoded["item_id"];
@@ -22,7 +22,7 @@ class CartController extends Controller
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
 	  return $this->redirect($this->generateUrl('cart_show'));
 	}
-	public function basketajaxAction(Request $request){
+	public function addajaxAction(Request $request){
 	  $decoded  = $request->request->all();
 	  $item_id = $decoded["item_id"];
 	  $user = $this->get('security.context')->getToken()->getUser();
@@ -32,19 +32,11 @@ class CartController extends Controller
 	  $getCounterResult = $this->get('cart.helper.cart')->countCartItemsByQuantity($user);
 	  return new Response($getCounterResult["counter"]);
 	}
-  	public function basketupdateAction(Request $request){
+  	public function processCheckoutAction(Request $request){
 	  $decoded  = $request->request->all();
 	  $order_amount = $decoded["order_amount"];
 	  $user = $this->get('security.context')->getToken()->getUser();
-	  if(isset($decoded['update']) == 'update'){
-	  	$entity = $this->get('cart.helper.cart')->updateCart($decoded);
-		return $this->redirect($this->generateUrl('cart_show'));
-	  }elseif(isset($decoded['checkout']) == 'checkout'){
-		$getCounterResult = $this->get('cart.helper.cart')->countCartItems($user);
-		if($getCounterResult["counter"] == 0){
-		  $this->get('session')->setFlash('warning', 'You need to add item(s) to the cart');
-		  return $this->redirect($this->generateUrl('cart_show'));
-		}else{
+		if(isset($decoded['checkout']) == 'checkout'){
 		  $session = $this->getRequest()->getSession();
 		  $session->set('order_amount', $order_amount);
 		  $default_billing_address = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,'1');
@@ -53,22 +45,16 @@ class CartController extends Controller
 		  $session->set('shipping_address', $default_shipping_address);
 		  return $this->redirect($this->generateUrl('order_default'));
 		}
-	  }else{
+	  else{
 		return $this->redirect($this->generateUrl('cart_show'));
 	  }
 	}
 //------------------------------Show Cart------------------------------------------------------------
 
 	public function showAction(){
-		$user = $this->get('security.context')->getToken()->getUser();
-		$cart=$user->getCart();
+	  $user = $this->get('security.context')->getToken()->getUser();
+	  $cart=$user->getCart();
 	  $grand_total = $this->get('cart.helper.cart')->getCart($user);
-//		if(count($get_total) == 0)
-//		{
-//		  $grand_total=0;
-//		}else{
-//		  $grand_total = array_sum($get_total["total"]);
-//		}
 	  $getCounterResult = $this->get('cart.helper.cart')->countCartItems($user);
 		return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
 			'cart' => $cart,

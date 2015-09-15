@@ -1,22 +1,22 @@
-cart_default:
-    pattern:  /cart
-    defaults: { _controller: LoveThatFitCartBundle:Cart:index}
-
-cart_add:
-    pattern:  /cart/add
-    defaults: { _controller: LoveThatFitCartBundle:Cart:add}
+#cart_default:
+#    pattern:  /cart
+#    defaults: { _controller: LoveThatFitCartBundle:Cart:index}
+#
+#cart_add:
+#    pattern:  /cart/add
+#    defaults: { _controller: LoveThatFitCartBundle:Cart:add}
 
 cart_basket:
     pattern:  /cart/basket/
     defaults: { _controller: LoveThatFitCartBundle:Cart:basket}
 
-cart_basket_update:
-    pattern:  /cart/basketupdate
-    defaults: { _controller: LoveThatFitCartBundle:Cart:basketupdate}
+cart_process_checkout:
+    pattern:  /cart/process
+    defaults: { _controller: LoveThatFitCartBundle:Cart:processCheckout}
 
-cart_basket_ajax:
-    pattern:  /cart/basketajax
-    defaults: { _controller: LoveThatFitCartBundle:Cart:basketajax}
+cart_add_ajax:
+    pattern:  /cart/addajax
+    defaults: { _controller: LoveThatFitCartBundle:Cart:addajax}
     requirements:
         _method:  POST
 
@@ -28,11 +28,17 @@ cart_delete:
     pattern:  /cart/delete/{id}
     defaults: { _controller: LoveThatFitCartBundle:Cart:delete}
 
+cart_update_ajax:
+    pattern:  /cart/update_qty_ajax/{id}/{qty}
+    defaults: { _controller: LoveThatFitCartBundle:Cart:updateQtyAjax}
+    requirements:
+        _method:  GET
+
 order_default:
-    pattern:  /billing
+    pattern:  /checkout/addresses
     defaults: { _controller: LoveThatFitCartBundle:Order:index}
 
-order_save_billing:
+save_addresses:
     pattern:  /billing/save
     defaults: { _controller: LoveThatFitCartBundle:Order:savebilling}
 
@@ -58,23 +64,22 @@ order_change_address:
 
 
 payment_default:
-    pattern:  /payment
+    pattern:  /checkout/payment
     defaults: { _controller: LoveThatFitCartBundle:Payment:index}
 
 payment:
-    pattern:  /paynow
+    pattern:  /checkout/payment-confirmation
     defaults: { _controller: LoveThatFitCartBundle:Payment:pay}
 
 user_profile_order_show:
     pattern:  /profile/order/{id}/show
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:show }
 
+user_profile_order_preview:
+    pattern:  /order/preview/{id}
+    defaults: { _controller: LoveThatFitCartBundle:MyOrder:previewOrder }
+
 user_profile_order_list:
     pattern:  /profile/order/{page_number}/{sort}
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:index,page_number: 1, sort:id}
 
-cart_update_ajax:
-    pattern:  /cart/update_qty_ajax/{id}/{qty}
-    defaults: { _controller: LoveThatFitCartBundle:Cart:updateQtyAjax}
-    requirements:
-        _method:  GET

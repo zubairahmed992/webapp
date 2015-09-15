@@ -58,7 +58,7 @@
                                             {{ billing_addresses.country }}<br>
 
                                              <div class="span3">
-                                                 <span class="bill_edit_con"><a href="{{ path('order_change_address', {'bill':'1'}) }}"></a></span>
+                                                 <span class="bill_edit_con"><a href="{{ path('order_change_address', {'bill':'billing'}) }}"></a></span>
                                              </div>
                                          </div>
                                         </div>
@@ -78,7 +78,7 @@
                                                 {{ shipping_addresses.city }} {{ shipping_addresses.state }} {{ shipping_addresses.postcode }}<br>
                                                 {{ shipping_addresses.country }}<br>
 
-                                                <span class="bill_edit_con"><a href="{{ path('order_change_address', {'bill':'0'}) }}"></a></span>
+                                                <span class="bill_edit_con"><a href="{{ path('order_change_address', {'bill':'shipping'}) }}"></a></span>
                                             </div>
 
                                         </div>

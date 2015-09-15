@@ -4,9 +4,6 @@ namespace LoveThatFit\CartBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Braintree_Configuration;
-use Braintree_ClientToken;
-use Braintree_Transaction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -25,9 +22,11 @@ class PaymentController extends Controller
 	if($counter["counter"] == 0){
 	  $billing_shipping_info = $session->get('billing_shipping_info');
 	  $billing_user_addresses='';
+	  $shipping_user_addresses='';
 	}else{
 	  $billing_shipping_info = $session->get('billing_shipping_info');
 	  $billing_user_addresses = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,1);
+	  $shipping_user_addresses = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,0);
 	}
 
 	return $this->render('LoveThatFitCartBundle:Payment:index.html.twig', array(
@@ -36,7 +35,8 @@ class PaymentController extends Controller
 	  'billing_shipping_info' => $billing_shipping_info,
 	  'token' => $clientToken,
 	  'counter' => $counter["counter"],
-	  'billing_user_addresses' => $billing_user_addresses
+	  'billing_user_addresses' => $billing_user_addresses,
+	  'shipping_user_addresses' => $shipping_user_addresses
 	));
   }
 

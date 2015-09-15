@@ -155,7 +155,7 @@ $( ".handle_inner_open" ).live('click', function(){
         //alert (data);
         $.ajax({
             type: "POST",
-            url: "{{ path('cart_basket_ajax')}}",
+            url: "{{ path('cart_add_ajax')}}",
             data:  {item_id:id},
             cache: false,           
             success: function(response) { //Your treatment
