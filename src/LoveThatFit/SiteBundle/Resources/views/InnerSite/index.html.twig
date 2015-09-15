@@ -821,10 +821,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     $(main_container_hldr + ' .prod_applied_detail').html($(new_prod_details).find('.prod_applied_detail').html());
                     $('.prod_applied_detail > .rgt_col').hide();
                     $('.fitting_alerts_ul').hide();
-                   $('.prod_applied_detail div:nth-child(6)').removeClass('handle_inner_new');
-                    $('.prod_applied_detail div:nth-child(6)').addClass('handle_inner_open');
-                    
-                     
+                    $('.prod_applied_detail div:nth-child(6)').removeClass('handle_inner_new').addClass('handle_inner_open');
                     $('.interact_wrap').css({'position':'absolute','left':'80px','top':'12px'}); 
                     $(main_select_color).html($(new_prod_details).find('.hldr_of_size_color').html());
                     $(main_container_hldr).fadeIn(300, function(){$( "#prod_accordion" ).accordion("refresh");});

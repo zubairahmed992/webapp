@@ -227,26 +227,26 @@ function chk_dress_applied_loaded(prod_type_applied){
                           </div>                                   
                                     <div class="action_icons">
                                         
-                                        <span class="fav_prod">
-                                            <span style="display:none;"> <a href="{{path('compare_product_add',{'item_id':productItem.id})}}">Comp</a></span>
-                                            {% if productItem and productItem%}
-                            {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-  <div class="like_icon1_{{productItem.id}}" style="">
-<a href="javascript:void(0);" onclick="lovedItems({{productItem.id}})" title="Loved/Liked" class="liked_icon_clicked_new">
-    <img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
-<span id="ajax_product_loved_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span>  
-</div>  
+                                       <span class="fav_prod">
+                                            <span style="display:none;">
+<a href="{{path('compare_product_add',{'item_id':productItem.id})}}">Comp</a></span>
+                                           {% if productItem and productItem%}
+                                               {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
+                                                   <div class="like_icon1_{{productItem.id}}" style="">
+                                                       <a href="javascript:void(0);" onclick="lovedItems({{productItem.id}})" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
+                                                       <span id="ajax_product_loved_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span>
+                                                   </div>
 
                             {%else%}
-<div id="like_icon_{{productItem.id}}" >
-<a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like" class="liked_icon_new">
-</a>
-<span id="ajax_product_love_url{{productItem.id}}" style="display:none;" on>{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
-</div>
-                            {%endif%}
+                                                   <div id="like_icon_{{productItem.id}}" >
+                                                       <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like" >
+                                                           <img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
+                                                       <span id="ajax_product_love_url{{productItem.id}}" style="display:none;" on>{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
+                                                   </div>
+                                               {%endif%}
            <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
-           <a class="fitting_alerts_feeback_{{product.id}}" style="display: none;">{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}</a>
-              {% endif %}
+                                               <a class="fitting_alerts_feeback_{{product.id}}" style="display: none;">{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}</a>
+                                           {% endif %}
                                             
                                             
                                            </span>

@@ -5804,6 +5804,7 @@ background-color:#fff;
       .cart_tbl tr:last-child td{
      border-bottom: 0px;
      padding-bottom: 10px;
+	 font-size: 1.0em;
     }
     
     
@@ -5850,15 +5851,15 @@ background-color:#fff;
     
     .checkout_btn{
         background:#426eb6;
-        padding:5px 10px 5px 10px;
+        padding:5px 10px;
         text-align: center;
         color: #fff;
         border:0px;
-        font-size: 1em;
+        font-size: 0.8em;
     }
     
     .update_btn{
-       background:#787878;
+        background:#787878;
         padding:5px 10px 5px 10px;
         text-align: center;
         color: #fff;
@@ -5867,6 +5868,7 @@ background-color:#fff;
         position: relative;
         float:left;
         right:-440px;
+		font-size:0.8em;
     }
     
     #quantity_box {
@@ -5911,7 +5913,7 @@ background-color:#fff;
     
     .billing_tbl{
         font-size: 0.85em;        
-        width: 100%;  
+        width: 90%;
         overflow: auto;
     }
     
@@ -6020,7 +6022,7 @@ background-color:#fff;
 .product_title{
   width:150px;
   float: left;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color:#5376a9;
   padding: 5px 0px 5px 5px;
   
@@ -6156,6 +6158,96 @@ background-color:#fff;
     .rgt_col{
         margin-top: 5px;
     }
-    
-    
+
+	.billing_wrap{
+		border: 1px dotted #999;
+		font-size: 0.9em;
+		padding: 10px;
+		line-height: 20px;
+	}
+	.billing_wrap h2{
+		font-weight: bold;
+		font-size:1.2em;
+		padding-bottom: 5px;
+		margin-bottom: 10px;
+		border-bottom: 1px dotted #999;
+	}
+
+   .shipping_wrap{
+	   border: 1px dotted #999;
+	   font-size: 0.9em;
+	   padding: 10px;
+	   line-height: 20px;
+   }
+
+	.shipping_wrap h2{
+		font-weight: bold;
+		font-size:1.2em;
+		padding-bottom: 5px;
+		margin-bottom: 10px;
+		border-bottom: 1px dotted #999;
+	}
+
+	.bill_edit_con a{
+		background: transparent url("../images/edit_icon.png") no-repeat scroll 0 0;
+		width: 25px;
+		height: 25px;
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+		opacity: 0.5;
+	}
+
+	.edt_icon a{
+		background: transparent url("../images/edit_icon.png") no-repeat scroll 0 0;
+		width: 25px;
+		height: 25px;
+		opacity: 0.5;
+		display: inline-block;
+	}
+
+.edt_icon_add{
+	background: transparent url("../images/edit_icon.png") no-repeat scroll 0 0;
+	width: 25px;
+	height: 25px;
+	opacity: 0.5;
+	display: inline-block;
+	position: absolute;
+	top: 15px;
+	left: 95px;
+}
+
+	.cart_tbl td{
+		position: relative;
+	}
+
+	.billing_tbl .billing_wrap,
+	.billing_tbl .shipping_wrap
+	{
+		position: relative;
+
+	}
+
+	.detail_block{
+		border-top: 1px dotted #999;
+		font-size: 0.9em;
+		padding-bottom: 10px;
+		position: relative;
+		margin-bottom: 10px;
+	}
+
+	#pay{
+		background: #009cde none repeat scroll 0 0;
+		border: 0 none;
+		border-radius: 4px;
+		color: #fff;
+		font-size: 1.1em;
+		font-style: italic;
+		font-weight: bold;
+		padding: 10px;
+	}
+
+
+
+
     

@@ -36,39 +36,51 @@
         </ul>
     </div><br>
     
-                            <h1>Billing Information</h1>
+                           <!-- <h1>Billing Information</h1>-->
                             
                           
                             <br>
                             
                             
-                            <table cellspacing="0" cellpadding="0" border="1" class="billing_tbl">
+                            <table cellspacing="0" cellpadding="0" border="1" class="billing_tbl" align="left">
                                 
                            
                                 <tr>
-                                    <td>
+                                    <td width="45%">
                                         <div class="span3">
-                                        {{ billing_addresses.first_name }} {{ billing_addresses.last_name }}<br>
-                                        {{ billing_addresses.address1 }}<br>
-                                        {{ billing_addresses.address2 }}
-                                        {{ billing_addresses.city }} {{ billing_addresses.state }} {{ billing_addresses.postcode }}<br>
-                                        {{ billing_addresses.country }}<br>
+
+                                         <div class="billing_wrap">
+                                             <h2>Billing Info</h2>
+                                            {{ billing_addresses.first_name }} {{ billing_addresses.last_name }}<br>
+                                            {{ billing_addresses.address1 }}<br>
+                                            {{ billing_addresses.address2 }}
+                                            {{ billing_addresses.city }} {{ billing_addresses.state }} {{ billing_addresses.postcode }}<br>
+                                            {{ billing_addresses.country }}<br>
+
+                                             <div class="span3">
+                                                 <span class="bill_edit_con"><a href="{{ path('order_change_address', {'bill':'1'}) }}"></a></span>
+                                             </div>
+                                         </div>
                                         </div>
-                                        <div class="span3">
-                                            <span><a href="{{ path('order_change_address', {'bill':'1'}) }}">Change Address</a></span>
-                                        </div>
+
 
                                     </td>
 
-
+<td width="2%"></td>
                                 
-                                    <td>
-                                        <div class="span3">{{ shipping_addresses.first_name }} {{ shipping_addresses.last_name }}<br>
-                                            {{ shipping_addresses.address1 }}<br>
-                                            {{ shipping_addresses.address2 }}
-                                            {{ shipping_addresses.city }} {{ shipping_addresses.state }} {{ shipping_addresses.postcode }}<br>
-                                            {{ shipping_addresses.country }}<br>
-                                            <span><a href="{{ path('order_change_address', {'bill':'0'}) }}">Change Address</a></span>
+                                    <td width="45%">
+                                        <div class="span3">
+                                            <div class="shipping_wrap">
+                                                <h2>Shipping Info</h2>
+                                                {{ shipping_addresses.first_name }} {{ shipping_addresses.last_name }}<br>
+                                                {{ shipping_addresses.address1 }}<br>
+                                                {{ shipping_addresses.address2 }}
+                                                {{ shipping_addresses.city }} {{ shipping_addresses.state }} {{ shipping_addresses.postcode }}<br>
+                                                {{ shipping_addresses.country }}<br>
+
+                                                <span class="bill_edit_con"><a href="{{ path('order_change_address', {'bill':'0'}) }}"></a></span>
+                                            </div>
+
                                         </div>
                                         {#                           <input type="submit" value="Change Address" class="checkout_btn"/>#}
 
@@ -80,9 +92,19 @@
 
                                 
                                  <tr>
-                                    
-                                    <td colspan="2">{#<input type="submit" value="Change Address" class="checkout_btn"/>#} </td>
+
+                                    <td colspan="3" height="10">{#<input type="submit" value="Change Address" class="checkout_btn"/>#} </td>
                                 </tr>
+
+                                <tr>
+
+                                    <td colspan="3" align="right"> <form action="{{ path('payment_default')}}" method="post">
+                                            <input type="submit" value="Continue" class="checkout_btn"/>
+                                        </form></td>
+                                </tr>
+
+
+
                                 
                                 
                                 
@@ -101,9 +123,7 @@
                                 <div class="span3">
 
                                     <div style="margin:0px 0px 0px 0px;">
-                                        <form action="{{ path('payment_default')}}" method="post">
-                                        <input type="submit" value="Continue" class="checkout_btn"/>
-                                            </form>
+
                                     </div>
                                 </div>
                             </div>

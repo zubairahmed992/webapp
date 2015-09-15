@@ -125,62 +125,65 @@
                                     {#<option value="{{ c.id }}">{{ c.address1 }}</option>#}
                                     {#{% endfor %}#}
                                     {#</select>#}
+
+                                        <div class="span3">{{ form_widget(form.billing_first_name,{ 'attr': {'placeholder': "First Name"}}) }}{{ form_errors(form.billing_first_name) }}</div>
                                     </td>                       
                                 
                                 
                                 
                                     <td>
-                                        <div class="span3">{{ form_widget(form.billing_first_name,{ 'attr': {'placeholder': "First Name"}}) }}{{ form_errors(form.billing_first_name) }}</div>
+                                        <div class="span3">{{ form_widget(form.billing_last_name,{ 'attr': {'placeholder': "Last Name"}}) }}{{ form_errors(form.billing_last_name) }}</div>
+
                                     </td>
                                 </tr>
                                 
                                 <tr>
-                                    <td>                                
-                                <div class="span3">{{ form_widget(form.billing_last_name,{ 'attr': {'placeholder': "Last Name"}}) }}{{ form_errors(form.billing_last_name) }}</div>   
+                                    <td>
+                                        <div class="span3">{{ form_widget(form.billing_address1,{ 'attr': {'placeholder': "Address 1"}}) }}{{ form_errors(form.billing_address1) }}</div>
                                     
                                     </td>
                                     
-                                    <td>                                      
-                                      <div class="span3">{{ form_widget(form.billing_address1,{ 'attr': {'placeholder': "Address 1"}}) }}{{ form_errors(form.billing_address1) }}</div>
+                                    <td>
 
+                                        <div class="span3">{{ form_widget(form.billing_address2,{ 'attr': {'placeholder': "Address 2"}}) }}{{ form_errors(form.billing_address2) }}</div>
                                     </td>
                                 </tr>                                
                                 <tr>
                                     <td>
+                                        <div class="span3">{{ form_widget(form.billing_phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.billing_phone) }}</div>
                                         
-                                        
-                                <div class="span3">{{ form_widget(form.billing_address2,{ 'attr': {'placeholder': "Address 2"}}) }}{{ form_errors(form.billing_address2) }}</div>
+
                                     </td>
                                     
                                     <td>
-                                       
-                                <div class="span3">{{ form_widget(form.billing_phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.billing_phone) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.billing_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.billing_city) }}</div>
                                         
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.billing_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.billing_city) }}</div>
+                                        <div class="span3">{{ form_widget(form.billing_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.billing_postcode) }}</div>
+
                                     </td>
                                     
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.billing_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.billing_postcode) }}</div>
+                                        <div class="span3">{{ form_widget(form.billing_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.billing_country) }}</div>
+
                                     </td>
                                     
                                 </tr>
                                 <tr>
                                     
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.billing_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.billing_country) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.billing_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.billing_state) }}</div>
                                         
                                     </td>
                                     <td>
                                         
-                                <div class="span3">{{ form_widget(form.billing_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.billing_state) }}</div>
+
                                         
                                     </td>
                                 </tr>
@@ -222,27 +225,28 @@
                                                 {#<option value="{{ c.id }}">{{ c.address1 }}</option>#}
                                             {#{% endfor %}#}
                                         {#</select>#}
+                                        <div class="span3">{{ form_widget(form.shipping_first_name,{ 'attr': {'placeholder': "First Name"}}) }}{{ form_errors(form.shipping_first_name) }}</div>
                                     </td>
                                     
                                     <td>
-                                        
+                                        <div class="span3">{{ form_widget(form.shipping_last_name,{ 'attr': {'placeholder': "Last Name"}}) }}{{ form_errors(form.shipping_last_name) }}</div>
                                        
-                                <div class="span3">{{ form_widget(form.shipping_first_name,{ 'attr': {'placeholder': "First Name"}}) }}{{ form_errors(form.shipping_first_name) }}</div>
+
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     
                                     <td>
-                                      
-                                <div class="span3">{{ form_widget(form.shipping_last_name,{ 'attr': {'placeholder': "Last Name"}}) }}{{ form_errors(form.shipping_last_name) }}</div>   
+                                        <div class="span3">{{ form_widget(form.shipping_address1,{ 'attr': {'placeholder': "Address 1"}}) }}{{ form_errors(form.shipping_address1) }}</div>
+
                                         
                                     </td>
                                     
                                     <td>
-                                        
-                                       
-                                <div class="span3">{{ form_widget(form.shipping_address1,{ 'attr': {'placeholder': "Address 1"}}) }}{{ form_errors(form.shipping_address1) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.shipping_address2,{ 'attr': {'placeholder': "Address 2"}}) }}{{ form_errors(form.shipping_address2) }}</div>
+
                                     </td>
                                     
                                     
@@ -252,14 +256,14 @@
                                 <tr>
                                     
                                     <td>
-                                       
-                                <div class="span3">{{ form_widget(form.shipping_address2,{ 'attr': {'placeholder': "Address 2"}}) }}{{ form_errors(form.shipping_address2) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.shipping_phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.shipping_phone) }}</div>
                                         
                                     </td>
                                     
                                     <td>
-                                       
-                                    <div class="span3">{{ form_widget(form.shipping_phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.shipping_phone) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.shipping_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.shipping_city) }}</div>
                                         
                                     </td>
                                 </tr>
@@ -267,26 +271,26 @@
                                 <tr>
                                     
                                     <td>
-                                       
-                                <div class="span3">{{ form_widget(form.shipping_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.shipping_city) }}</div>  
+                                        <div class="span3">{{ form_widget(form.shipping_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.shipping_postcode) }}</div>
+
                                     </td>
                                     
                                     <td>
-                                     
-                                <div class="span3">{{ form_widget(form.shipping_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.shipping_postcode) }}</div>   
+                                        <div class="span3">{{ form_widget(form.shipping_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.shipping_country) }}</div>
+
                                     </td>
                                 </tr>
                                 
                                 
                                 <tr>
                                     <td>
-                                     
-                                <div class="span3">{{ form_widget(form.shipping_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.shipping_country) }}</div>   
+
+                                        <div class="span3">{{ form_widget(form.shipping_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.shipping_state) }}</div>
                                         
                                     </td>
                                     <td>
                                        
-                                <div class="span3">{{ form_widget(form.shipping_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.shipping_state) }}</div>
+
                                         
                                     </td>
                                     

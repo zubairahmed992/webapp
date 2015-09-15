@@ -1,8 +1,17 @@
-{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% extends 'LoveThatFitCartBundle::basecart.html.twig' %}
 
 {% block profile_heading %}
+    <div id="breadcrumb">
+        <ul>
+            <li class="active"><a href="#">Shopping Cart</a></li>
+            <li class="bd_sep">>></li>
+            <li><a href="#">Delivery &amp; Shopping</a></li>
+            <li class="bd_sep">>></li>
+            <li><a href="#">Billing Methods</a></li>
+        </ul>
+    </div><br>
+    <h1 class="cart_hd">Order Confirmation</h1>
 
-    <h1>Order Detail</h1>
 {% endblock %}
 {% block profile_section %}
     {% if app.session.hasFlash('warning') %}
@@ -17,7 +26,7 @@
     {% endif %}
 
 
-    <table width="700" border="0" class="user_product_hd">
+    <table width="745" border="0" class="cart_tbl" cellpadding="0" cellspacing="0">
         <tr>
             <td>Image</td>
             <td>SKU</td>
@@ -32,13 +41,13 @@
 
             {% for c in cart %}
             <tr>
-                <td><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
-                <td>{{ c.productItem.sku }}</td>
-                <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
-                <td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> {{ c.qty }} </td>
-                <td>${{ c.productItem.price}}</td>
-                <td>${{ c.productItem.price * c.qty}}</td>
-                <td><a href="{{ path('cart_show')}}">Edit Order</a></td>
+                <td align="center"><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                <td align="center">{{ c.productItem.sku }}</td>
+                <td align="center">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
+                <td align="center"><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> {{ c.qty }} </td>
+                <td align="center">${{ c.productItem.price}}</td>
+                <td align="center">${{ c.productItem.price * c.qty}}</td>
+                <td align="center" valign="middle" class="edt_icon"><a href="{{ path('cart_show')}}"></a></td>
 
 
 
@@ -47,24 +56,27 @@
         {% else %}
             <tr><td align="center" colspan="6"><p>There are no records</p></td></tr>
         {% endfor %}
-        <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }} </strong></td></tr>
+        <tr><td colspan="7" align="right">Total:&nbsp;<strong>${{ grand_total }} </strong></td></tr>
 
             </table>
 
-    <table width="700" border="0" >
+    <table width="745" border="0" cellspacing="0" cellpadding="0" class="detail_block" >
        {% if(counter == 0) %}
         <tr><td>
-                <h1>Customer Detail</h1><br>
-                Name:{{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
+
+                <h1 class="cart_hd">Address Info</h1>
+
+                {{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
             </td></tr>
 
-            <tr><td>Address:{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
+            <tr><td>{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
         {% else %}
             <tr><td>
-                    <h1>Customer Detail</h1><br>
-                    Name:{{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}
+                    <h1 class="cart_hd">Address Info</h1>
+
+                    {{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}
                 </td></tr>
-            <tr><td>Address:{{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
+            <tr><td>{{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_add"></a></td></tr>
 
 
         {% endif %}
@@ -88,6 +100,7 @@
                     $('#pay').css('display','none');
                     $('#loading_image').show();
                     $('#process').show();
+                    $('.card-field').css('height','0px');
                     $('#checkout').submit();
                 }
             });
