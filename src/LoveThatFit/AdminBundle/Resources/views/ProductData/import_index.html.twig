@@ -126,6 +126,9 @@ function foo(){
         if(product_id!=0){                             
             data.append("product_id",product_id);
         }
+          if($("#csv_file").val()!=''){
+            data.append("csv",'file_selected');
+        }
         data.append("json",true);                
         return upload_csv("../foo", data);
 }
