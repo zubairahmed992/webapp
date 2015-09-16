@@ -60,44 +60,56 @@
 
             </table>
 
-    <table width="745" border="0" cellspacing="0" cellpadding="0" class="detail_block" >
+    <table border="0" cellspacing="0" cellpadding="0" class="order_conf_tbl" >
        {% if(counter == 0) %}
-        <tr><td>
+        <tr><td width="45%">
 
                 <h1 class="cart_hd">Billing Info</h1>
 
-                {{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
-            </td></tr>
+                {{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}<br>
 
-            <tr><td>{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a class="edt_icon_add" href="{{ path('order_default')}}"></a></td></tr>
-           <tr><td>
+                {{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a class="edt_icon_conf" href="{{ path('order_default')}}"></a>
+            </td>
+            <td width="5%"></td>
+
+
+          <td  width="45%">
 
                    <h1 class="cart_hd">Shipping Info</h1>
 
-                   {{ billing_shipping_info.billing.shipping_first_name  }} {{ billing_shipping_info.billing.shipping_last_name  }}
-               </td></tr>
+                   {{ billing_shipping_info.billing.shipping_first_name  }} {{ billing_shipping_info.billing.shipping_last_name  }}<br>
 
-           <tr><td>{{ billing_shipping_info.billing.shipping_address1 }} {{ billing_shipping_info.billing.shipping_state }} {{ billing_shipping_info.billing.shipping_city }} {{ billing_shipping_info.billing.shipping_country }} {{ billing_shipping_info.billing.shipping_postcode }} <a class="edt_icon_add" href="{{ path('order_default')}}"></a></td></tr>
+
+           {{ billing_shipping_info.billing.shipping_address1 }} {{ billing_shipping_info.billing.shipping_state }} {{ billing_shipping_info.billing.shipping_city }} {{ billing_shipping_info.billing.shipping_country }} {{ billing_shipping_info.billing.shipping_postcode }} <a class="edt_icon_conf" href="{{ path('order_default')}}"></a></td></tr>
         {% else %}
-            <tr><td>
+            <tr><td  width="45%">
                     <h1 class="cart_hd">Billing Info</h1>
 
-                    {{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}
-                </td></tr>
-            <tr><td>{{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_add"></a></td></tr>
-            <tr><td>
+                    {{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}<br>
+
+           {{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_conf"></a></td>
+                <td width="5%"></td>
+
+            <td width="45%">
                     <h1 class="cart_hd">Shipping Info</h1>
 
-                    {{ shipping_user_addresses.first_name  }} {{ shipping_user_addresses.last_name  }}
-                </td></tr>
-            <tr><td>{{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_add"></a></td></tr>
+                    {{ shipping_user_addresses.first_name  }} {{ shipping_user_addresses.last_name  }}<br>
+
+            {{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_conf"></a></td></tr>
 
         {% endif %}
     </table>
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">
             <div id="payment-form"></div>
-            <input type="hidden" name="order_amount" value="{{ grand_total }}"><input id="pay" type="submit" value="Pay ${{ grand_total }}"><img  src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" style="display: none;padding-left:200px" alt="loading" id="loading_image"><div id="process" style="display: none;padding-left:200px">please wait while your order is being processed...</div>
+            <input type="hidden" name="order_amount" value="{{ grand_total }}">
+            <input id="pay" type="submit" value="Pay ${{ grand_total }}">
+
+            <div style="text-align: center; float: left; width: 550px; margin: 0 auto; font-size: 0.9em; margin-bottom: 20px;">
+
+            <img  src="{{ asset('bundles/lovethatfit/site/images/process_2.gif') }}" style="display: none;padding-left:200px" alt="loading" id="loading_image">
+            <div id="process" style="display: none;padding-left:200px">please wait while your order is being processed...</div>
+            </div>
         </form>
 
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>

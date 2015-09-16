@@ -1,8 +1,8 @@
-{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% extends 'LoveThatFitCartBundle::basecart.html.twig' %}
 
 {% block profile_heading %}
 
-    <h1>Order Detail</h1>
+
 {% endblock %}
 {% block profile_section %}
     {% if app.session.hasFlash('warning') %}
@@ -17,14 +17,26 @@
     {% endif %}
 
 
-    <table width="700" border="0" class="user_product_hd">
+
             {% if(transaction_status == 'authorized') %}
-            <tr><td align="center"><p>Your Order has been placed successfully, your order number is : {{ order_number }}</p></td></tr>
+
+                <div class="confirmation_box">
+
+                    <h1>Order Confirmation</h1>
+
+                    Your Order has been placed successfully, your order number is <br><span>{{ order_number }}</span></div>
+
+
             {% else %}
-                <tr><td align="center"><p>There is some error occured while payment, Your Transaction has been Declined</p></td></tr>
+
+                <div class="confirmation_box">
+                    <h1>Order Confirmation</h1>
+                    There is some error occured while payment, Your Transaction has been Declined</div>
+
+
             {% endif %}
 
-            </table>
+
 
 
 

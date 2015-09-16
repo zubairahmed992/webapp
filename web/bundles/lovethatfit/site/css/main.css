@@ -5895,6 +5895,7 @@ background-color:#fff;
     
     .no_item_wrapper{
         margin-top:40px;
+		font-size:0.9em;
     }
     
     
@@ -5910,6 +5911,19 @@ background-color:#fff;
         display: block;
         overflow: auto;
     }
+
+	 .empty_prod_btn a{
+		 text-decoration: none;
+		 color:#fff;
+		 background:#426eb6;
+		 color:#fff;
+		 width:180px;
+		 padding:5px;
+		 margin-top:10px;
+		 display: block;
+		 font-size: 0.9em;
+
+	 }
     
     .billing_tbl{
         font-size: 0.85em;        
@@ -6246,6 +6260,72 @@ background-color:#fff;
 		font-weight: bold;
 		padding: 10px;
 	}
+
+	.order_conf_tbl{
+		border:1px dotted #999;
+		padding: 10px;
+		font-size: 0.9em;
+		position: relative;
+		width: 745px;
+		margin-bottom: 20px;
+	}
+
+.order_conf_tbl h1{
+	padding: 0px;
+	margin: 0px!important;
+	margin-bottom: 5px!important;
+
+}
+
+.order_conf_tbl td{
+
+	padding: 10px;
+
+}
+
+.order_conf_tbl td:nth-child(2n){
+	border-left: 1px dotted #999;
+
+}
+
+.edt_icon_conf{
+	background: transparent url("../images/edit_icon.png") no-repeat scroll 0 0;
+	width: 25px;
+	height: 25px;
+	opacity: 0.5;
+	display: inline-block;
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+}
+
+.confirmation_box{
+	background: #efefef;
+	box-shadow: 1px 2px 2px #ccc;
+	padding: 10px;
+	width: 500px;
+	margin: 0 auto;
+	font-size: 0.9em;
+	text-align: center;
+	margin-top: 80px;
+	border-radius: 10px;
+}
+
+.confirmation_box span {
+	background: #426eb6;
+	color: #fff;
+	padding: 10px;
+	font-size: 0.9em;
+	display: inline-block;
+	margin-top: 15px;
+	border-radius: 5px;
+	margin-bottom: 5px;
+
+}
+
+.confirmation_box h1 {
+padding-bottom: 10px;
+}
 
 
 
