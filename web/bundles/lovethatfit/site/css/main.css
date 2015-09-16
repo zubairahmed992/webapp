@@ -6297,6 +6297,7 @@ background-color:#fff;
 	position: absolute;
 	bottom: 5px;
 	right: 5px;
+	opacity: 0.3;
 }
 
 .confirmation_box{
@@ -6312,7 +6313,7 @@ background-color:#fff;
 }
 
 .confirmation_box span {
-	background: #426eb6;
+	background: #52627B;
 	color: #fff;
 	padding: 10px;
 	font-size: 0.9em;
@@ -6325,6 +6326,25 @@ background-color:#fff;
 
 .confirmation_box h1 {
 padding-bottom: 10px;
+}
+
+.return_btn{
+	border-radius: 5px;
+	margin:0 auto;
+	width: 120px;
+}
+
+.return_btn a{
+	text-decoration: none;
+	color: #fff;
+	background: #426eb6;
+	color: #fff;
+	width: 120px;
+	padding: 5px;
+	margin-top: 10px;
+	display: block;
+	font-size: 0.9em;
+
 }
 
 
