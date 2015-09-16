@@ -50,8 +50,8 @@ preview_address:
     pattern:  /preview
     defaults: { _controller: LoveThatFitCartBundle:Order:previewaddress}
 
-order_address:
-    pattern:  /order/get_address/{address_id}
+get_address:
+    pattern:  /checkout/get_address/{address_id}
     defaults: { _controller: LoveThatFitCartBundle:Order:getAddress}
     requirements:
         _method:  GET
@@ -68,7 +68,7 @@ payment_default:
     defaults: { _controller: LoveThatFitCartBundle:Payment:index}
 
 payment:
-    pattern:  /checkout/payment-confirmation
+    pattern:  /checkout/order_confirmation
     defaults: { _controller: LoveThatFitCartBundle:Payment:pay}
 
 user_profile_order_show:
@@ -76,7 +76,7 @@ user_profile_order_show:
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:show }
 
 user_profile_order_preview:
-    pattern:  /order/preview/{id}
+    pattern:  /profile/order/preview/{id}
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:previewOrder }
 
 user_profile_order_list:

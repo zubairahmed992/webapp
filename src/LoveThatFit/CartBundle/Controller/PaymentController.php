@@ -14,6 +14,9 @@ class PaymentController extends Controller
 	$user = $this->get('security.context')->getToken()->getUser();
 	$user_id = $this->get('security.context')->getToken()->getUser()->getId();
 	$session = $this->getRequest()->getSession();
+	if($session->get('order_amount') == ''){
+	  return $this->redirect($this->generateUrl('cart_show'));
+	}else{
 	$cart=$user->getCart();
 	$grand_total = $this->get('cart.helper.cart')->getCart($user);
 	$clientToken = $this->get('cart.helper.payment')->getClientToken();
@@ -38,12 +41,16 @@ class PaymentController extends Controller
 	  'billing_user_addresses' => $billing_user_addresses,
 	  'shipping_user_addresses' => $shipping_user_addresses
 	));
+	}
   }
 
    	public function payAction(Request $request){
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  $decoded  = $request->request->all();
 	  $session = $this->getRequest()->getSession();
+	  if($session->get('order_amount') == ''){
+		return $this->redirect($this->generateUrl('cart_show'));
+	  }else{
 	  $result = $this->get('cart.helper.payment')->braintreeTransaction($user,$decoded,$session);
 	  ######### Mail Code ###########
 	  //$entity = $this->get('cart.helper.order')->find($result['order_id']);
@@ -53,7 +60,7 @@ class PaymentController extends Controller
 		'order_number' => $result['order_number'],
 		'transaction_status' => $result['transaction_status']
 	  ));
-
+	  }
 
 	}
 

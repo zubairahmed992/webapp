@@ -27,7 +27,7 @@
          }else{
          $.ajax({
              type: "GET",
-             url: "../../order/get_address/" + address[address.selectedIndex].value,
+             url: "../../checkout/get_address/" + address[address.selectedIndex].value,
              success: function(data){
                  var u_obj = JSON.parse(data);
                  $('#first_name').val(u_obj.first_name);

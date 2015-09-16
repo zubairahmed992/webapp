@@ -4,9 +4,6 @@ namespace LoveThatFit\CartBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Braintree_Configuration;
-//use Braintree_ClientToken;
-//use Braintree_Transaction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;

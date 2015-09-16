@@ -16,6 +16,9 @@ class OrderController extends Controller
     public function indexAction()
     {
 	  $session = $this->getRequest()->getSession();
+	  if($session->get('order_amount') == ''){
+		return $this->redirect($this->generateUrl('cart_show'));
+	  }
 	  $order_amount = $session->get('order_amount');
 	  $billing_shipping_info = $session->get('billing_shipping_info');
 	  $entity = $this->get('cart.helper.order')->createNew();
