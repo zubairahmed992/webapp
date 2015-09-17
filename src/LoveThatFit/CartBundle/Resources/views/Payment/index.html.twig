@@ -115,10 +115,6 @@
 
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
         <script language="javascript" type="text/javascript">
-
-
-
-
             var clientToken = "{{ token }}";
 //            $('#pay').click(function() {
 //
@@ -127,23 +123,16 @@
                 container: "payment-form",
                 paymentMethodNonceReceived: function (event, nonce) {
                     $('#checkout').append("<input type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
-                   $('#pay').show();
+                    $('#pay').css('display','none');
                     $('#processbox').show();
                     $('#loading_image').show();
                     $('#process').show();
-
+                    $('#ct').show();
                     $('.card-field').css('height','0px');
+
                     $('#checkout').submit();
-
                 }
-
-
-
             });
-
-
-
-
         </script>
 
 
