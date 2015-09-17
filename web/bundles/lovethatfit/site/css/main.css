@@ -2322,6 +2322,7 @@ text-align: left;
     width:754px;
     float:right;
     margin-top:20px;
+	position: relative;
 }
 
 .top_gra{
@@ -6259,7 +6260,29 @@ background-color:#fff;
 		font-style: italic;
 		font-weight: bold;
 		padding: 10px;
+		float: left;margin-bottom: 40px;
 	}
+
+	#processbox{
+		display:none;
+	}
+
+	#loading_image{
+		margin-top: 280px;
+	}
+
+	#ct{
+		position: absolute;
+		z-index: 3000;
+		text-align: center;
+		background: #666;
+		opacity: 0.7;
+		display: none;
+	}
+
+#ct #loading_image{
+	z-index: 3001;
+}
 
 	.order_conf_tbl{
 		border:1px dotted #999;

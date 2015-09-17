@@ -164,10 +164,20 @@ $( ".handle_inner_open" ).live('click', function(){
     
    
     });
-    
-  
-    
-   
+
+
+
+    var intWidth = $(window).outerWidth();
+    var intHeight = $(window).outerHeight();
+
+    var xCenter = intWidth / 2;
+    var yCenter = intHeight / 2;
+
+    $('#processbox').css({'width':intWidth,'height':intHeight});
+
+    $('#ct').css({'width':intWidth,'height':intHeight,'margin':'0 auto'});
+
+   // alert("The center of the window is: " + xCenter + "x " + yCenter + "y");
     
     
     
@@ -194,7 +204,15 @@ $( ".handle_inner_open" ).live('click', function(){
         
 
       <div class="{{class}} full_wrapper ">
+
+
+
+          <div id="ct">
+              <img  src="{{ asset('bundles/lovethatfit/site/images/process_2.gif') }}" alt="loading" id="loading_image">
+              <div id="process">please wait while your order is being processed...</div>
+          </div>
         <div class="holder">
+
             {%if app.user %}
            
                 <div id="header">

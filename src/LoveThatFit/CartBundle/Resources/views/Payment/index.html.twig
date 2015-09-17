@@ -3,11 +3,11 @@
 {% block profile_heading %}
     <div id="breadcrumb">
         <ul>
-            <li class="active"><a href="#">Shopping Cart</a></li>
+            <li><a href="#">Shopping Cart</a></li>
             <li class="bd_sep">>></li>
             <li><a href="#">Delivery &amp; Shipping</a></li>
             <li class="bd_sep">>></li>
-            <li><a href="#">Review &amp; Billing</a></li>
+            <li class="active"><a href="#">Review &amp; Billing</a></li>
         </ul>
     </div><br>
     <h1 class="cart_hd">Order Confirmation</h1>
@@ -102,14 +102,10 @@
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">
             <div id="payment-form"></div>
-            <input type="hidden" name="order_amount" value="{{ grand_total }}">
+            <input type="hidden" name="order_amount" value="{{ grand_total }}"><br>
             <input id="pay" type="submit" value="Pay ${{ grand_total }}">
 
-            <div style="text-align: center; float: left; width: 550px; margin: 0 auto; font-size: 0.9em; margin-bottom: 20px;">
 
-            <img  src="{{ asset('bundles/lovethatfit/site/images/process_2.gif') }}" style="display: none;padding-left:200px" alt="loading" id="loading_image">
-            <div id="process" style="display: none;padding-left:200px">please wait while your order is being processed...</div>
-            </div>
         </form>
 
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
@@ -123,9 +119,12 @@
                 paymentMethodNonceReceived: function (event, nonce) {
                     $('#checkout').append("<input type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
                     $('#pay').css('display','none');
+                    $('#processbox').show();
                     $('#loading_image').show();
                     $('#process').show();
+                    $('#ct').show();
                     $('.card-field').css('height','0px');
+
                     $('#checkout').submit();
                 }
             });
