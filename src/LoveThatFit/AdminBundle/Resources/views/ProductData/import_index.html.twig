@@ -30,50 +30,34 @@
     <script>
 $(document).ready(function(){
    
-   
-   function show_compare_link(){
-        var product_id = $("#ddl_product").val();
-        
-        if(product_id!=0 && $("#csv_file").val()!=''){        
-            $('#a_csv_product_compare_preview').show()    
-        }else{
-            $('#a_csv_product_compare_preview').hide()    
-        }
-    }
-    
-    $('#ddl_product').change(function (event){
+$('#ddl_product').change(function (event){
     event.preventDefault(); 
-    var product_id = $("#ddl_product").val();      
     show_compare_link();
-    if(product_id==0){
-    $("#db_controls").hide();            
-    }else{
-        $("#db_controls").show();        
-    }
+    $("#ddl_product").val()==0?$("#db_controls").hide():$("#db_controls").show(); 
     return false;      
 });
 
 //---------------------------------------------
-   $('#a_db_product_preview').click(function (event){
-        event.preventDefault();
-    var product_id = $("#ddl_product").val();                    
-    if(product_id!=0){        
-        preview_data("../db_show/" + product_id);
-    }
+$('#a_db_product_preview').click(function (event){
+    event.preventDefault();
+    $("#ddl_product").val()==0?alert('select product!'):preview_data("../db_show/" + $("#ddl_product").val()); 
     return false;
     });
 
 //---------------------------------------------
    $('#a_db_product_json').click(function (event){
-        event.preventDefault();
-    var product_id = $("#ddl_product").val();                    
-    if(product_id!=0){                 
-        preview_data("../db_show/" + product_id + '/json');
-    }
+    event.preventDefault();
+    $("#ddl_product").val()==0?alert('select product!'):preview_data("../db_show/" + $("#ddl_product").val() + '/json'); 
     return false;
     });
 //---------------------------------------------
-   $('#a_csv_product_json').click(function (event){
+//---------------------------------------------
+$("#csv_file").change(function() {
+        show_compare_link();
+        $("#csv_file").val()==''?$("#csv_controls").hide():$("#csv_controls").show();
+    });
+
+$('#a_csv_product_json').click(function (event){
         event.preventDefault();    
         csv_show(true);
         return false;
@@ -90,15 +74,11 @@ $(document).ready(function(){
         return false;
     });
     
-//---------------------------------------------
-$("#csv_file").change(function() {
-        show_compare_link();
-        if($("#csv_file").val()==''){
-            $("#csv_controls").hide();            
-        }else{
-            $("#csv_controls").show();        
-        }
-    });
+//--------------------------------------------------------    
+   function show_compare_link(){
+       $("#ddl_product").val()!=0 && $("#csv_file").val()!=''?$('#a_csv_product_compare_preview').show():$('#a_csv_product_compare_preview').hide();
+    }
+
 //--------------------------------------------    
  function preview_data(compare_url){
     $.ajax({
