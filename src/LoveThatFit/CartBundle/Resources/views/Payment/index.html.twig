@@ -108,8 +108,17 @@
 
         </form>
 
+    <div id="ct">
+        <img  src="{{ asset('bundles/lovethatfit/site/images/process_2.gif') }}" alt="loading" id="loading_image">
+        <div id="process">please wait while your order is being processed...</div>
+    </div>
+
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
         <script language="javascript" type="text/javascript">
+
+
+
+
             var clientToken = "{{ token }}";
 //            $('#pay').click(function() {
 //
@@ -118,16 +127,23 @@
                 container: "payment-form",
                 paymentMethodNonceReceived: function (event, nonce) {
                     $('#checkout').append("<input type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
-                    $('#pay').css('display','none');
+                   $('#pay').show();
                     $('#processbox').show();
                     $('#loading_image').show();
                     $('#process').show();
-                    $('#ct').show();
-                    $('.card-field').css('height','0px');
 
+                    $('.card-field').css('height','0px');
                     $('#checkout').submit();
+
                 }
+
+
+
             });
+
+
+
+
         </script>
 
 
