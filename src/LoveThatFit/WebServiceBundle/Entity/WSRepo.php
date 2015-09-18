@@ -66,11 +66,12 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name
-            FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.product_colors pc            
+            FROM LoveThatFitAdminBundle:Product p             
             JOIN p.brand b
             LEFT JOIN p.retailer r
             JOIN p.user_item_try_history uih
+            JOIN uih.productitem pi
+            JOIN pi.product_color pc            
             JOIN p.clothing_type ct
             
             WHERE uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
@@ -86,8 +87,8 @@ class WSRepo {
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name
             FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.product_colors pc            
             JOIN p.product_items pi
+            JOIN pi.product_color pc                        
             JOIN p.brand b
             LEFT JOIN p.retailer r
             JOIN pi.users u
@@ -107,7 +108,7 @@ class WSRepo {
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name
             FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.product_colors pc            
+            JOIN p.displayProductColor pc            
             JOIN p.brand b
             LEFT JOIN p.retailer r
             JOIN p.clothing_type ct
