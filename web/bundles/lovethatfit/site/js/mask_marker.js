@@ -487,7 +487,7 @@ if(chk_no_img_path == true){
     mid_area_path.scale(inc_ratio, p_user_height);
     
     //One percent adjustment
-    //mid_area_path.scale(inc_ratio, 1.01);
+    mid_area_path.scale(inc_ratio, 1.01);
     
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
     
