@@ -167,15 +167,16 @@ $( ".handle_inner_open" ).live('click', function(){
 
 
 
-    var intWidth = $(window).outerWidth();
-    var intHeight = $(window).outerHeight();
+    var intWidth = $(document).innerWidth();
+    var intHeight = $(document).innerHeight();
 
-    var xCenter = intWidth / 2;
-    var yCenter = intHeight / 2;
+    //var xCenter = intWidth / 2;
+   // var yCenter = intHeight / 2;
 
-    $('#processbox').css({'width':intWidth,'height':intHeight});
+
 
     $('#ct').css({'width':intWidth,'height':intHeight,'margin':'0 auto'});
+    $('#processbox').css({'width':intWidth,'height':intHeight});
 
    // alert("The center of the window is: " + xCenter + "x " + yCenter + "y");
     

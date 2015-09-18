@@ -123,7 +123,7 @@
                 container: "payment-form",
                 paymentMethodNonceReceived: function (event, nonce) {
                     $('#checkout').append("<input type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
-                    $('#pay').css('display','none');
+                    $('#pay').css('display','block');
                     $('#processbox').show();
                     $('#loading_image').show();
                     $('#process').show();
