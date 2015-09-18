@@ -66,7 +66,7 @@
                 <table border="0" cellspacing="0" cellpadding="0" width="600">
                     <tr>
                         <td><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order #:</strong></font></td>
-                        <td><font face="Arial, Helvetica, sans-serif" size="2">{{order.OrderNumber }}</font></td>
+                        <td><font face="Arial, Helvetica, sans-serif" size="2"><a href="{{ app.request.getSchemeAndHttpHost() }}{{ path('user_profile_order_preview', {'id':order.Id}) }}">{{order.OrderNumber}}</a></font></td>
                     </tr>
                     <tr>
                         <td colspan="2" height="5">&nbsp;</td>
@@ -132,7 +132,7 @@
                                         <td>
                                             <table cellpadding="0" cellspacing="0">
                                                 <tr>
-                                                    <td style="border:1px solid #ccc; width:82px;"><img width="72" src="http://selfiestyler.com:81{{ asset(c.productItem.productColor.webPath) }}"></td>
+                                                    <td style="border:1px solid #ccc; width:82px;"><img width="72" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(c.productItem.productColor.webPath) }}"></td>
                                                 </tr>
                                             </table>
                                         </td>

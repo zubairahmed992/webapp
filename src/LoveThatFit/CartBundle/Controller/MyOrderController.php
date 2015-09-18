@@ -24,10 +24,6 @@ class MyOrderController extends Controller
 
   public function showAction($id) {
 	$entity = $this->get('cart.helper.order')->find($id);
-//	foreach($entity->getUserOrderDetail() as $ci){
-//	  echo $ci->getQty();
-//	}
-	//echo $entity->UserOrder()->getUserOrderDetail()->getQty();
 	$user = $this->get('security.context')->getToken()->getUser();
 	$valid_user = $this->get('cart.helper.order')->HasUserOrder($id,$user);
 	if($valid_user["counter"] == 0){
@@ -38,6 +34,19 @@ class MyOrderController extends Controller
 	  'order' => $entity,
 	  'order_id' => $id
 	));
+  }
+  //-----------------------Login session bridge for email click order number-----------------------------------------------------------------
+  public function previewOrderAction($id) {
+	$session = $this->getRequest()->getSession();
+	$user = $this->get('security.context')->getToken()->getUser();
+	if($user->getId()){
+	  return $this->redirect($this->generateUrl('user_profile_order_show', array('id' => $id)));
+	}else{
+	  $session->set('order_id', $id);
+	  return $this->redirect($this->generateUrl('login'));
+	}
+	die;
+
   }
 
 }
