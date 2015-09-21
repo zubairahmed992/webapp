@@ -19,18 +19,24 @@
                                         <tr>
                                             <td><div align="center">
                                                     <table border="0" cellspacing="2" cellpadding="2" width="600">
+
                                                         <tr>
-                                                            <td style="border-bottom: 1px solid #ccc;"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order #:</strong></font></td>
-                                                            <td></td>
-                                                            <td style="border-bottom: 1px solid #ccc;"><font face="Arial, Helvetica, sans-serif" size="2">{{order.OrderNumber }}</font></td>
+
+                                                            <td colspan="3">&nbsp;</td>
+
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="3" height="5">&nbsp;</td>
+                                                            <td><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order #:</strong></font></td>
+                                                            <td></td>
+                                                            <td><font face="Arial, Helvetica, sans-serif" size="2">{{order.OrderNumber }}</font></td>
                                                         </tr>
                                                         <tr>
-                                                            <td width="100" style="border-bottom: 1px solid #ccc;"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order Date:</strong></font></td>
+                                                            <td colspan="3" height="5"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order Date:</strong></font></td>
                                                             <td></td>
-                                                            <td width="500" style="border-bottom: 1px solid #ccc;"><font face="Arial, Helvetica, sans-serif" size="2">{{order.OrderDate|date('Y-m-d H:i:s') }}</font></td>
+                                                            <td width="500"><font face="Arial, Helvetica, sans-serif" size="2">{{order.OrderDate|date('Y-m-d H:i:s') }}</font></td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3">&nbsp;</td>
@@ -91,7 +97,7 @@
                                                                         <td>
                                                                             <table cellpadding="0" cellspacing="0">
                                                                                 <tr>
-                                                                                    <td style="border:1px solid #ccc; width:82px;"><img width="72" height="92" src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                                                                                    <td style="border:1px solid #ccc; width:82px;" align="center"><img width="72" height="92" src="{{ asset(c.productItem.productColor.webPath) }}"></td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
@@ -99,37 +105,39 @@
 
                                                                         <td><strong><font face="Arial, Helvetica, sans-serif" size="2">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</font></strong></td>
                                                                     </tr>
-                                                                </table></td>
+                                                                </table>
+                                                            </td>
                                                             <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">${{ c.productItem.price}}</font></td>
                                                             <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">{{ c.qty }}</font></td>
                                                         </tr>
+                                                            <tr>
+                                                                <td colspan="3" height="15"></td>
+                                                            </tr>
                                                         <tr>
-                                                            <td colspan="3">&nbsp;</td>
+                                                            <td colspan="3" style="border-top: 1px solid #efefef;" height="15"></td>
                                                         </tr>
                                                         {%endfor%}
 
-                                                        <tr>
-                                                            <td>&nbsp;</td>
-                                                            <td align="center">&nbsp;</td>
-                                                            <td align="center">&nbsp;</td>
-                                                        </tr>
 
-                                                        <tr>
-                                                            <td colspan="3">&nbsp;</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3">&nbsp;</td>
-                                                        </tr>
+
+
+
                                                     </table>
                                                     <table width="600" border="0" cellpadding="0" cellspacing="0">
                                                         <tr>
-                                                            <td><table border="0" cellspacing="0" cellpadding="0" align="right" width="400">
+                                                            <td>
+                                                                <table border="0" cellspacing="0" cellpadding="0" align="right" width="400">
                                                                     <tr>
                                                                         <td align="right"><strong>Total</strong></td>
                                                                         <td width="80" align="right"><strong>${{ order.orderAmount}}</strong></td>
                                                                     </tr>
 
-                                                                </table></td>
+                                                                    <tr>
+                                                                        <td colspan="2" height="10"></td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
                                                         </tr>
 
                                                     </table>
