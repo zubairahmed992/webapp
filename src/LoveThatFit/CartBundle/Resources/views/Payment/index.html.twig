@@ -87,7 +87,7 @@
 
                     {{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}<br>
 
-           {{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_conf"></a></td>
+           {{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_change_address', {'bill':'billing'}) }}" class="edt_icon_conf"></a></td>
                 <td width="5%"></td>
 
             <td width="45%">
@@ -95,7 +95,7 @@
 
                     {{ shipping_user_addresses.first_name  }} {{ shipping_user_addresses.last_name  }}<br>
 
-            {{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_default')}}" class="edt_icon_conf"></a></td></tr>
+            {{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_change_address', {'bill':'shipping'}) }}" class="edt_icon_conf"></a></td></tr>
 
         {% endif %}
     </table>
