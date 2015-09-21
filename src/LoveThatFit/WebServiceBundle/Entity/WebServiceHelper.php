@@ -461,8 +461,8 @@ class WebServiceHelper {
                 'color_id' => $pc->getId(),
                 'product_id' => $product->getId(),
                 'title' => $pc->getTitle(),
-                'image' => $pc->getImage()==null?'no-data':$pc->getImage(),
-                'pattern' => $pc->getPattern()==null?'no-data':$pc->getPattern(),
+                'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
+                'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
                 'recommended' => $default_color_id == $pc->getId() ? true : false,
             );
         }
@@ -471,19 +471,30 @@ class WebServiceHelper {
         $fb = $algo->getStrippedFeedBack();
         $default_item = $algo->getRecommendedFromStrippedFeedBack($fb);
         $p['sizes'] = $fb['feedback'];
+        $recommended_product_item = null;
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
             $ps_id = $pi->getProductSize()->getId();
+
             $p['items'][$pi->getId()] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
                 'color_id' => $pc_id,
                 'size_id' => $ps_id,
                 'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
-                'image' => $pi->getImage()==null?'no-data':$pi->getImage(),
+                'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
             );
+         
+            if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
+            $recommended_product_item = $pi;
         }
+        }
+        
+
+        $default_size_fb = array();
+        $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
+        $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
         return $this->response_array(true, "Product Detail ", true, $p);
     }
 
