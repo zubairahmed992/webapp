@@ -261,7 +261,13 @@ function formValidates()
 
                                                         </div>
                                                     {% endif %}
-                                                        <input type="hidden" name="_target_path" value="/inner_site/index" />
+
+                                                {% if(app.session.get('order_id')!='') %}
+                                                {% set val=app.session.get('order_id') %}
+                                                    <input type="hidden" name="_target_path" value="/profile/order/{{ val }}/show" />
+                                                {% else %}
+                                                    <input type="hidden" name="_target_path" value="/inner_site/index" />
+                                                {% endif %}
                                                     </div>
 
                                                     <div class="frm_ele">

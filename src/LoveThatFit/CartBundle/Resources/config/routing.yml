@@ -76,7 +76,7 @@ user_profile_order_show:
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:show }
 
 user_profile_order_preview:
-    pattern:  /profile/order/preview/{id}
+    pattern:  /order/preview/{id}
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:previewOrder }
 
 user_profile_order_list:

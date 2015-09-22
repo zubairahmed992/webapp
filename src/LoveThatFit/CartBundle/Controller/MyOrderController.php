@@ -25,6 +25,8 @@ class MyOrderController extends Controller
   public function showAction($id) {
 	$entity = $this->get('cart.helper.order')->find($id);
 	$user = $this->get('security.context')->getToken()->getUser();
+	$session = $this->getRequest()->getSession();
+	$session->set('order_id', '');
 	$valid_user = $this->get('cart.helper.order')->HasUserOrder($id,$user);
 	if($valid_user["counter"] == 0){
 	  $this->get('session')->setFlash('warning', 'You are not Authenticate to view this page');
@@ -38,15 +40,9 @@ class MyOrderController extends Controller
   //-----------------------Login session bridge for email click order number-----------------------------------------------------------------
   public function previewOrderAction($id) {
 	$session = $this->getRequest()->getSession();
-	$user = $this->get('security.context')->getToken()->getUser();
-	if($user->getId()){
-	  return $this->redirect($this->generateUrl('user_profile_order_show', array('id' => $id)));
-	}else{
-	  $session->set('order_id', $id);
-	  return $this->redirect($this->generateUrl('login'));
+	$session->set('order_id', $id);
+
+	return $this->redirect($this->generateUrl('user_profile_order_show',array('id' => $id)));
+	//return $this->redirect($this->generateUrl('login'));
 	}
-	die;
-
-  }
-
 }
