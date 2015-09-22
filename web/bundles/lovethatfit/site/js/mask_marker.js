@@ -503,6 +503,8 @@ if(chk_no_img_path == true){
 if(dv_iPhone6){    
 //    alert("its 6....");
     mid_area_path.scale(1.174,1.174);
+    
+    mid_area_path.scale(0.952,0.952);
 }
 
 

@@ -8,7 +8,7 @@ hitOptions = {
 inc_ratio = 1;
 
 var liquid_mask = {
-    user_height: parseInt($('#user_height_frm_3').attr('value')),
+    user_height: parseFloat($('#user_height_frm_3').attr('value')),
     def_mask: $("#default_user_path").html(),
     device_type: $("#dv_type").attr("value"),
     def_zoom_ratio: 1,
@@ -44,7 +44,14 @@ if(liquid_mask.device_type == "iphone6"){
     // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
     // 4.49 is 1% value
     //adj_btm_fix = 15.333 + 4.49;
-    adj_btm_fix = 0;
+    
+    //fix adjustment for iphone6 camera view.
+    
+    fix_add_btm = 8.5;
+    
+    adj_btm_fix = 15.333 + fix_add_btm;
+    
+    //adj_btm_fix = 0;
 }
 //////// From JS file
 chk_no_img_path = true;
@@ -288,6 +295,9 @@ if(chk_no_img_path == true){
       mid_area_path.scale(0.748, 0.748);
       //One percent adjustment
       mid_area_path.scale(1, 1.01);
+      
+      mid_area_path.scale(0.952, 0.952);
+      
       mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
       mid_area_path.position = new Point(screen.width/2,472 + 2 - adj_btm_fix);
       //alert("6_6_6");
