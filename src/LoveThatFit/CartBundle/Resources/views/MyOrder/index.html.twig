@@ -7,23 +7,27 @@
 {% block profile_section %}
 
     {% if app.session.hasFlash('warning') %}
+
+        <div class="confirmation_box">
+            <h1 style="padding-bottom: 15px;">
+
         <div class="alert alert-error">
             {{ app.session.flash('warning') }}
+        </div>
+            </h1>
         </div>
     {% endif %}
     {% if app.session.hasFlash('success') %}
         <div class="success_alert">
             {{ app.session.flash('success') }}
         </div>
-    {% endif %}
 
+        <div>
 
-    <div>
-
-        {#<div class="btn_wrapper">#}
+            {#<div class="btn_wrapper">#}
             {#<a href="{{path('cart_show')}}" class="btn">back</a>#}
-        {#</div>#}
-        <div class="clearfix"></div>
+            {#</div>#}
+            <div class="clearfix"></div>
 
             <div id="detail_wrapper" class="detail_wrap">
                 <div id="product_content">
@@ -58,7 +62,7 @@
 
 
 
-                          </table>
+                            </table>
                             {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
                             with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
                             ,'controller_name':'user_profile_order_list','sort':sort}
@@ -72,8 +76,12 @@
                 </div><!-- End pro_detail -->
             </div><!-- End product_content -->
 
-        </form>
-    </div>
+            </form>
+        </div>
+    {% endif %}
+
+
+
 
 
 {% endblock %}
