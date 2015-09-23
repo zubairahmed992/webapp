@@ -68,7 +68,10 @@ if(dv_type == "iphone6"){
                 // adjusting 66.666% value of top empty area -----  /3*2 = 17.333
 
                 //adj_btm_fix = 30.50;
-                adj_btm_fix = 0;
+                //adj_btm_fix = 0;
+                
+                //Static value "28px" adjusted based on screen test
+                adj_btm_fix = 28;
 
                 diff_dv = 38 + adj_btm_fix;
   
@@ -503,7 +506,6 @@ if(chk_no_img_path == true){
 if(dv_iPhone6){    
 //    alert("its 6....");
     mid_area_path.scale(1.174,1.174);
-    
     mid_area_path.scale(0.952,0.952);
 }
 
