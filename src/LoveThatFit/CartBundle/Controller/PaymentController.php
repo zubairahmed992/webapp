@@ -52,13 +52,10 @@ class PaymentController extends Controller
 		return $this->redirect($this->generateUrl('cart_show'));
 	  }else{
 	  $result = $this->get('cart.helper.payment')->braintreeTransaction($user,$decoded,$session);
-	  ######### Mail Code ###########
-	  //$entity = $this->get('cart.helper.order')->find($result['order_id']);
-	  //$this->get('mail_helper')->sendOrderConfirmationEmail($user,$entity, $user->getCart());
-	  ########## End Mail Code ########
 	  return $this->render('LoveThatFitCartBundle:Payment:success.html.twig', array(
 		'order_number' => $result['order_number'],
-		'transaction_status' => $result['transaction_status']
+		'transaction_status' => $result['transaction_status'],
+		'response_code' => $result['response_code']
 	  ));
 	  }
 

@@ -18,7 +18,7 @@
 
 
 
-            {% if(transaction_status == 'authorized') %}
+            {% if(order_number != '') %}
 
                 <div class="confirmation_box">
 
@@ -35,7 +35,7 @@
 
                 <div class="confirmation_box">
                     <h1>Order Confirmation</h1>
-                    There is some error occured while payment, Your Transaction has been Declined</div>
+                    {{ response_code }}</div>
 
 
             {% endif %}

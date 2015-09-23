@@ -77,6 +77,7 @@ class PaymentHelper {
 		$data = array();
 		$data["order_number"] = $order_number;
 		$data["transaction_status"] = $transaction_status;
+		$data["response_code"] = $result->transaction->processorResponseCode;
 		$session->set('billing_shipping_info', '');
 		$session->set('order_amount', '');
 		$session->set('bill_info', '');
@@ -91,6 +92,7 @@ class PaymentHelper {
 		$data = array();
 		$data["order_number"] = '';
 		$data["transaction_status"] = $transaction_status;
+		$data["response_code"] = $parse["decline_codes"][$result->transaction->processorResponseCode];
 		$session->set('billing_shipping_info', '');
 		$session->set('order_amount', '');
 		$session->set('bill_info', '');
