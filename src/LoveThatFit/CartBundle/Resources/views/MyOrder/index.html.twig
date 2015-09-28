@@ -9,11 +9,17 @@
     {% if app.session.hasFlash('warning') %}
 
         <div class="confirmation_box">
-            <h1 style="padding-bottom: 15px;">
+            <h1>
 
         <div class="alert alert-error">
             {{ app.session.flash('warning') }}
         </div>
+
+                <!--<div class="empty_prod_btn return_btn">
+                    <a href="{{path('inner_site_index')}}">Continue</a>
+                </div>-->
+
+
             </h1>
         </div>
     {% endif %}
@@ -22,65 +28,65 @@
             {{ app.session.flash('success') }}
         </div>
 
-        <div>
 
-            {#<div class="btn_wrapper">#}
-            {#<a href="{{path('cart_show')}}" class="btn">back</a>#}
-            {#</div>#}
-            <div class="clearfix"></div>
+    {% endif %}
 
-            <div id="detail_wrapper" class="detail_wrap">
-                <div id="product_content">
-                    <div id="pro_detail">
-                        <div class="edt_container">
-                            <h1>My Orders</h1><br>
+    <div>
 
-                            <table width="700" border="0" class="user_product_hd">
+        {#<div class="btn_wrapper">#}
+        {#<a href="{{path('cart_show')}}" class="btn">back</a>#}
+        {#</div>#}
+        <div class="clearfix"></div>
+
+        <div id="detail_wrapper" class="detail_wrap">
+            <div id="product_content">
+                <div id="pro_detail">
+                    <div class="edt_container">
+                        <h1>My Orders</h1><br>
+
+                        <table width="700" border="0" class="user_product_hd">
+                            <tr>
+                                <td>Order Number</td>
+                                <td>Order Date</td>
+                                <td>Order Status</td>
+                                <td>Order Amount</td>
+                                <td>Payment Method</td>
+
+
+                            </tr>
+                            {% for c in order %}
                                 <tr>
-                                    <td>Order Number</td>
-                                    <td>Order Date</td>
-                                    <td>Order Status</td>
-                                    <td>Order Amount</td>
-                                    <td>Payment Method</td>
+
+                                    <td><a target="_blank" href="{{path('user_profile_order_show', {'id': c.Id})}}">{{c.OrderNumber}}</a></td>
+                                    <td>{{ c.OrderDate|date('d-m-Y')}} </td>
+                                    <td>{{ c.OrderStatus}}</td>
+                                    <td>${{ c.OrderAmount}}</td>
+                                    <td>{{ c.PaymentMethod}}</td>
 
 
                                 </tr>
-                                {% for c in order %}
-                                    <tr>
-
-                                        <td><a target="_blank" href="{{path('user_profile_order_show', {'id': c.Id})}}">{{c.OrderNumber}}</a></td>
-                                        <td>{{ c.OrderDate|date('d-m-Y')}} </td>
-                                        <td>{{ c.OrderStatus}}</td>
-                                        <td>${{ c.OrderAmount}}</td>
-                                        <td>{{ c.PaymentMethod}}</td>
-
-
-                                    </tr>
-                                {% else %}
-                                    <tr><td colspan="5" align="center">You have no recent orders</td></tr>
-                                {% endfor %}
+                            {% else %}
+                                <tr><td colspan="5" align="center">You have no recent orders</td></tr>
+                            {% endfor %}
 
 
 
-                            </table>
-                            {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-                            with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-                            ,'controller_name':'user_profile_order_list','sort':sort}
-                            %}
-                        </div>
-
-
-
-
+                        </table>
+                        {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+                        with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+                        ,'controller_name':'user_profile_order_list','sort':sort}
+                        %}
                     </div>
-                </div><!-- End pro_detail -->
-            </div><!-- End product_content -->
-
-            </form>
-        </div>
-    {% endif %}
 
 
+
+
+                </div>
+            </div><!-- End pro_detail -->
+        </div><!-- End product_content -->
+
+        </form>
+    </div>
 
 
 

@@ -5770,7 +5770,7 @@ background-color:#fff;
         display:inline-block;
     }
 
-    #breadcrumb ul li.active a{
+    #breadcrumb ul li.active{
         color:#426eb6;
         font-weight:bold;
     }
@@ -6338,7 +6338,7 @@ background-color:#fff;
 .confirmation_box{
 	background: #efefef;
 	box-shadow: 1px 2px 2px #ccc;
-	padding: 10px;
+	padding: 10px 10px 15px 10px;
 	width: 500px;
 	margin: 0 auto;
 	font-size: 0.9em;

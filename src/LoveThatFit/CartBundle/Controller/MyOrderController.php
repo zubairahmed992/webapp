@@ -29,7 +29,7 @@ class MyOrderController extends Controller
 	$session->set('order_id', '');
 	$valid_user = $this->get('cart.helper.order')->HasUserOrder($id,$user);
 	if($valid_user["counter"] == 0){
-	  $this->get('session')->setFlash('warning', 'You are not Authenticate to view this page');
+	  $this->get('session')->setFlash('warning', 'You have entered wrong URL!');
 	  return $this->redirect($this->generateUrl('user_profile_order_list'));
 	}
 	return $this->render('LoveThatFitCartBundle:MyOrder:show.html.twig', array(
