@@ -103,7 +103,7 @@
         <form id="checkout" method="post" action="{{ path('payment')}}">
             <div id="payment-form"></div>
             <input type="hidden" name="order_amount" value="{{ grand_total }}"><br>
-            <input id="pay" type="submit" value="Pay ${{ grand_total }}">
+            <input style="display:none" id="pay" type="submit" value="Pay ${{ grand_total }}">
 
 
         </form>
@@ -116,13 +116,15 @@
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
         <script language="javascript" type="text/javascript">
             var clientToken = "{{ token }}";
-//            $('#pay').click(function() {
-//
-//            });
+            setTimeout(function() {
+                var el = document.getElementById('pay');
+                if( el )
+                    el.style.display = 'block';
+            }, 2200);
             braintree.setup(clientToken, "dropin", {
                 container: "payment-form",
                 paymentMethodNonceReceived: function (event, nonce) {
-                    $('#checkout').append("<input type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
+                    $('#checkout').append("<input id='payment_method_nonce' type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
                     $('#pay').css('display','block');
                     $('#processbox').show();
                     $('#loading_image').show();
