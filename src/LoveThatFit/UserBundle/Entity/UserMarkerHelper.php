@@ -231,13 +231,14 @@ class UserMarkerHelper {
         #$m1=0;
         foreach ($mm_specs['masked_marker'] as $mms_k=>$mms_v) {
             $user_fitpoint_measurement =  array_key_exists($mms_k, $ubm)?$ubm[$mms_k]:'';
-            $m1 = $this->calculate_distance($mms_v, $mm_array);            
+            $m1 = $this->calculate_distance($mms_v, $mm_array);    
+            $device_adjusted_px = $this->device_screen_adjustment($m1['avg'], $user->getImageDeviceType());
             $comp[$mms_k] = array(  'axis'=>$mms_v['axis'], 
                                     'type'=>$mms_v['type'], 
                                     'segments'=>$mms_v['segments'], 
                                     'body'=>$user_fitpoint_measurement, 
                                     'pixels'=>$m1,
-                                    'predicted'=>  $this->getPixelToInch($mm_specs, $mms_k, $m1['avg'], $user->getImageDeviceType()),
+                                    'predicted'=>  $this->getPixelToInch($mm_specs, $mms_k, $device_adjusted_px),
                                 );                
         }
         return $comp;
@@ -304,24 +305,23 @@ class UserMarkerHelper {
     #---------------------------------------------------------------
     private function device_screen_adjustment($inch_measure, $device_type=null){
         if( strtolower($device_type) == 'iphone6'){
-            return $inch_measure + ($inch_measure * 0.1123);
+            return $inch_measure + ($inch_measure * 0.891);
         }else{
             return $inch_measure;
         }
     }
     #---------------------------------------------------------------
-    private function getPixelToInch($mm_specs, $fit_point, $pixels, $device_type=null) {
+    private function getPixelToInch($mm_specs, $fit_point, $pixels) {
         $prev_px_measure = 0;
         $prev_inch_measure = 0;        
         if(array_key_exists($fit_point, $mm_specs['pixel_conversion'])){
         foreach ($mm_specs['pixel_conversion'][$fit_point] as $px_measure => $inch_measure) {
             if ($px_measure == $pixels) {#exact match of pixel
-                return $this->device_screen_adjustment($inch_measure, $device_type);
+                return $inch_measure;
             } elseif ($px_measure > $pixels) {
                 if ($prev_px_measure < $pixels) {#in between values of pixel
-                    if ($prev_px_measure == 0) { #compare with previous measurement
-                        $standard_inch_measure = ($px_measure - $pixels) < 5 ? $inch_measure : 0;
-                        return $this->device_screen_adjustment($standard_inch_measure, $device_type);
+                    if ($prev_px_measure == 0) { #compare with previous measurement                        
+                        return ($px_measure - $pixels) < 5 ? $inch_measure : 0;
                     } else {
                         #grate to scale ~~~~~~~~>
                         $px_diff=$px_measure-$prev_px_measure;# diff in px
@@ -329,7 +329,7 @@ class UserMarkerHelper {
                         $grade_scale=$inch_diff/$px_diff; # ratio of the diff
                         $current_inch_diff=$pixels-$prev_px_measure; # diff of the actual body px & prev item px
                         $current_inch_measure = $prev_inch_measure + ($grade_scale * $current_inch_diff);
-                        return $this->device_screen_adjustment($current_inch_measure, $device_type);
+                        return $current_inch_measure;
                     }
                 }
             }
