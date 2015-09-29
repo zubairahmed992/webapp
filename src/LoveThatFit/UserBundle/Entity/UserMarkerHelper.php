@@ -305,7 +305,7 @@ class UserMarkerHelper {
     #---------------------------------------------------------------
     private function device_screen_adjustment($inch_measure, $device_type=null){
         if( strtolower($device_type) == 'iphone6'){
-            return $inch_measure + ($inch_measure * 0.891);
+            return ($inch_measure * 0.89478);
         }else{
             return $inch_measure;
         }
