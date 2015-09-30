@@ -6132,6 +6132,7 @@ background-color:#fff;
    height: 27px;
    display: inline-block;
    margin-left: 3px;
+   cursor: pointer;
 }
 
 .add-to-cart{

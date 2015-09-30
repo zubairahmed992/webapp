@@ -221,7 +221,7 @@ function chk_dress_applied_loaded(prod_type_applied){
                                             
                                            <div class="prod_price">
           <a  onclick="get_compare_list('{{productItem.id}}')" href="javascript:void(0)" id="comapre_product">
-                  <img src="{{asset('bundles/lovethatfit/site/images/compare_icon_new.png')}}">
+                  <img src="{{asset('bundles/lovethatfit/site/images/compare_icon_new.png')}}" alt="Compare" title="Compare">
           </a>
           <span id="comapre_url{{productItem.id}}" style="display:none; ">{{path('compare_product_add',{'item_id':productItem.id})}}</span> 
                           </div>                                   
@@ -251,7 +251,7 @@ function chk_dress_applied_loaded(prod_type_applied){
                                             
                                            </span>
                   
-                  <div class="wishlist_icon" >
+                  <div class="wishlist_icon" title="Add to Wishlist">
             
                   </div>
                                     </div>   
