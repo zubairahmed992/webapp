@@ -215,8 +215,10 @@ class UserMarkerHelper {
         $ca=$this->getComparisionArray($user);
         $pa=array();
         foreach ($ca as $mms_k=>$mms_v) {
-            if($mms_v['predicted']>0)
-            $pa[$mms_k]=number_format($mms_v['predicted'], 2, '.', '');
+            if($mms_v['predicted']>0){
+                $device_adjusted_px = $this->device_screen_adjustment($mms_v['predicted'], $user->getImageDeviceType());
+                $pa[$mms_k]=number_format($device_adjusted_px, 2, '.', '');
+            }
         }
         return $pa;
     }
@@ -245,13 +247,14 @@ class UserMarkerHelper {
         
     }
     #---------------------------------------------------------------
-    public function getPredictedMeasurement($mask_json){                       
+    public function getPredictedMeasurement($mask_json, $device_type=null){                       
         $mm_specs =  $this->getMaskedMarkerSpecs();        
         $mm_array = json_decode($mask_json);
-        $pred_measurements=array();
+        $pred_measurements=array();        
         foreach ($mm_specs['masked_marker'] as $mms_k=>$mms_v) {
             $m1 = $this->calculate_distance($mms_v, $mm_array);                        
-            $predicted =  $this->getPixelToInch($mm_specs, $mms_k, $m1['avg']);
+            $device_adjusted_px = $this->device_screen_adjustment($m1['avg'], $device_type);
+            $predicted =  $this->getPixelToInch($mm_specs, $mms_k, $device_adjusted_px);
             if ($predicted>0){
                 $pred_measurements[$mms_k]=$predicted;                
             }
@@ -303,11 +306,12 @@ class UserMarkerHelper {
     }
     #----------------------------------------------------------------------------
     #---------------------------------------------------------------
-    private function device_screen_adjustment($inch_measure, $device_type=null){
+    #this method converts the px value of a device equivalent to iPhone5 in order to convert to inches
+    private function device_screen_adjustment($px_measure, $device_type=null){
         if( strtolower($device_type) == 'iphone6'){
-            return ($inch_measure * 0.89478);
+            return ($px_measure * 0.89478);
         }else{
-            return $inch_measure;
+            return $px_measure;
         }
     }
     #---------------------------------------------------------------

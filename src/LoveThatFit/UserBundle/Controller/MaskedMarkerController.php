@@ -58,7 +58,7 @@ class MaskedMarkerController extends Controller {
       public function fooAction($id=null){
         $user = $this->get('security.context')->getToken()->getUser();
         $marker = $user->getUserMarker();
-        $pred_measurements = $this->get('user.marker.helper')->getPredictedMeasurement($marker->getMarkerJson());                
+        $pred_measurements = $this->get('user.marker.helper')->getPredictedMeasurement($marker->getMarkerJson(), $user()->getImageDeviceType());                
         $m=$user->getMeasurement();        
         $um['original']=$m->getArray();
         foreach ($pred_measurements as $k=>$v) {
