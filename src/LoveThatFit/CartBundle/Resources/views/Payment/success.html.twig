@@ -24,7 +24,11 @@
 
                     <h1>Order Confirmation</h1>
 
-                    Your Order has been placed successfully, your order number is <br><span>{{ order_number }}</span>
+                    Your Order has been placed successfully, your order number is <br>
+
+                    <a href="{{path('user_profile_order_list')}}">
+                    <span>{{ order_number }}</span></a>
+
                     <div class="empty_prod_btn return_btn">
                         <a href="{{path('inner_site_index')}}">Continue</a>
                     </div>
