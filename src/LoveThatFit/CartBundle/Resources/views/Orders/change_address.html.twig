@@ -7,6 +7,25 @@
 {% block profile_section %}
     <script type="text/javascript">
 
+     function addAddress(){
+            $('#first_name').val('');
+            $('#last_name').val('');
+            $('#address1').val('');
+            $('#address2').val('');
+            $('#phone').val('');
+            $('#city').val('');
+            $('#postcode').val('');
+            $('#country').val('');
+            $('#state').val('');
+            $('#update_info').val('0');
+            $('#update_address').val('Add Address');
+            $('#update_info').val('0');
+            $('#default').css('display','block');
+            $('#add_address').css('display','none');
+            $('#addresses').val('add');
+            $('#default_message').css('display','none');
+            $('#displayval').text('Add');
+     }
      function getUserDetail(address,is_billing){
          if(address[address.selectedIndex].value == "add"){
              $('#first_name').val('');
@@ -239,7 +258,7 @@
                                 <div class="span3">
 
                                     <div style="margin:0px 0px 0px 0px;"><input type="hidden" id="update_info" name="update_info" value="1">
-                                        <input type="submit" id="add_address" value="Add New Address" class="checkout_btn"/>
+                                        <input type="button" id="add_address" value="Add New Address" class="checkout_btn" onclick="return addAddress();"/>
                                         <input type="submit" id="update_address" value="Update Address" class="checkout_btn"/>
                                     </div>
                                 </div>
