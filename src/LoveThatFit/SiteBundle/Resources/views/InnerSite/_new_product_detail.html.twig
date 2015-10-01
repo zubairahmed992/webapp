@@ -104,7 +104,9 @@ function chk_dress_applied_loaded(prod_type_applied){
                        
                              
                             <div class="product_title">{{product.Name}}</div>
-                            <div class="product_price_new"><a href="#" class="add-to-cart" id="{{ productItem.id }}" title="{{productItem.id}}"><span>$10</span></a></div>
+                            <div class="product_price_new"><a href="#" class="add-to-cart" id="{{ productItem.id }}"  title="Add to Cart"><span>$10</span>
+                                <input type="hidden" class="proidd" name="proidd" value="{{ productItem.id }}">
+                                </a></div>
                             
                             <div style="clear:both;"></div>
                             <div class="sepr"></div>

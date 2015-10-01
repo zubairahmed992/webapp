@@ -103,7 +103,9 @@ $( ".handle_inner_open" ).live('click', function(){
     
         jQuery('.add-to-cart').live('click', function(){
               //  alert("The paragraph was clicked.");
-                var title = jQuery(this).attr("title");
+                var title = jQuery(this).find('input').val();
+
+
                 
       
                

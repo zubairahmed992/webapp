@@ -6354,14 +6354,24 @@ background-color:#fff;
 }
 
 .confirmation_box span {
-	background: #52627B;
+
 	color: #fff;
 	padding: 10px;
-	font-size: 0.9em;
+	font-size: 1em;
 	display: inline-block;
 	margin-top: 15px;
-	border-radius: 5px;
+	border-radius: 3px;
 	margin-bottom: 5px;
+	border:2px solid #52627B;
+	font-weight: bold;
+
+}
+
+.confirmation_box span a {
+
+	color: #000;
+	text-decoration: none;
+
 
 }
 
