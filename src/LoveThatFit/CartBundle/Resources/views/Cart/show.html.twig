@@ -76,7 +76,7 @@
 
             {% for c in cart %}
             <tr>
-                <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}" height="65"  ></td>
                 <td>{{ c.productItem.sku}}</td>
                 <td align="left" width="20%">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
                 <td align="center" >
