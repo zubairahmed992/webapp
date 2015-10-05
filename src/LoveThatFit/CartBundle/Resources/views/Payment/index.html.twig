@@ -41,7 +41,7 @@
 
             {% for c in cart %}
             <tr>
-                <td align="center"><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                <td align="center"><img src="{{ asset(c.productItem.productColor.webPath) }}" height="60"></td>
                 <td align="center">{{ c.productItem.sku }}</td>
                 <td align="center">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
                 <td align="center"><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> {{ c.qty }} </td>
