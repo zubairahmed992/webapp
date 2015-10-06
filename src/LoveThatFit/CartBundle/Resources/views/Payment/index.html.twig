@@ -3,9 +3,9 @@
 {% block profile_heading %}
     <div id="breadcrumb">
         <ul>
-            <li>Shopping Cart</li>
+            <li><a href="{{path('cart_show')}}">Shopping Cart</a></li>
             <li class="bd_sep">>></li>
-            <li>Delivery &amp; Shipping</li>
+            <li><a href="{{path('order_default')}}">Delivery &amp; Shipping</a></li>
             <li class="bd_sep">>></li>
             <li class="active">Review &amp; Billing</li>
         </ul>
