@@ -47,7 +47,7 @@
                 <td align="center"><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> {{ c.qty }} </td>
                 <td align="center">${{ c.productItem.price}}</td>
                 <td align="center">${{ c.productItem.price * c.qty}}</td>
-                <td align="center" valign="middle" class="edt_icon"><a href="{{ path('cart_show')}}"></a></td>
+                <td align="center" valign="middle" class="edt_icon"><a href="{{ path('cart_show')}}" title="Edit Order"></a></td>
 
 
 
@@ -68,7 +68,7 @@
 
                 {{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}<br>
 
-                {{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a class="edt_icon_conf" href="{{ path('order_default')}}"></a>
+                {{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a class="edt_icon_conf" href="{{ path('order_default')}}" title="Edit Billing Info"></a>
             </td>
             <td width="5%"></td>
 
@@ -80,14 +80,14 @@
                    {{ billing_shipping_info.billing.shipping_first_name  }} {{ billing_shipping_info.billing.shipping_last_name  }}<br>
 
 
-           {{ billing_shipping_info.billing.shipping_address1 }} {{ billing_shipping_info.billing.shipping_state }} {{ billing_shipping_info.billing.shipping_city }} {{ billing_shipping_info.billing.shipping_country }} {{ billing_shipping_info.billing.shipping_postcode }} <a class="edt_icon_conf" href="{{ path('order_default')}}"></a></td></tr>
+           {{ billing_shipping_info.billing.shipping_address1 }} {{ billing_shipping_info.billing.shipping_state }} {{ billing_shipping_info.billing.shipping_city }} {{ billing_shipping_info.billing.shipping_country }} {{ billing_shipping_info.billing.shipping_postcode }} <a class="edt_icon_conf" href="{{ path('order_default')}}" title="Edit Shipping Info"></a></td></tr>
         {% else %}
             <tr><td  width="45%" id="bil_info">
                     <h1 class="cart_hd">Billing Info</h1>
 
                     {{ billing_user_addresses.first_name  }} {{ billing_user_addresses.last_name  }}<br>
 
-           {{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_change_address', {'bill':'billing'}) }}" class="edt_icon_conf"></a></td>
+           {{ billing_user_addresses.address1 }} {{ billing_user_addresses.state }} {{ billing_user_addresses.city }} {{ billing_user_addresses.country }} {{ billing_user_addresses.postcode }} <a href="{{ path('order_change_address', {'bill':'billing'}) }}" class="edt_icon_conf" title="Edit Billing Info"></a></td>
 
 
             <td width="45%" id="ship_info">
@@ -95,7 +95,7 @@
 
                     {{ shipping_user_addresses.first_name  }} {{ shipping_user_addresses.last_name  }}<br>
 
-            {{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_change_address', {'bill':'shipping'}) }}" class="edt_icon_conf"></a></td></tr>
+            {{ shipping_user_addresses.address1 }} {{ shipping_user_addresses.state }} {{ shipping_user_addresses.city }} {{ shipping_user_addresses.country }} {{ shipping_user_addresses.postcode }} <a href="{{ path('order_change_address', {'bill':'shipping'}) }}" class="edt_icon_conf" title="Edit Shipping Info"></a></td></tr>
 
         {% endif %}
     </table>
