@@ -96,8 +96,6 @@ class OrderController extends Controller
 		$default_shipping_address = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,'0');
 		$session->set('billing_address', $default_billing_address);
 		$session->set('shipping_address', $default_shipping_address);
-
-		//$session->get('order_amount', $decoded["order_amount"]); //making that session active so it can be check
 		return $this->redirect($this->generateUrl('order_default'));
 	  }else{
 		$this->get('cart.helper.userAddresses')->AddUserAddresses($user,$decoded);

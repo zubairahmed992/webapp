@@ -1,11 +1,3 @@
-#cart_default:
-#    pattern:  /cart
-#    defaults: { _controller: LoveThatFitCartBundle:Cart:index}
-#
-#cart_add:
-#    pattern:  /cart/add
-#    defaults: { _controller: LoveThatFitCartBundle:Cart:add}
-
 cart_basket:
     pattern:  /cart/basket/
     defaults: { _controller: LoveThatFitCartBundle:Cart:basket}

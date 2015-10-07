@@ -41,8 +41,6 @@ class MyOrderController extends Controller
   public function previewOrderAction($id) {
 	$session = $this->getRequest()->getSession();
 	$session->set('order_id', $id);
-
 	return $this->redirect($this->generateUrl('user_profile_order_show',array('id' => $id)));
-	//return $this->redirect($this->generateUrl('login'));
 	}
 }

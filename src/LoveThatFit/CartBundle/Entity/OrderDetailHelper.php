@@ -37,7 +37,6 @@ class OrderDetailHelper {
     }
 ///------------------------------- Add to Cart clicked -----------------------------------------------------///////////
   public function saveOrderDetail($user_cart,$user_order) {
-	//$user_order=$this->container->get('cart.helper.order')->find($order_id);
 	for($i=0;$i<count($user_cart["price"]);$i++){
 	  $product_item=$this->container->get('admin.helper.productitem')->find($user_cart["item_id"][$i]);
 	  $item_description = $product_item->getProduct()->getBrand()->getName()." ".$product_item->getProduct()->getName()." ".$product_item->getproductColor()->getTitle()." ".$product_item->getproductSize()->getTitle();
@@ -59,41 +58,6 @@ class OrderDetailHelper {
   public function findCartById($id){
 	return $this->repo->find($id);
   }
-
-
-#------------------------------ Get Cart Grand Total--------------------------------#
-//  public function getCartGrandTotal($decoded){
-//		print_r($decoded);die;
-//	for($i=0;$i<=count($decoded);$i++){
-//	  echo $decoded["product_item"][$i];die;
-//	  $product_item=$this->container->get('admin.helper.productitem')->find($decoded["product_item"][$i]);
-//	  echo $product_item->getPrice();
-//	  //$grand_total+=
-//	}
-//  }
-//#------------------------------Find cart by id--------------------------------#
-//  public function findCartByUserId($user,$product_item){
-//	return $this->repo->findOneByUserItem($user,$product_item);
-//  }
-//	//-------- update Quantity of Cart if item already in cart ----------------------------------------////////////
-//  public function updateCart($decoded) {
-//	  $qty = $decoded["qty"];
-//	  for($i=0;$i<count($qty);$i++){
-//		$id = $decoded["id"][$i];
-//		$cart=$this->findCartById($id);
-//		$cart->setQty($decoded["qty"][$i]);
-//		$this->save($cart);
-//	  }
-//  }
-//#------------------------------Get Cart by User--------------------------------#
-//  public function getCart($user){
-//	$cart_array=array();
-//	foreach($user->getCart() as $ci){
-//	  	$cart_array['price'][]=$ci->getProductItem()->getPrice();
-//	  	$cart_array['total'][]=$ci->getProductItem()->getPrice()*$ci->getQty();
-//	}
-//	return $cart_array;
-//  }
 
 	//-------------------------
 	public function save($user_order_detail) {

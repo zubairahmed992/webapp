@@ -12,21 +12,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class CartRepository extends EntityRepository
 {
-//  public function findProductItemByUser($user_id,$product_item_id) {
-//	$query = $this->getEntityManager()
-//	  ->createQuery("
-//     SELECT c.qty,c.ProductItem,c.user_id FROM LoveThatFitCartBundle:Cart as c
-//      WHERE
-//      c.product_item = :ProductItem
-//      and c.user = :user_id
-//      ")->setParameters(array('ProductItem' => $product_item_id,'user_id' => $user_id)) ;
-//
-//	try {
-//	  return $query->getResult();
-//	} catch (\Doctrine\ORM\NoResultException $e) {
-//	  return null;
-//	}
-//  }
   public function findOneByUserItem($user,$product_item) {
 	$record = $this->getEntityManager()
 	  ->createQuery(
@@ -42,31 +27,7 @@ class CartRepository extends EntityRepository
 	  return null;
 	}
   }
-//  public function findCartByUser($user) {
-//	$record = $this->getEntityManager()
-//	  ->createQuery("SELECT c,pi FROM LoveThatFitCartBundle:Cart c
-//					JOIN c.product_item pi
-//					JOIN pi.users u
-//                    WHERE c.user = :user")
-//	  ->setParameters(array('user' => $user));
-//	try {
-//	  return $record->getResult();
-//	} catch (\Doctrine\ORM\NoResultException $e) {
-//	  return null;
-//	}
-//  }
-//  public function findCartById($id) {
-//	$record = $this->getEntityManager()
-//	  ->createQuery("SELECT c.qty FROM LoveThatFitCartBundle:Cart c
-//					JOIN users u
-//                    WHERE c.id = :id")
-//	  ->setParameters(array('id' => $id));
-//	try {
-//	  return $record->getResult();
-//	} catch (\Doctrine\ORM\NoResultException $e) {
-//	  return null;
-//	}
-//  }
+
   public function removeCartByUser($user){
 	$record = $this->getEntityManager()
 	  ->createQuery("DELETE FROM LoveThatFitCartBundle:Cart c

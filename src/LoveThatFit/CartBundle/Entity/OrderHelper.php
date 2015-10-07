@@ -168,7 +168,6 @@ class OrderHelper {
 
 	$entity = $this->repo->listAllOrdersByUser($page_number, $limit,$user, $sort);
 	$rec_count = count($this->repo->countAllRecordByUser($user));
-	//$rec_count = $rec_count[0]["id"];
 	$cur_page = $page_number;
 
 	if ($page_number == 0 || $limit == 0) {
@@ -190,40 +189,6 @@ class OrderHelper {
 	return $this->repo->getRecordsCountWithCurrentOrderLimit($brand_id);
   }
 
-#------------------------------ Get Cart Grand Total--------------------------------#
-//  public function getCartGrandTotal($decoded){
-//		print_r($decoded);die;
-//	for($i=0;$i<=count($decoded);$i++){
-//	  echo $decoded["product_item"][$i];die;
-//	  $product_item=$this->container->get('admin.helper.productitem')->find($decoded["product_item"][$i]);
-//	  echo $product_item->getPrice();
-//	  //$grand_total+=
-//	}
-//  }
-//#------------------------------Find cart by id--------------------------------#
-//  public function findCartByUserId($user,$product_item){
-//	return $this->repo->findOneByUserItem($user,$product_item);
-//  }
-//	//-------- update Quantity of Cart if item already in cart ----------------------------------------////////////
-//  public function updateCart($decoded) {
-//	  $qty = $decoded["qty"];
-//	  for($i=0;$i<count($qty);$i++){
-//		$id = $decoded["id"][$i];
-//		$cart=$this->findCartById($id);
-//		$cart->setQty($decoded["qty"][$i]);
-//		$this->save($cart);
-//	  }
-//  }
-//#------------------------------Get Cart by User--------------------------------#
-//  public function getCart($user){
-//	$cart_array=array();
-//	foreach($user->getCart() as $ci){
-//	  	$cart_array['price'][]=$ci->getProductItem()->getPrice();
-//	  	$cart_array['total'][]=$ci->getProductItem()->getPrice()*$ci->getQty();
-//	}
-//	return $cart_array;
-//  }
-
 	//-------------------------
 	public function save($billing) {
 	  $class = $this->class;
@@ -232,7 +197,7 @@ class OrderHelper {
 	  $this->em->flush();
 	  return $billing;
 	}
-  //-------------------------Create New Brand--------------------------------------------
+  //-------------------------Create New Order--------------------------------------------
 
     public function createNew() {
         $class = $this->class;
@@ -247,7 +212,6 @@ class OrderHelper {
     public function delete($id) {
 
         $entity = $this->repo->find($id);
-        //$entity_name = $entity->getName();
         if ($entity) {
             $this->em->remove($entity);
             $this->em->flush();
