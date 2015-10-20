@@ -718,4 +718,25 @@ class UserHelper {
   public function getUserDetailArrayByEmail($email){
       return $this->repo->getUserDetailArrayByEmail($email);
   }
+  #------------------------------------------------------
+  public function makeFavourite($user, $product_item){      
+      
+        foreach($user->getProductItems() as $pi){
+            if ($pi->getId()==$product_item->getId()){
+                return true;
+            }elseif ($pi->getProductColor()->getId()==$product_item->getProductColor()->getId()){
+                    $pi->removeUser($user);                    
+                    $user->removeProductItem($pi);             
+                    $this->container->get('admin.helper.productitem')->save($pi);
+                    $this->container->get('user.helper.user')->saveUser($user);                
+                     return true;
+            }
+        }
+        $user->addProductItem($product_item); 
+        $product_item->addUser($user);
+        $this->container->get('admin.helper.productitem')->save($product_item);
+        $this->container->get('user.helper.user')->saveUser($user);
+         return true;      
+  }
+  
 }

@@ -500,6 +500,37 @@ class WebServiceHelper {
 
     #------------------------------------------------------------------------------
 
+     public function likeUnlikeItem($user, $ra) {
+         
+        if ($ra['like'] == 'true') {
+            if (count($user->getProductItems()) < 25) {# check limit
+                $default_item = null;
+                if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+                    $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+                }
+                if (!$default_item) {
+                    $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+                    $default_item = $p->getDefaultItem($user);
+                }
+                $this->container->get('user.helper.user')->find($user, $default_item);
+            } else {
+                return $this->response_array(false, "Favourite items reached max limit");
+            }
+        } else {
+            ###############################################################
+            foreach ($user->getProductItems() as $pi) {
+                if ($pi->getProduct()->getId() == $p->getId()) { #remove all items of the same product
+                    $pi->removeUser($user);                    # hack for like an item instead of a product 
+                    $user->removeProductItem($pi);              # needs to discuss & fix
+                    $this->container->get('admin.helper.productitem')->save($pi);
+                    $this->container->get('user.helper.user')->saveUser($user);
+                }
+            }
+            ########################################################
+            return $this->response_array(true, "product removed");
+        }
+    }
+    #-------------------
     public function loveItem($user, $ra) {
         $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
         if ($p) {

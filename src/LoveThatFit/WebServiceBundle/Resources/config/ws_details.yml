@@ -208,5 +208,15 @@ ws_product_like_default_item:
      product_id: 12     
      like: true
    request_type: post   
-   
+#______________________
+ws_product_like:
+   pattern:  /ws/product_like
+   title: product_like
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     product_id: 512   
+     item_id: 4126
+     like: true
+   request_type: post   
+      
    

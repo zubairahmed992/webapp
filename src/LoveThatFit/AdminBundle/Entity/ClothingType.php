@@ -198,7 +198,7 @@ class ClothingType
     public function isValid(){
         $msg_array=array();
         $valid=true;
-        if($this->name=''){
+        if($this->name==''){
             array_push($msg_array, array('valid'=>false, 'message'=>'Invalid name'));
             $valid=false;
         }

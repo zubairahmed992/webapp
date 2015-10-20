@@ -64,6 +64,10 @@ ws_product_like_default_item:
     pattern:  /ws/product_like_default_item
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productLikeDefaultItem }
 
+ws_product_like:
+    pattern:  /ws/product_like
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productLike }
+
 nws_brand_retailer:
     pattern:  /ws/brand_retailer
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailer }
