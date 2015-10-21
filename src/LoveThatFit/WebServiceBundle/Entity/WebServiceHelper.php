@@ -501,6 +501,9 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
 
      public function likeUnlikeItem($user, $ra) {
+         #$default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+         #$this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+         
          
         if ($ra['like'] == 'true') {
             if (count($user->getProductItems()) < 25) {# check limit
@@ -512,7 +515,9 @@ class WebServiceHelper {
                     $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
                     $default_item = $p->getDefaultItem($user);
                 }
-                $this->container->get('user.helper.user')->find($user, $default_item);
+              
+                $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+                return $this->response_array(true, "Updated");
             } else {
                 return $this->response_array(false, "Favourite items reached max limit");
             }

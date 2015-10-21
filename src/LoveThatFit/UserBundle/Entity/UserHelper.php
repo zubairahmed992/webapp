@@ -728,8 +728,7 @@ class UserHelper {
                     $pi->removeUser($user);                    
                     $user->removeProductItem($pi);             
                     $this->container->get('admin.helper.productitem')->save($pi);
-                    $this->container->get('user.helper.user')->saveUser($user);                
-                     return true;
+                    $this->container->get('user.helper.user')->saveUser($user);                                     
             }
         }
         $user->addProductItem($product_item); 
