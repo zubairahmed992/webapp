@@ -45,3 +45,9 @@ services:
         arguments:
             container: "@service_container"
 
+     cart.helper.shipping:
+        class: LoveThatFit\CartBundle\Entity\ShippingHelper
+        arguments:
+            container: "@service_container"
+
+

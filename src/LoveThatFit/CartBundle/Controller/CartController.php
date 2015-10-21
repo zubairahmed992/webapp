@@ -51,12 +51,28 @@ class CartController extends Controller
 	public function showAction(){
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  $cart=$user->getCart();
+	  $strDestinationZip = '38401';
+	  $strMethodShortName = 'GND';
+	  $strPackageLength = '24';
+	  $strPackageWidth = '18';
+	  $strPackageHeight = '6';
+	  $strPackageWeight = '2';
+	  $boolReturnPriceOnly = true;
 	  $grand_total = $this->get('cart.helper.cart')->getCart($user);
+	  $result = $this->get('cart.helper.shipping')->GetShippingRate(						$strDestinationZip,
+		$strMethodShortName,
+		$strPackageLength,
+		$strPackageWidth,
+		$strPackageHeight,
+		$strPackageWeight,
+		$boolReturnPriceOnly);
+	  //print_r($result);
 	  $getCounterResult = $this->get('cart.helper.cart')->countCartItems($user);
 		return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
 			'cart' => $cart,
 			'grand_total' => $grand_total,
-		  	'itemscounter' => $getCounterResult["counter"]
+		  	'itemscounter' => $getCounterResult["counter"],
+		  	'shipping_charges' => $result
 		  ));
 	  }
 
