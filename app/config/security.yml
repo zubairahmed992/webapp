@@ -94,6 +94,7 @@ security:
         
         - { path: ^/registration/step_one, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /email/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /email_sent/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /registration/user/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /registration/, roles: ROLE_USER }        
         - { path: /profile/, roles: ROLE_USER }        

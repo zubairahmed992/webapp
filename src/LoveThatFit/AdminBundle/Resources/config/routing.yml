@@ -1,3 +1,7 @@
+sent_email:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/sent_email.yml"
+    prefix:   /
+
 #-------------------------------------------------------------
 #-------------- ADMIN ------------------------
 #-------------------------------------------------------------

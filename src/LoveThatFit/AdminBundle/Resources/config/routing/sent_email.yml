@@ -1,0 +1,4 @@
+sent_email_show:
+    pattern:  /sent_email/show/{email_type}/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:sentEmail:show}
+
