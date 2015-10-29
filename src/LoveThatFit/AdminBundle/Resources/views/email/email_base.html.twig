@@ -1,54 +1,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
 
-<style>
-body{
-	background:#666666;
-	
-	}
+    <style>
+        body{
+            background:#666666;
 
-img {
-display:block;	
-}
+        }
 
-</style>
+        img {
+            display:block;
+        }
+
+    </style>
 
 
 
 </head>
 <body>
-<table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#FFFFFF";>
-  <tr>
-    <td colspan="3" align="center" bgcolor="#4b4b4b" height="4"></td>
-  </tr>
-  <tr>
-    <td colspan="3" align="center" height="5"></td>
-  </tr>
-  <tr>
-    <td colspan="3" align="center">
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td valign="top">&nbsp;</td>
-          <td valign="top"><font face="Arial, Helvetica, sans-serif" size="1" color="#373535">Having trouble? <a href="#" style="text-decoration:none"><font color="#373535"><u>Click here</u></font></a></font></td>
-          <td align="center"><img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images/logo.png')}}" style="display:block;" alt="SelfieStyler" title="SelfieStyler" /></td>
-          <td valign="top" align="right"><font face="Arial, Helvetica, sans-serif" size="1" color="#373535"><a href="#" style="text-decoration:none;"><font color="#373535">ABOUT</font></a>   |   <a href="#" style="text-decoration:none;"><font color="#373535">CONTACT</font></a></font></td>
-          <td valign="top">&nbsp;</td>
-        </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td height="30" colspan="3">&nbsp;</td>
-  </tr>
- 
-         {% block email %}{% endblock %}
-        
-        
-      <tr>
+<table width="570" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#FFFFFF";>
+    <tr>
+        <td colspan="3" align="center" bgcolor="#4b4b4b" height="4"></td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" height="5"></td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td valign="top">&nbsp;</td>
+                    <td valign="top"><font face="Arial, Helvetica, sans-serif" size="1" color="#373535">Having trouble? <a href="#" style="text-decoration:none"><font color="#373535"><u>Click here</u></font></a></font></td>
+                    <td align="center"><img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images/logo.png')}}" style="display:block;" alt="SelfieStyler" title="SelfieStyler" /></td>
+                    <td valign="top" align="right"><font face="Arial, Helvetica, sans-serif" size="1" color="#373535"><a href="#" style="text-decoration:none;"><font color="#373535">ABOUT</font></a>   |   <a href="#" style="text-decoration:none;"><font color="#373535">CONTACT</font></a></font></td>
+                    <td valign="top">&nbsp;</td>
+                </tr>
+            </table></td>
+    </tr>
+    <tr>
+        <td height="30" colspan="3"></td>
+    </tr>
+
+    <tr>
+        <td colspan="3">{% block email %}{% endblock %}</td>
+    </tr>
+
+
+
+
+    <tr>
         <td bgcolor="#464444" height="35" align="center"><font face="Arial, Helvetica, sans-serif" size="2" color="#fff">
-            
+
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <td width="10"></td>
@@ -58,14 +62,14 @@ display:block;
                         <td width="10"></td>
                     </tr>
                 </table>
-            
+
             </font></td>
-      </tr>      
-    </table>
+    </tr>
+</table>
 
 
 <map name="Map"><area shape="rect" coords="435,4,568,63" href="#"><area shape="rect" coords="349,5,436,63" href="#"><area shape="rect" coords="219,3,348,63" href="#"><area shape="rect" coords="98,3,218,63" href="#">
-  <area shape="rect" coords="2,3,96,62" href="#">
+    <area shape="rect" coords="2,3,96,62" href="#">
 </map>
 </body>
 </html>
