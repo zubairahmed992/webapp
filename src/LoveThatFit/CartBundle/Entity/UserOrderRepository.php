@@ -41,10 +41,10 @@ class UserOrderRepository extends EntityRepository
   public function listAllOrders($page_number = 0, $limit = 0, $sort = 'id') {
 	if ($page_number <= 0 || $limit <= 0) {
 	  $query = $this->getEntityManager()
-		->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o ORDER BY o.' . $sort . ' ASC');
+		->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o ORDER BY o.' . $sort . ' DESC');
 	} else {
 	  $query = $this->getEntityManager()
-		->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o ORDER BY o.' . $sort . ' ASC')
+		->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o ORDER BY o.' . $sort . ' DESC')
 		->setFirstResult($limit * ($page_number - 1))
 		->setMaxResults($limit);
 	}
