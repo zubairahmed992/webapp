@@ -40,13 +40,15 @@ class PaymentHelper {
 	  Braintree_Configuration::merchantId($parse["love_that_fit_cart"]["merchant_id"]);
 	  Braintree_Configuration::publicKey($parse["love_that_fit_cart"]["public_key"]);
 	  Braintree_Configuration::privateKey($parse["love_that_fit_cart"]["private_key"]);
-
 	  $billing_shipping_info = $session->get('billing_shipping_info');
 	  $result = Braintree_Transaction::sale(array(
-		"amount" => $decoded['order_amount'],
+		"amount" => $decoded['order_amount']+$decoded['shipping_amount'],
 		"paymentMethodNonce" => $decoded['payment_method_nonce'],
 	  ));
+
 	  $payment_json = json_encode($result);
+	  $shipping_amount = $decoded['shipping_amount'];
+
 
 	  /****************** Success and Fail Conditions *********************/
 	  if ($result->success) {
@@ -61,11 +63,11 @@ class PaymentHelper {
 		$select_address = $session->get('default');
 		if($select_address == 'yes'){
 		  //user came from show address screen and previously ordered things so saving just order information and using the previous added billing and shipping address
-		  $entity = $this->container->get('cart.helper.order')->saveBillingShippingDefaultAddress($billing_address,$shipping_address,$user,$order_amount);
+		  $entity = $this->container->get('cart.helper.order')->saveBillingShippingDefaultAddress($billing_address,$shipping_address,$user,$order_amount,$shipping_amount);
 		  $order_id = $entity->getId();
 		}else{
 		  //User came here first time so we need to store address here
-		  $entity = $this->container->get('cart.helper.order')->saveBillingShipping($billing_shipping_info,$user);
+		  $entity = $this->container->get('cart.helper.order')->saveBillingShipping($billing_shipping_info,$user,$shipping_amount);
 		  $order_id = $entity->getId();
 		  $this->container->get('cart.helper.userAddresses')->saveAddress($billing_shipping_info,$user,$bill_info,$ship_info);
 		}

@@ -56,8 +56,10 @@
         {% else %}
             <tr><td align="center" colspan="6"><p>There are no records</p></td></tr>
         {% endfor %}
-        <tr><td colspan="7" align="right">Total:&nbsp;<strong>${{ grand_total }} </strong></td></tr>
-
+        {% set total = shipping_charges + grand_total %}
+        <tr><td colspan="7" align="right">Sub Total:&nbsp;<strong>${{ grand_total| number_format(2) }} </strong></td></tr>
+        <tr><td colspan="7" align="right">Shipping Charges:&nbsp;<strong>${{ shipping_charges| number_format(2) }} </strong></td></tr>
+        <tr><td colspan="7" align="right">Grand Total:&nbsp;<strong>${{ total | number_format(2) }}</strong></td></tr>
             </table>
 
     <table border="0" cellspacing="0" cellpadding="0" class="order_conf_tbl" >
@@ -102,8 +104,9 @@
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">
             <div id="payment-form"></div>
-            <input type="hidden" name="order_amount" value="{{ grand_total }}"><br>
-            <input style="display:none" id="pay" type="submit" value="Pay ${{ grand_total }}">
+            <input type="hidden" name="order_amount" value="{{ grand_total}}"><br>
+            <input type="hidden" name="shipping_amount" value="{{ shipping_charges|number_format(2, '.','')}}"><br>
+            <input style="display:none" id="pay" type="submit" value="Pay ${{ total| number_format(2) }}">
 
 
         </form>

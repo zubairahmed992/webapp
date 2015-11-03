@@ -40,7 +40,7 @@ class OrderHelper {
         $this->repo = $em->getRepository($class);
     }
 //------------------------------- When user does payment and add addres from screen 1 -----------------------------------------------------///////////
-	public function saveBillingShipping($decoded,$user) {
+	public function saveBillingShipping($decoded,$user,$shipping_amount) {
 	  	$billing = $decoded["billing"];
 	  	$user_billing_shipping_info = $this->createNew();
 	  	$user_billing_shipping_info->setUser($user);
@@ -65,11 +65,12 @@ class OrderHelper {
 		$user_billing_shipping_info->setShippingState($billing["shipping_state"]);
 		$user_billing_shipping_info->setOrderStatus('Pending');
 		$user_billing_shipping_info->setOrderAmount($decoded["order_amount"]);
+		$user_billing_shipping_info->setShippingAmount($shipping_amount);
 		return $this->save($user_billing_shipping_info);
 
 	}
 //------------------------------- When user does payment and select addres from screen 2 -----------------------------------------------------///////////
-  public function saveBillingShippingDefaultAddress($billing_address,$shipping_address,$user,$order_amount) {
+  public function saveBillingShippingDefaultAddress($billing_address,$shipping_address,$user,$order_amount,$shipping_amount) {
 	$user_billing_shipping_info = $this->createNew();
 	$user_billing_shipping_info->setUser($user);
 	$user_billing_shipping_info->setBillingFirstName($billing_address["first_name"]);
@@ -93,6 +94,7 @@ class OrderHelper {
 	$user_billing_shipping_info->setShippingState($shipping_address["state"]);
 	$user_billing_shipping_info->setOrderStatus('Pending');
 	$user_billing_shipping_info->setOrderAmount($order_amount);
+	$user_billing_shipping_info->setShippingAmount($shipping_amount);
 	return $this->save($user_billing_shipping_info);
 
   }

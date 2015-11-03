@@ -181,7 +181,7 @@ class UserOrder
     private $order_status;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="float")
 	 *
 	 */
 	private $order_amount;
@@ -222,6 +222,14 @@ class UserOrder
 	 * @ORM\Column(name="order_number", type="integer", length=20, nullable=true)
 	 */
 	private $order_number;
+
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="shipping_amount", type="float", length=20, nullable=true)
+	 */
+	private $shipping_amount;
 
 
 
@@ -699,7 +707,7 @@ class UserOrder
 	/**
  * Set order_amount
  *
- * @param integer $orderAmount
+ * @param float $orderAmount
  * @return OrderAmount
  */
   public function setOrderAmount($orderAmount)
@@ -712,7 +720,7 @@ class UserOrder
   /**
    * Get order_amount
    *
-   * @return integer
+   * @return float
    */
   public function getOrderAmount()
   {
@@ -891,5 +899,28 @@ class UserOrder
 	public function getOrderNumber()
 	{
 	  return $this->order_number;
+	}
+
+	/**
+	 * Set shipping_amount
+	 *
+	 * @param float $shippingAmount
+	 * @return UserOrder
+	 */
+	public function setShippingAmount($shippingAmount)
+	{
+	  $this->shipping_amount = $shippingAmount;
+
+	  return $this;
+	}
+
+	/**
+	 * Get shipping_amount
+	 *
+	 * @return float
+	 */
+	public function getShippingAmount()
+	{
+	  return $this->shipping_amount;
 	}
 }

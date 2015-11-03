@@ -42,7 +42,7 @@ class ShippingHelper {
    * @var strShipperZip string
    * This is the "ship from" zip
    **/
-  var $strShipperZip = '12345';
+  var $strShipperZip = '22041';
 
   /**
    * @var strDefaultServiceCode string
