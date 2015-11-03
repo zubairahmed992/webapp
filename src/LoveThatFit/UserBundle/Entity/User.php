@@ -1784,7 +1784,7 @@ class User implements UserInterface, \Serializable {
 		'dress_brand' => $this->measurement && $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getName():'',
 		'dress_fitting_size_chart_id' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getId():0,
 		'dress_fitting_size' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getTitle():'',
-
+                'image_device_type'=>  $this->image_device_type,
 		'device_type'=>$device_type,
 		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
 	  );

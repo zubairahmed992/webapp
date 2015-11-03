@@ -2021,7 +2021,43 @@ class Measurement {
     }
 
     
-    
+    public function setByArray($ar){
+        $this->weight = array_key_exists('weight', $ar) ? $ar['weight'] : $this->weight;
+        $this->height = array_key_exists('height', $ar) ? $ar['height'] : $this->height;
+        $this->waist = array_key_exists('waist', $ar) ? $ar['waist'] : $this->waist;
+        $this->hip = array_key_exists('hip', $ar) ? $ar['hip'] : $this->hip;
+        $this->bust = array_key_exists('bust', $ar) ? $ar['bust'] : $this->bust;
+        $this->inseam = array_key_exists('inseam', $ar) ? $ar['inseam'] : $this->inseam;
+        $this->chest = array_key_exists('chest', $ar) ? $ar['chest'] : $this->chest;
+        $this->neck = array_key_exists('neck', $ar) ? $ar['neck'] : $this->neck;
+        $this->body_type = array_key_exists('body_type', $ar) ? $ar['body_type'] : $this->body_type;
+        $this->body_shape = array_key_exists('body_shape', $ar) ? $ar['body_shape'] : $this->body_shape;
+        $this->bra_size = array_key_exists('bra_size', $ar) ? $ar['bra_size'] : $this->bra_size;
+        $this->arm = array_key_exists('arm', $ar) ? $ar['arm'] : $this->arm;
+        $this->shoulder_across_front = array_key_exists('shoulder_across_front', $ar) ? $ar['shoulder_across_front'] : $this->shoulder_across_front;
+        $this->shoulder_height = array_key_exists('shoulder_height', $ar) ? $ar['shoulder_height'] : $this->shoulder_height;
+        $this->outseam = array_key_exists('outseam', $ar) ? $ar['outseam'] : $this->outseam;
+        $this->sleeve = array_key_exists('sleeve', $ar) ? $ar['sleeve'] : $this->sleeve;
+        $this->thigh = array_key_exists('thigh', $ar) ? $ar['thigh'] : $this->thigh;
+        $this->shoulder_width = array_key_exists('shoulder_width', $ar) ? $ar['shoulder_width'] : $this->shoulder_width;
+        $this->bust_height = array_key_exists('bust_height', $ar) ? $ar['bust_height'] : $this->bust_height;
+        $this->waist_heightt = array_key_exists('waist_height', $ar) ? $ar['waist_height'] : $this->waist_height;
+        $this->hip_height = array_key_exists('hip_height', $ar) ? $ar['hip_height'] : $this->hip_height;
+        $this->bust_width = array_key_exists('bust_width', $ar) ? $ar['bust_width'] : $this->bust_width;
+        $this->waist_width = array_key_exists('waist_width', $ar) ? $ar['waist_width'] : $this->waist_width;
+        $this->hip_width = array_key_exists('hip_width', $ar) ? $ar['hip_width'] : $this->hip_width;
+        $this->shoulder_across_back = array_key_exists('shoulder_across_back', $ar) ? $ar['shoulder_across_back'] : $this->shoulder_across_back;
+        $this->bicep = array_key_exists('bicep', $ar) ? $ar['tricep'] : $this->bicep;
+        $this->tricep = array_key_exists('tricep', $ar) ? $ar['tricep'] : $this->tricep;
+        $this->wrist = array_key_exists('wrist', $ar) ? $ar['wrist'] : $this->wrist;
+        $this->center_front_waist = array_key_exists('center_front_waist', $ar) ? $ar['center_front_waist'] : $this->center_front_waist;
+        $this->back_waist = array_key_exists('back_waist', $ar) ? $ar['back_waist'] : $this->back_waist;
+        $this->waist_hip = array_key_exists('waist_hip', $ar) ? $ar['waist_hip'] : $this->waist_hip;
+        $this->knee = array_key_exists('knee', $ar) ? $ar['knee'] : $this->knee;
+        $this->calf = array_key_exists('calf', $ar) ? $ar['calf'] : $this->calf;
+        $this->ankle = array_key_exists('ankle', $ar) ? $ar['ankle'] : $this->ankle;
+        $this->belt = array_key_exists('belt', $ar) ? $ar['belt'] : $this->belt;
+    }
     
     
     
