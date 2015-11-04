@@ -57,9 +57,18 @@
             <tr><td align="center" colspan="6"><p>There are no records</p></td></tr>
         {% endfor %}
         {% set total = shipping_charges + grand_total %}
-        <tr><td colspan="7" align="right">Sub Total:&nbsp;<strong>${{ grand_total| number_format(2) }} </strong></td></tr>
-        <tr><td colspan="7" align="right">Shipping Charges:&nbsp;<strong>${{ shipping_charges| number_format(2) }} </strong></td></tr>
-        <tr><td colspan="7" align="right">Grand Total:&nbsp;<strong>${{ total | number_format(2) }}</strong></td></tr>
+        <tr><td colspan="7" align="right">
+
+
+             <div>  Sub Total:&nbsp;&nbsp;<strong>${{ grand_total| number_format(2) }} </strong></div>
+            <div>Shipping Charges:&nbsp;&nbsp;<strong>${{ shipping_charges| number_format(2) }} </strong></div>
+            <div>Grand Total:&nbsp;&nbsp;<strong>${{ total | number_format(2) }}</strong></div>
+
+            </td>
+
+        </tr>
+
+
             </table>
 
     <table border="0" cellspacing="0" cellpadding="0" class="order_conf_tbl" >

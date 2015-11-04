@@ -5809,7 +5809,9 @@ background-color:#fff;
       .cart_tbl tr:last-child td{
      border-bottom: 0px;
      padding-bottom: 10px;
-	 font-size: 1.0em;
+
+		  font-size:0.9em;
+		  border-top: 1px dashed #c4c4c4;
     }
     
     
