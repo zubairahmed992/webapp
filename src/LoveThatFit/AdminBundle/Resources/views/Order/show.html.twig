@@ -150,21 +150,39 @@
                                     </div>
                                         <div class="span8">
                                             <div class="span3">Price</div>
-                                            <div class="span3">${{ c.productItem.price}}</div>
+                                            <div class="span3">${{ c.productItem.price| number_format(2)}}</div>
                             </div>
+                                        {% set sub_total = c.productItem.price * c.qty %}
                                     <div class="span8">
                                         <div class="span3">Sub Total</div>
-                                        <div class="span3">${{ c.productItem.price * c.qty}}</div>
+                                        <div class="span3">${{ sub_total| number_format(2)}}</div>
                                     </div>
 
                                         <div class="span8">
                                             <div class="span3"></div>
                                         </div>
                                     {% endfor %}
+
+                                    {% if(order.ShippingAmount != '') %}
+                                        {% set total = order.ShippingAmount + order.OrderAmount %}
+                                        {% set shipping_amount = order.ShippingAmount %}
+                                    {% else %}
+                                        {% set total='0' %}
+                                        {% set shipping_amount='0' %}
+                                    {% endif %}
                                     <div class="span8">
                                         <div class="span3">Total</div>
-                                        <div class="span3">${{ order.orderAmount}}</div>
+                                        <div class="span3">${{ order.orderAmount| number_format(2)}}</div>
                                     </div>
+                                    <div class="span8">
+                                        <div class="span3">Shipping</div>
+                                        <div class="span3">${{ shipping_amount| number_format(2)}}</div>
+                                    </div>
+                                    <div class="span8">
+                                        <div class="span3">Grand Total</div>
+                                        <div class="span3">${{ total| number_format(2)}}</div>
+                                    </div>
+
 
                                     <form action="{{ path('admin_order_update', {'id': order.Id})}}" method="post">
                                         <div class="span8">

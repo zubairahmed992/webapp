@@ -128,8 +128,17 @@
                                                             <td>
                                                                 <table border="0" cellspacing="0" cellpadding="0" align="right" width="400">
                                                                     <tr>
-                                                                        <td align="right"><strong>Total</strong></td>
-                                                                        <td width="80" align="right"><strong>${{ order.orderAmount}}</strong></td>
+                                                                        <td align="right"><strong>Sub Total</strong></td>
+                                                                        <td width="80" align="right"><strong>${{ order.orderAmount| number_format(2)}}</strong></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="right"><strong>Shipping Charges</strong></td>
+                                                                        <td width="80" align="right"><strong>${{ order.ShippingAmount| number_format(2)}}</strong></td>
+                                                                    </tr>
+                                                                    {% set total = order.ShippingAmount + order.orderAmount %}
+                                                                    <tr>
+                                                                        <td align="right"><strong>Grand Total</strong></td>
+                                                                        <td width="80" align="right"><strong>${{ total| number_format(2)}}</strong></td>
                                                                     </tr>
 
                                                                     <tr>

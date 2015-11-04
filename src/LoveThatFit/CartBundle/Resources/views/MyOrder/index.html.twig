@@ -49,18 +49,29 @@
                                 <td>Order Number</td>
                                 <td>Order Date</td>
                                 <td>Order Status</td>
-                                <td>Order Amount</td>
+                                <td>Sub Total</td>
+                                <td>Shipping Charges</td>
+                                <td>Grand Total</td>
                                 <td>Payment Method</td>
 
 
                             </tr>
                             {% for c in order %}
+                                {% if(c.ShippingAmount != '') %}
+                                {% set total = c.ShippingAmount + c.OrderAmount %}
+                                {% set shipping_amount = c.ShippingAmount %}
+                                {% else %}
+                                {% set total='0' %}
+                                {% set shipping_amount='0' %}
+                                {% endif %}
                                 <tr>
 
                                     <td><a target="_blank" href="{{path('user_profile_order_show', {'id': c.Id})}}">{{c.OrderNumber}}</a></td>
                                     <td>{{ c.OrderDate|date('d-m-Y')}} </td>
                                     <td>{{ c.OrderStatus}}</td>
-                                    <td>${{ c.OrderAmount}}</td>
+                                    <td>${{ c.OrderAmount| number_format(2)}}</td>
+                                    <td>${{ shipping_amount| number_format(2)}}</td>
+                                    <td>${{ total| number_format(2)}}</td>
                                     <td>{{ c.PaymentMethod}}</td>
 
 
