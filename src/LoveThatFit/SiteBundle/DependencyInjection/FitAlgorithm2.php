@@ -136,9 +136,12 @@ class FitAlgorithm2 {
             
         }
         $sorted_array=$this->array_sort($fb);
-        $recommendation=$this->get_recommended_size($fb);
+        $recommendation = $this->get_recommended_size($sorted_array);
         if($recommendation==null){
-            $recommendation=$this->get_recommended_loose_size($fb);
+            $recommendation=$this->get_recommended_loose_size($sorted_array);
+        }
+        if($recommendation==null){
+            $recommendation=end($sorted_array);
         }
         return array('feedback' => $sorted_array, 'recommendation'=>  $recommendation);
         #return array('feedback' => $this->array_sort($fb));
@@ -171,6 +174,7 @@ class FitAlgorithm2 {
         }
         return $rec_size;
     }
+   
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private function get_relevant_body_measurement($fp_specs, $body_specs){
         $body = 0;
