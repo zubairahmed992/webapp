@@ -1160,6 +1160,11 @@ class User implements UserInterface, \Serializable {
         
     }
     //----------------------------------------------------
+    public function copyDefaultImage() {
+        $this->image='cropped.png';
+        copy($this->getDummyUserImageRootPath(), $this->getAbsolutePath());        
+    }
+    //----------------------------------------------------
     private function copyTempToOriginalImage() {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
     }
@@ -1210,7 +1215,10 @@ class User implements UserInterface, \Serializable {
     public function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
-
+//----------------------------------------------------------
+    public function getDummyUserImageRootPath() {
+        return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.jpg';        
+    }
 //----------------------------------------------------------
     public function getUploadDir() {
         return 'uploads/ltf/users/' . $this->id;

@@ -714,7 +714,18 @@ class UserHelper {
   ##############################################################################################3
   ##############################################################################################3
   ##############################################################################################3
-    
+  
+    public function copyDefaultUserData($user){
+        $conf_yml = new Parser();
+        $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));
+        $user->setImageDeviceType($dud[$user->getGender()]['image']['device_type']);                
+        $user->copyDefaultImage();
+        $user->getMeasurement()->setByArray($dud[$user->getGender()]['measurements']);       
+        $this->container->get('user.helper.measurement')->saveMeasurement($user->getMeasurement());
+        $this->container->get('user.helper.user')->saveUser($user);
+        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$user->getGender()]['mask']);        
+    }
+#------------------------------------------------------  
   public function getUserDetailArrayByEmail($email){
       return $this->repo->getUserDetailArrayByEmail($email);
   }

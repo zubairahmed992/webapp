@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\UserMarker;
-use LoveThatFit\UserBundle\DependencyInjection\DummyUserHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,15 +57,8 @@ class MaskedMarkerController extends Controller {
     
       public function fooAction($id=null){
         $user = $this->get('user.helper.user')->find($id);
-        #return new response(json_encode($user->toDataArray()));          
-        $duh=new DummyUserHelper();
-        $duh->copyUserData($user);
-        $this->get('user.helper.measurement')->saveMeasurement($user->getMeasurement());
-        $this->get('user.helper.user')->saveUser($user);
-        $this->get('user.marker.helper')->fillMarker($user, $duh->conf[$user->getGender()]['mask']);
-        
-        return new response(json_encode($user->toDataArray()));
-        return new response(json_encode($duh->copyUserData(null)));                     
+        $this->get('user.helper.user')->copyDefaultUserData($user);
+        return new Response('-');
     }
     
     
