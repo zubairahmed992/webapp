@@ -97,7 +97,7 @@
                                                                         <td width="100">
                                                                             <table cellpadding="0" cellspacing="0">
                                                                                 <tr>
-                                                                                    <td style="border:1px solid #ccc; width:82px;" align="center"><img width="72" height="92" src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                                                                                    <td style="border:1px solid #ccc; width:82px;" align="center"><img width="65" height="92" src="{{ asset(c.productItem.productColor.webPath) }}"></td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
@@ -126,19 +126,19 @@
                                                     <table width="600" border="0" cellpadding="0" cellspacing="0">
                                                         <tr>
                                                             <td>
-                                                                <table border="0" cellspacing="0" cellpadding="0" align="right" width="400">
+                                                                <table border="0" cellspacing="0" cellpadding="0" align="right" width="400" style="font-size:0.9em">
                                                                     <tr>
-                                                                        <td align="right"><strong>Sub Total</strong></td>
-                                                                        <td width="80" align="right"><strong>${{ order.orderAmount| number_format(2)}}</strong></td>
+                                                                        <td align="right"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Sub Total</strong></font></td>
+                                                                        <td width="80" align="right"><font face="Arial, Helvetica, sans-serif" size="2"><strong>${{ order.orderAmount| number_format(2)}}</strong></font></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td align="right"><strong>Shipping Charges</strong></td>
-                                                                        <td width="80" align="right"><strong>${{ order.ShippingAmount| number_format(2)}}</strong></td>
+                                                                        <td align="right"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Shipping Charges</strong></font></td>
+                                                                        <td width="80" align="right"><font face="Arial, Helvetica, sans-serif" size="2"><strong>${{ order.ShippingAmount| number_format(2)}}</strong></font></td>
                                                                     </tr>
                                                                     {% set total = order.ShippingAmount + order.orderAmount %}
                                                                     <tr>
-                                                                        <td align="right"><strong>Grand Total</strong></td>
-                                                                        <td width="80" align="right"><strong>${{ total| number_format(2)}}</strong></td>
+                                                                        <td align="right"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Grand Total</strong></font></td>
+                                                                        <td width="80" align="right"><font face="Arial, Helvetica, sans-serif" size="2"><strong>${{ total| number_format(2)}}</strong></font></td>
                                                                     </tr>
 
                                                                     <tr>
