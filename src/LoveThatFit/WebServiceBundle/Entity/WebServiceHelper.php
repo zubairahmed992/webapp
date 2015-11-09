@@ -194,12 +194,14 @@ class WebServiceHelper {
         $measurement->setCalf(array_key_exists('calf', $request_array) ? $request_array['calf'] : $measurement->getCalf());
         $measurement->setAnkle(array_key_exists('ankle', $request_array) ? $request_array['ankle'] : $measurement->getAnkle());
         $measurement->setIphoneFootHeight(array_key_exists('iphone_foot_height', $request_array) ? $request_array['iphone_foot_height'] : $measurement->getIphoneFootHeight());
-        $measurement = $this->setSizeChartToUserMeasurement($measurement, $request_array);
+        
+        #*Since size charts has been removed from Registration process
+        #1* #$measurement = $this->setSizeChartToUserMeasurement($measurement, $request_array);
 
         $ar['manual'] = $measurement->getArray();
-        $ar['size_charts'] = $this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
+        #21* #$ar['size_charts'] = $this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
         $measurement->setMeasurementJson(json_encode($ar));
-        $measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
+        #3* #$measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
 
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         return $measurement;
@@ -251,8 +253,9 @@ class WebServiceHelper {
         return $measurement;
     }
 
+#*Since size charts has been removed from Registration process
     #---------------------------------------------------------------------
-
+/*
     private function setSizeChartToUserMeasurement($measurement, $request_array) {
         $gender = $request_array['gender'];
         $body_type = isset($request_array['bodyType']) ? $request_array['bodyType'] : 'regular';
@@ -289,7 +292,7 @@ class WebServiceHelper {
         }
         return $measurement;
     }
-
+*/
     #--------------------------------User Detail Array -----------------------------#
 
     private function getBasePath($request) {

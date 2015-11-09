@@ -1011,31 +1011,7 @@ public function itemPriceUpdateAction() {
 
 #-----------------------------------------------------------------------
     public function fooAction($id = 0) {
-        
-        $product_helper =  $this->get('webservice.helper.product');
-        $msg=$product_helper->getUserTryHistoryWebService('',$id);
-        return new Response(json_encode($msg));
-        
-        $product_item = $this->get('admin.helper.productitem')->find($id);
-        return new response(json_encode($product_item->getProductPieceDetailArray()));
-      /*  $params = array('product_id' => 13,
-            'color_title' => 'gray',
-            'view_title' => 'front-open',
-            'body_type' => 'regular',
-            'size_title' => 'l');
-    $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($params);
-    $product_color_view = $product_item->getProductColorViewByTitle($params['view_title']); 
-    #$product_item_piece = $this->get('admin.helper.product.item.piece')->createNew($product_item, $product_color_view);
-    $product_item_piece = $this->get('admin.helper.product.item.piece')->findOrCreateNew($product_item, $product_color_view);
-    $product_item_piece->setPieceType('strugle');
-    $this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
-    return new Response($product_item_piece->getProductColorView()->getTitle());
-      
-
-
-    return new response(json_encode($product_item_piece->getProductColorView()->getTitle()));
-       * 
-       */
+        return new response(json_encode($this->get('admin.helper.product')->productDetailSizeArray($id)));      
     }
 #-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {

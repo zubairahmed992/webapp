@@ -1226,5 +1226,11 @@ public function breakFileName($request_array,$product_id){
         }
     
         return $p;
-    }  
+    } 
+    #---------------------------------------------------------
+    
+    #------------------------------------------------------------------------
+public function productDetailSizeArray($product_id){
+    return $this->repo->productDetailSizeArray($product_id);
+}
 }
