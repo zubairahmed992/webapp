@@ -66,6 +66,47 @@ class DeviceController extends Controller {
             ));
     
 }
+ #---------------------------------------------------------------------------
+    
+   public function makeoverAction($auth_token=null, $edit_type=null, $device_type=null) {
+       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+       $device_type =$device_type==null? 'iphone5':$device_type;
+       if(!$user){
+           return new Response ('Authentication error');
+       }
+       
+        $measurement = $user->getMeasurement();                
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+       // return new response(json_encode($default_marker));
+        $device_spec = $user->getDeviceSpecs($device_type);
+        $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+        
+        $edit_type=$edit_type==null?'registration':$edit_type;
+        
+        return $this->render('LoveThatFitUserBundle:Device:mask_makeover.html.twig', array(
+                    'form' => $form->createView(),               
+                    'measurement_form' => $measurement_form->createView(),                   
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    'entity' => $user,
+                    'measurement' => $measurement,
+                    'edit_type' => $edit_type,
+                    'marker' => $marker,
+                    'default_marker' => $default_marker,
+                    'user_pixcel_height' =>  $device_spec->getUserPixcelHeight(),
+                    'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
+                    'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
+                    'per_inch_pixcel' => $device_spec->getDeviceUserPerInchPixelHeight(),
+                    'device_type' => $device_type,
+                    'device_screen_height' => $device_screen_height['pixel_height'],
+            ));
+    
+}
 #---------------------------------------------------------------------------
     
    public function svgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
@@ -141,7 +182,7 @@ class DeviceController extends Controller {
         $auth_token=$user->getAuthToken();
         
         if($auth_token){
-            return $this->redirect($this->generateUrl('device_browser_image_edit', array('auth_token'=>$auth_token)));
+            return $this->redirect($this->generateUrl('device_browser_image_edit', array('auth_token'=>$auth_token, 'edit_type'=>'edit', 'device_type'=>'iphone6')));
         }else{
             return new Response('Authentication error');
         }

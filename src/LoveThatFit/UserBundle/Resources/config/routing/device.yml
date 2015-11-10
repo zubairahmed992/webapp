@@ -9,6 +9,10 @@ device_browser_image_edit_auth:
 device_browser_image_edit:
     pattern:   /device_browser/image_edit/{auth_token}/{edit_type}/{device_type}
     defaults: { _controller: LoveThatFitUserBundle:Device:editImage, auth_token: null, edit_type: null, device_type: null }
+    
+device_browser_makeover:
+    pattern:   /device_browser/makeover/{auth_token}/{edit_type}/{device_type}
+    defaults: { _controller: LoveThatFitUserBundle:Device:makeover, auth_token: null, edit_type: null, device_type: null }
 
 device_browser_save_user_marker:
     pattern:   /device_browser/save_user_marker

@@ -24,7 +24,7 @@ var liquid_mask = {
 //dv_gap_bottom = 32;
 
 //Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
-if(liquid_mask.device_type == "iphone5"){
+if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android"){
     fixed_px_inch_ratio = 6.891;
     
     // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
@@ -324,7 +324,9 @@ if(chk_no_img_path == true){
     mid_area_path.opacity = 0.85;
 
     $("#svg_path_data").attr("value", mid_area_path.pathData);
-    //testEcho();
+    if(liquid_mask.device_type == "android"){
+        testEcho();
+    }
     window.location.href = "svg_path_created";
     return mid_area_path;
 }
@@ -332,5 +334,4 @@ if(chk_no_img_path == true){
 function testEcho(){
     var nameValue = $("#svg_path_data").attr("value");
     window.JSInterface.doEchoTest(nameValue);
-    
 }

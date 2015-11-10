@@ -46,7 +46,7 @@ dv_gap_bottom = 32;
 if(dv_type == "iphone5"){
     fixed_px_inch_ratio = 6.891;
     scr_width = 160;
-    but_x_adj = 294;
+    but_x_adj = 295;
     scr_height = 568;
     
     // adjusting 66.666% value of top empty area ----- 26/3*2 = 17.333
@@ -56,6 +56,14 @@ if(dv_type == "iphone5"){
     dv_iPhone6 = false;
     
     def_mask_x_pos = -100;
+    
+    an_inc = 260;
+    
+    lft_arrow_x = 96;
+    lft_arrow_y = 288;
+    
+    rgt_arrow_x = 224;
+    rgt_arrow_y = 288;
     
 }
 if(dv_type == "iphone6"){
@@ -91,6 +99,17 @@ if(dv_type == "iphone6"){
 
        //     diff_dv = 31 + adj_btm_fix;
           
+          an_inc = 360;
+          
+          lft_arrow_x = 220;
+          lft_arrow_y = 288;
+          
+            lft_arrow_x = 96;
+            lft_arrow_y = 288;
+
+            rgt_arrow_x = 278;
+            rgt_arrow_y = 288;
+          
 }
 //////// From JS file
 
@@ -98,7 +117,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 
 
-if(dv_edit_type == "registration" || dv_edit_type == "camera" || dv_edit_type == "reset"){
+if(dv_edit_type == "registration" || dv_edit_type == "camera" || dv_edit_type == "reset" || dv_edit_type == "android"){
     chk_no_img_path = true;
 }
 if(dv_edit_type == "edit"){
@@ -181,7 +200,6 @@ function reset_mask_seg(){
     var pathData = $("#default_user_path").html();
     mid_area_new_path = new Path(pathData);
     
-    alert(mid_area_new_path.segments.length);
     
     for(var i = 0; i < mid_area_new_path.segments.length; i++) {
         
@@ -715,12 +733,12 @@ extra_layer = new Layer();
 extra_layer.activate();
 
 
+
   
-var an_inc = 54;  
   
 var curr_path_prefix = $("#hdn_serverpath").attr("value");
 
-console.log(curr_path_prefix);
+//alert(curr_path_prefix);
 
 
 var but_back_top_url = curr_path_prefix + "bundles/lovethatfit/site/images/back_button_app.png";
@@ -732,70 +750,69 @@ but_back_top.position = new Point(25, 22);
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
-but_zoom_in.position = new Point(26, 24 + an_inc);
+
 
 var but_zoom_out_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_out.png";
 var but_zoom_out = new Raster(but_zoom_out_url);
 
-but_zoom_out.position = new Point(-500, 24 + an_inc);
+
 
 var but_move_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
 var but_move_left = new Raster(but_move_left_url);
 
-but_move_left.position = new Point(26, 68 + an_inc);
+
 
 var but_move_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
 var but_move_right = new Raster(but_move_right_url);
 
-but_move_right.position = new Point(26, 112 + an_inc);
+
 
 var but_move_up_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_up.png";
 var but_move_up = new Raster(but_move_up_url);
 
-but_move_up.position = new Point(26, 156 + an_inc);
+
 
 var but_move_down_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_down.png";
 var but_move_down = new Raster(but_move_down_url);
 
-but_move_down.position = new Point(26, 200 + an_inc);
+
 
 var but_rotate_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_left.png";
 var but_rotate_left = new Raster(but_rotate_left_url);
 
-but_rotate_left.position = new Point(26, 244 + an_inc);
+
 
 var but_rotate_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
 var but_rotate_right = new Raster(but_rotate_right_url);
 
-but_rotate_right.position = new Point(26, 288 + an_inc);
+
 
 var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
 var but_crop_icon = new Raster(but_crop_icon_url);
 
-but_crop_icon.position = new Point(26, 332 + an_inc);
+
 
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
 var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
 
-scr1_but_hiw_icon.position = new Point(but_x_adj, 24 + an_inc);
+
 
 var hand_cursor_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/hand_cursor_icon.png";
 var hand_cursor_icon = new Raster(hand_cursor_icon_url);
 
-hand_cursor_icon.position = new Point(but_x_adj, 24 + an_inc);
 hand_cursor_icon.visible = false;
+
 
 var edit_shape_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/edit_shape_icon.png";
 var edit_shape_icon = new Raster(edit_shape_icon_url);
 
-edit_shape_icon.position = new Point(but_x_adj, 24 + an_inc);
 edit_shape_icon.visible = false;
 
 
 var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/camera_icon.png";
 var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 
-scr1_but_camera_icon.position = new Point(but_x_adj, 68 + an_inc);
+
 
 var scr1_but_reset_url = curr_path_prefix + "bundles/lovethatfit/site/images/reset_btn.png";
 var scr1_but_reset = new Raster(scr1_but_reset_url);
@@ -808,6 +825,30 @@ var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
 
 scr1_but_save_icon.position = new Point(but_x_adj - 13, scr_height - 18);
 
+
+but_back_top.position = new Point(25, 24);
+scr1_but_hiw_icon.position = new Point(but_x_adj, 24);
+hand_cursor_icon.position = new Point(but_x_adj, 24);
+edit_shape_icon.position = new Point(but_x_adj, 24);
+
+scr1_but_camera_icon.position = new Point(but_x_adj, 68);
+
+
+but_move_up.position = new Point(26, 24 + an_inc);
+but_move_down.position = new Point(26, 68 + an_inc);
+but_rotate_left.position = new Point(26, 112 + an_inc);
+but_rotate_right.position = new Point(26, 156 + an_inc);
+but_crop_icon.position = new Point(26, 200 + an_inc);
+but_zoom_in.position = new Point(26, 244 + an_inc);
+but_zoom_out.position = new Point(-500, 244 + an_inc);
+
+
+
+but_move_left.position = new Point(lft_arrow_x, lft_arrow_y + an_inc);
+but_move_right.position = new Point(rgt_arrow_x, rgt_arrow_y + an_inc);
+
+
+// Create a group from the two paths:
 
 
 
@@ -1137,7 +1178,11 @@ function onMouseDown(event) {
                          if(hitResult.item == scr1_but_reset){
                             //window.location.reload();                
                             //reset_mask();
-                            window.location.href = "scr1_but_reset";
+                            if (confirm('Are you sure you want to start over?')) {
+                                window.location.href = "scr1_but_reset";
+                            } else {
+                                // Do nothing!
+                            }
                         }
                          if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
@@ -1330,12 +1375,24 @@ function onMouseDown(event) {
                             curr_big_seg = 28;
                             console.log("but_bp_rgt_foot");
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_hiw_icon){
-                            window.location.href = "scr1_but_how_it_works";
+                            
+                            if (confirm('Are you sure you want to start over?')) {
+                                window.location.href = "scr1_but_how_it_works";
+                            } else {
+                                // Do nothing!
+                            }
+                            
+                            
                             //$("#scr1_but_how_it_works").trigger( "click" );
                             //alert("How It Works Button Tap");
                             //console.log("scr1_but_hiw_icon");
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
-                            window.location.href = "scr1_but_camera_options";
+                            
+                            if (confirm('Are you sure you want to start over?')) {
+                                window.location.href = "scr1_but_camera_options";
+                            } else {
+                                // Do nothing!
+                            }
                             
                             //$("#scr1_but_camera_options").trigger();
                             
