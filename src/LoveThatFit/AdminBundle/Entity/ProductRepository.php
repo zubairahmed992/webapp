@@ -1197,8 +1197,9 @@ class ProductRepository extends EntityRepository {
   public function productDetailSizeArray($product_id){
    try{   return $this->getEntityManager()
                         ->createQueryBuilder()
+                        #->select("p,ct,ps,psm")
                         ->select("p.id, p.gender, p.styling_type, p.hem_length, p.fit_priority, p.size_title_type, 
-                            ct.name clothing_type, ps.title, ps.body_type, 
+                            ct.name clothing_type, ps.id as product_size_id, ps.title, ps.body_type, 
                             CONCAT( CONCAT(ps.body_type, ' '),  ps.title) as description,
                             psm.title as fit_point, psm.title as label, psm.garment_measurement_flat, psm.max_body_measurement, psm.vertical_stretch, 
                             psm.horizontal_stretch, psm.stretch_type_percentage, psm.ideal_body_size_high, 

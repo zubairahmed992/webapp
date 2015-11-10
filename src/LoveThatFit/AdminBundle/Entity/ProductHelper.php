@@ -1231,6 +1231,20 @@ public function breakFileName($request_array,$product_id){
     
     #------------------------------------------------------------------------
 public function productDetailSizeArray($product_id){
-    return $this->repo->productDetailSizeArray($product_id);
+    $product = $this->repo->productDetailSizeArray($product_id);
+    #return $product;
+    $p['id']=$product[0]['id'];
+    $p['gender']=$product[0]['gender'];
+    $p['hem_length']=$product[0]['hem_length'];
+    $p['size_title_type']=$product[0]['size_title_type'];
+    $p['clothing_type']=$product[0]['clothing_type'];
+    
+    foreach($product as $s){
+        $p['sizes'][$s['product_size_id']]['id']=$s['product_size_id'];
+        $p['sizes'][$s['product_size_id']]['title']=$s['title'];
+        $p['sizes'][$s['product_size_id']]['body_type']=$s['body_type'];
+        $p['sizes'][$s['product_size_id']]['description']=$s['description'];
+    }
+    return $p;
 }
 }
