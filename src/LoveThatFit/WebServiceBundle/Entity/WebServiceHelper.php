@@ -487,7 +487,7 @@ class WebServiceHelper {
                 'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                 'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
-                'price' => $pi->getPrice(),
+                'price' => $pi->getPrice()?$pi->getPrice():0,
             );
          
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
