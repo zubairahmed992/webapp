@@ -790,6 +790,9 @@ var but_rotate_right = new Raster(but_rotate_right_url);
 var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
 var but_crop_icon = new Raster(but_crop_icon_url);
 
+var but_crop_icon_active_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon_active.png";
+var but_crop_icon_active = new Raster(but_crop_icon_active_url);
+
 
 
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
@@ -839,6 +842,10 @@ but_move_down.position = new Point(26, 68 + an_inc);
 but_rotate_left.position = new Point(26, 112 + an_inc);
 but_rotate_right.position = new Point(26, 156 + an_inc);
 but_crop_icon.position = new Point(26, 200 + an_inc);
+
+but_crop_icon_active.visible = false;
+but_crop_icon_active.position = new Point(26, 200 + an_inc);
+
 but_zoom_in.position = new Point(26, 244 + an_inc);
 but_zoom_out.position = new Point(-500, 244 + an_inc);
 
@@ -1216,10 +1223,18 @@ function onMouseDown(event) {
                             curr_crop = "checked";
                             path_com.fillColor = "#fff";
                             path_com.opacity = 1;
-                        }else if(curr_crop == "checked" && hitResult.item == but_crop_icon){
+                            
+                            but_crop_icon_active.visible = true;
+                            but_crop_icon.visible = false;
+                            
+                        }else if(curr_crop == "checked" && hitResult.item == but_crop_icon_active){
                             curr_crop = "normal";
                             path_com.fillColor = "#666";
                             path_com.opacity = 0.6;
+                            
+                            but_crop_icon_active.visible = false;
+                            but_crop_icon.visible = true;
+                            
                         } if(curr_crop == "normal" && hitResult.item == but_bp_head_top){
                             big_point = true;
                             big_point_ele = hitResult.item;
