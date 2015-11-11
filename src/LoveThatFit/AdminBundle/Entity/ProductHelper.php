@@ -1238,12 +1238,33 @@ public function productDetailSizeArray($product_id){
     $p['hem_length']=$product[0]['hem_length'];
     $p['size_title_type']=$product[0]['size_title_type'];
     $p['clothing_type']=$product[0]['clothing_type'];
+    $p['fit_priority']=  $product[0]['fit_priority'];
+    $fp =  json_decode($product[0]['fit_priority'],true);
     
     foreach($product as $s){
-        $p['sizes'][$s['product_size_id']]['id']=$s['product_size_id'];
-        $p['sizes'][$s['product_size_id']]['title']=$s['title'];
-        $p['sizes'][$s['product_size_id']]['body_type']=$s['body_type'];
-        $p['sizes'][$s['product_size_id']]['description']=$s['description'];
+        if (!array_key_exists('sizes', $p) || (array_key_exists('sizes', $p) && !array_key_exists($s['description'], $p['sizes']))){
+            $p['sizes'][$s['description']]['id']=$s['product_size_id'];
+            $p['sizes'][$s['description']]['title']=$s['title'];
+            $p['sizes'][$s['description']]['body_type']=$s['body_type'];
+            $p['sizes'][$s['description']]['description']=$s['description'];
+        }
+        if($s['fit_point']=='hem_length' || (array_key_exists($s['fit_point'], $fp) && $fp[$s['fit_point']]>0)){
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['fit_point']=$s['fit_point'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['label']=$s['fit_point'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['calc_min_body_measurement']=$s['calc_min_body_measurement'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['min_body_measurement']=$s['min_body_measurement'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['ideal_body_size_low']=$s['ideal_body_size_low'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['fit_model']=$s['fit_model'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['ideal_body_size_high']=$s['ideal_body_size_high'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['max_body_measurement']=$s['max_body_measurement'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['calc_max_body_measurement']=$s['calc_max_body_measurement'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['grade_rule']=$s['grade_rule'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['garment_measurement_flat']=$s['garment_measurement_flat'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['garment_measurement_flat']=$s['garment_measurement_flat'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['garment_measurement_flat']=$s['garment_measurement_flat'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['garment_measurement_stretch_fit']=$s['garment_measurement_stretch_fit'];
+            $p['sizes'][$s['description']]['fit_points'][$s['fit_point']]['fit_priority']=array_key_exists($s['fit_point'], $fp)?$fp[$s['fit_point']]:0;
+        }
     }
     return $p;
 }
