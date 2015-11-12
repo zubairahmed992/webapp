@@ -177,11 +177,25 @@ class OrderHelper {
 	} else {
 	  $no_of_paginations = ceil($rec_count / $limit);
 	}
+	$track_information = $this->container->get('cart.helper.shipping')->getTrackingInformation();
+	if($track_information['TRACKRESPONSE']['RESPONSE']['RESPONSESTATUSDESCRIPTION']=='Success')
+	{
+	  $tracking_number = $track_information["TRACKRESPONSE"]['SHIPMENT']['SHIPMENTIDENTIFICATIONNUMBER'];
+	  $current_status = $track_information["TRACKRESPONSE"]['SHIPMENT']["PACKAGE"]["ACTIVITY"]["STATUS"]["STATUSTYPE"]["DESCRIPTION"];
+
+
+	}else{
+	  $tracking_number='';
+	  $current_status='';
+	}
 	return array('order' => $entity,
 	  'rec_count' => $rec_count,
 	  'no_of_pagination' => $no_of_paginations,
 	  'limit' => $cur_page,
 	  'per_page_limit' => $limit,
+	  'sort'=>$sort,
+	  'current_status' => $current_status,
+	  'tracking_number' => $tracking_number,
 	  'sort'=>$sort,
 	);
   }

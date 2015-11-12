@@ -53,6 +53,8 @@
                                 <td>Shipping Charges</td>
                                 <td>Grand Total</td>
                                 <td>Payment Method</td>
+                                <td>Tracking Number</td>
+                                <td>Parcel Status</td>
 
 
                             </tr>
@@ -73,6 +75,8 @@
                                     <td>${{ shipping_amount| number_format(2)}}</td>
                                     <td>${{ total| number_format(2)}}</td>
                                     <td>{{ c.PaymentMethod}}</td>
+                                    <td><a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums={{ tracking_number}}">{{ tracking_number}}</a></td>
+                                    <td>{{ current_status}}</td>
 
 
                                 </tr>

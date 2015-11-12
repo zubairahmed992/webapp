@@ -260,5 +260,77 @@ class ShippingHelper {
 
   } # end method GetShippingRate()
 
+  ##### Track Order using UPS
+  function getTrackingInformation()
+  {
+
+	//test tracking number from the documentation which have different statuses[page 122].
+	$track_info = ['1Z12345E0291980793','1Z12345E6692804405','1Z12345E0390515214'];
+	//,'1Z12345E1392654435','1Z12345E6892410845','1Z12345E029198079','1Z12345E1591910450','990728071','3251026119','9102084383041101186729','cgish000116630','1Z4861WWE194914215'
+	$random_keys=array_rand($track_info,1);
+	//$tracking_no='9102084383041101186729';
+	$tracking_no=$track_info[$random_keys];
+
+	$data ="<?xml version=\"1.0\"?>
+        <AccessRequest xml:lang='en-US'>
+        <AccessLicenseNumber>{$this->strAccessLicenseNumber}</AccessLicenseNumber>
+        <UserId>{$this->strUserId}</UserId>
+        <Password>{$this->strPassword}</Password>
+        </AccessRequest>
+        <?xml version=\"1.0\"?>
+        <TrackRequest>
+        <Request>
+        <TransactionReference>
+        <CustomerContext>
+        <InternalKey>blah</InternalKey>
+        </CustomerContext>
+        <XpciVersion>1.0</XpciVersion>
+        </TransactionReference>
+        <RequestAction>Track</RequestAction>
+        </Request>
+        <TrackingNumber>{$tracking_no}</TrackingNumber>
+        </TrackRequest>";
+	$ch = curl_init("https://wwwcie.ups.com/ups.app/xml/Track");
+	curl_setopt($ch, CURLOPT_HEADER, 1);
+	curl_setopt($ch,CURLOPT_POST,1);
+	curl_setopt($ch,CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+	$result=curl_exec ($ch);
+	$data = strstr($result, '<?');
+	$xml_parser = xml_parser_create();
+	xml_parse_into_struct($xml_parser, $data, $vals, $index);
+	xml_parser_free($xml_parser);
+	$params = array();
+	$level = array();
+	foreach ($vals as $xml_elem) {
+	  if ($xml_elem['type'] == 'open') {
+		if (array_key_exists('attributes',$xml_elem)) {
+		  list($level[$xml_elem['level']],$extra) = array_values($xml_elem['attributes']);
+		} else {
+		  $level[$xml_elem['level']] = $xml_elem['tag'];
+		}
+	  }
+	  if ($xml_elem['type'] == 'complete') {
+		if(isset($xml_elem['value']) && $xml_elem['value'] != '') {
+		  $start_level = 1;
+		  $php_stmt = '$params';
+		  while($start_level < $xml_elem['level']) {
+			$php_stmt .= '[$level['.$start_level.']]';
+			$start_level++;
+		  }
+		  $php_stmt .= '[$xml_elem[\'tag\']] = $xml_elem[\'value\'];';
+		  eval($php_stmt);
+		}
+
+	  }
+	}
+	curl_close($ch);
+	return $params;
+  }
+
+
 
 }
