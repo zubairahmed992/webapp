@@ -67,7 +67,8 @@ class WSRepo {
             ct.target as target,ct.name as clothing_type ,
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
-            b.id as brand_id, b.name as brand_name
+            b.id as brand_id, b.name as brand_name,
+            coalesce(pi.price, 0) as price
             FROM LoveThatFitAdminBundle:Product p             
             JOIN p.brand b
             LEFT JOIN p.retailer r
@@ -87,7 +88,8 @@ class WSRepo {
             ct.target as target,ct.name as clothing_type ,
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
-            b.id as brand_id, b.name as brand_name
+            b.id as brand_id, b.name as brand_name,
+            coalesce(pi.price, 0) as price
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.product_items pi
             JOIN pi.product_color pc                        
@@ -108,14 +110,17 @@ class WSRepo {
             ct.target as target,ct.name as clothing_type ,
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
-            b.id as brand_id, b.name as brand_name
+            b.id as brand_id, b.name as brand_name,
+            coalesce(pi.price, 0) as price
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.displayProductColor pc            
             JOIN p.brand b
+            JOIN p.product_items pi
             LEFT JOIN p.retailer r
             JOIN p.clothing_type ct
             
             WHERE p.gender=:gender AND p.disabled=0 AND p.displayProductColor!=''  
+            GROUP BY p.id 
             ORDER BY p.id DESC"
                                 )->setParameters(array('gender' => $user->getGender()))->setMaxResults(10);
                 break;
