@@ -420,7 +420,17 @@ class WebServiceHelper {
             return $this->response_array(false, 'Member not found');
         }
     }
-
+    
+#--------------------------------------------------------------------    
+ public function matchAlternateToken($ra){
+        $user = $this->findUserByAuthToken($ra['auth_token']);
+        if (count($user) > 0) {
+            return $this->response_array(true, 'User Authenticated');
+        } else {
+            return $this->response_array(false, 'Authentication Failure');
+        };   
+   return $user;
+  }
 #--------------------------------------------------------------------
 
     public function processRequest($request) {

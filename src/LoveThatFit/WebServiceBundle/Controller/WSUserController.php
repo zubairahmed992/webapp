@@ -110,6 +110,10 @@ class WSUserController extends Controller {
         return new Response($res);
 }
 #----------------------------------------------------------
+ public function  forgotPasswordTokenAuthAction(){     
+     return new response($this->get('webservice.helper')->matchAlternateToken($this->process_request()));
+ }
+#----------------------------------------------------------
  public function  forgotPasswordUpdateAction(){
      return new response($this->get('webservice.helper')->forgotPasswordUpdate($this->process_request()));
  }
