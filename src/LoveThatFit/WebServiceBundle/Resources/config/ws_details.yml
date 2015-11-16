@@ -48,7 +48,8 @@ ws_user_registration:
       email:  example@ltf.com
       password: ltf123
       gender: f
-      zipcode: 
+      zipcode:
+      dob:  
       weight: 80.00
       height: 61.00
       bust: 0.00
@@ -162,7 +163,7 @@ ws_user_profile_update:
       email:  kamran@ltf.com
       first_name:
       last_name:
-      birth_date:
+      dob:
       zipcode:
       auth_token: 97fc8d115394f3f1947f315783e29e0e
     request_type: post
