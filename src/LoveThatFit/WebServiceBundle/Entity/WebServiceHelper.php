@@ -28,7 +28,7 @@ class WebServiceHelper {
                     $response_array['brand'] = $retailer_brands['brand'];
                 }
 
-                return $this->response_array(true, 'user found', true, $response_array);
+                return $this->response_array(true, 'member found', true, $response_array);
             } else {
                 return $this->response_array(false, 'Invalid Password');
             }
@@ -152,7 +152,8 @@ class WebServiceHelper {
         $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
         $userDevice->setDeviceName($request_array['device_id']);
         $userDevice->setDeviceType($request_array['device_type']);
-        $userDevice->setDeviceUserPerInchPixelHeight(7); #default value 7            
+        $px_height=$request_array['device_type']=='iphone5'?6.891:7.797;
+        $userDevice->setDeviceUserPerInchPixelHeight($px_height); #default value 7            
         $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
         return $userDevice;
     }
@@ -423,6 +424,9 @@ class WebServiceHelper {
     
 #--------------------------------------------------------------------    
  public function matchAlternateToken($ra){
+        if (!array_key_exists('auth_token', $ra)){
+                 return $this->response_array(false, 'Authentication token parameter not provided');
+         }
         $user = $this->findUserByAuthToken($ra['auth_token']);
         if (count($user) > 0) {
             return $this->response_array(true, 'User Authenticated');
