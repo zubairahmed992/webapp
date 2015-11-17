@@ -205,7 +205,12 @@ class WebServiceHelper {
         #21* #$ar['size_charts'] = $this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
         $measurement->setMeasurementJson(json_encode($ar));
         #3* #$measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
-
+        # calculating shoulder_across_back & buse measurement
+        $bra_specs=$this->container->get('admin.helper.size')->getWomanBraSpecs($measurement->getBraSize());
+        if($bra_specs){
+            $measurement->setBust($bra_specs['average']);
+            $measurement->setShoulderAcrossBack($bra_specs['shoulder_across_back']);
+        }
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         return $measurement;
     }
