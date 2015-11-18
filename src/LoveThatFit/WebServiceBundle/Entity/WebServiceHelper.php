@@ -206,13 +206,17 @@ class WebServiceHelper {
         $measurement->setMeasurementJson(json_encode($ar));
         #3* #$measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
         # calculating shoulder_across_back & buse measurement
+        $this->setBraRelatedMeasurements($measurement);
+        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+        return $measurement;
+    }
+    #-------------------------------------------------------
+    private function setBraRelatedMeasurements($measurement){
         $bra_specs=$this->container->get('admin.helper.size')->getWomanBraSpecs($measurement->getBraSize());
         if($bra_specs){
             $measurement->setBust($bra_specs['average']);
             $measurement->setShoulderAcrossBack($bra_specs['shoulder_across_back']);
         }
-        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $measurement;
     }
 #-------------------------------------------------------
     private function setUserMeasurementWithParams($request_array, $user) {
@@ -221,21 +225,29 @@ class WebServiceHelper {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
 
+        
+        array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
             $measurement->setBraSize($request_array['bra_size']);
+            #if bust measurement is manually provided, it will still prefers the value
+            #calculated from bra-size
+            $this->setBraRelatedMeasurements($measurement);
         }
+        
+        #shoulder_across_back value if manually provided will be prefered over
+        #value calculated from bra-size
+        array_key_exists('shoulder_across_back', $request_array) ? $measurement->setShoulderAcrossBack($request_array['shoulder_across_back']) : '';
+        
         array_key_exists('body_type', $request_array) ? $measurement->setBodyTypes($request_array['body_type']) : '';
         array_key_exists('body_shape', $request_array) ? $measurement->setBodyShape($request_array['body_shape']) : '';
         array_key_exists('weight', $request_array) ? $measurement->setWeight($request_array['weight']) : '';
         array_key_exists('height', $request_array) ? $measurement->setHeight($request_array['height']) : '';
         array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';
         array_key_exists('shoulder_across_front', $request_array) ? $measurement->setShoulderAcrossFront($request_array['shoulder_across_front']) : '';
-        array_key_exists('shoulder_across_back', $request_array) ? $measurement->setShoulderAcrossBack($request_array['shoulder_across_back']) : '';
         array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
         array_key_exists('center_front_waist', $request_array) ? $measurement->setCenterFrontWaist($request_array['center_front_waist']) : '';
         array_key_exists('back_waist', $request_array) ? $measurement->setBackWaist($request_array['back_waist']) : '';
         array_key_exists('chest', $request_array) ? $measurement->setChest($request_array['chest']) : '';
-        array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';
         array_key_exists('bicep', $request_array) ? $measurement->setBicep($request_array['bicep']) : '';
         array_key_exists('tricep', $request_array) ? $measurement->setTricep($request_array['tricep']) : '';
         array_key_exists('sleeve', $request_array) ? $measurement->setSleeve($request_array['sleeve']) : '';
