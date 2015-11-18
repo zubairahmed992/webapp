@@ -68,7 +68,8 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
-            coalesce(pi.price, 0) as price
+            coalesce(pi.price, 0) as price,            
+            CASE WHEN (pu.id IS NULL) THEN 'false' ELSE 'true' END AS favourite
             FROM LoveThatFitAdminBundle:Product p             
             JOIN p.brand b
             LEFT JOIN p.retailer r
@@ -76,8 +77,8 @@ class WSRepo {
             JOIN uih.productitem pi
             JOIN pi.product_color pc            
             JOIN p.clothing_type ct
-            
-            WHERE uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
+            LEFT JOIN pi.users pu            
+            WHERE (pu.id IS NULL OR pu.id=:user_id) AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
             ORDER BY uih.count DESC"
                                 )->setParameters(array('user_id' => $user->getId()));
                 break;
@@ -89,7 +90,8 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
-            coalesce(pi.price, 0) as price
+            coalesce(pi.price, 0) as price,
+            'true' AS favourite
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.product_items pi
             JOIN pi.product_color pc                        
@@ -111,7 +113,8 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
-            coalesce(pi.price, 0) as price
+            coalesce(pi.price, 0) as price,
+            'false' AS favourite
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.displayProductColor pc            
             JOIN p.brand b
