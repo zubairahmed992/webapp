@@ -228,7 +228,7 @@ class WebServiceHelper {
         
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
-            $measurement->setBraSize($request_array['bra_size']);
+            $measurement->setBraSize(trim($request_array['bra_size']));
             #if bust measurement is manually provided, it will still prefers the value
             #calculated from bra-size
             $this->setBraRelatedMeasurements($measurement);
