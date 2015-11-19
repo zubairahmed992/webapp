@@ -1162,6 +1162,10 @@ class User implements UserInterface, \Serializable {
     //----------------------------------------------------
     public function copyDefaultImage() {
         $this->image='cropped.png';
+        
+        if (!is_dir($this->getUploadRootDir())) {
+                    mkdir($this->getUploadRootDir(), 0700);
+                }
         copy($this->getDummyUserImageRootPath(), $this->getAbsolutePath());        
     }
     //----------------------------------------------------

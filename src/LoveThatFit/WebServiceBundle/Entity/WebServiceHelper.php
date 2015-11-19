@@ -73,8 +73,8 @@ class WebServiceHelper {
             #size charts brands & size being saved
             //sizecharts measurement extraction
             #--- 4) Measurement
-            $measurement = $this->createUserMeasurementWithParams($request_array, $user);
-
+            #$measurement = $this->createUserMeasurementWithParams($request_array, $user);
+            $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
             #--- 5) Device
             $user_device = $this->createUserDeviceWithParams($request_array, $user);
             $detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
@@ -150,7 +150,7 @@ class WebServiceHelper {
 #-------------------------------------------------------
     private function createUserDeviceWithParams($request_array, $user) {
         $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
-        $userDevice->setDeviceName($request_array['device_id']);
+        array_key_exists('device_id', $request_array)? $userDevice->setDeviceName($request_array['device_id']):'';
         $userDevice->setDeviceType($request_array['device_type']);
         $px_height=$request_array['device_type']=='iphone5'?6.891:7.797;
         $userDevice->setDeviceUserPerInchPixelHeight($px_height); #default value 7            

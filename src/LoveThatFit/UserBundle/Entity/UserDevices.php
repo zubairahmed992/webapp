@@ -311,7 +311,7 @@ class UserDevices  {
     public function toArray($details = false) {
         if ($details) {
             return array(
-                'id' => $this->id,
+                #'id' => $this->id,
                 'device_name' => $this->device_name,
                 'deviceType' => $this->deviceType,
                 'per_inch_pixel_height' => $this->deviceUserPerInchPixelHeight,
@@ -323,7 +323,7 @@ class UserDevices  {
             );
         } else {
             return array(
-                'id' => $this->id,
+                #'id' => $this->id,
                 'device_name' => $this->device_name,
                 'deviceType' => $this->deviceType,
                 'per_inch_pixel_height' => $this->deviceUserPerInchPixelHeight,
