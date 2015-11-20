@@ -54,6 +54,12 @@ order_change_address:
     requirements:
         _method:  GET
 
+### Validate Address
+order_validate_address:
+    pattern:  /checkout/validate_address
+    defaults: { _controller: LoveThatFitCartBundle:Order:validateaddress}
+#    requirements:
+#        _method:  POST
 
 payment_default:
     pattern:  /checkout/payment

@@ -331,6 +331,153 @@ class ShippingHelper {
 	return $params;
   }
 
+  	#### Address Validation
+
+  //Returns an xml string from ups with address validation details.
+  function addressvalidation($city, $state, $zip_code)
+  {
+	$UPSWebserviceUrlstring = "https://wwwcie.ups.com/ups.app/xml/AV";
+
+	$data ="<?xml version=\"1.0\"?>
+        <AccessRequest xml:lang=\"en-US\">
+        <AccessLicenseNumber>{$this->strAccessLicenseNumber}</AccessLicenseNumber>
+        <UserId>{$this->strUserId}</UserId>
+        <Password>{$this->strPassword}</Password>
+        </AccessRequest>
+        <?xml version=\"1.0\"?>
+        <AddressValidationRequest xml:lang=\"en-US\">
+            <Request>
+                <TransactionReference>
+                    <CustomerContext>address verification data</CustomerContext>
+                    <XpciVersion>1.0001</XpciVersion>
+                </TransactionReference>
+                <RequestAction>AV</RequestAction>
+            </Request>
+            <Address>
+                <City>$city</City>
+                <StateProvinceCode>$state</StateProvinceCode>
+                <PostalCode>$zip_code</PostalCode>
+            </Address>
+        </AddressValidationRequest>";
+
+	$ch = curl_init("https://wwwcie.ups.com/ups.app/xml/AV");
+	curl_setopt($ch, CURLOPT_HEADER, 1);
+	curl_setopt($ch,CURLOPT_POST,1);
+	curl_setopt($ch,CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+	$result=curl_exec($ch);
+
+	return $result;
+
+  }
+
+//These are the 3 functions that are interdependent.
+// return an array with the locations of all the occurrences. Almost like an advanced strstr.
+  function Arrayfindall($needle, $haystack)
+  {
+	//Setting up
+	$buffer=''; //We will use a 'frameshift' buffer for this search
+	$pos=0; //Pointer
+	$end = strlen($haystack); //The end of the string
+	$getchar=''; //The next character in the string
+	$needlelen=strlen($needle); //The length of the needle to find (speeds up searching)
+	$found = array(); //The array we will store results in
+
+	while($pos<$end)//Scan file
+	{
+	  $getchar = substr($haystack,$pos,1); //Grab next character from pointer
+	  if($getchar!="\n" || $buffer < $needlelen) //If we fetched a line break, or the buffer is still smaller than the needle, ignore and grab next character
+	  {
+		$buffer = $buffer . $getchar; //Build frameshift buffer
+		if(strlen($buffer)>$needlelen) //If the buffer is longer than the needle
+		{
+		  $buffer = substr($buffer,-$needlelen);//Truncunate backwards to needle length (backwards so that the frame 'moves')
+		}
+		if($buffer==$needle) //If the buffer matches the needle
+		{
+		  $found[]=$pos-$needlelen+1; //Add the location of the needle to the array. Adding one fixes the offset.
+		}
+	  }
+	  $pos++; //Increment the pointer
+	}
+	if(array_key_exists(0,$found)) //Check for an empty array
+	{
+	  return $found; //Return the array of located positions
+	}
+	else
+	{
+	  return false; //Or if no instances were found return false
+	}
+  }
+  function GetAddressValidationResults($string)
+  {
+	$xml = $string;
+	//this determines how many AddressValidationResults were returned
+	$number = 0;
+	$num=preg_match_all('#<AddressValidationResult>#', $string, $array);
 
 
+	$avr_open = $this->Arrayfindall('<AddressValidationResult>', $string);
+
+	$avr_close = $this->Arrayfindall('</AddressValidationResult>', $string);
+
+	$int = 0;
+	$tmparray = array();
+	while ($int<$num)
+	{
+	  $open_int = $avr_open[$int];
+
+	  $close_int = $avr_close[$int];
+	  $node =  substr($xml, $open_int, $close_int);
+	  $tmpsubarray = $this->putxmlinarray($node);
+	  $tmparray[$int] = $tmpsubarray;
+	  $int++;
+	}
+	return $tmparray;
+
+  }
+  function putxmlinarray($string)
+  {
+	$xml_parser = xml_parser_create();
+	xml_parse_into_struct($xml_parser, $string, $vals, $index);
+	xml_parser_free($xml_parser);
+	$params = array();
+	$level = array();
+	foreach ($vals as $xml_elem)
+	{
+	  if ($xml_elem['type'] == 'open')
+	  {
+
+		if (array_key_exists('attributes',$xml_elem))
+		{
+
+		  list($level[$xml_elem['level']],$extra) = array_values($xml_elem['attributes']);
+		}
+		else
+		{
+		  $level[$xml_elem['level']] = $xml_elem['tag'];
+		}
+	  }
+
+	  if ($xml_elem['type'] == 'complete')
+	  {
+
+		$start_level = 1;
+		$php_stmt = '$params';
+		while($start_level < $xml_elem['level'])
+		{
+		  $php_stmt .= '[$level['.$start_level.']]';
+		  $start_level++;
+		}
+		$php_stmt .= '[$xml_elem[\'tag\']] = $xml_elem[\'value\'];';
+		eval($php_stmt);
+	  }
+
+	}
+
+	return $params;
+  }
 }

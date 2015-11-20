@@ -123,4 +123,54 @@ class OrderController extends Controller
 	public function previewAddressAction(){
 	  return $this->redirect($this->generateUrl('payment_default'));
 	}
+
+  	/* Validate Address on Orders Page using UPS API */
+	public function validateAddressAction(Request $request)
+	{
+	  $decoded  = $request->request->all();
+	  //Validate both addresses if user came first time and filled both addresses
+	  if($decoded["both_addresses"] == 1){
+	  $billing_state=$decoded["billing_state"];
+	  $billing_zip_code = $decoded["billing_postcode"];
+	  $billing_city=$decoded["billing_city"];
+
+	  $shipping_state=$decoded["shipping_state"];
+	  $shipping_zip_code = $decoded["shipping_postcode"];
+	  $shipping_city=$decoded["shipping_city"];
+
+	  $params = $result = $this->get('cart.helper.shipping')->addressvalidation($billing_city, $billing_state, $billing_zip_code);
+	  $addressvalidationresults = $this->get('cart.helper.shipping')->GetAddressValidationResults($params);
+	  $billing_quality = isset($addressvalidationresults[0]["ADDRESSVALIDATIONRESULT"]["QUALITY"])?$addressvalidationresults[0]["ADDRESSVALIDATIONRESULT"]["QUALITY"]:'';
+
+	  $params = $result = $this->get('cart.helper.shipping')->addressvalidation($shipping_city, $shipping_state, $shipping_zip_code);
+	  $addressvalidationresults = $this->get('cart.helper.shipping')->GetAddressValidationResults($params);
+	  $shipping_quality = isset($addressvalidationresults[0]["ADDRESSVALIDATIONRESULT"]["QUALITY"])?$addressvalidationresults[0]["ADDRESSVALIDATIONRESULT"]["QUALITY"]:'';
+		if($billing_quality  == '1.0' && $shipping_quality == '1.0'){
+		  return new Response("valid");
+		}elseif($billing_quality  == '1.0' && $shipping_quality != '1.0'){
+		  return new Response("shipping_invalid");
+		}elseif($billing_quality  != '1.0' && $shipping_quality == '1.0'){
+		  return new Response("billing_invalid");
+		}else{
+		  return new Response("both_invalid");
+		}
+	  }else{
+		//validate single address if user verify address from single edit address screen
+		$state=$decoded["state"];
+		$zip_code = $decoded["postcode"];
+		$city=$decoded["city"];
+
+		$params = $result = $this->get('cart.helper.shipping')->addressvalidation($city, $state, $zip_code);
+		//print_r($params);die;
+		$addressvalidationresults = $this->get('cart.helper.shipping')->GetAddressValidationResults($params);
+
+
+		$address_quality = isset($addressvalidationresults[0]["ADDRESSVALIDATIONRESULT"]["QUALITY"])?$addressvalidationresults[0]["ADDRESSVALIDATIONRESULT"]["QUALITY"]:'';
+		if($address_quality  == '1.0'){
+		  return new Response("valid");
+		}else{
+		  return new Response("invalid");
+		}
+	  }
+	}
 }

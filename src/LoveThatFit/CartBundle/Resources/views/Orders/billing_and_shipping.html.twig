@@ -32,42 +32,50 @@
          }
 
      }
-//     function getUserDetail(address,is_billing){
-//         $.ajax({
-//             type: "GET",
-//             url: "order/get_address/" + address[address.selectedIndex].value,
-//             success: function(data){
-//                 var u_obj = JSON.parse(data);
-//                 if(is_billing == 1){
-//                 $('#billing_billing_first_name').val(u_obj.first_name);
-//                 $('#billing_billing_last_name').val(u_obj.last_name);
-//                 $('#billing_billing_address1').val(u_obj.address1);
-//                 $('#billing_billing_address2').val(u_obj.address2);
-//                 $('#billing_billing_phone').val(u_obj.phone);
-//                 $('#billing_billing_city').val(u_obj.city);
-//                 $('#billing_billing_postcode').val(u_obj.postcode);
-//                 $('#billing_billing_country').val(u_obj.country);
-//                 $('#billing_billing_state').val(u_obj.state);
-//                 $('#bill_info').val('0');
-//                 //replace_all_user_data(data);
-//                 }else{
-//                 $('#billing_shipping_first_name').val(u_obj.first_name);
-//                 $('#billing_shipping_last_name').val(u_obj.last_name);
-//                 $('#billing_shipping_address1').val(u_obj.address1);
-//                 $('#billing_shipping_address2').val(u_obj.address2);
-//                 $('#billing_shipping_phone').val(u_obj.phone);
-//                 $('#billing_shipping_city').val(u_obj.city);
-//                 $('#billing_shipping_postcode').val(u_obj.postcode);
-//                 $('#billing_shipping_country').val(u_obj.country);
-//                 $('#billing_shipping_state').val(u_obj.state);
-//                 $('#ship_info').val('0');
-//                 }
-//             },
-//             failure: function(errMsg) {
-//                 alert(errMsg);
-//             }
-//         });
-//     }
+     $( document ).ready(function() {
+     $('#billingshipping').submit(function(event){
+         event.preventDefault();
+         var billing_state = $('#billing_billing_state').val();
+         var billing_postcode = $('#billing_billing_postcode').val();
+         var billing_city = $('#billing_shipping_city').val();
+
+         var shipping_state = $('#billing_shipping_state').val();
+         var shipping_postcode = $('#billing_shipping_postcode').val();
+         var shipping_city = $('#billing_shipping_city').val();
+         $('#billing-address-validation-error').css('display','none');
+         $('#shipping-address-validation-error').css('display','none');
+         $.ajax({
+             type: "POST",
+             url: "validate_address",
+             data: {"billing_state": billing_state,"billing_postcode":billing_postcode,"billing_city":billing_city,"shipping_state":shipping_state,"shipping_postcode":shipping_postcode,"shipping_city":shipping_city,"both_addresses":'1'},
+             success: function(data){
+                if(data == 'valid'){
+                    document.getElementById("billingshipping").submit();
+                }else if(data == 'shipping_invalid'){
+                    $('#shipping-address-validation-error').html('Shipping Address is Invalid Please check City,State and Zipcode.');
+                    $('#shipping-address-validation-error').css('display','block');
+                }else if(data == 'billing_invalid'){
+                    $('#billing-address-validation-error').html('Billing Address is Invalid Please check City,State and Zipcode.');
+                    $('#billing-address-validation-error').css('display','block');
+                }else if(data == 'both_invalid'){
+                    $('#billing-address-validation-error').html('Billing Address is Invalid Please check City,State and Zipcode.');
+                    $('#shipping-address-validation-error').html('Shipping Address is Invalid Please check City,State and Zipcode.');
+                    $('#billing-address-validation-error').css('display','block');
+                    $('#shipping-address-validation-error').css('display','block');
+                }
+                else{
+
+                    //$('#address-validation-error').css('display','block');
+                }
+             },
+             failure: function(errMsg) {
+
+                 //alert(errMsg);
+             }
+         });
+        });
+     });
+
 
 
     </script>
@@ -89,9 +97,8 @@
             {#<a href="{{path('cart_show')}}" class="btn">back</a>#}
         {#</div>#}
         <div class="clearfix"></div>
-        <form action="{{ path('save_addresses') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+        <form id="billingshipping" action="{{ path('save_addresses') }}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
-
             <div id="detail_wrapper" class="detail_wrap">
                 <div id="product_content">
                     <div id="pro_detail">
@@ -105,8 +112,10 @@
             <li><a href="">Review &amp; Billing</a></li>
         </ul>
     </div><br>
-    
-                            <h1>Billing Information</h1>
+                             <div id="billing-address-validation-error" style="display: none">Please check your address</div>
+
+
+                             <h1>Billing Information</h1>
                             
                           
                             <br>
@@ -207,7 +216,9 @@
                                                      
                             <div class="clearfix">&nbsp;</div>
                             <div id="shipping">
-                            <h1>Shipping Information</h1>
+                                <div id="shipping-address-validation-error" style="display: none">Please check your address</div>
+
+                                <h1>Shipping Information</h1>
                             
                            
                             
