@@ -1221,7 +1221,7 @@ class User implements UserInterface, \Serializable {
     }
 //----------------------------------------------------------
     public function getDummyUserImageRootPath() {
-        return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.jpg';        
+        return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
     }
 //----------------------------------------------------------
     public function getUploadDir() {
