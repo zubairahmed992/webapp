@@ -14,6 +14,11 @@ class SizeHelper {
         $this->constant = $this->conf["constants"];
     }
 
+    public function make_bra_size_title_standardized($str){
+            $str=str_replace(' ', '', $str);                    
+            preg_match_all('/^(\d+)(\w+)$/', $str, $bra_cup);
+            return $bra_cup[1][0]." ".$bra_cup[2][0];      
+    }
 #-------------------Fetch All Sizes -------------------------------------------#
 public function getAllSizes(){
   return array(
@@ -187,7 +192,8 @@ private function getWomanBraSizesParsed($type=null, $key_pair=true){
 }
 #------------------------------------------
 public function getWomanBraSpecs($bra_size){    
-     $arr=$this->constant['size_titles']['woman']['bra'];
+     $arr=$this->constant['size_titles']['woman']['bra'];     
+     $bra_size=str_replace(' ', '', $bra_size);                    
     foreach($arr as $key=>$val){
         if($key==$bra_size){            
             return array(

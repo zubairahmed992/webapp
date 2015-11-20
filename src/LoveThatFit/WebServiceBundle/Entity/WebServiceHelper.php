@@ -73,8 +73,9 @@ class WebServiceHelper {
             #size charts brands & size being saved
             //sizecharts measurement extraction
             #--- 4) Measurement
-            #$measurement = $this->createUserMeasurementWithParams($request_array, $user);
-            $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
+            $measurement = $this->createUserMeasurementWithParams($request_array, $user);
+            #this is where the default user gets enabled
+            #$measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
             #--- 5) Device
             $user_device = $this->createUserDeviceWithParams($request_array, $user);
             $detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
@@ -228,7 +229,12 @@ class WebServiceHelper {
         
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
-            $measurement->setBraSize(trim($request_array['bra_size']));
+            
+            $str=str_replace(' ', '', $request_array['bra_size']);        
+            preg_match_all('/^(\d+)(\w+)$/', $str, $bra_cup);
+            $b_size=trim($bra_cup[1][0]." ".$bra_cup[2][0]);            
+            $measurement->setBraSize($b_size);
+            
             #if bust measurement is manually provided, it will still prefers the value
             #calculated from bra-size
             $this->setBraRelatedMeasurements($measurement);
