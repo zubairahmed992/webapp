@@ -44,11 +44,18 @@
          var shipping_city = $('#billing_shipping_city').val();
          $('#billing-address-validation-error').css('display','none');
          $('#shipping-address-validation-error').css('display','none');
+         $("#cmhldr").show();
+         $("#cmhldr").prepend('<div class="uploading_in_progress2" style="top: 110px;"><span>Validating Address</span></div>');
+
          $.ajax({
              type: "POST",
              url: "validate_address",
              data: {"billing_state": billing_state,"billing_postcode":billing_postcode,"billing_city":billing_city,"shipping_state":shipping_state,"shipping_postcode":shipping_postcode,"shipping_city":shipping_city,"both_addresses":'1'},
+
+
+
              success: function(data){
+                $("#cmhldr").hide();
                 if(data == 'valid'){
                     document.getElementById("billingshipping").submit();
                 }else if(data == 'shipping_invalid'){
@@ -102,7 +109,13 @@
             <div id="detail_wrapper" class="detail_wrap">
                 <div id="product_content">
                     <div id="pro_detail">
+
+
+                        <div id="cmhldr"></div>
                         <div class="edt_container billing">
+
+
+
                              <div id="breadcrumb">
         <ul>
             <li><a href="{{path('cart_show')}}">Shopping Cart</a></li>

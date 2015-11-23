@@ -114,11 +114,15 @@
 
              $('#address-validation-error').css('display','none');
 
+            $("#cmhldr").show();
+            $("#cmhldr").prepend('<div class="uploading_in_progress2" style="top: 110px;"><span>Validating Address</span></div>');
+
              $.ajax({
                  type: "POST",
                  url: "../../checkout/validate_address",
                  data: {"state": user_state,"postcode":user_postcode,"city":user_city,"both_addresses":'0'},
                  success: function(data){
+                     $("#cmhldr").hide();
                      if(data == 'valid'){
                          document.getElementById("address_validate").submit();
                      }else{
@@ -156,6 +160,7 @@
             <div id="detail_wrapper" class="detail_wrap">
                 <div id="product_content">
                     <div id="pro_detail">
+                        <div id="cmhldr"></div>
                         <div class="edt_container billing">
                              <div id="breadcrumb">
         <ul>
