@@ -179,943 +179,1306 @@ constants:
           title: 36
           index: 14
       bra:
-        28a:
-            title: 28a
-            size: 28 
-            cup: a 
-            low: 28 
-            high: 30 
-            average: 29 
+        28AA:
             index_value: 1
-            shoulder_across_back: 13.5
-        28b:
-            title: 28b
-            size: 28 
-            cup: b 
-            low: 29 
-            high: 31 
-            average: 30  
+            title: 28AA
+            size: 28
+            cup: AA
+            low: 27
+            high: 29
+            average: 28
+            shoulder_across_back: 13.325
+            shoulder_across_front: 12.575
+        28A:
             index_value: 2
+            title: 28A
+            size: 28
+            cup: A
+            low: 28
+            high: 30
+            average: 29
             shoulder_across_back: 13.675
-        28c:
-            title: 28c
-            size: 28 
-            cup: c 
-            low: 30 
-            high: 32 
-            average: 31
-            shoulder_across_back: 13.875
+            shoulder_across_front: 12.925
+        28B:
             index_value: 3
-        28d:
-            title: 28d
-            size: 28 
-            cup: d 
-            low: 31 
-            high: 33 
-            average: 32   
-            shoulder_across_back: 14.375
+            title: 28B
+            size: 28
+            cup: B
+            low: 29
+            high: 31
+            average: 30
+            shoulder_across_back: 13.825
+            shoulder_across_front: 13.075
+        28C:
             index_value: 4
-        28dd:
-            title: 28dd
-            size: 28 
-            cup: dd 
-            low: 32 
-            high: 34 
-            average: 33      
-            shoulder_across_back: 14.625
+            title: 28C
+            size: 28
+            cup: C
+            low: 30
+            high: 32
+            average: 31
+            shoulder_across_back: 13.975
+            shoulder_across_front: 13.225
+        28D:
             index_value: 5
-        28ddd:
-            title: 28ddd
-            size: 28 
-            cup: ddd 
-            low: 33 
-            high: 35 
-            average: 34   
-            shoulder_across_back: 14.625 
+            title: 28D
+            size: 28
+            cup: D
+            low: 31
+            high: 33
+            average: 32
+            shoulder_across_back: 14.125
+            shoulder_across_front: 13.375
+        28DD:
             index_value: 6
-        28dddd:
-            title: 28dddd
-            size: 28 
-            cup: dddd 
-            low: 34 
-            high: 36 
-            average: 35   
-            shoulder_across_back: 14.875
+            title: 28DD
+            size: 28
+            cup: DD
+            low: 32
+            high: 34
+            average: 33
+            shoulder_across_back: 14.375
+            shoulder_across_front: 13.625
+        28DDD:
             index_value: 7
-        28h:
-            title: 28h
-            size: 28 
-            cup: h 
-            low: 35 
-            high: 37 
-            average: 36   
-            shoulder_across_back: 15.125
-            index_value: 8    
-        28i:
-            title: 28i
-            size: 28 
-            cup: i 
-            low: 36 
-            high: 38 
-            average: 37   
-            shoulder_across_back: 15.375
+            title: 28DDD
+            size: 28
+            cup: DDD
+            low: 33
+            high: 35
+            average: 34
+            shoulder_across_back: 14.625
+            shoulder_across_front: 13.875
+        28E:
+            index_value: 8
+            title: 28E
+            size: 28
+            cup: E
+            low: 32
+            high: 34
+            average: 33
+            shoulder_across_back: 14.375
+            shoulder_across_front: 13.625
+        28F:
             index_value: 9
-        28j:
-            title: 28j
-            size: 28 
-            cup: j 
-            low: 37 
-            high: 39 
-            average: 38   
-            shoulder_across_back: 15.525 
+            title: 28F
+            size: 28
+            cup: F
+            low: 33
+            high: 35
+            average: 34
+            shoulder_across_back: 14.625
+            shoulder_across_front: 13.875
+        28G:
             index_value: 10
-        28k:
-            title: 28k
-            size: 28 
-            cup: h 
-            low: 38 
-            high: 40 
-            average: 39   
-            shoulder_across_back: 15.775
+            title: 28G
+            size: 28
+            cup: G
+            low: 34
+            high: 36
+            average: 35
+            shoulder_across_back: 14.875
+            shoulder_across_front: 14.125
+        28H:
             index_value: 11
-        28l:
-            title: 28l
-            size: 28 
-            cup: l 
-            low: 39 
-            high: 41 
-            average: 40   
-            shoulder_across_back: 15.925
+            title: 28H
+            size: 28
+            cup: H
+            low: 35
+            high: 37
+            average: 36
+            shoulder_across_back: 15.125
+            shoulder_across_front: 14.375
+        28I:
             index_value: 12
-        28m:
-            title: 28m
-            size: 28 
-            cup: m
-            low: 40 
-            high: 42 
-            average: 41   
-            shoulder_across_back: 16.175
-            index_value: 13
-        28n:
-            title: 28n
-            size: 28 
-            cup: n
-            low: 41 
-            high: 43 
-            average: 42   
-            shoulder_across_back: 16.325
-            index_value: 14         
-        30a:
-            title: 30a
-            size: 30 
-            cup: a 
-            low: 30 
-            high: 32 
-            average: 31   
-            shoulder_across_back: 13.875
-            index_value: 15
-        30b:
-            title: 30b
-            size: 30 
-            cup: b 
-            low: 31 
-            high: 33 
-            average: 32      
-            shoulder_across_back: 14.375
-            index_value: 16
-        30c:
-            title: 30c
-            size: 30 
-            cup: c 
-            low: 32 
-            high: 34 
-            average: 33      
-            shoulder_across_back: 14.625
-            index_value: 17
-        30d:
-            title: 30d
-            size: 30 
-            cup: d 
-            low: 33 
-            high: 35 
-            average: 34      
-            shoulder_across_back: 15
-            index_value: 18
-        30dd:
-            title: 30dd
-            size: 30 
-            cup: dd 
-            low: 34 
-            high: 36 
-            average: 35       
-            shoulder_across_back: 14.625
-            index_value: 19
-        30ddd:
-            title: 30ddd
-            size: 30 
-            cup: ddd 
-            low: 35 
-            high: 37 
-            average: 36    
-            shoulder_across_back: 15.75
-            index_value: 20
-        30dddd:
-            title: 30dddd
-            size: 30 
-            cup: dddd 
-            low: 36 
-            high: 38 
-            average: 37   
+            title: 28I
+            size: 28
+            cup: I
+            low: 36
+            high: 38
+            average: 37
             shoulder_across_back: 15.375
-            index_value: 21    
-        30h:
-            title: 30h
-            size: 30 
-            cup: h 
-            low: 37 
-            high: 39 
-            average: 38    
+            shoulder_across_front: 14.625
+        28J:
+            index_value: 13
+            title: 28J
+            size: 28
+            cup: J
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 15.525
-            index_value: 22
-        30i:
-            title: 30i
-            size: 30 
-            cup: i 
-            low: 38 
-            high: 40 
-            average: 39   
-            shoulder_across_back: 15.775
-            index_value: 23
-        30j:
-            title: 30j
-            size: 30 
-            cup: j
-            low: 39 
-            high: 41 
-            average: 40   
-            shoulder_across_back: 15.925
-            index_value: 24
-        30k:
-            title: 30k
-            size: 30 
-            cup: k 
-            low: 40 
-            high: 42 
-            average: 41   
-            shoulder_across_back: 16.175
-            index_value: 25
-        30l:
-            title: 30l
-            size: 30 
-            cup: l
-            low: 41 
-            high: 43 
-            average: 42   
-            shoulder_across_back: 16.325
-            index_value: 26
-        30m:
-            title: 30m
-            size: 30 
-            cup: m
-            low: 42 
-            high: 44 
-            average: 43   
-            shoulder_across_back: 16.575
-            index_value: 27
-        30n:
-            title: 30n
-            size: 30 
-            cup: n
-            low: 43 
-            high: 45 
-            average: 44    
-            shoulder_across_back: 16.725
-            index_value: 28
-        32a:
-            title: 32a
-            size: 32 
-            cup: a 
-            low: 32 
-            high: 34 
-            average: 33     
-            shoulder_across_back: 14.625
-            index_value: 29
-        32b:
-            title: 32b
-            size: 32 
-            cup: b 
-            low: 33 
-            high: 35 
-            average: 34    
-            shoulder_across_back: 15
-            index_value: 30
-        32c:
-            title: 32c
-            size: 32 
-            cup: c 
-            low: 34 
-            high: 36 
-            average: 35       
-            shoulder_across_back: 14.375
-            index_value: 31
-        32d:
-            title: 32d
-            size: 32 
-            cup: d
-            low: 35 
-            high: 37 
-            average: 36    
-            shoulder_across_back: 15.75
-            index_value: 32
-        32dd:
-            title: 32dd
-            size: 32 
-            cup: dd
-            low: 36 
-            high: 38 
-            average: 37   
-            shoulder_across_back: 16
-            index_value: 33
-        32ddd:
-            title: 32ddd
-            size: 32 
-            cup: ddd
-            low: 37 
-            high: 39 
-            average: 38   
-            shoulder_across_back: 16.125
-            index_value: 34
-        32dddd:
-            title: 32dddd
-            size: 32 
-            cup: dddd
-            low: 38 
-            high: 40 
-            average: 39   
-            shoulder_across_back: 15.775
-            index_value: 35
-        32h:
-            title: 32h
-            size: 32 
-            cup: h
-            low: 39 
-            high: 41 
-            average: 40   
-            shoulder_across_back: 15.925
-            index_value: 36
-        32i:
-            title: 32i
-            size: 32 
-            cup: i
-            low: 40 
-            high: 42 
-            average: 41   
-            shoulder_across_back: 16.175
-            index_value: 37
-        32j:
-            title: 32j
-            size: 32 
-            cup: j
-            low: 41 
-            high: 43 
-            average: 42   
-            shoulder_across_back: 16.325
-            index_value: 38
-        32k:
-            title: 32k
-            size: 32 
-            cup: k
-            low: 42 
-            high: 44 
-            average: 43   
-            shoulder_across_back: 16.575
-            index_value: 39
-        32l:
-            title: 32l
-            size: 32 
-            cup: l
-            low: 43 
-            high: 45 
-            average: 44   
-            shoulder_across_back: 16.725
-            index_value: 40
-        32m:
-            title: 32m
-            size: 32 
-            cup: m
-            low: 44 
-            high: 46 
-            average: 45   
-            shoulder_across_back: 16.975
-            index_value: 41
-        32n:
-            title: 32n
-            size: 32 
-            cup: n
-            low: 45 
-            high: 47 
-            average: 46   
-            shoulder_across_back: 17.125
-            index_value: 42 
-            
-        34a:
-            title: 34a
-            size: 34 
-            cup: a
-            low: 34 
-            high: 36 
-            average: 35    
-            shoulder_across_back: 14.375
-            index_value: 43
-        34b:
-            title: 34b
-            size: 34 
-            cup: b
-            low: 35 
-            high: 37 
-            average: 36       
-            shoulder_across_back: 15.75
-            index_value: 44
-        34c:
-            title: 34c
-            size: 34 
-            cup: c
-            low: 36 
-            high: 38 
-            average: 37    
-            shoulder_across_back: 16
-            index_value: 45
-        34d:
-            title: 34d
-            size: 34 
-            cup: d
-            low: 37 
-            high: 39 
-            average: 38     
-            shoulder_across_back: 16.125
-            index_value: 46
-        34dd:
-            title: 34dd
-            size: 34 
-            cup: dd
-            low: 38 
-            high: 40 
-            average: 39       
-            shoulder_across_back: 16.675
-            index_value: 47
-        34ddd:
-            title: 34ddd
-            size: 34 
-            cup: ddd
-            low: 39 
-            high: 41 
-            average: 40   
-            shoulder_across_back: 16.875
-            index_value: 48
-        34dddd:
-            title: 34dddd
-            size: 34 
-            cup: dddd
-            low: 40 
-            high: 42 
-            average: 41   
-            shoulder_across_back: 16.175
-            index_value: 49
-        34h:
-            title: 34h
-            size: 34 
-            cup: h
-            low: 41 
-            high: 43 
-            average: 42   
-            shoulder_across_back: 16.325
-            index_value: 50  
-        34i:
-            title: 34i
-            size: 34 
-            cup: i
-            low: 42 
-            high: 44 
-            average: 43   
-            shoulder_across_back: 16.575
-            index_value: 51
-        34j:
-            title: 34j
-            size: 34 
-            cup: j
-            low: 43 
-            high: 45 
-            average: 44   
-            shoulder_across_back: 16.725
-            index_value: 52
-        34k:
-            title: 34k
-            size: 34 
-            cup: k
-            low: 44 
-            high: 46 
-            average: 45   
-            shoulder_across_back: 16.975
-            index_value: 53
-        34l:
-            title: 34l
-            size: 34 
-            cup: l
-            low: 45 
-            high: 47 
-            average: 46   
-            shoulder_across_back: 17.125
-            index_value: 54
-        34m:
-            title: 34m
-            size: 34 
-            cup: m
-            low: 46 
-            high: 48 
-            average: 47   
-            shoulder_across_back: 17.375
-            index_value: 55   
-        34n:
-            title: 34n
-            size: 34 
-            cup: n
-            low: 47
-            high: 49   
-            shoulder_across_back: 17.525
-            average: 48
-            index_value: 56        
-        36a:
-            title: 36a
-            size: 36 
-            cup: a
-            low: 36 
-            high: 38 
-            average: 37   
-            shoulder_across_back: 16
-            index_value: 57
-        36b:
-            title: 36b
-            size: 36 
-            cup: b
-            low: 37 
-            high: 39 
-            average: 38    
-            shoulder_across_back: 16.5
-            index_value: 58
-        36c:
-            title: 36c
-            size: 36 
-            cup: c
-            low: 38 
-            high: 40 
-            average: 39   
-            shoulder_across_back: 16.25
-            index_value: 59
-        36d:
-            title: 36d
-            size: 36 
-            cup: d
-            low: 39 
-            high: 41 
-            average: 40   
-            shoulder_across_back: 16.5
-            index_value: 60
-        36dd:
-            title: 36dd
-            size: 36 
-            cup: dd
-            low: 40 
-            high: 42 
-            average: 41    
-            shoulder_across_back: 16.875
-            index_value: 61
-        36ddd:
-            title: 36ddd
-            size: 36 
-            cup: ddd
-            low: 41 
-            high: 43 
-            average: 42       
-            shoulder_across_back: 17
-            index_value: 62
-        36dddd:
-            title: 36dddd
-            size: 36 
-            cup: dddd
-            low: 42 
-            high: 44 
-            average: 43       
-            shoulder_across_back: 16.575
-            index_value: 63
-        36h:
-            title: 36h
-            size: 36 
-            cup: h
-            low: 43 
-            high: 45 
-            average: 44       
-            shoulder_across_back: 16.725
-            index_value: 64
-        36i:
-            title: 36i
-            size: 36 
-            cup: i
-            low: 44 
-            high: 46 
-            average: 45       
-            shoulder_across_back: 16.975
-            index_value: 65
-        36j:
-            title: 36j
-            size: 36 
-            cup: j
-            low: 45 
-            high: 47 
-            average: 46       
-            shoulder_across_back: 17.125
-            index_value: 66
-        36k:
-            title: 36k
-            size: 36 
-            cup: k
-            low: 46 
-            high: 48 
-            average: 47       
-            shoulder_across_back: 17.375
-            index_value: 67
-        36l:
-            title: 36l
-            size: 36 
-            cup: l
-            low: 47 
-            high: 49 
-            average: 48       
-            shoulder_across_back: 17.625
-            index_value: 68
-        36m:
-            title: 36m
-            size: 36 
-            cup: m
-            low: 48 
-            high: 50 
-            average: 49       
-            shoulder_across_back: 17.875
-            index_value: 69
-        36n:
-            title: 36n
-            size: 36 
-            cup: n
-            low: 49 
-            high: 51 
-            average: 50       
-            shoulder_across_back: 18.025
-            index_value: 70   
-        38a:
-            title: 38a
-            size: 38 
-            cup: a
-            low: 38 
+            shoulder_across_front: 14.775
+        28K:
+            index_value: 14
+            title: 28K
+            size: 28
+            cup: K
+            low: 38
             high: 40
-            average: 39   
-            shoulder_across_back: 16.675
-            index_value: 71
-        38b:
-            title: 38b
-            size: 38 
-            cup: b
-            low: 39 
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        28L:
+            index_value: 15
+            title: 28L
+            size: 28
+            cup: L
+            low: 39
             high: 41
-            average: 40   
-            shoulder_across_back: 16.875
-            index_value: 72
-        38c:
-            title: 38c
-            size: 38 
-            cup: c
-            low: 40 
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        28M:
+            index_value: 16
+            title: 28M
+            size: 28
+            cup: M
+            low: 40
             high: 42
-            average: 41    
-            shoulder_across_back: 16
-            index_value: 73
-        38d:
-            title: 38d
-            size: 38 
-            cup: d
-            low: 41 
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        28N:
+            index_value: 17
+            title: 28N
+            size: 28
+            cup: N
+            low: 41
             high: 43
-            average: 42   
-            shoulder_across_back: 16.5
-            index_value: 74
-        38dd:
-            title: 38dd
-            size: 38 
-            cup: dd
-            low: 42 
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        30AA:
+            index_value: 18
+            title: 30AA
+            size: 30
+            cup: AA
+            low: 29
+            high: 31
+            average: 30
+            shoulder_across_back: 13.825
+            shoulder_across_front: 13.075
+        30A:
+            index_value: 19
+            title: 30A
+            size: 30
+            cup: A
+            low: 30
+            high: 32
+            average: 31
+            shoulder_across_back: 13.975
+            shoulder_across_front: 13.225
+        30B:
+            index_value: 20
+            title: 30B
+            size: 30
+            cup: B
+            low: 31
+            high: 33
+            average: 32
+            shoulder_across_back: 14.125
+            shoulder_across_front: 13.375
+        30C:
+            index_value: 21
+            title: 30C
+            size: 30
+            cup: C
+            low: 32
+            high: 34
+            average: 33
+            shoulder_across_back: 14.375
+            shoulder_across_front: 13.625
+        30D:
+            index_value: 22
+            title: 30D
+            size: 30
+            cup: D
+            low: 33
+            high: 35
+            average: 34
+            shoulder_across_back: 14.625
+            shoulder_across_front: 13.875
+        30DD:
+            index_value: 23
+            title: 30DD
+            size: 30
+            cup: DD
+            low: 34
+            high: 36
+            average: 35
+            shoulder_across_back: 14.875
+            shoulder_across_front: 14.125
+        30DDD:
+            index_value: 24
+            title: 30DDD
+            size: 30
+            cup: DDD
+            low: 35
+            high: 37
+            average: 36
+            shoulder_across_back: 15.125
+            shoulder_across_front: 14.375
+        30E:
+            index_value: 25
+            title: 30E
+            size: 30
+            cup: E
+            low: 34
+            high: 36
+            average: 35
+            shoulder_across_back: 14.875
+            shoulder_across_front: 14.125
+        30F:
+            index_value: 26
+            title: 30F
+            size: 30
+            cup: F
+            low: 35
+            high: 37
+            average: 36
+            shoulder_across_back: 15.125
+            shoulder_across_front: 14.375
+        30G:
+            index_value: 27
+            title: 30G
+            size: 30
+            cup: G
+            low: 36
+            high: 38
+            average: 37
+            shoulder_across_back: 15.375
+            shoulder_across_front: 14.625
+        30H:
+            index_value: 28
+            title: 30H
+            size: 30
+            cup: H
+            low: 37
+            high: 39
+            average: 38
+            shoulder_across_back: 15.525
+            shoulder_across_front: 14.775
+        30I:
+            index_value: 29
+            title: 30I
+            size: 30
+            cup: I
+            low: 38
+            high: 40
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        30J:
+            index_value: 30
+            title: 30J
+            size: 30
+            cup: J
+            low: 39
+            high: 41
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        30K:
+            index_value: 31
+            title: 30K
+            size: 30
+            cup: K
+            low: 40
+            high: 42
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        30L:
+            index_value: 32
+            title: 30L
+            size: 30
+            cup: L
+            low: 41
+            high: 43
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        30M:
+            index_value: 33
+            title: 30M
+            size: 30
+            cup: M
+            low: 42
             high: 44
-            average: 43    
-            shoulder_across_back: 16.25
-            index_value: 75
-        38ddd:
-            title: 38ddd
-            size: 38 
-            cup: dd
-            low: 43 
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        30N:
+            index_value: 34
+            title: 30N
+            size: 30
+            cup: N
+            low: 43
             high: 45
-            average: 44    
-            shoulder_across_back: 16.5
-            index_value: 76
-        38dddd:
-            title: 38dddd
-            size: 38 
-            cup: dddd
-            low: 44 
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        32A:
+            index_value: 35
+            title: 32A
+            size: 32
+            cup: A
+            low: 32
+            high: 34
+            average: 33
+            shoulder_across_back: 14.375
+            shoulder_across_front: 13.625
+        32B:
+            index_value: 36
+            title: 32B
+            size: 32
+            cup: B
+            low: 33
+            high: 35
+            average: 34
+            shoulder_across_back: 14.625
+            shoulder_across_front: 13.875
+        32C:
+            index_value: 37
+            title: 32C
+            size: 32
+            cup: C
+            low: 34
+            high: 36
+            average: 35
+            shoulder_across_back: 14.875
+            shoulder_across_front: 14.125
+        32D:
+            index_value: 38
+            title: 32D
+            size: 32
+            cup: D
+            low: 35
+            high: 37
+            average: 36
+            shoulder_across_back: 15.125
+            shoulder_across_front: 14.375
+        32DD:
+            index_value: 39
+            title: 32DD
+            size: 32
+            cup: DD
+            low: 36
+            high: 38
+            average: 37
+            shoulder_across_back: 15.375
+            shoulder_across_front: 14.625
+        32DDD:
+            index_value: 40
+            title: 32DDD
+            size: 32
+            cup: DDD
+            low: 37
+            high: 39
+            average: 38
+            shoulder_across_back: 15.525
+            shoulder_across_front: 14.775
+        32E:
+            index_value: 41
+            title: 32E
+            size: 32
+            cup: E
+            low: 36
+            high: 38
+            average: 37
+            shoulder_across_back: 15.375
+            shoulder_across_front: 14.625
+        32F:
+            index_value: 42
+            title: 32F
+            size: 32
+            cup: F
+            low: 37
+            high: 39
+            average: 38
+            shoulder_across_back: 15.525
+            shoulder_across_front: 14.775
+        32G:
+            index_value: 43
+            title: 32G
+            size: 32
+            cup: G
+            low: 38
+            high: 40
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        32H:
+            index_value: 44
+            title: 32H
+            size: 32
+            cup: H
+            low: 39
+            high: 41
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        32I:
+            index_value: 45
+            title: 32I
+            size: 32
+            cup: I
+            low: 40
+            high: 42
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        32J:
+            index_value: 46
+            title: 32J
+            size: 32
+            cup: J
+            low: 41
+            high: 43
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        32K:
+            index_value: 47
+            title: 32K
+            size: 32
+            cup: K
+            low: 42
+            high: 44
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        32L:
+            index_value: 48
+            title: 32L
+            size: 32
+            cup: L
+            low: 43
+            high: 45
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        32M:
+            index_value: 49
+            title: 32M
+            size: 32
+            cup: M
+            low: 44
             high: 46
-            average: 45    
+            average: 45
             shoulder_across_back: 16.975
-            index_value: 77
-        38h:
-            title: 38h
-            size: 38 
-            cup: h
-            low: 45 
+            shoulder_across_front: 16.225
+        32N:
+            index_value: 50
+            title: 32N
+            size: 32
+            cup: N
+            low: 45
             high: 47
-            average: 46    
+            average: 46
             shoulder_across_back: 17.125
-            index_value: 78
-        38i:
-            title: 38i
-            size: 38 
-            cup: i
-            low: 46 
-            high: 48
-            average: 47    
-            shoulder_across_back: 17.375
-            index_value: 79
-        38j:
-            title: 38j
-            size: 38 
-            cup: j
-            low: 47 
-            high: 49
-            average: 48   
-            shoulder_across_back: 17.625
-            index_value: 80
-        38k:
-            title: 38k
-            size: 38 
-            cup: k
-            low: 48 
-            high: 50
-            average: 49    
-            shoulder_across_back: 17.875
-            index_value: 81
-        38l:
-            title: 38l
-            size: 38 
-            cup: l
-            low: 49 
-            high: 51
-            average: 50    
-            shoulder_across_back: 18.025
-            index_value: 82
-        38m:
-            title: 38m
-            size: 38 
-            cup: m
-            low: 50 
-            high: 52
-            average: 51    
-            shoulder_across_back: 18.275
-            index_value: 83
-        38n:
-            title: 38n
-            size: 38 
-            cup: n
-            low: 51 
-            high: 53
-            average: 52    
-            shoulder_across_back: 18.425
-            index_value: 84    
-        40a:
-            title: 40a
-            size: 40 
-            cup: a
-            low: 40 
+            shoulder_across_front: 16.375
+        34A:
+            index_value: 51
+            title: 34A
+            size: 34
+            cup: A
+            low: 34
+            high: 36
+            average: 35
+            shoulder_across_back: 14.875
+            shoulder_across_front: 14.125
+        34B:
+            index_value: 52
+            title: 34B
+            size: 34
+            cup: B
+            low: 35
+            high: 37
+            average: 36
+            shoulder_across_back: 15.125
+            shoulder_across_front: 14.375
+        34C:
+            index_value: 53
+            title: 34C
+            size: 34
+            cup: C
+            low: 36
+            high: 38
+            average: 37
+            shoulder_across_back: 15.375
+            shoulder_across_front: 14.625
+        34D:
+            index_value: 54
+            title: 34D
+            size: 34
+            cup: D
+            low: 37
+            high: 39
+            average: 38
+            shoulder_across_back: 15.525
+            shoulder_across_front: 14.775
+        34DD:
+            index_value: 55
+            title: 34DD
+            size: 34
+            cup: DD
+            low: 38
+            high: 40
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        34DDD:
+            index_value: 56
+            title: 34DDD
+            size: 34
+            cup: DDD
+            low: 39
+            high: 41
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        34E:
+            index_value: 57
+            title: 34E
+            size: 34
+            cup: E
+            low: 38
+            high: 40
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        34F:
+            index_value: 58
+            title: 34F
+            size: 34
+            cup: F
+            low: 39
+            high: 41
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        34G:
+            index_value: 59
+            title: 34G
+            size: 34
+            cup: G
+            low: 40
             high: 42
-            average: 41    
-            shoulder_across_back: 16.875
-            index_value: 85
-        40b:
-            title: 40b
-            size: 40 
-            cup: b
-            low: 41 
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        34H:
+            index_value: 60
+            title: 34H
+            size: 34
+            cup: H
+            low: 41
             high: 43
-            average: 42       
-            shoulder_across_back: 17
-            index_value: 86
-        40c:
-            title: 40c
-            size: 40 
-            cup: c
-            low: 42 
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        34I:
+            index_value: 61
+            title: 34I
+            size: 34
+            cup: I
+            low: 42
             high: 44
-            average: 43    
-            shoulder_across_back: 17.375
-            index_value: 87
-        40d:
-            title: 40d
-            size: 40 
-            cup: d 
-            low: 43 
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        34J:
+            index_value: 62
+            title: 34J
+            size: 34
+            cup: J
+            low: 43
             high: 45
-            average: 44   
-            shoulder_across_back: 17.625
-            index_value: 88
-        40dd:
-            title: 40dd
-            size: 40 
-            cup: dd
-            low: 44 
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        34K:
+            index_value: 63
+            title: 34K
+            size: 34
+            cup: K
+            low: 44
             high: 46
-            average: 45    
-            shoulder_across_back: 17.875
-            index_value: 89
-        40ddd:
-            title: 40ddd
-            size: 40 
-            cup: ddd
-            low: 45 
+            average: 45
+            shoulder_across_back: 16.975
+            shoulder_across_front: 16.225
+        34L:
+            index_value: 64
+            title: 34L
+            size: 34
+            cup: L
+            low: 45
             high: 47
-            average: 46     
-            shoulder_across_back: 18.125
-            index_value: 90
-        40dddd:
-            title: 40dddd
-            size: 40 
-            cup: dddd
-            low: 46 
+            average: 46
+            shoulder_across_back: 17.125
+            shoulder_across_front: 16.375
+        34M:
+            index_value: 65
+            title: 34M
+            size: 34
+            cup: M
+            low: 46
             high: 48
-            average: 47     
+            average: 47
             shoulder_across_back: 17.375
-            index_value: 91   
-        40h:
-            title: 40h
-            size: 40 
-            cup: h
-            low: 47 
+            shoulder_across_front: 16.625
+        34N:
+            index_value: 66
+            title: 34N
+            size: 34
+            cup: N
+            low: 47
             high: 49
-            average: 48     
-            shoulder_across_back: 17.625
-            index_value: 92    
-        40i:
-            title: 40i
-            size: 40 
-            cup: i
-            low: 48 
-            high: 50
-            average: 49     
-            shoulder_across_back: 17.875
-            index_value: 93   
-        40j:
-            title: 40j
-            size: 40 
-            cup: j
-            low: 49 
-            high: 51
-            average: 50  
-            shoulder_across_back: 18.025
-            index_value: 94  
-        40k:
-            title: 40k
-            size: 40 
-            cup: k
-            low: 50 
-            high: 52
-            average: 51     
-            shoulder_across_back: 18.275
-            index_value: 95    
-        40l:
-            title: 40l
-            size: 40 
-            cup: l
-            low: 51 
-            high: 53
-            average: 52     
-            shoulder_across_back: 18.425
-            index_value: 96    
-        40m:
-            title: 40m
-            size: 40 
-            cup: m
-            low: 52 
-            high: 54
-            average: 53     
-            shoulder_across_back: 18.675
-            index_value: 97    
-        40n:
-            title: 40n
-            size: 40 
-            cup: n
-            low: 53 
-            high: 55
-            average: 54     
-            shoulder_across_back: 18.825
-            index_value: 98        
-        42a:
-            title: 42a
-            size: 42 
-            cup: a
-            low: 42 
+            average: 48
+            shoulder_across_back: 17.525
+            shoulder_across_front: 16.775
+        36A:
+            index_value: 67
+            title: 36A
+            size: 36
+            cup: A
+            low: 36
+            high: 38
+            average: 37
+            shoulder_across_back: 15.375
+            shoulder_across_front: 14.625
+        36B:
+            index_value: 68
+            title: 36B
+            size: 36
+            cup: B
+            low: 37
+            high: 39
+            average: 38
+            shoulder_across_back: 15.525
+            shoulder_across_front: 14.775
+        36C:
+            index_value: 69
+            title: 36C
+            size: 36
+            cup: C
+            low: 38
+            high: 40
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        36D:
+            index_value: 70
+            title: 36D
+            size: 36
+            cup: D
+            low: 39
+            high: 41
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        36DD:
+            index_value: 71
+            title: 36DD
+            size: 36
+            cup: DD
+            low: 40
+            high: 42
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        36DDD:
+            index_value: 72
+            title: 36DDD
+            size: 36
+            cup: DDD
+            low: 41
+            high: 43
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        36E:
+            index_value: 73
+            title: 36E
+            size: 36
+            cup: E
+            low: 40
+            high: 42
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        36F:
+            index_value: 74
+            title: 36F
+            size: 36
+            cup: F
+            low: 41
+            high: 43
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        36G:
+            index_value: 75
+            title: 36G
+            size: 36
+            cup: G
+            low: 42
             high: 44
-            average: 41     
-            shoulder_across_back: 18.375
-            index_value: 99        
-        42b:
-            title: 42b
-            size: 42 
-            cup: b
-            low: 43 
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        36H:
+            index_value: 76
+            title: 36H
+            size: 36
+            cup: H
+            low: 43
             high: 45
-            average: 44     
-            shoulder_across_back: 17.625
-            index_value: 100         
-        42c:
-            title: 42c
-            size: 42 
-            cup: c
-            low: 44 
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        36I:
+            index_value: 77
+            title: 36I
+            size: 36
+            cup: I
+            low: 44
             high: 46
-            average: 45     
-            shoulder_across_back: 17.875
-            index_value: 100
-        42d:
-            title: 42d
-            size: 42 
-            cup: d
-            low: 45 
-            high: 46
-            average: 47     
-            shoulder_across_back: 18.375
-            index_value: 100
-        42dd:
-            title: 42dd
-            size: 42 
-            cup: dd
-            low: 46 
+            average: 45
+            shoulder_across_back: 16.975
+            shoulder_across_front: 16.225
+        36J:
+            index_value: 78
+            title: 36J
+            size: 36
+            cup: J
+            low: 45
             high: 47
-            average: 48     
-            shoulder_across_back: 18.625
-            index_value: 100            
-        42ddd:
-            title: 42ddd
-            size: 42 
-            cup: ddd
-            low: 47 
+            average: 46
+            shoulder_across_back: 17.125
+            shoulder_across_front: 16.375
+        36K:
+            index_value: 79
+            title: 36K
+            size: 36
+            cup: K
+            low: 46
             high: 48
-            average: 49     
-            shoulder_across_back: 18.875
-            index_value: 100            
+            average: 47
+            shoulder_across_back: 17.375
+            shoulder_across_front: 16.625
+        36L:
+            index_value: 80
+            title: 36L
+            size: 36
+            cup: L
+            low: 47
+            high: 49
+            average: 48
+            shoulder_across_back: 17.625
+            shoulder_across_front: 16.875
+        36M:
+            index_value: 81
+            title: 36M
+            size: 36
+            cup: M
+            low: 48
+            high: 50
+            average: 49
+            shoulder_across_back: 17.875
+            shoulder_across_front: 17.125
+        36N:
+            index_value: 82
+            title: 36N
+            size: 36
+            cup: N
+            low: 49
+            high: 51
+            average: 50
+            shoulder_across_back: 18.025
+            shoulder_across_front: 17.275
+        38A:
+            index_value: 83
+            title: 38A
+            size: 38
+            cup: A
+            low: 38
+            high: 40
+            average: 39
+            shoulder_across_back: 15.775
+            shoulder_across_front: 15.025
+        38B:
+            index_value: 84
+            title: 38B
+            size: 38
+            cup: B
+            low: 39
+            high: 41
+            average: 40
+            shoulder_across_back: 15.925
+            shoulder_across_front: 15.175
+        38C:
+            index_value: 85
+            title: 38C
+            size: 38
+            cup: C
+            low: 40
+            high: 42
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        38D:
+            index_value: 86
+            title: 38D
+            size: 38
+            cup: D
+            low: 41
+            high: 43
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        38DD:
+            index_value: 87
+            title: 38DD
+            size: 38
+            cup: DD
+            low: 42
+            high: 44
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        38DDD:
+            index_value: 88
+            title: 38DDD
+            size: 38
+            cup: DDD
+            low: 43
+            high: 45
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        38E:
+            index_value: 89
+            title: 38E
+            size: 38
+            cup: E
+            low: 42
+            high: 44
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        38F:
+            index_value: 90
+            title: 38F
+            size: 38
+            cup: F
+            low: 43
+            high: 45
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        38G:
+            index_value: 91
+            title: 38G
+            size: 38
+            cup: G
+            low: 44
+            high: 46
+            average: 45
+            shoulder_across_back: 16.975
+            shoulder_across_front: 16.225
+        38H:
+            index_value: 92
+            title: 38H
+            size: 38
+            cup: H
+            low: 45
+            high: 47
+            average: 46
+            shoulder_across_back: 17.125
+            shoulder_across_front: 16.375
+        38I:
+            index_value: 93
+            title: 38I
+            size: 38
+            cup: I
+            low: 46
+            high: 48
+            average: 47
+            shoulder_across_back: 17.375
+            shoulder_across_front: 16.625
+        38J:
+            index_value: 94
+            title: 38J
+            size: 38
+            cup: J
+            low: 47
+            high: 49
+            average: 48
+            shoulder_across_back: 17.625
+            shoulder_across_front: 16.875
+        38K:
+            index_value: 95
+            title: 38K
+            size: 38
+            cup: K
+            low: 48
+            high: 50
+            average: 49
+            shoulder_across_back: 17.875
+            shoulder_across_front: 17.125
+        38L:
+            index_value: 96
+            title: 38L
+            size: 38
+            cup: L
+            low: 49
+            high: 51
+            average: 50
+            shoulder_across_back: 18.025
+            shoulder_across_front: 17.275
+        38M:
+            index_value: 97
+            title: 38M
+            size: 38
+            cup: M
+            low: 50
+            high: 52
+            average: 51
+            shoulder_across_back: 18.275
+            shoulder_across_front: 17.525
+        38N:
+            index_value: 98
+            title: 38N
+            size: 38
+            cup: N
+            low: 51
+            high: 53
+            average: 52
+            shoulder_across_back: 18.425
+            shoulder_across_front: 17.675
+        40A:
+            index_value: 99
+            title: 40A
+            size: 40
+            cup: A
+            low: 40
+            high: 42
+            average: 41
+            shoulder_across_back: 16.175
+            shoulder_across_front: 15.425
+        40B:
+            index_value: 100
+            title: 40B
+            size: 40
+            cup: B
+            low: 41
+            high: 43
+            average: 42
+            shoulder_across_back: 16.325
+            shoulder_across_front: 15.575
+        40C:
+            index_value: 101
+            title: 40C
+            size: 40
+            cup: C
+            low: 42
+            high: 44
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        40D:
+            index_value: 102
+            title: 40D
+            size: 40
+            cup: D
+            low: 43
+            high: 45
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        40DD:
+            index_value: 103
+            title: 40DD
+            size: 40
+            cup: DD
+            low: 44
+            high: 46
+            average: 45
+            shoulder_across_back: 16.975
+            shoulder_across_front: 16.225
+        40DDD:
+            index_value: 104
+            title: 40DDD
+            size: 40
+            cup: DDD
+            low: 45
+            high: 47
+            average: 46
+            shoulder_across_back: 17.125
+            shoulder_across_front: 16.375
+        40E:
+            index_value: 105
+            title: 40E
+            size: 40
+            cup: E
+            low: 44
+            high: 46
+            average: 45
+            shoulder_across_back: 16.975
+            shoulder_across_front: 16.225
+        40F:
+            index_value: 106
+            title: 40F
+            size: 40
+            cup: F
+            low: 45
+            high: 47
+            average: 46
+            shoulder_across_back: 17.125
+            shoulder_across_front: 16.375
+        40G:
+            index_value: 107
+            title: 40G
+            size: 40
+            cup: G
+            low: 46
+            high: 48
+            average: 47
+            shoulder_across_back: 17.375
+            shoulder_across_front: 16.625
+        40H:
+            index_value: 108
+            title: 40H
+            size: 40
+            cup: H
+            low: 47
+            high: 49
+            average: 48
+            shoulder_across_back: 17.625
+            shoulder_across_front: 16.875
+        40I:
+            index_value: 109
+            title: 40I
+            size: 40
+            cup: I
+            low: 48
+            high: 50
+            average: 49
+            shoulder_across_back: 17.875
+            shoulder_across_front: 17.125
+        40J:
+            index_value: 110
+            title: 40J
+            size: 40
+            cup: J
+            low: 49
+            high: 51
+            average: 50
+            shoulder_across_back: 18.025
+            shoulder_across_front: 17.275
+        40K:
+            index_value: 111
+            title: 40K
+            size: 40
+            cup: K
+            low: 50
+            high: 52
+            average: 51
+            shoulder_across_back: 18.275
+            shoulder_across_front: 17.525
+        40L:
+            index_value: 112
+            title: 40L
+            size: 40
+            cup: L
+            low: 51
+            high: 53
+            average: 52
+            shoulder_across_back: 18.425
+            shoulder_across_front: 17.675
+        40M:
+            index_value: 113
+            title: 40M
+            size: 40
+            cup: M
+            low: 52
+            high: 54
+            average: 53
+            shoulder_across_back: 18.675
+            shoulder_across_front: 17.925
+        40N:
+            index_value: 114
+            title: 40N
+            size: 40
+            cup: N
+            low: 53
+            high: 55
+            average: 54
+            shoulder_across_back: 18.825
+            shoulder_across_front: 18.075
+        42A:
+            index_value: 115
+            title: 42A
+            size: 42
+            cup: A
+            low: 42
+            high: 44
+            average: 43
+            shoulder_across_back: 16.575
+            shoulder_across_front: 15.825
+        42B:
+            index_value: 116
+            title: 42B
+            size: 42
+            cup: B
+            low: 43
+            high: 45
+            average: 44
+            shoulder_across_back: 16.725
+            shoulder_across_front: 15.975
+        42C:
+            index_value: 117
+            title: 42C
+            size: 42
+            cup: C
+            low: 44
+            high: 46
+            average: 45
+            shoulder_across_back: 16.975
+            shoulder_across_front: 16.225
+        42D:
+            index_value: 118
+            title: 42D
+            size: 42
+            cup: D
+            low: 45
+            high: 47
+            average: 46
+            shoulder_across_back: 17.125
+            shoulder_across_front: 16.375
+        42DD:
+            index_value: 119
+            title: 42DD
+            size: 42
+            cup: DD
+            low: 46
+            high: 48
+            average: 47
+            shoulder_across_back: 17.375
+            shoulder_across_front: 16.625
+        42DDD:
+            index_value: 120
+            title: 42DDD
+            size: 42
+            cup: DDD
+            low: 47
+            high: 49
+            average: 48
+            shoulder_across_back: 17.625
+            shoulder_across_front: 16.875
+        42E:
+            index_value: 121
+            title: 42E
+            size: 42
+            cup: E
+            low: 46
+            high: 48
+            average: 47
+            shoulder_across_back: 17.375
+            shoulder_across_front: 16.625
+        42F:
+            index_value: 122
+            title: 42F
+            size: 42
+            cup: F
+            low: 47
+            high: 49
+            average: 48
+            shoulder_across_back: 17.625
+            shoulder_across_front: 16.875
+        42G:
+            index_value: 123
+            title: 42G
+            size: 42
+            cup: G
+            low: 48
+            high: 50
+            average: 49
+            shoulder_across_back: 17.875
+            shoulder_across_front: 17.125
+        42H:
+            index_value: 124
+            title: 42H
+            size: 42
+            cup: H
+            low: 49
+            high: 51
+            average: 50
+            shoulder_across_back: 18.025
+            shoulder_across_front: 17.275
+        42I:
+            index_value: 125
+            title: 42I
+            size: 42
+            cup: I
+            low: 50
+            high: 52
+            average: 51
+            shoulder_across_back: 18.275
+            shoulder_across_front: 17.525
+        42J:
+            index_value: 126
+            title: 42J
+            size: 42
+            cup: J
+            low: 51
+            high: 53
+            average: 52
+            shoulder_across_back: 18.425
+            shoulder_across_front: 17.675
+        42K:
+            index_value: 127
+            title: 42K
+            size: 42
+            cup: K
+            low: 52
+            high: 54
+            average: 53
+            shoulder_across_back: 18.675
+            shoulder_across_front: 17.925
+        42L:
+            index_value: 128
+            title: 42L
+            size: 42
+            cup: L
+            low: 53
+            high: 55
+            average: 54
+            shoulder_across_back: 18.825
+            shoulder_across_front: 18.075
+        42M:
+            index_value: 129
+            title: 42M
+            size: 42
+            cup: M
+            low: 54
+            high: 56
+            average: 55
+            shoulder_across_back: 18.975
+            shoulder_across_front: 18.225
+        42N:
+            index_value: 130
+            title: 42N
+            size: 42
+            cup: N
+            low: 55
+            high: 57
+            average: 56
+            shoulder_across_back: 19.125
+            shoulder_across_front: 18.375            
     man:
       letter:
         XXS: 
