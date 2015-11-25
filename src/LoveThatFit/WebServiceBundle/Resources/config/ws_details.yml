@@ -49,7 +49,7 @@ ws_user_registration:
       password: ltf123
       gender: f
       zipcode:
-      dob:  
+      birth_date:  
       weight: 80.00
       height: 61.00
       bust: 0.00
@@ -171,7 +171,7 @@ ws_user_profile_update:
       email:  kamran@ltf.com
       first_name:
       last_name:
-      dob:
+      birth_date:
       zipcode:
       auth_token: 97fc8d115394f3f1947f315783e29e0e
     request_type: post

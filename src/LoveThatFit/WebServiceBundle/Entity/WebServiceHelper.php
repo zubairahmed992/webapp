@@ -130,7 +130,9 @@ class WebServiceHelper {
         $user->setPassword($request_array['password']);
         $user->setGender(array_key_exists('gender', $request_array) ? $request_array['gender'] : null);
         $user->setZipcode(array_key_exists('zipcode', $request_array) ? $request_array['zipcode'] : null);
+        #this dob line will be removed with the new build
         $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
+        $user->setBirthDate(array_key_exists('birth_date', $request_array) ? new \DateTime($request_array['birth_date']) : null);
         $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
         $user->generateAuthenticationToken();
         $this->container->get('user.helper.user')->saveUser($user);
@@ -144,7 +146,9 @@ class WebServiceHelper {
         array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) :  null;
         array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
         array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;        
-        array_key_exists('dob', $request_array) ? $user->setBirthDate(new \DateTime($request_array['dob'])) :  null;                        
+        #this dob line will be removed with the new build
+        $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
+        array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) :  null;                        
         return $user;
     }
 
