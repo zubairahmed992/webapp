@@ -114,6 +114,13 @@
 
              $('#address-validation-error').css('display','none');
 
+            if(!$.isNumeric($('#phone').val()) || $('#phone').val().length!=10){
+                $('#address-validation-error').html('Phone number Should be number format and should be 10 digits');
+                $('#phone').css('border-color','#ff0000');
+                $('#address-validation-error').css('display','block');
+                return false;
+            }
+            $('#phone').css('border-color','');
             $("#cmhldr").show();
             $("#cmhldr").prepend('<div class="uploading_in_progress2" style="top: 110px;"><span>Validating Address</span></div>');
 
@@ -233,34 +240,34 @@
                                     </td>
                                     
                                     <td>
-                                       
-                                <div class="span3">{{ form_widget(form.phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.phone) }}</div>
+                                        <div class="span3">{{ form_widget(form.city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.city) }}</div>
+
                                         
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.city) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.postcode) }}</div>
                                     </td>
                                     
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.postcode) }}</div>
+                                        <div class="span3">{{ form_widget(form.country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.country) }}</div>
+
                                     </td>
                                     
                                 </tr>
                                 <tr>
                                     
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.country) }}</div>
+
+                                        <div class="span3">{{ form_widget(form.state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.state) }}<input type="hidden" name="get_type" id="get_type" value="{{ val }}"> </div>
                                         
                                     </td>
                                     <td>
-                                        
-                                <div class="span3">{{ form_widget(form.state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.state) }}<input type="hidden" name="get_type" id="get_type" value="{{ val }}"> </div>
+
+                                        <div class="span3">{{ form_widget(form.phone,{ 'attr': {'placeholder': "Phone",'maxlength':'10'}}) }}{{ form_errors(form.phone) }}</div>
                                         
                                     </td>
                                 </tr>

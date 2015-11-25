@@ -32,7 +32,8 @@
          }
 
      }
-     $( document ).ready(function() {
+     jQuery( document ).ready(function() {
+
      $('#billingshipping').submit(function(event){
          event.preventDefault();
          var billing_state = $('#billing_billing_state').val();
@@ -44,6 +45,21 @@
          var shipping_city = $('#billing_shipping_city').val();
          $('#billing-address-validation-error').css('display','none');
          $('#shipping-address-validation-error').css('display','none');
+
+         if(!$.isNumeric($('#billing_billing_phone').val()) || $('#billing_billing_phone').val().length!=10){
+             $('#billing-address-validation-error').html('Phone numbers Should be number format and should be 10 digits');
+             $('#billing_billing_phone').css('border-color','#ff0000');
+             $('#billing-address-validation-error').css('display','block');
+             return false;
+         }
+         if(!$.isNumeric($('#billing_shipping_phone').val()) || $('#billing_shipping_phone').val().length!=10){
+             $('#shipping-address-validation-error').html('Phone numbers Should be number format and should be 10 digits');
+             $('#billing_billing_phone').css('border-color','');
+             $('#billing_shipping_phone').css('border-color','#ff0000');
+             $('#shipping-address-validation-error').css('display','block');
+             return false;
+         }
+
          $("#cmhldr").show();
          $("#cmhldr").prepend('<div class="uploading_in_progress2" style="top: 110px;"><span>Validating Address</span></div>');
 
@@ -172,35 +188,33 @@
                                 </tr>                                
                                 <tr>
                                     <td>
-                                        <div class="span3">{{ form_widget(form.billing_phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.billing_phone) }}</div>
+                                       <div class="span3">{{ form_widget(form.billing_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.billing_city) }}</div>
                                         
 
                                     </td>
                                     
                                     <td>
 
-                                        <div class="span3">{{ form_widget(form.billing_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.billing_city) }}</div>
+                                        <div class="span3">{{ form_widget(form.billing_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.billing_postcode) }}</div>
                                         
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     <td>
-                                        <div class="span3">{{ form_widget(form.billing_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.billing_postcode) }}</div>
+                                        <div class="span3">{{ form_widget(form.billing_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.billing_country) }}</div>
 
                                     </td>
                                     
                                     <td>
-                                        <div class="span3">{{ form_widget(form.billing_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.billing_country) }}</div>
-
-                                    </td>
+       <div class="span3">{{ form_widget(form.billing_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.billing_state) }}</div></td>
                                     
                                 </tr>
                                 <tr>
                                     
                                     <td>
 
-                                        <div class="span3">{{ form_widget(form.billing_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.billing_state) }}</div>
+                                        <div class="span3">{{ form_widget(form.billing_phone,{ 'attr': {'placeholder': "Phone",'maxlength':'10'}}) }}{{ form_errors(form.billing_phone) }}</div>
                                         
                                     </td>
                                     <td>
@@ -281,35 +295,35 @@
                                     
                                     <td>
 
-                                        <div class="span3">{{ form_widget(form.shipping_phone,{ 'attr': {'placeholder': "Phone"}}) }}{{ form_errors(form.shipping_phone) }}</div>
+                                        <div class="span3">{{ form_widget(form.shipping_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.shipping_city) }}</div>
                                         
                                     </td>
                                     
                                     <td>
 
-                                        <div class="span3">{{ form_widget(form.shipping_city,{ 'attr': {'placeholder': "City"}}) }}{{ form_errors(form.shipping_city) }}</div>
+                                        <div class="span3">{{ form_widget(form.shipping_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.shipping_postcode) }}</div>
                                         
                                     </td>
                                 </tr>
                                 
                                 <tr>
-                                    
-                                    <td>
-                                        <div class="span3">{{ form_widget(form.shipping_postcode,{ 'attr': {'placeholder': "Postal Code"}}) }}{{ form_errors(form.shipping_postcode) }}</div>
-
-                                    </td>
                                     
                                     <td>
                                         <div class="span3">{{ form_widget(form.shipping_country,{ 'attr': {'placeholder': "Country"}}) }}{{ form_errors(form.shipping_country) }}</div>
 
                                     </td>
+                                    
+                                    <td>
+                                        <div class="span3">{{ form_widget(form.shipping_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.shipping_state) }}</div>
+
+                                    </td>
                                 </tr>
                                 
                                 
                                 <tr>
                                     <td>
 
-                                        <div class="span3">{{ form_widget(form.shipping_state,{ 'attr': {'placeholder': "State"}}) }}{{ form_errors(form.shipping_state) }}</div>
+                                        <div class="span3">{{ form_widget(form.shipping_phone,{ 'attr': {'placeholder': "Phone",'maxlength':'10'}}) }}{{ form_errors(form.shipping_phone) }}</div>
                                         
                                     </td>
                                     <td>
