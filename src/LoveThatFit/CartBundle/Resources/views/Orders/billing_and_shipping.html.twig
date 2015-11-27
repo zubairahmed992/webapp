@@ -6,6 +6,7 @@
 {% endblock %}
 {% block profile_section %}
     <script type="text/javascript">
+
      function showShipping(chkbox){
          if(chkbox.checked == true) {
              $('#billing_shipping_first_name').val($('#billing_billing_first_name').val());
@@ -18,6 +19,7 @@
              $('#billing_shipping_country').val($('#billing_billing_country').val());
              $('#billing_shipping_state').val($('#billing_billing_state').val());
              $('#ship_info').val('0');
+
          }
          if(chkbox.checked == false) {
              $('#billing_shipping_first_name').val('');
@@ -33,6 +35,54 @@
 
      }
      jQuery( document ).ready(function() {
+
+
+             $('#billing_billing_first_name').on('focusout', function() {
+              if($('#shipping').is(":checked")){
+                    $('#billing_shipping_first_name').val ($(this).val());
+              }
+                 });
+             $('#billing_billing_last_name').on('focusout', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_last_name').val ($(this).val());
+                 }
+             });
+             $('#billing_billing_address1').on('focusout', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_address1').val ($(this).val());
+                 }
+             });
+             $('#billing_billing_address2').on('focusout', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_address2').val ($(this).val());
+                 }
+             });
+             $('#billing_billing_city').on('focusout', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_city').val ($(this).val());
+                 }
+             });
+             $('#billing_billing_postcode').on('focusout', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_postcode').val ($(this).val());
+                 }
+             });
+             $('#billing_billing_phone').on('focusout', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_phone').val ($(this).val());
+                 }
+             });
+             $('#billing_billing_state').on('change', function() {
+              if($('#shipping').is(":checked")){
+                 $('#billing_shipping_state').val ($(this).val());
+               }
+             });
+             $('#billing_billing_country').on('change', function() {
+                 if($('#shipping').is(":checked")){
+                     $('#billing_shipping_country').val ($(this).val());
+                 }
+             });
+
 
      $('#billingshipping').submit(function(event){
          event.preventDefault();
@@ -234,7 +284,7 @@
                                 
                                 <tr>
                                     
-                                    <td colspan="2"><div class="span3"><input type="checkbox" name="shipping" value="1" onclick="showShipping(this)"> <span style="font-size: 0.8em;">Shipping Information same as Billing above</span></div></td>
+                                    <td colspan="2"><div class="span3"><input type="checkbox" id="shipping" name="shipping" value="1" onclick="showShipping(this)"> <span style="font-size: 0.8em;">Shipping Information same as Billing above</span></div></td>
                                 </tr>
                                 
                             </table>                          
