@@ -521,7 +521,15 @@ class WebServiceHelper {
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
             $ps_id = $pi->getProductSize()->getId();
-
+            # get the highest price of all the items/color for a particular size
+            $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+            if (array_key_exists('price', $p['sizes'][$s_desc])) {
+                $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
+            } else {
+                $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
+            }
+            
+            
             $p['items'][$pi->getId()] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),

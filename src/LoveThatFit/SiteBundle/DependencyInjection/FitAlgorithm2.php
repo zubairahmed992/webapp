@@ -760,9 +760,14 @@ private function calculate_fitindex($fp_specs){
     # -----------------------------------------------------
 
     private function strip_for_services($sizes, $recommendation) {
+        $product_id=$this->product->getId();
+        $brand_name = $this->product->getBrand()->getName();
+        $style = $this->product->getStylingType()?$this->product->getStylingType():'';
         foreach ($sizes as $key => $value) {
             $sizes[$key]['size_id']=$sizes[$key]['id'];
-            $sizes[$key]['product_id']=$this->product->getId();
+            $sizes[$key]['product_id']=$product_id;
+            $sizes[$key]['brand']=$brand_name;
+            $sizes[$key]['style']=$style;            
             unset($sizes[$key]['min_fx']);
             unset($sizes[$key]['max_fx']);
             unset($sizes[$key]['high_fx']);
@@ -780,6 +785,7 @@ private function calculate_fitindex($fp_specs){
             }else{
                     $sizes[$key]['recommended'] = false;
             }
+            $sizes[$key]['price'] = 0;
             if (array_key_exists('fit_points', $sizes[$key])) {
                 $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
                 $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
