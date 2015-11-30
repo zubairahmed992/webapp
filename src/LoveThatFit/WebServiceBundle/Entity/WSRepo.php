@@ -68,7 +68,7 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
-            coalesce(pi.price, 0) as price,            
+            coalesce(pi.price, 0) as price, pi.id as product_item_id,
             CASE WHEN (pu.id IS NULL) THEN 'false' ELSE 'true' END AS favourite
             FROM LoveThatFitAdminBundle:Product p             
             JOIN p.brand b
@@ -90,7 +90,7 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
-            coalesce(pi.price, 0) as price,
+            coalesce(pi.price, 0) as price, pi.id as product_item_id,
             'true' AS favourite
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.product_items pi
@@ -113,7 +113,7 @@ class WSRepo {
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
-            coalesce(pi.price, 0) as price,
+            coalesce(pi.price, 0) as price, pi.id as product_item_id,
             'false' AS favourite
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.displayProductColor pc            
