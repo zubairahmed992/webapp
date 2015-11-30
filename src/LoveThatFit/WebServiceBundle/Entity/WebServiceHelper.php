@@ -570,7 +570,8 @@ class WebServiceHelper {
             }
         } else {
             ###############################################################
-            foreach ($user->getProductItems() as $pi) {
+            $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+            foreach ($user->getProductItems() as $pi) {                
                 if ($pi->getProduct()->getId() == $p->getId()) { #remove all items of the same product
                     $pi->removeUser($user);                    # hack for like an item instead of a product 
                     $user->removeProductItem($pi);              # needs to discuss & fix
