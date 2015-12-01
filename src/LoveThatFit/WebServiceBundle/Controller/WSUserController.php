@@ -39,7 +39,11 @@ class WSUserController extends Controller {
 
     public function registrationAction() {
         $decoded  = $this->process_request();
-        $json_data = $this->get('webservice.helper')->registrationService($decoded);
+        if(array_key_exists('create_default_user', $decoded)){
+            $json_data = $this->get('webservice.helper')->registrationWithDefaultValues($decoded);
+        }else{
+            $json_data = $this->get('webservice.helper')->registrationService($decoded);
+        }
         return new Response($json_data);      
     }  
 #~~~~~~~~~~~~~~~~~~~ ws_user_measurement_update   /ws/user_measurement_update

@@ -85,6 +85,33 @@ class WebServiceHelper {
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
         }
     }
+    
+     public function registrationWithDefaultValues($request_array) {
+
+        if (!array_key_exists('email', $request_array)) {
+            return $this->response_array(false, 'Email Not provided.');
+        }
+
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+        if (count($user) > 0) {
+            return $this->response_array(false, 'Email already exists.');
+        } else {
+            #--- 1) User
+            $user = $this->createUserWithParams($request_array);
+            #---- 2) send registration email ....            
+            $this->container->get('mail_helper')->sendRegistrationEmail($user);                    
+            #--- 3) default user values added
+            $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
+            #--- 4) Device
+            $user_device = $this->createUserDeviceWithParams($request_array, $user);
+            $detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
+            unset($detail_array['per_inch_pixel_height']);
+            unset($detail_array['deviceType']);
+            unset($detail_array['auth_token_web_service']);
+            return $this->response_array(true, 'User created', true, array('user' => $detail_array));
+        }
+    }
   #------------------------ measurementUpdate -----------------------
 
     public function measurementUpdate($ra) {
