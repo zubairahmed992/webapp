@@ -762,7 +762,7 @@ private function calculate_fitindex($fp_specs){
     private function strip_for_services($sizes, $recommendation) {
         $product_id=$this->product->getId();
         $brand_name = $this->product->getBrand()->getName();
-        $style = $this->product->getStylingType()?$this->product->getStylingType():'';
+        $style = $this->product->getName()?$this->product->getName():'';
         foreach ($sizes as $key => $value) {
             $sizes[$key]['size_id']=$sizes[$key]['id'];
             $sizes[$key]['product_id']=$product_id;
