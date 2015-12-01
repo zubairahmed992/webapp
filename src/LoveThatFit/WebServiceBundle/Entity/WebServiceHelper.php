@@ -501,8 +501,8 @@ class WebServiceHelper {
     public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         $p = array();
-        $default_color_id = $product->getDisplayProductColor()->getId();
-        foreach ($product->getProductColors() as $pc) {
+        $default_color_id = $product->getDisplayProductColor()->getId();         
+        foreach ($product->getProductColors() as $pc) {            
             $p['colors'][$pc->getTitle()] = array(
                 'color_id' => $pc->getId(),
                 'product_id' => $product->getId(),
@@ -518,6 +518,7 @@ class WebServiceHelper {
         $default_item = $algo->getRecommendedFromStrippedFeedBack($fb);
         $p['sizes'] = $fb['feedback'];
         $recommended_product_item = null;
+        $favouriteItemIds=$user->getFavouriteItemIdArray();
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
             $ps_id = $pi->getProductSize()->getId();
@@ -539,6 +540,7 @@ class WebServiceHelper {
                 'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
+                'favourite' => in_array($pi->getId(), $favouriteItemIds),
             );
          
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {

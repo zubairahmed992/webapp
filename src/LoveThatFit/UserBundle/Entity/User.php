@@ -1655,6 +1655,14 @@ class User implements UserInterface, \Serializable {
         }
         return false;
     }
+      #---------------------------------------------------
+    public function getFavouriteItemIdArray(){
+        $arr=array();
+        foreach($this->product_items as $pi){
+            array_push($arr, $pi->getId());
+        }
+        return $arr;
+    }
     #---------------------------------------------------
     public function compareUserDevicesDate()
     {
