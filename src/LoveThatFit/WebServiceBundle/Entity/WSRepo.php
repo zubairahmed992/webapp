@@ -55,7 +55,21 @@ class WSRepo {
     }}
     
 #-------------------------------------------------------
-    
+    public function userLikedProductIds($user_id) {
+        $query = $this->em
+                        ->createQuery(
+                                "SELECT distinct p.id product_id
+                         FROM LoveThatFitAdminBundle:Product p 
+                        JOIN p.product_items pi            
+                        JOIN pi.users u
+                        WHERE u.id=:user_id "
+                        )->setParameters(array('user_id' => $user_id));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 #-------------------------------------------------------------------
     public function productList($user, $list_type = null) {
         switch ($list_type) {

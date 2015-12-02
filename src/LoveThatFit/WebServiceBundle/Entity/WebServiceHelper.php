@@ -584,6 +584,12 @@ class WebServiceHelper {
 
     #------------------------------------------------------------------------------
 
+     public function userLikedProductIds($user) {
+        $product_ids = $this->container->get('webservice.repo')->userLikedProductIds($user);
+        return $this->response_array(true, "favourite product ids", true, $product_ids);        
+    }
+    #------------------------------------------------------------------------------
+
      public function likeUnlikeItem($user, $ra) {
          #$default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
          #$this->container->get('user.helper.user')->makeFavourite($user, $default_item);

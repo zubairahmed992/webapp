@@ -227,5 +227,11 @@ ws_product_like:
      item_id: 4126
      like: true
    request_type: post   
-      
+#______________________
+ws_user_liked_products:
+   pattern:  /ws/user_liked_products
+   title: user_liked_products
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091     
+   request_type: post         
    
