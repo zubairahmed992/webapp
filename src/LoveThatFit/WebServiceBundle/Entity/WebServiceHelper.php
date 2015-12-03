@@ -365,6 +365,7 @@ class WebServiceHelper {
     public function response_array($success, $message = null, $json = true, $data = null) {
         $ar = array(
             'data' => $data,
+            'count'=>$data?count($data):0,
             'message' => $message,
             'success' => $success,
         );

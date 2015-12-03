@@ -1,4 +1,8 @@
 
+visitor:
+    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/visitor.yml"
+    prefix:   /
+
 ws_routing:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/ws_routing.yml"
     prefix:   /
