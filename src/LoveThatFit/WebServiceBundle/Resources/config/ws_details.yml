@@ -88,6 +88,7 @@ ws_user_measurement_update:
       shoulder_across_front:
       shoulder_across_back:      
       shoulder_height:
+      shoulder_length:
       center_front_waist:
       back_waist:        
       chest: 0
