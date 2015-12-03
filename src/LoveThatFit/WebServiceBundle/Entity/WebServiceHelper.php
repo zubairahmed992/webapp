@@ -218,6 +218,8 @@ class WebServiceHelper {
         $measurement->setTricep(array_key_exists('tricep', $request_array) ? $request_array['tricep'] : $measurement->getTricep());
         $measurement->setWrist(array_key_exists('wrist', $request_array) ? $request_array['wrist'] : $measurement->getWrist());
         $measurement->setShoulderWidth(array_key_exists('shoulder_width', $request_array) ? $request_array['shoulder_width'] : $measurement->getShoulderWidth());
+        $measurement->setShoulderHeight(array_key_exists('shoulder_height', $request_array) ? $request_array['shoulder_height'] : $measurement->getShoulderHeight());
+        $measurement->setShoulderLength(array_key_exists('shoulder_length', $request_array) ? $request_array['shoulder_length'] : $measurement->getShoulderLength());
         $measurement->setBustHeight(array_key_exists('bust_height', $request_array) ? $request_array['bust_height'] : $measurement->getBustHeight());
         $measurement->setWaistHeight(array_key_exists('waist_height', $request_array) ? $request_array['waist_height'] : $measurement->getWaistHeight());
         $measurement->setHipHeight(array_key_exists('hip_height', $request_array) ? $request_array['hip_height'] : $measurement->getHipHeight());
@@ -282,6 +284,8 @@ class WebServiceHelper {
         array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';
         array_key_exists('shoulder_across_front', $request_array) ? $measurement->setShoulderAcrossFront($request_array['shoulder_across_front']) : '';
         array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
+        array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
+        
         array_key_exists('center_front_waist', $request_array) ? $measurement->setCenterFrontWaist($request_array['center_front_waist']) : '';
         array_key_exists('back_waist', $request_array) ? $measurement->setBackWaist($request_array['back_waist']) : '';
         array_key_exists('chest', $request_array) ? $measurement->setChest($request_array['chest']) : '';

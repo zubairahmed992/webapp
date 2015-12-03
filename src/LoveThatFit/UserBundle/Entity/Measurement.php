@@ -450,7 +450,42 @@ class Measurement {
         return $this->shoulder_across_back;
     }
     
-    #--------------------------------------------------------------------
+    
+#----------------------------------------------------------------------------------------
+
+    /**
+     * @var float $shoulderLength
+     *
+     * @ORM\Column(name="shoulder_length", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $shoulder_length = 0;
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      /**
+     * Set shoulderLength
+     *
+     * @param float $shoulderLength
+     * @return Measurement
+     */
+    public function setShoulderLength($shoulderLength) {
+        $this->shoulder_length = $shoulderLength;
+
+        return $this;
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Get shoulderLength
+     *
+     * @return float 
+     */
+    public function getShoulderLength() {
+        return $this->shoulder_length;
+    }
+
+#--------------------------------------------------------------------
+
+    
     /**
      * @var float $arm
      *
@@ -1465,6 +1500,7 @@ class Measurement {
             'arm' => $this->arm,
             'inseam' => $this->inseam,
             'shoulder_height' => $this->shoulder_height,
+            'shoulder_length' => $this->shoulder_length,
             'outseam' => $this->outseam,
             'sleeve' => $this->sleeve,
             'neck' => $this->neck,
