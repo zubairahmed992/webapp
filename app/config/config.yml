@@ -24,15 +24,16 @@ twig:
     globals:
         app_detail: 
             name:   'SelfieStyler'
+            url:  'http://stack.selfiestyler.com/'
             contact:
-                email: 'info@SelfieStyler.com'
-                non_us_number: '(646) 926-0079'
-                us_number: '(646) 926-0079'
+                email: 'membersupport@selfiestyler.com'
+                non_us_number: '(844) 769-7895'
+                us_number: '(844) 7MY-STYLE / (844) 769-7895'
                         
         social_media:
             facebook:
               app_id: 314138425462684
-              web_link: 'http://dev.lovethatfit.com/'
+              web_link: 'http://stack.selfiestyler.com/'
        #"%LoveThatFitUserBundle:Form:fields.html.twig%"
            
            
