@@ -26,9 +26,6 @@ class VisitorController extends Controller {
   public function saveInfoAction() {
       
         $decoded = $this->getRequest()->request->all();
-        return new response(var_dump($decoded["email"]));      
-      
-      
         $v = new Visitor();
         $v->setEmail($decoded['email']);
         $v->setBrowser($_SERVER['HTTP_USER_AGENT']);
