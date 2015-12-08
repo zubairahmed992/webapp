@@ -135,6 +135,7 @@ class FitAlgorithm2 {
             }
             
         }
+        return array('feedback' => $this->array_sort($fb));
         $sorted_array=$this->array_sort($fb);
         $recommendation = $this->get_recommended_size($sorted_array);
         if($recommendation==null){
@@ -320,13 +321,16 @@ private function calculate_fitindex($fp_specs){
             $size_types = $this->getSizeTypes($this->product->getGender());
             $fb = array();
             $size_identifier = '';
+            $i=0;
             if (is_array($size_titles) && count($size_titles) > 0) {
                 if (is_array($size_titles) && count($size_titles) > 0) {
                     foreach ($size_types as $stype) {
                         foreach ($size_titles as $stitle) {
                             $size_identifier = ucfirst($stype) . ' ' . $stitle;
-                            if (array_key_exists($size_identifier, $sizes))
+                            if (array_key_exists($size_identifier, $sizes)){
                                 $fb[$size_identifier] = $sizes[$size_identifier];
+                                $fb[$size_identifier]['sno'] = $i++;
+                            }
                         }
                     }
                 }

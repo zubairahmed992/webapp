@@ -204,6 +204,7 @@ public function getWomanBraSpecs($bra_size){
                     'high' => array_key_exists('high', $val)?$val['high']:null,
                     'average' => array_key_exists('average', $val)?$val['average']:null,
                     'shoulder_across_back' => array_key_exists('shoulder_across_back', $val)?$val['shoulder_across_back']:null,
+                    'shoulder_across_front' => array_key_exists('shoulder_across_front', $val)?$val['shoulder_across_front']:null,
                 );
             break;
         }

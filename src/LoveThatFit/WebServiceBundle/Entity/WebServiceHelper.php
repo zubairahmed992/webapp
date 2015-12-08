@@ -250,6 +250,7 @@ class WebServiceHelper {
         if($bra_specs){
             $measurement->setBust($bra_specs['average']);
             $measurement->setShoulderAcrossBack($bra_specs['shoulder_across_back']);
+            $measurement->setShoulderAcrossFront($bra_specs['shoulder_across_front']);
         }
     }
 #-------------------------------------------------------
@@ -276,13 +277,13 @@ class WebServiceHelper {
         #shoulder_across_back value if manually provided will be prefered over
         #value calculated from bra-size
         array_key_exists('shoulder_across_back', $request_array) ? $measurement->setShoulderAcrossBack($request_array['shoulder_across_back']) : '';
+        array_key_exists('shoulder_across_front', $request_array) ? $measurement->setShoulderAcrossFront($request_array['shoulder_across_front']) : '';
         
         array_key_exists('body_type', $request_array) ? $measurement->setBodyTypes($request_array['body_type']) : '';
         array_key_exists('body_shape', $request_array) ? $measurement->setBodyShape($request_array['body_shape']) : '';
         array_key_exists('weight', $request_array) ? $measurement->setWeight($request_array['weight']) : '';
         array_key_exists('height', $request_array) ? $measurement->setHeight($request_array['height']) : '';
-        array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';
-        array_key_exists('shoulder_across_front', $request_array) ? $measurement->setShoulderAcrossFront($request_array['shoulder_across_front']) : '';
+        array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';        
         array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
         array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
         
