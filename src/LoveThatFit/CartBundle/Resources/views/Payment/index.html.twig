@@ -59,9 +59,9 @@
         {% set total = shipping_charges + grand_total %}
         <tr><td colspan="7" align="right">
 
-
+            <div>Shipping UPS – Ground Method {{ transit_days }} business days </div>
              <div>  Sub Total:&nbsp;&nbsp;<strong>${{ grand_total| number_format(2) }} </strong></div>
-            <div>Shipping Charges:&nbsp;&nbsp;<strong>${{ shipping_charges| number_format(2) }} </strong></div>
+            <div>Shipping Amount:&nbsp;&nbsp;<strong>${{ shipping_charges| number_format(2) }} </strong></div>
             <div>Grand Total:&nbsp;&nbsp;<strong>${{ total | number_format(2) }}</strong></div>
 
             </td>

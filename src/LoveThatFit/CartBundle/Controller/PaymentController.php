@@ -26,12 +26,17 @@ class PaymentController extends Controller
 	  $billing_user_addresses='';
 	  $shipping_user_addresses='';
 	  $destination_zip=$billing_shipping_info["billing"]["shipping_postcode"];
+	  $destination_city=$billing_shipping_info["billing"]["shipping_city"];
+	  $destination_state=$billing_shipping_info["billing"]["shipping_state"];
 	}else{
 	  $billing_shipping_info = $session->get('billing_shipping_info');
 	  $billing_user_addresses = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,1);
 	  $shipping_user_addresses = $this->get('cart.helper.userAddresses')->getUserDefaultAddresses($user,0);
 	  $destination_zip = $shipping_user_addresses['postcode'];
+	  $destination_city = $shipping_user_addresses['city'];
+	  $destination_state = $shipping_user_addresses['state'];
 	}
+	  $date = date("Ymd");
 	  $strDestinationZip = $destination_zip;
 	  $strMethodShortName = 'GND';
 	  $strPackageLength = '13';
@@ -46,7 +51,8 @@ class PaymentController extends Controller
 		$strPackageHeight,
 		$strPackageWeight,
 		$boolReturnPriceOnly);
-
+	  $transit_days = $this->get('cart.helper.shipping')->getTimeInTransitInformation($destination_city,$destination_state,$destination_zip,$date);
+	  //echo $transit_days;
 	return $this->render('LoveThatFitCartBundle:Payment:index.html.twig', array(
 	  'cart' => $cart,
 	  'grand_total' => $grand_total,
@@ -55,6 +61,7 @@ class PaymentController extends Controller
 	  'counter' => $counter["counter"],
 	  'shipping_charges' => $result,
 	  'billing_user_addresses' => $billing_user_addresses,
+	  'transit_days' => $transit_days,
 	  'shipping_user_addresses' => $shipping_user_addresses
 	));
 	}

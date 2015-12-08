@@ -480,4 +480,133 @@ class ShippingHelper {
 
 	return $params;
   }
+  function GetTimeInTransitResults($string)
+  {
+	$xml = $string;
+	//this determines how many AddressValidationResults were returned
+	$number = 0;
+	$num=preg_match_all('#<TimeInTransitResponse>#', $string, $array);
+
+
+	$avr_open = $this->findallTransit('<TimeInTransitResponse>', $string);
+
+	$avr_close = $this->findallTransit('</TimeInTransitResponse>', $string);
+
+	$int = 0;
+	$tmparray = array();
+	while ($int<$num)
+	{
+	  $open_int = $avr_open[$int];
+
+	  $close_int = $avr_close[$int];
+	  $node =  substr($xml, $open_int, $close_int);
+	  $tmpsubarray = $this->putxmlinarray($node);
+	  $tmparray[$int] = $tmpsubarray;
+	  $int++;
+	}
+	// print_r($tmparray);
+
+	return $tmparray;
+
+  }
+  function findallTransit($needle, $haystack)
+  {
+	//Setting up
+	$buffer=''; //We will use a 'frameshift' buffer for this search
+	$pos=0; //Pointer
+	$end = strlen($haystack); //The end of the string
+	$getchar=''; //The next character in the string
+	$needlelen=strlen($needle); //The length of the needle to find (speeds up searching)
+	$found = array(); //The array we will store results in
+
+	while($pos<$end)//Scan file
+	{
+	  $getchar = substr($haystack,$pos,1); //Grab next character from pointer
+	  if($getchar!="\n" || $buffer < $needlelen) //If we fetched a line break, or the buffer is still smaller than the needle, ignore and grab next character
+	  {
+		$buffer = $buffer . $getchar; //Build frameshift buffer
+		if(strlen($buffer)>$needlelen) //If the buffer is longer than the needle
+		{
+		  $buffer = substr($buffer,-$needlelen);//Truncunate backwards to needle length (backwards so that the frame 'moves')
+		}
+		if($buffer==$needle) //If the buffer matches the needle
+		{
+		  $found[]=$pos-$needlelen+1; //Add the location of the needle to the array. Adding one fixes the offset.
+		}
+	  }
+	  $pos++; //Increment the pointer
+	}
+	if(array_key_exists(0,$found)) //Check for an empty array
+	{
+	  return $found; //Return the array of located positions
+	}
+	else
+	{
+	  return false; //Or if no instances were found return false
+	}
+  }
+  ##### Time In Transit using UPS
+  function getTimeInTransitInformation($city, $state, $zip_code,$date)
+  {
+
+
+	$data="<?xml version=\"1.0\"?>
+<AccessRequest xml:lang=\"en-US\">
+ <AccessLicenseNumber>{$this->strAccessLicenseNumber}</AccessLicenseNumber>
+  <UserId>{$this->strUserId}</UserId>
+  <Password>{$this->strPassword}</Password>
+</AccessRequest>
+<?xml version=\"1.0\"?>
+<TimeInTransitRequest xml:lang=\"en-US\">
+  <Request>
+    <TransactionReference>
+	<CustomerContext>Calculate Number of Days</CustomerContext>
+      <XpciVersion>1.001</XpciVersion>
+    </TransactionReference>
+    <RequestAction>TimeInTransit</RequestAction>
+  </Request>
+  <TransitFrom>
+    <AddressArtifactFormat>
+      <PostcodePrimaryLow>{$this->strShipperZip}</PostcodePrimaryLow>
+      <CountryCode>US</CountryCode>
+    </AddressArtifactFormat>
+  </TransitFrom>
+  <TransitTo>
+    <AddressArtifactFormat>
+      <PoliticalDivision2>{$city}</PoliticalDivision2>
+      <PoliticalDivision1>{$state}</PoliticalDivision1>
+      <PostcodePrimaryLow>{$zip_code}</PostcodePrimaryLow>
+      <CountryCode>US</CountryCode>
+    </AddressArtifactFormat>
+  </TransitTo>
+  <PickupDate>{$date}</PickupDate>
+  <InvoiceLineTotal>
+    <CurrencyCode>USD</CurrencyCode>
+    <MonetaryValue>50</MonetaryValue>
+  </InvoiceLineTotal>
+  <ShipmentWeight>
+    <UnitOfMeasurement>
+      <Code>LBS</Code>
+      <Description>Pounds</Description>
+    </UnitOfMeasurement>
+    <Weight>2</Weight>
+  </ShipmentWeight>
+</TimeInTransitRequest>";
+
+
+	$ch = curl_init("https://wwwcie.ups.com/ups.app/xml/TimeInTransit");
+	curl_setopt($ch, CURLOPT_HEADER, 1);
+	curl_setopt($ch,CURLOPT_POST,1);
+	curl_setopt($ch,CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+	$result=curl_exec($ch);
+	$params = $this->GetTimeInTransitResults($result);
+	$response_code= $params[0]["TIMEINTRANSITRESPONSE"]["RESPONSE"]["RESPONSESTATUSCODE"];
+	$transit_days = $params[0]["TIMEINTRANSITRESPONSE"]["TRANSITRESPONSE"]["SERVICESUMMARY"]["ESTIMATEDARRIVAL"]["BUSINESSTRANSITDAYS"];
+	$days = $transit_days+5;
+	return $days;
+  }
 }
