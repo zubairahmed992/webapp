@@ -135,7 +135,7 @@ class FitAlgorithm2 {
             }
             
         }
-        return array('feedback' => $this->array_sort($fb));
+        
         $sorted_array=$this->array_sort($fb);
         $recommendation = $this->get_recommended_size($sorted_array);
         if($recommendation==null){
