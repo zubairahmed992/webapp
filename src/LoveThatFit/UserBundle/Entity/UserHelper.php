@@ -245,8 +245,10 @@ class UserHelper {
     public function getPasswordEncoded(User $user) {
         $factory = $this->container->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
+        $user->setPwd($user->getPassword());
         $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
         $user->setPassword($password);
+        
         return $user;
     }
 //-------------------------------------------------------

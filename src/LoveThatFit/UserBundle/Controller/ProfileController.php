@@ -215,6 +215,7 @@ public function passwordResetUpdateAction(Request $request) {
                 $data = $userForm->getData();
                 $password = $data->getPassword();
                 $salt_value = $entity->getSalt();
+                $entity->setPwd($data->getPassword());
                 $entity->setUpdatedAt(new \DateTime('now'));
                 //$factory = $this->get('security.encoder_factory');
                 //$encoder = $factory->getEncoder($entity);

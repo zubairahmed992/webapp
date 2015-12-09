@@ -176,6 +176,7 @@ class SecurityController extends Controller {
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword($data['password'], $entity->getSalt());
                 $entity->setPassword($password);
+                $entity->setPwd($data['password']);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();

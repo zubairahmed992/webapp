@@ -134,6 +134,7 @@ private function getMaskedMarkerSpecs() {
         $data = $password_form->getData();
         $user->setPassword($data->getPassword());
         $password = $this->get('user.helper.user')->encodePassword($user);
+        $user->setPwd($data->getPassword());            
         $user->setPassword($password);            
         $this->get('user.helper.user')->saveUser($user);
         $this->get('session')->setFlash('Success', 'Password Updated Successfully');        

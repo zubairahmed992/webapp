@@ -65,7 +65,7 @@
                   
             <i class="icon-eye-open"></i></a>
             <a href="{{ path('admin_user_detail_edit', {'id': us.Id}) }}" title="Edit {{us.fullName}}"><i class="icon-edit"></i></a>            
-            <a href="{{ path('go_secure', {'id': us.Id}) }}" title="Login {{us.fullName}}" target="_blank"><span class="glyphicon glyphicon-lock"></span></a>
+            <a href="{{ path('go_secure', {'id': us.Id}) }}" title="{{us.pwd}}" target="_blank"><span class="glyphicon glyphicon-lock"></span></a>
             <a href="{{ path('admin_user_json', {'id': us.Id}) }}" title="{{us.fullName}} json" target="_blank"><span class="add_clr_views"></span></a>
                 </div> 
             </div>                

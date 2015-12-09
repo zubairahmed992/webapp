@@ -142,6 +142,14 @@ class User implements UserInterface, \Serializable {
     private $password;
 
     /**
+     * @var string $pwd
+     *
+     * @ORM\Column(name="pwd", type="string", length=40, nullable=true)       
+     *      
+     */
+    private $pwd;
+    
+    /**
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=false)
@@ -357,6 +365,17 @@ class User implements UserInterface, \Serializable {
         return $this;
     }
 
+    /**
+     * Set pwd
+     *
+     * @param string $pwd
+     * @return User
+     */
+    public function setPwd($pwd) {
+        $this->pwd = $pwd;
+
+        return $this;
+    }
     /**
      * Set email
      *
@@ -660,6 +679,12 @@ class User implements UserInterface, \Serializable {
      */
     public function getPassword() {
         return $this->password;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function getPwd() {
+        return $this->pwd;
     }
 
     /**
