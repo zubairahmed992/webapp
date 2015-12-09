@@ -112,6 +112,14 @@ class WebServiceHelper {
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
         }
     }
+ #------------------------ User -----------------------
+
+    public function userAdminList() {
+        $users = $this->container->get('webservice.repo')->userAdminList();                
+        return $this->response_array(true, 'measurement updated', true, array('user' => $users));
+       
+        
+    }    
   #------------------------ measurementUpdate -----------------------
 
     public function measurementUpdate($ra) {

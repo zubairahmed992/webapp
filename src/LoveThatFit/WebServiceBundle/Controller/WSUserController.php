@@ -126,9 +126,13 @@ class WSUserController extends Controller {
 #------------------------- ws_user_profile_update:  /ws/user_profile_update
         
     public function profileUpdateAction() {       
-       return new response($this->container->get('webservice.helper')->updateProfile($this->process_request()));
+       return new response($this->get('webservice.helper')->updateProfile($this->process_request()));
     }    
     
-   
+#------------------------- ws_user_list:  /ws/user_list
+   public function userAdminListAction() {       
+       $users = $this->get('webservice.helper')->userAdminList();
+       return new response($users);       
+    }    
 }
 

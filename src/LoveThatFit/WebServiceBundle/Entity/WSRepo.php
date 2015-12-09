@@ -204,5 +204,15 @@ class WSRepo {
                         ->getResult();            
             
             }
-    
+            
+             #--------------------------------------------------------------
+
+    public function userAdminList() {
+            return $this->em
+                        ->createQueryBuilder()
+                        ->select('u.id as user_id,  u.email,  u.gender,  u.image, u.authToken as auth_token, u.image_device_type')
+                        ->from('LoveThatFitUserBundle:User', 'u')                        
+                        ->getQuery()
+                        ->getResult(); 
+            }
 }

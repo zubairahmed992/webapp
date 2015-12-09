@@ -17,6 +17,14 @@ nws_user_detail:
     request_type: post
     description: return user detail against authentication token 
 #______________________
+nws_user_admin_list:
+    pattern:  /ws/user_admin_list
+    title: user_admin_list
+    params:
+          api_key: 00000000000000000000000000000          
+    request_type: post
+    description: return user detail against authentication token     
+#______________________
 ws_user_email_exists:
     pattern:  /ws/user_email_exists
     title: user_email_exists
