@@ -186,7 +186,17 @@ ws_user_profile_update:
     request_type: post
     description: This service will be used to update users basic information.    
     backend_process: 
-       
+
+#______________________   
+ws_user_feedback_add:
+    pattern:  /ws/user_feedback_add
+    title: user_feedback_add
+    params:
+      auth_token: 97fc8d115394f3f1947f315783e29e0e
+      message:
+    request_type: post
+    description: This service will be used to email user feedback to support & store in db    
+      
 #---------------------------------------------------------------------------
 #---------------------------------------------------------------------------
 #---------------------------------------------------------------------------

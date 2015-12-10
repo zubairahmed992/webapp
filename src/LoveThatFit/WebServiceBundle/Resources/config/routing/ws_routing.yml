@@ -53,6 +53,11 @@ ws_user_profile_update:
 ws_user_admin_list:
     pattern:  /ws/user_admin_list
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:userAdminList }
+
+ws_user_feedback_add:
+    pattern:  /ws/user_feedback_add
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:feedbackAdd }
+
 #------------------------------------------------------------------------------------
 
 nws_products:

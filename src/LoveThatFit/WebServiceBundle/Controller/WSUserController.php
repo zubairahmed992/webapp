@@ -134,5 +134,33 @@ class WSUserController extends Controller {
        $users = $this->get('webservice.helper')->userAdminList();
        return new response($users);       
     }    
+
+#~~~~~~~~~~~~~~~~~~~ ws_user_feedback_add   /ws/user_feedback_add
+
+    public function feedbackAddAction() {
+        $ra=$this->process_request();
+        if (!array_key_exists('auth_token', $ra)) {
+            return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
+        }
+
+        $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
+
+        if (count($user) > 0) {
+            $ufb = new \LoveThatFit\UserBundle\Entity\UserFeedback();
+            $ufb->setUser($user);
+            $ufb->setMessage($ra['message']);
+            $ufb->setCreatedAt(new \DateTime('now'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ufb);
+            $em->flush();
+            
+            return  new Response($this->get('webservice.helper')->response_array(true, 'Feedback added'));
+        } else {
+            return  new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+        }
+        
+    }  
+    
 }
 
