@@ -58,7 +58,10 @@ class User implements UserInterface, \Serializable {
      */
     protected $user_devices;
 
-    
+    /**
+     * @ORM\OneToMany(targetEntity="UserFeedback", mappedBy="user", orphanRemoval=true)
+     */
+    protected $user_feedback;
 
     // ...
 
@@ -1407,7 +1410,42 @@ class User implements UserInterface, \Serializable {
     {
         return $this->user_devices;
     }
+#---------------------------------------------------------------------------------
+    
+    /**
+     * Add user_feedback
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserFeedback $userFeedback
+     * @return User
+     */
+    public function addUserFeedback(\LoveThatFit\UserBundle\Entity\UserFeedback $userFeedback)
+    {
+        $this->user_feedback[] = $userFeedback;
+    
+        return $this;
+    }
 
+    /**
+     * Remove user_feedback
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserFeedback $user_feedback
+     */
+    public function removeUserFeedback(\LoveThatFit\UserBundle\Entity\UserFeedback $userFeedback)
+    {
+        $this->user_feedback->removeElement($userFeedback);
+    }
+
+    /**
+     * Get user_feedback
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserFeedback()
+    {
+        return $this->user_feedback;
+    }
+    
+    #----------------------------------------------------------------------------
     /**
      * Set userparentchildlink
      *
