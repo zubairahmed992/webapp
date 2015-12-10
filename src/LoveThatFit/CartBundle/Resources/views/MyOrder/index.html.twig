@@ -72,7 +72,13 @@
                                     <td>{{ c.OrderStatus}}</td>
                                   
                                     <td>${{ total| number_format(2)}}</td>
-                                    <td>{{ c.PaymentMethod}}</td>
+                                    <td>
+                                        {% if(c.PaymentMethod == 'paypal_account') %}
+                                        <a target="_blank" href="https://www.paypal.com/signin/?country.x=US&locale.x=en_US">{{ c.PaymentMethod}}</a>
+                                        {% else %}
+                                            {{ c.PaymentMethod}}
+                                        {% endif %}
+                                            </td>
                                     <td><a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums={{ tracking_number}}">{{ tracking_number}}</a></td>
                                     <td>{{ current_status}}</td>
 

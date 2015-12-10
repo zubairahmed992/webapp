@@ -606,7 +606,7 @@ class ShippingHelper {
 	$params = $this->GetTimeInTransitResults($result);
 	$response_code= $params[0]["TIMEINTRANSITRESPONSE"]["RESPONSE"]["RESPONSESTATUSCODE"];
 	$transit_days = $params[0]["TIMEINTRANSITRESPONSE"]["TRANSITRESPONSE"]["SERVICESUMMARY"]["ESTIMATEDARRIVAL"]["BUSINESSTRANSITDAYS"];
-	$days = $transit_days+5;
+	$days = $transit_days+2;
 	return $days;
   }
 }
