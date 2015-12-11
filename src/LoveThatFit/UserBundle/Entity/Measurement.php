@@ -1192,8 +1192,7 @@ class Measurement {
      * @return Measurement
      */
     public function setBrasize($brasize) {
-        $this->bra_size = $brasize;
-
+        $this->bra_size = strtolower($brasize);
         return $this;
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

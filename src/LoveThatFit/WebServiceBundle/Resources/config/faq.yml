@@ -1,0 +1,17 @@
+1:
+  faq_type: fitting_room
+  question: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  answer: Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
+  index: 1
+2:
+  faq_type: registration
+  question: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  answer: Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
+  index: 2
+3:
+  faq_type: registration
+  question: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  answer: Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
+  index: 3
+    
+  

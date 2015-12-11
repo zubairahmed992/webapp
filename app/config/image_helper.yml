@@ -10,6 +10,12 @@ image_category:
       width: 205
       prefix:  
       dir:  'uploads/ltf/retailers/web'  
+      
+    iphone:
+      height: 160
+      width: 410
+      prefix:  
+      dir:  'uploads/ltf/retailers/iphone'  
         
   brand:    
     original:
@@ -21,6 +27,12 @@ image_category:
       width: 205
       prefix:  
       dir:  'uploads/ltf/brands/web'  
+
+    iphone:
+      height: 160
+      width: 410
+      prefix:  
+      dir:  'uploads/ltf/brands/iphone'  
 
   product:
     original:
@@ -50,7 +62,44 @@ image_category:
        height: 240
        prefix:  
        dir:  'uploads/ltf/products/display/iphone5_product_list' 
-  
+       
+    iphone5_list:
+       width: 295
+       height: 403
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone5_list' 
+      
+    iphone5_fitting_alert:
+       width: 251
+       height: 294
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone5_fitting_alert' 
+      
+    iphone5_fitting_room_list:
+       width: 110
+       height: 152
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone5_fitting_room_list' 
+
+    iphone6_list:
+       width: 345
+       height: 472
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone6_list' 
+
+    iphone6_fitting_alert:
+       width: 251
+       height: 343
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone6_fitting_alert' 
+
+    iphone6_fitting_room_list:
+       width: 129
+       height: 177
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone6_fitting_room_list' 
+      
+      
   product_pattern:      
     original:
       prefix:  

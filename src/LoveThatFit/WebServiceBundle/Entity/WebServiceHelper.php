@@ -3,6 +3,7 @@
 namespace LoveThatFit\WebServiceBundle\Entity;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\Yaml\Parser;
 
 class WebServiceHelper {
 
@@ -677,5 +678,12 @@ class WebServiceHelper {
         } else {
             return $this->response_array(false, "product not found");
         }
+    }
+    
+    #-------------------#-------------------#-------------------
+    public function getFAQ($type=null){
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        
     }
 }

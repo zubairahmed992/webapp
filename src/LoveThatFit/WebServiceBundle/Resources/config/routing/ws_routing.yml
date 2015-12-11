@@ -87,3 +87,7 @@ ws_user_liked_products:
 nws_brand_retailer:
     pattern:  /ws/brand_retailer
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailer }
+#--------------------------------------------------------------
+ws_misc_faq:
+    pattern:  /ws/misc_faq
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:faq}
