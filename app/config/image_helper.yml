@@ -6,14 +6,14 @@ image_category:
       dir:  'uploads/ltf/retailers'  
 
     web:
-      height: 80
-      width: 205
+      height: 126
+      width: 126
       prefix:  
       dir:  'uploads/ltf/retailers/web'  
       
     iphone:
-      height: 160
-      width: 410
+      height: 126
+      width: 126
       prefix:  
       dir:  'uploads/ltf/retailers/iphone'  
         
@@ -23,14 +23,14 @@ image_category:
       dir:  'uploads/ltf/brands'  
 
     web:
-      height: 80
-      width: 205
+      height: 126
+      width: 126
       prefix:  
       dir:  'uploads/ltf/brands/web'  
 
     iphone:
-      height: 160
-      width: 410
+      height: 126
+      width: 126
       prefix:  
       dir:  'uploads/ltf/brands/iphone'  
 
