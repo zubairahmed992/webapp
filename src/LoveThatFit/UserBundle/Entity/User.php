@@ -1872,7 +1872,7 @@ class User implements UserInterface, \Serializable {
 		'device_type'=>$device_type,
 		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
                 'device_type'=>$device_type,
-                'default_user'=>false,
+                'default_user'=>  $this->user_marker->getDefaultUser(),
 	  );
 	}else{
 	  return array(

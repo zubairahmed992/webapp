@@ -58,6 +58,9 @@ ws_user_feedback_add:
     pattern:  /ws/user_feedback_add
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:feedbackAdd }
 
+ws_user_default_values:
+    pattern:  /ws/user_default_values
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:defaultValues}
 #------------------------------------------------------------------------------------
 
 nws_products:

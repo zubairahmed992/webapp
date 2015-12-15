@@ -2065,7 +2065,7 @@ class Measurement {
         $this->inseam = array_key_exists('inseam', $ar) ? $ar['inseam'] : $this->inseam;
         $this->chest = array_key_exists('chest', $ar) ? $ar['chest'] : $this->chest;
         $this->neck = array_key_exists('neck', $ar) ? $ar['neck'] : $this->neck;
-        $this->body_type = array_key_exists('body_type', $ar) ? $ar['body_type'] : $this->body_type;
+        $this->body_types = array_key_exists('body_type', $ar) ? $ar['body_type'] : $this->body_types;
         $this->body_shape = array_key_exists('body_shape', $ar) ? $ar['body_shape'] : $this->body_shape;
         $this->bra_size = array_key_exists('bra_size', $ar) ? $ar['bra_size'] : $this->bra_size;
         $this->arm = array_key_exists('arm', $ar) ? $ar['arm'] : $this->arm;

@@ -1,20 +1,20 @@
 1:
   faq_type: fitting_room
-  question: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  answer: Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
-  tags: selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
+  question: fitting_room_question Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  answer: fitting_room_answers Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
+  tags: fitting_room_faq selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
   index: 1
 2:
   faq_type: social_sharing
-  question: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  answer: Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
-  tags: selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
+  question: social_sharing_question Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  answer: social_sharing_answer Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
+  tags: social_sharing_faq selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
   index: 2
 3:
   faq_type: measurement
-  question: Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  answer: Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
-  tags: selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
+  question: measurement_question Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  answer: measurement_answer Vivamus tristique tempor venenatis. Sed felis purus, auctor maximus maximus sit amet, pretium eu leo
+  tags: measurement_tags selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
   index: 3
     
   

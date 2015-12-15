@@ -717,7 +717,7 @@ class UserHelper {
   ##############################################################################################3
   ##############################################################################################3
   
-    public function copyDefaultUserData($user){
+    public function copyDefaultUserData($user, $ra){
         $conf_yml = new Parser();
         $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));
         $user->setImageDeviceType($dud[$user->getGender()]['image']['device_type']);                
@@ -731,7 +731,15 @@ class UserHelper {
         $measurement->setByArray($dud[$user->getGender()]['measurements']);       
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         $this->container->get('user.helper.user')->saveUser($user);
-        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$user->getGender()]['mask']);        
+        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$user->getGender()]['mask']);
+        #---------------------------
+        $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
+        array_key_exists('device_id', $ra)? $userDevice->setDeviceName($ra['device_id']):'fff';
+        $userDevice->setDeviceType($dud[$user->getGender()]['image']['device_type']);        
+        $userDevice->setDeviceUserPerInchPixelHeight($dud[$user->getGender()]['image']['px_inch_ratio']); 
+        $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
+        #---------------------------
+        
     return $measurement ;
         
     }

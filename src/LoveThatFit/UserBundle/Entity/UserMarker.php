@@ -123,7 +123,13 @@ class UserMarker
      * @ORM\Column(name="default_marker_svg", type="text", nullable=true)
      */
     private $default_marker_svg;
-
+   /**
+     * @var string $default_user
+     *
+     * @ORM\Column(name="default_user", type="boolean")
+     */
+    private $default_user;
+    
     /**
      * Get id
      *
@@ -433,6 +439,27 @@ class UserMarker
     {
         return $this->default_marker_svg;
     }
+    
+     /**
+     * Set default_user
+     *
+     * @param boolean $default_user
+     * @return UserMarker
+     */
+    public function setDefaultUser($default_user){
+        $this->default_user = $default_user;    
+        return $this;
+    }
+
+    /**
+     * Get default_user
+     *
+     * @return boolean 
+     */
+    public function getDefaultUser(){
+        return $this->default_user;
+    }
+
     
     public function toDataArray($detail = false) {
         $a = array();

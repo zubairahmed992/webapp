@@ -103,10 +103,10 @@ class WebServiceHelper {
             #---- 2) send registration email ....            
             $this->container->get('mail_helper')->sendRegistrationEmail($user);                    
             #--- 3) default user values added
-            $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
-            #--- 4) Device
-            $user_device = $this->createUserDeviceWithParams($request_array, $user);
-            $detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
+            $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
+            
+            $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+            $detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
@@ -679,11 +679,5 @@ class WebServiceHelper {
             return $this->response_array(false, "product not found");
         }
     }
-    
-    #-------------------#-------------------#-------------------
-    public function getFAQ($type=null){
-        $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
-        
-    }
+   
 }

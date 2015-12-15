@@ -2,7 +2,7 @@
 namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Yaml\Parser;
 class WSUserController extends Controller {
 
      
@@ -161,6 +161,13 @@ class WSUserController extends Controller {
         }
         
     }  
-    
+    #~~~~~~~~~~~~~~~~~~~ ws_user_default_values   /ws/user_default_values
+
+    public function defaultValuesAction() {        
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));
+        return new Response(json_encode($conf));
+        
+    }
 }
 
