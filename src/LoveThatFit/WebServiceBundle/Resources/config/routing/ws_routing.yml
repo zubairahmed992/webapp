@@ -94,3 +94,7 @@ nws_brand_retailer:
 ws_misc_faq:
     pattern:  /ws/misc_faq
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:faq}
+
+ws_misc_banner:
+    pattern:  /ws/misc_banner
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:banner}

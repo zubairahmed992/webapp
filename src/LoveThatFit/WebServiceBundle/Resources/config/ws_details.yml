@@ -265,4 +265,9 @@ ws_misc_faq:
      faq_type: registration     
    request_type: post         
 
-   
+ws_misc_banner:
+   pattern:  /ws/misc_banner
+   title: misc_banner
+   params:
+     banner_type:
+   request_type: post

@@ -30,6 +30,25 @@ class WSMiscController extends Controller {
             return new Response(json_encode($conf));
         }
     }
+#~~~~~~~~~~~~~~~~~~~ ws_misc_banner   /ws/misc_banner
+
+    public function bannerAction() {
+        $decoded = $this->process_request();
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/banner.yml'));
+        if (array_key_exists('dashboard_banner', $conf) && $conf['dashboard_banner'] != null) {
+            $dashboard_banner = "";
+		  	foreach ($conf["dashboard_banner"] as $k => $v) {
+			  $dashboard_banner[$k] = $v;
+              if(array_key_exists('image',$v) && array_key_exists('image',$v)!=null){
+				$dashboard_banner[$k]["image"] = $decoded["base_path"].$v["image"];
+			  }
+			}
+            return new Response(json_encode($dashboard_banner));
+        } else {
+            return new Response(json_encode($conf));
+        }
+    }
 
 }
 
