@@ -719,27 +719,29 @@ class UserHelper {
   
     public function copyDefaultUserData($user, $ra){
         $conf_yml = new Parser();
-        $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));
-        $user->setImageDeviceType($dud[$user->getGender()]['image']['device_type']);                
-        $user->copyDefaultImage();
+        $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));        
+        $udt=strtolower($ra['device_type']);        
+        $user->setImageDeviceType($udt);
+        #$user->setImageDeviceType($dud[$user->getGender()]['image']['device_type']);                
         if ($user->getMeasurement()) {
             $measurement = $user->getMeasurement();
         } else {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
 
-        $measurement->setByArray($dud[$user->getGender()]['measurements']);       
+        $measurement->setByArray($dud[$udt][$user->getGender()]['measurements']);       
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         $this->container->get('user.helper.user')->saveUser($user);
-        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$user->getGender()]['mask']);
+        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$udt][$user->getGender()]['mask']);
+        
         #---------------------------
         $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
-        array_key_exists('device_id', $ra)? $userDevice->setDeviceName($ra['device_id']):'fff';
-        $userDevice->setDeviceType($dud[$user->getGender()]['image']['device_type']);        
-        $userDevice->setDeviceUserPerInchPixelHeight($dud[$user->getGender()]['image']['px_inch_ratio']); 
+        array_key_exists('device_id', $ra)? $userDevice->setDeviceName($ra['device_id']):'';
+        $userDevice->setDeviceType($dud[$udt][$user->getGender()]['image']['device_type']);        
+        $userDevice->setDeviceUserPerInchPixelHeight($dud[$udt][$user->getGender()]['image']['px_inch_ratio']); 
         $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
         #---------------------------
-        
+        $user->copyDefaultImage($udt);
     return $measurement ;
         
     }

@@ -1188,13 +1188,13 @@ class User implements UserInterface, \Serializable {
         
     }
     //----------------------------------------------------
-    public function copyDefaultImage() {
+    public function copyDefaultImage($device_type=null) {
         $this->image='cropped.png';
         
         if (!is_dir($this->getUploadRootDir())) {
                     mkdir($this->getUploadRootDir(), 0700);
                 }
-        copy($this->getDummyUserImageRootPath(), $this->getAbsolutePath());        
+        copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
     }
     //----------------------------------------------------
     private function copyTempToOriginalImage() {
@@ -1248,8 +1248,11 @@ class User implements UserInterface, \Serializable {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 //----------------------------------------------------------
-    public function getDummyUserImageRootPath() {
-        return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
+    public function getDummyUserImageRootPath($udt=null) {
+        if($udt)
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_cropped.png';        
+        else
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
     }
 //----------------------------------------------------------
     public function getUploadDir() {
@@ -1872,7 +1875,7 @@ class User implements UserInterface, \Serializable {
 		'device_type'=>$device_type,
 		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
                 'device_type'=>$device_type,
-                'default_user'=>  $this->user_marker->getDefaultUser(),
+                'default_user'=> $this->user_marker?$this->user_marker->getDefaultUser():false,
 	  );
 	}else{
 	  return array(
