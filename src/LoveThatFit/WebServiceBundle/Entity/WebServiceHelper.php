@@ -79,7 +79,10 @@ class WebServiceHelper {
             #$measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
             #--- 5) Device
             $user_device = $this->createUserDeviceWithParams($request_array, $user);
-            $detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
+            #$detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
+            $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+            $detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
+            
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
@@ -123,11 +126,17 @@ class WebServiceHelper {
     }    
   #------------------------ measurementUpdate -----------------------
 
-    public function measurementUpdate($ra) {
+  public function measurementUpdate($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
-        $measurement = $this->setUserMeasurementWithParams($ra, $user);
+        $measurement = $user->getMeasurement();
+        if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {
+            $ar['actual_user'] = $ra;
+            $measurement->setMeasurementJson(json_encode($ar));
+        } else {
+            $measurement = $this->setUserMeasurementWithParams($ra, $user);
+        }
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true,null, $ra['base_path'])));        
+        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $ra['base_path'])));
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
@@ -161,14 +170,9 @@ class WebServiceHelper {
     #-------------------------------------------------------
 
     private function createUserWithParams($request_array) {
-        $user = $this->container->get('user.helper.user')->createNewUser();
-        $user->setEmail($request_array['email']);
+        
+        $user=$this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
         $user->setPassword($request_array['password']);
-        $user->setGender(array_key_exists('gender', $request_array) ? $request_array['gender'] : null);
-        $user->setZipcode(array_key_exists('zipcode', $request_array) ? $request_array['zipcode'] : null);
-        #this dob line will be removed with the new build
-        $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
-        $user->setBirthDate(array_key_exists('birth_date', $request_array) ? new \DateTime($request_array['birth_date']) : null);
         $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
         $user->generateAuthenticationToken();
         $this->container->get('user.helper.user')->saveUser($user);
@@ -269,12 +273,6 @@ class WebServiceHelper {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
         
-        if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {
-            $ar['actual_user'] = json_encode($request_array);
-            $measurement->setMeasurementJson(json_encode($ar));
-            return $measurement;
-        }
-
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
             

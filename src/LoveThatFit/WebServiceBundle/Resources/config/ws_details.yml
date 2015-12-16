@@ -66,7 +66,7 @@ ws_user_registration:
       inseam: 0.00
       hip: 0.00
       waist: 0.00
-      device_type: iphone5
+      device_type: iphone6
       body_shape: pear
       bra_size: 30 b
       body_type: Regular
@@ -78,6 +78,21 @@ ws_user_registration:
       top_fitting_size: 0
       bottom_fitting_size: 0
       dress_fitting_size: 0
+    request_type: post
+    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
+    backend_process: 
+#______________________
+ws_user_registration_default_values:
+    pattern:  /ws/user_registration
+    title: user_registration
+    params:
+      email:  example@ltf.com
+      password: ltf123
+      gender: f
+      zipcode:
+      birth_date:  
+      device_type: iphone6
+      create_default_user: true
     request_type: post
     description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
     backend_process: 

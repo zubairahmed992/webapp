@@ -2055,8 +2055,58 @@ class Measurement {
         return $this->belt;
     }
 
+    public function copyJSONMeasurement($key){
+       $ar = $this->getJSONMeasurement($key);
+       return $this->setByArray($ar);
+    }
     
+    public function getJSONMeasurement($key){
+       $ar=  json_decode($this->measurement_json, true);
+       if (array_key_exists($key, $ar)){
+                 return $ar[$key];
+       }
+    }
+    public function clearObjectValues() {
+        $ar = array('weight' => 0,
+            'height' => 0,
+            'waist' => 0,
+            'hip' => 0,
+            'bust' => 0,
+            'inseam' => 0,
+            'chest' => 0,
+            'neck' => 0,
+            'body_types' => null,
+            'body_shape' => null,
+            'bra_size' => null,
+            'arm' => 0,
+            'shoulder_across_front' => 0,
+            'shoulder_height' => 0,
+            'shoulder_length' => 0,
+            'outseam' => 0,
+            'sleeve' => 0,
+            'thigh' => 0,
+            'shoulder_width' => 0,
+            'bust_height' => 0,
+            'waist_heightt' => 0,
+            'hip_height' => 0,
+            'bust_width' => 0,
+            'waist_width' => 0,
+            'hip_width' => 0,
+            'shoulder_across_back' => 0,
+            'bicep' => 0,
+            'tricep' => 0,
+            'wrist' => 0,
+            'center_front_waist' => 0,
+            'back_waist' => 0,
+            'waist_hip' => 0,
+            'knee' => 0,
+            'calf' => 0,
+            'ankle' => 0,
+            'belt' => 0);
+        return $this->setByArray($ar);
+    }
     public function setByArray($ar){
+        if (!is_array($ar)) return;
         $this->weight = array_key_exists('weight', $ar) ? $ar['weight'] : $this->weight;
         $this->height = array_key_exists('height', $ar) ? $ar['height'] : $this->height;
         $this->waist = array_key_exists('waist', $ar) ? $ar['waist'] : $this->waist;
@@ -2071,6 +2121,7 @@ class Measurement {
         $this->arm = array_key_exists('arm', $ar) ? $ar['arm'] : $this->arm;
         $this->shoulder_across_front = array_key_exists('shoulder_across_front', $ar) ? $ar['shoulder_across_front'] : $this->shoulder_across_front;
         $this->shoulder_height = array_key_exists('shoulder_height', $ar) ? $ar['shoulder_height'] : $this->shoulder_height;
+        $this->shoulder_length = array_key_exists('shoulder_length', $ar) ? $ar['shoulder_length'] : $this->shoulder_length;
         $this->outseam = array_key_exists('outseam', $ar) ? $ar['outseam'] : $this->outseam;
         $this->sleeve = array_key_exists('sleeve', $ar) ? $ar['sleeve'] : $this->sleeve;
         $this->thigh = array_key_exists('thigh', $ar) ? $ar['thigh'] : $this->thigh;
