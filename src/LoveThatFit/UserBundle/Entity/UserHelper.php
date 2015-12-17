@@ -722,6 +722,8 @@ class UserHelper {
         $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));        
         $udt=strtolower($ra['device_type']);        
         $user->setImageDeviceType($udt);
+        $user->setImage('cropped.png');
+        
         #$user->setImageDeviceType($dud[$user->getGender()]['image']['device_type']);                
         if ($user->getMeasurement()) {
             $measurement = $user->getMeasurement();
