@@ -120,7 +120,11 @@ class DeviceController extends Controller {
            return new Response ('Authentication error');
        }
        
-        $measurement = $user->getMeasurement();                
+        $measurement = $user->getMeasurement();         
+        if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+            $decoded=$measurement->getJSONMeasurement('actual_user');
+            $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+        }
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
         $form = $this->createForm(new RegistrationStepFourType(), $user);
