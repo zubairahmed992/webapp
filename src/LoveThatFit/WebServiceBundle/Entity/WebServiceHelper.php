@@ -267,7 +267,7 @@ class WebServiceHelper {
         }
     }
 #-------------------------------------------------------
-    private function setUserMeasurementWithParams($request_array, $user) {
+    public function setUserMeasurementWithParams($request_array, $user) {
         $measurement = $user->getMeasurement();
         if (!$measurement) {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
