@@ -69,7 +69,7 @@ class WebServiceHelper {
             #--- 1) User
             $user = $this->createUserWithParams($request_array);
             #---- 2) send registration email ....            
-            # $this->container->get('mail_helper')->sendRegistrationEmail($user);                    
+            # $this->container->get('mail_helper')->sendRegistrationEmail($user);
             #--- 3) Size charts
             #size charts brands & size being saved
             //sizecharts measurement extraction
@@ -682,5 +682,12 @@ class WebServiceHelper {
             return $this->response_array(false, "product not found");
         }
     }
-   
+
+  #feedback service
+  #------------------------ User -----------------------
+
+  public function feedbackService($user,$content) {
+	$this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
+  }
+	#end feedback service
 }

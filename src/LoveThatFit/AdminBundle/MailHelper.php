@@ -113,4 +113,35 @@ class MailHelper {
 	  return $result;
 	}
 
+  public function sendFeedbackEmail($user,$content) {
+
+	$from = $this->conf['parameters']['mailer_user'];
+	//$to = $user->getEmail();
+	$to = "membersupport@selfiestyler.com";
+	$body = "Following feedback sent by ".$user->getEmail()."<br><br>".$content;
+	$subject = 'SelfieStyler: Feedback Received. ';
+	//return 'emailing is currently disabled';
+	$message = \Swift_Message::newInstance()
+	  ->setSubject($subject)
+	  ->setFrom($from)
+	  ->setTo($to)
+	  ->setContentType("text/html")
+	  ->setBody($body);
+	try {
+	  $this->mailer->send($message);
+	} catch (\Swift_TransportException $e) {
+	  $result = array(
+		false,
+		'There was a problem sending email: ' . $e->getMessage()
+	  );
+	  return $result;
+	}
+
+	$result = array(
+	  true,
+	  'email has been sent.'
+	);
+	return $result;
+  }
+
 }

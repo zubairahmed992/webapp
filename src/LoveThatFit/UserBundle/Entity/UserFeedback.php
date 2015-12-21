@@ -34,7 +34,7 @@ class UserFeedback {
     /**
      * @var string $message
      *
-     * @ORM\Column(name="message", type="string",nullable=true)
+     * @ORM\Column(name="message", type="text",nullable=true)
      */
     private $message;
 

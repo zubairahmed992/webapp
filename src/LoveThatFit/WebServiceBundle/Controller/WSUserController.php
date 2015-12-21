@@ -154,6 +154,10 @@ class WSUserController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($ufb);
             $em->flush();
+
+		  	#feedback email
+		  	$this->get('webservice.helper')->feedbackService($user,$ra['message']);
+		  	#feedback email end
             
             return  new Response($this->get('webservice.helper')->response_array(true, 'Feedback added'));
         } else {
