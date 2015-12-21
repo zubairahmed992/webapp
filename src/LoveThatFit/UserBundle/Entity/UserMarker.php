@@ -54,6 +54,13 @@ class UserMarker
      */
     private $svg_paths;
     
+      /**
+     * @var string $image_actions
+     *
+     * @ORM\Column(name="image_actions", type="text", nullable=true)     
+     */
+    private $image_actions;
+    
     /**
      * @var float $mask_x
      *
@@ -370,7 +377,30 @@ class UserMarker
     {
         return $this->marker_json;
     }
+  /**
+     * Set image_actions
+     *
+     * @param string $image_actions
+     * @return UserMarker
+     */
+    public function setImageActions($image_actions)
+    {
+        $this->image_actions = $image_actions;
+    
+        return $this;
+    }
 
+    /**
+     * Get image_actions
+     *
+     * @return string 
+     */
+    public function getImageActions()
+    {
+        return $this->image_actions;
+    }
+
+    
     /**
      * Set user
      *

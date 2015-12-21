@@ -2000,6 +2000,7 @@ default_marker_svg:$('#default_marker_svg').attr('value'),
 shoulder_height: $("#shoulder_height").attr("value"),
 hip_height: $("#hip_height").attr("value"),
 svg_path:$('#img_path_paper').attr('value')};
+image_actions:$url};
 
 
  $.ajax({
