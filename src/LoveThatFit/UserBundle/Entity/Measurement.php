@@ -2062,7 +2062,7 @@ class Measurement {
     
     public function getJSONMeasurement($key){
        $ar=  json_decode($this->measurement_json, true);
-       if (array_key_exists($key, $ar)){
+       if (is_array($ar) && array_key_exists($key, $ar)){
                  return $ar[$key];
        }
     }
