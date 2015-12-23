@@ -9,9 +9,6 @@ hitOptions = {
 };
 
 
-
-
-
 change_x_pos_diff = 0;
 change_y_pos_diff = 0;
 inc_ratio = 1;
@@ -43,6 +40,27 @@ dv_gap_bottom = 32;
 //fixed_px_inch_ratio = 6.891;
 
 //iPhone5 and 6 px per inch
+
+var image_actions_count;
+var image_actions_setting = $('#image_actions').attr('value');
+//alert(image_actions_setting);
+
+if(dv_edit_type == "edit" && image_actions_setting == ""){
+    var old_account_img = true;
+}else{
+    var old_account_img = false;
+    if(image_actions_setting == "" || dv_edit_type == "registration" || dv_edit_type == "camera" || dv_edit_type == "reset" || dv_edit_type == "android"){
+        image_actions_count = {
+            move_up_down: 0,
+            move_left_right: 0,
+            img_rotate: 0
+        };
+    }else {
+        image_actions_count = JSON.parse(image_actions_setting);
+    }
+}
+
+
 if(dv_type == "iphone5"){
     fixed_px_inch_ratio = 6.891;
     scr_width = 160;
@@ -115,6 +133,16 @@ if(dv_type == "iphone6"){
 
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
+if(old_account_img){
+    orignal_img_path = croped_img_path;
+}else{
+    orignal_img_path = croped_img_path;
+
+    //orignal_img_path = orignal_img_path.substr(orignal_img_path.lastIndexOf('/') + 1);
+
+    orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?3344";
+}
+//alert(orignal_img_path);
 
 
 if(dv_edit_type == "registration" || dv_edit_type == "camera" || dv_edit_type == "reset" || dv_edit_type == "android"){
@@ -284,17 +312,29 @@ p_user_height = p_user_height / 100;
         //p_user_height = p_user_height / 100;
 
 
-user_img_url = $("#hdn_user_cropped_image_url").attr("value");
+//user_img_url = $("#hdn_user_cropped_image_url").attr("value");
+user_img_url = orignal_img_path;
 user_image = new Raster(user_img_url);
 user_image.on('load', function() {
-    //alert(user_image.getPixel(180, 230));
+    user_image.position = new Point(scr_width,scr_height/2);
+    user_image.pivot = new Point(0,(scr_height/2) - dv_gap_bottom);
+    //preset_user_image(move_up_down, move_left_right, img_rotate);
+    if(old_account_img){}else{
+        preset_user_image(parseInt(image_actions_count.move_up_down),parseInt(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+    }
 });
 
-user_image.position = new Point(scr_width,scr_height/2);
+function preset_user_image(move_up_down, move_left_right, img_rotate) {
+    
+    
+    user_image.position.y = user_image.position.y += move_up_down;
+    user_image.position.x = user_image.position.x += move_left_right;
+    user_image.rotate(img_rotate); // -0.1 for left, 0.1 for right
+}
 
 
 
-user_image.pivot = new Point(0,(scr_height/2) - dv_gap_bottom);
+
 
 
 //alert(user_image.bounds.bottomCenter);
@@ -1174,6 +1214,8 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
                             
+                            image_actions_count.move_left_right -= 1;
+                            
                             if(curr_view == "zoomed"){
                                 //x_pos_user_image -= ratio_zoom_value;
                             }
@@ -1194,12 +1236,16 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
                             
+                            image_actions_count.move_left_right += 1;
+                            
                             if(curr_view == "zoomed"){
                                 //x_pos_user_image += ratio_zoom_value;
                             }
                         }
                          if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
+                            
+                            image_actions_count.move_up_down -= 1;
                             
                             if(curr_view == "zoomed"){
                                 //y_pos_user_image -= ratio_zoom_value;
@@ -1208,16 +1254,24 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
                             
+                            image_actions_count.move_up_down += 1;
+                            
                             if(curr_view == "zoomed"){
                                 //y_pos_user_image += ratio_zoom_value;
                             }
                             
                         }
                          if(hitResult.item == but_rotate_left){
-                            user_image.rotate(-0.1); 
+                            user_image.rotate(-0.1);
+                            
+                            image_actions_count.img_rotate += -0.1;
+                            
                         }
                          if(hitResult.item == but_rotate_right){
                             user_image.rotate(0.1);
+                            
+                            image_actions_count.img_rotate += 0.1;
+                            
                         }
                          if(curr_crop == "normal" && hitResult.item == but_crop_icon){
                             curr_crop = "checked";
@@ -1439,7 +1493,6 @@ function onMouseDown(event) {
                             //to_image();
                                 
                                 //show_loader();
-                            
                             $("#img_path_json").attr("value", getPathArrayJson());
                             
                                 setTimeout(function(){ to_image(); }, 500);
@@ -1985,6 +2038,13 @@ function onMouseDrag(event) {
 
 
 function upload(){
+
+if(orignal_img_path){
+    $('#image_actions').attr('value',"");
+}else{
+    $('#image_actions').attr('value',JSON.stringify(image_actions_count));
+}
+
 var $url=$('#marker_update_url').attr('value');
 var value_ar = {
 auth_token:$('#user_auth_token').attr('value'),
@@ -1999,8 +2059,8 @@ default_marker_json:$('#default_marker_json').attr('value'),
 default_marker_svg:$('#default_marker_svg').attr('value'),
 shoulder_height: $("#shoulder_height").attr("value"),
 hip_height: $("#hip_height").attr("value"),
-svg_path:$('#img_path_paper').attr('value')};
-image_actions:$url};
+svg_path:$('#img_path_paper').attr('value'),
+image_actions:$('#image_actions').attr('value')};
 
 
  $.ajax({
