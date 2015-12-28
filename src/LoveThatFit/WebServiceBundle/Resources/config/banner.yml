@@ -32,6 +32,6 @@ dashboard_banner:
     price: 40
     index: 3
     link:
-      brand_id: 48
-      retailer_id: 20
+      brand_id: 
+      retailer_id: 15
     disable: false
