@@ -36,8 +36,10 @@ class DeviceController extends Controller {
        
         $measurement = $user->getMeasurement();               
         if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
-            $decoded=$measurement->getJSONMeasurement('actual_user');
-            $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+            $decoded=$measurement->getJSONMeasurement('actual_user');            
+            if(is_array($decoded)){
+                $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+            }
         }
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
@@ -123,7 +125,9 @@ class DeviceController extends Controller {
         $measurement = $user->getMeasurement();         
         if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
             $decoded=$measurement->getJSONMeasurement('actual_user');
-            $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+            if(is_array($decoded)){
+                $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+            }
         }
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
@@ -205,7 +209,9 @@ class DeviceController extends Controller {
             $measurement = $user->getMeasurement();               
             if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
                 $decoded=$measurement->getJSONMeasurement('actual_user');
-                $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+                 if(is_array($decoded)){
+                    $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+                }
             }
             $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);        
             return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
