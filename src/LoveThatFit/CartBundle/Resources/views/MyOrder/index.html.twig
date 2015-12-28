@@ -47,7 +47,7 @@
                         <table width="700" border="0" class="user_product_hd">
                             <tr>
                                 <td>Order Number</td>
-                                <td>Order Date</td>
+                                <td style="width:100px;">Order Date</td>
                                 <td>Order Status</td>
 
                                 <td>Grand Total</td>
@@ -79,7 +79,7 @@
                                             {{ c.PaymentMethod}}
                                         {% endif %}
                                             </td>
-                                    <td><a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums={{ tracking_number}}">{{ tracking_number}}</a></td>
+                                    <td><a target="_blank" href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums={{ tracking_number}}">{{ tracking_number}}</a></td>
                                     <td>{{ current_status}}</td>
 
 
