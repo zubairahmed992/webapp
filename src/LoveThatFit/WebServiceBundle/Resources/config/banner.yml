@@ -1,29 +1,33 @@
 dashboard_banner:
   1:
-    image: /uploads/ltf/products/banner/recommendation_image@2x.png
+    image: uploads/ltf/products/banner/recommendation_image@2x.png
     caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     price: 10
     index: 1
-    link:
+    type: brand
+    id: 63
     disable: false
   2:
-    image: /uploads/ltf/products/banner/recommendation_image_2@2x.png
+    image: uploads/ltf/products/banner/recommendation_image_2@2x.png
     caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     price: 20
     index: 2
-    link:
+    type: brand
+    id: 54
     disable: false
   3:
-    image: /uploads/ltf/products/banner/recommendation_image_-3@2x.png
+    image: uploads/ltf/products/banner/recommendation_image_-3@2x.png
     caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     price: 30
     index: 3
-    link:
+    type: brand
+    id: 52
     disable: false
   4:
-    image: /uploads/ltf/products/banner/recommendation_image_4@2x.png
+    image: uploads/ltf/products/banner/recommendation_image_4@2x.png
     caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     price: 40
     index: 3
-    link:
+    type: retailer
+    id: 15
     disable: false
