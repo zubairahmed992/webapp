@@ -201,7 +201,7 @@ class MaskMarkerInspectController extends Controller {
    public function maskImproveEditAction($user_id) {
        $user = $this->get('webservice.helper.user')->find($user_id);
       # return  new Response ($user->getEmail());
-       $edit_type='registration';
+       $edit_type='edit';
        $device_type='iphone5';
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
@@ -230,9 +230,7 @@ class MaskMarkerInspectController extends Controller {
         return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:_mask_improve_show.html.twig', array(
                     'form' => $form->createView(),               
                     'measurement_form' => $measurement_form->createView(),                   
-                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
-                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
-                    'entity' => $user,
+                       'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => $edit_type,
                     'marker' => $marker,
