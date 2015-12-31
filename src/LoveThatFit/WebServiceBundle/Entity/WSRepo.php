@@ -93,7 +93,7 @@ class WSRepo {
             JOIN p.clothing_type ct
             LEFT JOIN pi.users pu            
             WHERE (pu.id IS NULL OR pu.id=:user_id) AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
-            ORDER BY uih.count DESC"
+            ORDER BY uih.updated_at DESC"
                                 )->setParameters(array('user_id' => $user->getId()));
                 break;
             case 'favourite':
