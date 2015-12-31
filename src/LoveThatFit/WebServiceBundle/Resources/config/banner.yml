@@ -1,7 +1,7 @@
 dashboard_banner:
   1:
     image: uploads/ltf/products/banner/recommendation_image@2x.png
-    caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    caption: SelfieStyler Welcomes Zara
     price: 10
     index: 1
     type: brand
@@ -9,7 +9,7 @@ dashboard_banner:
     disable: false
   2:
     image: uploads/ltf/products/banner/recommendation_image_2@2x.png
-    caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    caption: DVF Dresses 20% Off
     price: 20
     index: 2
     type: brand
@@ -17,7 +17,7 @@ dashboard_banner:
     disable: false
   3:
     image: uploads/ltf/products/banner/recommendation_image_-3@2x.png
-    caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    caption: All AEO 25% Off
     price: 30
     index: 3
     type: brand
@@ -25,7 +25,7 @@ dashboard_banner:
     disable: false
   4:
     image: uploads/ltf/products/banner/recommendation_image_4@2x.png
-    caption: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    caption: Trend Update: Downtown Day2Night
     price: 40
     index: 3
     type: retailer
