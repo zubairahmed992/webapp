@@ -10,6 +10,11 @@ admin_dashboard:
     pattern:  /admin/dashboard
     defaults: { _controller: LoveThatFitAdminBundle:Default:index}
 
+#-------------- User Mask adjustment ------------------------
+    
+admin_user_mask_adjustment_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/user_mask_adjustment.yml"
+    prefix:   /
 #-------------- PRODUCT ------------------------
     
 admin_product_routes:

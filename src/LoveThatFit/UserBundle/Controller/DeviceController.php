@@ -229,7 +229,11 @@ class DeviceController extends Controller {
             throw $this->createNotFoundException('Unable to find Member.');
         }
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
-        $entity->resize_image(); # image is being resized to 320x568
+        #if not from mask marker adjustment interface then resize
+        if (!array_key_exists('env', $_POST) || (array_key_exists('env', $_POST) && !$_POST['env']=='admin')){  
+        #    $entity->resize_image(); # image is being resized to 320x568
+        }
+            $entity->resize_image(); # image is being resized to 320x568
         $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }
