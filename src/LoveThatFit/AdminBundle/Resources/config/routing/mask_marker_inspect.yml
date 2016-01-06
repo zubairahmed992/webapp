@@ -40,13 +40,5 @@ admin_user_mask_compare_index:
 admin_user_mask_compare_filter:
     pattern:  /admin/mask_compare/filter
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskCompareFilter}
-#----------------------------------------------------------------------------- 
 
-admin_user_mask_improve_index:
-    pattern:  /admin/mask_improve/index
-    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskImproveIndex}
-
-admin_user_mask_improve_edit:
-    pattern:   /admin/mask_improve/edit/{user_id}
-    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskImproveEdit}
     
