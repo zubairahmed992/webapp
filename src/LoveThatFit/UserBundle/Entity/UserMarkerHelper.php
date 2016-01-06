@@ -76,6 +76,12 @@ class UserMarkerHelper {
         $this->em->persist($usermarker);
         $this->em->flush();       
     }
+    #----------------------------------------------------------------------------
+    public function save($usermarker){
+        $usermarker->setUpdatedAt(new \DateTime('now'));            
+        $this->em->persist($usermarker);
+        $this->em->flush();       
+    }
        #----------------------------------------------------------------------------
     public function setArray($specs,$user_marker){
         if(array_key_exists('svg_path', $specs) && $specs['svg_path']){$user_marker->setSvgPaths($specs['svg_path']);}
@@ -121,6 +127,15 @@ class UserMarkerHelper {
            $this->saveUserMarker($user,$maskMarker);
             return 'added';
         }
+   }
+      #----------------------------------------------------------------------------
+   public function removeDefaultAccountStatus($user){
+      $maskMarker=$this->findMarkerByUser($user);
+      if(count($maskMarker)>0){
+            $maskMarker->setDefaultUser(false);
+            $this->save($maskMarker);
+        }
+        return $maskMarker;
    }
    
       #----------------------------------------------------------------------------
