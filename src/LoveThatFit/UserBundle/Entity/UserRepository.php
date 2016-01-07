@@ -355,5 +355,25 @@ class UserRepository extends EntityRepository {
                                 ->setParameters(array('options'=> $options));
                                     return $record->getResult();
     }
+
+  //autocomplete method
+  #--------------------------------------------------------------
+
+  public function getSearchUserData($term) {
+	//echo $term;die;
+	$query = $this->getEntityManager()
+	  ->createQuery("
+     SELECT us.id,us.email FROM LoveThatFitUserBundle:User us
+     WHERE us.email LIKE :term"
+	  )->setParameters(array('term' => $term.'%'));
+
+	try {
+	  return $query->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
+
+  //end of autocomplete method
 }
 

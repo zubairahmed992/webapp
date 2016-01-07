@@ -86,3 +86,9 @@ admin_push_notification:
 admin_mask_marker_inspect_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/mask_marker_inspect.yml"
     prefix:   /
+
+#-------------- Auto Complete  ------------------------
+
+admin_mask_marker_inspect_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/auto_complete.yml"
+    prefix:   /

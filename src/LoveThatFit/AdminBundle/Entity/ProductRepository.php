@@ -1218,5 +1218,24 @@ class ProductRepository extends EntityRepository {
    }catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }                
- }   
+ }
+
+  //autocomplete method
+  #--------------------------------------------------------------
+
+  public function getSearchProductData($term) {
+	$query = $this->getEntityManager()
+	  ->createQuery("
+     SELECT p.id,p.name FROM LoveThatFitAdminBundle:Product p
+     WHERE p.name LIKE :term"
+	  )->setParameters(array('term' => $term.'%'));
+
+	try {
+	  return $query->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
+
+  //end of autocomplete method
 }

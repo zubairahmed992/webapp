@@ -104,7 +104,8 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.bootstrap.wizard.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/custom.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.form.js') }}"></script>
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     
        <script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -114,6 +115,66 @@
 			var $percent = ($current/$total) * 100;
 			jQuery('#rootwizard').find('.bar').css({width:$percent+'%'});
 		}});
+        //for user
+        $("#keyword").keyup(function() {
+            $("#keyword").autocomplete({
+                minLength: 3,
+                //source: "autocomplete_user_search_result",
+                source:function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    url:"autocomplete_user_search_result",
+                    data: request,
+                    success: response,
+                    dataType: 'json'
+                });
+            },
+                focus: function( event, ui ) {
+                    $( "#keyword" ).val( ui.item.email);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#keyword" ).val( ui.item.email);
+                    $( "#user_id" ).val(ui.item.id);
+                    return false;
+                }
+            })
+                .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.email + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //for products
+        $("#product_keyword").keyup(function() {
+            $("#product_keyword").autocomplete({
+                minLength: 3,
+                source:function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url:"autocomplete_product_search_result",
+                        data: request,
+                        success: response,
+                        dataType: 'json'
+                    });
+                },
+                focus: function( event, ui ) {
+                    $( "#product_keyword" ).val( ui.item.name);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#product_keyword").val( ui.item.name);
+                    $("#product_id").val( ui.item.id );
+                    return false;
+                }
+            })
+                    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.name + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+
 	});	
 	</script>
 
