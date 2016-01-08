@@ -89,6 +89,6 @@ admin_mask_marker_inspect_routes:
 
 #-------------- Auto Complete  ------------------------
 
-admin_mask_marker_inspect_routes:
+admin_auto_complete:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/auto_complete.yml"
     prefix:   /
