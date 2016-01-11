@@ -45,6 +45,14 @@ services:
             class: LoveThatFit\UserBundle\Entity\UserMarker
             container: "@service_container"          
   
+  user.helper.userimagespec:
+        class: LoveThatFit\UserBundle\Entity\UserImageSpecHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\UserBundle\Entity\UserImageSpec
+            container: "@service_container"
+            
   twitter_helper:
           class:  LoveThatFit\UserBundle\TwitterHelper
        
