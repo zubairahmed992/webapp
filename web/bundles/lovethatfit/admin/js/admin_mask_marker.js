@@ -860,8 +860,9 @@ var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 var scr1_but_reset_url = curr_path_prefix + "bundles/lovethatfit/site/images/reset_btn.png";
 var scr1_but_reset = new Raster(scr1_but_reset_url);
 
-scr1_but_reset.position = new Point(38, scr_height - 18);
+//scr1_but_reset.position = new Point(38, scr_height - 18);
 
+scr1_but_reset.position = new Point(38, scr_height - 700);
 
 var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_next_btn.png";
 var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
@@ -2125,9 +2126,6 @@ image_actions:$('#image_actions').attr('value')};
 
 
 function post_img(){
-
-
-    
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;    
     var img_update_url = document.getElementById('hdn_image_update_url').value;        
@@ -2140,9 +2138,9 @@ function post_img(){
                       env : 'admin'
               }, function(canv_data) {
               var obj_url = jQuery.parseJSON( canv_data );
-               
-                      if(obj_url.status == "check"){                
-                         alert('mask updated');
+                      if(obj_url.status == "check"){
+                         alert("All Done! - Reloading...");
+                         window.location.reload();
                       }
               });  
   		
