@@ -406,9 +406,8 @@ class WebServiceHelper {
     #----------------------------------------------------------------------------------------
 
     public function uploadUserImage($user, $ra, $files) {
-        if ($user) {
-            #----get file name & create dir
-            
+        if ($user) {            
+            #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
@@ -422,6 +421,21 @@ class WebServiceHelper {
                 if (move_uploaded_file($files["image"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
                     $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);
                     copy($user->getOriginalImageAbsolutePath(), $user->getAbsolutePath());
+                    #--------- create user image specs
+                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);            
+            
+                   #~~~~~#~~~~~#~~~~~ measurement from JSON being copied
+                                  
+                   if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+                       $measurement = $user->getMeasurement();
+                       $decoded=$measurement->getJSONMeasurement('actual_user');
+                       if(is_array($decoded)){
+                           $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+                           $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+                       }
+                       $this->container->get('user.marker.helper')->removeDefaultAccountStatus($user);
+                   }
+                    #~~~~~#~~~~~#~~~~~#~~~~~#~~~~~#~~~~~
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }

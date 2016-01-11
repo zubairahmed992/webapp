@@ -206,13 +206,15 @@ class DeviceController extends Controller {
         $usermaker=$request->request->all();         
         if (array_key_exists('auth_token', $usermaker)){
             $user = $this->get('webservice.helper.user')->findByAuthToken($usermaker['auth_token']);
-            $measurement = $user->getMeasurement();               
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
             if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+                $measurement = $user->getMeasurement(); 
                 $decoded=$measurement->getJSONMeasurement('actual_user');
                  if(is_array($decoded)){
                     $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
                 }
             }
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);        
             return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
         }else{
@@ -229,7 +231,11 @@ class DeviceController extends Controller {
             throw $this->createNotFoundException('Unable to find Member.');
         }
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
-        $entity->resize_image(); # image is being resized to 320x568
+        #if not from mask marker adjustment interface then resize
+        if (!array_key_exists('env', $_POST) || (array_key_exists('env', $_POST) && !$_POST['env']=='admin')){  
+            $entity->resize_image(); # image is being resized to 320x568
+        }
+            #$entity->resize_image(); # image is being resized to 320x568
         $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }

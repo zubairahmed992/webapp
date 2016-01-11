@@ -102,6 +102,11 @@ class User implements UserInterface, \Serializable {
      * */
     private $user_marker; 
     
+     /**
+     * @ORM\OneToOne(targetEntity="UserImageSpec", mappedBy="user")
+     * */
+    private $user_image_spec; 
+    
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -1609,6 +1614,30 @@ class User implements UserInterface, \Serializable {
     {
         return $this->user_marker;
     }
+    
+    
+    /**
+     * Set user_marker
+     *
+     * @param \LoveThatFit\UserBundle\Entity\User $userImageSpec
+     * @return User
+     */
+    public function setUserImageSpec(\LoveThatFit\UserBundle\Entity\User $user_image_spec = null)
+    {
+        $this->user_image_spec = $user_image_spec;    
+        return $this;
+    }
+
+    /**
+     * Get user_image_spec
+     *
+     * @return \LoveThatFit\UserBundle\Entity\User 
+     */
+    public function getUserImageSpec()
+    {
+        return $this->user_image_spec;
+    }
+    
 
     /**
      * Set timeSpent

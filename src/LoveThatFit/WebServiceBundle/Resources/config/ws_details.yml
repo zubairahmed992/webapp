@@ -149,6 +149,8 @@ ws_user_image_uploader:
      device_type: iphone5
      height_per_inch: 6     
      upload_type: fitting_room
+     camera_angle: 10
+     camera_x: 10
    request_type: post
    file_upload: true
    description: This is image upload service for user. Images can be of types fitting_room, avatar or social_media which will be determined by the parameters (image_type) passed. Parameters device_type & height_per_inch are for fitting_room image only.

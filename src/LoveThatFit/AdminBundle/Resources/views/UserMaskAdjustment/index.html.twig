@@ -4,18 +4,22 @@
 {% endblock %}
 
 {% block body %}
-<form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }} class="form-inline">
-     <div class="form-group">
-        <label for="form_user">User</label>
-        {{ form_widget(form.User) }}{{ form_errors(form.User) }}    
-        <input type='button' class="btn btn-default" name='btn_hit' id='btn_hit' value="show mask">          
-    </div>
-    
-        
-</form> 
+<div class="mw_col_1">
+    <form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }} class="form-inline">
+        <div class="form-group">
+            <label class="mw_txt_label" for="form_user">Edit Mask:</label>
+            {{ form_widget(form.User) }}{{ form_errors(form.User) }}    
+            <div class="txt_rgt">
+                <input type='button' class="btn btn-default" name='btn_hit' id='btn_hit' value="Show Mask">          
+            </div>
+        </div>
 
-<div id ='summary_ajax'></div>
 
+    </form> 
+</div>
+<div class="mw_col_2">
+    <div id ='summary_ajax'></div>
+</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
        
@@ -34,7 +38,7 @@ $( "#btn_hit" ).click(function() {
 function hit_service() {
     
     var user_id = $("#user_User").val();       
-    var user_url = "../mask_improve/edit/" + user_id;         
+    var user_url = "../user_mask_adjustment/canvas/" + user_id;         
     
     
     $.ajax({

@@ -108,3 +108,34 @@ body {
 }
 
 
+/*////Mask Adjustment from Web////*/
+
+.mw_col_1 {
+    float: left;
+    width: 200px;
+    margin-right: 4%;
+    padding: 0 2% 2%;
+}
+.mw_col_2 {
+    float: left;
+    width: 64%;
+    display: block;
+    min-height: 500px;
+    padding-bottom: 40px;
+    position: relative;
+}
+.mw_col_2 form {
+    float:left;
+}
+.mw_col_2 canvas {
+}
+.txt_rgt {
+    padding-top: 10px;
+    padding-left: 121px;
+}
+.mw_txt_label {
+    font-weight: bold;
+}
+#page_wrap {
+    position: absolute !important;
+}

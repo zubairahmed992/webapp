@@ -10,6 +10,11 @@ admin_dashboard:
     pattern:  /admin/dashboard
     defaults: { _controller: LoveThatFitAdminBundle:Default:index}
 
+#-------------- User Mask adjustment ------------------------
+    
+admin_user_mask_adjustment_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/user_mask_adjustment.yml"
+    prefix:   /
 #-------------- PRODUCT ------------------------
     
 admin_product_routes:
@@ -80,4 +85,10 @@ admin_push_notification:
     
 admin_mask_marker_inspect_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/mask_marker_inspect.yml"
+    prefix:   /
+
+#-------------- Auto Complete  ------------------------
+
+admin_auto_complete:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/auto_complete.yml"
     prefix:   /

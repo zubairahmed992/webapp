@@ -1,0 +1,9 @@
+
+admin_user_mask_adjustment_index:
+    pattern:  /admin/user_mask_adjustment/index
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:index}
+
+admin_user_mask_adjustment_canvas:
+    pattern:   /admin/user_mask_adjustment/canvas/{user_id}
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:showCanvas}
+    

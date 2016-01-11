@@ -1,0 +1,19 @@
+admin_auto_complete_user:
+    pattern:  /admin/autocomplete_user/index
+    defaults: { _controller: LoveThatFitAdminBundle:Autocomplete:AutoCompleteUserIndex}
+
+admin_auto_user_search_result:
+    pattern:  /admin/autocomplete_user/autocomplete_user_search_result
+    defaults: { _controller: LoveThatFitAdminBundle:Autocomplete:AutoCompleteUserSearchResult}
+    requirements:
+        _method:  POST
+
+admin_auto_complete_product:
+    pattern:  /admin/autocomplete_product/index
+    defaults: { _controller: LoveThatFitAdminBundle:Autocomplete:AutoCompleteProductIndex}
+
+admin_auto_product_search_result:
+    pattern:  /admin/autocomplete_product/autocomplete_product_search_result
+    defaults: { _controller: LoveThatFitAdminBundle:Autocomplete:AutoCompleteProductSearchResult}
+    requirements:
+        _method:  POST

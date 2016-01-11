@@ -770,5 +770,12 @@ class UserHelper {
         $this->container->get('user.helper.user')->saveUser($user);
          return true;      
   }
+
+  //Autocomplete method
+  #------------------------------------------------------
+  public function getSearchData($term){
+	return $this->repo->getSearchUserData($term);
+  }
+  //end of autocomplete method
   
 }

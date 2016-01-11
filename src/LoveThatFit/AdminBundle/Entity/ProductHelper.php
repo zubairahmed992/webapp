@@ -1268,4 +1268,10 @@ public function productDetailSizeArray($product_id){
     }
     return $p;
 }
+  //Autocomplete method
+  #------------------------------------------------------
+  public function getSearchData($term){
+	return $this->repo->getSearchProductData($term);
+  }
+  //end of autocomplete method
 }
