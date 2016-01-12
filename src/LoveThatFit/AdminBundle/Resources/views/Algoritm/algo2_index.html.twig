@@ -4,34 +4,50 @@
 {% endblock %}
 {% block body %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    {#<style>#}
+        {##algorithm_User{display:none;}#}
+        {##algorithm_Product{display:none;}#}
+    {#</style>#}
 <script>
 $(document).ready(function(){
     
  
   $('a.product_edit_link').click(function (event){ 
      event.preventDefault(); 
-     if($("select[id='algorithm_Product']").val()){
-        var url= '../productdetail/'+$("select[id='algorithm_Product']").val()+'';
+//    if($("select[id='algorithm_Product']").val()){
+//        var url= '../productdetail/'+$("select[id='algorithm_Product']").val()+'';
+//        window.open(url);
+//    }
+    if($("#product_id").val()){
+        var url= '../productdetail/'+$("#product_id").val()+'';
         window.open(url);
     }
      return false; //for good measure
 });
 //-----------------------------------------------------------   
   $('a.user_edit_link').click(function (event){ 
-     event.preventDefault(); 
-     if($("select[id='algorithm_User']").val()){
-        var url = '../user/'+ $("select[id='algorithm_User']").val() +'/edit';
-        window.open(url);
-    }
+     event.preventDefault();
+     //if($("select[id='algorithm_User']").val()){
+        //var url = '../user/'+ $("select[id='algorithm_User']").val() +'/edit';
+       // var url = '../user/'+ $("#user_id").val() +'/edit';
+       // window.open(url);
+    //}
+      if($("#user_id").val()){
+          var url = '../user/'+ $("#user_id").val() +'/edit';
+          window.open(url);
+      }
      return false; //for good measure
 });
 //-----------------------------------------------------------
  $('a.compare').click(function (event){ 
      event.preventDefault(); 
      
-    var user_id = $("#algorithm_User").val();
-    var product_id = $("#algorithm_Product").val();                    
-    var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id;         
+     //var user_id = $("#algorithm_User").val();
+     //var product_id = $("#algorithm_Product").val();
+
+     var user_id = $("#user_id").val();
+     var product_id = $("#product_id").val();
+     var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id;
      $.ajax({
         url: compare_url
         ,success: function(response) {
@@ -44,8 +60,10 @@ $(document).ready(function(){
 $('a.json').click(function (event){ 
      event.preventDefault(); 
      
-    var user_id = $("#algorithm_User").val();
-    var product_id = $("#algorithm_Product").val();                    
+//    var user_id = $("#algorithm_User").val();
+//    var product_id = $("#algorithm_Product").val();
+    var user_id = $("#user_id").val();
+    var product_id = $("#product_id").val();
     var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id + "/1";         
      $.ajax({
         url: compare_url
@@ -60,8 +78,10 @@ $('a.json').click(function (event){
 $('a.strip_json').click(function (event){ 
      event.preventDefault(); 
      
-    var user_id = $("#algorithm_User").val();
-    var product_id = $("#algorithm_Product").val();                    
+//    var user_id = $("#algorithm_User").val();
+//    var product_id = $("#algorithm_Product").val();
+    var user_id = $("#user_id").val();
+    var product_id = $("#product_id").val();
     var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id + "/2";         
      $.ajax({
         url: compare_url
@@ -74,18 +94,18 @@ $('a.strip_json').click(function (event){
 });
 //------------------------------------------------------------------
 
-$( "select[id='algorithm_User']" ).change(function() {
-    var user_id = $("select[id='algorithm_User']").val();
-    var url= '../user/'+ user_id +'/edit';
-    $('#user_edit_link').attr("href", url);    
-});
-$( "select[id='algorithm_Product']" ).change(function() {
-    var product_id= $("select[id='algorithm_Product']").val();
-    var url= '../productdetail/'+product_id+'';
-    $('#product_edit_link').attr("href", url);    
-});
+//$( "select[id='algorithm_User']" ).change(function() {
+//    var user_id = $("select[id='algorithm_User']").val();
+//    var url= '../user/'+ user_id +'/edit';
+//    $('#user_edit_link').attr("href", url);
+//});
+//$( "select[id='algorithm_Product']" ).change(function() {
+//    var product_id= $("select[id='algorithm_Product']").val();
+//    var url= '../productdetail/'+product_id+'';
+//    $('#product_edit_link').attr("href", url);
+//});
 
-var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
+//var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
 
 
 });        
@@ -102,17 +122,19 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
         
         <a id="user_edit_link" class="user_edit_link" href="#">User</a>
         <form id="userForm" method="post" {{ form_enctype(userForm) }}>
-        {{ form_errors(userForm) }}                                  
-        {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
-        {{ form_rest(userForm) }}
+        {#{{ form_errors(userForm) }}                                  #}
+        {#{{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}#}
+            <input type="text"  placeholder="Search Users" id="keyword">
+        {#{{ form_rest(userForm) }}#}
         </form>                 
     </div>
     <div style="float: left">
         <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
         <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
-        {{ form_errors(productForm) }}                                            
-        {{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            
-        {{ form_rest(productForm) }}
+        {#{{ form_errors(productForm) }}                                            #}
+        {#{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            #}
+            <input type="text" placeholder="Search Product" id="product_keyword">
+        {#{{ form_rest(productForm) }}#}
         </form>      
     </div>
     <a id='compare' class='compare' href="#">Compare</a> | 
@@ -121,6 +143,17 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
     <br>
     <div id="summary_ajax" style="float: none">
     </div>
+    {#<div class="ui-widget" style="clear:both">#}
+        {#<label for="tags">Select Users: </label>#}
+        {#<input type="text"  placeholder="Search" id="keyword">#}
+        <input type="hidden"  id="user_id">
+    {#</div>#}
+
+    {#<div class="ui-widget" style="clear:both">#}
+        {#<label for="tags">Select Products: </label>#}
+        {#<input type="text" placeholder="Search Product" id="product_keyword">#}
+        <input type="hidden" id="product_id">
+    {#</div>#}
 </div> 
 
 {% endblock %}
