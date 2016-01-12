@@ -204,6 +204,7 @@ class DeviceController extends Controller {
      public function saveUserMarkerAction(Request $request)
     {
         $usermaker=$request->request->all();         
+        return new Response($usermaker['image_actions']);
         if (array_key_exists('auth_token', $usermaker)){
             $user = $this->get('webservice.helper.user')->findByAuthToken($usermaker['auth_token']);
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
@@ -215,7 +216,12 @@ class DeviceController extends Controller {
                 }
             }
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);        
+            $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);
+            #update actions in the user_image_specs/adjustment
+            if(array_key_exists('image_actions', $usermaker) && $usermaker['image_actions']){
+                $this->container->get('user.helper.userimagespec')->updateWithParam($usermaker['image_actions'], $user);
+             }
+            
             return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
         }else{
             return new Response('Authentication token not provided.');
