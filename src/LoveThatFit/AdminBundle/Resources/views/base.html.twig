@@ -136,6 +136,7 @@
                 select: function( event, ui ) {
                     $( "#keyword" ).val( ui.item.email);
                     $( "#user_id" ).val(ui.item.id);
+                    hit_service();
                     var url= '../user/'+ ui.item.id +'/edit';
                     $('#user_edit_link').attr("href", url);
                     return false;
@@ -178,7 +179,7 @@
                         .appendTo( ul );
             };
         });
-
+        function hit_service(){}
 	});	
 	</script>
 
