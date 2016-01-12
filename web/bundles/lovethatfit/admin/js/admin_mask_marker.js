@@ -786,7 +786,6 @@ var but_back_top = new Raster(but_back_top_url);
 
 but_back_top.position = new Point(25, 22);
 
-
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
@@ -870,13 +869,15 @@ var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
 scr1_but_save_icon.position = new Point(but_x_adj - 13, scr_height - 18);
 
 
-but_back_top.position = new Point(25, 24);
-scr1_but_hiw_icon.position = new Point(but_x_adj, 24);
+//but_back_top.position = new Point(25, 24);
+but_back_top.position = new Point(25, -700);
+//scr1_but_hiw_icon.position = new Point(but_x_adj, 24);
+scr1_but_hiw_icon.position = new Point(but_x_adj, -700);
 hand_cursor_icon.position = new Point(but_x_adj, 24);
 edit_shape_icon.position = new Point(but_x_adj, 24);
 
-scr1_but_camera_icon.position = new Point(but_x_adj, 68);
-
+//scr1_but_camera_icon.position = new Point(but_x_adj, 68);
+scr1_but_camera_icon.position = new Point(but_x_adj, -700);
 
 but_move_up.position = new Point(26, 24 + an_inc);
 but_move_down.position = new Point(26, 68 + an_inc);
@@ -1459,7 +1460,7 @@ function onMouseDown(event) {
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
                             
                             if (confirm('Are you sure you want to start over?')) {
-                                window.location.href = "scr1_but_camera_options";
+                                //window.location.href = "scr1_but_camera_options";
                             } else {
                                 // Do nothing!
                             }
