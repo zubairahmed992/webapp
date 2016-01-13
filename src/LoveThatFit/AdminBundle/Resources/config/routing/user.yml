@@ -6,6 +6,10 @@ admin_user_detail_show:
     pattern:  /admin/user/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:User:show }
 
+admin_user_set_default:
+    pattern:  /admin/user/{id}/set_default/{demo}
+    defaults: { _controller: LoveThatFitAdminBundle:User:setDefaultUser, demo:false}    
+
 admin_user_json:
     pattern:  /admin/user/{id}/json
     defaults: { _controller: LoveThatFitAdminBundle:User:json }

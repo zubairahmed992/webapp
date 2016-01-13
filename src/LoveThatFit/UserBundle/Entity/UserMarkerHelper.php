@@ -144,6 +144,19 @@ class UserMarkerHelper {
         return $this->repo->findMarkerByUser($user);
     }
 
+       #----------------------------------------------------------------------------
+       public function setDefaultUserAs($user, $default_user = false) {           
+        $m = $this->repo->findMarkerByUser($user);
+        if ($m) {
+            $m->setDefaultUser($default_user);
+            $this->save($m);
+            return $default_user;
+        } else {
+            return false;
+        }
+    }
+
+    
    #----------------------------------------------------------------------------
     
     public function findByUser($user)

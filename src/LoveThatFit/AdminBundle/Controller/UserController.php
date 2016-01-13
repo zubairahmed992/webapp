@@ -54,7 +54,24 @@ private function getMaskedMarkerSpecs() {
                     'brandtried'=>count($this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity)),
                 ));
     }
+ //-------------------------Show user detail-------------------------------------------------------
+    public function setDefaultUserAction($id, $demo = false) {
+        $user = $this->get('user.helper.user')->find($id);
+        if ($user) {
+            $d = $this->get('user.marker.helper')->setDefaultUserAs($user, $demo === 'true' ? true : false);
+        }
+        $user_limit = $this->get('user.helper.user')->getRecordsCountWithCurrentUserLimit($id);
+        $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($user_limit[0]['id']));
+        $page_number = $page_number == 0 ? 1 : $page_number;
 
+        return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
+                    'user' => $user,
+                    'page_number' => $page_number,
+                    'product' => $this->get('site.helper.usertryitemhistory')->countUserTiredProducts($user),
+                    'brand' => $this->get('site.helper.usertryitemhistory')->findUserTiredBrands($user),
+                    'brandtried' => count($this->get('site.helper.usertryitemhistory')->findUserTiredBrands($user)),
+                ));
+    }
     //--------------------------User Serach------------------------------------------------------------
     public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
