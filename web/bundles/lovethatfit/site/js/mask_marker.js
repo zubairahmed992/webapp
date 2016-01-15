@@ -2039,10 +2039,10 @@ function onMouseDrag(event) {
 
 function upload(){
 
-if(orignal_img_path){
-    $('#image_actions').attr('value',"");
+if(old_account_img){
+    $('#image_actions').attr('value',"");    
 }else{
-    $('#image_actions').attr('value',JSON.stringify(image_actions_count));
+    $('#image_actions').attr('value',JSON.stringify(image_actions_count));    
 }
 
 var $url=$('#marker_update_url').attr('value');

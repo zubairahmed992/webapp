@@ -3,7 +3,7 @@
 {% block mask_marker_view %}
 <!--<script type="text/paperscript" src="{#{ asset('bundles/lovethatfit/site/js/mask_marker_6.js') }#}" canvas="canv_mask"></script>-->
 
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker.js?eaet6dddr55edsf') }}" canvas="canv_mask"></script>
+<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker.js?eaet6dddfsdr55edsf') }}" canvas="canv_mask"></script>
 
 <script>
     function me_triggered(){
@@ -15,12 +15,7 @@
 <div id="page_wrap">
     <div id="loading_bar"><img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" /></div>
 </div>
-<div class="canvas" style="display: none;">
-    <canvas  id="canvas-1" width="364" height="505" style="display: inline-block; -moz-user-select: none; left: -1px;"></canvas>
-    <button id="me_button" onclick="to_image()">Draw to Image</button>
-    <image id="updated_img" width="320" height="568" />
-    <textarea id="text_area" style="boder: 4px solid #ffc00;">afadfasfs</textarea>
-</div>
+
 <input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
 <input id="dv_bottom_bar" type="hidden" value="{{ bottom_bar }}" />
@@ -108,40 +103,6 @@
 
 -->
 
-
-<script type="text/paperscript" canvas="canvas-1">
-var raster = new Raster('fff.jpg');	
-	raster.position = view.center;
-	raster.visible = true;	
-
-/////=========================Extras================================================================================== 
-var myPath = new Path();
-	myPath.strokeColor = 'white';
-	myPath.add(new Point(40, 90));
-	myPath.add(new Point(90, 40));
-	myPath.add(new Point(140, 90));
-
-var myCircle = new Path.Circle(new Point(100, 70), 50);
-	myCircle.strokeColor = 'black';
-	myCircle.selected = true;
-    myCircle.removeSegment(0);
-
-var path = new CompoundPath({
-    children: [
-        new Path.Circle({
-            center: new Point(50, 50),
-            radius: 30
-        }),
-        new Path.Circle({
-            center: new Point(50, 50),
-            radius: 10
-        })
-    ],
-    fillColor: 'black',
-    selected: true
-});
-/////=========================Extras=================================================================================== 	
-</script>
 
 
 
