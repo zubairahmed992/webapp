@@ -14,6 +14,10 @@
 
 <div>      
     <h1 style="float:left;">User's Detail</h1>
+                {%if(user.userMarker and user.userMarker.defaultUser)%}
+                    *demo account <a href="{{ path('admin_user_set_default',{'id':user.id}) }}">remove demo </a>
+                {%endif%}
+
      <div class="btn_wrapper">  
        <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete User</a>
          <a href="{{ path('admin_users',{'page_number':page_number}) }}" class="btn">back</a>    

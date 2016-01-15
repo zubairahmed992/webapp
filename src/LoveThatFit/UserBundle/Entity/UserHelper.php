@@ -744,6 +744,7 @@ class UserHelper {
         $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
         #---------------------------
         $user->copyDefaultImage($udt);
+        copy($user->getAbsolutePath(),$user->getOriginalImageAbsolutePath());#making a copy of original
     return $measurement ;
         
     }

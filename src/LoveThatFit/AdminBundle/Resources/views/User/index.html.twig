@@ -58,7 +58,7 @@
             <div class="span1">{{us.id}}</div>
             <div class="span3">{{us.firstName}} {{us.lastName}}</div>
             <div class="span1">{{us.gender}}</div>            
-            <div class="span1">{{us.email}}</div>
+            <div class="span1">{{us.email}}{{us.userMarker? us.userMarker.defaultUser?'*':'':''}}</div>
             <div class="span1">{{us.createdAt|date('d-m-Y')}}</div>
                 
             <div class="span1" style="width:17.87%!important;"><a href="{{ path('admin_user_detail_show', {'id': us.id}) }}" title="Show {{us.firstName}}">

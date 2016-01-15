@@ -7,7 +7,9 @@
 <form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }} class="form-inline">
      <div class="form-group">
         <label for="form_user">User</label>
-        {{ form_widget(form.User) }}{{ form_errors(form.User) }}    
+        {#{{ form_widget(form.User) }}{{ form_errors(form.User) }}    #}
+         <input type="text"  placeholder="Search Users" id="keyword">
+         <input type="hidden" id="user_id">
         <input type='button' class="btn btn-default" name='btn_hit' id='btn_hit' value="hit">          
         &nbsp;&nbsp;    
         <input type='checkbox' name='chk_json' id='chk_json' value="json"> JSON
@@ -25,9 +27,9 @@
        
 $(document).ready(function(){
     
-$( "select[id='user_User']" ).change(function() {
-    hit_service();
-    });
+//$( "select[id='user_User']" ).change(function() {
+//    hit_service();
+//    });
 
 $( "#btn_hit" ).click(function() {
   hit_service();
@@ -39,7 +41,7 @@ function hit_service() {
     var chk_json = document.getElementById('chk_json');
     var chk_path_axis = document.getElementById('chk_path_axis');
     var mode = chk_json.checked?chk_json.value:null;
-    var user_id = $("#user_User").val();   
+    var user_id = $("#user_id").val();
     var user_url = "../mask_marker_inspect/user/" + user_id+"/"+mode;         
 
     if(chk_json.checked){

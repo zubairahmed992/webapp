@@ -111,6 +111,7 @@ class UserMarkerHelper {
        $specs['default_marker_json']=$user_marker->getDefaultMarkerJson();
        $specs['default_marker_svg']=$user_marker->getDefaultMarkerSvg();
        $specs['default_user']=$user_marker->getDefaultUser();       
+       $specs['image_actions']=$user_marker->getImageActions();       
         return ($specs);
    }
       #----------------------------------------------------------------------------
@@ -144,6 +145,19 @@ class UserMarkerHelper {
         return $this->repo->findMarkerByUser($user);
     }
 
+       #----------------------------------------------------------------------------
+       public function setDefaultUserAs($user, $default_user = false) {           
+        $m = $this->repo->findMarkerByUser($user);
+        if ($m) {
+            $m->setDefaultUser($default_user);
+            $this->save($m);
+            return $default_user;
+        } else {
+            return false;
+        }
+    }
+
+    
    #----------------------------------------------------------------------------
     
     public function findByUser($user)
