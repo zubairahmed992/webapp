@@ -85,6 +85,7 @@ class UserImageSpecHelper {
        
     #----------------------------------------------------------------------------
     public function setArray($specs_array,$specs_obj){
+        if(is_array($specs_array)){
         if(array_key_exists('camera_angle', $specs_array) && $specs_array['camera_angle']){$specs_obj->setCameraAngle($specs_array['camera_angle']);}
         if(array_key_exists('camera_x', $specs_array) && $specs_array['camera_x']){$specs_obj->setCameraX($specs_array['camera_x']);}
         if(array_key_exists('displacement_x', $specs_array) && $specs_array['displacement_x']){$specs_obj->setDisplacementX($specs_array['displacement_x']);}
@@ -94,6 +95,7 @@ class UserImageSpecHelper {
         if(array_key_exists('move_up_down', $specs_array) && $specs_array['move_up_down']){$specs_obj->setDisplacementY($specs_array['move_up_down']);}
         if(array_key_exists('move_left_right', $specs_array) && $specs_array['move_left_right']){$specs_obj->setDisplacementX($specs_array['move_left_right']);}
         if(array_key_exists('img_rotate', $specs_array) && $specs_array['img_rotate']){$specs_obj->setRotation($specs_array['img_rotate']);}
+        }
         return $specs_obj;
         }
        #----------------------------------------------------------------------------

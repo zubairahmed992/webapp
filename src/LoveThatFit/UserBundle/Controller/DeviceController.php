@@ -203,8 +203,7 @@ class DeviceController extends Controller {
 #----------------------------------------------------------------------------    
      public function saveUserMarkerAction(Request $request)
     {
-        $usermaker=$request->request->all();         
-        return new Response($usermaker['image_actions']);
+        $usermaker=$request->request->all();                 
         if (array_key_exists('auth_token', $usermaker)){
             $user = $this->get('webservice.helper.user')->findByAuthToken($usermaker['auth_token']);
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
