@@ -134,13 +134,19 @@ if(dv_type == "iphone6"){
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(old_account_img){
+    
     orignal_img_path = croped_img_path;
+    console.log(croped_img_path);
 }else{
+    
     orignal_img_path = croped_img_path;
 
     //orignal_img_path = orignal_img_path.substr(orignal_img_path.lastIndexOf('/') + 1);
-
-    orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?3344";
+var d = new Date();
+    var n = d.getTime();
+    console.log(croped_img_path);
+    
+    orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?time=" + n;
 }
 //alert(orignal_img_path);
 
