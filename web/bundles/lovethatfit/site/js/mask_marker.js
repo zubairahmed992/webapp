@@ -136,7 +136,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 if(old_account_img){
     
     orignal_img_path = croped_img_path;
-    console.log(croped_img_path);
+    alert("Old:" + croped_img_path);
 }else{
     
     orignal_img_path = croped_img_path;
@@ -146,7 +146,9 @@ var d = new Date();
     var n = d.getTime();
     console.log(croped_img_path);
     
+    
     orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?time=" + n;
+    alert("New:" + orignal_img_path);
 }
 //alert(orignal_img_path);
 
