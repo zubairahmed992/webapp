@@ -134,8 +134,10 @@
                     return false;
                 },
                 select: function( event, ui ) {
-                    $( "#keyword" ).val( ui.item.email);
-                    $( "#user_id" ).val(ui.item.id);
+                    $("#keyword").val(ui.item.email);
+                    $("#user_id").val(ui.item.id);
+                    $('#user_User option[value='+ui.item.id+']').attr('selected','selected');
+                    $('#algorithm_User option[value='+ui.item.id+']').attr('selected','selected');
                     hit_service();
                     var url= '../user/'+ ui.item.id +'/edit';
                     $('#user_edit_link').attr("href", url);
@@ -168,6 +170,7 @@
                 select: function( event, ui ) {
                     $("#product_keyword").val( ui.item.name);
                     $("#product_id").val( ui.item.id );
+                    $('#algorithm_Product option[value='+ui.item.id+']').attr('selected','selected');
                     var url= '../productdetail/'+ui.item.id+'';
                     $('#product_edit_link').attr("href", url);
                     return false;
