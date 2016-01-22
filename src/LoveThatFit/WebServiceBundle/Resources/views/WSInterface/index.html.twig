@@ -24,7 +24,15 @@
             color:  #257691;
         }
     </style>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $( "select[id='sel_user']" ).change(function() {
+            $("#user_id").val(this.value);
+            $('#keyword_user').val($('option:selected', $(this)).text());
+        });
+    });
+</script>
 
 
     <div class="p_listing">     
@@ -39,6 +47,11 @@
                     <option value="{{v['pattern']}}">{{ k }}</option>
                 {% endfor %}
                 </select>
+            </div>
+            <div class="span4">
+                <b>Member: </b>&nbsp;
+                <input type="text"  placeholder="Search Users" id="keyword_user">
+                <input type="hidden" id="user_id"> OR
             </div>
             <div class="span4">
                 <b>Member: </b>&nbsp;
