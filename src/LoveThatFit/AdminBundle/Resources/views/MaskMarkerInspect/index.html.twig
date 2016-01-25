@@ -7,7 +7,7 @@
 <form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }} class="form-inline">
      <div class="form-group">
         <label for="form_user">User</label>
-        {#{{ form_widget(form.User) }}{{ form_errors(form.User) }}    #}
+        {{ form_widget(form.User) }}{{ form_errors(form.User) }} OR
          <input type="text"  placeholder="Search Users" id="keyword">
          <input type="hidden" id="user_id">
         <input type='button' class="btn btn-default" name='btn_hit' id='btn_hit' value="hit">          
@@ -27,9 +27,12 @@
        
 $(document).ready(function(){
     
-//$( "select[id='user_User']" ).change(function() {
-//    hit_service();
-//    });
+$( "select[id='user_User']" ).change(function() {
+    $("#user_id").val(this.value);
+    $('#keyword').val($('option:selected', $(this)).text());
+    //alert($('#keyword').val($('option:selected', $(this)).text()));
+    hit_service();
+    });
 
 $( "#btn_hit" ).click(function() {
   hit_service();

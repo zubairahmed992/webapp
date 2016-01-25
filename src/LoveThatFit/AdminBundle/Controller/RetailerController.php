@@ -13,22 +13,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RetailerController extends Controller {
 
-  //  protected $container;
-
-    /**
-     * {@inheritDoc}
-     */
-    /*public function setContainer(ContainerInterface $container = null) {
-        $this->container = $container;
-    }*/
-
-    //------------------------------------------------------------------------------------------
     public function indexAction($page_number, $sort = 'id') {
         $brands_with_pagination = $this->get('admin.helper.retailer')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Retailer:index.html.twig', $brands_with_pagination);
     }
 
-//------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public function showAction($id) {
 
@@ -50,7 +40,8 @@ class RetailerController extends Controller {
                 ));
     }
 
-//------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     public function newAction() {
 
         $entity = $this->get('admin.helper.retailer')->createNew();
@@ -60,7 +51,8 @@ class RetailerController extends Controller {
                     'form' => $form->createView()));
     }
 
-    //------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     public function createAction(Request $request) {
         $entity = $this->get('admin.helper.retailer')->createNew();
         $form = $this->createForm(new RetailerType('add'), $entity);
@@ -86,7 +78,8 @@ class RetailerController extends Controller {
                 ));
     }
 
-//------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     public function editAction($id) {
 
         $specs = $this->get('admin.helper.retailer')->findWithSpecs($id);
@@ -108,7 +101,7 @@ class RetailerController extends Controller {
         );
     }
 
-    //------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public function updateAction(Request $request, $id) {
 
@@ -146,8 +139,7 @@ class RetailerController extends Controller {
                 ));
     }
 
-
-//------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public function deleteAction($id) {
         try {
@@ -160,13 +152,8 @@ class RetailerController extends Controller {
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-
     
-//------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------------------
+//#################################################################################
 
     public function brandEditAction($id) {
         $entity = $this->getRetailer($id);
@@ -183,7 +170,7 @@ class RetailerController extends Controller {
                 ));
     }
 
-//------------------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public function brandUpdateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
@@ -218,10 +205,7 @@ class RetailerController extends Controller {
     }
 
     
-    //---------------------------------------------------------------------------------
-    //---------------------------------------------------------------------------------
-    //---------------------------------------------------------------------------------
-    
+    /*
     
     
     public function newRetailerUserAction($id) {
@@ -337,7 +321,7 @@ class RetailerController extends Controller {
         }
     }
 
-
+*/
 //------------------------------Generate Access Token For Retailer------------------------------
     
  public function generateRetailerAccessTokenAction($id)
@@ -347,15 +331,7 @@ class RetailerController extends Controller {
      return new Response($accesstoken);     
  }
     
- //----------------------Count Retailer Users---------------------------------------
- 
- public function countRetailerUsersAction($id)
- {    
-     #$totaluser=$this->get('shopify.helper')->getArrayCustomerCount($id);
-     #return new response(json_encode($totaluser));
-     return new response(json_encode('Functionality is disabled.'));
- }
- 
+
  
 //-------------------------------- Methods ---------------------------------------------------
 //-------------------------------- Methods ---------------------------------------------------

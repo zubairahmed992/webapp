@@ -25,7 +25,7 @@
       {%if retailer.id %}
       <a href="{{ path('admin_retailer_edit', {'id': retailer.id}) }}" class="btn">Edit</a>      
       <a href="#myModal2{{retailer.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
-      <a href="{{ path('admin_count_retailer_user',{'id':retailer.id}) }}" class="btn">Count Users</a>
+      
       {% endif %}      
       </div>
       <div class="clearfix"></div>
@@ -59,77 +59,7 @@
                                     </div>
                                         </div>
                                             <div style="clear:both" >&nbsp</div>                                    
-                                    <div class="span12">                                        
-                                      <div style="background:#efefef; padding-left: 10px;">
-                                          <b>Admin Users</b>
-                                         <span class="mng_brnd_btn"><a href="{{ path('admin_new_retailer_user', {'id': retailer.id}) }}" class="btn" class="mng_brnd_btn">Add New User</a></span>
-                                     </div>                                    
-                                    </div>                                        
-                                    <div class="span12">
-                                        <div class="row-fluid show-grid">                                 
-                                        {%for r in retaileruser%}
-                                         <div class="span9" style="border-bottom:1px solid #ccc; line-height: 54px;">{{r.name}}</div> 
-                                         <div class="span3" style="border-bottom:1px solid #ccc;">
-                                             <a class="btn" href="{{ path('admin_retailer_edit_user', {'retailerId':retailer.id,'id': r.id}) }}">edit</a>
-                                             <a class="btn" href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.name}}">Delete</a>
-                                         </div>                                         
-                                         
-                    
-            </div>  
-                     
-  <div id="myModal{{r.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Retailer User</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Retailer User <b>{{r.name}}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_retailer_user_delete', {'id': r.id}) }}"  class="btn btn-primary">Delete</a>    
-  </div>
-</div>                                          
-{%endfor%}                                        
-</div>
-                                    </div>
-                                    
-                                     <div class="span12"> 
-    
-     <div style="background:#efefef; padding-left: 10px;">
-      <b>Webhooks Detail</b>
-      <span id="call_webhook_url" style="display:none;">{{path('shopify_webhook_call')}}</span>
-      <span id="list_webhook_url" style="display:none;">{{path('shopify_webhook_list')}}</span>
-      <span id="delete_webhook_url" style="display:none;">{{path('shopify_webhook_delete')}}</span>
-     
-      <span class="mng_brnd_btn">
-     <a  href="#myModalCreateWebHook" class="btn" role="button" data-toggle="modal">Create New WebHooks </a>
-     <a  onclick="ListWebHook()"href="#_" class="btn" >List Of WebHooks </a>
-   
-     
-     </span>
-     </div>      
-           <div class="row-fluid show-grid">                                 
-                 <img src="{{asset('bundles/lovethatfit/site/images/loading.gif')}}" id="loading-indicator"  style="display:none;" /> 
-                   <div class="row-fluid show-grid product_main space_wrap_product" id="json_response">
-                       <table>
-                           <tr>
-                               <th>WebHook Name</th>
-                               <th>Detail</th>
-                           </tr>
-                           
-                       </table>                     
-                 </div> 
-    
-                                </div>  
-                                
-                                
-                                
-                                </div> 
-                                     
- 
-
-
+                                                                       
                                 </div>      
                             </div><!-- End pro_detail -->      
                         </div><!-- End product_content --> 
@@ -149,109 +79,8 @@
   </div>
 </div> 
                         
-  <div id="myModalCreateWebHook" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Enter URL Address Where you want to create WebHook</h3>
-  </div>
-  <div class="modal-body">
-      Address:<input type="text" id="webhook_address" value="">
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="#_"  class="btn btn-primary" onclick="callWebHook()">Create WebHooks</a>    
-  </div>
-</div> 
+ 
 <!-- Modal -->
-   <style>
- #loading-indicator {
-  position: absolute;
-  left: 500px;
-  top: 400px;
-}
-     </style>    
-<script>
-function callWebHook(){
-    //$('#loading-indicator').show();
-    $('#myModalCreateWebHook').hide();
-    
-    var webhook_address=$('#webhook_address').val();
-   if($.trim(webhook_address)){
-       webhook_address=webhook_address;
-   }else{
-       webhook_address=window.document.location.hostname
-   }
-$.ajax({
-        type:'POST',
-        url: $('#call_webhook_url').text(),
-        data:{base_url:webhook_address},
-        success: function(data) {
-        $('#loading-indicator').hide();
-        location.reload(true);
-        $('#json_response').html(data);
-       
-       },
-       error: function() {
-     $('#loading-indicator').hide();
-     location.reload(true);
-     
-      $("#json_response").html('Could not contact server. Suggestion your web hooks already created first you have to delete webhook');
-  },
-        
-   })
-}
-window.onload = function() {
-  ListWebHook();
-};
-function parseJson(json_data){
-   // var json_data={"orders_create":{"address":"http:\/\/24474d38.ngrok.com\/webapp\/web\/app_dev.php\/shopify\/webhook\/order_create_callback","created_at":"2014-08-25T08:33:00-04:00","fields":[],"format":"json","id":6889503,"metafield_namespaces":[],"topic":"orders\/create","updated_at":"2014-08-25T08:33:00-04:00"},"cart_create":{"address":"http:\/\/24474d38.ngrok.com\/webapp\/web\/app_dev.php\/shopify\/webhook\/cart_create_callback","created_at":"2014-08-25T08:33:01-04:00","fields":[],"format":"json","id":6889507,"metafield_namespaces":[],"topic":"carts\/create","updated_at":"2014-08-25T08:33:01-04:00"}};//$('#json_response').html();
-    var str=null;
-    var count=1;
-    $.each(jQuery.parseJSON(json_data), function( key, value ) {
-        str+='S.No:'+count;
-        $.each(value, function( key, value ) {
-        str+="<tr>";
-        str+='<td><b>'+key+'</b></td><td>'+value+'</td>';
-        str+="</tr>"; 
-        count++;
-    });
-    str+='<td><a href="#_" onclick="delWebHook('+value['id']+')">Delete</a></td>';
-    });
-    
- $('#json_response').html(str);
-}
-function ListWebHook(){
-    //$('#loading-indicator').show();
-    $.ajax({
-        type:'POST',
-        url: $('#list_webhook_url').text(),
-        success: function(data) {
-          $('#loading-indicator').hide();
-         parseJson(data)
-           //$('#json_response').html(data);
-       }
-   })
-}
-function delWebHook(id){
-  var r = confirm("Delete WebHook");
-if (r == true) {
-    
-        //$('#loading-indicator').show();
-        $.ajax({
-        type:'GET',
-        url: $('#delete_webhook_url').text()+"/"+id,
-        success: function(data) {
-           
-         if($.trim(data)==$.trim("Delete")){
-              $('#loading-indicator').hide();
-            ListWebHook();
-         }
-           //$('#json_response').html(data);
-       }
-   })
-}
-}
-
-</script>
+  
 {% endblock %}
 

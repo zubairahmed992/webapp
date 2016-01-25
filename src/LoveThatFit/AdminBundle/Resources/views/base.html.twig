@@ -134,8 +134,10 @@
                     return false;
                 },
                 select: function( event, ui ) {
-                    $( "#keyword" ).val( ui.item.email);
-                    $( "#user_id" ).val(ui.item.id);
+                    $("#keyword").val(ui.item.email);
+                    $("#user_id").val(ui.item.id);
+                    $('#user_User option[value='+ui.item.id+']').attr('selected','selected');
+                    $('#algorithm_User option[value='+ui.item.id+']').attr('selected','selected');
                     hit_service();
                     var url= '../user/'+ ui.item.id +'/edit';
                     $('#user_edit_link').attr("href", url);
@@ -168,6 +170,7 @@
                 select: function( event, ui ) {
                     $("#product_keyword").val( ui.item.name);
                     $("#product_id").val( ui.item.id );
+                    $('#algorithm_Product option[value='+ui.item.id+']').attr('selected','selected');
                     var url= '../productdetail/'+ui.item.id+'';
                     $('#product_edit_link').attr("href", url);
                     return false;
@@ -179,6 +182,78 @@
                         .appendTo( ul );
             };
         });
+        //for import page path difference so another function written
+        //for products
+        $("#product_keyword_import").keyup(function() {
+            $("#product_keyword_import").autocomplete({
+                minLength: 2,
+                source:function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url:"../../autocomplete_product/autocomplete_product_search_result",
+                        data: request,
+                        success: response,
+                        dataType: 'json'
+                    });
+                },
+                focus: function( event, ui ) {
+                    $( "#product_keyword_import" ).val( ui.item.name);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#product_keyword_import").val( ui.item.name);
+                    $("#product_id").val( ui.item.id );
+                    $('#form_products option[value='+ui.item.id+']').attr('selected','selected');
+                    return false;
+                }
+            })
+                    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.name + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //end
+        //for services page specifically for users drop down
+        //for user
+        $("#keyword_user").keyup(function() {
+            $("#keyword_user").autocomplete({
+                minLength: 2,
+                //source: "autocomplete_user_search_result",
+                source:function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url:"../admin/autocomplete_user/autocomplete_user_search_result",
+                        data: request,
+                        success: response,
+                        dataType: 'json'
+                    });
+                },
+                focus: function( event, ui ) {
+                    $("#keyword_user").val( ui.item.email);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#keyword_user").val(ui.item.email);
+                    $("#user_id").val(ui.item.id);
+                    //alert(ui.item.email);
+                    //$('#sel_user option[value='+ui.item.id+']').attr('selected','selected');
+                    //$('#sel_user').text(ui.item.email).attr('selected','selected');
+                    //$('#sel_user').text($('option:selected', ui.item.email));
+                    //.attr('selected','selected');
+                    $("#sel_user option:contains(" + ui.item.email + ")").attr('selected', 'selected');
+                    change_user_detail();
+                    replace_user_data();
+                    return false;
+                }
+            })
+                    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.email + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //end
         function hit_service(){}
 	});	
 	</script>
