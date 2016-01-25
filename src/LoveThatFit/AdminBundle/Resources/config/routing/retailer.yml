@@ -43,36 +43,7 @@ admin_retailer_brand_add:
     pattern:  /admin/retailer/brand/{id}/create
     defaults: { _controller: LoveThatFitAdminBundle:Retailer:brandUpdate }
  
-#---------------------------------------------------------------------------------    
-    
-admin_new_retailer_user:
-    pattern:  /admin/retailer/{id}/user/new
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:newRetailerUser }
-    
-admin_create_retailer_user:
-    pattern:  /admin/retailer/{id}/user/create
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:createRetailerUser }
-    requirements: 
-      _method: post
-      
-admin_retailer_edit_user:      
-    pattern:  /admin/retailer/{retailerId}/user/{id}/edit
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:editRetailerUser }
-      
-admin_retailer_update_user:
-    pattern:  /admin/retailer/user/{id}/update
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:updateRetailerUser }
-    requirements:
-        _method:  POST
-        
-admin_retailer_user_delete:
-    pattern:  /admin/retailer/user/{id}/delete
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:deleteRetailerUser }
-
+ #---------------------------------------------------------------------------------
 admin_retailer_access_token_generate:
     pattern:  /admin/retailer/{id}/access_token/generate
     defaults: { _controller: LoveThatFitAdminBundle:Retailer:generateRetailerAccessToken }
-
-admin_count_retailer_user:    
-    pattern:  /admin/retailer/users/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:countRetailerUsers,id: 0 }
