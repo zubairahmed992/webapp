@@ -22,16 +22,11 @@ class UserController extends Controller {
 
         //--------------------------User List-------------------------------------------------------------
     public function jsonAction($id) {
-        $user = $this->get('user.helper.user')->find($id);
-        $ar['size_charts']=$this->get('admin.helper.sizechart')->measurementFromSizeCharts($user->getMeasurement());
-        #$mm_specs=$this->getMaskedMarkerSpecs();
-        #$ub_specs=$user->getMeasurement()->getArray();
+        $user = $this->get('user.helper.user')->find($id);     
+        $ar['actual_measurement'] = $user->getMeasurement()->getArray();
+        $ar['json_stored'] = json_decode($user->getMeasurement()->getMeasurementJson());
         $ar['masked_marker'] = $this->get('user.marker.helper')->getPridictedMeasurementArray($user);
-             
-#$user->toDataArray()
         return new Response(json_encode($ar));
-        
-        
     }
 private function getMaskedMarkerSpecs() {
         $yaml = new Parser();
