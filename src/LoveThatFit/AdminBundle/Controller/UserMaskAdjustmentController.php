@@ -45,6 +45,7 @@ class UserMaskAdjustmentController extends Controller {
         return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_canvas.html.twig', array(
                     'form' => $form->createView(),               
                     'entity' => $user,
+                    'user_image_spec' => $user->getUserImageSpec(),
                     'measurement' => $measurement,
                     'edit_type' => 'edit',
                     'marker' => $marker,

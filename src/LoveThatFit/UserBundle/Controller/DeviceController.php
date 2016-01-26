@@ -218,7 +218,7 @@ class DeviceController extends Controller {
             $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);
             #update actions in the user_image_specs/adjustment
             if(array_key_exists('image_actions', $usermaker) && $usermaker['image_actions']){
-                $this->container->get('user.helper.userimagespec')->updateWithParam($usermaker['image_actions'], $user);
+                $this->container->get('user.helper.userimagespec')->updateWithParam(json_decode($usermaker['image_actions'],true), $user);
              }
             
             return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
