@@ -91,6 +91,7 @@ class UserImageSpecHelper {
         if(array_key_exists('displacement_x', $specs_array) && $specs_array['displacement_x']){$specs_obj->setDisplacementX($specs_array['displacement_x']);}
         if(array_key_exists('displacement_y', $specs_array) && $specs_array['displacement_y']){$specs_obj->setDisplacementY($specs_array['displacement_y']);}
         if(array_key_exists('rotation', $specs_array) && $specs_array['rotation']){$specs_obj->setRotation($specs_array['rotation']);}
+        if(array_key_exists('device_type', $specs_array) && $specs_array['device_type']){$specs_obj->setDeviceType($specs_array['device_type']);}
         #if from the mask marker js
         if(array_key_exists('move_up_down', $specs_array) && $specs_array['move_up_down']){$specs_obj->setDisplacementY($specs_array['move_up_down']);}
         if(array_key_exists('move_left_right', $specs_array) && $specs_array['move_left_right']){$specs_obj->setDisplacementX($specs_array['move_left_right']);}

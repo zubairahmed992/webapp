@@ -16,6 +16,19 @@
 <div id="page_wrap">
     <div id="loading_bar"><img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" /></div>
 </div>
+{% if (user_image_spec)%}
+<div>
+    Image info:
+    <div>Camera angle:{{user_image_spec.cameraAngle}}</div>
+    <div>Camera x:{{user_image_spec.cameraX}}</div>
+    <div>Displacement x:{{user_image_spec.displacementX}}</div>
+    <div>Displacement y:{{user_image_spec.displacementY}}</div>
+    <div>Rotation:{{user_image_spec.rotation}}</div>
+    <div>device Type:{{user_image_spec.deviceType}}</div>
+</div>
+{% else%}
+<div>image info not available</div>
+{% endif %}
 <div class="canvas" style="display: none;">
     <canvas  id="canvas-1" width="364" height="505" style="display: inline-block; -moz-user-select: none; left: -1px;"></canvas>
     <button id="me_button" onclick="to_image()">Draw to Image</button>
