@@ -435,7 +435,7 @@ manClothingType();
       {%endfor%}  
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.tank_knit %}
       {% if (entity.sleeveStyling==blouse_styling_type)%}
-      $("option[value='{{entity.sleeveStyling}}']").attr('selected','selected');
+      $("option[value='{{sleeve_styling}}']").attr('selected','selected');
       {%endif%}         
       {%endfor%}    
           
@@ -450,7 +450,7 @@ manClothingType();
       {%endfor%} 
       {% for blouse_styling_type in productSpecification.women.style_type.jacket %}
       {% if (entity.stylingType==blouse_styling_type)%}
-      $("option[value='{{entity.stylingType}}']").attr('selected','selected');
+      $("option[value='{{styling_type}}']").attr('selected','selected');
       {%endif%}         
       {%endfor%}      
         //Hem Length  
@@ -460,8 +460,9 @@ manClothingType();
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
       {% for blouse_styling_type in productSpecification.women.hem_length.jacket %}
-      {% if (entity.hemLength==blouse_styling_type)%}
-      $("option[value='{{entity.hemLength}}']").attr('selected','selected');
+      {% set hem_length = entity.hemLength|replace({' ': "_"}) %}
+      {% if (hem_length==blouse_styling_type)%}
+      $("option[value='{{hem_length}}']").attr('selected','selected');
       {%endif%}         
       {%endfor%}  
     //Neck Line
@@ -480,13 +481,71 @@ manClothingType();
       var str='{{blouse_styling_type}}';
       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' '));                        
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
-      {%endfor%}   
+      {%endfor%}
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.jacket %}
-      {% if (entity.sleeveStyling==blouse_styling_type)%}
-      $("option[value='{{entity.sleeveStyling}}']").attr('selected','selected');
+      {% set sleeve_style = entity.sleeveStyling|replace({' ': "_"}) %}
+      {% if (sleeve_style==blouse_styling_type)%}
+      $("option[value='{{sleeve_style}}']").attr('selected','selected');
       {%endif%}         
-      {%endfor%}      
-          
+      {%endfor%}
+
+
+      //fit type
+      {% for blouse_styling_type in productSpecification.fit_type %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_",'-':""})|lower %}
+      $('#product_fit_type').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.fit_type %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_",'-':""})|lower %}
+      {% set fit_type_style = entity.fitType|replace({' - ': "_",' ':"_",'-':""})|lower %}
+      {% if (fit_type_style==blouse_styling_type_val)%}
+      $("option[value='{{fit_type_style}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
+      //layering
+      {% for blouse_styling_type in productSpecification.layering %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_"})|lower %}
+      $('#product_layering').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.layering %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_"})|lower %}
+      {% set layering = entity.layering|replace({' - ': "_",' ':"_"})|lower %}
+      {% if (layering==blouse_styling_type_val)%}
+      $("option[value='{{layering}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
+      //stretch type
+      {% for blouse_styling_type in productSpecification.women.stretch_type %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_",'/':""})|lower %}
+      $('#product_stretch_type').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.women.stretch_type %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_",'/':""})|lower %}
+      {% set stretch_type = entity.stretchType|replace({' ': "_",'/':""})|lower %}
+      {% if (stretch_type==blouse_styling_type_val)%}
+      $("option[value='{{stretch_type}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
+      //fabric weight
+      {% for blouse_styling_type in productSpecification.women.fabric_weight %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
+      $('#product_fabric_weight').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.women.fabric_weight %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
+      {% set fabric_weight = entity.fabricWeight|replace({' ': "_"})|lower %}
+      {% if (fabric_weight==blouse_styling_type_val)%}
+      $("option[value='{{fabric_weight}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
       $('#rise').hide();
     }
   if(strtolower(clothing_type)==strtolower('sweater')){   
@@ -495,13 +554,13 @@ manClothingType();
       var str='{{blouse_styling_type}}';
         str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' '));                        
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
-      {%endfor%}  
+      {%endfor%}
       {% for blouse_styling_type in productSpecification.women.style_type.sweater %}
-          
-      {% if (entity.stylingType==blouse_styling_type)%}
-      $("option[value='{{entity.stylingType}}']").attr('selected','selected');
-      {%endif%}         
-      {%endfor%}    
+      {% set  styling_type = entity.stylingType|capitalize %}
+      {% if (styling_type==blouse_styling_type|capitalize)%}
+      $("option[value='{{styling_type}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
           //Hem Length
       {% for blouse_styling_type in productSpecification.women.hem_length.sweater %}
        var str='{{blouse_styling_type}}';
@@ -517,12 +576,14 @@ manClothingType();
    //Neck Line
       {% for blouse_styling_type in productSpecification.women.neck_line.sweater %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' '));                    
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' '));              {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
       {% for blouse_styling_type in productSpecification.women.neck_line.sweater %}
-      {% if (entity.neckLine==blouse_styling_type)%}
-      $("option[value='{{entity.neckLine}}']").attr('selected','selected');
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
+      {% set neck_line = entity.neckLine|replace({' ': "_"})|lower %}
+      {% if (neck_line==blouse_styling_type_val)%}
+      $("option[value='{{neck_line}}']").attr('selected','selected');
       {%endif%}         
       {%endfor%} 
        // Sleeving Style      
@@ -532,10 +593,70 @@ manClothingType();
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}  
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.sweater %}
-      {% if (entity.sleeveStyling==blouse_styling_type)%}
-      $("option[value='{{entity.sleeveStyling}}']").attr('selected','selected');
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
+      {% set sleeve_styling = entity.sleeveStyling|replace({' ': "_"})|lower %}
+      {% if (sleeve_styling==blouse_styling_type)%}
+      $("option[value='{{sleeve_styling}}']").attr('selected','selected');
       {%endif%}         
-      {%endfor%}       
+      {%endfor%}
+
+      //stretch type
+      {% for blouse_styling_type in productSpecification.women.stretch_type %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_",'/':""})|lower %}
+      $('#product_stretch_type').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.women.stretch_type %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_",'/':""})|lower %}
+      {% set stretch_type = entity.stretchType|replace({' ': "_",'/':""})|lower %}
+      {% if (stretch_type==blouse_styling_type_val)%}
+      $("option[value='{{stretch_type}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
+      //fabric weight
+      {% for blouse_styling_type in productSpecification.women.fabric_weight %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
+      $('#product_fabric_weight').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.women.fabric_weight %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' ': "_"})|lower %}
+      {% set fabric_weight = entity.fabricWeight|replace({' ': "_"})|lower %}
+      {% if (fabric_weight==blouse_styling_type_val)%}
+      $("option[value='{{fabric_weight}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
+
+      //fit type
+      {% for blouse_styling_type in productSpecification.fit_type %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_",'-':""})|lower %}
+      $('#product_fit_type').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.fit_type %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_",'-':""})|lower %}
+      {% set fit_type_style = entity.fitType|replace({' - ': "_",' ':"_",'-':""})|lower %}
+      {% if (fit_type_style==blouse_styling_type_val)%}
+      $("option[value='{{fit_type_style}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
+      //layering
+      {% for blouse_styling_type in productSpecification.layering %}
+      var str='{{blouse_styling_type}}';
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_"})|lower %}
+      $('#product_layering').append('<option value="{{blouse_styling_type_val}}">'+str+'</option>');
+      {%endfor%}
+      {% for blouse_styling_type in productSpecification.layering %}
+      {% set blouse_styling_type_val = blouse_styling_type|replace({' - ': "_",' ':"_"})|lower %}
+      {% set layering = entity.layering|replace({' - ': "_",' ':"_"})|lower %}
+      {% if (layering==blouse_styling_type_val)%}
+      $("option[value='{{layering}}']").attr('selected','selected');
+      {%endif%}
+      {%endfor%}
+
       $('#rise').hide();
     }
   if(strtolower(clothing_type)==strtolower('trouser')){   

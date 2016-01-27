@@ -602,7 +602,7 @@ constants:
 
     stretch_type:
       woven_straight_grain: woven_straight_grain
-      woven_ w_stretch_fibers: woven_ w_stretch_fibers
+      woven_w_stretch_fibers: woven_w_stretch_fibers
       woven_bias_grain: woven_bias_grain
       knit_2_way: "knit_2_way"
       knit_4_way:  "knit_4_way"
