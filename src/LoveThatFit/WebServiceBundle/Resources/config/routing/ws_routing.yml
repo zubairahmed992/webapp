@@ -30,6 +30,10 @@ ws_user_image_uploader:
     pattern:  /ws/user_image_uploader
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:imageUploader }
 
+ws_user_file_uploader:
+    pattern:  /ws/user_file_uploader
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:fileUploader }
+
 nws_user_password_change:
     pattern:  /ws/user_password_change
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:passwordChange }

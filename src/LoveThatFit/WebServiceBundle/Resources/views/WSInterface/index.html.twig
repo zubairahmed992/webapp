@@ -165,7 +165,14 @@ $( "#btn_hit_service" ).click(function() {
              tt = $('option:selected', $('#sel_service')).html();
              service_detail=(tt=='select'?null:find_service_obj(tt));
             if(service_detail!=null && service_detail.file_upload){
-                hit_image_upload_service();
+                //image upload or file upload condition
+                if($('#sel_service').val() == '/ws/user_file_uploader')
+                {
+                    hit_file_upload_service();
+                }else{
+
+                    hit_image_upload_service();
+                }
             }else{
                 hit_service();
             }
@@ -271,6 +278,35 @@ function hit_image_upload_service(){
                      display_response(errMsg);
                  }
               });    
+}
+
+//-------------------------------------
+
+//-----------------------------------------------------------
+function hit_file_upload_service(){
+
+    var value_ar = JSON.parse($("#txt_request_params").val());
+    input_file = document.getElementById('image_to_upload');
+    data= new FormData();
+    data.append("file", input_file.files[0]);
+    data.append("email",value_ar['email']);
+    data.append("device_type",value_ar['device_type']);
+
+
+    $.ajax({
+        type: "POST",
+        url: ".." + $("#service_url").text(),
+        data: data,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        success: function(data){
+            display_response(data);
+        },
+        failure: function(errMsg) {
+            display_response(errMsg);
+        }
+    });
 }
 
 //-------------------------------------

@@ -105,8 +105,13 @@ class User implements UserInterface, \Serializable {
      /**
      * @ORM\OneToOne(targetEntity="UserImageSpec", mappedBy="user")
      * */
-    private $user_image_spec; 
-    
+    private $user_image_spec;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="UserAppAccessLog", mappedBy="user")
+	 * */
+	private $user_app_access_log;
+
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -1637,9 +1642,31 @@ class User implements UserInterface, \Serializable {
     {
         return $this->user_image_spec;
     }
-    
 
-    /**
+	/**
+	 * Set user_app_access_log
+	 *
+	 * @param \LoveThatFit\UserBundle\Entity\User $userAppAccessLog
+	 * @return User
+	 */
+	public function setUserAppAccessLog(\LoveThatFit\UserBundle\Entity\User $user_app_access_log = null)
+	{
+	  $this->user_app_access_log = $user_app_access_log;
+	  return $this;
+	}
+
+	/**
+	 * Get user_app_access_log
+	 *
+	 * @return \LoveThatFit\UserBundle\Entity\User
+	 */
+	public function getUserAppAccessLog()
+	{
+	  return $this->user_app_access_log;
+	}
+
+
+  /**
      * Set timeSpent
      *
      * @param \string $timeSpent
