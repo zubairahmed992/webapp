@@ -494,11 +494,11 @@ class WebServiceHelper {
 		} else {
 		  return $this->response_array(false, 'Invalid file uploaded');
 		}
-		#______________________________________> Avatar
+
 	  }
 	  //method will call here which will update the db log table
 	  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
-	return;
+	return "file uploaded";
   }
     #-------------------------------------------------------------
      public function changePassword($ra) {
