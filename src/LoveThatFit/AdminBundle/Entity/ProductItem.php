@@ -69,10 +69,7 @@ class ProductItem
      * */
     private $product_item_pieces;
     
-    /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrack", mappedBy="product_items")
-     */
-    protected $retailer_order_item_track;
+    
     
 
     public function __construct() {
@@ -600,36 +597,5 @@ class ProductItem
         return $this->user_fitting_room_ittem;
     }
 
-    /**
-     * Add retailer_order_item_track
-     *
-     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrack $retailerOrderItemTrack
-     * @return ProductItem
-     */
-    public function addRetailerOrderItemTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrack $retailerOrderItemTrack)
-    {
-        $this->retailer_order_item_track[] = $retailerOrderItemTrack;
-    
-        return $this;
-    }
-
-    /**
-     * Remove retailer_order_item_track
-     *
-     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrack $retailerOrderItemTrack
-     */
-    public function removeRetailerOrderItemTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrack $retailerOrderItemTrack)
-    {
-        $this->retailer_order_item_track->removeElement($retailerOrderItemTrack);
-    }
-
-    /**
-     * Get retailer_order_item_track
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRetailerOrderItemTrack()
-    {
-        return $this->retailer_order_item_track;
-    }
+  
 }

@@ -1,18 +1,18 @@
-love_that_fit_external_site:
-    resource: "@LoveThatFitExternalSiteBundle/Resources/config/routing.yml"
-    prefix:   /
+#love_that_fit_external_site:
+#    resource: "@LoveThatFitExternalSiteBundle/Resources/config/routing.yml"
+#    prefix:   /
 
-love_that_fit_shopify:
-    resource: "@LoveThatFitShopifyBundle/Resources/config/routing.yml"
-    prefix:   /
+#love_that_fit_shopify:
+#    resource: "@LoveThatFitShopifyBundle/Resources/config/routing.yml"
+#    prefix:   /
 
 love_that_fit_cart:
     resource: "@LoveThatFitCartBundle/Resources/config/routing.yml"
     prefix:   /
 
-love_that_fit_retailer_admin:
-    resource: "@LoveThatFitRetailerAdminBundle/Resources/config/routing.yml"
-    prefix:   /
+#love_that_fit_retailer_admin:
+#    resource: "@LoveThatFitRetailerAdminBundle/Resources/config/routing.yml"
+#    prefix:   /
 
 love_that_fit_web_service:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing.yml"

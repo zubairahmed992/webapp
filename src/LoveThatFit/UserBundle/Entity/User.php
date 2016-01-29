@@ -88,14 +88,7 @@ class User implements UserInterface, \Serializable {
      */
     private $retailer_site_users;
     
-    
-    /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack", mappedBy="user")
-     */
-    private $retailer_order_track;
-    
-    
-    
+  
     
     /**
      * @ORM\OneToOne(targetEntity="UserMarker", mappedBy="user")
