@@ -472,11 +472,25 @@ class WebServiceHelper {
 	if ($user) {
 	  #----get file name & create dir
 	  $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
+	  $file = 'logs.txt';
 	  if (!is_dir($user->getUploadRootDir())) {
 		@mkdir($user->getUploadRootDir(), 0700);
 	  }
 	  if ($ext == 'txt') {
-		  move_uploaded_file($files["file"]["tmp_name"], $user->getOriginalImageAbsolutePath());
+		$path = $user->getUploadRootDir();
+		if (file_exists($path."/".$file)) {
+		  // Open the file to get existing content
+		  $current = file_get_contents($path."/".$file);
+		  // store file content as a string in $str
+		  $current.="\n\n-------------------------------------------------------------".date("Y-m-d")."-----".$ra["device_type"]."------------------------------\n\n";
+		  $current.= "\n".file_get_contents($files["file"]["tmp_name"]);
+		  file_put_contents($path."/".$file, $current);
+		} else {
+		  $current= file_get_contents($files["file"]["tmp_name"]);
+		  file_put_contents($path."/".$file,$current);
+
+		}
+
 		} else {
 		  return $this->response_array(false, 'Invalid file uploaded');
 		}
