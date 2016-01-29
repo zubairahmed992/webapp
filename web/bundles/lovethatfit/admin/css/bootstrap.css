@@ -48,7 +48,7 @@ section {
       }
 
 .show-grid:hover [class*="span"]{
-  background: #e5e9db;
+  background: #efefef;
 }
 .show-grid:hover [class*="hds"]{
   background: #333333;
@@ -6511,7 +6511,7 @@ overflow: auto;
 }
 
 .hd_bdr{
-    border-bottom: 3px solid #ccc000;
+    border-bottom: 3px solid #000;
 }
 
 .dashboard_tbl canvas{
