@@ -154,7 +154,19 @@ ws_user_image_uploader:
    request_type: post
    file_upload: true
    description: This is image upload service for user. Images can be of types fitting_room, avatar or social_media which will be determined by the parameters (image_type) passed. Parameters device_type & height_per_inch are for fitting_room image only.
-   
+
+#______________________
+ws_user_file_uploader:
+   pattern:  /ws/user_file_uploader
+   title: user_file_uploader
+   params:
+     auth_token:
+     device_type: iphone5
+     upload_type: app_access_log
+   request_type: post
+   file_upload: true
+   description:
+
 #______________________
 ws_user_password_change:
    pattern:  /ws/user_password_change

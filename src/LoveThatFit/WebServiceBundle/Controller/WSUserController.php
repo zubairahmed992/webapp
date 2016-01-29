@@ -67,7 +67,14 @@ class WSUserController extends Controller {
         $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/uploads/ltf/users/'. $user->getId() . "/";
         return new Response($this->get('webservice.helper')->uploadUserImage($user, $decoded, $_FILES));
     }
-
+#~~~~~~~~~~~~~~~~~~~ ws_file_uploader   /ws/file_uploader
+  public function fileUploaderAction() {
+	//$decoded = $this->process_request();
+	$decoded = array("auth_token" =>'76aff354be53cc674748e0601b81f113');
+	#if email index exists check required....
+	$user = $this->get('user.helper.user')->findByAuthToken($decoded['auth_token']);
+	return new Response($this->get('webservice.helper')->uploadUserFile($user, $decoded, $_FILES));
+  }
 #---------------------------------------------
     public function fooAction() {
         $decoded = $this->process_request();

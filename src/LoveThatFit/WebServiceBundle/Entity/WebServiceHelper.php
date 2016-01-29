@@ -466,7 +466,26 @@ class WebServiceHelper {
             return $this->response_array(false, 'member not found');
         }
     }
-   
+  #----------------------------------------------------------------------------------------
+
+  public function uploadUserfile($user, $ra, $files) {
+	if ($user) {
+	  #----get file name & create dir
+	  $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
+	  if (!is_dir($user->getUploadRootDir())) {
+		@mkdir($user->getUploadRootDir(), 0700);
+	  }
+	  if ($ext == 'txt') {
+		  move_uploaded_file($files["file"]["tmp_name"], $user->getOriginalImageAbsolutePath());
+		} else {
+		  return $this->response_array(false, 'Invalid file uploaded');
+		}
+		#______________________________________> Avatar
+	  }
+	  //method will call here which will update the db log table
+	  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
+	return;
+  }
     #-------------------------------------------------------------
      public function changePassword($ra) {
          $user = $this->findUserByAuthToken($ra['auth_token']);
