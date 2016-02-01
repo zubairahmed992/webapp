@@ -485,10 +485,15 @@ class WebServiceHelper {
 		  $current.="\n\n-------------------------------------------------------------".date("Y-m-d")."-----".$ra["device_type"]."------------------------------\n\n";
 		  $current.= "\n".file_get_contents($files["file"]["tmp_name"]);
 		  file_put_contents($path."/".$file, $current);
+		  //method will call here which will update the db log table
+		  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
+		  return $this->response_array(false, 'File uploaded Successfully');
 		} else {
 		  $current= file_get_contents($files["file"]["tmp_name"]);
 		  file_put_contents($path."/".$file,$current);
-
+		  //method will call here which will update the db log table
+		  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
+		  return $this->response_array(false, 'File uploaded Successfully');
 		}
 
 		} else {
@@ -496,9 +501,7 @@ class WebServiceHelper {
 		}
 
 	  }
-	  //method will call here which will update the db log table
-	  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
-	return "file uploaded";
+
   }
     #-------------------------------------------------------------
      public function changePassword($ra) {
