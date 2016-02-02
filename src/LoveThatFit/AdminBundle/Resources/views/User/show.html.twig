@@ -291,7 +291,11 @@
 
                                     <div class="span8">
                                         <div class="span3">Log Count</div>
-                                        <div class="span3">{{log_count}} - <a href="{{ path('admin_user_download_access_logs', {'id': user.Id}) }}">Download Log file</a></div>
+                                        <div class="span3">{{log_count}}
+                                            {% if(log_count > 0) %}
+                                            - <a href="{{ path('admin_user_download_access_logs', {'id': user.Id}) }}">Download Log file</a>
+                                            {% endif %}
+                                        </div>
 
                                     </div>
 

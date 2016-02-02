@@ -92,3 +92,8 @@ admin_mask_marker_inspect_routes:
 admin_auto_complete:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/auto_complete.yml"
     prefix:   /
+
+#----- Download Access Logs ---------------------
+admin_user_download_access_logs:
+    pattern:  /download_access_logs/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:User:downloadAccessLogs }

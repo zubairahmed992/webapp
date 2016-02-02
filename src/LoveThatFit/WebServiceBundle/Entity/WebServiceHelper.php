@@ -476,7 +476,7 @@ class WebServiceHelper {
 	  if (!is_dir($user->getUploadRootDir())) {
 		@mkdir($user->getUploadRootDir(), 0700);
 	  }
-
+	  if ($ext == 'txt') {
 		$path = $user->getUploadRootDir();
 		if (file_exists($path."/".$file)) {
 		  // Open the file to get existing content
@@ -495,6 +495,11 @@ class WebServiceHelper {
 		  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
 		  return $this->response_array(false, 'File uploaded Successfully');
 		}
+
+		} else {
+		  return $this->response_array(false, 'Invalid file uploaded');
+		}
+
 	  }
 
   }
