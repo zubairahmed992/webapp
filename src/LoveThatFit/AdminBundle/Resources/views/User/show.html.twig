@@ -12,32 +12,32 @@
 
 {% block body %}
 
-<div>      
+<div>
     <h1 style="float:left;">User's Detail</h1>
                 {%if(user.userMarker and user.userMarker.defaultUser)%}
                     *demo account <a href="{{ path('admin_user_set_default',{'id':user.id}) }}">remove demo </a>
                 {%endif%}
 
-     <div class="btn_wrapper">  
+     <div class="btn_wrapper">
        <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete User</a>
-         <a href="{{ path('admin_users',{'page_number':page_number}) }}" class="btn">back</a>    
+         <a href="{{ path('admin_users',{'page_number':page_number}) }}" class="btn">back</a>
       </div>
-      <div class="clearfix"></div>   
-    
+      <div class="clearfix"></div>
 
-            <div id="detail_wrapper">      
+
+            <div id="detail_wrapper">
                 <div id="p_hd">{%if(user.firstName!='')%}{{user.firstName }}'s Detail{%else%} User Detail{%endif%}</div>
                 {%if(user.AvatarWebPath!='')%}
                 <div class="span3">
                     <div id="pro_img"> <img src="{{asset(user.AvatarWebPath) }}" />
                     </div><!--/.well -->
                     <div class="clearfix"></div>
-                    </div>         
+                    </div>
                 {%endif%}
                     <div id="product_content">
                         <div id="pro_detail">
-                            <div class="edt_container">         
-                                <div class="row-fluid show-grid edt_span">                                    
+                            <div class="edt_container">
+                                <div class="row-fluid show-grid edt_span">
                                     <div class="span8">
                                     <div class="span3">Full Name</div>
                                     <div class="span3">{{user.firstName }} {{user.lastName }}</div>
@@ -46,321 +46,327 @@
                                   <div class="span8">
                                     <div class="span3">Gender</div>
                                     <div class="span3">Female</div>
-                                    </div>          
+                                    </div>
                                     {%endif%}
                                         {%if(user.gender=='m') %}
                                   <div class="span8">
                                     <div class="span3">Gender</div>
                                     <div class="span3">Male</div>
-                                    </div>          
+                                    </div>
                                     {%endif%}
-                                    
-                                        
+
+
                                     <div class="span8">
                                     <div class="span3">Email</div>
                                     <div class="span3">{{user.email }}</div>
-                                    </div>   
-                                   
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Product Tried</div>
                                     <div class="span3">{{product}}</div>
-                                    </div>   
-                                        
+                                    </div>
+
                                         <div class="span8">
                                     <div class="span3">Brand Tried</div>
                                     <div class="span3">{{brandtried}}</div>
                                     </div>
-                                        
-                                        
+
+
                                     <div class="span8">
                                     <div class="span3">Date Of Birth</div>
                                     <div class="span3">{{ user.birthDate|date('d-m-Y') }}</div>
-                                    </div>   
-                                    
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Age</div>
                                     <div class="span3">{{user.age}}</div>
-                                    </div>   
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Zip Code</div>
                                     <div class="span3">{{user.zipcode}}</div>
-                                    </div>  
-                                        
+                                    </div>
+
                                      <div class="span8">
                                     <div class="span3">Auth Token</div>
                                     <div class="span3">{{user.authToken}}</div>
-                                    </div> 
-                                        
-                                   
-                                      
+                                    </div>
+
+
+
                                     <div class="span8">
                                     <div class="span3">Auth Token for Web Services</div>
                                     <div class="span3">{{user.authTokenWebService}}</div>
-                                    </div>     
-                                    
+                                    </div>
+
                                         <div class="span8">
                                     <div class="span3">Auth Token Created Date</div>
                                     <div class="span3">{{user.authTokenCreatedAt|date('d-m-Y')}}</div>
-                                    </div> 
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Secret Question</div>
                                     <div class="span3">{{user.secretQuestion}}</div>
-                                    </div>     
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Secret Answer</div>
                                     <div class="span3">{{user.secretAnswer}}</div>
-                                    </div>  
-                                        
-                                        
-                                        
+                                    </div>
+
+
+
                                     <div class="span8">
                                     <div class="span3">Weight</div>
                                     <div class="span3">{{user.measurement.weight}}</div>
-                                    </div> 
-                                     
+                                    </div>
+
                                    <div class="span8">
                                     <div class="span3">Height</div>
                                     <div class="span3">{{user.measurement.height}}</div>
-                                    </div>      
-                                        
+                                    </div>
+
                                    <div class="span8">
                                     <div class="span3">Waist</div>
                                     <div class="span3">{{user.measurement.waist}}</div>
-                                    </div> 
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Hip</div>
                                     <div class="span3">{{user.measurement.hip}}</div>
-                                    </div> 
-                                        
-                                        
+                                    </div>
+
+
                                    <div class="span8">
                                     <div class="span3">Bust</div>
                                     <div class="span3">{{user.measurement.bust}}</div>
-                                    </div> 
-                                        
-                                        
-                                        
+                                    </div>
+
+
+
                                     <div class="span8">
                                     <div class="span3">Chest</div>
                                     <div class="span3">{{user.measurement.chest}}</div>
-                                    </div> 
-                                        
-                                        
-                                        
+                                    </div>
+
+
+
                                    <div class="span8">
                                     <div class="span3">Arm</div>
                                     <div class="span3">{{user.measurement.arm}}</div>
-                                    </div> 
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Inseam</div>
                                     <div class="span3">{{user.measurement.inseam}}</div>
                                     </div>
-                                        
+
                                      <div class="span8">
                                     <div class="span3">Outseam</div>
                                     <div class="span3">{{user.measurement.outseam}}</div>
                                     </div>
-                                        
+
                                    <div class="span8">
                                     <div class="span3">Shoulder height</div>
                                     <div class="span3">{{user.measurement.shoulderHeight}}</div>
                                     </div>
-                                       
-                                        
-                                        
+
+
+
                                       <div class="span8">
                                     <div class="span3">shoulder Across Front</div>
                                     <div class="span3">{{user.measurement.shoulderAcrossFront}}</div>
-                                    </div>    
-                                  
-                                    
+                                    </div>
+
+
                                      <div class="span8">
                                     <div class="span3">shoulder Across back</div>
                                     <div class="span3">{{user.measurement.shoulderAcrossBack}}</div>
-                                    </div>        
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Sleeve</div>
                                     <div class="span3">{{user.measurement.sleeve}}</div>
-                                    </div>           
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Neck</div>
                                     <div class="span3">{{user.measurement.neck}}</div>
-                                    </div>    
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Thigh</div>
                                     <div class="span3">{{user.measurement.thigh}}</div>
-                                    </div>   
-                                        
+                                    </div>
+
                                      <div class="span8">
                                     <div class="span3">Bicep</div>
                                     <div class="span3">{{user.measurement.bicep}}</div>
-                                    </div>     
-                  
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Tricep</div>
                                     <div class="span3">{{user.measurement.tricep}}</div>
-                                    </div> 
-                                        
-                                        
+                                    </div>
+
+
                                   <div class="span8">
                                     <div class="span3">Wrist</div>
                                     <div class="span3">{{user.measurement.wrist}}</div>
-                                    </div>  
-                                        
+                                    </div>
+
                                     <div class="span8">
                                     <div class="span3">Center Front Waist</div>
                                     <div class="span3">{{user.measurement.centerFrontWaist}}</div>
-                                    </div>   
-                                        
-                                        
+                                    </div>
+
+
                                     <div class="span8">
                                     <div class="span3">Back Waist</div>
                                     <div class="span3">{{user.measurement.backWaist}}</div>
-                                    </div>    
-                                   
-                                        
-                                        
+                                    </div>
+
+
+
                                    <div class="span8">
                                     <div class="span3">Waist Hip</div>
                                     <div class="span3">{{user.measurement.waistHip}}</div>
-                                    </div> 
-                                        
-                                        
-                                             
+                                    </div>
+
+
+
                                    <div class="span8">
                                     <div class="span3">Knee</div>
                                     <div class="span3">{{user.measurement.knee}}</div>
-                                    </div> 
-                                        
+                                    </div>
+
                                       <div class="span8">
                                     <div class="span3">Calf</div>
                                     <div class="span3">{{user.measurement.calf}}</div>
-                                    </div>  
-                                        
-                                        
+                                    </div>
+
+
                                      <div class="span8">
                                     <div class="span3">Ankle</div>
                                     <div class="span3">{{user.measurement.ankle}}</div>
-                                    </div> 
-                                        
+                                    </div>
+
                                          <div class="span8">
                                     <div class="span3">Body Shape</div>
                                     <div class="span3">{{user.measurement.bodyShape}}</div>
-                                    </div>   
-                                     
+                                    </div>
+
                                            <div class="span8">
                                     <div class="span3">Body Typese</div>
                                     <div class="span3">{{user.measurement.bodyTypes}}</div>
-                                    </div>   
-                                        
+                                    </div>
+
                                       <div class="span8">
                                     <div class="span3">Bra size</div>
                                     <div class="span3">{{user.measurement.brasize}}</div>
-                                    </div>    
-                                        
-                                        
-                                    
-                                 
-                                     
-                                 
-                                    
+                                    </div>
+
+
+
+
+
+
+
                                     <div class="span8">
                                     <div class="span3">Iphone Outseam</div>
                                     <div class="span3">{{user.measurement.iphoneOutseam}}</div>
-                                    </div>  
-                                        
+                                    </div>
+
                                    <div class="span8">
                                     <div class="span3">Iphone  Shoulder Height</div>
                                     <div class="span3">{{user.measurement.iphoneShoulderHeight}}</div>
-                                    </div>   
-                                    
-                                        
+                                    </div>
+
+
                                    <div class="span8">
                                     <div class="span3">iphone foot height</div>
                                     <div class="span3">{{user.measurement.iphoneFootHeight}}</div>
 
-                                    </div> 
-                                        
-                                        
-                                        
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Log Count</div>
+                                        <div class="span3">{{log_count}} - <a href="{{ path('admin_user_download_access_logs', {'id': user.Id}) }}">Download Log file</a></div>
+
+                                    </div>
+
+
+
                                     <div class="span8">
                                     <div class="span3">Profile completion</div>
-                                    <div> 
-                                    <table width="100%" border="0">                                    
-                                      
+                                    <div>
+
+
+                                    <table width="100%" border="0">
+
                                    <tr>
                                    <td>Photo uploaded:</td><td>{%if user.image==null%}
-                                    Not Uploaded    
+                                    Not Uploaded
                                    {%else%}
                                     Uploaded
-                                   {%endif%}</td>                                    
-                                   </tr>                                        
+                                   {%endif%}</td>
+                                   </tr>
                                    <tr>
                                    <td>Photo marked:</td><td> {%if user.getUserMarker==null%}
-                                    Not     
+                                    Not
                                    {%else%}
                                     Yes
                                    {%endif%}</td>
                                    </tr>
-                                   
+
                                    <tr>
                                        <td>Size Entered</td>
                                        <td>
                                        {%if user.gender=='f'%}
                                        {%if user.measurement.getTopBrand==null and user.measurement.getBottomBrand==null and user.measurement.getDressBrand==null%}
                                           No sizes Entered
-                                       {%endif%}        
+                                       {%endif%}
                                         {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand!=null and user.measurement.getDressBrand==null%}
                                             Partial sizes Entered
                                         {%endif%}
                                         {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand!=null and user.measurement.getDressBrand!=null%}
                                             All sizes Entered
-                                       {%endif%}  
+                                       {%endif%}
                                        {%endif%}
                                        {%if user.gender=='m'%}
                                        {%if user.measurement.getTopBrand==null and user.measurement.getBottomBrand==null%}
                                          No sizes Entered
-                                       {%endif%}        
+                                       {%endif%}
                                       {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand==null%}
                                          Partial sizes Entered
                                        {%endif%}
                                        {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand!=null%}
                                         All sizes Entered
-                                       {%endif%} 
-                                        {%endif%}       
-                                       
+                                       {%endif%}
+                                        {%endif%}
+
                                        </td>
                                    </tr>
-                                   
+
                                    <tr>
                                    <td>Measurements entered:</td><td> {{ user.getMeasurementStatistics}}%
                                     </td>
                                    </tr>
-                                   
-                                   
+
+
                                     </table>
                                     </div>
-                                    </div> 
-                                        
-                                        
-                                        
-                                        
+                                    </div>
 
-                                    </div>   
 
-                                        
-                                        
+
+
+
+                                    </div>
+
                                    <div class="span8">
                                     <div class="span3">Devices</div>
-                                    <div> 
+                                    <div>
                                     <table width="100%" border="0">
                                     <tr>
                                     <td>Device Name</td>
@@ -376,16 +382,16 @@
                                         {%endfor%}
                                     </table>
                                     </div>
-                                    </div>      
-                                   
-                                       
-                                        
+                                    </div>
+
+
+
                                   <div class="span8">
                                     <div class="span3">Retailer Site Users</div>
-                                    
-                                    <div> 
+
+                                    <div>
                                     <table width="100%" border="0">
-                                        <tr><td colspan="4" align="right"><a href="{{ path('admin_retailer_site_user_new', {'id': user.Id}) }}"  class="btn btn-primary">Add</a></td></tr> 
+                                        <tr><td colspan="4" align="right"><a href="{{ path('admin_retailer_site_user_new', {'id': user.Id}) }}"  class="btn btn-primary">Add</a></td></tr>
                                    <tr>
                                     <td>CreatedAt</td>
                                     <td>UpdatedAt</td>
@@ -399,31 +405,31 @@
                                     <td></td>
                                     <td><a href="{{ path('admin_retailer_site_user_edit', {'user_id':user.Id,'id': ret.Id}) }}"><i class="icon-edit"></i></a> <a href="#myModal1{{ret.Id}}" role="button" data-toggle="modal" title="Delete"><i class="icon-remove"></i></a> </td>
                                    </tr>
-                                   
+
                                    <div id="myModal1{{ret.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Delete Retailer Site User</h3>
-  </div>  
+  </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     <a href="{{ path('admin_retailer_site_user_delete', {'id': ret.Id}) }}"  class="btn btn-primary">Delete</a>
-    
+
   </div>
 </div>
                                         {%endfor%}
                                     </table>
                                     </div>
-                                    </div>        
-                                        
+                                    </div>
 
-                                        
-                                        
-                                        
+
+
+
+
                                  <div class="span8">
                                     <div class="span3">Brands Tried</div>
-                                    <div> 
-                                    <table width="100%" border="0">                                    
+                                    <div>
+                                    <table width="100%" border="0">
                                       {%for b in brand%}
                                    <tr>
                                     <td> {{b.name}}</td>
@@ -433,19 +439,19 @@
                                         {%endfor%}
                                     </table>
                                     </div>
-                                    </div>         
-                                        
-
-                                </div> 
-                                     
+                                    </div>
 
 
+                                </div>
 
-                                </div>      
-                            </div><!-- End pro_detail -->      
-                        </div><!-- End product_content --> 
+
+
+
+                                </div>
+                            </div><!-- End pro_detail -->
+                        </div><!-- End product_content -->
                     </div> <!-- End detail_wrapper -->
-                </form>  
+                </form>
 
                        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
@@ -460,11 +466,11 @@
         <a href="{{ path('admin_user_delete',{'id':user.Id}) }} " class="btn btn-primary">Delete</a>
 
     </div>
-</div>  
-                
-                
-                
-            </div>      
+</div>
+
+
+
+            </div>
 
 {% endblock %}
 

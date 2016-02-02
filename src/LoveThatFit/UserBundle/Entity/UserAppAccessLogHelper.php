@@ -61,6 +61,11 @@ class UserAppAccessLogHelper {
 	  }
 	}
   //-------------------------
+  public function getAppAccessLogCount($user) {
+	$result = $this->findLogsCountByUserId($user);
+	return $result["valCount"];
+  }
+  //-------------------------
   public function save($user_app_access_log) {
 	$class = $this->class;
 	$this->em->persist($user_app_access_log);
