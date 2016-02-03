@@ -51,7 +51,11 @@
    $(document).ready(function(){
        
         $('a.a_display_users').click(function (event){            
-                event.preventDefault(); 
+                event.preventDefault();
+                if($('#txt_from_id').val() > $('#txt_to_id').val()){
+                    alert("From User ID should be Less then To User Id");
+                    return false;
+                }
                 hit_service();
         });
         //-------------------
