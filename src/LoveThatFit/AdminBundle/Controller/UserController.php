@@ -35,6 +35,7 @@ private function getMaskedMarkerSpecs() {
     //-------------------------Show user detail-------------------------------------------------------
     public function showAction($id) {
         $entity = $this->get('user.helper.user')->find($id);        
+        $log_count = $this->get('user.helper.userappaccesslog')->getAppAccessLogCount($entity);
         $user_limit = $this->get('user.helper.user')->getRecordsCountWithCurrentUserLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($user_limit[0]['id']));
         $page_number=$page_number==0?1:$page_number;        
@@ -44,6 +45,7 @@ private function getMaskedMarkerSpecs() {
         return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
                     'user' => $entity,
                     'page_number' => $page_number,
+                    'log_count' => $log_count,
                     'product'=>$this->get('site.helper.usertryitemhistory')->countUserTiredProducts($entity),
                     'brand'=>$this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity),
                     'brandtried'=>count($this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity)),
@@ -306,6 +308,23 @@ private function getMaskedMarkerSpecs() {
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
+	//download file action
+	public function downloadAccessLogsAction($id)
+	{
+	  //$path = $this->get('kernel')->getRootDir(). "/../web/uploads/ltf/users/".$id."/";
+	  $path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/uploads/ltf/users/'. $id . "/";
+	  $filename='logs.txt';
+	  $content = file_get_contents($path.$filename);
+
+	  $response = new Response();
+
+	  //set headers
+	  $response->headers->set('Content-Type', 'mime/type');
+	  $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename);
+
+	  $response->setContent($content);
+	  return $response;
+	}
     
     
     //-------------------------------User Search Form-----------------------------------------------------------

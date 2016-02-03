@@ -290,6 +290,7 @@ function hit_file_upload_service(){
     data= new FormData();
     data.append("file", input_file.files[0]);
     data.append("email",value_ar['email']);
+    data.append("auth_token",value_ar['auth_token']);
     data.append("device_type",value_ar['device_type']);
 
 

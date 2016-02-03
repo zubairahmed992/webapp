@@ -223,9 +223,10 @@ lost_account_form:
 
 lost_account_secret_answer:    
    pattern:   /secret_question_answer
-   defaults:  { _controller: LoveThatFitUserBundle:Security:secretQuestionAnswer }  
+   defaults:  { _controller: LoveThatFitUserBundle:Security:secretQuestionAnswer }
+
 
 #----------------------------------------  Dev/Testing ------------------------------------------------  
 go_secure:
     pattern:  /gosecure/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }     
+    defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }
