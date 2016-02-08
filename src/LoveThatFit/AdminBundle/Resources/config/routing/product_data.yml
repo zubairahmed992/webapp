@@ -1,11 +1,3 @@
-admin_product_data:
-    pattern:  /admin/product/data
-    defaults: { _controller: LoveThatFitAdminBundle:ProductData:index}
-
-admin_product_data_create:
-    pattern:  /admin/product/data/create
-    defaults: { _controller: LoveThatFitAdminBundle:ProductData:createProductData}
-
 #---------------------------------------- CSV update---------------------
 admin_product_data_import_index:
     pattern:  /admin/product_data/import/index
@@ -31,13 +23,7 @@ admin_product_data_csv_show:
 admin_product_data_csv_read:
     pattern:  /admin/product_data/csv/read
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvRead }
-    
 
-
-admin_product_data_foo:
-    pattern:  /admin/product_data/foo
-    defaults: { _controller: LoveThatFitAdminBundle:ProductData:foo }  
-    
 admin_product_data_csv_upload:
    pattern:  /admin/product_data/csv_upload
    defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvUpload }  

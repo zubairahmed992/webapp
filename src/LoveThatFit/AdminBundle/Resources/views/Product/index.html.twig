@@ -4,10 +4,11 @@
 {% endblock %}
 
 {% block header_right_links %}
-   <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a> | <a href="{{ path('admin_algorithm_avg') }}" >Fit Model</a>
+   <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a>
+    {# Fifth Comment <!--| <a href="{{ path('admin_algorithm_avg') }}" >Fit Model</a>-->#}
 <br>
-    
-     <a href="{{ path('admin_product_data') }}" >Product Data</a> |       <a href="{{ path('admin_product_data_import_index') }}" >import & update</a>
+    {#Fourth Comment#}
+     {#<a href="{{ path('admin_product_data') }}" >Product Data</a> |#}       <a href="{{ path('admin_product_data_import_index') }}" >import & update</a>
     <br>
     <a  style="visibility: hidden" href="{{ path('admin_product_stats') }}" >Product Stats</a>
      {#<a style="visibility: hidden" href="{{ path('shopify_data_index') }}" >Shopify SKU update</a> #}
