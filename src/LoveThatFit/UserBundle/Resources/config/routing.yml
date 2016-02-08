@@ -1,3 +1,8 @@
+selfieshare_feedback:
+    resource: "@LoveThatFitUserBundle/Resources/config/routing/selfieshare_feedback.yml"
+    prefix:   /
+#---------------------------------------------------------------
+
 admin_product_routes:
     resource: "@LoveThatFitUserBundle/Resources/config/routing/device.yml"
     prefix:   /

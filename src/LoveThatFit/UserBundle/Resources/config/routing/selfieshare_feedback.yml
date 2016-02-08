@@ -1,0 +1,15 @@
+selfieshare_feedback_create:
+    pattern:   /selfieshare/feedback/create
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShareFeedback:create }
+
+selfieshare_feedback_edit:
+    pattern:   /selfieshare/feedback/edit
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShareFeedback:edit }
+
+selfieshare_feedback_update:
+    pattern:   /selfieshare/feedback/update
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShareFeedback:update }
+
+selfieshare_feedback_show:
+    pattern:   /selfieshare/feedback/show
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShareFeedback:show }    
