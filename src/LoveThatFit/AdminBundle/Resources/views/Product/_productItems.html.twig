@@ -1,3 +1,9 @@
+<style>
+    .imgstyle{
+        display: none;
+    }
+</style>
+
 <script>
 function rawImageValidation(){
    var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
@@ -181,15 +187,17 @@ function editPieceView(product_id,item_id,id){
       
          {% else %}
 
-                <div class="row-fluid show-grid p_title">
+                <div class="row-fluid show-grid p_title" style="position: relative">
                      <div class="span1">{{pi.sku}} </div>
                      <div class="span1">{{pi.price>0?'$'~pi.price:pi.price}} </div>
                     <div class="span2">{{pi.productSize.bodyType}} {{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
-                    <div class="span2">
+                    <div class="span2" onmouseover="document.getElementById('myimg_'+{{ pi.id }}).style.display='block';"
+                         onmouseout="document.getElementById('myimg_'+{{ pi.id }}).style.display='none';">
                         {%if(pi.image!='')%}
-                          {{pi.image}}                          
+                          {{pi.image}}
                           {%endif%}
+                       <span class="imgstyle" id="myimg_{{ pi.id }}" style="z-index:20;box-shadow:2px 2px 2px 2px #ccc;background:#fff; padding:20px; position: absolute;top:10%;left:55%;"> <img  style="width: 70px; height: 100px;" src="{{ asset(pi.productColor.webPath) }}" width="100" height="100"/></span>
                     </div>
                   <div class="span2">
                    {%for pp in pi.productItemPieces%}
