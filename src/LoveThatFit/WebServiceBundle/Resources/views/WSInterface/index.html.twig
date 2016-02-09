@@ -377,7 +377,9 @@ function replace_user_data(){
                     obj1.auth_token=token;
                 }
                 if (request_json.indexOf("email")!=-1){
-                    obj1.email=email;                    
+                    if (typeof obj1.email != "undefined") {
+                        obj1.email=email;                    
+                        }
                 }
                 if (email.indexOf("buf")!=-1 && request_json.indexOf("password")!=-1){
                     obj1.password='Buffalo1';    
