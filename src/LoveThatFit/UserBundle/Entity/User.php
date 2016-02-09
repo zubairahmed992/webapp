@@ -57,6 +57,11 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="UserDevices", mappedBy="user", orphanRemoval=true)
      */
     protected $user_devices;
+    
+       /**
+     * @ORM\OneToMany(targetEntity="Selfieshare", mappedBy="user", orphanRemoval=true)
+     */
+    protected $selfieshare;
 
     /**
      * @ORM\OneToMany(targetEntity="UserFeedback", mappedBy="user", orphanRemoval=true)
@@ -1424,7 +1429,40 @@ class User implements UserInterface, \Serializable {
         return $this->user_devices;
     }
 #---------------------------------------------------------------------------------
-    
+  
+
+    /**
+     * Add selfieshare
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Selfieshare $selfieshare
+     * @return User
+     */
+    public function addSelfieshare(\LoveThatFit\UserBundle\Entity\Selfieshare $selfieshare)
+    {
+        $this->selfieshare[] = $selfieshare;    
+        return $this;
+    }
+
+    /**
+     * Remove selfieshare
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Selfieshare $selfieshare
+     */
+    public function removeSelfieshare(\LoveThatFit\UserBundle\Entity\Selfieshare $selfieshare)
+    {
+        $this->selfieshare->removeElement($selfieshare);
+    }
+
+    /**
+     * Get selfieshare
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSelfieshare()
+    {
+        return $this->selfieshare;
+    }
+#---------------------------------------------------------------------------------    
     /**
      * Add user_feedback
      *

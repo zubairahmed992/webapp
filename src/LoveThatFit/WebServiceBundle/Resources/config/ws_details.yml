@@ -166,7 +166,29 @@ ws_user_file_uploader:
    request_type: post
    file_upload: true
    description:
-
+     
+#______________________
+ws_selfieshare_create:
+   pattern:  /ws/selfieshare/create
+   title: selfieshare_create
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091     
+     device_type: iphone6
+     items: 5101, 5024 	
+     friends:
+       mycroft:
+        name: mycroft 
+        email: mc@ss.com 
+        phone: 89349724397428
+       watson:
+        name: watson 
+        email: wt@ss.com
+        phone: 23478237892389
+          
+   request_type: post   
+   file_upload: true
+   description:
+   
 #______________________
 ws_user_password_change:
    pattern:  /ws/user_password_change

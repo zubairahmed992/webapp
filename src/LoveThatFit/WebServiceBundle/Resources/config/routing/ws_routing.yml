@@ -65,6 +65,11 @@ ws_user_feedback_add:
 ws_user_default_values:
     pattern:  /ws/user_default_values
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:defaultValues}
+
+ws_selfieshare_create:
+    pattern:  /ws/selfieshare/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreate}
+    
 #------------------------------------------------------------------------------------
 
 nws_products:

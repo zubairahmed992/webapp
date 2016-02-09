@@ -45,6 +45,14 @@ services:
             class: LoveThatFit\UserBundle\Entity\UserMarker
             container: "@service_container"          
   
+  user.selfieshare.helper:
+        class: LoveThatFit\UserBundle\Entity\SelfieshareHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\UserBundle\Entity\Selfieshare
+            container: "@service_container"   
+            
   user.helper.userimagespec:
         class: LoveThatFit\UserBundle\Entity\UserImageSpecHelper
         arguments:

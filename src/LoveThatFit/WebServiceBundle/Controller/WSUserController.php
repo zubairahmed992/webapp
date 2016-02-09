@@ -180,5 +180,23 @@ class WSUserController extends Controller {
         return new Response(json_encode($conf));
         
     }
+ #~~~~~~~~~~~~~~~~~~~~~~ ws_selfieshare_create	/ws/selfieshare/create
+ 
+    
+     public function selfieshareCreateAction(){
+      $ra=$this->process_request();
+        if (!array_key_exists('auth_token', $ra)) {
+            return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
+        }
+
+        $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
+
+        if (count($user) > 0) {
+            $this->get('user.selfieshare.helper')->createWithParam($ra, $user);            
+            return  new Response($this->get('webservice.helper')->response_array(true, 'selfieshare created'));
+        } else {
+            return  new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+        }
+ }
 }
 
