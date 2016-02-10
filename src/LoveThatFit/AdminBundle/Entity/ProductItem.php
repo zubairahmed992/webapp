@@ -55,6 +55,11 @@ class ProductItem
      * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="productitem")
      */
     private $user_fitting_room_ittem;
+    /**
+
+     * @ORM\OneToMany(targetEntity="LoveThatFit\UserBundle\Entity\SelfieshareItem", mappedBy="product_item")
+     */
+    private $selfieshare_item;
     
     /**
      * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\User", mappedBy="product_items")
@@ -599,7 +604,41 @@ class ProductItem
     {
         return $this->user_fitting_room_ittem;
     }
+#---------------------------------------------
+       /**
+     * Add selfieshare_item
+     *
+     * @param \LoveThatFit\UserBundle\Entity\SelfieshareItem $selfieshare_item
+     * @return ProductItem
+     */
+    public function addSelfieshareItem(\LoveThatFit\UserBundle\Entity\SelfieshareItem $selfieshare_item)
+    {
+        $this->selfieshare_item[] = $selfieshare_item;
+    
+        return $this;
+    }
 
+    /**
+     * Remove selfieshare_item
+     *
+     * @param \LoveThatFit\UserBundle\Entity\SelfieshareItem $selfieshare_item
+     */
+    public function removeSelfieshareItem(\LoveThatFit\UserBundle\Entity\SelfieshareItem $selfieshare_item)
+    {
+        $this->selfieshare_item->removeElement($selfieshare_item);
+    }
+
+    /**
+     * Get selfieshare_item
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSelfieshareItem()
+    {
+        return $this->selfieshare_item;
+    }
+
+#----------------------------------------------    
     /**
      * Add retailer_order_item_track
      *

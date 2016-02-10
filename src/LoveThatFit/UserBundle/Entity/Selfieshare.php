@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
-
+use LoveThatFit\AdminBundle\Entity\ProductItem;
 use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,7 +22,16 @@ class Selfieshare  {
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE" )
      *  */
     private $user;
-  
+    
+    /**
+     * @ORM\OneToMany(targetEntity="SelfieshareFeedback", mappedBy="selfieshare", orphanRemoval=true)
+     */
+    protected $selfieshare_feedback;  
+    
+    /**
+     * @ORM\OneToMany(targetEntity="SelfieshareItem", mappedBy="selfieshare", orphanRemoval=true)
+     */
+    protected $selfieshare_item;  
 
     /**
      * @var integer $id

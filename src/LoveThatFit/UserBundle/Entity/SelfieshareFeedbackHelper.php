@@ -16,7 +16,7 @@ use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\UserBundle\Event\UserEvent;
 use Symfony\Component\HttpFoundation\Request;
 
-class SelfieshareHelper {
+class SelfieshareFeedbackHelper {
 
     /**
      * Holds the Symfony2 event dispatcher service
@@ -50,28 +50,43 @@ class SelfieshareHelper {
         $this->repo = $em->getRepository($class);
     }
        #----------------------------------------------------------------------------
-     public function createNew($user=null){
+     public function createNew($selfieshare=null){
        $class = $this->class;
-       $selfieshare = new $class();
-       $selfieshare->setUser($user);       
-       $selfieshare->setCreatedAt(new \DateTime('now'));    
-       return $selfieshare;
+       $ssfeedback = new $class();
+       $ssfeedback->setSelfieshare($selfieshare);       
+       $ssfeedback->setUpdatedAt(new \DateTime('now'));    
+       $ssfeedback->setRef(uniqid());    
+       return $ssfeedback;
      }
-     
+  
+      #----------------------------------------------------------------------------
+     public function createWithArray($friends, $selfieshare) {        
+         foreach ($friends as $k => $v) {             
+             $ssfb =  $this->setWithParam($v, $this->createNew($selfieshare));        
+             $this->save($ssfb);           
+         }
+    }  
    #----------------------------------------------------------------------------
-     public function createWithParam($ra, $user) {
-        $selfieshare=  $this->createNew($user);
-        if(array_key_exists('device_type', $ra) && $ra['device_type']){$selfieshare->setDeviceType($ra['device_type']);}
-        if(array_key_exists('image', $ra) && $ra['image']){$selfieshare->setImage($ra['image']);}  
-        $selfieshare->file=$_FILES["image"];
-        $selfieshare->upload();
-        $this->save($selfieshare);          
-        $this->container->get('user.selfiesharefeedback.helper')->createWithArray($ra['friends'], $selfieshare);
+     public function createWithParam($ra, $selfieshare) {        
+        $ssfb =  $this->setWithParam($ra, $this->createNew($selfieshare));        
+        $this->save($ssfb);           
     }  
     
     #----------------------------------------------------------------------------
-    public function save($selfieshare) {
-        $this->em->persist($selfieshare);
+     private function setWithParam($ra, $ss) {
+        if(array_key_exists('comments', $ra) && $ra['comments']){$ss->setComments($ra['comments']);}
+        if(array_key_exists('rating', $ra) && $ra['rating']){$ss->setRating($ra['rating']);}
+        if(array_key_exists('like', $ra) && $ra['like']){$ss->setLike($ra['device_type']);}
+        if(array_key_exists('name', $ra) && $ra['name']){$ss->setName($ra['name']);}
+        if(array_key_exists('email', $ra) && $ra['email']){$ss->setEmail($ra['email']);}
+        if(array_key_exists('phone', $ra) && $ra['phone']){$ss->setPhone($ra['phone']);}
+        if(array_key_exists('ref', $ra) && $ra['ref']){$ss->setRef($ra['ref']);}
+        return $ss;           
+    }  
+    #----------------------------------------------------------------------------
+    public function save($ss) {
+        $ss->setUpdatedAt(new \DateTime('now'));    
+        $this->em->persist($ss);
         $this->em->flush();      
     }
        
