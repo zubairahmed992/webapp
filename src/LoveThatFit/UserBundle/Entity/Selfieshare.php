@@ -72,6 +72,12 @@ class Selfieshare  {
      * @ORM\Column(name="comments", type="string", length=255, nullable=true)
      */
     private $comments;
+/**
+     * @var string $message
+     *
+     * @ORM\Column(name="message", type="string", length=255, nullable=true)
+     */
+    private $message;
  
      /**
      * @var string $name
@@ -203,6 +209,29 @@ class Selfieshare  {
         return $this->created_at;
     }
 
+ #------------------------------------------------   message
+         /**
+     * Set message
+     *
+     * @param string $message
+     * @return Selfieshare
+     */
+    public function setMessage($message) {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string 
+     */
+    public function getMessage() {
+        return $this->message;
+    }
+    
+    
  #------------------------------------------------   comments
          /**
      * Set comments
