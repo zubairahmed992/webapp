@@ -319,9 +319,9 @@ function hit_selfieshare_service(){
     data.append("auth_token",value_ar['auth_token']);
     data.append("device_type",value_ar['device_type']);
     data.append("comments",value_ar['comments']);
-    data.append("name",value_ar['name']);
-    data.append("phone",value_ar['phone']);
-    data.append("email",value_ar['email']);
+    data.append("friend_name",value_ar['friend_name']);
+    data.append("friend_phone",value_ar['friend_phone']);
+    data.append("friend_email",value_ar['friend_email']);
 
     $.ajax({
         type: "POST",

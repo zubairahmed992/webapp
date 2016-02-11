@@ -174,9 +174,9 @@ ws_selfieshare_create:
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091     
      device_type: iphone6
-     name: mycroft 
-     email: mc@ss.com 
-     phone: 89349724397428
+     friend_name: mycroft 
+     friend_email: mc@ss.com 
+     friend_phone: 89349724397428
    request_type: post   
    file_upload: true
    description:
