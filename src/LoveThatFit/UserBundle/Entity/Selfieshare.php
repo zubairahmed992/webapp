@@ -63,6 +63,18 @@ class Selfieshare  {
      * @ORM\Column(name="comments", type="string", length=255, nullable=true)
      */
     private $comments;
+    /**
+     * @var integer $rating
+     *
+     * @ORM\Column(name="rating", type="integer", nullable=true)     
+     */
+    private $rating;
+     /**
+     * @var boolean $favourite
+     *
+     * @ORM\Column(name="favourite", type="boolean", nullable=true)
+     */
+    private $favourite;
 /**
      * @var string $message
      *
@@ -88,12 +100,19 @@ class Selfieshare  {
      * @ORM\Column(name="friend_phone", type="string", length=60, nullable=true)
      */
     private $friend_phone;
-     /**
+     
+   /**
      * @var string $ref
      *
      * @ORM\Column(name="ref", type="string", length=60, nullable=true)
      */
-   
+    private $ref;
+     /**
+     * @var \DateTime $updated_at
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updated_at;
 #------------------------------------    
     /**
      * Get id
@@ -244,7 +263,48 @@ class Selfieshare  {
     public function getComments() {
         return $this->comments;
     }
+  #------------------------------------------------   rating
        
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     * @return Selfieshare
+     */
+    public function setRating($rating) {
+        $this->rating = $rating != null ? $rating : 0;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer 
+     */
+    public function getRating() {
+        return $this->rating != null ? $this->rating : 0;
+    }
+    #------------------------------------------------   like
+
+       /**
+     * Set favourite
+     *
+     * @param boolean $favourite
+     * @return Selfieshare
+     */
+    public function setFavourite($favourite) {
+        $this->favourite = $favourite;
+        return $this;
+    }
+
+    /**
+     * Get favourite
+     *
+     * @return boolean 
+     */
+    public function getFavourite() {
+        return $this->favourite;
+    }     
 #------------------------------------------------   name
         /**
      * Set friend_name
@@ -309,7 +369,49 @@ class Selfieshare  {
     public function getFriendPhone() {
         return $this->friend_phone;
     }
-    
+    #------------------------------------------------   ref
+             /**
+     * Set ref
+     *
+     * @param string $ref
+     * @return Selfieshare
+     */
+    public function setRef($ref) {
+        $this->ref = $ref;
+
+        return $this;
+    }
+
+    /**
+     * Get ref
+     *
+     * @return string 
+     */
+    public function getRef() {
+        return $this->ref;
+    }
+    #------------------------------------------------   
+   
+    /**
+     * Set updatedAt
+     *
+     * @param datetime $updated_at
+     * @return Selfieshare
+     */
+    public function setUpdatedAt(\dateTime $updated_at) {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt() {
+        return $this->updated_at;
+    }
     #-----------------------------------------------------------
     
    

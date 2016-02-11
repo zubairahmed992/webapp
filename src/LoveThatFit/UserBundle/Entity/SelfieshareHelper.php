@@ -76,12 +76,13 @@ class SelfieshareHelper {
         if(array_key_exists('friend_name', $ra) && $ra['friend_name']){$selfieshare->setFriendName($ra['friend_name']);}
         if(array_key_exists('friend_email', $ra) && $ra['friend_email']){$selfieshare->setFriendEmail($ra['friend_email']);}
         if(array_key_exists('friend_phone', $ra) && $ra['friend_phone']){$selfieshare->setFriendPhone($ra['friend_phone']);}
-    
+        $selfieshare->setRef(uniqid());
         $this->save($selfieshare);          
     }  
     
     #----------------------------------------------------------------------------
     public function save($selfieshare) {
+       $selfieshare->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($selfieshare);
         $this->em->flush();      
     }
