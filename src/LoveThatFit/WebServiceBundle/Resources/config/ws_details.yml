@@ -177,6 +177,7 @@ ws_selfieshare_create:
      friend_name: mycroft 
      friend_email: mc@ss.com 
      friend_phone: 89349724397428
+     message: 'look at me! look at me!!'
    request_type: post   
    file_upload: true
    description:
