@@ -66,7 +66,38 @@ class Selfieshare  {
      */
     public $file;
 #------------------------------------
-    
+/**
+     * @var string $comments
+     *
+     * @ORM\Column(name="comments", type="string", length=255, nullable=true)
+     */
+    private $comments;
+ 
+     /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=60, nullable=true)
+     */
+    private $name;
+     /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=60, nullable=true)
+     */
+    private $email;
+     /**
+     * @var string $phone
+     *
+     * @ORM\Column(name="phone", type="string", length=60, nullable=true)
+     */
+    private $phone;
+     /**
+     * @var string $ref
+     *
+     * @ORM\Column(name="ref", type="string", length=60, nullable=true)
+     */
+   
+#------------------------------------    
     /**
      * Get id
      *
@@ -172,7 +203,93 @@ class Selfieshare  {
         return $this->created_at;
     }
 
- 
+ #------------------------------------------------   comments
+         /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return Selfieshare
+     */
+    public function setComments($comments) {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments() {
+        return $this->comments;
+    }
+       
+#------------------------------------------------   name
+        /**
+     * Set name
+     *
+     * @param string $name
+     * @return Selfieshare
+     */
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName() {
+        return $this->name;
+    }
+    #------------------------------------------------   email
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Selfieshare
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
+    #------------------------------------------------   phone
+         /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return Selfieshare
+     */
+    public function setPhone($phone) {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone() {
+        return $this->phone;
+    }
+    
     #-----------------------------------------------------------
     
    

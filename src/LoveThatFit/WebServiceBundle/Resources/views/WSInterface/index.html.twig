@@ -318,6 +318,10 @@ function hit_selfieshare_service(){
     data.append("image", input_file.files[0]);
     data.append("auth_token",value_ar['auth_token']);
     data.append("device_type",value_ar['device_type']);
+    data.append("comments",value_ar['comments']);
+    data.append("name",value_ar['name']);
+    data.append("phone",value_ar['phone']);
+    data.append("email",value_ar['email']);
 
     $.ajax({
         type: "POST",

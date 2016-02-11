@@ -61,12 +61,23 @@ class SelfieshareHelper {
    #----------------------------------------------------------------------------
      public function createWithParam($ra, $user) {
         $selfieshare=  $this->createNew($user);
+    
+        if (array_key_exists("image", $_FILES)) {
+            $selfieshare->file = $_FILES["image"];
+        } else {
+            return 'image not provided';
+        }
+        
+        $selfieshare->upload();
+        
         if(array_key_exists('device_type', $ra) && $ra['device_type']){$selfieshare->setDeviceType($ra['device_type']);}
         if(array_key_exists('image', $ra) && $ra['image']){$selfieshare->setImage($ra['image']);}  
-        $selfieshare->file=$_FILES["image"];
-        $selfieshare->upload();
+        if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
+        if(array_key_exists('name', $ra) && $ra['name']){$selfieshare->setName($ra['name']);}
+        if(array_key_exists('email', $ra) && $ra['email']){$selfieshare->setEmail($ra['email']);}
+        if(array_key_exists('phone', $ra) && $ra['phone']){$selfieshare->setPhone($ra['phone']);}
+    
         $this->save($selfieshare);          
-        $this->container->get('user.selfiesharefeedback.helper')->createWithArray($ra['friends'], $selfieshare);
     }  
     
     #----------------------------------------------------------------------------

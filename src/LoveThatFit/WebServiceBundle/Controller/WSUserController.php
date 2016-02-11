@@ -185,6 +185,7 @@ class WSUserController extends Controller {
     
      public function selfieshareCreateAction(){
       $ra=$this->process_request();
+      #return new Response(json_encode($ra));
         if (!array_key_exists('auth_token', $ra)) {
             return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
         }
