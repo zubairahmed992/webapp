@@ -73,9 +73,9 @@ class SelfieshareHelper {
         if(array_key_exists('device_type', $ra) && $ra['device_type']){$selfieshare->setDeviceType($ra['device_type']);}
         if(array_key_exists('image', $ra) && $ra['image']){$selfieshare->setImage($ra['image']);}  
         if(array_key_exists('message', $ra) && $ra['message']){$selfieshare->setMessage($ra['message']);}
-        if(array_key_exists('friend_name', $ra) && $ra['friend_name']){$selfieshare->setName($ra['friend_name']);}
-        if(array_key_exists('friend_email', $ra) && $ra['friend_email']){$selfieshare->setEmail($ra['friend_email']);}
-        if(array_key_exists('friend_phone', $ra) && $ra['friend_phone']){$selfieshare->setPhone($ra['friend_phone']);}
+        if(array_key_exists('friend_name', $ra) && $ra['friend_name']){$selfieshare->setFriendName($ra['friend_name']);}
+        if(array_key_exists('friend_email', $ra) && $ra['friend_email']){$selfieshare->setFriendEmail($ra['friend_email']);}
+        if(array_key_exists('friend_phone', $ra) && $ra['friend_phone']){$selfieshare->setFriendPhone($ra['friend_phone']);}
     
         $this->save($selfieshare);          
     }  

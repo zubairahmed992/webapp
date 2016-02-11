@@ -23,16 +23,7 @@ class Selfieshare  {
      *  */
     private $user;
     
-    /**
-     * @ORM\OneToMany(targetEntity="SelfieshareFeedback", mappedBy="selfieshare", orphanRemoval=true)
-     */
-    protected $selfieshare_feedback;  
     
-    /**
-     * @ORM\OneToMany(targetEntity="SelfieshareItem", mappedBy="selfieshare", orphanRemoval=true)
-     */
-    protected $selfieshare_item;  
-
     /**
      * @var integer $id
      *
@@ -80,23 +71,23 @@ class Selfieshare  {
     private $message;
  
      /**
-     * @var string $name
+     * @var string $friend_name
      *
-     * @ORM\Column(name="name", type="string", length=60, nullable=true)
+     * @ORM\Column(name="friend_name", type="string", length=60, nullable=true)
      */
-    private $name;
+    private $friend_name;
      /**
-     * @var string $email
+     * @var string $friend_email
      *
-     * @ORM\Column(name="email", type="string", length=60, nullable=true)
+     * @ORM\Column(name="friend_email", type="string", length=60, nullable=true)
      */
-    private $email;
+    private $friend_email;
      /**
-     * @var string $phone
+     * @var string $friend_phone
      *
-     * @ORM\Column(name="phone", type="string", length=60, nullable=true)
+     * @ORM\Column(name="friend_phone", type="string", length=60, nullable=true)
      */
-    private $phone;
+    private $friend_phone;
      /**
      * @var string $ref
      *
@@ -256,67 +247,67 @@ class Selfieshare  {
        
 #------------------------------------------------   name
         /**
-     * Set name
+     * Set friend_name
      *
-     * @param string $name
+     * @param string $friend_name
      * @return Selfieshare
      */
-    public function setName($name) {
-        $this->name = $name;
+    public function setFriendName($friend_name) {
+        $this->friend_name = $friend_name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get friend_name
      *
      * @return string 
      */
-    public function getName() {
-        return $this->name;
+    public function getFriendName() {
+        return $this->friend_name;
     }
     #------------------------------------------------   email
     /**
-     * Set email
+     * Set friend_email
      *
-     * @param string $email
+     * @param string $friend_email
      * @return Selfieshare
      */
-    public function setEmail($email) {
-        $this->email = $email;
+    public function setFriendEmail($friend_email) {
+        $this->friend_email = $friend_email;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get friend_email
      *
      * @return string 
      */
-    public function getEmail() {
-        return $this->email;
+    public function getFriendEmail() {
+        return $this->friend_email;
     }
 
     #------------------------------------------------   phone
          /**
-     * Set phone
+     * Set friend_phone
      *
-     * @param string $phone
+     * @param string $friend_phone
      * @return Selfieshare
      */
-    public function setPhone($phone) {
-        $this->phone = $phone;
+    public function setFriendPhone($friend_phone) {
+        $this->friend_phone = $friend_phone;
 
         return $this;
     }
 
     /**
-     * Get phone
+     * Get friend_phone
      *
      * @return string 
      */
-    public function getPhone() {
-        return $this->phone;
+    public function getFriendPhone() {
+        return $this->friend_phone;
     }
     
     #-----------------------------------------------------------
