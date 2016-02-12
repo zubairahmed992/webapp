@@ -78,8 +78,18 @@ class SelfieshareHelper {
         if(array_key_exists('friend_phone', $ra) && $ra['friend_phone']){$selfieshare->setFriendPhone($ra['friend_phone']);}
         $selfieshare->setRef(uniqid());
         $this->save($selfieshare);          
+        return $selfieshare;
     }  
-    
+     #----------------------------------------------------------------------------
+     public function updateFeedback($ra) {
+        $selfieshare=$this->repo->findOneBy(array('ref' => $ra['ref']));
+        if(array_key_exists('rating', $ra) && $ra['rating']){$selfieshare->setRating($ra['rating']);}
+        #if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite(true);}
+        $selfieshare->setFavourite(array_key_exists('favourite', $ra) && $ra['favourite']?true:false);
+        if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
+        $this->save($selfieshare);          
+        return $selfieshare;
+    }  
     #----------------------------------------------------------------------------
     public function save($selfieshare) {
        $selfieshare->setUpdatedAt(new \DateTime('now'));
@@ -92,7 +102,10 @@ class SelfieshareHelper {
     public function find($id) {
         return $this->repo->find($id);
     } 
-    
+    #----------------------------
+    public function findByRef($ref) {
+        return $this->repo->findOneBy(array('ref' => $ref));
+    } 
     
 }
     

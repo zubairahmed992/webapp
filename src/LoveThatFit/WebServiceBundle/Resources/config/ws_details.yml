@@ -181,7 +181,18 @@ ws_selfieshare_create:
    request_type: post   
    file_upload: true
    description:
+#______________________
 
+ws_selfieshare_feedback_update:
+   pattern:  /selfieshare/feedback_update
+   title: selfieshare_feedback_update
+   params:
+     ref: 56bdc887043ce
+     rating: 3
+     favourite: true
+     comments: 'look at you! look at you!!'
+   request_type: post   
+   
 #______________________
 ws_user_password_change:
    pattern:  /ws/user_password_change
