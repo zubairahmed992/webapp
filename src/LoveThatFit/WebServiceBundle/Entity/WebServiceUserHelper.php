@@ -57,14 +57,14 @@ class WebServiceUserHelper {
         $class = $this->class;
         $user = new $class();
         $user->setCreatedAt(new \DateTime('now'));
-        $user->setUpdatedAt(new \DateTime('now'));            
+        $user->setUpdatedAt(new \DateTime('now'));
         return $user;
     }
 
 //-------------------------------------------------------
 
     public function saveUser(User $user) {
-        $user->setUpdatedAt(new \DateTime('now'));            
+        $user->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($user);
         $this->em->flush();
     }
@@ -89,7 +89,7 @@ class WebServiceUserHelper {
 
 #------------------------------------------------------------------------------#
     public function findByName($firstname, $lastname) {
-        return $this->repo->findByName($firstname, $lastname);        
+        return $this->repo->findByName($firstname, $lastname);
     }
 
 #------------------------------------------------------------------------------#
@@ -119,12 +119,12 @@ class WebServiceUserHelper {
      public function emailCheck($email) {
         $entity = $this->repo->findOneBy(array('email' => $email));
         if(count($entity)>0){
-           return array('Message' => 'The Email already exists');  
+           return array('Message' => 'The Email already exists');
         }else{
              return array('Message' => 'Valid Email');
         }
     }
-#--------------------------------------Forget Password Checking-----------------# 
+#--------------------------------------Forget Password Checking-----------------#
     public function emailCheckForgetPassowrd($email) {
         if ($this->isDuplicateEmail(Null, $email) == true) {
             return true;
@@ -136,7 +136,7 @@ class WebServiceUserHelper {
     public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
-#--------------Forget Password Webservices ------------------------------------# 
+#--------------Forget Password Webservices ------------------------------------#
     public function updateTokenSendEmail($request,$email){
         $_user=$this->repo->findByEmail($email);
         $uniq_id=  uniqid();
@@ -144,7 +144,7 @@ class WebServiceUserHelper {
         $this->saveUser($_user) ;
         return $_user;
     }
-  #---------------Update Authenicated Token------------------------------------#  
+  #---------------Update Authenicated Token------------------------------------#
   public function checkTokenforgetPassword($auth_token){
   $entity = $this->repo->findOneBy(array('authToken' => $auth_token));
         if (count($entity) > 0) {
@@ -153,7 +153,7 @@ class WebServiceUserHelper {
             return $user;
         } else {
             return array('status' => False, 'Message' => 'Authentication Failure');
-        };   
+        };
    return $user;
   }
 #--------------------------Update Forget Password------------------------------#
@@ -167,7 +167,7 @@ public function updateForgetPassword($email,$password){
         } else {
             return array('Message' => 'Invalid Email');
         }
-}  
+}
 #----------------------------Chek Token ---------------------------------------#
 public function authenticateToken($token) {
         $entity = $this->repo->findOneBy(array('authToken' => $token));
@@ -200,11 +200,11 @@ public function registerUser(User $user) {
     }
 #------------\------------------------------------------------------------------#
     public function getArrayByEmail($email, $device_type=null) {//getUserArrayByEmail
-        $entity = $this->repo->findOneBy(array('email' => $email));        
+        $entity = $this->repo->findOneBy(array('email' => $email));
         $userinfo = $this->fillUserArray($entity, $device_type);
         return $userinfo;
     }
-#------------------------------------------------------------------------------#    
+#------------------------------------------------------------------------------#
    public function getDetailArrayByEmail($email, $device_type=null) {
         $entity = $this->repo->findOneBy(array('email' => $email));
         $userinfo = $this->fillUserArray($entity, $device_type);
@@ -212,44 +212,44 @@ public function registerUser(User $user) {
         return array_merge($userinfo, $user_measurment);
     }
 #--------------------------------User Detail Array -----------------------------#
- private function gettingUserDetailArray($entity, $request) {
-        // change name getUserDetailArrayWithRequestArray
-        $userinfo = $this->fillUserArray($entity);
-        $entity = $this->repo->find($userinfo['userId']);
-        $measurement = $entity->getMeasurement();        
-        $user_measurment = $this->fillMeasurementArray($measurement);
-        $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['userId'] . "/";
-        $userinfo['authTokenWebService'] = $entity->getAuthToken();   
-        
-        return array_merge($userinfo, $user_measurment);
-    }
+// private function gettingUserDetailArray($entity, $request) {
+//        // change name getUserDetailArrayWithRequestArray
+//        $userinfo = $this->fillUserArray($entity);
+//        $entity = $this->repo->find($userinfo['userId']);
+//        $measurement = $entity->getMeasurement();
+//        $user_measurment = $this->fillMeasurementArray($measurement);
+//        $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['userId'] . "/";
+//        $userinfo['authTokenWebService'] = $entity->getAuthToken();
+//
+//        return array_merge($userinfo, $user_measurment);
+//    }
     #-----------------------------------------------------------------------
-    
-    public function userDetailObject($user, $deviceType=null) {        
-        $user_array = $this->fillUserArray($user);        
-        $measurment_array = $this->fillMeasurementArray($user->getMeasurement());        
+
+    public function userDetailObject($user, $deviceType=null) {
+        $user_array = $this->fillUserArray($user);
+        $measurment_array = $this->fillMeasurementArray($user->getMeasurement());
         if ($deviceType){
             $device_specs=$user->getDeviceSpecs($deviceType);
             if($device_specs){
                 $user_array['preDeviceType'] = $device_specs->getDeviceType();
-                $user_array['postDeviceType'] = $device_specs->getDeviceType(); 
+                $user_array['postDeviceType'] = $device_specs->getDeviceType();
                 $user_array['heightPerInch'] = $device_specs->getDeviceUserPerInchPixelHeight();
             }  else {
                 $user_array['preDeviceType'] = null;
-                $user_array['postDeviceType'] = null; 
+                $user_array['postDeviceType'] = null;
                 $user_array['heightPerInch'] = null;
             }
         }
-       /* 
+       /*
         $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
         if ($maskMarker){
             $user_array['defaultMarkerSvg'] =$maskMarker->setDefaultMarkerSvg();
         }else{
             $user_array['defaultMarkerSvg'] =null;
         }
-        * 
+        *
         */
-        $user_array['authTokenWebService'] = $user->getAuthToken();  
+        $user_array['authTokenWebService'] = $user->getAuthToken();
         $user_array['path'] = $user->getUploadDir();
         $user_array['iphoneImage'] = $user->getImage();
         return array_merge($user_array, $measurment_array);
@@ -258,36 +258,36 @@ public function registerUser(User $user) {
     public function updateWithUserArray($decoded) {
         $email = $decoded['email'];
         if ($email) {
-            $user = $this->repo->findOneBy(array('email' => $email));            
-            $user->setUpdatedAt(new \DateTime('now'));            
+            $user = $this->repo->findOneBy(array('email' => $email));
+            $user->setUpdatedAt(new \DateTime('now'));
             $this->saveUser($this->setObjectWithArray($user, $decoded));
             return true;
         } else {
             return false;
         }
     }
-    
+
 #-------------------------Login Web Service------------------------------------#
- 
+
  /*   public function loginWebService($request_array, $request) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
         /*$email ='amrani192@gmail.com';
-        $password =''; 
+        $password ='';
         $deviceType="iphone4s";*/
-       
+
        /* $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
                 $device_type=array();
                //  $pre_device_type=$entity->getDeviceType();
             if ($this->matchPassword($entity, $password)) {
-               
+
                 // $device_type['preDeviceType']=$pre_device_type;
                 // $entity->setDeviceType($deviceType);
                  $this->saveUser($entity);
                  $user_info=$this->gettingUserDetailArray($entity, $request);
-                    return array_merge($user_info,$device_type);                
+                    return array_merge($user_info,$device_type);
             } else {
                 return array('Message' => 'Invalid Password');
             }
@@ -295,57 +295,57 @@ public function registerUser(User $user) {
             return array('Message' => 'Invalid Email');
         }
     }*/
-    
 
-    
 
- public function loginWebService($request_array, $request) {
-        $email = $request_array['email'];
-        $password = $request_array['password'];
-        $deviceType=$request_array['deviceType'];
-       
-        $entity = $this->findOneBy($email);
-        if (count($entity) > 0) {
-            if ($this->matchPassword($entity, $password)) {
-                $device_type=$this->getUserDeviceTypeAndMarking($entity,$deviceType);
-                //$pre_device_type=$entity->getDeviceType();
-                // $entity->setDeviceType($deviceType);
-                 $this->saveUser($entity);
-                 $user_info=$this->gettingUserDetailArray($entity, $request);
-                    return array_merge($user_info,$device_type);                
-            } else {
-                return array('Message' => 'Invalid Password');
-            }
-        } else {
-            return array('Message' => 'Invalid Email');
-        }
-    }
-   
+
+
+// public function loginWebService($request_array, $request) {
+//        $email = $request_array['email'];
+//        $password = $request_array['password'];
+//        $deviceType=$request_array['deviceType'];
+//
+//        $entity = $this->findOneBy($email);
+//        if (count($entity) > 0) {
+//            if ($this->matchPassword($entity, $password)) {
+//                $device_type=$this->getUserDeviceTypeAndMarking($entity,$deviceType);
+//                //$pre_device_type=$entity->getDeviceType();
+//                // $entity->setDeviceType($deviceType);
+//                 $this->saveUser($entity);
+//                 $user_info=$this->gettingUserDetailArray($entity, $request);
+//                    return array_merge($user_info,$device_type);
+//            } else {
+//                return array('Message' => 'Invalid Password');
+//            }
+//        } else {
+//            return array('Message' => 'Invalid Email');
+//        }
+//    }
+
 #-------------------------------Web Service For Registration-------------------#
 public function registerWithReqestArray(Request $request, $request_array) {
-       $brandHelper = $this->container->get('admin.helper.brand');   
+       $brandHelper = $this->container->get('admin.helper.brand');
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
-        
-            
-        
-        
+
+
+
+
         $email = $request_array['email'];
         $password = $request_array['password'];
 
         if ($this->isDuplicateEmail(Null, $email)) {
             return array('Message' => 'The Email already exists');
         } else {
-            $user = $this->createNewUser();            
+            $user = $this->createNewUser();
             $password=  $this->encodeThisPassword($user, $password);
             $user->setPassword($password);
             $this->setObjectWithArray($user, $request_array);
             $user->generateAuthenticationToken();
-            
-             //send registration email ....            
+
+             //send registration email ....
             $this->container->get('mail_helper')->sendRegistrationEmail($user);
-                
-            
-            
+
+
+
             // Saving Device Type in User Device Table
             $user_device_name=$request_array['deviceId'];
             $userDevice= new UserDevices();
@@ -354,7 +354,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $userDevice->setDeviceUserPerInchPixelHeight(7); #default value 7
             $userDevice->setUser($user);
             $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
-               
+
             $measurement = new Measurement();
             $measurement = $this->setSizechartInMeasurment($measurement, $request_array);
             $measurement->setUser($user);
@@ -366,7 +366,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $user_info=$this->gettingUserDetailArray($user, $request);
             $device_type=$this->getUserDeviceTypeAndMarking($user,$request_array['deviceType']);
             return array_merge($user_info,$device_type);
-            //return $this->gettingUserDetailArray($user, $request);             
+            //return $this->gettingUserDetailArray($user, $request);
         }
     }
 #-----------------------Measurement Edit Service-------------------------------#
@@ -389,19 +389,19 @@ public function updateMeasurementWithReqestArray($id, $request_array,$request) {
         $email = $request_array['email'];
       //  $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
       //  $iphone_outseam = $request_array['iphone_outseam'];
-        
+
         $entity = $this->repo->findOneBy(array('email' => $email));// has to be change to getByEmail
         if (count($entity) > 0) {
             $userinfo = $this->fillUserArray($entity, $request_array['deviceType']);
             $userinfo['authTokenWebService'] = $entity->getAuthToken();
-          //  $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";             
-                
+          //  $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";
+
             $entity = $this->repo->find($userinfo['userId']);
              if (array_key_exists('deviceType', $request_array) and (array_key_exists('heightPerInch', $request_array)) ) {
             $this->setMarkingDeviceType($entity, $request_array['deviceType'],$request_array['heightPerInch']);
             }
-            $measurement = $entity->getMeasurement();// remove this when added to  
-            
+            $measurement = $entity->getMeasurement();// remove this when added to
+
             if ($measurement) {
                 $measurement->setUpdatedAt(new \DateTime('now'));
                /* if (isset($iphone_shoulder_height)) {
@@ -412,11 +412,11 @@ public function updateMeasurementWithReqestArray($id, $request_array,$request) {
                 }*/
         if (array_key_exists('shoulderWidth', $request_array)) {
             $measurement->setShoulderWidth($request_array['shoulderWidth']);
-        }    
+        }
         if (array_key_exists('shoulderHeight', $request_array)) {
             $measurement->setShoulderHeight($request_array['shoulderHeight']);
-        }    
-        
+        }
+
            if (array_key_exists('bustHeight', $request_array)) {
             $measurement->setbustHeight($request_array['bustHeight']);
         }
@@ -429,7 +429,7 @@ public function updateMeasurementWithReqestArray($id, $request_array,$request) {
          if (array_key_exists('hipWidth', $request_array)) {
             $measurement->setHipWidth($request_array['hipWidth']);
         }
-         
+
         if (array_key_exists('waistHeight', $request_array)) {
             $measurement->setWaistHeight($request_array['waistHeight']);
         }
@@ -439,18 +439,18 @@ public function updateMeasurementWithReqestArray($id, $request_array,$request) {
         if (array_key_exists('iphoneFootHeight', $request_array)) {
             $measurement->setIphoneFootHeight($request_array['iphoneFootHeight']);
         }
-        
-        
+
+
                 $entity->setMeasurement($measurement);
                 $this->saveUser($entity);
-            }                        
-            $user_measurment = $this->fillMeasurementArray($measurement);            
+            }
+            $user_measurment = $this->fillMeasurementArray($measurement);
             return  array_merge($userinfo, $user_measurment);
         } else {
             return array('Message' => 'Invalid Email');
         }
 }
-#---------------------Change Password Action-----------------------------------#  
+#---------------------Change Password Action-----------------------------------#
 public function changePasswordWithReqestArray($request_array) {
         if (isset($request_array['email'])) {$email = $request_array['email'];}
         if (isset($request_array['password'])){$password = $request_array['password'];}
@@ -460,7 +460,7 @@ public function changePasswordWithReqestArray($request_array) {
          $old_password='123456'; */
         $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
         if (count($entity) > 0) {
-            if ($this->matchPassword($entity, $old_password)) {                
+            if ($this->matchPassword($entity, $old_password)) {
                 $password = $this->encodeThisPassword($entity, $password);
                 $entity->setPassword($password);
                 $this->saveUser($entity);
@@ -473,9 +473,9 @@ public function changePasswordWithReqestArray($request_array) {
         }
     }
 #----------------- Getting the User Info ---------------------------------------#
-private function fillUserArray($entity, $device_type=null) {  
-    
-   
+private function fillUserArray($entity, $device_type=null) {
+
+
         $birth_date = $entity->getBirthDate();
         $userinfo = array();
         $userinfo['userId'] = $entity->getId();
@@ -502,22 +502,22 @@ private function fillUserArray($entity, $device_type=null) {
         }else{
             $userinfo['iphoneImage'] ='';
         }
-        
+
         /*else{
            if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
         }*/
         #if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
-        
-     
-                  
+
+
+
           //  $userDevice= new UserDevices();
-          
+
 //  if($entity->getDeviceUserPerInchPixelHeight()){$userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();}else{$userinfo['heightPerInch']='';}
       //  if($entity->getDeviceType()){$userinfo['postDeviceType']= $entity->getDeviceType();} else{$userinfo['postDeviceType']='';}
       //  if($entity->getDeviceType()){$userinfo['preDeviceType']= $entity->getDeviceType();}else{ $userinfo['preDeviceType']='';}
-       
-        
+
+
         return $userinfo;
     }
 #------------------------------------------------------------------------------#
@@ -549,7 +549,7 @@ private function fillUserArray($entity, $device_type=null) {
             $userinfo['bodyShape'] = $measurement->getBodyShape();
             }else{
                 $userinfo['bodyShape'] ='';}
-                
+
             if($measurement->getBraSize()){
             $userinfo['braSize'] = $measurement->getBraSize();
             }else{
@@ -557,11 +557,11 @@ private function fillUserArray($entity, $device_type=null) {
             }
             $userinfo['thigh'] = $measurement->getThigh();
             $userinfo['shoulderWidth'] = $measurement->getShoulderWidth();
-            
+
             $userinfo['bustHeight'] = $measurement->getbustHeight();
             $userinfo['waistHeight'] = $measurement->getWaistHeight();
             $userinfo['hipHeight'] = $measurement->getHipHeight();
-            
+
             $userinfo['bustWidth'] = $measurement->getBustWidth();
             $userinfo['waistWidth'] = $measurement->getWaistWidth();
             $userinfo['hipWidth'] = $measurement->getHipWidth();
@@ -578,8 +578,8 @@ private function fillUserArray($entity, $device_type=null) {
             $userinfo['ankle'] = $measurement->getAnkle();
             $userinfo['iphoneFootHeight'] = $measurement->getIphoneFootHeight();
             $userinfo['iphoneHeadHeight'] = $measurement->getIphoneHeadHeight();
-            
-            
+
+
             if($measurement->getTopBrand()){
             $userinfo['topBrandId'] = $measurement->getTopBrand()->getId();
             }else{
@@ -595,7 +595,7 @@ private function fillUserArray($entity, $device_type=null) {
             }else{
                 $userinfo['dressBrandId']=0;
             }
-           
+
             if($measurement->getTopFittingSizeChart()){
             $userinfo['topFittingSizeChartId'] = $measurement->getTopFittingSizeChart()->getId();
             }else{
@@ -611,11 +611,11 @@ private function fillUserArray($entity, $device_type=null) {
             }else{
                 $userinfo['dressFittingSizeChartId']=0;
             }
-    
-        } 
-         
+
+        }
+
         return $userinfo;
-    
+
     }
 
 #----------------------------Set User Array-------------------------------------#
@@ -639,7 +639,7 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('dob', $request_array)) {
             $user->setBirthDate(new \DateTime($request_array['dob']));
         }
-      
+
         return $user;
     }
 
@@ -647,31 +647,31 @@ private function setObjectWithArray($user, $request_array) {
 
     private function setSizechartInMeasurment($measurement, $request_array) {
 
-        $sizeChartHelper = $this->container->get('admin.helper.sizechart');    
-        $brandHelper = $this->container->get('admin.helper.brand');    
-        
+        $sizeChartHelper = $this->container->get('admin.helper.sizechart');
+        $brandHelper = $this->container->get('admin.helper.brand');
+
         //getBrandIdBaseOnBrandName
-        
+
         //user teranary operator
         // $sc_top_id = isset($request_array['sc_top_id'])? $request_array['sc_top_id']:0;
         //targetTop='Abc'
        // targetBottom='Bottom'
        // targetDress='Dress'
-       
-        
-        
+
+
+
         $gender=$request_array['gender'];
-         
+
          if(isset($request_array['bodyType'])){
              $bodyType=$request_array['bodyType'];
          }else{
-             
+
              $bodyType='Regular';
          }
         if($request_array['targetTop'] ){
-        
+
             $target='Top';
-            
+
             $size_title=$request_array['topSize'];
              if($size_title==00 or $size_title=='00'){
                 $size_title=00;
@@ -680,13 +680,13 @@ private function setObjectWithArray($user, $request_array) {
                 $size_title=0;
             }
             $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetTop']);
-           
+
             $sc_top_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title,$bodyType);
             if($sc_top_id){
             $top_id=$sc_top_id[0];}else{
-            $top_id=0;    
+            $top_id=0;
             }
-            
+
         }
          else {
             $top_id = 0;
@@ -704,7 +704,7 @@ private function setObjectWithArray($user, $request_array) {
             $sc_bottom_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title,$bodyType);
             if($sc_bottom_id){
             $bottom_id=$sc_bottom_id[0];}else{
-            $bottom_id=0;    
+            $bottom_id=0;
             }
         } else {
             $bottom_id = 0;
@@ -725,11 +725,11 @@ private function setObjectWithArray($user, $request_array) {
             }else{
                 $dress_id=0;
             }
-            
+
         } else {
             $dress_id = 0;
         }
-        
+
         if ($top_id) {
             $top_size = $sizeChartHelper->findOneById($top_id);
             $measurement->setTopFittingSizeChart($top_size); //
@@ -782,7 +782,7 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('braSize', $request_array)) {
             $measurement->setBraSize($request_array['braSize']);
         }
-        
+
         if (array_key_exists('thigh', $request_array)) {
             $measurement->setThigh($request_array['thigh']);
         }
@@ -798,7 +798,7 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('shoulderAcrossBack', $request_array)) {
             $measurement->setShoulderAcrossBack($request_array['shoulderAcrossBack']);
         }
-        
+
          if (array_key_exists('sleeve', $request_array)) {
             $measurement->setSleeve($request_array['sleeve']);
         }
@@ -840,21 +840,21 @@ private function setObjectWithArray($user, $request_array) {
         }
          if (array_key_exists('calf', $request_array)) {
             $measurement->setCalf($request_array['calf']);
-        }   
+        }
            if (array_key_exists('ankle', $request_array)) {
             $measurement->setAnkle($request_array['ankle']);
-        } 
+        }
           if (array_key_exists('iphoneFootHeight', $request_array)) {
             $measurement->setIphoneFootHeight($request_array['iphoneFootHeight']);
-        } 
-           
-            
+        }
+
+
         return $measurement;
     }
 
 
-    
-     #-- in_aray dosn't work on multidimensional, so this is recursion method for check array exist or not ---#  
+
+     #-- in_aray dosn't work on multidimensional, so this is recursion method for check array exist or not ---#
  private function in_array_r($needle, $haystack, $strict = false) {
     foreach ($haystack as $item) {
         if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
@@ -867,41 +867,41 @@ private function setObjectWithArray($user, $request_array) {
 
 
 #-------Device Type and Height Per Inch Getting values
-public function getUserDeviceTypeAndMarking($entity,$deviceType){
-   
-            $device_type=array();
-            $userId=$entity->getId();
-          
-            $deviceTypeDb=$this->container->get('user.helper.userdevices')->findDeviceTypeBaseOnUserId($userId);
-           if($this->in_array_r($deviceType,$deviceTypeDb)){
-               
-               foreach($deviceTypeDb as $singleId){
-                if($singleId['deviceType']==$deviceType){
-                   $userDevicesMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($singleId['deviceType'],$userId);
-                    foreach($userDevicesMarking as $singleDeviceMarking){
-                       $singleMarking=$singleDeviceMarking['deviceUserPerInchPixelHeight'];
-                    if($singleMarking){  
-                       $device_type['heightPerInch']=$singleMarking;
-                       $device_type['deviceType']=$deviceType;
-                       return $device_type;
-                   }else{
-                       $device_type['heightPerInch']='0';
-                       $device_type['deviceType']=$deviceType;
-                       return $device_type;
-                     }
-                   }
-                }
-              }
-            }else{
-                $newUserDevice=new UserDevices(); 
-                $newUserDevice->setDeviceType($deviceType);
-                $newUserDevice->setUser($entity);
-                $this->container->get('user.helper.userdevices')->saveUserDevices($newUserDevice);
-                $device_type['heightPerInch']='0';
-                $device_type['deviceType']=$deviceType;
-                 return $device_type;
-            }
-}
+//public function getUserDeviceTypeAndMarking($entity,$deviceType){
+//
+//            $device_type=array();
+//            $userId=$entity->getId();
+//
+//            $deviceTypeDb=$this->container->get('user.helper.userdevices')->findDeviceTypeBaseOnUserId($userId);
+//           if($this->in_array_r($deviceType,$deviceTypeDb)){
+//
+//               foreach($deviceTypeDb as $singleId){
+//                if($singleId['deviceType']==$deviceType){
+//                   $userDevicesMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($singleId['deviceType'],$userId);
+//                    foreach($userDevicesMarking as $singleDeviceMarking){
+//                       $singleMarking=$singleDeviceMarking['deviceUserPerInchPixelHeight'];
+//                    if($singleMarking){
+//                       $device_type['heightPerInch']=$singleMarking;
+//                       $device_type['deviceType']=$deviceType;
+//                       return $device_type;
+//                   }else{
+//                       $device_type['heightPerInch']='0';
+//                       $device_type['deviceType']=$deviceType;
+//                       return $device_type;
+//                     }
+//                   }
+//                }
+//              }
+//            }else{
+//                $newUserDevice=new UserDevices();
+//                $newUserDevice->setDeviceType($deviceType);
+//                $newUserDevice->setUser($entity);
+//                $this->container->get('user.helper.userdevices')->saveUserDevices($newUserDevice);
+//                $device_type['heightPerInch']='0';
+//                $device_type['deviceType']=$deviceType;
+//                 return $device_type;
+//            }
+//}
 #--------------------Set Marking against Device Type---------------------------#
 public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
   $chkMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($deviceType,$entity->getId());
@@ -913,14 +913,14 @@ public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
     }
    //return $chkSingleMarking;
    if($chkSingleMarking==0 || $chkSingleMarking==Null){
-               $newUserDevice=new UserDevices(); 
+               $newUserDevice=new UserDevices();
                $newUserDevice->setDeviceType($deviceType);
                $newUserDevice->setDeviceUserPerInchPixelHeight($heightPerInch);
                $newUserDevice->setUser($entity);
                $this->container->get('user.helper.userdevices')->saveUserDevices($newUserDevice);
-   } 
+   }
    else{
-               //$newUserDevice=new UserDevices(); 
+               //$newUserDevice=new UserDevices();
                $userDevices=$entity->getUserDevices();
                foreach($userDevices as $singleDevice){
                    $deviceTypeDb=$singleDevice->getDeviceType();
@@ -931,9 +931,9 @@ public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
               $this->container->get('user.helper.userdevices')->saveUserDevices($singleDevice);
                    }
                }
-               
-              
-   } 
+
+
+   }
 }
 #---------------------Get All User With Device name ---------------------------#
  public function getAllUserDeviceType(){

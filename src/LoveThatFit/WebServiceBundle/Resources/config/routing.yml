@@ -10,18 +10,18 @@ wsi:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/ws_interface.yml"
     prefix:   /
 
-ws_test:
-    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/wstest.yml"
-    prefix:   /
+#ws_test:
+#    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/wstest.yml"
+#    prefix:   /
 
 dws:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/device_services.yml"
     prefix:   /
 
 
-service_interface_routes:
-    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/service_interface.yml"
-    prefix:   /
+#service_interface_routes:
+#    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/service_interface.yml"
+#    prefix:   /
 #----------------------------- User Routes--------------------------------------#
 ws_connection_check:
     pattern:  /web_service/connection_check
@@ -33,7 +33,7 @@ ws_login:
 
 ws_user_detail:
     pattern:  /web_service/user_detail
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:userDetail }  
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:userDetail }
   
 ws_registration_create:
    pattern:  /web_service/register
@@ -54,7 +54,7 @@ ws_forget_password:
    
 ws_edit_profile:
    pattern:  /web_service/edit_profile
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfile}   
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfile}
     
 ws_user_profile:
    pattern:  /web_service/user_profile
@@ -123,11 +123,11 @@ ws_brands:
     
 ws_new_products:
     pattern:  /web_service/newproducts
-    defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductListing,_format: json  }    
+    defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductListing,_format: json  }
 
 ws_new_products_detail:
     pattern:  /web_service/newproducts_detail
-    defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductDetail,_format: json  }    
+    defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductDetail,_format: json  }
 
 
 ws_products:
@@ -172,7 +172,7 @@ ws_images_ul:
    
 ws_product_syn:
    pattern:  /web_service/product_sync
-   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductSyn}   
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductSyn}
    
 ws_brand_syn:
    pattern:  /web_service/brand_sync
@@ -184,7 +184,7 @@ ws_product_detail_syn:
 
 ws_product_for_user_syn:
    pattern:  /web_service/product_user_sync
-   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductForUserSyn} 
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductForUserSyn}
 
 
 ws_send_push_notifcation:
