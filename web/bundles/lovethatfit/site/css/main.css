@@ -6481,5 +6481,106 @@ padding-bottom: 10px;
 
 
 
+.fitting_image_holder{
+	background:#f2f2f2; 
+	position:relative; 
+	box-shadow:0px 2px 2px #ccc; 
+	text-align:center; 
+	padding:10px; 
+	margin:0 auto; 
+	width:50%;
+	overflow:auto;
+	}
+
+.container_show{
+width:50%;
+min-width:320px;
+background:#fff;
+border:1px solid #ececec;
+margin:0 auto;
+}
+
+.comments_sec table thead tr:first-child{	
+	background:#242424;
+	color:#fff;
+	
+}
+
+.comments_sec table th{	
+	text-align:center;
+	
+	
+}
+
+.comments_sec td{	
+	background:#ffffff;	
+	height: 60px; 
+	vertical-align:middle!important;
+	font-weight:bold;
+        text-align: center;
+	
+}
+
+.comments_sec table tr{	
+	box-shadow:0px 1px 1px #ccc;
+}
+
+.logosm{
+	background:#fff;
+	padding:5px;
+	box-shadow:0 0px 5px #555;
+	overflow:auto;
+	position:absolute;
+	bottom:0px;
+	left:10px;
+	height:auto;
+	margin:0 auto; 
+	
+	
+}
+
+.clr{
+	clear:both;
+	margin-bottom:20px;
+}
+	
+.table{
+	background:#c8c8c8;		
+}
+
+.enlarge_icon{
+position:absolute;
+right:10px;
+bottom:10px;
+opacity: 0.3;	
+}
+
+
+.rating_ratio{
+    float: right;
+    height: 18px;
+    overflow: hidden;
+    position: relative;
+    width: 92px;
+}
+
+.rating_bar{
+    background: #000 none repeat scroll 0 0;
+    height: 15px;   
+    position: absolute;
+    top: 5px;
+    width: 70px;
+}
+
+.rating_transparent{
+    background: transparent url("../images/star_transparent.png") no-repeat scroll 0 0;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 3px;
+    width: 92px;
+}
+
+
 
     

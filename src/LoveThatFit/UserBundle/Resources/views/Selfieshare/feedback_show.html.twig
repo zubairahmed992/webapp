@@ -1,13 +1,33 @@
-<div class="container comments_sec">
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Love That Fit</title>
+        <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+        
+    </head>
+    <body style="background:#ccc;">
+
+
+<div class="container_show comments_sec">
   <div style="position:relative;">
-  <div class="logosm"><img src="images/logo.png" width="100%" height="auto" /></div> 
+  <div class="logosm"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" width="70" height="auto" /></div> 
   
   <div style="text-align:center; font-size:20px; padding:10px 0px;">Monica</div>
    <div class="fitting_image_holder">
    
    <img src="images/fitting_room_img.png" width="70%" height="auto"/>
    
-   <div class="enlarge_icon"><img src="images/image_enlarge.png" style="width:50%; height:auto;" /></div>
+   <div class="enlarge_icon"><img src="{{ asset('bundles/lovethatfit/site/images/image_enlarge.png') }}" style="width:50%; height:auto;" /></div>
    
    </div>
  
@@ -18,7 +38,13 @@
   
   
   <div class="clr"></div>  
-  <div style="background:#555; color:#FFF; text-align:right; border-bottom:2px solid #ccc; padding:8px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; font-size:18px;">5 Like 25% Comments</div>       
+  <div style="overflow: auto;background:#555; color:#FFF; text-align:right; border-bottom:2px solid #ccc; padding:8px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; font-size:18px;">
+      <div class="rating_ratio"> <img src="{{ asset('bundles/lovethatfit/site/images/rating_bg.png') }}">
+      
+          <div class="rating_bar"></div>
+          <div class="rating_transparent"></div>
+      </div>
+  </div>       
   <table class="table">
     <thead>
       <tr>
@@ -31,63 +57,50 @@
     <tbody>
       <tr>
         <td valign="middle">Arnold France</td>
-        <td align="center"><img src="images/comments_icon.png" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" /></td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  /></td>
         <td align="center">
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}"/>
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
         </td>
       </tr>
+      
       <tr>
-        <td>Monica Stephen</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/dislike_icon.png" width="75%"  /></td>
+        <td valign="middle">Arnold France</td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" /></td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  /></td>
         <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}"/>
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
         </td>
       </tr>
+      
       <tr>
-        <td>Julianne Applegate</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
+        <td valign="middle">Arnold France</td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" /></td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  /></td>
         <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}"/>
+        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
         </td>
       </tr>
-      <tr>
-        <td>Peter Herry</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
-        <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" /></td>
-      </tr>
-      <tr>
-        <td>Shawn Peri</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
-        <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-         </td>
-      </tr>
+      
+      
+      
+      
     </tbody>
   </table>
 </div>
+        
+        
+         </body>
+</html>
