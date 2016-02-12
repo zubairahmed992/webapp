@@ -1,5 +1,5 @@
-selfieshare_feedback:
-    resource: "@LoveThatFitUserBundle/Resources/config/routing/selfieshare_feedback.yml"
+selfieshare:
+    resource: "@LoveThatFitUserBundle/Resources/config/routing/selfieshare.yml"
     prefix:   /
 #---------------------------------------------------------------
 

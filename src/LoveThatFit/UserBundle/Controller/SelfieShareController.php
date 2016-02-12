@@ -6,18 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SelfieShareFeedbackController extends Controller {
+class SelfieShareController extends Controller {
 
-    public function createAction() {
-        return new Response('create');
-    }
+   
 
-    #----------------------------------------------
-
-    public function editAction() {
-        
-          return $this->render('LoveThatFitUserBundle:SelfieshareFeedback:edit.html.twig');
-        return new Response('edit');
+    public function feedbackEditAction($ref) {
+        #return new Response($ref);
+        return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_edit.html.twig');        
     }
 
     #----------------------------------------------
