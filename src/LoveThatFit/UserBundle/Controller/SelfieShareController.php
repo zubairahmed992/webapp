@@ -17,14 +17,14 @@ class SelfieShareController extends Controller {
 
     #----------------------------------------------
 
-    public function updateAction() {
+    public function feedbackUpdateAction() {
         return new Response('update');
     }
 
     #----------------------------------------------
 
-    public function showAction() {
-        return new Response('show');
+    public function feedbackShowAction() {
+         return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_show.html.twig');   
     }
 
 }
