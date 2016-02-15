@@ -1,93 +1,129 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Love That Fit</title>
+        <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+      
+        
+        <script>
+
+$(document).ready(function() {
+   $('#clientsOpen').click(function () {
+	   
+   
+if ($('#clientsDashboard').is(':visible')){
+
+
+$('#clientsOpen').css({'background':'#333','color':'#fff'});
+$('#clientsDropDown').css({'border-bottom':'10px solid #333'});
+$('.logosm3').css({'display':'block','margin-top':'160px','margin-left':'10px'});
+
+
+$('#upicon').css({'display':'inline-block'});
+$('#downicon').css({'display':'none'});
+
+}
+else{
+$('#clientsOpen').css({'background':'#c4c4c5','color':'#333'});
+$('#clientsDropDown').css({'border-bottom':'0px'});	
+$('.logosm3').css({'display':'none'});
+$('#downicon').css({'display':'inline-block'});
+$('#upicon').css({'display':'none'});
+}
+		
+
+		
+    $('#clientsDropDown #clientsDashboard').slideToggle({
+      direction: "up"
+    }, 300);
+    $(this).toggleClass('clientsClose');
+  }); // end click
+});
+
+
+$(':radio').change(
+  function(){
+    $('.choice').text( this.value + ' stars' );
+  } 
+);
+
+</script>
+    </head>
+    <body style="background:#ccc;">
+
 <div class="container comments_sec">
-  <div style="position:relative;">
-  <div class="logosm"><img src="images/logo.png" width="100%" height="auto" /></div> 
-  
-  <div style="text-align:center; font-size:20px; padding:10px 0px;">Monica</div>
-   <div class="fitting_image_holder">
+ <div style="position:relative;">
+
+  <div class="fitting_image_holder">    
+    <img src="{{ asset('bundles/lovethatfit/site/images/fitting_room_img.png') }}" width="70%" height="auto"/>    
+    <div class="enlarge_icon"><img src="{{ asset('bundles/lovethatfit/site/images/image_enlarge.png') }}" style="width:50%; height:auto;" /></div>   
+ </div>  
    
-   <img src="images/fitting_room_img.png" width="70%" height="auto"/>
-   
-   <div class="enlarge_icon"><img src="images/image_enlarge.png" style="width:50%; height:auto;" /></div>
-   
-   </div>
- 
-  
-   
-    </div> 
-  
+    </div>   
   
   
   <div class="clr"></div>  
-  <div style="background:#555; color:#FFF; text-align:right; border-bottom:2px solid #ccc; padding:8px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; font-size:18px;">5 Like 25% Comments</div>       
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Friends</th>
-        <th align="center">Comments</th>
-        <th>Like</th>
-        <th>Rating</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td valign="middle">Arnold France</td>
-        <td align="center"><img src="images/comments_icon.png" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
-        <td align="center">
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        </td>
-      </tr>
-      <tr>
-        <td>Monica Stephen</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/dislike_icon.png" width="75%"  /></td>
-        <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        </td>
-      </tr>
-      <tr>
-        <td>Julianne Applegate</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
-        <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        </td>
-      </tr>
-      <tr>
-        <td>Peter Herry</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
-        <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" /></td>
-      </tr>
-      <tr>
-        <td>Shawn Peri</td>
-        <td align="center"><img src="images/comments_icon.png" alt="" width="25" height="25" /></td>
-        <td align="center"><img src="images/like_icon.png" width="75%"  /></td>
-        <td align="center">
-           <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_dark.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-        <img src="images/rating_star_icon_light.png" />
-         </td>
-      </tr>
-    </tbody>
-  </table>
+ 
+  
+   <div class="logosm3"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>
+  <div id="clientsDropDown">
+    <p id="clientsOpen">Feedback
+    <span id="downicon">▼</span>
+     <span id="upicon">▲</span>
+    
+    </p>
+
+  <div id="clientsDashboard">  
+  
+   <div style="background: #CCC; padding: 10px; overflow: auto; /* [disabled]width:100%; */" id="commentwrap">
+  
+  <div class="like_rating_wrapper">
+  
+  <div class="like_wrapper">
+        <span>Like: </span>
+        <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" />
+        <img src="{{ asset('bundles/lovethatfit/site/images/show_dislike_icon.png') }}" width="25" height="25" />
+  </div>
+  
+  <div class="rating_wrapper">
+  
+    <span>Rating:</span>
+          
+         <span class="star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+  
+  </div>
+  
+  
+  </div>
+  <div class="logosm2"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>  
+  <div class="textarea_wrap"><textarea name="textarea" id="textarea" cols="45" rows="5"></textarea></div>
+  <div class="clr"></div>
+  <div class="submitcomments"><input type="submit" name="button" id="button" value="SEND" /></div>  
+  
+  </div>  
+  
+   
+  </div>
+  <!-- /clientsDashboard -->
+</div>  
 </div>
+  
+   
+         </body>
+</html>
