@@ -144,4 +144,29 @@ class MailHelper {
 	return $result;
   }
 
+   public function sendEmailWithTemplate($arr) {
+        $from = $this->conf['parameters']['mailer_user'];
+        $message = \Swift_Message::newInstance()
+                ->setSubject($arr['subject'])
+                ->setFrom($from)
+                ->setTo($arr['to_email'])
+                ->setContentType("text/html")
+                ->setBody($this->templating->render($arr['template'], $arr['template_array']));
+        try {
+            $this->mailer->send($message);
+        } catch (\Swift_TransportException $e) {
+            $result = array(
+                false,
+                'There was a problem sending email: ' . $e->getMessage()
+            );
+            return $result;
+        }
+
+        $result = array(
+            true,
+            'email has been sent.'
+        );
+        return $result;
+    }
+
 }

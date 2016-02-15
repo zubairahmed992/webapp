@@ -20,7 +20,15 @@ class SelfieShareController extends Controller {
     public function feedbackUpdateAction() {
         $ra=$this->getRequest()->request->all();
         #return new Response(json_encode($ra));
-        $selfieshare=$this->get('user.selfieshare.helper')->updateFeedback($ra);            
+        $selfieshare=$this->get('user.selfieshare.helper')->updateFeedback($ra);  
+        
+        $user=$selfieshare->getUser();
+        $ss_ar['to_email'] = $user->getEmail();
+        $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
+        $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$selfieshare);
+        $ss_ar['subject']='SelfieStrler friend share';
+        $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+            
         return new Response($selfieshare->getFriendName().'provided feedback updated.');
     }
 

@@ -1,3 +1,10 @@
+sent_email_test:
+    pattern:  /sent_email/test
+    defaults: { _controller: LoveThatFitAdminBundle:sentEmail:sendTestEmail}
+sent_email_selfieshare:
+    pattern:  /sent_email/selfieshare/{ref}
+    defaults: { _controller: LoveThatFitAdminBundle:sentEmail:selfieshare}
+
 sent_email_show:
     pattern:  /sent_email/show/{email_type}/{id}
     defaults: { _controller: LoveThatFitAdminBundle:sentEmail:show}

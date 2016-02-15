@@ -87,7 +87,16 @@ class SelfieshareHelper {
         #if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite(true);}
         $selfieshare->setFavourite(array_key_exists('favourite', $ra) && $ra['favourite']?true:false);
         if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
-        $this->save($selfieshare);          
+        $this->save($selfieshare);         
+        /*
+         if the updated time is less than five minutes then dont send email
+        $user=$selfieshare->getUser();
+        $ss_ar['to_email'] = $user->getEmail();
+        $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
+        $ss_ar['template_array']=array('user'=>$user, 'selfiestyler'=>$selfieshare);
+        $ss_ar['subject']='SelfieStrler friend share';
+        $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+        */
         return $selfieshare;
     }  
     #----------------------------------------------------------------------------
