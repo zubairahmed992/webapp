@@ -347,4 +347,11 @@ private function getMaskedMarkerSpecs() {
                         ))
                         ->getForm();
     }
+    
+       //-------------------------Selfieshare -------------------------------------------------------
+    public function selfieshareListAction($id) {
+        $user = $this->get('user.helper.user')->find($id);        
+        return $this->render('LoveThatFitAdminBundle:User:selfieshare_list.html.twig', array(
+                    'user' => $user));
+    }
 }

@@ -65,7 +65,7 @@ $(':radio').change(
  <div style="position:relative;">
 
   <div class="fitting_image_holder">    
-    <img src="{{ asset('bundles/lovethatfit/site/images/fitting_room_img.png') }}" width="70%" height="auto"/>    
+    <img src="{{ asset(selfieshare.webPath) }}" width="70%" height="auto"/>    
     <div class="enlarge_icon"><img src="{{ asset('bundles/lovethatfit/site/images/image_enlarge.png') }}" style="width:50%; height:auto;" /></div>   
  </div>  
    
@@ -74,7 +74,8 @@ $(':radio').change(
   
   <div class="clr"></div>  
  
-  
+  {{path("selfieshare_feedback_update")}}
+  {#"/selfieshare/feedback_update"#}
    <div class="logosm3"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>
   <div id="clientsDropDown">
     <p id="clientsOpen">Feedback
@@ -90,6 +91,7 @@ $(':radio').change(
   <div class="like_rating_wrapper">
   
   <div class="like_wrapper">
+      {{selfieshare.favourite}}
         <span>Like: </span>
         <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" />
         <img src="{{ asset('bundles/lovethatfit/site/images/show_dislike_icon.png') }}" width="25" height="25" />
@@ -98,8 +100,9 @@ $(':radio').change(
   <div class="rating_wrapper">
   
     <span>Rating:</span>
-          
+          {{selfieshare.rating}}
          <span class="star-rating">
+             
   <input type="radio" name="rating" value="1"><i></i>
   <input type="radio" name="rating" value="2"><i></i>
   <input type="radio" name="rating" value="3"><i></i>
@@ -112,7 +115,7 @@ $(':radio').change(
   
   </div>
   <div class="logosm2"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>  
-  <div class="textarea_wrap"><textarea name="textarea" id="textarea" cols="45" rows="5"></textarea></div>
+  <div class="textarea_wrap"><textarea name="textarea" id="textarea" cols="45" rows="5" >{{selfieshare.comments}}</textarea></div>
   <div class="clr"></div>
   <div class="submitcomments"><input type="submit" name="button" id="button" value="SEND" /></div>  
   

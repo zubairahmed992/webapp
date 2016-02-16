@@ -24,8 +24,8 @@ and open the template in the editor.
   
   
    <div class="fitting_image_holder">
-   
-   <img src="images/fitting_room_img.png" width="70%" height="auto"/>
+      
+   <img src="{{ asset(selfieshare.webPath) }}" width="70%" height="auto"/>
    
    <div class="enlarge_icon"><img src="{{ asset('bundles/lovethatfit/site/images/image_enlarge.png') }}" style="width:50%; height:auto;" /></div>
    
@@ -56,10 +56,17 @@ and open the template in the editor.
     </thead>
     <tbody>
       <tr>
-        <td valign="middle">Arnold France</td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" /></td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  /></td>
+        <td valign="middle">{{selfieshare.friendName}}</td>
+        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" />
+        {{selfieshare.comments}}
+        </td>
         <td align="center">
+            {%if (selfieshare.favourite)%}
+            <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  />
+        {%endif%}
+        </td>
+        <td align="center">
+            {{selfieshare.rating}}
         <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
         <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
         <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />

@@ -1,0 +1,48 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_users') }}" >Users</a> <span class="divider">/</span></li>
+<li class="active">
+<a href="{{ path('admin_user_detail_show', {'id': user.id}) }}" >Back</a>
+</li>
+
+{% endblock %}
+
+{% block h1 %}SelfieShare{% endblock %}
+
+{% block title %}SelfieShare{% endblock %}
+
+
+{% block body %}
+   <div class="bs-docs-grid">              
+
+        <div class="row-fluid">
+            <div class="span1 hds">ID</div>
+            <div class="span3 hds">Name</div>
+            <div class="span2 hds">Phone</div>            
+            <div class="span1 hds">Email</div>
+            <div class="span1 hds">Created At</div>
+           
+            <div class="span2 hds" style="width:17.60%!important;">Actions</div>
+        </div>  
+         
+          {% for ss in user.selfieshare %}
+        <div class="row-fluid show-grid space_wrap">
+            <div class="span1">{{ss.id}}</div>
+            <div class="span3">{{ss.friendName}} </div>
+            <div class="span1">{{ss.friendPhone}}</div>            
+            <div class="span1">{{ss.friendEmail}}</div>
+            <div class="span1">{{ss.createdAt|date('d-m-Y')}}</div>
+                
+            <div class="span1">
+                
+                <a href="{{ path('selfieshare_feedback_show', {'ref': ss.ref}) }}" target="_blank">show</a>            
+                <a href="{{ path('selfieshare_feedback_edit', {'ref': ss.ref}) }}" target="_blank">edit</a>            
+            </div> 
+            </div>                
+               
+{% endfor %}
+ </div>
+ 
+{% endblock %}
+

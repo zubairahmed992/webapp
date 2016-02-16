@@ -7,5 +7,5 @@ selfieshare_feedback_update:
     defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackUpdate }
         
 selfieshare_feedback_show:
-    pattern:   /selfieshare/feedback_show
+    pattern:   /selfieshare/feedback_show/{ref}
     defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackShow, ref: null }    
