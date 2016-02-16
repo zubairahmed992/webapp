@@ -5,16 +5,3 @@ admin_fit_algorithm2_index:
 admin_fit_algorithm2_comparision:
     pattern:  /admin/fit_algorithm2/compare/{user_id}/{product_id}/{json}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:FitAlgorithmCompare, user_id: 0, product_id: 0, json: 0}
-#-------------------------------------------------------
-admin_algorithm_avg:
-    pattern:  /admin/algorithm/avg
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:avg}
-
-admin_algorithm_avg_comparison:
-    pattern:  /admin/algorithm/avg_comparison/{user_id}/{product_id}/{json}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:avgComparison, user_id: 0, product_id: 0, json: 0}
-#-------------------------------------------------------
-admin_algorithm_foo:
-    pattern:  /admin/algorithm/foo/{user_id}/{product_id}/{size_id}/{type}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0, size_id: 0, type: 0}
-    
