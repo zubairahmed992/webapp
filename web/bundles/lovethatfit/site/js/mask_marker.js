@@ -1222,10 +1222,11 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
                             
-                            image_actions_count.move_left_right -= 1;
-                            
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_left_right -= 0.5;
                                 //x_pos_user_image -= ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_left_right -= 1;
                             }
                             
                         }
@@ -1244,28 +1245,37 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
                             
-                            image_actions_count.move_left_right += 1;
+                            
                             
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_left_right += 0.5;
                                 //x_pos_user_image += ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_left_right += 1;
                             }
                         }
                          if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
                             
-                            image_actions_count.move_up_down -= 1;
+                            
                             
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_up_down -= 0.5;
                                 //y_pos_user_image -= ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_up_down -= 1;
                             }
                         }
                          if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
                             
-                            image_actions_count.move_up_down += 1;
+                            
                             
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_up_down += 0.5;
                                 //y_pos_user_image += ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_up_down += 1;
                             }
                             
                         }

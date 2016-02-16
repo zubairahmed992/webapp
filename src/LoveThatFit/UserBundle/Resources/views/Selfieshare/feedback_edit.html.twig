@@ -18,6 +18,11 @@ and open the template in the editor.
         <script>
 
 $(document).ready(function() {
+ 
+ $("#send_button").click(function(){
+     hit_update_service();
+ });
+    
    $('#clientsOpen').click(function () {
 	   
    
@@ -47,7 +52,7 @@ $('#upicon').css({'display':'none'});
       direction: "up"
     }, 300);
     $(this).toggleClass('clientsClose');
-    hit_update_service();
+    
   }); // end click
   
 });
@@ -81,6 +86,13 @@ $.ajax({
   });
 }
 </script>
+
+  <input type="text" value="{{selfieshare.ref}}" />
+  <input type="text" value="{{ asset(selfieshare.webPath) }}" />
+  <input type="text" value="{{selfieshare.favourite}}" />
+  <input type="text" value="{{selfieshare.rating}}" />
+  <input type="text" value="{{selfieshare.comments}}" />
+
     </head>
     <body style="background:#ccc;">
 
@@ -99,7 +111,7 @@ $.ajax({
  
   
   
-  {{selfieshare.ref}}
+  
    <div class="logosm3"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>
   <div id="clientsDropDown">
     <p id="clientsOpen">Feedback
@@ -115,7 +127,7 @@ $.ajax({
   <div class="like_rating_wrapper">
   
   <div class="like_wrapper">
-      {{selfieshare.favourite}}
+      
         <span>Like: </span>
         <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" />
         <img src="{{ asset('bundles/lovethatfit/site/images/show_dislike_icon.png') }}" width="25" height="25" />
@@ -124,7 +136,7 @@ $.ajax({
   <div class="rating_wrapper">
   
     <span>Rating:</span>
-          {{selfieshare.rating}}
+          
          <span class="star-rating">
              
   <input type="radio" name="rating" value="1"><i></i>
@@ -139,9 +151,9 @@ $.ajax({
   
   </div>
   <div class="logosm2"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>  
-  <div class="textarea_wrap"><textarea name="textarea" id="textarea" cols="45" rows="5" >{{selfieshare.comments}}</textarea></div>
+  <div class="textarea_wrap"><textarea name="textarea" id="textarea" cols="45" rows="5" ></textarea></div>
   <div class="clr"></div>
-  <div class="submitcomments"><input type="submit" name="button" id="button" value="SEND" /></div>  
+  <div class="submitcomments"><input type="submit" name="button" id="send_button" value="SEND" /></div>  
   
   </div>  
   
