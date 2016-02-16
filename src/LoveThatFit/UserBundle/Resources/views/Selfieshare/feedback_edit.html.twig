@@ -47,16 +47,39 @@ $('#upicon').css({'display':'none'});
       direction: "up"
     }, 300);
     $(this).toggleClass('clientsClose');
+    hit_update_service();
   }); // end click
+  
 });
 
 
 $(':radio').change(
   function(){
-    $('.choice').text( this.value + ' stars' );
+    $('.choice').text( this.value + ' stars' );   
   } 
+  
 );
+function hit_update_service(){
+    var value_ar = {
+ref:'56bdc887043ce',
+comments:'laviosa',
+favourite: true,
+rating: 4};
 
+{#path("selfieshare_feedback_update")#}
+        
+$.ajax({
+        type: "POST",
+        url: "../feedback_update",
+        data: value_ar,  
+       success: function(data){
+           alert(data);
+    },
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+  });
+}
 </script>
     </head>
     <body style="background:#ccc;">
@@ -74,8 +97,9 @@ $(':radio').change(
   
   <div class="clr"></div>  
  
-  {{path("selfieshare_feedback_update")}}
-  {#"/selfieshare/feedback_update"#}
+  
+  
+  {{selfieshare.ref}}
    <div class="logosm3"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>
   <div id="clientsDropDown">
     <p id="clientsOpen">Feedback
