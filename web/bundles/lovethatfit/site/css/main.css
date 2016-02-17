@@ -6687,6 +6687,9 @@ opacity: 0.3;
 .like_wrapper{
     float:left;	
 }
+.like_wrapper a span {
+    display: none;
+}
 
 .rating_wrapper{
     float:right;	
