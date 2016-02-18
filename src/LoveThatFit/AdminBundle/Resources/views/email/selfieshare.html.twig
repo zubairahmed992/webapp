@@ -2,5 +2,5 @@
 {% block email %}
 Please click on the link below to comments on {{user.email}} style
 
-<a href="{{ path('selfieshare_feedback_edit', {'ref': selfieshare.ref}) }}"  >Selfie Styler share</a>
+<a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_edit', {'ref': selfieshare.ref}) }}"  >Selfie Styler share</a>
 {% endblock %}

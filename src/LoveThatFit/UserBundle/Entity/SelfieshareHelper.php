@@ -87,16 +87,24 @@ class SelfieshareHelper {
         #if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite(true);}        
         if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite($ra['favourite']=='false'?false:true);}
         if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
+        #->format('Y-m-d H:i:s')
+        $current = new \DateTime('now');        
+        $updated_at = $selfieshare->getUpdatedAt();        
+        $updated_at = $updated_at->format('Y-m-d H:i:s');
+        $current = $current->format('Y-m-d H:i:s');
+        $to_time = strtotime($current);
+        $from_time = strtotime($updated_at);
+        $interval  =  round(abs($to_time - $from_time) / 60,2);
+        #if ($interval>10){
+            $user=$selfieshare->getUser();
+            $ss_ar['to_email'] = $user->getEmail();
+            $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
+            $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$selfieshare);
+            $ss_ar['subject']='SelfieStrler friend share';
+            $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);            
+        #}
+        
         $this->save($selfieshare);         
-        /*
-         if the updated time is less than five minutes then dont send email
-        $user=$selfieshare->getUser();
-        $ss_ar['to_email'] = $user->getEmail();
-        $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
-        $ss_ar['template_array']=array('user'=>$user, 'selfiestyler'=>$selfieshare);
-        $ss_ar['subject']='SelfieStrler friend share';
-        $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);
-        */
         return $selfieshare;
     }  
     #----------------------------------------------------------------------------
