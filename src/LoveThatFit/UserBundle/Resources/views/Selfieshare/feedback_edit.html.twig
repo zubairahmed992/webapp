@@ -11,19 +11,26 @@ and open the template in the editor.
         <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
-      
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="user-scalable=no, width=device-width, minimal-ui">
         
         <script>
 
 $(document).ready(function() {
- 
+  $("#ss_like").css({'opacity':'0.2'});
+  $("#ss_dislike").css({'opacity':'0.2'});
  $("#ss_like").click(function(){
+      $("#ss_like").css({'opacity':'1'});
+      $("#ss_dislike").css({'opacity':'0.2'});
      $("#ss_like").toggleClass("like_enable");
      $("#ss_dislike").removeClass("like_enable");
      $("#ss_like_status").attr("value", $(".like_enable span").html());
      hit_update_service();
  });
-  $("#ss_dislike").click(function(){
+  $("#ss_dislike").click(function(){    
+     
+     $("#ss_dislike").css({'opacity':'1'});       
+      $("#ss_like").css({'opacity':'0.2'});
      $("#ss_dislike").toggleClass("like_enable");
      $("#ss_like").removeClass("like_enable");
      $("#ss_like_status").attr("value", $(".like_enable span").html());
@@ -105,21 +112,21 @@ $.ajax({
 }
 </script>
 
-  <input id="auth_ref" type="text" value="{{selfieshare.ref}}" />
-  <input id="ss_web_path" type="text" value="{{ asset(selfieshare.webPath) }}" />
-  <input id="ss_like_status" type="text" value="{{selfieshare.favourite}}" />
-  <input id="ss_rating" type="text" value="{{selfieshare.rating}}" />
-  <input id="ss_comments" type="text" value="{{selfieshare.comments}}" />
+  <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
+  <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
+  <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
+  <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
+  <input id="ss_comments" type="hidden" value="{{selfieshare.comments}}" />
 
     </head>
-    <body style="background:#ccc;">
+    <body style="background:#efefef;">
 
-<div class="container comments_sec">
+<div class="container comments_sec" style="border:none;">
  <div style="position:relative;">
 
   <div class="fitting_image_holder">    
-    <img src="{{ asset(selfieshare.webPath) }}" width="70%" height="auto"/>    
-    <div class="enlarge_icon"><img src="{{ asset('bundles/lovethatfit/site/images/image_enlarge.png') }}" style="width:50%; height:auto;" /></div>   
+    <img src="{{ asset(selfieshare.webPath) }}"/>    
+    
  </div>  
    
     </div>   
@@ -130,7 +137,7 @@ $.ajax({
   
   
   
-   <div class="logosm3"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>
+  <div class="logosm3"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div>
   <div id="clientsDropDown">
     <p id="clientsOpen">Feedback
     <span id="downicon">▼</span>
@@ -148,7 +155,7 @@ $.ajax({
       
         <span>Like: </span>
         <a id="ss_like" class="" href="javascript:void(0);"><span>true</span><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" /></a>
-        <a id="ss_dislike" class="" href="javascript:void(0);"><span>false</span><img src="{{ asset('bundles/lovethatfit/site/images/show_dislike_icon.png') }}" width="25" height="25" /></a>
+        <a id="ss_dislike" class="" href="javascript:void(0);"><span>false</span><img src="{{ asset('bundles/lovethatfit/site/images/dislike_icon_active.png') }}" width="25" height="25" /></a>
         
   </div>
   
@@ -169,7 +176,7 @@ $.ajax({
   
   
   </div>
-  <div class="logosm2"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></div>  
+        <div class="logosm2"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div>  
   <div class="textarea_wrap"><textarea name="textarea" id="ss_textarea" cols="45" rows="5" ></textarea></div>
   <div class="clr"></div>
   <div class="submitcomments"><input type="submit" name="button" id="send_button" value="SEND" /></div>  

@@ -13,10 +13,23 @@ and open the template in the editor.
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="user-scalable=no, width=device-width, minimal-ui">
+        
+        <script>
+            $(document).ready(function() {
+                
+                var act_value = $("$bar_val").attr("value");
+                
+                
+                
+                });
+        </script>
         
     </head>
     <body style="background:#ccc;">
 
+        <input id="bar_val" type="hidden" value="{{selfieshare.rating}}"/>
 
 <div class="container_show comments_sec">
   <div style="position:relative;">
@@ -25,9 +38,9 @@ and open the template in the editor.
   
    <div class="fitting_image_holder">
       
-   <img src="{{ asset(selfieshare.webPath) }}" width="70%" height="auto"/>
+   <img src="{{ asset(selfieshare.webPath) }}" width="50%" height="auto"/>
    
-   <div class="enlarge_icon"><img src="{{ asset('bundles/lovethatfit/site/images/image_enlarge.png') }}" style="width:50%; height:auto;" /></div>
+   
    
    </div>
  
@@ -38,18 +51,12 @@ and open the template in the editor.
   
   
   <div class="clr"></div>  
-  <div style="overflow: auto;background:#555; color:#FFF; text-align:right; border-bottom:2px solid #ccc; padding:8px; font-weight:bold; font-family:Arial, Helvetica, sans-serif; font-size:18px;">
-      <div class="rating_ratio"> <img src="{{ asset('bundles/lovethatfit/site/images/rating_bg.png') }}">
-      
-          <div class="rating_bar"></div>
-          <div class="rating_transparent"></div>
-      </div>
-  </div>       
+        
   <table class="table">
     <thead>
       <tr>
         <th>Friends</th>
-        <th align="center">Comments</th>
+        
         <th>Like</th>
         <th>Rating</th>
       </tr>
@@ -57,9 +64,7 @@ and open the template in the editor.
     <tbody>
       <tr>
         <td valign="middle">{{selfieshare.friendName}}</td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" />
-        {{selfieshare.comments}}
-        </td>
+        
         <td align="center">
             {%if (selfieshare.favourite)%}
             <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  />
@@ -67,39 +72,35 @@ and open the template in the editor.
         </td>
         <td align="center">
             {{selfieshare.rating}}
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}"/>
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
+            
+            
+       
+            
+            <div class="rating_ratio"> <img src="{{ asset('bundles/lovethatfit/site/images/rating_bg.png') }}">
+      
+               
+                
+          <div id="rtbar" class="rating_{{selfieshare.rating}}"></div>
+          <div class="rating_transparent"></div>
+      </div>
+            
+            
+            
         </td>
+      </tr>
+      <tr>
+          
+          <td colspan="3" align="left" style="padding:0px;">
+              <div style="padding:5px; color:#333;background: #ccc;float:left; display: block; width: 98%; text-align: left;">Comments</div>
+             
+              <div style="font-size: 12px;float:left; padding: 5px;">Lorem ipsum text will come here</div>
+              
+              </td>
       </tr>
       
-      <tr>
-        <td valign="middle">Arnold France</td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" /></td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  /></td>
-        <td align="center">
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}"/>
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
-        </td>
-      </tr>
+     
       
-      <tr>
-        <td valign="middle">Arnold France</td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/comments_icon.png') }}" width="25" height="25" /></td>
-        <td align="center"><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  /></td>
-        <td align="center">
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_dark.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}"/>
-        <img src="{{ asset('bundles/lovethatfit/site/images/rating_star_icon_light.png') }}" />
-        </td>
-      </tr>
+      
       
       
       
