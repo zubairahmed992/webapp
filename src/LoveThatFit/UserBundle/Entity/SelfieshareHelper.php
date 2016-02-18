@@ -95,14 +95,14 @@ class SelfieshareHelper {
         $to_time = strtotime($current);
         $from_time = strtotime($updated_at);
         $interval  =  round(abs($to_time - $from_time) / 60,2);
-        #if ($interval>10){
+        if ($interval>10){
             $user=$selfieshare->getUser();
             $ss_ar['to_email'] = $user->getEmail();
             $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
             $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$selfieshare);
             $ss_ar['subject']='SelfieStrler friend share';
             $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);            
-        #}
+        }
         
         $this->save($selfieshare);         
         return $selfieshare;
