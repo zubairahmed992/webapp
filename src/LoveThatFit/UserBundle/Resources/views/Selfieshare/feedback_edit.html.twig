@@ -107,7 +107,7 @@ $.ajax({
 
   <input id="auth_ref" type="text" value="{{selfieshare.ref}}" />
   <input id="ss_web_path" type="text" value="{{ asset(selfieshare.webPath) }}" />
-  <input id="ss_like_status" type="text" value="{{selfieshare.favourite}}" />
+  <input id="ss_like_status" type="text" value="{{selfieshare.favourite?'true':'false'}}" />
   <input id="ss_rating" type="text" value="{{selfieshare.rating}}" />
   <input id="ss_comments" type="text" value="{{selfieshare.comments}}" />
 

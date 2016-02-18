@@ -84,7 +84,7 @@ class SelfieshareHelper {
      public function updateFeedback($ra) {
         $selfieshare=$this->repo->findOneBy(array('ref' => $ra['ref']));
         if(array_key_exists('rating', $ra) && $ra['rating']){$selfieshare->setRating($ra['rating']);}
-        if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite($ra['favourite']=='false'?'false':'true');}
+        if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite($ra['favourite']=='false'?false:true);}
         if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
         $current = new \DateTime('now');        
         $updated_at = $selfieshare->getUpdatedAt();        
