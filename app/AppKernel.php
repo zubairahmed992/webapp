@@ -29,7 +29,7 @@ class AppKernel extends Kernel
             new LoveThatFit\SiteBundle\LoveThatFitSiteBundle(),
             new LoveThatFit\UserBundle\LoveThatFitUserBundle(),
             new LoveThatFit\WebServiceBundle\LoveThatFitWebServiceBundle(),
-            new LoveThatFit\RetailerAdminBundle\LoveThatFitRetailerAdminBundle(),
+            //new LoveThatFit\RetailerAdminBundle\LoveThatFitRetailerAdminBundle(),
             new LoveThatFit\ShopifyBundle\LoveThatFitShopifyBundle(),
             new LoveThatFit\ExternalSiteBundle\LoveThatFitExternalSiteBundle(),
             new LoveThatFit\CartBundle\LoveThatFitCartBundle(),
