@@ -1,0 +1,11 @@
+{% extends 'LoveThatFitAdminBundle::email/selfieshare_base.html.twig' %}
+{% block email %}
+    {{user.email}} has sent her/(his) latest look from SelfieStyler. Click on the <a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_edit', {'ref': selfieshare.ref}) }}"  >Link</a> to view, rate and comment.<br /><br />
+    
+    Learn more about <a href="http://www.selfiestyler.com">SelfieStyler</a>
+    <br><br>
+    <img width="20%" height="100" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(selfieshare.webPath) }}">
+        
+
+<br>
+{% endblock %}

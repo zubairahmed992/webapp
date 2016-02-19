@@ -195,7 +195,7 @@ class WSUserController extends Controller {
         if (count($user) > 0) {
             $ss=$this->get('user.selfieshare.helper')->createWithParam($ra, $user);      
             $ss_ar['to_email']=$ss->getFriendEmail();
-            $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
+            $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare_friend.html.twig';
             $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$ss, 'link_type'=>'edit');
             $ss_ar['subject']='SelfieStyler friend share';
             $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
