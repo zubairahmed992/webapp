@@ -68,10 +68,12 @@ and open the template in the editor.
         <td align="center">
             {%if (selfieshare.favourite)%}
             <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26"  />
-        {%endif%}
+       {%else%}
+            <img src="{{ asset('bundles/lovethatfit/site/images/show_dislike_icon.png') }}" width="26"  />
+            {%endif%}
         </td>
-        <td align="center">
-            {{selfieshare.rating}}
+        <td>
+            
             
             
        

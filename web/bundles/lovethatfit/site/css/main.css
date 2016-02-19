@@ -6563,11 +6563,12 @@ opacity: 0.3;
 
 
 .rating_ratio{
-    float: right;
+    
     height: 20px;
     overflow: hidden;
     position: relative;
     width: 92px;
+    margin:0 auto;
 }
 
 .rating_bar{
@@ -7392,4 +7393,7 @@ and (orientation : portrait) {
     top: 5px;
 }
 
+.table tr:first-child td{
+    text-transform: capitalize;
+}
 
