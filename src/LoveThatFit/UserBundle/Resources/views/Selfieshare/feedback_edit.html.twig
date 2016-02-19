@@ -43,7 +43,12 @@ $(document).ready(function() {
  
  $("#send_button").click(function(){
      $("#ss_comments").attr("value",$("#ss_textarea").val());
+     var commentbox = $("#ss_textarea").val();
+     if(commentbox!=''){
      hit_update_service();
+     }else{
+         alert('Kindly put comments');
+     }
  });
     
    $('#clientsOpen').click(function () {
