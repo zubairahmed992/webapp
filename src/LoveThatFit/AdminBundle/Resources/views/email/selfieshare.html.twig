@@ -2,5 +2,11 @@
 {% block email %}
 Please click on the link below to comments on {{user.email}} style
     <img width="20%" height="100" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(selfieshare.webPath) }}">
-<a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_edit', {'ref': selfieshare.ref}) }}"  >Selfie Styler share</a>
+    {% if(link_type=='edit') %}
+        <a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_edit', {'ref': selfieshare.ref}) }}"  >Selfie Styler share</a>
+    {%else%}
+        <a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_show', {'ref': selfieshare.ref}) }}"  >Selfie Styler share</a>
+    {%endif%}
+
+<br>
 {% endblock %}

@@ -97,8 +97,8 @@ class SelfieshareHelper {
             $user=$selfieshare->getUser();
             $ss_ar['to_email'] = $user->getEmail();
             $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare.html.twig';
-            $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$selfieshare);
-            $ss_ar['subject']='SelfieStrler friend share';
+            $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$selfieshare, 'link_type'=>'show');
+            $ss_ar['subject']='SelfieStyler friend share';
             $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);            
         }
         
