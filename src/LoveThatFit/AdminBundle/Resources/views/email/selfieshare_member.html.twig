@@ -1,8 +1,8 @@
 {% extends 'LoveThatFitAdminBundle::email/selfieshare_base.html.twig' %}
 {% block email %}
-{{selfieshare.friendName}} provided feedback on your style photo. please clink on the <a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_show', {'ref': selfieshare.ref}) }}"  >link</a>.
+    <font color="#346da7">{{selfieshare.friendName}}</font> provided feedback on your style photo. please clink on the <a href="{{ app.request.scheme~'://'~app.request.host ~ path('selfieshare_feedback_show', {'ref': selfieshare.ref}) }}"  >link</a>.
 <br><br>  
-<table><tr><td align="center"><img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(selfieshare.webPath) }}"></td></tr></table>
+<table align="center"><tr><td align="center"><img style="border:1px solid #ccc;" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(selfieshare.webPath) }}"></td></tr></table>
 
         
 
