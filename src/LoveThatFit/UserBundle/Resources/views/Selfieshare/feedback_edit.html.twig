@@ -6,13 +6,13 @@ and open the template in the editor.
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
         <title>Love That Fit</title>
         <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="user-scalable=no, width=device-width, minimal-ui">
+        
         
         <script>
 
@@ -108,7 +108,7 @@ $.ajax({
         url: "../feedback_update",
         data: value_ar,  
        success: function(data){
-           alert(data);
+           //alert(data);
     },
         failure: function(errMsg) {
             alert(errMsg);
@@ -117,19 +117,22 @@ $.ajax({
 }
 </script>
 
-  <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
+
+
+    </head>
+    <body style="background:#efefef;">
+        
+        
+          <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
   <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
   <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
   <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
   <input id="ss_comments" type="hidden" value="{{selfieshare.comments}}" />
 
-    </head>
-    <body style="background:#efefef;">
-
 <div class="container comments_sec" style="border:none;">
  <div style="position:relative;">
 
-  <div class="fitting_image_holder">    
+  <div class="share_img_hldr">    
     <img src="{{ asset(selfieshare.webPath) }}"/>    
     
  </div>  
@@ -152,13 +155,13 @@ $.ajax({
 
   <div id="clientsDashboard">  
   
-   <div style="background: #CCC; padding: 10px; overflow: auto; /* [disabled]width:100%; */" id="commentwrap">
+   <div style="background: #CCC; padding: 2%; overflow: auto; /* [disabled]width:100%; */" id="commentwrap">
   
   <div class="like_rating_wrapper">
   
   <div class="like_wrapper">
       
-        <span>Like: </span>
+      <span class="lable_like_rate">Like: </span>
         <a id="ss_like" class="" href="javascript:void(0);"><span>true</span><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" /></a>
         <a id="ss_dislike" class="" href="javascript:void(0);"><span>false</span><img src="{{ asset('bundles/lovethatfit/site/images/dislike_icon_active.png') }}" width="25" height="25" /></a>
         
@@ -166,7 +169,7 @@ $.ajax({
   
   <div class="rating_wrapper">
   
-    <span>Rating:</span>
+    <span class="lable_like_rate">Rating:</span>
           
          <span class="star-rating">
              
