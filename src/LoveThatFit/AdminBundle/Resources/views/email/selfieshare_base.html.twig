@@ -21,9 +21,7 @@
 </head>
 <body>
 <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr>
-        <td colspan="3" align="center" bgcolor="#4b4b4b" height="4"></td>
-    </tr>
+    
     <tr>
         <td colspan="3" align="left" height="5"><font face="Arial, Helvetica, sans-serif" size="1" color="#373535">Having trouble? <a href="#" style="text-decoration:none"><font color="#373535"><u>Click here</u></font></a></font></td>
     </tr>
@@ -37,6 +35,9 @@
                 </tr>
             </table></td>
     </tr>
+                    <tr>
+        <td colspan="3" align="center" height="10"></td>
+    </tr>
     <tr>
         <td colspan="3" align="center" bgcolor="#333333" height="4"></td>
     </tr>
@@ -45,7 +46,7 @@
     </tr>
     <tr>
         <td height="30" colspan="3">
-        {% block email %}{% endblock %}
+            <font face="Arial, Helvetica, sans-serif">{% block email %}{% endblock %}</font>
         
         
         </td>
