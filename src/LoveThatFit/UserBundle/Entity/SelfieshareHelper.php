@@ -77,7 +77,8 @@ class SelfieshareHelper {
         if(array_key_exists('friend_email', $ra) && $ra['friend_email']){$selfieshare->setFriendEmail($ra['friend_email']);}
         if(array_key_exists('friend_phone', $ra) && $ra['friend_phone']){$selfieshare->setFriendPhone($ra['friend_phone']);}
         $selfieshare->setRef(uniqid());
-        $this->save($selfieshare);          
+        $this->em->persist($selfieshare);
+        $this->em->flush();    
         return $selfieshare;
     }  
      #----------------------------------------------------------------------------
@@ -86,6 +87,8 @@ class SelfieshareHelper {
         if(array_key_exists('rating', $ra) && $ra['rating']){$selfieshare->setRating($ra['rating']);}
         if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite($ra['favourite']=='false'?false:true);}
         if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
+        $interval  = 11;
+        if($selfieshare->getUpdatedAt()){
         $current = new \DateTime('now');        
         $updated_at = $selfieshare->getUpdatedAt();        
         $updated_at = $updated_at->format('Y-m-d H:i:s');
@@ -93,6 +96,7 @@ class SelfieshareHelper {
         $to_time = strtotime($current);
         $from_time = strtotime($updated_at);
         $interval  =  round(abs($to_time - $from_time) / 60,2);
+        }
         if ($interval>10){
             $user=$selfieshare->getUser();
             $ss_ar['to_email'] = $user->getEmail();

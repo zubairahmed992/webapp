@@ -110,7 +110,7 @@ class Selfieshare  {
      /**
      * @var \DateTime $updated_at
      *
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updated_at;
 #------------------------------------    
