@@ -6616,11 +6616,17 @@ opacity: 0.3;
 	overflow:auto;
 	}
 
-.container{
+        .ss_comm_area {
+            background: url('../images/trans_5.png');
+            padding: 2%;
+            overflow: auto;
+        }
+        
+.container_show,
+        .container{
 	width:50%;
 	min-width:375px;
 	background:#fff;
-	border:1px solid #ececec;
 	padding:0px!important;
 	min-height:667px;
 	position:relative;
@@ -6837,7 +6843,7 @@ span.lable_like_rate {
 }
 #clientsOpen {
   
- background:#c4c4c5;
+ background: url('../images/trans_5.png');
     cursor: pointer;
     padding:10px;
     text-align:center;
@@ -6905,7 +6911,6 @@ span.lable_like_rate {
 and (min-device-width : 375px) 
 and (max-device-width : 375px) 
 and (orientation : portrait) {
-    
     .rating_wrapper{
         margin-top:0;
     }
@@ -6918,6 +6923,7 @@ and (orientation : portrait) {
 and (min-device-width : 320px) 
 and (max-device-width : 320px) 
 and (orientation : portrait) {
+    .container_show,
     .container{
             min-width:320px;
             background:#fff;

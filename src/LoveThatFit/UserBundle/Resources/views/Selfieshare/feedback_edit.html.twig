@@ -57,7 +57,7 @@ $(document).ready(function() {
 if ($('#clientsDashboard').is(':visible')){
 
 
-$('#clientsOpen').css({'background':'#333','color':'#fff'});
+$('#clientsOpen').css({'color':'#fff'});
 $('#clientsDropDown').css({'border-bottom':'10px solid #333'});
 $('.logosm3').css({'display':'block','margin-top':'160px','margin-left':'10px'});
 
@@ -108,7 +108,7 @@ $.ajax({
         url: "../feedback_update",
         data: value_ar,  
        success: function(data){
-           //alert(data);
+           //Textalert(data);
     },
         failure: function(errMsg) {
             alert(errMsg);
@@ -155,7 +155,7 @@ $.ajax({
 
   <div id="clientsDashboard">  
   
-   <div style="background: #CCC; padding: 2%; overflow: auto; /* [disabled]width:100%; */" id="commentwrap">
+      <div id="commentwrap" class="ss_comm_area">
   
   <div class="like_rating_wrapper">
   
