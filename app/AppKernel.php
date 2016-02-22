@@ -20,21 +20,21 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-			new Acme\TestBundle\AcmeTestBundle(),
-            new Acme\HelloBundle\AcmeHelloBundle(),
-            new Acme\StoreBundle\AcmeStoreBundle(),
-            new Acme\TaskBundle\AcmeTaskBundle(),
+			//new Acme\TestBundle\AcmeTestBundle(),
+            //new Acme\HelloBundle\AcmeHelloBundle(),
+            //new Acme\StoreBundle\AcmeStoreBundle(),
+            //new Acme\TaskBundle\AcmeTaskBundle(),
             new LoveThatFit\AdminBundle\LoveThatFitAdminBundle(),
-            new Acme\UserBundle\AcmeUserBundle(),
+            //new Acme\UserBundle\AcmeUserBundle(),
             new LoveThatFit\SiteBundle\LoveThatFitSiteBundle(),
             new LoveThatFit\UserBundle\LoveThatFitUserBundle(),
             new LoveThatFit\WebServiceBundle\LoveThatFitWebServiceBundle(),
-            new LoveThatFit\ShopifyBundle\LoveThatFitShopifyBundle(),
+            //new LoveThatFit\ShopifyBundle\LoveThatFitShopifyBundle(),
             new LoveThatFit\CartBundle\LoveThatFitCartBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
+            //$bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

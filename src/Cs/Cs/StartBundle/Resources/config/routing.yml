@@ -1,3 +1,0 @@
-cs_start_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: CsStartBundle:Default:index }
