@@ -23,12 +23,7 @@ class Retailer
     protected $retailer_users;
     
     
-    /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack", mappedBy="retailer", orphanRemoval=true)
-     */
-    
-    protected $retailer_order_track;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Brand", inversedBy="retailers")
      * @ORM\JoinTable(name="retailer_brand")
@@ -605,42 +600,4 @@ public function deleteImages()
         return $this->token_timestamp;
     }
 
-   
-
-    
-
-    
-
-    /**
-     * Add retailer_order_track
-     *
-     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
-     * @return Retailer
-     */
-    public function addRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
-    {
-        $this->retailer_order_track[] = $retailerOrderTrack;
-    
-        return $this;
-    }
-
-    /**
-     * Remove retailer_order_track
-     *
-     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
-     */
-    public function removeRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
-    {
-        $this->retailer_order_track->removeElement($retailerOrderTrack);
-    }
-
-    /**
-     * Get retailer_order_track
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRetailerOrderTrack()
-    {
-        return $this->retailer_order_track;
-    }
 }

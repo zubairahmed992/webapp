@@ -93,15 +93,7 @@ class User implements UserInterface, \Serializable {
      */
     private $retailer_site_users;
     
-    
-    /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack", mappedBy="user")
-     */
-    private $retailer_order_track;
-    
-    
-    
-    
+
     /**
      * @ORM\OneToOne(targetEntity="UserMarker", mappedBy="user")
      * */
@@ -1727,38 +1719,7 @@ class User implements UserInterface, \Serializable {
         return $this->timeSpent;
     }
 
-    /**
-     * Add retailer_order_track
-     *
-     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
-     * @return User
-     */
-    public function addRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
-    {
-        $this->retailer_order_track[] = $retailerOrderTrack;
-    
-        return $this;
-    }
 
-    /**
-     * Remove retailer_order_track
-     *
-     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
-     */
-    public function removeRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
-    {
-        $this->retailer_order_track->removeElement($retailerOrderTrack);
-    }
-
-    /**
-     * Get retailer_order_track
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRetailerOrderTrack()
-    {
-        return $this->retailer_order_track;
-    }
     #---------------------------------
     public function getDeviceSpecs($device_type = null) {
         $us = $this->getUserDevices();

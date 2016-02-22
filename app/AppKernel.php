@@ -31,7 +31,7 @@ class AppKernel extends Kernel
             new LoveThatFit\WebServiceBundle\LoveThatFitWebServiceBundle(),
             //new LoveThatFit\RetailerAdminBundle\LoveThatFitRetailerAdminBundle(),
             new LoveThatFit\ShopifyBundle\LoveThatFitShopifyBundle(),
-            new LoveThatFit\ExternalSiteBundle\LoveThatFitExternalSiteBundle(),
+            //new LoveThatFit\ExternalSiteBundle\LoveThatFitExternalSiteBundle(),
             new LoveThatFit\CartBundle\LoveThatFitCartBundle(),
         );
 
