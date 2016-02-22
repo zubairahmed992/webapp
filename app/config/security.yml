@@ -30,32 +30,6 @@ security:
                path:   /admin/logout
                target: /admin/login
 
-#        retailer_admin:
-#            provider: retailer_db
-#            pattern:    ^/retailer
-#            anonymous: ~
-#            form_login:
-#                login_path:  /retailer/login
-#                check_path:  /retailer/login_check
-#                username_parameter: _username
-#                password_parameter: _password
-#            logout:
-#               path:   /retailer/logout
-#               target: /retailer/login
-        
-#        external_site:
-#            provider: user_db
-#            pattern:    ^/external
-#            anonymous: ~
-#            context: primary_auth
-#            form_login:
-#                login_path:  /external/login
-#                check_path:  /external/login_check
-#                username_parameter: _username
-#                password_parameter: _password
-#            logout:
-#               path:   /external/logout
-#               target: /external/login
         
         secured_area:
             provider: user_db
@@ -87,10 +61,7 @@ security:
         - { path: ^/shopify/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         
         - { path: ^/free_share/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
-#        - { path: /external/registration/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/external/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/external/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: /external/, roles: ROLE_USER }
+
         
         - { path: ^/registration/step_one, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /email/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
