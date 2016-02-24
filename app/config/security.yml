@@ -58,7 +58,6 @@ security:
         - { path: /admin/, roles: ROLE_ADMIN }
         - { path: /admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
-        - { path: ^/shopify/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         
         - { path: ^/free_share/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
 
