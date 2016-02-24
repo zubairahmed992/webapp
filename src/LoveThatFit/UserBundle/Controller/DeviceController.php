@@ -28,7 +28,7 @@ class DeviceController extends Controller {
     #---------------------------------------------------------------------------
     
    public function editImageAction($auth_token=null, $edit_type=null, $device_type=null) {
-       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
@@ -75,7 +75,7 @@ class DeviceController extends Controller {
  #---------------------------------------------------------------------------
     
    public function makeoverAction($auth_token=null, $edit_type=null, $device_type=null) {
-       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
@@ -116,7 +116,7 @@ class DeviceController extends Controller {
 #---------------------------------------------------------------------------
     
    public function svgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
-       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
@@ -205,7 +205,7 @@ class DeviceController extends Controller {
     {
         $usermaker=$request->request->all();                 
         if (array_key_exists('auth_token', $usermaker)){
-            $user = $this->get('webservice.helper.user')->findByAuthToken($usermaker['auth_token']);
+            $user = $this->get('user.helper.user')->findByAuthToken($usermaker['auth_token']);
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
             if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
                 $measurement = $user->getMeasurement(); 
@@ -230,7 +230,7 @@ class DeviceController extends Controller {
     
     public function updateImageAction() {
         $auth_token = $_POST['auth_token'];
-        $entity = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+        $entity = $this->get('user.helper.user')->findByAuthToken($auth_token);
         
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Member.');
@@ -247,7 +247,7 @@ class DeviceController extends Controller {
     
     #----------------------------------------------------------------------------
    public function fooAction() {
-        $user = $this->get('webservice.helper.user')->find(1243);
+        $user = $this->get('user.helper.user')->find(1243);
         $device_type = 'iphone5';$edit_type = 'registration';
         $auth_token = $user->getAuthToken();
         if ($auth_token) {                        

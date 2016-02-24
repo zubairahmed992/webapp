@@ -263,7 +263,7 @@ return $this->repo->findAll();
  
  }
  function getUserDeviceIdArray($limit, $lastUserId){
-     $getUserList= $this->container->get('webservice.helper.user')->getFirstLimtedUserWithDeviceType($limit,$lastUserId);
+     $getUserList= $this->container->get('user.helper.user')->getFirstLimtedUserWithDeviceType($limit,$lastUserId);
      $lastUserId=$this->getMaxUserId($getUserList);
      $deviceType=$this->getDeviceNameArray($getUserList);
      return array ('lastUserId'=>$lastUserId,'deviceType'=>$deviceType);

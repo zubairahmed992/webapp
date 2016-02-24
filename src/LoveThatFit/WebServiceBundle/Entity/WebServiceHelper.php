@@ -18,7 +18,7 @@ class WebServiceHelper {
     public function loginService($request_array) {
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
-            if ($this->container->get('webservice.helper.user')->matchPassword($user, $request_array['password'])) {
+            if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     $response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
