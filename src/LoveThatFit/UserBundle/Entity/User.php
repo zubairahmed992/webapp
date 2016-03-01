@@ -349,6 +349,15 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(name="time_spent", type="string", nullable=true)
      */
     private $timeSpent;
+    
+     /**
+     * @var integer $status
+     *
+     * @ORM\Column(name="status", type="integer", nullable=true,options={"default" = 0})
+       
+     */
+    private $status;
+
 
     /**
      * Get id
@@ -843,7 +852,28 @@ class User implements UserInterface, \Serializable {
     public function getZipcode() {
         return $this->zipcode;
     }
+#-----------------------------------------
+       /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus() {
+        return $this->status;
+    }
 
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return User
+     */
+    public function setStatus($status) {
+        $this->status = $status;
+        return $this;
+    }
+
+#-----------------------------------------    
     public function getMyClosetListArray($product_item_id) {
         $productitem = $this->getProductItems();
         foreach ($productitem as $ps) {

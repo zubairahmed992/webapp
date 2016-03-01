@@ -414,7 +414,15 @@ class WebServiceHelper {
             }
                 #______________________________________> Fitting Room image
             if ($ra['upload_type'] == 'fitting_room') {
-
+                $user->setImageDeviceType($ra['device_type']); #THIS SHOULD BE COPPIED TO ARCHIVE
+                if (move_uploaded_file($files["image"]["tmp_name"], $user->getTempImageAbsolutePath())) {
+                    $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);                    
+                    #--------- create user image specs
+                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);            
+                } else {
+                    return $this->response_array(false, 'Image not uploaded');
+                }
+/*
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
 
@@ -439,6 +447,8 @@ class WebServiceHelper {
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
+ * 
+ */
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);

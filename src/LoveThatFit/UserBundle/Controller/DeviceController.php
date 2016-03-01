@@ -115,17 +115,17 @@ class DeviceController extends Controller {
 }
 #---------------------------------------------------------------------------
     
-   public function svgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
-       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
-       $device_type =$device_type==null? 'iphone5':$device_type;
-       if(!$user){
-           return new Response ('Authentication error');
-       }
-       
-        $measurement = $user->getMeasurement();         
-        if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
-            $decoded=$measurement->getJSONMeasurement('actual_user');
-            if(is_array($decoded)){
+   public function svgPathAction($auth_token = null, $edit_type = null, $device_type = null, $template = null) {
+        $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+        $device_type = $device_type == null ? 'iphone5' : $device_type;
+        if (!$user) {
+            return new Response('Authentication error');
+        }
+
+        $measurement = $user->getMeasurement();
+        if ($user->getUserMarker()->getDefaultUser()) {# if demo account, then get measurement from json
+            $decoded = $measurement->getJSONMeasurement('actual_user');
+            if (is_array($decoded)) {
                 $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
             }
         }
@@ -135,27 +135,19 @@ class DeviceController extends Controller {
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $marker = $this->get('user.marker.helper')->getByUser($user);
         $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
-       // return new response(json_encode($default_marker));
         $device_spec = $user->getDeviceSpecs($device_type);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
-        /*
-        $edit_type=$edit_type==null || strtolower($edit_type)=='reg'?'registration':$edit_type;
-         return new Response(json_encode(array(
-                    'entity' => $user,
-                    'measurement' => $measurement,
-                    'edit_type' => $edit_type,
-                    'marker' => $marker,
-                    'default_marker' => $default_marker,
-                    'user_pixcel_height' =>  $device_spec->getUserPixcelHeight(),
-                    'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
-                    'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
-                    'per_inch_pixcel' => $device_spec->getDeviceUserPerInchPixelHeight(),
-                    'device_type' => $device_type,
-                    'device_screen_height' => $device_screen_height['pixel_height'],
-            )));*/
-        return $this->render('LoveThatFitUserBundle:Device:svg_path.html.twig', array(
-                    'form' => $form->createView(),               
-                    'measurement_form' => $measurement_form->createView(),                   
+
+        $temp = null;
+        if ($template == 'full') {
+            $temp = 'LoveThatFitUserBundle:Device:svg_path_full.html.twig';
+        } else {
+            $temp = 'LoveThatFitUserBundle:Device:svg_path.html.twig';
+        }
+
+        return $this->render($temp, array(
+                    'form' => $form->createView(),
+                    'measurement_form' => $measurement_form->createView(),
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
@@ -163,17 +155,16 @@ class DeviceController extends Controller {
                     'edit_type' => $edit_type,
                     'marker' => $marker,
                     'default_marker' => $default_marker,
-                    'user_pixcel_height' => $device_spec==null?0:$device_spec->getUserPixcelHeight(),
+                    'user_pixcel_height' => $device_spec == null ? 0 : $device_spec->getUserPixcelHeight(),
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
-                    'per_inch_pixcel' => $device_spec==null?0:$device_spec->getDeviceUserPerInchPixelHeight(),
+                    'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
                     'device_type' => $device_type,
                     'device_screen_height' => $device_screen_height['pixel_height'],
-            ));
-    
-}
+                ));
+    }
 
-   //--------------------------------- write bgcropped image from canvas
+    //--------------------------------- write bgcropped image from canvas
     public function bgCroppedImageUploadAction() {
         $id = $_POST['id'];
         $entity = $this->get('user.helper.user')->find($id);
