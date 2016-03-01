@@ -58,6 +58,11 @@ class User implements UserInterface, \Serializable {
      */
     protected $user_devices;
     
+      /**
+     * @ORM\OneToMany(targetEntity="UserArchives", mappedBy="user", orphanRemoval=true)
+     */
+    protected $user_archives;
+    
        /**
      * @ORM\OneToMany(targetEntity="Selfieshare", mappedBy="user", orphanRemoval=true)
      */
@@ -1423,7 +1428,7 @@ class User implements UserInterface, \Serializable {
     }
 
     
-    
+    #-----------------------------------------------------
     
 
     /**
@@ -1460,6 +1465,39 @@ class User implements UserInterface, \Serializable {
     }
 #---------------------------------------------------------------------------------
   
+    /**
+     * Add user_archives
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserArchives $userArchives
+     * @return User
+     */
+    public function addUserArchives(\LoveThatFit\UserBundle\Entity\UserArchives $userArchives)
+    {
+        $this->user_archives[] = $userArchives;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_archives
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserArchives $userArchives
+     */
+    public function removeUserArchives(\LoveThatFit\UserBundle\Entity\UserArchives $userArchives)
+    {
+        $this->user_archives->removeElement($userArchives);
+    }
+
+    /**
+     * Get user_archives
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserArchives()
+    {
+        return $this->user_archives;
+    }
+#---------------------------------------------------------------------------------
 
     /**
      * Add selfieshare

@@ -419,6 +419,8 @@ class WebServiceHelper {
                     $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);                    
                     #--------- create user image specs
                     $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);            
+                    $user->setStatus(-1);
+                    $this->container->get('user.helper.user')->saveUser($user);
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
