@@ -89,6 +89,13 @@ class UserArchives
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updated_at;
+
+	/**
+	 * @var integer $status
+	 * @ORM\Column(name="status", type="integer", nullable=true, options={"default":"-1"})
+	 */
+	private $status;
+
     #----------------------------------------
     
     /**
@@ -290,7 +297,32 @@ class UserArchives
         return $this->updated_at;
     }
     #----------------------------------------
-    /**
+
+	#----------------------------------------
+	/**
+	 * Set status
+	 *
+	 * @param integer $status
+	 * @return UserArchives
+	 */
+	public function setStatus($status)
+	{
+	  $this->status = $status;
+
+	  return $this;
+	}
+
+	/**
+	 * Get status
+	 *
+	 * @return integer
+	 */
+	public function getStatus()
+	{
+	  return $this->status;
+	}
+	#----------------------------------------
+	  /**
      * Set user
      *
      * @param \LoveThatFit\UserBundle\Entity\User $user
