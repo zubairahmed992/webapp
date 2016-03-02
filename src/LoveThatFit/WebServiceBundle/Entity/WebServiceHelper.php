@@ -414,11 +414,13 @@ class WebServiceHelper {
             }
                 #______________________________________> Fitting Room image
             if ($ra['upload_type'] == 'fitting_room') {
-                $user->setImageDeviceType($ra['device_type']); #THIS SHOULD BE COPPIED TO ARCHIVE
+                
                 if (move_uploaded_file($files["image"]["tmp_name"], $user->getTempImageAbsolutePath())) {
-                    $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);                    
-                    #--------- create user image specs
-                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);            
+                    $parsed_array=  $this->parse_request_for_archive($ra);     
+                    
+                    $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
+                    #$this->container->get('user.helper.userarchives')->saveArchives($user_archive,$parsed_array);
+                    
                     $user->setStatus(-1);
                     $this->container->get('user.helper.user')->saveUser($user);
                 } else {
@@ -478,7 +480,23 @@ class WebServiceHelper {
             return $this->response_array(false, 'member not found');
         }
     }
-  #----------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------
+
+    private function parse_request_for_archive($ra) {
+        $arr = array(
+            #'measurement' => $ra['measurement'],
+            'device_type' => $ra['device_type'],
+            'height_per_inch' => $ra['height_per_inch'],
+            'image_specs' =>  json_encode(array( #json encoded image specs
+                'camera_angle' => $ra['camera_angle'],
+                'camera_x' => $ra['camera_x'],
+                'device_type' => $ra['device_type'],
+                'height_per_inch' => $ra['height_per_inch'],
+            )),
+        );
+        return $arr;
+    }
+ #----------------------------------------------------------------------------------------    
 
   public function uploadUserfile($user, $ra, $files) {
 	if ($user) {
