@@ -1972,7 +1972,7 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key=true,$device_type=null, $base_path=null){
 	if($key){
 	  $device_specs=$this->getDeviceSpecs($device_type);
-          $measurement_json=$this->measurement ? $this->measurement->getJSONMeasurement('actual_user'):null;          
+          $measurement_json=$this->measurement ? $this->measurement->getJSONMeasurement('actual_user'):'';          
           
 	  return array(
 		'id' => $this->getId(),
