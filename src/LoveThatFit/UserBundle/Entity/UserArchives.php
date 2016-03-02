@@ -80,7 +80,7 @@ class UserArchives
     private $default_marker_svg;
    
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     protected $created_at;
         /**

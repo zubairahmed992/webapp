@@ -416,10 +416,12 @@ class WebServiceHelper {
             if ($ra['upload_type'] == 'fitting_room') {
                 
                 if (move_uploaded_file($files["image"]["tmp_name"], $user->getTempImageAbsolutePath())) {
+                    $actual_measurement=$user->getMeasurement()->getJSONMeasurement('actual_user');
+                    $ra['measurement']=  is_array($actual_measurement)? json_encode($actual_measurement):null;
                     $parsed_array=  $this->parse_request_for_archive($ra);     
                     
                     $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
-                    #$this->container->get('user.helper.userarchives')->saveArchives($user_archive,$parsed_array);
+                    $this->container->get('user.helper.userarchives')->saveArchives($user_archive,$parsed_array);
                     
                     $user->setStatus(-1);
                     $this->container->get('user.helper.user')->saveUser($user);
@@ -484,10 +486,10 @@ class WebServiceHelper {
 
     private function parse_request_for_archive($ra) {
         $arr = array(
-            #'measurement' => $ra['measurement'],
+            'measurement' => $ra['measurement'],
             'device_type' => $ra['device_type'],
             'height_per_inch' => $ra['height_per_inch'],
-            'image_specs' =>  json_encode(array( #json encoded image specs
+            'image_actions' =>  json_encode(array( #json encoded image specs
                 'camera_angle' => $ra['camera_angle'],
                 'camera_x' => $ra['camera_x'],
                 'device_type' => $ra['device_type'],
