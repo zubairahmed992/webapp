@@ -1972,6 +1972,8 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key=true,$device_type=null, $base_path=null){
 	if($key){
 	  $device_specs=$this->getDeviceSpecs($device_type);
+          $measurement_json=$this->measurement ? $this->measurement->getJSONMeasurement('actual_user'):null;          
+          
 	  return array(
 		'id' => $this->getId(),
                 'user_id' => $this->getId(),
@@ -2038,6 +2040,7 @@ class User implements UserInterface, \Serializable {
 		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
                 'device_type'=>$device_type,
                 'default_user'=> $this->user_marker?$this->user_marker->getDefaultUser():false,
+                'measurement_json'=> $measurement_json,
 	  );
 	}else{
 	  return array(
