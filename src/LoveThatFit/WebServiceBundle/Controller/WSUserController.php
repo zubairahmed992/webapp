@@ -48,13 +48,7 @@ class WSUserController extends Controller {
         $json_data = $this->get('webservice.helper')->measurementUpdate($decoded);
         return new Response($json_data);      
     }      
-#~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts
-    public function sizeChartsAction(){
-       $decoded  = $this->process_request();
-       $json_data=$this->get('webservice.helper')->sizeChartsService($decoded);
-        return new response($json_data);
-       
-   } 
+
 #~~~~~~~~~~~~~~~~~~~ ws_image_uploader   /ws/image_uploader
     public function imageUploaderAction() {
         $decoded = $this->process_request();
