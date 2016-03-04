@@ -406,29 +406,16 @@ class WebServiceHelper {
     #----------------------------------------------------------------------------------------
 
     public function uploadUserImage($user, $ra, $files) {
-        if ($user) {            
+        if ($user) {
             #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-                #______________________________________> Fitting Room image
+            #______________________________________> Fitting Room image
+
             if ($ra['upload_type'] == 'fitting_room') {
-                
-                if (move_uploaded_file($files["image"]["tmp_name"], $user->getTempImageAbsolutePath())) {
-                    $actual_measurement=$user->getMeasurement()->getJSONMeasurement('actual_user');
-                    $ra['measurement']=  is_array($actual_measurement)? json_encode($actual_measurement):null;
-                    $parsed_array=  $this->parse_request_for_archive($ra);     
-                    
-                    $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
-                    $this->container->get('user.helper.userarchives')->saveArchives($user_archive,$parsed_array);
-                    
-                    $user->setStatus(-1);
-                    $this->container->get('user.helper.user')->saveUser($user);
-                } else {
-                    return $this->response_array(false, 'Image not uploaded');
-                }
-/*
+
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
 
@@ -436,47 +423,61 @@ class WebServiceHelper {
                     $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);
                     copy($user->getOriginalImageAbsolutePath(), $user->getAbsolutePath());
                     #--------- create user image specs
-                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);            
-            
-                   #~~~~~#~~~~~#~~~~~ measurement from JSON being copied
-                                  
-                   if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
-                       $measurement = $user->getMeasurement();
-                       $decoded=$measurement->getJSONMeasurement('actual_user');
-                       if(is_array($decoded)){
-                           $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
-                           $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-                       }
-                       $this->container->get('user.marker.helper')->removeDefaultAccountStatus($user);
-                   }
+                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);
+
+                    #~~~~~#~~~~~#~~~~~ measurement from JSON being copied
+
+                    if ($user->getUserMarker()->getDefaultUser()) {# if demo account, then get measurement from json
+                        $measurement = $user->getMeasurement();
+                        $decoded = $measurement->getJSONMeasurement('actual_user');
+                        if (is_array($decoded)) {
+                            $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+                            $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+                        }
+                        $this->container->get('user.marker.helper')->removeDefaultAccountStatus($user);
+                    }
                     #~~~~~#~~~~~#~~~~~#~~~~~#~~~~~#~~~~~
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
- * 
- */
+
+                #______________________________________> upload_pending
+            } elseif ($ra['upload_type'] == 'fittong_room_pending') {
+                if (move_uploaded_file($files["image"]["tmp_name"], $user->getTempImageAbsolutePath())) {
+                    $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
+                    $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
+                    $parsed_array = $this->parse_request_for_archive($ra);
+
+                    $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
+                    $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
+
+                    $user->setStatus(-1);
+                    $this->container->get('user.helper.user')->saveUser($user);
+                } else {
+                    return $this->response_array(false, 'Image not uploaded');
+                }
+
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);
                 if (!move_uploaded_file($_FILES["image"]["tmp_name"], $user->getAbsoluteAvatarPath())) {
                     return new Response(json_encode(array('Message' => 'Image not uploaded')));
-                }                
+                }
                 #---------------------------------------->Social Media
-            } elseif ($ra['upload_type'] == 'social_media') {                                
-                $random_name = uniqid() . "." . $ext;            
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $user->getUploadRootDir().'/'.$random_name)) {                
-                    return $this->response_array(true, 'Image uploaded',true, $ra['base_path'] . $random_name);
-                } else {                
+            } elseif ($ra['upload_type'] == 'social_media') {
+                $random_name = uniqid() . "." . $ext;
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $user->getUploadRootDir() . '/' . $random_name)) {
+                    return $this->response_array(true, 'Image uploaded', true, $ra['base_path'] . $random_name);
+                } else {
                     return $this->response_array(false, 'Image not uploaded');
-                }                
-                
+                }
             } else {#~~~~~~~~~~~~~> anyother image type
                 return $this->response_array(false, 'invalid upload type');
             }
 
             $this->container->get('user.helper.user')->saveUser($user);
             $userinfo = array();
-            $userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);            
+            $userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
             return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
         } else {
             return $this->response_array(false, 'member not found');

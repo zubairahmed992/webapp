@@ -2040,6 +2040,7 @@ class User implements UserInterface, \Serializable {
 		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
                 'device_type'=>$device_type,
                 'default_user'=> $this->user_marker?$this->user_marker->getDefaultUser():false,
+                'status'=> $this->status?$this->status:0,
                 'measurement_json'=> $measurement_json,
 	  );
 	}else{
