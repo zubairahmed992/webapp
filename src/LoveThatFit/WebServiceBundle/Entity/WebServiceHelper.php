@@ -91,6 +91,7 @@ class WebServiceHelper {
   public function measurementUpdate($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $user->getMeasurement();
+        $base_path=$ra['base_path'];
         if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {            
             if(array_key_exists('base_path', $ra)) unset($ra['base_path']);
             if(array_key_exists('body_shape', $ra)) unset($ra['body_shape']);
@@ -103,7 +104,7 @@ class WebServiceHelper {
             $measurement = $this->setUserMeasurementWithParams($ra, $user);
         }
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $ra['base_path'])));
+        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
