@@ -70,6 +70,30 @@ class UserArchivesHelper {
 		return $this->save($user_archives);
 	}
 
+
+	public function getListWithPagination($page_number, $sort) {
+	  $yaml = new Parser();
+	  $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+	  $limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+	  $entity = $this->repo->listAllPendingUsers($page_number, $limit, $sort);
+	  $rec_count = count($this->repo->countAllRecord());
+	  $cur_page = $page_number;
+
+	  if ($page_number == 0 || $limit == 0) {
+		$no_of_paginations = 0;
+	  } else {
+		$no_of_paginations = ceil($rec_count / $limit);
+	  }
+	  return array('user' => $entity,
+		'rec_count' => $rec_count,
+		'no_of_pagination' => $no_of_paginations,
+		'limit' => $cur_page,
+		'per_page_limit' => $limit,
+		'sort'=>$sort,
+	  );
+	}
+
     public function find($id) {
         return $this->repo->find($id);
     }

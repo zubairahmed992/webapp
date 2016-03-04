@@ -1,0 +1,7 @@
+admin_pending_user_show:
+    pattern:  /admin/pendinguser/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:PendingUser:show }
+
+admin_pending_user:
+    pattern:  /admin/pendinguser/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:PendingUser:index ,page_number: 1, sort:id }

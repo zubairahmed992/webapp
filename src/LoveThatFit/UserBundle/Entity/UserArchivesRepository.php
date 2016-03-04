@@ -12,5 +12,31 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserArchivesRepository extends EntityRepository
 {
+  public function listAllPendingUsers($page_number = 0, $limit = 0, $sort = 'id') {
+	if ($page_number <= 0 || $limit <= 0) {
+	  $query = $this->getEntityManager()
+		->createQuery('SELECT a.id,a.status FROM LoveThatFitUserBundle:UserArchives a where a.status=:status ORDER BY a.' . $sort . ' DESC')->setParameters(array('status' => '-1'));
+	  echo $query->getSQL();die;
+	} else {
+	  $query = $this->getEntityManager()
+		->createQuery('SELECT a FROM LoveThatFitUserBundle:UserArchives a where a.status=:status ORDER BY a.' . $sort . ' DESC')->setParameters(array('status' => '-1'))
+		->setFirstResult($limit * ($page_number - 1))
+		->setMaxResults($limit);
+	}
+	try {
+	  return $query->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return "null";
+	}
+  }
 
+  public function countAllRecord() {
+	$total_record = $this->getEntityManager()
+	  ->createQuery('SELECT a FROM LoveThatFitUserBundle:UserArchives a');
+	try {
+	  return $total_record->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
 }
