@@ -57,6 +57,21 @@ class UserMaskAdjustmentController extends Controller {
                     'device_type' => $device_type,
                     'device_screen_height' => $device_screen_height['pixel_height'],
             ));
-    
+
 }
+
+	//----------------All Pending User Display List --------------------------------------------------------------------------
+	public function listAction($page_number, $sort = 'id') {
+	  $orders_with_pagination = $this->get('user.helper.userarchives')->getListWithPagination($page_number, $sort);
+	  // print_r($orders_with_pagination);die;
+	  return $this->render('LoveThatFitAdminBundle:PendingUser:index.html.twig', $orders_with_pagination);
+	}
+
+  //-----------------------Display Single order Detail by Id-----------------------------------------------------------------
+
+	public function showAction($id) {
+	  return $this->render('LoveThatFitAdminBundle:PendingUser:show.html.twig', array(
+
+	  ));
+	}
 }

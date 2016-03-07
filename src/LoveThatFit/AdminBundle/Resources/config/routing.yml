@@ -38,14 +38,7 @@ admin_order_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/order.yml"
     prefix:   /
 
-#-------------- PENDING USER ------------------------
-
-admin_pending_users_routes:
-    resource: "@LoveThatFitAdminBundle/Resources/config/routing/pending_users.yml"
-    prefix:   /
-
-
-    #-------------- CLOTHING TYPE ------------------------
+#-------------- CLOTHING TYPE ------------------------
     
 admin_clothing_type_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/clothing_type.yml"
