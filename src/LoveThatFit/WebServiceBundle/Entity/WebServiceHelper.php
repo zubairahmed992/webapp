@@ -94,10 +94,8 @@ class WebServiceHelper {
         $base_path=$ra['base_path'];
         if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {            
             if(array_key_exists('base_path', $ra)) unset($ra['base_path']);
-            if(array_key_exists('body_shape', $ra)) unset($ra['body_shape']);
             if(array_key_exists('email', $ra)) unset($ra['email']);
             if(array_key_exists('auth_token', $ra)) unset($ra['auth_token']);
-            if(array_key_exists('body_type', $ra)) unset($ra['body_type']);            
             $ar['actual_user'] = $ra;
             $measurement->setMeasurementJson(json_encode($ar));
         } else {
