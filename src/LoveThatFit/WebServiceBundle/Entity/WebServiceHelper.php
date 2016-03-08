@@ -158,7 +158,7 @@ class WebServiceHelper {
         if (!$measurement) {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
-        
+
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
             

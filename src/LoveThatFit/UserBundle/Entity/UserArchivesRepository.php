@@ -16,7 +16,6 @@ class UserArchivesRepository extends EntityRepository
 	if ($page_number <= 0 || $limit <= 0) {
 	  $query = $this->getEntityManager()
 		->createQuery('SELECT a.id,a.status FROM LoveThatFitUserBundle:UserArchives a where a.status=:status ORDER BY a.' . $sort . ' DESC')->setParameters(array('status' => '-1'));
-	  echo $query->getSQL();die;
 	} else {
 	  $query = $this->getEntityManager()
 		->createQuery('SELECT a FROM LoveThatFitUserBundle:UserArchives a where a.status=:status ORDER BY a.' . $sort . ' DESC')->setParameters(array('status' => '-1'))
@@ -37,6 +36,21 @@ class UserArchivesRepository extends EntityRepository
 	  return $total_record->getResult();
 	} catch (\Doctrine\ORM\NoResultException $e) {
 	  return null;
+	}
+  }
+
+  public function getArchive($user) {
+	  $query = $this->getEntityManager()
+		->createQuery(
+		  "SELECT a
+		 FROM LoveThatFitUserBundle:UserArchives a WHERE a.user=:user and a.status=:status
+		 ")->setParameter('user',$user)
+		 ->setParameter('status',"-1")
+		->setMaxResults(1);
+	try {
+	  return $query->getSingleResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return "null";
 	}
   }
 }

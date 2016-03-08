@@ -114,5 +114,10 @@ class UserArchivesHelper {
 	 return $user_archives;
  }
 
+  #-------------------- Get User Archive Measurement ----------------#
+  public function getArchive($user_id) {
+	return $this->repo->getArchive($user_id);
+  }
+
     
 }
