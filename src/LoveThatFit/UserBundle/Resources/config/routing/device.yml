@@ -19,8 +19,8 @@ device_browser_save_user_marker:
     defaults: { _controller: LoveThatFitUserBundle:Device:saveUserMarker}
 
 device_browser_svg_path:
-    pattern:   /device_browser/svg_path/{auth_token}/{edit_type}/{device_type}
-    defaults: { _controller: LoveThatFitUserBundle:Device:svgPath, auth_token: null, edit_type: null, device_type: null }
+    pattern:   /device_browser/svg_path/{auth_token}/{edit_type}/{device_type}/{template}
+    defaults: { _controller: LoveThatFitUserBundle:Device:svgPath, auth_token: null, edit_type: null, device_type: null, template: null }
 
 device_browser_image_update:
     pattern:   /device_browser/image_update

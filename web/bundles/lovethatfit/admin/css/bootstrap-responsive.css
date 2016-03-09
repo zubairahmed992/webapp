@@ -272,22 +272,32 @@
     width: 14.5299%;
     *width: 14. 599%;
   }
+
+    .row-fluid .span3_2 {
+        width: 20.53%;
+        *width: 14. 599%;
+    }
   .row-fluid .span1:not(.hds) {
-    width: 5.982905982905983%;
-    *width: 5.929714493544281%;
-   min-height:60px;
-   max-height:60px;
-   
-	
+       width: 5.982905982905983%;
+       *width: 5.929714493544281%;
+       min-height:60px;
+       max-height:60px;
+       overflow:hidden;
+   }
+
+    .row-fluid .span3:not(.hds) {
+        min-height:60px;
+        max-height:60px;
         overflow:hidden;
-	
-  }
+    }
+
+    .row-fluid .span3_2:not(.hds) {
+        min-height:60px;
+        max-height:60px;
+        overflow:hidden;
+    }
   
-  .row-fluid .span3:not(.hds) {
-    
-    overflow: hidden;
-        
-}
+
   
    .span1 img{
 	margin-top:-15px;  

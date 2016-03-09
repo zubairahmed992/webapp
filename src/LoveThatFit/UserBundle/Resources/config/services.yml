@@ -76,7 +76,15 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\UserBundle\Entity\UserAppAccessLog
             container: "@service_container"
-            
+
+  user.helper.userarchives:
+        class: LoveThatFit\UserBundle\Entity\UserArchivesHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\UserBundle\Entity\UserArchives
+            container: "@service_container"
+
   twitter_helper:
           class:  LoveThatFit\UserBundle\TwitterHelper
        

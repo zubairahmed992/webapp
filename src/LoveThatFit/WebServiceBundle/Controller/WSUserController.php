@@ -39,11 +39,7 @@ class WSUserController extends Controller {
 
     public function registrationAction() {
         $decoded  = $this->process_request();
-        if(array_key_exists('create_default_user', $decoded)){
-            $json_data = $this->get('webservice.helper')->registrationWithDefaultValues($decoded);
-        }else{
-            $json_data = $this->get('webservice.helper')->registrationService($decoded);
-        }
+        $json_data = $this->get('webservice.helper')->registrationWithDefaultValues($decoded);        
         return new Response($json_data);      
     }  
 #~~~~~~~~~~~~~~~~~~~ ws_user_measurement_update   /ws/user_measurement_update
@@ -52,13 +48,7 @@ class WSUserController extends Controller {
         $json_data = $this->get('webservice.helper')->measurementUpdate($decoded);
         return new Response($json_data);      
     }      
-#~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts
-    public function sizeChartsAction(){
-       $decoded  = $this->process_request();
-       $json_data=$this->get('webservice.helper')->sizeChartsService($decoded);
-        return new response($json_data);
-       
-   } 
+
 #~~~~~~~~~~~~~~~~~~~ ws_image_uploader   /ws/image_uploader
     public function imageUploaderAction() {
         $decoded = $this->process_request();

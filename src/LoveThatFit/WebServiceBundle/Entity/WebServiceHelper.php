@@ -52,44 +52,6 @@ class WebServiceHelper {
     }
 
     #------------------------ User -----------------------
-
-    public function registrationService($request_array) {
-
-        if (!array_key_exists('email', $request_array)) {
-            return $this->response_array(false, 'Email Not provided.');
-        }
-
-        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
-
-        if (count($user) > 0) {
-            #$measurement=$this->createUserMeasurementWithParams($request_array,$user);
-            #return $this->response_array(true, 'moka', true, $measurement->getCompleteArray());
-            return $this->response_array(false, 'Email already exists.');
-        } else {
-            #--- 1) User
-            $user = $this->createUserWithParams($request_array);
-            #---- 2) send registration email ....            
-            # $this->container->get('mail_helper')->sendRegistrationEmail($user);
-            #--- 3) Size charts
-            #size charts brands & size being saved
-            //sizecharts measurement extraction
-            #--- 4) Measurement
-            $measurement = $this->createUserMeasurementWithParams($request_array, $user);
-            #this is where the default user gets enabled
-            #$measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user);
-            #--- 5) Device
-            $user_device = $this->createUserDeviceWithParams($request_array, $user);
-            #$detail_array = array_merge($user->toArray(true, $request_array['base_path'] ), $measurement->toArray(), $user_device->toArray());            
-            $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
-            $detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
-            
-            unset($detail_array['per_inch_pixel_height']);
-            unset($detail_array['deviceType']);
-            unset($detail_array['auth_token_web_service']);
-            return $this->response_array(true, 'User created', true, array('user' => $detail_array));
-        }
-    }
-    
      public function registrationWithDefaultValues($request_array) {
 
         if (!array_key_exists('email', $request_array)) {
@@ -129,14 +91,18 @@ class WebServiceHelper {
   public function measurementUpdate($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $user->getMeasurement();
-        if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {
+        $base_path=$ra['base_path'];
+        if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {            
+            if(array_key_exists('base_path', $ra)) unset($ra['base_path']);
+            if(array_key_exists('email', $ra)) unset($ra['email']);
+            if(array_key_exists('auth_token', $ra)) unset($ra['auth_token']);
             $ar['actual_user'] = $ra;
             $measurement->setMeasurementJson(json_encode($ar));
         } else {
             $measurement = $this->setUserMeasurementWithParams($ra, $user);
         }
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $ra['base_path'])));
+        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
@@ -148,23 +114,6 @@ class WebServiceHelper {
         } else {
             return $this->response_array(false, 'Member not found');
         }
-    }
-        #-------------------------------------------------------
-
-    private function merge_objects_to_array($objs) {
-        $ar = array();
-
-        if (array_key_exists('user', $objs)) {
-            $ar = array_merge($ar, $objs['user']);
-            unset($ar['auth_token_web_service']);
-        } elseif (array_key_exists('measurement', $objs)) {
-            $ar = array_merge($ar, $objs['measurement']);
-        } elseif (array_key_exists('device', $objs)) {
-            $ar = array_merge($ar, $objs['device']);
-            unset($ar['per_inch_pixel_height']);
-            unset($ar['deviceType']);
-        }
-        return $ar;
     }
 
     #-------------------------------------------------------
@@ -192,71 +141,6 @@ class WebServiceHelper {
         return $user;
     }
 
-#-------------------------------------------------------
-    private function createUserDeviceWithParams($request_array, $user) {
-        $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
-        array_key_exists('device_id', $request_array)? $userDevice->setDeviceName($request_array['device_id']):'';
-        $userDevice->setDeviceType($request_array['device_type']);
-        $px_height=$request_array['device_type']=='iphone5'?6.891:7.797;
-        $userDevice->setDeviceUserPerInchPixelHeight($px_height); #default value 7            
-        $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
-        return $userDevice;
-    }
-#-------------------------------------------------------
-    private function createUserMeasurementWithParams($request_array, $user) {
-        if ($user->getMeasurement()) {
-            $measurement = $user->getMeasurement();
-        } else {
-            $measurement = $this->container->get('user.helper.measurement')->createNew($user);
-        }
-
-        $measurement->setWeight(array_key_exists('weight', $request_array) ? $request_array['weight'] : $measurement->getWeight());
-        $measurement->setHeight(array_key_exists('height', $request_array) ? $request_array['height'] : $measurement->getHeight());
-        $measurement->setWaist(array_key_exists('waist', $request_array) ? $request_array['waist'] : $measurement->getWaist());
-        $measurement->setHip(array_key_exists('hip', $request_array) ? $request_array['hip'] : $measurement->getHip());
-        $measurement->setBust(array_key_exists('bust', $request_array) ? $request_array['bust'] : $measurement->getBust());
-        $measurement->setInseam(array_key_exists('inseam', $request_array) ? $request_array['inseam'] : $measurement->getInseam());
-        $measurement->setChest(array_key_exists('chest', $request_array) ? $request_array['chest'] : $measurement->getChest());
-        $measurement->setNeck(array_key_exists('neck', $request_array) ? $request_array['neck'] : $measurement->getNeck());
-        $measurement->setBodyTypes(array_key_exists('body_type', $request_array) ? $request_array['body_type'] : $measurement->getBodyTypes());
-        $measurement->setBodyShape(array_key_exists('body_shape', $request_array) ? $request_array['body_shape'] : $measurement->getBodyShape());
-        $measurement->setBraSize(array_key_exists('bra_size', $request_array) ? $request_array['bra_size'] : $measurement->getBraSize());
-        $measurement->setThigh(array_key_exists('thigh', $request_array) ? $request_array['thigh'] : $measurement->getThigh());
-        $measurement->setCenterFrontWaist(array_key_exists('center_front_waist', $request_array) ? $request_array['center_front_waist'] : $measurement->getCenterFrontWaist());
-        $measurement->setBackWaist(array_key_exists('back_waist', $request_array) ? $request_array['back_waist'] : $measurement->getBackWaist());
-        $measurement->setShoulderAcrossFront(array_key_exists('shoulder_across_front', $request_array) ? $request_array['shoulder_across_front'] : $measurement->getShoulderAcrossFront());
-        $measurement->setShoulderAcrossBack(array_key_exists('shoulder_across_back', $request_array) ? $request_array['shoulder_across_back'] : $measurement->getShoulderAcrossBack());
-        $measurement->setSleeve(array_key_exists('sleeve', $request_array) ? $request_array['sleeve'] : $measurement->getSleeve());
-        $measurement->setBicep(array_key_exists('bicep', $request_array) ? $request_array['bicep'] : $measurement->getBicep());
-        $measurement->setTricep(array_key_exists('tricep', $request_array) ? $request_array['tricep'] : $measurement->getTricep());
-        $measurement->setWrist(array_key_exists('wrist', $request_array) ? $request_array['wrist'] : $measurement->getWrist());
-        $measurement->setShoulderWidth(array_key_exists('shoulder_width', $request_array) ? $request_array['shoulder_width'] : $measurement->getShoulderWidth());
-        $measurement->setShoulderHeight(array_key_exists('shoulder_height', $request_array) ? $request_array['shoulder_height'] : $measurement->getShoulderHeight());
-        $measurement->setShoulderLength(array_key_exists('shoulder_length', $request_array) ? $request_array['shoulder_length'] : $measurement->getShoulderLength());
-        $measurement->setBustHeight(array_key_exists('bust_height', $request_array) ? $request_array['bust_height'] : $measurement->getBustHeight());
-        $measurement->setWaistHeight(array_key_exists('waist_height', $request_array) ? $request_array['waist_height'] : $measurement->getWaistHeight());
-        $measurement->setHipHeight(array_key_exists('hip_height', $request_array) ? $request_array['hip_height'] : $measurement->getHipHeight());
-        $measurement->setBustWidth(array_key_exists('bust_width', $request_array) ? $request_array['bust_width'] : $measurement->getBustWidth());
-        $measurement->setWaistWidth(array_key_exists('waist_width', $request_array) ? $request_array['waist_width'] : $measurement->getWaistWidth());
-        $measurement->setHipWidth(array_key_exists('hip_width', $request_array) ? $request_array['hipt_width'] : $measurement->getHipWidth());
-        $measurement->setWaistHip(array_key_exists('waist_hip', $request_array) ? $request_array['waist_hip'] : $measurement->getWaistHip());
-        $measurement->setKnee(array_key_exists('knee', $request_array) ? $request_array['knee'] : $measurement->getKnee());
-        $measurement->setCalf(array_key_exists('calf', $request_array) ? $request_array['calf'] : $measurement->getCalf());
-        $measurement->setAnkle(array_key_exists('ankle', $request_array) ? $request_array['ankle'] : $measurement->getAnkle());
-        $measurement->setIphoneFootHeight(array_key_exists('iphone_foot_height', $request_array) ? $request_array['iphone_foot_height'] : $measurement->getIphoneFootHeight());
-        
-        #*Since size charts has been removed from Registration process
-        #1* #$measurement = $this->setSizeChartToUserMeasurement($measurement, $request_array);
-
-        $ar['manual'] = $measurement->getArray();
-        #21* #$ar['size_charts'] = $this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
-        $measurement->setMeasurementJson(json_encode($ar));
-        #3* #$measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
-        # calculating shoulder_across_back & buse measurement
-        $this->setBraRelatedMeasurements($measurement);
-        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $measurement;
-    }
     #-------------------------------------------------------
     private function setBraRelatedMeasurements($measurement){
         $bra_specs=$this->container->get('admin.helper.size')->getWomanBraSpecs($measurement->getBraSize());
@@ -266,13 +150,13 @@ class WebServiceHelper {
             $measurement->setShoulderAcrossFront($bra_specs['shoulder_across_front']);
         }
     }
-#-------------------------------------------------------
+    #-------------------------------------------------------
     public function setUserMeasurementWithParams($request_array, $user) {
         $measurement = $user->getMeasurement();
         if (!$measurement) {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
-        
+
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
             
@@ -327,54 +211,11 @@ class WebServiceHelper {
         return $measurement;
     }
 
-#*Since size charts has been removed from Registration process
-    #---------------------------------------------------------------------
-/*
-    private function setSizeChartToUserMeasurement($measurement, $request_array) {
-        $gender = $request_array['gender'];
-        $body_type = isset($request_array['bodyType']) ? $request_array['bodyType'] : 'regular';
-
-        if (isset($request_array['top_brand'])) {
-            $top_brand = $this->container->get('admin.helper.brand')->findOneByName($request_array['top_brand']);
-            if ($top_brand) {
-                $measurement->setTopBrand($top_brand);
-                $top_size_chart = $this->container->get('admin.helper.sizechart')->findOneByMatchingParams($request_array['top_fitting_size'], $request_array['top_brand'], $gender, $body_type, 'top');
-                if ($top_size_chart) {
-                    $measurement->setTopFittingSizeChart($top_size_chart);
-                }
-            }
-        }
-        if (isset($request_array['bottom_brand'])) {
-            $bottom_brand = $this->container->get('admin.helper.brand')->findOneByName($request_array['bottom_brand']);
-            if ($bottom_brand) {
-                $measurement->setBottomBrand($bottom_brand);
-                $bottom_size_chart = $this->container->get('admin.helper.sizechart')->findOneByMatchingParams($request_array['bottom_fitting_size'], $request_array['bottom_brand'], $gender, $body_type, 'bottom');
-                if ($bottom_size_chart) {
-                    $measurement->setBottomFittingSizeChart($bottom_size_chart);
-                }
-            }
-        }
-        if (isset($request_array['dress_brand'])) {
-            $dress_brand = $this->container->get('admin.helper.brand')->findOneByName($request_array['dress_brand']);
-            if ($dress_brand) {
-                $measurement->setDressBrand($dress_brand);
-                $dress_size_chart = $this->container->get('admin.helper.sizechart')->findOneByMatchingParams($request_array['dress_fitting_size'], $request_array['dress_brand'], $gender, $body_type, 'dress');
-                if ($dress_size_chart) {
-                    $measurement->setDressFittingSizeChart($dress_size_chart);
-                }
-            }
-        }
-        return $measurement;
-    }
-*/
     #--------------------------------User Detail Array -----------------------------#
-
     private function getBasePath($request) {
         return $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
     }
-
     #----------------------------------------------------------------------------------------
-
     public function response_array($success, $message = null, $json = true, $data = null) {
         $ar = array(
             'data' => $data,
@@ -384,9 +225,7 @@ class WebServiceHelper {
         );
         return $json ? json_encode($ar) : $ar;
     }
-
     #----------------------------------------------------------------------------------------
-
     public function emailExists($email) {
         $user = $this->container->get('user.helper.user')->findByEmail($email);
         return $user ? true : false;
@@ -394,25 +233,15 @@ class WebServiceHelper {
 
     #----------------------------------------------------------------------------------------
 
-    public function sizeChartsService($request_array) {
-        $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArrayByGender($request_array['gender']);
-        if (count($sc) > 0) {
-            return $this->response_array(true, 'Size charts', true, array('size_charts' => $sc));
-        } else {
-            return $this->response_array(false, 'Size Charts not found');
-        }
-    }
-
-    #----------------------------------------------------------------------------------------
-
     public function uploadUserImage($user, $ra, $files) {
-        if ($user) {            
+        if ($user) {
             #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-                #______________________________________> Fitting Room image
+            #______________________________________> Fitting Room image
+
             if ($ra['upload_type'] == 'fitting_room') {
 
                 $user->setImage('cropped' . "." . $ext);
@@ -422,51 +251,83 @@ class WebServiceHelper {
                     $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);
                     copy($user->getOriginalImageAbsolutePath(), $user->getAbsolutePath());
                     #--------- create user image specs
-                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);            
-            
-                   #~~~~~#~~~~~#~~~~~ measurement from JSON being copied
-                                  
-                   if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
-                       $measurement = $user->getMeasurement();
-                       $decoded=$measurement->getJSONMeasurement('actual_user');
-                       if(is_array($decoded)){
-                           $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
-                           $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-                       }
-                       $this->container->get('user.marker.helper')->removeDefaultAccountStatus($user);
-                   }
+                    $this->container->get('user.helper.userimagespec')->updateWithParam($ra, $user);
+
+                    #~~~~~#~~~~~#~~~~~ measurement from JSON being copied
+
+                    if ($user->getUserMarker()->getDefaultUser()) {# if demo account, then get measurement from json
+                        $measurement = $user->getMeasurement();
+                        $decoded = $measurement->getJSONMeasurement('actual_user');
+                        if (is_array($decoded)) {
+                            $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+                            $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+                        }
+                        $this->container->get('user.marker.helper')->removeDefaultAccountStatus($user);
+                    }
                     #~~~~~#~~~~~#~~~~~#~~~~~#~~~~~#~~~~~
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
+
+                #______________________________________> upload_pending
+            } elseif ($ra['upload_type'] == 'fitting_room_pending') {
+                if (move_uploaded_file($files["image"]["tmp_name"], $user->getTempImageAbsolutePath())) {
+                    $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
+                    $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
+                    $parsed_array = $this->parse_request_for_archive($ra);
+
+                    $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
+                    $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
+
+                    $user->setStatus(-1);
+                    
+                } else {
+                    return $this->response_array(false, 'Image not uploaded');
+                }
+
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);
                 if (!move_uploaded_file($_FILES["image"]["tmp_name"], $user->getAbsoluteAvatarPath())) {
                     return new Response(json_encode(array('Message' => 'Image not uploaded')));
-                }                
+                }
                 #---------------------------------------->Social Media
-            } elseif ($ra['upload_type'] == 'social_media') {                                
-                $random_name = uniqid() . "." . $ext;            
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $user->getUploadRootDir().'/'.$random_name)) {                
-                    return $this->response_array(true, 'Image uploaded',true, $ra['base_path'] . $random_name);
-                } else {                
+            } elseif ($ra['upload_type'] == 'social_media') {
+                $random_name = uniqid() . "." . $ext;
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $user->getUploadRootDir() . '/' . $random_name)) {
+                    return $this->response_array(true, 'Image uploaded', true, $ra['base_path'] . $random_name);
+                } else {
                     return $this->response_array(false, 'Image not uploaded');
-                }                
-                
+                }
             } else {#~~~~~~~~~~~~~> anyother image type
                 return $this->response_array(false, 'invalid upload type');
             }
 
             $this->container->get('user.helper.user')->saveUser($user);
             $userinfo = array();
-            $userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);            
+            $userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
             return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
         } else {
             return $this->response_array(false, 'member not found');
         }
     }
-  #----------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------
+
+    private function parse_request_for_archive($ra) {
+        $arr = array(
+            'measurement' => $ra['measurement'],
+            'device_type' => $ra['device_type'],
+            'height_per_inch' => $ra['height_per_inch'],
+            'image_actions' =>  json_encode(array( #json encoded image specs
+                'camera_angle' => $ra['camera_angle'],
+                'camera_x' => $ra['camera_x'],
+                'device_type' => $ra['device_type'],
+                'height_per_inch' => $ra['height_per_inch'],
+            )),
+        );
+        return $arr;
+    }
+ #----------------------------------------------------------------------------------------    
 
   public function uploadUserfile($user, $ra, $files) {
 	if ($user) {

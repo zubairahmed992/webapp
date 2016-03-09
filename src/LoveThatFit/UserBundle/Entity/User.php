@@ -58,6 +58,11 @@ class User implements UserInterface, \Serializable {
      */
     protected $user_devices;
     
+      /**
+     * @ORM\OneToMany(targetEntity="UserArchives", mappedBy="user", orphanRemoval=true)
+     */
+    protected $user_archives;
+    
        /**
      * @ORM\OneToMany(targetEntity="Selfieshare", mappedBy="user", orphanRemoval=true)
      */
@@ -341,6 +346,15 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(name="time_spent", type="string", nullable=true)
      */
     private $timeSpent;
+    
+     /**
+     * @var integer $status
+     *
+     * @ORM\Column(name="status", type="integer", nullable=true,options={"default" = 0})
+       
+     */
+    private $status;
+
 
     /**
      * Get id
@@ -835,7 +849,28 @@ class User implements UserInterface, \Serializable {
     public function getZipcode() {
         return $this->zipcode;
     }
+#-----------------------------------------
+       /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus() {
+        return $this->status;
+    }
 
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return User
+     */
+    public function setStatus($status) {
+        $this->status = $status;
+        return $this;
+    }
+
+#-----------------------------------------    
     public function getMyClosetListArray($product_item_id) {
         $productitem = $this->getProductItems();
         foreach ($productitem as $ps) {
@@ -1385,7 +1420,7 @@ class User implements UserInterface, \Serializable {
     }
 
     
-    
+    #-----------------------------------------------------
     
 
     /**
@@ -1422,6 +1457,39 @@ class User implements UserInterface, \Serializable {
     }
 #---------------------------------------------------------------------------------
   
+    /**
+     * Add user_archives
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserArchives $userArchives
+     * @return User
+     */
+    public function addUserArchives(\LoveThatFit\UserBundle\Entity\UserArchives $userArchives)
+    {
+        $this->user_archives[] = $userArchives;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_archives
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserArchives $userArchives
+     */
+    public function removeUserArchives(\LoveThatFit\UserBundle\Entity\UserArchives $userArchives)
+    {
+        $this->user_archives->removeElement($userArchives);
+    }
+
+    /**
+     * Get user_archives
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserArchives()
+    {
+        return $this->user_archives;
+    }
+#---------------------------------------------------------------------------------
 
     /**
      * Add selfieshare
@@ -1865,6 +1933,8 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key=true,$device_type=null, $base_path=null){
 	if($key){
 	  $device_specs=$this->getDeviceSpecs($device_type);
+          $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
+          
 	  return array(
 		'id' => $this->getId(),
                 'user_id' => $this->getId(),
@@ -1931,6 +2001,8 @@ class User implements UserInterface, \Serializable {
 		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
                 'device_type'=>$device_type,
                 'default_user'=> $this->user_marker?$this->user_marker->getDefaultUser():false,
+                'status'=> $this->status?$this->status:0,
+                'measurement_json'=> $measurement_json,
 	  );
 	}else{
 	  return array(
