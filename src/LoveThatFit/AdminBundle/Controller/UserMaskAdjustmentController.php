@@ -81,8 +81,8 @@ class UserMaskAdjustmentController extends Controller {
 	  //$measurement = $user->getMeasurement();
 	  //$temp = array("height" => $measurement->getHeight(),"bust" => $measurement->getBust());
 	  //print_r($temp);
-		$measurement_decoded_value = json_decode($measurement_archive->getMeasurementJson(),1);
-	  $decoded_measurement_archive=$measurement_decoded_value['actual_user'];
+		$decoded_measurement_archive = json_decode($measurement_archive->getMeasurementJson(),1);
+	  
 		if(is_array($decoded_measurement_archive)){
 		  $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded_measurement_archive, $user);
 		}
