@@ -778,5 +778,9 @@ class UserHelper {
 	return $this->repo->getSearchUserData($term);
   }
   //end of autocomplete method
+  #------------Get First 100 User with  Device Type------------------------------#
+ public function getFirstLimtedUserWithDeviceType($limit,$page_number){
+     return $this->repo->getFirstLimtedUserWithDeviceType($limit,$page_number);
+ }
   
 }

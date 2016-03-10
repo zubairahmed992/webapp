@@ -1,5 +1,0 @@
-dws_constants:
-   pattern:  /dws/constants
-   defaults: { _controller: LoveThatFitWebServiceBundle:Device:Constants}
-
-   

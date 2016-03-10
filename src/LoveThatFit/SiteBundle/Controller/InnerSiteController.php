@@ -33,59 +33,6 @@ public function indexAction($list_type) {
            ));
  }
  
-#-------------------------------------------------------------------------------
-public function shopifyIndexAction($sku=null,$user_id=null,$retailer_id=null) {
-       
-    $user = $this->get('security.context')->getToken()->getUser();
-        $session = $this->get("session");
-        if ($sku == null && $session->has('shopify_user')) {                  
-                  $sku = $session->get('sku');                  
-              } 
-        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku); 
-        
-          if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
-            $retailer_id=null;
-            }else{
-                
-            }
-            $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
-            $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
-        //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
-        return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
-            'item'=>$itemBySku,
-            'retailer_id'=>$retailer_id,
-            'list_type'=>null,            
-            'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
-           ));
- }
- #-------------------------------------------------------------------------------
-public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=null) {
-        
-        $user = $this->get('security.context')->getToken()->getUser();
-        $session = $this->get("session");
-        if ($session->has('shopify_user')) {
-                  $shopify_user = $session->get('shopify_user');                  
-                  $sku = $session->get('sku');
-                   $site_user_id=$shopify_user['site_user_id'];
-                  $retailer = $this->get('admin.helper.retailer')->find($shopify_user['retailer_id']);
-                  $shop_spec=array('customer_id'=>$site_user_id,'shop_domain'=>$retailer->getShopDomain(),'access_token'=>$retailer->getAccessToken());
-                 $customer_order=($this->get('shopify.helper')->getCustomerList($shop_spec));
-                 $this->get('admin.helper.retailer.site.user')->addNew($user, $site_user_id,$retailer,$customer_order['orders_count']);
-                 
-                  
-              } 
-        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
-        //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
-        $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
-        $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
-        return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
-            'item'=>$itemBySku,
-            'retailer_id'=>$retailer_id,
-            'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
-            'list_type'=>null,            
-           ));
- }
-
 
 #-------------------------------------------------------------------------------
  public function homeAction($page_number = 0, $limit = 0) {
@@ -126,17 +73,6 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         }
     }
     
-#-------------------------------------------------------------------------------
-#-----1-Moved
-   /* public function fittingRoomProductsListssAction($list_type='recently_tried_on', $page_number = 0, $limit = 0)
-    {
-        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
-        $gender = $this->get('security.context')->getToken()->getUser()->getGender();
-        $options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
-        $entity = $this->get('admin.helper.product')->listByType($options);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_products_short.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
-    }*/
-
 
 #-------------------------------------------------------------------------------
     public function productsAction($gender, $page_number = 0, $limit = 0) {

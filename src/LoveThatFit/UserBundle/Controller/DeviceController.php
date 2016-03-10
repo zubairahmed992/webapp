@@ -28,7 +28,7 @@ class DeviceController extends Controller {
     #---------------------------------------------------------------------------
     
    public function editImageAction($auth_token=null, $edit_type=null, $device_type=null) {
-       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
@@ -75,7 +75,7 @@ class DeviceController extends Controller {
  #---------------------------------------------------------------------------
     
    public function makeoverAction($auth_token=null, $edit_type=null, $device_type=null) {
-       $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
@@ -115,17 +115,18 @@ class DeviceController extends Controller {
 }
 #---------------------------------------------------------------------------
     
-   public function svgPathAction($auth_token = null, $edit_type = null, $device_type = null, $template = null) {
-        $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
-        $device_type = $device_type == null ? 'iphone5' : $device_type;
-        if (!$user) {
-            return new Response('Authentication error');
-        }
 
-        $measurement = $user->getMeasurement();
-        if ($user->getUserMarker()->getDefaultUser()) {# if demo account, then get measurement from json
-            $decoded = $measurement->getJSONMeasurement('actual_user');
-            if (is_array($decoded)) {
+   public function svgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
+       $device_type =$device_type==null? 'iphone5':$device_type;
+       if(!$user){
+           return new Response ('Authentication error');
+       }
+       
+        $measurement = $user->getMeasurement();         
+        if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+            $decoded=$measurement->getJSONMeasurement('actual_user');
+            if(is_array($decoded)){
                 $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
             }
         }
@@ -196,7 +197,7 @@ class DeviceController extends Controller {
     {
         $usermaker=$request->request->all();                 
         if (array_key_exists('auth_token', $usermaker)){
-            $user = $this->get('webservice.helper.user')->findByAuthToken($usermaker['auth_token']);
+            $user = $this->get('user.helper.user')->findByAuthToken($usermaker['auth_token']);
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
             if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
                 $measurement = $user->getMeasurement(); 
@@ -221,7 +222,7 @@ class DeviceController extends Controller {
     
     public function updateImageAction() {
         $auth_token = $_POST['auth_token'];
-        $entity = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+        $entity = $this->get('user.helper.user')->findByAuthToken($auth_token);
         
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Member.');
@@ -238,6 +239,7 @@ class DeviceController extends Controller {
     
     #----------------------------------------------------------------------------
    public function fooAction() {
+
 	 $user = $this->get('user.helper.user')->find('1846');
 	$data = array(
 	  "measurement" => '{"actual_user":{"body_type":"Regular","bra_size":"32D","height":72,"weight":123,"auth_token":"98225cbb99770c6478c697d537f63c71","email":"makepiece@ss.com","body_shape":"Rectangle","base_path":"http:\/\/192.168.0.203\/webapp\/web\/"},"masked_marker":{"bust":39.784177887419,"shoulder_across_front":17.473892384084,"waist":41.061956257092,"hip":38.489122100453,"inseam":30.789111873716,"thigh":21.630147481259}}',

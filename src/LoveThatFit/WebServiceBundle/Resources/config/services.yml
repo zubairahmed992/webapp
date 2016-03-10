@@ -23,20 +23,5 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\UserBundle\Entity\PushNotification
             container: "@service_container"
-   
-   
-    webservice.helper.product:
-        class: LoveThatFit\WebServiceBundle\Entity\WebServiceProductHelper
-        arguments:
-            dispatcher: "@event_dispatcher"
-            em: "@doctrine.orm.entity_manager"
-            class: LoveThatFit\AdminBundle\Entity\Product
-            container: "@service_container"
     
-    webservice.helper.user:
-        class: LoveThatFit\WebServiceBundle\Entity\WebServiceUserHelper
-        arguments:
-            dispatcher: "@event_dispatcher"
-            em: "@doctrine.orm.entity_manager"
-            class: LoveThatFit\UserBundle\Entity\User
-            container: "@service_container"        
+         
