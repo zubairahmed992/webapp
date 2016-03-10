@@ -55,7 +55,7 @@
 	    <div class="span1">{{b.CreatedAt|date('d-m-Y')}}</div>
 	    <div class="span3_2">
             <div>                    
-                    <a href="{{ path('admin_pending_user_show', {'id': b.user.id}) }}" title="Show Order"><i class="icon-eye-open"></i></a>
+                    <a href="{{ path('admin_pending_user_show', {'user_id': b.user.id}) }}" title="Show Order"><i class="icon-eye-open"></i></a>
 
                 </div> 
             </div>

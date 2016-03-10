@@ -70,7 +70,7 @@ class UserMaskAdjustmentController extends Controller {
   //-----------------------Display Single order Detail by Id-----------------------------------------------------------------
 
 	public function showAction($user_id) {
-	  $user = $this->get('webservice.helper.user')->find($user_id);
+	  $user = $this->get('user.helper.user')->find($user_id);
 	  # return  new Response ($user->getEmail());
 	  $device_type =$user->getImageDeviceType()==null? 'iphone5':$user->getImageDeviceType();
 	  if(!$user){
