@@ -265,14 +265,18 @@ if(chk_no_img_path == true){
     
 }
     
-    
-    
+    var full_height_path = mid_area_path;
     
     
     if(liquid_mask.device_type == "iphone5"){
-      mid_area_path.scale(0.750, 0.750);
+      
+     
+      //mid_area_path.scale(0.750, 0.750);
+      
       //One percent adjustment
       mid_area_path.scale(1, 1.01);
+      
+      
       mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
       mid_area_path.position = new Point(160,403.50 - adj_btm_fix);
       
@@ -289,6 +293,67 @@ if(chk_no_img_path == true){
       //
       //,New fix
       mid_area_path.scale(1.174,1.174);
+      
+      
+      var scr_full = $("#scr_full").attr("value");
+      if(scr_full == "full"){
+          //alert("asdf");
+      }
+      
+      
+      //mid_area_path.scale(0.9, 0.9);
+      mid_area_path.scale(0.748, 0.748);
+      //One percent adjustment
+      mid_area_path.scale(1, 1.01);
+      
+      mid_area_path.scale(0.952, 0.952);
+      
+      mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
+      mid_area_path.position = new Point(screen.width/2,472 + 2 - adj_btm_fix);
+      //alert("6_6_6");
+      
+        mid_area_path.segments[41].point.y += 19; 
+        mid_area_path.segments[41].handleOut = handleOut_41;
+        mid_area_path.segments[40].handleOut = handleOut_40;
+
+        mid_area_path.segments[29].point.y += 19;
+        mid_area_path.segments[29].handleIn = handleIn_29;
+        mid_area_path.segments[30].handleIn = handleIn_30;
+    }
+    
+    
+    
+    if(liquid_mask.device_type == "iphone5"){
+      
+     
+      mid_area_path.scale(0.750, 0.750);
+      
+      //One percent adjustment
+      mid_area_path.scale(1, 1.01);
+      
+      
+      mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
+      mid_area_path.position = new Point(160,403.50 - adj_btm_fix);
+      
+        mid_area_path.segments[41].point.y += 16.56; 
+        mid_area_path.segments[41].handleOut = handleOut_41;
+        mid_area_path.segments[40].handleOut = handleOut_40;
+
+        mid_area_path.segments[29].point.y += 16.56;
+        mid_area_path.segments[29].handleIn = handleIn_29;
+        mid_area_path.segments[30].handleIn = handleIn_30;
+    }
+    if (liquid_mask.device_type == "iphone6"){
+      
+      //
+      //,New fix
+      mid_area_path.scale(1.174,1.174);
+      
+      
+      var scr_full = $("#scr_full").attr("value");
+      if(scr_full == "full"){
+          //alert("asdf");
+      }
       
       
       //mid_area_path.scale(0.9, 0.9);

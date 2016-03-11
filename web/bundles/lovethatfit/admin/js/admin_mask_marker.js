@@ -134,13 +134,21 @@ if(dv_type == "iphone6"){
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(old_account_img){
+    
     orignal_img_path = croped_img_path;
+    //alert("Old:" + croped_img_path);
 }else{
+    
     orignal_img_path = croped_img_path;
 
     //orignal_img_path = orignal_img_path.substr(orignal_img_path.lastIndexOf('/') + 1);
-
-    orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?3344";
+var d = new Date();
+    var n = d.getTime();
+    console.log(croped_img_path);
+    
+    
+    orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?time=" + n;
+    //alert("New:" + orignal_img_path);
 }
 //alert(orignal_img_path);
 
@@ -786,6 +794,7 @@ var but_back_top = new Raster(but_back_top_url);
 
 but_back_top.position = new Point(25, 22);
 
+
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
@@ -859,9 +868,8 @@ var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 var scr1_but_reset_url = curr_path_prefix + "bundles/lovethatfit/site/images/reset_btn.png";
 var scr1_but_reset = new Raster(scr1_but_reset_url);
 
-//scr1_but_reset.position = new Point(38, scr_height - 18);
+scr1_but_reset.position = new Point(38, scr_height - 18);
 
-scr1_but_reset.position = new Point(38, scr_height - 700);
 
 var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_next_btn.png";
 var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
@@ -869,15 +877,13 @@ var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
 scr1_but_save_icon.position = new Point(but_x_adj - 13, scr_height - 18);
 
 
-//but_back_top.position = new Point(25, 24);
-but_back_top.position = new Point(25, -700);
-//scr1_but_hiw_icon.position = new Point(but_x_adj, 24);
-scr1_but_hiw_icon.position = new Point(but_x_adj, -700);
+but_back_top.position = new Point(25, 24);
+scr1_but_hiw_icon.position = new Point(but_x_adj, 24);
 hand_cursor_icon.position = new Point(but_x_adj, 24);
 edit_shape_icon.position = new Point(but_x_adj, 24);
 
-//scr1_but_camera_icon.position = new Point(but_x_adj, 68);
-scr1_but_camera_icon.position = new Point(but_x_adj, -700);
+scr1_but_camera_icon.position = new Point(but_x_adj, 68);
+
 
 but_move_up.position = new Point(26, 24 + an_inc);
 but_move_down.position = new Point(26, 68 + an_inc);
@@ -1038,6 +1044,15 @@ path_com.opacity = 0;
 function show_loader(){
     
 }
+
+//// Fix for Web Version ////
+
+scr1_but_reset.visible = false;
+but_back_top.visible = false;
+scr1_but_hiw_icon.visible = false;
+scr1_but_camera_icon.visible = false;
+
+
 
 
 function supportsToDataURL()
@@ -1216,10 +1231,11 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
                             
-                            image_actions_count.move_left_right -= 1;
-                            
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_left_right -= 0.5;
                                 //x_pos_user_image -= ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_left_right -= 1;
                             }
                             
                         }
@@ -1238,28 +1254,37 @@ function onMouseDown(event) {
                          if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
                             
-                            image_actions_count.move_left_right += 1;
+                            
                             
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_left_right += 0.5;
                                 //x_pos_user_image += ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_left_right += 1;
                             }
                         }
                          if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
                             
-                            image_actions_count.move_up_down -= 1;
+                            
                             
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_up_down -= 0.5;
                                 //y_pos_user_image -= ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_up_down -= 1;
                             }
                         }
                          if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
                             
-                            image_actions_count.move_up_down += 1;
+                            
                             
                             if(curr_view == "zoomed"){
+                                image_actions_count.move_up_down += 0.5;
                                 //y_pos_user_image += ratio_zoom_value;
+                            }else{
+                                image_actions_count.move_up_down += 1;
                             }
                             
                         }
@@ -1460,7 +1485,7 @@ function onMouseDown(event) {
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
                             
                             if (confirm('Are you sure you want to start over?')) {
-                                //window.location.href = "scr1_but_camera_options";
+                                // Fix for Web version // window.location.href = "scr1_but_camera_options";
                             } else {
                                 // Do nothing!
                             }
@@ -2041,10 +2066,10 @@ function onMouseDrag(event) {
 
 function upload(){
 
-if(orignal_img_path){
-    $('#image_actions').attr('value',"");
+if(old_account_img){
+    $('#image_actions').attr('value',"");    
 }else{
-    $('#image_actions').attr('value',JSON.stringify(image_actions_count));
+    $('#image_actions').attr('value',JSON.stringify(image_actions_count));    
 }
 
 var $url=$('#marker_update_url').attr('value');
@@ -2127,6 +2152,9 @@ image_actions:$('#image_actions').attr('value')};
 
 
 function post_img(){
+
+
+    
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;    
     var img_update_url = document.getElementById('hdn_image_update_url').value;        
@@ -2136,10 +2164,15 @@ function post_img(){
               $.post(img_update_url, {
                       imageData : canv_data,
                       auth_token : auth_token,
-                      env : 'admin'
+                      env: 'admin'
               }, function(canv_data) {
               var obj_url = jQuery.parseJSON( canv_data );
+               
+             // console.log("i am checked bhai");
+                
+                      
                       if(obj_url.status == "check"){
+ 
                          alert("All Done! - Reloading...");
                          window.location.reload();
                       }
