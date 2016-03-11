@@ -84,6 +84,10 @@ class UserImageSpecHelper {
     }
        
     #----------------------------------------------------------------------------
+     public function createNewWithParams($user, $specs_array){
+       return $this->setArray($specs_array, $this->createNew($user));       
+     }
+     #----------------------------------------------------------------------------
     public function setArray($specs_array,$specs_obj){
         if(is_array($specs_array)){
         if(array_key_exists('camera_angle', $specs_array) && $specs_array['camera_angle']){$specs_obj->setCameraAngle($specs_array['camera_angle']);}

@@ -230,6 +230,16 @@ class UserMarkerHelper {
             
         }
     }
+ #---------------------------------------------------------------------------
+    
+  public function getDefaultMask($gender, $body_type){
+      $mask_type_array = $this->getMaskedMarkerSpecs();      
+      if(array_key_exists($gender,$mask_type_array['mask_type'])){
+          if(array_key_exists($body_type, $mask_type_array['mask_type'][$gender])){
+              return $mask_type_array['mask_type'][$gender][$body_type];
+          }
+      }
+    }    
  #------------------------------------------------------------------------------# 
   public function getBodyShapeTitle($mask_type) {
         foreach ($mask_type as $key => $value) {

@@ -115,8 +115,8 @@ class UserArchivesHelper {
  }
 
   #-------------------- Get User Archive Measurement ----------------#
-  public function getArchive($user_id) {
-	return $this->repo->getArchive($user_id);
+  public function getPendingArchive($user_id) {
+	return $this->repo->getPendingArchive($user_id);
   }
 
     

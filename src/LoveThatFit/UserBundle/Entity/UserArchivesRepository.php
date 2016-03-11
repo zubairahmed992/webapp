@@ -39,7 +39,7 @@ class UserArchivesRepository extends EntityRepository
 	}
   }
 
-  public function getArchive($user) {
+  public function getPendingArchive($user) {
 	  $query = $this->getEntityManager()
 		->createQuery(
 		  "SELECT a
