@@ -139,14 +139,7 @@ class DeviceController extends Controller {
         $device_spec = $user->getDeviceSpecs($device_type);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
 
-        $temp = null;
-        if ($template == 'full') {
-            $temp = 'LoveThatFitUserBundle:Device:svg_path_full.html.twig';
-        } else {
-            $temp = 'LoveThatFitUserBundle:Device:svg_path.html.twig';
-        }
-
-        return $this->render($temp, array(
+        return $this->render('LoveThatFitUserBundle:Device:svg_path.html.twig', array(
                     'form' => $form->createView(),
                     'measurement_form' => $measurement_form->createView(),
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
