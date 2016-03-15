@@ -119,5 +119,27 @@ class UserArchivesHelper {
 	return $this->repo->getPendingArchive($user_id);
   }
 
+  #-------------------- Update User Status ----------------#
+  public function updateStatus($user_id) {
+	$user = $this->container->get('user.helper.user')->find($user_id);
+	$result = $this->getPendingArchive($user);
+	$id = $result->getId();
+	if($result->getStatus() == '-1'){
+	  $result_user = $this->container->get('user.helper.user')->find($user_id);
+	  $result_user->setStatus(0);
+	  $result_user->setUpdatedAt(new \DateTime('now'));
+	  $this->em->persist($result_user);
+	  $this->em->flush();
+	  $this->delete($id);
+	}
+ }
+
+  public function delete($id) {
+	$entity = $this->repo->find($id);
+	if ($entity) {
+	  $this->em->remove($entity);
+	  $this->em->flush();
+	}
+  }
     
 }

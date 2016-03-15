@@ -16,3 +16,7 @@ admin_pending_user_show:
 admin_pending_user:
     pattern:  /admin/pending_user/list/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:list,page_number: 1, sort:id }
+
+admin_update_status:
+    pattern:  /admin/pending_user/{user_id}/update_status
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:updateStatus }

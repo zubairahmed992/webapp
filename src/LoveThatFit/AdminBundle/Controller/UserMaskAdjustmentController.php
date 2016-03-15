@@ -61,11 +61,18 @@ class UserMaskAdjustmentController extends Controller {
 }
 
 	//----------------All Pending User Display List --------------------------------------------------------------------------
-	public function listAction($page_number, $sort = 'id') {
-	  $orders_with_pagination = $this->get('user.helper.userarchives')->getListWithPagination($page_number, $sort);
-	  // print_r($orders_with_pagination);die;
-	  return $this->render('LoveThatFitAdminBundle:PendingUser:index.html.twig', $orders_with_pagination);
-	}
+  public function listAction($page_number, $sort = 'id') {
+	$orders_with_pagination = $this->get('user.helper.userarchives')->getListWithPagination($page_number, $sort);
+	// print_r($orders_with_pagination);die;
+	return $this->render('LoveThatFitAdminBundle:PendingUser:index.html.twig', $orders_with_pagination);
+  }
+
+  //----------------Pending User status Update --------------------------------------------------------------------------
+  public function updateStatusAction($user_id) {
+	$archive = $this->get('user.helper.userarchives')->UpdateStatus($user_id);
+	$this->get('session')->setFlash('success', 'Status has been Revert');
+	return $this->redirect($this->generateUrl('admin_pending_user'));
+  }
 
   //-----------------------Display Single order Detail by Id-----------------------------------------------------------------
 
