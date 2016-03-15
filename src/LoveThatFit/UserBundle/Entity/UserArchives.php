@@ -95,7 +95,19 @@ class UserArchives
 	 * @ORM\Column(name="status", type="integer", nullable=true, options={"default":"-1"})
 	 */
 	private $status;
-
+        
+    /**
+     * @var string $image
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * )
+     */
+    private $image;        
+    
+/**
+     * @Assert\File()
+     */
+    public $file;
     #----------------------------------------
     
     /**
@@ -298,7 +310,6 @@ class UserArchives
     }
     #----------------------------------------
 
-	#----------------------------------------
 	/**
 	 * Set status
 	 *
@@ -321,7 +332,30 @@ class UserArchives
 	{
 	  return $this->status;
 	}
-	#----------------------------------------
+
+#----------------------------------------
+        
+          /**
+     * Set image
+     *
+     * @param string $image
+     * @return User
+     */
+    public function setImage($image) {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage() {
+        return $this->image;
+    }
+    #----------------------------------------
 	  /**
      * Set user
      *
@@ -343,6 +377,85 @@ class UserArchives
     public function getUser()
     {
         return $this->user;
+    }
+
+        #----------------------------------------
+    public function getOriginalAbsolutePath() {
+        return $this->getAbsolutePath('original');
+    }
+//----------------------------------------------------------
+    public function getOriginalWebPath() {     
+           return $this->getWebPath('original');
+    }
+    //----------------------------------------------------------    
+    public function getCroppedAbsolutePath() {
+        return $this->getAbsolutePath('cropped');
+    }
+//----------------------------------------------------------
+    public function getCroppedWebPath() {     
+           return $this->getWebPath('cropped');
+    }
+    
+    #----------------------------------------
+    public function getImageName($image_type='original'){
+        $file_array = explode('.',$this->image);
+        $ext = $file_array[1];
+        switch ($image_type) {
+            case 'original':
+                return $this->id .'_original.'.$ext;
+                break;
+            case 'cropped':
+                return $this->id .'_cropped.'.$ext;
+                break;
+            default:
+                return $this->id .'_cropped.'.$ext;
+                break;
+        }
+        
+        
+    }
+    
+    #----------------------------------------
+
+    public function getAbsolutePath($image_type='original') {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->getImageName($image_type);
+    }
+
+//----------------------------------------------------------
+    public function getWebPath($image_type='original') {
+            return null === $this->image ? null : $this->getUploadDir() . '/' . $this->getImageName($image_type) . '?rand=' . uniqid();
+    }
+
+    //----------------------------------------------------------
+    public function getDirWebPath() {
+        return $this->getUploadDir() . '/';
+    }
+
+//----------------------------------------------------------
+    public function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+//----------------------------------------------------------
+    public function getUploadDir() {
+        return 'uploads/ltf/users/' . $this->getUser()->getId();
+    }
+
+//----------------------------------------------------------
+    public function upload() {
+
+        if (null === $this->file) {
+            return;
+        }
+
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->image = $this->id.'_original.' . $ext;
+        
+        $this->file->move(
+                $this->getUploadRootDir(), $this->image
+        );
+        $this->file = null;
+        return $this->$this->image;
     }
     
 }
