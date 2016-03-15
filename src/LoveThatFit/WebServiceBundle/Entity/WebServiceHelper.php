@@ -271,21 +271,19 @@ class WebServiceHelper {
 
                 #______________________________________> upload_pending
             } elseif ($ra['upload_type'] == 'fitting_room_pending') {
-               
-                    $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
-                    $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
-                    $parsed_array = $this->parse_request_for_archive($ra);
-
                     $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
-                    $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);                    
-                    #set image name with id
-                    $user_archive->setImage($user_archive->getId().'_original.'.$ext);                    
-                    if (move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath('original'))) {                                        
-                       $user->setStatus(-1);                    
+                    $user_archive->setImage(uniqid().'.'.$ext);                                        
+                    
+                    if (move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath('original'))) {                                                                
+                        $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
+                        $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
+                        $parsed_array = $this->parse_request_for_archive($ra);
+                        $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);                    
+
+                        $user->setStatus(-1);                    
                    } else {
                        return $this->response_array(false, 'Image not uploaded');
-                   }
-                   $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
+                   }                   
                 
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {

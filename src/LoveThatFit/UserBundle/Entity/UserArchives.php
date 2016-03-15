@@ -398,17 +398,15 @@ class UserArchives
     
     #----------------------------------------
     public function getImageName($image_type='original'){
-        $file_array = explode('.',$this->image);
-        $ext = $file_array[1];
         switch ($image_type) {
             case 'original':
-                return $this->id .'_original.'.$ext;
+                return 'original_'.$this->image;
                 break;
             case 'cropped':
-                return $this->id .'_cropped.'.$ext;
+                return 'cropped_'.$this->image;
                 break;
             default:
-                return $this->id .'_cropped.'.$ext;
+                return 'cropped_'.$this->image;
                 break;
         }
         
