@@ -75,9 +75,9 @@ admin_product_data_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/product_data.yml"
     prefix:   /   
     #---------------------------Push Notification Interface ------------------#
-admin_push_notification:
-    resource: "@LoveThatFitAdminBundle/Resources/config/routing/push_notification.yml"
-    prefix:   /       
+#admin_push_notification:
+#    resource: "@LoveThatFitAdminBundle/Resources/config/routing/push_notification.yml"
+#    prefix:   /
     
 #-------------- Masked Marker ------------------------
     
