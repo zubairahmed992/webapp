@@ -2074,6 +2074,7 @@ if(old_account_img){
 
 var $url=$('#marker_update_url').attr('value');
 var value_ar = {
+archive_id:$('#hdn_archive_id').attr('value'),
 auth_token:$('#user_auth_token').attr('value'),
 rect_x: $('#p_selected_pic_x').attr('value'),
 rect_y: $('#p_selected_pic_y').attr('value'),
@@ -2094,7 +2095,8 @@ image_actions:$('#image_actions').attr('value')};
         type: "POST",
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
-       success: function(data){//alert(data);
+       success: function(data){
+           alert(data);
            post_img();
 //           alert("1");
 //           //post_img();
@@ -2152,30 +2154,20 @@ image_actions:$('#image_actions').attr('value')};
 
 
 function post_img(){
-
-
-    
-    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
-    var entity_id = document.getElementById('hdn_entity_id').value;    
     var img_update_url = document.getElementById('hdn_image_update_url').value;        
     var canv_data = $("#text_area").val();
-    var auth_token = $('#user_auth_token').attr('value');
+    var archive_id = $('#hdn_archive_id').attr('value');
+    
     
               $.post(img_update_url, {
                       imageData : canv_data,
-                      auth_token : auth_token,
+                      auth_token : archive_id,
                       env: 'admin'
               }, function(canv_data) {
-              var obj_url = jQuery.parseJSON( canv_data );
-               
+                  alert(canv_data);
+              //var obj_url = jQuery.parseJSON( canv_data );
              // console.log("i am checked bhai");
-                
-                      
-                      if(obj_url.status == "check"){
- 
-                         alert("All Done! - Reloading...");
-                         window.location.reload();
-                      }
+            //if(obj_url.status == "check"){}
               });  
   		
 }

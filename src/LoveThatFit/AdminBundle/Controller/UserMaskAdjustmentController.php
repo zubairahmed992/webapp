@@ -117,7 +117,57 @@ class UserMaskAdjustmentController extends Controller {
                     'per_inch_pixcel' => $image_actions_archive['height_per_inch'],#------>
                     'device_type' => $device_type,#------>
                     'device_screen_height' => $device_screen_height['pixel_height'],#------>
+                    'archive' => $archive,#------>
             ));        
       
 	}
+        
+        #----------------------------------------------------------------------------    
+     public function archiveSaveMarkerAction(Request $request)
+    {
+         return new Response('archive marker update');
+        $usermaker=$request->request->all();                 
+        if (array_key_exists('auth_token', $usermaker)){
+            $user = $this->get('user.helper.user')->findByAuthToken($usermaker['auth_token']);
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
+            if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+                $measurement = $user->getMeasurement(); 
+                $decoded=$measurement->getJSONMeasurement('actual_user');
+                 if(is_array($decoded)){
+                    $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+                }
+            }
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);
+            #update actions in the user_image_specs/adjustment
+            if(array_key_exists('image_actions', $usermaker) && $usermaker['image_actions']){
+                $this->container->get('user.helper.userimagespec')->updateWithParam(json_decode($usermaker['image_actions'],true), $user);
+             }
+            
+            return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
+        }else{
+            return new Response('Authentication token not provided.');
+        }
+    }
+    #--------------------------------------------------------------------------
+    
+    public function archiveImageUpdateAction() {
+            return new Response('archive image update');
+        $auth_token = $_POST['auth_token'];
+        $entity = $this->get('user.helper.user')->findByAuthToken($auth_token);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Member.');
+        }
+        $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        #if not from mask marker adjustment interface then resize
+        if (!array_key_exists('env', $_POST) || (array_key_exists('env', $_POST) && !$_POST['env']=='admin')){  
+            $entity->resize_image(); # image is being resized to 320x568
+        }
+            #$entity->resize_image(); # image is being resized to 320x568
+        $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+        return new Response($response);
+    }
+    
+    #----------------------------------------------------------------------------
 }
