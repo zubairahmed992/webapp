@@ -379,6 +379,24 @@ class UserArchives
         return $this->user;
     }
 
+    #----------------------------------------
+    public function getMarkerArray() {
+
+        $ar = array();
+        $ar['svg_paths'] = $this->svg_paths;
+        $ar['marker_json'] = $this->marker_json;
+        $mp = json_decode($this->marker_params);
+        if (is_array($mp)) {
+            array_key_exists('mask_x', $mp) ? $ar['mask_x'] = $mp['mask_x'] : '';
+            array_key_exists('mask_y', $mp) ? $ar['mask_y'] = $mp['mask_y'] : '';
+            array_key_exists('rect_x', $mp) ? $ar['rect_x'] = $mp['rect_x'] : '';
+            array_key_exists('rect_y', $mp) ? $ar['rect_y'] = $mp['rect_y'] : '';
+            array_key_exists('rect_height', $mp) ? $ar['rect_height'] = $mp['rect_height'] : '';
+            array_key_exists('rect_width', $mp) ? $ar['rect_width'] = $mp['rect_width'] : '';
+        }
+        return $ar;
+    }
+    
         #----------------------------------------
     public function getOriginalAbsolutePath() {
         return $this->getAbsolutePath('original');

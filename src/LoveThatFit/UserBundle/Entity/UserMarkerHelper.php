@@ -205,6 +205,24 @@ class UserMarkerHelper {
        $user_marker->setUser($user);
        return $user_marker;
     }
+    #----------------------------------------------------------------------------    
+    public function arrayToObject($user, $ar){
+       
+       $class = $this->class;
+       $user_marker = new $class();
+       array_key_exists('svg_paths', $ar)? $user_marker->setSvgPaths($ar['svg_paths']):'';
+       array_key_exists('marker_json', $ar)? $user_marker->setMarkerJson($ar['marker_json']):'';
+       
+       array_key_exists('mask_x', $ar)? $user_marker->setMaskX($ar['mask_x']):'';
+       array_key_exists('mask_y', $ar)? $user_marker->setMaskY($ar['mask_y']):'';
+       array_key_exists('rect_x', $ar)? $user_marker->setRectX($ar['rect_x']):'';
+       array_key_exists('rect_y', $ar)? $user_marker->setRectY($ar['rect_y']):'';
+       array_key_exists('rect_height', $ar)? $user_marker->setRectHeight($ar['rect_height']):'';
+       array_key_exists('rect_width', $ar)? $user_marker->setRectWidth($ar['rect_width']):'';
+       
+       $user_marker->setUser($user);
+       return $user_marker;
+    }
     #---------------------------------------------------------------------------
     
   public function getDefaultValuesBaseOnBodyType($user){

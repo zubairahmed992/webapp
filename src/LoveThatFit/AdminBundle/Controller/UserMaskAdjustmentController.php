@@ -74,59 +74,61 @@ class UserMaskAdjustmentController extends Controller {
 	return $this->redirect($this->generateUrl('admin_pending_user'));
   }
 
-  //-----------------------Display Single order Detail by Id-----------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
 
-	public function showAction($user_id) {
-            
-        $user = $this->get('user.helper.user')->find($user_id);      
-       
-       if(!$user){
-           return new Response ('Authentication error');
-       }
-         $archive = $this->get('user.helper.userarchives')->getPendingArchive($user);
-          $measurement_archive = json_decode($archive->getMeasurementJson(),1);          
-          #$marker_param_archive = json_decode($archive->getMarkerParams(),1);
-          $image_actions_archive = json_decode($archive->getImageActions(),1); 
-          /*tester comparer
-          return new Response (json_encode(array(
-              'actual'=>$user->getMeasurement()->toArray(),
-              'archive'=>$this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user)->toArray()
-              )));
-          */
+    public function showAction($user_id) {
+
+        $user = $this->get('user.helper.user')->find($user_id);
+
+        if (!$user) {
+            return new Response('Authentication error');
+        }
+        $archive = $this->get('user.helper.userarchives')->getPendingArchive($user);
+        $measurement_archive = json_decode($archive->getMeasurementJson(), 1);
+        $image_actions_archive = json_decode($archive->getImageActions(), 1);
+
         $device_type = $image_actions_archive['device_type'];
         $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
-        $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender()=='m'?'man':'woman',$measurement->getBodyShape());        
-        
+        $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
+
         $form = $this->createForm(new RegistrationStepFourType(), $user);
-        $marker = $this->get('user.marker.helper')->getByUser($user);
-        $image_specs=$this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
-        
+        #$marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());        
+
+        if ($archive->getSvgPaths()) {
+            $marker = $this->get('user.marker.helper')->arrayToObject($archive->getMarkerArray());
+        } else {
+            $marker = $this->get('user.marker.helper')->getDefaultObject($user);
+        }
+
+        $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
+
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
-                
+
         return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_canvas.html.twig', array(
-                    'form' => $form->createView(),#------>
-                    'entity' => $user,#------>
+                    'form' => $form->createView(), #------>
+                    'entity' => $user, #------>
                     'user_image_spec' => $image_specs, #------->
-                    'measurement' => $measurement,#------>
-                    'edit_type' => 'edit',#------>
-                    'marker' => $marker,#------->default marker
-                    'default_marker' => $default_marker,#-------->
-                    'user_pixcel_height' => $measurement->getHeight() * $image_actions_archive['height_per_inch'],#------>
-                    'top_bar' => $measurement->getIphoneHeadHeight(),#------>
-                    'bottom_bar' => $measurement->getIphoneFootHeight(),#------>
-                    'per_inch_pixcel' => $image_actions_archive['height_per_inch'],#------>
-                    'device_type' => $device_type,#------>
-                    'device_screen_height' => $device_screen_height['pixel_height'],#------>
-                    'archive' => $archive,#------>
-            ));        
-      
-	}
-        
-        #----------------------------------------------------------------------------    
+                    'measurement' => $measurement, #------>
+                    'edit_type' => 'edit', #------>
+                    'marker' => $marker, #------->default marker
+                    'default_marker' => $default_marker, #-------->
+                    'user_pixcel_height' => $measurement->getHeight() * $image_actions_archive['height_per_inch'], #------>
+                    'top_bar' => $measurement->getIphoneHeadHeight(), #------>
+                    'bottom_bar' => $measurement->getIphoneFootHeight(), #------>
+                    'per_inch_pixcel' => $image_actions_archive['height_per_inch'], #------>
+                    'device_type' => $device_type, #------>
+                    'device_screen_height' => $device_screen_height['pixel_height'], #------>
+                    'archive' => $archive, #------>
+                ));
+    }
+
+    #----------------------------------------------------------------------------    
      public function archiveSaveMarkerAction(Request $request)
     {
-         return new Response('archive marker update');
-        $usermaker=$request->request->all();                 
+        $params=$request->request->all();                 
+         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+         return new Response($archive->getId());
+        
         if (array_key_exists('auth_token', $usermaker)){
             $user = $this->get('user.helper.user')->findByAuthToken($usermaker['auth_token']);
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
