@@ -51,13 +51,19 @@ class UserArchivesHelper {
 	public function saveArchives($user_archives,$data) {
 	  if (array_key_exists('measurement', $data)){
 	 	 $user_archives->setMeasurementJson($data['measurement']);
-	  }
+	  }else{
+              
+          }
 	  if (array_key_exists('image_actions', $data)){
 		$user_archives->setImageActions($data['image_actions']);
-	  }
+	  }else{
+              
+          }
 	  if (array_key_exists('marker_params', $data)){
 		$user_archives->setMarkerParams($data['marker_params']);
-	  }
+	  }else{
+              
+          }
 	  if (array_key_exists('svg_paths', $data)){
 		$user_archives->setSvgPaths($data['svg_paths']);
 	  }
@@ -69,8 +75,37 @@ class UserArchivesHelper {
 	  }
 		return $this->save($user_archives);
 	}
-
-
+#---------------------------------------------------------------------
+    private function extractMarkerParams($ar) {
+        $mp = array();            
+        array_key_exists('rect_x', $ar)? $mp['rect_x'] = $ar['rect_x'] : '';
+        array_key_exists('rect_y', $ar)? $mp['rect_y'] = $ar['rect_y'] : '';
+        array_key_exists('rect_height', $ar)? $mp['rect_height'] = $ar['rect_height'] : '';
+        array_key_exists('rect_width', $ar)? $mp['rect_width'] = $ar['rect_width'] : '';
+        array_key_exists('mask_x', $ar)? $mp['mask_x'] = $ar['mask_x'] : '';
+        array_key_exists('mask_y', $ar)? $mp['mask_y'] = $ar['mask_y'] : '';
+        return  json_encode($mp);
+    }
+    #---------------------------------------------------------------------    
+    private function extractImageActions($ia_params, $ia_archive) {
+        $a1 = json_decode($ia_archive, true);
+        $a2 = json_decode($ia_params, true);
+        if (is_array($a2)&& is_array($a1)){ #if both are array then proceed
+            return json_encode(array_merge_recursive($a1, $a2));
+        }else{
+            return $ia_archive;
+        }
+        
+    }
+#---------------------------------------------------------------------
+    private function extractMeasurements($ar, $m_json) {        
+        $amja=json_decode($m_json, true);        
+        array_key_exists('hip_height', $ar)? $mj['hip_height'] = $ar['hip_height'] : '';
+        array_key_exists('shoulder_height', $ar)? $mj['shoulder_height'] = $ar['shoulder_height'] : '';        
+        $res = array_merge_recursive($amja, $mj);
+        return json_encode($res);
+    }
+    #---------------------------------------------------------------------
 	public function getListWithPagination($page_number, $sort) {
 	  $yaml = new Parser();
 	  $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));

@@ -126,8 +126,9 @@ class UserMaskAdjustmentController extends Controller {
      public function archiveSaveMarkerAction(Request $request)
     {
         $params=$request->request->all();                 
-         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
-         return new Response($archive->getId());
+        $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+        
+        return new Response($archive->getId());
         
         if (array_key_exists('auth_token', $usermaker)){
             $user = $this->get('user.helper.user')->findByAuthToken($usermaker['auth_token']);
