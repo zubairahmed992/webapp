@@ -2140,7 +2140,8 @@ image_actions:$('#image_actions').attr('value')};
     },
         failure: function(errMsg) {
             //setTimeout(go_to_index,'500');
-            alert(errMsg);
+            //alert(errMsg);
+            window.location.reload();
         }
   });
 

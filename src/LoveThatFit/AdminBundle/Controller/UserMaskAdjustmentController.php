@@ -76,14 +76,19 @@ class UserMaskAdjustmentController extends Controller {
 
   //----------------------------------------------------------------------------------------
 
-    public function showAction($user_id) {
+    public function showAction($archive_id) {
+        
+        $archive = $this->get('user.helper.userarchives')->find($archive_id);
+        $user = $archive->getUser();
 
-        $user = $this->get('user.helper.user')->find($user_id);
-
+        if (!$archive) {
+            return new Response('archive not found');
+        }
+        
         if (!$user) {
             return new Response('Authentication error');
         }
-        $archive = $this->get('user.helper.userarchives')->getPendingArchive($user);
+        
         $measurement_archive = json_decode($archive->getMeasurementJson(), 1);
         $image_actions_archive = json_decode($archive->getImageActions(), 1);
 
@@ -93,13 +98,14 @@ class UserMaskAdjustmentController extends Controller {
 
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         #$marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());        
-
+        /*
         if ($archive->getSvgPaths()) {
-            $marker = $this->get('user.marker.helper')->arrayToObject($archive->getMarkerArray());
+            $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
         } else {
             $marker = $this->get('user.marker.helper')->getDefaultObject($user);
         }
-
+        */
+        $marker = $this->get('user.marker.helper')->getDefaultObject($user);
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
 
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
@@ -123,34 +129,14 @@ class UserMaskAdjustmentController extends Controller {
     }
 
     #----------------------------------------------------------------------------    
-     public function archiveSaveMarkerAction(Request $request)
-    {
-        $params=$request->request->all();                 
+
+    public function archiveSaveMarkerAction(Request $request) {
+        $params = $request->request->all();
+        
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+        $this->get('user.helper.userarchives')->saveArchives($archive, $params);
         
-        return new Response($archive->getId());
-        
-        if (array_key_exists('auth_token', $usermaker)){
-            $user = $this->get('user.helper.user')->findByAuthToken($usermaker['auth_token']);
-            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~demo account check
-            if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
-                $measurement = $user->getMeasurement(); 
-                $decoded=$measurement->getJSONMeasurement('actual_user');
-                 if(is_array($decoded)){
-                    $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
-                }
-            }
-            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);
-            #update actions in the user_image_specs/adjustment
-            if(array_key_exists('image_actions', $usermaker) && $usermaker['image_actions']){
-                $this->container->get('user.helper.userimagespec')->updateWithParam(json_decode($usermaker['image_actions'],true), $user);
-             }
-            
-            return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
-        }else{
-            return new Response('Authentication token not provided.');
-        }
+        return new Response('archive updated');
     }
     #--------------------------------------------------------------------------
     

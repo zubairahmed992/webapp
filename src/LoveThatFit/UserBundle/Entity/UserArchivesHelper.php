@@ -48,33 +48,32 @@ class UserArchivesHelper {
 
     #-------------------------------------------------------------------------
 
-	public function saveArchives($user_archives,$data) {
-	  if (array_key_exists('measurement', $data)){
-	 	 $user_archives->setMeasurementJson($data['measurement']);
-	  }else{
-              
-          }
-	  if (array_key_exists('image_actions', $data)){
-		$user_archives->setImageActions($data['image_actions']);
-	  }else{
-              
-          }
-	  if (array_key_exists('marker_params', $data)){
-		$user_archives->setMarkerParams($data['marker_params']);
-	  }else{
-              
-          }
-	  if (array_key_exists('svg_paths', $data)){
-		$user_archives->setSvgPaths($data['svg_paths']);
-	  }
-	  if (array_key_exists('marker_json', $data)){
-		$user_archives->setMarkerJson($data['marker_json']);
-	  }
-	  if (array_key_exists('default_marker_svg', $data)){
-		$user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
-	  }
-		return $this->save($user_archives);
-	}
+	public function saveArchives($user_archives, $data) {
+        if (array_key_exists('measurement', $data)) {
+            $user_archives->setMeasurementJson($this->extractMeasurements(json_decode($data['measurement']), $user_archives->getMeasurementJson()));
+        } else {
+            $user_archives->setMeasurementJson($this->extractMeasurements($data, $user_archives->getMeasurementJson()));            
+        }
+        if (array_key_exists('image_actions', $data)) {
+            $user_archives->setImageActions($this->extractImageActions($data['image_actions'], $user_archives->getImageActions()));
+        }
+        if (array_key_exists('marker_params', $data)) {
+            $user_archives->setMarkerParams($data['marker_params']);
+        } else {
+            $user_archives->setMarkerParams($this->extractMarkerParams($data));
+        }
+        if (array_key_exists('svg_path', $data)) {
+            $user_archives->setSvgPaths($data['svg_path']);
+        }
+        if (array_key_exists('marker_json', $data)) {
+            $user_archives->setMarkerJson($data['marker_json']);
+        }
+        if (array_key_exists('default_marker_svg', $data)) {
+            $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
+        }
+        return $this->save($user_archives);
+    }
+
 #---------------------------------------------------------------------
     private function extractMarkerParams($ar) {
         $mp = array();            
@@ -98,12 +97,14 @@ class UserArchivesHelper {
         
     }
 #---------------------------------------------------------------------
-    private function extractMeasurements($ar, $m_json) {        
-        $amja=json_decode($m_json, true);        
-        array_key_exists('hip_height', $ar)? $mj['hip_height'] = $ar['hip_height'] : '';
-        array_key_exists('shoulder_height', $ar)? $mj['shoulder_height'] = $ar['shoulder_height'] : '';        
-        $res = array_merge_recursive($amja, $mj);
-        return json_encode($res);
+    private function extractMeasurements($ar, $m_json) {
+        $amja = json_decode($m_json, true);
+        if (is_array($ar) && is_array($amja)) { #if both are array then proceed
+            array_key_exists('hip_height', $ar) ? $amja['hip_height'] = $ar['hip_height'] : '';
+            array_key_exists('shoulder_height', $ar) ? $amja['shoulder_height'] = $ar['shoulder_height'] : '';
+            return json_encode($amja);
+        }
+        return $m_json;
     }
     #---------------------------------------------------------------------
 	public function getListWithPagination($page_number, $sort) {
