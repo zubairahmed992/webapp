@@ -2162,7 +2162,7 @@ function post_img(){
     
               $.post(img_update_url, {
                       imageData : canv_data,
-                      auth_token : archive_id,
+                      archive_id : archive_id,
                       env: 'admin'
               }, function(canv_data) {
                   alert(canv_data);

@@ -140,21 +140,20 @@ class UserMaskAdjustmentController extends Controller {
     }
     #--------------------------------------------------------------------------
     
-    public function archiveImageUpdateAction() {
-            return new Response('archive image update');
-        $auth_token = $_POST['auth_token'];
-        $entity = $this->get('user.helper.user')->findByAuthToken($auth_token);
+    public function archiveImageUpdateAction(Request $request) {
+            #return new Response('archive image update');
+        $params = $request->request->all();
+        $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Member.');
+        if (!$archive) {
+            throw $this->createNotFoundException('Unable to find archive.');
         }
-        $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        $response = $archive->writeImageFromCanvas($_POST['imageData']);
         #if not from mask marker adjustment interface then resize
-        if (!array_key_exists('env', $_POST) || (array_key_exists('env', $_POST) && !$_POST['env']=='admin')){  
-            $entity->resize_image(); # image is being resized to 320x568
-        }
-            #$entity->resize_image(); # image is being resized to 320x568
-        $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+        
+        $archive->resizeImage(); # image is being resized to 320x568
+            
+        #$this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }
     
