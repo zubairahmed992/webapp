@@ -138,6 +138,12 @@ class UserMaskAdjustmentController extends Controller {
         
         return new Response('archive updated');
     }
+    #----------------------------------------------------------------------------    
+
+    public function archiveToLiveAction($archive_id) {                
+        $this->get('user.helper.userarchives')->makeArchiveToCurrent($archive_id);        
+        return new Response('archive to live'.$archive_id);
+    }
     #--------------------------------------------------------------------------
     
     public function archiveImageUpdateAction(Request $request) {

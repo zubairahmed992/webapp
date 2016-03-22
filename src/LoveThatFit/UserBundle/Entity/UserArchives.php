@@ -418,7 +418,7 @@ class UserArchives
     }
     
     #----------------------------------------
-    public function getImageName($image_type='original'){
+    public function getImageName($image_type){
         switch ($image_type) {
             case 'original':
                 return 'original_'.$this->image;
@@ -426,8 +426,16 @@ class UserArchives
             case 'cropped':
                 return 'cropped_'.$this->image;
                 break;
+            case '-original':
+                $ar=explode('.', $this->image);
+                return 'original.'.$ar[1];                
+                break;
+            case '-cropped':
+                $ar=explode('.', $this->image);
+                return 'cropped.'.$ar[1];                
+                break;
             default:
-                return 'cropped_'.$this->image;
+                return $this->image;
                 break;
         }
         
@@ -436,12 +444,12 @@ class UserArchives
     
     #----------------------------------------
 
-    public function getAbsolutePath($image_type='original') {
+    public function getAbsolutePath($image_type) {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->getImageName($image_type);
     }
 
 //----------------------------------------------------------
-    public function getWebPath($image_type='original') {
+    public function getWebPath($image_type) {
             return null === $this->image ? null : $this->getUploadDir() . '/' . $this->getImageName($image_type) . '?rand=' . uniqid();
     }
 
@@ -459,7 +467,11 @@ class UserArchives
     public function getUploadDir() {
         return 'uploads/ltf/users/' . $this->getUser()->getId();
     }
-
+//----------------------------------------------------------
+    public function copyImagesToUser() {     
+        @copy($this->getAbsolutePath('original'),$this->getAbsolutePath('-original'));
+        @copy($this->getAbsolutePath('cropped'),$this->getAbsolutePath('-cropped'));
+    }
 //----------------------------------------------------------
     public function upload() {
 

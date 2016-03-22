@@ -186,21 +186,34 @@ class UserArchivesHelper {
         $measurement_archive = json_decode($archive->getMeasurementJson(), 1);     
         $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+    
         #mask marker------------>
         $marker = $user->getUserMarker();
         $this->container->get('user.marker.helper')->setArray($archive->getMarkerArray(),$marker);
         $this->container->get('user.marker.helper')->save($marker);
+    
         #image specs------------>
         $image_actions_archive = json_decode($archive->getImageActions(), 1);
         $this->container->get('user.helper.userimagespec')->updateWithParam($image_actions_archive,$user);                
+   
         #user status------------>          
         $user->setStatus(0);
         $this->container->get('user.helper.user')->saveUser($user);                
-        #archive statuses------------>
-            $archive->setStatus(0);
+        #archive statuses------------>        
+        $archive->setStatus(0);
+        $this->pendingToCurrent($user);
+        $this->save($archive);
         #image copy------------>
-        
+        $archive->copyImagesToUser();
   }
 
-    
+    #-------------------- update status
+  public function pendingToCurrent($user) {
+        foreach ($user->getUserArchives() as $a) {
+            if ($a->getStatus() == 0) {
+                $a->setStatus(1);
+                $this->save($a);
+            }
+        }
+    }
 }

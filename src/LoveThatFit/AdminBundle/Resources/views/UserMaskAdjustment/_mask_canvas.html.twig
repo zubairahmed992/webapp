@@ -25,7 +25,7 @@
     <div>Displacement y:{{user_image_spec.displacementY}}</div>
     <div>Rotation:{{user_image_spec.rotation}}</div>
     <div>device Type:{{user_image_spec.deviceType}}</div>
-    <div>foo:{{archive.getWebPath}}</div>
+    <div>foo:{{archive.getWebPath('original')}}</div>
     
 </div>
 {% else%}
@@ -72,7 +72,7 @@
 
 
 
-<input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath)}}"/>
+<input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
 
 
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
