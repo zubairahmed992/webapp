@@ -48,7 +48,45 @@ class UserArchivesHelper {
 
     #-------------------------------------------------------------------------
 
-	public function saveArchives($user_archives, $data) {
+    public function saveArchives($user_archives, $data) {
+
+        if (array_key_exists('measurement', $data)) {
+            if (strlen($user_archives->getMeasurementJson()) > 0) {
+                $arc = json_decode($data['measurement']);
+                $meas = json_decode($user_archives->getMeasurementJson());
+                $user_archives->setMeasurementJson(json_encode(array_merge_recursive($meas, $arc)));
+            } else {
+                $user_archives->setMeasurementJson($data['measurement']);
+            }
+        } else {
+            $user_archives->setMeasurementJson($this->extractMeasurements($data, $user_archives->getMeasurementJson()));
+        }
+        if (array_key_exists('image_actions', $data)) {
+            if (strlen($user_archives->getImageActions()) > 0) {
+                $param = json_decode($data['image_actions']);
+                $arch = json_decode($user_archives->getImageActions());
+                $user_archives->setMeasurementJson(json_encode(array_merge_recursive($arch, $param)));
+            } else {
+                $user_archives->setImageActions($data['image_actions']);
+            }
+            
+        }
+        if (array_key_exists('marker_params', $data)) {
+            $user_archives->setMarkerParams($data['marker_params']);
+        }
+        if (array_key_exists('svg_path', $data)) {
+            $user_archives->setSvgPaths($data['svg_path']);
+        }
+        if (array_key_exists('marker_json', $data)) {
+            $user_archives->setMarkerJson($data['marker_json']);
+        }
+        if (array_key_exists('default_marker_svg', $data)) {
+            $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
+        }
+        return $this->save($user_archives);
+    }
+    #----------------------------------------
+    public function _saveArchives($user_archives, $data) {
         if (array_key_exists('measurement', $data)) {
             $user_archives->setMeasurementJson($this->extractMeasurements(json_decode($data['measurement']), $user_archives->getMeasurementJson()));
         } else {
