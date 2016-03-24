@@ -54,7 +54,9 @@ class UserArchivesHelper {
             if (strlen($user_archives->getMeasurementJson()) > 0) {
                 $arc = json_decode($data['measurement']);
                 $meas = json_decode($user_archives->getMeasurementJson());
-                $user_archives->setMeasurementJson(json_encode(array_merge_recursive($meas, $arc)));
+                if (is_array($meas)&& is_array($arc)){
+                    $user_archives->setMeasurementJson(json_encode(array_merge_recursive($meas, $arc)));
+                }                
             } else {
                 $user_archives->setMeasurementJson($data['measurement']);
             }
@@ -65,7 +67,9 @@ class UserArchivesHelper {
             if (strlen($user_archives->getImageActions()) > 0) {
                 $param = json_decode($data['image_actions']);
                 $arch = json_decode($user_archives->getImageActions());
-                $user_archives->setMeasurementJson(json_encode(array_merge_recursive($arch, $param)));
+                if (is_array($param)&& is_array($arch)){
+                    $user_archives->setMeasurementJson(json_encode(array_merge_recursive($arch, $param)));
+                }
             } else {
                 $user_archives->setImageActions($data['image_actions']);
             }
