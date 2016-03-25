@@ -98,14 +98,15 @@ class UserMaskAdjustmentController extends Controller {
 
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         #$marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());        
-        /*
+        
         if ($archive->getSvgPaths()) {
             $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
         } else {
             $marker = $this->get('user.marker.helper')->getDefaultObject($user);
         }
-        */
+        
         $marker = $this->get('user.marker.helper')->getDefaultObject($user);
+        #return new Response(json_encode($marker->toDataArray(true)));
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
 
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);

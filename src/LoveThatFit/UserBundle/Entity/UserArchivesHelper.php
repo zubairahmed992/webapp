@@ -73,10 +73,11 @@ class UserArchivesHelper {
             } else {
                 $user_archives->setImageActions($data['image_actions']);
             }
-            
         }
-        if (array_key_exists('marker_params', $data)) {
+         if (array_key_exists('marker_params', $data)) {
             $user_archives->setMarkerParams($data['marker_params']);
+        } else {
+            $user_archives->setMarkerParams($this->extractMarkerParams($data));
         }
         if (array_key_exists('svg_path', $data)) {
             $user_archives->setSvgPaths($data['svg_path']);
