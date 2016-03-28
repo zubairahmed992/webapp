@@ -61,6 +61,7 @@ class MaskedMarkerController extends Controller {
         return new Response('-');
     }
 
+	  //--------------------------------- bar method to test notification helper
 	  public function barAction() {
 		$this->get('pushnotification.helper')->sendPushNotification();
 		echo "helper called";
