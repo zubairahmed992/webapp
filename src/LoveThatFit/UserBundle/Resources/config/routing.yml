@@ -116,7 +116,7 @@ registration_device_view_edit:
     pattern:  /registration/device_view
     defaults: { _controller: LoveThatFitUserBundle:Registration:deviceView }    
 
-    
+
     
 #----------------------------- Profile ---------------------------------------------
 
@@ -181,7 +181,11 @@ user_marker_default:
 
 user_maker_foo:    
     pattern:  /user/marker/foo/{id}
-    defaults: { _controller: LoveThatFitUserBundle:MaskedMarker:foo, id: null }       
+    defaults: { _controller: LoveThatFitUserBundle:MaskedMarker:foo, id: null }
+
+foo_notification:
+   pattern:  /marker/bar
+   defaults: { _controller: LoveThatFitUserBundle:MaskedMarker:bar }
 #---------------------------------------------- Login ------------------------------------------
 
 admin_login:

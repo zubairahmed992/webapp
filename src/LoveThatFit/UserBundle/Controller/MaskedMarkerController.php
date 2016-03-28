@@ -60,8 +60,14 @@ class MaskedMarkerController extends Controller {
         $this->get('user.helper.user')->copyDefaultUserData($user);
         return new Response('-');
     }
-    
-    
+
+	  public function barAction() {
+		$this->get('pushnotification.helper')->sendPushNotification();
+		echo "helper called";
+		die;
+		return new Response($response);
+
+	  }
     
 
 }

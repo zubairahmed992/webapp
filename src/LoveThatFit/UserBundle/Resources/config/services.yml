@@ -88,7 +88,7 @@ services:
   twitter_helper:
           class:  LoveThatFit\UserBundle\TwitterHelper
        
-       
+
          
              
 #  authentication_handler:
