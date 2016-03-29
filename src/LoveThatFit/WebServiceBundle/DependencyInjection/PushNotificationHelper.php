@@ -17,7 +17,7 @@ class PushNotificationHelper{
 
     public function sendPushNotification($deviceToken,$msg){
     //print_r($deviceToken);die;
-	$pass = 'selfie';
+	$pass = '';
    // Get the parameters from http get or from command line
 
   $message=$msg;
