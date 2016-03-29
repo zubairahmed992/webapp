@@ -63,9 +63,9 @@ class MaskedMarkerController extends Controller {
 
 	  //--------------------------------- bar method to test notification helper
 	  public function barAction() {
-		$this->get('pushnotification.helper')->sendPushNotification();
-		echo "helper called";
-		die;
+		$deviceToken='9CCA5A448A1DB79C11EE5E9061CE48E2395E67496EDE8E45808260BFEEAD98E5';
+		$msg='This is my first message using push notification';
+		$response = $this->get('pushnotification.helper')->sendPushNotification($deviceToken,$msg);
 		return new Response($response);
 
 	  }

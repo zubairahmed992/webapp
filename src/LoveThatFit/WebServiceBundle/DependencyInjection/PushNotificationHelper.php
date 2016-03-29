@@ -15,9 +15,9 @@ class PushNotificationHelper{
  
    //-------------------------------------------------------
 
-    public function sendPushNotification(){
-	  echo "checking";die;
-    $pass = '';
+    public function sendPushNotification($deviceToken,$msg){
+    //print_r($deviceToken);die;
+	$pass = '';
    // Get the parameters from http get or from command line
 
   $message=$msg;
@@ -57,10 +57,10 @@ class PushNotificationHelper{
          stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
         $fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
         $payload = json_encode($body);
-        foreach($deviceToken as $token=>$key){
-         $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $key)) . pack("n",strlen($payload)).$payload;
+        //foreach($deviceToken as $token=>$key){
+         $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $deviceToken)) . pack("n",strlen($payload)).$payload;
         fwrite($fp, $msg);
-        }
+        //}
         fclose($fp);
         return "sending message :" . $payload;
     }
