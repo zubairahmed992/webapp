@@ -44,7 +44,7 @@
 <input id="dv_type" type="hidden" value="{{ device_type }}" />
 <input id="dv_scr_h" type="hidden" value="{{ device_screen_height }}" />
 <input id="dv_edit_type" type="hidden" value="{{ edit_type }}" />
-
+<input id="hdn_archive_id" type="hidden" value="{{archive.id}}"/>
 <input id="user_auth_token" type="hidden" value="{{ entity.authToken }}" />
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
 <input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
@@ -58,7 +58,7 @@
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
 <input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
-<input id="marker_update_url" type="hidden" value="{{ path('user_maker_save')}}" />{#path('admin_archive_save_marker')#}
+<input id="marker_update_url" type="hidden" value="{{ path('admin_archive_save_marker')}}" />{#path('user_maker_save')#}
 
 <input id="btn_send_params" type="hidden" value="send" />
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
@@ -72,7 +72,7 @@
 
 
 
-<input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+<input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
 
 
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
@@ -82,7 +82,7 @@
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('admin_archive_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 

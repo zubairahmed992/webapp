@@ -111,7 +111,7 @@ class UserMaskAdjustmentController extends Controller {
 
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
 
-        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_canvas.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
                     'entity' => $user, #------>
                     'user_image_spec' => $image_specs, #------->
@@ -133,10 +133,8 @@ class UserMaskAdjustmentController extends Controller {
 
     public function archiveSaveMarkerAction(Request $request) {
         $params = $request->request->all();
-        
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
-        $this->get('user.helper.userarchives')->saveArchives($archive, $params);
-        
+        $this->get('user.helper.userarchives')->saveArchives($archive, $params);        
         return new Response('archive updated');
     }
     #----------------------------------------------------------------------------    

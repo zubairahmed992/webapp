@@ -63,10 +63,10 @@ class DeviceController extends Controller {
                     'edit_type' => $edit_type,
                     'marker' => $marker,
                     'default_marker' => $default_marker,
-                    'user_pixcel_height' =>  $device_spec->getUserPixcelHeight(),
+                    'user_pixcel_height' => $device_spec?$device_spec->getUserPixcelHeight():0,
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
-                    'per_inch_pixcel' => $device_spec->getDeviceUserPerInchPixelHeight(),
+                    'per_inch_pixcel' => $device_spec?$device_spec->getDeviceUserPerInchPixelHeight():0,
                     'device_type' => $device_type,
                     'device_screen_height' => $device_screen_height['pixel_height'],
             ));

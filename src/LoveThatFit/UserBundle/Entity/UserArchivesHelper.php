@@ -63,17 +63,22 @@ class UserArchivesHelper {
         } else {
             $user_archives->setMeasurementJson($this->extractMeasurements($data, $user_archives->getMeasurementJson()));
         }
+
+        
+        #---------------------------
         if (array_key_exists('image_actions', $data)) {
             if (strlen($user_archives->getImageActions()) > 0) {
                 $param = json_decode($data['image_actions']);
                 $arch = json_decode($user_archives->getImageActions());
                 if (is_array($param)&& is_array($arch)){
-                    $user_archives->setMeasurementJson(json_encode(array_merge_recursive($arch, $param)));
+                    $user_archives->setImageActions(json_encode(array_merge_recursive($arch, $param)));
                 }
             } else {
                 $user_archives->setImageActions($data['image_actions']);
             }
         }
+        #---------------------------
+        #---------------------------
          if (array_key_exists('marker_params', $data)) {
             $user_archives->setMarkerParams($data['marker_params']);
         } else {
@@ -84,6 +89,12 @@ class UserArchivesHelper {
         }
         if (array_key_exists('marker_json', $data)) {
             $user_archives->setMarkerJson($data['marker_json']);
+            #--------------------------
+            $image_actions_archive_array = json_decode($user_archives->getImageActions(),true);
+            $predicted_measurement = $this->container->get('user.marker.helper')->getPredictedMeasurement($data['marker_json'], $image_actions_archive_array['device_type']);
+            $measurement_archive_array  = json_decode($user_archives->getMeasurementJson(),true);            
+            $measurement_archive_array['mask']=json_encode($predicted_measurement);
+            $user_archives->setMeasurementJson(json_encode($measurement_archive_array));
         }
         if (array_key_exists('default_marker_svg', $data)) {
             $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
