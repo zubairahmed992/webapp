@@ -45,7 +45,7 @@ class PushNotificationHelper{
    }
 	//echo $cert;
    if($server=='production'){ 
-      $appleServer='ssl://gateway.push.apple.com:2195';
+      $appleServer='ssl://gateway.sandbox.push.apple.com:2195';
       $certpem = $cert;
    }
    else{
@@ -57,11 +57,14 @@ class PushNotificationHelper{
         // assume the private key passphase was removed.
          stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
         $fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
+
         $payload = json_encode($body);
+
         //foreach($deviceToken as $token=>$key){
          $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $deviceToken)) . pack("n",strlen($payload)).$payload;
+
         fwrite($fp, $msg);
-        //}
+       // }
         fclose($fp);
         return "sending message :" . $payload;
     }
