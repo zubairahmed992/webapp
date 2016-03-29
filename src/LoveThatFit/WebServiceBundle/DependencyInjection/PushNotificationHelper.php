@@ -17,7 +17,7 @@ class PushNotificationHelper{
 
     public function sendPushNotification($deviceToken,$msg){
     //print_r($deviceToken);die;
-	$pass = '';
+	$pass = 'selfie';
    // Get the parameters from http get or from command line
 
   $message=$msg;
@@ -40,9 +40,10 @@ class PushNotificationHelper{
   if($server=='production'){
    $cert= dirname(__FILE__).'/cerpro.pem';
    }else{
-   $cert= dirname(__FILE__).'/ck.pem';
-   }
 
+   $cert= 'ck.pem';
+   }
+	//echo $cert;
    if($server=='production'){ 
       $appleServer='ssl://gateway.push.apple.com:2195';
       $certpem = $cert;
