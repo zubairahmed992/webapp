@@ -49,10 +49,12 @@ class BrandController extends Controller {
         $form->bind($request);
         if ($form->isValid()) {#!!!! set in separat methods
             $message_array = $this->get('admin.helper.brand')->save($entity);
+           /*
             $msg = $this->get('push_notification_helper')->getNotificationType('brand_create');
             if ($msg['status'] == 'true') {
                 $this->get('push_notification_helper')->setNotificationInDB($msg['type'], $msg['message']);
             }
+           */
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
             if ($message_array['success']) {
                 return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
@@ -251,11 +253,11 @@ class BrandController extends Controller {
     }
 
     //-------------------------------Get Product By Brand-----------------------------------------------------------
-
+/*
     public function productsAction($id) {
         $brand = $this->get('admin.helper.brand')->find($id);
         $products = $brand->getProducts();
         return new Response(var_dump($products));
     }
-
+*/
 }
