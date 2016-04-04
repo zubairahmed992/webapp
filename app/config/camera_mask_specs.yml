@@ -1,0 +1,19 @@
+mask_specs:
+  iphone5c:
+    mask_x: 55
+    mask_y: 55
+    pixel_per_inch: 5
+  iphone5s:
+    mask_x: 55
+    mask_y: 55
+    pixel_per_inch: 5
+  iphone6c:
+    mask_x: 66
+    mask_y: 66
+    pixel_per_inch: 6
+  iphone6s:
+    mask_x: 66
+    mask_y: 66
+    pixel_per_inch: 6  
+    
+  

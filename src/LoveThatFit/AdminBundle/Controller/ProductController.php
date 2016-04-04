@@ -1011,7 +1011,8 @@ public function itemPriceUpdateAction() {
 
 #-----------------------------------------------------------------------
     public function fooAction($id = 0) {
-        return new response(json_encode($this->get('admin.helper.product')->productDetailSizeArray($id)));      
+        #return new response(json_encode($this->get('admin.helper.product')->productDetailSizeArray($id)));      
+        return new response(json_encode($this->get('admin.helper.camera_mask_specs')->getMaskSpecs()));      
     }
 #-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {

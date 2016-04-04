@@ -161,7 +161,8 @@ services:
      admin.helper.user.mannequin:
         class: LoveThatFit\UserBundle\Entity\MannequinHelper
      
-         
+     admin.helper.camera_mask_specs:
+        class: LoveThatFit\AdminBundle\DependencyInjection\CameraMaskSpecsHelper         
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
