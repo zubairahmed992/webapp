@@ -248,7 +248,21 @@ class UserMarkerHelper {
             
         }
     }
- #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    
+  public function getDeviceTypeForModel($model) {
+        $iphone5_models = array('iPhone5c', 'iphone5c', 'iPhone5s', 'iphone5s', 'iphonese', 'iPhoneSE');
+        $iphone6_models = array('iPhone6Plus', 'iphone6plus', 'iPhone6s', 'iphone6s', 'iPhone6sPlus', 'iphone6splus');
+
+        if (array_key_exists($model, $iphone5_models)) {
+            return 'iphone5';
+        } elseif (array_key_exists($model, $iphone6_models)) {
+            return 'iphone6';
+        } else {
+            return $model;
+        }
+    }
+    #---------------------------------------------------------------------------
     
   public function getDefaultMask($gender, $body_type){
       $mask_type_array = $this->getMaskedMarkerSpecs();      

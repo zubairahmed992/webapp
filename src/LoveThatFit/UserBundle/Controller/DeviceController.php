@@ -67,7 +67,8 @@ class DeviceController extends Controller {
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
                     'per_inch_pixcel' => $device_spec?$device_spec->getDeviceUserPerInchPixelHeight():0,
-                    'device_type' => $device_type,
+                    'device_type' => $this->get('user.marker.helper')->getDeviceTypeForModel($device_type),
+                    'device_model'=> $device_type,
                     'device_screen_height' => $device_screen_height['pixel_height'],
             ));
     
@@ -153,7 +154,8 @@ class DeviceController extends Controller {
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
                     'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
-                    'device_type' => $device_type,
+                    'device_type' => $this->get('user.marker.helper')->getDeviceTypeForModel($device_type),
+                    'device_model'=> $device_type,
                     'device_screen_height' => $device_screen_height['pixel_height'],
                 ));
     }
