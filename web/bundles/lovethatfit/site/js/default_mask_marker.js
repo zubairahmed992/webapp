@@ -6,32 +6,61 @@ hitOptions = {
 };
 
 inc_ratio = 1;
-curr_screen_height = 505;
-center_pos = 160;
-def_pos_x = -500;
-def_path_diff = 500;
 
-gap_top_head = -20;
+var liquid_mask = {
+    user_height: parseFloat($('#user_height_frm_3').attr('value')),
+    def_mask: $("#default_user_path").html(),
+    device_type: $("#dv_model").attr("value"),
+    def_zoom_ratio: 1,
+    scr_empty_top: 26,
+    px_per_inch_ratio: function(){return 6.891},
+    adjusted_user_mask: function(){return}
+}
+//alert("asdf");
 
-curr_view = "normal";
-curr_crop = "normal";
 
-dv_user_px_h = parseInt($("#dv_user_px_height").attr("value"));
-dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
-dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
-dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
-dv_type = parseInt($("#dv_type").attr("value"));
-dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
-dv_edit_type = $("#dv_edit_type").attr("value");
 
-dv_gap_top = 26;
-dv_gap_bottom = 32;
+//dv_gap_top = 26;
+//dv_gap_bottom = 32;
 
 //Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
-fixed_px_inch_ratio = 6.891;
-
+if(liquid_mask.device_type == "iphone5c" || liquid_mask.device_type == "android"){
+    fixed_px_inch_ratio = 6.891;
+    
+    // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
+    // 
+    // 
+    // 3.83 is 1% value
+    //adj_btm_fix = (13 + 3.83)-3;
+    
+    //adj_btm_fix = 13; (Old setting when move mask upside)
+    adj_btm_fix = 0;
+    
+}
+if(liquid_mask.device_type == "iphone5s"){
+    fixed_px_inch_ratio = 6.891;
+    adj_btm_fix = 4; // Adjustment of iPhone5S
+}
+if(liquid_mask.device_type == "iphone6"){
+    //fixed_px_inch_ratio = 8.094;
+    
+    fixed_px_inch_ratio = 6.891;
+    
+    // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
+    // 4.49 is 1% value
+    //adj_btm_fix = 15.333 + 4.49;
+    
+    //fix adjustment for iphone6 camera view.
+    
+    fix_add_btm = 8.5;
+    
+    adj_btm_fix = 15.333 + fix_add_btm;
+    
+    adj_btm_fix = adj_btm_fix - 19;
+    
+    //adj_btm_fix = 0;
+}
 //////// From JS file
-
 chk_no_img_path = true;
 
 $(document).ready(function() {
@@ -66,7 +95,6 @@ mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
 
 
 
-
 //mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
 //mid_area_path.segments[41].point.y -= 50;
 
@@ -75,11 +103,11 @@ mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
 //p_user_height = p_user_height + p_user_height_add;
 
 
-p_user_height_px = p_user_height * fixed_px_inch_ratio;
+                //p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
 //p_user_height_add_px = p_user_height_add * fixed_px_inch_ratio;
 
-var p_extra_foot_area = 0;
+                //var p_extra_foot_area = 0;
 
 
 p_user_height = p_user_height * fixed_px_inch_ratio;
@@ -89,7 +117,6 @@ p_user_height = p_user_height * fixed_px_inch_ratio;
 p_user_height = p_user_height * 100 / 430;
 
 p_user_height = p_user_height / 100;
-
 
 if(chk_no_img_path == true){
             mid_area_path.scale(inc_ratio, p_user_height);            
@@ -160,7 +187,6 @@ if(chk_no_img_path == true){
   
   user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
   
-  //alert(dv_per_inch_px);
   
   var torso_w_adj_left = [54,53,52,51,50,49];
   var torso_w_adj_right = [16,17,18,19,20,21];
@@ -242,28 +268,60 @@ if(chk_no_img_path == true){
     mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
     
+    
+    
 }
-    mid_area_path.scale(0.750, 0.750);
-    
-    mid_area_path.scale(1, 1.01);
     
     
-    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
     
-    mid_area_path.segments[41].point.y += 16.56;
-    mid_area_path.segments[41].handleOut = handleOut_41;
-    mid_area_path.segments[40].handleOut = handleOut_40;
+    
+    
+    if(liquid_mask.device_type == "iphone5"){
+      mid_area_path.scale(0.750, 0.750);
+      //One percent adjustment
+      mid_area_path.scale(1, 1.01);
+      mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
+      mid_area_path.position = new Point(160,403.50 - adj_btm_fix);
+      
+        mid_area_path.segments[41].point.y += 16.56; 
+        mid_area_path.segments[41].handleOut = handleOut_41;
+        mid_area_path.segments[40].handleOut = handleOut_40;
 
-    mid_area_path.segments[29].point.y += 16.56;
-    mid_area_path.segments[29].handleIn = handleIn_29;
-    mid_area_path.segments[30].handleIn = handleIn_30;
+        mid_area_path.segments[29].point.y += 16.56;
+        mid_area_path.segments[29].handleIn = handleIn_29;
+        mid_area_path.segments[30].handleIn = handleIn_30;
+    }
+    if (liquid_mask.device_type == "iphone6"){
+      
+      //
+      //,New fix
+      mid_area_path.scale(1.174,1.174);
+      
+      
+      //mid_area_path.scale(0.9, 0.9);
+      mid_area_path.scale(0.748, 0.748);
+      //One percent adjustment
+      mid_area_path.scale(1, 1.01);
+      
+      mid_area_path.scale(0.952, 0.952);
+      
+      mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
+      mid_area_path.position = new Point(screen.width/2,472 + 2 - adj_btm_fix);
+      //alert("6_6_6");
+      
+        mid_area_path.segments[41].point.y += 19; 
+        mid_area_path.segments[41].handleOut = handleOut_41;
+        mid_area_path.segments[40].handleOut = handleOut_40;
+
+        mid_area_path.segments[29].point.y += 19;
+        mid_area_path.segments[29].handleIn = handleIn_29;
+        mid_area_path.segments[30].handleIn = handleIn_30;
+    } 
+    
+    
+    
 
 
-    mid_area_path.position = new Point(160,403.50);
-    
-    
-    
-   // mid_area_path.position = new Point(160,0);
     
     
     
@@ -273,6 +331,14 @@ if(chk_no_img_path == true){
     mid_area_path.opacity = 0.85;
 
     $("#svg_path_data").attr("value", mid_area_path.pathData);
+    if(liquid_mask.device_type == "android"){
+        testEcho();
+    }
     window.location.href = "svg_path_created";
     return mid_area_path;
+}
+
+function testEcho(){
+    var nameValue = $("#svg_path_data").attr("value");
+    window.JSInterface.doEchoTest(nameValue);
 }
