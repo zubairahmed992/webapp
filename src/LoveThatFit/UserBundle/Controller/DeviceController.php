@@ -29,7 +29,10 @@ class DeviceController extends Controller {
     
    public function editImageAction($auth_token=null, $edit_type=null, $device_type=null) {
        $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
-       $device_type =$device_type==null? 'iphone5':$device_type;
+       $device_model = $device_type;
+       $device_type = $this->get('user.marker.helper')->getDeviceTypeForModel($device_type);
+       #$device_type = $device_type==null? 'iphone5':$device_type;
+       
        if(!$user){
            return new Response ('Authentication error');
        }
@@ -67,8 +70,8 @@ class DeviceController extends Controller {
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
                     'per_inch_pixcel' => $device_spec?$device_spec->getDeviceUserPerInchPixelHeight():0,
-                    'device_type' => $this->get('user.marker.helper')->getDeviceTypeForModel($device_type),
-                    'device_model'=> $device_type,
+                    'device_type' => $device_type,
+                    'device_model'=> $device_model,
                     'device_screen_height' => $device_screen_height['pixel_height'],
             ));
     
@@ -119,6 +122,8 @@ class DeviceController extends Controller {
 
    public function svgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
        $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
+       $device_model = $device_type;
+       $device_type = $this->get('user.marker.helper')->getDeviceTypeForModel($device_type);       
        $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
@@ -154,8 +159,8 @@ class DeviceController extends Controller {
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
                     'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
-                    'device_type' => $this->get('user.marker.helper')->getDeviceTypeForModel($device_type),
-                    'device_model'=> $device_type,
+                    'device_type' => $device_type,
+                    'device_model'=> $device_model,
                     'device_screen_height' => $device_screen_height['pixel_height'],
                 ));
     }

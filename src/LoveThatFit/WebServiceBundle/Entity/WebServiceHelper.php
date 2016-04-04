@@ -246,6 +246,10 @@ class WebServiceHelper {
 
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
+                
+                if(array_key_exists('device_model', $ra)){
+                    $user->setImageDeviceModel($ra['device_model']);
+                }
 
                 if (move_uploaded_file($files["image"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
                     $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);
