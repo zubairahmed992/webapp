@@ -328,7 +328,7 @@ if(chk_no_img_path == true){
 			mid_area_path.scale(1.081, 1.081);
 
       mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-      mid_area_path.position = new Point(screen.width/2,(474 - adj_btm_fix) + 23.5);
+      mid_area_path.position = new Point(screen.width/2,(474 - adj_btm_fix) - 27);
       //alert("6_6_6");
 
         mid_area_path.segments[41].point.y += 19;
