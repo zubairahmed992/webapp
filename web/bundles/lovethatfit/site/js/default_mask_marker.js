@@ -293,10 +293,9 @@ if(chk_no_img_path == true){
 }
 
 
-
-
-
     if(liquid_mask.device_type == "iphone5"){
+
+      
       mid_area_path.scale(0.750, 0.750);
       //One percent adjustment
       mid_area_path.scale(1, 1.01);
