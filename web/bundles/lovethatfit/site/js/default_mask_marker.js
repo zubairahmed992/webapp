@@ -10,7 +10,8 @@ inc_ratio = 1;
 var liquid_mask = {
     user_height: parseFloat($('#user_height_frm_3').attr('value')),
     def_mask: $("#default_user_path").html(),
-    device_type: $("#dv_model").attr("value"),
+    device_type: $("#dv_type").attr("value"),
+    device_model: $("#dv_model").attr("value"),
     def_zoom_ratio: 1,
     scr_empty_top: 26,
     px_per_inch_ratio: function(){return 6.891},
@@ -24,41 +25,60 @@ var liquid_mask = {
 //dv_gap_bottom = 32;
 
 //Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
-if(liquid_mask.device_type == "iphone5c" || liquid_mask.device_type == "android"){
-    fixed_px_inch_ratio = 6.891;
+if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android"){
+    
+  if(liquid_mask.device_model == "iphone5"){
+        fixed_px_inch_ratio = 6.891;
+        adj_btm_fix = 0; // Adjustment of iPhone5S
+  }
+  if(liquid_mask.device_model == "iphone5c"){  
+        fixed_px_inch_ratio = 6.891;
 
-    // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
-    //
-    //
-    // 3.83 is 1% value
-    //adj_btm_fix = (13 + 3.83)-3;
+        // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
+        //
+        //
+        // 3.83 is 1% value
+        //adj_btm_fix = (13 + 3.83)-3;
 
-    //adj_btm_fix = 13; (Old setting when move mask upside)
-    adj_btm_fix = 0;
-
-}
-if(liquid_mask.device_type == "iphone5"){
-    fixed_px_inch_ratio = 6.891;
-    adj_btm_fix = 4; // Adjustment of iPhone5S
+        //adj_btm_fix = 13; (Old setting when move mask upside)
+        adj_btm_fix = 0;
+    }
+    if(liquid_mask.device_model == "iphone5s"){
+        fixed_px_inch_ratio = 6.891;
+        adj_btm_fix = 4; // Adjustment of iPhone5S
+    }
 }
 if(liquid_mask.device_type == "iphone6"){
-    //fixed_px_inch_ratio = 8.094;
+    if(liquid_mask.device_model == "iphone6"){
+        
+        //fixed_px_inch_ratio = 8.094;
 
-    fixed_px_inch_ratio = 6.891;
+        fixed_px_inch_ratio = 6.891;
 
-    // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
-    // 4.49 is 1% value
-    //adj_btm_fix = 15.333 + 4.49;
+        // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
+        // 4.49 is 1% value
+        //adj_btm_fix = 15.333 + 4.49;
 
-    //fix adjustment for iphone6 camera view.
+        //fix adjustment for iphone6 camera view.
 
-    fix_add_btm = 8.5;
+        fix_add_btm = 8.5;
 
-    adj_btm_fix = 15.333 + fix_add_btm;
+        adj_btm_fix = 15.333 + fix_add_btm;
 
-    adj_btm_fix = adj_btm_fix - 19;
+        adj_btm_fix = adj_btm_fix - 19;
 
-    //adj_btm_fix = 0;
+        //adj_btm_fix = 0;
+    }
+    if(liquid_mask.device_model == "iphone6s"){
+        fixed_px_inch_ratio = 6.891;
+
+        fix_add_btm = 8.5;
+
+        adj_btm_fix = 15.333 + fix_add_btm;
+
+        adj_btm_fix = adj_btm_fix - 19;
+
+    }
 }
 //////// From JS file
 chk_no_img_path = true;
