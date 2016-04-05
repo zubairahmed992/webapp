@@ -26,12 +26,12 @@ var liquid_mask = {
 
 //Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
 if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android"){
-    
+
   if(liquid_mask.device_model == "iphone5"){
         fixed_px_inch_ratio = 6.891;
-        adj_btm_fix = 55; // Adjustment of iPhone5S
+        adj_btm_fix = 100; // Adjustment of iPhone5S
   }
-  if(liquid_mask.device_model == "iphone5c"){  
+  if(liquid_mask.device_model == "iphone5c"){
         fixed_px_inch_ratio = 6.891;
 
         // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
@@ -50,7 +50,7 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
 }
 if(liquid_mask.device_type == "iphone6"){
     if(liquid_mask.device_model == "iphone6"){
-        
+
         //fixed_px_inch_ratio = 8.094;
 
         fixed_px_inch_ratio = 6.891;
