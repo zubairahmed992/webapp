@@ -325,7 +325,7 @@ if(chk_no_img_path == true){
 
       mid_area_path.scale(0.952, 0.952);
 
-			mid_area_path.scale(1.109, 1.109);
+			mid_area_path.scale(1.081, 1.081);
 
       mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
       mid_area_path.position = new Point(screen.width/2,(474 - adj_btm_fix) + 23.5);
