@@ -293,8 +293,12 @@ if(chk_no_img_path == true){
 }
 
 
-    if(liquid_mask.device_type == "iphone5"){
 
+
+alert("Bahar - type and model: " + liquid_mask.device_model);
+    if(liquid_mask.device_type == "iphone5"){
+      
+      alert("Andar - type and model: " + );
       
       mid_area_path.scale(0.750, 0.750);
       //One percent adjustment
