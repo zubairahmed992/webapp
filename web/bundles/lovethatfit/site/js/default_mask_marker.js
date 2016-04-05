@@ -29,7 +29,7 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
 
   if(liquid_mask.device_model == "iphone5"){
         fixed_px_inch_ratio = 6.891;
-        adj_btm_fix = 100; // Adjustment of iPhone5S
+        adj_btm_fix = 0; // Adjustment of iPhone5S
   }
   if(liquid_mask.device_model == "iphone5c"){
         fixed_px_inch_ratio = 6.891;
@@ -325,8 +325,10 @@ if(chk_no_img_path == true){
 
       mid_area_path.scale(0.952, 0.952);
 
+			mid_area_path.scale(1.0675, 1.0675);
+
       mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-      mid_area_path.position = new Point(screen.width/2,472 + 2 - adj_btm_fix);
+      mid_area_path.position = new Point(screen.width/2,(474 - adj_btm_fix) - 31.5);
       //alert("6_6_6");
 
         mid_area_path.segments[41].point.y += 19;
