@@ -29,7 +29,7 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
     
   if(liquid_mask.device_model == "iphone5"){
         fixed_px_inch_ratio = 6.891;
-        adj_btm_fix = 0; // Adjustment of iPhone5S
+        adj_btm_fix = 55; // Adjustment of iPhone5S
   }
   if(liquid_mask.device_model == "iphone5c"){  
         fixed_px_inch_ratio = 6.891;
