@@ -1,4 +1,5 @@
 app/config/parameters.yml
+app/config/camera_mask_specs.yml
 web/app_dev.php
 app/bootstrap.php.cache
 app/cache/*
