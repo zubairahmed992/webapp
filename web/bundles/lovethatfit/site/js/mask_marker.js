@@ -29,6 +29,9 @@ dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
 dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
 dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
 dv_type = $("#dv_type").attr("value");
+
+dv_model = $("#dv_model").attr("value");
+
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
 dv_edit_type = $("#dv_edit_type").attr("value");
 
@@ -62,15 +65,16 @@ if(dv_edit_type == "edit" && image_actions_setting == ""){
 
 
 if(dv_type == "iphone5"){
+    
+ 
+    
     fixed_px_inch_ratio = 6.891;
     scr_width = 160;
     but_x_adj = 295;
     scr_height = 568;
     
     // adjusting 66.666% value of top empty area ----- 26/3*2 = 17.333
-    adj_btm_fix = 17.333;
     
-    diff_dv = 31 + adj_btm_fix;
     dv_iPhone6 = false;
     
     def_mask_x_pos = -100;
@@ -82,6 +86,23 @@ if(dv_type == "iphone5"){
     
     rgt_arrow_x = 224;
     rgt_arrow_y = 288;
+    
+    
+    if(dv_model == "iphone5"){
+        //adj_btm_fix = 17.333;
+        adj_btm_fix = 0;
+        diff_dv = 31 + adj_btm_fix;
+  }
+  if(dv_model == "iphone5c"){
+        adj_btm_fix = 0;
+        diff_dv = 31 + adj_btm_fix;
+    }
+    if(dv_model == "iphone5s"){
+        adj_btm_fix = 5;
+        diff_dv = 31 + adj_btm_fix;
+    }
+    
+    
     
 }
 if(dv_type == "iphone6"){
@@ -97,7 +118,7 @@ if(dv_type == "iphone6"){
                 //adj_btm_fix = 0;
                 
                 //Static value "28px" adjusted based on screen test
-                adj_btm_fix = 28;
+                adj_btm_fix = 8;
 
                 diff_dv = 38 + adj_btm_fix;
   
@@ -573,6 +594,8 @@ if(dv_iPhone6){
 //    alert("its 6....");
     mid_area_path.scale(1.174,1.174);
     mid_area_path.scale(0.952,0.952);
+    
+    mid_area_path.scale(1.081, 1.081); /// April 6, 2016 - new setting
 }
 
 
