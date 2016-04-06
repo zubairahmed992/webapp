@@ -95,3 +95,8 @@ admin_auto_complete:
 admin_user_download_access_logs:
     pattern:  /download_access_logs/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:downloadAccessLogs }
+
+#---------- YML Data ----------------------
+admin_yml_setting_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/yml_setting.yml"
+    prefix:   /

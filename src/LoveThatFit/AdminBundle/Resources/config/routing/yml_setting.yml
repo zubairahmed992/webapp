@@ -1,0 +1,8 @@
+#---------------------------------------- YML data update ---------------------
+admin_yml_setting_index:
+    pattern:  /admin/yml_setting
+    defaults: { _controller: LoveThatFitAdminBundle:YmlSetting:index }
+
+admin_yml_setting_update:
+    pattern:  /admin/update_setting
+    defaults: { _controller: LoveThatFitAdminBundle:YmlSetting:update }
