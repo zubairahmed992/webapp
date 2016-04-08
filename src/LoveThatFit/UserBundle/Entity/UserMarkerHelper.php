@@ -383,7 +383,8 @@ class UserMarkerHelper {
     #this method converts the px value of a device equivalent to iPhone5 in order to convert to inches
     private function device_screen_adjustment($px_measure, $device_type=null){
         if( strtolower($device_type) == 'iphone6'){
-            return ($px_measure * 0.89478);
+            //return ($px_measure * 0.89478);
+            return ($px_measure * 0.8278);
         }else{
             return $px_measure;
         }
