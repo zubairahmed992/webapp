@@ -215,12 +215,23 @@ class UserArchivesHelper {
 	$result = $this->getPendingArchive($user);
 	$id = $result->getId();
 	if($result->getStatus() == '-1'){
+	  $user_cropped_image = "cropped_".$result->getImage();
+	  $user_original_image = "original_".$result->getImage();
+	  //echo $result->getImage();die;
 	  $result_user = $this->container->get('user.helper.user')->find($user_id);
 	  $result_user->setStatus(0);
 	  $result_user->setUpdatedAt(new \DateTime('now'));
 	  $this->em->persist($result_user);
 	  $this->em->flush();
 	  $this->delete($id);
+	  if (file_exists("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image))
+	  {
+		unlink ("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image);
+	  }
+	  if (file_exists("../web/uploads/ltf/users/".$user_id."/".$user_original_image))
+	  {
+		unlink ("../web/uploads/ltf/users/".$user_id."/".$user_original_image);
+	  }
 	}
  }
 #--------------------
