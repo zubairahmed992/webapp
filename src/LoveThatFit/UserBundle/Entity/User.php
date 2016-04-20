@@ -272,6 +272,15 @@ class User implements UserInterface, \Serializable {
      * )
      */
     private $image_updated_at;
+    
+     /**
+     * @var string $device_tokens
+     *
+     * @ORM\Column(name="device_tokens", type="text", nullable=true)
+     * )
+     */
+    private $device_tokens;
+    
 
     /**
      * @var string $avatar
@@ -857,7 +866,28 @@ class User implements UserInterface, \Serializable {
     public function getProductItems() {
         return $this->product_items;
     }
+#-----------------------------------------
+    /**
+     * Set device_tokens
+     *
+     * @param string $device_tokens
+     * @return User
+     */
+    public function setDeviceTokens($device_tokens) {
+        $this->device_tokens = $device_tokens;
 
+        return $this;
+    }
+
+    /**
+     * Get device_tokens
+     *
+     * @return string 
+     */
+    public function getDeviceTokens() {
+        return $this->device_tokens;
+    }
+#-----------------------------------------
     /**
      * Set zipcode
      *
@@ -2182,4 +2212,41 @@ class User implements UserInterface, \Serializable {
 	return $this->cart;
   }
   ##############################################################################
+  
+  public function addDeviceToken($device_type, $token) {
+        if ($this->device_tokens) {
+            $temp = json_decode($this->device_tokens);
+            if (is_array($temp)) {
+                if (!in_array($token, $temp[$device_type])) {
+                    array_push($temp[$device_type], $token);
+                    $this->device_tokens = json_encode($temp);
+                }
+            } else {
+                $this->device_tokens = json_encode(array($device_type => array($token)));
+            }
+        } else {
+            $this->device_tokens = json_encode(array($device_type => array($token)));
+        }
+    }
+    #------------------------------------------------
+    public function getDeviceTokenArrayByDevice($device_type, $token) {
+        if ($this->device_tokens) {
+            $temp = json_decode($this->device_tokens);
+            if (is_array($temp)) {
+                return $temp[$device_type];
+            }
+        }
+        return;
+    }
+    #------------------------------------------------
+    public function getDeviceTokenArray() {
+        if ($this->device_tokens) {
+            $temp = json_decode($this->device_tokens);
+            if (is_array($temp)) {
+                return $temp;
+            }
+        }
+        return;
+    }
+  
 }
