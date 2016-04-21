@@ -2231,8 +2231,25 @@ class User implements UserInterface, \Serializable {
             $this->device_tokens = json_encode(array($device_type => array($token)));
         }
     }
+     ##############################################################################
+  
+  public function removeDeviceToken($token) {
+      if ($this->device_tokens) {
+            $temp = json_decode($this->device_tokens);
+            if (is_array($temp)) {
+                foreach ($temp as $device => $tokens) {
+                    foreach ($tokens as $t) {
+                        if($t==$token){
+                            unset($t); 
+                        }
+                    }
+                }
+            } 
+        } 
+    }
     #------------------------------------------------
-    public function getDeviceTokenArrayByDevice($device_type, $token) {
+    public function getDeviceTokenArrayByDevice($device_type) {
+        #device_type = iphone or android
         if ($this->device_tokens) {
             $temp = json_decode($this->device_tokens);
             if (is_array($temp)) {
