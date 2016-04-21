@@ -40,6 +40,7 @@ ws_user_login:
           email:  example@ltf.com
           password: ltf123
           device_type: iphone5
+          device_token: 1122334455667788990011223344556677889900
           user_detail: true
           retailer_brand: true
     optional_params:
@@ -56,6 +57,7 @@ ws_user_registration:
       email:  example@ltf.com
       password: ltf123
       gender: f
+      device_token: 11223344556677889900112233445566778899000
       zipcode:
       birth_date:  
       weight: 80.00
@@ -88,6 +90,7 @@ ws_user_registration_default_values:
     params:
       email:  example@ltf.com
       password: ltf123
+      device_token: 1122334455667788990011223344556677889900
       gender: f
       zipcode:
       birth_date:  

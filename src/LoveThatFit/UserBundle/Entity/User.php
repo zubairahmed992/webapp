@@ -2214,7 +2214,10 @@ class User implements UserInterface, \Serializable {
   ##############################################################################
   
   public function addDeviceToken($device_type, $token) {
-        if ($this->device_tokens) {
+      if (strpos(strtolower($device_type), 'iphone') !== false || strpos(strtolower($device_type), 'ipad') !== false ) {
+    $device_type='iphone';
+        }  
+      if ($this->device_tokens) {
             $temp = json_decode($this->device_tokens);
             if (is_array($temp)) {
                 if (!in_array($token, $temp[$device_type])) {

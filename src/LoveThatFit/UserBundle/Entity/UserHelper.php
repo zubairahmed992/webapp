@@ -782,5 +782,11 @@ class UserHelper {
  public function getFirstLimtedUserWithDeviceType($limit,$page_number){
      return $this->repo->getFirstLimtedUserWithDeviceType($limit,$page_number);
  }
-  
+  #------------------------------------------------------
+  public function updateDeviceToken($user, $params){      
+      $user->addDeviceToken($params['device_type'], $params['device_token']);
+      $this->container->get('user.helper.user')->saveUser($user);
+         return true;      
+  }
+
 }
