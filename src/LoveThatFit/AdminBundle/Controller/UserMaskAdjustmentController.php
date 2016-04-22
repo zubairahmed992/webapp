@@ -95,18 +95,19 @@ class UserMaskAdjustmentController extends Controller {
         $device_type = $image_actions_archive['device_type'];
         $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
         $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
-
+         #return new Response(json_encode($archive->getMarkerArray()));   
         $form = $this->createForm(new RegistrationStepFourType(), $user);
-        #$marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());        
-        
+        $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());        
+        #return new Response(json_encode($marker->getMarkerJson()));
+        /*
         if ($archive->getSvgPaths()) {
             $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
         } else {
             $marker = $this->get('user.marker.helper')->getDefaultObject($user);
         }
+        */
+        #$marker = $this->get('user.marker.helper')->getDefaultObject($user);
         
-        $marker = $this->get('user.marker.helper')->getDefaultObject($user);
-        #return new Response(json_encode($marker->toDataArray(true)));
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
 
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
