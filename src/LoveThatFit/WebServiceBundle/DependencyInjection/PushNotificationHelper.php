@@ -4,6 +4,7 @@ namespace LoveThatFit\WebServiceBundle\DependencyInjection;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 class PushNotificationHelper{
 
 
@@ -17,6 +18,7 @@ class PushNotificationHelper{
     //echo "test";
 	  //print_r($deviceToken);die;
 	  $pass = '';
+	  $msg='This is my third message';
    // Get the parameters from http get or from command line
 	  //$id = $this->get('security.context')->getToken()->getUser()->getId();
 	  //echo $id;
