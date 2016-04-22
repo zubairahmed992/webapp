@@ -2252,8 +2252,8 @@ class User implements UserInterface, \Serializable {
         #device_type = iphone or android
         if ($this->device_tokens) {
             $temp = json_decode($this->device_tokens);
-            if (is_array($temp)) {
-                return $temp[$device_type];
+            if (is_object($temp)) {
+                return $temp->$device_type;
             }
         }
         return;

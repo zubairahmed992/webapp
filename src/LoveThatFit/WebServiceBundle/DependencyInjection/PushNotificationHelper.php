@@ -4,46 +4,56 @@ namespace LoveThatFit\WebServiceBundle\DependencyInjection;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
-
-
 class PushNotificationHelper{
 
 
-     public function __construct(){
-        
-    }
- 
+  public function __construct(Container $container) {
+	$this->container = $container;
+
+  }
    //-------------------------------------------------------
 
-    public function sendPushNotification($deviceToken,$msg){
+    public function sendPushNotification($user){
     //echo "test";
 	  //print_r($deviceToken);die;
-	$pass = '';
+	  $pass = '';
    // Get the parameters from http get or from command line
+	  //$id = $this->get('security.context')->getToken()->getUser()->getId();
+	  //echo $id;
 
-  $message=$msg;
-   $badge = 1 ;
-  $sound = 'default';
-   // Construct the notification payload
-  //foreach($msg as $messages=>$key){
-    //  $message.=$key;
- // }
-   $body = array();
-   $body['aps'] = array('alert' => $message);
+	  $deviceToken = $user->getDeviceTokenArrayByDevice('iphone');
+	  /*
+	  if(count($notification_val) == 1){
+		$deviceToken = $notification_val[0];
+	  }else{
+		$deviceToken = implode(",",$notification_val);
+	  }
+	  */
+	  //echo $deviceToken;
+	  //die;
+	  $message=$msg;
+	   $badge = 1 ;
+	  $sound = 'default';
+	   // Construct the notification payload
+	  //foreach($msg as $messages=>$key){
+		//  $message.=$key;
+	 // }
+	   $body = array();
+	   $body['aps'] = array('alert' => $message);
 
-  if ($badge)
-     $body['aps']['badge'] = $badge;
-  if ($sound)
-     $body['aps']['sound'] = $sound;
+	  if ($badge)
+		 $body['aps']['badge'] = $badge;
+	  if ($sound)
+		 $body['aps']['sound'] = $sound;
 
-   /* End of Configurable Items */
-   $server = 'developement';
-  if($server=='production'){
-   $cert= dirname(__FILE__).'/cerpro.pem';
-   }else{
+	   /* End of Configurable Items */
+	   $server = 'developement';
+	  if($server=='production'){
+	   $cert= dirname(__FILE__).'/pushcert.pem';
+	   }else{
 
-   $cert= dirname(__FILE__).'/pushcert.pem';
-   }
+	   $cert= dirname(__FILE__).'/pushcert.pem';
+	   }
 
 	//echo $cert;
    //die;
@@ -63,11 +73,11 @@ class PushNotificationHelper{
 
         $payload = json_encode($body);
 
-        //foreach($deviceToken as $token=>$key){
-         $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $deviceToken)) . pack("n",strlen($payload)).$payload;
+        foreach($deviceToken as $token){
+         $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $token)) . pack("n",strlen($payload)).$payload;
 
         fwrite($fp, $msg);
-       // }
+        }
         fclose($fp);
         return "sending message :" . $payload;
     }

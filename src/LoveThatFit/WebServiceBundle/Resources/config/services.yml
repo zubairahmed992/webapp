@@ -18,5 +18,7 @@ services:
             
     pushnotification.helper:
           class:  LoveThatFit\WebServiceBundle\DependencyInjection\PushNotificationHelper
+          arguments:
+            container: "@service_container"
     
          
