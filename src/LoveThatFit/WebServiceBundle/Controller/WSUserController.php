@@ -39,7 +39,9 @@ class WSUserController extends Controller {
     public function sendPushNotificationAction() {
         $decoded  = $this->process_request();                                 
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
-        return new Response($json_data);
+        $user=$this->get('user.helper.user')->findByAuthToken($decoded['auth_token']);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);            
+        return new Response(json_encode($push_response));
     }    
     
 #~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
