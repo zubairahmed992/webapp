@@ -72,14 +72,13 @@ class WSUserController extends Controller {
 	$user = $this->get('user.helper.user')->findByAuthToken($decoded['auth_token']);
 	return new Response($this->get('webservice.helper')->uploadUserFile($user, $decoded, $_FILES));
   }
-#---------------------------------------------
-    public function fooAction() {
-        $decoded = $this->process_request();
-        #return new Response($decoded['param1']);
-        #$user = $this->container->get('webservice.repo')->findUser($decoded['param1']);
-        $user = $this->container->get('user.helper.user')->find($decoded['param1']);
-        $res = $this->container->get('webservice.helper')->response_array(true,"member found",true,$user->toDataArray(true,$decoded['param2']));
-        return new Response($res);
+#-------------------- ws_change_user_status
+    public function changeUserStatusAction($token, $status) {
+        $user = $this->get('user.helper.user')->findByAuthToken($token);
+        $old_status=$user->getStatus();
+        $user->setStatus($status);
+        $this->get('user.helper.user')->saveUser($user);
+        return new Response('Status updated from ('.$old_status.') to ('.$status.')');
     }
 
 #------------------------- ws_image_uploader   /ws/image_uploader

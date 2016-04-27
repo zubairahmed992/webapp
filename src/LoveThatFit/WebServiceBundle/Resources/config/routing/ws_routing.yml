@@ -1,3 +1,7 @@
+ws_change_user_status:
+    pattern:  /ws/change_user_status/{token}/{status}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:changeUserStatus }
+
 ws_send_push_notification:
     pattern:  /ws/send_push_notification
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sendPushNotification }
