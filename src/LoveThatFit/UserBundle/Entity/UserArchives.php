@@ -389,7 +389,7 @@ class UserArchives
         $ar['default_svg_paths'] = $this->default_marker_svg;
         
         
-        $mp = json_decode($this->marker_params);
+        $mp = json_decode($this->marker_params,true);
         if (is_array($mp)) {
             array_key_exists('mask_x', $mp) ? $ar['mask_x'] = $mp['mask_x'] : '';
             array_key_exists('mask_y', $mp) ? $ar['mask_y'] = $mp['mask_y'] : '';
