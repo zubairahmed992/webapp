@@ -68,10 +68,10 @@ class UserArchivesHelper {
         #---------------------------
         if (array_key_exists('image_actions', $data)) {
             if (strlen($user_archives->getImageActions()) > 0) {
-                $param = json_decode($data['image_actions']);
-                $arch = json_decode($user_archives->getImageActions());
+                $param = json_decode($data['image_actions'],true);
+                $arch = json_decode($user_archives->getImageActions(),true);
                 if (is_array($param)&& is_array($arch)){
-                    $user_archives->setImageActions(json_encode(array_merge_recursive($arch, $param)));
+                    $user_archives->setImageActions(json_encode(array_merge($arch, $param)));
                 }
             } else {
                 $user_archives->setImageActions($data['image_actions']);

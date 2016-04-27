@@ -79,6 +79,15 @@ class UserMaskAdjustmentController extends Controller {
 
     public function showAction($archive_id) {
         
+        /*
+        
+                $param = json_decode('{"camera_angle":"122","camera_x":"1.149475","device_type":"iphone5","height_per_inch":"6.89","move_up_down":-18,"move_left_right":-14,"img_rotate":0}',true);
+                $arch = json_decode('{"camera_angle":"12","camera_x":"0.149475","device_type":"iphone5","height_per_inch":"6.89"}',true);
+                if (is_array($param)&& is_array($arch)){
+                    return new response(json_encode(array_merge($arch, $param)));
+                }
+        
+        */
         $archive = $this->get('user.helper.userarchives')->find($archive_id);
         $user = $archive->getUser();
 
