@@ -386,7 +386,8 @@ class UserArchives
         $ar['svg_paths'] = $this->svg_paths;
         $ar['marker_json'] = $this->marker_json;
         $ar['image_actions'] = $this->image_actions;
-        $this->default_marker_svg;
+        $ar['default_svg_paths'] = $this->default_marker_svg;
+        
         
         $mp = json_decode($this->marker_params);
         if (is_array($mp)) {
