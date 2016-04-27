@@ -44,8 +44,10 @@ class WebServiceHelper {
         $user = $this->findUserByAuthToken($request_array['auth_token']);
         $data = array();
         if ($user) {
-            $data['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
-            return $this->response_array(true, 'member found', true, $data);
+            $device_type=  array_key_exists('device_type', $request_array)?$request_array['device_type']:null;
+            $data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']);  
+            $push_response = $this->container->get('pushnotification.helper')->sendPushNotification($user, json_encode($data));            
+            return $this->response_array(true, 'member found', false, $push_response);
         } else {
             return $this->response_array(false, 'Member not found');
         }

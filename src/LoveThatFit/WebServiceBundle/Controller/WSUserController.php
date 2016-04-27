@@ -34,6 +34,13 @@ class WSUserController extends Controller {
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
         return new Response($json_data);
     }
+#~~~~~~~~~~~~~~~~~~~ ws_push_notification   /ws/push_notification
+
+    public function sendPushNotificationAction() {
+        $decoded  = $this->process_request();                                 
+        $json_data = $this->get('webservice.helper')->userDetail($decoded);
+        return new Response($json_data);
+    }    
     
 #~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
 

@@ -14,11 +14,11 @@ class PushNotificationHelper{
   }
    //-------------------------------------------------------
 
-    public function sendPushNotification($user){
+    public function sendPushNotification($user, $msg){
     //echo "test";
 	  //print_r($deviceToken);die;
 	  $pass = '';
-	  $msg='This is my third message';
+	  #$msg='This is my third message';
    // Get the parameters from http get or from command line
 	  //$id = $this->get('security.context')->getToken()->getUser()->getId();
 	  //echo $id;
@@ -75,6 +75,8 @@ class PushNotificationHelper{
 
         $payload = json_encode($body);
 
+        if ($deviceToken){
+        
         foreach($deviceToken as $token){
          $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $token)) . pack("n",strlen($payload)).$payload;
 
@@ -82,6 +84,9 @@ class PushNotificationHelper{
         }
         fclose($fp);
         return "sending message :" . $payload;
+        }else{
+            return "device token not found: notification not sent.";
+        }
     }
  
 

@@ -1,6 +1,6 @@
-ws_foo:
-    pattern:  /ws/foo
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:foo }
+ws_send_push_notification:
+    pattern:  /ws/send_push_notification
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sendPushNotification }
 
 ws_user_login:
     pattern:  /ws/login

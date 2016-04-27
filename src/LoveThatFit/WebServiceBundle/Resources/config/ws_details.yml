@@ -1,12 +1,10 @@
-ws_foo:
-    pattern:  /ws/foo
-    title: foo
+ws_send_push_notification:
+    pattern:  /ws/send_push_notification
+    title: send_push_notification
     params:
-          param1:  1112
-          param2:  050315.buf.037@ltf.com
-          param3:  6cec8a8067b6d5811ba953e40f834d7d
+          auth_token:  
     request_type: post
-    description: For testing functionalities & work in progress. 
+    description: For testing functionalities & work in progress.Send user detail in push notification
 #______________________
 nws_user_detail:
     pattern:  /ws/user_detail
