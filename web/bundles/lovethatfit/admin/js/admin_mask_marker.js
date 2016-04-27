@@ -29,11 +29,10 @@ dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
 dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
 dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
 dv_type = $("#dv_type").attr("value");
-
-dv_model = $("#dv_model").attr("value");
-
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
 dv_edit_type = $("#dv_edit_type").attr("value");
+
+dv_model = $("#dv_model").attr("value");
 
 
 dv_gap_top = 26;
@@ -65,15 +64,16 @@ if(dv_edit_type == "edit" && image_actions_setting == ""){
 
 
 if(dv_type == "iphone5"){
-    
- 
-    
     fixed_px_inch_ratio = 6.891;
     scr_width = 160;
     but_x_adj = 295;
     scr_height = 568;
     
     // adjusting 66.666% value of top empty area ----- 26/3*2 = 17.333
+    //apr 26//adj_btm_fix = 17.333;
+    
+    //apr 26//diff_dv = 31 + adj_btm_fix;
+    
     
     dv_iPhone6 = false;
     
@@ -87,9 +87,7 @@ if(dv_type == "iphone5"){
     rgt_arrow_x = 224;
     rgt_arrow_y = 288;
     
-    alert(dv_model);
-    
-    if(dv_model == "iphone5"){
+  if(dv_model == "iphone5"){
         //adj_btm_fix = 17.333;
         adj_btm_fix = 0;
         diff_dv = 31 + adj_btm_fix;
@@ -99,13 +97,9 @@ if(dv_type == "iphone5"){
         diff_dv = 31 + adj_btm_fix;
     }
     if(dv_model == "iphone5s"){
-        
         adj_btm_fix = 5;
         diff_dv = 31 + adj_btm_fix;
     }
-    
-    
-    
 }
 if(dv_type == "iphone6"){
           //      fixed_px_inch_ratio = 8.094;
@@ -598,6 +592,7 @@ if(dv_iPhone6){
     mid_area_path.scale(0.952,0.952);
     
     mid_area_path.scale(1.081, 1.081); /// April 6, 2016 - new setting
+    
 }
 
 
@@ -1070,13 +1065,14 @@ function show_loader(){
     
 }
 
-
 //// Fix for Web Version ////
- 
+
 scr1_but_reset.visible = false;
 but_back_top.visible = false;
 scr1_but_hiw_icon.visible = false;
 scr1_but_camera_icon.visible = false;
+
+
 
 
 function supportsToDataURL()
@@ -2114,7 +2110,6 @@ hip_height: $("#hip_height").attr("value"),
 svg_path:$('#img_path_paper').attr('value'),
 image_actions:$('#image_actions').attr('value')};
 
-alert($url);
 
  $.ajax({
         type: "POST",
@@ -2164,8 +2159,7 @@ alert($url);
     },
         failure: function(errMsg) {
             //setTimeout(go_to_index,'500');
-            //alert(errMsg);
-            window.location.reload();
+            alert(errMsg);
         }
   });
 
@@ -2183,8 +2177,8 @@ function post_img(){
 
     
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
-    var entity_id = document.getElementById('hdn_entity_id').value;    
-    var img_update_url = document.getElementById('hdn_image_update_url').value;        
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
     var canv_data = $("#text_area").val();
     var archive_id = $('#hdn_archive_id').attr('value');
     
@@ -2193,17 +2187,16 @@ function post_img(){
                       archive_id : archive_id,
                       env: 'admin'
               }, function(canv_data) {
-                  alert(canv_data);
               var obj_url = jQuery.parseJSON( canv_data );
                
              // console.log("i am checked bhai");
                 
+                      
                       if(obj_url.status == "check"){
-                         
-                         //window.location.href = "scr1_but_save_mask";
+ 
+                         alert("All Done! - Reloading...");
+                         window.location.reload();
                       }
-                      
-                      
               });  
   		
 }
@@ -2214,8 +2207,6 @@ function to_image(){
                   var chikki = canvas.toDataURL();
                   //alert(  chikki.replace(/^data:image\/(png|jpg);base64,/, ""));
                   $("#text_area").val(chikki);
-                  
-                  
                   
                   ///alert($("#text_area").val());
                   //setTimeout(function(){ alert(chikki); }, 3000);
