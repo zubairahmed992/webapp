@@ -1,9 +1,9 @@
 /* Page-level */
 * {
 	margin:0;
-	padding:0;
-        font-family: MyCustomFont;
+	padding:0;        
         outline: none;
+        
 }
 .txt_center {
     text-align: center;
@@ -27,4 +27,67 @@
 #loading_bar img {
     width: 200px;
     height: 12px;
+}
+
+.container_pending{
+    
+padding-right: 0px!important;
+}
+
+.container_pending .span3{    
+    
+    font-family: Arial;
+    font-size: 0.9em;
+    
+}
+
+.container_pending .span3 div{    
+    padding: 5px 0px 5px 25px;
+    background: #f1f1f2;
+    margin-bottom: 2px;
+   
+    
+}
+
+.container_pending .span3 div span:first-child{
+    display: inline-block;   
+    min-width: 150px;
+    font-weight: bold;
+     
+    
+}
+
+.container_pending h5{
+    padding: 0px 0px 0px 25px;
+}
+
+.nav_btns{    
+    background:#ececed;    
+    padding: 50px 0px 50px 0px; 
+    text-align: center;    
+    position: relative;
+    bottom: 0px;
+    width: 125%;    
+   position: relative;
+   top: 130px;
+}
+
+.nav_btns a{    
+    background:#1a1a1a;     
+    padding: 8px 50px 8px 50px; 
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.nav_btns div:nth-child(2) a{
+    background:#4f4f4f;     
+    padding: 8px 125px 8px 125px; 
+    text-transform: uppercase;
+    display: inline-block;
+    margin-top: 10px;
+   
+    
+    
 }
