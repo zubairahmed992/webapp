@@ -14,7 +14,7 @@ class PushNotificationHelper{
   }
    //-------------------------------------------------------
 
-    public function sendPushNotification($user, $msg){
+    public function sendPushNotification($user, $msg=''){
     //echo "test";
 	  //print_r($deviceToken);die;
 	  $pass = '';
@@ -33,7 +33,8 @@ class PushNotificationHelper{
 	  */
 	  //echo $deviceToken;
 	  //die;
-	  $message=$msg;
+	  $message ='Your image has been Caliborated';
+	  //$message=$msg;
 	   $badge = 1 ;
 	  $sound = 'default';
 	   // Construct the notification payload
@@ -41,7 +42,7 @@ class PushNotificationHelper{
 		//  $message.=$key;
 	 // }
 	   $body = array();
-	   $body['aps'] = array('alert' => $message);
+	   $body['aps'] = array('alert' => $message  ,'data'=> $msg);
 
 	  if ($badge)
 		 $body['aps']['badge'] = $badge;
@@ -54,7 +55,7 @@ class PushNotificationHelper{
 	   $cert= dirname(__FILE__).'/pushcert.pem';
 	   }else{
 
-	   $cert= dirname(__FILE__).'/pushcert.pem';
+	   $cert= dirname(__FILE__).'/SSPush.pem';
 	   }
 
 	//echo $cert;
