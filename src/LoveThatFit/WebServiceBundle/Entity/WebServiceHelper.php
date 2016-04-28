@@ -28,7 +28,9 @@ class WebServiceHelper {
                     $response_array['retailer'] = $retailer_brands['retailer'];
                     $response_array['brand'] = $retailer_brands['brand'];
                 }
-                $this->container->get('user.helper.user')->updateDeviceToken($user,$request_array);
+                if(array_key_exists('device_token', $request_array) ){
+                    $this->container->get('user.helper.user')->updateDeviceToken($user,$request_array);
+                }
                 return $this->response_array(true, 'member found', true, $response_array);
             } else {
                 return $this->response_array(false, 'Invalid Password');
@@ -66,12 +68,14 @@ class WebServiceHelper {
         } else {
             #--- 1) User
             $user = $this->createUserWithParams($request_array);
-            #---- 2) send registration email ....            
-            $this->container->get('mail_helper')->sendRegistrationEmail($user);                    
+            
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
             
             $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+            #---- 2) send registration email ....            
+            #$this->container->get('mail_helper')->sendRegistrationEmail($user);                    
+            
             $detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
@@ -604,6 +608,17 @@ class WebServiceHelper {
         }
     }
 
+    #----------------------------------------------------------------------------------------
+
+    public function sizeChartsService($request_array) {
+        $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArrayByGender($request_array['gender']);
+        if (count($sc) > 0) {
+            return $this->response_array(true, 'Size charts', true, array('size_charts' => $sc));
+        } else {
+            return $this->response_array(false, 'Size Charts not found');
+        }
+    }
+    
   #feedback service
   #------------------------ User -----------------------
 
