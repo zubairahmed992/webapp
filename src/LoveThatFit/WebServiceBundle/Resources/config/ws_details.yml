@@ -3,6 +3,7 @@ ws_send_push_notification:
     title: send_push_notification
     params:
           auth_token:  
+          device_token:  
     request_type: post
     description: For testing functionalities & work in progress.Send user detail in push notification
 #______________________
