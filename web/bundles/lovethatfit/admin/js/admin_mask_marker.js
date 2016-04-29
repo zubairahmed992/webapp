@@ -891,7 +891,7 @@ var scr1_but_reset = new Raster(scr1_but_reset_url);
 scr1_but_reset.position = new Point(38, scr_height - 18);
 
 
-var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_next_btn.png";
+var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_save_btn.png";
 var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
 
 scr1_but_save_icon.position = new Point(but_x_adj - 13, scr_height - 18);

@@ -312,6 +312,8 @@ if(chk_no_img_path == true){
       mid_area_path.position = new Point(160,403.50 - adj_btm_fix);
 
 
+        
+
         mask_retake_full.pivot = new Point(mask_retake_full.bounds.bottomCenter.x,mask_retake_full.bounds.bottomCenter.y);
         mask_retake_full.position = new Point(160,scr_height - 48.333);
 
@@ -323,6 +325,12 @@ if(chk_no_img_path == true){
         mid_area_path.segments[29].point.y += 16.56;
         mid_area_path.segments[29].handleIn = handleIn_29;
         mid_area_path.segments[30].handleIn = handleIn_30;
+        
+        
+        
+        
+        
+        
         
         mask_retake_full.segments[41].point.y += 22; 
         mask_retake_full.segments[41].handleOut = handleOut_41;

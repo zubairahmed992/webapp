@@ -7,6 +7,7 @@
 }
 .txt_center {
     text-align: center;
+    margin-left: 100px;
 }
 .hide_me {
     display:none;
@@ -66,11 +67,10 @@ padding-right: 0px!important;
     padding: 50px 0px 50px 0px; 
     text-align: center;    
     position: relative;
-    bottom: 0px;
-    width: 125%;    
-   position: relative;
-   top: 130px;
+   
 }
+
+
 
 .nav_btns a{    
     background:#1a1a1a;     
@@ -81,7 +81,7 @@ padding-right: 0px!important;
     display: inline-block;
 }
 
-.nav_btns div:nth-child(2) a{
+.nav_btns div:nth-child(2)a{
     background:#4f4f4f;     
     padding: 8px 125px 8px 125px; 
     text-transform: uppercase;
@@ -90,4 +90,49 @@ padding-right: 0px!important;
    
     
     
+}
+
+
+@media (max-width: 979px) {
+  .container_pending .span3{
+    height: 220px!important;
+  }
+}
+
+@media (max-width: 625px) {
+  .container_pending .span3{
+    height: 220px!important;
+  }
+  
+  .txt_center {
+    text-align: center;
+    margin-left: 0px;
+}
+    
+}
+
+@media (max-width: 767px) {
+    .activatewrap{        
+        margin-left:-20px!important;
+    }
+    
+    .txt_center {
+    text-align: center;
+    margin-left: 0px;
+}
+    
+    .container_pending .span3{
+    height: 220px!important;
+  }
+}
+
+
+.maindiv{    
+    position: relative;
+}
+
+.activatewrap{
+   position: absolute;
+   bottom:0px;
+   width: 112.3%;
 }
