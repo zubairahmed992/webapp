@@ -94,9 +94,9 @@
 
 
 
+<div class="span10 maindiv">
 
-
-<div class="span9">
+<div class="span10">
 
 {% if (device_type == "iphone5")%}
 <div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
@@ -107,12 +107,16 @@
 
 
 
-<div class="nav_btns">
+
+</div>
+
+
+
+<div class="span10 activatewrap">
+    <div class="nav_btns">
     <div>
-        <a href="#">Save</a>
-        <a href="#">Activate</a>
+        <a href={{ path('admin_archive_to_live', {'archive_id': archive.id}) }}>Confirm & Activate</a>
     </div>
-        <div> <a href="#">Reject</a></div>
 
 </div>
 </div>
@@ -121,6 +125,7 @@
 
 </div>
         </div>
+    </div>
 
 
 
@@ -200,6 +205,10 @@ var path = new CompoundPath({
    //alert($docu); 
    var $height = $(document).height();
    $(".container_pending .span3").css({"height":$height+"px"});
+   
+   var $heightt = $(document).height();
+   var $heightt = $heightt - 178;   
+   $(".maindiv").css({"height":$heightt+"px"});
     
 </script>
 {% endblock %}
