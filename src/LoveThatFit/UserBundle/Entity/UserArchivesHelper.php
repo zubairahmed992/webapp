@@ -270,6 +270,7 @@ class UserArchivesHelper {
         $this->save($archive);
         #image copy------------>
         $archive->copyImagesToUser();
+        return $archive;
   }
 
     #-------------------- update status
