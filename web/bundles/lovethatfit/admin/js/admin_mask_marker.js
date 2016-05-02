@@ -97,7 +97,7 @@ if(dv_type == "iphone5"){
         diff_dv = 31 + adj_btm_fix;
     }
     if(dv_model == "iphone5s"){
-        adj_btm_fix = 5;
+        adj_btm_fix = 0;
         diff_dv = 31 + adj_btm_fix;
     }
 }
@@ -114,8 +114,7 @@ if(dv_type == "iphone6"){
                 //adj_btm_fix = 0;
                 
                 //Static value "28px" adjusted based on screen test
-                adj_btm_fix = 8;
-
+                adj_btm_fix = 7.5;
                 diff_dv = 38 + adj_btm_fix;
   
   
