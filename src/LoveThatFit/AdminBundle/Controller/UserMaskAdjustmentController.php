@@ -155,8 +155,14 @@ class UserMaskAdjustmentController extends Controller {
     }
     #------------------------admin_archive_to_live:  /admin/archive_to_live/{archive_id}----------------------------------------------------    
 
-    public function archiveToLiveAction($archive_id) {                
-        $this->get('user.helper.userarchives')->makeArchiveToCurrent($archive_id);        
+    public function archiveToLiveAction($archive_id) {          
+        $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrent($archive_id); 
+        $user=$this->container->get('user.helper.user')->find($archive->getUser()->getId());                  
+        
+        $decoded  = $this->process_request();                              
+        $decoded['auth_token']=$user->getAuthToken();
+        $json_data = $this->get('webservice.helper')->userDetail($decoded);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);
         return new Response('archive to live'.$archive_id);
     }
     #--------------------------------------------------------------------------
@@ -179,4 +185,9 @@ class UserMaskAdjustmentController extends Controller {
     }
     
     #----------------------------------------------------------------------------
+     private function process_request(){
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
+        $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+        return $decoded;        
+    }
 }

@@ -18,6 +18,7 @@
     <div><span>Displacement y:</span>{{user_image_spec.displacementY}}</div>
     <div><span>Rotation:</span>{{user_image_spec.rotation}}</div>
     <div><span>Device Type:</span>{{user_image_spec.deviceType}}</div>
+    <div><span>Mode:</span>{{edit_type}}</div>
     <!--<div><span>foo:</span>{{archive.getWebPath('original')}}</div>-->
     
 </div>
@@ -110,17 +111,19 @@
 
 </div>
 
-
+{%if (edit_type=='edit')%}
 
 <div class="span10 activatewrap">
     <div class="nav_btns">
     <div>
-        <a href={{ path('admin_archive_to_live', {'archive_id': archive.id}) }}>Confirm & Activate</a>
+        <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+        <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+        <input type="hidden" value="{{ path('admin_pending_user') }}" id="pending_user_url">
     </div>
 
 </div>
 </div>
-
+{%endif%}
 
 
 </div>
@@ -211,6 +214,33 @@ var path = new CompoundPath({
    $(".maindiv").css({"height":$heightt+"px"});
     
 </script>
+
+<script>
+       
+$(document).ready(function(){
+    
+$( "#btn_confirm" ).click(function() {
+  put_archive_to_live();
+ //alert('hi');
+});
+
+
+//----------------------
+function put_archive_to_live() {
+    var archive_to_live_url = $("#archive_to_live_url").val();
+    var pending_user_url = $("#pending_user_url").val();
+  
+        $.ajax({
+             url: archive_to_live_url
+             ,success: function(response) {
+                window.location=pending_user_url;
+             }
+          })
+    
+      return false; 
+    }
+});        
+    </script>
 {% endblock %}
 
 
