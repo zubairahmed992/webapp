@@ -47,8 +47,14 @@ class WSUserController extends Controller {
         $decoded  = $this->process_request();                                 
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
         $user=$this->get('user.helper.user')->findByAuthToken($decoded['auth_token']);
-        $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);            
-        return new Response(json_encode($push_response));
+		if($decoded["auth_token"] !='' && $decoded["device_token"] ==''){
+		  $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);
+		}elseif($decoded["auth_token"] =='' && $decoded["device_token"] !=''){
+		  $push_response = $this->get('pushnotification.helper')->sendPushNotificationWithDeviceToken($decoded["device_token"]);
+		}else{
+		  $push_response = $this->get('pushnotification.helper')->sendPushNotificationWithDeviceToken($decoded["device_token"], $json_data);
+		}
+	  return new Response(json_encode($push_response));
     }    
     
 #~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
