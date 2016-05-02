@@ -163,10 +163,15 @@ class WebServiceHelper {
     #-------------------------------------------------------
     public function setUserMeasurementWithParams($request_array, $user) {
         $measurement = $user->getMeasurement();
+        
         if (!$measurement) {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
 
+        if (!is_array($request_array)){
+            return $measurement;
+        }
+        
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
         if (array_key_exists('bra_size', $request_array)) {
             
@@ -328,14 +333,17 @@ class WebServiceHelper {
     #----------------------------------------------------------------------------------------
 
     private function parse_request_for_archive($ra) {
+        $device_type = $this->container->get('user.marker.helper')->getDeviceTypeForModel($ra['device_type']);
         $arr = array(
             'measurement' => $ra['measurement'],
-            'device_type' => $ra['device_type'],
+            'device_type' => $device_type,
+            'device_model' => $ra['device_type'],
             'height_per_inch' => $ra['height_per_inch'],
             'image_actions' =>  json_encode(array( #json encoded image specs
+                'device_model' => $ra['device_type'],
                 'camera_angle' => $ra['camera_angle'],
                 'camera_x' => $ra['camera_x'],
-                'device_type' => $ra['device_type'],
+                'device_type' => $device_type,
                 'height_per_inch' => $ra['height_per_inch'],
             )),
         );

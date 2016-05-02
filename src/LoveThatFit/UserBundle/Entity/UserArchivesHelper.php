@@ -263,6 +263,8 @@ class UserArchivesHelper {
    
         #user status------------>          
         $user->setStatus(0);
+        array_key_exists('device_type', $image_actions_archive)? $user->setImageDeviceType($image_actions_archive['device_type']):'';
+        array_key_exists('device_model', $image_actions_archive)? $user->setImageDeviceModel($image_actions_archive['device_model']):'';
         $this->container->get('user.helper.user')->saveUser($user);                
         #archive statuses------------>        
         $archive->setStatus(0);
