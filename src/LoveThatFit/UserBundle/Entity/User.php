@@ -607,7 +607,7 @@ class User implements UserInterface, \Serializable {
      * @return string 
      */
     public function getImageDeviceModel() {
-        return $this->image_device_type;
+        return $this->image_device_model;
     }
     #-------------------------------------------
     /**
