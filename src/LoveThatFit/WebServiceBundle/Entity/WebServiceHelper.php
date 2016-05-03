@@ -333,17 +333,17 @@ class WebServiceHelper {
     #----------------------------------------------------------------------------------------
 
     private function parse_request_for_archive($ra) {
-        $device_type = $this->container->get('user.marker.helper')->getDeviceTypeForModel($ra['device_type']);
+        #$device_type = $this->container->get('user.marker.helper')->getDeviceTypeForModel($ra['device_type']);
         $arr = array(
             'measurement' => $ra['measurement'],
-            'device_type' => $device_type,
-            'device_model' => $ra['device_type'],
+            'device_type' => $ra['device_type'],
+            'device_model' => $ra['device_model'],
             'height_per_inch' => $ra['height_per_inch'],
             'image_actions' =>  json_encode(array( #json encoded image specs
-                'device_model' => $ra['device_type'],
+                'device_model' => $ra['device_model'],
                 'camera_angle' => $ra['camera_angle'],
                 'camera_x' => $ra['camera_x'],
-                'device_type' => $device_type,
+                'device_type' => $ra['device_type'],
                 'height_per_inch' => $ra['height_per_inch'],
             )),
         );
