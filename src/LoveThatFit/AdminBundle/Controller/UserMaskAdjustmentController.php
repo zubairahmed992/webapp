@@ -141,7 +141,7 @@ class UserMaskAdjustmentController extends Controller {
                     'device_type' => $device_type, #------>
                     'device_screen_height' => $device_screen_height['pixel_height'], #------>
                     'archive' => $archive, #------>
-                    'device_model' => "iphone5s", #------>
+                    'device_model' => $image_actions_archive['device_model'], #------>
                 ));
     }
 
