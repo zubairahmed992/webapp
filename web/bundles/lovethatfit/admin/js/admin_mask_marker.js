@@ -62,7 +62,7 @@ if(dv_edit_type == "edit" && image_actions_setting == ""){
     }
 }
 
-
+//alert(dv_type +" - "+ dv_model);
 if(dv_type == "iphone5"){
     fixed_px_inch_ratio = 6.891;
     scr_width = 160;
@@ -97,7 +97,7 @@ if(dv_type == "iphone5"){
         diff_dv = 31 + adj_btm_fix;
     }
     if(dv_model == "iphone5s"){
-        adj_btm_fix = 0;
+        adj_btm_fix = 5;
         diff_dv = 31 + adj_btm_fix;
     }
 }
@@ -114,10 +114,10 @@ if(dv_type == "iphone6"){
                 //adj_btm_fix = 0;
                 
                 //Static value "28px" adjusted based on screen test
-                adj_btm_fix = 7.5;
+                adj_btm_fix = 5.5;
                 diff_dv = 38 + adj_btm_fix;
   
-  
+  //alert("ip6");
           
             fixed_px_inch_ratio = 6.891;
             

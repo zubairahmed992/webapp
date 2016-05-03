@@ -30,10 +30,12 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
   if(liquid_mask.device_model == "iphone5"){
         fixed_px_inch_ratio = 6.891;
         adj_btm_fix = 0; // Adjustment of iPhone5S
-        
-        full_adj_btm_fix = 31.333; // Temp, not in scope fo iphone5
+        //alert("iPhone5: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
+        //full_adj_btm_fix = 30.333; //30.333 for iPhone 5s // Temp, not in scope fo iphone5
+        full_adj_btm_fix = 30.333; //30.333 for iPhone 5C
   }
   if(liquid_mask.device_model == "iphone5c"){
+      //alert("iPhone5C: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         fixed_px_inch_ratio = 6.891;
 
         // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
@@ -45,18 +47,20 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
         //adj_btm_fix = 13; (Old setting when move mask upside)
         adj_btm_fix = 0;
         
-        full_adj_btm_fix = 31.333;
+        full_adj_btm_fix = 30.333;
     }
     if(liquid_mask.device_model == "iphone5s"){
+        //alert("iPhone5S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         fixed_px_inch_ratio = 6.891;
         adj_btm_fix = 4; // Adjustment of iPhone5S
         
-        full_adj_btm_fix = 26.333;
+        full_adj_btm_fix = 35.333;
+        
     }
 }
 if(liquid_mask.device_type == "iphone6"){
     if(liquid_mask.device_model == "iphone6"){
-
+         //alert("iPhone6: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         //fixed_px_inch_ratio = 8.094;
 
         fixed_px_inch_ratio = 6.891;
@@ -77,6 +81,7 @@ if(liquid_mask.device_type == "iphone6"){
         //adj_btm_fix = 0;
     }
     if(liquid_mask.device_model == "iphone6s"){
+        //alert("iPhone6S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         fixed_px_inch_ratio = 6.891;
 
         fix_add_btm = 8.5;
@@ -376,7 +381,7 @@ if(chk_no_img_path == true){
       mask_retake_full.pivot = new Point(mask_retake_full.bounds.bottomCenter.x,mask_retake_full.bounds.bottomCenter.y);
       //mask_retake_full.position = new Point(screen.width/2,466);
       
-      mask_retake_full.position = new Point(screen.width/2,621); //Fixed for iphone 6 "621"
+      mask_retake_full.position = new Point(screen.width/2,623); //Fixed for iphone 6 "621"
       
 
         mid_area_path.segments[41].point.y += 19;
@@ -387,11 +392,11 @@ if(chk_no_img_path == true){
         mid_area_path.segments[29].handleIn = handleIn_29;
         mid_area_path.segments[30].handleIn = handleIn_30;
         
-        mask_retake_full.segments[41].point.y += 26.5; 
+        mask_retake_full.segments[41].point.y += 24.5; 
         mask_retake_full.segments[41].handleOut = handleOut_41;
         mask_retake_full.segments[40].handleOut = handleOut_40;
  
-        mask_retake_full.segments[29].point.y += 26.5;
+        mask_retake_full.segments[29].point.y += 24.5;
         mask_retake_full.segments[29].handleIn = handleIn_29;
         mask_retake_full.segments[30].handleIn = handleIn_30;
         
