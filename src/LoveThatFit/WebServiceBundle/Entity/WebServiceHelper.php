@@ -101,11 +101,13 @@ class WebServiceHelper {
             if(array_key_exists('base_path', $ra)) unset($ra['base_path']);
             if(array_key_exists('email', $ra)) unset($ra['email']);
             if(array_key_exists('auth_token', $ra)) unset($ra['auth_token']);
-            $ar['actual_user'] = $ra;
-            $measurement->setMeasurementJson(json_encode($ar));
+            #$ar['actual_user'] = $ra;
+            #$measurement->setMeasurementJson(json_encode($ar));
         } else {
             $measurement = $this->setUserMeasurementWithParams($ra, $user);
         }
+         $ar['actual_user'] = $ra;
+        $measurement->setMeasurementJson(json_encode($ar));
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
     }
