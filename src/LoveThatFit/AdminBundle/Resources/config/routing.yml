@@ -100,3 +100,8 @@ admin_user_download_access_logs:
 admin_yml_setting_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/yml_setting.yml"
     prefix:   /
+
+#---------- Copy User Data ----------------------
+admin_copy_user_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/copy_user.yml"
+    prefix:   /

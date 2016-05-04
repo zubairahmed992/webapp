@@ -14,6 +14,7 @@ use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\UserBundle\Event\UserEvent;
 use LoveThatFit\UserBundle\Entity\Measurement;
+use LoveThatFit\UserBundle\Entity\UserMarker;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -790,5 +791,133 @@ class UserHelper {
       }
          return true;      
   }
+  public function duplicateUser($duplicate_user,$data) {
 
+	$email = $data["prefix"]."-".$duplicate_user->getEmail();
+
+	  $user = $this->createNewUser();
+	  $data["isActive"] =  $duplicate_user->getIsActive();
+	  $data["gender"] =  $duplicate_user->getGender();
+	  $data["firstName"] =  $duplicate_user->getfirstName();
+	  $data["lastName"] =  $duplicate_user->getlastName();
+	  $data["zipcode"] =  $duplicate_user->getZipcode();
+	  $data["dob"] =  $duplicate_user->getBirthDate();
+	  $data["image"] =  $duplicate_user->getImage();
+	  $data["status"] =  $duplicate_user->getStatus();
+	  $data["deviceType"] =  $duplicate_user->getImageDeviceType();
+	  $data["device_tokens"] =  $duplicate_user->getDeviceTokens();
+	  $data["ImageDeviceModel"] =  $duplicate_user->getImageDeviceModel();
+	  $data["ImageUpdatedAt"] =  $duplicate_user->getImageUpdatedAt();
+	  $data["AuthTokenCreatedAt"] =  $duplicate_user->getAuthTokenCreatedAt();
+	  $data["TimeSpent"] =  $duplicate_user->getTimeSpent();
+	  $data["SecretQuestion"] =  $duplicate_user->getSecretQuestion();
+	  $data["SecretAnswer"] =  $duplicate_user->getSecretAnswer();
+	  $data["iphoneImage"] =  $duplicate_user->getiphoneImage();
+	  $data["AuthTokenWebService"] =  $duplicate_user->getAuthTokenWebService();
+	  $data["Avatar"] =  $duplicate_user->getAvatar();
+
+	  $password=  $this->encodeThisPassword($user, $data["password"]);
+	  $user->setPassword($password);
+	  $user->setStatus($data['status']);
+	  $user->setEmail($email);
+	  $user->setGender($data['gender']);
+	  $user->setFirstName($data['firstName']);
+	  $user->setLastName($data['lastName']);
+	  $user->setIsActive($data['isActive']);
+	  $user->setBirthDate($data['dob']);
+	  $user->setImage($data['image']);
+	  $user->setUpdatedAt(new \DateTime('now'));
+	  $user->setCreatedAt(new \DateTime('now'));
+	  $auth_token = $user->generateAuthenticationToken();
+	  $user->setAuthToken($auth_token);
+	  $user->setAuthTokenCreatedAt($data['AuthTokenCreatedAt']);
+	  $user->setAvatar($data['Avatar']);
+	  $user->setZipcode($data['zipcode']);
+	  $user->setAuthTokenWebService($data['AuthTokenWebService']);
+	  $user->setiphoneImage($data['iphoneImage']);
+	  $user->setSecretQuestion($data['SecretQuestion']);
+	  $user->setSecretAnswer($data['SecretAnswer']);
+	  $user->setTimeSpent($data['TimeSpent']);
+	  $user->setImageUpdatedAt($data['ImageUpdatedAt']);
+	  $user->setImageDeviceType($data['deviceType']);
+	  $user->setPwd($data['password']);
+	  $user->setImageDeviceModel($data['ImageDeviceModel']);
+	  $user->setDeviceTokens($data['device_tokens']);
+	  $result = $this->saveUser($user);
+	  $this->duplicateUserMeasurement($user,$duplicate_user);
+	  $this->duplicateUserMarker($user,$duplicate_user);
+	  $this->duplicateImageSpec($user,$duplicate_user);
+	  $this->duplicateUserDevice($user,$duplicate_user);
+	  $this->copyImages($user,$duplicate_user);
+	  return "User Created";
+	}
+  private function duplicateUserMeasurement($user,$duplicate_user) {
+	$request_array = $duplicate_user->getMeasurement()->getArray();
+	if(isset($request_array["gender"])!=''){
+	$measurement = $this->container->get('user.helper.measurement')->createNew($user);
+	$measurement->setByArray($request_array);
+	$this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+	return $measurement;
+	}
+  }
+  private function duplicateUserMarker($user,$duplicate_user){
+	$maskMarker = $this->container->get('user.marker.helper')->findMarkerByUser($duplicate_user);
+	if($maskMarker->getId()!=''){
+	  $marker = $this->container->get('user.marker.helper')->createNew();
+	  $marker->setSvgPaths($maskMarker->getSvgPaths());
+	  $marker->setUser($user);
+	  $marker->setMarkerJson($maskMarker->getMarkerJson());
+	  $marker->setRectX($maskMarker->getRectX());
+	  $marker->setRectY($maskMarker->getRectY());
+	  $marker->setMaskX($maskMarker->getMaskX());
+	  $marker->setMaskY($maskMarker->getMaskY());
+	  $marker->setDefaultMarkerJson($maskMarker->getDefaultMarkerJson());
+	  $marker->setDefaultMarkerSvg($maskMarker->getDefaultMarkerSvg());
+	  $marker->setDefaultUser($maskMarker->getDefaultUser());
+	  $marker->setImageActions($maskMarker->getImageActions());
+	  $marker->setRectHeight($maskMarker->getRectHeight());
+	  $marker->setRectWidth($maskMarker->getRectWidth());
+	  $marker->setCreatedAt(new \DateTime('now'));
+	  $marker->setUpdatedAt(new \DateTime('now'));
+	  $this->container->get('user.marker.helper')->saveUserMarker($user,$marker);
+	}
+  }
+  private function duplicateImageSpec($user,$duplicate_user) {
+	$image_spec_detail = $this->container->get('user.helper.userimagespec')->findByUser($duplicate_user);
+	if(count($image_spec_detail) > 0){
+	$image_spec = $this->container->get('user.helper.userimagespec')->createNew($user);
+	$image_spec->setCameraAngle($image_spec_detail[0]["camera_angle"]);
+	$image_spec->setCameraX($image_spec_detail[0]["camera_x"]);
+	$image_spec->setDisplacementX($image_spec_detail[0]["displacement_x"]);
+	$image_spec->setDisplacementY($image_spec_detail[0]["displacement_y"]);
+	$image_spec->setRotation($image_spec_detail[0]["rotation"]);
+	$image_spec->setDeviceType($image_spec_detail[0]["deviceType"]);
+	$this->container->get('user.helper.userimagespec')->saveNew($user,$image_spec);
+  	}
+  }
+  private function duplicateUserDevice($user,$duplicate_user) {
+	$user_devices_detail = $this->container->get('user.helper.userdevices')->findAllDeviceTypeBaseOnUserId($duplicate_user);
+	if(count($user_devices_detail) > 0){
+	foreach($user_devices_detail as $val){
+	  $user_devices = $this->container->get('user.helper.userdevices')->createNew($user);
+	  $user_devices->setDeviceName($val["device_name"]);
+	  $user_devices->setDeviceType($val["deviceType"]);
+	  $user_devices->setDeviceUserPerInchPixelHeight($val["deviceUserPerInchPixelHeight"]);
+	  $user_devices->setDeviceImage($val["device_image"]);
+	  $user_devices->setImageUpdatedAt($val["image_updated_at"]);
+	  $this->container->get('user.helper.userdevices')->saveUserDevices($user_devices);
+		}
+	 }
+  }
+  private function copyImages($user,$duplicate_user) {
+	if (!is_dir($user->getUploadRootDir())){
+	  mkdir($user->getUploadRootDir(), 0700);
+	  if(file_exists($duplicate_user->getAbsolutePath())){
+	  	copy($duplicate_user->getAbsolutePath(),$user->getAbsolutePath());
+	  }
+	  if(file_exists($duplicate_user->getOriginalImageAbsolutePath())){
+		copy($duplicate_user->getOriginalImageAbsolutePath(),$user->getOriginalImageAbsolutePath());
+	  }
+	}
+  }
 }

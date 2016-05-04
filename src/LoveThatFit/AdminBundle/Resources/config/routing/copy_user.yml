@@ -1,0 +1,8 @@
+#---------------------------------------- YML data update ---------------------
+admin_copy_user_index:
+    pattern:  /admin/copy_user/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:CopyUser:index }
+
+admin_copy_user_update:
+    pattern:  /admin/update_user
+    defaults: { _controller: LoveThatFitAdminBundle:CopyUser:updateUser }

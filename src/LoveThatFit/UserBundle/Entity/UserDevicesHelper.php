@@ -79,6 +79,10 @@ class UserDevicesHelper {
     public function findDeviceTypeBaseOnUserId($userId){
     return $this->repo->findDeviceTypeBaseOnUserId($userId);
     }
+  #--------------- Find All on user id ---------------------------#
+  public function findAllDeviceTypeBaseOnUserId($userId){
+	return $this->repo->findAllDeviceTypeBaseOnUserId($userId);
+  }
     #------------------------------------
     public function findOneByDeviceTypeAndUser($user_id, $device_type){
         return $this->repo->findOneBy(array('user' => $user_id, 'deviceType' => $device_type));

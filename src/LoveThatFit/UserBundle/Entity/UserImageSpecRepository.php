@@ -12,8 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserImageSpecRepository extends EntityRepository
 {
-   
-    
+
+  #--------------- Find all base on user id ---------------------------#
+  public function findByUser($user){
+	$query = $this->getEntityManager()
+	  ->createQuery("
+     SELECT ui FROM LoveThatFitUserBundle:UserImageSpec ui
+     WHERE  ui.user =:user"
+	  )->setParameters(array('user' => $user));
+	try {
+	  return $query->getArrayResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
     
     
 }

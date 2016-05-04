@@ -43,6 +43,18 @@ class UserDevicesRepository extends EntityRepository
             return null;
         }
     }
- 
+	#--------------- Find All on user id ---------------------------#
+	public function findAllDeviceTypeBaseOnUserId($userId){
+	  $query = $this->getEntityManager()
+		->createQuery("
+	   SELECT ud FROM LoveThatFitUserBundle:UserDevices ud
+	   WHERE  ud.user =:userId"
+		)->setParameters(array('userId' => $userId));
+	  try {
+		return $query->getArrayResult();
+	  } catch (\Doctrine\ORM\NoResultException $e) {
+		return null;
+	  }
+	}
 
 }

@@ -1481,6 +1481,8 @@ class Measurement {
             'knee' => $this->knee,
             'calf' => $this->calf,
             'ankle' => $this->ankle,
+            'bra_size' => $this->bra_size,
+            'hip_height' => $this->hip_height,
         );
     }
 #--------------------------------------------------------------------
