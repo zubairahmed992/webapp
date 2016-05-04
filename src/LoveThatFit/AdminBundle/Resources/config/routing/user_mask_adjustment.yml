@@ -33,4 +33,10 @@ admin_archive_image_update:
 admin_archive_to_live:
     pattern:  /admin/archive_to_live/{archive_id}
     defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:archiveToLive }
+  
+    #   Archive Access ~~~~~~~~~~>*
+
+admin_user_profile_archives:
+    pattern:  /admin/user_profile_archives/{user_id}/{archive_id}
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:profileArchives,archive_id: null }
     
