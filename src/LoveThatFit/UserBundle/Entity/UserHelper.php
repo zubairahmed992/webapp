@@ -843,13 +843,14 @@ class UserHelper {
 	  $user->setPwd($data['password']);
 	  $user->setImageDeviceModel($data['ImageDeviceModel']);
 	  $user->setDeviceTokens($data['device_tokens']);
-	  $result = $this->saveUser($user);
+	  $this->saveUser($user);
+	  $id = $user->getId();
 	  $this->duplicateUserMeasurement($user,$duplicate_user);
 	  $this->duplicateUserMarker($user,$duplicate_user);
 	  $this->duplicateImageSpec($user,$duplicate_user);
 	  $this->duplicateUserDevice($user,$duplicate_user);
 	  $this->copyImages($user,$duplicate_user);
-	  return $user->getId();
+	  return $id;
 	}
   private function duplicateUserMeasurement($user,$duplicate_user) {
 	$request_array = $duplicate_user->getMeasurement()->getArray();
@@ -862,7 +863,8 @@ class UserHelper {
   }
   private function duplicateUserMarker($user,$duplicate_user){
 	$maskMarker = $this->container->get('user.marker.helper')->findMarkerByUser($duplicate_user);
-	if($maskMarker->getId()!=''){
+	//print_r($maskMarker);die;
+	if(count($maskMarker) > 0){
 	  $marker = $this->container->get('user.marker.helper')->createNew();
 	  $marker->setSvgPaths($maskMarker->getSvgPaths());
 	  $marker->setUser($user);
