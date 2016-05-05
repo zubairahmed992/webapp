@@ -49,9 +49,12 @@ class CopyUserController extends Controller {
 	  //print_r($request_array);die;
 	  //$this->get('user.helper.userimagespec')->findDeviceTypeBaseOnUserId($user);
 
-	  $this->get('user.helper.user')->duplicateUser($user,$data);
+	  $user_id = $this->get('user.helper.user')->duplicateUser($user,$data);
 	  $this->get('session')->setFlash('success', 'Duplicate User Created');
-	  return $this->redirect($this->generateUrl('admin_users'));
+	  //return $this->redirect($this->generateUrl('admin_users'));
+	  return $this->redirect(
+		$this->generateUrl("admin_user_detail_show", array("id" => $user_id))
+	  );
 	  //print_r($measurement);die;
 	  //echo "<pre>";
 	  //print_r($user);die;

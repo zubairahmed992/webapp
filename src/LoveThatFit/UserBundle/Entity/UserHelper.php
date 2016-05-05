@@ -849,7 +849,7 @@ class UserHelper {
 	  $this->duplicateImageSpec($user,$duplicate_user);
 	  $this->duplicateUserDevice($user,$duplicate_user);
 	  $this->copyImages($user,$duplicate_user);
-	  return "User Created";
+	  return $user->getId();
 	}
   private function duplicateUserMeasurement($user,$duplicate_user) {
 	$request_array = $duplicate_user->getMeasurement()->getArray();
