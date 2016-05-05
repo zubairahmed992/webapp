@@ -1173,7 +1173,7 @@
 }
 
   #detail_wrapper .row-fluid .span3:not(.hds) {
-    width: 25%;   
+    width: 30%;
     min-height:55px;
     max-height:70px;
     padding-top:10px;
