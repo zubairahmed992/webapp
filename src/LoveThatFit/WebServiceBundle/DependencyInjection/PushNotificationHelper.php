@@ -33,7 +33,7 @@ class PushNotificationHelper{
 	  */
 	  //echo $deviceToken;
 	  //die;
-	  $message ='Your image has been Caliborated';
+	  $message ='Your image has been calibrated';
 	  //$message=$msg;
 	   $badge = 1 ;
 	  $sound = 'default';
@@ -95,7 +95,7 @@ class PushNotificationHelper{
 
   public function sendPushNotificationWithDeviceToken($deviceToken,$data=''){
 	$pass = '';
-	$message ='Your image has been Caliborated';
+	$message ='Your image has been calibrated';
 	$badge = 1 ;
 	$sound = 'default';
 	$body = array();
