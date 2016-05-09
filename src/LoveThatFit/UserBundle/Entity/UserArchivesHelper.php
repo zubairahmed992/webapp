@@ -218,10 +218,10 @@ class UserArchivesHelper {
 	  $user_cropped_image = "cropped_".$result->getImage();
 	  $user_original_image = "original_".$result->getImage();
 	  //echo $result->getImage();die;
-	  $result_user = $this->container->get('user.helper.user')->find($user_id);
-	  $result_user->setStatus(0);
-	  $result_user->setUpdatedAt(new \DateTime('now'));
-	  $this->em->persist($result_user);
+	  #$result_user = $this->container->get('user.helper.user')->find($user_id);
+	  $user->setStatus(0);
+	  $user->setUpdatedAt(new \DateTime('now'));
+	  $this->em->persist($user);
 	  $this->em->flush();
 	  $this->delete($id);
 	  if (file_exists("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image))
@@ -267,8 +267,8 @@ class UserArchivesHelper {
         array_key_exists('device_model', $image_actions_archive)? $user->setImageDeviceModel($image_actions_archive['device_model']):'';
         $this->container->get('user.helper.user')->saveUser($user);                
         #archive statuses------------>        
-        $archive->setStatus(0);
         $this->pendingToCurrent($user);
+        $archive->setStatus(1);
         $this->save($archive);
         #image copy------------>
         $archive->copyImagesToUser();
@@ -278,10 +278,11 @@ class UserArchivesHelper {
     #-------------------- update status
   public function pendingToCurrent($user) {
         foreach ($user->getUserArchives() as $a) {
-            if ($a->getStatus() == 0) {
-                $a->setStatus(1);
+            if ($a->getStatus() != -1) {
+                $a->setStatus(0);
                 $this->save($a);
             }
         }
     }
+    #status{"pending":-1, "active":1, "inactive":0}
 }
