@@ -50,11 +50,18 @@ class CopyUserController extends Controller {
 	  //$this->get('user.helper.userimagespec')->findDeviceTypeBaseOnUserId($user);
 
 	  $user_id = $this->get('user.helper.user')->duplicateUser($user,$data);
-	  $this->get('session')->setFlash('success', 'Duplicate User Created');
-	  //return $this->redirect($this->generateUrl('admin_users'));
-	  return $this->redirect(
-		$this->generateUrl("admin_user_detail_show", array("id" => $user_id))
-	  );
+	  /*
+	  if($user_id == 'Archive Data not Found'){
+		$this->get('session')->setFlash('warning', 'User can not be duplicate Archive Data not Found');
+		return $this->redirect($this->generateUrl('admin_users'));
+	  }else{
+	  */
+		$this->get('session')->setFlash('success', 'Duplicate User Created');
+		//return $this->redirect($this->generateUrl('admin_users'));
+		return $this->redirect(
+		  $this->generateUrl("admin_user_detail_show", array("id" => $user_id))
+		);
+	  //}
 	  //print_r($measurement);die;
 	  //echo "<pre>";
 	  //print_r($user);die;

@@ -53,4 +53,30 @@ class UserArchivesRepository extends EntityRepository
 	  return "null";
 	}
   }
+
+  public function getAllArchive($user) {
+	$query = $this->getEntityManager()
+	  ->createQuery(
+		"SELECT a
+		 FROM LoveThatFitUserBundle:UserArchives a WHERE a.user=:user
+		 ")->setParameter('user',$user);
+	try {
+	  return $query->getArrayResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return "null";
+	}
+  }
+  public function getAllArchiveCount($user) {
+	$query = $this->getEntityManager()
+	  ->createQuery(
+		"SELECT COUNT(a.id) as counter
+		 FROM LoveThatFitUserBundle:UserArchives a WHERE a.user=:user
+		 ")->setParameter('user',$user)
+	  	   ->setMaxResults(1);
+	try {
+	  return $query->getSingleResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return "null";
+	}
+  }
 }

@@ -209,6 +209,14 @@ class UserArchivesHelper {
 	return $this->repo->getPendingArchive($user_id);
   }
 
+  #-------------------- Get User Archive Measurement ----------------#
+  public function getAllArchive($user_id) {
+	return $this->repo->getAllArchive($user_id);
+  }
+  #-------------------- Get User Active Archive Count ----------------#
+  public function getAllArchiveCount($user_id) {
+	return $this->repo->getAllArchiveCount($user_id);
+  }
   #-------------------- Update User Status ----------------#
   public function updateStatus($user_id) {
 	$user = $this->container->get('user.helper.user')->find($user_id);

@@ -792,9 +792,18 @@ class UserHelper {
          return true;      
   }
   public function duplicateUser($duplicate_user,$data) {
-
-	$email = $data["prefix"]."-".$duplicate_user->getEmail();
-
+	/*
+	$active_status = $this->container->get('user.helper.userarchives')->getActiveArchiveCount($duplicate_user);
+	$user_status = $duplicate_user->getStatus();
+	$active_archive = $this->container->get('user.helper.userarchives')->getActiveArchive($duplicate_user);
+	if(count($active_archive) > 0){
+	  $active_archive_status = $active_archive[0]["status"];
+	}else{
+	  $active_archive_status = 0;
+	}
+	if(isset($active_status["counter"]) > 0 && $user_status==0 && $active_archive_status == 1){
+	  */
+	  $email = $data["prefix"]."-".$duplicate_user->getEmail();
 	  $user = $this->createNewUser();
 	  $data["isActive"] =  $duplicate_user->getIsActive();
 	  $data["gender"] =  $duplicate_user->getGender();
@@ -843,6 +852,7 @@ class UserHelper {
 	  $user->setPwd($data['password']);
 	  $user->setImageDeviceModel($data['ImageDeviceModel']);
 	  $user->setDeviceTokens($data['device_tokens']);
+	  $user->setOriginalUser($duplicate_user);
 	  $this->saveUser($user);
 	  $id = $user->getId();
 	  $this->duplicateUserMeasurement($user,$duplicate_user);
@@ -850,8 +860,42 @@ class UserHelper {
 	  $this->duplicateImageSpec($user,$duplicate_user);
 	  $this->duplicateUserDevice($user,$duplicate_user);
 	  $this->copyImages($user,$duplicate_user);
+	  $this->duplicateArchive($user,$duplicate_user);
 	  return $id;
+	/*
+  	}else{
+		return "Archive Data not Found";
+		}
+	*/
 	}
+  private function duplicateArchive($user,$duplicate_user) {
+	//Create new Active Archives with duplicate user
+	$active_count = $this->container->get('user.helper.userarchives')->getAllArchiveCount($duplicate_user);
+	if($active_count["counter"] > 0){
+	  //$user_archive = $this->container->get('user.helper.userarchives')->getAllArchive($duplicate_user);
+	  foreach($duplicate_user->getUserArchives() as $val){
+		$user_archives = $this->container->get('user.helper.userarchives')->createNew($user);
+		$user_archives->setMeasurementJson($val->getMeasurementJson());
+		$user_archives->setImageActions($val->getImageActions());
+		$user_archives->setMarkerParams($val->getMarkerParams());
+		$user_archives->setSvgPaths($val->getSvgPaths());
+		$user_archives->setMarkerJson($val->getMarkerJson());
+		$user_archives->setDefaultMarkerSvg($val->getDefaultMarkerSvg());
+		$user_archives->setImage($val->getImage());
+		$user_archives->setStatus($val->getStatus());
+		//echo $val->getAbsolutePath('original')."<br>";
+		//echo $user_archives->getAbsolutePath('original');
+		//die;
+		if(file_exists($val->getAbsolutePath('original'))){
+		  copy($val->getAbsolutePath('original'),$user_archives->getAbsolutePath('original'));
+		}
+		if(file_exists($val->getAbsolutePath('cropped'))){
+		  copy($val->getAbsolutePath('cropped'),$user_archives->getAbsolutePath('cropped'));
+		}
+		$this->container->get('user.helper.userarchives')->save($user_archives);
+	  }
+	}
+  }
   private function duplicateUserMeasurement($user,$duplicate_user) {
 	$request_array = $duplicate_user->getMeasurement()->getArray();
 	if(isset($request_array["gender"])!=''){

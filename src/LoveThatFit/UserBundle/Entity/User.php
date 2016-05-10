@@ -25,7 +25,7 @@ class User implements UserInterface, \Serializable {
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="duplicate_users")
-     * @ORM\JoinColumn(name="original_user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="original_user_id", referencedColumnName="id", nullable=true)
      */
     private $original_user;
     #------------------------------------------------------------------
@@ -57,7 +57,7 @@ class User implements UserInterface, \Serializable {
      * @param LoveThatFit\UserBundle\Entity\User  $duplicate_users
      * @return User
      */
-    public function addDuplicateUser(\LoveThatFit\AdminBundle\Entity\User $duplicate_user) {
+    public function addDuplicateUser($duplicate_user) {
         $this->duplicate_users[] = $duplicate_user;
 
         return $this;
@@ -68,7 +68,7 @@ class User implements UserInterface, \Serializable {
      *
      * @param LoveThatFit\UserBundle\Entity\User  $duplicate_user
      */
-    public function removeDuplicateUser(LoveThatFit\UserBundle\Entity\User $duplicate_user) {
+    public function removeDuplicateUser($duplicate_user) {
         $this->duplicate_users->removeElement($duplicate_user);
     }
 

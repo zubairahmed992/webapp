@@ -1483,6 +1483,7 @@ class Measurement {
             'ankle' => $this->ankle,
             'bra_size' => $this->bra_size,
             'hip_height' => $this->hip_height,
+            'measurement_json' => $this->measurement_json,
         );
     }
 #--------------------------------------------------------------------
@@ -2145,6 +2146,7 @@ class Measurement {
         $this->calf = array_key_exists('calf', $ar) ? $ar['calf'] : $this->calf;
         $this->ankle = array_key_exists('ankle', $ar) ? $ar['ankle'] : $this->ankle;
         $this->belt = array_key_exists('belt', $ar) ? $ar['belt'] : $this->belt;
+        $this->measurement_json = array_key_exists('measurement_json', $ar) ? $ar['measurement_json'] : $this->measurement_json;
     }
     
     
