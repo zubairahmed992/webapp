@@ -7,7 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * LoveThatFit\UserBundle\Entity\User
  *  
@@ -16,6 +17,71 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable {
 
+    // ...
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="original_user")
+     */
+    private $duplicate_users;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="duplicate_users")
+     * @ORM\JoinColumn(name="original_user_id", referencedColumnName="id")
+     */
+    private $original_user;
+    #------------------------------------------------------------------
+     /**
+     * Set original
+     *
+     * @param LoveThatFit\UserBundle\Entity\User $original_user
+     * @return User
+     */
+    public function setOriginalUser(\LoveThatFit\UserBundle\Entity\User $original_user = null) {
+        $this->original_user = $original_user;        
+        return $this;
+    }
+
+    /**
+     * Get original_user
+     *
+     * @return LoveThatFit\UserBundle\Entity\User 
+     */
+    public function getOriginalUser() {
+        return $this->original_user;
+    }
+
+    #------------------------------------------------------------------
+    
+       /**
+     * Add duplicate_users
+     *
+     * @param LoveThatFit\UserBundle\Entity\User  $duplicate_users
+     * @return User
+     */
+    public function addDuplicateUser(\LoveThatFit\AdminBundle\Entity\User $duplicate_user) {
+        $this->duplicate_users[] = $duplicate_user;
+
+        return $this;
+    }
+
+    /**
+     * Remove duplicate_users
+     *
+     * @param LoveThatFit\UserBundle\Entity\User  $duplicate_user
+     */
+    public function removeDuplicateUser(LoveThatFit\UserBundle\Entity\User $duplicate_user) {
+        $this->duplicate_users->removeElement($duplicate_user);
+    }
+
+    /**
+     * Get duplicate_users
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDuplicateUsers() {
+        return $this->duplicate_users;
+    } 
+    #--------------------------------------------
+    
    public $isApproved;
     
     /**
@@ -120,7 +186,8 @@ class User implements UserInterface, \Serializable {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->product_items = new \Doctrine\Common\Collections\ArrayCollection();
-	  	$this->cart = new \Doctrine\Common\Collections\ArrayCollection();
+	$this->cart = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->duplicate = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 //---------------------------------------------------------------------
