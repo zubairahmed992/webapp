@@ -1,0 +1,62 @@
+device_config:
+  
+  iphone5:
+    svg_mask_x: 55
+    svg_mask_y: 55
+    pixel_per_inch: 5
+    ground_marker_px:
+    max_user_height_inch:
+    svg_scale_ratio:
+    device_model:
+    product_px_per_inch:
+  
+  iphone5c:
+    svg_mask_x: 55
+    svg_mask_y: 55
+    pixel_per_inch: 5
+    ground_marker_px:
+    max_user_height_inch:
+    svg_scale_ratio:
+    device_model:
+    product_px_per_inch:
+  
+  iphone5s:
+    svg_mask_x: 55
+    svg_mask_y: 55
+    pixel_per_inch: 5
+    ground_marker_px:
+    max_user_height_inch:
+    svg_scale_ratio:
+    device_model:
+    product_px_per_inch:
+  
+  iphone6:
+    svg_mask_x: 66
+    svg_mask_y: 66
+    pixel_per_inch: 6
+    ground_marker_px:
+    max_user_height_inch:
+    svg_scale_ratio:
+    device_model:
+    product_px_per_inch:
+  
+  iphone6c:
+    svg_mask_x: 66
+    svg_mask_y: 66
+    pixel_per_inch: 6
+    ground_marker_px:
+    max_user_height_inch:
+    svg_scale_ratio:
+    device_model:
+    product_px_per_inch:
+  
+  iphone6s:
+    svg_mask_x: 66
+    svg_mask_y: 66
+    pixel_per_inch: 6  
+    ground_marker_px:
+    max_user_height_inch:
+    svg_scale_ratio:
+    device_model:
+    product_px_per_inch:
+    
