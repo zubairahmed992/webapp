@@ -19,7 +19,9 @@
     <div><span>Rotation:</span>{{user_image_spec.rotation}}</div>
     <div><span>Device Type:</span>{{user_image_spec.deviceType}}</div>
     <div><span>Device Model:</span>{{device_model}}</div>
-    <div><span>Mode:</span>{{edit_type}}</div>
+    <div><span>Mode:</span>{{edit_type}}
+        <a href="{{ path('admin_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Refresh</a>
+    </div>
     {% if (archives is defined)%}
     <div><span>Archives:</span></div>
     {% for k, v in archives %}

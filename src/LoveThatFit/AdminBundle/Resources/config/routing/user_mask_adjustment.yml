@@ -10,8 +10,8 @@ admin_user_mask_adjustment_canvas:
 
 ## Show pending list
 admin_pending_user_show:
-    pattern:  /admin/pending_user/{archive_id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:show }
+    pattern:  /admin/pending_user/{archive_id}/show/{mode}
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:show, mode:null }
 
 admin_pending_user:
     pattern:  /admin/pending_user/list/{page_number}/{sort}

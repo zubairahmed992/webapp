@@ -77,7 +77,7 @@ class UserMaskAdjustmentController extends Controller {
 
   //----------------------------------------------------------------------------------------
 
-    public function showAction($archive_id) {
+    public function showAction($archive_id, $mode=null) {
         
         $archive = $this->get('user.helper.userarchives')->find($archive_id);
         $user = $archive->getUser();
@@ -98,14 +98,18 @@ class UserMaskAdjustmentController extends Controller {
         $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $edit_type = "registration";
-        if ($archive->getSvgPaths()) {
-            $edit_type = "edit";
-            $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
-        } else {
+        if ($mode && $mode == 'refresh') {
             $edit_type = "registration";
             $marker = $this->get('user.marker.helper')->getDefaultObject($user);
+        } else {
+            if ($archive->getSvgPaths()) {
+                $edit_type = "edit";
+                $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
+            } else {
+                $edit_type = "registration";
+                $marker = $this->get('user.marker.helper')->getDefaultObject($user);
+            }
         }
-        
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
         
