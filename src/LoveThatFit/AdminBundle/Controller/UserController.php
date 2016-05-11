@@ -41,9 +41,26 @@ private function getMaskedMarkerSpecs() {
         $page_number=$page_number==0?1:$page_number;        
         if(!$entity){        
             $this->get('session')->setFlash('warning', 'User not found!');
-        }     
+        }
+	  	if(!$entity->getOriginalUser()){
+		  $duplicate_user = '0';
+		  $duplicate_list = $entity->getDuplicateUsers();
+		  $duplicate_count = count($duplicate_list);
+		}else{
+		  $duplicate_user = '1';
+		  $duplicate_list = $entity->getOriginalUser();
+		  $duplicate_count = 0;
+		}
+//	  foreach($duplicate_list as $val){
+//		echo $val->getId();
+//	  }
+//	  	die;
+
         return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
                     'user' => $entity,
+                    'duplicate_user' => $duplicate_user,
+                    'duplicate_list' => $duplicate_list,
+                    'duplicate_count' => $duplicate_count,
                     'page_number' => $page_number,
                     'log_count' => $log_count,
                     'product'=>$this->get('site.helper.usertryitemhistory')->countUserTiredProducts($entity),

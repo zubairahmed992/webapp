@@ -123,7 +123,6 @@ class UserHelper {
     public function findByEmail($email) {
         return $this->repo->findOneBy(array('email' => $email));
     }
-
     //-------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
@@ -803,7 +802,10 @@ class UserHelper {
 	}
 	if(isset($active_status["counter"]) > 0 && $user_status==0 && $active_archive_status == 1){
 	  */
-	  $email = $data["prefix"]."-".$duplicate_user->getEmail();
+	  //$email = $data["prefix"]."-".$duplicate_user->getEmail();
+	  $email = $data["email"];
+	  $check_email_exist = $this->findByEmail($email);
+	  if(count($check_email_exist)== 0){
 	  $user = $this->createNewUser();
 	  $data["isActive"] =  $duplicate_user->getIsActive();
 	  $data["gender"] =  $duplicate_user->getGender();
@@ -862,6 +864,9 @@ class UserHelper {
 	  $this->copyImages($user,$duplicate_user);
 	  $this->duplicateArchive($user,$duplicate_user);
 	  return $id;
+	  }else{
+		return "Email already exist";
+	  }
 	/*
   	}else{
 		return "Archive Data not Found";

@@ -17,10 +17,10 @@
             //jQuery('.fields_error').html('');
             var password = document.validatedForm.password.value;
             var cpassword = document.validatedForm.cpassword.value;
-            var prefix = document.validatedForm.prefix.value;
-            if(prefix == ''){
+            var email = document.validatedForm.email.value;
+            if(email == ''){
                 //jQuery('.fields_error').html('Email Prefix must be given');
-                alert("Email prefix can not be empty");
+                alert("Email can not be empty");
                 return false;
             }
             if(password == ''){
@@ -89,7 +89,7 @@
                                     <div class="span8">
                                     <div class="span3">Email<br>Add Prefix</div>
 
-                                    <div class="span3"><input id="prefix" type="text" name="prefix" style="width:40px">-{{user.email }}</div>
+                                    <div class="span3"><input id="email" type="text" name="email" value="dup-{{user.email }}" ></div>
                                     </div>
 
                                     <div class="span8">
