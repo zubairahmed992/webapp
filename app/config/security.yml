@@ -10,7 +10,7 @@ security:
             iterations: 1
             encode_as_base64: false
             
-      LoveThatFit\AdminBundle\Entity\RetailerUser:
+      LoveThatFit\AdminBundle\Entity\AdminSupportUser:
             algorithm:   sha1
             iterations: 1
             encode_as_base64: false      
@@ -29,7 +29,19 @@ security:
             logout:
                path:   /admin/logout
                target: /admin/login
-
+               
+#        support_admin:
+#                    provider: support_db
+#                    pattern:    ^/support_admin
+#                    anonymous: ~
+#                    form_login:
+#                        login_path:  /support_admin/login
+#                        check_path:  /support_admin/login_check
+#                        username_parameter: _username
+#                        password_parameter: _password                
+#                    logout:
+#                       path:   /support_admin/logout
+#                       target: /support_admin/login
         
         secured_area:
             provider: user_db
@@ -72,9 +84,9 @@ security:
         - { path: /inner_site, roles: ROLE_USER }
         - { path: /ajax, roles: ROLE_USER }
                 
-#        - { path: ^/retailer/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: /retailer/, roles: ROLE_RETAILER }
-#        - { path: /retailer, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/support_admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /support_admin/, roles: ROLE_RETAILER }
+        - { path: /support_admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
         
 
@@ -87,8 +99,8 @@ security:
         user_db:                      
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
-        retailer_db:                      
-            entity: { class: LoveThatFit\AdminBundle\Entity\RetailerUser, property: username }
+#        support_db:                      
+#            entity: { class: LoveThatFit\AdminBundle\Entity\SupportAdminUser, property: email }
             
             
 
