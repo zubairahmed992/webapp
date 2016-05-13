@@ -186,7 +186,15 @@ class UserMaskAdjustmentController extends Controller {
 
         $default_archive_id = null;
        
-
+  #find all archives associated with user
+        foreach ($user->getUserArchives() as $a) {
+            if ($a->getStatus() == -1) {#pick the pending one
+                $default_archive_id = $a->getId();
+            } elseif ($a->getStatus() == 1 && !$default_archive_id) {            #pick the active one
+                $default_archive_id = $a->getId();
+            }
+        }
+        
         if ($default_archive_id && !$archive) {
             $archive = $this->get('user.helper.userarchives')->find($default_archive_id);
             $archive_id = $default_archive_id;
