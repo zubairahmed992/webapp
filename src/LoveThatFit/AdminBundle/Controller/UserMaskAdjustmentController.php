@@ -171,8 +171,7 @@ class UserMaskAdjustmentController extends Controller {
     #----------------------------------------------------------------------------
     #----------------------------------------------------------------------------    
 
-    public function profileArchivesAction($user_id, $archive_id = null) {
-        $archives = array();
+    public function profileArchivesAction($user_id, $archive_id = null, $mode=null) {
         $archive = null;
         if ($archive_id) {
             $archive = $this->get('user.helper.userarchives')->find($archive_id);
@@ -186,15 +185,7 @@ class UserMaskAdjustmentController extends Controller {
         }
 
         $default_archive_id = null;
-        #find all archives associated with user
-        foreach ($user->getUserArchives() as $a) {
-            if ($a->getStatus() == -1) {#pick the pending one
-                $default_archive_id = $a->getId();
-            } elseif ($a->getStatus() == 1 && !$default_archive_id) {            #pick the active one
-                $default_archive_id = $a->getId();
-            }
-            $archives[$a->getId()] = $a->getId();
-        }
+       
 
         if ($default_archive_id && !$archive) {
             $archive = $this->get('user.helper.userarchives')->find($default_archive_id);
@@ -217,7 +208,8 @@ class UserMaskAdjustmentController extends Controller {
         $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $edit_type = "registration";
-        if ($archive->getSvgPaths()) {
+        
+        if ($archive->getSvgPaths() && !$mode) {
             $edit_type = "edit";
             $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
         } else {
@@ -243,7 +235,7 @@ class UserMaskAdjustmentController extends Controller {
                     'device_type' => $device_type, #------>
                     'device_screen_height' => $device_screen_height['pixel_height'], #------>
                     'archive' => $archive, #------>
-                    'archives' => $archives, #------>
+                    'archives' => $user->getUserArchives(), #------>
                     'device_model' => array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                 ));
     }
