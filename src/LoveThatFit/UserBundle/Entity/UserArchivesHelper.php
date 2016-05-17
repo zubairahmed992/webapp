@@ -126,7 +126,7 @@ class UserArchivesHelper {
         $archive->setMarkerJson($marker->getMarkerJson());
         $archive->setStatus(1);
         $this->save($archive);
-        
+        return $archive;
         
         #device type
         

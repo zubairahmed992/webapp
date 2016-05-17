@@ -2068,6 +2068,9 @@ class Measurement {
        if (is_array($ar) && array_key_exists($key, $ar)){
                  return $ar[$key];
        }
+       elseif(strpos($key, 'actual_user') !== false){
+           return $this->toArray();
+       }
     }
     public function clearObjectValues() {
         $ar = array('weight' => 0,

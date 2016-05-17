@@ -39,4 +39,8 @@ admin_archive_to_live:
 admin_user_profile_archives:
     pattern:  /admin/user_profile_archives/{user_id}/{archive_id}/{mode}
     defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:profileArchives,archive_id: null, mode: null }
+
+admin_user_create_archives_data:
+    pattern:  /admin/user_create_archives_data/{user_id}
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:createArchivesData}
     

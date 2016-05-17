@@ -1,0 +1,47 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active">Masked Marker Edit</li>
+{% endblock %}
+
+{% block body %}
+<br><br><br>
+<div class="mw_col_6">
+No Archive found for {{user.email}}, do you want to     
+<a href="{{ path('admin_user_create_archives_data', {'user_id': user.id}) }}" title="Create Archives">Create archives from existing data</a>
+            ?
+</div>
+<div class="mw_col_2">
+    <div id ='summary_ajax'></div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+       
+$(document).ready(function(){
+    
+$( "select[id='user_User']" ).change(function() {
+    hit_service();
+    });
+
+$( "#btn_hit" ).click(function() {
+  hit_service();
+});
+
+});        
+//----------------------
+function hit_service() {
+    
+    var user_id = $("#user_User").val();       
+    var user_url = "../user_mask_adjustment/canvas/" + user_id;         
+    
+    
+    $.ajax({
+             url: user_url
+             ,success: function(response) {
+                $('#summary_ajax').html(response);                
+             }
+          })
+    
+    }
+
+    </script>
+{% endblock %}
