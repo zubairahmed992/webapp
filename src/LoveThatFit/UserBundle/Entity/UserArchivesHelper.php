@@ -102,30 +102,36 @@ class UserArchivesHelper {
         return $this->save($user_archives);
     }
     #----------------------------------------
-    public function _saveArchives($user_archives, $data) {
-        if (array_key_exists('measurement', $data)) {
-            $user_archives->setMeasurementJson($this->extractMeasurements(json_decode($data['measurement']), $user_archives->getMeasurementJson()));
-        } else {
-            $user_archives->setMeasurementJson($this->extractMeasurements($data, $user_archives->getMeasurementJson()));            
-        }
-        if (array_key_exists('image_actions', $data)) {
-            $user_archives->setImageActions($this->extractImageActions($data['image_actions'], $user_archives->getImageActions()));
-        }
-        if (array_key_exists('marker_params', $data)) {
-            $user_archives->setMarkerParams($data['marker_params']);
-        } else {
-            $user_archives->setMarkerParams($this->extractMarkerParams($data));
-        }
-        if (array_key_exists('svg_path', $data)) {
-            $user_archives->setSvgPaths($data['svg_path']);
-        }
-        if (array_key_exists('marker_json', $data)) {
-            $user_archives->setMarkerJson($data['marker_json']);
-        }
-        if (array_key_exists('default_marker_svg', $data)) {
-            $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
-        }
-        return $this->save($user_archives);
+    public function createFromExistingData($user) {
+        $archive =  $this->createNew($user);
+        $marker=$user->getUserMarker();
+        #measurement
+        $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
+        $archive->setMeasurementJSON(is_array($actual_measurement) ? json_encode($actual_measurement) : null);
+        #image specs        
+        $archive->setImageActions($marker->getImageActions());
+        #-------------------------------------------
+        $mp = array(
+          'rect_x' => $marker->getRectX(),
+          'rect_y' =>   $marker->getRectY(),
+          'rect_width' =>   $marker->getRectWidth(),
+          'rect_height' =>   $marker->getRectHeight(),
+          'mask_x' =>   $marker->getMaskX(),
+          'mask_y' =>   $marker->getMaskY(),            
+        );                    
+        $archive->setMarkerParams(json_encode($mp));
+        #-------------------------------------------
+        $archive->setSVGPaths($marker->getSVGPaths());
+        $archive->setDefaultMarkerSVG($marker->getDefaultMarkerSvg());
+        $archive->setMarkerJson($marker->getMarkerJson());
+        $archive->setStatus(1);
+        $this->save($archive);
+        
+        
+        #device type
+        
+        #image
+        
     }
 
 #---------------------------------------------------------------------
@@ -139,6 +145,7 @@ class UserArchivesHelper {
         array_key_exists('mask_y', $ar)? $mp['mask_y'] = $ar['mask_y'] : '';
         return  json_encode($mp);
     }
+   
     #---------------------------------------------------------------------    
     private function extractImageActions($ia_params, $ia_archive) {
         $a1 = json_decode($ia_archive, true);
