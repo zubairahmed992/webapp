@@ -102,14 +102,20 @@ class UserArchivesHelper {
         return $this->save($user_archives);
     }
     #----------------------------------------
+    #----------------------------------------
     public function createFromExistingData($user) {
         $archive =  $this->createNew($user);
-        $marker=$user->getUserMarker();
+        $marker = $user->getUserMarker();
         #measurement
         $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
         $archive->setMeasurementJSON(is_array($actual_measurement) ? json_encode($actual_measurement) : null);
         #image specs        
-        $archive->setImageActions($marker->getImageActions());
+        $device_specs = $user->getDeviceSpecs($user->getImageDeviceType());
+        $image_actions=  json_decode($marker->getImageActions(),true);
+        $image_actions['device_type'] = $user->getImageDeviceType();
+        $image_actions['device_model'] = $user->getImageDeviceModel();
+        $image_actions['height_per_inch'] = $device_specs ? $device_specs->getDeviceUserPerInchPixelHeight() : 7;
+        $archive->setImageActions(json_encode($image_actions));
         #-------------------------------------------
         $mp = array(
           'rect_x' => $marker->getRectX(),
@@ -125,6 +131,11 @@ class UserArchivesHelper {
         $archive->setDefaultMarkerSVG($marker->getDefaultMarkerSvg());
         $archive->setMarkerJson($marker->getMarkerJson());
         $archive->setStatus(1);
+        $archive->setImage(uniqid().'.png');
+        #---------------------- copy images
+        @copy($user->getOriginalImageAbsolutePath(),$archive->getAbsolutePath('original'));
+        @copy($user->getAbsolutePath(),$archive->getAbsolutePath('cropped'));
+        #----------------------
         $this->save($archive);
         return $archive;
         

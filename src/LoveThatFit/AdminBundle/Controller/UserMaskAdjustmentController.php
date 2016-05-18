@@ -173,8 +173,7 @@ class UserMaskAdjustmentController extends Controller {
   public function createArchivesDataAction($user_id) {
       $user = $this->container->get('user.helper.user')->find($user_id);
       $archive=$this->container->get('user.helper.userarchives')->createFromExistingData($user);
-  return new Response('Created');
-      $this->redirect($this->generateUrl('admin_user_profile_archives', array('user_id' => $user->getId(),
+      return $this->redirect($this->generateUrl('admin_user_profile_archives', array('user_id' => $user->getId(),
             'archive_id' => $archive->getId())));
   }
   
