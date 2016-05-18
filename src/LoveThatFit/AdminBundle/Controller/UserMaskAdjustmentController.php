@@ -223,6 +223,7 @@ class UserMaskAdjustmentController extends Controller {
         $image_actions_archive = json_decode($archive->getImageActions(), 1);
 
         $device_type = $image_actions_archive['device_type'];
+        $device_type=$device_type?$device_type:$user->getImageDeviceType();
         $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
         $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
         $form = $this->createForm(new RegistrationStepFourType(), $user);
@@ -255,7 +256,7 @@ class UserMaskAdjustmentController extends Controller {
                     'device_screen_height' => $device_screen_height['pixel_height'], #------>
                     'archive' => $archive, #------>
                     'archives' => $user->getUserArchives(), #------>
-                    'device_model' => array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
+                    'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                 ));
     }
 
