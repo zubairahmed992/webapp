@@ -110,6 +110,14 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Retailer
             container: "@service_container"
+
+     admin.helper.support:
+        class: LoveThatFit\AdminBundle\Entity\SupportAdminUserHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\SupportAdminUser
+            container: "@service_container"
             
      admin.helper.retailer.user:
         class: LoveThatFit\AdminBundle\Entity\RetailerUserHelper

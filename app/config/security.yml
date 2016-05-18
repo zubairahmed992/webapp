@@ -10,7 +10,7 @@ security:
             iterations: 1
             encode_as_base64: false
             
-      LoveThatFit\AdminBundle\Entity\AdminSupportUser:
+      LoveThatFit\AdminBundle\Entity\SupportAdminUser:
             algorithm:   sha1
             iterations: 1
             encode_as_base64: false      
@@ -38,7 +38,7 @@ security:
 #                        login_path:  /support_admin/login
 #                        check_path:  /support_admin/login_check
 #                        username_parameter: _username
-#                        password_parameter: _password                
+#                        password_parameter: _password
 #                    logout:
 #                       path:   /support_admin/logout
 #                       target: /support_admin/login
@@ -99,8 +99,8 @@ security:
         user_db:                      
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
-#        support_db:                      
-#            entity: { class: LoveThatFit\AdminBundle\Entity\SupportAdminUser, property: email }
+        support_db:
+            entity: { class: LoveThatFit\AdminBundle\Entity\SupportAdminUser, property: email }
             
             
 

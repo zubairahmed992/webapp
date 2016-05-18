@@ -1,0 +1,72 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Support Admin Users</li>
+{% endblock %}
+
+
+
+{% block body %}
+  
+<div class="p_listing">     
+    <h1>Support Admin Users</h1>
+    <div class="btn_wrapper2">     
+     <div id="chart_figures" class="brand_chart_figures">
+         <div class="facts">
+                    <div><span>Total no of Support Admin Users:</span>{{rec_count}}</div>
+     </div>
+     </div>    
+     <a href="{{ path('admin_support_user_new') }}" class="btn">Add New</a>
+      </div>    
+     <div class="clearfix"></div>      
+    <div class="bs-docs-grid">              
+
+        <div class="row-fluid">
+            <div class="span1 hds">ID</div>
+            <div class="span1 hds">Name</div>
+            <div class="span3 hds">Email</div>
+                            
+            <div class="span1 hds">Actions</div>
+            <div class="span1 hds"></div>            
+            <div class="span1 hds"></div>      
+            
+        </div>             
+          {% for r in retailers %}         
+        <div class="row-fluid show-grid space_wrap_rt_ad">
+            <div class="span1">{{r.id}}</div>
+            <div class="span1">{{r.name}}</div>
+            <div class="span3">{{r.email}}</div>
+           
+            <div class="span1">
+            <div>
+
+                    <a href="{{ path('admin_support_user_edit', {'id': r.id}) }}" title="Edit {{r.name}}"><i class="icon-edit"></i></a>
+                    
+                    <a href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.name}}"><i class="icon-remove"></i></a>
+                </div> 
+            </div>
+                 <div class="span1"></div>
+            <div class="span1"></div> 
+        </div>
+        <!-- Modal -->
+<div id="myModal{{r.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Support User</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Support User <b>{{r.name}}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_support_user_delete', {'id': r.id}) }}"  class="btn btn-primary">Delete</a>
+  </div>
+</div>
+        
+{% endfor %}
+    </div>
+ {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'admin_support_user','sort':sort}
+        %}  
+</div>
+{% endblock %}

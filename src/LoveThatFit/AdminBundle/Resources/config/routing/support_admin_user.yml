@@ -1,0 +1,29 @@
+admin_support_user:
+    pattern:  /admin/support_user/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:index ,page_number: 1, sort:id }
+admin_support_user_new:
+    pattern:  /admin/new_support_user
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:new }
+admin_support_user_create:
+    pattern:  /admin/create_support_user
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:create }
+    requirements:
+      _method: post
+admin_support_user_edit:
+    pattern:  /support_user/edit/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:edit }
+    requirements:
+      _method:  GET
+admin_support_user_delete:
+    pattern:  /support_user/delete/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:delete }
+admin_support_user_update:
+    pattern:  /support_user/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:update }
+    requirements:
+        _method:  POST
+admin_support_user_change_password:
+    pattern:  /support_user/{id}/change_password
+    defaults: { _controller: LoveThatFitAdminBundle:SupportAdminUser:changePassword }
+    requirements:
+        _method:  POST

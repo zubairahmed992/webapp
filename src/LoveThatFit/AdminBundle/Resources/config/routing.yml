@@ -105,3 +105,8 @@ admin_yml_setting_routes:
 admin_copy_user_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/copy_user.yml"
     prefix:   /
+
+#---------- Copy User Data ----------------------
+support_admin_user_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/support_admin_user.yml"
+    prefix:   /
