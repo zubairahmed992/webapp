@@ -4,64 +4,64 @@ device_config:
     svg_mask_x: 55
     svg_mask_y: 55
     pixel_per_inch: 5
-    ground_marker_px:
-    max_user_height_inch:
-    svg_scale_ratio:
-    device_model:
-    product_px_per_inch:
-    neck_exlusion_px:
+    ground_marker_px: 0
+    max_user_height_inch: 0
+    svg_scale_ratio: 0
+    device_model: iphone5
+    product_px_per_inch: 0
+    neck_exlusion_px: 0
   
   iphone5c:
     svg_mask_x: 55
     svg_mask_y: 55
     pixel_per_inch: 5
-    ground_marker_px:
-    max_user_height_inch:
-    svg_scale_ratio:
-    device_model:
-    product_px_per_inch:
-    neck_exlusion_px:
+    ground_marker_px: 0
+    max_user_height_inch: 0
+    svg_scale_ratio: 0
+    device_model: iphone5c
+    product_px_per_inch: 0
+    neck_exlusion_px: 0
   
   iphone5s:
     svg_mask_x: 55
     svg_mask_y: 55
     pixel_per_inch: 5
-    ground_marker_px:
-    max_user_height_inch:
-    svg_scale_ratio:
-    device_model:
-    product_px_per_inch:
-    neck_exlusion_px:
+    ground_marker_px: 0
+    max_user_height_inch: 0
+    svg_scale_ratio: 0
+    device_model: iphone5s
+    product_px_per_inch: 0
+    neck_exlusion_px: 0
   
   iphone6:
     svg_mask_x: 66
     svg_mask_y: 66
     pixel_per_inch: 6
-    ground_marker_px:
-    max_user_height_inch:
-    svg_scale_ratio:
-    device_model:
-    product_px_per_inch:
-    neck_exlusion_px:
+    ground_marker_px: 0
+    max_user_height_inch: 0
+    svg_scale_ratio: 0
+    device_model: iphone6
+    product_px_per_inch: 0
+    neck_exlusion_px: 0
   
   iphone6c:
     svg_mask_x: 66
     svg_mask_y: 66
     pixel_per_inch: 6
-    ground_marker_px:
-    max_user_height_inch:
-    svg_scale_ratio:
-    device_model:
-    product_px_per_inch:
-    neck_exlusion_px:
+    ground_marker_px: 0
+    max_user_height_inch: 0
+    svg_scale_ratio: 0
+    device_model: iphone6c
+    product_px_per_inch: 0
+    neck_exlusion_px: 0
   
   iphone6s:
     svg_mask_x: 66
     svg_mask_y: 66
     pixel_per_inch: 6  
-    ground_marker_px:
-    max_user_height_inch:
-    svg_scale_ratio:
-    device_model:
-    product_px_per_inch:
-    neck_exlusion_px:
+    ground_marker_px: 0
+    max_user_height_inch: 0
+    svg_scale_ratio: 0
+    device_model: iphone6s
+    product_px_per_inch: 0
+    neck_exlusion_px: 0
