@@ -48,6 +48,7 @@
     </div>
 {% else %}
 {% endif %}
+    <div class="clearfix"></div>
     <h1 style="float:left;">User's Detail</h1>
                 {%if(user.userMarker and user.userMarker.defaultUser)%}
                     *demo account <a href="{{ path('admin_user_set_default',{'id':user.id}) }}">remove demo </a>

@@ -2,16 +2,20 @@
 {% block breadcrumb %}
    <li class="active">Users</li>
 {% endblock %}
-       {% block header_right_links %}
-   <a href="{{ path('admin_user_mask_adjustment_index') }}" >Masked Adjustment</a> &nbsp;|&nbsp;
-   <a href="{{ path('admin_mask_marker_inspect_index') }}" >Masked Inspection</a> &nbsp;|&nbsp;   
-   <a href="{{ path('admin_user_mask_compare_index') }}" >Mask Visual Compare</a>
-    &nbsp;|&nbsp;
-    <a href="{{ path('admin_pending_user') }}" >Pending Users</a>
-{% endblock %}
+
 
 {% block body %}
-<div class="p_listing">     
+<div class="p_listing">
+    <div class="clearfix"></div>
+    {% block header_right_links %}
+        <div class="adjustment_links" style="margin-top: 20px; float:right;">
+            <a href="{{ path('admin_user_mask_adjustment_index') }}" >Masked Adjustment</a>
+            <a href="{{ path('admin_mask_marker_inspect_index') }}" >Masked Inspection</a>
+            <a href="{{ path('admin_user_mask_compare_index') }}" >Mask Visual Compare</a>
+
+            <a href="{{ path('admin_pending_user') }}" >Pending Users</a>
+        </div>
+    {% endblock %}
     <h1 style="float:left;">Users</h1>
     
      <div class="clearfix"></div> 
@@ -28,6 +32,9 @@
     
      </div>  
       </div>
+
+
+
        
    <div class="clearfix"></div> 
     
