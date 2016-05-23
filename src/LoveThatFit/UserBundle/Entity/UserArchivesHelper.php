@@ -132,9 +132,16 @@ class UserArchivesHelper {
         $archive->setMarkerJson($marker->getMarkerJson());
         $archive->setStatus(1);
         $archive->setImage(uniqid().'.png');
-        #---------------------- copy images
-        @copy($user->getOriginalImageAbsolutePath(),$archive->getAbsolutePath('original'));
+       #---------------------- copy images
+        
+        if (file_exists($user->getOriginalImageAbsolutePath())) {
+            @copy($user->getOriginalImageAbsolutePath(),$archive->getAbsolutePath('original'));
+        } else {
+            @copy($user->getAbsolutePath(),$user->getOriginalImageAbsolutePath());
+            @copy($user->getAbsolutePath(),$archive->getAbsolutePath('original'));
+        }
         @copy($user->getAbsolutePath(),$archive->getAbsolutePath('cropped'));
+        
         #----------------------
         $this->save($archive);
         return $archive;
