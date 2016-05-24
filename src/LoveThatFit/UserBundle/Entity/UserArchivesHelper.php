@@ -110,13 +110,8 @@ class UserArchivesHelper {
         $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
         $archive->setMeasurementJSON(is_array($actual_measurement) ? json_encode($actual_measurement) : null);
         #image specs        
-        $device_specs = $user->getDeviceSpecs($user->getImageDeviceType());
-        $image_actions=  json_decode($marker->getImageActions(),true);
-        $image_actions['device_type'] = $user->getImageDeviceType();                
-        #if device model is null & device type is iphone5, then make the model iphone5c
-        $image_actions['device_model'] = $user->getImageDeviceModel()==null && strtolower($user->getImageDeviceType())=='iphone5'?'iphone5c':'';
-        $image_actions['height_per_inch'] = $device_specs ? $device_specs->getDeviceUserPerInchPixelHeight() : 7;
-        $archive->setImageActions(json_encode($image_actions));
+        $device_specs = $user->getDeviceSpecs($user->getImageDeviceType());        
+        $archive->setImageActions($this->extractImageActions($user, $marker, $device_specs));
         #-------------------------------------------
         $mp = array(
           'rect_x' => $marker->getRectX(),
@@ -166,15 +161,18 @@ class UserArchivesHelper {
     }
    
     #---------------------------------------------------------------------    
-    private function extractImageActions($ia_params, $ia_archive) {
-        $a1 = json_decode($ia_archive, true);
-        $a2 = json_decode($ia_params, true);
-        if (is_array($a2)&& is_array($a1)){ #if both are array then proceed
-            return json_encode(array_merge_recursive($a1, $a2));
-        }else{
-            return $ia_archive;
-        }
-        
+    private function extractImageActions($user, $marker, $device_specs) {
+        $image_actions=  json_decode($marker->getImageActions(),true);
+        $image_actions['device_type'] = $user->getImageDeviceType();                
+        $image_actions['device_model'] = $user->getImageDeviceModel()==null && strtolower($user->getImageDeviceType())=='iphone5'?'iphone5c':'';
+        $image_actions['height_per_inch'] = $device_specs ? $device_specs->getDeviceUserPerInchPixelHeight() : 7;
+        $ia=array('move_up_down' => 0, "move_left_right" => 0, "img_rotate" => 0, "height_per_inch" => "7.12");
+        foreach ($ia as $k => $v) {
+            if(!array_key_exists($k, $image_actions)){
+                $image_actions[$k]=$v;
+            }
+        }        
+        return json_encode($image_actions);        
     }
 #---------------------------------------------------------------------
     private function extractMeasurements($ar, $m_json) {
@@ -319,4 +317,12 @@ class UserArchivesHelper {
         }
     }
     #status{"pending":-1, "active":1, "inactive":0}
+  #-----------------------------------------------------------  
+    public function deleteArchiveWithImages($archive_id) {
+        $archive = $this->repo->find($archive_id);
+        unlink($archive->getAbsolutePath('original'));
+        unlink($archive->getAbsolutePath('cropped'));
+        $this->em->remove($archive);
+        $this->em->flush();
+    }
 }

@@ -176,7 +176,11 @@ class UserMaskAdjustmentController extends Controller {
       return $this->redirect($this->generateUrl('admin_user_profile_archives', array('user_id' => $user->getId(),
             'archive_id' => $archive->getId())));
   }
-  
+   #-------------------------/admin/archive_delete_with_images/{archive_id}---------------------------------------------------    
+  public function deleteArchiveWithImagesAction($archive_id) {
+      $this->container->get('user.helper.userarchives')->deleteArchiveWithImages($archive_id);
+      return new Response('deleted');
+  }
     #----------------------------------------------------------------------------    
   
     public function profileArchivesAction($user_id, $archive_id = null, $mode=null) {
