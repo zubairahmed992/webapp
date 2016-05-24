@@ -112,8 +112,9 @@ class UserArchivesHelper {
         #image specs        
         $device_specs = $user->getDeviceSpecs($user->getImageDeviceType());
         $image_actions=  json_decode($marker->getImageActions(),true);
-        $image_actions['device_type'] = $user->getImageDeviceType();
-        $image_actions['device_model'] = $user->getImageDeviceModel();
+        $image_actions['device_type'] = $user->getImageDeviceType();                
+        #if device model is null & device type is iphone5, then make the model iphone5c
+        $image_actions['device_model'] = $user->getImageDeviceModel()==null && strtolower($user->getImageDeviceType())=='iphone5'?'iphone5c':'';
         $image_actions['height_per_inch'] = $device_specs ? $device_specs->getDeviceUserPerInchPixelHeight() : 7;
         $archive->setImageActions(json_encode($image_actions));
         #-------------------------------------------
