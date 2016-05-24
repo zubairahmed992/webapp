@@ -3,65 +3,71 @@ device_config:
   iphone5:
     svg_mask_x: 55
     svg_mask_y: 55
-    pixel_per_inch: 5
+    pixel_per_inch: 6.891
+    jt_pixel_added: 0.483
     ground_marker_px: 0
-    max_user_height_inch: 0
+    max_user_height_inch: 65
     svg_scale_ratio: 0
     device_model: iphone5
-    product_px_per_inch: 0
-    neck_exlusion_px: 0
+    product_px_per_inch: 17
+    neck_exlusion_px: 238
   
   iphone5c:
     svg_mask_x: 55
     svg_mask_y: 55
-    pixel_per_inch: 5
+    pixel_per_inch: 6.891
+    jt_pixel_added: 0.483
     ground_marker_px: 0
-    max_user_height_inch: 0
+    max_user_height_inch: 74
     svg_scale_ratio: 0
     device_model: iphone5c
-    product_px_per_inch: 0
-    neck_exlusion_px: 0
+    product_px_per_inch: 17
+    neck_exlusion_px: 238
   
   iphone5s:
     svg_mask_x: 55
     svg_mask_y: 55
-    pixel_per_inch: 5
-    ground_marker_px: 0
-    max_user_height_inch: 0
+    pixel_per_inch: 6.891
+    jt_pixel_added: 0.483
+    ground_marker_px:
+    max_user_height_inch: 74
     svg_scale_ratio: 0
     device_model: iphone5s
-    product_px_per_inch: 0
-    neck_exlusion_px: 0
+    product_px_per_inch: 17
+    neck_exlusion_px: 238
   
   iphone6:
     svg_mask_x: 66
     svg_mask_y: 66
-    pixel_per_inch: 6
+    pixel_per_inch: 7.797
+    jt_pixel_added: 0.483
     ground_marker_px: 0
-    max_user_height_inch: 0
+    max_user_height_inch: 74
     svg_scale_ratio: 0
     device_model: iphone6
-    product_px_per_inch: 0
-    neck_exlusion_px: 0
+    product_px_per_inch: 17
+    neck_exlusion_px: 238
   
   iphone6c:
     svg_mask_x: 66
     svg_mask_y: 66
-    pixel_per_inch: 6
+    pixel_per_inch: 7.797
+    jt_pixel_added: 0.483
     ground_marker_px: 0
-    max_user_height_inch: 0
+    max_user_height_inch: 73
     svg_scale_ratio: 0
-    device_model: iphone6c
-    product_px_per_inch: 0
-    neck_exlusion_px: 0
+    device_model: iphone6s
+    product_px_per_inch: 17
+    neck_exlusion_px: 238
   
   iphone6s:
     svg_mask_x: 66
     svg_mask_y: 66
-    pixel_per_inch: 6  
+    pixel_per_inch: 7.797
+    jt_pixel_added: 0.483 
     ground_marker_px: 0
-    max_user_height_inch: 0
+    max_user_height_inch: 73
     svg_scale_ratio: 0
-    device_model: iphone6s
-    product_px_per_inch: 0
-    neck_exlusion_px: 0
+    device_model: 0
+    product_px_per_inch: 17
+    neck_exlusion_px: 238
