@@ -110,6 +110,7 @@ class UserMaskAdjustmentController extends Controller {
                 $marker = $this->get('user.marker.helper')->getDefaultObject($user);
             }
         }
+        $mode=$archive->getSvgPaths()?$mode:null;
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
         
@@ -128,6 +129,7 @@ class UserMaskAdjustmentController extends Controller {
                     'device_type' => $device_type, #------>
                     'device_screen_height' => $device_screen_height['pixel_height'], #------>
                     'archive' => $archive, #------>
+                    'mode' => $mode, #------>
                     'device_model' => array_key_exists('device_model',$image_actions_archive)?$image_actions_archive['device_model']:'', #------>
                 ));
     }
@@ -240,7 +242,7 @@ class UserMaskAdjustmentController extends Controller {
             $edit_type = "registration";
             $marker = $this->get('user.marker.helper')->getDefaultObject($user);
         }
-
+        $mode=$archive->getSvgPaths()?$mode:null;
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
 
@@ -259,6 +261,7 @@ class UserMaskAdjustmentController extends Controller {
                     'device_type' => $device_type, #------>
                     'device_screen_height' => $device_screen_height['pixel_height'], #------>
                     'archive' => $archive, #------>
+                    'mode' => $mode, #------>
                     'archives' => $user->getUserArchives(), #------>
                     'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                 ));
