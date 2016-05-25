@@ -12,7 +12,12 @@ class WebServiceHelper {
     public function __construct(Container $container) {
         $this->container = $container;
     }
+#----------------------------------------------------
 
+    private function user_array($user, $device_type=null, $base_path=null){
+        $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($device_type);
+        return $user->toDataArray(true, $device_type, $base_path, $device_config);
+    }
     #------------------------ User -----------------------
 
     public function loginService($request_array) {
@@ -21,7 +26,8 @@ class WebServiceHelper {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
-                    $response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
+                    #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
+                    $response_array['user'] =  $this->user_array($user,$request_array['device_type'], $request_array['base_path']);
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -47,7 +53,9 @@ class WebServiceHelper {
         $data = array();
         if ($user) {
             $device_type=  array_key_exists('device_type', $request_array)?$request_array['device_type']:null;
-            $data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']);  
+            #$data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']); 
+            $data['user'] = $this->user_array($user, $device_type, $request_array['base_path']); 
+            
             return $this->response_array(true, 'member found', true, $data);
         } else {
             return $this->response_array(false, 'Member not found');
@@ -76,7 +84,9 @@ class WebServiceHelper {
             #---- 2) send registration email ....            
             #$this->container->get('mail_helper')->sendRegistrationEmail($user);                    
             
-            $detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);            
+            #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
+            $detail_array = $this->user_array($user, $request_array['device_type'], $request_array['base_path']); 
+            
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
@@ -109,7 +119,9 @@ class WebServiceHelper {
          $ar['actual_user'] = $ra;
         $measurement->setMeasurementJson(json_encode($ar));
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
+        #return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
+    return $this->response_array(true, 'measurement updated', true, array('user' => $this->user_array($user, null, $base_path)));
+        
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
@@ -326,7 +338,9 @@ class WebServiceHelper {
 
             $this->container->get('user.helper.user')->saveUser($user);
             $userinfo = array();
-            $userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
+            #$userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
+            $userinfo['user'] = $this->user_array($user, $ra['device_type'], $ra['base_path']);
+            
             return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
         } else {
             return $this->response_array(false, 'member not found');

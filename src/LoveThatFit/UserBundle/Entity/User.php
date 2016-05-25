@@ -2056,9 +2056,9 @@ class User implements UserInterface, \Serializable {
 
   }
 
-  public function toDataArray($key=true,$device_type=null, $base_path=null){
+  public function toDataArray($key=true,$device_type=null, $base_path=null, $device_config = null){
 	if($key){
-	  $device_specs=$this->getDeviceSpecs($device_type);
+	  #$device_specs=$this->getDeviceSpecs($device_type);
           $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
           
 	  return array(
@@ -2124,7 +2124,8 @@ class User implements UserInterface, \Serializable {
 		'dress_fitting_size' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getTitle():'',
                 'image_device_type'=>  $this->image_device_type,
 		'device_type'=>$device_type,
-		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
+		#'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
+              'height_per_inch'=>  is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)?$device_config['pixel_per_inch']:0,
                 'device_type'=>$device_type,
                 'default_user'=> $this->user_marker?$this->user_marker->getDefaultUser():false,
                 'status'=> $this->status?$this->status:0,
