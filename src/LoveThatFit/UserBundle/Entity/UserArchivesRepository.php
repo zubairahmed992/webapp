@@ -31,7 +31,7 @@ class UserArchivesRepository extends EntityRepository
 
   public function countAllRecord() {
 	$total_record = $this->getEntityManager()
-	  ->createQuery('SELECT a FROM LoveThatFitUserBundle:UserArchives a');
+	  ->createQuery('SELECT a FROM LoveThatFitUserBundle:UserArchives a  where a.status=-1');
 	try {
 	  return $total_record->getResult();
 	} catch (\Doctrine\ORM\NoResultException $e) {
