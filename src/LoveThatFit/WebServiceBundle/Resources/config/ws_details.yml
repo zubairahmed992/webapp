@@ -149,6 +149,7 @@ ws_user_image_uploader:
    params:
      email: iphone@gmail.com
      device_type: iphone5
+     device_model: iphone5
      height_per_inch: 6     
      upload_type: fitting_room
      camera_angle: 10
