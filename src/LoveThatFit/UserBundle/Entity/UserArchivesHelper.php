@@ -225,8 +225,32 @@ class UserArchivesHelper {
 	 $user_archives->setUpdatedAt(new \DateTime('now'));
 	 $this->em->persist($user_archives);
 	 $this->em->flush();
+     //echo $user_archives->getUser();
+     $result = $this->getAllArchiveCount($user_archives->getUser());
+     if($result["counter"] == 6){
+        $this->removeFirstArchive($user_archives);
+     }
 	 return $user_archives;
  }
+  #------------------ Delete First Archive Record with Images ------#
+    public function removeFirstArchive($user_archives){
+    $all_archive = $this->getAllArchive($user_archives->getUser());
+    $counter=0;
+    foreach($all_archive as $val){
+        if($counter == 0){
+            $archive = $this->repo->find($val["id"]);
+            if(file_exists($archive->getAbsolutePath('original'))){
+                unlink($archive->getAbsolutePath('original'));
+            }
+            if(file_exists($archive->getAbsolutePath('cropped'))){
+                unlink($archive->getAbsolutePath('cropped'));
+            }
+            $this->delete($val["id"]);
+        }
+        $counter++;
+    }
+    }
+  #------------------ End of Delete First Archive Record with Images ------#
 
   #-------------------- Get User Archive Measurement ----------------#
   public function getPendingArchive($user_id) {
