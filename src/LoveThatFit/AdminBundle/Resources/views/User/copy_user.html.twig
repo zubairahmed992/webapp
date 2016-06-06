@@ -18,11 +18,20 @@
             var password = document.validatedForm.password.value;
             var cpassword = document.validatedForm.cpassword.value;
             var email = document.validatedForm.email.value;
+            //var re = /[A-Z0-9._%+]+@[A-Z0-9.]+.[A-Z]{2,4}/igm;
+
             if(email == ''){
                 //jQuery('.fields_error').html('Email Prefix must be given');
                 alert("Email can not be empty");
                 return false;
             }
+            var atpos = email.indexOf("@");
+            var dotpos = email.lastIndexOf(".");
+            if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {
+                alert("Not a valid e-mail address");
+                return false;
+            }
+
             if(password == ''){
                 alert('Password can not be blank');
                 return false;
@@ -32,7 +41,7 @@
                 return false;
             }
             if(password != cpassword){
-                alert('Password and Confirm password does not match,Please correct.');
+                alert('Password & Confirm Password do not match. Please correct');
                 return false;
             }
 
@@ -62,7 +71,7 @@
 
                                 </div>
                                 <div class="btn_wrapper"><input type="hidden" name="user_id" value="{{user.id }}">
-                                    <input name="submit" type="submit" value="submit" onclick="return checkPassword()" >
+                                    <input name="submit" type="submit" value="Duplicate User" onclick="return checkPassword()" >
 
                                 </div>
                                     <div class="span8">
