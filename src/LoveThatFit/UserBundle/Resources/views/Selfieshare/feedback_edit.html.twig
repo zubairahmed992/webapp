@@ -17,8 +17,8 @@ and open the template in the editor.
         <script>
 
 $(document).ready(function() {
-  $("#ss_like").css({'opacity':'0.2'});
-  $("#ss_dislike").css({'opacity':'0.2'});
+//  $("#ss_like").css({'opacity':'0.2'});
+//  $("#ss_dislike").css({'opacity':'0.2'});
  $("#ss_like").click(function(){
       $("#ss_like").css({'opacity':'1'});
       $("#ss_dislike").css({'opacity':'0.2'});
@@ -128,7 +128,7 @@ $.ajax({
     <body style="background:#efefef;">
         
         
-          <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
+  <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
   <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
   <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
   <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
@@ -165,10 +165,26 @@ $.ajax({
   <div class="like_rating_wrapper">
   
   <div class="like_wrapper">
-      
+      {% if(selfieshare.favourite is null) %}
+      {% set ss_like='' %}
+      {% set ss_dislike='' %}
+      {% set ss_like_opacity='opacity: 0.2;' %}
+      {% set ss_dislike_opacity='opacity: 0.2;' %}
+      {% elseif(selfieshare.favourite==1) %}
+      {% set ss_like='like_enable' %}
+      {% set ss_like_opacity='opacity: 1;' %}
+      {% set ss_dislike='' %}
+      {% set ss_dislike_opacity='opacity: 0.2;' %}
+
+      {% elseif(selfieshare.favourite==0) %}
+      {% set ss_dislike='like_enable' %}
+      {% set ss_like='' %}
+      {% set ss_like_opacity='opacity: 0.2;' %}
+      {% set ss_dislike_opacity='opacity:1;' %}
+      {% endif %}
       <span class="lable_like_rate">Like: </span>
-        <a id="ss_like" class="" href="javascript:void(0);"><span>true</span><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" /></a>
-        <a id="ss_dislike" class="" href="javascript:void(0);"><span>false</span><img src="{{ asset('bundles/lovethatfit/site/images/dislike_icon_active.png') }}" width="25" height="25" /></a>
+        <a id="ss_like" class="{{ ss_like }}" href="javascript:void(0);" style="{{ ss_like_opacity }}"><span>true</span><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" /></a>
+        <a id="ss_dislike" class="{{ ss_dislike }}" href="javascript:void(0);" style="{{ ss_dislike_opacity }}"><span>false</span><img src="{{ asset('bundles/lovethatfit/site/images/dislike_icon_active.png') }}" width="25" height="25" /></a>
         
   </div>
   
