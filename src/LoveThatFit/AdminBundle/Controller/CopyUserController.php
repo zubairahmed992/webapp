@@ -52,7 +52,7 @@ class CopyUserController extends Controller {
 	  $response = $this->get('user.helper.user')->duplicateUser($user,$data);
 
 	  if($response == 'Email already exist'){
-		$this->get('session')->setFlash('warning', 'User already exist with this email');
+		$this->get('session')->setFlash('warning', 'User already exists with this email address');
 		return $this->redirect($this->generateUrl('admin_copy_user_index', array("id" => $data["user_id"])));
 	  }else{
 
