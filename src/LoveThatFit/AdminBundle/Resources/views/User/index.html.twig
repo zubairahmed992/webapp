@@ -33,7 +33,7 @@
      </div>  
       </div>
 
-
+<p style="color:#ff0000">Duplicate users are showing in red colors</p>
 
        
    <div class="clearfix"></div> 
@@ -63,7 +63,12 @@
         </div>  
          
           {% for us in pagination.users %}
-        <div class="row-fluid show-grid space_wrap">
+          {% if(us.originalUser is null)%}
+           {% set rowstyle="" %}
+          {% else %}
+          {% set rowstyle="color:#ff0000" %}
+          {% endif %}
+        <div class="row-fluid show-grid space_wrap" style="{{ rowstyle }}">
             <div class="span1">{{us.id}}</div>
             <div class="span3">{{us.firstName}} {{us.lastName}}</div>
             <div class="span1">{{us.gender}}</div>            
