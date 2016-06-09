@@ -70,14 +70,17 @@
  {{ app.session.flash('warning') }}    
 </div>   
 {% endif %}
- {% if app.session.hasFlash('success') %}
-       <div class="alert alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong>   
- {{ app.session.flash('success') }}    
-</div>   
-{% endif %}         
-   <div class="container-fluid">      
+
+    <div style="clear: both; margin-bottom:80px;"></div>
+    {% if app.session.hasFlash('success') %}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong>
+            {{ app.session.flash('success') }}
+        </div>
+    {% endif %}
+
+    <div class="container-fluid">
    
             {% block body %}
                 <div style="float: right">
