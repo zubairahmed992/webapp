@@ -31,6 +31,10 @@ admin_product_data_foo:
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:foo }
 
 admin_product_data_csv_upload:
-   pattern:  /admin/product_data/csv_upload
-   defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvUpload }  
-          
+    pattern:  /admin/product_data/csv_upload
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvUpload }
+
+#--------------------------------- Add device type and create new folder filled with products images -------------
+admin_product_data_product_image_genrate:
+    pattern:  /admin/product_data/product_image_genrate
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:productImageGenrate }

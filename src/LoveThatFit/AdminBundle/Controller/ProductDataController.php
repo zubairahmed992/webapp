@@ -12,6 +12,10 @@ use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
 use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
 use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class ProductDataController extends Controller {
 
@@ -337,4 +341,73 @@ class ProductDataController extends Controller {
         return new Response(json_encode($decoded));
         
     }
+    /**
+     * @return string
+     * Create new device type images and store images into given devie type also add missing files into selected directory
+     */
+    public function productImageGenrateAction()
+    {
+        $message = array();
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        $directoryList = $conf['image_category']['product'];
+        foreach($directoryList as $key => $value  ){
+            if( array_key_exists('width',$value)){
+                $directory[$key] = $value['width'].",".$value['height'].",".$key;
+            }
+        }
+
+        if(isset($_POST['deviceListName'])) {
+            $newDirectoryList = explode(',', $_POST['deviceListName']);
+            $width = $newDirectoryList[0];
+            $height = $newDirectoryList[1];
+            $newDirectory = $newDirectoryList[2];
+            $src = $_SERVER['DOCUMENT_ROOT'].'webappBK/web/uploads/ltf/products/display/iphone_list';
+            $dir = $_SERVER['DOCUMENT_ROOT'].'/webappBK/web/uploads/ltf/products/display';
+            // Get total Directory From Destination Path
+            $totalDirectory =  $this->get('admin.helper.productimagegenrate')->getTotalDirectories($dir);
+            $dest = $dir . "/" . $newDirectory;
+            $srcfilesCount = $this->get('admin.helper.productimagegenrate')->getCountFiles($src);
+            $dstfilesCount = $this->get('admin.helper.productimagegenrate')->getCountFiles($dest);
+            if (!in_array($newDirectory, $totalDirectory)) {
+                mkdir($dir . "/" . $newDirectory, 0777, true);
+                $contents = $this->get('admin.helper.productimagegenrate')->getImages($src);
+                foreach ($contents as $file) {
+                    if ($file == ".") continue;
+                    if ($file == "..") continue;
+                    $array = explode('.', $file);
+                    $extension = end($array);
+                    $src_path = $src . '/' . $file;
+                    $dest_path = $dest . '/' . $file;
+                    $this->get('admin.helper.productimagegenrate')->setPathResizeDimentions($src_path, $dest_path, $extension, $width, $height);
+                }
+                $message = array("Successfully File Coipied");
+            } else if ($srcfilesCount != $dstfilesCount) {
+                $srcFiels = $this->get('admin.helper.productimagegenrate')->getImages($src);
+                $destFiels = $this->get('admin.helper.productimagegenrate')->getImages($dest);
+                foreach ($srcFiels as $file) {
+                    if ($file == ".") continue;
+                    if ($file == "..") continue;
+                    if (!in_array($file, $destFiels)) {
+                        $array = explode('.', $file);
+                        $missingImages[] = $file;
+                        $extension = end($array);
+                        $src_path = $src . '/' . $file;
+                        $dest_path = $dest . '/' . $file;
+                        $this->get('admin.helper.productimagegenrate')->setPathResizeDimentions($src_path, $dest_path, $extension, $width, $height);
+                    }
+                }
+                $messingcount = "Total Missing Images are " . count($missingImages);
+                $message = array($messingcount." Missing File Successfully Updated ");
+            } else {
+                $message = array("No changes Made");
+            }
+        }
+
+        return $this->render('LoveThatFitAdminBundle:ProductData:product_image_genrate.html.twig',  array(
+            'deviceList' => $directory,
+            'message'   => $message,
+        ));
+    }
+
 }

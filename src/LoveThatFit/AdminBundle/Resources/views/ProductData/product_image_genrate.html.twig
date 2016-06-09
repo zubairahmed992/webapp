@@ -1,0 +1,26 @@
+ {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active"> Product Image Genrate</li>
+{% endblock %}        
+{% block body %}
+  <div class="newDevice">
+        <form action="{{ path('admin_product_data_product_image_genrate') }}" method="post" >
+           <label>Please Select Device Type</label>
+            <select name="deviceListName">
+                {% for key, deviceLists in deviceList %}
+                    <option value="{{ deviceLists }}"> {{ key }}</option>
+                {% endfor %}
+            </select>
+            <p>
+                <button type="submit">Continue</button>
+            </p>
+        </form>
+
+    </div>
+
+    {% if message is not empty %}
+        {{ message[0] }}
+
+    {% endif %}
+
+{% endblock %}

@@ -173,8 +173,11 @@ services:
         class: LoveThatFit\AdminBundle\DependencyInjection\CameraMaskSpecsHelper         
 
      admin.helper.device:
-        class: LoveThatFit\AdminBundle\DependencyInjection\DeviceHelper         
-        
+        class: LoveThatFit\AdminBundle\DependencyInjection\DeviceHelper
+
+     admin.helper.productimagegenrate:
+         class: LoveThatFit\AdminBundle\Entity\ProductImageGenrateHelper
+
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
