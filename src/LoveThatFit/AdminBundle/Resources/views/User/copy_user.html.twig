@@ -44,6 +44,10 @@
                 alert('Password & Confirm Password do not match. Please correct');
                 return false;
             }
+            if(password.length <=5){
+                alert('Password should at least be 6 characters long');
+                return false;
+            }
 
 
         }
