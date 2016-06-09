@@ -119,7 +119,6 @@ iphone6:
       chest:  34.25
       arm:  0
       inseam: 30.04
-      shoulder_height: 162.85
       outseam:  0
       sleeve: 22.5
       neck: 13.5  
@@ -138,10 +137,14 @@ iphone6:
       shoulder_width: 0
       bust_height: 0
       waist_height: 0
-      hip_height: 336.20
       bust_width: 0
       waist_width: 0
       hip_width: 0
+      shoulder_height: 162.85
+      hip_height: 336.20
+      top_placement: 22.87
+      bottom_placement: 47.22
+      
     image:
       url: 'iphone6_f_cropped.png'
       device_type: iphone6
@@ -175,7 +178,6 @@ iphone5:
       chest:  33.7
       arm:  0
       inseam: 30
-      shoulder_height:  143.76
       outseam:  0
       sleeve: 26.8
       neck: 13.5  
@@ -194,10 +196,14 @@ iphone5:
       shoulder_width: 0
       bust_height: 0
       waist_height: 0
-      hip_height: 302.31
       bust_width: 0
       waist_width: 0
       hip_width: 0
+      shoulder_height:  143.76
+      hip_height: 302.31
+      top_placement: 20.86
+      bottom_placement: 43.87
+      
     image:
       url: 'iphone5_f_cropped.png'
       device_type: iphone5

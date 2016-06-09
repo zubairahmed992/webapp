@@ -1891,6 +1891,70 @@ class Measurement {
 
 
     /**
+     * @var float $top_placement
+     *
+     * @ORM\Column(name="top_placement", type="float", nullable=true,options={"default" = 0})
+     * 
+     */
+    private $top_placement = 0;
+	
+	 /**
+     * Set top_placement
+     *
+     * @param float $top_placement
+     * @return Measurement
+     */
+    public function setTopPlacement($top_placement) {
+        $this->top_placement = $top_placement;
+
+        return $this;
+    }
+
+    /**
+     * Get top_placement
+     *
+     * @return float 
+     */
+    public function getTopPlacement() {
+        return $this->top_placement;
+    }
+    
+    	#----------------------------------------------------------------------------------
+
+
+
+    /**
+     * @var float $bottom_placement
+     *
+     * @ORM\Column(name="bottom_placement", type="float", nullable=true,options={"default" = 0})
+     * 
+     */
+    private $bottom_placement = 0;
+	
+	 /**
+     * Set bottom_placement
+     *
+     * @param float $bottom_placement
+     * @return Measurement
+     */
+    public function setBottomPlacement($bottom_placement) {
+        $this->bottom_placement = $bottom_placement;
+
+        return $this;
+    }
+
+    /**
+     * Get bottom_placement
+     *
+     * @return float 
+     */
+    public function getBottomPlacement() {
+        return $this->bottom_placement;
+    }
+    
+    	#----------------------------------------------------------------------------------
+
+    /**
      * @var float $iphone_shoulder_height
      *
      * @ORM\Column(name="iphone_shoulder_height", type="float", nullable=true,options={"default" = 0})
@@ -2149,15 +2213,24 @@ class Measurement {
         $this->calf = array_key_exists('calf', $ar) ? $ar['calf'] : $this->calf;
         $this->ankle = array_key_exists('ankle', $ar) ? $ar['ankle'] : $this->ankle;
         $this->belt = array_key_exists('belt', $ar) ? $ar['belt'] : $this->belt;
+        $this->top_placement = array_key_exists('top_placement', $ar) ? $ar['top_placement'] : $this->top_placement;
+        $this->bottom_placement = array_key_exists('bottom_placement', $ar) ? $ar['bottom_placement'] : $this->bottom_placement;
         $this->measurement_json = array_key_exists('measurement_json', $ar) ? $ar['measurement_json'] : $this->measurement_json;
     }
     
     
-    
-    
-    
-    
-    
+    public function calculatePlacementPositions(){
+        $this->top_placement=$this->shoulder_height/1;
+        $this->bottom_placement=$this->hip_height/1;
+    }
+
+
+
+
+
+
+
+
 #----------------------------------------------------------------------------------
 
  

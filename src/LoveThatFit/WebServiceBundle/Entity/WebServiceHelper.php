@@ -212,9 +212,6 @@ class WebServiceHelper {
         array_key_exists('weight', $request_array) ? $measurement->setWeight($request_array['weight']) : '';
         array_key_exists('height', $request_array) ? $measurement->setHeight($request_array['height']) : '';
         array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';        
-        array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
-        array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
-        
         array_key_exists('center_front_waist', $request_array) ? $measurement->setCenterFrontWaist($request_array['center_front_waist']) : '';
         array_key_exists('back_waist', $request_array) ? $measurement->setBackWaist($request_array['back_waist']) : '';
         array_key_exists('chest', $request_array) ? $measurement->setChest($request_array['chest']) : '';
@@ -230,12 +227,17 @@ class WebServiceHelper {
         array_key_exists('thigh', $request_array) ? $measurement->setThigh($request_array['thigh']) : '';
         array_key_exists('bust_height', $request_array) ? $measurement->setBustHeight($request_array['bust_height']) : '';
         array_key_exists('waist_height', $request_array) ? $measurement->setWaistHeight($request_array['waist_height']) : '';
-        array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
         array_key_exists('knee', $request_array) ? $measurement->setKnee($request_array['knee']) : '';
         array_key_exists('calf', $request_array) ? $measurement->setCalf($request_array['calf']) : '';
         array_key_exists('ankle', $request_array) ? $measurement->setAnkle($request_array['ankle']) : '';
         array_key_exists('iphone_foot_height', $request_array) ? $measurement->setIphoneFootHeight($request_array['iphone_foot_height']) : '';
-
+        
+        array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
+        array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
+        array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
+        $measurement->calculatePlacementPositions();
+        
+        
         #$ar = json_decode($measurement->getMeasurementJson());
         #$ar['manual'] = $measurement->getArray();
         #$measurement->setMeasurementJson(json_encode($ar));
