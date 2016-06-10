@@ -2219,9 +2219,11 @@ class Measurement {
     }
     
     
-    public function calculatePlacementPositions(){
-        $this->top_placement=$this->shoulder_height/1;
-        $this->bottom_placement=$this->hip_height/1;
+    public function calculatePlacementPositions($px_per_inch){
+        if($px_per_inch>0){
+        $this->top_placement=$this->shoulder_height/$px_per_inch;
+        $this->bottom_placement=$this->hip_height/$px_per_inch;
+        }
     }
 
 

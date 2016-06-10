@@ -235,8 +235,11 @@ class WebServiceHelper {
         array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
         array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
         array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
-        $measurement->calculatePlacementPositions();
-        
+        #calculating top & bottom position in inches
+        $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user->getImageDeviceModel());
+        if(is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)){
+            $measurement->calculatePlacementPositions($device_config['pixel_per_inch']);
+        }
         
         #$ar = json_decode($measurement->getMeasurementJson());
         #$ar['manual'] = $measurement->getArray();
