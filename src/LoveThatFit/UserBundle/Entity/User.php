@@ -2060,7 +2060,7 @@ class User implements UserInterface, \Serializable {
 	if($key){
 	  #$device_specs=$this->getDeviceSpecs($device_type);
           $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
-          
+          $this->measurement->calculatePlacementPositions(is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)?$device_config['pixel_per_inch']:0);
 	  return array(
 		'id' => $this->getId(),
                 'user_id' => $this->getId(),
