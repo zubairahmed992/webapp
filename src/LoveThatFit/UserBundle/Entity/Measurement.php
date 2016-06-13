@@ -20,6 +20,8 @@ class Measurement {
     public $top_size;
     public $bottom_size;
     public $dress_size;
+    public $top_placement=0;
+    public $bottom_placement=0;
 
     /**
      * Bidirectional (OWNING SIDE - FK)
@@ -1889,71 +1891,7 @@ class Measurement {
     }
 	#----------------------------------------------------------------------------------
 
-
-    /**
-     * @var float $top_placement
-     *
-     * @ORM\Column(name="top_placement", type="float", nullable=true,options={"default" = 0})
-     * 
-     */
-    private $top_placement = 0;
-	
-	 /**
-     * Set top_placement
-     *
-     * @param float $top_placement
-     * @return Measurement
-     */
-    public function setTopPlacement($top_placement) {
-        $this->top_placement = $top_placement;
-
-        return $this;
-    }
-
-    /**
-     * Get top_placement
-     *
-     * @return float 
-     */
-    public function getTopPlacement() {
-        return $this->top_placement;
-    }
     
-    	#----------------------------------------------------------------------------------
-
-
-
-    /**
-     * @var float $bottom_placement
-     *
-     * @ORM\Column(name="bottom_placement", type="float", nullable=true,options={"default" = 0})
-     * 
-     */
-    private $bottom_placement = 0;
-	
-	 /**
-     * Set bottom_placement
-     *
-     * @param float $bottom_placement
-     * @return Measurement
-     */
-    public function setBottomPlacement($bottom_placement) {
-        $this->bottom_placement = $bottom_placement;
-
-        return $this;
-    }
-
-    /**
-     * Get bottom_placement
-     *
-     * @return float 
-     */
-    public function getBottomPlacement() {
-        return $this->bottom_placement;
-    }
-    
-    	#----------------------------------------------------------------------------------
-
     /**
      * @var float $iphone_shoulder_height
      *
