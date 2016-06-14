@@ -21,7 +21,6 @@ class WebServiceHelper {
         $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
         $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
         $device_config['image_device_model'] = $user->extractImageDeviceModel();
-        return $device_config;
         return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
     }
     #------------------------ User -----------------------
