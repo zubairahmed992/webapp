@@ -2157,10 +2157,10 @@ class Measurement {
     }
     
     
-    public function calculatePlacementPositions($px_per_inch){
-        if($px_per_inch>0){
-        $this->top_placement=$this->shoulder_height/$px_per_inch;
-        $this->bottom_placement=$this->hip_height/$px_per_inch;
+    public function calculatePlacementPositions($device_conversion_ratio){
+        if ($device_conversion_ratio && $device_conversion_ratio > 0) {
+            $this->top_placement = $this->shoulder_height * $device_conversion_ratio;
+            $this->bottom_placement = $this->hip_height * $device_conversion_ratio;
         }
     }
 

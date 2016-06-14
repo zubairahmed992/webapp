@@ -26,6 +26,14 @@ class DeviceHelper {
         }    
         return;
     }
-
+//--------------------------------------------------------------------------------
+    public function getConversionRatio($original, $targeted) {
+        if ($targeted && array_key_exists($targeted, $this->conf)) {
+            if (array_key_exists($original, $this->conf) && $this->conf[$original]['pixel_per_inch'] > 0) {
+                return $this->conf[$targeted]['pixel_per_inch'] / $this->conf[$original]['pixel_per_inch'];
+            }
+        }
+        return;
+    }
 
 }

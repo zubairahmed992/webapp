@@ -676,6 +676,10 @@ class User implements UserInterface, \Serializable {
     public function getImageDeviceModel() {
         return $this->image_device_model;
     }
+    public function extractImageDeviceModel() {
+        return $this->image_device_model ? $this->image_device_model : $this->image_device_type;
+    }
+
     #-------------------------------------------
     /**
      * Set avatar
@@ -2060,7 +2064,7 @@ class User implements UserInterface, \Serializable {
 	if($key){
 	  #$device_specs=$this->getDeviceSpecs($device_type);
           $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
-          $this->measurement->calculatePlacementPositions(is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)?$device_config['pixel_per_inch']:0);
+          $this->measurement->calculatePlacementPositions(is_array($device_config) && array_key_exists('conversion_ratio', $device_config)?$device_config['conversion_ratio']:0);
 	  return array(
 		'id' => $this->getId(),
                 'user_id' => $this->getId(),
