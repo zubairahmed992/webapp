@@ -93,7 +93,7 @@ class UserArchivesHelper {
             $image_actions_archive_array = json_decode($user_archives->getImageActions(),true);
             $predicted_measurement = $this->container->get('user.marker.helper')->getPredictedMeasurement($data['marker_json'], $image_actions_archive_array['device_type']);
             $measurement_archive_array  = json_decode($user_archives->getMeasurementJson(),true);            
-            $measurement_archive_array['mask']=json_encode($predicted_measurement);
+            $measurement_archive_array['mask']=$predicted_measurement;
             $user_archives->setMeasurementJson(json_encode($measurement_archive_array));
         }
         if (array_key_exists('default_marker_svg', $data)) {
@@ -306,6 +306,11 @@ class UserArchivesHelper {
         #measurement------------>
         $measurement_archive = json_decode($archive->getMeasurementJson(), 1);     
         $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
+        
+        if(array_key_exists('mask', $measurement_archive)){
+            $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive['mask'], $user);
+        }
+        
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
     
         #mask marker------------>
