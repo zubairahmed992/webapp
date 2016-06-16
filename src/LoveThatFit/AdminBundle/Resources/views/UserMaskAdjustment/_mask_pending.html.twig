@@ -27,19 +27,19 @@
                     <a href="{{ path('admin_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
                     <img src="{{ asset(a.getWebPath('cropped'))}}" style="width: 35px; height:40px"/>
                     </a>
-                    
+
                 </span></div>
     {% endfor %}
      <div>
-        <a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Refresh</a>
+        <a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
     </div>
     {%else%}
     <div>
-        <a href="{{ path('admin_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Refresh</a>
+        <a href="{{ path('admin_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
     <!--<div><span>foo:</span>{{archive.getWebPath('original')}}</div>-->
-    
+
 </div>
 {% else%}
 <div>image info not available</div>
@@ -96,7 +96,7 @@
 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
 
 
-<span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
+<span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>
 
 
 
@@ -106,10 +106,10 @@
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('admin_archive_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
-                
+
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
-                
-                
+
+
 
                 </form>
 
@@ -181,11 +181,11 @@
 
 
 <script type="text/paperscript" canvas="canvas-1">
-var raster = new Raster('fff.jpg');	
+var raster = new Raster('fff.jpg');
 	raster.position = view.center;
-	raster.visible = true;	
+	raster.visible = true;
 
-/////=========================Extras================================================================================== 
+/////=========================Extras==================================================================================
 var myPath = new Path();
 	myPath.strokeColor = 'white';
 	myPath.add(new Point(40, 90));
@@ -211,48 +211,48 @@ var path = new CompoundPath({
     fillColor: 'black',
     selected: true
 });
-/////=========================Extras=================================================================================== 	
+/////=========================Extras===================================================================================
 </script>
-        
+
         <link href="{{ asset('bundles/lovethatfit/site/css/device_view_styles.css') }}" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
         <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>-->
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/paper.js') }}"></script>
-        
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/admin/js/admin_mask_marker.js?grrhy6ed662ssdww5erssg') }}" canvas="canv_mask"></script>
+
+<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/admin/js/admin_mask_marker.js?grrhy6edd662ssdwsw5erssg') }}" canvas="canv_mask"></script>
 
 <script>
     function me_triggered(){
         //window.location.href = window.location.href + "#camera";
         alert(window.location.href);
     }
-    
-  
-   //alert($docu); 
+
+
+   //alert($docu);
    var $height = $(document).height();
    $(".container_pending .span3").css({"height":$height+"px"});
-   
+
    var $heightt = $(document).height();
-   var $heightt = $heightt - 178;   
+   var $heightt = $heightt - 178;
    $(".maindiv").css({"height":$heightt+"px"});
-    
+
 </script>
 
 <script>
-       
+
 $(document).ready(function(){
-    
+
 $( "#btn_confirm" ).click(function() {
-    
-   
+
+
    var strconfirm = confirm("Are you sure mask is saved?");
    if (strconfirm == true)
             {
                 put_archive_to_live();
-            }  
+            }
  //alert('hi');
- 
+
 });
 
 
@@ -260,18 +260,16 @@ $( "#btn_confirm" ).click(function() {
 function put_archive_to_live() {
     var archive_to_live_url = $("#archive_to_live_url").val();
     var redirect_url = $("#redirect_url").val();
-  
+
         $.ajax({
              url: archive_to_live_url
              ,success: function(response) {
                 window.location=redirect_url;
              }
           })
-    
-      return false; 
+
+      return false;
     }
-});        
+});
     </script>
 {% endblock %}
-
-
