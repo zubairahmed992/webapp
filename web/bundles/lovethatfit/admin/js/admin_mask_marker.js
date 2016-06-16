@@ -68,25 +68,25 @@ if(dv_type == "iphone5"){
     scr_width = 160;
     but_x_adj = 295;
     scr_height = 568;
-    
+
     // adjusting 66.666% value of top empty area ----- 26/3*2 = 17.333
     //apr 26//adj_btm_fix = 17.333;
-    
+
     //apr 26//diff_dv = 31 + adj_btm_fix;
-    
-    
+
+
     dv_iPhone6 = false;
-    
+
     def_mask_x_pos = -100;
-    
+
     an_inc = 260;
-    
+
     lft_arrow_x = 96;
     lft_arrow_y = 288;
-    
+
     rgt_arrow_x = 224;
     rgt_arrow_y = 288;
-    
+
   if(dv_model == "iphone5"){
         //adj_btm_fix = 17.333;
         adj_btm_fix = 0;
@@ -112,18 +112,18 @@ if(dv_type == "iphone6"){
 
                 //adj_btm_fix = 30.50;
                 //adj_btm_fix = 0;
-                
+
                 //Static value "28px" adjusted based on screen test
                 adj_btm_fix = 5.5;
                 diff_dv = 38 + adj_btm_fix;
-  
+
   //alert("ip6");
-          
+
             fixed_px_inch_ratio = 6.891;
-            
+
             def_mask_x_pos = -60;
-            
-            
+
+
        //     scr_width = 160;
         //    but_x_adj = 294;
         //    scr_height = 568;
@@ -132,37 +132,37 @@ if(dv_type == "iphone6"){
       //      adj_btm_fix = 17.333;
 
        //     diff_dv = 31 + adj_btm_fix;
-          
+
           an_inc = 360;
-          
+
           lft_arrow_x = 220;
           lft_arrow_y = 288;
-          
+
             lft_arrow_x = 96;
             lft_arrow_y = 288;
 
             rgt_arrow_x = 278;
             rgt_arrow_y = 288;
-          
+
 }
 //////// From JS file
 
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(old_account_img){
-    
+
     orignal_img_path = croped_img_path;
     //alert("Old:" + croped_img_path);
 }else{
-    
+
     orignal_img_path = croped_img_path;
 
     //orignal_img_path = orignal_img_path.substr(orignal_img_path.lastIndexOf('/') + 1);
 var d = new Date();
     var n = d.getTime();
     console.log(croped_img_path);
-    
-    
+
+
     orignal_img_path = orignal_img_path.split("cropped.png")[0] + "original.png?time=" + n;
     //alert("New:" + orignal_img_path);
 }
@@ -196,15 +196,15 @@ $(document).ready(function() {
 });
 
 function top_btm_markers_pos(){
-    
-    
+
+
 //mid_area_path.segments[6].point.x;
 //mid_area_path.segments[62].point.x;
 //mid_area_path.segments[20].point.x;
 //mid_area_path.segments[48].point.x;
-    
-    
-    
+
+
+
         var sholder_left = mid_area_path.segments[6].point.y;
         var sholder_right = mid_area_path.segments[62].point.y;
 
@@ -225,10 +225,10 @@ function top_btm_markers_pos(){
         }else{
             $("#hip_height").attr("value", bottom_right);
                 }
-                
-                
-       //alert("SL:"+sholder_left+"    SR: "+sholder_right + "BL:"+bottom_left+"    BR: "+bottom_right);         
-                
+
+
+       //alert("SL:"+sholder_left+"    SR: "+sholder_right + "BL:"+bottom_left+"    BR: "+bottom_right);
+
 }
 
 function reset_mask() {
@@ -237,33 +237,33 @@ function reset_mask() {
     $('#user_height_frm_3').attr('value', '72')
     path_com.remove();
     createBlob();
-    
+
     user_image.opacity = 0.5;
-    
-    
-    
-    
+
+
+
+
     //reset_mask_seg();
 }
 
-function reset_mask_seg(){  
-    
-    
+function reset_mask_seg(){
+
+
     var pathData = $("#default_user_path").html();
     mid_area_new_path = new Path(pathData);
-    
-    
+
+
     for(var i = 0; i < mid_area_new_path.segments.length; i++) {
-        
+
         mid_area_path.segments[i].point = mid_area_new_path.segments[i].point;
         mid_area_path.segments[i].handleIn = mid_area_new_path.segments[i].handleIn;
         mid_area_path.segments[i].handleOut = mid_area_new_path.segments[i].handleOut;
-        
+
         //mid_area_path.segments[i].(mid_area_new_path.segments[i]);
     }
-    
+
     return mid_area_path;
-  }  
+  }
 
 function createBlob() {
 
@@ -273,7 +273,7 @@ function createBlob() {
         if(chk_no_img_path == true){
             var pathData = $("#default_user_path").html();
         }
-        
+
 mid_area_path = new Path(pathData);
 mid_area_path.opacity = 0.6;
 
@@ -349,8 +349,8 @@ user_image.on('load', function() {
 });
 
 function preset_user_image(move_up_down, move_left_right, img_rotate) {
-    
-    
+
+
     user_image.position.y = user_image.position.y += move_up_down;
     user_image.position.x = user_image.position.x += move_left_right;
     user_image.rotate(img_rotate); // -0.1 for left, 0.1 for right
@@ -368,7 +368,7 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
 
 
 //image_layer.remove();
-//project.layers.push(image_layer); 
+//project.layers.push(image_layer);
 //overall_layer.activate();
 //project.layers.push(overall_layer);
 
@@ -382,38 +382,38 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
                 //user_image.position = new Point(center_pos,user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75));
 
 if(chk_no_img_path == true){
-    
+
     //alert((dv_user_px_h + (((dv_user_px_h / 100) * 3.75) / 100)));
 
                 //mid_area_path.scale(inc_ratio, p_user_height * ((dv_user_px_h + ((dv_user_px_h / 100) * 3.75)) / 450));
     //alert("in side");
                //mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
-   
+
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-   
+
    mid_area_path.position = new Point(scr_width, scr_height - diff_dv);
-   
+
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-   
-   
-   
-   
-   
-              
-   
-   
-   
+
+
+
+
+
+
+
+
+
    //user_image.pivot = new Point(160,542);
    //mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
 
-   
+
    //alert(mid_area_path.pivot);
-               
-     
+
+
    def_head_base_point = mid_area_path.segments[0].point.y;
-   
+
   // alert("Head base: " + def_head_base_point + " User Height: "+def_shape_h);
-   
+
   if(parseInt($('#user_height_frm_3').attr('value')) >= 75){
     def_head_p_incr = (parseInt($('#user_height_frm_3').attr('value')) - 75)/5;
   }
@@ -427,22 +427,22 @@ if(chk_no_img_path == true){
           if(head_segments[i] == 5 || head_segments[i] == 65) {
             mid_area_path.segments[head_segments[i]].point.y += def_head_p_incr * 1.5;
           }
-          
+
           else {
             mid_area_path.segments[head_segments[i]].point.y +=  def_head_p_incr;
           }
       };
   }
   adj_head_points();
-  
+
   var torso_adj_segments = [16,17,18,19,20,21,35,54,53,52,51,50,49];
   function adj_torso_points(){
-        
+
   //var arm_pit_dis = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
   var arm_pit_dis = 43;
   var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
   var final_arm_pit_dis = (arm_pit_dis - arm_pit_dis_curr) + def_head_p_incr;
-  
+
       for(var i = 0; i < torso_adj_segments.length; i++) {
           if(false) {
             mid_area_path.segments[torso_adj_segments[i]].point.y = (mid_area_path.segments[64].point.y + arm_pit_dis);
@@ -453,15 +453,15 @@ if(chk_no_img_path == true){
       };
   }
   adj_torso_points();
-  
-  
+
+
   var inseam_adj_segments = [22,23,24,25,48,47,46,45,44];
   function adj_inseam_points(){
-        
+
   var arm_pit_dis = 43;
   var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
   var final_arm_pit_dis = (arm_pit_dis - arm_pit_dis_curr) + def_head_p_incr;
-  
+
       for(var i = 0; i < inseam_adj_segments.length; i++) {
           if(false) {
             mid_area_path.segments[inseam_adj_segments[i]].point.y = (mid_area_path.segments[64].point.y + arm_pit_dis);
@@ -472,30 +472,30 @@ if(chk_no_img_path == true){
       };
   }
   adj_inseam_points();
-  
-  
+
+
   var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
   //alert(user_shoulder_width);
   //alert(dv_per_inch_px);
   user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
-  
-  
-  
+
+
+
   //alert(dv_per_inch_px);
-  
+
   var torso_w_adj_left = [54,53,52,51,50,49];
   var torso_w_adj_right = [16,17,18,19,20,21];
-  
+
   var dm_front_shoulder = mid_area_path.segments[7].point.x - mid_area_path.segments[63].point.x;
   var user_front_shoulder = user_shoulder_width;
-  
+
   var front_shoulder_diff = user_front_shoulder - dm_front_shoulder;
   //alert(front_shoulder_diff/2);
   mid_area_path.segments[7].point.x += front_shoulder_diff/2;
   mid_area_path.segments[63].point.x -= front_shoulder_diff/2;
-  
+
   //var front_shoulder_diff = 60;
-  
+
   var diff_apply = front_shoulder_diff/2;
 
   function adj_torso_points_w(){
@@ -507,75 +507,75 @@ if(chk_no_img_path == true){
     };
   }
   adj_torso_points_w();
-  
-  
+
+
   var arm_w_adj_out_left = [8,9,10];
   var arm_w_adj_out_right = [62,61,60];
   var diff_apply = front_shoulder_diff/4;
-  
+
   mid_area_path.segments[8].point.x += (diff_apply*2)+((diff_apply*32)/100);
   mid_area_path.segments[9].point.x += (diff_apply*2)+((diff_apply*32)/100);
   mid_area_path.segments[10].point.x += (diff_apply*2)+((diff_apply*32)/100);
   mid_area_path.segments[62].point.x -= (diff_apply*2)-((diff_apply*32)/100);
   mid_area_path.segments[61].point.x -= (diff_apply*2)-((diff_apply*32)/100);
   mid_area_path.segments[60].point.x -= (diff_apply*2)-((diff_apply*32)/100);
-  
+
   mid_area_path.segments[14].point.x += diff_apply*2;
   mid_area_path.segments[15].point.x += diff_apply*2;
-  
+
   mid_area_path.segments[14].point.x -= ((diff_apply*32)/100);
   mid_area_path.segments[15].point.x -= ((diff_apply*32)/100);
-  
+
   mid_area_path.segments[56].point.x -= diff_apply*2;
   mid_area_path.segments[55].point.x -= diff_apply*2;
-  
+
   mid_area_path.segments[56].point.x += (diff_apply*32)/100;
   mid_area_path.segments[55].point.x += (diff_apply*32)/100;
-  
+
 //var chk_da_lala = front_shoulder_diff*54/100;
 //alert(chk_da_lala);
-  
+
   //mid_area_path.segments[48].point.x -= (front_shoulder_diff/2)*54/100;
   mid_area_path.segments[48].point.x -= front_shoulder_diff*54/100;
-  
+
   mid_area_path.segments[47].point.x -= front_shoulder_diff*44/100;
   mid_area_path.segments[46].point.x -= front_shoulder_diff*44/100;
   mid_area_path.segments[45].point.x -= front_shoulder_diff*44/100;
-  
+
   mid_area_path.segments[44].point.x -= ((front_shoulder_diff*33.5)/100);
-  
+
   mid_area_path.segments[43].point.x -= ((diff_apply*33.5)/100);
 
   mid_area_path.segments[22].point.x += front_shoulder_diff*54/100;
   mid_area_path.segments[23].point.x += ((front_shoulder_diff*44)/100);
   mid_area_path.segments[24].point.x += ((front_shoulder_diff*44)/100);
   mid_area_path.segments[25].point.x += ((front_shoulder_diff*44)/100);
-  
+
   mid_area_path.segments[26].point.x += ((front_shoulder_diff*44)/100);
-  
+
   mid_area_path.segments[27].point.x += ((diff_apply*33.5)/100);
-  
-  
- 
+
+
+
     mid_area_path.segments[34].point.x -= ((front_shoulder_diff*14)/100);
     mid_area_path.segments[36].point.x += ((front_shoulder_diff*14)/100);
-    
+
     mid_area_path.segments[33].point.x -= ((front_shoulder_diff*11)/100);
     mid_area_path.segments[37].point.x += ((front_shoulder_diff*11)/100);
-    
+
     mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
-  
+
 //mid_area_path.selected = true;
 
 
     mid_area_path.scale(inc_ratio, p_user_height);
-    
+
     //One percent adjustment
     mid_area_path.scale(inc_ratio, 1.01);
-    
+
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-    
+
     mid_area_path.segments[41].point.y += 22;
     mid_area_path.segments[41].handleOut = handleOut_41;
     mid_area_path.segments[40].handleOut = handleOut_40;
@@ -585,13 +585,13 @@ if(chk_no_img_path == true){
     mid_area_path.segments[30].handleIn = handleIn_30;
 
 
-if(dv_iPhone6){    
+if(dv_iPhone6){
 //    alert("its 6....");
     mid_area_path.scale(1.174,1.174);
     mid_area_path.scale(0.952,0.952);
-    
+
     mid_area_path.scale(1.081, 1.081); /// April 6, 2016 - new setting
-    
+
 }
 
 
@@ -604,32 +604,32 @@ $("#hip_height").attr("value", mid_area_path.segments[21].point.y);
 
     $("#mask_x").attr("value", mid_area_path.position.x);
     $("#mask_y").attr("value", mid_area_path.position.y);
-    
-    
-    
-    
+
+
+
+
    }
    else{
-    
-              
+
+
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area); /// Setting pivot point before x, y setting, as it is done in registration///
 
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
-    
+
     //mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     //mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
     //mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
-    
+
     //mid_area_path.pivot = new Point(center_pos,0);
     //mid_area_path.scale(1.15,1.15);
     //mid_area_path.scale(1.15,1.15);
-    
-    
-    
+
+
+
     //alert(parseInt($('#dv_bottom_bar').attr('value')) - parseInt($('#dv_top_bar').attr('value')));
     //mid_area_path.position = new Point(140, -17 + 50 );
     //alert(p_user_height_new);
-    
+
    }
 
 
@@ -646,30 +646,30 @@ $("#hip_height").attr("value", mid_area_path.segments[21].point.y);
     /*
                 var sholder_left = mid_area_path.segments[6].point.y;
                 var sholder_right = mid_area_path.segments[62].point.y;
-                
-                
+
+
                 if(sholder_left <= sholder_right){
                     $("#measurement_shoulder_height").attr("value", sholder_left);
                 }else{
                     $("#measurement_shoulder_height").attr("value", sholder_right);
                 }
-                
-                
+
+
                 var bottom_left = mid_area_path.segments[21].point.y - 66;
                 var bottom_right = mid_area_path.segments[49].point.y - 66;
-                
-                
-                
+
+
+
                 //alert(sholder_right);
-                
+
                 if(bottom_left <= bottom_right){
                     $("#measurement_hip_height").attr("value", bottom_left);
                 }else{
                     $("#measurement_hip_height").attr("value", bottom_right);
                 }
-                
-          */      
-////////////////////////////////////////////////////////////// 
+
+          */
+//////////////////////////////////////////////////////////////
 
 trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 2000));
 trans_bg.style = {
@@ -687,7 +687,7 @@ path_com = new CompoundPath({
     //strokeWidth: 1,
     //strokeColor: '#ffcc00',
     fillColor: '#666666'
-    
+
 	//strokeColor: '#ffcc00'
 });
 
@@ -697,63 +697,63 @@ path_com = new CompoundPath({
 
 path_com.opacity = 0.85;
 
-     if(chk_no_img_path == true){      
-     
+     if(chk_no_img_path == true){
+
         export_svg_data();
         default_svg_data();
-     
-     
+
+
         //alert(path_com.children[1].pathData);
         //alert(mid_area_path.pathData);
-     
+
         //default_shape = new Layer();
-        
+
         //default_shape.activate();
-        
+
         //default_shape.sendToBack();
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
-        
+
         d_adj_path = new Path(default_adjusted_path_data);
-        
+
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
-        
+
         d_adj_path.position = new Point(def_mask_x_pos,scr_height - diff_dv);
-        
+
         //alert(d_adj_path.position + "5454");
-        
+
         //default_shape.visible = false;
-        
-        
+
+
         d_adj_path.strokeColor = 'black';
         //d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
-        
+
         //d_adj_path.position = new Point(0,0);
-        
+
         d_adj_path.opacity = 0.5;
         //d_adj_path.fillColor = "#ffcc00";
-        
+
         d_adj_path.visible = false;
-     
+
      //default_shape.remove();
-     
+
      //project.layers.push(default_shape);
-     
+
      //overall_layer.activate();
-      
+
 
     }else {
-    
-    
+
+
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         console.log(default_adjusted_path_data);
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         d_adj_path.opacity = 0.5;
-        
+
         d_adj_path.position.x = def_mask_x_pos;
         d_adj_path.visible = false;
-        
+
     }
       return path_com;
 }
@@ -782,17 +782,17 @@ rgt_leg_ref = new Path({});
 
 lft_leg_ref = new Path({});
 
- function get_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){  
-    
+ function get_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){
+
     ref_part_obj.removeSegments();
-    
+
     for(var i = int_seg_num; i < end_seg_num; i++) {
         ref_part_obj.add(obj_path_for_ref.segments[i]);
     }
-    
+
     return ref_part_obj;
-  }  
-  
+  }
+
 main_layer.activate();
 project.layers.push(main_layer);
 
@@ -801,8 +801,8 @@ extra_layer.activate();
 
 
 
-  
-  
+
+
 var curr_path_prefix = $("#hdn_serverpath").attr("value");
 
 //alert(curr_path_prefix);
@@ -984,7 +984,7 @@ but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
 
 var single_item = null;
 function hide_big_points(){
-    
+
     but_bp_head_top.position = new Point(-500, -500);
     but_bp_lft_shoulder.position = new Point(-500, -500);
     but_bp_rgt_shoulder.position = new Point(-500, -500);
@@ -1018,8 +1018,8 @@ function set_big_points(single_item){
         but_bp_inseam.position = new Point(mid_area_path.segments[34].point);
         but_bp_lft_foot.position = new Point(mid_area_path.segments[40].point);
         but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
-        
-        
+
+
     }
 }
 
@@ -1038,8 +1038,8 @@ function hide_ele_img_export(){
     scr1_but_camera_icon.opacity = 0;
     scr1_but_save_icon.opacity = 0;
     path_com.opacity = 0;
-    
-    
+
+
 but_zoom_in.position = new Point(-1000,-1000);
 but_zoom_out.position = new Point(-1000,-1000);
 but_move_left.position = new Point(-1000,-1000);
@@ -1053,15 +1053,15 @@ scr1_but_hiw_icon.position = new Point(-1000,-1000);
 scr1_but_camera_icon.position = new Point(-1000,-1000);
 scr1_but_save_icon.position = new Point(-1000,-1000);
 path_com.opacity = 0;
-    
+
     //post_img();
     //upload();
     return true;
-    
+
 }
 
 function show_loader(){
-    
+
 }
 
 //// Fix for Web Version ////
@@ -1092,58 +1092,58 @@ project.layers.push(extra_layer);
 function zoom_out_settings(){
     zoom_out_value = 1/2;
                            //main_layer.pivot = new Point(160,538);
-                           
+
                            //alert(main_layer.position);
-                           
-                           
+
+
                            //main_layer.position = mid_area_path.pivot;
-                           
-                           
-                           
+
+
+
                            main_layer.scale(zoom_out_value,zoom_out_value);
-                           
+
                            main_layer.position.x = main_layer.position.x - change_x_pos_diff/2;
                            main_layer.position.y = main_layer.position.y - change_y_pos_diff/2;
                            //def_path.position.x += change_x_pos_diff/2;
                            //user_image.position.x += change_x_pos_diff/2;
-                           
+
                            console.log(change_x_pos_diff/2);
-                           
-                           
+
+
                            mid_area_path.selected = false;
                            curr_view = "normal";
-                           hitOptions.fill = false; 
-                           
-                           
+                           hitOptions.fill = false;
+
+
                            change_x_pos_diff = 0;
                            change_y_pos_diff = 0;
-                           
+
                            but_zoom_in.position.x = 26;
                            but_zoom_out.position.x = -500;
-                            
+
 //                            curr_view = "normal";
 //                            hitOptions.fill = true;
-//                            
+//
 //                            main_path.scale(zoom_out_value,zoom_out_value);
 //                            mid_area_path.selected = true;
 //                            trans_bg.scale(zoom_out_value,zoom_out_value);
 //                            def_path.scale(zoom_out_value,zoom_out_value);
 //                            user_image.scale(zoom_out_value,zoom_out_value);
 //                            user_image.position.y -= 66;
-//                            
+//
 //                            main_path.position.x = x_pos_main_path;
 //                            trans_bg.position.x = x_pos_trans_bg;
 //                            def_path.position.x = x_pos_def_path;
 //                            user_image.position.x = x_pos_user_image;
-//                            
+//
 //                            main_path.position.y = y_pos_main_path;
 //                            trans_bg.position.y = y_pos_trans_bg;
 //                            def_path.position.y = y_pos_def_path;
 //                            user_image.position.y = y_pos_user_image;
-//                            
+//
 //                            but_zoom_in.position.x = 26;
 //                            but_zoom_out.position.x = -500;
-                            
+
                             set_big_points();
 }
 
@@ -1162,107 +1162,107 @@ ijazat = "yes";
 var segment;
 var movePath = false;
 function onMouseDown(event) {
-    
+
 	segment = path = null;
 	var hitResult = project.hitTest(event.point, hitOptions);
-        
+
 	if (!hitResult)
 		return;
 
 	if (event.modifiers.shift) {
 		if (hitResult.type == 'segment') {
 			//hitResult.segment.remove();
-			
+
 		};
 		return;
 	}
-        
+
         if (hitResult.type == 'segment') {
             if(curr_view == "normal"){
                 console.log("Normal hay bhai");
 		return false;
             }
 	};
-        
+
         if(hitResult.item == user_image){
-            
+
         }
-       
-        
-        
+
+
+
 	if (hitResult && hitResult.item != user_image) {
                 var ratio_zoom_value = 1/3;
 		path = hitResult.item;
-                
+
 		if (hitResult.type == 'segment') {
 			segment = hitResult.segment;
 		} else if (hitResult.type == 'pixel') {
 			//segment = null;
                         if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
-                           
-                           
+
+
                            main_layer.pivot = new Point(scr_width,scr_height - diff_dv);
                            //pos_main_layer = main_layer.position;
                            //alert(main_layer.position);
-                           
+
                            main_layer.scale(2,2);
                            mid_area_path.selected = true;
                            curr_view = "zoomed";
-                           //hitOptions.fill = true; 
-                           
+                           //hitOptions.fill = true;
+
                            but_zoom_in.position.x = -500;
                            but_zoom_out.position.x = 26;
-                           
+
                            scr1_but_hiw_icon.visible = false;
                            scr1_but_camera_icon.visible = false;
-                           
+
                            hand_cursor_icon.visible = true;
-                           
+
                            hide_big_points();
-                           
-                           
-                            
+
+
+
                         } if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
                            scr1_but_hiw_icon.visible = true;
                            scr1_but_camera_icon.visible = true;
-                           
+
                            hand_cursor_icon.visible = false;
                            edit_shape_icon.visible = false;
                            zoom_out_settings();
                         }
-                        
+
                           if(curr_view == "zoomed" && hitResult.item == hand_cursor_icon){
                               hand_cursor_icon.visible = false;
                               edit_shape_icon.visible = true;
-                              
+
                               hand_cursor = true;
                               hitOptions.segments = false;
-                              
+
                           }
                           if(curr_view == "zoomed" && hitResult.item == edit_shape_icon){
                               edit_shape_icon.visible = false;
                               hand_cursor_icon.visible = true;
-                              
+
                               hand_cursor = false;
                               hitOptions.segments = true;
                           }
-                        
+
                          if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
-                            
+
                             if(curr_view == "zoomed"){
                                 image_actions_count.move_left_right -= 0.5;
                                 //x_pos_user_image -= ratio_zoom_value;
                             }else{
                                 image_actions_count.move_left_right -= 1;
                             }
-                            
+
                         }
                          if(hitResult.item == but_back_top){
-                               window.location.href = "scr1_but_back_top";                
+                               window.location.href = "scr1_but_back_top";
                         }
                          if(hitResult.item == scr1_but_reset){
-                            //window.location.reload();                
+                            //window.location.reload();
                             //reset_mask();
                             if (confirm('Are you sure you want to start over?')) {
                                 window.location.href = "scr1_but_reset";
@@ -1272,9 +1272,9 @@ function onMouseDown(event) {
                         }
                          if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
-                            
-                            
-                            
+
+
+
                             if(curr_view == "zoomed"){
                                 image_actions_count.move_left_right += 0.5;
                                 //x_pos_user_image += ratio_zoom_value;
@@ -1284,9 +1284,9 @@ function onMouseDown(event) {
                         }
                          if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
-                            
-                            
-                            
+
+
+
                             if(curr_view == "zoomed"){
                                 image_actions_count.move_up_down -= 0.5;
                                 //y_pos_user_image -= ratio_zoom_value;
@@ -1296,45 +1296,45 @@ function onMouseDown(event) {
                         }
                          if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
-                            
-                            
-                            
+
+
+
                             if(curr_view == "zoomed"){
                                 image_actions_count.move_up_down += 0.5;
                                 //y_pos_user_image += ratio_zoom_value;
                             }else{
                                 image_actions_count.move_up_down += 1;
                             }
-                            
+
                         }
                          if(hitResult.item == but_rotate_left){
                             user_image.rotate(-0.1);
-                            
+
                             image_actions_count.img_rotate += -0.1;
-                            
+
                         }
                          if(hitResult.item == but_rotate_right){
                             user_image.rotate(0.1);
-                            
+
                             image_actions_count.img_rotate += 0.1;
-                            
+
                         }
                          if(curr_crop == "normal" && hitResult.item == but_crop_icon){
                             curr_crop = "checked";
                             path_com.fillColor = "#fff";
                             path_com.opacity = 1;
-                            
+
                             but_crop_icon_active.visible = true;
                             but_crop_icon.visible = false;
-                            
+
                         }else if(curr_crop == "checked" && hitResult.item == but_crop_icon_active){
                             curr_crop = "normal";
                             path_com.fillColor = "#666";
                             path_com.opacity = 0.6;
-                            
+
                             but_crop_icon_active.visible = false;
                             but_crop_icon.visible = true;
-                            
+
                         } if(curr_crop == "normal" && hitResult.item == but_bp_head_top){
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -1343,7 +1343,7 @@ function onMouseDown(event) {
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 62;
-                            
+
                             console.log("but_bp_lft_shoulder");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_shoulder){
                             big_point = true;
@@ -1351,185 +1351,185 @@ function onMouseDown(event) {
                             curr_big_seg = 6;
                             console.log("but_bp_rgt_shoulder");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_lft_arm_pit){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 53;
-                            
+
                             curr_range_1 = but_bp_lft_arm_pit;
                             curr_range_2 = but_bp_lft_waist;
                             big_move_adj = [52, 54];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_lft_arm_pit");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 15;
-                            
+
                             curr_range_1 = but_bp_rgt_arm_pit;
                             curr_range_2 = but_bp_rgt_waist;
                             big_move_adj = [16, 14];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_rgt_arm_pit");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 51;
-                            
+
                             curr_range_1 = but_bp_lft_waist;
                             curr_range_2 = but_bp_lft_hip;
                             big_move_adj = [50,49];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_lft_waist");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 17;
-                            
+
                             curr_range_1 = but_bp_rgt_waist;
                             curr_range_2 = but_bp_rgt_hip;
                             big_move_adj = [18,19];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_rgt_waist");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 48;
-                            
+
                             curr_range_1 = but_bp_lft_hip;
                             curr_range_2 = but_bp_lft_foot;
                             //big_move_adj = [47,46,45,44,43,37,36,35];
                             big_move_adj = [47];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_lft_hip");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 20;
-                            
+
                             curr_range_1 = but_bp_rgt_hip;
                             curr_range_2 = but_bp_rgt_foot;
                             //big_move_adj = [21,22,23,24,25,31,32,33];
                             big_move_adj = [21];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_rgt_hip");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
-                            
+
                             //ijazat = "no";
-                            
+
                             get_path_seg(rgt_arm_ref, mid_area_path, 7, 15);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 10;
                             console.log("but_bp_rgt_hand");
-                            
-                             
-                            
+
+
+
                         } if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
-                            
+
                             //ijazat = "no";
-                            
+
                             get_path_seg(lft_arm_ref, mid_area_path, 54, 62);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 58;
                             console.log("but_bp_lft_hand");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
-                            
+
                             //ijazat = "no";
-                            
+
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 34;
-                            
+
                             curr_range_1 = but_bp_inseam;
                             curr_range_2 = but_bp_rgt_foot;
                             big_move_adj = [21,22,23,24,25,31,32,33,47,46,45,44,43,37,36,35];
                             get_ele_pos();
-                            
+
                             console.log("but_bp_inseam");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
-                            
+
                             //ijazat = "no";
-                            
+
                             get_path_seg(lft_leg_ref, mid_area_path, 35, 48);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 40;
                             console.log("but_bp_lft_foot");
                         } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
-                            
+
                             //ijazat = "no";
-                            
+
                             get_path_seg(rgt_leg_ref, mid_area_path, 21, 34);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 28;
                             console.log("but_bp_rgt_foot");
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_hiw_icon){
-                            
+
                             if (confirm('Are you sure you want to start over?')) {
                                 window.location.href = "scr1_but_how_it_works";
                             } else {
                                 // Do nothing!
                             }
-                            
-                            
+
+
                             //$("#scr1_but_how_it_works").trigger( "click" );
                             //alert("How It Works Button Tap");
                             //console.log("scr1_but_hiw_icon");
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
-                            
+
                             if (confirm('Are you sure you want to start over?')) {
                                 // Fix for Web version // window.location.href = "scr1_but_camera_options";
                             } else {
                                 // Do nothing!
                             }
-                            
+
                             //$("#scr1_but_camera_options").trigger();
-                            
+
                             //$("#scr1_but_camera_options").live('click', function() { alert("That tickles!") });
                             //$("#scr1_but_camera_options").live('click');
-                            
+
                             //alert(window.location.href);
-                            
+
                             //$("#scr1_but_camera_options").trigger( "click" );
-                            
+
                             //alert("Camera Button Tap");
                             console.log("scr1_but_camera_icon");
                         } if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             //project.layers.push(overall_layer);
                             //overall_layer.activate();
-                            
+
                             if(curr_view == "zoomed"){
                                 zoom_out_settings();
-                                
+
                                 $("#page_wrap").fadeIn(160);
                             //overall_layer.visible = false;
-                            
+
                             main_layer.visible = false;
                             extra_layer.visible = false;
                             hide_big_points();
@@ -1537,15 +1537,15 @@ function onMouseDown(event) {
                             image_export_layer.activate();
                             image_export_layer.addChild(user_image);
                             //to_image();
-                                
+
                                 //show_loader();
                             $("#img_path_json").attr("value", getPathArrayJson());
-                            
+
                                 setTimeout(function(){ to_image(); }, 500);
                             }else{
-                            
+
                             $("#img_path_json").attr("value", getPathArrayJson());
-                            
+
                             $("#page_wrap").fadeIn(160);
                             //overall_layer.visible = false;
                             //alert("asdf");
@@ -1556,56 +1556,56 @@ function onMouseDown(event) {
                             image_export_layer.activate();
                             image_export_layer.addChild(user_image);
                             //to_image();
-                                
+
                                 //show_loader();
 
-                                setTimeout(function(){ to_image(); }, 500);                 
+                                setTimeout(function(){ to_image(); }, 500);
                                 //$("#me_button").trigger( "click" );
                             //alert("Browser Support: " + supportsToDataURL());
-                            
+
                             //
                             //
                             //
                             //alert("Save Button Tap");
                             //$("#scr1_but_save_mask").trigger( "click" );
-                            
-                            
+
+
                             console.log("scr1_but_save_icon");
-                            
+
                           }
                         }
-                        
+
 		}
 	}
 	//movePath = hitResult.type == 'fill';
 	//if (movePath)
 		//project.activeLayer.addChild(hitResult.item);
-       //project.activeLayer.addChild(main_path);           
-       
+       //project.activeLayer.addChild(main_path);
+
        if(hitResult.item == main_path){
               console.log("Its me lala");
-          }         
-       
+          }
+
          if(curr_view == "zoomed"){
        mid_area_path.selected = true;
-   }       
-                
+   }
+
 }
 
 
 
 function onMouseUp(event){
-    
+
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
-            
-             
-            
+
+
+
             $("#mask_x").attr("value", mid_area_path.position.x);
             $("#mask_y").attr("value", mid_area_path.position.y);
-    
-   export_svg_data(); 
+
+   export_svg_data();
    top_btm_markers_pos();
-    
+
     if(big_point == true){
         default_svg_data();
         //alert(mid_area_path.position.x);
@@ -1616,82 +1616,82 @@ function onMouseUp(event){
     curr_big_seg = null;
   if (segment) {
         //$("#img_path_json").attr("value", getPathArrayJson());
-        
-    }   
-    
-    
+
+    }
+
+
     /*-------------------------- Mask Index settings ------------------------------
-    
+
     var sg_shoulder_rgt = mid_area_path.segments[6];
     var sg_shoulder_lft = mid_area_path.segments[62];
-    
+
     var sg_chest_rgt = mid_area_path.segments[16];
     var sg_chest_lft = mid_area_path.segments[52];
-    
+
     var sg_bust_rgt = mid_area_path.segments[16];
     var sg_bust_lft = mid_area_path.segments[52];
-    
+
     var sg_waist_rgt = mid_area_path.segments[17];
     var sg_waist_lft = mid_area_path.segments[51];
-    
+
     var sg_hip_rgt = mid_area_path.segments[20];
     var sg_hip_lft = mid_area_path.segments[48];
-    
+
     var sg_inseam = mid_area_path.segments[34];
-    
+
     var sg_rgt_thigh_outer = mid_area_path.segments[21];
     var sg_rgt_thigh_inner = mid_area_path.segments[33];
-    
+
     var sg_lft_thigh_inner = mid_area_path.segments[35];
     var sg_lft_thigh_outer = mid_area_path.segments[47];
-    
+
     var sg_rgt_bicep_outer = mid_area_path.segments[7];
     var sg_rgt_bicep_inner = mid_area_path.segments[14];
-    
-    
-    
-    
+
+
+
+
     //mid_area_path.segments[4].point.x = 200;
    // mid_area_path.segments[64].point.x = 200;
-   
+
    //alert(rgt_arm_ref);
-   
-   
+
+
    */
-   
+
    if(curr_view == "zoomed"){
        mid_area_path.selected = true;
    }
-   
-   
+
+
 }
 function getPathArrayJson(){
     var mp_array=[];
     for(var i = 0; i < mid_area_path.segments.length; i++) {
-        mp_array.push([mid_area_path.segments[i].point.x * 2, mid_area_path.segments[i].point.y * 2]);            
-        
+        mp_array.push([mid_area_path.segments[i].point.x * 2, mid_area_path.segments[i].point.y * 2]);
+
         console.log(mid_area_path.segments[i].point.x * 2 + " ::: "+mid_area_path.segments[i].point.y * 2);
     };
-    
+
     return JSON.stringify(mp_array);
 }
 
 
 main_path = mid_area_path;
-            
-        
+
+
           //main_path = path;
-            
+
             def_path = d_adj_path;
 
 
 function set_pivot(curr_item,point_to_set, point_x, point_y){
     if(point_to_set != null){
-        
+
         console.log(point_to_set);
-        
+
         curr_item.pivot = new Point(point_to_set);
-        
+
     }else{
         console.log(point_x +"====="+point_y);
         curr_item.pivot = new Point(point_x,point_y);
@@ -1704,17 +1704,17 @@ curr_range_1 = curr_range_2 = null;
 curr_ele_pos_per = false;
 mid_move_adj_per = [];
 function get_ele_pos(){
-    
+
     total_range = curr_range_2.position.y - curr_range_1.position.y;
-    
+
     for(var i = 0; i < big_move_adj.length; i++) {
-        
+
         curr_ele_pos = main_path.segments[big_move_adj[i]].point.y - curr_range_1.position.y;
         curr_ele_pos_per = curr_ele_pos * 100 / total_range;
         mid_move_adj_per[i] = curr_ele_pos_per;
-        
+
     }
-    
+
 }
 
 function set_ele_pos_per(){
@@ -1748,97 +1748,97 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
     curr_pos_rotate = main_path.segments[curr_big_seg].point.x;
             //var rotate_min = 240;rotate_min
             //var rotate_max = 280;
-            
+
             final_rotate_value = rotate_max - curr_pos_rotate;
-            
+
             //console.log(final_rotate_value);
-            
+
             if(event.delta.x > 0){
                final_rotate_value = final_rotate_value + event.delta.x;
             }
             if(event.delta.x < 0){
                final_rotate_value = final_rotate_value - event.delta.x;
             }
-            
+
             if(final_rotate_value > 0 && final_rotate_value < 40){
-                
-               if(event.delta.x > 0){ 
-                   
+
+               if(event.delta.x > 0){
+
                 //px_value_final = event.delta.x/0.4;
                 //deg_val = px_value_final * 0.14;
-                   
+
                    //console.log("IS: "+deg_val);
                 //set_ref_part_obj.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
-                
+
                 //one_per = final_rotate_value / 100;
-                
-                
-                
+
+
+
                 //final_deg_val = deg_val / 100;
                 //console.log(final_deg_val);
-                
+
                 set_ref_part_obj.rotate(-0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    
+
                     //alert(mid_area_path.segments[seg_srt+i].point.x +" : " + def_path.segments[seg_srt+i].point.x);
-                    
+
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                     mid_area_path.segments[seg_srt+i].handleIn = set_ref_part_obj.segments[i].handleIn;
                     mid_area_path.segments[seg_srt+i].handleOut = set_ref_part_obj.segments[i].handleOut;
-                    
+
                     //def_path.segments[seg_srt+i].point.x = mid_area_path.segments[seg_srt+i].point.x - 1000;
                     //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
-                    
-                    
+
+
                     //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
-                
+
                }else {
-                   
+
                 //px_value_final = event.delta.x/0.4;
                 //deg_val = 0.14 * px_value_final;
-                
+
                 //console.log(deg_val);
-                
+
                 set_ref_part_obj.rotate(0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    
+
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                     mid_area_path.segments[seg_srt+i].handleIn = set_ref_part_obj.segments[i].handleIn;
                     mid_area_path.segments[seg_srt+i].handleOut = set_ref_part_obj.segments[i].handleOut;
                     //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
                     //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
-                    
-                    
-                    
+
+
+
                     //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                }
             }else if(final_rotate_value > 40){
                 set_ref_part_obj.rotate(-0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    
+
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                     //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
                     //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
-                   
-                   
-                   
+
+
+
                    // mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
-                                
+
             }else if(final_rotate_value < 0){
                 set_ref_part_obj.rotate(0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    
+
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                     //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
                     //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
-                    
-                    
+
+
                     //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
- 
+
             }
 }
 
@@ -1846,8 +1846,8 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
 
             //set_path_seg(set_ref_part_obj, rotate_min, rotate_max, seg_srt, seg_end, pivot_x, pivot_y, main_obj_seg_srt, main_obj_seg_end);
             //set_path_seg(set_ref_part_obj, pivot_x, pivot_y, rotate_min, rotate_max, seg_srt, seg_end, main_obj_seg_srt, main_obj_seg_end);
-            
-            
+
+
 
 
 
@@ -1872,32 +1872,32 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
 
 
 function onMouseDrag(event) {
-    
+
     if(curr_view == "zoomed"){
        mid_area_path.selected = true;
    }
-    
-    
-    
+
+
+
     console.log(rgt_arm_ref);
-    
-        if(big_point_ele == but_bp_head_top){       
+
+        if(big_point_ele == but_bp_head_top){
             //big_point_ele.position.y += event.delta.y;
             //set_pivot(main_path, main_path.segments[28].point , 50, 50);
-            
+
             //main_path.scale(1, 0.6);
         }else if(big_point_ele){
-            
+
               //alert(mid_area_path.segments[40].point.x - mid_area_path.segments[34].point.x); // 24px
-              
-            
+
+
             if(big_point_ele == but_bp_lft_hand){
                            //event, set_ref_part_obj, pivot_x                      , pivot_y                                                                                                           , rotate_min                             , rotate_max, seg_srt, seg_end, main_obj_seg_srt, main_obj_seg_end
               //set_path_seg(event, lft_arm_ref, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2), mid_area_path.segments[48].point.x + 10, mid_area_path.segments[48].point.x + 50, 54, 62, 53, 63);
               set_path_seg(event, lft_arm_ref, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2), mid_area_path.segments[48].point.x + 10, mid_area_path.segments[48].point.x + 50, 54, 62, 53, 63);
                but_bp_lft_hand.position = mid_area_path.segments[curr_big_seg].point;
-               
-               
+
+
             }else if(big_point_ele == but_bp_rgt_hand){
                 set_path_seg(event, rgt_arm_ref, mid_area_path.segments[6].point.x, mid_area_path.segments[6].point.y + ((mid_area_path.segments[16].point.y - mid_area_path.segments[6].point.y)/2), mid_area_path.segments[20].point.x - 50, mid_area_path.segments[20].point.x - 10, 7, 15, 7, 16);
                 but_bp_rgt_hand.position = mid_area_path.segments[curr_big_seg].point;
@@ -1910,11 +1910,11 @@ function onMouseDrag(event) {
                 but_bp_rgt_foot.position = mid_area_path.segments[curr_big_seg].point;
                 console.log("asf");
             }else if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
-                
+
                 main_path.segments[curr_big_seg].point += event.delta;
                 def_path.segments[curr_big_seg].point += event.delta;
                 big_point_ele.position = main_path.segments[curr_big_seg].point;
-                
+
                 set_ele_pos_per();
                 if(big_point_ele == but_bp_inseam){
                     main_path.segments[20].point.y += event.delta.y;
@@ -1925,14 +1925,14 @@ function onMouseDrag(event) {
                     but_bp_lft_hip.position.y += event.delta.y;
                 }
             }
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
         }else if(segment) {
-        
+
         function get_index_num(){
             for(var i = 0; i < path.segments.length + 1; i++) {
                 if(segment == path.segments[i]){
@@ -1942,21 +1942,21 @@ function onMouseDrag(event) {
         }
         curr_dragged_seg = get_index_num();
         //alert(curr_dragged_seg);
-        
-        
-        
+
+
+
         var def_segment = def_path.segments[curr_dragged_seg].point.x;
-        
-        
-        
+
+
+
         //def_segment = def_segment + def_path_diff + center_pos;
         def_segment = def_segment + def_path_diff;
         //alert(def_segment);
-        
+
         //var def_segment = 200;
             var px_range = 70;
             var active_segment = segment.point.x;
-            
+
             if(active_segment > (def_segment + px_range)){
                     path.segments[curr_dragged_seg].point.x = def_segment + px_range;
                }else{
@@ -1966,16 +1966,16 @@ function onMouseDrag(event) {
                     segment.point += event.delta;
                    }
                }
-               
+
         var active_segment_y = path.segments[curr_dragged_seg].point.y;
-        
-        
+
+
             if(curr_dragged_seg == 68 || curr_dragged_seg == 67 || curr_dragged_seg == 66 || curr_dragged_seg == 65 || curr_dragged_seg == 64 || curr_dragged_seg == 63 || curr_dragged_seg == 61 || curr_dragged_seg == 60 || curr_dragged_seg == 52 || curr_dragged_seg == 51 || curr_dragged_seg == 50 || curr_dragged_seg == 49 || curr_dragged_seg == 48 || curr_dragged_seg == 47 || curr_dragged_seg == 46 || curr_dragged_seg == 45 || curr_dragged_seg == 44 || curr_dragged_seg == 43 || curr_dragged_seg == 42 || curr_dragged_seg == 33 || curr_dragged_seg == 32 || curr_dragged_seg == 31 || curr_dragged_seg == 30 || curr_dragged_seg == 14 || curr_dragged_seg == 13 ){
-                    
+
                     var active_segment_top = path.segments[curr_dragged_seg - 1].point.y - 5;
                     var active_segment_bottom = path.segments[curr_dragged_seg + 1].point.y + 5;
-            
-            
+
+
                     if(active_segment_y >= active_segment_top){
                             path.segments[curr_dragged_seg].point.y = active_segment_top;
                     }else{
@@ -1986,11 +1986,11 @@ function onMouseDrag(event) {
                     }
                     console.log("Not me! " + curr_dragged_seg);
                }else{
-               
+
                         var active_segment_top = path.segments[curr_dragged_seg - 1].point.y + 5;
                         var active_segment_bottom = path.segments[curr_dragged_seg + 1].point.y - 5;
-                        
-                        
+
+
                         if(curr_dragged_seg == 54 || curr_dragged_seg == 55 || curr_dragged_seg == 38 || curr_dragged_seg == 37 || curr_dragged_seg == 36 || curr_dragged_seg == 35 || curr_dragged_seg == 26 || curr_dragged_seg == 25 || curr_dragged_seg == 24 || curr_dragged_seg == 23 || curr_dragged_seg == 22 || curr_dragged_seg == 21 || curr_dragged_seg == 20 || curr_dragged_seg == 19 || curr_dragged_seg == 18 || curr_dragged_seg == 17 || curr_dragged_seg == 16 || curr_dragged_seg == 8 || curr_dragged_seg == 7 || curr_dragged_seg == 4 || curr_dragged_seg == 3 || curr_dragged_seg == 2 || curr_dragged_seg == 1){
 
                                 if(active_segment_y <= active_segment_top){
@@ -2003,13 +2003,13 @@ function onMouseDrag(event) {
                                 }
 
                         }else{
-                        
+
                                     var def_segment = def_path.segments[curr_dragged_seg].point.y;
                                     //def_segment = def_segment + 500 + center_pos;
                                     var px_range = 20;
                                     var active_segment = segment.point.y;
-            
-            
+
+
                                 if(active_segment > (def_segment + px_range)){
                                         path.segments[curr_dragged_seg].point.y = def_segment + px_range;
                                 }else{
@@ -2021,34 +2021,34 @@ function onMouseDrag(event) {
                                     }
                                 }
                         }
-                        
-                        
+
+
                 console.log("Not me! " + curr_dragged_seg);
                }
-               
-        
-        
-       
-       
-        
-       
-       
-       
-            
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		//path.smooth();
-		
-		
-		
+
+
+
 		console.log("Me Hit!");
-                
+
            //////////// - Setting Limit on canvas trag - //////////////
-                
+
 	} else if (curr_view == "zoomed" && hand_cursor == true) {
             //alert(this.type);
                 if(change_x_pos_diff + event.delta.x >= -scr_width && change_x_pos_diff + event.delta.x <= scr_width){
@@ -2059,19 +2059,19 @@ function onMouseDrag(event) {
                     main_layer.position.y += event.delta.y;
                     change_y_pos_diff += event.delta.y;
                 }
-                
-                
+
+
                 console.log(change_x_pos_diff);
                 //console.log(main_layer.position.x);
                 //console.log(mid_area_path.segments[0].point.x);
-                
+
 		//path_com.position += event.delta;
 		//def_path.position += event.delta;
                 //user_image.position += event.delta;
 	}
-	
 
-	
+
+
 }
 //var rectangle = new Rectangle(new Point(20, 20), new Size(60, 60));
 //var cornerSize = new Size(10, 10);
@@ -2086,9 +2086,9 @@ function onMouseDrag(event) {
 function upload(){
 
 if(old_account_img){
-    $('#image_actions').attr('value',"");    
+    $('#image_actions').attr('value',"");
 }else{
-    $('#image_actions').attr('value',JSON.stringify(image_actions_count));    
+    $('#image_actions').attr('value',JSON.stringify(image_actions_count));
 }
 
 var $url=$('#marker_update_url').attr('value');
@@ -2113,17 +2113,17 @@ image_actions:$('#image_actions').attr('value')};
  $.ajax({
         type: "POST",
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
-        data: value_ar,  
+        data: value_ar,
        success: function(data){//alert(data);
            post_img();
 //           alert("1");
 //           //post_img();
-//            var entity_id = document.getElementById('hdn_entity_id').value;    
-//            var img_update_url = document.getElementById('hdn_image_update_url').value;        
+//            var entity_id = document.getElementById('hdn_entity_id').value;
+//            var img_update_url = document.getElementById('hdn_image_update_url').value;
 //            var canv_data = document.getElementById('canv_mask').toDataURL();
-//           
+//
 //           img_update_url = "http://192.168.0.209" + img_update_url;
-//           
+//
 //            alert(img_update_url);
 //            $.post(img_update_url,
 //            {
@@ -2133,28 +2133,28 @@ image_actions:$('#image_actions').attr('value')};
 //            function(id,imageData){
 //                alert("ID: " + id + "\nImage Data: " + imageData);
 //            });
-            
-            
+
+
 //            $.ajax({
 //                        type: "POST",
 //                        url: img_update_url,
 //                        id: entity_id,
-//                        imageData: canv_data,  
+//                        imageData: canv_data,
 //                    success: function(data){//alert(data);
 //
 //                            alert("2");
 //                        //setTimeout(go_to_index,'500');
-//                    console.log(data);    
+//                    console.log(data);
 //                    },
 //                        failure: function(errMsg) {
 //                            //setTimeout(go_to_index,'500');
 //                            alert(errMsg);
 //                        }
 //                });
-           
-           
+
+
            //setTimeout(go_to_index,'500');
-     console.log(data);    
+     console.log(data);
     },
         failure: function(errMsg) {
             //setTimeout(go_to_index,'500');
@@ -2174,42 +2174,56 @@ image_actions:$('#image_actions').attr('value')};
 function post_img(){
 
 
-    
+
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;
     var img_update_url = document.getElementById('hdn_image_update_url').value;
     var canv_data = $("#text_area").val();
     var archive_id = $('#hdn_archive_id').attr('value');
-    
+
               $.post(img_update_url, {
                       imageData : canv_data,
                       archive_id : archive_id,
                       env: 'admin'
               }, function(canv_data) {
               var obj_url = jQuery.parseJSON( canv_data );
-               
+
              // console.log("i am checked bhai");
-                
-                      
+
+
                       if(obj_url.status == "check"){
- 
+
                          alert("All Done! - Reloading...");
-                         window.location.reload();
+
+												 var curr_url = window.location + '';
+
+												 curr_url_array = curr_url.split('/');
+												 if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
+													 curr_url = curr_url.split('/refresh')[0];
+													 window.location.assign(curr_url)
+												 }else{
+												 	window.location.reload();
+											   }
+
+												 //alert(curr_url);
+
+
+                         //window.location.reload();
                       }
-              });  
-  		
+              });
+
 }
 function to_image(){
-         
+
  		  var canvas = document.getElementById("canv_mask");
                   //alert(canvas.toDataURL());
                   var chikki = canvas.toDataURL();
                   //alert(  chikki.replace(/^data:image\/(png|jpg);base64,/, ""));
                   $("#text_area").val(chikki);
-                  
+
                   ///alert($("#text_area").val());
                   //setTimeout(function(){ alert(chikki); }, 3000);
-                  
+
   		  document.getElementById("updated_img").src = $("#text_area").val();
                   //var chichi = document.getElementById("theimage");
                     //var pichi = chichi;
