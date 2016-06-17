@@ -176,6 +176,7 @@ ws_selfieshare_create:
    title: selfieshare_create
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091     
+     message_type: sms
      device_type: iphone6
      friend_name: mycroft 
      friend_email: mc@ss.com 

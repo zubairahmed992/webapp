@@ -194,9 +194,9 @@ class WSUserController extends Controller {
  #~~~~~~~~~~~~~~~~~~~~~~ ws_selfieshare_create	/ws/selfieshare/create
  
     
-     public function selfieshareCreateAction(){
-      $ra=$this->process_request();
-      #return new Response(json_encode($ra));
+ public function selfieshareCreateAction() {
+        $ra = $this->process_request();
+        #return new Response(json_encode($ra));
         if (!array_key_exists('auth_token', $ra)) {
             return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
         }
@@ -204,16 +204,22 @@ class WSUserController extends Controller {
         $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
 
         if (count($user) > 0) {
-            $ss=$this->get('user.selfieshare.helper')->createWithParam($ra, $user);      
-            $ss_ar['to_email']=$ss->getFriendEmail();
-            $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare_friend.html.twig';
-            $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$ss, 'link_type'=>'edit');
-            $ss_ar['subject']='SelfieStyler friend share';
-            $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
-            return  new Response($this->get('webservice.helper')->response_array(true, 'selfieshare created'));
+            $ss = $this->get('user.selfieshare.helper')->createWithParam($ra, $user);
+            if (array_key_exists('message_type', $ra) && $ra['message_type'] == 'sms') {
+                $baseurl = $this->getRequest()->getHost();
+                return new Response($baseurl . "/" . $this->generateUrl('selfieshare_feedback_edit', array('ref' => $ss->getRef())));
+            } else {
+
+                $ss_ar['to_email'] = $ss->getFriendEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/selfieshare_friend.html.twig';
+                $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'SelfieStyler friend share';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+                return new Response($this->get('webservice.helper')->response_array(true, 'selfieshare created'));
+            }
         } else {
-            return  new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
         }
- }
+    }
 }
 
