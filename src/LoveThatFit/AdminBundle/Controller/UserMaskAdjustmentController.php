@@ -74,7 +74,12 @@ class UserMaskAdjustmentController extends Controller {
 	$this->get('session')->setFlash('success', 'Status has been Reverted');
 	return $this->redirect($this->generateUrl('admin_pending_user'));
   }
-
+    //----------------Pending User status discard Status icon --------------------------------------------------------------------------
+    public function discardStatusAction($user_id) {
+        $archive = $this->get('user.helper.userarchives')->discardStatus($user_id);
+        $this->get('session')->setFlash('success', 'Archive has been discarded');
+        return $this->redirect($this->generateUrl('admin_pending_user'));
+    }
   //----------------------------------------------------------------------------------------
 
     public function showAction($archive_id, $mode=null) {
@@ -144,11 +149,11 @@ class UserMaskAdjustmentController extends Controller {
     }
     #------------------------admin_archive_to_live:  /admin/archive_to_live/{archive_id}----------------------------------------------------    
 
-    public function archiveToLiveAction($archive_id) {          
-        $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrent($archive_id); 
+    public function archiveToLiveAction($archive_id) {
+        $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrent($archive_id);
         $user=$this->container->get('user.helper.user')->find($archive->getUser()->getId());                  
         
-        $decoded  = $this->process_request();                              
+        $decoded  = $this->process_request();
         $decoded['auth_token']=$user->getAuthToken();
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
         $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);

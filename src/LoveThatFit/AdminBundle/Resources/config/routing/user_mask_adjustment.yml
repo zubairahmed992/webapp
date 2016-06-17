@@ -20,8 +20,11 @@ admin_pending_user:
 admin_update_status:
     pattern:  /admin/pending_user/{user_id}/update_status
     defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:updateStatus }
-    
-    
+
+admin_discard_status:
+    pattern:  /admin/pending_user/{user_id}/delete_status
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:discardStatus }
+
 admin_archive_save_marker:
     pattern:   /admin/archive/save_marker
     defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:archiveSaveMarker}

@@ -6,26 +6,26 @@
 
 
 {% block body %}
-  
-<div class="p_listing">     
+
+<div class="p_listing">
     <h1>Pending Users</h1>
-    
- 
-    
+
+
+
     <div class="btn_wrapper2">
-     
+
      <div id="chart_figures" class="brand_chart_figures">
          <div class="facts">
                     <div><span>Total Users:</span>{{rec_count}}</div>
      </div>
      </div>
-    
-   
+
+
       </div>
-    
-     <div class="clearfix"></div> 
-     
-    <div class="bs-docs-grid">              
+
+     <div class="clearfix"></div>
+
+    <div class="bs-docs-grid">
 
         <div class="row-fluid">
             <div class="span1 hds"><a href="{{  path('admin_order')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
@@ -33,9 +33,9 @@
 	      <div class="span3 hds">Status</div>
 	      <div class="span1 hds">Created Date</div>
 	        <div class="span3_2 hds">Actions</div>
- 
-            
-        </div>  
+
+
+        </div>
 
           {% for b in user %}
 
@@ -54,10 +54,11 @@
             </div>
 	    <div class="span1">{{b.CreatedAt|date('d-m-Y')}}</div>
 	    <div class="span3_2">
-            <div>                    
+            <div>
                     <a href="{{ path('admin_pending_user_show', {'archive_id': b.id}) }}" title="Show Mass Marker"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('admin_update_status', {'user_id': b.user.id}) }}" title="Revert Status"><i class="icon-undo" style="background-position: -215px -24px"></i></a>
-                </div> 
+                <a href="{{ path('admin_discard_status', {'user_id': b.user.id}) }}" title="Delete Archive"><i class="icon-delete" style="background-position: -215px -24px"></i></a>
+                </div>
             </div>
         </div>
 
@@ -70,7 +71,7 @@
  {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
   with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
 ,'controller_name':'admin_pending_user','sort':sort}
-        %}  
+        %}
 </div>
 
 
