@@ -45,7 +45,15 @@ class SelfieShareController extends Controller {
     public function submitFeedbackAction() {
         $ra=$this->getRequest()->request->all();
         $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ra["ref"]);
+        $user=$this->container->get('user.helper.user')->find($selfieshare->getUser()->getId());
+        $push_notification = array();
+        $baseurl = $this->getRequest()->getHost();
+        $url = $baseurl . $this->generateUrl('selfieshare_feedback_review', array('ref' => $ra["ref"]));
+        $push_notification["url"] = $url;
+        $push_notification["notification_type"] = "friends_feedback";
+        $json_data = json_encode($push_notification);
         $this->get('user.selfiesharefeedback.helper')->createWithParam($ra,$selfieshare);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedback($user, $json_data);
         return new Response($selfieshare->getFriendName().'provided feedback updated.');
     }
     #----------------------------------------------
