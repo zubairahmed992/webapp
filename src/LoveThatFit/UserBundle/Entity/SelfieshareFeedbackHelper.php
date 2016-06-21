@@ -67,8 +67,8 @@ class SelfieshareFeedbackHelper {
          }
     }  
    #----------------------------------------------------------------------------
-     public function createWithParam($ra, $selfieshare) {        
-        $ssfb =  $this->setWithParam($ra, $this->createNew($selfieshare));        
+     public function createWithParam($ra, $selfieshare) {
+        $ssfb =  $this->setWithParam($ra, $this->createNew($selfieshare));
         $this->save($ssfb);           
     }  
     
@@ -76,12 +76,19 @@ class SelfieshareFeedbackHelper {
      private function setWithParam($ra, $ss) {
         if(array_key_exists('comments', $ra) && $ra['comments']){$ss->setComments($ra['comments']);}
         if(array_key_exists('rating', $ra) && $ra['rating']){$ss->setRating($ra['rating']);}
-        if(array_key_exists('like', $ra) && $ra['like']){$ss->setLike($ra['device_type']);}
+        if(array_key_exists('favourite', $ra)){
+            if($ra["favourite"]==1){
+                $ss->setFavourite(1);
+            }else{
+                $ss->setFavourite(0);
+            }
+            //$ss->setFavourite($ra['favourite']);
+        }
         if(array_key_exists('name', $ra) && $ra['name']){$ss->setName($ra['name']);}
         if(array_key_exists('email', $ra) && $ra['email']){$ss->setEmail($ra['email']);}
         if(array_key_exists('phone', $ra) && $ra['phone']){$ss->setPhone($ra['phone']);}
         if(array_key_exists('ref', $ra) && $ra['ref']){$ss->setRef($ra['ref']);}
-        return $ss;           
+        return $ss;
     }  
     #----------------------------------------------------------------------------
     public function save($ss) {
@@ -94,8 +101,12 @@ class SelfieshareFeedbackHelper {
        #----------------------------------------------------------------------------
     public function find($id) {
         return $this->repo->find($id);
-    } 
-    
+    }
+
+    #----------------------------
+    public function findByRef($ref) {
+        return $this->repo->findByRef(array('ref' => $ref));
+    }
     
 }
     

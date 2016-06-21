@@ -42,15 +42,15 @@ class SelfieshareFeedback  {
       /**
      * @var integer $rating
      *
-     * @ORM\Column(name="rating", type="integer")     
+     * @ORM\Column(name="rating", type="integer" , nullable=true)
      */
     private $rating;
      /**
-     * @var boolean $like
+     * @var boolean $favourite
      *
-     * @ORM\Column(name="like", type="boolean", nullable=true)
+     * @ORM\Column(name="favourite", type="boolean", nullable=true)
      */
-    private $like;
+    private $favourite;
     /**
      * @var string $name
      *
@@ -161,23 +161,23 @@ class SelfieshareFeedback  {
     #------------------------------------------------   like
 
        /**
-     * Set like
+     * Set favourite
      *
-     * @param boolean $like
+     * @param boolean $favourite
      * @return User
      */
-    public function setLike($like) {
-        $this->like = $like;
+    public function setFavourite($favourite) {
+        $this->favourite = $favourite;
         return $this;
     }
 
     /**
-     * Get like
+     * Get favourite
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getLike() {
-        return $this->like;
+    public function getFavourite() {
+        return $this->favourite;
     }
 
     

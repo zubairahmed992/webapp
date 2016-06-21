@@ -9,3 +9,15 @@ selfieshare_feedback_update:
 selfieshare_feedback_show:
     pattern:   /selfieshare/feedback_show/{ref}
     defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackShow, ref: null }    
+
+selfieshare_provide_feedback:
+    pattern:   /selfieshare/provide_feedback/{ref}
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:provideFeedback, ref: null }
+
+selfieshare_submit_feedback:
+    pattern:   /selfieshare/submit_feedback
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:submitFeedback }
+
+selfieshare_feedback_review:
+    pattern:   /selfieshare/feedback_review/{ref}
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackReview, ref: null }

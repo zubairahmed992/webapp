@@ -207,7 +207,7 @@ class WSUserController extends Controller {
             $ss = $this->get('user.selfieshare.helper')->createWithParam($ra, $user);
             if (array_key_exists('message_type', $ra) && $ra['message_type'] == 'sms') {
                 $baseurl = $this->getRequest()->getHost();
-                return new Response($baseurl . "/" . $this->generateUrl('selfieshare_feedback_edit', array('ref' => $ss->getRef())));
+                return new Response($baseurl . $this->generateUrl('selfieshare_provide_feedback', array('ref' => $ss->getRef())));
             } else {
 
                 $ss_ar['to_email'] = $ss->getFriendEmail();

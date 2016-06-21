@@ -31,6 +31,29 @@ class SelfieShareController extends Controller {
          return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_show.html.twig', array('selfieshare' => $selfieshare));   
     }
 
+    #----------------------------- selfieshare_provide_feedback: /selfieshare/provide_feedback
+
+    public function provideFeedbackAction($ref=null) {
+        $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ref);
+        return $this->render('LoveThatFitUserBundle:Selfieshare:provide_feedback.html.twig', array('selfieshare' => $selfieshare));
+        //$selfieshare=$this->get('user.selfieshare.helper')->updateFeedback($ra);
+        //return new Response($selfieshare->getFriendName().'provided feedback updated.');
+    }
+
+    #----------------------------- selfieshare_submit_feedback: /selfieshare/submit_feedback
+
+    public function submitFeedbackAction() {
+        $ra=$this->getRequest()->request->all();
+        $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ra["ref"]);
+        $this->get('user.selfiesharefeedback.helper')->createWithParam($ra,$selfieshare);
+        return new Response($selfieshare->getFriendName().'provided feedback updated.');
+    }
+    #----------------------------------------------
+    public function feedbackReviewAction($ref=null) {
+        $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ref);
+        #return new Response($selfieshare->getFriendName());
+        return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_review.html.twig', array('selfieshare' => $selfieshare));
+    }
 }
 
 ?>
