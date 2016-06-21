@@ -25,7 +25,11 @@
     {% for a in archives %}
             <div><span>
                     <a href="{{ path('admin_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
-                    <img src="{{ asset(a.getWebPath('cropped'))}}" style="width: 35px; height:40px"/>
+                    {% if (a.status==-1)%}
+                        <img src="{{ asset(a.getWebPath('original'))}}" style="width: 35px; height:40px"/>
+                    {%else%}
+                        <img src="{{ asset(a.getWebPath('cropped'))}}" style="width: 35px; height:40px"/>
+                    {%endif%}
                     </a>
 
                 </span></div>
