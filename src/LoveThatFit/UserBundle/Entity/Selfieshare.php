@@ -17,6 +17,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Selfieshare  {
 
+    /**
+     * @ORM\OneToMany(targetEntity="SelfieshareFeedback", mappedBy="selfieshare", orphanRemoval=true)
+     */
+    protected $selfieshare_feedback;
+
      /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="selfieshare" , cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE" )
@@ -413,8 +418,39 @@ class Selfieshare  {
         return $this->updated_at;
     }
     #-----------------------------------------------------------
-    
-   
+
+    /**
+     * Add selfieshare_feedback
+     *
+     * @param \LoveThatFit\UserBundle\Entity\SelfieshareFeedback $selfieshare_feedback
+     * @return User
+     */
+    public function addSelfieshare(\LoveThatFit\UserBundle\Entity\SelfieshareFeedback $selfieshare_feedback)
+    {
+        $this->selfieshare_feedback[] = $selfieshare_feedback;
+        return $this;
+    }
+
+    /**
+     * Remove selfieshare_feedback
+     *
+     * @param \LoveThatFit\UserBundle\Entity\SelfieshareFeedback $selfieshare_feedback
+     */
+    public function removeSelfieshare(\LoveThatFit\UserBundle\Entity\SelfieshareFeedback $selfieshare_feedback)
+    {
+        $this->selfieshare_feedback->removeElement($selfieshare_feedback);
+    }
+
+    /**
+     * Get selfieshare_feedback
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSelfieshare()
+    {
+        return $this->selfieshare_feedback;
+    }
+#---------------------------------------------------------------------------------
      public function upload() {
 
       if (null === $this->file) {
