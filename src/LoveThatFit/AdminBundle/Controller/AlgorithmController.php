@@ -26,22 +26,47 @@ class AlgorithmController extends Controller {
                     'user' => '',
                 ));
     }
+
 //------------------------------------------------------------------------------------------
-    
-    public function fitAlgorithmCompareAction($user_id, $product_id, $json=0) {
+
+    public function fitAlgorithmCompareAction($user_id, $product_id, $json = 0) {
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);
         $fe = new FitAlgorithm2($user, $product);
-        
-        if ($json==0) {
+
+        if ($json == 0) {
             return $this->render('LoveThatFitAdminBundle:Algoritm:_algo2_comparison.html.twig', array(
                         'product' => $product, 'user' => $user, 'data' => $fe->getFeedback(),
                     ));
-        } elseif ($json==1) {
-            return new Response(json_encode($fe->getFeedback()));            
-        } elseif ($json==2) {
-            return new Response($fe->getStrippedFeedBackJSON());            
+        } elseif ($json == 1) {
+            return new Response(json_encode($fe->getFeedback()));
+        } elseif ($json == 2) {
+            return new Response($fe->getStrippedFeedBackJSON());
         }
     }
+
     //------------------------------------------------------------------------------------------
+    
+    #--------------------------------------------------
+    public function productListAction() {
+        $userForm = $this->createForm(new AlgoritumTestlType());
+        $products = $this->get('admin.helper.product')->getListWithPagination();
+        $users = $this->get('user.helper.user')->findAll();
+        return $this->render('LoveThatFitAdminBundle:Algoritm:product_list_index.html.twig', array(
+                    'userForm' => $userForm->createView(),
+        
+            'products' => $products,
+                    'users' => $users,
+                ));
+    }
+    
+        #--------------------------------------------------
+    public function sizeRecommendationsAction($page = 0, $limit = 10, $sort = 'id') {
+        $products = $this->get('admin.helper.product')->listAll($page, $limit, $sort);
+        #return new response('sffs');
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations.html.twig', array(
+                    
+            'products' => $products,
+                ));
+    }
 }

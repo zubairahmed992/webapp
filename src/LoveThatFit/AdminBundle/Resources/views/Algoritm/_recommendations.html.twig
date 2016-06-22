@@ -1,0 +1,16 @@
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Size</th>
+        <th>Fit Index</th>
+    </tr>
+    {% for id, p in products %} 
+    <tr>
+        <td style="padding: 2px; padding-right: 20px">{{p.id}}</td>
+        <td>{{p.name}}</td>
+        <td></td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</table>

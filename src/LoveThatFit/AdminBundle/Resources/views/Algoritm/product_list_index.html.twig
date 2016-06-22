@@ -1,0 +1,56 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active"> Product list with recomended sizes & fit index</li>
+{% endblock %}
+{% block body %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<h4> Product list with recomended sizes & fit index</h4>
+<script>
+$(document).ready(function(){
+
+  $( "select[id='algorithm_User']" ).change(function() {
+        $("#user_id").val(this.value);
+        $('#keyword').val($('option:selected', $(this)).text());
+  });
+  
+//-----------------------------------------------------------
+ $('a.compare').click(function (event){ 
+     event.preventDefault(); 
+     
+     var user_id = $("#user_id").val();
+     var compare_url = "../fit_algorithm2/compare/" + user_id;
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           $('#summary_ajax').html(response);
+        }
+     })
+     return false; //for good measure
+});
+
+    </script>
+
+<span id='user_id' style="display: block"></span>
+
+<div class="p_listing"> 
+    <div style="float: left">
+        
+        <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+        {{ form_errors(userForm) }}
+        {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
+           Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
+        {{ form_rest(userForm) }}
+        </form>                 
+    </div>
+    <a id='compare' class='compare' href="#">process</a> | 
+    <br>
+    
+    <br>
+    <div id="summary_ajax" style="float: none">
+    </div>
+        <input type="hidden"  id="user_id">
+
+
+</div> 
+
+{% endblock %}

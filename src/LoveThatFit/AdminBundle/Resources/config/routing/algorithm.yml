@@ -5,3 +5,11 @@ admin_fit_algorithm2_index:
 admin_fit_algorithm2_comparision:
     pattern:  /admin/fit_algorithm2/compare/{user_id}/{product_id}/{json}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:FitAlgorithmCompare, user_id: 0, product_id: 0, json: 0}
+
+admin_fit_algorithm2_product_list_index:
+    pattern:  /admin/fit_algorithm2/product_list_index
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:productList}
+
+admin_fit_algorithm2_size_recommendations:
+    pattern:  /admin/fit_algorithm2/size_recommendations/{page}/{limit}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:sizeRecommendations, page: 0, limit: 10, sort: 'id'}

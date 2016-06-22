@@ -199,7 +199,14 @@ class ProductHelper{
         return $this->repo->removeBrand();
     }
 
-    //-------------------------------------------------------
+//-------------------------------------------------------
+
+    public function listAll($page_number = 0, $limit = 10, $sort = 'id') {
+        $products = $this->repo->listAllProduct($page_number, $limit, $sort);
+        return  $products;
+      
+    }    
+//-------------------------------------------------------
 
     public function getListWithPagination($page_number = 0, $sort = 'id') {
         $yaml = new Parser();
