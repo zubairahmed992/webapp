@@ -119,6 +119,10 @@ $.ajax({
         data: value_ar,  
        success: function(data){
            //Textalert(data);
+           $('#loginScreen').hide();
+           $('.successscreen').show();
+           document.getElementById("myNav").style.width = "100%";
+           $("#stage").text("Thank you for contacting us. We will get back to you shortly.");
     },
         failure: function(errMsg) {
             alert(errMsg);
@@ -153,6 +157,12 @@ $("#savebutton").click(function(){
 
 
     <div id="myNav" class="overlay" style="z-index: 200;">
+
+       <div class="successscreen">
+        <div id="stage"></div>
+           <div>Close</div>
+       </div>
+
         <div id="loginScreen">
             <div class="forml">
                 <div class="heading">Kindly fillup the form below</div>
