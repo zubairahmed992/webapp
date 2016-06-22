@@ -6980,3 +6980,64 @@ and (orientation : portrait) {
     }
 
 }
+
+.overlay {
+	/* Height & width depends on how you want to reveal the overlay (see JS below) */
+	height: 100%;
+	width: 0;
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	background-color: rgb(0,0,0); /* Black fallback color */
+	background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+	overflow-x: hidden; /* Disable horizontal scroll */
+	transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+#loginScreen {
+	height: 230px;
+	width: 380px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 10;
+	background: #fff;
+	box-shadow: 0px 3px 6px #000;
+	margin-top:50px!important;
+}
+#loginScreen:target, #loginScreen:target + #cover {
+	display: block;
+	opacity: 2;
+}
+.forml {
+	width: 330px;
+	margin: 0 auto;
+	padding: 5px;
+}
+.form_ctrl {
+	display: block;
+}
+.form_ctrl input[type=text], input[type=email] {
+	width: 100%;
+	margin-bottom: 5px;
+	background: #333;
+	color: #fff;
+	border: none;
+	height: 30px;
+	text-indent: 10px;
+	border-radius: 0;
+	padding:0px;
+}
+.form_ctrl button{
+	padding: 10px;
+	width: 100%;
+	margin-top: 15px;
+	background: #999;
+	color: #fff;
+	border: none;
+}
+.forml .heading {
+	font-family: arial;
+	font-weight: normal;
+	margin: 15px 0px;
+	text-align: center;
+}

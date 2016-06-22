@@ -125,20 +125,55 @@ $.ajax({
         }
   });
 }
+
+$(document).ready(function() {
+$("#savebutton").click(function(){
+
+    var name = $('#name').val();
+    var email = $('#email').val();
+    var phone = $('#phone').val();
+
+    document.getElementById("myNav").style.width = "0%";
+
+});
+});
 </script>
 
 
 
     </head>
     <body style="background:#efefef;">
-        
-        
-  <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
-  <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
-  <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
-  <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
-  <input id="ss_comments" type="hidden" value="{{selfieshare.comments}}" />
 
+    <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
+    <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
+    <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
+    <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
+    <input id="ss_comments" type="hidden" value="{{selfieshare.comments}}" />
+
+
+
+    <div id="myNav" class="overlay" style="z-index: 200;">
+        <div id="loginScreen">
+            <div class="forml">
+                <div class="heading">Kindly fillup the form below</div>
+                <form action="" method="post">
+                    <div class="form_ctrl">
+                        <input type="text" name="name" id="name" placeholder="Name">
+                    </div>
+                    <div class="form_ctrl">
+                        <input type="text" name="email" id="email" placeholder="Email">
+                    </div>
+                    <div class="form_ctrl">
+                        <input type="text" name="phone" id="phone" placeholder="Phone">
+                    </div>
+                    <div class="form_ctrl">
+
+                        <button id="savebutton" type="button" name="button">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 <div class="container comments_sec" style="border:none;">
  <div style="position:relative;">
 
@@ -150,7 +185,7 @@ $.ajax({
     </div>   
   
   
-  <div class="clr"></div>  
+  <div class="clr"></div>
  
   
   
@@ -160,7 +195,6 @@ $.ajax({
     <p id="clientsOpen">Feedback
     <span id="downicon">▼</span>
      <span id="upicon">▲</span>
-    
     </p>
 
   <div id="clientsDashboard">  
@@ -211,9 +245,9 @@ $.ajax({
   
   </div>
         <div class="logosm2"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div><br>
-      Name:<input type="text" name="name" id="name"><br>
-      Email:<input type="text" name="email" id="email"><br>
-      Phone:<input type="text" name="phone" id="phone">
+
+
+
   <div class="textarea_wrap"><textarea name="textarea" id="ss_textarea" cols="45" rows="5" ></textarea></div>
   <div class="clr"></div>
   <div class="submitcomments"><input type="submit" name="button" id="send_button" value="SEND" /></div>  
@@ -225,7 +259,13 @@ $.ajax({
   <!-- /clientsDashboard -->
 </div>  
 </div>
-  
-   
+
+    <script>
+        $(document).ready(function(){
+
+            document.getElementById("myNav").style.width = "100%";
+
+        });
+    </script>
          </body>
 </html>
