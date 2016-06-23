@@ -29,7 +29,14 @@ class FitAlgorithm2 {
         $this->product = $product;
         $this->size_helper = new SizeHelper();
     }
-
+ 
+    function setUser($user) {
+        $this->user = $user;
+        }
+    
+    function setProduct($product) {
+        $this->product = $product;
+    }
 #-----------------------------------------------------
 
     function getFeedBackJSON() {

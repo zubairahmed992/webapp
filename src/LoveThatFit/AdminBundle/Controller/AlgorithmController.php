@@ -64,11 +64,19 @@ class AlgorithmController extends Controller {
     public function sizeRecommendationsAction($user_id, $page = 1, $limit = 10, $sort = 'id') {
         $products = $this->get('admin.helper.product')->listAll($page, $limit, $sort);
         $pa= array(); 
+        $user = $this->get('user.helper.user')->find($user_id);
+        $algo = new FitAlgorithm2($user);
+        
+        
         foreach ($products as $p) {
-            $pa[$p->getId()] = array('name' => $p->getName(),
-                'fit_index'=>1,
-                'size'=>'S',
-                );
+            $algo->setProduct($p);
+            $fb = $algo->getFeedBack();
+            if (array_key_exists('recommendation', $fb)) {
+                $pa[$p->getId()] = array('name' => $p->getName(),
+                    'fit_index'=>$fb['recommendation']['fit_index'],
+                    'size'=>$fb['recommendation']['description'],
+                    );
+            }
         }
         return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations.html.twig', array(
                     
