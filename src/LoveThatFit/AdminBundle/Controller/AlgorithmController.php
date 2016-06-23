@@ -61,12 +61,18 @@ class AlgorithmController extends Controller {
     }
     
         #--------------------------------------------------
-    public function sizeRecommendationsAction($page = 0, $limit = 10, $sort = 'id') {
+    public function sizeRecommendationsAction($user_id, $page = 1, $limit = 10, $sort = 'id') {
         $products = $this->get('admin.helper.product')->listAll($page, $limit, $sort);
-        #return new response('sffs');
+        $pa= array(); 
+        foreach ($products as $p) {
+            $pa[$p->getId()] = array('name' => $p->getName(),
+                'fit_index'=>1,
+                'size'=>'S',
+                );
+        }
         return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations.html.twig', array(
                     
-            'products' => $products,
+            'products' => $pa,
                 ));
     }
 }

@@ -7,10 +7,10 @@
     </tr>
     {% for id, p in products %} 
     <tr>
-        <td style="padding: 2px; padding-right: 20px">{{p.id}}</td>
+        <td style="padding: 2px; padding-right: 20px">{{id}}</td>
         <td>{{p.name}}</td>
-        <td></td>
-        <td></td>
+        <td>{{p.fit_index}}</td>
+        <td>{{p.size}}</td>
     </tr>
     {% endfor %}
 </table>
