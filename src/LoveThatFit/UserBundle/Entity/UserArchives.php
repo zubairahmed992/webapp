@@ -502,7 +502,7 @@ class UserArchives
     }
     #-------------------------------------------
     
-     public function resizeImage() {
+     public function resizeImage($device_type='') {
 
         $filename = $this->getAbsolutePath('cropped');
         $image_info = @getimagesize($filename);
@@ -521,12 +521,18 @@ class UserArchives
         }
         #------------ Need dimensions
         
-        $width = $image_info[0] * 0.50;
-        $height = $image_info [1] * 0.50;
-        
-        #$width = 320;
-        #$height = 568;
-                
+        //$width = $image_info[0] * 0.50;
+        //$height = $image_info [1] * 0.50;
+
+         //$width = $image_info[0];
+         //$height = $image_info [1];
+        if($device_type == 'iphone6'){
+            $width = 375;
+            $height = 667;
+        }else{
+            $width = 320;
+            $height = 568;
+        }
         $img_new = imagecreatetruecolor($width, $height);
         imagealphablending($img_new, false);
         imagesavealpha($img_new,true);

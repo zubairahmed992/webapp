@@ -164,13 +164,14 @@ class UserMaskAdjustmentController extends Controller {
     public function archiveImageUpdateAction(Request $request) {
         $params = $request->request->all();
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
-        
+        $image_actions = json_decode($archive->getImageActions());
+        $device_type = $image_actions->device_type;
         if (!$archive) {
             throw $this->createNotFoundException('Unable to find archive.');
         }
         $response = $archive->writeImageFromCanvas($_POST['imageData']);
         #if not from mask marker adjustment interface then resize
-        $archive->resizeImage(); # image is being resized to 320x568
+        $archive->resizeImage($device_type); # image is being resized to 320x568
         #$this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }
