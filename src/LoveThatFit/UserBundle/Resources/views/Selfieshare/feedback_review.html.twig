@@ -30,6 +30,37 @@ and open the template in the editor.
 
 
 
+          .span2{
+              text-align: center;
+              height: 40px;
+              padding-top: 15px;
+          }
+
+            .span3{
+                text-align: center;
+                height: 40px;
+                padding-top: 15px;
+
+            }
+
+            .titlbg{
+                background:#666;
+                line-height: 0px;
+                color:#fff;
+                height: 15px;
+            }
+
+            .comments_listing {
+                min-height: 300px;
+                max-height: 300px;
+                overflow: auto;
+            }
+
+            .comments_listing .span8 {
+
+            width:658px!important;
+            }
+
         </style>
     </head>
     <body style="background:#ccc;">
@@ -55,24 +86,24 @@ and open the template in the editor.
   
   
   
-  <div class="clr"></div>  
-        
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Friends</th>
-        
-        <th>Like/UnLike</th>
-        <th>Rating</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="clr"></div>
 
+
+   <div class="row" style="margin-left: 0px;">
+       <span class="span2 titlbg">Friends</span>
+       <span class="span3 titlbg">Like/UnLike</span>
+       <span class="span3 titlbg">Rating</span>
+
+   </div>
+
+
+
+    <div class="comments_listing">
     {% for sf in selfieshare.selfieshare %}
-      <tr>
-        <td valign="middle">{{sf.name}}</td>
-        
-        <td align="center">
+
+
+         <span class="span2">{{sf.name}}</span>
+         <span class="span3">
             {% if(sf.favourite is null) %}
                 <img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="26" class="like_light"  />
                 <img src="{{ asset('bundles/lovethatfit/site/images/show_dislike_icon.png') }}" width="26"  />
@@ -83,45 +114,33 @@ and open the template in the editor.
 
 
             {%endif%}
-
-        </td>
-        <td>
-            
-            
-            
-       
-            
-            <div class="rating_ratio"> <img src="{{ asset('bundles/lovethatfit/site/images/rating_bg.png') }}">
-      
-               
-                
+        </span>
+        <span class="span3"><div class="rating_ratio"> <img src="{{ asset('bundles/lovethatfit/site/images/rating_bg.png') }}">
           <div id="rtbar" class="rating_{{sf.rating}}"></div>
           <div class="rating_transparent"></div>
-      </div>
-            
-            
-            
-        </td>
-      </tr>
-      <tr>
+      </div></span>
+
+     <div class="row">
           
-          <td colspan="3" align="left" style="padding:0px;">
+          <span class="span8" align="left" style="padding:0px;">
+
               <div style="padding:5px; color:#333;background: #ccc;float:left; display: block; width: 98%; text-align: left;">Comments</div>
-             
               <div style="font-size: 12px;float:left; padding: 5px;">{{sf.comments}}</div>
               
-              </td>
-      </tr>
-      
+              </span>
+     </div>
+
+
+
 {% endfor %}
+        </div>
+
+
       
       
       
       
-      
-      
-    </tbody>
-  </table>
+
 </div>
         
         
