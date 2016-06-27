@@ -6996,7 +6996,7 @@ and (orientation : portrait) {
 }
 #loginScreen {
 	height: 230px;
-	width: 340px;
+	width: 300px;
 	margin: 0 auto;
 	position: relative;
 	z-index: 10;
@@ -7023,7 +7023,7 @@ and (orientation : portrait) {
 	opacity: 2;
 }
 .forml {
-	width: 300px;
+	width: 260px;
 	margin: 0 auto;
 	padding: 5px;
 }
