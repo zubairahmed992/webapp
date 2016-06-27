@@ -164,7 +164,19 @@ class UserArchivesHelper {
     private function extractImageActions($user, $marker, $device_specs) {
         $image_actions=  json_decode($marker->getImageActions(),true);
         $image_actions['device_type'] = $user->getImageDeviceType();                
-        $image_actions['device_model'] = $user->getImageDeviceModel()==null && strtolower($user->getImageDeviceType())=='iphone5'?'iphone5c':'';
+        #--------------------------------------
+        if ($user->getImageDeviceModel()==null){
+            if (strtolower($user->getImageDeviceType())=='iphone5'){
+                $image_actions['device_model'] = 'iphone5c';
+            }else{
+                $image_actions['device_model'] = $user->getImageDeviceType();
+            }
+        }else{
+            $image_actions['device_model'] = $user->getImageDeviceModel();
+        }
+        #--------------------------------------
+        $image_actions['device_model'] = $user->getImageDeviceModel()==null && strtolower($user->getImageDeviceType())=='iphone5'?'iphone5c':$user->getImageDeviceModel();
+        
         $image_actions['height_per_inch'] = $device_specs ? $device_specs->getDeviceUserPerInchPixelHeight() : 7;
         $ia=array('move_up_down' => 0, "move_left_right" => 0, "img_rotate" => 0, "height_per_inch" => "7.12");
         foreach ($ia as $k => $v) {
