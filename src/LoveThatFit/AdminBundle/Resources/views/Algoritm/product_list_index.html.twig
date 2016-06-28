@@ -18,6 +18,7 @@ $(document).ready(function(){
      var user_id = $("#user_id").val();
      var page = $("#sel_page").val();
      var limit = $("#sel_limit").val();
+     var range = $("#txt_id_range").val();
      var compare_url = "../fit_algorithm2/size_recommendations/" + user_id + "/" + page + "/" + limit;
      $.ajax({
         url: compare_url
@@ -41,7 +42,10 @@ $(document).ready(function(){
            Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
         {{ form_rest(userForm) }}
         </form>                 
-    Limit:
+        </div>
+    <div style="float: left">
+    
+        Limit:
         <select id="sel_limit" name="sel_limit">
             <option value="2">2</option>
             <option value="5">5</option>
@@ -67,10 +71,12 @@ $(document).ready(function(){
             <option value="10">10</option>
         </select>
     </div>
-    <a id='compare' class='compare' href="#">process</a>  
+        
+        <input type="text" id='txt_id_range' name='txt_id_range'>    
+    <a id='compare' class='compare' href="#">Process >></a>  
     <br>
     
-    <br>
+    <br><br>
     <div id="summary_ajax" style="float: none">
     </div>
         <input type="hidden"  id="user_id">
