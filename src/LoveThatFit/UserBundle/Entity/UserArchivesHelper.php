@@ -174,8 +174,6 @@ class UserArchivesHelper {
         }else{
             $image_actions['device_model'] = $user->getImageDeviceModel();
         }
-        #--------------------------------------
-        $image_actions['device_model'] = $user->getImageDeviceModel()==null && strtolower($user->getImageDeviceType())=='iphone5'?'iphone5c':$user->getImageDeviceModel();
         
         $image_actions['height_per_inch'] = $device_specs ? $device_specs->getDeviceUserPerInchPixelHeight() : 7;
         $ia=array('move_up_down' => 0, "move_left_right" => 0, "img_rotate" => 0, "height_per_inch" => "7.12");
