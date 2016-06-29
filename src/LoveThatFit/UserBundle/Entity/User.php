@@ -2063,8 +2063,9 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key=true,$device_type=null, $base_path=null, $device_config = null){
 	if($key){
 	  #$device_specs=$this->getDeviceSpecs($device_type);
-          $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
-          $this->measurement->calculatePlacementPositions(is_array($device_config) && array_key_exists('conversion_ratio', $device_config)?$device_config['conversion_ratio']:0);
+        $this->measurement->calculatePlacementPositions(is_array($device_config) && array_key_exists('conversion_ratio', $device_config)?$device_config['conversion_ratio']:0);
+        $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
+          
 	  return array(
 		'id' => $this->getId(),
                 'user_id' => $this->getId(),
