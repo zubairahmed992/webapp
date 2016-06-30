@@ -35,5 +35,14 @@ class DeviceHelper {
         }
         return;
     }
+    //--------------------------------------------------------------------------------
+    public function getScreenConversionRatio($original, $targeted) {
+        if ($targeted && array_key_exists($targeted, $this->conf)) {
+            if (array_key_exists($original, $this->conf) && $this->conf[$original]['total_screen_height_px'] > 0) {
+                return $this->conf[$targeted]['total_screen_height_px'] / $this->conf[$original]['total_screen_height_px'];
+            }
+        }
+        return;
+    }
 
 }

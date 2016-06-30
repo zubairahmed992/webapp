@@ -19,7 +19,8 @@ class WebServiceHelper {
         $request_array['device_model']= is_array($request_array) && array_key_exists('device_model', $request_array)?$request_array['device_model']:$request_array['device_type'];
         $request_array['base_path']= is_array($request_array) && array_key_exists('base_path', $request_array)?$request_array['base_path']:null;                
         $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
-        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
+        #$device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
+        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
         $device_config['image_device_model'] = $user->extractImageDeviceModel();
         return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
     }
@@ -238,13 +239,12 @@ class WebServiceHelper {
         array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
         array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
         $user_device_model = isset($request_array['device_model'])?$request_array['device_model']:$user->getImageDeviceType();
-        //echo $user_device_model;die;
         #calculating top & bottom position in inches
         #$device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user->getImageDeviceModel());
         $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user_device_model);
-        //print_r($device_config);die;
         $device_config['image_device_model'] = $user->extractImageDeviceModel();
-        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($device_config['image_device_model'],$user_device_model);
+        #$device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($device_config['image_device_model'],$user_device_model);
+        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'],$user_device_model);
         
         if(is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)){
             $measurement->calculatePlacementPositions($device_config['conversion_ratio'] );
