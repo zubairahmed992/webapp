@@ -14,13 +14,13 @@ class WebServiceHelper {
     }
 #----------------------------------------------------
 
-    private function user_array($user, $request_array=null){
-        $request_array['device_type']= is_array($request_array) && array_key_exists('device_type', $request_array)?$request_array['device_type']:null;
-        $request_array['device_model']= is_array($request_array) && array_key_exists('device_model', $request_array)?$request_array['device_model']:$request_array['device_type'];
-        $request_array['base_path']= is_array($request_array) && array_key_exists('base_path', $request_array)?$request_array['base_path']:null;                
+    private function user_array($user, $request_array = null) {
+        $request_array['device_type'] = is_array($request_array) && array_key_exists('device_type', $request_array) ? $request_array['device_type'] : $user->getImageDeviceType();
+        $request_array['device_model'] = is_array($request_array) && array_key_exists('device_model', $request_array) ? $request_array['device_model'] : $request_array['device_type'];
+        $request_array['base_path'] = is_array($request_array) && array_key_exists('base_path', $request_array) ? $request_array['base_path'] : null;
         $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
         #$device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
-        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
+        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
         $device_config['image_device_model'] = $user->extractImageDeviceModel();
         return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
     }
