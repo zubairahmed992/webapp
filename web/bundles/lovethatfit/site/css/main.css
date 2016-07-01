@@ -5744,6 +5744,14 @@ background-color:#fff;
     
     height:462px;
 }
+#container_iphone6 #user_dummy_img_hldr {
+    text-align: center;
+}
+#container_iphone6 #fr_user_image {
+    height:483px;
+    text-align: center;
+}
+
 #container_iphone5 #user_dummy_img_hldr {
     text-align: center;
 }

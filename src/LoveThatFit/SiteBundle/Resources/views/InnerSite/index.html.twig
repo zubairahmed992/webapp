@@ -127,7 +127,7 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
     if(document.getElementById('apply_img_dress') != null){
         var top_drop_dress = document.getElementById('full_dropable').style.top;       
         top_drop_dress = parseInt(top_drop_dress.slice(0,-2));
-
+        
 
         var share_dress_img = document.getElementById('apply_img_dress');
         dress_prod_left = 364/2 - document.getElementById('apply_img_dress').width/2;
@@ -740,7 +740,68 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                             
                            //-------- Quick fix pixcel adjustmanets for some products
                            px_variance=$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).find('.pixel_variance').attr('value');
-                         if($("#account_type").attr("value") == "iphone5" || $("#account_type").attr("value") == "iPhone5" ){
+                         
+                         if($("#account_type").attr("value") == "iphone6"){
+                             
+                            var top_value_initial = parseInt($("#hdn_prod_top_pos").attr("value"));
+
+                            //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
+                            //top_value_initial = top_value_initial / 2;
+                            var adj_top_value = 83;
+                            
+                            
+                            
+                            var top_value_init_final = top_value_initial * 0.7241;
+                            
+                            top_value_init_final = top_value_init_final - adj_top_value;
+                             if(curr_prod_type=='top'){
+                                 
+                                if(px_variance==0){
+                                    $("#top_dropable").css("top", top_value_init_final + "px", "left","20px");
+                                }else{
+                                    $("#top_dropable").css("top", (top_value_init_final + parseInt(px_variance)) + "px", "left","20px");
+                                }
+                           }
+                           if(curr_prod_type=='dress'){
+                               if(px_variance==0){
+                                   alert(top_value_init_final);
+                                   $("#full_dropable").css("top", top_value_init_final + "px", "left","20px");
+                                //console.log('1');                      
+                                }else{
+                                                        $("#full_dropable").css("top", (top_value_init_final - 23 + parseInt(px_variance)) + "px");                                        
+                                //console.log('2');                            
+                                }
+                           }
+                           if(curr_prod_type=='bottom'){
+                                 
+                                 bottom_value_initial = parseInt($("#hdn_prod_bottom_pos").attr("value"));
+
+                                //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
+                                //top_value_initial = top_value_initial / 2;
+                               bottom_value_initial = bottom_value_initial / 7.374;
+
+                               bottom_value_initial = bottom_value_initial * 6.408;
+
+                                //var adj_btm_value = (760 * 6.891) / 60;
+                                //alert(adj_btm_value);
+                                
+                                //var btm_value_init_final = bottom_value_initial - 94;
+                                
+                                var btm_value_init_final = bottom_value_initial - 119;
+                                 
+                                 //alert(bottom_value_initial);
+                                 //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
+                                 //bottom_value_init_final = bottom_value_initial / 2;
+                                 //bottom_value_initial = bottom_value_initial / 7.374;
+                                 //bottom_value_init_final = bottom_value_initial * 6;
+                                 
+                                 //alert(bottom_value_init_final);
+                                 
+                                if(px_variance==0){
+                                    $("#bottom_dropable").css("top", btm_value_init_final + "px");
+                                }
+                           }
+                         }else if($("#account_type").attr("value") == "iphone5" || $("#account_type").attr("value") == "iPhone5" ){
                              
                             var top_value_initial = parseInt($("#hdn_prod_top_pos").attr("value"));
 
@@ -765,6 +826,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                                    $("#full_dropable").css("top", top_value_init_final + "px", "left","20px");
                                 //console.log('1');                      
                                 }else{
+                                    
                                                         $("#full_dropable").css("top", (top_value_init_final - 23 + parseInt(px_variance)) + "px");                                        
                                 //console.log('2');                            
                                 }
