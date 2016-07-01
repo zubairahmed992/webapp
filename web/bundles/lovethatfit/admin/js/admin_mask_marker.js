@@ -5,9 +5,8 @@ hitOptions = {
 	segments: true,
 	stroke: false,
 	fill: false,
-	tolerance: 22
+	tolerance: 4
 };
-
 
 change_x_pos_diff = 0;
 change_y_pos_diff = 0;
@@ -1161,6 +1160,23 @@ ijazat = "yes";
 
 var segment;
 var movePath = false;
+
+function hand_cursor_hit(){
+			hand_cursor_icon.visible = false;
+			edit_shape_icon.visible = true;
+
+			hand_cursor = true;
+			hitOptions.segments = false;
+}
+function edit_shape_hit(){
+		edit_shape_icon.visible = false;
+		hand_cursor_icon.visible = true;
+
+		hand_cursor = false;
+		hitOptions.segments = true;
+}
+
+
 function onMouseDown(event) {
 
 	segment = path = null;
@@ -1232,19 +1248,10 @@ function onMouseDown(event) {
                         }
 
                           if(curr_view == "zoomed" && hitResult.item == hand_cursor_icon){
-                              hand_cursor_icon.visible = false;
-                              edit_shape_icon.visible = true;
-
-                              hand_cursor = true;
-                              hitOptions.segments = false;
-
+                              hand_cursor_hit();
                           }
                           if(curr_view == "zoomed" && hitResult.item == edit_shape_icon){
-                              edit_shape_icon.visible = false;
-                              hand_cursor_icon.visible = true;
-
-                              hand_cursor = false;
-                              hitOptions.segments = true;
+                              edit_shape_hit();
                           }
 
                          if(hitResult.item == but_move_left){
@@ -1867,7 +1874,17 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
 
 
 
+function onKeyDown(event) {
+	if(curr_view == "zoomed" && event.key == "control"){
+		hand_cursor_hit();
+	}
+}
 
+function onKeyUp(event) {
+	if(curr_view == "zoomed" && event.key == "control"){
+		edit_shape_hit();
+	}
+}
 
 
 
