@@ -137,8 +137,17 @@ $("#savebutton").click(function(){
     var name = $('#name').val();
     var email = $('#email').val();
     var phone = $('#phone').val();
-    document.getElementById("myNav").style.width = "0%";
 
+    if((name=='')||(email=='')){
+    alert('Please Enter Required Fields');
+    }
+
+
+    else
+    {
+
+        document.getElementById("myNav").style.width = "0%";
+    }
 });
 
     $(".closeit").click(function(){
@@ -193,10 +202,10 @@ $("#savebutton").click(function(){
                 <div class="heading">Kindly fillup the form below</div>
                 <form action="" method="post">
                     <div class="form_ctrl">
-                        <input type="text" name="name" id="name" placeholder="Name">
+                        <input type="text" name="name" id="name" placeholder="Name" required>
                     </div>
                     <div class="form_ctrl">
-                        <input type="text" name="email" id="email" placeholder="Email">
+                        <input type="text" name="email" id="email" placeholder="Email" required>
                     </div>
                     <div class="form_ctrl">
                         <input type="text" name="phone" id="phone" placeholder="Phone">
@@ -279,7 +288,7 @@ $("#savebutton").click(function(){
   
   
   </div>
-        <div class="logosm2"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div><br>
+        <div class="logosm2"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div>
 
 
 

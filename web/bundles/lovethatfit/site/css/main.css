@@ -6843,7 +6843,7 @@ span.lable_like_rate {
 /*=================================*/
 #clientsDropDown {
   position:absolute;
-  bottom:-190px;
+  bottom:0px;
   width:100%;  
   z-index: 100; 
   
@@ -6880,7 +6880,7 @@ span.lable_like_rate {
 #clientsDropDown p{
     right:0px;
     top:-40px;
-    position:absolute;	
+    position:absolute;
 }
 
 
