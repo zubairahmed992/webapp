@@ -206,6 +206,12 @@ class ProductHelper{
         return  $products;
       
     }    
+    
+//-------------------------------------------------------
+
+    public function listProductByIds($ids) {
+        return $this->repo->listProductsByIds($ids);              
+    }        
 //-------------------------------------------------------
 
     public function getListWithPagination($page_number = 0, $sort = 'id') {
