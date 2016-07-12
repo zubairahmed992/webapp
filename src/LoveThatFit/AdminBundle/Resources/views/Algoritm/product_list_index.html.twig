@@ -12,22 +12,36 @@ $(document).ready(function(){
         $('#keyword').val($('option:selected', $(this)).text());
   });
   
+
 //-----------------------------------------------------------
- $('a.compare').click(function (event){ 
+ $('a.compare_with_product_ids').click(function (event){ 
      event.preventDefault(); 
-     var user_id = $("#user_id").val();
-     var page = $("#sel_page").val();
-     var limit = $("#sel_limit").val();
-     var range = $("#txt_id_range").val();
-     var compare_url = "../fit_algorithm2/size_recommendations/" + user_id + "/" + page + "/" + limit;
+     
+     var ar = {
+         user_id:$("#user_id").val(), 
+         page:$("#sel_page").val(), 
+         limit: $("#sel_limit").val(), 
+         ids: $("#txt_id_range").val()};
+     
+     var compare_url = "../fit_algorithm2/user_product_marathon";
+     
      $.ajax({
-        url: compare_url
-        ,success: function(response) {
-           $('#summary_ajax').html(response);
-        }
-     })
-     return false; //for good measure
+               type: "POST",
+               url: compare_url,
+               data: JSON.stringify(ar),  
+              contentType: "application/json; charset=utf-8",
+                traditional: true,
+               success: function(response){
+                   $('#summary_ajax').html(response);                    
+                },
+               failure: function(response) {
+                   $('#summary_ajax').html(response);                    
+               }
+         });
+     
+     //return false; //for good measure     
 });
+
 });
     </script>
 
@@ -71,11 +85,16 @@ $(document).ready(function(){
             <option value="10">10</option>
         </select>
     </div>
+     
         
-        <input type="text" id='txt_id_range' name='txt_id_range'>    
-    <a id='compare' class='compare' href="#">Process >></a>  
+    
     <br>
     
+    <br><br>
+    <div>comma separated product ids, eg. 23, 34, 55 </div>
+    <input type="text" id='txt_id_range' name='txt_id_range'>    
+    <br><br>
+    <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Process >></a>  
     <br><br>
     <div id="summary_ajax" style="float: none">
     </div>

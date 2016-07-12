@@ -65,9 +65,9 @@ class ProductRepository extends EntityRepository {
         }
     }
     //-------------------------------------------------------------------------------------
-    public function listProductsByIds($ids) {
+    public function listProductsByIds($ids) {        
         $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.id IN (:ids)');
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.id IN (:ids)')->setParameter('ids', $ids);        
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

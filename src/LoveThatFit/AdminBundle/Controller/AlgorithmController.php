@@ -50,24 +50,31 @@ class AlgorithmController extends Controller {
     #--------------------------------------------------
     public function productListAction() {
         $userForm = $this->createForm(new AlgoritumTestlType());
-        $products = $this->get('admin.helper.product')->getListWithPagination();
         $users = $this->get('user.helper.user')->findAll();
         return $this->render('LoveThatFitAdminBundle:Algoritm:product_list_index.html.twig', array(
-                    'userForm' => $userForm->createView(),
-        
-            'products' => $products,
+                    'userForm' => $userForm->createView(),        
                     'users' => $users,
                 ));
     }
     
-        #--------------------------------------------------
-    public function sizeRecommendationsAction($user_id, $page = 1, $limit = 10, $sort = 'id') {
-        $products = $this->get('admin.helper.product')->listAll($page, $limit, $sort);
+
+    #--------------------------------------------------
+    public function userProductMarathonAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
+        #return new Response($decoded['ids']);
+        #if range ...................
+        if (strlen(ltrim($decoded['ids']))>0){
+            $ids=explode(',', $decoded['ids']);
+            
+            $products = $this->get('admin.helper.product')->listProductByIds($ids);
+        }else{
+            $products = $this->get('admin.helper.product')->listAll($decoded['page'], $decoded['limit']);
+        }
+        
         $pa= array(); 
-        $user = $this->get('user.helper.user')->find($user_id);
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
         $algo = new FitAlgorithm2($user);
-        
-        
+                
         foreach ($products as $p) {
             $algo->setProduct($p);
             $fb = $algo->getFeedBack();
@@ -78,8 +85,7 @@ class AlgorithmController extends Controller {
                     );
             }
         }
-        return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations.html.twig', array(
-                    
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations.html.twig', array(                    
             'products' => $pa,
                 ));
     }
