@@ -64,7 +64,16 @@ class ProductRepository extends EntityRepository {
             return "null";
         }
     }
-    
+    //-------------------------------------------------------------------------------------
+    public function listProductsByIds($ids) {        
+        $query = $this->getEntityManager()
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.id IN (:ids)')->setParameter('ids', $ids);        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
     /* --------------------------------------------------------- */
 
     public function findByGender($gender, $page_number = 0, $limit = 0) {

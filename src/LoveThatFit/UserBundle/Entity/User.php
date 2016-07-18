@@ -2063,7 +2063,8 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key=true,$device_type=null, $base_path=null, $device_config = null){
 	if($key){
 	  #$device_specs=$this->getDeviceSpecs($device_type);
-        $this->measurement->calculatePlacementPositions(is_array($device_config) && array_key_exists('conversion_ratio', $device_config)?$device_config['conversion_ratio']:0);
+        $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config)?$device_config['conversion_ratio']:1;
+        $this->measurement->calculatePlacementPositions($device_conversion_ratio );
         $measurement_json=$this->measurement && $this->measurement->getJSONMeasurement('actual_user')? $this->measurement->getJSONMeasurement('actual_user'):'';          
           
 	  return array(
@@ -2083,6 +2084,7 @@ class User implements UserInterface, \Serializable {
 		'belt' => $this->measurement?$this->measurement->getBelt():0,
                 'top_placement' => $this->measurement?$this->measurement->top_placement:0,
                 'bottom_placement' => $this->measurement?$this->measurement->bottom_placement:0,
+                'device_conversion_ratio' => $device_conversion_ratio,
 		'hip' => $this->measurement?$this->measurement->getHip():0,
 		'bust' => $this->measurement?$this->measurement->getBust():0,
 		'chest' => $this->measurement?$this->measurement->getChest():0,
