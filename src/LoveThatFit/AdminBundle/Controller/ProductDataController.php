@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\AdminBundle\Controller;
 
+use LoveThatFit\AdminBundle\Entity\BrandFormatImport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,123 @@ class ProductDataController extends Controller {
         );
     }
 
+    public function csvBrandSpecificationAction()
+    {
+        //$brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
+        $brandNames = $this->get('admin.helper.brand')->getBrandNameId();
+       // var_dump($brandObj);
+
+        return $this->render('LoveThatFitAdminBundle:ProductData:brand_format.html.twig',array('brandNames' => $brandNames));
+        die( "csvBrandSpecification");
+    }
+
+    public function saveBrandSpecificationAction()
+    {
+        var_dump($_POST);
+        foreach ($_POST as $name => $value) {
+            $val[$name] = $value;
+        }
+        print_R($val['product_Brand']);
+        $em = $this->getDoctrine()->getManager();
+        $pc = new BrandFormatImport();
+        $pc->setBrandName($val['product_Brand']);
+        $pc->setBrandFormat(json_encode($val));
+        $em->persist($pc);
+        $em->flush();
+        print_r($val);
+       // $data = implode(',',$_POST);
+       // print_r(explode(",",$data));
+        die("csv_brand_specification_save");
+    }
+
+    public function csvMultipleBrandImportFormAction()
+    {
+        //$brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
+       $brandNames = $this->get('admin.helper.brand')->getBrandNameId();
+        // var_dump($brandObj);
+        return $this->render('LoveThatFitAdminBundle:ProductData:import_multiple_brand_csv.html.twig',array('brandNames' => $brandNames));
+        die("okadfasdf");
+    }
+
+
+    public function csvMultipleBrandImportAction()
+    {
+        $value = 'AEO';
+        $data =  $this->getDoctrine()->getManager()
+            ->createQueryBuilder()
+            ->select('bfi.brand_format')
+            ->from('LoveThatFitAdminBundle:BrandFormatImport','bfi')
+            ->Where('bfi.brand_name =:brandName')
+            ->setParameters(array('brandName' => $value))
+            ->getQuery()
+            ->getResult();
+        $datJson = $data[0]['brand_format'];
+      //  echo $datJson;
+        $productData= json_decode($datJson,true);
+        print_r($productData);
+       // echo $_POST['productImport'];
+       var_dump($_FILES['productImport']['tmp_name']);
+     //   die("ofkayasfdsd");
+
+
+        $row = 0;
+        if (($handle = fopen($_FILES['productImport']['tmp_name'], "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+                $raowValue[$row] = $data;
+
+                //echo $data[0][0];
+               // echo "<p> $num fields in line $row: <br /></p>\n";
+                $row++;
+                for ($c=0; $c < $num; $c++) {
+                   // if(in_array($data[$c],$productData))
+                 //   echo $data[$c]. "<br />\n";
+                }
+            }
+            fclose($handle);
+        }
+        echo "<pre>";
+       //  print_r($raowValue[0][0]);
+        echo "<br>";
+        $rows=0;
+        foreach($raowValue as $key => $value){
+            $num = count($value);
+           // echo $num;
+            for ($c=0; $c < $num; $c++) {
+                // if(in_array($data[$c],$productData))
+                //   echo $data[$c]. "<br />\n";
+              //    echo $raowValue[$rows][$c]. "<br />\n";
+                $aaa = $rows.",".$c;
+                if(in_array($aaa, $productData)){
+                    $key1 = array_search ($aaa, $productData);
+                  ///  echo $key1."<br>";
+                     $productSave[$key1] = $raowValue[$rows][$c];
+                }
+
+
+
+            }
+            $rows++;
+
+
+        }
+
+        echo "<pre>";
+       print_r($productSave);
+       // print_r($raowValue[0][1]);
+        die("asdfsadfsad");
+
+
+
+        echo "<br>";
+
+
+
+        //print_r($data[0]['control_number']);
+        print_r($data);
+
+        die("csvMultipleBrandImport");
+    }
 #------------------------------------------------------------#
       public function csvUploadAction(Request $request) {
         $form = $this->getCsvUploadForm();
