@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * LoveThatFit\SiteBundle\Entity\Visitor
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="LoveThatFit\SiteBundle\Entity\Visitor")
+ * @ORM\Entity(repositoryClass="LoveThatFit\SiteBundle\Entity\VisitorRepository")
  */
 class Visitor
 {    
@@ -81,6 +81,12 @@ class Visitor
      */
     private $country;
     
+    /**
+     * @var string $json_data
+     *
+     * @ORM\Column(name="json_data", type="string",nullable=true)
+     */
+    private $json_data;
     
   #----------------------------------------------------------------  
     /**
@@ -221,6 +227,30 @@ class Visitor
     public function getCountry()
     {
         return $this->country;
+    }
+   #----------------------------------------------------------------  
+    
+      /**
+     * Set json_data
+     *
+     * @param string $json_data
+     * @return Visitor
+     */
+    public function setJsonData($json_data)
+    {
+        $this->json_data = $json_data;
+    
+        return $this;
+    }
+
+    /**
+     * Get $json_data
+     *
+     * @return string 
+     */
+    public function getJsonData()
+    {
+        return $this->json_data;
     }
    #----------------------------------------------------------------  
 }

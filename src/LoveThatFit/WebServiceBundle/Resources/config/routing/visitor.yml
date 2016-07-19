@@ -6,3 +6,14 @@ visitor_save_info:
     pattern:  /visitor/save_info
     defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:saveInfo }
 
+visitor_index:
+    pattern:  /visitor/index
+    defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:index }
+
+visitor_register:
+    pattern:  /visitor/register
+    defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:register }
+
+visitor_update:
+    pattern:  /visitor/update
+    defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:update }

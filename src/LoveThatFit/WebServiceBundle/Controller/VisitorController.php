@@ -23,16 +23,19 @@ class VisitorController extends Controller {
         return new response(json_encode($_SERVER['HTTP_USER_AGENT']));      
     }
     #---------------------------------------------------
-  public function saveInfoAction() {
-      
-        $decoded = $this->getRequest()->request->all();
+      public function registerAction() {
+        return $this->render('LoveThatFitWebServiceBundle:Visitor:register.html.twig');        
+    }
+    #---------------------------------------------------
+  public function saveInfoAction() {      
+        $decoded = $this->getRequest()->request->all();        
         $v = new Visitor();
         $v->setEmail($decoded['email']);
         $v->setBrowser($_SERVER['HTTP_USER_AGENT']);
         #$v->setDevice('sfdsfdsfd');
         $v->setIpAddress($this->get_client_ip());
         #$v->setCountry('sfdsfdsfd');
-        $v->setCreatedAt(new \DateTime('now'));
+        $v->setCreatedAt(new \DateTime('now'));        
         $em = $this->getDoctrine()->getManager();
         $em->persist($v);
         $em->flush();
@@ -77,6 +80,28 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
-    
+
+public function updateAction() {      
+        $decoded = $this->getRequest()->request->all();        
+        return  new response($decoded['email']);
+        $visitor = $this->get('site.helper.visitor')->findByEmail($decoded['email']);                
+        return  new response(json_encode($visitor->getId()));
+        #find user by email
+        #if already exists update user 
+        # if not create the user
+        # return thanks message
+        $v = new Visitor();
+        $v->setEmail($decoded['email']);
+        $v->setBrowser($_SERVER['HTTP_USER_AGENT']);
+        #$v->setDevice('sfdsfdsfd');
+        $v->setIpAddress($this->get_client_ip());
+        #$v->setCountry('sfdsfdsfd');
+        $v->setCreatedAt(new \DateTime('now'));
+        $v->setJsonData(json_encode($decoded));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($v);
+        $em->flush();
+        return new response(json_encode('save visitor info'));      
+    }       
 }
 

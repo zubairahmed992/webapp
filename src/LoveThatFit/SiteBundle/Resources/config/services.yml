@@ -27,5 +27,11 @@ services:
       arguments:
           container: "@service_container"
 
-
+  site.helper.visitor:
+        class: LoveThatFit\SiteBundle\Entity\VisitorHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\SiteBundle\Entity\Visitor
+            container: "@service_container"
       
