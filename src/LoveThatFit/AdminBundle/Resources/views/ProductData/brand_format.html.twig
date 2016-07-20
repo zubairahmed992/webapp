@@ -157,7 +157,17 @@
                                           <input type="text" id="product_layering" name="product_layering" required="required" maxlength="255">
                                       </div>
                                   </div>
-                          </div>
+
+                                  {#gentrate Size text Boxes#}
+                                        {#{{ dump(sizeConfiguration) }}#}
+                                      <label> Slect Sizes </label>
+                                          {% for  brandName in sizeConfiguration %}
+                                              <br>
+                                          {% for  brand in brandName %}
+                                              {{ brand }} <input type="text" name="{{ brandName[0] }}[]" style="width: 30px" > </input>
+                                          {% endfor %}
+                                          {% endfor %}
+                                       </div>
                               <p>
                                   <button type="submit">Save</button>
                               </p>

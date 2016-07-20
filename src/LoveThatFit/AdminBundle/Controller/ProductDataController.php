@@ -37,8 +37,20 @@ class ProductDataController extends Controller {
         //$brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         $brandNames = $this->get('admin.helper.brand')->getBrandNameId();
        // var_dump($brandObj);
+        $sizeConfiguration = array(
+                                    array('size cm','S','M','L','XL','XXL','Tolran ce'),
+                                    array('Cross Ches','','','','','',''),
+                                    array('Cross Chest','','','','','',''),
+                                    array('HSP Lenght','','','','','',''),
+                                    array('NECK OPENING','','','','','',''),
 
-        return $this->render('LoveThatFitAdminBundle:ProductData:brand_format.html.twig',array('brandNames' => $brandNames));
+                                  );
+       // $sizeConfiguration[1] = ('Cross Chest',);
+        //$sizeConfiguration[2] = ('HSP Lenght','','','','','','');
+       //// $sizeConfiguration[3] = ('NECK OPENING','','','','','','');
+       // $sizeConfiguration[4] = ('Bsck Neck Depth','','','','','','');
+
+        return $this->render('LoveThatFitAdminBundle:ProductData:brand_format.html.twig',array('brandNames' => $brandNames,'sizeConfiguration'=>$sizeConfiguration));
         die( "csvBrandSpecification");
     }
 
@@ -49,12 +61,12 @@ class ProductDataController extends Controller {
             $val[$name] = $value;
         }
         print_R($val['product_Brand']);
-        $em = $this->getDoctrine()->getManager();
-        $pc = new BrandFormatImport();
-        $pc->setBrandName($val['product_Brand']);
-        $pc->setBrandFormat(json_encode($val));
-        $em->persist($pc);
-        $em->flush();
+//        $em = $this->getDoctrine()->getManager();
+//        $pc = new BrandFormatImport();
+//        $pc->setBrandName($val['product_Brand']);
+//        $pc->setBrandFormat(json_encode($val));
+//        $em->persist($pc);
+//        $em->flush();
         print_r($val);
        // $data = implode(',',$_POST);
        // print_r(explode(",",$data));
@@ -65,6 +77,7 @@ class ProductDataController extends Controller {
     {
         //$brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
        $brandNames = $this->get('admin.helper.brand')->getBrandNameId();
+
         // var_dump($brandObj);
         return $this->render('LoveThatFitAdminBundle:ProductData:import_multiple_brand_csv.html.twig',array('brandNames' => $brandNames));
         die("okadfasdf");
