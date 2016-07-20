@@ -62,8 +62,8 @@ class VisitorHelper {
     }
 #------------------------------------------------------
 
-    public function findByEmail($email) {
-        return $this->repo->findByEmail($email);
+    public function findOneByEmail($email) {
+        return $this->repo->findOneByEmail($email);
     }
 
 }

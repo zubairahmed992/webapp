@@ -80,13 +80,14 @@ function hit_service(){
                url: "../visitor/update",
                data: visitor,  
                dataType: "json",
-               success: function(data){
+               success: function(data){                 
                    alert(data);                    
                 },
-               failure: function(errMsg) {
+               failure: function(errMsg) {                   
                    alert(errMsg);
                }
          });    
+        
 }
 </script>
 
