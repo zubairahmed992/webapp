@@ -71,23 +71,26 @@ class AlgorithmController extends Controller {
             $products = $this->get('admin.helper.product')->listProductByIds($ids);
             #$products = $this->get('admin.helper.product')->listProductsByGenderAndIds($user->getGender(), $ids);
         }else{
-            $products = $this->get('admin.helper.product')->listAll($decoded['page'], $decoded['limit']);
-            #$products = $this->get('admin.helper.product')->listAllByGender($user->getGender(), $decoded['page'],
+            #$products = $this->get('admin.helper.product')->listAll($decoded['page'], $decoded['limit']);
+            $products = $this->get('admin.helper.product')->listAllByGender($user->getGender(), $decoded['page'],$decoded['limit']);
         }
         
         $pa= array(); 
         #$user = $this->get('user.helper.user')->find($decoded['user_id']);
         $algo = new FitAlgorithm2($user);
-                
+        $serial = ($decoded['page']*$decoded['limit'])+1;
         foreach ($products as $p) {
             $algo->setProduct($p);
             $fb = $algo->getFeedBack();
             if (array_key_exists('recommendation', $fb)) {
                 $pa[$p->getId()] = array('name' => $p->getName(),
                     'fit_index'=>$fb['recommendation']['fit_index'],
+                    'clothing_type' => $p->getClothingType()->getName(),
                     'size'=>$fb['recommendation']['description'],
+                    'serial'=>$serial,
                     );
             }
+            $serial++;
         }
         return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations.html.twig', array(                    
             'products' => $pa,

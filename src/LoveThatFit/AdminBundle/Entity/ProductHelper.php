@@ -220,11 +220,6 @@ class ProductHelper{
     }        
 //-------------------------------------------------------
 
-    public function listProductsByGenderAndIds($gender, $ids) {
-        return $this->repo->listProductsByIds($gender, $ids);              
-    }        
-    
-    
     public function getListWithPagination($page_number = 0, $sort = 'id') {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
