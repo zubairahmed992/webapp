@@ -64,10 +64,59 @@ class ProductRepository extends EntityRepository {
             return "null";
         }
     }
+    
+    //-------------------------------------------------------------------------------------
+    public function listProductsByGender($gender, $page_number = 0, $limit = 0, $sort = 'id') {
+
+        if ($limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p 
+                        WHERE p.gender = :gender 
+                        ORDER BY p.' . $sort . ' ASC')
+                    ->setParameter('gender', $gender);
+        }else{
+            if ($page_number <= 0) {
+                    $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  
+                        WHERE p.gender = :gender 
+                        ORDER BY p.' . $sort . ' ASC')
+                    ->setParameter('gender', $gender)        
+                    ->setMaxResults($limit);
+            }else{
+                    $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  
+                        WHERE p.gender = :gender 
+                        ORDER BY p.' . $sort . ' ASC')
+                    ->setParameter('gender', $gender)
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+            }
+        }
+        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+
     //-------------------------------------------------------------------------------------
     public function listProductsByIds($ids) {        
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.id IN (:ids)')->setParameter('ids', $ids);        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+    //-------------------------------------------------------------------------------------
+    public function listProductsByGenderAndIds($gender, $ids) {        
+        $query = $this->getEntityManager()
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p 
+                    WHERE p.id IN (:ids) AND
+                    p.gender = :gender')
+                ->setParameters(array('id' => $ids, 'gender' => $gender));        
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

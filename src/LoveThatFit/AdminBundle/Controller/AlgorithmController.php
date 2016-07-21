@@ -63,16 +63,20 @@ class AlgorithmController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
         #return new Response($decoded['ids']);
         #if range ...................
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+        
         if (strlen(ltrim($decoded['ids']))>0){
             $ids=explode(',', $decoded['ids']);
             
             $products = $this->get('admin.helper.product')->listProductByIds($ids);
+            #$products = $this->get('admin.helper.product')->listProductsByGenderAndIds($user->getGender(), $ids);
         }else{
             $products = $this->get('admin.helper.product')->listAll($decoded['page'], $decoded['limit']);
+            #$products = $this->get('admin.helper.product')->listAllByGender($user->getGender(), $decoded['page'],
         }
         
         $pa= array(); 
-        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+        #$user = $this->get('user.helper.user')->find($decoded['user_id']);
         $algo = new FitAlgorithm2($user);
                 
         foreach ($products as $p) {
