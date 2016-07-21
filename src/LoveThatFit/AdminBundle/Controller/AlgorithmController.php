@@ -96,4 +96,51 @@ class AlgorithmController extends Controller {
             'products' => $pa,
                 ));
     }
+
+    #--------------------------------------------------
+    public function printUserProductMarathonAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        #return new Response($decoded['ids']);
+        #if range ...................
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+
+        if (strlen(ltrim($decoded['ids']))>0){
+            $ids=explode(',', $decoded['ids']);
+
+            $products = $this->get('admin.helper.product')->listProductByIds($ids);
+            #$products = $this->get('admin.helper.product')->listProductsByGenderAndIds($user->getGender(), $ids);
+        }else{
+            #$products = $this->get('admin.helper.product')->listAll($decoded['page'], $decoded['limit']);
+            $products = $this->get('admin.helper.product')->listAllByGender($user->getGender(), $decoded['page'],$decoded['limit']);
+        }
+
+        $pa= array();
+        #$user = $this->get('user.helper.user')->find($decoded['user_id']);
+        $algo = new FitAlgorithm2($user);
+        $serial = ($decoded['page']*$decoded['limit'])+1;
+        $last_item='';
+        foreach ($products as $p) {
+            $algo->setProduct($p);
+            $fb = $algo->getFeedBack();
+            if (array_key_exists('recommendation', $fb)) {
+                if($p->getClothingType()->getName() == $last_item){
+                    $name = '';
+                }else{
+                    $name = $p->getClothingType()->getName();
+                }
+                $pa[$p->getId()] = array('name' => $p->getName(),
+                    'fit_index'=>$fb['recommendation']['fit_index'],
+                    'clothing_type' => $name,
+                    'size'=>$fb['recommendation']['description'],
+                    'serial'=>$serial,
+                );
+            }
+            $serial++;
+            $last_item = $p->getClothingType()->getName();
+        }
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_print_recommendations.html.twig', array(
+            'products' => $pa,
+        ));
+    }
 }

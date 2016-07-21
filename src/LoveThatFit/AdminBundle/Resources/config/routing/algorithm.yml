@@ -14,3 +14,6 @@ admin_fit_algorithm2_user_product_marathon:
     pattern:  /admin/fit_algorithm2/user_product_marathon
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:userProductMarathon}
 
+admin_fit_algorithm2_print_user_product_marathon:
+    pattern:  /admin/fit_algorithm2/print_user_product_marathon
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:printUserProductMarathon}
