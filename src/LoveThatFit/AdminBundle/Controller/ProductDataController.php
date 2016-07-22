@@ -37,36 +37,53 @@ class ProductDataController extends Controller {
         //$brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         $brandNames = $this->get('admin.helper.brand')->getBrandNameId();
        // var_dump($brandObj);
-        $sizeConfiguration = array(
-                                    array('size cm','S','M','L','XL','XXL','Tolran ce'),
-                                    array('Cross Ches','','','','','',''),
-                                    array('Cross Chest','','','','','',''),
-                                    array('HSP Lenght','','','','','',''),
-                                    array('NECK OPENING','','','','','',''),
 
-                                  );
-       // $sizeConfiguration[1] = ('Cross Chest',);
-        //$sizeConfiguration[2] = ('HSP Lenght','','','','','','');
-       //// $sizeConfiguration[3] = ('NECK OPENING','','','','','','');
-       // $sizeConfiguration[4] = ('Bsck Neck Depth','','','','','','');
+        $size_types1 = array(
+            'woman' => array( 'letter' => array ('XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
+                              '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X'
+                            ),
+            'number' => array (00, 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30),
+            'waist' => array (23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36)));
 
-        return $this->render('LoveThatFitAdminBundle:ProductData:brand_format.html.twig',array('brandNames' => $brandNames,'sizeConfiguration'=>$sizeConfiguration));
+        $size_types_letters = array('XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
+                '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X');
+        $size_types_number = array(00, 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30);
+        $size_types_waist = array (23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);
+
+        $fit_points=array('tee_knit', 'neck', 'shoulder_across_front','shoulder_across_back','shoulder_length','arm_length',
+                        'bicep','triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'back_waist',
+                        'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle','hem_length');
+
+        $size_fit_points = array($fit_points,$size_types_letters, $size_types_number, $size_types_waist);
+
+        return $this->render('LoveThatFitAdminBundle:ProductData:brand_format.html.twig',array('brandNames' => $brandNames,'size_fit_points'=>$size_fit_points));
         die( "csvBrandSpecification");
     }
 
-    public function saveBrandSpecificationAction()
+//    public function AutoCompleteProductSearchResultAction(Request $request) {
+//        $decoded  = $request->request->all();
+//        $search_result_user_data = $this->get('admin.helper.product')->getSearchData($decoded["term"]);
+//        return new Response(json_encode($search_result_user_data));
+    //$id = $request->request->get('sizeValue');
+
+//    }
+
+
+
+    public function saveBrandSpecificationAction(Request $request)
     {
+
         var_dump($_POST);
         foreach ($_POST as $name => $value) {
             $val[$name] = $value;
         }
-        print_R($val['product_Brand']);
-//        $em = $this->getDoctrine()->getManager();
-//        $pc = new BrandFormatImport();
-//        $pc->setBrandName($val['product_Brand']);
-//        $pc->setBrandFormat(json_encode($val));
-//        $em->persist($pc);
-//        $em->flush();
+       // print_R($val['product_Brand']);
+        $em = $this->getDoctrine()->getManager();
+        $pc = new BrandFormatImport();
+        $pc->setBrandName($val['product_Brand']);
+        $pc->setBrandFormat(json_encode($val));
+        $em->persist($pc);
+        $em->flush();
         print_r($val);
        // $data = implode(',',$_POST);
        // print_r(explode(",",$data));

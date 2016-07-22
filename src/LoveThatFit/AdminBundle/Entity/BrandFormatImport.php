@@ -30,7 +30,7 @@ class BrandFormatImport {
     /**
      * @var string
      *
-     * @ORM\Column(name="brand_format", type="string", length=1255)
+     * @ORM\Column(name="brand_format", type="string", length=25555)
      */
     private $brand_format;
 

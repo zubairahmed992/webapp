@@ -48,6 +48,8 @@ admin_product_data_csv_brand_specification:
 admin_product_data_save_brand_specification:
     pattern:  /admin/product_data/save_brand_specification
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:saveBrandSpecification }
+    requirements:
+        _method:  POST
 
 #--------------------------------- Open Multiple Brand CSV Form  -------------
 admin_product_data_multiple_brand_csv:
