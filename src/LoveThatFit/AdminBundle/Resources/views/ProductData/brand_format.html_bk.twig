@@ -5,29 +5,39 @@
 {% block body %}
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
     <script type="application/javascript">
-        jQuery(document).ready(function () {
+        jQuery(document).ready(function() {
             $(".selectSize").change(function () {
-                var size_type = $.parseJSON(this.value);
-                var siz_genrate = $('.size_genrate');
-                var fit_points = $('.fit_point').val();
-                var result = $.parseJSON(fit_points);
-                siz_genrate.empty();
-                var tableData = '';
-                tableData += "<table><tr><th> Size Lable </th>";
-                $.each(size_type, function (k, size_label) {
-                    tableData += "<th>" + size_label + "</th>";
-                });
-                tableData += "</tr>";
-                $.each(result, function (k, fit_point_value) {
-                    tableData += "<tr><td>" + fit_point_value + "</td>";
-                    $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + fit_point_value + "_" + v + " style='width: 40px'/> </td>";
+                    //source: "autocomplete_user_search_result",
+                alert(JSON.stringify(this.value));
+                var ar ={sizeValue:this.value};
+//                $.ajax({
+//                    type: "POST",
+//                    url: "/recherche/ajax",
+//                    data: {
+//                        zoom: e.target.getZoom()
+//                    },
+//                    dataType: "json",
+//                    success: function(response) {
+//                        console.log(response);
+//                    }
+//                });
+
+                //source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/webapp/web/app_dev.php/admin/product_data/save_brand_specification",
+
+                        data: {sizeValue:this.value},
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        success: function (response) {
+                            alert("okay");
+                          alert( JSON.stringify(response))
+                            console.log(response);
+                        }
                     });
-                    tableData += "</tr>";
-                });
-                tableData += "</table>";
-                siz_genrate.append(tableData);
-            })
+                })
+           // })
         })
     </script>
 
@@ -162,19 +172,36 @@
 
                                   <div class="row-fluid show-grid">
                                       <div class="span3">Slect Sizes</div>
-
+                                      {{ dump(sizeConfiguration) }}
                                       <div class="span3">
-                                          <select name="select_size"  class="selectSize">
-                                              <option selected> Select Size</option>
-                                              <option value="{{ size_fit_points[1]|json_encode() }}"> letter</option>
-                                              <option value="{{ size_fit_points[2]|json_encode() }}"> number</option>
-                                              <option value="{{ size_fit_points[3]|json_encode() }}"> waist</option>
+                                          <select name="select_size" class="selectSize">
+                                              <option value="letter"> Select Size</option>
+                                              {#<option value={{ sizeConfiguration|json_encode() }}> letter</option>#}
+                                              <option value="number"> number</option>
+                                              <option value="waist"> waist</option>
 
                                           </select>
                                       </div>
-                                      <input type="hidden" disabled value="{{ size_fit_points[0]|json_encode() }}" name="fit_point" class="fit_point">
                                   </div>
-                                  <div class="size_genrate"> </div>
+
+                                  {#gentrate Size text Boxes#}
+                                        {#{{ dump(sizeConfiguration) }}#}
+
+                                          {% set flag = 0 %}
+                                          {% for  brandName in sizeConfiguration[1] %}
+
+                                              <br>
+                                          {% for  brand in sizeConfiguration[0] %}
+                                              {% if flag == 0 %}
+                                                  {{ brand }}
+                                              {% else  %}
+                                              {#{{ brand }} <input type="text" name="{{ brand }}[]" style="width: 30px" > </input>#}
+                                              {% endif %}
+
+                                          {% endfor %}
+                                              {% set flag = 1 %}
+                                          {% endfor %}
+                                       </div>
                               <p>
                                   <button type="submit">Save</button>
                               </p>
