@@ -143,4 +143,69 @@ class AlgorithmController extends Controller {
             'products' => $pa,
         ));
     }
+
+    function downloadCsvResultsAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        #return new Response($decoded['ids']);
+        #if range ...................
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+        if (strlen(ltrim($decoded['ids']))>0){
+            $ids=explode(',', $decoded['ids']);
+
+            $products = $this->get('admin.helper.product')->listProductByIds($ids);
+            #$products = $this->get('admin.helper.product')->listProductsByGenderAndIds($user->getGender(), $ids);
+        }else{
+            #$products = $this->get('admin.helper.product')->listAll($decoded['page'], $decoded['limit']);
+            $products = $this->get('admin.helper.product')->listAllByGender($user->getGender(), $decoded['page'],$decoded['limit']);
+        }
+
+        $pa= array();
+        #$user = $this->get('user.helper.user')->find($decoded['user_id']);
+        $algo = new FitAlgorithm2($user);
+
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachement; filename="data.csv";');
+        $f = fopen('php://output', 'w');
+        $is_first_element=true;
+        $last_item='';
+
+        # Then loop through the rows
+        foreach ($products as $p) {
+            $algo->setProduct($p);
+            $fb = $algo->getFeedBack();
+            if (array_key_exists('recommendation', $fb)) {
+                if($p->getClothingType()->getName() == $last_item){
+                    $name = '';
+                }else{
+                    $name = $p->getClothingType()->getName();
+                }
+                $pa = array(
+                    'user_id' => $decoded['user_id'],
+                    'email' => $user->getEmail(),
+                    'clothing_type' => $name,
+                    'product_id' => $p->getId(),
+                    'name' => $p->getName(),
+                    'size'=>$fb['recommendation']['description'],
+                    'fit_index'=>$fb['recommendation']['fit_index'],
+                );
+
+                if ($is_first_element){
+
+                    fputcsv($f, array_keys($pa));
+                    fputcsv($f, $pa);
+                    $is_first_element=false;
+                }else{
+                    fputcsv($f, $pa);
+                }
+            }
+
+            //$last_item = $p->getClothingType()->getName();
+        }
+        # Close the stream off
+        fclose($f);
+        return new Response('');
+
+    }
 }
