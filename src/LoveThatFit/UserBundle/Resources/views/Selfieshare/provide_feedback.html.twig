@@ -198,8 +198,12 @@ $("#savebutton").click(function(){
        </div>
 
         <div id="loginScreen">
+            <div id="popup_logo"><img src="{{asset('bundles/lovethatfit/site/images/logo_popup.png')}}"></img>
+
+            </div>
+            <div id="popup_tagline">Snap - Style - Share - Shop</div>
             <div class="forml">
-                <div class="heading">Kindly fillup the form below</div>
+                <div class="heading">Tell Morgan what you think!</div>
                 <form action="" method="post">
                     <div class="form_ctrl">
                         <input type="text" name="name" id="name" placeholder="Name" required>
@@ -207,9 +211,7 @@ $("#savebutton").click(function(){
                     <div class="form_ctrl">
                         <input type="text" name="email" id="email" placeholder="Email" required>
                     </div>
-                    <div class="form_ctrl">
-                        <input type="text" name="phone" id="phone" placeholder="Phone">
-                    </div>
+
                     <div class="form_ctrl">
 
                         <button id="savebutton" type="button" name="button">Submit</button>
