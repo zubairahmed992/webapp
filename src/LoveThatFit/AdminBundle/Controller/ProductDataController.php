@@ -76,12 +76,8 @@ class ProductDataController extends Controller
 
         var_dump($_POST);
         foreach ($_POST as $name => $value) {
-//            if($name == "select_size"){
-//              continue;
-//            }
             $val[$name] = $value;
         }
-        // print_R($sizes['select_size']);
         $em = $this->getDoctrine()->getManager();
         $pc = new BrandFormatImport();
         $pc->setBrandName($val['product_Brand']);
@@ -89,19 +85,14 @@ class ProductDataController extends Controller
         $em->persist($pc);
         $em->flush();
         print_r($val);
-        // $data = implode(',',$_POST);
-        // print_r(explode(",",$data));
-        die("csv_brand_specification_save");
+        die("Successfully Save");
+
     }
 
     public function csvMultipleBrandImportFormAction()
     {
-        //$brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         $brandNames = $this->get('admin.helper.brand')->getBrandNameId();
-
-        // var_dump($brandObj);
         return $this->render('LoveThatFitAdminBundle:ProductData:import_multiple_brand_csv.html.twig', array('brandNames' => $brandNames));
-        die("okadfasdf");
     }
 
 
@@ -117,51 +108,28 @@ class ProductDataController extends Controller
             ->getQuery()
             ->getResult();
         $datJson = $data[0]['brand_format'];
-        //  echo $datJson;
         $productData = json_decode($datJson, true);
-
-        echo "<pre>";
-       // print_r($productData['select_size']);
-        // echo $_POST['productImport'];
-      //  var_dump($_FILES['productImport']['tmp_name']);
-        //   die("ofkayasfdsd");
-
         echo "<h1> Multiple Product CSV Read</h1>";
         $row = 0;
         if (($handle = fopen($_FILES['productImport']['tmp_name'], "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $num = count($data);
                 $raowValue[$row] = $data;
-            $row++;
-                for ($c = 0; $c < $num; $c++) {
-                    // if(in_array($data[$c],$productData))
-                    //   echo $data[$c]. "<br />\n";
-                }
+                $row++;
             }
             fclose($handle);
         }
-
-
         $rows = 0;
         foreach ($raowValue as $key => $value) {
             $num = count($value);
-            // echo $num;
             for ($c = 0; $c < $num; $c++) {
-                // if(in_array($data[$c],$productData))
-                //   echo $data[$c]. "<br />\n";
-                //    echo $raowValue[$rows][$c]. "<br />\n";
-                $aaa = $rows . "," . $c;
+                    $aaa = $rows . "," . $c;
                 if (in_array($aaa, $productData)) {
                     $key1 = array_search($aaa, $productData);
-                    ///  echo $key1."<br>";
-                    $productSave[$key1] = $raowValue[$rows][$c];
+                        $productSave[$key1] = $raowValue[$rows][$c];
                 }
-
-
-            }
+             }
             $rows++;
-
-
         }
         $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
             'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'back_waist',
@@ -169,67 +137,32 @@ class ProductDataController extends Controller
         $product_size = trim($productData['select_size'], '[');
         $product_size_value = trim($product_size, ']');
         $size = explode(',', $product_size_value);
-
         foreach ($fit_points as $keys => $fit_point_val) {
             foreach ($size as $ke => $selected_size_val) {
                 $fit_point[$fit_point_val . "_" . trim($selected_size_val, '""')] = '';
             }
         }
         $result_array = array_intersect_key($productSave, $fit_point);
-
-
-      //  print_r($result_array1);
-      //  print_r($result_array);
-       // print_r($productSave);
-
-
         foreach ($productSave as $key => $val) {
 
-            if(array_key_exists ($key,$result_array)){
+            if (array_key_exists($key, $result_array)) {
                 break;
             } else {
                 echo $key . " : " . $val . "<br>";
             }
         }
-        echo "<p>";
 
-//        foreach ($productSave as $keys => $fit_point_val) {
-//            echo $key . " : " . $val . "<br>";
-//            if()
-//        }
-
-
-//        echo "<table>";
-//        foreach($fit_point as $keys => $fit_point_val) {
-//            $a = true;
-//            echo "<tr><td>".$keys."</td>";
-//            foreach($size as $ke => $selected_size_val) {
-//                //$fit_point[ $fit_point_val."_".trim($selected_size_val,'""')]='';
-//                echo "<td>".trim($selected_size_val,'""')."</td>";
-//                if(array_key_exists($keys,$result_array) AND $a){
-//                    echo "<td>".$result_array[$keys]."</td>";
-//                    $a=false;
-//                }
-//            }
-//            echo "</tr>";
-//            continue;
-//        }
-//        echo "</table>";
-
-
-        echo "<table>";
+        echo "<p><table>";
         foreach ($fit_points as $keys => $fit_point_val) {
-            $a = true;
             echo "<tr><td>" . $fit_point_val . "</td>";
             foreach ($size as $ke => $selected_size_val) {
                 if ($fit_point_val == "sizes") {
                     echo "<td>" . trim($selected_size_val, '""') . "</td>";
                 } else {
                     $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
-                    if (array_key_exists($fit_points_key, $result_array) AND $a) {
+                    if (array_key_exists($fit_points_key, $result_array)) {
                         echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
                         // echo "<td>" . $result_array[$fit_points_key] . "</td>";
-                        $a = false;
                     } else {
                         echo "<td><input type='text' style='width:40px'></td>";
                     }
