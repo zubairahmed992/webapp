@@ -51,6 +51,38 @@ class FitAlgorithm2 {
             return $cm;
         }
     }
+    #-----------------------------------------------------
+    function getFeedBackForSizeTitle($size) {
+
+        if ($size == null || !isset($size))
+            return 'no size';
+
+        $fb = $this->getFeedBack();
+        if (array_key_exists('recommendation', $fb)) {
+            if ($fb['recommendation']['title'] == $size) { # if it matches best fit
+                return array(
+                    'feedback' => $fb['recommendation'],
+                );
+            }
+        }
+        if (array_key_exists('feedback', $fb)) {
+            foreach ($fb['feedback'] as $size_fb) {
+                if ($fb['recommendation']['title'] == $size) {
+                    if (array_key_exists('recommendation', $fb)) {
+                        return array(
+                            'feedback' => $size_fb,
+                            'recommendation' => $fb['recommendation'],
+                        );
+                    }else{
+                        return array(
+                            'feedback' => $size_fb,
+                        );
+                    }
+                }
+            }
+        }
+        return null;
+    }
 #-----------------------------------------------------    
     function getSizeFeedBack($size) {
 

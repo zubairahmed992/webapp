@@ -21,3 +21,11 @@ admin_fit_algorithm2_print_user_product_marathon:
 admin_fit_algorithm2_download_csv_result:
     pattern:  /admin/fit_algorithm2/download_csv_results
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:downloadCsvResults}
+
+admin_test_demo:
+    pattern:  /admin/fit_algorithm2/user_test_demo
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:userTestDemo}
+
+admin_test_demo_products:
+    pattern:  /admin/fit_algorithm2/user_test_demo_products
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:userTestDemoProducts}
