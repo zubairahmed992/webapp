@@ -143,6 +143,8 @@ class ProductDataController extends Controller
             }
         }
         $result_array = array_intersect_key($productSave, $fit_point);
+        echo  "<pre>";
+      //  print_r($result_array);
         foreach ($productSave as $key => $val) {
 
             if (array_key_exists($key, $result_array)) {
