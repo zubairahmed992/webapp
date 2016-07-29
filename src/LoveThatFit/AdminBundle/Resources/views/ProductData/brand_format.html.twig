@@ -29,8 +29,24 @@
                 //tableData += "</table>";
                 siz_genrate.append(tableData);
             });
+            var fit_poit_condition =true;
             $(".add_size").click(function () {
                 var siz_lable_value = $('#product_fit_modle_size').val();
+                var fit_point_labels='';
+                var fit_point = $('.fit_point').val();
+                    if(fit_poit_condition){
+                        fit_point_labels = $.parseJSON(fit_point)
+                        fit_poit_condition=false;
+                } else{
+                        fit_point_labels =fit_point
+
+                    }
+
+                fit_point_labels += ","+siz_lable_value;
+                $('.fit_point').val(fit_point_labels)
+
+
+
                 var size_type =  $('.selectSize :selected').val();
                 size_type = $.parseJSON(size_type);
                 var siz_genrate = $('.size_genrate');
@@ -206,7 +222,7 @@
 
                                         </select>
                                     </div>
-                                    <input type="hidden" disabled value="{{ size_fit_points[0]|json_encode() }}"
+                                    <input type="hidden"    value="{{ size_fit_points[0]|json_encode() }}"
                                            name="fit_point" class="fit_point">
                                 </div>
                                 <div class="size_genrate"></div>

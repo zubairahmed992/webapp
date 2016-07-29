@@ -107,6 +107,7 @@ class ProductDataController extends Controller
             ->getQuery()
             ->getResult();
         $datJson = $data[0]['brand_format'];
+
         $productData = json_decode($datJson, true);
         echo "<h1> Multiple Product CSV Read</h1>";
         $row = 0;
@@ -122,17 +123,19 @@ class ProductDataController extends Controller
         foreach ($raowValue as $key => $value) {
             $num = count($value);
             for ($c = 0; $c < $num; $c++) {
-                    $aaa = $rows . "," . $c;
+                $aaa = $rows . "," . $c;
                 if (in_array($aaa, $productData)) {
                     $key1 = array_search($aaa, $productData);
-                        $productSave[$key1] = $raowValue[$rows][$c];
+                    $productSave[$key1] = $raowValue[$rows][$c];
                 }
-             }
+            }
             $rows++;
         }
-        $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
-            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+//        $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
+//            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
+//            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        $fit_points = explode(',', $productData['fit_point']);
+        array_unshift($fit_points, 'sizes');
         $product_size = trim($productData['select_size'], '[');
         $product_size_value = trim($product_size, ']');
         $size = explode(',', $product_size_value);
@@ -142,10 +145,7 @@ class ProductDataController extends Controller
             }
         }
         $result_array = array_intersect_key($productSave, $fit_point);
-        echo  "<pre>";
-      //  print_r($productSave);
-     //   print_r($productData);
-     //  print_r($result_array);
+        echo "<pre>";
         foreach ($productSave as $key => $val) {
 
             if (array_key_exists($key, $result_array)) {
@@ -154,22 +154,33 @@ class ProductDataController extends Controller
                 echo $key . " : " . $val . "<br>";
             }
         }
-
+        echo "<pre>";
         echo "<p><table>";
         foreach ($fit_points as $keys => $fit_point_val) {
             echo "<tr><td>" . $fit_point_val . "</td>";
+            $grade_rule = 0;
             foreach ($size as $ke => $selected_size_val) {
+                $grade_rule = $grade_rule + 1;
                 if ($fit_point_val == "sizes") {
                     echo "<td>" . trim($selected_size_val, '""') . "</td>";
+                    echo "<td>GR </td>";
                 } else {
                     $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
                     if (array_key_exists($fit_points_key, $result_array)) {
                         echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
-                        // echo "<td>" . $result_array[$fit_points_key] . "</td>";
+                        $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
+                        if (isset($result_array[$gr])) {
+                            $gr_value = $result_array[$gr] - $result_array[$fit_points_key];
+                            echo "<td><input type='text' style='width:40px' value=" . $gr_value . "> </td>";
+                        } else {
+                            echo "<td><input type='text' style='width:40px'> </td>";
+                        }
                     } else {
+                        echo "<td><input type='text' style='width:40px'></td>";
                         echo "<td><input type='text' style='width:40px'></td>";
                     }
                 }
+
             }
             echo "</tr>";
         }
