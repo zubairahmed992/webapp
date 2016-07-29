@@ -53,8 +53,7 @@ class ProductDataController extends Controller
         $size_types_waist = array(23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);
 
         $fit_points = array('tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'back_waist',
-            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
 
         $size_fit_points = array($fit_points, $size_types_letters, $size_types_number, $size_types_waist);
 
@@ -132,7 +131,7 @@ class ProductDataController extends Controller
             $rows++;
         }
         $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'back_waist',
+            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
             'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
         $product_size = trim($productData['select_size'], '[');
         $product_size_value = trim($product_size, ']');
@@ -144,7 +143,9 @@ class ProductDataController extends Controller
         }
         $result_array = array_intersect_key($productSave, $fit_point);
         echo  "<pre>";
-      //  print_r($result_array);
+      //  print_r($productSave);
+     //   print_r($productData);
+     //  print_r($result_array);
         foreach ($productSave as $key => $val) {
 
             if (array_key_exists($key, $result_array)) {

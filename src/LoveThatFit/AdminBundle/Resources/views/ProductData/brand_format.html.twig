@@ -7,6 +7,7 @@
     <script type="application/javascript">
         jQuery(document).ready(function () {
             $(".selectSize").change(function () {
+                $('.add_size_row').show();
                 var size_type = $.parseJSON(this.value);
                 var siz_genrate = $('.size_genrate');
                 var fit_points = $('.fit_point').val();
@@ -19,15 +20,28 @@
                 });
                 tableData += "</tr>";
                 $.each(result, function (k, fit_point_value) {
-                    tableData += "<tr><td>" + fit_point_value + "</td>";
+                    tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
                     $.each(size_type, function (k, v) {
                         tableData += "<td>  <input type='text' name=" + fit_point_value + "_" + v + " style='width: 40px'/> </td>";
                     });
                     tableData += "</tr>";
                 });
-                tableData += "</table>";
+                //tableData += "</table>";
                 siz_genrate.append(tableData);
-            })
+            });
+            $(".add_size").click(function () {
+                var siz_lable_value = $('#product_fit_modle_size').val();
+                var size_type =  $('.selectSize :selected').val();
+                size_type = $.parseJSON(size_type);
+                var siz_genrate = $('.size_genrate');
+                var tableData = '';
+                tableData += "<table><tr><td class='span2'>"+ siz_lable_value + "</td>";
+                $.each(size_type, function (k, v) {
+                    tableData += "<td>  <input type='text' name=" + siz_lable_value + "_" + v + " style='width: 40px'/> </td>";
+                });
+                tableData += "</tr></table>";
+                siz_genrate.append(tableData);
+            });
         })
     </script>
 
@@ -171,6 +185,13 @@
                                                maxlength="255">
                                     </div>
                                 </div>
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Fit Model Size</div>
+                                    <div class="span3">
+                                        <input type="text" id="product_stretch_type" name="product_fit_modle_size"
+                                               maxlength="255">
+                                    </div>
+                                </div>
 
 
                                 <div class="row-fluid show-grid">
@@ -189,6 +210,16 @@
                                            name="fit_point" class="fit_point">
                                 </div>
                                 <div class="size_genrate"></div>
+
+                                <div class="row-fluid show-grid add_size_row" style="display: none">
+                                    <div class="span3">Enter Size Lable</div>
+                                    <div class="span3">
+                                        <input type="text" id="product_fit_modle_size" name="product_fit_modle_size"
+                                               maxlength="255">
+                                        <button type="button" class="add_size">Add Size Lable</button>
+                                    </div>
+
+                                </div>
                                 <p>
                                     <button type="submit">Save</button>
                                 </p>
