@@ -95,7 +95,7 @@ security:
             memory:
                 users:
                     waq:  { password: d43051a23a3d69631f01fc55dbaa2ec62dff1720, roles: 'ROLE_ADMIN' }
-                    admin: { password: d9d36ff8334e0347da346125bd5ddf89265c074e, roles: 'ROLE_ADMIN' }
+                    admin: { password: 00c7469da1fc95666e3fce191fe0476373225616, roles: 'ROLE_ADMIN' }
                     developer: { password: 9c80446cde6cbab69bb83eb452d9d882941190d5, roles: 'ROLE_ADMIN' }
                     designer: { password: 999bf90e871b2a8869c396c031b7b5ae223a0b32, roles: 'ROLE_ADMIN' }
                     julianne: { password: 4796e2401d5e278f4c3a337ba632ac0d515acfc5, roles: 'ROLE_ADMIN' }
