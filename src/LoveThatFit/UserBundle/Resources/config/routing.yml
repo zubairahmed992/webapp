@@ -205,6 +205,10 @@ admin_logout:
 login:
     pattern:   /login
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration }
+
+login_index:
+    pattern:   /login_index
+    defaults: { _controller: LoveThatFitUserBundle:Registration:loginIndex }    
     
 login_check:
     pattern:   /login_check

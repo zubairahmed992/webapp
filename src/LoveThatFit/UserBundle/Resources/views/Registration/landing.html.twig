@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<!--Import Google Icon Font-->
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+<!--Import jQuery before materialize.js--> 
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> 
+<script type="text/javascript" src="js/materialize.min.js"></script>  
+<script type="text/javascript" src="js/apps.js"></script>
+<script type="text/javascript" src="js/formslider.js"></script>
+
+<script>
+$(document).ready(function(e) {
+    $( "#content-splash" ).parent().css( "width", "100%" );
+	$('#opc').height(window.innerHeight).width(window.outerWidth);
+	
+});
+
+</script>    
+
+<body>
+<div class="container">
+
+<div id="content-splash">
+<div id="opc"></div>
+         <div class="row">
+         <div class="col">      
+          
+          <div class="col m12">
+         
+          <div class="center">
+          	<div class="logo"><img src="images/Logo_home.png" width="30%" class="responsive-img"></div>
+             <h4>REGISTRATION</h4>
+         <!-- <h5>Let's Get Started!</h5>-->
+          <p>Creat an account so you can try clothes on and see
+look, fit and size on your own body.</p>
+          </div>
+         
+          <div class="row center">
+          	<span class="title_txt">Snap - Style - Share - Shop</span>
+          </div>       
+          <form name="user" ng-controller="mainController">
+          
+        
+          
+          <div class="row col s7">
+          
+           <div class="input-field">
+          
+          
+          <input id="showsplash" style="float:left;" value="Sign Up" class="btn black col save-changes" type="submit" name="action" ng-disabled="user.$invalid"> 
+
+
+         
+          <a class="btn grey darken-6">Login</a>   
+          </div> 
+          </div>
+          
+          </form>
+          
+           </div>
+               
+         </div>
+   
+      
+     
+           
+    
+  </div>
+        </div>
+      
+        <div id="content-login">
+         <div class="row">
+         <div class="col s5 offset-s4 z-depth-2 opacity90 card">      
+          
+          <div class="col m12">
+         
+          <div class="center">
+          	<div class="logo"><img src="images/Logo_home.png" width="30%" class="responsive-img"></div>
+             <h4>REGISTRATION</h4>
+         <!-- <h5>Let's Get Started!</h5>-->
+          <p>Creat an account so you can try clothes on and see
+look, fit and size on your own body.</p>
+          </div>
+         
+          <div class="row center">
+          	<span class="title_txt">Snap - Style - Share - Shop</span>
+          </div>       
+          <form name="user" ng-controller="mainController">
+          
+          <div class="input-field">
+          <input id="email" type="email" class="validate" ng-model="formData.email" name="email" required>         
+          <span class="error" ng-show="user.email.$error.required && user.email.$dirty">Email Required</span>
+   <span class="error" ng-show="!user.email.$error.required && user.email.$error.email && user.email.$dirty">Invalid Email Address</span>  
+   <span ng-show="user.email.$error.required" class="error">*</span>           
+          <label for="email">Email</label>
+          </div>  
+                   
+         
+          <!--// password -->          
+          <div class="input-field">
+      <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+        <span ng-show="user.password.$error.required" class="error">*</span>
+        <span ng-show="user.password.$error.minlength" class="error">
+          Passwords must be between 8 and 20 characters.</span>
+        <span ng-show="user.password.$error.pattern" class="error">
+          Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+     
+      <label for="password">Password</label>
+        </div>           
+           <!--// password -->           
+           
+           <!--//  confirm password -->               
+          <div class="input-field">
+        <label for="password_c">Confirm Password</label>
+        <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" valid-password-c="formData.password" required />
+        <span ng-show="user.password_c.$error.noMatch" class="error">Passwords do not match.</span>
+          <span ng-show="user.password_c.$error.required" class="error">*</span>
+      </div>          
+           <!--//  end confirm password -->
+          
+                    
+          <div class="input-field">
+          <input id="zip" type="text" name="zip" ng-model="formData.zip" required>          
+          <span ng-show="user.zip.$error.required" class="error">*</span> 
+           <span ng-show="!user.zip.$valid && user.zip.$dirty" class="error">Zipcode Required</span> 
+          <label for="zip_code">Zip Code</label>
+          </div>           
+          <div class="input-field">
+          <input type="date" class="datepicker">
+          <label for="dob">Date Of Birth</label>
+          <script>
+		  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
+		  </script>
+         
+          </div> 
+          <div class="input-field center">        
+                    
+            <input name="group1" type="radio" id="female" checked/>
+           <label for="female">Female</label>
+            <input name="group1" type="radio" id="male" />
+           <label for="male">Male</label> 
+        </div>
+          <br><br>         
+          
+          <div class="row col s11">
+          
+           <div class="input-field">
+          
+          
+          <input id="showregister" value="Sign Up" class="btn black col s5 offset-s1 save-changes" type="submit" name="action" ng-disabled="user.$invalid"> 
+
+         
+          <a class="btn grey darken-6 col s5 offset-s1">Login</a>   
+          </div> 
+          </div>
+          
+          </form>
+          
+           </div>
+               
+         </div>
+   
+      
+     
+           
+    
+  </div>
+        </div>
+      
+      
+      
+      <div id="content-register">
+        <div class="row">
+         <div class="col s5 offset-s4 z-depth-2 opacity90 card">      
+          
+          <div class="col m12">
+         
+          <div class="center">
+          	<div class="logo"><img src="images/Logo_home.png" width="30%" class="responsive-img"></div>
+             <h4>REGISTRATION STEP 2</h4>
+         <!-- <h5>Let's Get Started!</h5>-->
+          <p>Creat an account so you can try clothes on and see
+look, fit and size on your own body.</p>
+          </div>
+         
+          <div class="row center">
+          	<span class="title_txt">Snap - Style - Share - Shop</span>
+          </div>       
+          <form name="user" ng-controller="mainController">
+          
+          <div class="input-field">
+          <input id="email" type="email" class="validate" ng-model="formData.email" name="email" required>         
+          <span class="error" ng-show="user.email.$error.required && user.email.$dirty">Email Required</span>
+   <span class="error" ng-show="!user.email.$error.required && user.email.$error.email && user.email.$dirty">Invalid Email Address</span>  
+   <span ng-show="user.email.$error.required" class="error">*</span>           
+          <label for="email">Email</label>
+          </div>  
+                   
+         
+          <!--// password -->          
+          <div class="input-field">
+      <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+        <span ng-show="user.password.$error.required" class="error">*</span>
+        <span ng-show="user.password.$error.minlength" class="error">
+          Passwords must be between 8 and 20 characters.</span>
+        <span ng-show="user.password.$error.pattern" class="error">
+          Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+     
+      <label for="password">Password</label>
+        </div>           
+           <!--// password -->           
+           
+           <!--//  confirm password -->               
+          <div class="input-field">
+        <label for="password_c">Confirm Password</label>
+        <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" valid-password-c="formData.password" required />
+        <span ng-show="user.password_c.$error.noMatch" class="error">Passwords do not match.</span>
+          <span ng-show="user.password_c.$error.required" class="error">*</span>
+      </div>          
+           <!--//  end confirm password -->
+          
+                    
+          <div class="input-field">
+          <input id="zip" type="text" name="zip" ng-model="formData.zip" required>          
+          <span ng-show="user.zip.$error.required" class="error">*</span> 
+           <span ng-show="!user.zip.$valid && user.zip.$dirty" class="error">Zipcode Required</span> 
+          <label for="zip_code">Zip Code</label>
+          </div>           
+          <div class="input-field">
+          <input type="date" class="datepicker">
+          <label for="dob">Date Of Birth</label>
+          <script>
+		  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
+		  </script>
+         
+          </div> 
+          <div class="input-field center">        
+                    
+            <input name="group1" type="radio" id="female" checked/>
+           <label for="female">Female</label>
+            <input name="group1" type="radio" id="male" />
+           <label for="male">Male</label> 
+        </div>
+          <br><br>         
+          
+          <div class="row col s11">
+          
+           <div class="input-field">
+          
+          
+          <input id="showregister" value="Sign Up" class="btn black col s5 offset-s1 save-changes" type="submit" name="action" ng-disabled="user.$invalid"> 
+
+         
+          <a class="btn grey darken-6 col s5 offset-s1">Login</a>   
+          </div> 
+          </div>
+          
+          </form>
+          
+           </div>
+               
+         </div>
+   
+      
+     
+           
+    
+  </div>
+        
+      
+      </div>
+</div>
+
+
+</body>
+</html>

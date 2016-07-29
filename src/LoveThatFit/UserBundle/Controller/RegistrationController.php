@@ -25,6 +25,12 @@ use Symfony\Component\Yaml\Parser;
 
 class RegistrationController extends Controller {
 
+    public function loginIndexAction() {
+        return $this->render('LoveThatFitUserBundle:Registration:landing.html.twig');
+    }
+
+
+#>>>>>>>>>>>>>>>>>>>>>> Replace with new registration >>>>>>>>>>>>>>>>>>
     public function registrationAction() {
         
         $request = $this->getRequest();
@@ -62,7 +68,7 @@ class RegistrationController extends Controller {
     }
 
 //----------------------------------------------------------------
-
+#>>>>>>>>>>>>>>>>>>>>>> Replace with new registration flow / new controller in web services maybe >>>>>>>>>>>>>>>>>>
     public function registrationCreateAction() {
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $brandHelper=$this->get('admin.helper.brand');
@@ -150,6 +156,7 @@ class RegistrationController extends Controller {
     }
 
 //--------------------------------------------------------------------------------
+    #>>>>>>>>>>>>>>>>>>>>>> Remove Replace with new registration (same method with additional params email) >>>>>>>>>>>>>>>>>>
     public function measurementCreateAction(Request $request) {
 
         $user = $this->get('security.context')->getToken()->getUser();
@@ -242,7 +249,7 @@ class RegistrationController extends Controller {
         }
   }
 
-//-----------------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>> Removed >>>>>>>>>>>>>>>>>>
     public function measurementEditAction() {
 
         $size_chart_helper = $this->get('admin.helper.sizechart');
@@ -296,7 +303,7 @@ class RegistrationController extends Controller {
                 ));
     }
 
-    
+    #>>>>>>>>>>>>>>>>>>>>>> Ask if require in iOS & android then Removed >>>>>>>>>>>>>>>>>>
     public function parentChildEmailAction(Request $request)
     {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -326,7 +333,7 @@ class RegistrationController extends Controller {
                 ));        
     }
     
-    
+    #>>>>>>>>>>>>>>>>>>>>>> Ask if require in iOS & android then Removed >>>>>>>>>>>>>>>>>>
     public function parentChildUpdateEmailAction(Request $request)
     {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -355,10 +362,7 @@ class RegistrationController extends Controller {
     }
     
     
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//---------------------------------- Image upload STEP ---------------------------------------------------
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //------------------------ Render Fitting room image upload page
+#>>>>>>>>>>>>>>>>>>>>>> Remove >>>>>>>>>>>>>>>>>>
 
     public function stepFourEditAction() {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -385,7 +389,7 @@ class RegistrationController extends Controller {
                 ));
     }
 
-#---------------------------Profile Edit Image ---------------#
+#>>>>>>>>>>>>>>>>>>>>>> Remove >>>>>>>>>>>>>>>>>>
     public function fittingRoomImageEditAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -465,7 +469,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         }
     }
 
-//--------------------------- update fitting room image, 
+#>>>>>>>>>>>>>>>>>>>>>> Remove >>>>>>>>>>>>>>>>>>
     public function stepFourCreateAction(Request $request, $id) {
 
         
@@ -496,7 +500,11 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-   #--------------------------Registration Step Four For Ipad
+   
+
+#>>>>>>>>>>>>>>>>>>>>>> Remove >>>>>>>>>>>>>>>>>>
+    
+    
    public function stepFourEditIpadAction( $edit_type = null) {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
@@ -525,7 +533,9 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
             ));
    }
    
-   #--------------------------Registration Step Four For Range
+#>>>>>>>>>>>>>>>>>>>>>> Remove >>>>>>>>>>>>>>>>>>
+   
+   
    public function stepFourEditIRangeOverAction( $edit_type = null) {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
@@ -586,7 +596,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
                      'mesurement_segs'=>$user_mm_comparison,
             ));
    }
-#-----------Registration Step Four TimeSpent Ajax Request--------------------#
+#>>>>>>>>>>>>>>>>>>>>>> Remove >>>>>>>>>>>>>>>>>>
 public function stepFourTimeSpentAction(Request $request){
      $data = $request->request->all();
      $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -594,7 +604,7 @@ public function stepFourTimeSpentAction(Request $request){
     $user->setTimeSpent($_GET['chk_time']);
     $this->get('user.helper.user')->saveUser($user); 
 }
-//-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
+#>>>>>>>>>>>>>>>>>>>>>> Check for usage & Remove >>>>>>>>>>>>>>>>>>
 
     public function stepFourMeasurementUpdateAction(Request $request, $id) {
 
@@ -612,7 +622,7 @@ public function stepFourTimeSpentAction(Request $request){
         }
     }
 
-    //--------------------------------- deals with image submitted from canvas, saves image
+    #>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
     public function stepFourImageUpdateAction() {
         $id = $_POST['id'];
         $entity = $this->get('user.helper.user')->find($id);
@@ -625,7 +635,7 @@ public function stepFourTimeSpentAction(Request $request){
         return new Response($response);
         
     }
-        
+        #>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
     public function stepFourVerticalMeasurementUpdateAction(Request $request, $id) {
 
         $entity = $this->get('user.helper.user')->find($id);
@@ -641,7 +651,7 @@ public function stepFourTimeSpentAction(Request $request){
             return new Response('Vertical Position Measurement has not been updated!');
         }
     }
-        
+        #>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
     public function stepFourHorizontalMeasurementUpdateAction(Request $request, $id) {
 
         $entity = $this->get('user.helper.user')->find($id);
@@ -673,9 +683,7 @@ public function stepFourTimeSpentAction(Request $request){
    return $response;
     }
     
-    #---------------------------------------------------------------------------
-    #--------------------- Masked Marker - new registration
-    #---------------------------------------------------------------------------
+#>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
       public function stepImageEditAction($edit_type=null) {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
@@ -768,9 +776,7 @@ public function stepFourTimeSpentAction(Request $request){
 }
 
 
-    #---------------------------------------------------------------------------
-    #------------ Device View - Mask Marker - new registration - Edit ----------
-    #---------------------------------------------------------------------------
+    #>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
       public function deviceViewAction($edit_type=null) {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
