@@ -4,8 +4,8 @@
 <!--Import Google Icon Font-->
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
+<link href="{{ asset('bundles/lovethatfit/site/registration/css/materialize.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/lovethatfit/site/registration/css/custom.css') }}" rel="stylesheet" type="text/css" />
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,10 +13,11 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
 <!--Import jQuery before materialize.js--> 
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> 
-<script type="text/javascript" src="js/materialize.min.js"></script>  
-<script type="text/javascript" src="js/apps.js"></script>
-<script type="text/javascript" src="js/formslider.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/registration/js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/registration/js/apps.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/registration/js/formslider.js') }}"></script>
 
 <script>
 $(document).ready(function(e) {
@@ -38,7 +39,9 @@ $(document).ready(function(e) {
           <div class="col m12">
          
           <div class="center">
-          	<div class="logo"><img src="images/Logo_home.png" width="30%" class="responsive-img"></div>
+          	<div class="logo">
+                <img src="{{ asset('bundles/lovethatfit/site/registration/images/Logo_home.png') }}">
+                </div>
              <h4>REGISTRATION</h4>
          <!-- <h5>Let's Get Started!</h5>-->
           <p>Creat an account so you can try clothes on and see
