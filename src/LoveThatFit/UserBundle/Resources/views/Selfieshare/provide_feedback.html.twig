@@ -134,11 +134,11 @@ $.ajax({
 $(document).ready(function() {
 $("#savebutton").click(function(){
 
-    var name = $('#name').val();
-    var email = $('#email').val();
-    var phone = $('#phone').val();
+    var name_pop = $('#name').val();
+    var email_pop = $('#email').val();
 
-    if((name=='')||(email=='')){
+
+    if((name_pop=='')||(email_pop=='')){
     alert('Please Enter Required Fields');
     }
 
@@ -168,9 +168,9 @@ $("#savebutton").click(function(){
             }
 
 
-            function getCookie(name) {
+            function getCookie(name_a) {
                 var cookie = document.cookie;
-                var prefix = name + "=";
+                var prefix = name_a + "=";
                 var begin = cookie.indexOf("; " + prefix);
                 if (begin == -1) {
                     begin = cookie.indexOf(prefix);
@@ -189,11 +189,10 @@ $("#savebutton").click(function(){
 
             window.onload =  function(){
                 var popupId = "popups";
-                var cookieName = "subcribe";
-                var cookieValue = "popups";
-                var cookieValue = "popups";
+                var cookieName = name_pop;
+                var cookieValue = email_pop;
                 var noDays = 7;
-                var myCookie = getCookie("subcribe");
+                var myCookie = getCookie(cookieName);
                 if (myCookie == null) {
                     document.getElementById(popupId).style.display="block";
                 } else {
