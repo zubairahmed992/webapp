@@ -156,6 +156,56 @@ $("#savebutton").click(function(){
 });
 </script>
 
+        <script type="text/javascript">
+            function createCookie(name, value, days) {
+                var date, expires;
+                if (days){
+                    date = new Date();
+                    date.setTime(date.getTime()+(days*24*60*60*1000));
+                    expires = "; expires="+date.toUTCString();
+                } else { expires = "";}
+                document.cookie = name+"="+value+expires+"; path=/";
+            }
+
+
+            function getCookie(name) {
+                var cookie = document.cookie;
+                var prefix = name + "=";
+                var begin = cookie.indexOf("; " + prefix);
+                if (begin == -1) {
+                    begin = cookie.indexOf(prefix);
+                    if (begin != 0) return null;
+                } else {
+                    begin += 2;
+                    var end = document.cookie.indexOf(";", begin);
+                    if (end == -1) {
+                        end = cookie.length;
+                    }
+                }
+                return decodeURI(document.cookie.substring(begin + prefix.length, end));
+
+            }
+
+
+            window.onload =  function(){
+                var popupId = "popups";
+                var cookieName = "subcribe";
+                var cookieValue = "popups";
+                var cookieValue = "popups";
+                var noDays = 7;
+                var myCookie = getCookie("subcribe");
+                if (myCookie == null) {
+                    document.getElementById(popupId).style.display="block";
+                } else {
+                    document.getElementById(popupId).style.display="none";
+                }
+                getCookie(name);
+                createCookie(cookieName, cookieValue, noDays);
+            }
+
+        </script>
+
+
         <style>
             #loading-indicator {
                 position: absolute;
@@ -197,6 +247,7 @@ $("#savebutton").click(function(){
            <div><a href="#" class="closeit">X</a></div>
        </div>
 
+        <div id="popups">
         <div id="loginScreen">
             <div id="popup_logo"><img src="{{asset('bundles/lovethatfit/site/images/logo_popup.png')}}"></img>
 
@@ -218,6 +269,7 @@ $("#savebutton").click(function(){
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     </div>
 <div class="container comments_sec" style="border:none;">
