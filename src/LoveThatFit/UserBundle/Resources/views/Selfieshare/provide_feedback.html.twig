@@ -131,25 +131,67 @@ $.ajax({
   });
 }
 
-var name_pop;
-var email_pop;
+
+        function createCookie(name, value, days) {
+            var date, expires;
+            if (days){
+                date = new Date();
+                date.setTime(date.getTime()+(days*24*60*60*1000));
+                expires = "; expires="+date.toUTCString();
+            } else { expires = "";}
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+
+
+function getCookie(name_a) {
+    var cookie = document.cookie;
+    var prefix = name_a + "=";
+    var begin = cookie.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = cookie.indexOf(prefix);
+        if (begin != 0) return null;
+    } else {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+            end = cookie.length;
+        }
+    }
+    return decodeURI(document.cookie.substring(begin + prefix.length, end));
+
+}
+
+
+
 
 $(document).ready(function() {
 $("#savebutton").click(function(){
 
     var name_pop = $('#name').val();
     var email_pop = $('#email').val();
+    var nodays =  7;
 
 
     if((name_pop=='')||(email_pop=='')){
     alert('Please Enter Required Fields');
     }
 
-
     else
     {
 
-        document.getElementById("myNav").style.width = "0%";
+        var myCookie = getCookie(cookieName);
+        if (myCookie == null) {
+            document.getElementById(popupId).style.display="block";
+            document.getElementById('myNav').style.display="block";
+        } else {
+            document.getElementById(popupId).style.display="none";
+            document.getElementById('myNav').style.display="none";
+
+
+        }
+        getCookie(name);
+        createCookie(name_pop, email_pop, nodays);
+
     }
 });
 
@@ -159,53 +201,7 @@ $("#savebutton").click(function(){
 });
 </script>
 
-        <script type="text/javascript">
-            function createCookie(name, value, days) {
-                var date, expires;
-                if (days){
-                    date = new Date();
-                    date.setTime(date.getTime()+(days*24*60*60*1000));
-                    expires = "; expires="+date.toUTCString();
-                } else { expires = "";}
-                document.cookie = name+"="+value+expires+"; path=/";
-            }
 
-
-            function getCookie(name_a) {
-                var cookie = document.cookie;
-                var prefix = name_a + "=";
-                var begin = cookie.indexOf("; " + prefix);
-                if (begin == -1) {
-                    begin = cookie.indexOf(prefix);
-                    if (begin != 0) return null;
-                } else {
-                    begin += 2;
-                    var end = document.cookie.indexOf(";", begin);
-                    if (end == -1) {
-                        end = cookie.length;
-                    }
-                }
-                return decodeURI(document.cookie.substring(begin + prefix.length, end));
-
-            }
-
-
-            window.onload =  function(){
-                var popupId = "popups";
-                var cookieName = name_pop;
-                var cookieValue = email_pop;
-                var noDays = 7;
-                var myCookie = getCookie(cookieName);
-                if (myCookie == null) {
-                    document.getElementById(popupId).style.display="block";
-                } else {
-                    document.getElementById(popupId).style.display="none";
-                }
-                getCookie(name);
-                createCookie(cookieName, cookieValue, noDays);
-            }
-
-        </script>
 
 
         <style>
