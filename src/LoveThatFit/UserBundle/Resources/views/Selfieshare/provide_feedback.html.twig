@@ -171,6 +171,10 @@ $(document).ready(function() {
     var $noDays = 7;
     var $cookieName = "shareFeedback";
 
+    $myCookie = getCookie($cookieName);
+    console.log($myCookie);
+    if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
+
 $("#savebutton").click(function(){
 
     var name_pop = $('#name').val();
@@ -184,9 +188,6 @@ $("#savebutton").click(function(){
 
     else{
 
-
-
-
             var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
             $myCookie = getCookie($cookieName);
             if($cookieName !='' || $cookieValue !=''){
@@ -197,9 +198,7 @@ $("#savebutton").click(function(){
 
     }
 
-    $myCookie = getCookie($cookieName);
-    console.log($myCookie);
-    if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
+
 
 });
 
