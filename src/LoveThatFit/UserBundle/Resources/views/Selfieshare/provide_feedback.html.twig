@@ -167,13 +167,13 @@ function getCookie(name) {
 $(document).ready(function() {
 
     var myCookie='';
-    var $popupId = "#popups, #myNav";
+   //var $popupId = "#popups, #myNav";
     var $noDays = 7;
     var $cookieName = "shareFeedback";
 
     $myCookie = getCookie($cookieName);
     console.log($myCookie);
-    if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
+    if($myCookie == null) {$('#myNav').show();} else {$('#myNav').hide();}
 
 $("#savebutton").click(function(){
 
