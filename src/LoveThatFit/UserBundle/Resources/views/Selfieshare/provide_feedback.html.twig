@@ -132,20 +132,19 @@ $.ajax({
 }
 
 
-        function createCookie(name, value, days) {
-            var date, expires;
-            if (days){
-                date = new Date();
-                date.setTime(date.getTime()+(days*24*60*60*1000));
-                expires = "; expires="+date.toUTCString();
-            } else { expires = "";}
-            document.cookie = name+"="+value+expires+"; path=/";
-        }
+function createCookie(name, value, days) {
+    var date, expires;
+    if (days){
+        date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        expires = "; expires="+date.toUTCString();
+    } else { expires = "";}
+    document.cookie = name+"="+value+expires+"; path=/";
+}
 
-
-function getCookie(name_a) {
+function getCookie(name) {
     var cookie = document.cookie;
-    var prefix = name_a + "=";
+    var prefix = name + "=";
     var begin = cookie.indexOf("; " + prefix);
     if (begin == -1) {
         begin = cookie.indexOf(prefix);
@@ -164,6 +163,7 @@ function getCookie(name_a) {
 
 
 
+
 $(document).ready(function() {
 $("#savebutton").click(function(){
 
@@ -176,30 +176,34 @@ $("#savebutton").click(function(){
     alert('Please Enter Required Fields');
     }
 
-    else
-    {
-
-        var myCookie = getCookie(cookieName);
-        if (myCookie == null) {
-            document.getElementById(popupId).style.display="block";
-            document.getElementById('myNav').style.display="block";
-        } else {
-            document.getElementById(popupId).style.display="none";
-            document.getElementById('myNav').style.display="none";
-
-
-        }
-        getCookie(name);
-        createCookie(name_pop, email_pop, nodays);
-
-    }
 });
 
     $(".closeit").click(function(){
         document.getElementById("myNav").style.width = "0%";
     });
 });
-</script>
+
+
+$(document).ready(function(e) {
+    var myCookie='';
+    var $popupId = "#popups, #myNav";
+    var $noDays = 7;
+    var $cookieName = "shareFeedback";
+
+    $('#sharefeedbackform').submit(function () {
+        var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
+        $myCookie = getCookie($cookieName);
+        if($cookieName !='' || $cookieValue !=''){
+            createCookie($cookieName, $cookieValue, $noDays);
+        }else{ alert("empty data");}
+
+    });
+    $myCookie = getCookie($cookieName);
+    console.log($myCookie);
+    if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
+});
+
+        </script>
 
 
 
@@ -253,7 +257,7 @@ $("#savebutton").click(function(){
             <div id="popup_tagline">Snap - Style - Share - Shop</div>
             <div class="forml">
                 <div class="heading">Tell Morgan what you think!</div>
-                <form action="" method="post">
+                <form action="" method="post" id="sharefeedbackform">
                     <div class="form_ctrl">
                         <input type="text" name="name" id="name" placeholder="Name" required>
                     </div>
