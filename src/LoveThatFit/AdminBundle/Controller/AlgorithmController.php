@@ -136,6 +136,7 @@ class AlgorithmController extends Controller {
                     #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
                     'size'=> $fb["feedback"]['title'],
                     'serial'=>$serial,
+                    'fits'=>$fb["feedback"]['fits'],
                     'recommended_size'=> '',
                     'recommended_fit_index'=>'',
                 );
