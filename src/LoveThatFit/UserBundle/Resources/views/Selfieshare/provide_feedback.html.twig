@@ -167,20 +167,22 @@ function getCookie(name) {
 $(document).ready(function() {
 
     var myCookie='';
-   //var $popupId = "#popups, #myNav";
     var $noDays = 7;
     var $cookieName = "shareFeedback";
 
     $myCookie = getCookie($cookieName);
     console.log($myCookie);
-    if($myCookie == null) {$('#myNav').show();} else {$('#myNav').hide();}
+    if($myCookie == null) {
+        $('#myNav').show();
+    } else {
+        $('#myNav').hide();
+    }
 
 $("#savebutton").click(function(){
 
     var name_pop = $('#name').val();
     var email_pop = $('#email').val();
     var nodays =  7;
-
 
     if((name_pop=='')||(email_pop=='')){
     alert('Please Enter Required Fields');
@@ -196,15 +198,16 @@ $("#savebutton").click(function(){
                 alert("empty data");
             }
 
+           document.getElementById("myNav").style.width = "0%";
     }
 
 
 
 });
 
-    $(".closeit").click(function(){
-        document.getElementById("myNav").style.width = "0%";
-    });
+    //$(".closeit").click(function(){
+      //  document.getElementById("myNav").style.width = "0%";
+   // });
 });
 
 
