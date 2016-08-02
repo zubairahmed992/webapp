@@ -195,11 +195,11 @@ $("#savebutton").click(function(){
                 alert("empty data");
             }
 
-
-        $myCookie = getCookie($cookieName);
-        console.log($myCookie);
-        if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
     }
+
+    $myCookie = getCookie($cookieName);
+    console.log($myCookie);
+    if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
 
 });
 
