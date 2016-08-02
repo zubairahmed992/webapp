@@ -57,7 +57,7 @@ class VisitorController extends Controller {
 #------------------------------------------------
     public function updateAction() {
         $decoded = $this->process_request();
-        if (array_key_exists($decoded, 'email')) {
+        if (array_key_exists('email', $decoded) && strlen($decoded['email'])>0) {
             $v = $this->get('site.helper.visitor')->findOneByEmail($decoded['email']);
             if (!$v) {
                 $v = new Visitor();
@@ -72,7 +72,7 @@ class VisitorController extends Controller {
             $em->flush();
             return new response(json_encode('save visitor info'));
         } else {
-            return new response(json_encode('save visitor info'));
+            return new response(json_encode('user email missing'));
         }
     }
 
