@@ -62,6 +62,7 @@ class FitAlgorithm2 {
             if ($fb['recommendation']['title'] == $size) { # if it matches best fit
                 return array(
                     'feedback' => $fb['recommendation'],
+                    'recommendation' => $fb['recommendation'],
                 );
             }
         }

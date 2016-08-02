@@ -1,3 +1,4 @@
+{% if products %}
 <table class="table table-condensed table-bordered  table-hover" >
     <tr style="background-color: #F2F2F2;font-size:12px;">
         <th>Id</th>
@@ -6,6 +7,8 @@
         <th>Name</th>
         <th>Size</th>
         <th>Fit Index</th>
+        <th>Rec. Size</th>
+        <th>Rec. Fit Index</th>
     </tr>
     {% for id, p in products %} 
     <tr>
@@ -15,7 +18,12 @@
         <td>{{p.name}}</td>
         <td>{{p.size}}</td>
         <td>{{p.fit_index}}</td>
+        <td>{{p.recommended_size}}</td>
+        <td>{{p.recommended_fit_index}}</td>
 
     </tr>
     {% endfor %}
 </table>
+{% else %}
+<div>Products not found</div>
+{% endif %}

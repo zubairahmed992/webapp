@@ -128,6 +128,7 @@ class AlgorithmController extends Controller {
         foreach ($products as $p) {
             $algo->setProduct($p);
             $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+            
             if (is_array($fb) && array_key_exists('feedback', $fb)) {
                 $pa[$p->getId()] = array('name' => $p->getName(),
                     'fit_index'=>$fb["feedback"]['fit_index'],
@@ -135,14 +136,13 @@ class AlgorithmController extends Controller {
                     #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
                     'size'=> $fb["feedback"]['title'],
                     'serial'=>$serial,
+                    'recommended_size'=> '',
+                    'recommended_fit_index'=>'',
                 );
-            }else{
-                $pa[$p->getId()] = array('name' => $p->getName(),
-                    'fit_index'=>'',
-                    'clothing_type' => $p->getClothingType()->getName(),
-                    'size'=> '',
-                    'serial'=>$serial,
-                );
+                if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                        $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                        $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                }
             }
             $serial++;
         }
