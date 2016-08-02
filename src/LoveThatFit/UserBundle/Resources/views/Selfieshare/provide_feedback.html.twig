@@ -165,6 +165,12 @@ function getCookie(name) {
 
 
 $(document).ready(function() {
+
+    var myCookie='';
+    var $popupId = "#popups, #myNav";
+    var $noDays = 7;
+    var $cookieName = "shareFeedback";
+
 $("#savebutton").click(function(){
 
     var name_pop = $('#name').val();
@@ -178,19 +184,18 @@ $("#savebutton").click(function(){
 
     else{
 
-        var myCookie='';
-        var $popupId = "#popups, #myNav";
-        var $noDays = 7;
-        var $cookieName = "shareFeedback";
 
-        $('#sharefeedbackform').submit(function () {
+
+
             var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
             $myCookie = getCookie($cookieName);
             if($cookieName !='' || $cookieValue !=''){
                 createCookie($cookieName, $cookieValue, $noDays);
-            }else{ alert("empty data");}
+            }else{
+                alert("empty data");
+            }
 
-        });
+
         $myCookie = getCookie($cookieName);
         console.log($myCookie);
         if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
