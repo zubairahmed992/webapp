@@ -35,7 +35,12 @@ class SelfieShareController extends Controller {
 
     public function provideFeedbackAction($ref=null) {
         $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ref);
-        return $this->render('LoveThatFitUserBundle:Selfieshare:provide_feedback.html.twig', array('selfieshare' => $selfieshare));
+        $user=$this->container->get('user.helper.user')->find($selfieshare->getUser()->getId());
+        $name = $user->getFullName();
+        if(trim($name) == ''){
+            $name = $user->getEmail();
+        }
+        return $this->render('LoveThatFitUserBundle:Selfieshare:provide_feedback.html.twig', array('selfieshare' => $selfieshare , 'name' => $name));
         //$selfieshare=$this->get('user.selfieshare.helper')->updateFeedback($ra);
         //return new Response($selfieshare->getFriendName().'provided feedback updated.');
     }
