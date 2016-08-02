@@ -176,6 +176,26 @@ $("#savebutton").click(function(){
     alert('Please Enter Required Fields');
     }
 
+    else{
+
+        var myCookie='';
+        var $popupId = "#popups, #myNav";
+        var $noDays = 7;
+        var $cookieName = "shareFeedback";
+
+        $('#sharefeedbackform').submit(function () {
+            var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
+            $myCookie = getCookie($cookieName);
+            if($cookieName !='' || $cookieValue !=''){
+                createCookie($cookieName, $cookieValue, $noDays);
+            }else{ alert("empty data");}
+
+        });
+        $myCookie = getCookie($cookieName);
+        console.log($myCookie);
+        if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
+    }
+
 });
 
     $(".closeit").click(function(){
@@ -184,24 +204,9 @@ $("#savebutton").click(function(){
 });
 
 
-$(document).ready(function(e) {
-    var myCookie='';
-    var $popupId = "#popups, #myNav";
-    var $noDays = 7;
-    var $cookieName = "shareFeedback";
 
-    $('#sharefeedbackform').submit(function () {
-        var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
-        $myCookie = getCookie($cookieName);
-        if($cookieName !='' || $cookieValue !=''){
-            createCookie($cookieName, $cookieValue, $noDays);
-        }else{ alert("empty data");}
 
-    });
-    $myCookie = getCookie($cookieName);
-    console.log($myCookie);
-    if($myCookie == null) {$($popupId).show();} else {$($popupId).hide();}
-});
+
 
         </script>
 
