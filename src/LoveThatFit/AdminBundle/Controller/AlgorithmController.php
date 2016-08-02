@@ -148,6 +148,7 @@ class AlgorithmController extends Controller {
         }
         return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations_test_demo_products.html.twig', array(
             'products' => $pa,
+            'user' => $user,
         ));
     }
     #--------------------------------------------------
@@ -194,6 +195,7 @@ class AlgorithmController extends Controller {
         }
         return $this->render('LoveThatFitAdminBundle:Algoritm:_print_recommendations.html.twig', array(
             'products' => $pa,
+            'user' => $user,
         ));
     }
 

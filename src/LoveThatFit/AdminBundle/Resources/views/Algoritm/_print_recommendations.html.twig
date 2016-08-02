@@ -1,81 +1,166 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style type="text/css">
+
+
+table {
+    border-collapse: collapse;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+}
+table, th, td {
+	border: 1px solid #5a5a5a;
+	padding-top: 6px;
+	padding-right: 4px;
+	padding-bottom: 6px;
+	padding-left: 4px;	
+}
+
+.title {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;
+	background-color: #CCC;
+}
+
+.row-bg {
+	background-color: #EEEEEE
+}
+</style>
+</head>
+
 <body>
-{#<table class="table table-condensed table-bordered  table-hover" >#}
 
-<h4> Product list with recomended sizes & fit index</h4>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="24%">Name: {{user.fullName}}</td>
+    <td width="29%">Email: {{user.email}}</td>
+    <td width="10%">Bust: {{user.measurement.bust}}</td>
+    <td width="9%">Waist: {{user.measurement.waist}}</td>
+    <td width="9%">Hip: {{user.measurement.hip}}</td>
+    <td width="9%">Thigh: {{user.measurement.thigh}}</td>
+    <td width="10%">Inseam: {{user.measurement.inseam}}</td>
+  </tr>
+</table>
+<br />
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  
+  <tr class="title">
+    <td height="44" colspan="2" align="center">Item</td>
+    <td width="8%" align="center">Fit index<br />
+    (0 / 10)</td>
+    <td width="5%" align="center">Size</td>
+    <td width="9%" align="center">Member fit (Y/N)</td>
+    <td width="8%" align="center">Member fit Rating (Y/N)</td>
+    <td width="6%" align="center">Tech fit (Y/N)</td>
+    <td width="6%" align="center">Tech fit Rating (Y/N)</td>
+    <td width="6%" align="center">Req larger (Y/N)</td>
+    <td width="6%" align="center">Req Smaller (Y/N)</td>
+    <td width="7%" align="center">Member app (Y/N)</td>
+    <td width="7%" align="center">Tech App (Y/N)</td>
+    <td width="19%">Note</td>
+  </tr>
 
-    <table border="1" cellpadding="2" cellspacing="2">
-        <tr>
-            <td width="2%"></td>
-            <td width="6%">Name:</td>
-            <td colspan="2" align="center">Email:</td>
-            <td width="13%">&nbsp;</td>
-            <td width="8%">&nbsp;</td>
-            <td width="11%" align="center">Bust:</td>
-            <td width="10%" align="right">Waist:</td>
-            <td width="10%" align="right">Hip:</td>
-            <td colspan="2" align="center">Thigh:</td>
-            <td width="5%" align="left">Inseam:</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Item</strong></td>
-            <td width="10%" align="center" bgcolor="#CCCCCC"><strong>Fit Index <br />
-                    (0-10 App)</strong></td>
-            <td width="2%" align="center" bgcolor="#CCCCCC"><strong>Size</strong></td>
-            <td width="9%" align="left" bgcolor="#CCCCCC"><strong>Member<br />
-                    Fit (Y/N)</strong></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Member Fit<br />
-                    Rating (0-10)</strong></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Tech Fit<br />
-                    (Y/N)</strong></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Tech Fit<br />
-                    Rating (0-10)</strong></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Req Larger<br />
-                    (Y/N)</strong></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Req Smaller<br />
-                    (Y/N)</strong></td>
-            <td width="7%" align="center" bgcolor="#CCCCCC"><strong>Member<br />
-                    App (Y/N)</strong></td>
-            <td width="7%" align="center" bgcolor="#CCCCCC"><strong>Tech App<br />
-                    (Y/N)</strong></td>
-            <td align="center" bgcolor="#CCCCCC"><strong>Notes</strong></td>
-        </tr>
+      
         {% for id, p in products %}
-            {% if loop.index % 2 == 0 %}
-               {% set class_val = 'even' %}
-            {% else %}
-                {% set class_val = 'odd' %}
-                {% endif %}
-        <tr class="{{ class_val }}">
-            <td></td>
-            <td><strong>{{p.clothing_type}}</strong></td>
-            <td>{{p.fit_index}}</td>
-            <td>{{p.size}}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-            <tr class="{{ class_val }}">
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
+    <tr>
+    <td width="2%" align="center">&nbsp;</td>
+    <td width="11%">{{p.clothing_type}}</td>
+    <td width="8%" align="center" valign="middle">{{p.fit_index}}</td>
+    <td width="5%" align="center" valign="middle">{{p.size}}</td>
+    <td width="9%" align="center" valign="middle">&nbsp;</td>
+    <td width="8%" align="center" valign="middle">&nbsp;</td>
+    <td width="6%" align="center" valign="middle">&nbsp;</td>
+    <td width="6%" align="center" valign="middle">&nbsp;</td>
+    <td width="6%" align="center" valign="middle">&nbsp;</td>
+    <td width="6%" align="center" valign="middle">&nbsp;</td>
+    <td width="7%" align="center" valign="middle">&nbsp;</td>
+    <td width="7%" align="center" valign="middle">&nbsp;</td>
+    <td width="19%">&nbsp;</td>
+  </tr>
+       <tr class="row-bg">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td align="center" valign="middle">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
         {% endfor %}
+    
+    </table>
+
+<br />
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="middle">A</td>
+    <td align="center" valign="middle">B</td>
+    <td align="center" valign="middle">C</td>
+    <td align="center" valign="middle">D</td>
+    <td align="center" valign="middle">E</td>
+    <td align="center" valign="middle">F</td>
+    <td align="center" valign="middle">G</td>
+    <td align="center" valign="middle">H</td>
+    <td align="center" valign="middle">I</td>
+    <td align="center" valign="middle">J</td>
+    <td align="center" valign="middle">K</td>
+    <td align="center" valign="middle">L</td>
+    <td align="center" valign="middle">M</td>
+    <td align="center" valign="middle">N</td>
+    <td align="center" valign="middle">O</td>
+    <td align="center" valign="middle">P</td>
+    <td align="center" valign="middle">Q</td>
+    <td align="center" valign="middle">R</td>
+    <td align="center" valign="middle">S</td>
+    <td align="center" valign="middle">T</td>
+    <td align="center" valign="middle">U</td>
+    <td align="center" valign="middle">V</td>
+    <td align="center" valign="middle">W</td>
+    <td align="center" valign="middle">X</td>
+    <td align="center" valign="middle">Y</td>
+    <td align="center" valign="middle">Z</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">32</td>
+    <td align="center" valign="middle">31</td>
+    <td align="center" valign="middle">30</td>
+    <td align="center" valign="middle">29</td>
+    <td align="center" valign="middle">28</td>
+    <td align="center" valign="middle">27</td>
+    <td align="center" valign="middle">26</td>
+    <td align="center" valign="middle">25</td>
+    <td align="center" valign="middle">24</td>
+    <td align="center" valign="middle">32</td>
+    <td align="center" valign="middle">XXL</td>
+    <td align="center" valign="middle">XL</td>
+    <td align="center" valign="middle">L</td>
+    <td align="center" valign="middle">M</td>
+    <td align="center" valign="middle">S</td>
+    <td align="center" valign="middle">XS</td>
+    <td align="center" valign="middle">16</td>
+    <td align="center" valign="middle">14</td>
+    <td align="center" valign="middle">12</td>
+    <td align="center" valign="middle">10</td>
+    <td align="center" valign="middle">8</td>
+    <td align="center" valign="middle">6</td>
+    <td align="center" valign="middle">4</td>
+    <td align="center" valign="middle">2</td>
+    <td align="center" valign="middle">0</td>
+    <td align="center" valign="middle">0.0</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
 </body>
 </html>
