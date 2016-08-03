@@ -153,6 +153,45 @@ class AlgorithmController extends Controller {
         ));
     }
     #--------------------------------------------------
+    
+    #-------------------------------------------------- User Test Demo Products Ajax Call copy of Marathon
+    public function userTestDemoProductListAction($user_id) {
+        $user = $this->get('user.helper.user')->find($user_id);
+        $ids= array (490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
+        $try_sizes = array ('490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
+        $products = $this->get('admin.helper.product')->listProductByIds($ids);
+    
+        $pa= array();
+
+        $algo = new FitAlgorithm2($user);
+        $serial = 1;
+        foreach ($products as $p) {
+            $algo->setProduct($p);
+            $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+            
+            if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                $pa[$p->getId()] = array('name' => $p->getName(),
+                    'fit_index'=>$fb["feedback"]['fit_index'],
+                    'clothing_type' => $p->getClothingType()->getName(),
+                    'size'=> $fb["feedback"]['title'],
+                    'serial'=>$serial,
+                    'fits'=>$fb["feedback"]['fits'],
+                    'recommended_size'=> '',
+                    'recommended_fit_index'=>'',
+                );
+                if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                        $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                        $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                }
+            }
+            $serial++;
+        }
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_recommendations_test_demo_product_list.html.twig', array(
+            'products' => $pa,
+            'user' => $user,
+        ));
+    }
+    #--------------------------------------------------
     public function printUserProductMarathonAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 

@@ -44,7 +44,20 @@ $(document).ready(function(){
      
      //return false; //for good measure     
 });
+//-----------------------------------------------------------
+ $('a.print_compare_with_product_ids').click(function (event){ 
+     event.preventDefault(); 
+     
+     
+         user_id=$("#user_id").val(); 
+         
+     var compare_url = "../fit_algorithm2/user_test_demo_product_list/"+user_id;
+     window.location=compare_url;
+    
+    
+});
 
+    //-----------------------------------------------------------
     //-----------------------------------------------------------
     $('a.print').click(function (event){
         event.preventDefault();
@@ -141,6 +154,7 @@ $(document).ready(function(){
     <br><br>
 <div style="clear:both">
     <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Process >></a>
+    <a id='print_compare_with_product_ids' class='print_compare_with_product_ids' href="#">Print >></a> 
 </div>
     <br><br>
 

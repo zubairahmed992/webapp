@@ -29,3 +29,7 @@ admin_test_demo:
 admin_test_demo_products:
     pattern:  /admin/fit_algorithm2/user_test_demo_products
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:userTestDemoProducts}
+    
+admin_test_demo_product_list:
+    pattern:  /admin/fit_algorithm2/user_test_demo_product_list/{user_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:userTestDemoProductList}    
