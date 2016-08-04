@@ -120,6 +120,83 @@ $.ajax({
         }
   });
 }
+
+
+function createCookie(name, value, days) {
+    var date, expires;
+    if (days){
+        date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        expires = "; expires="+date.toUTCString();
+    } else { expires = "";}
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function getCookie(name) {
+    var cookie = document.cookie;
+    var prefix = name + "=";
+    var begin = cookie.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = cookie.indexOf(prefix);
+        if (begin != 0) return null;
+    } else {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+            end = cookie.length;
+        }
+    }
+    return decodeURI(document.cookie.substring(begin + prefix.length, end));
+
+}
+
+
+
+$(document).ready(function() {
+
+    var myCookie='';
+    var $noDays = 7;
+    var $cookieName = "shareFeedback";
+
+    $myCookie = getCookie($cookieName);
+    console.log($myCookie);
+    if($myCookie == null) {
+        $('#myNav').show();
+    } else {
+        $('#myNav').hide();
+    }
+
+    $("#savebutton").click(function(){
+
+        var name_pop = $('#name').val();
+        var email_pop = $('#email').val();
+        var nodays =  7;
+
+        if((name_pop=='')||(email_pop=='')){
+            alert('Please Enter Required Fields');
+        }
+
+        else{
+
+            var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
+            $myCookie = getCookie($cookieName);
+            if($cookieName !='' || $cookieValue !=''){
+                createCookie($cookieName, $cookieValue, $noDays);
+            }else{
+                alert("empty data");
+            }
+
+            document.getElementById("myNav").style.width = "0%";
+        }
+
+
+
+    });
+
+    //$(".closeit").click(function(){
+    //  document.getElementById("myNav").style.width = "0%";
+    // });
+});
 </script>
 
 
@@ -127,13 +204,48 @@ $.ajax({
     </head>
     <body style="background:#efefef;">
         
-        
+
+
   <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
   <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
   <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
   <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
   <input id="ss_comments" type="hidden" value="{{selfieshare.comments}}" />
 
+
+
+<div id="myNav" class="overlay" style="z-index: 200; width:100%;">
+
+    <div class="successscreen">
+        <div id="stage"></div>
+        <div><a href="#" class="closeit">X</a></div>
+    </div>
+
+  <div id="popups">
+      <div id="loginScreen">
+          <div id="popup_logo"><img src="{{asset('bundles/lovethatfit/site/images/logo_popup.png')}}">
+
+          </div>
+          <div id="popup_tagline">Snap - Style - Share - Shop</div>
+          <div class="forml">
+              <div class="heading">Tell {{ name }} what you think!</div>
+              <form action="" method="post" id="sharefeedbackform">
+                  <div class="form_ctrl">
+                      <input type="text" name="name" id="name" placeholder="Name" required>
+                  </div>
+                  <div class="form_ctrl">
+                      <input type="text" name="email" id="email" placeholder="Email" required>
+                  </div>
+
+                  <div class="form_ctrl">
+
+                      <button id="savebutton" type="button" name="button">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
 <div class="container comments_sec" style="border:none;">
  <div style="position:relative;">
 
