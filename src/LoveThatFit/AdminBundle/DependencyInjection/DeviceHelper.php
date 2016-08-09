@@ -17,6 +17,7 @@ class DeviceHelper {
 
 //--------------------------------------------------------------------------------
     public function getDeviceConfig($node=null) {
+        $this->get_additional_configuration();
         if($node){
             if(array_key_exists($node, $this->conf)){
                 return $this->conf[$node];
@@ -26,6 +27,21 @@ class DeviceHelper {
         }    
         return;
     }
+//--------------------------------------------------------------------------------    
+    private function get_additional_configuration() {
+        foreach ($this->conf as $d => $c) {
+            $resize_ratio = ($c['pixel_per_inch'] + $c['jt_pixel_added']) / $c['product_px_per_inch'];
+            $this->conf[$d]['resize_ratio'] = $resize_ratio;
+            $pos = strpos($d, 'iphone6');
+
+            if ($pos === false) {
+                $this->conf[$d]['resize_ratio_adjustment'] = $resize_ratio * 1;
+            } else {
+                $this->conf[$d]['resize_ratio_adjustment'] = $resize_ratio * 1.081;
+            }
+        }
+    }
+
 //--------------------------------------------------------------------------------
     public function getConversionRatio($original, $targeted) {
         if ($targeted && array_key_exists($targeted, $this->conf)) {
