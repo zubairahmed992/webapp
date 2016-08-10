@@ -2063,19 +2063,14 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key = true, $device_type = null, $base_path = null, $device_config = null) {
         if ($key) {
             #$device_specs=$this->getDeviceSpecs($device_type);
+            $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 0;
+            $iphone_resize_ratio = is_array($device_config) && array_key_exists('resize_ratio', $device_config) ? $device_config['resize_ratio'] : 0;
+            $neck_exclusion_px = is_array($device_config) && array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 0;
             
-            $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 1;
             $this->measurement->calculatePlacementPositions($device_conversion_ratio);
+            $tp=$this->measurement->top_placement;
             
-            if ($device_type == 'iphone5') {
-                if (is_array($device_config)) {
-                    $iphone_resize_ratio = array_key_exists('resize_ratio', $device_config) ? $device_config['resize_ratio'] : 1;
-                    $neck_exlusion_px = array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 1;
-                    $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exlusion_px);
-                }
-            } else {
-                $this->measurement->top_placement = ($this->measurement->top_placement * 1.08) - 2;
-            }
+            $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
             
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
             return array(

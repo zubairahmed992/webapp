@@ -31,14 +31,7 @@ class DeviceHelper {
     private function get_additional_configuration() {
         foreach ($this->conf as $d => $c) {
             $resize_ratio = ($c['pixel_per_inch'] + $c['jt_pixel_added']) / $c['product_px_per_inch'];
-            $this->conf[$d]['resize_ratio'] = $resize_ratio;
-            $pos = strpos($d, 'iphone6');
-
-            if ($pos === false) {
-                $this->conf[$d]['resize_ratio_adjustment'] = $resize_ratio * 1;
-            } else {
-                $this->conf[$d]['resize_ratio_adjustment'] = $resize_ratio * 1.081;
-            }
+            $this->conf[$d]['resize_ratio'] = strpos($d, 'iphone6') === false ? $resize_ratio : $resize_ratio * 1.081;
         }
     }
 
