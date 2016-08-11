@@ -138,7 +138,7 @@ class ProductDataController extends Controller
         $fit_points = explode(',', $productData['fit_point']);
         array_unshift($fit_points, 'sizes');
 
-        print_r($fit_points);
+      //      print_r($fit_points);
 
         $product_size = trim($productData['select_size'], '[');
         $product_size_value = trim($product_size, ']');
@@ -149,7 +149,7 @@ class ProductDataController extends Controller
             }
         }
         echo "<pre>";
-       // print_r($fit_point);
+        //print_r($productSave);
         $result_array = array_intersect_key($productSave, $fit_point);
         echo "<pre>";
         foreach ($productSave as $key => $val) {
@@ -165,6 +165,7 @@ class ProductDataController extends Controller
         foreach ($fit_points as $keys => $fit_point_val) {
             echo "<tr><td>" . $fit_point_val . "</td>";
             $grade_rule = 0;
+            $count = 0;
             foreach ($size as $ke => $selected_size_val) {
                 $grade_rule = $grade_rule + 1;
                 if ($fit_point_val == "sizes") {
@@ -173,6 +174,7 @@ class ProductDataController extends Controller
                 } else {
                     $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
                     if (array_key_exists($fit_points_key, $result_array)) {
+                        $count = $count + 1;
                         echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
                         $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
                         if (isset($result_array[$gr])) {
@@ -194,60 +196,81 @@ class ProductDataController extends Controller
         //////////////////////////////        Size Code ///////////////////////////////////////////////
 
         echo "<pre>";
+        //echo $count;
+        $size_selected = array_chunk($result_array,$count);
+
+       print_r($size_selected[0]);
+        print array_search('50',$size_selected[0]);
+        print_r($size);
+        //die();
        print_r($result_array);
-     //  print_r($productData);
 
         echo "<br>";
         echo "<p><table>";
         $sizes = array('Garment Dimension', 'Garment Stretch', 'Grade Rule', 'Min Calc',	'Min Actual', 'Ideal Low', 'Fit Model','Ideal High', 'Max Actual', 'Max Calc', 'Range Conf');
 
-        $grade_rule = 0;
-        $na= 'N/A';
-        $next_element = array_keys($result_array);
+        // remove first elemnt of array
+        array_shift($fit_points);
+         $na = "N/A";
+        $min_calc = 0;
+        $max_calc =0;
+        $ideal_low = 0;
+        $ideal_heigh = 0;
         foreach ($size as $ke => $selected_size_val) {
-            //echo $size[$ke+1];
-
                 echo "<tr><td>" . $selected_size_val . "</td>";
                 foreach ($sizes as $key => $size_labels){
                     echo "<td>" . $size_labels . "</td>";
                 }
                 foreach ($fit_points as $keys => $fit_point_vals) {
-
-                    if($fit_point_vals == "sizes")
-                        continue;
                     $fit_points_key = $fit_point_vals."_".trim($selected_size_val, '""');
                    // echo "<br>".$fit_points_key;
-                    if (array_key_exists($fit_points_key,$result_array)) {
-                        $grade_rule = $grade_rule + 1;
-                        echo $grade_rule;
+                      ///////////// Calculate the Grade Rule Value  /////////////////////////
+                    if (array_key_exists($fit_points_key, $result_array)) {
+                        $fit_point = $fit_point_vals . "_" . trim($size[$ke + 1], '""');
+                        if (isset($result_array[$fit_point])) {
+                            $fit_model = $result_array[$fit_points_key];
+                            $fit_model_next = $result_array[$fit_point];
+                            $grade_rule_value = $fit_model_next - $fit_model;
+                            $min_calc = $fit_model - (2.5*$grade_rule_value);
+                            $max_calc = $fit_model + (2.5*$grade_rule_value);
+                            $ideal_low = $fit_model - $grade_rule_value;
+                            $ideal_heigh = $fit_model + $grade_rule_value;
+                        } else {
+                            $grade_rule_value = "N/A";
+                            $min_calc = 0;
+                            $max_calc = 0;
+                            $ideal_low = 0;
+                            $ideal_heigh = 0;
+                        }
+                    }
+                    ///////////// End Calculate the Grade Rule Value  /////////////////////////
+
+
+                    // $grade_rule = $grade_rule + 1;
+                       // echo $grade_rule;
                         //$fit_points_key = $fit_point_val."_".trim($size[$ke+$grade_rule], '""');
                         // die("asdfasdfadf");
                         // $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
                        // $gr = $fit_point_vals . "_" . trim($size[$grade_rule], '"');
-                        if (isset( $result_array[$fit_points_key])) {
-                            $size_first = $result_array[$fit_points_key];
-                            $size_second = next($result_array);
+
                                  //$size_second = array_values($result_array);
-                            if(isset($size_second[$grade_rule]))
-                            $grade_rule_value = $size_second - $size_first ;
-                        } else {
-                            $grade_rule_value='';
-                        }
-                    }
 
 
+
+                    //echo $b."-";
+                    //echo $grade_rule_value;
                     echo "</tr><tr><td>" . $fit_point_vals . "</td>";
                       if (!empty($productData[$fit_points_key])){
                         echo "<td>" . $na . "</td>";
                         echo "<td>" . $na . "</td>";
                         echo "<td>" . $grade_rule_value . "</td>";
-                        echo "<td>" . $na . "</td>";
-                        echo "<td>" . $na . "</td>";
-                        echo "<td>" . $na . "</td>";
+                        echo "<td>" . $min_calc . "</td>";
+                        echo "<td>" . $min_calc . "</td>";
+                        echo "<td>" . $ideal_low . "</td>";
                         echo "<td>" . $result_array[$fit_points_key] . "</td>";
-                        echo "<td>" . $na . "</td>";
-                        echo "<td>" . $na . "</td>";
-                        echo "<td>" . $na . "</td>";
+                        echo "<td>" . $ideal_heigh . "</td>";
+                        echo "<td>" . $max_calc . "</td>";
+                        echo "<td>" . $max_calc . "</td>";
                   //  if (isset($selected_size_val[$grade_rule])) {
                         echo "<td>" . $result_array[$fit_points_key] . "</td>";
                        } else {
