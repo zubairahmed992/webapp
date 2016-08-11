@@ -88,7 +88,7 @@ class WebServiceHelper {
             
             $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
             #---- 2) send registration email ....            
-            $this->container->get('mail_helper')->sendRegistrationEmail($user);
+            #$this->container->get('mail_helper')->sendRegistrationEmail($user);
             
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array); 
