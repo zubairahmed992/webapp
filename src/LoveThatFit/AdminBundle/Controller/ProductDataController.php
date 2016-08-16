@@ -20,7 +20,6 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 class ProductDataController extends Controller
 {
-
     //------------------------------------------------------------------------------------------
     #--------------------------------------------------------------
 #-----------------------Form Upload CSV File------------------#
@@ -73,6 +72,21 @@ class ProductDataController extends Controller
     public function saveBrandSpecificationAction(Request $request)
     {
 
+        $request = $request->request->all();
+        $brand_name = $request['brand_name'];
+
+        $data = $this->getDoctrine()->getManager()
+            ->createQueryBuilder()
+            ->select('bfi.brand_description')
+            ->from('LoveThatFitAdminBundle:BrandFormatImport', 'bfi')
+            ->Where('bfi.brand_name =:brandName')
+            ->setParameters(array('brandName' => $brand_name))
+            ->getQuery()
+            ->getResult();
+
+
+        return new Response(json_encode($data));
+        die(json_decode($text));
         var_dump($_POST);
         foreach ($_POST as $name => $value) {
             $val[$name] = $value;
@@ -80,6 +94,7 @@ class ProductDataController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pc = new BrandFormatImport();
         $pc->setBrandName($val['product_Brand']);
+        $pc->setBrandDescription($val['brand_description']);
         $pc->setBrandFormat(json_encode($val));
         $em->persist($pc);
         $em->flush();
@@ -197,13 +212,13 @@ class ProductDataController extends Controller
 
         echo "<pre>";
         //echo $count;
-        $size_selected = array_chunk($result_array,$count);
+       // $size_selected = array_chunk($result_array,$count);
 
-       print_r($size_selected[0]);
-        print array_search('50',$size_selected[0]);
-        print_r($size);
+     //  print_r($size_selected[0]);
+      //  print array_search('50',$size_selected[0]);
+      //  print_r($size);
         //die();
-       print_r($result_array);
+      // print_r($result_array);
 
         echo "<br>";
         echo "<p><table>";
@@ -271,7 +286,6 @@ class ProductDataController extends Controller
                         echo "<td>" . $ideal_heigh . "</td>";
                         echo "<td>" . $max_calc . "</td>";
                         echo "<td>" . $max_calc . "</td>";
-                  //  if (isset($selected_size_val[$grade_rule])) {
                         echo "<td>" . $result_array[$fit_points_key] . "</td>";
                        } else {
                           echo "<td>" . $na . "</td>";

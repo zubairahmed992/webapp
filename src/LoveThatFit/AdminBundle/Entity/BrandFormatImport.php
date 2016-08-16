@@ -30,6 +30,12 @@ class BrandFormatImport {
     /**
      * @var string
      *
+     * @ORM\Column(name="brand_description", type="string", length=255)
+     */
+    private $brand_description;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="brand_format", type="string", length=25555)
      */
     private $brand_format;
@@ -67,6 +73,27 @@ class BrandFormatImport {
         return $this->brand_name;
     }
 
+    /**
+     * Set brand_name
+     *
+     * @param string $brand_description
+    @return string
+     */
+    public function setBrandDescription($brand_description)
+    {
+        $this->brand_description = $brand_description;
+        return $this;
+    }
+
+    /**
+     * Get brand_description
+     *
+     * @return string
+     */
+    public function getBrandDescription()
+    {
+        return $this->brand_description;
+    }
 
     /**
      * Set brand_format
