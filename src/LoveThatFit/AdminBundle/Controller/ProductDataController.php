@@ -337,9 +337,21 @@ class ProductDataController extends Controller {
     }
     #-------------------------------------------------------
     public function fooAction() {
-        $decoded = $this->getRequest()->request->all();        
-        return new Response(json_encode($decoded));
+        $size_types = array(
+            'woman' => array('letter' => array('XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
+                    '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X'
+                ),
+                'number' => array('00', '0', '1', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30'),
+                'waist' => array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36')));
         
+        $fit_points = array('tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
+            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+
+        #return new Response(json_encode(array($size_types, $fit_points)));
+        return $this->render('LoveThatFitAdminBundle:ProductData:foo.html.twig',  array(
+            'size_types' => $size_types,
+            'fit_points'   => $fit_points,
+        ));
     }
     /**
      * @return string

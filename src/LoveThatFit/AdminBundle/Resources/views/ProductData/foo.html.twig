@@ -1,0 +1,28 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+  <li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span>Import CSV</li>   
+{% endblock %}
+{% block body %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+      $( "select[id='form_products']" ).change(function() {
+          $("#product_id").val(this.value);
+          $('#product_keyword_import').val($('option:selected', $(this)).text());
+      });
+  });
+  </script>
+      <div>      
+          
+      
+    {%for v in fit_points%}
+          <div  style="float:left">{{v}}</div>
+          {%for v in size_types.woman.letter%}
+                <div style="float:left">{{v}}</div>
+          {% endfor%}
+          <br>
+    {% endfor%}
+</div>
+{% endblock %}
+     
