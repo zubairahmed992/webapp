@@ -111,3 +111,26 @@ ws_misc_faq:
 ws_misc_banner:
     pattern:  /ws/misc_banner
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:banner}
+
+#-------------------------Shopping Cart Routes-------------------------------------
+
+#Add Single Item to Cart
+ws_cart_single_item:
+    pattern:  /ws/add_item_to_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCart}
+
+#Add multiple Item to Cart
+ws_cart_multiple_items:
+    pattern:  /ws/add_items_to_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemsToCart}
+
+#Remove User Cart
+ws_remove_user_cart:
+    pattern:  /ws/remove_user_item
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:removeUserItem}
+
+#Show User Cart
+ws_remove_user_cart:
+    pattern:  /ws/show_user_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart}
+#-------------------------Shopping Cart Routes-------------------------------------

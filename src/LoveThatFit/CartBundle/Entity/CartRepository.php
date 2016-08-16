@@ -39,6 +39,21 @@ class CartRepository extends EntityRepository
 	  return null;
 	}
   }
+
+	public function removeCartByItem($user,$product_item){
+	$record = $this->getEntityManager()
+	  ->createQuery("DELETE FROM LoveThatFitCartBundle:Cart c
+                    WHERE c.user = :user and c.product_item=:product_item")
+	  ->setParameter('user' , $user)
+      ->setParameter('product_item', $product_item);
+	try {
+	  return $record->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
+
+
   public function countCartByUser($user){
 	$record = $this->getEntityManager()
 	  ->createQuery("SELECT COUNT(c.id) as counter FROM LoveThatFitCartBundle:Cart c

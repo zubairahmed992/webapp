@@ -58,7 +58,10 @@ class CartHelper {
   public function removeUserCart($user) {
 	return $this->repo->removeCartByUser($user);
   }
-
+  //------------------------------- Remove User Cart -----------------------------------------------------///////////
+  public function removeCartByItem($user,$product_item) {
+      return $this->repo->removeCartByItem($user,$product_item);
+  }
 
 #------------------------------Find cart by id--------------------------------#
   public function findCartById($id){
@@ -110,7 +113,7 @@ class CartHelper {
 	return $grand_total;
   }
 #------------------------------Get Formatted Cart Data by User--------------------------------#
-  public function getFormattedCart($user){
+  public function getFormattedCart($user,$image=''){
 	$cart_array=array();
 	foreach($user->getCart() as $ci){
 	  $cart_array['price'][]=$ci->getProductItem()->getPrice();
@@ -120,7 +123,19 @@ class CartHelper {
 	}
 	return $cart_array;
   }
-
+#------------------------------Get User Cart for service--------------------------------#
+  public function getUserCart($user){
+    $cart_array=array();
+    $counter=0;
+    foreach($user->getCart() as $ci){
+      $cart_array[$counter]['price']=$ci->getProductItem()->getPrice();
+      $cart_array[$counter]['qty']=$ci->getQty();
+      $cart_array[$counter]['item_id']=$ci->getProductItem()->getId();
+      $cart_array[$counter]['image']= $ci->getProductItem()->getProductColor()->getWebPath();
+      $counter++;
+    }
+    return $cart_array;
+  }
 	//-------------------------
 	public function save($cart) {
 	  $class = $this->class;

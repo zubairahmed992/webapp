@@ -330,3 +330,47 @@ ws_misc_banner:
    params:
      banner_type:
    request_type: post
+
+#---------------------------- Shopping Cart -------------------------------------
+#ws_cart_item_add_to_cart:
+#   pattern:  /ws/add_item_to_cart
+#   title: product_add_to_cart
+#   params:
+#     auth_token: 121c421783cd4d71d871ec16a1296091
+#     quantity: 1
+#     item_id: 4126
+#   request_type: post
+
+ws_cart_items_add_to_cart:
+   pattern:  /ws/add_items_to_cart
+   title: product_add_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     items: [{"item_id":4126,"quantity":"1"},{"item_id":4127,"quantity":"2"}]
+   request_type: post
+
+#remove cart of user
+ws_remove_user_cart:
+   pattern:  /ws/remove_user_cart
+   title: remove_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: post
+
+#remove single item from user cart
+#ws_remove_user_cart_item:
+#   pattern:  /ws/remove_user_item
+#   title: remove_user_cart
+#   params:
+#     auth_token: 121c421783cd4d71d871ec16a1296091
+#     item_id: 4126
+#   request_type: post
+
+#show user cart
+ws_show_user_cart:
+   pattern:  /ws/show_user_cart
+   title: show_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: get
+#---------------------------- End Shopping cart ---------------------------------
