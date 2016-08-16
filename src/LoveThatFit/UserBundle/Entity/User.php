@@ -2066,12 +2066,13 @@ class User implements UserInterface, \Serializable {
             $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 0;
             $iphone_resize_ratio = is_array($device_config) && array_key_exists('resize_ratio', $device_config) ? $device_config['resize_ratio'] : 0;
             $neck_exclusion_px = is_array($device_config) && array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 0;
-            
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->calculatePlacementPositions($device_conversion_ratio);
-            $tp=$this->measurement->top_placement;
-            
             $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
-            
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            $hip_height = $this->measurement->bottom_placement - 94;
+            $this->measurement->bottom_placement = ($hip_height  - ($hip_height * 0.08)) + 6;
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
             return array(
                 'id' => $this->getId(),
