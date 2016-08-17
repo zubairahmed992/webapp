@@ -1,0 +1,7 @@
+parameters:
+#    love_that_fit_support.example.class: LoveThatFit\SupportBundle\Example
+
+services:
+#    love_that_fit_support.example:
+#        class: %love_that_fit_support.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

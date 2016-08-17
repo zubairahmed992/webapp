@@ -34,12 +34,12 @@ class SupportAdminUser implements UserInterface, \Serializable {
     private $email;
 
     /**
-     * @var string $name
+     * @var string $user_name
      *
-     * @ORM\Column(name="name", type="string", length=60, nullable=false)
-     * @Assert\NotBlank(groups={"registration_step_one"}, message="Name cannot be blank")
+     * @ORM\Column(name="user_name", type="string", length=60, nullable=false)
+     * @Assert\NotBlank(groups={"registration_step_one"}, message="User Name cannot be blank")
      */
-    private $name;
+    private $user_name;
 
     /**
      * @var string $salt
@@ -230,15 +230,15 @@ class SupportAdminUser implements UserInterface, \Serializable {
      *
      * @return string
      */
-    public function getUsername() {
-        return $this->username;
+    public function getUserName() {
+        return $this->user_name;
     }
 
     /**
      * @inheritDoc
      */
     public function getRoles() {
-        return array('ROLE_RETAILER');
+        return array('ROLE_SUPPORT');
     }
 
     /**
@@ -268,14 +268,14 @@ class SupportAdminUser implements UserInterface, \Serializable {
 
 
     /**
-     * Set username
+     * Set user_name
      *
      * @param string $username
      * @return SupportAdminUser
      */
-    public function setUsername($username)
+    public function setUserName($username)
     {
-        $this->username = $username;
+        $this->user_name = $username;
 
         return $this;
     }
@@ -303,28 +303,28 @@ class SupportAdminUser implements UserInterface, \Serializable {
         return $this->isActive;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return SupportAdminUser
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+//    /**
+//     * Set name
+//     *
+//     * @param string $name
+//     * @return SupportAdminUser
+//     */
+//    public function setUserName($name)
+//    {
+//        $this->name = $username;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get name
+//     *
+//     * @return string
+//     */
+//    public function getUserName()
+//    {
+//        return $this->user_name;
+//    }
 
     public $old_password;
 

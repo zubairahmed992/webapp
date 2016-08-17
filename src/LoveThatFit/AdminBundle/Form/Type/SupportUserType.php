@@ -12,7 +12,7 @@ class SupportUserType extends AbstractType {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('name', 'text');  
+        $builder->add('user_name', 'text');
         $builder->add('email', 'text');
         if($this->mode == 'add') {
            $builder->add('password', 'password');

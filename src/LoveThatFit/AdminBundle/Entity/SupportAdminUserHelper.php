@@ -48,7 +48,7 @@ class SupportAdminUserHelper {
 	public function saveSupportUsers($supportUser,$data) {
 		$password = $this->encodeThisPassword($supportUser,$data["password"]);
 		$supportUser->setPassword($password);
-		$supportUser->setName($data["name"]);
+		$supportUser->setUserName($data["user_name"]);
 		$supportUser->setEmail($data["email"]);
 		$this->save($supportUser);
 	}
@@ -84,7 +84,7 @@ class SupportAdminUserHelper {
 	  $this->em->persist($entity);
 	  $this->em->flush();
 
-	  return array('message' => 'Support user ' . $entity->getName() . ' succesfully updated!',
+	  return array('message' => 'Support user ' . $entity->getUserName() . ' succesfully updated!',
 		'field' => 'all',
 		'message_type' => 'success',
 		'success' => true,
@@ -152,8 +152,8 @@ class SupportAdminUserHelper {
   }
 
 //-------------------------------------------------------
-  public function findOneByName($name) {
-	return $this->repo->findOneByName($name);
+  public function findOneByUserName($user_name) {
+	return $this->repo->findOneByUserName($user_name);
   }
 
 

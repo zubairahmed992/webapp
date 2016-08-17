@@ -30,7 +30,14 @@ class SupportAdminUserController extends Controller {
         $form = $this->createForm(new SupportUserType('add'));
         $form->bind($request);
         if (count($this->get('admin.helper.support')->findOneBy($decoded["support_user"]["email"])) > 0) {
-            $this->get('session')->setFlash('warning', 'Support User has already exists.');
+            $this->get('session')->setFlash('warning', 'Support User email already exists.');
+            return $this->render('LoveThatFitAdminBundle:UserSupport:user_new.html.twig', array(
+                    'form' => $form->createView()
+                )
+            );
+        }
+        if (count($this->get('admin.helper.support')->findOneByUserName($decoded["support_user"]["user_name"])) > 0) {
+            $this->get('session')->setFlash('warning', 'Support Username already exists.');
             return $this->render('LoveThatFitAdminBundle:UserSupport:user_new.html.twig', array(
                     'form' => $form->createView()
                 )

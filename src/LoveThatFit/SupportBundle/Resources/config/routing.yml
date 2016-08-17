@@ -1,0 +1,22 @@
+#-------------------------------------------------------------
+#-------------- Support ------------------------
+#-------------------------------------------------------------
+#---------------------------------------------- Login ------------------------------------------
+
+support_login:
+    pattern:   /support/login
+    defaults:  { _controller: LoveThatFitSupportBundle:Security:login }
+
+support:
+    pattern:   /support
+    defaults:  { _controller: LoveThatFitSupportBundle:Security:login }
+
+support_login_check:
+    pattern:   /support/login_check
+
+support_logout:
+    pattern:   /support/logout
+
+support_dashboard:
+    pattern:  /support/dashboard
+    defaults: { _controller: LoveThatFitSupportBundle:Default:index}

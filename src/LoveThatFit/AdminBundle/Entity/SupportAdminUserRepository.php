@@ -48,11 +48,11 @@ class SupportAdminUserRepository extends EntityRepository
 
   //--------------------------------------------------------------------------
 
-  public function findOneByName($name) {
+  public function findOneByUserName($user_name) {
 	$record = $this->getEntityManager()
 	  ->createQuery("SELECT r FROM LoveThatFitAdminBundle:SupportAdminUser r
-                                WHERE r.name = :name")
-	  ->setParameters(array('name' => $name));
+                                WHERE r.user_name = :user_name")
+	  ->setParameters(array('user_name' => $user_name));
 	try {
 	  return $record->getSingleResult();
 	} catch (\Doctrine\ORM\NoResultException $e) {
