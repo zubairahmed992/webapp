@@ -20,3 +20,7 @@ support_logout:
 support_dashboard:
     pattern:  /support/dashboard
     defaults: { _controller: LoveThatFitSupportBundle:Default:index}
+
+support_users:
+    pattern:  /support/users/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitSupportBundle:User:index , page_number: 1, sort:id }
