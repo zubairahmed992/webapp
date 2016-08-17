@@ -85,6 +85,7 @@ security:
         - { path: /ajax, roles: ROLE_USER }
                 
         - { path: ^/support/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /support/, roles: ROLE_SUPPORT }
         - { path: /support, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
         
