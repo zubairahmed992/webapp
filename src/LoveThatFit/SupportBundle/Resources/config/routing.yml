@@ -2,7 +2,9 @@
 #-------------- Support ------------------------
 #-------------------------------------------------------------
 #---------------------------------------------- Login ------------------------------------------
-
+###############################################
+############# Admin panel and Dashboard ####################
+################################################
 support_login:
     pattern:   /support/login
     defaults:  { _controller: LoveThatFitSupportBundle:Security:login }
@@ -24,3 +26,32 @@ support_dashboard:
 support_users:
     pattern:  /support/users/{page_number}/{sort}
     defaults: { _controller: LoveThatFitSupportBundle:User:index , page_number: 1, sort:id }
+
+########### Cart page ################
+support_cart_index:
+    pattern:  /support/cart
+    defaults: { _controller: LoveThatFitSupportBundle:Cart:CartIndex}
+
+###############################################
+############# Auto Complete ####################
+################################################
+support_auto_complete_user:
+    pattern:  /support/autocomplete_user/index
+    defaults: { _controller: LoveThatFitSupportBundle:Autocomplete:AutoCompleteUserIndex}
+
+support_auto_user_search_result:
+    pattern:  /support/autocomplete_user/autocomplete_user_search_result
+    defaults: { _controller: LoveThatFitSupportBundle:Autocomplete:AutoCompleteUserSearchResult}
+    requirements:
+        _method:  POST
+
+support_auto_complete_product:
+    pattern:  /support/autocomplete_product/index
+    defaults: { _controller: LoveThatFitSupportBundle:Autocomplete:AutoCompleteProductIndex}
+
+support_auto_product_search_result:
+    pattern:  /support/autocomplete_product/autocomplete_product_search_result
+    defaults: { _controller: LoveThatFitSupportBundle:Autocomplete:AutoCompleteProductSearchResult}
+    requirements:
+        _method:  POST
+################## End of Auto Complete #############################
