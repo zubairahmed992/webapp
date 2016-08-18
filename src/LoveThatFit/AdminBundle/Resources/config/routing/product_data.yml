@@ -60,3 +60,10 @@ admin_product_data_multiple_brand_csv:
 admin_product_data_multiple_brand_csv_import:
     pattern:  /admin/product_data/csv_multiple_brand_import
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvMultipleBrandImport }
+
+#--------------------------------- Save Brand Specification Format  -------------
+admin_product_data_brand_description:
+    pattern:  /admin/product_data/brand_description
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:brandDescription }
+    requirements:
+        _method:  POST

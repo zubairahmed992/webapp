@@ -46,10 +46,10 @@ class ProductDataController extends Controller
                 'number' => array(00, 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30),
                 'waist' => array(23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36)));
 
-        $size_types_letters = array('XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
+        $size_types_letters = array('Calculation', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
             '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X');
-        $size_types_number = array(00, 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30);
-        $size_types_waist = array(23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);
+        $size_types_number = array('Calculation', '00', 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30);
+        $size_types_waist = array('Calculation', 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);
 
         $fit_points = array('tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
             'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
@@ -67,9 +67,7 @@ class ProductDataController extends Controller
     //$id = $request->request->get('sizeValue');
 
 //    }
-
-
-    public function saveBrandSpecificationAction(Request $request)
+    public function brandDescriptionAction(Request $request)
     {
 
         $request = $request->request->all();
@@ -86,8 +84,10 @@ class ProductDataController extends Controller
 
 
         return new Response(json_encode($data));
-        die(json_decode($text));
-        var_dump($_POST);
+    }
+
+    public function saveBrandSpecificationAction(Request $request)
+    {
         foreach ($_POST as $name => $value) {
             $val[$name] = $value;
         }
@@ -150,23 +150,34 @@ class ProductDataController extends Controller
 //            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
 //            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
         $sizes = array('Garment Dimension', 'Garment Stretch', 'Grade Rule', 'Min Calc',	'Min Actual', 'Ideal Low', 'Fit Model','Ideal High', 'Max Actual', 'Max Calc', 'Range Conf');
-        $fit_points = explode(',', $productData['fit_point']);
+        $fit_point_trim = trim($productData['fit_point'],'[');
+        $fit_point_trim_value = trim($fit_point_trim,']');
+        $fit_points = explode(',', $fit_point_trim_value);
         array_unshift($fit_points, 'sizes');
-
-      //      print_r($fit_points);
-
         $product_size = trim($productData['select_size'], '[');
         $product_size_value = trim($product_size, ']');
         $size = explode(',', $product_size_value);
+        echo "<pre>";
+        //print_r($size);
+
         foreach ($fit_points as $keys => $fit_point_val) {
+           if($fit_point_val == 'sizes') continue;
+            $flag_formula=true;
             foreach ($size as $ke => $selected_size_val) {
-                $fit_point[$fit_point_val . "_" . trim($selected_size_val, '""')] = '';
+                if($flag_formula)
+               $fit_point_formula[trim($fit_point_val, '""') . "_" . trim($selected_size_val, '""')] = '';
+                $fit_point[trim($fit_point_val, '""') . "_" . trim($selected_size_val, '""')] = '';
+                $flag_formula = false;
             }
         }
+
         echo "<pre>";
-        //print_r($productSave);
+        //print_r($fit_point_formula);
+       // print_r($fit_point);
         $result_array = array_intersect_key($productSave, $fit_point);
-        echo "<pre>";
+        $formula_arry = array_intersect_key($productData, $fit_point_formula);
+         echo "<pre>";
+      //  print_r($formula_arry);
         foreach ($productSave as $key => $val) {
 
             if (array_key_exists($key, $result_array)) {
@@ -175,39 +186,39 @@ class ProductDataController extends Controller
                 echo $key . " : " . $val . "<br>";
             }
         }
-        echo "<pre>";
-        echo "<p><table>";
-        foreach ($fit_points as $keys => $fit_point_val) {
-            echo "<tr><td>" . $fit_point_val . "</td>";
-            $grade_rule = 0;
-            $count = 0;
-            foreach ($size as $ke => $selected_size_val) {
-                $grade_rule = $grade_rule + 1;
-                if ($fit_point_val == "sizes") {
-                    echo "<td>" . trim($selected_size_val, '""') . "</td>";
-                    echo "<td>GR </td>";
-                } else {
-                    $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
-                    if (array_key_exists($fit_points_key, $result_array)) {
-                        $count = $count + 1;
-                        echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
-                        $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
-                        if (isset($result_array[$gr])) {
-                            $gr_value = $result_array[$gr] - $result_array[$fit_points_key];
-                            echo "<td><input type='text' style='width:40px' value=" . $gr_value . "> </td>";
-                        } else {
-                            echo "<td><input type='text' style='width:40px'> </td>";
-                        }
-                    } else {
-                        echo "<td><input type='text' style='width:40px'></td>";
-                        echo "<td><input type='text' style='width:40px'></td>";
-                    }
-                }
-
-            }
-            echo "</tr>";
-        }
-        echo "</table>";
+//        echo "<pre>";
+//        echo "<p><table>";
+//        foreach ($fit_points as $keys => $fit_point_val) {
+//            echo "<tr><td>" . $fit_point_val . "</td>";
+//            $grade_rule = 0;
+//            $count = 0;
+//            foreach ($size as $ke => $selected_size_val) {
+//                $grade_rule = $grade_rule + 1;
+//                if ($fit_point_val == "sizes") {
+//                    echo "<td>" . trim($selected_size_val, '""') . "</td>";
+//                    echo "<td>GR </td>";
+//                } else {
+//                    $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
+//                    if (array_key_exists($fit_points_key, $result_array)) {
+//                        $count = $count + 1;
+//                        echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
+//                        $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
+//                        if (isset($result_array[$gr])) {
+//                            $gr_value = $result_array[$gr] - $result_array[$fit_points_key];
+//                            echo "<td><input type='text' style='width:40px' value=" . $gr_value . "> </td>";
+//                        } else {
+//                            echo "<td><input type='text' style='width:40px'> </td>";
+//                        }
+//                    } else {
+//                        echo "<td><input type='text' style='width:40px'></td>";
+//                        echo "<td><input type='text' style='width:40px'></td>";
+//                    }
+//                }
+//
+//            }
+//            echo "</tr>";
+//        }
+//        echo "</table>";
         //////////////////////////////        Size Code ///////////////////////////////////////////////
 
         echo "<pre>";
@@ -218,7 +229,7 @@ class ProductDataController extends Controller
       //  print array_search('50',$size_selected[0]);
       //  print_r($size);
         //die();
-      // print_r($result_array);
+       print_r($result_array);
 
         echo "<br>";
         echo "<p><table>";
@@ -231,19 +242,63 @@ class ProductDataController extends Controller
         $max_calc =0;
         $ideal_low = 0;
         $ideal_heigh = 0;
+        $fit_model = 0;
+        $grade_rule_value = 0;
+        // Combine array value and keys
+        foreach ($fit_points as $ke => $fit_point_size_val) {
+            $fit_point_sizes [] = trim($fit_point_size_val, '""')."_Calculation";
+        }
+        $fit_point_value = array_combine($fit_point_sizes, $fit_points);
+        // End Combine array value and keys
+       echo "<pre>";
+       // print_r($fit_point_value);
+        //die();
+
+
+
         foreach ($size as $ke => $selected_size_val) {
+            $flag = true;
+            if(trim($selected_size_val, '""') == "Calculation") continue;
                 echo "<tr><td>" . $selected_size_val . "</td>";
                 foreach ($sizes as $key => $size_labels){
                     echo "<td>" . $size_labels . "</td>";
                 }
-                foreach ($fit_points as $keys => $fit_point_vals) {
-                    $fit_points_key = $fit_point_vals."_".trim($selected_size_val, '""');
-                   // echo "<br>".$fit_points_key;
+                foreach ($fit_point_value as $fit_point_keys => $fit_point_vals) {
+                    $fit_points_key = trim($fit_point_vals,'""')."_".trim($selected_size_val, '""');
+
+                    if(!empty($formula_arry[$fit_point_keys]) && isset($result_array[$fit_points_key])) {
+                        $formula = explode(" ", $formula_arry[$fit_point_keys] );
+                        switch ($formula[1]) {
+                            case '*':
+                             //   echo "Multiplie";
+                                $fit_model = $result_array[$fit_points_key] * $formula[2];
+                                break;
+                            case '/':
+                             //   echo "Divide";
+                                $fit_model = $result_array[$fit_points_key] / $formula[2];
+                                break;
+                            case '+':
+                              //  echo "Addition";
+                                $fit_model = $result_array[$fit_points_key] + $formula[2];
+                                break;
+                            case '-':
+                               // echo "Subtration";
+                                $fit_model = $result_array[$fit_points_key] - $formula[2];
+                                break;
+                        }
+                    }
+
                       ///////////// Calculate the Grade Rule Value  /////////////////////////
                     if (array_key_exists($fit_points_key, $result_array)) {
-                        $fit_point = $fit_point_vals . "_" . trim($size[$ke + 1], '""');
+                        $fit_point = trim($fit_point_vals,'""') . "_" . trim($size[$ke + 1], '""');
+
                         if (isset($result_array[$fit_point])) {
-                            $fit_model = $result_array[$fit_points_key];
+
+                            if(!isset($fit_model)){
+
+                                $fit_model = $result_array[$fit_points_key];
+                            }
+                           // $fit_model = $result_array[$fit_points_key];
                             $fit_model_next = $result_array[$fit_point];
                             $grade_rule_value = $fit_model_next - $fit_model;
                             $min_calc = $fit_model - (2.5*$grade_rule_value);
@@ -282,11 +337,11 @@ class ProductDataController extends Controller
                         echo "<td>" . $min_calc . "</td>";
                         echo "<td>" . $min_calc . "</td>";
                         echo "<td>" . $ideal_low . "</td>";
-                        echo "<td>" . $result_array[$fit_points_key] . "</td>";
+                        echo "<td>" . $fit_model . "</td>";
                         echo "<td>" . $ideal_heigh . "</td>";
                         echo "<td>" . $max_calc . "</td>";
                         echo "<td>" . $max_calc . "</td>";
-                        echo "<td>" . $result_array[$fit_points_key] . "</td>";
+                        echo "<td>" . $ideal_low . "</td>";
                        } else {
                           echo "<td>" . $na . "</td>";
                           echo "<td>" . $na . "</td>";

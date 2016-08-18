@@ -10,7 +10,7 @@
                 // var brand_name = this.name;
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost/webapp/web/app_dev.php/admin/product_data/save_brand_specification",
+                    url: "http://localhost/webapp/web/app_dev.php/admin/product_data/brand_description",
                     data: {brand_name: this.value},
                     dataType: "json",
                     success: function (response) {
