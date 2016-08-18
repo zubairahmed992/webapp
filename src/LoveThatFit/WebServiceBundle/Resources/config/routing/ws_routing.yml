@@ -112,6 +112,10 @@ ws_misc_banner:
     pattern:  /ws/misc_banner
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:banner}
 
+ws_build_config:
+    pattern:  /ws/build_config
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:buildConfig}
+
 #-------------------------Shopping Cart Routes-------------------------------------
 
 #Add Single Item to Cart

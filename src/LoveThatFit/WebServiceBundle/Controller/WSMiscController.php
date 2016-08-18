@@ -50,5 +50,16 @@ class WSMiscController extends Controller {
         }
     }
 
+    #~~~~~~~~~~~~~~~~~~~ ws_build_config   /ws/build_config
+
+    public function buildConfigAction() {
+        $conf=array(
+            'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
+            'beta'=>array('build_type'=>'beta','url'=>'beta.selfiestyler.com'),
+            'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
+        );
+            return new Response(json_encode($conf));
+        
+    }
 }
 
