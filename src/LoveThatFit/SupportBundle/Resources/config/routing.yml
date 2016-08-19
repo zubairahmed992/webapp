@@ -32,6 +32,18 @@ support_cart_index:
     pattern:  /support/cart
     defaults: { _controller: LoveThatFitSupportBundle:Cart:CartIndex}
 
+### Show Cart
+support_cart_show:
+    pattern:  /support/cart/show/{id}
+    defaults: { _controller: LoveThatFitSupportBundle:Cart:Show}
+    requirements:
+        _method:  GET
+
+### Cart delete
+support_cart_delete:
+    pattern:  /support/cart/delete/{id}/{user_id}
+    defaults: { _controller: LoveThatFitSupportBundle:Cart:delete}
+
 ###############################################
 ############# Auto Complete ####################
 ################################################

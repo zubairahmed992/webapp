@@ -46,24 +46,20 @@ $(document).ready(function(){
         return false; //for good measure
     });
 //-----------------------------------------------------------
-    $('a.compare').click(function (event){
+    $('a.showcart').click(function (event){
         event.preventDefault();
 
-        //var user_id = $("#algorithm_User").val();
-        //var product_id = $("#algorithm_Product").val();
-
         var user_id = $("#user_id").val();
-        var product_id = $("#product_id").val();
-        var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id;
+        //var product_id = $("#product_id").val();
+        var show_url = "cart/show/" + user_id ;
         $.ajax({
-            url: compare_url
+            url: show_url
             ,success: function(response) {
                 $('#summary_ajax').html(response);
             }
         })
         return false; //for good measure
     });
-
 
 
 
@@ -77,9 +73,9 @@ $(document).ready(function(){
 
 <div class="p_listing"> 
 
-    <h3>Algorithm 2</h3>
+    <h3>Shopping Cart Testing Interface</h3>
     <div style="float: left">
-        
+
         <a id="user_edit_link" class="user_edit_link" href="#">User</a>
         <form id="userForm" method="post" {{ form_enctype(userForm) }}>
         {{ form_errors(userForm) }}
@@ -97,7 +93,7 @@ $(document).ready(function(){
         {{ form_rest(productForm) }}
         </form>      
     </div>
-
+    <a href="#" id="showcart" class="showcart">show cart</a>
     <div id="summary_ajax" style="float: none">
     </div>
     {#<div class="ui-widget" style="clear:both">#}

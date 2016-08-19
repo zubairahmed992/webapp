@@ -113,7 +113,7 @@ class CartHelper {
 	return $grand_total;
   }
 #------------------------------Get Formatted Cart Data by User--------------------------------#
-  public function getFormattedCart($user,$image=''){
+  public function getFormattedCart($user){
 	$cart_array=array();
 	foreach($user->getCart() as $ci){
 	  $cart_array['price'][]=$ci->getProductItem()->getPrice();

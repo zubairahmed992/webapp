@@ -2,6 +2,14 @@ parameters:
 #    love_that_fit_support.example.class: LoveThatFit\SupportBundle\Example
 
 services:
-#    love_that_fit_support.example:
-#        class: %love_that_fit_support.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+     kernel.listener.accessDenied:
+        class: LoveThatFit\SupportBundle\Component\Event\AccessDeniedListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception, method: onAccessDeniedException }
+     cart.helper.cart:
+        class: LoveThatFit\CartBundle\Entity\CartHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\CartBundle\Entity\Cart
+            container: "@service_container"

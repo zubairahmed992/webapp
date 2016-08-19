@@ -1,0 +1,77 @@
+
+<script>
+    function removeCart(id,user_id){
+        if(confirm("Are you sure you want to delete this?")){
+            var delete_url = "cart/delete/" + id + "/"+ user_id;
+            $.ajax({
+                url: delete_url
+                ,success: function(response) {
+                    //alert(response);
+                    $("#cart_"+id).closest('tr').remove();
+                    if(response == 0){
+                        $('.cart_tbl tr:last').after("<tr><td align='center' colspan='6'> <p class='no_item_wrapper'>  Currently there are no items in the cart.</p></td></tr>");
+                    }
+                }
+            })
+        }
+        else{
+            return false;
+        }
+
+    }
+</script>
+<table width="745" border="1" class="cart_tbl" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Image</td>
+
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Unit Price</td>
+            <td>Sub Total</td>
+            <td>Actions</td>
+
+        </tr>
+
+
+
+        {% for c in cart %}
+            <tr id="cart_{{ c.id }}">
+                <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}" height="65"  ></td>
+
+                <td align="left" width="20%">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
+                <td align="center" >
+                    <input type="hidden" name="id[]" value="{{ c.id }}">
+                    <input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}">
+                    <input id="qty_{{ c.id }}" type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" >
+
+
+                </td>
+                <td align="center">${{ c.productItem.price}}</td>
+                <td align="center">$<span id="subtotal_{{ c.id }}">{{ c.productItem.price * c.qty}}</span></td>
+
+                <td align="center">
+
+                            <a id="remove" onclick="return removeCart('{{ c.id }}','{{ c.user.id }}')" title="Remove">  <img alt="Remove" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
+
+                </td>
+
+            </tr>
+
+
+        {% endfor %}
+
+
+
+        {% if(itemscounter == 0 ) %}
+
+            <tr>
+                <td align="center" colspan="6">
+                    <p class="no_item_wrapper">
+                        Currently there are no items in the cart.
+
+
+                    </p>
+                </td>
+            </tr>
+        {% endif %}
+        </table>
