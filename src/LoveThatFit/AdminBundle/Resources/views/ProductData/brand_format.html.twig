@@ -5,6 +5,7 @@
 {% block body %}
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
     <script type="application/javascript">
+        var $ = jQuery.noConflict();
         jQuery(document).ready(function () {
             $(".selectSize").change(function () {
                 $('.add_size_row').show();
@@ -28,30 +29,83 @@
                 });
                 //tableData += "</table>";
                 siz_genrate.append(tableData);
+
+
+                // Fill Text Box Valuw auto
+                var $vl;
+                var $ctrlKey = 17;
+                var $cKey = 67;
+                var $sum = 0;
+                var $text_box_value;
+                $(".formFill  input").each(function () {
+                    $(this).keydown(function (e) {
+                        $text_box_value = $(this).val();
+                        var $fld_value = $(this).val().split(',');
+                        $sum += Number(e.keyCode);
+                        // Ctrl + C increase Column value in text box
+                        if ($sum == 67) {
+                            $sum = 84;
+                        }
+                        if (e.keyCode == 17) {
+                            $sum = 0;
+                        }
+                        if ($sum == 84) {
+                            $sum = 0;
+                            $vl = parseInt($fld_value[0]) + 1;
+                            $(this).val($vl + "," + $fld_value[1]);
+                        }
+
+                        if ($sum == 84) {
+                            $sum = 0;
+                            $(this).val($vl);
+                        }
+                        // Ctrl + B increase Row value in text box
+                        if ($sum == 66) {
+                            $sum = 83;
+                        }
+                        if (e.keyCode == 17) {
+                            $sum = 0;
+                        }
+                        if ($sum == 83) {
+                            $sum = 0;
+                            $vl = parseInt($fld_value[1]) + 1;
+                            $(this).val($fld_value[0] + "," + $vl);
+                        }
+                        if ($sum == 83) {
+                            $sum = 0;
+                            $(this).val($vl);
+                        }
+                    });
+                   // Copy texty box value into next one text box
+                    $(this).keyup(function (e) {
+                        if (e.keyCode == 9) {
+                            $(this).val($text_box_value);
+                        }
+                    });
+                });
+            // End auto fill value
             });
-            var fit_poit_condition =true;
+
+
+            var fit_poit_condition = true;
             $(".add_size").click(function () {
                 var siz_lable_value = $('#product_fit_modle_size').val();
-                var fit_point_labels='';
+                var fit_point_labels = '';
                 var fit_point = $('.fit_point').val();
-                    if(fit_poit_condition){
-                        fit_point_labels = $.parseJSON(fit_point)
-                        fit_poit_condition=false;
-                } else{
-                        fit_point_labels =fit_point
+                if (fit_poit_condition) {
+                    fit_point_labels = $.parseJSON(fit_point)
+                    fit_poit_condition = false;
+                } else {
+                    fit_point_labels = fit_point
 
-                    }
-
-                fit_point_labels += ","+siz_lable_value;
+                }
+                fit_point_labels += "," + siz_lable_value;
                 $('.fit_point').val(fit_point_labels)
-
-
-
-                var size_type =  $('.selectSize :selected').val();
+                var size_type = $('.selectSize :selected').val();
                 size_type = $.parseJSON(size_type);
                 var siz_genrate = $('.size_genrate');
                 var tableData = '';
-                tableData += "<table><tr><td class='span2'>"+ siz_lable_value + "</td>";
+                tableData += "<table><tr><td class='span2'>" + siz_lable_value + "</td>";
                 $.each(size_type, function (k, v) {
                     tableData += "<td>  <input type='text' name=" + siz_lable_value + "_" + v + " style='width: 40px'/> </td>";
                 });
@@ -67,17 +121,11 @@
 
     <div id="detail_wrapper">
         <div id="product_content">
-
-
             {#{{ dump(brandNames) }}#}
-
-
-            <form action="{{ path('admin_product_data_save_brand_specification') }}" method="post">
+            <form action="{{ path('admin_product_data_save_brand_specification') }}" method="post" class="formFill">
                 <div id="detail_wrapper">
                     <div id="p_hd">Product Brand CSV Format Configure</div>
-
                     <div class="clearfix"></div>
-
                     <div id="product_content">
                         <div id="pro_detail">
                             <div class="edt_container">
@@ -229,7 +277,7 @@
 
                                         </select>
                                     </div>
-                                    <input type="hidden"    value="{{ size_fit_points[0]|json_encode() }}"
+                                    <input type="hidden" value="{{ size_fit_points[0]|json_encode() }}"
                                            name="fit_point" class="fit_point">
                                 </div>
                                 <div class="size_genrate"></div>
