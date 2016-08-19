@@ -47,4 +47,13 @@ class CartController extends Controller {
     return new Response($getCounterResult["counter"]);
   }
 
+  //------------------------------------------------------------------------------------------
+  public function addToCartAction(Request $request){
+	  $decoded  = $request->request->all();	  
+	  $user = $this->get('user.helper.user')->find($decoded["user_id"]);
+          $product = $this->get('admin.helper.product')->find($decoded["product_id"]);
+          $item=$product->getDefaultItem($user);
+	  $this->get('cart.helper.cart')->fillCart($item->getId(),$user,1);
+	  return new Response(true);
+	}
 }

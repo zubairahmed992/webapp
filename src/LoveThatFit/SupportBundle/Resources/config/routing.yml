@@ -44,6 +44,12 @@ support_cart_delete:
     pattern:  /support/cart/delete/{id}/{user_id}
     defaults: { _controller: LoveThatFitSupportBundle:Cart:delete}
 
+support_cart_add:
+    pattern:  /support/cart_add
+    defaults: { _controller: LoveThatFitSupportBundle:Cart:addToCart}
+    requirements:
+        _method:  POST
+
 ###############################################
 ############# Auto Complete ####################
 ################################################
