@@ -23,10 +23,6 @@ support_dashboard:
     pattern:  /support/dashboard
     defaults: { _controller: LoveThatFitSupportBundle:Default:index}
 
-support_users:
-    pattern:  /support/users/{page_number}/{sort}
-    defaults: { _controller: LoveThatFitSupportBundle:User:index , page_number: 1, sort:id }
-
 ########### Cart page ################
 support_cart_index:
     pattern:  /support/cart
@@ -73,3 +69,13 @@ support_auto_product_search_result:
     requirements:
         _method:  POST
 ################## End of Auto Complete #############################
+
+## users routes start ##
+support_users:
+    pattern:  /support/users
+    defaults: { _controller: LoveThatFitSupportBundle:User:index}
+
+support_users_paginate:
+    pattern:  /support/users/paginate
+    defaults: { _controller: LoveThatFitSupportBundle:User:paginate}
+## users routes start ##

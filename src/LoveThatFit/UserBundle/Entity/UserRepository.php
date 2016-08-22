@@ -373,7 +373,54 @@ class UserRepository extends EntityRepository {
 	  return null;
 	}
   }
+    //end of autocomplete method
 
-  //end of autocomplete method
+
+    public function search($data, $page = 0, $max = NULL, $order, $getResult = true) 
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null; 
+        
+        $query 
+            ->select('
+                u.id,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.gender,
+                u.createdAt,
+                IDENTITY(u.original_user) as original_user_id'
+            )
+            ->from('LoveThatFitUserBundle:User', 'u');
+        if ($search) {
+            $query 
+                ->andWhere('u.firstName like :search') 
+                ->orWhere('u.lastName like :search') 
+                ->orWhere('u.email like :search') 
+                ->setParameter('search', "%".$search."%");
+        }
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "u.id";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "u.firstName";
+            } elseif ($orderByColumn == 4) {
+                $orderByColumn = "u.createdAt";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+
+        if ($max) {
+            $preparedQuery = $query->getQuery() 
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery(); 
+        }
+        return $getResult?$preparedQuery->getResult():$preparedQuery; 
+    }
 }
 

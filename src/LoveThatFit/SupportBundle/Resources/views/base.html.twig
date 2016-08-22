@@ -12,6 +12,15 @@
     <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/js/custom.js') }}" rel="stylesheet" type="text/css" />
+
+    <!-- datatable css & js file start-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lovethatfit/admin/datatable/css/jquery.dataTables.css') }}">
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery-1.12.3.min.js') }}">
+        </script>
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery.dataTables.js') }}">
+        </script>
+    <!-- datatable css & js file end-->
     </head>
     <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,8 +41,7 @@
             </p>
             <!-- Top Navigation Start -->
             <ul class="nav">
-                
-
+              <li><a href="{{ path('support_users') }}">Users</a></li>
               <li><a href="{{ path('support_logout') }}">Logout</a></li>
             </ul>
              <!-- Top Navigation End -->
@@ -81,8 +89,6 @@
     <footer>
       <p>&copy; Company 2012</p>
     </footer>
-
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-transition.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-alert.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-modal.js') }}"></script>

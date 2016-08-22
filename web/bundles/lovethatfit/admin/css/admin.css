@@ -139,3 +139,6 @@ body {
 #page_wrap {
     position: absolute !important;
 }
+.duplicate_user_class {
+    color:#ff0000;
+}

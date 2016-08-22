@@ -6,10 +6,89 @@
 
 {% block body %}
 <div class="p_listing">
-test
+    <div class="clearfix"></div>
+      <h1 style="float:left;">Users</h1>
+      <div class="clearfix"></div>
+      <div class="btn_wrapper2">
+        <div id="chart_figures" class="product_chart_figures">
+          <div class="facts">
+            <div><span>Total Users:</span>{{rec_count}}</div>
+            <div><span>Female:</span>{{femaleUsers}}</div>
+            <div><span>Male:</span>{{maleUsers}}</div>
+          </div>
+        </div>
       </div>
-
-
- 
-
+      <p style="color:#ff0000">Duplicate users are showing in red colors</p>
+      <div class="clearfix"></div>
+    </div>
+    <div class="bs-docs-grid">
+      <table id="example" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Gender</th>
+              <th>Created At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>  
+    </div>
+  </div> 
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    $('#example').DataTable({
+       "processing": true, 
+        "serverSide": true, 
+        "ajax": {
+            "url": "{{ path('support_users_paginate') }}",
+            "type": "POST"
+        },
+        "sAjaxDataProp": "data", 
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "order": [[ 0, "desc" ]],
+        "columns": [
+          {
+              "data"  : "Sno",
+              "searchable" : false,
+          },
+          {
+              "data"  : "full_name",
+          },
+          {
+              "data"  : "email",
+              "orderable" : false
+          },
+          {
+              "data"  : "gender",
+              "orderable" : false
+          },
+          {
+              "data"  : "createdAt",
+              "searchable": false
+          },
+          {
+              "data"  : "action",
+              "searchable": false,
+              "orderable" : false
+          },
+          {
+              "data"  : "original_user_id",
+              "searchable": false,
+              "visible": false
+          }
+        ],
+        "createdRow": function ( row, data, index ) {
+            if ( data["original_user_id"] != null ) {
+              $('td', row).addClass('duplicate_user_class');
+            }
+        },
+    });
+  });
+</script>
 {% endblock %}

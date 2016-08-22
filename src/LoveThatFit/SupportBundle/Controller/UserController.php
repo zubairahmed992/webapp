@@ -6,18 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\UserBundle\Entity\User;
-use LoveThatFit\AdminBundle\Form\Type\UserMeasurementType;
-use LoveThatFit\AdminBundle\Form\Type\UserProfileSettingsType;
-use LoveThatFit\AdminBundle\Form\Type\MannequinTestType;
-use LoveThatFit\AdminBundle\Form\Type\RetailerSiteUserType;
-
 
 class UserController extends Controller {
 
-    //--------------------------User List-------------------------------------------------------------
-    public function indexAction($page_number, $sort = 'id') {
-       echo "test";die;
+    public function indexAction()
+    {
+    	$totalRecords = $this->get('user.helper.user')->countAllUserRecord();
+    	$femaleUsers  = $this->get('user.helper.user')->countByGender('f');
+    	$maleUsers    = $this->get('user.helper.user')->countByGender('m');
+    	
+		return $this->render('LoveThatFitSupportBundle:User:index.html.twig',
+                array('rec_count' => count($totalRecords),
+                    'femaleUsers' => $femaleUsers,
+                    'maleUsers'   => $maleUsers
+                    )
+        );
     }
 
-
+    public function paginateAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output = $this->get('user.helper.user')->search($requestData);
+        
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
+    }
 }
