@@ -61,7 +61,37 @@ $(document).ready(function(){
         return false; //for good measure
     });
 
+    $('a.add_to_cart').click(function (event){
+        event.preventDefault();
 
+        var user_id = $("#user_id").val();
+        var product_id = $("#product_id").val();
+
+        var postForm = { //Fetch form data
+            'user_id'     : user_id,
+            'product_id'     : product_id
+
+        };
+        var show_url = "cart_add";
+        $.ajax({
+            type:'POST',
+            url: show_url,
+            data:postForm,
+            dataType:'json'
+            ,success: function(response) {
+                if(response==1){
+                    var show_url = "cart/show/" + user_id ;
+                    $.ajax({
+                        url: show_url
+                        ,success: function(response) {
+                            $('#summary_ajax').html(response);
+                        }
+                    })
+                }
+            }
+        })
+        return false; //for good measure
+    });
 
 });        
 
@@ -94,6 +124,7 @@ $(document).ready(function(){
         </form>      
     </div>
     <a href="#" id="showcart" class="showcart">show cart</a>
+    <a href="#" id="add_to_cart" class="add_to_cart">add to cart</a>
     <div id="summary_ajax" style="float: none">
     </div>
     {#<div class="ui-widget" style="clear:both">#}

@@ -54,6 +54,6 @@ class CartController extends Controller {
           $product = $this->get('admin.helper.product')->find($decoded["product_id"]);
           $item=$product->getDefaultItem($user);
 	  $this->get('cart.helper.cart')->fillCart($item->getId(),$user,1);
-	  return new Response(true);
+	  return new Response("1");
 	}
 }
