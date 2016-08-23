@@ -1,0 +1,159 @@
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active"> Product list with recomended sizes & fit index</li>
+{% endblock %}
+{% block body %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    Evaluation Product Sheet
+    <a id='print' class='print' href="#">Print >></a> or
+    <a id='download' class='download' href="#" target="_parent"> CSV >></a>
+    <br><br>
+    <div style="clear:both">
+        <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Sample Products >></a>
+    </div>
+    <br><br>
+<h4> Product list with recomended sizes & fit index</h4>
+<script>
+$(document).ready(function(){
+  $( "select[id='algorithm_User']" ).change(function() {
+        $("#user_id").val(this.value);
+        $('#keyword').val($('option:selected', $(this)).text());
+  });
+  
+
+//-----------------------------------------------------------
+ $('a.compare_with_product_ids').click(function (event){
+     event.preventDefault();
+
+     var ar = {
+         user_id:$("#user_id").val(),
+         ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
+
+     var compare_url = "evaluation_sheet/sample";
+
+     $.ajax({
+               type: "POST",
+               url: compare_url,
+               data: JSON.stringify(ar),
+              contentType: "application/json; charset=utf-8",
+                traditional: true,
+               success: function(response){
+                   $('#summary_ajax').html(response);
+                },
+               failure: function(response) {
+                   $('#summary_ajax').html(response);
+               }
+         });
+
+     //return false; //for good measure
+});
+
+
+    //-----------------------------------------------------------
+    //-----------------------------------------------------------
+    $('a.print').click(function (event){
+        event.preventDefault();
+
+        var ar = {
+            user_id:$("#user_id").val(),
+            page:$("#sel_page").val(),
+            limit: $("#sel_limit").val(),
+            ids: $("#txt_id_range").val()};
+
+        var compare_url = "evaluation_sheet/print";
+
+        var form = $('<form action="' + compare_url + '" method="post">' +
+                '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="page"  id="page" value="' + $("#sel_page").val() + '" /><input type="hidden" name="limit"  id="limit" value="' + $("#sel_limit").val() + '" /><input type="hidden" name="ids"  id="ids" value="474, 475, 479, 472, 476, 540, 473, 541" />' +
+                '</form>');
+        $('body').append(form);
+        form.submit();
+
+    });
+
+    $('a.download').click(function (event){
+        event.preventDefault();
+
+        var ar = {
+            user_id:$("#user_id").val(),
+            page:$("#sel_page").val(),
+            limit: $("#sel_limit").val(),
+            ids: $("#txt_id_range").val()};
+
+        var compare_url = "evaluation_sheet/csv";
+//' + $("#txt_id_range").val() + '
+        var form = $('<form action="' + compare_url + '" method="post">' +
+                '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="page"  id="page" value="' + $("#sel_page").val() + '" /><input type="hidden" name="limit"  id="limit" value="' + $("#sel_limit").val() + '" /><input type="hidden" name="ids"  id="ids" value="474, 475, 479, 472, 476, 540, 473, 541" />' +
+                '</form>');
+        $('body').append(form);
+        form.submit();
+
+    });
+
+});
+    </script>
+
+<span id='user_id' style="display: block"></span>
+
+<div class="p_listing"> 
+    <div style="float: left">
+
+        <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+        {{ form_errors(userForm) }}
+        {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
+           Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
+        {{ form_rest(userForm) }}
+        </form>                 
+        </div>
+
+    {#<div style="float: left">#}
+    {##}
+        {#Limit:#}
+        {#<select id="sel_limit" name="sel_limit">#}
+
+            {#<option value="0">None</option>#}
+            {#<option value="2">2</option>#}
+            {#<option value="5">5</option>#}
+            {#<option value="10">10</option>#}
+            {#<option value="20">20</option>#}
+            {#<option value="30">30</option>#}
+            {#<option value="50">50</option>#}
+            {#<option value="80">80</option>#}
+            {#<option value="100">100</option>#}
+        {#</select>#}
+        {#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
+        {#Page:#}
+        {#<select id="sel_page" name="sel_page">#}
+            {#<option value="1">1</option>#}
+            {#<option value="2">2</option>#}
+            {#<option value="3">3</option>#}
+            {#<option value="4">4</option>#}
+            {#<option value="5">5</option>#}
+            {#<option value="6">6</option>#}
+            {#<option value="7">7</option>#}
+            {#<option value="8">8</option>#}
+            {#<option value="9">9</option>#}
+            {#<option value="10">10</option>#}
+        {#</select>#}
+    {#</div>#}
+     
+        
+    
+    {#<br>#}
+    {##}
+    {#<br><br>#}
+    {#<div>comma separated product ids, eg. 23, 34, 55 </div>#}
+    {#<input type="text" id='txt_id_range' name='txt_id_range'>    #}
+
+    <br><br>
+
+
+    <br><br>
+    <div id="summary_ajax" style="float: none">
+    </div>
+        <input type="hidden"  id="user_id">
+
+
+</div> 
+
+{% endblock %}

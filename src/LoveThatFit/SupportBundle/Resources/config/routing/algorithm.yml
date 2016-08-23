@@ -1,0 +1,15 @@
+support_fit_evaluation_sheet_print:
+    pattern:  /support/evaluation_sheet/print
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:print}
+
+support_fit_evaluation_sheet_csv:
+    pattern:  /support/evaluation_sheet/csv
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:csv}
+
+support_evaluation_sheet_index:
+    pattern:  /support/evaluation_sheet
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:index}
+
+support_evaluation_sheet_sample_products:
+    pattern:  /support/evaluation_sheet/sample
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:sample}

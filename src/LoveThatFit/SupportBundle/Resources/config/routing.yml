@@ -79,3 +79,11 @@ support_users_paginate:
     pattern:  /support/users/paginate
     defaults: { _controller: LoveThatFitSupportBundle:User:paginate}
 ## users routes start ##
+
+## Algorithm Functionality of Admin moved to support bundle #########
+     #-------------- Algorithm Route ------------------------
+support_algoritm_routes:
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/algorithm.yml"
+    prefix:   /
+
+######## End of Algorithm ###########################################
