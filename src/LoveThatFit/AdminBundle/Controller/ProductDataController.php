@@ -48,7 +48,7 @@ class ProductDataController extends Controller
 
         $size_types_letters = array('Calculation', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
             '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X');
-        $size_types_number = array('Calculation', '00', 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30);
+        $size_types_number = array('Calculation', '00', 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30);
         $size_types_waist = array('Calculation', 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);
 
         $fit_points = array('tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
@@ -112,12 +112,12 @@ class ProductDataController extends Controller
 
     public function csvMultipleBrandImportAction()
     {
-        $value = '17 Sundays';
+        $value = $_POST['brand_Description_value'];
         $data = $this->getDoctrine()->getManager()
             ->createQueryBuilder()
             ->select('bfi.brand_format')
             ->from('LoveThatFitAdminBundle:BrandFormatImport', 'bfi')
-            ->Where('bfi.brand_name =:brandName')
+            ->Where('bfi.brand_description =:brandName')
             ->setParameters(array('brandName' => $value))
             ->getQuery()
             ->getResult();
@@ -229,7 +229,7 @@ class ProductDataController extends Controller
       //  print array_search('50',$size_selected[0]);
       //  print_r($size);
         //die();
-       print_r($result_array);
+      // print_r($result_array);
 
         echo "<br>";
         echo "<p><table>";
@@ -242,7 +242,7 @@ class ProductDataController extends Controller
         $max_calc =0;
         $ideal_low = 0;
         $ideal_heigh = 0;
-        $fit_model = 0;
+        $fit_model=null;
         $grade_rule_value = 0;
         // Combine array value and keys
         foreach ($fit_points as $ke => $fit_point_size_val) {
@@ -250,12 +250,14 @@ class ProductDataController extends Controller
         }
         $fit_point_value = array_combine($fit_point_sizes, $fit_points);
         // End Combine array value and keys
-       echo "<pre>";
-       // print_r($fit_point_value);
+        echo "<pre>";
+        // print_r($result_array);
         //die();
 
 
-
+            echo "<pre>";
+      //  print_r($size);
+      //  die();
         foreach ($size as $ke => $selected_size_val) {
             $flag = true;
             if(trim($selected_size_val, '""') == "Calculation") continue;
@@ -287,17 +289,18 @@ class ProductDataController extends Controller
                                 break;
                         }
                     }
-
+                   // echo $fit_model;
+                    //die();
                       ///////////// Calculate the Grade Rule Value  /////////////////////////
                     if (array_key_exists($fit_points_key, $result_array)) {
+                        if( isset($size[$ke + 1]) )
                         $fit_point = trim($fit_point_vals,'""') . "_" . trim($size[$ke + 1], '""');
+                       // else
+                       //   $fit_point = trim($fit_point_vals,'""') . "_" . trim($size[$ke], '""');
 
-                        if (isset($result_array[$fit_point])) {
-
-                            if(!isset($fit_model)){
-
+                        if (isset($result_array[$fit_point])) {//
                                 $fit_model = $result_array[$fit_points_key];
-                            }
+
                            // $fit_model = $result_array[$fit_points_key];
                             $fit_model_next = $result_array[$fit_point];
                             $grade_rule_value = $fit_model_next - $fit_model;
@@ -324,8 +327,6 @@ class ProductDataController extends Controller
                        // $gr = $fit_point_vals . "_" . trim($size[$grade_rule], '"');
 
                                  //$size_second = array_values($result_array);
-
-
 
                     //echo $b."-";
                     //echo $grade_rule_value;
