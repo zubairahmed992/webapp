@@ -44,7 +44,12 @@ class SupportTaskLog
      */
     private $member_email;
 
-
+    /**
+     * @var string $support_user_name
+     *
+     * @ORM\Column(name="support_user_name", type="string", length=40,nullable=true)
+     */
+    private $support_user_name;
     /**
      * @var int $duration
      *
@@ -111,6 +116,26 @@ class SupportTaskLog
      */
     public function getMemberEmail() {
         return $this->member_email;
+    }
+    #---------------------------------------
+    /**
+     * Set support_user_name
+     *
+     * @param string $support_user_name
+     * @return SupportTaskLog
+     */
+    public function setSupportUserName($support_user_name) {
+      $this->support_user_name = $support_user_name;
+      return $this;
+    }
+
+    /**
+     * Get support_user_name
+     *
+     * @return string
+     */
+    public function getSupportUserName() {
+      return $this->support_user_name;
     }
     #----------------------------------
     

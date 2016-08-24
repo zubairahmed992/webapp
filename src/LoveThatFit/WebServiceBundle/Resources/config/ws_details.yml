@@ -381,6 +381,7 @@ ws_support_task_log_add:
    title: support_task_log_add
    params:
      member_email:  info@ss.com
+     support_user_name:  ovais
      duration:  480
      log_type:  calibration
    request_type: get

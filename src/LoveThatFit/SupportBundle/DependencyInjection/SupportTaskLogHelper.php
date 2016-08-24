@@ -52,6 +52,7 @@ class SupportTaskLogHelper {
 //-------------------------------------------------------    
     public function fill($stl_obj, $stl){
         array_key_exists('member_email', $stl)?$stl_obj->setMemberEmail($stl['member_email']):'';
+        array_key_exists('support_user_name', $stl)?$stl_obj->setSupportUserName($stl['support_user_name']):'';
         array_key_exists('duration', $stl)?$stl_obj->setDuration($stl['duration']):'';
         array_key_exists('log_type', $stl)?$stl_obj->setLogType($stl['log_type']):'';
         array_key_exists('start_time', $stl)?$stl_obj->setStartTime($stl['start_time']):'';
