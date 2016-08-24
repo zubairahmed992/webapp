@@ -79,4 +79,42 @@ class UserArchivesRepository extends EntityRepository
 	  return "null";
 	}
   }
+
+  	public function search($data, $page = 0, $max = NULL, $order, $getResult = true) 
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null; 
+        
+        $query 
+            ->select('
+                ua.id,
+                u.email,
+                ua.created_at'
+            )
+            ->from('LoveThatFitUserBundle:UserArchives', 'ua')
+            ->leftJoin("LoveThatFitUserBundle:User", "u", "WITH", "u.id = ua.user")
+            ->andWhere('ua.status = :pending');
+        
+        if ($search) {
+            $query 
+                ->andWhere('u.email like :search')
+                ->setParameter('search', "%".$search."%");
+        }
+        $query->setParameter('pending', '-1');
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            $query->OrderBy("ua.id", $orderByDirection);
+        }
+
+        if ($max) {
+            $preparedQuery = $query->getQuery() 
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery(); 
+        }
+        return $getResult?$preparedQuery->getResult():$preparedQuery; 
+    }
 }

@@ -1,0 +1,91 @@
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Orders</li>
+{% endblock %}
+
+
+
+{% block body %}
+<div class="p_listing">
+  <h1>Pending Users</h1>
+  <div class="btn_wrapper2">
+    <div id="chart_figures" class="brand_chart_figures">
+      <div class="facts">
+        <div><span>Total Users:</span>{{rec_count}}</div>
+     </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="bs-docs-grid">
+    <table id="example" class="display" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+      $('#example').DataTable({
+       "processing": true, 
+        "serverSide": true, 
+        "ajax": {
+            "url": "{{ path('support_pending_users_paginate') }}",
+            "type": "POST"
+        },
+        "sAjaxDataProp": "data", 
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "order": [[ 0, "desc" ]],
+        "columns": [
+          {
+              "data"  : "Sno",
+              "searchable" : false,
+          },
+          {
+              "data"  : "email",
+              "orderable" : false
+          },
+          {
+              "data"  : "status",
+              "orderable" : false
+          },
+          {
+              "data"  : "createdAt",
+              "searchable": false
+          },
+          {
+              "data"  : "action",
+              "searchable": false,
+              "orderable" : false
+          },
+          {
+              "data"  : "id",
+              "searchable" : false,
+              "visible" : false,
+          },
+        ],
+    });
+    $.fn.dataTableExt.sErrMode = 'throw';
+    //reload again
+    setInterval (function test() {
+      location.reload();
+      /*
+        var table = $('#example').DataTable();
+        table.order( [[ 0, 'desc' ]] )
+        table.draw( );
+        ///
+        table.ajax.reload();
+        table.ajax.url( "{{ path('support_pending_users_paginate') }}" ).load();
+      */
+    }, 30000);
+  });
+</script>
+{% endblock %}

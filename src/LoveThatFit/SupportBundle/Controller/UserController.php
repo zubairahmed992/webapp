@@ -30,4 +30,21 @@ class UserController extends Controller {
         
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
+
+    public function pendingUsersAction()
+    {
+        $totalRecords = $this->get('user.helper.userarchives')->countAllRecord();
+
+        return $this->render('LoveThatFitSupportBundle:PendingUser:index.html.twig',
+                array('rec_count' => $totalRecords)
+            );
+    }
+
+    public function pendingUsersPaginateAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output = $this->get('user.helper.userarchives')->search($requestData);
+        
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
+    }
 }

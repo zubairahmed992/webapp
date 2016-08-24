@@ -1,0 +1,9 @@
+## users routes start ##
+support_users:
+    pattern:  /support/users
+    defaults: { _controller: LoveThatFitSupportBundle:User:index}
+
+support_users_paginate:
+    pattern:  /support/users/paginate
+    defaults: { _controller: LoveThatFitSupportBundle:User:paginate}
+## users routes start ##

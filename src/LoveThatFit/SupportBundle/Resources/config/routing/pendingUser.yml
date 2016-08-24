@@ -1,0 +1,7 @@
+support_pending_users:
+    pattern:  /support/pendingUsers
+    defaults: { _controller: LoveThatFitSupportBundle:User:pendingUsers}
+
+support_pending_users_paginate:
+    pattern:  /support/pendingUsers/paginate
+    defaults: { _controller: LoveThatFitSupportBundle:User:pendingUsersPaginate}

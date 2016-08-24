@@ -7,6 +7,11 @@
 {% block body %}
 <div class="p_listing">
     <div class="clearfix"></div>
+      {% block header_right_links %}
+          <div class="adjustment_links" style="margin-top: 20px; float:right;">
+            <a href="{{ path('support_pending_users') }}" >Pending Users</a>
+          </div>
+      {% endblock %}
       <h1 style="float:left;">Users</h1>
       <div class="clearfix"></div>
       <div class="btn_wrapper2">
