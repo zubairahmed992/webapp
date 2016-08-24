@@ -374,3 +374,13 @@ ws_show_user_cart:
      auth_token: 121c421783cd4d71d871ec16a1296091
    request_type: get
 #---------------------------- End Shopping cart ---------------------------------
+
+#------------------------ Task Log
+ws_support_task_log_add:
+   pattern:  /ws/support_task_log/add
+   title: support_task_log_add
+   params:
+     member_email:  info@ss.com
+     duration:  480
+     log_type:  calibration
+   request_type: get

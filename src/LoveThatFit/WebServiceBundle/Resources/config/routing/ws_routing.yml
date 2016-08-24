@@ -116,6 +116,10 @@ ws_build_config:
     pattern:  /ws/build_config
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:buildConfig}
 
+
+ws_support_task_log_add:
+    pattern:  /ws/support_task_log/add
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:logTask}
 #-------------------------Shopping Cart Routes-------------------------------------
 
 #Add Single Item to Cart
