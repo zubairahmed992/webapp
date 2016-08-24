@@ -2,6 +2,7 @@
 namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Yaml\Parser;
 class WSMiscController extends Controller {
     
@@ -61,5 +62,11 @@ class WSMiscController extends Controller {
             return new Response(json_encode($conf));
         
     }
+    #---------------------------------- /ws/support_task_log/add
+    public function logTaskAction(Request $request){
+	  $decoded  = $request->request->all();	  
+          $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
+	  return new Response("1");
+	}
 }
 
