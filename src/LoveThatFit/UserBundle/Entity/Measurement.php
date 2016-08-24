@@ -2166,7 +2166,6 @@ class Measurement {
     public function calculatePlacementPositions($device_conversion_ratio){
         if ($device_conversion_ratio && $device_conversion_ratio > 0) {
             $this->top_placement = $this->shoulder_height * $device_conversion_ratio;
-            $this->top_placement = $this->top_placement + 22;
             $this->bottom_placement = $this->hip_height * $device_conversion_ratio;
         }
     }
