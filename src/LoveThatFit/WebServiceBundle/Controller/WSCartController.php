@@ -31,13 +31,17 @@ class WSCartController extends Controller {
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $items = $decoded["items"];
-            foreach($items as $detail){
+            $items = isset($decoded["items"])?$decoded["items"]:"0";
 
+            if($items != 0){
+            foreach($items as $detail){
                 $this->container->get('cart.helper.cart')->fillCart($detail["item_id"],$user,$detail["quantity"]);
             }
             $resp = 'Items has been added to Cart Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }

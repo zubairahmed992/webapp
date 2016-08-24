@@ -346,7 +346,7 @@ ws_cart_items_add_to_cart:
    title: product_add_to_cart
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
-     items: [{"item_id":4126,"quantity":"1"},{"item_id":4127,"quantity":"2"}]
+     items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
    request_type: post
 
 #remove cart of user

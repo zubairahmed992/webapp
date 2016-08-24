@@ -130,11 +130,11 @@ ws_cart_multiple_items:
 
 #Remove User Cart
 ws_remove_user_cart:
-    pattern:  /ws/remove_user_item
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:removeUserItem}
+    pattern:  /ws/remove_user_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:removeUserCart}
 
 #Show User Cart
-ws_remove_user_cart:
+ws_show_user_cart:
     pattern:  /ws/show_user_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart}
 #-------------------------Shopping Cart Routes-------------------------------------
