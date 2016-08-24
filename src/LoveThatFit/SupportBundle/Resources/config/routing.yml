@@ -76,4 +76,8 @@ support_users:
 support_pending_users:
     resource: "@LoveThatFitSupportBundle/Resources/config/routing/pendingUser.yml"
     prefix:   /
+
+support_evaluation_sheet:
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/evaluation_sheet.yml"
+    prefix:   /
 ## users routes end ##
