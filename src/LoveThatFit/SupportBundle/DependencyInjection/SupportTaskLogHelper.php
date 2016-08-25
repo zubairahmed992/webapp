@@ -47,23 +47,35 @@ class SupportTaskLogHelper {
     public function createNew() {
         $class = $this->class;
         $supportTaskLog = new $class();
+
         return $supportTaskLog;
     }   
 //-------------------------------------------------------    
     public function fill($stl_obj, $stl){
+        
         array_key_exists('member_email', $stl)?$stl_obj->setMemberEmail($stl['member_email']):'';
         array_key_exists('support_user_name', $stl)?$stl_obj->setSupportUserName($stl['support_user_name']):'';
         array_key_exists('duration', $stl)?$stl_obj->setDuration($stl['duration']):'';
         array_key_exists('log_type', $stl)?$stl_obj->setLogType($stl['log_type']):'';
         array_key_exists('start_time', $stl)?$stl_obj->setStartTime($stl['start_time']):'';
-        array_key_exists('end_time', $stl)?$stl_obj->getStartTime($stl['end_time']):'';
+        array_key_exists('end_time', $stl)?$stl_obj->setEndTime($stl['end_time']):'';
+
         return $stl_obj;
     }
    
 //-------------------------------------------------------
-    public function saveAsNew($stl_array) {        
+    public function saveAsNew($stl_array) {
+        $end_time   = date("Y-m-d H:i:s");
+        $start_time = date("Y-m-d H:i:s", 
+            strtotime($end_time) - $stl_array['duration']
+        );
+
         $entity=$this->fill($this->createNew(), $stl_array);
-        $entity->setCreatedAt(new \DateTime('now'));        
+        $entity->setStartTime(new \DateTime($start_time));
+        $entity->setEndTime(new \DateTime($end_time));
+        $entity->setCreatedAt(new \DateTime('now'));
+        $entity->setSupportAdminUser($stl_array['supportUsers']);
+
         $this->save($entity);            
     }
 //-------------------------------------------------------

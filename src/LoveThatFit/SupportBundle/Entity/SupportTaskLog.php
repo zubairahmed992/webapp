@@ -14,9 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class SupportTaskLog
 {    
-    
     /**
-     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SupportAdminUser", inversedBy="task_time_logs")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SupportAdminUser", inversedBy="support_task_log")
      * @ORM\JoinColumn(name="support_admin_user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $support_admin_user;
@@ -249,18 +248,18 @@ class SupportTaskLog
 #--------------------------------------------
   
     /**
-     * Set user
+     * Set support_admin_user
      *
      * @param LoveThatFit\AdminBundle\Entity\SupportAdminUser $support_admin_user
-     * @return SupportTaskLog
+     * @return SupportAdminUser
      */
-    public function setSupportAdminUser(\LoveThatFit\AdminBundle\Entity\User $support_admin_user = null){
+    public function setSupportAdminUser(\LoveThatFit\AdminBundle\Entity\SupportAdminUser $support_admin_user = null){
         $this->support_admin_user = $support_admin_user;    
         return $this;
     }
 
     /**
-     * Get user
+     * Get support_admin_user
      *
      * @return LoveThatFit\AdminBundle\Entity\SupportAdminUser 
      */

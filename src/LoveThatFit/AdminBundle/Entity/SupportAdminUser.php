@@ -15,6 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 class SupportAdminUser implements UserInterface, \Serializable {
 
     /**
+     * @ORM\OneToMany(targetEntity="\LoveThatFit\SupportBundle\Entity\SupportTaskLog", mappedBy="ltf_support_user")
+     */
+    protected $support_admin_user;
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -330,6 +334,29 @@ class SupportAdminUser implements UserInterface, \Serializable {
 
     public function getOldpassword() {
         return $this->old_password;
+    }
+
+    /**
+     * Set support_admin_user
+     *
+     * @param LoveThatFit\SupportBundle\Entity\SupportTaskLog $support_admin_user
+     * @return support_admin_user
+     * 
+     */
+    //----------------------------------------------------------
+    public function setSupportAdminUser(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $support_admin_user = null) 
+    {
+        $this->support_admin_user = $support_admin_user;
+        return $this;
+    }
+
+    /**
+     * Get support_admin_user
+     *
+     * @return LoveThatFit\SupportBundle\Entity\SupportTaskLog 
+     */
+    public function getSupportAdminUser() {
+        return $this->support_admin_user;
     }
 
 }

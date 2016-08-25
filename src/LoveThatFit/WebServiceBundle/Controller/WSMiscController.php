@@ -64,9 +64,12 @@ class WSMiscController extends Controller {
     }
     #---------------------------------- /ws/support_task_log/add
     public function logTaskAction(Request $request){
-	  $decoded  = $request->request->all();	  
-          $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
-	  return new Response("1");
+        $decoded = $request->request->all();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $decoded['supportUsers'] = $this->get('admin.helper.support')->findOneByUserName($decoded["support_user_name"]);
+        
+        $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
+        return new Response("1");
 	}
 }
 
