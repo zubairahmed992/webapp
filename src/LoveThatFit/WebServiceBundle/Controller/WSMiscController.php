@@ -54,13 +54,30 @@ class WSMiscController extends Controller {
     #~~~~~~~~~~~~~~~~~~~ ws_build_config   /ws/build_config
 
     public function buildConfigAction() {
-        $conf=array(
+        $conf= array(
+            'data' => array(
             'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
             'beta'=>array('build_type'=>'beta','url'=>'beta.selfiestyler.com'),
             'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
+        ),
+            'count'=>3,
+            'message' => 'configuration for build deployment',
+            'success' => 'true',
         );
+        
+        
             return new Response(json_encode($conf));
         
+    }
+    
+      public function response_array($success, $message = null, $json = true, $data = null) {
+        $ar = array(
+            'data' => $data,
+            'count'=>$data?count($data):0,
+            'message' => $message,
+            'success' => $success,
+        );
+        return $json ? json_encode($ar) : $ar;
     }
     #---------------------------------- /ws/support_task_log/add
     public function logTaskAction(Request $request){

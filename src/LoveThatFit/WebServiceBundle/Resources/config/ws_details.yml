@@ -385,3 +385,10 @@ ws_support_task_log_add:
      duration:  480
      log_type:  calibration
    request_type: get
+   
+   
+ws_build_config:
+   pattern:  /ws/build_config
+   title: build_config
+   params:
+   request_type: get
