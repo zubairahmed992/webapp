@@ -12,6 +12,9 @@
     <div style="clear:both">
         <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Sample Products >></a>
     </div>
+    <div style="clear:both">
+        <a id='cart' class='cart' href="#">Shopping cart >></a>
+    </div>
     <br><br>
 <h4> Product list with recomended sizes & fit index</h4>
 <script>
@@ -48,7 +51,32 @@ $(document).ready(function(){
 
      //return false; //for good measure
 });
+//-----------------------------------------------------------
+    $('a.cart').click(function (event){
+        event.preventDefault();
 
+        var ar = {
+            user_id:$("#user_id").val(),
+            ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
+
+        var compare_url = "evaluation_sheet/cart";
+
+        $.ajax({
+            type: "POST",
+            url: compare_url,
+            data: JSON.stringify(ar),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function(response){
+                $('#summary_ajax').html(response);
+            },
+            failure: function(response) {
+                $('#summary_ajax').html(response);
+            }
+        });
+
+        //return false; //for good measure
+    });
 
     //-----------------------------------------------------------
     //-----------------------------------------------------------

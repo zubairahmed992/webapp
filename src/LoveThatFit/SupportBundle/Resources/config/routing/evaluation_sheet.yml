@@ -13,3 +13,7 @@ support_evaluation_sheet_index:
 support_evaluation_sheet_sample_products:
     pattern:  /support/evaluation_sheet/sample
     defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:sample}
+
+support_evaluation_sheet_cart:
+    pattern:  /support/evaluation_sheet/cart
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:cart}

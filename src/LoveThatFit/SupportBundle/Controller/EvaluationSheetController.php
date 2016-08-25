@@ -30,6 +30,47 @@ class EvaluationSheetController extends Controller {
         $arr=$this->test_demo_data($decoded['user_id']);
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', $arr);
     }
+
+    #-------------------------------------------------- User Test Demo Products Ajax Call copy of Marathon
+    public function cartAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+        $cart=$user->getCart();
+        $pa= array();
+
+        $algo = new FitAlgorithm2($user);
+        $serial = 1;
+$arr=array();
+//        foreach ($cart as $c) {
+//            $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
+//        }
+//        return new response(json_encode($arr));
+//        die;
+        foreach ($cart as $c) {
+            $p=$c->getProductItem()->getProduct();
+            $algo->setProduct($p);
+
+                $fb = $algo->getFeedBackForSizeTitle($c->getProductItem()->getProductSize()->getTitle());
+                if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                    $pa[$p->getId()] = array('name' => $p->getName(),
+                        'fit_index'=>$fb["feedback"]['fit_index'],
+                        'clothing_type' => $p->getClothingType()->getName(),
+                        #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
+                        'size'=> $fb["feedback"]['title'],
+                        'serial'=>$serial,
+                        'fits'=>$fb["feedback"]['fits'],
+                        'recommended_size'=> '',
+                        'recommended_fit_index'=>'',
+                    );
+                    if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                        $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                        $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                    }
+                }
+            $serial++;
+        }
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', array('products' => $pa,'user' => $user));
+    }
     #--------------------------------------------------
     private function test_demo_data($user_id){
         $user = $this->get('user.helper.user')->find($user_id);
