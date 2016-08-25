@@ -12,6 +12,10 @@
 {% if (user_image_spec)%}
         <div class="span3 bs-docs-sidebar" style="background: #d3d3d4;">
             <h5>MASK MARKER INFO:</h5>
+    <div><span>member id:</span>{{entity.id}}</div>
+    <div><span>member Name:</span>{{entity.fullName}}</div>
+    <div><span>email:</span>{{entity.email}}</div>
+    
     <div><span>Camera angle:</span>{{user_image_spec.cameraAngle}}</div>
     <div><span>Camera x:</span>{{user_image_spec.cameraX}}</div>
     <div><span>Displacement x:</span>{{user_image_spec.displacementX}}</div>
