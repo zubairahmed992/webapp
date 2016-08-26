@@ -68,7 +68,8 @@ class FitAlgorithm2 {
         }
         if (array_key_exists('feedback', $fb)) {
             foreach ($fb['feedback'] as $size_fb) {
-                if ($fb['recommendation']['title'] == $size) {
+                #if ($fb['recommendation']['title'] == $size) {
+                if ($size_fb['title'] == $size) {
                     if (array_key_exists('recommendation', $fb)) {
                         return array(
                             'feedback' => $size_fb,
