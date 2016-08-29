@@ -107,9 +107,6 @@ body {
     width:12.5% !important;
 }
 
-
-/*////Mask Adjustment from Web////*/
-
 .mw_col_1 {
     float: left;
     width: 200px;
@@ -141,4 +138,47 @@ body {
 }
 .duplicate_user_class {
     color:#ff0000;
+}
+
+.task_table {
+    border-spacing: 0;
+    color: #4a4a4d;
+    border-collapse: collapse;
+    margin-left: 30%;
+    width: 30%;
+}
+.task_table td {
+    padding: 10px 15px;
+    vertical-align: middle;
+}
+.task_table td {
+    border: 1px solid #cecfd5;
+}
+.td-green {
+    background-color: #003300 !important;
+    color: #fff;
+}
+.td-green-light {
+    background-color: #009933 !important;
+    color: #fff;
+}
+.td-red {
+    background-color: #800000 !important;
+    color: #fff;
+}
+.td-red-light {
+    background-color: #ff8080 !important;
+    color: #fff;
+}
+.td-blue {
+    background-color: #0066ff !important;
+    color: #fff;
+}
+.td-black {
+    background-color: #000;
+    color: #fff;
+}
+.td-orange {
+    background-color: #ff9933;
+    color: #fff;
 }
