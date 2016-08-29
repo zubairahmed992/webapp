@@ -85,8 +85,129 @@ class SupportTaskLogHelper {
             $this->em->flush();
     }
 
-   
+    public function search($data)
+    {
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : 0; 
+        //limit
+        $start   = $data['start']; 
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0; 
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = $data['search'];
+        $filters = [
+            'query' => @$search['value']
+        ];
 
-    
+        $finalData = $this->repo->search($filters, $start, $length, $order);
+        
+        $output = array( 
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)), 
+            'recordsTotal'    => count($this->repo->search(array(), 0, false, $order)),
+            'data'            => array()
+        );
+
+        $a = 1;
+
+        foreach ($finalData as $fData) {
+            $output['data'][] = [ 
+                'Sno'       => $a,
+                'user_name' => $fData["user_name"],
+                'log_type'  => $fData["log_type"],
+                'fast'      => $fData["fast"],
+                'slow'      => $fData["slow"],
+                'avrg'      => number_format($fData["avrg"], 2, '.', ','),
+                'total'     => $fData["total"],
+                'userid'    => $fData["id"]
+            ];
+
+            $a++;
+        }
+
+        return $output;
+    }
+
+    public function findSupprtUser($id)
+    {
+        $data = $this->repo->findSupprtUser($id);
+        if (!empty($data[0])) {
+            $above_avg = $this->repo->findAboveAverage($id, $data[0]['avrg'], $data[0]['fast']);
+            $data[0]['above_avg'] = isset($above_avg[0]['above_avg']) ? $above_avg[0]['above_avg'] : 0;
+
+            $below_avg = $this->repo->findBelowAverage($id, $data[0]['avrg'], $data[0]['slow']);
+            $data[0]['below_avg'] = isset($below_avg[0]['below_avg']) ? $below_avg[0]['below_avg'] : 0;
+        }
+        
+        return $data;
+    }
+
+    public function showSearch($data)
+    {
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : 0; 
+        //limit
+        $start   = $data['start']; 
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0; 
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = $data['search'];
+        $filters = [
+            'query' => @$search['value']
+        ];
+        $userid   = $data['userid'];
+
+        $finalData = $this->repo->showSearch(
+                $filters,
+                $start,
+                $length,
+                $order,
+                $userid
+            );
+        
+        $output = array( 
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->showSearch(
+                    $filters,
+                    0,
+                    false,
+                    $order,
+                    $userid
+                )
+            ), 
+            'recordsTotal'    => count($this->repo->showSearch(
+                    array(),
+                    0,
+                    false,
+                    $order,
+                    $userid
+                )
+            ),
+            'data'            => array()
+        );
+
+        $a = 1;
+        foreach ($finalData as $fData) {
+            $output['data'][] = [ 
+                'Sno'          => $a,
+                'log_type'     => $fData["log_type"],
+                'member_email' => $fData["member_email"],
+                'date'         => ($fData["start_time"]->format('m-d-Y')),
+                'start_time'   => ($fData["start_time"]->format('h:i:s')),
+                'end_time'     => ($fData["end_time"]->format('h:i:s')),
+                'duration'     => $fData["duration"]
+            ];
+
+            $a++;
+        }
+
+        return $output;
+    }
     
 }

@@ -1,0 +1,17 @@
+## users routes start ##
+support_users_task_log:
+    pattern:  /support/tasklog
+    defaults: { _controller: LoveThatFitSupportBundle:TaskLog:index}
+
+support_users_task_log_paginate:
+    pattern:  /support/tasklog/paginate
+    defaults: { _controller: LoveThatFitSupportBundle:TaskLog:paginate}
+    
+support_users_task_log_show:
+    pattern:  /support/tasklog/{id}/show
+    defaults: { _controller: LoveThatFitSupportBundle:TaskLog:show}
+
+support_users_task_log_show_paginate:
+    pattern:  /support/tasklog/show/paginate
+    defaults: { _controller: LoveThatFitSupportBundle:TaskLog:showPaginate}
+## users routes start ##

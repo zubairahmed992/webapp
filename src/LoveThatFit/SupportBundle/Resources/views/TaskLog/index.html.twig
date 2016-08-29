@@ -1,0 +1,106 @@
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Task Logs</li>
+{% endblock %}
+
+
+{% block body %}
+<div class="p_listing">
+    <div class="clearfix"></div>
+      <h1 style="float:left;">Task Logs</h1>
+      <div class="clearfix"></div>
+    </div>
+    <div class="bs-docs-grid">
+      <table id="example" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Support User Name</th>
+              <th>Log Type</th>
+              <th>Total Tasks</th>
+              <th>Fastest Duration (Seconds)</th>
+              <th>Slowest Duration (Seconds)</th>
+              <th>Average Duration (Seconds)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>  
+    </div>
+  </div> 
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    var table = $('#example').DataTable({
+       "processing": true, 
+        "serverSide": true, 
+        "ajax": {
+            "url": "{{ path('support_users_task_log_paginate') }}",
+            "type": "POST"
+        },
+        "sAjaxDataProp": "data", 
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "order": [[ 0, "desc" ]],
+        "columns": [
+          {
+              "data"  : "Sno",
+              "searchable" : false,
+          },
+          {
+              "data"  : "user_name",
+          },
+          {
+              "data"  : "log_type",
+              "orderable" : false,
+              "searchable" : false,
+          },
+          {
+              "data"  : "total",
+              "orderable": false,
+              "searchable" : false,
+          },
+          {
+              "data"  : "fast",
+              "orderable" : false,
+              "searchable" : false,
+          },
+          {
+              "data"  : "slow",
+              "orderable" : false,
+              "searchable" : false,
+          },
+          {
+              "data"  : "avrg",
+              "orderable": false,
+              "searchable" : false,
+          },
+          {
+              "title"         : "Actions",
+              "targets"       : -1,
+              "data"          : null,
+              "orderable"     : false,
+              "searchable"    : false,
+              "defaultContent": '<button class="btn btn-cyan btn-xs" data-action="Detail" title="Detail"><i class="icon-eye-open"></i></button>',
+          },
+          {
+              "data"  : "userid",
+              "visible": false
+          },
+        ]
+    });
+
+    jQuery('#example tbody').on( 'click', 'button, a, img', function () {
+      var dataAction = $(this).attr('data-action');
+      var data = table.row( $(this).parents('tr') ).data();
+      if (dataAction == 'Detail') {
+          var url = '{{ path('support_users_task_log_show', {'id': ":id"}) }}';
+          url     = url.replace(':id', data.userid);
+          window.top.location = url;
+      }
+    });
+  });
+
+</script>
+{% endblock %}

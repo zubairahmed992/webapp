@@ -81,3 +81,9 @@ support_evaluation_sheet:
     resource: "@LoveThatFitSupportBundle/Resources/config/routing/evaluation_sheet.yml"
     prefix:   /
 ## users routes end ##
+
+## time log routes start ##
+support_users_task_log:
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/task_log.yml"
+    prefix:   /
+## time log routes end ##
