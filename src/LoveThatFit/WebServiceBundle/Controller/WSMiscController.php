@@ -88,5 +88,25 @@ class WSMiscController extends Controller {
         $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
         return new Response("1");
 	}
+
+    #---------------------------------- /ws/caliboration_status
+    public function caliborationStatusAction(Request $request){
+        $decoded = $request->request->all();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user_email = isset($decoded["user_email"])?$decoded["user_email"]:"";
+        $caliboration_status = isset($decoded["caliboration_status"])?$decoded["caliboration_status"]:"";
+        if($user_email!= null && $caliboration_status!= null){
+        $ss_ar['to_email'] = $user_email;
+        $ss_ar['template'] = 'LoveThatFitAdminBundle::email/caliboration_status.html.twig';
+        $ss_ar['template_array'] = array('cs' => $decoded);
+        $ss_ar['subject'] = 'Caliboration Status';
+        $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+        return new Response($this->get('webservice.helper')->response_array(true, 'Caliboration Email sent'));
+        }else{
+            $res = $this->get('webservice.helper')->response_array(false, 'Parameters must be enter correctly');
+            return new Response($res);
+        }
+
+    }
 }
 

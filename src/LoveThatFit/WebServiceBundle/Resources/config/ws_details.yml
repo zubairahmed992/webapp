@@ -392,3 +392,12 @@ ws_build_config:
    title: build_config
    params:
    request_type: get
+
+ws_caliboration_status:
+   pattern:  /ws/caliboration_status
+   title: caliboration_status
+   params:
+     user_email: ovais.rafique@centricsource.com
+     comment: test test test
+     caliboration_status: reject
+   request_type: post
