@@ -17,6 +17,20 @@
   </div>
   <div class="clearfix"></div>
   <div class="bs-docs-grid">
+    <table border="0" cellspacing="5" cellpadding="5" style="float:right;">
+      <tbody>
+        <tr>
+          <td><label style='display:block;'>Time Duration:</label></td>
+          <td><div class="inner-addon right-addon">
+            <select class="form-control" name="time_duration" id="time_duration">
+              {% for i in 1..5 %}
+                <option value="{{ i }}" {{ (i == 2 ? ' selected ' : '') }}>{{ i }} Minutes</option>
+              {% endfor %}
+            </select>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
     <table id="example" class="display" cellspacing="0" width="100%">
       <thead>
         <tr>
@@ -33,7 +47,7 @@
   </div>
 <script type="text/javascript">
   jQuery(document).ready(function() {
-      $('#example').DataTable({
+      table = $('#example').DataTable({
        "processing": true, 
         "serverSide": true, 
         "ajax": {
@@ -74,18 +88,25 @@
         ],
     });
     $.fn.dataTableExt.sErrMode = 'throw';
+    
     //reload again
-    setInterval (function test() {
-      location.reload();
-      /*
-        var table = $('#example').DataTable();
-        table.order( [[ 0, 'desc' ]] )
-        table.draw( );
-        ///
-        table.ajax.reload();
-        table.ajax.url( "{{ path('support_pending_users_paginate') }}" ).load();
-      */
-    }, 30000);
+    var time;
+    setDuration(time);
+    $('#time_duration').on('change', function() {
+      time = $("#time_duration").val();
+      setDuration(time);
+    });
+
   });
+  function setDuration(time) {
+    if (typeof time === "undefined") {
+      time = 2;
+    }
+    time = time * 1000 * 60;
+    setInterval (function test() {
+      $('#example_filter input').val("");
+      table.search( "" ).draw();
+    }, time);
+  }
 </script>
 {% endblock %}
