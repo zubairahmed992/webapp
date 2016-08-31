@@ -155,11 +155,11 @@ body {
     border: 1px solid #cecfd5;
 }
 .td-green {
-    background-color: #003300 !important;
+    background-color: #009933 !important;
     color: #fff;
 }
 .td-green-light {
-    background-color: #009933 !important;
+    background-color: #88cc00 !important;
     color: #fff;
 }
 .td-red {
@@ -167,7 +167,7 @@ body {
     color: #fff;
 }
 .td-red-light {
-    background-color: #ff8080 !important;
+    background-color: #ff9999 !important;
     color: #fff;
 }
 .td-blue {
