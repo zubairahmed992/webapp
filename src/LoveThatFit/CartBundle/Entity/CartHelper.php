@@ -131,7 +131,8 @@ class CartHelper {
       $cart_array[$counter]['price']=$ci->getProductItem()->getPrice();
       $cart_array[$counter]['qty']=$ci->getQty();
       $cart_array[$counter]['item_id']=$ci->getProductItem()->getId();
-      $cart_array[$counter]['image']= $ci->getProductItem()->getProductColor()->getWebPath();
+      $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
+      $cart_array[$counter]['image']= $get_path["iphone6_list"];
       $counter++;
     }
     return $cart_array;
