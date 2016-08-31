@@ -1212,6 +1212,8 @@ function onMouseDown(event) {
 
 		if (hitResult.type == 'segment') {
 			segment = hitResult.segment;
+                        hor_line.position.y = event.point.y;
+                        hor_line.visible=true;
 		} else if (hitResult.type == 'pixel') {
 			//segment = null;
                         if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
@@ -1602,6 +1604,8 @@ function onMouseDown(event) {
 
 
 function onMouseUp(event){
+    
+    hor_line.visible=false;
 
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
 
@@ -1959,7 +1963,11 @@ function onMouseDrag(event) {
         }
         curr_dragged_seg = get_index_num();
         //alert(curr_dragged_seg);
-
+        
+        var hor_line_pos = path.segments[curr_dragged_seg].point.y;
+        //alert(path.segments[curr_dragged_seg].point.y);
+        hor_line.position.y = hor_line_pos;
+        hor_line.visible=true;
 
 
         var def_segment = def_path.segments[curr_dragged_seg].point.x;
@@ -2256,3 +2264,12 @@ function to_image(){
 
 
 //alert(project.layers);
+var view_width = view.size.width;
+var hor_line = new Path({
+ segments:[[0, 0], [view_width, 0]],
+ strokeColor:'red',
+ strokeWidth:1,
+ opacity:0.3
+ });
+hor_line.visible=false;
+
