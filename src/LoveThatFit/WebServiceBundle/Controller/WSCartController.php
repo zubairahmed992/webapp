@@ -32,8 +32,8 @@ class WSCartController extends Controller {
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $items = isset($decoded["items"])?$decoded["items"]:"0";
-
             if($items != 0){
+                $this->container->get('cart.helper.cart')->removeUserCart($user);
             foreach($items as $detail){
                 $this->container->get('cart.helper.cart')->fillCart($detail["item_id"],$user,$detail["quantity"]);
             }
