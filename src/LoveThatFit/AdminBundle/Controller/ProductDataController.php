@@ -374,8 +374,8 @@ class ProductDataController extends Controller {
             $width = $newDirectoryList[0];
             $height = $newDirectoryList[1];
             $newDirectory = $newDirectoryList[2];
-            $src = $_SERVER['DOCUMENT_ROOT'].'webappBK/web/uploads/ltf/products/display/iphone_list';
-            $dir = $_SERVER['DOCUMENT_ROOT'].'/webappBK/web/uploads/ltf/products/display';
+            $src = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/display/iphone_list';
+            $dir = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/display';
             // Get total Directory From Destination Path
             $totalDirectory =  $this->get('admin.helper.productimagegenrate')->getTotalDirectories($dir);
             $dest = $dir . "/" . $newDirectory;
