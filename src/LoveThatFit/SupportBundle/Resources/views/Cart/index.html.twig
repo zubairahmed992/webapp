@@ -48,13 +48,16 @@ $(document).ready(function(){
 //-----------------------------------------------------------
     $('a.showcart').click(function (event){
         event.preventDefault();
-
         var user_id = $("#user_id").val();
+        if (user_id != "") {
+            $(".ajax_loader").show();
+        }
         //var product_id = $("#product_id").val();
         var show_url = "cart/show/" + user_id ;
         $.ajax({
-            url: show_url
-            ,success: function(response) {
+            url: show_url,
+            success: function(response) {
+                $(".ajax_loader").hide();
                 $('#summary_ajax').html(response);
             }
         })
@@ -63,10 +66,11 @@ $(document).ready(function(){
 
     $('a.add_to_cart').click(function (event){
         event.preventDefault();
-
         var user_id = $("#user_id").val();
         var product_id = $("#product_id").val();
-
+        if (product_id != "") {
+            $(".ajax_loader").show();
+        }
         var postForm = { //Fetch form data
             'user_id'     : user_id,
             'product_id'     : product_id
@@ -77,13 +81,14 @@ $(document).ready(function(){
             type:'POST',
             url: show_url,
             data:postForm,
-            dataType:'json'
-            ,success: function(response) {
+            dataType:'json',
+            success: function(response) {
                 if(response==1){
                     var show_url = "cart/show/" + user_id ;
                     $.ajax({
-                        url: show_url
-                        ,success: function(response) {
+                        url: show_url,
+                        success: function(response) {
+                            $(".ajax_loader").hide();
                             $('#summary_ajax').html(response);
                         }
                     })
@@ -92,7 +97,6 @@ $(document).ready(function(){
         })
         return false; //for good measure
     });
-
 });        
 
     </script>
@@ -100,7 +104,7 @@ $(document).ready(function(){
 <span id='product_id' style="display: block"></span>
 <span id='size_id' style="display: none"></span>
 <span id='user_id' style="display: block"></span>
-
+<div class="ajax_loader"></div>
 <div class="p_listing"> 
 
     <h3>Shopping Cart Testing Interface</h3>
@@ -139,5 +143,22 @@ $(document).ready(function(){
         <input type="hidden" id="product_id">
     {#</div>#}
 </div> 
-
+    
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to proceed?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

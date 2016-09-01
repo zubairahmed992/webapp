@@ -1,23 +1,23 @@
 
 <script>
     function removeCart(id,user_id){
-        if(confirm("Are you sure you want to delete this?")){
+        $('#confirmDelete').modal('show');
+        $('.btn-ok').click(function (){
+            $('#confirmDelete').modal('hide');
+            $(".ajax_loader").show();
             var delete_url = "cart/delete/" + id + "/"+ user_id;
             $.ajax({
-                url: delete_url
-                ,success: function(response) {
+                url: delete_url,
+                success: function(response) {
                     //alert(response);
+                    $(".ajax_loader").hide();
                     $("#cart_"+id).closest('tr').remove();
                     if(response == 0){
                         $('.cart_tbl tr:last').after("<tr><td align='center' colspan='6'> <p class='no_item_wrapper'>  Currently there are no items in the cart.</p></td></tr>");
                     }
                 }
-            })
-        }
-        else{
-            return false;
-        }
-
+            });
+        });
     }
 </script>
 <table width="745" border="1" class="cart_tbl" cellpadding="0" cellspacing="0">
@@ -50,9 +50,9 @@
                 <td align="center">$<span id="subtotal_{{ c.id }}">{{ c.productItem.price * c.qty}}</span></td>
 
                 <td align="center">
+                    <a id="remove" onclick="return removeCart('{{ c.id }}','{{ c.user.id }}')" title="Remove">  <img alt="Remove" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
 
-                            <a id="remove" onclick="return removeCart('{{ c.id }}','{{ c.user.id }}')" title="Remove">  <img alt="Remove" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
-
+                    
                 </td>
 
             </tr>
