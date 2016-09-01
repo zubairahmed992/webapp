@@ -34,7 +34,9 @@ $(document).ready(function(){
          ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
 
      var compare_url = "evaluation_sheet/sample";
-
+     if (ar != "") {
+        $(".ajax_loader").show();
+     }
      $.ajax({
                type: "POST",
                url: compare_url,
@@ -42,9 +44,11 @@ $(document).ready(function(){
               contentType: "application/json; charset=utf-8",
                 traditional: true,
                success: function(response){
-                   $('#summary_ajax').html(response);
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
                 },
                failure: function(response) {
+                   $(".ajax_loader").hide();
                    $('#summary_ajax').html(response);
                }
          });
@@ -60,7 +64,9 @@ $(document).ready(function(){
             ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
 
         var compare_url = "evaluation_sheet/cart";
-
+        if (ar != "") {
+            $(".ajax_loader").show();
+        }
         $.ajax({
             type: "POST",
             url: compare_url,
@@ -68,9 +74,11 @@ $(document).ready(function(){
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: function(response){
+                $(".ajax_loader").hide();
                 $('#summary_ajax').html(response);
             },
             failure: function(response) {
+                $(".ajax_loader").hide();
                 $('#summary_ajax').html(response);
             }
         });
@@ -122,7 +130,7 @@ $(document).ready(function(){
     </script>
 
 <span id='user_id' style="display: block"></span>
-
+<div class="ajax_loader"></div>
 <div class="p_listing"> 
     <div style="float: left">
 
