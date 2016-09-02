@@ -17,6 +17,8 @@ class SecurityController extends Controller {
   public function loginAction() {
     $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
 
+    $this->get('session')->remove('Permissions');
+
     return $this->render(
         'LoveThatFitSupportBundle:Security:supportLogin.html.twig', array(
             'last_username' => $security_context['last_username'],

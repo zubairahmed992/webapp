@@ -32,6 +32,12 @@
 </div>
 <script type="text/javascript">
   jQuery(document).ready(function() {
+
+    if( {{app.session.get('Permissions')['taskLogs']['show']}} == 1 ) {
+        visible          = true;
+        showDetailButton = true;
+    }
+
     var table = $('#example').DataTable({
        "processing": true, 
         "serverSide": true, 
@@ -82,7 +88,7 @@
               "data"          : null,
               "orderable"     : false,
               "searchable"    : false,
-              "defaultContent": '<button class="btn btn-cyan btn-xs" data-action="Detail" title="Detail"><i class="icon-eye-open"></i></button>',
+              "defaultContent": ((typeof showDetailButton != "undefined" && showDetailButton == true) ? DetailPageButton : ''),
           },
           {
               "data"  : "userid",

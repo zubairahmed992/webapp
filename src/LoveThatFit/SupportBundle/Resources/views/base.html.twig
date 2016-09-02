@@ -18,7 +18,8 @@
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
         <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery-1.12.3.min.js') }}">
         </script>
-        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery.dataTables.js') }}">
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery.dataTables.js') }}"></script>
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/buttons.js') }}">
         </script>
     <!-- datatable css & js file end-->
     </head>
@@ -41,11 +42,22 @@
             </p>
             <!-- Top Navigation Start -->
             <ul class="nav">
+            {% if app.session.get('Permissions')['users']['view'] == 1 %}
               <li><a href="{{ path('support_users') }}">Users</a></li>
+            {% endif %}
+            {% if app.session.get('Permissions')['pendingUsers']['view'] == 1 %}
+              <li><a href="{{ path('support_pending_users') }}">Pending Users</a></li>
+            {% endif %}
+            {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
               <li><a href="{{ path('support_evaluation_sheet_index') }}">Evaluation Sheet</a></li>
+            {% endif %}
+            {% if app.session.get('Permissions')['shoppingCart']['view'] == 1 %}
               <li><a href="{{ path('support_cart_index') }}">Shopping Cart</a></li>
+            {% endif %}
+            {% if app.session.get('Permissions')['taskLogs']['view'] == 1 %}
               <li><a href="{{ path('support_users_task_log') }}">Task Log</a></li>
-              <li><a href="{{ path('support_logout') }}">Logout</a></li>
+            {% endif %}
+            <li><a href="{{ path('support_logout') }}">Logout</a></li>
             </ul>
              <!-- Top Navigation End -->
           </div><!--/.nav-collapse -->
@@ -58,7 +70,6 @@
           <li><a href="{{ path('admin_dashboard') }}">Admin</a> <span class="divider">/</span></li>
           {% block breadcrumb %}{% endblock %}
     </ul>
-
     <!-- Breadcrumb End -->      
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">

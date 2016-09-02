@@ -1,0 +1,27 @@
+users_roles:
+    
+  Developers:
+    users:
+      view: 1
+    pendingUsers:
+      view: 1
+    evaluationSheet:
+      view: 1
+    shoppingCart:
+      view: 1
+    taskLogs:
+      view: 1
+      show: 1
+
+  Calibration:
+    users:
+      view: 1
+    pendingUsers:
+      view: 1
+    evaluationSheet:
+      view: 0
+    shoppingCart:
+      view: 0
+    taskLogs:
+      view: 1
+      show: 1

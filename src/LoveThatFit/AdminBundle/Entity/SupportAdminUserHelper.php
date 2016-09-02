@@ -50,6 +50,7 @@ class SupportAdminUserHelper {
 		$supportUser->setPassword($password);
 		$supportUser->setUserName($data["user_name"]);
 		$supportUser->setEmail($data["email"]);
+		$supportUser->setRoleName($data["role_name"]);
 		$this->save($supportUser);
 	}
 //-------------------------------------------------------
@@ -81,6 +82,7 @@ class SupportAdminUserHelper {
 	  if ($msg_array["success"] == "no") {
 	  $entity->setUpdatedAt(new \DateTime('now'));
 	  $entity->setEmail($data["email"]);
+	  $entity->setRoleName($data["role_name"]);
 	  $this->em->persist($entity);
 	  $this->em->flush();
 

@@ -17,7 +17,6 @@ class SupportUserType extends AbstractType {
         if($this->mode == 'add') {
            $builder->add('password', 'password');
         }
-        //$builder->add('username', 'text');
     }
 
 //    public function getDefaultOptions(array $options) {

@@ -41,6 +41,18 @@
             <div id="detail_wrapper">      
                     <div id="product_content">
                         <div id="pro_detail">
+                            
+                            <div class="edt_container">
+                                <div class="row-fluid show-grid">
+                                <div class="span3">Role Name</div>
+                                <div class="span3">
+                                    <select class="form-control" name="support_user[role_name]" id="role_name">
+                                        {% for r in roles %}
+                                            <option value="{{ r }}" {{ (entity.getRoleName == r) ? 'selected' : ''}}>{{ r }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <div class="edt_container">
                                 <div class="row-fluid show-grid">
                                     <div class="span3">User Name</div>

@@ -22,29 +22,26 @@
 
         <div class="row-fluid">
             <div class="span1 hds">ID</div>
+            <div class="span1 hds">Role Name</div>
             <div class="span1 hds">Name</div>
             <div class="span3 hds">Email</div>
-                            
             <div class="span1 hds">Actions</div>
-            <div class="span1 hds"></div>            
-            <div class="span1 hds"></div>      
+            <div class="span1 hds"></div>
             
         </div>             
           {% for r in retailers %}         
         <div class="row-fluid show-grid space_wrap_rt_ad">
             <div class="span1">{{r.id}}</div>
+            <div class="span1">{{r.roleName}}</div>
             <div class="span1">{{r.userName}}</div>
             <div class="span3">{{r.email}}</div>
-           
             <div class="span1">
             <div>
-
                     <a href="{{ path('admin_support_user_edit', {'id': r.id}) }}" title="Edit {{r.userName}}"><i class="icon-edit"></i></a>
                     
                     <a href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.userName}}"><i class="icon-remove"></i></a>
                 </div> 
             </div>
-                 <div class="span1"></div>
             <div class="span1"></div> 
         </div>
         <!-- Modal -->

@@ -5,29 +5,44 @@ namespace LoveThatFit\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-//use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SupportUserType;
 use LoveThatFit\AdminBundle\Entity\SupportAdminUser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Yaml\Parser;
 
 class SupportAdminUserController extends Controller {
 
     public function indexAction($page_number, $sort = 'id') {
         $support_with_pagination = $this->get('admin.helper.support')->getListWithPagination($page_number, $sort);
+
         return $this->render('LoveThatFitAdminBundle:UserSupport:index.html.twig', $support_with_pagination);
     }
 
-
-
     public function newAction() {
-	  $form = $this->createForm(new SupportUserType('add'));
-      return $this->render('LoveThatFitAdminBundle:UserSupport:user_new.html.twig', array(
-             'form' => $form->createView(),
-             ));
-    }
-    public function createAction(Request $request) {
-        $decoded  = $request->request->all();
+        $yaml = new Parser();
+        $conf = $yaml->parse(
+                file_get_contents('../src/LoveThatFit/AdminBundle/Resources/config/users_roles.yml')
+            );
+        
+        $roles = [];
+        if (!empty($conf)) {
+            foreach ($conf as $key => $value) {
+                foreach ($value as $k => $v) {
+                    $roles[] = $k;
+                }
+            }
+        }
+
         $form = $this->createForm(new SupportUserType('add'));
+        return $this->render('LoveThatFitAdminBundle:UserSupport:user_new.html.twig', array(
+                'form' => $form->createView(),
+                'roles' => $roles
+            ));
+    }
+
+    public function createAction(Request $request) {
+        $decoded = $request->request->all();
+        $form    = $this->createForm(new SupportUserType('add'));
         $form->bind($request);
         if (count($this->get('admin.helper.support')->findOneBy($decoded["support_user"]["email"])) > 0) {
             $this->get('session')->setFlash('warning', 'Support User email already exists.');
@@ -52,12 +67,25 @@ class SupportAdminUserController extends Controller {
     }
 
     public function editAction($id) {
-
+        $yaml = new Parser();
+        $conf = $yaml->parse(
+                file_get_contents('../src/LoveThatFit/AdminBundle/Resources/config/users_roles.yml')
+            );
+        
+        $roles = [];
+        if (!empty($conf)) {
+            foreach ($conf as $key => $value) {
+                foreach ($value as $k => $v) {
+                    $roles[] = $k;
+                }
+            }
+        }
         $entity = $this->get('admin.helper.support')->find($id);
         $form = $this->createForm(new SupportUserType('edit'), $entity);
         return $this->render('LoveThatFitAdminBundle:UserSupport:user_edit.html.twig', array(
-                'form' => $form->createView(),
+                'form'   => $form->createView(),
                 'entity' => $entity,
+                'roles'  => $roles
             )
         );
     }

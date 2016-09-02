@@ -27,6 +27,13 @@ class SupportAdminUser implements UserInterface, \Serializable {
      */
     private $id;
 
+    /**
+     * @var string $role_name
+     *
+     * @ORM\Column(name="role_name", type="string", length=100, nullable=false)
+     * )
+     */
+    private $role_name;
 
     /**
      * @var string $email
@@ -48,14 +55,14 @@ class SupportAdminUser implements UserInterface, \Serializable {
     /**
      * @var string $salt
      *
-     * @ORM\Column(name="salt", type="string", length=32, nullable=true)
+     * @ORM\Column(name="salt", type="string", length=100, nullable=true)
      */
     private $salt;
 
     /**
      * @var string $password
      *
-     * @ORM\Column(name="password", type="string", length=40)
+     * @ORM\Column(name="password", type="string", length=100)
      *      @Assert\Length(
      *      min = "6",
      *      max = "50",
@@ -101,8 +108,31 @@ class SupportAdminUser implements UserInterface, \Serializable {
         return $this->id;
     }
 
+    #-----------------------------------------
+    /**
+     * Set role_name
+     *
+     * @param string $role_name
+     * @return User
+     */
+    public function setRoleName($role_name) {
+        $this->role_name = $role_name;
 
+        return $this;
+    }
 
+    /**
+     * Get role_name
+     *
+     * @return string 
+     */
+    public function getRoleName() {
+        return $this->role_name;
+    }
+    
+    #-----------------------------------------
+
+    /**
     /**
      * Set createdAt
      *
