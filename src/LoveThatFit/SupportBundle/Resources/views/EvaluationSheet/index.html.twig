@@ -8,13 +8,7 @@
     Evaluation Product Sheet
     <a id='print' class='print' href="#">Print >></a> or
     <a id='download' class='download' href="#" target="_parent"> CSV >></a>
-    <br><br>
-    <div style="clear:both">
-        <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Sample Products >></a>
-    </div>
-    <div style="clear:both">
-        <a id='cart' class='cart' href="#">Shopping cart >></a>
-    </div>
+    
     <br><br>
 <h4> Product list with recomended sizes & fit index</h4>
 <script>
@@ -138,6 +132,9 @@ $(document).ready(function(){
         {{ form_errors(userForm) }}
         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
            Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
+           &nbsp;
+           <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Try on Products </a> |
+            <a id='cart' class='cart' href="#">Shopping cart items </a>
         {{ form_rest(userForm) }}
         </form>                 
         </div>

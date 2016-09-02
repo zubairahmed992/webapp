@@ -319,4 +319,46 @@ class AlgorithmController extends Controller {
             }
 
     }
+    
+    #--------------------------------------
+    
+    #--------------------------------------------------
+    public function fooAction($user_id) {
+         $user = $this->get('user.helper.user')->find($user_id);
+         $cart=$user->getCart();
+        
+        $pa= array();
+
+        $algo = new FitAlgorithm2($user);
+        $serial = 1;
+        
+        foreach ($cart as $c) {
+            $i=$c->getProductItem();
+            $p=$i->getProduct();
+            $algo->setProduct($p);
+            $pa[$p->getId()] = $i->getProductSize()->getTitle();
+            $fb = $algo->getFeedBackForSizeTitle($i->getProductSize()->getTitle());
+            if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                $pa[$p->getId()] = array('name' => $p->getName(),
+                    'fit_index'=>$fb["feedback"]['fit_index'],
+                    'clothing_type' => $p->getClothingType()->getName(),
+                    #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
+                    'size'=> $fb["feedback"]['title'],
+                    'serial'=>$serial,
+                    'fits'=>$fb["feedback"]['fits'],
+                    'recommended_size'=> '',
+                    'recommended_fit_index'=>'',
+                );
+                if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                        $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                        $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                }
+            }
+            $serial++;
+        }
+                return new Response (json_encode(array(
+            'products' => $pa,
+            'user' => $user,
+        )));
+    }
 }

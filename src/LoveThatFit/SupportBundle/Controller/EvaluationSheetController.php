@@ -52,7 +52,9 @@ $arr=array();
 
                 $fb = $algo->getFeedBackForSizeTitle($c->getProductItem()->getProductSize()->getTitle());
                 if (is_array($fb) && array_key_exists('feedback', $fb)) {
-                    $pa[$p->getId()] = array('name' => $p->getName(),
+                    $pa[$c->getId()] = array(
+                        'product_id' => $p->getId(),
+                        'name' => $p->getName(),
                         'fit_index'=>$fb["feedback"]['fit_index'],
                         'clothing_type' => $p->getClothingType()->getName(),
                         #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
@@ -63,8 +65,8 @@ $arr=array();
                         'recommended_fit_index'=>'',
                     );
                     if(is_array($fb) && array_key_exists('recommendation', $fb)){
-                        $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
-                        $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                        $pa[$c->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                        $pa[$c->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
                     }
                 }
             $serial++;
