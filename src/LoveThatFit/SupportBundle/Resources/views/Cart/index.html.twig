@@ -18,6 +18,68 @@ $(document).ready(function(){
     $( "select[id='algorithm_Product']" ).change(function() {
         $("#product_id").val(this.value);
         $('#product_keyword').val($('option:selected', $(this)).text());
+        var show_url = "cart/get_sizes_and_colors/" + this.value ;
+
+        $("#size_id").html("<option value =''>Select Size</option>");
+        $("#color_id").html("<option value =''>Select Color</option>");
+        $(".ajax_loader").show();
+        $.getJSON(show_url, function(data){
+            $.each(data.size, function (index, value) {
+                    $('#size_id').css('display','block');
+                    $("#size_id").append("<option value ='"+index+"'>"+value+"</option>");
+            });
+            $.each(data.color, function (index, value) {
+                $('#color_id').css('display','block');
+                $("#color_id").append("<option value ='"+index+"'>"+value+"</option>");
+            });
+            $(".ajax_loader").hide();
+        });
+    });
+    $( "select[id='size_id']" ).change(function() {
+        $("#size").val(this.value);
+    });
+
+    $( "select[id='color_id']" ).change(function() {
+        var color_id = this.value;
+        var product_id = $("#product_id").val();
+        var size = $("#size").val();
+        var show_url = "cart/get_sizes_and_colors/" + product_id ;
+        $(".ajax_loader").show();
+        $.getJSON(show_url, function(data){
+            //console.log(data.item[color_id][size].id);
+            var item_id = data.item[color_id][size].id;
+
+            var user_id = $("#user_id").val();
+
+            if (item_id != "") {
+                $(".ajax_loader").show();
+            }
+            var postForm = { //Fetch form data
+                'user_id'     : user_id,
+                'item_id'     : item_id
+
+            };
+            var show_url = "cart_add_item";
+            $.ajax({
+                type:'POST',
+                url: show_url,
+                data:postForm,
+                dataType:'json',
+                success: function(response) {
+                    if(response==1){
+                        var show_url = "cart/show/" + user_id ;
+                        $.ajax({
+                            url: show_url,
+                            success: function(response) {
+                                $(".ajax_loader").hide();
+                                $('#summary_ajax').html(response);
+                            }
+                        })
+                    }
+                }
+            })
+        });
+        $(".ajax_loader").hide();
     });
     $('a.product_edit_link').click(function (event){
         event.preventDefault();
@@ -97,12 +159,13 @@ $(document).ready(function(){
         })
         return false; //for good measure
     });
+
 });        
 
     </script>
 
 <span id='product_id' style="display: block"></span>
-<span id='size_id' style="display: none"></span>
+{#<span id='size_id' style="display: none"></span>#}
 <span id='user_id' style="display: block"></span>
 <div class="ajax_loader"></div>
 <div class="p_listing"> 
@@ -125,10 +188,14 @@ $(document).ready(function(){
         &nbsp;{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}
             Or <input type="text" placeholder="Search Product" id="product_keyword"><input type="hidden" id="product_id">
         {{ form_rest(productForm) }}
-        </form>      
+        </form>
+
+
+   <select id="size_id" style="display: none"><option value="">Please Select Size</option></select>
+    <select id="color_id" style="display: none"><option value="">Please Select Color</option></select>
     </div>
     <a href="#" id="showcart" class="showcart">show cart</a>
-    <a href="#" id="add_to_cart" class="add_to_cart">add to cart</a>
+    <a href="#" id="add_to_cart" class="add_to_cart">add recommended item to cart</a>
     <div id="summary_ajax" style="float: none">
     </div>
     {#<div class="ui-widget" style="clear:both">#}
@@ -141,6 +208,10 @@ $(document).ready(function(){
         {#<label for="tags">Select Products: </label>#}
         {#<input type="text" placeholder="Search Product" id="product_keyword">#}
         <input type="hidden" id="product_id">
+         <input type="hidden" id="size">
+        {#<input type="hidden" id="size_id">#}
+        {#<input type="hidden" id="color_id">#}
+        <input type="hidden" id="item_id">
     {#</div>#}
 </div> 
     

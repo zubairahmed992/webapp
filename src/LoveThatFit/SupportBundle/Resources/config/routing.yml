@@ -40,11 +40,26 @@ support_cart_delete:
     pattern:  /support/cart/delete/{id}/{user_id}
     defaults: { _controller: LoveThatFitSupportBundle:Cart:delete}
 
+#add to cart with recommended items
 support_cart_add:
     pattern:  /support/cart_add
     defaults: { _controller: LoveThatFitSupportBundle:Cart:addToCart}
     requirements:
         _method:  POST
+
+#add to cart item
+support_cart_add_item:
+    pattern:  /support/cart_add_item
+    defaults: { _controller: LoveThatFitSupportBundle:Cart:addToCartItem}
+    requirements:
+        _method:  POST
+
+### get Product Sizes
+support_get_sizes_and_colors:
+    pattern:  /support/cart/get_sizes_and_colors/{product_id}
+    defaults: { _controller: LoveThatFitSupportBundle:Cart:getSizeColor}
+    requirements:
+        _method:  GET
 
 ###############################################
 ############# Auto Complete ####################

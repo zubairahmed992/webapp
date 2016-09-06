@@ -1270,7 +1270,24 @@ class Product {
 
         return $imagesPath;
     }
+//----------------------------------------------------------
+    public function getIdsArray() {
+        $productItems = $this->getProductItems();
+        $item_array = array();
+        $size_array = array();
+        $color_array = array();
+        foreach ($productItems as $pi) {
 
+
+            $size_array[$pi->getProductSize()->getId()] =  $pi->getProductSize()->getTitle();
+            $color_array[$pi->getProductColor()->getId()] =  $pi->getProductColor()->getTitle();
+            $item_array[$pi->getProductColor()->getId()] [$pi->getProductSize()->getId()] = array(
+                'id' => $pi->getId(),
+            );
+        }
+
+        return array('item'=> $item_array, 'size'=> $size_array, 'color'=> $color_array);
+    }
     /**
      * Add product_color_view
      *

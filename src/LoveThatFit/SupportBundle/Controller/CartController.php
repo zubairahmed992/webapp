@@ -47,7 +47,7 @@ class CartController extends Controller {
     return new Response($getCounterResult["counter"]);
   }
 
-  //------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------Recommended Items
   public function addToCartAction(Request $request){
 	  $decoded  = $request->request->all();	  
 	  $user = $this->get('user.helper.user')->find($decoded["user_id"]);
@@ -56,4 +56,28 @@ class CartController extends Controller {
 	  $this->get('cart.helper.cart')->fillCart($item->getId(),$user,1);
 	  return new Response("1");
 	}
+  //------------------------------------------------------------------------------------------
+//get product sizes and colors
+  public function getSizeColorAction($product_id) {
+    $product = $this->get('admin.helper.product')->find($product_id);
+    $sizes=$product->getIdsArray($product);
+    return new Response(json_encode($sizes));
+    //print_r($sizes["size"]);die;
+//    foreach($sizes["size"] as $size){
+//      echo $size["title"];
+//    }
+//    die;
+//    return $this->render('LoveThatFitSupportBundle:Cart:show.html.twig', array(
+//
+//    ));
+  }
+
+  //------------------------------------------------------------------------------------------Add Items to cart
+  public function addToCartItemAction(Request $request){
+    $decoded  = $request->request->all();
+    $user = $this->get('user.helper.user')->find($decoded["user_id"]);
+    $this->get('cart.helper.cart')->fillCart($decoded["item_id"],$user,1);
+    return new Response("1");
+  }
+
 }
