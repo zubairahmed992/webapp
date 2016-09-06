@@ -153,6 +153,12 @@ class SupportTaskLogRepository extends EntityRepository{
                 s.duration'
             )
             ->from('LoveThatFitSupportBundle:SupportTaskLog', 's')
+            ->leftJoin(
+                    "LoveThatFitUserBundle:UserArchives",
+                    "ua",
+                    "WITH",
+                    "s.archives_id = ua.id"
+                )
             ->where('s.support_admin_user=:userid')
             ->setParameter('userid', $userid);
         

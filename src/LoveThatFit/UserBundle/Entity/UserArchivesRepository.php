@@ -80,11 +80,11 @@ class UserArchivesRepository extends EntityRepository
 	}
   }
 
-  	public function search($data, $page = 0, $max = NULL, $order, $getResult = true) 
+  	public function search($data, $page = 0, $max = NULL, $order, $user_id, $getResult = true) 
     {
-        $query = $this->getEntityManager()->createQueryBuilder();
-        $search = isset($data['query']) && $data['query']?$data['query']:null; 
-        
+	    $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
+
         $query 
             ->select('
                 ua.id,
@@ -92,7 +92,19 @@ class UserArchivesRepository extends EntityRepository
                 ua.created_at'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
-            ->leftJoin("LoveThatFitUserBundle:User", "u", "WITH", "u.id = ua.user")
+            ->leftJoin(
+            		"LoveThatFitUserBundle:User",
+            		"u",
+            		"WITH",
+            		"u.id = ua.user"
+            	)
+            ->leftJoin(
+            		"LoveThatFitSupportBundle:SupportTaskLog",
+            		"t",
+            		"WITH",
+            		"t.archives_id = ua.id"
+            	)
+            ->where('t.support_admin_user = :user_id')
             ->andWhere('ua.status = :pending');
         
         if ($search) {
@@ -100,7 +112,9 @@ class UserArchivesRepository extends EntityRepository
                 ->andWhere('u.email like :search')
                 ->setParameter('search', "%".$search."%");
         }
-        $query->setParameter('pending', '-1');
+        $query
+        	->setParameter('user_id', $user_id)
+        	->setParameter('pending', '-1');
 
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];

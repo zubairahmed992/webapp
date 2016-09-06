@@ -14,18 +14,21 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class SupportTaskLog
 {    
+    public function __construct()
+    {
+              
+    }
     /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SupportAdminUser", inversedBy="support_task_log")
      * @ORM\JoinColumn(name="support_admin_user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $support_admin_user;
     
-    
-     public function __construct()
-    {
-              
-    }
-    
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\UserArchives", inversedBy="support_task_log")
+     * @ORM\JoinColumn(name="archives_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $archives_id;
     
     /**
      * @var integer $id
@@ -84,6 +87,7 @@ class SupportTaskLog
      * @ORM\Column(name="created_at", type="datetime",nullable=true)
      */
     private $created_at;
+
     
     
 #---------------------------------------------------------------------
@@ -243,9 +247,29 @@ class SupportTaskLog
         return $this->created_at;
     }
 
-    
-  
-#--------------------------------------------
+    #----------------------------------------
+    /**
+     * Set archives_id
+     *
+     * @param LoveThatFit\UserBundle\Entity\UserArchives $archives_id
+     * @return archives_id
+     * 
+     */
+    public function setArchives(\LoveThatFit\UserBundle\Entity\UserArchives $archives_id = null) {
+        $this->archives_id = $archives_id;
+
+        return $this;
+    }
+
+    /**
+     * Get archives_id
+     *
+     * @return LoveThatFit\UserBundle\Entity\UserArchives 
+     */
+    public function getArchives() {
+        return $this->archives_id;
+    }
+    #--------------------------------------------
   
     /**
      * Set support_admin_user

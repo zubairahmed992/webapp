@@ -69,12 +69,12 @@ class SupportTaskLogHelper {
         $start_time = date("Y-m-d H:i:s", 
             strtotime($end_time) - $stl_array['duration']
         );
-
         $entity=$this->fill($this->createNew(), $stl_array);
         $entity->setStartTime(new \DateTime($start_time));
         $entity->setEndTime(new \DateTime($end_time));
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setSupportAdminUser($stl_array['supportUsers']);
+        $entity->setArchives($stl_array['archives_id']);
 
         $this->save($entity);            
     }

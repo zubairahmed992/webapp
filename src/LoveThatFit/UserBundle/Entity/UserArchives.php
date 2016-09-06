@@ -24,7 +24,10 @@ class UserArchives
      *  */
     private $user;
     
-     
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SupportBundle\Entity\SupportTaskLog", mappedBy="user_archives")
+     */
+    protected $archives;
     
     /**
      * @var integer
@@ -120,7 +123,7 @@ class UserArchives
         return $this->id;
     }
 #----------------------------------------
-    
+        
     /**
      * Set measurement_json
      *
@@ -378,7 +381,39 @@ class UserArchives
     {
         return $this->user;
     }
+    #----------------------------------------
 
+    /**
+     * Add archives
+     *
+     * @param \LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives
+     * @return Brand
+     */
+    public function addArchives(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives)
+    {
+        $this->archives[] = $archives;
+    
+        return $this;
+    }
+    /**
+     * Remove archives
+     *
+     * @param \LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives
+     */
+    public function removeArchives(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives)
+    {
+        $this->archives->removeElement($archives);
+    }
+
+    /**
+     * Get archives
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArchives()
+    {
+        return $this->archives;
+    }
     #----------------------------------------
     public function getMarkerArray() {
 
