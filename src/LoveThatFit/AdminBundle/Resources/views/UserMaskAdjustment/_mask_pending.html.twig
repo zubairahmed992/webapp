@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% extends 'LoveThatFitAdminBundle::base_pending.html.twig' %}
 
 
 
@@ -10,22 +10,35 @@
 <div class="container_pending">
 <div class="row">
 {% if (user_image_spec)%}
-        <div class="span3 bs-docs-sidebar" style="background: #d3d3d4;">
-            <h5>MASK MARKER INFO:</h5>
-    <div><span>member id:</span>{{entity.id}}</div>
-    <div><span>member Name:</span>{{entity.fullName}}</div>
-    <div><span>email:</span>{{entity.email}}</div>
+        <div class="span3 bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -1px 3px 7px #000;">
+            <div style="padding-top:20px;">
+                <span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/logo_admin.png') }}" title="SelfieStyler"></span>
+                <span class="login_person">Logged in as: {% if app.user %}
+                         {{ app.user.username }} {#<a href="#" class="navbar-link"></a>#}
+                    {% endif %}</span>
+            </div>
+
+            <div style="clear: both;"></div>
+
+<hr class="black">
+            <h5>ACCOUNT INFO:</h5>
+            <div><span>Email:</span>{{entity.email}}</div>
+            <div><span>Member Name:</span>{{entity.fullName}}</div>
+            <div><span>Member id:</span>{{entity.id}}</div>
+            <hr class="black">
+            <h5>CAMERA INFO:</h5>
     
     <div><span>Camera angle:</span>{{user_image_spec.cameraAngle}}</div>
     <div><span>Camera x:</span>{{user_image_spec.cameraX}}</div>
     <div><span>Displacement x:</span>{{user_image_spec.displacementX}}</div>
     <div><span>Displacement y:</span>{{user_image_spec.displacementY}}</div>
     <div><span>Rotation:</span>{{user_image_spec.rotation}}</div>
-    <div><span>Device Type:</span>{{user_image_spec.deviceType}}</div>
+    <!--<div><span>Device Type:</span>{{user_image_spec.deviceType}}</div>
     <div><span>Device Model:</span>{{device_model}}</div>
-    <div><span>Mode:</span>{{edit_type}}</div>
+    <div><span>Mode:</span>{{edit_type}}</div>-->
     {% if (archives is defined)%}
-    <div><span>Archives:</span></div>
+        <hr class="black">
+   <h5>Archives:</h5>
     {% for a in archives %}
             <div><span>
                     <a href="{{ path('admin_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
@@ -43,7 +56,13 @@
     </div>
     {%else%}
     <div>
-        <a href="{{ path('admin_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
+        <a STYLE="background: #1a1a1a;
+    padding: 8px 0px; width: 90%;
+    text-align: center;
+    color: #ffffff;
+    margin-top:50px;
+    text-transform: uppercase;
+    display: inline-block;" href="{{ path('admin_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
     <!--<div><span>foo:</span>{{archive.getWebPath('original')}}</div>-->
@@ -123,15 +142,18 @@
 
 
 
-<div class="span10 maindiv">
+<div class="span8 maindiv">
 
-<div class="span10">
+<div class="span8">
 
 {% if (device_type == "iphone5")%}
-<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas>cc</div>
 {% endif %}
 {% if (device_type == "iphone6")%}
-<div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas>
+<div class="rej_img"><a href="#">Reject Image</a></div>
+    <div class="clk_img"><span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/clock_admin.png') }}" title="SelfieStyler"></span></div>
+</div>
 {% endif %}
 
 
@@ -139,26 +161,79 @@
 
 </div>
 
-{%if (edit_type=='edit' or ( mode is defined and mode) )%}
 
-<div class="span10 activatewrap">
-    <div class="nav_btns">
-    <div>
-        <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-        <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
-        {% if (archives is defined)%}
-            <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
-        {% else %}
-            <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
-        {% endif %}
-    </div>
-
-</div>
-</div>
-{%endif%}
 
 
 </div>
+
+
+    {%if (edit_type=='edit' or ( mode is defined and mode) )%}
+    <!--<div class="row">
+        <h5>Measurement Comparision</h5>
+        <div class="span3">
+
+
+
+            <div class="nav_btns">
+
+<table cellpadding="0" cellspacing="0" border="1" width="100%">
+    <tr>
+        <td></td>
+        <td>User Info</td>
+        <td>Mask Info</td>
+    </tr>
+
+    <tr>
+        <td>Shoulder</td>
+        <td>{{ entity.measurement.shoulderAcrossBack }}</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Bust</td>
+        <td>{{ entity.measurement.bust }}</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Waist</td>
+        <td>{{ entity.measurement.waist }}</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Hip</td>
+        <td>{{ entity.measurement.hip }}</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Inseem</td>
+        <td>{{ entity.measurement.inseam }}</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Thigh</td>
+        <td>{{ entity.measurement.thigh }}</td>
+        <td></td>
+    </tr>
+</table>
+
+                <div>
+                    <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+                    <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+                    {% if (archives is defined)%}
+                        <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+                    {% else %}
+                        <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        </div>-->
+    {%endif%}
         </div>
     </div>
 
