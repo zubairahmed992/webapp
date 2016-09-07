@@ -1006,13 +1006,8 @@ class UserHelper {
                 'email' => $fData["email"], 
                 'gender' => $fData["gender"],
                 'createdAt' => ($fData["createdAt"]->format('m-d-Y')),
-                'action' => '<a href="#" title="Duplicate">
-                               <i class="icon-tags"></i>
-                             </a>
-                             <a href="#" title="Archives">
-                                <i class="icon-tasks"></i>
-                             </a>',
                 'original_user_id' => $fData["original_user_id"], 
+                'id' => $fData["id"],
             ];
 
             $a++;

@@ -8,3 +8,4 @@ ApproveButton    = '<button class="btn btn-default btn-circle command-approve ap
 DisapproveButton = '<button class="btn btn-default btn-circle command-disapprove appDis" data-action="Disapprove" title="Disapprove"><i class="fa fa-times noMargin"></i></button>';
 DetailPageButton = '<button class="btn btn-cyan btn-xs" data-action="Detail" title="View"><i class="icon-eye-open"></i></button>';
 ReasonButton = '<button class="btn btn-detail btn-xs add-reason marginLeft10" data-action="Reason" title="Reason"><i class="fa fa-folder-open noMargin folder-icon"></i></button>';
+DuplicateUser = '<button class="btn btn-detail btn-xs add-reason marginLeft10" data-action="DuplicateUser" title="DuplicateUser"><i class="icon-tags"></i></button>';

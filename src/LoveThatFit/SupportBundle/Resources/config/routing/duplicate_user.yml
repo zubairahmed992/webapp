@@ -1,0 +1,8 @@
+#---------------------------------------- YML data update ---------------------
+support_duplicate_user_index:
+    pattern:  /support/duplicate_user/{id}
+    defaults: { _controller: LoveThatFitSupportBundle:DuplicateUser:index }
+
+support_duplicate_user_update:
+    pattern:  /support/update_user
+    defaults: { _controller: LoveThatFitSupportBundle:DuplicateUser:updateUser }

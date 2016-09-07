@@ -41,7 +41,12 @@
 </div>
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    $('#example').DataTable({
+
+
+        visible          = true;
+        showDuplicateUser = true;
+
+        var table = $('#example').DataTable({
        "processing": true, 
         "serverSide": true, 
         "ajax": {
@@ -73,13 +78,20 @@
               "searchable": false
           },
           {
-              "data"  : "action",
-              "searchable": false,
-              "orderable" : false
+              "title"         : "Actions",
+              "targets"       : -1,
+              "data"          : null,
+              "orderable"     : false,
+              "searchable"    : false,
+              "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : ''),
           },
           {
               "data"  : "original_user_id",
               "searchable": false,
+              "visible": false
+          },
+          {
+              "data"  : "id",
               "visible": false
           }
         ],
@@ -88,6 +100,15 @@
               $('td', row).addClass('duplicate_user_class');
             }
         },
+    });
+      jQuery('#example tbody').on( 'click', 'button, a, img', function () {
+      var dataAction = $(this).attr('data-action');
+      var data = table.row( $(this).parents('tr') ).data();
+      if (dataAction == 'DuplicateUser') {
+          var url = '{{ path('support_duplicate_user_index', {'id': ":id"}) }}';
+          url     = url.replace(':id', data.id);
+          window.top.location = url;
+      }
     });
   });
 </script>

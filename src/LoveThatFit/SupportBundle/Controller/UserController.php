@@ -47,4 +47,38 @@ class UserController extends Controller {
         
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
+
+    //-------------------------Show user detail-------------------------------------------------------
+    public function showAction($id) {
+        $entity = $this->get('user.helper.user')->find($id);
+        $log_count = $this->get('user.helper.userappaccesslog')->getAppAccessLogCount($entity);
+        $user_limit = $this->get('user.helper.user')->getRecordsCountWithCurrentUserLimit($id);
+        $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($user_limit[0]['id']));
+        $page_number=$page_number==0?1:$page_number;
+        if(!$entity){
+            $this->get('session')->setFlash('warning', 'User not found!');
+        }
+        if(!$entity->getOriginalUser()){
+            $duplicate_user = '0';
+            $duplicate_list = $entity->getDuplicateUsers();
+            $duplicate_count = count($duplicate_list);
+        }else{
+            $duplicate_user = '1';
+            $duplicate_list = $entity->getOriginalUser();
+            $duplicate_count = 0;
+        }
+        return $this->render('LoveThatFitSupportBundle:User:show.html.twig', array(
+            'user' => $entity,
+            'duplicate_user' => $duplicate_user,
+            'duplicate_list' => $duplicate_list,
+            'duplicate_count' => $duplicate_count,
+            'page_number' => $page_number,
+            'log_count' => $log_count,
+            'product'=>$this->get('site.helper.usertryitemhistory')->countUserTiredProducts($entity),
+            'brand'=>$this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity),
+            'brandtried'=>count($this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity)),
+        ));
+    }
+    //-------------------------Show user detail-------------------------------------------------------
+
 }

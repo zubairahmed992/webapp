@@ -102,3 +102,8 @@ support_users_task_log:
     resource: "@LoveThatFitSupportBundle/Resources/config/routing/task_log.yml"
     prefix:   /
 ## time log routes end ##
+
+## duplicate User routes start ##
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/duplicate_user.yml"
+    prefix:   /
+## duplicate User  routes end ##

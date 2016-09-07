@@ -7,3 +7,8 @@ support_users_paginate:
     pattern:  /support/users/paginate
     defaults: { _controller: LoveThatFitSupportBundle:User:paginate}
 ## users routes start ##
+
+#show user detail
+support_user_detail_show:
+    pattern:  /support/user/{id}/show
+    defaults: { _controller: LoveThatFitSupportBundle:User:show }
