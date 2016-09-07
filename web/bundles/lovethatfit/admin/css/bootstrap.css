@@ -312,7 +312,7 @@ body {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  line-height: 20px;
+
   color: #333333;
   background-color: #ffffff;
 }
@@ -1093,6 +1093,10 @@ pre code {
 
 form {
   margin: 0 0 20px;
+}
+
+.container_pending form{
+  margin:5px!important;
 }
 
 fieldset {

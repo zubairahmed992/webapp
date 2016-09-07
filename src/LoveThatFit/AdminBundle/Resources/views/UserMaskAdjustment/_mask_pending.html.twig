@@ -10,7 +10,7 @@
 <div class="container_pending">
 <div class="row">
 {% if (user_image_spec)%}
-        <div class="span3 bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -1px 3px 7px #000;">
+        <div class="span3 bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -3px 1px 15px #000;">
             <div style="padding-top:20px;">
                 <span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/logo_admin.png') }}" title="SelfieStyler"></span>
                 <span class="login_person">Logged in as: {% if app.user %}
@@ -313,7 +313,8 @@ var path = new CompoundPath({
 
 
    //alert($docu);
-   var $height = $(document).height();
+   var $height = $(window).height();
+    
    $(".container_pending .span3").css({"height":$height+"px"});
 
    var $heightt = $(document).height();
