@@ -157,7 +157,7 @@ class SupportTaskLogRepository extends EntityRepository{
                     "LoveThatFitUserBundle:UserArchives",
                     "ua",
                     "WITH",
-                    "s.archives_id = ua.id"
+                    "s.archive = ua.id"
                 )
             ->where('s.support_admin_user=:userid')
             ->setParameter('userid', $userid);

@@ -74,7 +74,7 @@ class SupportTaskLogHelper {
         $entity->setEndTime(new \DateTime($end_time));
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setSupportAdminUser($stl_array['supportUsers']);
-        $entity->setArchives($stl_array['archives_id']);
+        $entity->setArchive($stl_array['archive']);
 
         $this->save($entity);            
     }
@@ -208,6 +208,15 @@ class SupportTaskLogHelper {
         }
 
         return $output;
+    }
+
+    public function saveAssignPendingUsers($data)
+    {
+        $entity=$this->fill($this->createNew(), $data);
+        $entity->setSupportAdminUser($data['supportUsers']);
+        $entity->setArchive($data['archive']);
+
+        $this->save($entity);
     }
     
 }

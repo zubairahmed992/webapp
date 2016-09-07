@@ -5,3 +5,11 @@ support_pending_users:
 support_pending_users_paginate:
     pattern:  /support/pendingUsers/paginate
     defaults: { _controller: LoveThatFitSupportBundle:User:pendingUsersPaginate}
+
+support_pending_users_assign:
+    pattern:  /support/pendingUsers/assign
+    defaults: { _controller: LoveThatFitSupportBundle:User:assignPendingUsers}
+
+support_pending_users_task_logs_add:
+    pattern:  /support/pendingUsers/support_users/add
+    defaults: { _controller: LoveThatFitSupportBundle:User:addPendingUsersTaskLog}

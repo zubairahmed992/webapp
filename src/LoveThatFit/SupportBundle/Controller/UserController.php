@@ -42,8 +42,9 @@ class UserController extends Controller {
 
     public function pendingUsersPaginateAction(Request $request)
     {
-        $requestData = $this->get('request')->request->all();
-        $output = $this->get('user.helper.userarchives')->search($requestData);
+        $requestData            = $this->get('request')->request->all();
+        $requestData['user_id'] = $this->getUser()->getId();
+        $output                 = $this->get('user.helper.userarchives')->search($requestData);
         
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
@@ -80,5 +81,19 @@ class UserController extends Controller {
         ));
     }
     //-------------------------Show user detail-------------------------------------------------------
+    public function assignPendingUsersAction()
+    {
+        $result = $this->get('admin.helper.support')->findSupportAdmin();
+        return new Response(json_encode($result), 200, ['Content-Type' => 'application/json']);
+    }
 
+    public function addPendingUsersTaskLogAction(Request $request)
+    {
+        $decoded                 = $this->get('request')->request->all();
+        $decoded['supportUsers'] = $this->get('admin.helper.support')->find($decoded["supportUsers"]);
+        $decoded['archive']      = $this->get('user.helper.userarchives')->find($decoded["archive"]);
+
+        $result = $this->get('support.helper.supporttasklog')->saveAssignPendingUsers($decoded);
+        return new Response(json_encode($result), 200, ['Content-Type' => 'application/json']);
+    }
 }

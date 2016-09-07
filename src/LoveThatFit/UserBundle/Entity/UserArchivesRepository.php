@@ -102,9 +102,9 @@ class UserArchivesRepository extends EntityRepository
             		"LoveThatFitSupportBundle:SupportTaskLog",
             		"t",
             		"WITH",
-            		"t.archives_id = ua.id"
+            		"t.archive = ua.id"
             	)
-            ->where('t.support_admin_user = :user_id')
+            #################->where('t.support_admin_user = :user_id')
             ->andWhere('ua.status = :pending');
         
         if ($search) {
@@ -113,7 +113,7 @@ class UserArchivesRepository extends EntityRepository
                 ->setParameter('search', "%".$search."%");
         }
         $query
-        	->setParameter('user_id', $user_id)
+        	#################->setParameter('user_id', $user_id)
         	->setParameter('pending', '-1');
 
         if (is_array($order)) {

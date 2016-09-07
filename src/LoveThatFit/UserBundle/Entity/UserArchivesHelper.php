@@ -429,8 +429,7 @@ class UserArchivesHelper {
                 'id'        => $fData["id"],
                 'email'     => $fData["email"], 
                 'status'    => "Pending",
-                'createdAt' => ($fData["created_at"]->format('m-d-Y')),
-                'action'    => ''
+                'createdAt' => ($fData["created_at"]->format('m-d-Y'))
             ];
 
             $a++;

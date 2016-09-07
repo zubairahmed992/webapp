@@ -16,19 +16,19 @@ class SupportTaskLog
 {    
     public function __construct()
     {
-              
+
     }
     /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SupportAdminUser", inversedBy="support_task_log")
      * @ORM\JoinColumn(name="support_admin_user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $support_admin_user;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\UserArchives", inversedBy="support_task_log")
-     * @ORM\JoinColumn(name="archives_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="archive_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $archives_id;
+    protected $archive;
     
     /**
      * @var integer $id
@@ -249,25 +249,25 @@ class SupportTaskLog
 
     #----------------------------------------
     /**
-     * Set archives_id
+     * Set archive
      *
-     * @param LoveThatFit\UserBundle\Entity\UserArchives $archives_id
-     * @return archives_id
+     * @param LoveThatFit\UserBundle\Entity\UserArchives $archive
+     * @return archive
      * 
      */
-    public function setArchives(\LoveThatFit\UserBundle\Entity\UserArchives $archives_id = null) {
-        $this->archives_id = $archives_id;
+    public function setArchive(\LoveThatFit\UserBundle\Entity\UserArchives $archive = null) {
+        $this->archive = $archive;
 
         return $this;
     }
 
     /**
-     * Get archives_id
+     * Get archive
      *
      * @return LoveThatFit\UserBundle\Entity\UserArchives 
      */
-    public function getArchives() {
-        return $this->archives_id;
+    public function getArchive() {
+        return $this->archive;
     }
     #--------------------------------------------
   

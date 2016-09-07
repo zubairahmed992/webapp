@@ -60,11 +60,6 @@ class SupportAdminUserRepository extends EntityRepository
 	}
   }
 
-
-
-
-
-
   public function isDuplicateEmail($id, $email) {
 	try {
 
@@ -86,6 +81,18 @@ class SupportAdminUserRepository extends EntityRepository
 	}
   }
 
-
-
+  public function findSupportAdmin()
+  {
+  		return $this->getEntityManager()
+  			->createQueryBuilder()
+            ->select('
+            	s.id,
+            	s.user_name'
+            )
+            ->from('LoveThatFitAdminBundle:SupportAdminUser', 's')
+            ->where('s.isActive=:active')
+            ->setParameter('active', 1)
+            ->getQuery()
+            ->getResult();
+  }
 }

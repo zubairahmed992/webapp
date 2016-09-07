@@ -251,5 +251,9 @@ class SupportAdminUserHelper {
 	return $this->repo->isDuplicateEmail($id, $email);
   }
 
+  public function findSupportAdmin()
+  {
+  	return $this->repo->findSupportAdmin();
+  }
 
 }

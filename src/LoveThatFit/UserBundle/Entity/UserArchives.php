@@ -27,7 +27,7 @@ class UserArchives
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\SupportBundle\Entity\SupportTaskLog", mappedBy="user_archives")
      */
-    protected $archives;
+    protected $support_task_logs;
     
     /**
      * @var integer
@@ -384,35 +384,35 @@ class UserArchives
     #----------------------------------------
 
     /**
-     * Add archives
+     * Add support_task_logs
      *
-     * @param \LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives
-     * @return Brand
+     * @param \LoveThatFit\SupportBundle\Entity\SupportTaskLog $support_task_logs
+     * @return support_task_logs
      */
-    public function addArchives(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives)
+    public function addSupportTaskLog(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $support_task_logs)
     {
-        $this->archives[] = $archives;
+        $this->support_task_logs[] = $support_task_logs;
     
         return $this;
     }
     /**
-     * Remove archives
+     * Remove support_task_logs
      *
-     * @param \LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives
+     * @param \LoveThatFit\SupportBundle\Entity\SupportTaskLog $support_task_logs
      */
-    public function removeArchives(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $archives)
+    public function removeSupportTaskLog(\LoveThatFit\SupportBundle\Entity\SupportTaskLog $support_task_logs)
     {
-        $this->archives->removeElement($archives);
+        $this->support_task_logs->removeElement($support_task_logs);
     }
 
     /**
-     * Get archives
+     * Get support_task_logs
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getArchives()
+    public function getSupportTaskLog()
     {
-        return $this->archives;
+        return $this->support_task_logs;
     }
     #----------------------------------------
     public function getMarkerArray() {

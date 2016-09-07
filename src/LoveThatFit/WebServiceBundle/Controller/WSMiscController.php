@@ -84,7 +84,7 @@ class WSMiscController extends Controller {
         $decoded = $request->request->all();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $decoded['supportUsers'] = $this->get('admin.helper.support')->findOneByUserName($decoded["support_user_name"]);
-        $decoded['archives_id'] = $this->get('user.helper.userarchives')->find($decoded["archives_id"]);
+        $decoded['archive'] = $this->get('user.helper.userarchives')->find($decoded["archive"]);
 
         $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
         return new Response("1");
