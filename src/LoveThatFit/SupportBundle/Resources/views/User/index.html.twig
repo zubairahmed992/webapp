@@ -45,6 +45,7 @@
 
         visible          = true;
         showDuplicateUser = true;
+        ShowDetailPageButton = true;
 
         var table = $('#example').DataTable({
        "processing": true, 
@@ -83,7 +84,8 @@
               "data"          : null,
               "orderable"     : false,
               "searchable"    : false,
-              "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : ''),
+              "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
+            + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
           },
           {
               "data"  : "original_user_id",
@@ -106,6 +108,11 @@
       var data = table.row( $(this).parents('tr') ).data();
       if (dataAction == 'DuplicateUser') {
           var url = '{{ path('support_duplicate_user_index', {'id': ":id"}) }}';
+          url     = url.replace(':id', data.id);
+          window.top.location = url;
+      }
+      if (dataAction == 'Detail') {
+          var url = '{{ path('support_user_detail_show', {'id': ":id"}) }}';
           url     = url.replace(':id', data.id);
           window.top.location = url;
       }
