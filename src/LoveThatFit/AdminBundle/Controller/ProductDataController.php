@@ -93,7 +93,7 @@ class ProductDataController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         $pc = new BrandFormatImport();
-        $pc->setBrandName($val['product_Brand']);
+        $pc->setBrandName($val['brand_name']);
         $pc->setBrandDescription($val['brand_description']);
         $pc->setBrandFormat(json_encode($val));
         $em->persist($pc);
@@ -146,6 +146,28 @@ class ProductDataController extends Controller
             }
             $rows++;
         }
+        echo "<pre>";
+      //  print_r($raowValue);
+      //  die("sdfoasdof asdsadfsa dfasd fasdf asd fsadf ");
+        echo count($productData['fit_priority']);
+        //die("okay");
+
+        $rows = 0;
+            foreach ($productData['fit_priority'] as $keys => $nextarray){
+                $num = count($value);
+                for ($c = 0; $c < $num; $c++) {
+                    $aaa = $rows . "," . $c;
+                $key1 = array_search($aaa, $productData['fit_priority']);
+                $productSave[$keys] = $raowValue[$rows][$c];
+                }
+                $rows++;
+            }
+
+
+        echo "<pre>";
+        print_r($productData);
+        die("sdfoasdof asdsadfsa dfasd fasdf asd fsadf ");
+
 //        $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
 //            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
 //            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
@@ -410,21 +432,21 @@ class ProductDataController extends Controller
             } // end Sizes loop
 
 
-    $data['gender'] = 'f';
-    $data['clothing_type'] = 'jean';
-        $data['styling_type'] = 'boot cut';
-        $data['neck_line'] = 'n/a';
-        $data['sleeve_styling'] ='n/a';
-    $data['rise'] = 'low rise';
-    $data['hem_length'] = 'full length';
-        $data['stretch_type'] = 'woven w/ stretch fibers';
-        $data['horizontal_stretch'] = '15%';
-        $data['vertical_stretch'] = '0%';
-        $data['fabric_weight'] = 'Heavy weight woven';
-        $data['structural_detail'] ='';
-        $data['styling_detail'] ='';
-        $data['fit_type'] = 'Woven - formal structured fit';
-        $data['layring'] = '1st layer - worn next to skin';
+         //$data['gender'] = 'f';
+         //$data['clothing_type'] = 'jean';
+         //$data['styling_type'] = 'boot cut';
+         //$data['neck_line'] = 'n/a';
+         //$data['sleeve_styling'] ='n/a';
+         //$data['rise'] = 'low rise';
+         //$data['hem_length'] = 'full length';
+         //$data['stretch_type'] = 'woven w/ stretch fibers';
+         //$data['horizontal_stretch'] = '15%';
+         //$data['vertical_stretch'] = '0%';
+         //$data['fabric_weight'] = 'Heavy weight woven';
+         //$data['structural_detail'] ='';
+         // $data['styling_detail'] ='';
+         //$data['fit_type'] = 'Woven - formal structured fit';
+         //$data['layring'] = '1st layer - worn next to skin';
         $data['fit_priority'] = Array( 'shoulder_across_back' => '0',
             'bust' => '0',
             'waist' => '25',
@@ -434,7 +456,7 @@ class ProductDataController extends Controller
         );
 
    $data['size_title_type'] = 'waist';
-    $data['body_type'] = 'Regular';
+    //$data['body_type'] = 'Regular';
     $data['product_color'] = Array
     (
         '0' => 'pacific ocean'
@@ -456,30 +478,32 @@ class ProductDataController extends Controller
         );
         echo "<pre>";
         //print_r($data);
-        $data['style'] = "testing";
+        //$data['style'] = "testing";
         $data['sizes'] = $sizess['sizes'];
         print_r($data);
         echo "</table>";
 
-        $em = $this->getDoctrine()->getManager();
-        $pcsv = new ProductCSVDataUploader();
-        $product = $pcsv->fillProduct($data);
-        $data['brand_name'] = 'citizens of humanity';
-        $data['clothing_type'] =  'jean';
-        $data['retailer_name'] = 'citizens of humanity';
-        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
-        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
-
-        //$product = $this->fillProduct($data);
-        $product->setBrand($brand);
-        $product->setClothingType($clothingType);
-        $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
-        $product->setRetailer($retailer);
-
-        $em->persist($product);
-        $em->flush();
-        $this->addProductSizesFromArray($product, $data);
-        $this->addProductColorsFromArray($product, $data);
+//        $em = $this->getDoctrine()->getManager();
+//        $pcsv = new ProductCSVDataUploader();
+//        $product = $pcsv->fillProduct($data);
+//        //$data['brand_name'] = 'citizens of humanity';
+//        $data['clothing_type'] =  'jean';
+//        $data['retailer_name'] = 'citizens of humanity';
+//        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
+//        //$brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
+//        $brand = $data['brand_name'];
+//
+//        //$product = $this->fillProduct($data);
+//        $product->setBrand($brand);
+//        $product->setClothingType($clothingType);
+//       // $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
+//        $retailer = $data['retailer_name'];
+//        $product->setRetailer($retailer);
+//
+//        $em->persist($product);
+//        $em->flush();
+//        $this->addProductSizesFromArray($product, $data);
+//        $this->addProductColorsFromArray($product, $data);
         die("save Data");
     }
 
@@ -847,8 +871,8 @@ class ProductDataController extends Controller
             $width = $newDirectoryList[0];
             $height = $newDirectoryList[1];
             $newDirectory = $newDirectoryList[2];
-            $src = $_SERVER['DOCUMENT_ROOT'] . 'webappBK/web/uploads/ltf/products/display/iphone_list';
-            $dir = $_SERVER['DOCUMENT_ROOT'] . '/webappBK/web/uploads/ltf/products/display';
+            $src = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/display/iphone_list';
+            $dir = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/display';
             // Get total Directory From Destination Path
             $totalDirectory = $this->get('admin.helper.productimagegenrate')->getTotalDirectories($dir);
             $dest = $dir . "/" . $newDirectory;
