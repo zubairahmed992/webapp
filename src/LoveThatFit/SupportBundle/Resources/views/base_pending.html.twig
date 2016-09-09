@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Support ~ SelfieStyler</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/js/custom.js') }}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+
+          <div class="nav-collapse collapse">
+              <!--<p class="navbar-text pull-right">
+                {% if app.user %}
+                    Logged in as {{ app.user.username }} {#<a href="#" class="navbar-link"></a>#}
+                {% endif %}
+           
+            </p>-->
+            <!-- Top Navigation Start -->
+            <ul class="nav pending_nav">
+                
+              <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+              <li><a href="{{ path('admin_clothing_types') }}">Clothing Types</a></li>
+              <li><a href="{{ path('admin_brands') }}">Brands</a></li>
+              <li><a href="{{ path('admin_products') }}">Products</a></li>
+              <li><a href="{{ path('admin_survey') }}">Survey</a></li>
+              <li><a href="{{ path('admin_size_charts') }}">SizeCharts</a></li>
+              <li><a href="{{ path('admin_retailers') }}">Retailers</a></li>
+              <li><a href="{{ path('admin_users') }}">Users</a></li>
+              <li><a href="{{ path('admin_support_user') }}">Support Users</a></li>
+                {#{{ path('admin_push_notification') }}#}
+              {#<li><a href="#">Push Notifcation</a></li>#}
+                <li><a href="{{ path('admin_yml_setting_index') }}">Yml Settings</a></li>
+              <li><a href="{{ path('admin_clothing_type_standards') }}">Constants</a></li>
+              <li><a href="{{ path('ws_interface_index') }}">Services</a></li>
+              <li><a href="{{ path('admin_order') }}">Orders</a></li>
+              <li><a href="{{ path('admin_logout') }}">Logout</a></li>
+            </ul>
+             <!-- Top Navigation End -->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Breadcrumb Start
+    <ul class="breadcrumb">
+          <li><a href="{{ path('admin_dashboard') }}">Admin</a> <span class="divider">/</span></li>
+          {% block breadcrumb %}{% endblock %}
+    </ul>-->
+
+    <!-- Breadcrumb End -->      
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Warning!</strong>   
+ {{ app.session.flash('warning') }}    
+</div>   
+{% endif %}
+
+    <!--<div style="clear: both; margin-bottom:80px;"></div>-->
+    {% if app.session.hasFlash('success') %}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong>
+            {{ app.session.flash('success') }}
+        </div>
+    {% endif %}
+
+    <div class="container-fluid">
+   
+            {% block body %}
+                <div style="float: right">
+                    {% block header_right_links %}{% endblock %}
+                </div>
+            {% endblock %}
+   
+   </div>  
+      
+    
+       
+    <footer>
+      <p>&copy; Company 2012</p>
+    </footer>
+
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-transition.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-alert.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-modal.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-dropdown.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-scrollspy.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-tab.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-tooltip.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-popover.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-button.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-collapse.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-carousel.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-typeahead.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.bootstrap.wizard.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/custom.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.form.js') }}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+       <script type="text/javascript">
+	jQuery(document).ready(function() {
+	  	jQuery('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+			var $total = navigation.find('li').length;
+			var $current = index+1;
+			var $percent = ($current/$total) * 100;
+			jQuery('#rootwizard').find('.bar').css({width:$percent+'%'});
+		}});
+        //for user
+        $("#keyword").keyup(function() {
+            $("#keyword").autocomplete({
+                minLength: 2,
+                //source: "autocomplete_user_search_result",
+                source:function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    url:"../autocomplete_user/autocomplete_user_search_result",
+                    data: request,
+                    success: response,
+                    dataType: 'json'
+                });
+            },
+                focus: function( event, ui ) {
+                    $( "#keyword" ).val( ui.item.email);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#keyword").val(ui.item.email);
+                    $("#user_id").val(ui.item.id);
+                    $('#user_User option[value='+ui.item.id+']').attr('selected','selected');
+                    $('#algorithm_User option[value='+ui.item.id+']').attr('selected','selected');
+                    hit_service();
+                    var url= '../user/'+ ui.item.id +'/edit';
+                    $('#user_edit_link').attr("href", url);
+                    return false;
+                }
+            })
+                .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.email + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //for products
+        $("#product_keyword").keyup(function() {
+            $("#product_keyword").autocomplete({
+                minLength: 2,
+                source:function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url:"../autocomplete_product/autocomplete_product_search_result",
+                        data: request,
+                        success: response,
+                        dataType: 'json'
+                    });
+                },
+                focus: function( event, ui ) {
+                    $( "#product_keyword" ).val( ui.item.name);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#product_keyword").val( ui.item.name);
+                    $("#product_id").val( ui.item.id );
+                    $('#algorithm_Product option[value='+ui.item.id+']').attr('selected','selected');
+                    var url= '../productdetail/'+ui.item.id+'';
+                    $('#product_edit_link').attr("href", url);
+                    return false;
+                }
+            })
+                    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.name + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //for import page path difference so another function written
+        //for products
+        $("#product_keyword_import").keyup(function() {
+            $("#product_keyword_import").autocomplete({
+                minLength: 2,
+                source:function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url:"../../autocomplete_product/autocomplete_product_search_result",
+                        data: request,
+                        success: response,
+                        dataType: 'json'
+                    });
+                },
+                focus: function( event, ui ) {
+                    $( "#product_keyword_import" ).val( ui.item.name);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#product_keyword_import").val( ui.item.name);
+                    $("#product_id").val( ui.item.id );
+                    $('#form_products option[value='+ui.item.id+']').attr('selected','selected');
+                    return false;
+                }
+            })
+                    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.name + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //end
+        //for services page specifically for users drop down
+        //for user
+        $("#keyword_user").keyup(function() {
+            $("#keyword_user").autocomplete({
+                minLength: 2,
+                //source: "autocomplete_user_search_result",
+                source:function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url:"../admin/autocomplete_user/autocomplete_user_search_result",
+                        data: request,
+                        success: response,
+                        dataType: 'json'
+                    });
+                },
+                focus: function( event, ui ) {
+                    $("#keyword_user").val( ui.item.email);
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $("#keyword_user").val(ui.item.email);
+                    $("#user_id").val(ui.item.id);
+                    //alert(ui.item.email);
+                    //$('#sel_user option[value='+ui.item.id+']').attr('selected','selected');
+                    //$('#sel_user').text(ui.item.email).attr('selected','selected');
+                    //$('#sel_user').text($('option:selected', ui.item.email));
+                    //.attr('selected','selected');
+                    $("#sel_user option:contains(" + ui.item.email + ")").attr('selected', 'selected');
+                    change_user_detail();
+                    replace_user_data();
+                    return false;
+                }
+            })
+                    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                        .append( "<a>" + item.email + "</a>" )
+                        .appendTo( ul );
+            };
+        });
+        //end
+        function hit_service(){}
+	});	
+	</script>
+
+    </body>
+</html>
