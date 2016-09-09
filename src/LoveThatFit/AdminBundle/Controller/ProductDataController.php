@@ -127,14 +127,13 @@ class ProductDataController extends Controller
         echo "<h1> Multiple Product CSV Read</h1>";
         $row = 0;
         if (($handle = fopen($_FILES['productImport']['tmp_name'], "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $num = count($data);
+            while (($data = fgetcsv($handle, 100000, ",")) !== FALSE) {
                 $raowValue[$row] = $data;
                 $row++;
             }
             fclose($handle);
         }
-        $rows = 0;
+          $rows = 0;
         foreach ($raowValue as $key => $value) {
             $num = count($value);
             for ($c = 0; $c < $num; $c++) {
@@ -146,27 +145,6 @@ class ProductDataController extends Controller
             }
             $rows++;
         }
-        echo "<pre>";
-      //  print_r($raowValue);
-      //  die("sdfoasdof asdsadfsa dfasd fasdf asd fsadf ");
-        echo count($productData['fit_priority']);
-        //die("okay");
-
-        $rows = 0;
-            foreach ($productData['fit_priority'] as $keys => $nextarray){
-                $num = count($value);
-                for ($c = 0; $c < $num; $c++) {
-                    $aaa = $rows . "," . $c;
-                $key1 = array_search($aaa, $productData['fit_priority']);
-                $productSave[$keys] = $raowValue[$rows][$c];
-                }
-                $rows++;
-            }
-
-
-        echo "<pre>";
-        print_r($productData);
-        die("sdfoasdof asdsadfsa dfasd fasdf asd fsadf ");
 
 //        $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
 //            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
@@ -193,9 +171,6 @@ class ProductDataController extends Controller
             }
         }
 
-        echo "<pre>";
-        //print_r($fit_point_formula);
-       // print_r($fit_point);
         $result_array = array_intersect_key($productSave, $fit_point);
         $formula_arry = array_intersect_key($productData, $fit_point_formula);
          echo "<pre>";
@@ -254,15 +229,7 @@ class ProductDataController extends Controller
 //        echo "</table>";
         //////////////////////////////        Size Code ///////////////////////////////////////////////
 
-        echo "<pre>";
-        //echo $count;
-       // $size_selected = array_chunk($result_array,$count);
 
-     //  print_r($size_selected[0]);
-      //  print array_search('50',$size_selected[0]);
-      //  print_r($size);
-        //die();
-      // print_r($result_array);
 
         echo "<br>";
         echo "<p><table>";
@@ -283,15 +250,6 @@ class ProductDataController extends Controller
         }
         $fit_point_value = array_combine($fit_point_sizes, $fit_points);
         // End Combine array value and keys
-        echo "<pre>";
-        // print_r($result_array);
-        //die();
-
-
-            echo "<pre>";
-      //  print_r($size);
-      //  die();
-
 
         foreach ($size as $ke => $selected_size_val) {
             $flag = true;
@@ -431,55 +389,37 @@ class ProductDataController extends Controller
 
             } // end Sizes loop
 
+       // Fill next Array Level
+        function strstr_after($haystack, $needle, $case_insensitive = false) {
+            $strpos = ($case_insensitive) ? 'stripos' : 'strpos';
+            $pos = $strpos($haystack, $needle);
+            if (is_int($pos)) {
+                return substr($haystack, $pos + strlen($needle));
+            }
+            // Most likely false or null
+            return $pos;
+        }
+        $fit_prority    = array();
+        $fabric_content = array();
+        $product_color  = array();
+        foreach ($productSave as $fit => $fitpriority) {
+            // $email = 'hello_stackoverflow';
+            if(strstr_after($fit, 'fitpriority_'))
+                $fit_prority[strstr_after($fit, 'fitpriority_')] = $fitpriority;
+            if(strstr_after($fit, 'fabriccontent_'))
+                $fabric_content[strstr_after($fit, 'fabriccontent_')] = $fitpriority;
+            if(strstr_after($fit, 'productcolor_'))
+                $product_color[strstr_after($fit, 'productcolor_')] = $fitpriority;
 
-         //$data['gender'] = 'f';
-         //$data['clothing_type'] = 'jean';
-         //$data['styling_type'] = 'boot cut';
-         //$data['neck_line'] = 'n/a';
-         //$data['sleeve_styling'] ='n/a';
-         //$data['rise'] = 'low rise';
-         //$data['hem_length'] = 'full length';
-         //$data['stretch_type'] = 'woven w/ stretch fibers';
-         //$data['horizontal_stretch'] = '15%';
-         //$data['vertical_stretch'] = '0%';
-         //$data['fabric_weight'] = 'Heavy weight woven';
-         //$data['structural_detail'] ='';
-         // $data['styling_detail'] ='';
-         //$data['fit_type'] = 'Woven - formal structured fit';
-         //$data['layring'] = '1st layer - worn next to skin';
-        $data['fit_priority'] = Array( 'shoulder_across_back' => '0',
-            'bust' => '0',
-            'waist' => '25',
-            'hip' => '55',
-            'neck' => '0',
-            'thigh' => '20'
-        );
+        }
+        $data['fit_priority']   = $fit_prority;
+        $data['fabric_content'] = $fabric_content;
+        $data['product_color']  = $product_color;
+        $data['sizes']          = $sizess['sizes'];
+        // End fill next Level Array
 
-   $data['size_title_type'] = 'waist';
-    //$data['body_type'] = 'Regular';
-    $data['product_color'] = Array
-    (
-        '0' => 'pacific ocean'
-    );
-
-    $data['fabric_content'] = Array
-    (
-        'silk' => '0.00',
-            'nylon' => '0.00',
-            'lycra/spandex' => '0.00',
-            'wool' => '0.00',
-            'elastane' => '2.00',
-            'other' => '0.00',
-            'cotton' => '98.00',
-            'poly' => '0.00',
-            'rayon/modal' => '0.0',
-            'acrylic' => '0.00',
-            'linen' => '0.00'
-        );
         echo "<pre>";
-        //print_r($data);
-        //$data['style'] = "testing";
-        $data['sizes'] = $sizess['sizes'];
+
         print_r($data);
         echo "</table>";
 

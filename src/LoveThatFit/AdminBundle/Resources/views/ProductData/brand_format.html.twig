@@ -119,7 +119,26 @@
                 var fit_priority_lable_value = $('input:text[name=fit_priority]').val();
                 if (fit_priority_lable_value)
                     $('.fitPrority').append("<div class='row-fluid show-grid'> <div class='span3'>" + fit_priority_lable_value + "</div> <div class='span3'> <input type='text' name=fitpriority_" + fit_priority_lable_value + "> </div></div>");
+                $('input:text[name=fit_priority]').val('');
             });
+
+            // add_fabric_content
+            $(".add_fabric_content").click(function () {
+                var fabric_content_lable_value = $('input:text[name=fabric_content]').val();
+                if (fabric_content_lable_value)
+                    $('.fabriccontent').append("<div class='row-fluid show-grid'> <div class='span3'>" + fabric_content_lable_value + "</div> <div class='span3'> <input type='text' name=fabriccontent_" + fabric_content_lable_value + "> </div></div>");
+                $('input:text[name=fabric_content]').val('');
+            });
+
+            // add_product_color
+            $(".add_product_color").click(function () {
+                var product_color_lable_value = $('input:text[name=product_color]').val();
+                if (product_color_lable_value)
+                    $('.productcolor').append("<div class='row-fluid show-grid'> <div class='span3'>" + product_color_lable_value + "</div> <div class='span3'> <input type='text' name=productcolor_" + product_color_lable_value + "> </div></div>");
+                $('input:text[name=product_color]').val('');
+            });
+
+
 
         })
     </script>
@@ -295,6 +314,8 @@
                                                maxlength="255">
                                     </div>
                                 </div>
+                                {#Add Fit Prority Dynamic Input Box#}
+                                <div class="fitPrority"> </div>
 
                                 <div class="row-fluid show-grid add_size_row">
                                     <div class="span3">Enter Fit Priority Lable</div>
@@ -305,8 +326,31 @@
                                     </div>
                                 </div>
 
-                                 {#Add Fit Prority Dynamic Input Box#}
-                                <div class="fitPrority"> </div>
+                                {#Add Fabric Content Dynamic Input Box#}
+                                <div class="fabriccontent"> </div>
+
+                                <div class="row-fluid show-grid add_size_row">
+                                    <div class="span3">Enter Fabric Content Lable</div>
+                                    <div class="span3">
+                                        <input type="text" name="fabric_content"
+                                               maxlength="255">
+                                        <button type="button" class="add_fabric_content">Add Fabric Content Lable</button>
+                                    </div>
+                                </div>
+
+                                {#Add Product Color Dynamic Input Box#}
+                                <div class="productcolor"> </div>
+
+                                <div class="row-fluid show-grid add_size_row">
+                                    <div class="span3">Enter Product Color Lable</div>
+                                    <div class="span3">
+                                        <input type="text" name="product_color"
+                                               maxlength="255">
+                                        <button type="button" class="add_product_color">Add Product Color Lable</button>
+                                    </div>
+                                </div>
+
+
 
 
                                 <div class="row-fluid show-grid">
