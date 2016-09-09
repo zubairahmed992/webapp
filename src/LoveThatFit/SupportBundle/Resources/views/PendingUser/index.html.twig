@@ -200,11 +200,6 @@
         },
         error: function(){}
       });
-      
-
-      //var url = '{{ path('support_users_task_log_show', {'id': ":id"}) }}';
-      //url     = url.replace(':id', data.userid);
-      //window.top.location = url;
     }
     if (dataAction == 'UnAssignUsers') {
       $('#confirmUnassign').modal('show');
@@ -212,7 +207,9 @@
       $("#delete_value").val(delete_value);
     }
     if (dataAction == 'Detail') {
-      alert("hello");
+      var url = '{{ path('support_pending_user_show', {'archive_id': ":id"}) }}';
+      url     = url.replace(':id', data.id);
+      window.top.location = url;
     }
   });
 
