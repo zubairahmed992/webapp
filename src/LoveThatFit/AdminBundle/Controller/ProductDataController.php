@@ -175,14 +175,14 @@ class ProductDataController extends Controller
         $formula_arry = array_intersect_key($productData, $fit_point_formula);
          echo "<pre>";
         $data=array();
-       print_r($formula_arry);
+      // print_r($formula_arry);
         foreach ($productSave as $key => $val) {
 
             if (array_key_exists($key, $result_array)) {
                 break;
             } else {
                 $data[$key] = $val;
-                echo $key . " : " . $val . "<br>";
+                //echo $key . " : " . $val . "<br>";
             }
         }
 
@@ -425,7 +425,7 @@ class ProductDataController extends Controller
 
 //        $em = $this->getDoctrine()->getManager();
 //        $pcsv = new ProductCSVDataUploader();
-//        $product = $pcsv->fillProduct($data);
+//        $product = $pcsv->fillProduct($data);fabric  content, product color and fit priority
 //        //$data['brand_name'] = 'citizens of humanity';
 //        $data['clothing_type'] =  'jean';
 //        $data['retailer_name'] = 'citizens of humanity';
