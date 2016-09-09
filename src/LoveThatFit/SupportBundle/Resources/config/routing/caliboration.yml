@@ -1,14 +1,44 @@
 
 
 ## Show pending list
+support_pending_user_show:
+    pattern:  /support/pending_user/{archive_id}/show/{mode}
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:show, mode:null }
 
+support_pending_user:
+    pattern:  /support/pending_user/list/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:list,page_number: 1, sort:id }
 
+support_update_status:
+    pattern:  /support/pending_user/{user_id}/update_status
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:updateStatus }
 
+support_discard_status:
+    pattern:  /support/pending_user/{user_id}/delete_status
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:discardStatus }
 
+support_archive_save_marker:
+    pattern:   /support/archive/save_marker
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:archiveSaveMarker}
 
+support_archive_image_update:
+    pattern:   /support/archive/image_update
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:archiveImageUpdate }
 
+support_archive_to_live:
+    pattern:  /support/archive_to_live/{archive_id}
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:archiveToLive }
   
     #   Archive Access ~~~~~~~~~~>*
 
+support_user_profile_archives:
+    pattern:  /support/user_profile_archives/{user_id}/{archive_id}/{mode}
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:profileArchives,archive_id: null, mode: null }
 
+support_user_create_archives_data:
+    pattern:  /support/user_create_archives_data/{user_id}
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:createArchivesData}
 
+support_archive_delete_with_images:
+    pattern:  /support/archive_delete_with_images/{archive_id}
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:deleteArchiveWithImages}
