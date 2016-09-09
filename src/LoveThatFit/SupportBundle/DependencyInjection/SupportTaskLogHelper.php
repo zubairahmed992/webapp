@@ -213,10 +213,33 @@ class SupportTaskLogHelper {
     public function saveAssignPendingUsers($data)
     {
         $entity=$this->fill($this->createNew(), $data);
+        $entity->setCreatedAt(new \DateTime('now'));
         $entity->setSupportAdminUser($data['supportUsers']);
         $entity->setArchive($data['archive']);
 
         $this->save($entity);
+    }
+
+    public function findByAssingnedIdMemberEmail()
+    {
+        return $this->repo->findByAssingnedIdMemberEmail($archive, $member_email);
+    }
+
+    public function UnAssignPendingUsers($data)
+    {
+
+        $decode = $this->repo->findByAssingnedIdMemberEmail(
+                $data['archive'],
+                $data['member_email']
+            );
+        if (!empty($decode)) {
+            $entity = $this->repo->find($decode[0]['id']);
+            if ($entity) {
+                $this->em->remove($entity);
+                $this->em->flush();
+                return "success";
+            }
+        }
     }
     
 }

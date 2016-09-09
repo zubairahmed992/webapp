@@ -183,5 +183,21 @@ class SupportTaskLogRepository extends EntityRepository{
         }
         return $getResult?$preparedQuery->getResult():$preparedQuery; 
     }
+
+    public function findByAssingnedIdMemberEmail($archive, $member_email)
+    {
+        return $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select("t.id")
+                ->from('LoveThatFitSupportBundle:SupportTaskLog', 't')
+                ->where('t.archive=:archive')
+                ->andwhere('t.member_email=:member_email')
+                ->setParameter('archive', $archive)
+                ->setParameter('member_email', $member_email)
+                ->OrderBy("t.id", "DESC")
+                ->setMaxResults("1")
+                ->getQuery()
+                ->getResult();
+    }
     
 }

@@ -67,12 +67,32 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="confirmUnassign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to proceed?</p>
+                    <input type="hidden" name="delete_value" id="delete_value">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-unAssign">UnAssign</a>
+                </div>
+            </div>
+        </div>
+    </div>
 <script type="text/javascript">
   jQuery(document).ready(function() {
 
       if( {{app.session.get('Permissions')['taskLogs']['show']}} == 1 ) {
-        visible           = true;
-        showApproveButton = true;
+        visible            = true;
+        showApproveButton  = true;
+        showUnAssignButton = true;
+        showDetailPageButton = true;
       }
 
       table = $('#example').DataTable({
@@ -109,14 +129,28 @@
               "data"          : null,
               "orderable"     : false,
               "searchable"    : false,
-              "defaultContent": ((typeof showApproveButton != "undefined" && showApproveButton == true) ? AssignButton : ''),
+              "defaultContent": ((typeof showApproveButton != "undefined" && showApproveButton == true) ? AssignButton : '')  + ((typeof showUnAssignButton != "undefined" && showUnAssignButton == true) ? UnAssignButton : '') + ((typeof showDetailPageButton != "undefined" && showDetailPageButton == true) ? DetailPageButton : ''),
           },
           {
               "data"  : "id",
               "searchable" : false,
               "visible" : false,
           },
+          {
+              "data"  : "taskCount",
+              "searchable" : false,
+              "visible" : false,
+          },
         ],
+        "createdRow": function ( row, data, index ) {
+            $('td', row).eq(4).find('.detail').addClass( 'button-margin-left' );
+
+            if ( data["taskCount"] > 0 ) {
+              $('td', row).eq(4).find('.assign_button').css( 'display', 'none' );
+            } else if ( data["taskCount"] == 0 ) {
+              $('td', row).eq(4).find('.unassign_button').css( 'display', 'none' );
+            }
+        },
       });
       
       $.fn.dataTableExt.sErrMode = 'throw';
@@ -145,18 +179,24 @@
     var dataAction = $(this).attr('data-action');
     var data = table.row( $(this).parents('tr') ).data();
     if (dataAction == 'AssignUsers') {
+      //clear last assign values
+      $('#member_email').val();
+      $('#archive_id').val();
+      $('#archive_id').val();
+      $('#supportSelect').find('option').remove();
+
       $.ajax({
         url:  '{{ path("support_pending_users_assign") }}',
         type: 'POST',
         success: function(result){
           $('#member_email').val(data['email']);
           $('#archive_id').val(data['id']);
-          $.each(result, function(key, value) {
-          $('#supportSelect')
-               .append($("<option></option>")
-                          .attr("value", value['id']+"|"+value['user_name'])
-                          .text(value['user_name'])); 
-          });
+          
+          var option = '';
+          for (var i=0;i<result.length;i++){
+             option += '<option value="'+ result[i]['id']+"|"+result[i]['user_name'] + '">' + result[i]['user_name'] + '</option>';
+          }
+          $('#supportSelect').append(option);
           $('#supportUsers').modal('show');
         },
         error: function(){}
@@ -166,6 +206,14 @@
       //var url = '{{ path('support_users_task_log_show', {'id': ":id"}) }}';
       //url     = url.replace(':id', data.userid);
       //window.top.location = url;
+    }
+    if (dataAction == 'UnAssignUsers') {
+      $('#confirmUnassign').modal('show');
+      var delete_value = data['email'] +"|"+ data['id'];
+      $("#delete_value").val(delete_value);
+    }
+    if (dataAction == 'Detail') {
+      alert("hello");
     }
   });
 
@@ -189,12 +237,30 @@
         support_user_name : support_user_name,
       },
       success: function(result){
-        
+        $('#example_filter input').val("");
+        table.search( "" ).draw();
       },
       error: function(){}
     });
-  
+  });
 
+  $('.btn-unAssign').click(function (){
+    $('#confirmUnassign').modal('hide');
+    var values = $("#delete_value").val();
+    var arr = values.split('|');
+    $.ajax({
+      url:  '{{ path("support_pending_users_task_logs_remove") }}',
+      type: 'POST',
+      data: {
+        member_email: arr[0],
+        archive     : arr[1],
+      },
+      success: function(result){
+        $('#example_filter input').val("");
+        table.search( "" ).draw();
+      },
+      error: function(){}
+    });
   });
 
 </script>

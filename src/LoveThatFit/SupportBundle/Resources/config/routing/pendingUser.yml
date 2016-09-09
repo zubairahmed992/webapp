@@ -13,3 +13,7 @@ support_pending_users_assign:
 support_pending_users_task_logs_add:
     pattern:  /support/pendingUsers/support_users/add
     defaults: { _controller: LoveThatFitSupportBundle:User:addPendingUsersTaskLog}
+
+support_pending_users_task_logs_remove:
+    pattern:  /support/pendingUsers/support_users/remove
+    defaults: { _controller: LoveThatFitSupportBundle:User:removePendingUsersTaskLog}

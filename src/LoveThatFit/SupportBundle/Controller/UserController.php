@@ -45,7 +45,7 @@ class UserController extends Controller {
         $requestData            = $this->get('request')->request->all();
         $requestData['user_id'] = $this->getUser()->getId();
         $output                 = $this->get('user.helper.userarchives')->search($requestData);
-        
+            
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
 
@@ -95,5 +95,13 @@ class UserController extends Controller {
 
         $result = $this->get('support.helper.supporttasklog')->saveAssignPendingUsers($decoded);
         return new Response(json_encode($result), 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function removePendingUsersTaskLogAction(Request $request)
+    {
+        $decoded = $this->get('request')->request->all();
+        $result = $this->get('support.helper.supporttasklog')->UnAssignPendingUsers($decoded);
+        
+        return new Response(json_encode($result), 200, ['Content-Type' => 'application/json']);   
     }
 }

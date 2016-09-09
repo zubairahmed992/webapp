@@ -425,11 +425,12 @@ class UserArchivesHelper {
         $a = 1;
         foreach ($finalData as $fData) {
             $output['data'][] = [ 
-                'Sno'       => $a, 
+                'Sno'       => $a,
                 'id'        => $fData["id"],
-                'email'     => $fData["email"], 
+                'email'     => $fData["email"],
                 'status'    => "Pending",
-                'createdAt' => ($fData["created_at"]->format('m-d-Y'))
+                'createdAt' => ($fData["created_at"]->format('m-d-Y')),
+                'taskCount' => $fData["taskCount"],
             ];
 
             $a++;
