@@ -2063,13 +2063,14 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key = true, $device_type = null, $base_path = null, $device_config = null) {
         if ($key) {
             #$device_specs=$this->getDeviceSpecs($device_type);
+            $resize_ratio_jt = is_array($device_config) && array_key_exists('resize_ratio_jt', $device_config) ? $device_config['resize_ratio_jt'] : 0;
             $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 0;
             $iphone_resize_ratio = is_array($device_config) && array_key_exists('resize_ratio', $device_config) ? $device_config['resize_ratio'] : 0;
             $neck_exclusion_px = is_array($device_config) && array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 0;
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->calculatePlacementPositions($device_conversion_ratio);
             $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
-            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * 1.081)-2.048867;            
+            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt)-2.048867;            
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $hip_height = $this->measurement->bottom_placement - 94;
             $this->measurement->bottom_placement = ($hip_height  - ($hip_height * 0.08)) + 6;
