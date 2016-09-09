@@ -213,6 +213,7 @@ class SupportTaskLogHelper {
     public function saveAssignPendingUsers($data)
     {
         $entity=$this->fill($this->createNew(), $data);
+        $entity->setLogType("calibration");
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setSupportAdminUser($data['supportUsers']);
         $entity->setArchive($data['archive']);
@@ -220,14 +221,13 @@ class SupportTaskLogHelper {
         $this->save($entity);
     }
 
-    public function findByAssingnedIdMemberEmail()
+    public function findByAssingnedIdMemberEmail($archive, $member_email)
     {
         return $this->repo->findByAssingnedIdMemberEmail($archive, $member_email);
     }
 
     public function UnAssignPendingUsers($data)
     {
-
         $decode = $this->repo->findByAssingnedIdMemberEmail(
                 $data['archive'],
                 $data['member_email']
@@ -241,5 +241,34 @@ class SupportTaskLogHelper {
             }
         }
     }
+
+    public function findByAssingnedIdSupportIDMemberEmail(
+        $archive,
+        $support_admin_user,
+        $member_email
+    ) {
+        return $this->repo->findByAssingnedIdSupportIDMemberEmail(
+            $archive,
+            $support_admin_user,
+            $member_email
+        );
+    }
     
+    public function update($data)
+    {
+        $end_time   = date("Y-m-d H:i:s");
+        $start_time = date("Y-m-d H:i:s", 
+            strtotime($end_time) - $data['duration']
+        );
+
+        $entity = $this->repo->find($data['id']);
+        $entity->setSupportUserName($data['support_user_name']);
+        $entity->setDuration($data['duration']);
+        $entity->setLogType($data['log_type']);
+        $entity->setStartTime(new \DateTime($start_time));
+        $entity->setEndTime(new \DateTime($end_time));
+        
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
 }

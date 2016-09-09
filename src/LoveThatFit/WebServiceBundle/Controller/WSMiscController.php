@@ -85,8 +85,16 @@ class WSMiscController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $decoded['supportUsers'] = $this->get('admin.helper.support')->findOneByUserName($decoded["support_user_name"]);
         $decoded['archive'] = $this->get('user.helper.userarchives')->find($decoded["archive"]);
-
-        $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
+        $getID   = $this->get('support.helper.supporttasklog')->findByAssingnedIdSupportIDMemberEmail(
+                $decoded['archive'],
+                $decoded['supportUsers'],
+                $decoded['member_email']
+            );
+        if (!empty($getID)) {
+            $decoded['id'] = $getID[0]['id'];
+        }
+        
+        $this->get('support.helper.supporttasklog')->update($decoded);
         return new Response("1");
 	}
 
