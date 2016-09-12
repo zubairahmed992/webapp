@@ -118,9 +118,9 @@ class SupportTaskLogHelper {
                 'Sno'       => $a,
                 'user_name' => $fData["user_name"],
                 'log_type'  => $fData["log_type"],
-                'fast'      => $fData["fast"],
-                'slow'      => $fData["slow"],
-                'avrg'      => number_format($fData["avrg"], 2, '.', ','),
+                'slow'      => gmdate("i:s", $fData["slow"]),
+                'fast'      => gmdate("i:s", $fData["fast"]),
+                'avrg'      => gmdate("i:s", number_format($fData["avrg"], 2, '.', ',')),
                 'total'     => $fData["total"],
                 'userid'    => $fData["id"]
             ];
@@ -135,13 +135,12 @@ class SupportTaskLogHelper {
     {
         $data = $this->repo->findSupprtUser($id);
         if (!empty($data[0])) {
-            $above_avg = $this->repo->findAboveAverage($id, $data[0]['avrg'], $data[0]['fast']);
+            $above_avg = $this->repo->findAboveAverage($id, $data[0]['avrg'], $data[0]['slow']);
             $data[0]['above_avg'] = isset($above_avg[0]['above_avg']) ? $above_avg[0]['above_avg'] : 0;
 
-            $below_avg = $this->repo->findBelowAverage($id, $data[0]['avrg'], $data[0]['slow']);
+            $below_avg = $this->repo->findBelowAverage($id, $data[0]['avrg'], $data[0]['fast']);
             $data[0]['below_avg'] = isset($below_avg[0]['below_avg']) ? $below_avg[0]['below_avg'] : 0;
         }
-        
         return $data;
     }
 

@@ -20,15 +20,15 @@
           <td class="td-orange">{{supportData[0]['total']}}</td>
         </tr>
         <tr>
-          <td class="td-green">Fastest Time (Seconds)</td>
+          <td class="td-green">Fastest Time (Min:Sec)</td>
           <td class="td-green val-fast">{{supportData[0]['fast']}}</td>
         </tr>
         <tr>
-          <td class="td-red">Slowest Time (Seconds)</td>
+          <td class="td-red">Slowest Time (Min:Sec)</td>
           <td class="td-red val-slow">{{supportData[0]['slow']}}</td>
         </tr>
         <tr>
-          <td class="td-blue">Average (Seconds)</td>
+          <td class="td-blue">Average (Min:Sec)</td>
           <td class="td-blue val-avg">{{supportData[0]['avrg']|number_format(2, '.', ',')}}</td>
         </tr>
         <tr>
@@ -85,8 +85,8 @@
 <script type="text/javascript">
   jQuery(document).ready(function() {
 
-    var max = $(".val-fast").text();
-    var min = $(".val-slow").text();
+    var min = $(".val-fast").text();
+    var max = $(".val-slow").text();
     var avg = $(".val-avg").text();
 
     var table = $('#example').DataTable({
@@ -141,11 +141,11 @@
         "createdRow": function ( row, data, index ) {
             if ( data['duration'] > avg && data['duration'] < max ) {
                 $('td', row).addClass('td-green-light');
-            } else if ( data['duration'] == max ) {
+            } else if ( data['duration'] == min ) {
                 $('td', row).addClass('td-green');
             } else if ( data['duration'] < avg && data['duration'] > min ) {
                 $('td', row).addClass('td-red-light');
-            } else if ( data['duration'] == min ) {
+            } else if ( data['duration'] == max ) {
                 $('td', row).addClass('td-red');
             }
         }

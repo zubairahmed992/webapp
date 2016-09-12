@@ -28,8 +28,8 @@ class SupportTaskLogRepository extends EntityRepository{
                 u.id,
                 u.user_name,
                 s.log_type,
-                MAX(s.duration) AS fast,
-                MIN(s.duration) AS slow,
+                MAX(s.duration) AS slow,
+                MIN(s.duration) AS fast,
                 AVG(s.duration) AS avrg,
                 COUNT(s.id) AS total'
             )
@@ -70,8 +70,8 @@ class SupportTaskLogRepository extends EntityRepository{
                 ->select('
                     u.id,
                     u.user_name,
-                    MAX(s.duration) AS fast,
-                    MIN(s.duration) AS slow,
+                    MAX(s.duration) AS slow,
+                    MIN(s.duration) AS fast,
                     AVG(s.duration) AS avrg,
                     COUNT(s.id) as total'
                 )

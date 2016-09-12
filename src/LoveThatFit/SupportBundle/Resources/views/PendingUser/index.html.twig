@@ -96,8 +96,8 @@
       }
 
       table = $('#example').DataTable({
-       "processing": true, 
-        "serverSide": true, 
+        "processing": true, 
+        "serverSide": true,
         "ajax": {
             "url": "{{ path('support_pending_users_paginate') }}",
             "type": "POST"
