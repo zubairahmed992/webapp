@@ -147,7 +147,7 @@
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
-<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas>cc</div>
+<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
 {% endif %}
 {% if (device_type == "iphone6")%}
 <div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas>
@@ -168,14 +168,14 @@
 
 
     {%if (edit_type=='edit' or ( mode is defined and mode) )%}
-    <!--<div class="row">
-        <h5>Measurement Comparision</h5>
+    <div class="row">
+       <!-- <h5>Measurement Comparision</h5>-->
         <div class="span3">
 
 
 
-            <div class="nav_btns">
-
+            <div class="nav_btns" style="background:none!important; padding:0px!important;">
+<!--
 <table cellpadding="0" cellspacing="0" border="1" width="100%">
     <tr>
         <td></td>
@@ -218,7 +218,7 @@
         <td>{{ entity.measurement.thigh }}</td>
         <td></td>
     </tr>
-</table>
+</table>-->
 
                 <div>
                     <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
@@ -232,7 +232,7 @@
 
             </div>
         </div>
-        </div>-->
+        </div>
     {%endif%}
         </div>
     </div>
@@ -314,9 +314,8 @@ var path = new CompoundPath({
 
    //alert($docu);
    var $height = $(window).height();
-    
-   $(".container_pending .span3").css({"height":$height+"px"});
 
+   $(".container_pending .span3").css({"height":$height+"px"});
    var $heightt = $(document).height();
    var $heightt = $heightt - 178;
    $(".maindiv").css({"height":$heightt+"px"});
