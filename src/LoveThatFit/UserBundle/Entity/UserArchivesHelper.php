@@ -429,16 +429,13 @@ class UserArchivesHelper {
                 'id'                => $fData["id"],
                 'email'             => $fData["email"],
                 'status'            => "Pending",
-                'createdAt'      => $fData["created_at"]->format('m-d-Y h:i:s'),
+                'createdAt'         => $fData["created_at"]->format('m-d-Y h:i:s'),
                 'support_user_name' => $fData["support_user_name"],
                 'taskCount'         => $fData["taskCount"],
             ];
 
             $a++;
         }
-        echo "<pre>";
-        print_r($output);
-        die();
         return $output;
     }
 
