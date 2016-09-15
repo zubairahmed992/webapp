@@ -103,7 +103,7 @@ class SupportTaskLogHelper {
         ];
 
         $finalData = $this->repo->search($filters, $start, $length, $order);
-        
+
         $output = array( 
             "draw"            => $draw,
             'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)), 
@@ -118,9 +118,9 @@ class SupportTaskLogHelper {
                 'Sno'       => $a,
                 'user_name' => $fData["user_name"],
                 'log_type'  => $fData["log_type"],
-                'slow'      => gmdate("H:i:s", $fData["slow"]),
-                'fast'      => gmdate("H:i:s", $fData["fast"]),
-                'avrg'      => gmdate("H:i:s", number_format($fData["avrg"], 2, '.', ',')),
+                'slow'      => $fData["slow"],
+                'fast'      => $fData["fast"],
+                'avrg'      => number_format($fData["avrg"], 2, '.', ','),
                 'total'     => $fData["total"],
                 'userid'    => $fData["id"]
             ];
@@ -131,14 +131,14 @@ class SupportTaskLogHelper {
         return $output;
     }
 
-    public function findSupprtUser($id)
+    public function findSupprtUserByID($id)
     {
-        $data = $this->repo->findSupprtUser($id);
+        $data = $this->repo->findSupprtUserByID($id);
         if (!empty($data[0])) {
-            $above_avg = $this->repo->findAboveAverage($id, $data[0]['avrg'], $data[0]['slow']);
+            $above_avg = $this->repo->findAboveAverageByID($id, $data[0]['avrg'], $data[0]['slow']);
             $data[0]['above_avg'] = isset($above_avg[0]['above_avg']) ? $above_avg[0]['above_avg'] : 0;
 
-            $below_avg = $this->repo->findBelowAverage($id, $data[0]['avrg'], $data[0]['fast']);
+            $below_avg = $this->repo->findBelowAverageByID($id, $data[0]['avrg'], $data[0]['fast']);
             $data[0]['below_avg'] = isset($below_avg[0]['below_avg']) ? $below_avg[0]['below_avg'] : 0;
         }
         return $data;
@@ -270,4 +270,10 @@ class SupportTaskLogHelper {
         $this->em->persist($entity);
         $this->em->flush();
     }
+
+    public function findSupprtUsers()
+    {
+        return $this->repo->findSupprtUsers();
+    }
+
 }

@@ -9,7 +9,28 @@
     <div class="clearfix"></div>
       <h1 style="float:left;">Task Logs</h1>
       <div class="clearfix"></div>
+      <div class="btn_wrapper2">
+        <table class="task_table">
+        <tr>
+          <td class="td-orange">Total Tasks</td>
+          <td class="td-orange">{{supportData[0]['total']}}</td>
+        </tr>
+        <tr>
+          <td class="td-green">Fastest Time (hh:mm:ss)</td>
+          <td class="td-green val-fast">{{supportData[0]['fast']}}</td>
+        </tr>
+        <tr>
+          <td class="td-red">Slowest Time (hh:mm:ss)</td>
+          <td class="td-red val-slow">{{supportData[0]['slow']}}</td>
+        </tr>
+        <tr>
+          <td class="td-blue">Average (hh:mm:ss)</td>
+          <td class="td-blue val-avg">{{supportData[0]['avrg']|number_format(2, '.', ',')}}</td>
+        </tr>
+        </table>
+      </div>
     </div>
+    <div class="clearfix"></div>
     <div class="bs-docs-grid">
       <table id="example" class="display" cellspacing="0" width="100%">
           <thead>
@@ -37,6 +58,10 @@
         visible          = true;
         showDetailButton = true;
     }
+
+    var min = $(".val-fast").text();
+    var max = $(".val-slow").text();
+    var avg = $(".val-avg").text();
 
     var table = $('#example').DataTable({
        "processing": true, 
@@ -94,7 +119,30 @@
               "data"  : "userid",
               "visible": false
           },
-        ]
+        ],
+        "createdRow": function ( row, data, index ) {
+            if ( data['fast'] == min ) {
+                $('td', row).addClass('td-green');
+            } else if ( data['slow'] == max ) {
+                $('td', row).addClass('td-red');
+            } else if ( data['avrg'] == avg ) {
+                $('td', row).addClass('td-blue');
+            }
+            
+            fast = formatSecondsAsTime(data['fast'], 'hh:mm:ss');
+            $('td', row).eq(4).html(fast);
+
+            slow = formatSecondsAsTime(data['slow'], 'hh:mm:ss');
+            $('td', row).eq(5).html(slow);
+
+            avrg = formatSecondsAsTime(data['avrg'], 'hh:mm:ss');
+            $('td', row).eq(6).html(avrg);
+        },
+        "fnInitComplete": function(oSettings, json) {
+          $(".val-avg").text(formatSecondsAsTime(avg, 'hh:mm:ss'));
+          $(".val-fast").text(formatSecondsAsTime(min, 'hh:mm:ss'));
+          $(".val-slow").text(formatSecondsAsTime(max, 'hh:mm:ss'));
+        }
     });
 
     jQuery('#example tbody').on( 'click', 'button, a, img', function () {

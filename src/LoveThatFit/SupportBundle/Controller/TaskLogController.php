@@ -12,7 +12,18 @@ class TaskLogController extends Controller {
 
 	public function indexAction()
     {
-        return $this->render('LoveThatFitSupportBundle:TaskLog:index.html.twig',array());
+        $entity = $this->get('support.helper.supporttasklog')->findSupprtUsers();
+        if(!$entity){        
+            $this->get('session')->setFlash('warning', 'No User not found!');
+            return $this->redirect($this->generateUrl('support_users_task_log'));
+            exit;
+        }
+
+        return $this->render('LoveThatFitSupportBundle:TaskLog:index.html.twig',
+            array(
+                "supportData"  => $entity,
+            )
+        );
     }
 
     public function paginateAction(Request $request)
@@ -25,7 +36,7 @@ class TaskLogController extends Controller {
 
     public function showAction($id)
     {
-        $entity       = $this->get('support.helper.supporttasklog')->findSupprtUser($id);
+        $entity       = $this->get('support.helper.supporttasklog')->findSupprtUserByID($id);
         $supportUsers = $this->get('admin.helper.support')->findAll();
 
         if(!$entity){        

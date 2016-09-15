@@ -429,13 +429,16 @@ class UserArchivesHelper {
                 'id'                => $fData["id"],
                 'email'             => $fData["email"],
                 'status'            => "Pending",
-                'createdAt'         => $fData["created_at"]->format('m-d-Y h:i:s'),
+                'createdAt'         => ($fData["created_at"] == "") ? "00:00:00" : date_diff(
+                    new \DateTime(), $fData["created_at"]
+                )->format('%a days, %H:%i:%s'),
                 'support_user_name' => $fData["support_user_name"],
                 'taskCount'         => $fData["taskCount"],
             ];
 
             $a++;
         }
+
         return $output;
     }
 

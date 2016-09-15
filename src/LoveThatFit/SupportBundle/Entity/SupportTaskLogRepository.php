@@ -63,7 +63,7 @@ class SupportTaskLogRepository extends EntityRepository{
         return $getResult?$preparedQuery->getResult():$preparedQuery; 
     }
 
-    public function findSupprtUser($id)
+    public function findSupprtUserByID($id)
     {
         return  $this->getEntityManager()
                 ->createQueryBuilder()
@@ -88,7 +88,7 @@ class SupportTaskLogRepository extends EntityRepository{
                 ->getResult();
     }
 
-    public function findAboveAverage($id, $avgVal, $maxVal)
+    public function findAboveAverageByID($id, $avgVal, $maxVal)
     {
         return $this->getEntityManager()
                 ->createQueryBuilder()
@@ -110,7 +110,7 @@ class SupportTaskLogRepository extends EntityRepository{
                 ->getResult();
     }
 
-    public function findBelowAverage($id, $avgVal, $minVal)
+    public function findBelowAverageByID($id, $avgVal, $minVal)
     {
         return $this->getEntityManager()
                 ->createQueryBuilder()
@@ -219,6 +219,21 @@ class SupportTaskLogRepository extends EntityRepository{
                 ->setParameter('log_type', 'calibration')
                 ->OrderBy("t.id", "DESC")
                 ->setMaxResults("1")
+                ->getQuery()
+                ->getResult();
+    }
+
+    public function findSupprtUsers()
+    {
+        return  $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select('
+                    MAX(s.duration) AS slow,
+                    MIN(s.duration) AS fast,
+                    AVG(s.duration) AS avrg,
+                    COUNT(s.id) as total'
+                )
+                ->from('LoveThatFitSupportBundle:SupportTaskLog', 's')
                 ->getQuery()
                 ->getResult();
     }
