@@ -421,20 +421,24 @@ class UserArchivesHelper {
             'recordsTotal'    => count($this->repo->search(array(), 0, false, $order, $user_id)),
             'data'            => array()
         );
-
+        
         $a = 1;
         foreach ($finalData as $fData) {
             $output['data'][] = [ 
-                'Sno'       => $a,
-                'id'        => $fData["id"],
-                'email'     => $fData["email"],
-                'status'    => "Pending",
-                'createdAt' => ($fData["created_at"]->format('m-d-Y')),
-                'taskCount' => $fData["taskCount"],
+                'Sno'               => $a,
+                'id'                => $fData["id"],
+                'email'             => $fData["email"],
+                'status'            => "Pending",
+                'createdAt'      => $fData["created_at"]->format('m-d-Y h:i:s'),
+                'support_user_name' => $fData["support_user_name"],
+                'taskCount'         => $fData["taskCount"],
             ];
 
             $a++;
         }
+        echo "<pre>";
+        print_r($output);
+        die();
         return $output;
     }
 

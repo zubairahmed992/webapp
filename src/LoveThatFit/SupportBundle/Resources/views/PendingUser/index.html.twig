@@ -37,7 +37,8 @@
           <th>S.No</th>
           <th>Email</th>
           <th>Status</th>
-          <th>Created At</th>
+          <th>Created</th>
+          <th>Assign To</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -124,6 +125,10 @@
               "searchable": false
           },
           {
+              "data"  : "support_user_name",
+              "searchable": false
+          },
+          {
               "title"         : "Actions",
               "targets"       : -1,
               "data"          : null,
@@ -143,12 +148,15 @@
           },
         ],
         "createdRow": function ( row, data, index ) {
-            $('td', row).eq(4).find('.detail').addClass( 'button-margin-left' );
-
+            $('td', row).eq(5).find('.detail').addClass( 'button-margin-left' );
             if ( data["taskCount"] > 0 ) {
-              $('td', row).eq(4).find('.assign_button').css( 'display', 'none' );
+              $('td', row).eq(5).find('.assign_button').css( 'display', 'none' );
             } else if ( data["taskCount"] == 0 ) {
-              $('td', row).eq(4).find('.unassign_button').css( 'display', 'none' );
+              $('td', row).eq(5).find('.unassign_button').css( 'display', 'none' );
+            }
+            
+            if (data["support_user_name"] == null ) {
+              $('td', row).eq(4).html('Not Assigned').addClass('color-red');
             }
         },
       });

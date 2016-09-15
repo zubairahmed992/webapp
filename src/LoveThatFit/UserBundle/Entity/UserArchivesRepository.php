@@ -91,7 +91,8 @@ class UserArchivesRepository extends EntityRepository
                 u.email,
                 ua.created_at,
                 (select COUNT(t.id) from LoveThatFitSupportBundle:SupportTaskLog t 
-                where t.archive = ua.id) as taskCount'
+                where t.archive = ua.id) as taskCount,
+                tl.support_user_name'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->leftJoin(
@@ -99,6 +100,12 @@ class UserArchivesRepository extends EntityRepository
             		"u",
             		"WITH",
             		"u.id = ua.user"
+            	)
+            ->leftJoin(
+            		"LoveThatFitSupportBundle:SupportTaskLog",
+            		"tl",
+            		"WITH",
+            		"tl.archive = ua.id"
             	)
             ->andWhere('ua.status = :pending');
         if ($search) {

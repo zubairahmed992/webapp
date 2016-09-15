@@ -118,9 +118,9 @@ class SupportTaskLogHelper {
                 'Sno'       => $a,
                 'user_name' => $fData["user_name"],
                 'log_type'  => $fData["log_type"],
-                'slow'      => gmdate("i:s", $fData["slow"]),
-                'fast'      => gmdate("i:s", $fData["fast"]),
-                'avrg'      => gmdate("i:s", number_format($fData["avrg"], 2, '.', ',')),
+                'slow'      => gmdate("H:i:s", $fData["slow"]),
+                'fast'      => gmdate("H:i:s", $fData["fast"]),
+                'avrg'      => gmdate("H:i:s", number_format($fData["avrg"], 2, '.', ',')),
                 'total'     => $fData["total"],
                 'userid'    => $fData["id"]
             ];
@@ -197,9 +197,9 @@ class SupportTaskLogHelper {
                 'Sno'          => $a,
                 'log_type'     => $fData["log_type"],
                 'member_email' => $fData["member_email"],
-                'date'         => ($fData["start_time"]->format('m-d-Y')),
-                'start_time'   => ($fData["start_time"]->format('h:i:s')),
-                'end_time'     => ($fData["end_time"]->format('h:i:s')),
+                'date'         => ($fData["start_time"] == "") ? "00-00-0000" : ($fData["start_time"]->format('m-d-Y')),
+                'start_time'   => ($fData["start_time"] == "") ? "00:00:00" : $fData["start_time"]->format('h:i:s') ,
+                'end_time'     => ($fData["end_time"] == "") ? "00:00:00" : $fData["end_time"]->format('h:i:s') ,
                 'duration'     => $fData["duration"]
             ];
 
