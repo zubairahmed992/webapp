@@ -4,7 +4,6 @@
 {% endblock %}
 
 
-
 {% block body %}
 <div class="p_listing">
   <h1>Pending Users</h1>
@@ -156,15 +155,15 @@
           },
         ],
         "createdRow": function ( row, data, index ) {
-            $('td', row).eq(5).find('.detail').addClass( 'button-margin-left' );
+            $('td', row).eq(6).find('.detail').addClass( 'button-margin-left' );
             if ( data["taskCount"] > 0 ) {
-              $('td', row).eq(5).find('.assign_button').css( 'display', 'none' );
+              $('td', row).eq(6).find('.assign_button').css( 'display', 'none' );
             } else if ( data["taskCount"] == 0 ) {
-              $('td', row).eq(5).find('.unassign_button').css( 'display', 'none' );
+              $('td', row).eq(6).find('.unassign_button').css( 'display', 'none' );
             }
             
             if (data["support_user_name"] == null ) {
-              $('td', row).eq(4).html('Not Assigned').addClass('color-red');
+              $('td', row).eq(5).html('Not Assigned').addClass('color-red');
             }
         },
       });
