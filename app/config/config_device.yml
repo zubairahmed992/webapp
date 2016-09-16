@@ -58,7 +58,7 @@ device_config:
     neck_exlusion_px: 238
     screen_available_height_px: 0
     total_screen_height_px: 667
-    resize_ratio_jt: 1.08
+    resize_ratio_jt: 1.06
     
   iphone6s:
     svg_mask_x: 66
