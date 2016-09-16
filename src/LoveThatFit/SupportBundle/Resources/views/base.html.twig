@@ -55,7 +55,11 @@
               <li><a href="{{ path('support_cart_index') }}">Shopping Cart</a></li>
             {% endif %}
             {% if app.session.get('Permissions')['taskLogs']['view'] == 1 %}
-              <li><a href="{{ path('support_users_task_log') }}">Task Log</a></li>
+                {% if app.session.get('Permissions')['taskLogs']['all'] == 1 %}
+                    <li><a href="{{ path('support_users_task_log') }}">Task Log</a></li>
+                {% elseif  app.session.get('Permissions')['taskLogs']['all'] == 0 %}
+                    <li><a href="{{ path('support_users_task_log_show', {'id': app.user.id}) }}">Task Log</a></li>
+                {% endif %}
             {% endif %}
             <li><a href="{{ path('support_logout') }}">Logout</a></li>
             </ul>

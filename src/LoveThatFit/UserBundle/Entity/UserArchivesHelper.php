@@ -412,13 +412,37 @@ class UserArchivesHelper {
             'query' => @$search['value']
         ];
         $user_id = $data['user_id'];
+        $all     = $data['all'];
 
-        $finalData = $this->repo->search($filters, $start, $length, $order, $user_id);
+        $finalData = $this->repo->search(
+            $filters,
+            $start,
+            $length,
+            $order,
+            $user_id,
+            $all
+        );
         
         $output = array( 
             "draw"            => $draw,
-            'recordsFiltered' => count($this->repo->search($filters, 0, false, $order, $user_id)), 
-            'recordsTotal'    => count($this->repo->search(array(), 0, false, $order, $user_id)),
+            'recordsFiltered' => count($this->repo->search(
+                    $filters,
+                    0,
+                    false,
+                    $order,
+                    $user_id,
+                    $all
+                )
+            ), 
+            'recordsTotal'    => count($this->repo->search(
+                    array(),
+                    0,
+                    false,
+                    $order,
+                    $user_id,
+                    $all
+                )
+            ),
             'data'            => array()
         );
         

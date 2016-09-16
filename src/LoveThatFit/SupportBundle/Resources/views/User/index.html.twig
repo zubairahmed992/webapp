@@ -42,68 +42,74 @@
 <script type="text/javascript">
   jQuery(document).ready(function() {
 
+    if( {{app.session.get('Permissions')['users']['duplicate']}} == 1 ) {
+      visible           = true;
+      showDuplicateUser = true;
+    }
 
-        visible          = true;
-        showDuplicateUser = true;
-        ShowDetailPageButton = true;
-
-        var table = $('#example').DataTable({
-       "processing": true, 
-        "serverSide": true, 
-        "ajax": {
-            "url": "{{ path('support_users_paginate') }}",
-            "type": "POST"
+    if( {{app.session.get('Permissions')['users']['detail']}} == 1 ) {
+      visible              = true;
+      ShowDetailPageButton = true;
+    }
+    
+    var table = $('#example').DataTable({
+      "processing": true, 
+      "serverSide": true, 
+      "ajax": {
+          "url": "{{ path('support_users_paginate') }}",
+          "type": "POST"
+      },
+      "sAjaxDataProp": "data", 
+      "pageLength": 10,
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "order": [[ 0, "desc" ]],
+      "columns": [
+        {
+            "data"  : "Sno",
+            "searchable" : false,
         },
-        "sAjaxDataProp": "data", 
-        "pageLength": 10,
-        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-        "order": [[ 0, "desc" ]],
-        "columns": [
-          {
-              "data"  : "Sno",
-              "searchable" : false,
-          },
-          {
-              "data"  : "full_name",
-          },
-          {
-              "data"  : "email",
-              "orderable" : false
-          },
-          {
-              "data"  : "gender",
-              "orderable" : false
-          },
-          {
-              "data"  : "createdAt",
-              "searchable": false
-          },
-          {
-              "title"         : "Actions",
-              "targets"       : -1,
-              "data"          : null,
-              "orderable"     : false,
-              "searchable"    : false,
-              "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
-            + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
-          },
-          {
-              "data"  : "original_user_id",
-              "searchable": false,
-              "visible": false
-          },
-          {
-              "data"  : "id",
-              "visible": false
+        {
+            "data"  : "full_name",
+        },
+        {
+            "data"  : "email",
+            "orderable" : false
+        },
+        {
+            "data"  : "gender",
+            "orderable" : false
+        },
+        {
+            "data"  : "createdAt",
+            "searchable": false
+        },
+        {
+            "title"         : "Actions",
+            "targets"       : -1,
+            "data"          : null,
+            "orderable"     : false,
+            "searchable"    : false,
+            "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
+          + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
+        },
+        {
+            "data"  : "original_user_id",
+            "searchable": false,
+            "visible": false
+        },
+        {
+            "data"  : "id",
+            "visible": false
+        }
+      ],
+      "createdRow": function ( row, data, index ) {
+          if ( data["original_user_id"] != null ) {
+            $('td', row).addClass('duplicate_user_class');
           }
-        ],
-        "createdRow": function ( row, data, index ) {
-            if ( data["original_user_id"] != null ) {
-              $('td', row).addClass('duplicate_user_class');
-            }
-        },
+      },
     });
-      jQuery('#example tbody').on( 'click', 'button, a, img', function () {
+  
+    jQuery('#example tbody').on( 'click', 'button, a, img', function () {
       var dataAction = $(this).attr('data-action');
       var data = table.row( $(this).parents('tr') ).data();
       if (dataAction == 'DuplicateUser') {
@@ -117,6 +123,6 @@
           window.top.location = url;
       }
     });
-  });
+});
 </script>
 {% endblock %}

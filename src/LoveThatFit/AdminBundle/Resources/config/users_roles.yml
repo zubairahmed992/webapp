@@ -1,27 +1,81 @@
 users_roles:
-    
+
   Developers:
     users:
       view: 1
+      duplicate: 1
+      detail: 1
     pendingUsers:
       view: 1
+      assign: 1
+      unAssign: 1
+      detail: 1
+      all: 1
     evaluationSheet:
       view: 1
     shoppingCart:
       view: 1
     taskLogs:
       view: 1
-      show: 1
+      detail: 1
+      all: 1
 
   Calibration:
     users:
       view: 1
+      duplicate: 1
+      detail: 1
     pendingUsers:
       view: 1
+      assign: 0
+      unAssign: 0
+      detail: 1
+      all: 0
     evaluationSheet:
       view: 0
     shoppingCart:
       view: 0
     taskLogs:
       view: 1
-      show: 1
+      detail: 1
+      all: 0
+  
+  Assignee:
+    users:
+      view: 1
+      duplicate: 1
+      detail: 1
+    pendingUsers:
+      view: 1
+      assign: 1
+      unAssign: 1
+      detail: 1
+      all: 1
+    evaluationSheet:
+      view: 0
+    shoppingCart:
+      view: 0
+    taskLogs:
+      view: 1
+      detail: 1
+      all: 1
+
+  USATeam:
+    users:
+      view: 1
+      duplicate: 0
+      detail: 0
+    pendingUsers:
+      view: 1
+      assign: 0
+      unAssign: 0
+      detail: 0
+      all: 1
+    evaluationSheet:
+      view: 1
+    shoppingCart:
+      view: 1
+    taskLogs:
+      view: 1
+      detail: 1
+      all: 1

@@ -89,11 +89,19 @@
 <script type="text/javascript">
   jQuery(document).ready(function() {
 
-      if( {{app.session.get('Permissions')['taskLogs']['show']}} == 1 ) {
-        visible            = true;
-        showApproveButton  = true;
-        showUnAssignButton = true;
+      if( {{app.session.get('Permissions')['pendingUsers']['detail']}} == 1 ) {
+        visible              = true;
         showDetailPageButton = true;
+      }
+
+      if( {{app.session.get('Permissions')['pendingUsers']['assign']}} == 1 ) {
+        visible           = true;
+        showApproveButton = true;
+      }
+
+      if( {{app.session.get('Permissions')['pendingUsers']['unAssign']}} == 1 ) {
+        visible            = true;
+        showUnAssignButton = true;
       }
 
       table = $('#example').DataTable({

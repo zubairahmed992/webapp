@@ -80,7 +80,15 @@ class UserArchivesRepository extends EntityRepository
 	}
   }
 
-  	public function search($data, $page = 0, $max = NULL, $order, $user_id, $getResult = true) 
+  	public function search(
+        $data,
+        $page = 0,
+        $max = NULL,
+        $order,
+        $user_id,
+        $all,
+        $getResult = true
+    ) 
     {
 	    $query = $this->getEntityManager()->createQueryBuilder();
         $search = isset($data['query']) && $data['query']?$data['query']:null;
@@ -108,6 +116,11 @@ class UserArchivesRepository extends EntityRepository
             		"tl.archive = ua.id"
             	)
             ->andWhere('ua.status = :pending');
+        if ($all == 0) {
+            $query 
+                ->andWhere('tl.support_admin_user =:user_id')
+                ->setParameter('user_id', $user_id);
+        }
         if ($search) {
             $query 
                 ->andWhere('u.email like :search')

@@ -25,6 +25,7 @@ class DefaultController extends Controller
                 }
             }
         }
+        
         if (!empty($permissions)) {
             $this->get('session')->set('Permissions', $permissions);
             return $this->render('LoveThatFitSupportBundle:Default:index.html.twig');

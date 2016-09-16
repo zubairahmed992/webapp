@@ -44,26 +44,28 @@
       <div class="clearfix"></div>
     </div>
     <div class="bs-docs-grid">
-      <table border="0" cellspacing="5" cellpadding="5" style="float:right;">
-        <tbody>
-            <tr>
-              <td>
-                <label style='display:block;'>Members:</label>
-              </td>
-              <td>
-                <div class="inner-addon right-addon">
-                    <select class="form-control" name="members" id="members">
-                        {% for users in supportUsers %}
-                            <option value="{{ users.Id }}" {{ (users.Id == id ? ' selected ' : '') }}>
-                              {{ users.UserName}}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-              </td>
-            </tr>
-        </tbody>
-      </table>
+      {% if( app.session.get('Permissions')['taskLogs']['all'] == 1 ) %}
+        <table border="0" cellspacing="5" cellpadding="5" style="float:right;">
+          <tbody>
+              <tr>
+                <td>
+                  <label style='display:block;'>Members:</label>
+                </td>
+                <td>
+                  <div class="inner-addon right-addon">
+                      <select class="form-control" name="members" id="members">
+                          {% for users in supportUsers %}
+                              <option value="{{ users.Id }}" {{ (users.Id == id ? ' selected ' : '') }}>
+                                {{ users.UserName}}
+                              </option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      {% endif %}
       <table id="example" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>

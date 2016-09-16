@@ -44,6 +44,7 @@ class UserController extends Controller {
     {
         $requestData            = $this->get('request')->request->all();
         $requestData['user_id'] = $this->getUser()->getId();
+        $requestData['all']     = $this->container->get('session')->get('Permissions')['pendingUsers']['all'];
         $output                 = $this->get('user.helper.userarchives')->search($requestData);
             
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
