@@ -394,11 +394,14 @@ ws_build_config:
    params:
    request_type: get
 
-ws_caliboration_status:
-   pattern:  /ws/caliboration_status
-   title: caliboration_status
+ws_image_approval:
+   pattern:  /ws/image_approval
+   title: image_approval
    params:
-     user_email: ovais.rafique@centricsource.com
+     member_email: ovais.rafique@centricsource.com
+     support_user_name:  ovais
+     duration:  480
+     archive:  5
      comment: test test test
      caliboration_status: reject
    request_type: post

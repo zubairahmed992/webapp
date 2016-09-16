@@ -98,11 +98,27 @@ class WSMiscController extends Controller {
         return new Response("1");
 	}
 
-    #---------------------------------- /ws/caliboration_status
-    public function caliborationStatusAction(Request $request){
+    #---------------------------------- /ws/image_approval
+    public function imageApprovalAction(Request $request){
         $decoded = $request->request->all();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        $user_email = isset($decoded["user_email"])?$decoded["user_email"]:"";
+        //task log start
+        $decoded['supportUsers'] = $this->get('admin.helper.support')->findOneByUserName($decoded["support_user_name"]);
+        $decoded['archive'] = $this->get('user.helper.userarchives')->find($decoded["archive"]);
+        $getID   = $this->get('support.helper.supporttasklog')->findByAssingnedIdSupportIDMemberEmail(
+            $decoded['archive'],
+            $decoded['support_user_name'],
+            $decoded['member_email']
+        );
+
+        if (!empty($getID)) {
+            $decoded['id'] = $getID[0]['id'];
+        }
+
+        $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
+        //task log end
+
+        $user_email = isset($decoded["member_email"])?$decoded["member_email"]:"";
         $caliboration_status = isset($decoded["caliboration_status"])?$decoded["caliboration_status"]:"";
         if($user_email!= null && $caliboration_status!= null){
         $ss_ar['to_email'] = $user_email;

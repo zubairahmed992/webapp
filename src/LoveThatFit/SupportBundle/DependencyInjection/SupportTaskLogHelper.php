@@ -75,6 +75,7 @@ class SupportTaskLogHelper {
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setSupportAdminUser($stl_array['supportUsers']);
         $entity->setArchive($stl_array['archive']);
+        $entity->setLogType("image_approval");
 
         $this->save($entity);            
     }

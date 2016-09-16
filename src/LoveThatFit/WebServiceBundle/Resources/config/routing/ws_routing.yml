@@ -145,6 +145,6 @@ ws_show_user_cart:
 
 #-------------------------Caliboration Image Approved/Reject Routes-------------------------------------
 
-ws_caliboration_status:
-    pattern:  /ws/caliboration_status
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:caliborationStatus}
+ws_image_approval:
+    pattern:  /ws/image_approval
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:imageApproval}
