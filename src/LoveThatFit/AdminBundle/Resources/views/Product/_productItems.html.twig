@@ -197,7 +197,7 @@ function editPieceView(product_id,item_id,id){
                         {%if(pi.image!='')%}
                           {{pi.image}}
                           {%endif%}
-                       <span class="imgstyle" id="myimg_{{ pi.id }}" style="z-index:20;box-shadow:2px 2px 2px 2px #ccc;background:#fff; padding:20px; position: absolute;top:10%;left:55%;"> <img  style="width: 70px; height: 100px;" src="{{ asset(pi.productColor.webPath) }}" width="100" height="100"/></span>
+                       <span class="imgstyle" id="myimg_{{ pi.id }}" style="z-index:20;box-shadow:2px 2px 2px 2px #ccc;background:#fff; padding:20px; position: absolute;top:10%;left:55%;"> <img  style="width: 70px; height: 100px;" src="{{ asset(pi.webPath) }}" width="100" height="100"/></span>
                     </div>
                   <div class="span2">
                    {%for pp in pi.productItemPieces%}
