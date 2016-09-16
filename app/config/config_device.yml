@@ -13,7 +13,7 @@ device_config:
     neck_exlusion_px: 238
     screen_available_height_px: 0
     total_screen_height_px: 568
-    resize_ratio_jt: 1.08
+    resize_ratio_jt: 1
   
   iphone5c:
     svg_mask_x: 55
@@ -28,7 +28,7 @@ device_config:
     neck_exlusion_px: 238
     screen_available_height_px: 0
     total_screen_height_px: 568
-    resize_ratio_jt: 1.08
+    resize_ratio_jt: 1
     
   iphone5s:
     svg_mask_x: 55
@@ -43,7 +43,7 @@ device_config:
     neck_exlusion_px: 238
     screen_available_height_px: 0
     total_screen_height_px: 568
-    resize_ratio_jt: 1.08
+    resize_ratio_jt: 1
     
   iphone6:
     svg_mask_x: 66
@@ -73,7 +73,7 @@ device_config:
     neck_exlusion_px: 238
     screen_available_height_px: 0
     total_screen_height_px: 667
-    resize_ratio_jt: 1.08
+    resize_ratio_jt: 1
     
   iphoneSE:
     svg_mask_x: 66
@@ -88,4 +88,4 @@ device_config:
     neck_exlusion_px: 238
     screen_available_height_px: 0    
     total_screen_height_px: 667
-    resize_ratio_jt: 1.08
+    resize_ratio_jt: 1
