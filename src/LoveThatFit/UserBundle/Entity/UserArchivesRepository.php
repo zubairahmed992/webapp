@@ -90,17 +90,20 @@ class UserArchivesRepository extends EntityRepository
         $getResult = true
     ) 
     {
-	    $query    = $this->getEntityManager()->createQueryBuilder();
-        $search   = isset($data['query']) && $data['query']?$data['query']:null;
+        /*
+            ->addSelect('(select t.support_user_name from LoveThatFitSupportBundle:SupportTaskLog t
+                where t.archive = ua.id and t.log_type = :cali) AS support_user_name'
+            )
+        */
+	    $query  = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
         $log_type = "calibration";
         $query 
             ->select('
                 ua.id,
                 u.email,
-                ua.created_at'
-            )
-            ->addSelect('(select t.support_user_name from LoveThatFitSupportBundle:SupportTaskLog t
-                where t.archive = ua.id and t.log_type = :log_type) AS support_user_name'
+                ua.created_at,
+                t.support_user_name'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->leftJoin(
@@ -108,20 +111,30 @@ class UserArchivesRepository extends EntityRepository
             		"u",
             		"WITH",
             		"u.id = ua.user"
-            	)
+            )
+            ->leftJoin(
+                    "LoveThatFitSupportBundle:SupportTaskLog",
+                    "t",
+                    "WITH",
+                    $query->expr()->andX(
+                        $query->expr()->eq('t.archive', 'ua.id'),
+                        $query->expr()->eq('t.log_type',':log_type')
+                    )
+            )
+            ->setParameter("log_type", "calibration")
             ->andWhere('ua.status = :pending');
         if ($all == 0) {
             $query 
-                ->andWhere('tl.support_admin_user =:user_id')
+                ->andWhere('t.support_admin_user =:user_id')
                 ->setParameter('user_id', $user_id);
         }
         if ($search) {
             $query 
                 ->andWhere('u.email like :search')
+                ->orWhere('t.support_user_name like :search')
                 ->setParameter('search', "%".$search."%");
         }
-        $query->setParameter('pending', '-1')
-              ->setParameter('log_type', "calibration");
+        $query->setParameter('pending', '-1');
 
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];
