@@ -79,7 +79,27 @@ constants:
           index: 16
         4X:
           title: 4X
-          index: 17
+          index: 17     
+          
+        OS-1:
+          title: OS-1
+          index: 18
+        OS-l:
+          title: OS-l
+          index: 19
+        OS-I:
+          title: OS-I
+          index: 20
+        OS_1:
+          title: OS_1
+          index: 21
+        OS_l:
+          title: OS_l
+          index: 22
+        OS_I:
+          title: OS_I
+          index: 23
+          
       number:
         '00':
           title: '00'
