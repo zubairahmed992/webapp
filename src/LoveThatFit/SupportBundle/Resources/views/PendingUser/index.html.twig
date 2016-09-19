@@ -9,9 +9,11 @@
   <h1>Pending Users</h1>
   <div class="btn_wrapper2">
     <div id="chart_figures" class="brand_chart_figures">
+    {% if( app.session.get('Permissions')['pendingUsers']['assign'] == 1 ) %}
       <div class="facts">
         <div><span>Total Users:</span>{{rec_count}}</div>
      </div>
+    {% endif %}
     </div>
   </div>
   <div class="clearfix"></div>

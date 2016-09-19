@@ -90,15 +90,17 @@ class UserArchivesRepository extends EntityRepository
         $getResult = true
     ) 
     {
-	    $query = $this->getEntityManager()->createQueryBuilder();
-        $search = isset($data['query']) && $data['query']?$data['query']:null;
-
+	    $query    = $this->getEntityManager()->createQueryBuilder();
+        $search   = isset($data['query']) && $data['query']?$data['query']:null;
+        $log_type = "calibration";
         $query 
             ->select('
                 ua.id,
                 u.email,
-                ua.created_at,
-                tl.support_user_name'
+                ua.created_at'
+            )
+            ->addSelect('(select t.support_user_name from LoveThatFitSupportBundle:SupportTaskLog t
+                where t.archive = ua.id and t.log_type = :log_type) AS support_user_name'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->leftJoin(
@@ -107,14 +109,7 @@ class UserArchivesRepository extends EntityRepository
             		"WITH",
             		"u.id = ua.user"
             	)
-            ->leftJoin(
-            		"LoveThatFitSupportBundle:SupportTaskLog",
-            		"tl",
-            		"WITH",
-            		"tl.archive = ua.id"
-            	)
-            ->andWhere('ua.status = :pending')
-            ->andWhere('tl.log_type= :log_type');
+            ->andWhere('ua.status = :pending');
         if ($all == 0) {
             $query 
                 ->andWhere('tl.support_admin_user =:user_id')
@@ -126,7 +121,7 @@ class UserArchivesRepository extends EntityRepository
                 ->setParameter('search', "%".$search."%");
         }
         $query->setParameter('pending', '-1')
-              ->setParameter('log_type', 'calibration');
+              ->setParameter('log_type', "calibration");
 
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];
