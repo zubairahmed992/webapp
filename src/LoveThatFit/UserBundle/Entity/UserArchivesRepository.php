@@ -98,8 +98,6 @@ class UserArchivesRepository extends EntityRepository
                 ua.id,
                 u.email,
                 ua.created_at,
-                (select COUNT(t.id) from LoveThatFitSupportBundle:SupportTaskLog t 
-                where t.archive = ua.id) as taskCount,
                 tl.support_user_name'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
@@ -115,7 +113,8 @@ class UserArchivesRepository extends EntityRepository
             		"WITH",
             		"tl.archive = ua.id"
             	)
-            ->andWhere('ua.status = :pending');
+            ->andWhere('ua.status = :pending')
+            ->andWhere('tl.log_type= :log_type');
         if ($all == 0) {
             $query 
                 ->andWhere('tl.support_admin_user =:user_id')
@@ -126,7 +125,8 @@ class UserArchivesRepository extends EntityRepository
                 ->andWhere('u.email like :search')
                 ->setParameter('search', "%".$search."%");
         }
-        $query->setParameter('pending', '-1');
+        $query->setParameter('pending', '-1')
+              ->setParameter('log_type', 'calibration');
 
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];

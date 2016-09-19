@@ -148,22 +148,14 @@
               "searchable"    : false,
               "defaultContent": ((typeof showApproveButton != "undefined" && showApproveButton == true) ? AssignButton : '')  + ((typeof showUnAssignButton != "undefined" && showUnAssignButton == true) ? UnAssignButton : '') + ((typeof showDetailPageButton != "undefined" && showDetailPageButton == true) ? DetailPageButton : ''),
           },
-          {
-              "data"  : "taskCount",
-              "searchable" : false,
-              "visible" : false,
-          },
         ],
         "createdRow": function ( row, data, index ) {
             $('td', row).eq(6).find('.detail').addClass( 'button-margin-left' );
-            if ( data["taskCount"] > 0 ) {
-              $('td', row).eq(6).find('.assign_button').css( 'display', 'none' );
-            } else if ( data["taskCount"] == 0 ) {
-              $('td', row).eq(6).find('.unassign_button').css( 'display', 'none' );
-            }
-            
             if (data["support_user_name"] == null ) {
+              $('td', row).eq(6).find('.unassign_button').css( 'display', 'none' );
               $('td', row).eq(5).html('Not Assigned').addClass('color-red');
+            } else {
+              $('td', row).eq(6).find('.assign_button').css( 'display', 'none' );
             }
         },
       });
