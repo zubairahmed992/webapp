@@ -112,13 +112,13 @@ class ProductDataController extends Controller
 
     public function csvMultipleBrandImportAction()
     {
-        $value = $_POST['brand_Description_value'];
+        $brand_description_value = $_POST['brand_Description_value'];
         $data = $this->getDoctrine()->getManager()
             ->createQueryBuilder()
             ->select('bfi.brand_format')
             ->from('LoveThatFitAdminBundle:BrandFormatImport', 'bfi')
             ->Where('bfi.brand_description =:brandName')
-            ->setParameters(array('brandName' => $value))
+            ->setParameters(array('brandName' => $brand_description_value))
             ->getQuery()
             ->getResult();
         $datJson = $data[0]['brand_format'];
@@ -444,6 +444,12 @@ class ProductDataController extends Controller
 //        $em->flush();
 //        $this->addProductSizesFromArray($product, $data);
 //        $this->addProductColorsFromArray($product, $data);
+
+         //$src = str_replace('\\', '/', getcwd()). '/uploads/ltf/csvproducts/';
+         $src =  getcwd(). '/uploads/ltf/products/raw_products_csv/';
+         $name = $_FILES['productImport']['name'];
+         move_uploaded_file($_FILES['productImport']['tmp_name'], $src.$name);
+         rename($src.$name, $src.$brand_description_value.".csv");
         die("save Data");
     }
 

@@ -18,8 +18,10 @@
                         if(response == "") {
                             $('.brand_description').html("")
                         }
-                        $('.brand_description').html(response[0]['brand_description'])
-                        $('.description').val(response[0]['brand_description'])
+                        $('.description').empty();
+                        $('.description').append(
+                                $('<option>Select Brand Type</option>')
+                        );
                         $.each(response, function (index, item) {
                             $('.description').append(
                                     $('<option></option>').val(item.brand_description).html(item.brand_description)
