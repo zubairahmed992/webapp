@@ -103,6 +103,11 @@ class WSMiscController extends Controller {
         $decoded = $request->request->all();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         //task log start
+
+        $support_user_name = isset($decoded['support_user_name'])?$decoded['support_user_name']:'';
+        $archive = isset($decoded['archive'])?$decoded['archive']:'';
+        $duration = isset($decoded['archive'])?$decoded['duration']:'';
+        if($support_user_name !='' && $archive!='' && $duration!=''){
         $decoded['supportUsers'] = $this->get('admin.helper.support')->findOneByUserName($decoded["support_user_name"]);
         $decoded['archive'] = $this->get('user.helper.userarchives')->find($decoded["archive"]);
         $getID   = $this->get('support.helper.supporttasklog')->findByAssingnedIdSupportIDMemberEmail(
@@ -116,6 +121,7 @@ class WSMiscController extends Controller {
         }
 
         $this->get('support.helper.supporttasklog')->saveAsNew($decoded);
+        }
         //task log end
 
         $user_email = isset($decoded["member_email"])?$decoded["member_email"]:"";
