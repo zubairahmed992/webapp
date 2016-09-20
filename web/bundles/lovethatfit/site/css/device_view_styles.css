@@ -45,7 +45,6 @@ padding-right: 0px!important;
 
 .container_pending .span3 div{    
     padding: 1px 0px 1px 20px;
-    background: #f1f1f2;
     margin-bottom: 2px;
     font-size: 0.95em;
    
@@ -164,28 +163,42 @@ padding-right: 0px!important;
     font-style: italic;
 }
 
-.rej_img{
-    display: inline;
-    position:absolute;
-    top:5px;
-    right: 40px;
-}
-
 .clk_img{
     display: inline;
     position:absolute;
-    top:5px;
-    left: 210px;
+    top:0px;
+    left: 205px;
+    display: none;
+    font-size: 3em;
 }
 
 .rej_img a{
+    display: inline;
+    position:absolute;
+    top:0px;
+    right: 30px;
+    border:1px solid #666;
+    color: #fff;
+    padding:5px 15px 5px 15px;
+    background: #6a6a6a;
+}
+
+.rej_img a:hover{
+   text-decoration:none;
+}
+
+.approve_img a{
+    display: inline;
+    position:absolute;
+    top:35px;
+    right: 28px;
     border:1px solid #666;
     color: #fff;
     padding:5px 10px 5px 10px;
     background: #6a6a6a;
 }
 
-.rej_img a:hover{
-   text-decoration:none;
+.approve_img a:hover{
+    text-decoration:none;
 }
 

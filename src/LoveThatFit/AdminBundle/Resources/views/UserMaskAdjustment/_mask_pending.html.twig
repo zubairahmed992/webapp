@@ -10,7 +10,7 @@
 <div class="container_pending">
 <div class="row">
 {% if (user_image_spec)%}
-        <div class="span3 bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -3px 1px 15px #000;">
+        <div class="span3 firstnav bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -3px 1px 15px #000;">
             <div style="padding-top:20px;">
                 <span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/logo_admin.png') }}" title="SelfieStyler"></span>
                 <span class="login_person">Logged in as: {% if app.user %}
@@ -151,8 +151,14 @@
 {% endif %}
 {% if (device_type == "iphone6")%}
 <div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas>
-<div class="rej_img"><a href="#">Reject Image</a></div>
-    <div class="clk_img"><span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/clock_admin.png') }}" title="SelfieStyler"></span></div>
+<div class="rej_img">
+    <a href="#">Reject Image</a>
+
+</div>
+    <div class="approve_img">
+        <a href="#">Approve Image</a>
+    </div>
+    <i class="fa fa-clock-o clk_img" aria-hidden="true"></i>
 </div>
 {% endif %}
 
@@ -170,7 +176,7 @@
     {%if (edit_type=='edit' or ( mode is defined and mode) )%}
     <div class="row">
        <!-- <h5>Measurement Comparision</h5>-->
-        <div class="span3">
+        <div class="span3 newh">
 
 
 
@@ -238,7 +244,13 @@
     </div>
 
 
-
+    <div>
+        <input type="hidden" id="oldtime" value="" data-value=""  />
+        <button id="start">Start</button>
+        <input type="hidden" id="newtime" value="" data-value=""  />
+        <input type="hidden" class="diff" value="" data-value=""  />
+        <button id="end">End</button>
+    </div>
 
 
 
@@ -315,10 +327,18 @@ var path = new CompoundPath({
    //alert($docu);
    var $height = $(window).height();
 
-   $(".container_pending .span3").css({"height":$height+"px"});
-   var $heightt = $(document).height();
-   var $heightt = $heightt - 178;
+    $(".newh").css({"position":"absolute","right":"10px","top":"530px"});
+   $(".container_pending .firstnav").css({"height":$height+"px"});
+   var $heightt = $(window).height();
+   var $heightt = $heightt;
    $(".maindiv").css({"height":$heightt+"px"});
+
+    $('.approve_img').click(function(){
+      $('.clk_img').show();
+      $('.rej_img').hide();
+        $('.approve_img').hide();
+    });
+
 
 </script>
 
@@ -326,7 +346,56 @@ var path = new CompoundPath({
 
 $(document).ready(function(){
 
-$( "#btn_confirm" ).click(function() {
+// ==================   Riaz code for timer starts from here===============================
+    function timer(){
+        var timeStamp = Math.floor(Date.now());
+        return timeStamp;
+    }
+    function diff(){
+        var newVal = $("#newtime").val();
+        var oldVal = $("#oldtime").val();
+        var result = Math.ceil((newVal - oldVal) / 1000);
+        $(".diff").html(result);
+        return result;
+    }
+
+    $(".clk_img").click(function(){
+        $("#oldtime").val(timer);
+        $(this).css({'color':'red'});
+        //$(this).hide();
+    });
+
+// end
+
+    $("#end").click(function(){
+        $("#newtime").val(timer);
+        $(this).attr('disabled','disabled');
+        $time = diff();
+        var $archiveId = $("#hdn_archive_id").val();
+        var $suppEmail = $("#entity_email").val();
+        var $suppName = $("#support_user_name").val();
+
+        $.ajax({
+            url: '../../../ws/support_task_log/add',
+            type: 'POST',
+            data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
+            success: function (response) {
+                alert("Your time Noted");
+            },
+            error: function () {
+                alert("Please press end button");
+            }
+        });
+    });
+
+    // ==================   Riaz code for timer
+
+
+
+
+
+
+    $( "#btn_confirm" ).click(function() {
 
 
    var strconfirm = confirm("Are you sure mask is saved?");
