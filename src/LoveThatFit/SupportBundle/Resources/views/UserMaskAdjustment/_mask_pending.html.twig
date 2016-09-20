@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base_pending.html.twig' %}
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
 
 
 
@@ -264,7 +264,13 @@
 
 
 
-
+    <div>
+        <input type="hidden" id="oldtime" value="" data-value=""  />
+        <button id="start">Start</button>
+        <input type="hidden" id="newtime" value="" data-value=""  />
+        <input type="hidden" class="diff" value="" data-value=""  />
+        <button id="end">End</button>
+    </div>
 
 
 <input class="hide_me" id="re_load" style="position: absolute; bottom:10px; padding: 10px; left:10px; z-index: 13100; text-align: center; font-size: 16px;" type="button" value="Reload Page" onClick="window.location.reload();">
@@ -369,7 +375,7 @@ var path = new CompoundPath({
 
 $(document).ready(function(){
 
-    // ==================   Riaz code for timer starts from here===============================
+
     function timer(){
         var timeStamp = Math.floor(Date.now());
         return timeStamp;
@@ -387,8 +393,6 @@ $(document).ready(function(){
         $(this).css({'color':'red'});
         //$(this).hide();
     });
-
-// end
 
     $("#end").click(function(){
         $("#newtime").val(timer);
@@ -411,13 +415,9 @@ $(document).ready(function(){
         });
     });
 
-
-
     $("#comment_btn").click(function(){
-
         var $mem_email = $("#entity_email").val();
         var $member_comments = $("#rej_comments").val();
-
 
         $.ajax({
             url: '../../../ws/image_approval',
@@ -433,12 +433,7 @@ $(document).ready(function(){
             }
         });
     });
-
-    // ==================   Riaz code for timer
-
 $( "#btn_confirm" ).click(function() {
-
-
    var strconfirm = confirm("Are you sure mask is saved?");
    if (strconfirm == true)
             {
@@ -449,7 +444,6 @@ $( "#btn_confirm" ).click(function() {
 });
 
 
-//----------------------
 function put_archive_to_live() {
     var archive_to_live_url = $("#archive_to_live_url").val();
     var redirect_url = $("#redirect_url").val();
