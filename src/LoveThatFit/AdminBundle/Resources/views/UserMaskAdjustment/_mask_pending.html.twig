@@ -8,7 +8,24 @@
 </div>
 
 <div class="container_pending">
-<div class="row">
+<div id="dimpop"></div>
+    <div id="rej_popup">
+        <div class="rej_cross_btn">x</div>
+<span>Are you sure you want to reject this image?</span>
+        <form method="post" action="">
+
+
+            <span id="inst">Mention the reason below:</span>
+            <textarea rows="4" cols="4" name="rej_comments" id="rej_comments"></textarea>
+            <input type="button" value="Submit" id="comment_btn">
+            <input type="Reset" value="Reset">
+
+        </form>
+
+    </div>
+
+
+    <div class="row">
 {% if (user_image_spec)%}
         <div class="span3 firstnav bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -3px 1px 15px #000;">
             <div style="padding-top:20px;">
@@ -84,6 +101,8 @@
 
 
 <input id="dv_model" type="hidden" value="{{ device_model }}" />
+
+        <input id="entity_email" type="hidden" value="{{entity.email}}" />
 
 <input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
@@ -339,6 +358,16 @@ var path = new CompoundPath({
         $('.approve_img').hide();
     });
 
+    $('.rej_cross_btn').click(function(){
+        $('#dimpop').hide();
+        $('#rej_popup').hide();
+    });
+
+    $('.rej_img').click(function(){
+        $('#dimpop').show();
+        $('#rej_popup').show();
+
+    });
 
 </script>
 
@@ -379,6 +408,27 @@ $(document).ready(function(){
             url: '../../../ws/support_task_log/add',
             type: 'POST',
             data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
+            success: function (response) {
+                alert("Your time Noted");
+            },
+            error: function () {
+                alert("Please press end button");
+            }
+        });
+    });
+
+
+
+    $("#comment_btn").click(function(){
+
+        var $mem_email = $("#entity_email").val();
+        var $member_comments = $("#rej_comments").val();
+
+
+        $.ajax({
+            url: '../../../ws/image_approval',
+            type: 'POST',
+            data: {member_email:$mem_email ,comment:$member_comments, caliboration_status:'reject'},
             success: function (response) {
                 alert("Your time Noted");
             },
