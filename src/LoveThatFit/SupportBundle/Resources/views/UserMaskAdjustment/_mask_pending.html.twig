@@ -169,11 +169,21 @@
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
-<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas>
+    <div class="rej_img">
+        <a href="#">Reject Image</a>
+    </div>
+    <div class="approve_img">
+        <a href="#">Approve Image</a>
+    </div>
+    <div class="clk_img"><span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/clock_admin.png') }}" title="SelfieStyler"></span></div>
+</div>
 {% endif %}
 {% if (device_type == "iphone6")%}
 <div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas>
-<div class="rej_img"><a href="#">Reject Image</a></div>
+   <div class="rej_img">
+    <a href="#">Reject Image</a>
+</div>
     <div class="approve_img">
         <a href="#">Approve Image</a>
     </div>
