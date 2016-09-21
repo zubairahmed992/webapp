@@ -122,10 +122,12 @@
         ],
         "createdRow": function ( row, data, index ) {
             if ( data['fast'] == min ) {
-                $('td', row).addClass('td-green');
-            } else if ( data['slow'] == max ) {
-                $('td', row).addClass('td-red');
-            } else if ( data['avrg'] == avg ) {
+              $('td', row).eq(4).addClass('task-td-green');
+            } 
+            if ( data['slow'] == max ) {
+                $('td', row).eq(5).addClass('task-td-red');
+            } 
+            if ( data['avrg'] == avg ) {
                 $('td', row).addClass('td-blue');
             }
             

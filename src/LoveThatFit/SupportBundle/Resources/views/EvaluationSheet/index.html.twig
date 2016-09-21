@@ -28,24 +28,27 @@ $(document).ready(function(){
          ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
 
      var compare_url = "evaluation_sheet/sample";
-     if (ar != "") {
+     if ($("#user_id").val() != "") {
+        $('#error_attribute').html('');
         $(".ajax_loader").show();
+         $.ajax({
+           type: "POST",
+           url: compare_url,
+           data: JSON.stringify(ar),
+          contentType: "application/json; charset=utf-8",
+            traditional: true,
+           success: function(response){
+                $(".ajax_loader").hide();
+                $('#summary_ajax').html(response);
+            },
+           failure: function(response) {
+               $(".ajax_loader").hide();
+               $('#summary_ajax').html(response);
+           }
+        });
+     } else {
+        $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
      }
-     $.ajax({
-               type: "POST",
-               url: compare_url,
-               data: JSON.stringify(ar),
-              contentType: "application/json; charset=utf-8",
-                traditional: true,
-               success: function(response){
-                    $(".ajax_loader").hide();
-                    $('#summary_ajax').html(response);
-                },
-               failure: function(response) {
-                   $(".ajax_loader").hide();
-                   $('#summary_ajax').html(response);
-               }
-         });
 
      //return false; //for good measure
 });
@@ -58,24 +61,27 @@ $(document).ready(function(){
             ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
 
         var compare_url = "evaluation_sheet/cart";
-        if (ar != "") {
+        if ($("#user_id").val() != "") {
             $(".ajax_loader").show();
+            $('#error_attribute').html('');
+            $.ajax({
+                type: "POST",
+                url: compare_url,
+                data: JSON.stringify(ar),
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                success: function(response){
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                },
+                failure: function(response) {
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                }
+            });
+        } else {
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
         }
-        $.ajax({
-            type: "POST",
-            url: compare_url,
-            data: JSON.stringify(ar),
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            success: function(response){
-                $(".ajax_loader").hide();
-                $('#summary_ajax').html(response);
-            },
-            failure: function(response) {
-                $(".ajax_loader").hide();
-                $('#summary_ajax').html(response);
-            }
-        });
 
         //return false; //for good measure
     });
@@ -179,9 +185,9 @@ $(document).ready(function(){
     {#<input type="text" id='txt_id_range' name='txt_id_range'>    #}
 
     <br><br>
-
-
     <br><br>
+    <div style="margin-left:20px;" id="error_attribute"></div>
+    <div class="clear:both;"></div>
     <div id="summary_ajax" style="float: none">
     </div>
         <input type="hidden"  id="user_id">

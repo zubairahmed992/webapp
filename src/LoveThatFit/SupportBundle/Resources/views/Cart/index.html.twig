@@ -16,6 +16,7 @@ $(document).ready(function(){
         $('#keyword').val($('option:selected', $(this)).text());
     });
     $( "select[id='algorithm_Product']" ).change(function() {
+        $('#error_attribute').html('');    
         $("#product_id").val(this.value);
         $('#product_keyword').val($('option:selected', $(this)).text());
         var show_url = "cart/get_sizes_and_colors/" + this.value ;
@@ -110,16 +111,19 @@ $(document).ready(function(){
         event.preventDefault();
         var user_id = $("#user_id").val();
         if (user_id != "") {
+            $('#error_attribute').html('');
             $(".ajax_loader").show();
+            var show_url = "cart/show/" + user_id ;
+            $.ajax({
+                url: show_url,
+                success: function(response) {
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                }
+            });
+        } else{
+            $('#error_attribute').html('<p style="color:#ff0000">Please select user</p>');
         }
-        var show_url = "cart/show/" + user_id ;
-        $.ajax({
-            url: show_url,
-            success: function(response) {
-                $(".ajax_loader").hide();
-                $('#summary_ajax').html(response);
-            }
-        })
         return false; //for good measure
     });
 
@@ -127,34 +131,56 @@ $(document).ready(function(){
         event.preventDefault();
         var user_id = $("#user_id").val();
         var product_id = $("#product_id").val();
-        if (product_id != "") {
+        if (product_id != "" && user_id != "") {
+            $('#error_attribute').html('');
             $(".ajax_loader").show();
-        }
-        var postForm = { //Fetch form data
-            'user_id'     : user_id,
-            'product_id'     : product_id
+            var postForm = { //Fetch form data
+                'user_id'     : user_id,
+                'product_id'     : product_id
 
-        };
-        var show_url = "cart_add";
+            };
+            var show_url = "cart_add";
+            $.ajax({
+                type:'POST',
+                url: show_url,
+                data:postForm,
+                dataType:'json',
+                success: function(response) {
+                    if(response==1){
+                        var show_url = "cart/show/" + user_id ;
+                        $.ajax({
+                            url: show_url,
+                            success: function(response) {
+                                $(".ajax_loader").hide();
+                                $('#summary_ajax').html(response);
+                            }
+                        })
+                    }
+                }
+            });
+        } else{
+            $('#error_attribute').html('<p style="color:#ff0000">Please select user and product</p>');
+        }
+        return false; //for good measure
+    });
+//-----------------------------------------------------------
+    //delete record
+    $('.btn-ok').click(function (){
+        $('#confirmDelete').modal('hide');
+        var values = $("#delete_value").val();
+        var arr = values.split('|');
+        $(".ajax_loader").show();
+        var delete_url = "cart/delete/" + arr[0] + "/"+ arr[1];
         $.ajax({
-            type:'POST',
-            url: show_url,
-            data:postForm,
-            dataType:'json',
+            url: delete_url,
             success: function(response) {
-                if(response==1){
-                    var show_url = "cart/show/" + user_id ;
-                    $.ajax({
-                        url: show_url,
-                        success: function(response) {
-                            $(".ajax_loader").hide();
-                            $('#summary_ajax').html(response);
-                        }
-                    })
+                $(".ajax_loader").hide();
+                $("#cart_"+arr[0]).closest('tr').remove();
+                if(response == 0){
+                    $('.cart_tbl tr:last').after("<tr><td align='center' colspan='6'> <p class='no_item_wrapper'>  Currently there are no items in the cart.</p></td></tr>");
                 }
             }
-        })
-        return false; //for good measure
+        });
     });
 
 });        
@@ -230,6 +256,7 @@ $(document).ready(function(){
                 <div class="modal-body">
                     <p>Do you want to proceed?</p>
                 </div>
+                <input type="hidden" name="delete_value" id="delete_value">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-danger btn-ok">Delete</a>

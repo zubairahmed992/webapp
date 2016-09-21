@@ -182,6 +182,19 @@ body {
     background-color: #ff9933;
     color: #fff;
 }
+.task-td-green {
+    color: #009933 !important;
+    font-weight: bold;
+}
+.task-td-red {
+    color: #800000 !important;
+    font-weight: bold;
+}
+.task-td-blue {
+    color: #0066ff !important;
+    font-weight: bold;
+}
+
 .ajax_loader {
     display : none;
     position : fixed;
