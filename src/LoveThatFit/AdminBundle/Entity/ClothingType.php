@@ -2,6 +2,7 @@
 
 
 namespace LoveThatFit\AdminBundle\Entity;
+use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,7 +35,18 @@ class ClothingType
      * @ORM\Column(type="string", length=255)     
      */    
     protected $name;
-    
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $image;
+
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     * @Assert\NotBlank(groups={"add"}, message = "must upload brand logo image!")
+     */
+    public $file;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -234,5 +246,78 @@ class ClothingType
     public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Brand
+     */
+    public function setImage($image) {
+      $this->image = $image;
+
+      return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage() {
+      return $this->image;
+    }
+    //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+
+    public function upload() {
+      // the file property can be empty if the field is not required
+      if (null === $this->file) {
+        return;
+      }
+
+      $ih=new ImageHelper('clothing_type', $this);
+      $ih->upload();
+    }
+  //---------------------------------------------------
+
+    public function getAbsolutePath()
+    {
+      return null === $this->image
+          ? null
+          : $this->getUploadRootDir().'/'.$this->image;
+    }
+  //---------------------------------------------------
+    public function getWebPath()
+    {
+      return null === $this->image
+          ? null
+          : $this->getUploadDir().'/'.$this->image;
+    }
+  //---------------------------------------------------
+    protected function getUploadRootDir()
+    {
+      return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+  //---------------------------------------------------
+    protected function getUploadDir($type='iphone')
+    {# the path will be changed to 'uploads/ltf/brands/web'
+      return 'uploads/ltf/clothing_type/'.$type;
+    }
+    //---------------------------------------------------
+    public function getImagePaths() {
+      $ih = new ImageHelper('clothing_type', $this);
+      return $ih->getImagePaths();
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function deleteImages()
+    {
+      $ih=new ImageHelper('clothing_type', $this);
+      $ih->deleteImages($this->image);
     }
 }

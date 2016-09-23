@@ -32,7 +32,24 @@ image_category:
       height: 126
       width: 126
       prefix:  
-      dir:  'uploads/ltf/brands/iphone'  
+      dir:  'uploads/ltf/brands/iphone'
+
+  clothing_type:
+    original:
+      prefix:
+      dir:  'uploads/ltf/clothing_type'
+
+    web:
+      height: 126
+      width: 126
+      prefix:
+      dir:  'uploads/ltf/clothing_type/web'
+
+    iphone:
+      height: 126
+      width: 126
+      prefix:
+      dir:  'uploads/ltf/clothing_type/iphone'
 
   product:
     original:

@@ -71,6 +71,7 @@ class ClothingTypeHelper {
 
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
+            $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
 
