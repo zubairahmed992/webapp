@@ -221,7 +221,22 @@ class ClothingTypeHelper {
         return $cat_array;
     }
     
-    
+  #-------------------------------------------------------------------------------#
+    public function getDescriptionArray($gender=null){
+        $cat_list=$this->repo->findAllRecord();
+        $cat_array['woman']=array();
+        $cat_array['man']=array();
+        foreach($cat_list as $key=>$value){
+            if($value->getGender()=='f'){
+                #array_push($cat_array['woman'],array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url'));
+                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=> 'image url'));
+            }else{
+                #$cat_array['man'][$value->getName()]=array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url');
+                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=>'image url'));
+           }
+        }
+        return $gender?$cat_array[$gender=='m'?'man':'woman']:$cat_array;        
+    }  
     
     #-----------------Find By Clothing Type By Gender---------------------------------# 
     public function findClothingTypsByGender($gender){
