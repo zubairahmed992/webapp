@@ -1,6 +1,6 @@
 users_roles:
 
-  Developers:
+  Admin:
     users:
       view: 1
       duplicate: 1
@@ -20,7 +20,7 @@ users_roles:
       detail: 1
       all: 1
 
-  Calibration:
+  Calibrator:
     users:
       view: 1
       duplicate: 1
@@ -40,7 +40,7 @@ users_roles:
       detail: 1
       all: 0
   
-  Assignee:
+  Lead:
     users:
       view: 1
       duplicate: 1

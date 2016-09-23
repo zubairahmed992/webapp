@@ -215,3 +215,50 @@ body {
 .color-red {
     color: #800000;
 }
+.detail {
+    margin-left: 10px;
+}
+.support-top-tabs {
+    padding-top: 30px;
+}
+.support-top-tabs .nav > li > a:hover span {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 4px;
+}
+
+.support-tabs-open {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 4px;   
+}
+.dataTable {
+    border: 1px solid #CCCCCC !important;
+    border-radius: 3px;
+    border-collapse: collapse;
+}
+
+.dataTable thead th {
+    cursor: auto;
+    background: rgba(100,101,107,.45);
+    text-align: inherit;
+    color: rgba(0,0,0,.87);
+    padding: .92857143em .78571429em !important;
+    vertical-align: inherit;
+    font-style: none;
+    font-weight: 700;
+    text-transform: none;
+    border-bottom: 1px solid rgba(34,36,38,.1) !important;
+    border-right: 1px solid rgba(34,36,38,.1) !important;
+    border-left: none;
+    border-collapse: collapse;
+}
+.dataTable tbody tr td {
+    border-right: 1px solid #e5e5e5 !important;
+    border-top: 1px solid #e5e5e5 !important;
+}
+.dataTables_length select {
+    width: 65px;
+}
+.dataTables_wrapper {
+    margin-bottom: 20px;
+}
