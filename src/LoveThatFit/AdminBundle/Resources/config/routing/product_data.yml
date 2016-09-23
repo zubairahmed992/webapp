@@ -38,3 +38,32 @@ admin_product_data_csv_upload:
 admin_product_data_product_image_genrate:
     pattern:  /admin/product_data/product_image_genrate
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:productImageGenrate }
+
+#--------------------------------- Open Brand Specification Form  -------------
+admin_product_data_csv_brand_specification:
+    pattern:  /admin/product_data/csv_brand_specification
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvBrandSpecification }
+
+#--------------------------------- Save Brand Specification Format  -------------
+admin_product_data_save_brand_specification:
+    pattern:  /admin/product_data/save_brand_specification
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:saveBrandSpecification }
+    requirements:
+        _method:  POST
+
+#--------------------------------- Open Multiple Brand CSV Form  -------------
+admin_product_data_multiple_brand_csv:
+    pattern:  /admin/product_data/csv_multipole_brand_import_form
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvMultipleBrandImportForm }
+
+#--------------------------------- Multiple Brand CSV Import  -------------
+admin_product_data_multiple_brand_csv_import:
+    pattern:  /admin/product_data/csv_multiple_brand_import
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvMultipleBrandImport }
+
+#--------------------------------- Save Brand Specification Format  -------------
+admin_product_data_brand_description:
+    pattern:  /admin/product_data/brand_description
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:brandDescription }
+    requirements:
+        _method:  POST
