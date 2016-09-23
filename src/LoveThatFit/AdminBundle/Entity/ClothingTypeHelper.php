@@ -232,7 +232,7 @@ class ClothingTypeHelper {
                 array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=> 'image url'));
             }else{
                 #$cat_array['man'][$value->getName()]=array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url');
-                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=>'image url'));
+                array_push($cat_array['man'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=>'image url'));
            }
         }
         return $gender?$cat_array[$gender=='m'?'man':'woman']:$cat_array;        
