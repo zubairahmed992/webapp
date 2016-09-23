@@ -223,17 +223,17 @@ class ClothingTypeHelper {
     }
     
   #-------------------------------------------------------------------------------#
-    public function getDescriptionArray($gender=null){
+    public function getDescriptionArray($gender=null,$base_path){
         $cat_list=$this->repo->findAllRecord();
         $cat_array['woman']=array();
         $cat_array['man']=array();
         foreach($cat_list as $key=>$value){
             if($value->getGender()=='f'){
                 #array_push($cat_array['woman'],array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url'));
-                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=> 'image url'));
+                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=> $base_path.$value->getWebPath()));
             }else{
                 #$cat_array['man'][$value->getName()]=array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url');
-                array_push($cat_array['man'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=>'image url'));
+                array_push($cat_array['man'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=>  $base_path.$value->getWebPath()));
            }
         }
         return $gender?$cat_array[$gender=='m'?'man':'woman']:$cat_array;        
