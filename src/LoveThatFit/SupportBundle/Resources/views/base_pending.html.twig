@@ -3,72 +3,88 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Support ~ SelfieStyler</title>
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/admin/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/js/custom.js') }}" rel="stylesheet" type="text/css" />
+
+        <!-- datatable css & js file start-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lovethatfit/admin/datatable/css/jquery.dataTables.css') }}">
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery-1.12.3.min.js') }}">
+        </script>
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery.dataTables.js') }}"></script>
+        <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/buttons.js') }}">
+        </script>
+        <!-- datatable css & js file end-->
     </head>
     <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
 
-          <div class="nav-collapse collapse">
-              <!--<p class="navbar-text pull-right">
-                {% if app.user %}
-                    Logged in as {{ app.user.username }} {#<a href="#" class="navbar-link"></a>#}
-                {% endif %}
-           
-            </p>-->
-            <!-- Top Navigation Start -->
-            <ul class="nav pending_nav">
-                
-              <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
-              <li><a href="{{ path('admin_clothing_types') }}">Clothing Types</a></li>
-              <li><a href="{{ path('admin_brands') }}">Brands</a></li>
-              <li><a href="{{ path('admin_products') }}">Products</a></li>
-              <li><a href="{{ path('admin_survey') }}">Survey</a></li>
-              <li><a href="{{ path('admin_size_charts') }}">SizeCharts</a></li>
-              <li><a href="{{ path('admin_retailers') }}">Retailers</a></li>
-              <li><a href="{{ path('admin_users') }}">Users</a></li>
-              <li><a href="{{ path('admin_support_user') }}">Support Users</a></li>
-                {#{{ path('admin_push_notification') }}#}
-              {#<li><a href="#">Push Notifcation</a></li>#}
-                <li><a href="{{ path('admin_yml_setting_index') }}">Yml Settings</a></li>
-              <li><a href="{{ path('admin_clothing_type_standards') }}">Constants</a></li>
-              <li><a href="{{ path('ws_interface_index') }}">Services</a></li>
-              <li><a href="{{ path('admin_order') }}">Orders</a></li>
-              <li><a href="{{ path('admin_logout') }}">Logout</a></li>
-            </ul>
-             <!-- Top Navigation End -->
-          </div><!--/.nav-collapse -->
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                        {% if app.user %}
+                            Logged in as {{ app.user.username }} {#<a href="#" class="navbar-link"></a>#}
+                        {% endif %}
+
+                    </p>
+                    <!-- Top Navigation Start -->
+                    <ul class="nav">
+                        {% if app.session.get('Permissions')['users']['view'] == 1 %}
+                            <li><a href="{{ path('support_users') }}">Users</a></li>
+                        {% endif %}
+                        {% if app.session.get('Permissions')['pendingUsers']['view'] == 1 %}
+                            <li><a href="{{ path('support_pending_users') }}">Pending Users</a></li>
+                        {% endif %}
+                        {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
+                            <li><a href="{{ path('support_evaluation_sheet_index') }}">Evaluation Sheet</a></li>
+                        {% endif %}
+                        {% if app.session.get('Permissions')['shoppingCart']['view'] == 1 %}
+                            <li><a href="{{ path('support_cart_index') }}">Shopping Cart</a></li>
+                        {% endif %}
+                        {% if app.session.get('Permissions')['taskLogs']['view'] == 1 %}
+                            {% if app.session.get('Permissions')['taskLogs']['all'] == 1 %}
+                                <li><a href="{{ path('support_users_task_log') }}">Task Log</a></li>
+                            {% elseif  app.session.get('Permissions')['taskLogs']['all'] == 0 %}
+                                <li><a href="{{ path('support_users_task_log_show', {'id': app.user.id}) }}">Task Log</a></li>
+                            {% endif %}
+                        {% endif %}
+                        <li><a href="{{ path('support_logout') }}">Logout</a></li>
+                    </ul>
+                    <!-- Top Navigation End -->
+                </div><!--/.nav-collapse -->
+            </div>
         </div>
-      </div>
     </div>
-    
+
+    <div style="clear: both; margin-top:5px;"></div>
+
     <!-- Breadcrumb Start
     <ul class="breadcrumb">
           <li><a href="{{ path('admin_dashboard') }}">Admin</a> <span class="divider">/</span></li>
           {% block breadcrumb %}{% endblock %}
     </ul>-->
 
-    <!-- Breadcrumb End -->      
+    <!-- Breadcrumb End -->
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Warning!</strong>   
- {{ app.session.flash('warning') }}    
-</div>   
+  <strong>Warning!</strong>
+ {{ app.session.flash('warning') }}
+</div>
 {% endif %}
 
     <!--<div style="clear: both; margin-bottom:80px;"></div>-->
@@ -81,17 +97,17 @@
     {% endif %}
 
     <div class="container-fluid">
-   
+
             {% block body %}
                 <div style="float: right">
                     {% block header_right_links %}{% endblock %}
                 </div>
             {% endblock %}
-   
-   </div>  
-      
-    
-       
+
+   </div>
+
+
+
     <footer>
       <p>&copy; Company 2012</p>
     </footer>
@@ -114,7 +130,7 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.form.js') }}"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    
+
        <script type="text/javascript">
 	jQuery(document).ready(function() {
 	  	jQuery('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
@@ -263,7 +279,7 @@
         });
         //end
         function hit_service(){}
-	});	
+	});
 	</script>
 
     </body>
