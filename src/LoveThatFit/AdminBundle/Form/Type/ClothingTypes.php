@@ -13,6 +13,7 @@ class ClothingTypes extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('name', 'text');        
         $builder->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')));
+        $builder->add('file');
         $builder->add('gender', new GenderType(), array('multiple' => false,'expanded' => true));
         $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));
     }

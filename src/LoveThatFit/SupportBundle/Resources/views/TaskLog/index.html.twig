@@ -72,7 +72,7 @@
         },
         "sAjaxDataProp": "data", 
         "pageLength": 10,
-        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
         "order": [[ 0, "desc" ]],
         "columns": [
           {
@@ -127,7 +127,7 @@
             if ( data['slow'] == max ) {
                 $('td', row).eq(5).addClass('task-td-red');
             } 
-            if ( data['avrg'] == avg ) {
+            if ( data['avrg'] == avg && data['avrg'] != "0.00") {
                 $('td', row).addClass('td-blue');
             }
             

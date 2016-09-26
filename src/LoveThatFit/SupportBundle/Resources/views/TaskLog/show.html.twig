@@ -102,7 +102,7 @@
         },
         "sAjaxDataProp": "data", 
         "pageLength": 10,
-        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
         "order": [[ 0, "desc" ]],
         "columns": [
           {
@@ -141,15 +141,15 @@
         ],
         "createdRow": function ( row, data, index ) {
             if ( data['duration'] > avg && data['duration'] < max ) {
-                $('td', row).addClass('td-green-light');
+              $('td', row).addClass('td-green-light');
             } else if ( data['duration'] == min ) {
-                $('td', row).addClass('td-green');
+              $('td', row).addClass('td-green');
             } else if ( data['duration'] < avg && data['duration'] > min ) {
-                $('td', row).addClass('td-red-light');
+              $('td', row).addClass('td-red-light');
             } else if ( data['duration'] == max ) {
-                $('td', row).addClass('td-red');
-            } else if ( data['duration'] == avg ) {
-                $('td', row).addClass('td-blue');
+              $('td', row).addClass('td-red');
+            } else if ( data['duration'] == avg && data['duration'] != "") {
+              $('td', row).addClass('td-blue');
             }
             duration = formatSecondsAsTime(data['duration'], 'hh:mm:ss');
             $('td', row).eq(6).html(duration);

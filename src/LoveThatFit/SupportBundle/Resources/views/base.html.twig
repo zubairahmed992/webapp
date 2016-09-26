@@ -15,6 +15,7 @@
 
     <!-- datatable css & js file start-->
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lovethatfit/admin/datatable/css/jquery.dataTables.css') }}">
+
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
         <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/datatable/js/jquery-1.12.3.min.js') }}">
         </script>
@@ -33,7 +34,7 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#"><img src="{{ asset('bundles/lovethatfit/admin/images/ltf_logo-f29cf3839961bcee3cb58b93121e379d.png') }}"></a>
-          <div class="nav-collapse collapse">
+          <div class="nav-collapse collapse support-top-tabs">
             <p class="navbar-text pull-right">
                 {% if app.user %}
                     Logged in as {{ app.user.username }} {#<a href="#" class="navbar-link"></a>#}
@@ -42,33 +43,52 @@
             </p>
             <!-- Top Navigation Start -->
             <ul class="nav">
-            {% if app.session.get('Permissions')['users']['view'] == 1 %}
-              <li><a href="{{ path('support_users') }}">Users</a></li>
-            {% endif %}
-            {% if app.session.get('Permissions')['pendingUsers']['view'] == 1 %}
-              <li><a href="{{ path('support_pending_users') }}">Pending Users</a></li>
-            {% endif %}
-            {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
-              <li><a href="{{ path('support_evaluation_sheet_index') }}">Evaluation Sheet</a></li>
-            {% endif %}
-            {% if app.session.get('Permissions')['shoppingCart']['view'] == 1 %}
-              <li><a href="{{ path('support_cart_index') }}">Shopping Cart</a></li>
-            {% endif %}
-            {% if app.session.get('Permissions')['taskLogs']['view'] == 1 %}
-                {% if app.session.get('Permissions')['taskLogs']['all'] == 1 %}
-                    <li><a href="{{ path('support_users_task_log') }}">Task Log</a></li>
-                {% elseif  app.session.get('Permissions')['taskLogs']['all'] == 0 %}
-                    <li><a href="{{ path('support_users_task_log_show', {'id': app.user.id}) }}">Task Log</a></li>
+                <li><a href="{{ path('support_dashboard') }}">
+                    <span class='{% if (app.request.attributes.get("_route") == "support_dashboard") %} support-tabs-open {% endif %}'>Dashboard</span>
+                </a></li>
+                {% if app.session.get('Permissions')['users']['view'] == 1 %}
+                    <li><a href="{{ path('support_users') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "support_users")
+                            or (app.request.attributes.get("_route") == "support_user_detail_show")
+                            or (app.request.attributes.get("_route") == "support_duplicate_user_index")
+                         %} support-tabs-open {% endif %}'>Users</span>
+                    </a></li>
                 {% endif %}
-            {% endif %}
-            <li><a href="{{ path('support_logout') }}">Logout</a></li>
+                {% if app.session.get('Permissions')['pendingUsers']['view'] == 1 %}
+                    <li><a href="{{ path('support_pending_users') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "support_pending_users")
+                        or (app.request.attributes.get("_route") == "support_pending_user_show") %} support-tabs-open {% endif %}'>Pending Users</span>
+                    </a></li>
+                {% endif %}
+                {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
+                    <li><a href="{{ path('support_evaluation_sheet_index') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "support_evaluation_sheet_index") %} support-tabs-open {% endif %}'>
+                        Evaluation Sheet</span>
+                    </a></li>
+                {% endif %}
+                {% if app.session.get('Permissions')['shoppingCart']['view'] == 1 %}
+                    <li><a href="{{ path('support_cart_index') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "support_cart_index") %} support-tabs-open {% endif %}'>Shopping Cart</span>
+                    </a></li>
+                {% endif %}
+                {% if app.session.get('Permissions')['taskLogs']['view'] == 1 %}
+                    {% if app.session.get('Permissions')['taskLogs']['all'] == 1 %}
+                        <li><a href="{{ path('support_users_task_log') }}">
+                            <span class='{% if (app.request.attributes.get("_route") == "support_users_task_log") or (app.request.attributes.get("_route") == "support_users_task_log_show") %} support-tabs-open {% endif %}'>Task Log</span>
+                        </a></li>
+                    {% elseif  app.session.get('Permissions')['taskLogs']['all'] == 0 %}
+                        <li><a href="{{ path('support_users_task_log_show', {'id': app.user.id}) }}">
+                            <span class='{% if (app.request.attributes.get("_route") == "support_dashboard") %} support-tabs-open {% endif %}'>Task Log</span>
+                        </a></li>
+                    {% endif %}
+                {% endif %}
+                <li><a href="{{ path('support_logout') }}"><span>Logout</span></a></li>
             </ul>
              <!-- Top Navigation End -->
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
-    
     <!-- Breadcrumb Start -->
     <ul class="breadcrumb">
           <li><a href="{{ path('support_dashboard') }}">Admin</a> <span class="divider">/</span></li>
