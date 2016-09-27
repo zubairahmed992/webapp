@@ -37,9 +37,9 @@ class TaskLogController extends Controller {
     public function showAction($id)
     {
         $entity       = $this->get('support.helper.supporttasklog')->findSupprtUserByID($id);
-        $supportUsers = $this->get('admin.helper.support')->findAll();
-
-        if(!$entity){        
+        $supportUsers = $this->get('admin.helper.support')->findSupportAdmin();
+        
+        if(!$entity){
             $this->get('session')->setFlash('warning', 'No User not found!');
             return $this->redirect($this->generateUrl('support_users_task_log'));
             exit;

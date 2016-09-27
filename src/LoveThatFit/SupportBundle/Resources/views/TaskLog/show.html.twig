@@ -49,14 +49,14 @@
           <tbody>
               <tr>
                 <td>
-                  <label style='display:block;'>Members:</label>
+                  <label style='display:block;'>Support Admin Users:</label>
                 </td>
                 <td>
                   <div class="inner-addon right-addon">
                       <select class="form-control" name="members" id="members">
                           {% for users in supportUsers %}
-                              <option value="{{ users.Id }}" {{ (users.Id == id ? ' selected ' : '') }}>
-                                {{ users.UserName}}
+                              <option value="{{ users.id }}" {{ (users.id == id ? ' selected ' : '') }}>
+                                {{ users.user_name}}
                               </option>
                           {% endfor %}
                       </select>
@@ -69,7 +69,7 @@
       <table id="example" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>S.No</th>
+              <th>Task ID</th>
               <th>Log Type</th>
               <th>Member Email</th>
               <th>Date</th>
@@ -106,8 +106,8 @@
         "order": [[ 0, "desc" ]],
         "columns": [
           {
-              "data"  : "Sno",
-              "searchable" : false,
+              "data"  : "id",
+              "searchable" : false
           },
           {
               "data"  : "log_type",

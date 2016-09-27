@@ -146,6 +146,7 @@ class SupportTaskLogRepository extends EntityRepository{
         
         $query 
             ->select('
+                s.id,
                 s.log_type,
                 s.member_email,
                 s.start_time,

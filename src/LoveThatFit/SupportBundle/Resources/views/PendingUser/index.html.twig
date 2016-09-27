@@ -35,12 +35,11 @@
     <table id="example" class="display" cellspacing="0" width="100%">
       <thead>
         <tr>
-          <th>S.No</th>
           <th>Archive ID</th>
           <th>Email</th>
           <th>Status</th>
           <th>Created</th>
-          <th>Assign To</th>
+          <th>Assignd To</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -119,10 +118,6 @@
         "order": [[ 0, "desc" ]],
         "columns": [
           {
-              "data"  : "Sno",
-              "searchable" : false,
-          },
-          {
               "data"  : "id",
               "searchable" : false,
           },
@@ -139,7 +134,8 @@
               "searchable": false
           },
           {
-              "data"  : "support_user_name"
+              "data"  : "support_user_name",
+              "orderable" : false
           },
           {
               "title"         : "Actions",
@@ -151,12 +147,12 @@
           },
         ],
         "createdRow": function ( row, data, index ) {
-            $('td', row).eq(6).find('.detail').addClass( 'button-margin-left' );
+            $('td', row).eq(5).find('.detail').addClass( 'button-margin-left' );
             if (data["support_user_name"] == null ) {
-              $('td', row).eq(6).find('.unassign_button').css( 'display', 'none' );
-              $('td', row).eq(5).html('Not Assigned').addClass('color-red');
+              $('td', row).eq(5).find('.unassign_button').css( 'display', 'none' );
+              $('td', row).eq(4).html('Not Assigned').addClass('color-red');
             } else {
-              $('td', row).eq(6).find('.assign_button').css( 'display', 'none' );
+              $('td', row).eq(5).find('.assign_button').css( 'display', 'none' );
             }
         },
       });

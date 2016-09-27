@@ -998,19 +998,15 @@ class UserHelper {
             'data'            => array()
         );
 
-        $a = 1;
         foreach ($finalData as $fData) {
             $output['data'][] = [ 
-                'Sno' => $a, 
+                'id' => $fData["id"],
                 'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
                 'email' => $fData["email"], 
                 'gender' => $fData["gender"],
                 'createdAt' => ($fData["createdAt"]->format('m-d-Y')),
-                'original_user_id' => $fData["original_user_id"], 
-                'id' => $fData["id"],
+                'original_user_id' => $fData["original_user_id"]
             ];
-
-            $a++;
         }
 
         return $output;

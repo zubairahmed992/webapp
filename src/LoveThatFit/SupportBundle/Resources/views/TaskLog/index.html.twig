@@ -35,7 +35,7 @@
       <table id="example" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>S.No</th>
+              <th>Support Admin ID</th>
               <th>Support User Name</th>
               <th>Log Type</th>
               <th>Total Tasks</th>
@@ -62,7 +62,7 @@
     var min = $(".val-fast").text();
     var max = $(".val-slow").text();
     var avg = $(".val-avg").text();
-
+    
     var table = $('#example').DataTable({
        "processing": true, 
         "serverSide": true, 
@@ -76,7 +76,7 @@
         "order": [[ 0, "desc" ]],
         "columns": [
           {
-              "data"  : "Sno",
+              "data"  : "userid",
               "searchable" : false,
           },
           {
@@ -115,10 +115,6 @@
               "searchable"    : false,
               "defaultContent": ((typeof showDetailButton != "undefined" && showDetailButton == true) ? DetailPageButton : ''),
           },
-          {
-              "data"  : "userid",
-              "visible": false
-          },
         ],
         "createdRow": function ( row, data, index ) {
             if ( data['fast'] == min ) {
@@ -128,7 +124,7 @@
                 $('td', row).eq(5).addClass('task-td-red');
             } 
             if ( data['avrg'] == avg && data['avrg'] != "0.00") {
-                $('td', row).addClass('td-blue');
+                $('td', row).eq(6).addClass('task-td-blue');
             }
             
             fast = formatSecondsAsTime(data['fast'], 'hh:mm:ss');

@@ -92,6 +92,7 @@ class SupportAdminUserRepository extends EntityRepository
             ->from('LoveThatFitAdminBundle:SupportAdminUser', 's')
             ->where('s.isActive=:active')
             ->setParameter('active', 1)
+            ->orderBy("s.user_name", "asc")
             ->getQuery()
             ->getResult();
   }

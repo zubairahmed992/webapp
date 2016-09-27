@@ -116,14 +116,13 @@ class SupportTaskLogHelper {
 
         foreach ($finalData as $fData) {
             $output['data'][] = [ 
-                'Sno'       => $a,
+                'userid'    => $fData["id"],
                 'user_name' => $fData["user_name"],
                 'log_type'  => $fData["log_type"],
                 'slow'      => $fData["slow"],
                 'fast'      => $fData["fast"],
                 'avrg'      => number_format($fData["avrg"], 2, '.', ','),
-                'total'     => $fData["total"],
-                'userid'    => $fData["id"]
+                'total'     => $fData["total"]
             ];
 
             $a++;
@@ -195,7 +194,7 @@ class SupportTaskLogHelper {
         $a = 1;
         foreach ($finalData as $fData) {
             $output['data'][] = [ 
-                'Sno'          => $a,
+                'id'           => $fData["id"],
                 'log_type'     => $fData["log_type"],
                 'member_email' => $fData["member_email"],
                 'date'         => ($fData["start_time"] == "") ? "00-00-0000" : ($fData["start_time"]->format('m-d-Y')),

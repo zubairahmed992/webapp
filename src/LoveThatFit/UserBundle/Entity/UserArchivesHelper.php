@@ -446,10 +446,8 @@ class UserArchivesHelper {
             'data'            => array()
         );
         
-        $a = 1;
         foreach ($finalData as $fData) {
             $output['data'][] = [ 
-                'Sno'               => $a,
                 'id'                => $fData["id"],
                 'email'             => $fData["email"],
                 'status'            => "Pending",
@@ -458,10 +456,7 @@ class UserArchivesHelper {
                 )->format('%a days, %H:%i:%s'),
                 'support_user_name' => $fData["support_user_name"]
             ];
-
-            $a++;
         }
-
         return $output;
     }
 

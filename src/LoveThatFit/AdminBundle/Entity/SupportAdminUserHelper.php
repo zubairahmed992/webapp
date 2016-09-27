@@ -175,17 +175,17 @@ class SupportAdminUserHelper {
 	$cur_page = $page_number;
 
 	if ($page_number == 0 || $limit == 0) {
-	  $no_of_paginations = 0;
+		$no_of_paginations = 0;
 	} else {
-	  $no_of_paginations = ceil($rec_count / $limit);
+		$no_of_paginations = ceil($rec_count / $limit);
 	}
 	return array('products' => $entity,
-	  'rec_count' => $rec_count,
-	  'no_of_pagination' => $no_of_paginations,
-	  'limit' => $cur_page,
-	  'per_page_limit' => $limit,
-	  'sort'=>$sort,
-	  'retailers' => $entity,
+		'rec_count' => $rec_count,
+		'no_of_pagination' => $no_of_paginations,
+		'limit' => $cur_page,
+		'per_page_limit' => $limit,
+		'sort'=>$sort,
+		'retailers' => $entity,
 	);
   }
 
