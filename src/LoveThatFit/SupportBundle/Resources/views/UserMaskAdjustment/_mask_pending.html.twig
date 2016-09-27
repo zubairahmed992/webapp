@@ -276,10 +276,10 @@
 
     <div>
         <input type="hidden" id="oldtime" value="" data-value=""  />
-        <button id="start">Start</button>
+        <!--<button id="start">Start</button>-->
         <input type="hidden" id="newtime" value="" data-value=""  />
         <input type="hidden" class="diff" value="" data-value=""  />
-        <button id="end">End</button>
+        <!--<button id="end">End</button>-->
     </div>
 
 
@@ -404,7 +404,7 @@ $(document).ready(function(){
         //$(this).hide();
     });
 
-    $("#end").click(function(){
+    function endtimer(){
         $("#newtime").val(timer);
         $(this).attr('disabled','disabled');
         $time = diff();
@@ -423,7 +423,15 @@ $(document).ready(function(){
                 alert("Please press end button");
             }
         });
+
+    }
+    $("#end").click(function(){
+        endtimer();
     });
+
+
+
+
 
     $("#comment_btn").click(function(){
         var $mem_email = $("#entity_email").val();
