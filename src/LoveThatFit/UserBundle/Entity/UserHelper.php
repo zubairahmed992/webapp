@@ -771,6 +771,19 @@ class UserHelper {
         $this->container->get('user.helper.user')->saveUser($user);
          return true;      
   }
+  public function makeLike($user, $product_item){
+
+        foreach($user->getProductItems() as $pi){
+            if ($pi->getId()==$product_item->getId()){
+                return true;
+            }
+        }
+        $user->addProductItem($product_item);
+        $product_item->addUser($user);
+        $this->container->get('admin.helper.productitem')->save($product_item);
+        $this->container->get('user.helper.user')->saveUser($user);
+        return true;
+  }
 
   //Autocomplete method
   #------------------------------------------------------
