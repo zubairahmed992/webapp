@@ -230,14 +230,30 @@ class ClothingTypeHelper {
         foreach($cat_list as $key=>$value){
             if($value->getGender()=='f'){
                 #array_push($cat_array['woman'],array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url'));
-                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=> $base_path.$value->getWebPath()));
+                array_push($cat_array['woman'],array('clothing_type'=>$value->getName(), 'caption'=>$this->getCaptionEncoded($value->getName()), 'image'=> $base_path.$value->getWebPath()));
             }else{
                 #$cat_array['man'][$value->getName()]=array('id'=> $value->getId(), 'clothing_type'=>$value->getName(), 'target'=>$value->getTarget(),'caption'=>'caption', 'image'=>'image url');
                 array_push($cat_array['man'],array('clothing_type'=>$value->getName(), 'caption'=>'caption', 'image'=>  $base_path.$value->getWebPath()));
            }
         }
         return $gender?$cat_array[$gender=='m'?'man':'woman']:$cat_array;        
-    }  
+    }
+    private function getCaptionEncoded($caption){
+        if($caption == 'tank_knit'){
+            $caption = "tank tops";
+        }
+        if($caption == 'tee_knit'){
+            $caption = "tee shirts";
+        }
+        $caption_start = explode("_",$caption);
+        if(count($caption_start) > 1){
+            $caption_end = ucfirst($caption_start[0])." ".ucfirst($caption_start[1]);
+
+        }else{
+            $caption_end = ucfirst($caption_start[0]);
+        }
+        return $caption_end;
+    }
     
     #-----------------Find By Clothing Type By Gender---------------------------------# 
     public function findClothingTypsByGender($gender){
