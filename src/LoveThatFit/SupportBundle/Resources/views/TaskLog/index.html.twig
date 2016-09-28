@@ -1,26 +1,26 @@
 {% extends 'LoveThatFitSupportBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Task Logs</li>
+   <li class="active">Tasks Logs</li>
 {% endblock %}
 
 
 {% block body %}
 <div class="p_listing">
     <div class="clearfix"></div>
-      <h1 style="float:left;">Task Logs</h1>
+      <h1 style="float:left;">Tasks Logs</h1>
       <div class="clearfix"></div>
       <div class="btn_wrapper2">
         <table class="task_table">
         <tr>
-          <td class="td-orange">Total Tasks</td>
+          <td class="td-orange">Tasks -Total</td>
           <td class="td-orange">{{supportData[0]['total']}}</td>
         </tr>
         <tr>
-          <td class="td-green">Fastest Time (hh:mm:ss)</td>
+          <td class="td-green">Fastest (hh:mm:ss)</td>
           <td class="td-green val-fast">{{supportData[0]['fast']}}</td>
         </tr>
         <tr>
-          <td class="td-red">Slowest Time (hh:mm:ss)</td>
+          <td class="td-red">Slowest (hh:mm:ss)</td>
           <td class="td-red val-slow">{{supportData[0]['slow']}}</td>
         </tr>
         <tr>
@@ -39,9 +39,9 @@
               <th>Support User Name</th>
               <th>Log Type</th>
               <th>Total Tasks</th>
-              <th>Fastest Duration (hh:mm:ss)</th>
-              <th>Slowest Duration (hh:mm:ss)</th>
-              <th>Average Duration (hh:mm:ss)</th>
+              <th>Fastest (hh:mm:ss)</th>
+              <th>Slowest (hh:mm:ss)</th>
+              <th>Average (hh:mm:ss)</th>
               <th>Actions</th>
             </tr>
           </thead>

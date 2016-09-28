@@ -1,13 +1,13 @@
 {% extends 'LoveThatFitSupportBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Individual Task Logs</li>
+   <li class="active">Individual Tasks Log</li>
 {% endblock %}
 
 
 {% block body %}
 <div class="p_listing">
     <div class="clearfix"></div>
-      <h1 style="float:left;">Single Task Logs</h1>
+      <h1 style="float:left;">Individual Tasks Log</h1>
       <div class="clearfix"></div>
       <div class="btn_wrapper2">
         <table class="task_table">
@@ -16,15 +16,15 @@
           <td class="td-black">{{supportData[0]['user_name']}}</td>
         </tr>
         <tr>
-          <td class="td-orange">Total Tasks</td>
+          <td class="td-orange">Tasks -Total</td>
           <td class="td-orange">{{supportData[0]['total']}}</td>
         </tr>
         <tr>
-          <td class="td-green">Fastest Time (hh:mm:ss)</td>
+          <td class="td-green">Fastest (hh:mm:ss)</td>
           <td class="td-green val-fast">{{supportData[0]['fast']}}</td>
         </tr>
         <tr>
-          <td class="td-red">Slowest Time (hh:mm:ss)</td>
+          <td class="td-red">Slowest (hh:mm:ss)</td>
           <td class="td-red val-slow">{{supportData[0]['slow']}}</td>
         </tr>
         <tr>
@@ -32,11 +32,11 @@
           <td class="td-blue val-avg">{{supportData[0]['avrg']|number_format(2, '.', ',')}}</td>
         </tr>
         <tr>
-          <td class="td-red-light">Total Above Average</td>
+          <td class="td-red-light">Above Average - Total</td>
           <td class="td-red-light">{{supportData[0]['above_avg']}}</td>
         </tr>
         <tr>
-          <td class="td-green-light">Total Below Average</td>
+          <td class="td-green-light">Below Average - Total</td>
           <td class="td-green-light">{{supportData[0]['below_avg']}}</td>
         </tr>
         </table>
@@ -49,7 +49,7 @@
           <tbody>
               <tr>
                 <td>
-                  <label style='display:block;'>Support Admin Users:</label>
+                  <label style='display:block;'>Calibrators:</label>
                 </td>
                 <td>
                   <div class="inner-addon right-addon">
@@ -75,7 +75,7 @@
               <th>Date</th>
               <th>Start Time</th>
               <th>End Time</th>
-              <th>Total Duration (hh:mm:ss)</th>
+              <th>Task Duration (hh:mm:ss)</th>
             </tr>
           </thead>
           <tbody>

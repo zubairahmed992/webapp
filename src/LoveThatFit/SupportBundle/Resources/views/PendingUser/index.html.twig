@@ -21,7 +21,7 @@
     <table border="0" cellspacing="5" cellpadding="5" style="float:right;">
       <tbody>
         <tr>
-          <td><label style='display:block;'>Time Duration:</label></td>
+          <td><label style='display:block;'>Refresh After:</label></td>
           <td><div class="inner-addon right-addon">
             <select class="form-control" name="time_duration" id="time_duration">
               {% for i in 1..5 %}
@@ -38,8 +38,8 @@
           <th>Archive ID</th>
           <th>Email</th>
           <th>Status</th>
-          <th>Created</th>
-          <th>Assignd To</th>
+          <th>Created Since</th>
+          <th>Assigned To</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -52,7 +52,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel">Select Support Admin</h4>
+          <h4 class="modal-title" id="myModalLabel">Select Support Admin User</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -74,7 +74,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Unassigned</h4>
                 </div>
                 <div class="modal-body">
                     <p>Do you want to proceed?</p>
