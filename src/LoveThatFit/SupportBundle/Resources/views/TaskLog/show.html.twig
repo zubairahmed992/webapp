@@ -32,12 +32,12 @@
           <td class="td-blue val-avg">{{supportData[0]['avrg']|number_format(2, '.', ',')}}</td>
         </tr>
         <tr>
-          <td class="td-green-light">Total Above Average</td>
-          <td class="td-green-light">{{supportData[0]['above_avg']}}</td>
+          <td class="td-red-light">Total Above Average</td>
+          <td class="td-red-light">{{supportData[0]['above_avg']}}</td>
         </tr>
         <tr>
-          <td class="td-red-light">Total Below Average</td>
-          <td class="td-red-light">{{supportData[0]['below_avg']}}</td>
+          <td class="td-green-light">Total Below Average</td>
+          <td class="td-green-light">{{supportData[0]['below_avg']}}</td>
         </tr>
         </table>
       </div>
@@ -141,11 +141,11 @@
         ],
         "createdRow": function ( row, data, index ) {
             if ( data['duration'] > avg && data['duration'] < max ) {
-              $('td', row).addClass('td-green-light');
+              $('td', row).addClass('td-red-light');
             } else if ( data['duration'] == min ) {
               $('td', row).addClass('td-green');
             } else if ( data['duration'] < avg && data['duration'] > min ) {
-              $('td', row).addClass('td-red-light');
+              $('td', row).addClass('td-green-light');
             } else if ( data['duration'] == max ) {
               $('td', row).addClass('td-red');
             } else if ( data['duration'] == avg && data['duration'] != "") {
