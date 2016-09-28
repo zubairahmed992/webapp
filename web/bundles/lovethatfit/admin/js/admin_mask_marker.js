@@ -1551,6 +1551,11 @@ function onMouseDown(event) {
                             $("#img_path_json").attr("value", getPathArrayJson());
 
                                 setTimeout(function(){ to_image(); }, 500);
+                                
+                                //alert("zoom sdfafasdfasfasdfasdfasdfdasf");
+                                ///Time recording end
+                                //endtimer();
+                                
                             }else{
 
                             $("#img_path_json").attr("value", getPathArrayJson());
@@ -1580,7 +1585,10 @@ function onMouseDown(event) {
 
 
                             console.log("scr1_but_save_icon");
-
+                                
+                                ///Time recording end
+                                //alert("sdfafasdfasfasdfasdfasdfdasf");
+                                //endtimer();
                           }
                         }
 
@@ -2218,19 +2226,9 @@ function post_img(){
 
                       if(obj_url.status == "check"){
 
-                         alert("All Done! - Reloading...");
+                         endtimer();
 
-												 var curr_url = window.location + '';
-
-												 curr_url_array = curr_url.split('/');
-												 if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
-													 curr_url = curr_url.split('/refresh')[0];
-													 window.location.assign(curr_url)
-												 }else{
-												 	window.location.reload();
-											   }
-
-												 //alert(curr_url);
+                                    //alert(curr_url);
 
 
                          //window.location.reload();
