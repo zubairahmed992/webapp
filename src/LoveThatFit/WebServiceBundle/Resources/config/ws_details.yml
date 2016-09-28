@@ -302,9 +302,9 @@ ws_product_like:
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
      product_id: 512   
-     item_id: 4126
+     item_id: [4126,4127]
      like: true
-   request_type: post   
+   request_type: post
 #______________________
 ws_user_liked_products:
    pattern:  /ws/user_liked_products

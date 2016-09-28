@@ -6,6 +6,7 @@ dashboard_banner:
     index: 1
     type: brand
     id: 63
+    product_ids: 0
     disable: false
   2:
     image: uploads/ltf/products/banner/recommendation_image_2@2x.png
@@ -14,6 +15,7 @@ dashboard_banner:
     index: 2
     type: brand
     id: 54
+    product_ids: 0
     disable: false
   3:
     image: uploads/ltf/products/banner/recommendation_image_-3@2x.png
@@ -22,12 +24,41 @@ dashboard_banner:
     index: 3
     type: brand
     id: 52
+    product_ids: 0
     disable: false
-  4:
+  4:    
     image: uploads/ltf/products/banner/recommendation_image_4@2x.png
     caption: Trend Update: Downtown Day2Night
     price: 40
     index: 3
     type: retailer
     id: 15
+    product_ids: 0
     disable: false
+  5:
+    image: uploads/ltf/products/banner/1111.jpg
+    caption: Stylist style 1111
+    price: 40
+    index: 3
+    type: stylist_recommendations
+    id: 0
+    product_ids: [546,538, 537]
+    disable: false
+  6:
+    image: uploads/ltf/products/banner/2222.jpg
+    caption: Stylist style 2222
+    price: 40
+    index: 3
+    type: stylist_recommendations
+    product_ids: [548, 539, 554]
+    id: 0
+    disable: false
+  7:
+    image: uploads/ltf/products/banner/3333.jpg
+    caption: Stylist style 3333
+    price: 40
+    index: 3
+    type: stylist_recommendations
+    product_ids: [549,540,553]
+    id: 0
+    disable: false    

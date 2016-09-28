@@ -573,8 +573,92 @@ class WebServiceHelper {
         return $this->response_array(true, "favourite product ids", true, $product_ids);        
     }
     #------------------------------------------------------------------------------
-
      public function likeUnlikeItem($user, $ra) {
+
+       if ($ra['like'] == 'true') {
+         if (count($user->getProductItems()) < 25) {# check limit
+           $default_item = null;
+           if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+             if(!is_array($ra['item_id'])){
+               $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+               $this->container->get('user.helper.user')->makeLike($user, $default_item);
+             }else{
+               foreach($ra['item_id'] as $items){
+                 $default_item = $this->container->get('admin.helper.productitem')->find($items);
+                 $this->container->get('user.helper.user')->makeLike($user, $default_item);
+               }
+             }
+           }else{
+             $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+             $default_item = $p->getDefaultItem($user);
+             $this->container->get('user.helper.user')->makeLike($user, $default_item);
+           }
+           return $this->response_array(true, "Updated");
+         } else {
+           return $this->response_array(false, "Favourite items reached max limit");
+         }
+       }else{
+
+         ##-------- product_id
+         if (array_key_exists('product_id', $ra) && $ra['product_id'] != null) {
+           $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+           foreach ($user->getProductItems() as $pi) {
+             if ($pi->getProduct()->getId() == $p->getId()) { #remove all items of the same product
+               $pi->removeUser($user);
+               $user->removeProductItem($pi);
+               $this->container->get('admin.helper.productitem')->save($pi);
+               $this->container->get('user.helper.user')->saveUser($user);
+             }
+           }
+
+         }
+         if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+             ##----------items_id array
+             foreach ($user->getProductItems() as $pi) {
+               if ($pi->getId() == $ra['item_id']){
+               $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+               $user->removeProductItem($pi);
+                 $pi->removeUser($user);
+                $this->container->get('user.helper.user')->saveUser($user);
+                 $this->container->get('admin.helper.productitem')->save($pi);
+               }
+             }
+          }
+         ###############################################################
+         ########################################################
+         return $this->response_array(true, "Item removed");
+       }
+
+
+     }
+
+  #------------------------------------------------------------------------------
+  public function __likeUnlikeItem($user, $ra) {
+    if ($ra['like'] == 'true') {
+      if (count($user->getProductItems()) < 25) {# check limit
+        $default_item = null;
+        if (array_key_exists('item_id', $ra) && $ra['item_id'] != null && !is_array($ra['item_id'])) {
+          $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+        }
+        if(array_key_exists('item_id', $ra) && $ra['item_id'] != null && is_array($ra['item_id'])){
+          foreach($ra['item_id'] as $items){
+            $default_item = $this->container->get('admin.helper.productitem')->find($items["item_id"]);
+            $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+          }
+        }
+        if (!$default_item) {
+          $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+          $default_item = $p->getDefaultItem($user);
+        }
+
+        $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+        return $this->response_array(true, "Updated");
+      } else {
+        return $this->response_array(false, "Favourite items reached max limit");
+      }
+    }
+  }
+     public function _likeUnlikeItem($user, $ra) {
          #$default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
          #$this->container->get('user.helper.user')->makeFavourite($user, $default_item);
          
