@@ -1,9 +1,11 @@
 {% if products %}
+    <h4 id="heading"></h4>
 <table class="table table-condensed table-bordered  table-hover" >
     <tr style="background-color: #F2F2F2;font-size:12px;">
         <th>Id</th>
         <th>Clothing Type</th>
         <th>Name</th>
+        <th>Color</th>
         <th>Size</th>
         <th>Fits</th>
         <th>Fit Index</th>
@@ -15,6 +17,7 @@
         <td style="padding: 2px; padding-right: 20px">{{id}}</td>
         <td>{{p.clothing_type}}</td>
         <td>{{p.name}}</td>
+        <td>{{p.color}}</td>
         <td>{{p.size}}</td>
         <td>{{p.fits}}</td>
         <td>{{p.fit_index}}</td>

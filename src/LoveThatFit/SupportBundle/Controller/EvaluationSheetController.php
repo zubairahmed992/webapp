@@ -51,6 +51,7 @@ $arr=array();
             $algo->setProduct($p);
 
                 $fb = $algo->getFeedBackForSizeTitle($c->getProductItem()->getProductSize()->getTitle());
+                $product_color = $c->getProductItem()->getProductColor()->getTitle();
                 if (is_array($fb) && array_key_exists('feedback', $fb)) {
                     $pa[$c->getId()] = array(
                         'product_id' => $p->getId(),
@@ -59,6 +60,7 @@ $arr=array();
                         'clothing_type' => $p->getClothingType()->getName(),
                         #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
                         'size'=> $fb["feedback"]['title'],
+                        'color'=> $product_color,
                         'serial'=>$serial,
                         'fits'=>$fb["feedback"]['fits'],
                         'recommended_size'=> '',
@@ -73,6 +75,52 @@ $arr=array();
         }
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', array('products' => $pa,'user' => $user));
     }
+
+    #-------------------------------------------------- Favourite products of user
+    public function favouriteAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+        $favourite=$user->getProductItems();
+        $pa= array();
+
+        $algo = new FitAlgorithm2($user);
+        $serial = 1;
+        $arr=array();
+//        foreach ($cart as $c) {
+//            $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
+//        }
+//        return new response(json_encode($arr));
+//        die;
+        foreach ($favourite as $c) {
+            $p=$c->getProduct();
+            $algo->setProduct($p);
+
+            $fb = $algo->getFeedBackForSizeTitle($c->getProductSize()->getTitle());
+            $product_color = $c->getProductColor()->getTitle();
+            if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                $pa[$c->getId()] = array(
+                    'product_id' => $p->getId(),
+                    'name' => $p->getName(),
+                    'fit_index'=>$fb["feedback"]['fit_index'],
+                    'clothing_type' => $p->getClothingType()->getName(),
+                    #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
+                    'size'=> $fb["feedback"]['title'],
+                    'color'=> $product_color,
+                    'serial'=>$serial,
+                    'fits'=>$fb["feedback"]['fits'],
+                    'recommended_size'=> '',
+                    'recommended_fit_index'=>'',
+                );
+                if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                    $pa[$c->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                    $pa[$c->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                }
+            }
+            $serial++;
+        }
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', array('products' => $pa,'user' => $user));
+    }
+
     #--------------------------------------------------
     private function test_demo_data($user_id){
         $user = $this->get('user.helper.user')->find($user_id);
@@ -93,6 +141,7 @@ $arr=array();
                         'fit_index'=>$fb['recommendation']['fit_index'],
                         'clothing_type' => $p->getClothingType()->getName(),
                         'size'=> $fb["recommendation"]['title'],
+                        'color'=> $p->getdisplayProductColor()->getTitle(),
                         'serial'=>$serial,
                         'fits'=>$fb["recommendation"]['fits'],
                         'recommended_size'=> '-',
@@ -108,6 +157,7 @@ $arr=array();
                     'clothing_type' => $p->getClothingType()->getName(),
                     #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
                     'size'=> $fb["feedback"]['title'],
+                    'color'=> $p->getdisplayProductColor()->getTitle(),
                     'serial'=>$serial,
                     'fits'=>$fb["feedback"]['fits'],
                     'recommended_size'=> '',
