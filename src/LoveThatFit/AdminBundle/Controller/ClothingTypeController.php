@@ -36,7 +36,7 @@ class ClothingTypeController extends Controller {
     public function newAction() {
 
         $entity = $this->get('admin.helper.ClothingType')->createNew();
-        $form = $this->createForm(new ClothingTypes('add'), $entity);
+        $form = $this->createForm(new ClothingTypes('add',$entity), $entity);
         return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
                     'form' => $form->createView()));
     }
@@ -44,7 +44,7 @@ class ClothingTypeController extends Controller {
     //-------------------------------Save Clothing type in database-----------------------------------------------------------
     public function createAction(Request $request) {
         $entity = $this->get('admin.helper.ClothingType')->createNew();
-        $form = $this->createForm(new ClothingTypes('add'), $entity);
+        $form = $this->createForm(new ClothingTypes('add',$entity), $entity);
         $form->bind($request);
         if ($entity->getName() != null and $form->isValid()) {
             $message_array = $this->get('admin.helper.ClothingType')->save($entity);
@@ -69,7 +69,8 @@ class ClothingTypeController extends Controller {
         if(!$entity){       
         $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
         }else{
-        $form = $this->createForm(new ClothingTypes('edit'), $entity);
+        $form = $this->createForm(new ClothingTypes('edit',$entity), $entity);
+            //echo $entity->getTarget();die;
         $form->get('target')->setData($entity->getTarget());
         $deleteForm = $this->createForm(new DeleteType(), $entity);
         }
@@ -87,7 +88,7 @@ class ClothingTypeController extends Controller {
         {
             $this->get('session')->setFlash('warning', 'The ClothingType not found!');
         }else{
-        $form = $this->createForm(new ClothingTypes('edit'), $entity);
+        $form = $this->createForm(new ClothingTypes('edit',$entity), $entity);
         $form->get('target')->setData($entity->getTarget());
         $form->bind($request);
 
