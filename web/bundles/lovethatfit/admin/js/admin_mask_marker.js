@@ -1218,7 +1218,8 @@ function onMouseDown(event) {
 			//segment = null;
                         if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
 
-
+                           vline.visible = false; 
+                            
                            main_layer.pivot = new Point(scr_width,scr_height - diff_dv);
                            //pos_main_layer = main_layer.position;
                            //alert(main_layer.position);
@@ -1880,7 +1881,12 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
 
 
 
-
+var vline = new Path({
+    segments:[[view.size.width/2, 0], [view.size.width/2, view.size.height]],
+    strokeColor:'red',
+    strokeWidth:1,
+    opacity:0.5
+});
 
 
 
@@ -1890,12 +1896,25 @@ function onKeyDown(event) {
 	if(curr_view == "zoomed" && event.key == "control"){
 		hand_cursor_hit();
 	}
+        if(event.key == "q"){
+            trans_bg.opacity = 0;
+        }
 }
 
 function onKeyUp(event) {
 	if(curr_view == "zoomed" && event.key == "control"){
 		edit_shape_hit();
 	}
+        if(curr_view != "zoomed" && event.key == "c"){
+            if(vline.visible){
+                vline.visible = false;
+            }else{
+                vline.visible = true;
+            }
+        }
+        if(event.key == "q"){
+            trans_bg.opacity = 0.85;
+        }
 }
 
 
