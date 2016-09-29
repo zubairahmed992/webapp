@@ -196,7 +196,7 @@ $(document).ready(function(){
     <h3>Shopping Cart Testing Interface</h3>
     <div style="float: left">
 
-        <a id="user_edit_link" class="user_edit_link" href="#">User</a>
+        <h6>User</h6>
         <form id="userForm" method="post" {{ form_enctype(userForm) }}>
         {{ form_errors(userForm) }}
         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
@@ -205,7 +205,7 @@ $(document).ready(function(){
         </form>                 
     </div>
     <div style="float: left">
-        <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
+        <h6>Product</h6>
         <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
         {{ form_errors(productForm) }}
         &nbsp;{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}
