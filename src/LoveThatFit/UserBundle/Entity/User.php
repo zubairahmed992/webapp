@@ -2075,7 +2075,9 @@ class User implements UserInterface, \Serializable {
             $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt);            
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $hip_height = $this->measurement->bottom_placement - 94;
-            $this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
+            $x_calculation=$hip_height-($hip_height * $resize_ratio_jt); # 0.08% value calculation
+            #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
+            $this->measurement->bottom_placement = ($hip_height  - $x_calculation) + 6;
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
             return array(
