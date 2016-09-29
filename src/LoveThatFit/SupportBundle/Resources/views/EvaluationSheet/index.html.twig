@@ -6,21 +6,21 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     Evaluation Product Sheet
-    <a id='print' class='print' href="#">Print >></a> or
-    <a id='download' class='download' href="#" target="_parent"> CSV >></a>
+    <a id='print' class='print' href="javascrip:;">Print >></a> or
+    <a id='download' class='download' href="javascript:;" target="_parent"> CSV >></a>
     
     <br><br>
 <h4> Product list with recomended sizes & fit index</h4>
 <script>
 $(document).ready(function(){
-  $( "select[id='algorithm_User']" ).change(function() {
+    $( "select[id='algorithm_User']" ).change(function() {
         $("#user_id").val(this.value);
         $('#keyword').val($('option:selected', $(this)).text());
   });
   
 
-//-----------------------------------------------------------
- $('a.compare_with_product_ids').click(function (event){
+    //-----------------------------------------------------------
+    $('a.compare_with_product_ids').click(function (event){
      event.preventDefault();
 
      var ar = {
@@ -53,8 +53,8 @@ $(document).ready(function(){
      }
 
      //return false; //for good measure
-});
-//-----------------------------------------------------------
+    });
+    //-----------------------------------------------------------
     $('a.cart').click(function (event){
         event.preventDefault();
 
@@ -89,7 +89,7 @@ $(document).ready(function(){
 
         //return false; //for good measure
     });
-//-----------------------------------------------------------
+    //-----------------------------------------------------------
     $('a.favourite').click(function (event){
         event.preventDefault();
 
@@ -129,39 +129,39 @@ $(document).ready(function(){
     $('a.print').click(function (event){
         event.preventDefault();
 
-        var ar = {
-            user_id:$("#user_id").val(),
-            page:$("#sel_page").val(),
-            limit: $("#sel_limit").val(),
-            ids: $("#txt_id_range").val()};
+        if ($("#user_id").val() != "") {
+            var ar = {
+                user_id:$("#user_id").val(),
+                page:$("#sel_page").val(),
+                limit: $("#sel_limit").val(),
+                ids: $("#txt_id_range").val()};
 
-        var compare_url = "evaluation_sheet/print";
-
-        var form = $('<form action="' + compare_url + '" method="post">' +
-                '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="page"  id="page" value="' + $("#sel_page").val() + '" /><input type="hidden" name="limit"  id="limit" value="' + $("#sel_limit").val() + '" /><input type="hidden" name="ids"  id="ids" value="474, 475, 479, 472, 476, 540, 473, 541" />' +
-                '</form>');
-        $('body').append(form);
-        form.submit();
-
+            var compare_url = "evaluation_sheet/print";
+            var form = $('<form action="' + compare_url + '" method="post" target="_blank">' +
+                    '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="page"  id="page" value="' + $("#sel_page").val() + '" /><input type="hidden" name="limit"  id="limit" value="' + $("#sel_limit").val() + '" /><input type="hidden" name="ids"  id="ids" value="474, 475, 479, 472, 476, 540, 473, 541" />' +
+                    '</form>');
+            $('body').append(form);
+            form.submit();
+        }
     });
 
     $('a.download').click(function (event){
         event.preventDefault();
+        if ($("#user_id").val() != "") {
+            var ar = {
+                user_id:$("#user_id").val(),
+                page:$("#sel_page").val(),
+                limit: $("#sel_limit").val(),
+                ids: $("#txt_id_range").val()};
 
-        var ar = {
-            user_id:$("#user_id").val(),
-            page:$("#sel_page").val(),
-            limit: $("#sel_limit").val(),
-            ids: $("#txt_id_range").val()};
-
-        var compare_url = "evaluation_sheet/csv";
-//' + $("#txt_id_range").val() + '
-        var form = $('<form action="' + compare_url + '" method="post">' +
-                '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="page"  id="page" value="' + $("#sel_page").val() + '" /><input type="hidden" name="limit"  id="limit" value="' + $("#sel_limit").val() + '" /><input type="hidden" name="ids"  id="ids" value="474, 475, 479, 472, 476, 540, 473, 541" />' +
-                '</form>');
-        $('body').append(form);
-        form.submit();
-
+            var compare_url = "evaluation_sheet/csv";
+            //' + $("#txt_id_range").val() + '
+            var form = $('<form action="' + compare_url + '" method="post">' +
+                    '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="page"  id="page" value="' + $("#sel_page").val() + '" /><input type="hidden" name="limit"  id="limit" value="' + $("#sel_limit").val() + '" /><input type="hidden" name="ids"  id="ids" value="474, 475, 479, 472, 476, 540, 473, 541" />' +
+                    '</form>');
+            $('body').append(form);
+            form.submit();
+        }
     });
 
 });

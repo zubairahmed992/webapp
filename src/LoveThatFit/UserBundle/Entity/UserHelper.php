@@ -1030,4 +1030,8 @@ class UserHelper {
         return $this->repo->countAllUserRecord();
     }
 
+    public function findAllUsersAsc()
+    {
+        return $this->repo->findAllUsersAsc();
+    }
 }

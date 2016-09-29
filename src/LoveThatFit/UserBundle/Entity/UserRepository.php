@@ -422,5 +422,13 @@ class UserRepository extends EntityRepository {
         }
         return $getResult?$preparedQuery->getResult():$preparedQuery; 
     }
+
+    public function findAllUsersAsc()
+    {
+        $query = $this->getEntityManager()
+                ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us ORDER BY us.email ASC');
+        //echo $query->getSql();
+        return $query->getResult();
+    }
 }
 

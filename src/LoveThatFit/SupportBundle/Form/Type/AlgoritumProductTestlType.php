@@ -14,6 +14,10 @@ class AlgoritumProductTestlType extends AbstractType
     {
         $builder ->add('Product', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Product',
+                    'query_builder' => function ($repository) {
+                            return $repository->createQueryBuilder('p')
+                            ->orderBy('p.name', 'ASC');
+                            },
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'name',

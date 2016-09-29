@@ -17,7 +17,7 @@ class EvaluationSheetController extends Controller {
     #--------------------------------------------------
     public function indexAction() {
         $userForm = $this->createForm(new AlgoritumTestlType());
-        $users = $this->get('user.helper.user')->findAll();
+        $users = $this->get('user.helper.user')->findAllUsersAsc();
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:index.html.twig', array(
             'userForm' => $userForm->createView(),
             'users' => $users,
