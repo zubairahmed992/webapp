@@ -17,7 +17,7 @@ class ClothingTypes extends AbstractType {
         $builder->add('name', 'text');
         $builder->add('target', 'choice', array(
             'data'	=> $this->target,
-            'choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress'),
+            'choices'=> array('top'=>'top','bottom'=>'bottom', 'dress'=>'dress'),
             'multiple' => false,
             'expanded' => false
             ));
