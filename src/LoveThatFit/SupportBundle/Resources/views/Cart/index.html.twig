@@ -15,26 +15,30 @@ $(document).ready(function(){
         $("#user_id").val(this.value);
         $('#keyword').val($('option:selected', $(this)).text());
     });
+    
     $( "select[id='algorithm_Product']" ).change(function() {
-        $('#error_attribute').html('');    
-        $("#product_id").val(this.value);
-        $('#product_keyword').val($('option:selected', $(this)).text());
-        var show_url = "cart/get_sizes_and_colors/" + this.value ;
-
-        $("#size_id").html("<option value =''>Select Size</option>");
-        $("#color_id").html("<option value =''>Select Color</option>");
-        $(".ajax_loader").show();
-        $.getJSON(show_url, function(data){
-            $.each(data.size, function (index, value) {
-                    $('#size_id').css('display','block');
-                    $("#size_id").append("<option value ='"+index+"'>"+value+"</option>");
+        $('#error_attribute').html('');
+        if (this.value != "") {
+            $("#product_id").val(this.value);
+            $('#product_keyword').val($('option:selected', $(this)).text());
+            var show_url = "cart/get_sizes_and_colors/" + this.value ;
+            
+            $("#size_id").html("<option value =''>Select Size</option>");
+            $("#color_id").html("<option value =''>Select Color</option>");
+            $(".ajax_loader").show();
+            
+            $.getJSON(show_url, function(data){
+                $.each(data.size, function (index, value) {
+                        $('#size_id').css('display','block');
+                        $("#size_id").append("<option value ='"+index+"'>"+value+"</option>");
+                });
+                $.each(data.color, function (index, value) {
+                    $('#color_id').css('display','block');
+                    $("#color_id").append("<option value ='"+index+"'>"+value+"</option>");
+                });
+                $(".ajax_loader").hide();
             });
-            $.each(data.color, function (index, value) {
-                $('#color_id').css('display','block');
-                $("#color_id").append("<option value ='"+index+"'>"+value+"</option>");
-            });
-            $(".ajax_loader").hide();
-        });
+        }
     });
     $( "select[id='size_id']" ).change(function() {
         $("#size").val(this.value);
