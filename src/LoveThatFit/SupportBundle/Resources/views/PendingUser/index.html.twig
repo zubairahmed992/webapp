@@ -149,8 +149,11 @@
         "createdRow": function ( row, data, index ) {
             $('td', row).eq(5).find('.detail').addClass( 'button-margin-left' );
             if (data["support_user_name"] == null ) {
+              //hide unassign button
               $('td', row).eq(5).find('.unassign_button').css( 'display', 'none' );
               $('td', row).eq(4).html('Not Assigned').addClass('color-red');
+              //hide show button
+              $('td', row).eq(5).find('.detail').css( 'display', 'none' );
             } else {
               $('td', row).eq(5).find('.assign_button').css( 'display', 'none' );
             }
