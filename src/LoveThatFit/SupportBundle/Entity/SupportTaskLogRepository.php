@@ -208,7 +208,7 @@ class SupportTaskLogRepository extends EntityRepository{
     ) {
         return $this->getEntityManager()
                 ->createQueryBuilder()
-                ->select("t.id")
+                ->select("t.id, t.start_time")
                 ->from('LoveThatFitSupportBundle:SupportTaskLog', 't')
                 ->where('t.archive=:archive')
                 ->andwhere('t.support_admin_user=:support_admin_user')

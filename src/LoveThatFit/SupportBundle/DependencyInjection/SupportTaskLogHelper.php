@@ -255,16 +255,22 @@ class SupportTaskLogHelper {
     
     public function update($data)
     {
-        $end_time   = date("Y-m-d H:i:s");
-        $start_time = date("Y-m-d H:i:s", 
-            strtotime($end_time) - $data['duration']
-        );
-
+        $end_time = date("Y-m-d H:i:s");
         $entity = $this->repo->find($data['id']);
+
         $entity->setSupportUserName($data['support_user_name']);
         $entity->setDuration($data['duration']);
         $entity->setLogType($data['log_type']);
-        $entity->setStartTime(new \DateTime($start_time));
+
+        if ($data['start_time'] == '') {
+            $start_time = date("Y-m-d H:i:s", 
+                strtotime($end_time) - $data['duration']
+            );
+            $entity->setStartTime(new \DateTime($start_time));
+        } else {
+            $entity->setStartTime($data['start_time']);
+        }
+        
         $entity->setEndTime(new \DateTime($end_time));
         
         $this->em->persist($entity);

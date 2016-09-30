@@ -90,10 +90,18 @@ class WSMiscController extends Controller {
                 $decoded['supportUsers'],
                 $decoded['member_email']
             );
+
         if (!empty($getID)) {
             $decoded['id'] = $getID[0]['id'];
+            if ($getID[0]['start_time'] == "") {
+                $decoded['start_time'] = '';
+            } elseif($getID[0]['start_time'] != "" && $getID[0]['start_time']->format("H:i:s") == "00:00:00") {
+                $decoded['start_time'] = '';
+            } else {
+                $decoded['start_time'] = $getID[0]['start_time'];
+            }
         }
-        
+
         $this->get('support.helper.supporttasklog')->update($decoded);
         return new Response("1");
 	}
