@@ -12,7 +12,7 @@
 .hide_me {
     display:none;
 }
-#page_wrap {
+/*#page_wrap {
  margin:0 auto;
  text-align:center;
  position:fixed;
@@ -21,14 +21,34 @@
  display: none;
  background:url(../images/trans_dot_65.png) right top repeat;
  z-index: 12000;
+}*/
+#page_wrap {
+    margin:0 auto;
+    text-align:center;
+    position:fixed !important;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background:rgba(0,0,0,0.7);
+    z-index: 12000;
+    left:0;
+    bottom:0;
+}
+
+.firstnav{
+    min-height: 748px;
 }
 #loading_bar {
     margin-top: 180px;
+    padding:7px;
+    background: #000000;
+    display:inline-block;
 }
 #loading_bar img {
     width: 200px;
     height: 12px;
 }
+
 
 .container_pending{
     
