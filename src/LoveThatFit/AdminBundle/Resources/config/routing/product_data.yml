@@ -67,3 +67,10 @@ admin_product_data_brand_description:
     defaults: { _controller: LoveThatFitAdminBundle:ProductData:brandDescription }
     requirements:
         _method:  POST
+
+#--------------------------------- CSV Data Mapper Runtime  -------------
+admin_product_data_csv_mapper_run_time:
+    pattern:  /admin/product_data/csv_mapper_run_time
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:csvMapperRunTime }
+    requirements:
+        _method:  POST

@@ -41,8 +41,21 @@
         <div class="btn_wrapper"><a href="{{ path('admin_products') }}" class="btn">back to list</a></div>
         <div class="clearfix"></div>
 
+        {#echo "<html><body><table border='1'>\n\n"#}
+            {#$f = fopen($_FILES['productImport']['tmp_name'], "r");#}
+            {#while (($line = fgetcsv($f)) !== false) {#}
+            {#echo "<tr>";#}
+                {#foreach ($line as $key => $cell) {#}
+                {#echo "<td class='getValueCell'>" . htmlspecialchars($cell) .$key. "</td>";#}
+                {#}#}
+                {#echo "</tr>\n";#}
+            {#}#}
+            {#fclose($f);#}
+
+
+        {#{{ path('admin_product_data_multiple_brand_csv_import') }}#}
         <div id="detail_wrapper">
-            <form action="{{ path('admin_product_data_multiple_brand_csv_import') }}" method="post"
+            <form action="{{ path('admin_product_data_csv_mapper_run_time') }}" method="post"
                   enctype="multipart/form-data">
                 <div id="product_content">
                     <div class="row-fluid show-grid" id="brand_1">

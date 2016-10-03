@@ -13,13 +13,13 @@ class ProductCSVDataUploader {
     private $product;
     private $row;
     private $previous_row;
-    private $path;
+    public $path;
     private $clothing_type_index;
     private $db_product;
     
     
 //--------------------------------------------------------------------
-    public function __construct($path) {
+    public function __construct($path=null) {
         $this->path = $path;
     }
 
@@ -424,7 +424,7 @@ class ProductCSVDataUploader {
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['stretch_type_percentage']);
                     $p['sizes'][$ps->getTitle()][$psm->getTitle()]['fit_model'] = $p['sizes'][$ps->getTitle()][$psm->getTitle()]['fit_model_measurement'];
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['fit_model_measurement']);
-                    
+
                     
                     unset($p['sizes'][$ps->getTitle()][$psm->getTitle()]['vertical_stretch']);
             }

@@ -108,7 +108,36 @@ class ProductDataController extends Controller {
         return $this->render('LoveThatFitAdminBundle:ProductData:import_multiple_brand_csv.html.twig', array('brandNames' => $brandNames));
     }
 
+    public  function csvMapperRunTimeAction()
+    {
+        $row = 0;
+        if (($handle = fopen($_FILES['productImport']['tmp_name'], "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 100000000, ",")) !== FALSE) {
+                $csvData[$row] = $data;
+                $row++;
+            }
+            fclose($handle);
+        }
+         //  echo "<pre>";
+        //print_r($csvData);
+        $product_attribute = array('garment_name', 'stretch_type', 'horizontal_stretch', 'vertical_stretch', 'gender', 'styling_type', 'style', 'neck_line', 'sleeve_styling', 'rise','hem_length', 'fabric_weight', 'structural_detail', 'fit_type', 'layring', 'size_title_type');
+        return $this->render('LoveThatFitAdminBundle:ProductData:csv_mapper_run_time.html.twig', array('csvData' => $csvData , 'product_attribute' => $product_attribute));
 
+
+        //        echo "<h1> Multiple Product CSV Read</h1>";
+        //        echo "<html><body><table border='1'>\n\n";
+        //        $f = fopen($_FILES['productImport']['tmp_name'], "r");
+        //        while (($line = fgetcsv($f)) !== false) {
+        //            echo "<tr>";
+        //            foreach ($line as $key => $cell) {
+        //                echo "<td class='getValueCell'>" . htmlspecialchars($cell) .$key. "</td>";
+        //            }
+        //            echo "</tr>\n";
+        //        }
+        //        fclose($f);
+        //        echo "\n</table></body></html>";
+
+    }
     public function csvMultipleBrandImportAction()
     {
         $brand_description_value = $_POST['brand_Description_value'];
@@ -123,10 +152,12 @@ class ProductDataController extends Controller {
         $datJson = $data[0]['brand_format'];
 
         $productData = json_decode($datJson, true);
-        echo "<h1> Multiple Product CSV Read</h1>";
+        echo "<pre>";
+        //print_r($productData);
+
         $row = 0;
         if (($handle = fopen($_FILES['productImport']['tmp_name'], "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 100000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000000, ",")) !== FALSE) {
                 $raowValue[$row] = $data;
                 $row++;
             }
@@ -136,7 +167,7 @@ class ProductDataController extends Controller {
         foreach ($raowValue as $key => $value) {
             $num = count($value);
             for ($c = 0; $c < $num; $c++) {
-                $aaa = $rows . "," . $c;
+                $aaa = $rows .",". $c;
                 if (in_array($aaa, $productData)) {
                     $key1 = array_search($aaa, $productData);
                     $productSave[$key1] = $raowValue[$rows][$c];
@@ -157,7 +188,7 @@ class ProductDataController extends Controller {
         $product_size_value = trim($product_size, ']');
         $size = explode(',', $product_size_value);
         echo "<pre>";
-        //print_r($size);
+      // print_r($productSave);
 
         foreach ($fit_points as $keys => $fit_point_val) {
             if($fit_point_val == 'sizes') continue;
@@ -174,61 +205,20 @@ class ProductDataController extends Controller {
         $formula_arry = array_intersect_key($productData, $fit_point_formula);
         echo "<pre>";
         $data=array();
-        // print_r($formula_arry);
+        //print_r($result_array);
         foreach ($productSave as $key => $val) {
 
             if (array_key_exists($key, $result_array)) {
-                break;
+                continue;
             } else {
                 $data[$key] = $val;
-                //echo $key . " : " . $val . "<br>";
+                echo $key . " : " . $val . "<br>";
             }
         }
-
-
-//        $em = $this->getDoctrine()->getManager();
-//        $product = $pcsv->fillProduct($data);
-//        $product->setBrand($brand);
-//        $product->setClothingType($clothingType);
-//        $product->setRetailer($retailer);
-//        $em->persist($product);
-//        $em->flush();
-//        echo "<pre>";
-//        echo "<p><table>";
-//        foreach ($fit_points as $keys => $fit_point_val) {
-//            echo "<tr><td>" . $fit_point_val . "</td>";
-//            $grade_rule = 0;
-//            $count = 0;
-//            foreach ($size as $ke => $selected_size_val) {
-//                $grade_rule = $grade_rule + 1;
-//                if ($fit_point_val == "sizes") {
-//                    echo "<td>" . trim($selected_size_val, '""') . "</td>";
-//                    echo "<td>GR </td>";
-//                } else {
-//                    $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
-//                    if (array_key_exists($fit_points_key, $result_array)) {
-//                        $count = $count + 1;
-//                        echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
-//                        $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
-//                        if (isset($result_array[$gr])) {
-//                            $gr_value = $result_array[$gr] - $result_array[$fit_points_key];
-//                            echo "<td><input type='text' style='width:40px' value=" . $gr_value . "> </td>";
-//                        } else {
-//                            echo "<td><input type='text' style='width:40px'> </td>";
-//                        }
-//                    } else {
-//                        echo "<td><input type='text' style='width:40px'></td>";
-//                        echo "<td><input type='text' style='width:40px'></td>";
-//                    }
-//                }
-//
-//            }
-//            echo "</tr>";
-//        }
-//        echo "</table>";
-        //////////////////////////////        Size Code ///////////////////////////////////////////////
-
-
+        echo "<pre>";
+       // print_r($data);
+       // die();
+      //////////////////////////////        Size Code ///////////////////////////////////////////////
 
         echo "<br>";
         echo "<p><table>";
@@ -254,10 +244,9 @@ class ProductDataController extends Controller {
             $flag = true;
             if(trim($selected_size_val, '""') == "Calculation") continue;
 
-
-            echo "<tr><td>" . $selected_size_val . "</td>";
+            //echo "<tr><td>" . $selected_size_val . "</td>";
             foreach ($sizes as $key => $size_labels){
-                echo "<td>" . $size_labels . "</td>";
+               // echo "<td>" . $size_labels . "</td>";
             }
             foreach ($fit_point_value as $fit_point_keys => $fit_point_vals) {
                 $fit_points_key = trim($fit_point_vals,'""')."_".trim($selected_size_val, '""');
@@ -308,14 +297,14 @@ class ProductDataController extends Controller {
                         $ideal_heigh = $fit_model + $grade_rule_value;
                         $sizess['sizes'][$selected_size_val][$fit_point_vals]['garment_measurement_flat'] = $fit_model;
                         $sizess['sizes'][$selected_size_val][$fit_point_vals]['garment_measurement_stretch_fit'] = $fit_model;
-                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['grade_rule'] = $fit_model;
-                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['min_calculated'] = $fit_model;
-                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['min_body_measurement'] = $fit_model;
+                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['grade_rule'] = $grade_rule_value;
+                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['min_calculated'] = $min_calc;
+                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['min_body_measurement'] = $ideal_low;
                         $sizess['sizes'][$selected_size_val][$fit_point_vals]['ideal_body_size_low'] = $fit_model;
                         $sizess['sizes'][$selected_size_val][$fit_point_vals]['fit_model'] = $fit_model;
                         $sizess['sizes'][$selected_size_val][$fit_point_vals]['ideal_body_size_high'] = $fit_model;
-                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['maximum_body_measurement'] = $fit_model;
-                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['max_calculated'] = $fit_model;
+                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['maximum_body_measurement'] = $ideal_heigh;
+                        $sizess['sizes'][$selected_size_val][$fit_point_vals]['max_calculated'] = $max_calc;
                     } else {
                         $grade_rule_value = "N/A";
                         $min_calc = 0;
@@ -339,32 +328,32 @@ class ProductDataController extends Controller {
 
                 //echo $b."-";
                 //echo $grade_rule_value;
-                echo "</tr><tr><td>" . $fit_point_vals . "</td>";
-                if (!empty($productData[$fit_points_key])){
-                    echo "<td>" . $na . "</td>";
-                    echo "<td>" . $na . "</td>";
-                    echo "<td>" . $grade_rule_value . "</td>";
-                    echo "<td>" . $min_calc . "</td>";
-                    echo "<td>" . $min_calc . "</td>";
-                    echo "<td>" . $ideal_low . "</td>";
-                    echo "<td>" . $fit_model . "</td>";
-                    echo "<td>" . $ideal_heigh . "</td>";
-                    echo "<td>" . $max_calc . "</td>";
-                    echo "<td>" . $max_calc . "</td>";
-                    echo "<td>" . $ideal_low . "</td>";
-                } else {
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                }
+//                echo "</tr><tr><td>" . $fit_point_vals . "</td>";
+//                if (!empty($productData[$fit_points_key])){
+//                    echo "<td>" . $na . "</td>";
+//                    echo "<td>" . $na . "</td>";
+//                    echo "<td>" . $grade_rule_value . "</td>";
+//                    echo "<td>" . $min_calc . "</td>";
+//                    echo "<td>" . $min_calc . "</td>";
+//                    echo "<td>" . $ideal_low . "</td>";
+//                    echo "<td>" . $fit_model . "</td>";
+//                    echo "<td>" . $ideal_heigh . "</td>";
+//                    echo "<td>" . $max_calc . "</td>";
+//                    echo "<td>" . $max_calc . "</td>";
+//                    echo "<td>" . $ideal_low . "</td>";
+//                } else {
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                    echo "<td></td>";
+//                }
                 // }
 //                        $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
 //                        if (array_key_exists($fit_points_key, $result_array)) {
@@ -411,39 +400,83 @@ class ProductDataController extends Controller {
                 $product_color[strstr_after($fit, 'productcolor_')] = $fitpriority;
 
         }
+
+
         $data['fit_priority']   = $fit_prority;
         $data['fabric_content'] = $fabric_content;
         $data['product_color']  = $product_color;
         $data['sizes']          = $sizess['sizes'];
         // End fill next Level Array
+       // print_r(array_keys($data['sizes']));
+        $sizes = array_keys($data['sizes']);
+        $keysize = $sizes[0];
+        $keysizedimension = $data['sizes'][$keysize];
 
-        echo "<pre>";
+        $keysizedimensionvalue = array_keys($keysizedimension);
+        $keydimentionvaluew = $keysizedimensionvalue[0];
 
-        print_r($data);
+        $dimension = array_keys($data['sizes'][$keysize][$keydimentionvaluew]);
+       // print_r($dimension);
+      //  die("okay");
+        echo "<table border=5>";
+        foreach ($data['sizes'] as $keys => $item) {
+            echo "<tr><th>" . $keys . "</th>";
+            foreach ($dimension as $deminsionkey => $dimensionvalue) {
+                if($dimensionvalue == 'fit_model')
+                    echo "<th bgcolor='#7fff00'>" . $dimensionvalue . "</th>";
+                else
+                    echo "<th>" . $dimensionvalue . "</th>";
+            }
+            echo "</tr><tr>";
+            foreach ($item as $size_keys => $size_values) {
+                echo "<td>".$size_keys."</td>";
+                $tr = 0;
+                foreach ($size_values as $size_key => $sizevalues) {
+                    $tr++;
+                    if($tr == 7)
+                        echo "<td bgcolor='#7fffd4'>".$sizevalues."</td>";
+                    else
+                    echo "<td>".$sizevalues."</td>";
+
+
+
+                }
+                echo "</tr>";
+
+            }
+        }
+        echo "</tr>";
         echo "</table>";
+        echo "<pre>";
+       // $data['brand_name'] = 'citizens of humanity';
+       //  $data['clothing_type'] =  'jean';
+       //  $data['retailer_name'] = 'citizens of humanity';
+        $data['size_title_type'] = 'waist';
+        $data['body_type'] = 'Regular';
+       // $data['stretch_type']   = '';
+       // $data['style']   = '';
+       // $data['neck_line']   = '';
+       // $data['sleeve_styling']   = '';
+       // $data['rise']   = '';
+       // $data['hem_length']   = '';
+       // $data['fabric_weight']   = '';
+       // $data['fit_type']   = '';
 
+      //  print_r($data);
+        //die();
 //        $em = $this->getDoctrine()->getManager();
 //        $pcsv = new ProductCSVDataUploader();
-//        $product = $pcsv->fillProduct($data);fabric  content, product color and fit priority
-//        //$data['brand_name'] = 'citizens of humanity';
-//        $data['clothing_type'] =  'jean';
-//        $data['retailer_name'] = 'citizens of humanity';
+//        $product = $pcsv->fillProduct($data);
 //        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
-//        //$brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
-//        $brand = $data['brand_name'];
-//
-//        //$product = $this->fillProduct($data);
+//        $brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
 //        $product->setBrand($brand);
 //        $product->setClothingType($clothingType);
-//       // $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
-//        $retailer = $data['retailer_name'];
+//        $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
 //        $product->setRetailer($retailer);
-//
 //        $em->persist($product);
 //        $em->flush();
 //        $this->addProductSizesFromArray($product, $data);
 //        $this->addProductColorsFromArray($product, $data);
-
         //$src = str_replace('\\', '/', getcwd()). '/uploads/ltf/csvproducts/';
         $src =  getcwd(). '/uploads/ltf/products/raw_products_csv/';
         $name = $_FILES['productImport']['name'];
