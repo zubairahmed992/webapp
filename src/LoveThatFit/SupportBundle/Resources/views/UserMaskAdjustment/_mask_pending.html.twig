@@ -176,7 +176,7 @@
     <div class="approve_img">
         <a href="#">Approve Image</a>
     </div>
-    <div class="clk_img"><span class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/clock_admin.png') }}" title="SelfieStyler"></span></div>
+    <i class="fa fa-clock-o clk_img" aria-hidden="true"></i>
 </div>
 {% endif %}
 {% if (device_type == "iphone6")%}
@@ -261,7 +261,7 @@
                     {% if (archives is defined)%}
                         <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
                     {% else %}
-                        <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
+                        <input type="hidden" value="{{ path('support_pending_users') }}" id="redirect_url">
                     {% endif %}
                 </div>
 
@@ -477,7 +477,6 @@ $( "#btn_confirm" ).click(function() {
 function put_archive_to_live() {
     var archive_to_live_url = $("#archive_to_live_url").val();
     var redirect_url = $("#redirect_url").val();
-
         $.ajax({
              url: archive_to_live_url
              ,success: function(response) {
