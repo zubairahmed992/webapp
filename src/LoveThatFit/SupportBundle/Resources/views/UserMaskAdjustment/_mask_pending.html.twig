@@ -257,11 +257,11 @@
 
                 <div>
                     <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-                    <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+                    <input type="hidden" value="" data-url="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
                     {% if (archives is defined)%}
-                        <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+                        <input type="hidden" value="" data-url="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
                     {% else %}
-                        <input type="hidden" value="{{ path('support_pending_users') }}" id="redirect_url">
+                        <input type="hidden" value="" data-url="{{ path('support_pending_users') }}" id="redirect_url">
                     {% endif %}
                 </div>
 
@@ -475,8 +475,8 @@ $( "#btn_confirm" ).click(function() {
 
 
 function put_archive_to_live() {
-    var archive_to_live_url = $("#archive_to_live_url").val();
-    var redirect_url = $("#redirect_url").val();
+    var archive_to_live_url = $("#archive_to_live_url").attr("data-url");
+    var redirect_url = $("#redirect_url").attr("data-url");
         $.ajax({
              url: archive_to_live_url
              ,success: function(response) {
