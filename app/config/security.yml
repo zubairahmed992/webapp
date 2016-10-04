@@ -108,6 +108,7 @@ security:
                     shahjahan: { password: b5d6f5d11108a7b569b1ffe4d8c45ecffcefd777, roles: 'ROLE_ADMIN' }
                     sami: { password: 90ae902d475d0d0a8a8ea1e4a798096bd2320c53, roles: 'ROLE_ADMIN' }
                     khurram: { password: 9a9200395b52630e4e29516db927a91eb655933b, roles: 'ROLE_ADMIN' }
+                    jackson: { password: f7454a2230b6cbbac5ee2f810f3ad06f6ab560b3, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
