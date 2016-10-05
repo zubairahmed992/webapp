@@ -36,7 +36,7 @@ dashboard_banner:
     product_ids: 0
     disable: false
   5:
-    image: uploads/ltf/products/banner/1111.jpg
+    image: uploads/ltf/products/banner/1.png
     caption: Story 1
     price: 40
     index: 4
@@ -45,7 +45,7 @@ dashboard_banner:
     product_ids: [572,576,571,579,569]
     disable: false
   6:
-    image: uploads/ltf/products/banner/2222.jpg
+    image: uploads/ltf/products/banner/2.png
     caption: Story 2
     price: 40
     index: 5
@@ -54,7 +54,7 @@ dashboard_banner:
     id: 0
     disable: false
   7:
-    image: uploads/ltf/products/banner/3333.jpg
+    image: uploads/ltf/products/banner/3.png
     caption: Story 3
     price: 40
     index: 6
@@ -63,7 +63,7 @@ dashboard_banner:
     id: 0
     disable: false
   8:
-    image: uploads/ltf/products/banner/3333.jpg
+    image: uploads/ltf/products/banner/4.png
     caption: Story 4
     price: 40
     index: 7
@@ -72,7 +72,7 @@ dashboard_banner:
     id: 0
     disable: false
   9:
-    image: uploads/ltf/products/banner/3333.jpg
+    image: uploads/ltf/products/banner/5.png
     caption: Story 5
     price: 40
     index: 8
