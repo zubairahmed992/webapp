@@ -90,13 +90,22 @@ param:limit, page_number,limit,sort
             return "null";
         }
     }
-    
-    
+
+  public function findAllAvailableRecords()
+  {
+    $query = $this->getEntityManager()
+        ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c where c.disabled=0  order by c.id,c.gender, c.target, c.name');
+    try {
+      return $query->getResult();
+    } catch (\Doctrine\ORM\NoResultException $e) {
+      return null;
+    }
+  }
         
     public function findAllRecord()
     {
       $query = $this->getEntityManager()
-                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c where c.disabled=0  order by c.id,c.gender, c.target, c.name');
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c order by c.id,c.gender, c.target, c.name');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

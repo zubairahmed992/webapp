@@ -37,28 +37,46 @@ dashboard_banner:
     disable: false
   5:
     image: uploads/ltf/products/banner/1111.jpg
-    caption: Stylist style 1111
+    caption: Story 1
     price: 40
-    index: 3
+    index: 4
     type: stylist_recommendations
     id: 0
-    product_ids: [546,538, 537]
+    product_ids: [572,576,571,579,569]
     disable: false
   6:
     image: uploads/ltf/products/banner/2222.jpg
-    caption: Stylist style 2222
+    caption: Story 2
     price: 40
-    index: 3
+    index: 5
     type: stylist_recommendations
-    product_ids: [548, 539, 554]
+    product_ids: [587,577,570,594,582,584]
     id: 0
     disable: false
   7:
     image: uploads/ltf/products/banner/3333.jpg
-    caption: Stylist style 3333
+    caption: Story 3
     price: 40
-    index: 3
+    index: 6
     type: stylist_recommendations
-    product_ids: [549,540,553]
+    product_ids: [588,580,582,566,592,570,591]
     id: 0
-    disable: false    
+    disable: false
+  8:
+    image: uploads/ltf/products/banner/3333.jpg
+    caption: Story 4
+    price: 40
+    index: 7
+    type: stylist_recommendations
+    product_ids: [593,573,602,581]
+    id: 0
+    disable: false
+  9:
+    image: uploads/ltf/products/banner/3333.jpg
+    caption: Story 5
+    price: 40
+    index: 8
+    type: stylist_recommendations
+    product_ids: [565,569,582,592,576,571]
+    id: 0
+    disable: false
