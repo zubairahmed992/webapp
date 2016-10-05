@@ -133,6 +133,7 @@ $(document).ready(function(){
         event.preventDefault();
 
         if ($("#user_id").val() != "") {
+            $('#error_attribute').html('');
             var ar = {
                 user_id:$("#user_id").val(),
                 page:$("#sel_page").val(),
@@ -145,12 +146,16 @@ $(document).ready(function(){
                     '</form>');
             $('body').append(form);
             form.submit();
+        } else {
+            $('#summary_ajax').html('');
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
         }
     });
 
     $('a.download').click(function (event){
         event.preventDefault();
         if ($("#user_id").val() != "") {
+            $('#error_attribute').html('');
             var ar = {
                 user_id:$("#user_id").val(),
                 page:$("#sel_page").val(),
@@ -164,6 +169,9 @@ $(document).ready(function(){
                     '</form>');
             $('body').append(form);
             form.submit();
+        } else {
+            $('#summary_ajax').html('');
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
         }
     });
 
