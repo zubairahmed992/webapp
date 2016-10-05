@@ -24,7 +24,7 @@ class UserMaskAdjustmentController extends Controller {
   public function updateStatusAction($user_id) {
 	$archive = $this->get('user.helper.userarchives')->UpdateStatus($user_id);
 	$this->get('session')->setFlash('success', 'Status has been Reverted');
-	return $this->redirect($this->generateUrl('support_pending_user'));
+	return $this->redirect($this->generateUrl('support_pending_users'));
   }
     //----------------Pending User status discard Status icon --------------------------------------------------------------------------
     public function discardStatusAction($user_id) {

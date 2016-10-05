@@ -104,7 +104,7 @@
 </div>
 
 
-    <input id="admin_update_status" type="hidden" value="{{ path('admin_update_status', {'user_id': b.user.id}) }}" />
+    <input id="admin_update_status" type="hidden" value="{{ path('support_update_status', {'user_id': entity.id}) }}" />
     <input id="dv_model" type="hidden" value="{{ device_model }}" />
     <input id="entity_email" type="hidden" value="{{entity.email}}" />
 <input id="support_user_name" type="hidden" value="{{ app.user.username }}" />
