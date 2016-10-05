@@ -224,7 +224,7 @@ class ClothingTypeHelper {
     
   #-------------------------------------------------------------------------------#
     public function getDescriptionArray($gender=null,$base_path){
-        $cat_list=$this->repo->findAllRecord();
+        $cat_list=$this->repo->findAllAvailableRecords();
         $cat_array['woman']=array();
         $cat_array['man']=array();
         foreach($cat_list as $key=>$value){
