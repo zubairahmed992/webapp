@@ -52,9 +52,9 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
     if(liquid_mask.device_model == "iphone5s"){
         //alert("iPhone5S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         fixed_px_inch_ratio = 6.891;
-        adj_btm_fix = 4; // Adjustment of iPhone5S
+        adj_btm_fix = 0; // Adjustment of iPhone5S
         
-        full_adj_btm_fix = 35.333;
+        full_adj_btm_fix = 30.333;
         
     }
 }
