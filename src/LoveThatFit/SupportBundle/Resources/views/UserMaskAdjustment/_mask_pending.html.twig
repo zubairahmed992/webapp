@@ -454,7 +454,7 @@ $(document).ready(function(){
             url: '../../../ws/image_approval',
             type: 'POST',
             //$mem_email
-            data: {member_email:'riazshahartist@gmail.com' ,comment:$member_comments, caliboration_status:'reject'},
+            data: {member_email:$mem_email ,comment:$member_comments, caliboration_status:'reject'},
             success: function (response) {
                 alert("Your comments has been sent successfully");
                 $('#dimpop').hide();
