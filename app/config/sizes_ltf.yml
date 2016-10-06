@@ -81,23 +81,23 @@ constants:
           title: 4X
           index: 17     
           
-        OS-1:
-          title: OS-1
+        0S1:
+          title: 0S1
           index: 18
-        OS-l:
-          title: OS-l
+        0Sl:
+          title: 0Sl
           index: 19
-        OS-I:
-          title: OS-I
+        0SI:
+          title: 0SI
           index: 20
-        OS_1:
-          title: OS_1
+        OS1:
+          title: OS1
           index: 21
-        OS_l:
-          title: OS_l
+        OSl:
+          title: OSl
           index: 22
-        OS_I:
-          title: OS_I
+        OSI:
+          title: OSI
           index: 23
           
       number:
