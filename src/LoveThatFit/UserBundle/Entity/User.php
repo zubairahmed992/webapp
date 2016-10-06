@@ -2070,9 +2070,15 @@ class User implements UserInterface, \Serializable {
             $neck_exclusion_px = is_array($device_config) && array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 0;
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->calculatePlacementPositions($device_conversion_ratio);
+            
             $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
             #$this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt)-2.048867;            
-            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt);            
+            
+            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt);
+
+            ##added by umer on 06-10-2016 as per ibrahim bhai instructions
+            $this->measurement->top_placement + 10;
+            
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->bottom_placement = $this->measurement->bottom_placement - 94;
             if ($device_type=='iphone6' || $device_type=='iphone6s'){
@@ -2080,6 +2086,9 @@ class User implements UserInterface, \Serializable {
                 #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
                 $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 6;
             }
+            ##added by umer on 06-10-2016 as per ibrahim bhai instructions
+            $this->measurement->bottom_placement + 10;
+            
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
             return array(
