@@ -135,7 +135,7 @@ class WSMiscController extends Controller {
         $user_email = isset($decoded["member_email"])?$decoded["member_email"]:"";
         $caliboration_status = isset($decoded["caliboration_status"])?$decoded["caliboration_status"]:"";
         if($user_email!= null && $caliboration_status!= null){
-        $ss_ar['to_email'] = "ovais.rafique@centricsource.com";
+        $ss_ar['to_email'] = "membersupport@selfiestyler.com";
         $ss_ar['template'] = 'LoveThatFitAdminBundle::email/caliboration_status.html.twig';
         $ss_ar['template_array'] = array('cs' => $decoded);
         $ss_ar['subject'] = 'Caliboration Status';
