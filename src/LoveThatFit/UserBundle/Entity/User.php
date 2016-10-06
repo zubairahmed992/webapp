@@ -2074,7 +2074,7 @@ class User implements UserInterface, \Serializable {
             $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
             #$this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt)-2.048867;            
             
-            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt + 15);
+            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt + 7);
 
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
             ##$this->measurement->top_placement + 7;
@@ -2084,7 +2084,7 @@ class User implements UserInterface, \Serializable {
             if ($device_type=='iphone6' || $device_type=='iphone6s'){
                 $x_calculation=($this->measurement->bottom_placement * ($resize_ratio_jt-1)); # 0.08% value calculation
                 #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
-                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 27;
+                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 16.5;
             }
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
             ##$this->measurement->bottom_placement + 10.5;
