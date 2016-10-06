@@ -2074,20 +2074,20 @@ class User implements UserInterface, \Serializable {
             $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
             #$this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt)-2.048867;            
             
-            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt);
+            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt + 15);
 
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
-            $this->measurement->top_placement + 7;
+            ##$this->measurement->top_placement + 7;
             
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->bottom_placement = $this->measurement->bottom_placement - 94;
             if ($device_type=='iphone6' || $device_type=='iphone6s'){
                 $x_calculation=($this->measurement->bottom_placement * ($resize_ratio_jt-1)); # 0.08% value calculation
                 #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
-                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 6;
+                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 27;
             }
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
-            $this->measurement->bottom_placement + 10.5;
+            ##$this->measurement->bottom_placement + 10.5;
             
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
