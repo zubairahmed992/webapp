@@ -12,3 +12,4 @@ web/uploads/acme
 *.php~
 
 .idea/*
+web/.htaccess
