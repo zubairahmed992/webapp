@@ -2074,7 +2074,7 @@ class User implements UserInterface, \Serializable {
             $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
             #$this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt)-2.048867;            
             
-            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt + 7);
+            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt);
 
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
             ##$this->measurement->top_placement + 7;
