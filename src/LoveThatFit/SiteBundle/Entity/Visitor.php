@@ -50,7 +50,14 @@ class Visitor
      * @ORM\Column(name="email", type="string",nullable=true)
      */
     private $email;
-    
+
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string",nullable=true)
+     */
+    private $name;
     /**
      * @var string $ip_address
      *
@@ -134,6 +141,30 @@ class Visitor
     public function getDevice()
     {
         return $this->device;
+    }
+  #----------------------------------------------------------------
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Visitor
+     */
+    public function setName($name)
+    {
+      $this->name = $name;
+
+      return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+      return $this->name;
     }
    #----------------------------------------------------------------  
 

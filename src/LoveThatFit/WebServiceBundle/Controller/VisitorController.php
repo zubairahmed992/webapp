@@ -24,6 +24,7 @@ class VisitorController extends Controller {
         $decoded = $this->getRequest()->request->all();
         $v = new Visitor();
         $v->setEmail($decoded['email']);
+        $v->setName($decoded['name']);
         $v->setBrowser($_SERVER['HTTP_USER_AGENT']);
         #$v->setDevice('sfdsfdsfd');
         $v->setIpAddress($this->get_client_ip());
