@@ -37,7 +37,7 @@ dashboard_banner:
     disable: false
   5:
     image: uploads/ltf/products/banner/1.png
-    caption: Story 1
+    caption: Ebony and Ivory 
     price: 40
     index: 4
     type: stylist_recommendations
@@ -46,7 +46,7 @@ dashboard_banner:
     disable: false
   6:
     image: uploads/ltf/products/banner/2.png
-    caption: Story 2
+    caption: Easy Breezy
     price: 40
     index: 5
     type: stylist_recommendations
@@ -55,7 +55,7 @@ dashboard_banner:
     disable: false
   7:
     image: uploads/ltf/products/banner/3.png
-    caption: Story 3
+    caption: Beyond the Blues
     price: 40
     index: 6
     type: stylist_recommendations
@@ -64,7 +64,7 @@ dashboard_banner:
     disable: false
   8:
     image: uploads/ltf/products/banner/4.png
-    caption: Story 4
+    caption: Business Casual 
     price: 40
     index: 7
     type: stylist_recommendations
@@ -73,10 +73,22 @@ dashboard_banner:
     disable: false
   9:
     image: uploads/ltf/products/banner/5.png
-    caption: Story 5
+    caption: Contemporary Fun
     price: 40
     index: 8
     type: stylist_recommendations
     product_ids: [565,569,582,592,576,571]
     id: 0
     disable: false
+  10:
+    image: uploads/ltf/products/banner/6.png
+    caption: Modern Edge
+    price: 40
+    index: 9
+    type: stylist_recommendations
+    product_ids: [564, 581, 578, 580]
+    id: 0
+    disable: false
+    
+    
+    
