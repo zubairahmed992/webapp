@@ -223,6 +223,7 @@ constants:
          hip: Hip
          neck: Neck
          thigh: Thigh
+  
   fit_type:   
        stretch_skin_tight: Stretch - skin tight
        stretch_close_fitting: Stretch - close fitting
@@ -261,7 +262,6 @@ constants:
       wool: Wool
       other: Other       
 
-         
   women:
     clothing_type:
       blouse: Blouse
@@ -835,6 +835,8 @@ constants:
       peplum: Peplum
       belted: Belted
    
+  attributes: [clothing_type, brand, name, gender, description, styling_type, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, retailer_reference, control_number]
+
         
  clothing_type_target:
   Blouse : top

@@ -1,0 +1,6 @@
+
+
+admin_product_specs_foo:
+    pattern:  /admin/product_specs/foo
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:foo }
+
