@@ -76,3 +76,11 @@ admin_retailer_site_user_edit:
 admin_retailer_site_user_update:
     pattern:  /admin/retailer/site/user/{user_id}/update/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:updateRetailerSiteUser}
+
+admin_users_new:
+    pattern:  /admin/user/new_users
+    defaults: { _controller: LoveThatFitAdminBundle:User:newIndex}
+
+admin_users_paginate:
+    pattern:  /admin/user/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:User:paginate}

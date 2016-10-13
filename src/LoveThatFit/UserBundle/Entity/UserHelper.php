@@ -998,8 +998,19 @@ class UserHelper {
         $order   = $data['order'];
         //search data
         $search  = $data['search'];
+        $gender  = $data['gender'];
+        
+        if ($data['age'] != "") {
+            $endDate = $this->getUserBirthDate($data['age']);
+            $new_timestamp = strtotime('-12 months', strtotime($endDate));
+            $startDate = date("Y-m-d", $new_timestamp);
+        }
         $filters = [
-            'query' => @$search['value']
+            'query'     => @$search['value'],
+            'gender'    => @$gender,
+            'startDate' => @$startDate,
+            'endDate'   => @$endDate,
+
         ];
 
         $finalData = $this->repo->search($filters, $start, $length, $order);
@@ -1016,7 +1027,7 @@ class UserHelper {
                 'id' => $fData["id"],
                 'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
                 'email' => $fData["email"], 
-                'gender' => $fData["gender"],
+                'gender' => ($fData["gender"] == "f") ? "Female" : "Male",
                 'createdAt' => ($fData["createdAt"]->format('m-d-Y')),
                 'original_user_id' => $fData["original_user_id"]
             ];

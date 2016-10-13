@@ -378,8 +378,11 @@ class UserRepository extends EntityRepository {
 
     public function search($data, $page = 0, $max = NULL, $order, $getResult = true) 
     {
-        $query = $this->getEntityManager()->createQueryBuilder();
-        $search = isset($data['query']) && $data['query']?$data['query']:null; 
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
+        $gender    = isset($data['gender']) && $data['gender']?$data['gender'] : null;
+        $startDate = isset($data['startDate']) && $data['startDate'] ? $data['startDate'] : null;
+        $endDate   = isset($data['endDate']) && $data['endDate'] ? $data['endDate'] : null;
         
         $query 
             ->select('
@@ -399,6 +402,17 @@ class UserRepository extends EntityRepository {
                 ->orWhere('u.email like :search') 
                 ->setParameter('search', "%".$search."%");
         }
+        if ($gender != "") {
+            $query 
+                ->andWhere('u.gender=:gender')
+                ->setParameter('gender', $gender);
+        }
+        if ($startDate != "" && $endDate != "") {
+            $query 
+                ->andWhere('u.birthDate BETWEEN :startDate AND :endDate')
+                ->setParameter('startDate', $startDate )
+                ->setParameter('endDate', $endDate);
+        }
 
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];
@@ -407,12 +421,13 @@ class UserRepository extends EntityRepository {
                 $orderByColumn = "u.id";
             } elseif ($orderByColumn == 1) {
                 $orderByColumn = "u.firstName";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "u.email";
             } elseif ($orderByColumn == 4) {
                 $orderByColumn = "u.createdAt";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
-
         if ($max) {
             $preparedQuery = $query->getQuery() 
                 ->setMaxResults($max)

@@ -16,8 +16,32 @@ class UserController extends Controller {
 
     //--------------------------User List-------------------------------------------------------------
     public function indexAction($page_number, $sort = 'id') {
+        
         $size_with_pagination = $this->get('user.helper.user')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:User:index.html.twig', array('pagination' => $size_with_pagination, 'searchform' => $this->userSearchFrom()->createView()));
+
+    }
+
+    public function newIndexAction()
+    {
+        $totalRecords = $this->get('user.helper.user')->countAllUserRecord();
+        $femaleUsers  = $this->get('user.helper.user')->countByGender('f');
+        $maleUsers    = $this->get('user.helper.user')->countByGender('m');
+        
+        return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
+                array('rec_count' => count($totalRecords),
+                    'femaleUsers' => $femaleUsers,
+                    'maleUsers'   => $maleUsers
+                    )
+        );
+    }
+
+    public function paginateAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output = $this->get('user.helper.user')->search($requestData);
+        
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
 
         //--------------------------User List-------------------------------------------------------------
