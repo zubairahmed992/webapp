@@ -9,15 +9,15 @@
 
 <style>
         .c_pannel{
-            background-color: #f5f5f5; padding: 10px;    
+            background-color: #f5f5f5; padding: 10px;
         }
         .hide_pannel{
             display: none;
-                
+
             }
          .show_pannel{
-            display: block;                
-            }            
+            display: block;
+            }
         .service_header{
             font-size: 24px;
             font-weight: bold;
@@ -35,7 +35,7 @@
 </script>
 
 
-    <div class="p_listing">     
+    <div class="p_listing">
         <h3>Web Services Client</h3>
         <div id="select_pannel" class="row">
             <div class="span1"></div>
@@ -63,12 +63,12 @@
                 </select>
             </div>
             <div class="span2">
-                <button type="submit" class="btn btn-default" id='btn_hit_service'> Hit</button>        
+                <button type="submit" class="btn btn-default" id='btn_hit_service'> Hit</button>
 
                 <input id="chk_new_window" type="checkbox"> New
             </div>
         </div>
-        
+
     <div id='display_pannel'>
         <div id='service_name_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
@@ -99,7 +99,7 @@
             <span id="timer_sec"  style="display:none">0</span>
             <span id="timer_mil_sec"  style="display:none">0</span>
         </div>
-        
+
         <div  id='service_request_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
@@ -107,55 +107,55 @@
                 <textarea style="width: 500px; height: 100px" id="txt_request_params"></textarea>
             </div>
         </div>
-        
+
         <div  id='service_image_pannel'  class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div  id='image_pannel' class="span4">select image to upload:
                 <input type="file" id="image_to_upload" name="image_to_upload">
             </div>
         </div>
-            
+
         <div  id='service_response_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
                 <b>Response</b>
                 <textarea style="width: 500px; height: 100px" id="txt_response_params"></textarea>
             </div>
-        </div>   
-        
+        </div>
+
         <div  id='service_form_gen_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div id='gen_form' class="span4">
             </div>
 
-        </div>   
+        </div>
 
         <div  id='service_description_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div id='service_description' class="span4"></div>
         </div>
-        
+
         <div  id='service_backend_process_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div  id='backend_process' class="span4"></div>
         </div>
-        
-            
-            
-</div>        
-        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
+
+
+
+</div>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
         <script  type='text/javascript'>
         //-------------------------------------------------------
         {% autoescape false %};
         var j = '{{ services|json_encode()}}';
         var services_obj = JSON.parse(j);
         {% endautoescape %}
-        
+
         //-------------------------------------------------------
         //------------- service dropdownlist --------------------------
 
-        $("#sel_service").change(function() {      
-            update_service_detail();          
+        $("#sel_service").change(function() {
+            update_service_detail();
             replace_user_data();
         });
 
@@ -178,20 +178,20 @@ $( "#btn_hit_service" ).click(function() {
             }
    }
 })
- 
-//--------------------------------------------------------- 
-        function service_form_gen(service_name){         
+
+//---------------------------------------------------------
+        function service_form_gen(service_name){
             service_detail = find_service_obj(service_name);
             return JSON.stringify(service_detail.params);
         }
 
 //--------------------------------------------------
-         function update_service_detail(){     
+         function update_service_detail(){
              tt = $('option:selected', $('#sel_service')).html();
              fill_service_detail(tt=='select'?null:find_service_obj(tt));
-        } 
-//---------------------------------------------------------         
-          
+        }
+//---------------------------------------------------------
+
           function fill_service_detail(service_detail){
                 $('#service_name').html(service_detail==null?'':service_detail.title);
                 $('#service_url').html(service_detail==null?'':service_detail.pattern);
@@ -207,53 +207,53 @@ $( "#btn_hit_service" ).click(function() {
                 $('#service_request_pannel').css("display", display);
                 $('#service_response_pannel').css("display", display);
                 $('#service_image_pannel').css("display", (service_detail!=null && service_detail.file_upload)?'block':'none');
-        }         
-       
+        }
+
           //--------------------------------------------------
-         function find_pattern(service_name){    
+         function find_pattern(service_name){
             service_detail = find_service_obj(service_name);
-            return service_detail.pattern;    
-        } 
+            return service_detail.pattern;
+        }
         //--------------------------------------------------
-        function find_service_obj(service_name){    
+        function find_service_obj(service_name){
             for(var key in  services_obj)
                if(key==service_name)
-                    return services_obj[key];                     
+                    return services_obj[key];
         }
 
 //-------------------------------------------------------------
 
-function hit_service(){    
+function hit_service(){
     var value_ar = "";
         if($("#txt_request_params").val()){
-            value_ar = JSON.parse($("#txt_request_params").val());        
+            value_ar = JSON.parse($("#txt_request_params").val());
         }
         restartTimer();//~~~~~~~~~~~~~~>
         $.ajax({
                type: "POST",
                url: ".." + $("#service_url").text(),
-               data: value_ar,  
+               data: value_ar,
                dataType: "json",
                success: function(data){
-                   display_response(data);                    
+                   display_response(data);
                 },
                failure: function(errMsg) {
                    display_response(errMsg);
                }
-         });    
+         });
 }
 //-------------------------------------------------------------
- 
-  //--------------------------------------------------------- 
 
-        $("#btn_generate_form").click(function() {  
+  //---------------------------------------------------------
+
+        $("#btn_generate_form").click(function() {
           alert('generate form');
         });
-        
-//-----------------------------------------------------------        
-function hit_image_upload_service(){    
-        
-        var value_ar = JSON.parse($("#txt_request_params").val());        
+
+//-----------------------------------------------------------
+function hit_image_upload_service(){
+
+        var value_ar = JSON.parse($("#txt_request_params").val());
         input_file = document.getElementById('image_to_upload');
         data= new FormData();
         data.append("image", input_file.files[0]);
@@ -261,24 +261,24 @@ function hit_image_upload_service(){
         data.append("height_per_inch",value_ar['height_per_inch']);
         data.append("device_type",value_ar['device_type']);
         data.append("device_model",value_ar['device_model']);
-        data.append("upload_type",value_ar['upload_type']);            
+        data.append("upload_type",value_ar['upload_type']);
         data.append("camera_angle",value_ar['camera_angle']);
-        data.append("camera_x",value_ar['camera_x']);            
+        data.append("camera_x",value_ar['camera_x']);
 
         $.ajax({
                  type: "POST",
                  url: ".." + $("#service_url").text(),
-                 data: data,  
+                 data: data,
                  processData: false,
                  contentType: false,
                  enctype: 'multipart/form-data',
                  success: function(data){
-                     display_response(data);                    
+                     display_response(data);
                   },
                  failure: function(errMsg) {
                      display_response(errMsg);
                  }
-              });    
+              });
 }
 
 //-------------------------------------
@@ -342,7 +342,7 @@ function hit_selfieshare_service(){
 }
 
 //-------------------------------------
-    
+
  function display_response(data){
             stopTimer();
             if($('#chk_new_window').is(':checked')){
@@ -358,20 +358,20 @@ function hit_selfieshare_service(){
             }else{
                 str = JSON.stringify(data, null, 2);
                 str = str.split("\\").join("");
-                $('#txt_response_params').val(str);            
+                $('#txt_response_params').val(str);
             }
-}   
-//-----------------------------------------------------    
-//-----------------------------------------------------    
-//-----------------------------------------------------    
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
 
 //------------------- user dropdownlist --------------------
-        $("#sel_user").change(function() {  
-            change_user_detail();  
+        $("#sel_user").change(function() {
+            change_user_detail();
             replace_user_data();
-            
+
         });
-//-----------------------------------------------------    
+//-----------------------------------------------------
 
 function replace_user_data(){
           email = $("#user_name").text();
@@ -384,38 +384,38 @@ function replace_user_data(){
                 }
                 if (request_json.indexOf("email")!=-1){
                     if (typeof obj1.email != "undefined") {
-                        obj1.email=email;                    
+                        obj1.email=email;
                         }
                 }
                 if (email.indexOf("buf")!=-1 && request_json.indexOf("password")!=-1){
-                    obj1.password='Buffalo1';    
+                    obj1.password='Buffalo1';
                 }
-                $("#txt_request_params").val(JSON.stringify(obj1));        
+                $("#txt_request_params").val(JSON.stringify(obj1));
                 hit_user_service();
-            }        
+            }
 }
- 
+
 //-------------------------------------------------------------
 var user_JSON;
-function hit_user_service(){    
-        email = $("#user_name").text();    
+function hit_user_service(){
+        email = $("#user_name").text();
         service_url='/ws_interface/user/'+email;
         $.ajax({
                type: "GET",
                url: ".." + service_url,
                success: function(data){
                    user_JSON=data;
-                   replace_all_user_data(data);     
+                   replace_all_user_data(data);
                    //$("#txt_response_params").text(data);
                    //alert(data);
                    },
                failure: function(errMsg) {
                    alert(errMsg);
                }
-         });    
+         });
 }
 
-   
+
 //-----------------------------------------
 
 function replace_all_user_data(user_detail){
@@ -436,32 +436,32 @@ function replace_all_user_data(user_detail){
 //var user_JSON;
 
 //--------------------------------------------------
- 
- 
-        function change_user_detail(){         
-             tt = $('option:selected', $('#sel_user')).html();             
+
+
+        function change_user_detail(){
+             tt = $('option:selected', $('#sel_user')).html();
              if (tt=='select'){
                 $('#user_name').html('');
-                $('#user_auth_token').html('');                
+                $('#user_auth_token').html('');
                 $('#user_name_pannel').css("display", 'none');
-                $('#user_token_pannel').css("display", 'none');                
+                $('#user_token_pannel').css("display", 'none');
             }else{
                 $('#user_name').html(tt);
                 $('#user_auth_token').html($('option:selected', $('#sel_user')).val());
                 $('#user_name_pannel').css("display", 'block');
-                $('#user_token_pannel').css("display", 'block');  
+                $('#user_token_pannel').css("display", 'block');
             }
-        } 
- 
+        }
+
  //-------------------------------------------------------------
- 
- 
+
+
     //-------------------------------------
 
 
-//-----------------------------------------------------    
-//-----------------------------------------------------    
-//-----------------------------------------------------    
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
 
 
 function startTimer(){
@@ -477,32 +477,32 @@ function startTimer(){
             min=min+1;
         }
     }
-    setTimer('0:'+min.toString()+':'+sec.toString()+'.'+mil_sec.toString());    
+    setTimer('0:'+min.toString()+':'+sec.toString()+'.'+mil_sec.toString());
     setTime(min,sec,mil_sec);
     var timer=setTimeout(function(){startTimer()});
     }
 }
-//-----------------------------------------------------    
+//-----------------------------------------------------
 function stopTimer(){
 $("#timer_status").text(-1);
 }
 //------------------------------------
 function restartTimer(){
     resetTimer();
-    startTimer(); 
+    startTimer();
 }
-//-----------------------------------------------------    
+//-----------------------------------------------------
 function resetTimer(){
 $("#timer_status").text(0);
 setTime(0,0,0);
 setTimer("00:00:00.00");
-}    
+}
 //------------------------------------
-function setTimer(ms){    
+function setTimer(ms){
     $("#timer").text(ms);
 }
 //------------------------------------
-function setTime(m,s,ms){    
+function setTime(m,s,ms){
 $("#timer_mil_sec").text(ms);
 $("#timer_sec").text(s);
 $("#timer_min").text(m);

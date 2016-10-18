@@ -14,28 +14,28 @@
                     </div>
 
                     <div class="frm_ele">
-                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
+                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}
                         {{ form_errors(form.password.password) }}
                         {{ form_errors(form.password.confirm) }}
                     </div>
                      <div class="frm_ele">
-                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
+                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}
                         {{ form_errors(form.zipcode) }}
                     </div>
 
-                    <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
+                    <div style="float:left; margin-left:20px; margin-bottom: 10px;">
                         <div class="frm_ele radio_buts">
-                            {{ form_row(form.gender) }}                     
+                            {{ form_row(form.gender) }}
                         </div>
                     </div>
-                    
+
                     <div style="clear:both;"></div>
                     {{ form_rest(form) }}
-                
+
                     <input class="reg_next_step" type="submit" value="Register" />
 
 
-                   
+
                 </form>
 
 
