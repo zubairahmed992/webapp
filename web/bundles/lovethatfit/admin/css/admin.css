@@ -262,3 +262,8 @@ body {
 .dataTables_wrapper {
     margin-bottom: 20px;
 }
+.custom_search_user {
+    position: absolute;
+    z-index: 1;
+    margin-left: 470px;
+}

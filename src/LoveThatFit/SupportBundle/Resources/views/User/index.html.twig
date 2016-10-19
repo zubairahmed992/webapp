@@ -22,6 +22,21 @@
       <div class="clearfix"></div>
     </div>
     <div class="bs-docs-grid">
+      <div class="custom_search_user">
+        Gender:&nbsp;
+        <select id="gender">
+          <option value="">Select Gender</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+        </select>
+        &nbsp;&nbsp;Age:&nbsp;
+        <select id="age">
+          <option value="">Select Age</option>
+          {% for i in 15..50 %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <table id="example" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>
@@ -57,7 +72,11 @@
       "serverSide": true, 
       "ajax": {
           "url": "{{ path('support_users_paginate') }}",
-          "type": "POST"
+          "type": "POST",
+          "data"  : function ( d ) {                        
+                      d.gender = $('#gender').val(),
+                      d.age    = $('#age').val()
+                    },
       },
       "sAjaxDataProp": "data", 
       "pageLength": 10,
@@ -105,6 +124,10 @@
             $('td', row).addClass('duplicate_user_class');
           }
       },
+    });
+
+    $('#gender, #age').change( function() {
+      table.draw();
     });
   
     jQuery('#example tbody').on( 'click', 'button, a, img', function () {

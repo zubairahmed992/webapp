@@ -1,0 +1,10 @@
+
+
+admin_product_specs_foo:
+    pattern:  /admin/product_specs/foo
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:foo }
+
+admin_product_specs_bar:
+    pattern:  /admin/product_specs/bar  
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:bar }
+

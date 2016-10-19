@@ -1,95 +1,491 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
+{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
+{#<html xmlns="http://www.w3.org/1999/xhtml" >#}
+{#<head>#}
+{#<link rel="shortcut icon" type="image/png" href="images/ico/short-cut.png"/>#}
+{#<meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#<meta name="viewport" content="width=device-width, initial-scale=1">#}
+{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
+{#<title>Style your image with SelfieStyler</title>#}
+
+
+{#<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />#}
+{#<link href="css/styles.css" rel="stylesheet" type="text/css" />#}
+{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">#}
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
+    {#</head>#}
+
+{#<body class="full">#}
+{#<div class="container-fluid">#}
+{#<div class="row row-centered">#}
+{#<div style="margin-top:3%;">#}
+  {#<div class="col-xs-10 col-sm-6 col-md-4 col-centered login-box">#}
+
+  {#<div class="logo-margin">#}
+   {#<div class="col-centered"><img src="{{asset('bundles/lovethatfit/site/images/logo_inner.png')}}" class="img-responsive" alt="Selfie Styler"></div>#}
+  {#</div>#}
+      {#<br></br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_email" type="text" value="Email"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_password" type="text" value="password"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_gender" type="text" value="gender"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_zip_code" type="text" value="zip_code"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_height" type="text" value="height"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_weight" type="text" value="weight"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_fit_type" type="text" value="fit_type"></div><br>#}
+
+      {#<div class="form-group"><input class="form-control" id="txt_body_shape" type="text" value="body_shape"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_bra_size" type="text" value="bra_size"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_bust" type="text" value="bust"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_waist" type="text" value="waist"></div><br>#}
+      {#<div class="form-group"><input class="form-control" id="txt_hip" type="text" value="hip"></div><br>#}
+      {#<button type="button" class="btn btn-primary btn-lg" id='btn_continue'>Continue </button>#}
+
+    {#</div>#}
+{#</div>#}
+ {#</div>#}
+
+
+{#</div>#}
+
+
+
+
+
+{#<script>#}
+
+  {#$("#btn_continue").click(function() {#}
+          {#hit_service();#}
+        {#});#}
+
+{#function hit_service(){#}
+
+        {#var visitor = {#}
+            {#email: $("#txt_email").val(),#}
+            {#password : $("#txt_password").val(),#}
+            {#gender : $("#txt_gender").val(),#}
+            {#zip_code : $("#txt_zip_code").val(),#}
+            {#height : $("#txt_height").val(),#}
+            {#weight : $("#txt_weight").val(),#}
+            {#fit_type : $("#txt_fit_type").val(),#}
+            {#body_shape : $("#txt_body_shape").val(),#}
+            {#bra_size : $("#txt_bra_size").val(),#}
+            {#bust : $("#txt_bust").val(),#}
+            {#waist : $("#txt_waist").val(),#}
+            {#hip : $("#txt_hip").val()#}
+        {#};#}
+
+
+
+        {#$.ajax({#}
+               {#type: "POST",#}
+               {#url: "../visitor/update",#}
+               {#data: visitor,#}
+               {#dataType: "json",#}
+               {#success: function(data){#}
+                   {#alert(data);#}
+                {#},#}
+               {#failure: function(errMsg) {#}
+                   {#alert(errMsg);#}
+               {#}#}
+         {#});#}
+
+{#}#}
+{#</script>#}
+
+
+{#</body>#}
+{#</html>#}
+
+
+
+
+<!DOCTYPE html>
+<html ng-app="myApp">
 <head>
-<link rel="shortcut icon" type="image/png" href="images/ico/short-cut.png"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Style your image with SelfieStyler</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/lovethatfit/site/css/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/lovethatfit/site/css/custom.css') }}"  media="screen,projection"/>
 
 
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/styles.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    </head>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
 
-<body class="full">
-<div class="container-fluid">
-<div class="row row-centered"> 
-<div style="margin-top:3%;">
-  <div class="col-xs-10 col-sm-6 col-md-4 col-centered login-box">
-  
-  <div class="logo-margin">
-   <div class="col-centered"><img src="{{asset('bundles/lovethatfit/site/images/logo_inner.png')}}" class="img-responsive" alt="Selfie Styler"></div> 
-  </div>
-      <br></br>    
-      <div class="form-group"><input class="form-control" id="txt_email" type="text" value="Email"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_password" type="text" value="password"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_gender" type="text" value="gender"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_zip_code" type="text" value="zip_code"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_height" type="text" value="height"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_weight" type="text" value="weight"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_fit_type" type="text" value="fit_type"></div><br>
-      
-      <div class="form-group"><input class="form-control" id="txt_body_shape" type="text" value="body_shape"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_bra_size" type="text" value="bra_size"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_bust" type="text" value="bust"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_waist" type="text" value="waist"></div><br>
-      <div class="form-group"><input class="form-control" id="txt_hip" type="text" value="hip"></div><br>      
-      <button type="button" class="btn btn-primary btn-lg" id='btn_continue'>Continue </button>     
-      
-    </div>
-</div> 
- </div>
-  
-  
-</div>
-
-
-
- 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/apps.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/formslider.js') }}"></script>
 
 <script>
-    
-  $("#btn_continue").click(function() {  
-          hit_service();
-        });
-        
-function hit_service(){    
-        
-        var visitor = {        
-            email: $("#txt_email").val(),
-            password : $("#txt_password").val(),
-            gender : $("#txt_gender").val(),
-            zip_code : $("#txt_zip_code").val(),
-            height : $("#txt_height").val(),
-            weight : $("#txt_weight").val(),
-            fit_type : $("#txt_fit_type").val(),
-            body_shape : $("#txt_body_shape").val(),
-            bra_size : $("#txt_bra_size").val(),
-            bust : $("#txt_bust").val(),
-            waist : $("#txt_waist").val(),
-            hip : $("#txt_hip").val()
-        };
-            
-                          
-        
-        $.ajax({
-               type: "POST",
-               url: "../visitor/update",
-               data: visitor,  
-               dataType: "json",
-               success: function(data){                 
-                   alert(data);                    
-                },
-               failure: function(errMsg) {                   
-                   alert(errMsg);
-               }
-         });    
-        
+
+$("#btn_continue").click(function() {
+hit_service();
+});
+
+function hit_service(){
+var visitor = {
+email: $("#email").val(),
+password : $("#password").val(),
+gender : $("#female").val(),
+zip_code : $("#zip_code").val(),
+height : $("#dat_of_birth").val(),
+weight : $("#txt_weight").val(),
+fit_type : $("#txt_fit_type").val(),
+body_shape : $("#txt_body_shape").val(),
+bra_size : $("#txt_bra_size").val(),
+bust : $("#txt_bust").val(),
+waist : $("#txt_waist").val(),
+hip : $("#txt_hip").val()
+};
+
+
+
+$.ajax({
+type: "POST",
+url: "../visitor/update",
+data: visitor,
+dataType: "json",
+success: function(data){
+alert(data);
+},
+failure: function(errMsg) {
+alert(errMsg);
+}
+});
+
 }
 </script>
+<script>
+    $(document).ready(function(e) {
+        $( "#content-splash" ).parent().css( "width", "100%" );
+        $('#opc').height(window.innerHeight).width(window.outerWidth);
+
+    });
+
+</script>
+
+<body>
+<div class="container">
+    <div class="col m1 loginbtn" style="z-index:1;"><a href="#" id="showlogin">Login</a></div>
+    <div id="content-splash">
+        <div id="opc"></div>
+        <div class="row">
+            <div class="col">
+
+                <div class="col m12">
+
+                    <div class="center">
+                        <div class="logo col m3 offset-m0"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+
+                        <h4 class="tagline">SNAP - STYLE - SHARE - SHOP</h4>
+                        <!-- <h5>Let's Get Started!</h5>-->
+                        <div class="col m6 offset-m3">Lorem ipsum dolor sit amet, maiorum oporteat te mel. Velit falli periculis duo at, agam invidunt scribentur ne cum. Mei nullam tritani maiestatis at, alia sonet postulant vim an, mei mediocrem iudicabit cu. Ius an tempor offendit, mei hinc copiosae ei. Usu eu soluta maiestatis.
+
+                            <span class="bottom_txt"><span>Design@selfiestyler.com</span>  Do you want to join Selfiestyler</span>
+                        </div>
+                    </div>
+
+
+                    <form name="user" ng-controller="mainController">
+
+
+
+                        <div class="row col s7">
+
+                            <div class="input-field">
+
+
+                                <input id="showsplash" style="float:left;" value="Join" class="btn black save-changes col m3 offset-m0" type="submit" name="action" ng-disabled="user.$invalid">
+
+
+
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+    <div id="content-register">
+        <div class="row">
+
+            <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
+
+                <div class="col">
+
+                    <div class="center">
+                        <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+                        <div class="row center">
+                            <span class="title_txt">Snap - Style - Share - Shop</span>
+                        </div>
+
+                        <h4>Registration</h4>
+
+                        <!-- <h5>Let's Get Started!</h5>-->
+                        <p>Lorem ipsum dolor sit amet, maiorum oporteat te mel. Velit falli periculis duo at, agam invidunt scribentur ne cum. Mei nullam tritani maiestatis at,</p>
+                    </div>
+
+
+                    <form name="user" ng-controller="mainController">
+
+                        <div class="input-field">
+                            <input id="email" type="email" class="validate" ng-model="formData.email" name="email" required>
+                            <span class="error" ng-show="user.email.$error.required && user.email.$dirty">Email Required</span>
+                            <span class="error" ng-show="!user.email.$error.required && user.email.$error.email && user.email.$dirty">Invalid Email Address</span>
+                            <span ng-show="user.email.$error.required" class="error">*</span>
+                            <label for="email">Email</label>
+                        </div>
+
+
+                        <!--// password -->
+                        <div class="input-field">
+                            <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+                            <span ng-show="user.password.$error.required" class="error">*</span>
+        <span ng-show="user.password.$error.minlength" class="error">
+          Passwords must be between 8 and 20 characters.</span>
+                            <!--<span ng-show="user.password.$error.pattern" class="error">
+                              Must contain one lower &amp; uppercase letter.</span>-->
+
+                            <label for="password">Password</label>
+                        </div>
+                        <!--// password -->
+
+                        <!--//  confirm password -->
+                        <div class="input-field">
+                            <label for="password_c">Confirm Password</label>
+                            <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" valid-password-c="formData.password" required />
+                            <span ng-show="user.password_c.$error.noMatch" class="error">Passwords do not match.</span>
+                            <span ng-show="user.password_c.$error.required" class="error">*</span>
+                        </div>
+                        <!--//  end confirm password -->
+
+
+                        <div class="input-field">
+                            <input id="zip" type="text" name="zip" ng-model="formData.zip" required>
+                            <span ng-show="user.zip.$error.required" class="error">*</span>
+                            <span ng-show="!user.zip.$valid && user.zip.$dirty" class="error">Zipcode Required</span>
+                            <label for="zip_code">Zip Code</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="date" id="dat_of_birth" class="datepicker">
+                            <label for="dob">Date Of Birth</label>
+                            <script>
+                                $('.datepicker').pickadate({
+                                    selectMonths: true, // Creates a dropdown to control month
+                                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                                });
+                            </script>
+
+                        </div>
+                        <div class="input-field center">
+
+                            <input name="group1" type="radio" id="female" checked/>
+                            <label for="female">Female</label>
+                            <input name="group1" type="radio" id="male" />
+                            <label for="male">Male</label>
+                        </div>
+                        <br><br>
+
+                        <div class="row col s11">
+
+                            <div class="input-field">
+                                <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes" type="submit" onclick="hit_service()" name="action" ng-disabled="user.$invalid">
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+    <div id="content-register-step-2">
+        <div class="row">
+
+            <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
+
+
+
+                <div class="col m12">
+
+                    <div class="center">
+                        <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+                        <div class="row center">
+                            <span class="title_txt">Snap - Style - Share - Shop</span>
+                        </div>
+
+                        <h4>Registration Step 2</h4>
+
+                        <!-- <h5>Let's Get Started!</h5>-->
+                        <p>Lorem ipsum dolor sit amet, maiorum oporteat te mel. Velit falli periculis duo at, agam invidunt scribentur ne cum. Mei nullam tritani maiestatis at,</p>
+                    </div>
+
+
+                    <form name="user" ng-controller="mainController">
+
+                        <div class="input-field">
+                            <input id="email" type="email" class="validate" ng-model="formData.email" name="email" required>
+                            <span class="error" ng-show="user.email.$error.required && user.email.$dirty">Email Required</span>
+                            <span class="error" ng-show="!user.email.$error.required && user.email.$error.email && user.email.$dirty">Invalid Email Address</span>
+                            <span ng-show="user.email.$error.required" class="error">*</span>
+                            <label for="email">Email</label>
+                        </div>
+
+
+                        <!--// password -->
+                        <div class="input-field">
+                            <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+                            <span ng-show="user.password.$error.required" class="error">*</span>
+        <span ng-show="user.password.$error.minlength" class="error">
+          Passwords must be between 8 and 20 characters.</span>
+                            <!--<span ng-show="user.password.$error.pattern" class="error">
+                              Must contain one lower &amp; uppercase letter.</span>-->
+
+                            <label for="password">Password</label>
+                        </div>
+                        <!--// password -->
+
+                        <!--//  confirm password -->
+                        <div class="input-field">
+                            <label for="password_c">Confirm Password</label>
+                            <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" valid-password-c="formData.password" required />
+                            <span ng-show="user.password_c.$error.noMatch" class="error">Passwords do not match.</span>
+                            <span ng-show="user.password_c.$error.required" class="error">*</span>
+                        </div>
+                        <!--//  end confirm password -->
+
+
+                        <div class="input-field">
+                            <input id="zip" type="text" name="zip" ng-model="formData.zip" required>
+                            <span ng-show="user.zip.$error.required" class="error">*</span>
+                            <span ng-show="!user.zip.$valid && user.zip.$dirty" class="error">Zipcode Required</span>
+                            <label for="zip_code">Zip Code</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="date" class="datepicker">
+                            <label for="dob">Date Of Birth</label>
+                            <script>
+                                $('.datepicker').pickadate({
+                                    selectMonths: true, // Creates a dropdown to control month
+                                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                                });
+                            </script>
+
+                        </div>
+                        <div class="input-field center">
+
+                            <input name="group1" type="radio" id="female" checked/>
+                            <label for="female">Female</label>
+                            <input name="group1" type="radio" id="male" />
+                            <label for="male">Male</label>
+                        </div>
+                        <br><br>
+
+                        <div class="row col s11">
+
+                            <div class="input-field">
+
+
+                                <input id="showregister_2" value="Next" class="btn black col s7 center offset-s3 save-changes" type="submit" name="action" ng-disabled="user.$invalid">
+
+
+
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+    <div id="content-login">
+        <div class="row">
+            <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
+
+
+                <div class="col m12">
+
+                    <div class="center">
+                        <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+                        <h4>Login</h4>
+                        <div class="row center">
+                            <span class="title_txt">Snap - Style - Share - Shop</span>
+                        </div>
+                        <!-- <h5>Let's Get Started!</h5>-->
+                        <p>Creat an account so you can try clothes on and see
+                            look, fit and size on your own body.</p>
+                    </div>
+
+
+                    {#<form name="user" ng-controller="mainController">#}
+                    <form action="http://localhost/webapp/web/app_dev.php/login_check" method="post" class="form" name="loginform" id="loginform">
+
+                        <div class="input-field">
+                            <input id="email" type="email" class="validate" name="_username" required>
+                                <label for="email">Email</label>
+                        </div>
+
+                        <div class="input-field">
+                            <input id="zip" type="password" name="_password"  required>
+
+                            <label for="zip_code">Password </label>
+                        </div>
+
+                        <br><br>
+                        <div class="row col s11">
+                            <div class="input-field">
+                                {#<input id="showregister2" value="Sign Up" class="btn black col s5 offset-s1 save-changes" type="submit">#}
+                                <button type="submit"  class="btn grey darken-6 col s5 offset-s1" value="Submit">Login</button>
+                                {#<a class="btn grey darken-6 col s5 offset-s1">Login</a>#}
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
 
 
 </body>

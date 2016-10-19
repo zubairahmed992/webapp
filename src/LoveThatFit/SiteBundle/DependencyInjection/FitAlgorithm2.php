@@ -617,7 +617,9 @@ private function calculate_fitindex($fp_specs){
             return $hem_length;
         }
 
-        if ($this->product->getClothingType() == 'skirt') {
+        if ($this->product->getClothingType() == 'skirt' 
+                || $this->product->getClothingType() == 'skirts'
+                ) {
           $rise = $this->product->getRise();
             switch ($rise) {
                 case 'high_rise':
@@ -640,16 +642,20 @@ private function calculate_fitindex($fp_specs){
     }
     #-------------------------------------------------------------
     private function get_hem_advice($item_specs, $body_specs) {
-        $clothing_type = $this->product->getClothingType();
-
+        $clothing_type = $this->product->getClothingType();        
+        /*  
         if ($clothing_type->getName() == 'trouser' ||
                 $clothing_type->getName() == 'jean') {
             return $this->get_inseam_advice($item_specs, $body_specs);
         } elseif ($clothing_type->getName() == 'skirt' || $clothing_type->getName() == 'dress' || $clothing_type->getName() == 'coat') {
             return $this->get_hem_length_advice($item_specs, $body_specs);
+        }*/      
+        if (in_array(strtolower($clothing_type->getName()), array('trouser','trousers', 'jean', 'jeans'))) {
+            return $this->get_inseam_advice($item_specs, $body_specs);
+        } elseif (in_array(strtolower($clothing_type->getName()), array('skirt','skirts', 'dress', 'dresses', 'coat', 'coats'))) {
+            return $this->get_hem_length_advice($item_specs, $body_specs);
         }
-        
-           
+   
     }
     #-----------------------------------------------------
     private function get_hem_length_advice($item_specs, $body_specs) {
@@ -675,7 +681,8 @@ private function calculate_fitindex($fp_specs){
         $actual_hem_length = $hem_length;
         $clothing_type=$this->product->getClothingType();
         
-          if($clothing_type->getName()=='skirt'){
+          if($clothing_type->getName()=='skirt' ||
+                  $clothing_type->getName()=='skirts'){
           $hem_length = $this->cut_to_natural_waste($hem_length);
           }
                 

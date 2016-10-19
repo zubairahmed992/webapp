@@ -9,11 +9,11 @@
     <div class="clearfix"></div>
     {% block header_right_links %}
         <div class="adjustment_links" style="margin-top: 20px; float:right;">
+            <a href="{{ path('admin_users_new') }}" >New Grid</a> 
             <a href="{{ path('admin_test_demo') }}" >Test Session</a> 
             <a href="{{ path('admin_fit_algorithm2_product_list_index') }}" >Products Fit index lists</a> 
             <a href="{{ path('admin_mask_marker_inspect_index') }}" >Masked Inspection</a>
             <a href="{{ path('admin_user_mask_compare_index') }}" >Mask Visual Compare</a>
-
             <a href="{{ path('admin_pending_user') }}" >Pending Users</a>
         </div>
     {% endblock %}
@@ -81,7 +81,9 @@
             <i class="icon-eye-open"></i></a>
             <a href="{{ path('admin_user_detail_edit', {'id': us.Id}) }}" title="Edit {{us.fullName}}"><i class="icon-edit"></i></a>            
             <a href="{{ path('go_secure', {'id': us.Id}) }}" title="{{us.pwd}}" target="_blank"><span class="glyphicon glyphicon-lock"></span></a>
+            
             <a href="{{ path('admin_user_json', {'id': us.Id}) }}" title="{{us.fullName}} json" target="_blank"><span class="add_clr_views"></span></a>
+            
             <a href="{{ path('admin_copy_user_index', {'id': us.id}) }}" title="Duplicate {{us.firstName}}"><i class="icon-tags"></i></a>
             
             <a href="{{ path('admin_user_profile_archives', {'user_id': us.id}) }}" title="Archives"><i class="icon-tasks"></i></a>
