@@ -457,10 +457,11 @@ $(document).ready(function(){
             data: {member_email:$mem_email ,comment:$member_comments, caliboration_status:'reject'},
             success: function (response) {
                 alert("Your comment has been sent successfully");
+                $('#rej_comments').val('');
                 $('#dimpop').hide();
                 $('#rej_popup').hide();
                  window.location= $revert_status;
-            },  
+            },
             error: function () {
                 alert("Please press end button");
             }
