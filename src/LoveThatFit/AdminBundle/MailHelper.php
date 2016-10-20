@@ -18,6 +18,7 @@ class MailHelper {
         $yaml = new Parser();
         $this->conf = $yaml->parse(file_get_contents('../app/config/parameters.yml'));
         $this->templating = $templating;
+        $this->server = $this->conf['parameters']['server'];
     }
 
     private function sendEmail($from, $to, $body, $user, $subject = '', $reset_link='') {
@@ -29,20 +30,29 @@ class MailHelper {
                 ->setContentType("text/html")
                 ->setBody(
                 $this->templating->render($body, array('entity' => $user, 'reset_link' => $reset_link)));
-        try {
-            $this->mailer->send($message);
-        } catch (\Swift_TransportException $e) {
-            $result = array(
-                false,
-                'There was a problem sending email: ' . $e->getMessage()
-            );
-            return $result;
-        }
+        if($this->server!='local')
+        {
+          try {
+              $this->mailer->send($message);
+          } catch (\Swift_TransportException $e) {
+              $result = array(
+                  false,
+                  'There was a problem sending email: ' . $e->getMessage()
+              );
+              return $result;
+          }
 
-        $result = array(
-            true,
-            'email has been sent.'
-        );
+
+          $result = array(
+              true,
+              'email has been sent.'
+          );
+        }else{
+          $result = array(
+              true,
+              'email not sent.'
+          );
+        }
         return $result;
     }
 
@@ -127,20 +137,27 @@ class MailHelper {
 	  ->setTo($to)
 	  ->setContentType("text/html")
 	  ->setBody($body);
-	try {
-	  $this->mailer->send($message);
-	} catch (\Swift_TransportException $e) {
-	  $result = array(
-		false,
-		'There was a problem sending email: ' . $e->getMessage()
-	  );
-	  return $result;
-	}
+    if($this->server!='local') {
+      try {
+        $this->mailer->send($message);
+      } catch (\Swift_TransportException $e) {
+        $result = array(
+            false,
+            'There was a problem sending email: ' . $e->getMessage()
+        );
+        return $result;
+      }
 
-	$result = array(
-	  true,
-	  'email has been sent.'
-	);
+      $result = array(
+          true,
+          'email has been sent.'
+      );
+    }else{
+      $result = array(
+          true,
+          'email not sent.'
+      );
+    }
 	return $result;
   }
 
@@ -152,20 +169,27 @@ class MailHelper {
                 ->setTo($arr['to_email'])
                 ->setContentType("text/html")
                 ->setBody($this->templating->render($arr['template'], $arr['template_array']));
-        try {
-            $this->mailer->send($message);
-        } catch (\Swift_TransportException $e) {
-            $result = array(
-                false,
-                'There was a problem sending email: ' . $e->getMessage()
-            );
-            return $result;
-        }
+     if($this->server!='local') {
+       try {
+         $this->mailer->send($message);
+       } catch (\Swift_TransportException $e) {
+         $result = array(
+             false,
+             'There was a problem sending email: ' . $e->getMessage()
+         );
+         return $result;
+       }
 
-        $result = array(
-            true,
-            'email has been sent.'
-        );
+       $result = array(
+           true,
+           'email has been sent.'
+       );
+     }else{
+       $result = array(
+           true,
+           'email not sent.'
+       );
+     }
         return $result;
     }
 
