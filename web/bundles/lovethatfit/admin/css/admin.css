@@ -267,3 +267,14 @@ body {
     z-index: 1;
     margin-left: 470px;
 }
+.evaluation_tr {
+    background-color: #F2F2F2;
+    font-size:12px;
+}
+.evaluation_tr th span a{
+    text-decoration: none;
+    color: #005A83;
+}
+.hide_grid_row {
+    display: none;
+}
