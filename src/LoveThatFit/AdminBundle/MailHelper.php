@@ -18,7 +18,7 @@ class MailHelper {
         $yaml = new Parser();
         $this->conf = $yaml->parse(file_get_contents('../app/config/parameters.yml'));
         $this->templating = $templating;
-        $this->server = $this->conf['parameters']['server'];
+        $this->server = isset($this->conf['parameters']['server'])?$this->conf['parameters']['server']:'';
     }
 
     private function sendEmail($from, $to, $body, $user, $subject = '', $reset_link='') {
