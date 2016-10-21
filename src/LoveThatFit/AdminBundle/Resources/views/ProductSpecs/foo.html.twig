@@ -5,7 +5,9 @@
 {% block body %}
 
   <a href="#" id="btn_foo" >foo</a> 
-  <div id="product_specs_json">{{ product_specs_json }}</div>
+  <div id="fields_div"></div>
+  <div id="product_specs_json" hidden="true">{{ product_specs_json }}</div>
+  
   
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript">
@@ -13,10 +15,18 @@
   $(document).ready(function(){
       $('#btn_foo').click(function (event){ 
      event.preventDefault();
-     alert('foo bar buz');            
+    var specs = $("#product_specs_json").val();
+    alert(specs['attributes']);
  });
-      $("#product_specs_json").val();
-  });
+    
+
+
+
+
+});
+  
+  
+  
   </script>
 {% endblock %}
      
