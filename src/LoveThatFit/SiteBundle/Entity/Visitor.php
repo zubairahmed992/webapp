@@ -91,7 +91,7 @@ class Visitor
     /**
      * @var string $json_data
      *
-     * @ORM\Column(name="json_data", type="string",nullable=true)
+     * @ORM\Column(name="json_data", type="text",nullable=true)
      */
     private $json_data;
     
@@ -264,7 +264,7 @@ class Visitor
       /**
      * Set json_data
      *
-     * @param string $json_data
+     * @param text $json_data
      * @return Visitor
      */
     public function setJsonData($json_data)
@@ -277,7 +277,7 @@ class Visitor
     /**
      * Get $json_data
      *
-     * @return string 
+     * @return text
      */
     public function getJsonData()
     {
