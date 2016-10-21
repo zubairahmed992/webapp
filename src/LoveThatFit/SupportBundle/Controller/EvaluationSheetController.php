@@ -151,7 +151,7 @@ class EvaluationSheetController extends Controller {
 
     #--------------------------------------------------
 
-    public function onhandFitIndexAction() {
+    public function onhandAction() {
         $decoded = $this->get('request')->request->all();
 
         $arr=$arr=$this->test_demo_data_fit_index(
