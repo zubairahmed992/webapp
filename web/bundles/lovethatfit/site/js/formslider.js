@@ -1,8 +1,9 @@
 $(document).ready(function(){
-  $("form").submit(function(e) {
-    $("#loginform").unbind(e);  
-    e.preventDefault();
-  });
+    $("form").submit(function(e) {
+       // e.preventDefault();
+    });
+
+
   
   var csplash = $("#content-splash");
   var cregister = $("#content-register");
@@ -80,12 +81,7 @@ $(document).ready(function(){
   });
   
   
- 
-  
-  
-  
-  
-  
+
   /* display the login page */
   $("#showlogin").on("click", function(e){
     e.preventDefault();   

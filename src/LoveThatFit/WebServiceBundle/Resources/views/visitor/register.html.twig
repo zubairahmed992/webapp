@@ -1,103 +1,3 @@
-{#<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">#}
-{#<html xmlns="http://www.w3.org/1999/xhtml" >#}
-{#<head>#}
-{#<link rel="shortcut icon" type="image/png" href="images/ico/short-cut.png"/>#}
-{#<meta http-equiv="X-UA-Compatible" content="IE=edge">#}
-{#<meta name="viewport" content="width=device-width, initial-scale=1">#}
-{#<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />#}
-{#<title>Style your image with SelfieStyler</title>#}
-
-
-{#<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />#}
-{#<link href="css/styles.css" rel="stylesheet" type="text/css" />#}
-{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">#}
-{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
-    {#</head>#}
-
-{#<body class="full">#}
-{#<div class="container-fluid">#}
-{#<div class="row row-centered">#}
-{#<div style="margin-top:3%;">#}
-  {#<div class="col-xs-10 col-sm-6 col-md-4 col-centered login-box">#}
-
-  {#<div class="logo-margin">#}
-   {#<div class="col-centered"><img src="{{asset('bundles/lovethatfit/site/images/logo_inner.png')}}" class="img-responsive" alt="Selfie Styler"></div>#}
-  {#</div>#}
-      {#<br></br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_email" type="text" value="Email"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_password" type="text" value="password"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_gender" type="text" value="gender"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_zip_code" type="text" value="zip_code"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_height" type="text" value="height"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_weight" type="text" value="weight"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_fit_type" type="text" value="fit_type"></div><br>#}
-
-      {#<div class="form-group"><input class="form-control" id="txt_body_shape" type="text" value="body_shape"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_bra_size" type="text" value="bra_size"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_bust" type="text" value="bust"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_waist" type="text" value="waist"></div><br>#}
-      {#<div class="form-group"><input class="form-control" id="txt_hip" type="text" value="hip"></div><br>#}
-      {#<button type="button" class="btn btn-primary btn-lg" id='btn_continue'>Continue </button>#}
-
-    {#</div>#}
-{#</div>#}
- {#</div>#}
-
-
-{#</div>#}
-
-
-
-
-
-{#<script>#}
-
-  {#$("#btn_continue").click(function() {#}
-          {#hit_service();#}
-        {#});#}
-
-{#function hit_service(){#}
-
-        {#var visitor = {#}
-            {#email: $("#txt_email").val(),#}
-            {#password : $("#txt_password").val(),#}
-            {#gender : $("#txt_gender").val(),#}
-            {#zip_code : $("#txt_zip_code").val(),#}
-            {#height : $("#txt_height").val(),#}
-            {#weight : $("#txt_weight").val(),#}
-            {#fit_type : $("#txt_fit_type").val(),#}
-            {#body_shape : $("#txt_body_shape").val(),#}
-            {#bra_size : $("#txt_bra_size").val(),#}
-            {#bust : $("#txt_bust").val(),#}
-            {#waist : $("#txt_waist").val(),#}
-            {#hip : $("#txt_hip").val()#}
-        {#};#}
-
-
-
-        {#$.ajax({#}
-               {#type: "POST",#}
-               {#url: "../visitor/update",#}
-               {#data: visitor,#}
-               {#dataType: "json",#}
-               {#success: function(data){#}
-                   {#alert(data);#}
-                {#},#}
-               {#failure: function(errMsg) {#}
-                   {#alert(errMsg);#}
-               {#}#}
-         {#});#}
-
-{#}#}
-{#</script>#}
-
-
-{#</body>#}
-{#</html>#}
-
-
-
-
 <!DOCTYPE html>
 <html ng-app="myApp">
 <head>
@@ -124,45 +24,7 @@
    #regform .rowGroup input.select-dropdown{ height:30px;  line-height: 2.2rem !important;}
    #regform .rowGroup label:first-child{padding-left:10px;}
 </style>
-<script>
-    {# $("#btn_continue").click(function() {
-hit_service();
-});
 
-function hit_service(){
-var visitor = {
-email: $("#email").val(),
-password : $("#password").val(),
-gender : $("#female").val(),
-zip_code : $("#zip_code").val(),
-height : $("#dat_of_birth").val(),
-weight : $("#txt_weight").val(),
-fit_type : $("#txt_fit_type").val(),
-body_shape : $("#txt_body_shape").val(),
-bra_size : $("#txt_bra_size").val(),
-bust : $("#txt_bust").val(),
-waist : $("#txt_waist").val(),
-hip : $("#txt_hip").val()
-};
-
-
-
-$.ajax({
-    type: "POST",
-    url: "../visitor/update",
-    data: visitor,
-    dataType: "json",
-    success: function(data){
-    alert(data);
-},
-    failure: function(errMsg) {
-    alert(errMsg);
-}
-});
-
-}
-#}
-</script>
 <script>
     $(document).ready(function(e) {
         $("#greetBox").hide();
@@ -453,7 +315,7 @@ $.ajax({
 
 
                     {#<form name="user" ng-controller="mainController">#}
-                    <form action="http://localhost/webapp/web/app_dev.php/login_check" method="post"  class="form" name="loginform" id="loginform" onsubmit="return formValidates()">
+                    <form action="/webapp/web/app_dev.php/login_check" method="post"  class="form" name="loginform" id="loginform">
                       <input type="hidden" name="_target_path" value="/inner_site/index">
                         <div class="input-field">
                             <input id="email" type="email" class="validate" name="_username" required>
