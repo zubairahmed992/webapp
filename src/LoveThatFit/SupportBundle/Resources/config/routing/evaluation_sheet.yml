@@ -22,6 +22,6 @@ support_evaluation_sheet_favourite:
     pattern:  /support/evaluation_sheet/favourite
     defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:favourite}
 
-support_evaluation_sheet_onhand_fit_index:
-    pattern:  /support/evaluation_sheet/onhand_fit_index
-    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:onhandFitIndex}
+support_evaluation_sheet_onhand:
+    pattern:  /support/evaluation_sheet/onhand
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:onhand}
