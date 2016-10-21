@@ -1,90 +1,54 @@
 dashboard_banner:
   1:
-    image: uploads/ltf/products/banner/recommendation_image@2x.png
-    caption: SelfieStyler Welcomes Zara
-    price: 10
-    index: 1
-    type: brand
-    id: 63
-    product_ids: 0
-    disable: false
-  2:
-    image: uploads/ltf/products/banner/recommendation_image_2@2x.png
-    caption: DVF Dresses 20% Off
-    price: 20
-    index: 2
-    type: brand
-    id: 54
-    product_ids: 0
-    disable: false
-  3:
-    image: uploads/ltf/products/banner/recommendation_image_-3@2x.png
-    caption: All AEO 25% Off
-    price: 30
-    index: 3
-    type: brand
-    id: 52
-    product_ids: 0
-    disable: false
-  4:    
-    image: uploads/ltf/products/banner/recommendation_image_4@2x.png
-    caption: Trend Update: Downtown Day2Night
-    price: 40
-    index: 3
-    type: retailer
-    id: 15
-    product_ids: 0
-    disable: false
-  5:
     image: uploads/ltf/products/banner/1.png
     caption: Ebony and Ivory 
     price: 40
-    index: 4
+    index: 1
     type: stylist_recommendations
     id: 0
     product_ids: [572,576,571,579,569]
     disable: false
-  6:
+  2:
     image: uploads/ltf/products/banner/2.png
     caption: Easy Breezy
     price: 40
-    index: 5
+    index: 2
     type: stylist_recommendations
     product_ids: [587,577,570,594,582,584]
     id: 0
     disable: false
-  7:
+  3:
     image: uploads/ltf/products/banner/3.png
     caption: Beyond the Blues
     price: 40
-    index: 6
+    index: 3
     type: stylist_recommendations
     product_ids: [588,580,582,566,592,570,591]
     id: 0
     disable: false
-  8:
+  4:
     image: uploads/ltf/products/banner/4.png
     caption: Business Casual 
     price: 40
-    index: 7
+    index: 4
     type: stylist_recommendations
     product_ids: [593,573,602,581]
     id: 0
     disable: false
-  9:
+  5:
     image: uploads/ltf/products/banner/5.png
     caption: Contemporary Fun
     price: 40
-    index: 8
+    index: 5
     type: stylist_recommendations
     product_ids: [565,569,582,592,576,571]
     id: 0
     disable: false
-  10:
+  6:
     image: uploads/ltf/products/banner/6.png
     caption: Modern Edge
     price: 40
-    index: 9
+    index: 6
     type: stylist_recommendations
     product_ids: [564, 581, 578, 580]
     id: 0
