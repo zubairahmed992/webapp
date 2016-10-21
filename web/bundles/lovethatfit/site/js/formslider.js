@@ -1,5 +1,6 @@
 $(document).ready(function(){
   $("form").submit(function(e) {
+    $("#loginform").unbind(e);  
     e.preventDefault();
   });
   
@@ -7,17 +8,32 @@ $(document).ready(function(){
   var cregister = $("#content-register");
   var cregister_2 = $("#content-register-step-2");
   var clogin = $("#content-login");
- 
+ var greetings = $("#greetBox");
+  
+    $("#register_btn").click(function(){
+         $("#regform").fadeOut('slow'); 
+         $("#greetBox").fadeIn().animate({
+      "left": "-880px"	  
+    }, 800, function(){ /* callback */ });
+        });  
+  
+
+   
+    
+
   
   /* display the register page */
   $("#showsplash").on("click", function(e){ 	 
-    e.preventDefault();   
+   
+      e.preventDefault();   
     $(cregister).css("display", "block");	
     
     $(csplash).stop().animate({
 	  "opacity": 0.25,
       "left": "-880px"	  
     }, 800, function(){ /* callback */ });
+  
+   
     
     
 	var winh = $(window).width();
@@ -43,6 +59,7 @@ $(document).ready(function(){
     $(cregister).stop().animate({
       "left": "-880px"
     }, 800, function(){ /* callback */ });
+    
     
     
 	var winh = $(window).width();
