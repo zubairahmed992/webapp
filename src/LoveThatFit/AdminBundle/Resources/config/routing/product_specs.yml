@@ -8,3 +8,7 @@ admin_product_specs_bar:
     pattern:  /admin/product_specs/bar  
     defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:bar }
 
+admin_product_specs_map:
+    pattern:  /admin/product_specs/mapping_input
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:mappingInput }    
+
