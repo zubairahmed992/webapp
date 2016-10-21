@@ -119,24 +119,26 @@
             str = $(this).attr("data-id");
             val = str.split("|")
             user_id = $("#user_id").val();
-            var compare_url = "evaluation_sheet/sample";
+            var compare_url = "evaluation_sheet/cart";
 
             if (user_id != "") {
-                $('#error_attribute').html('');
                 $(".ajax_loader").show();
+                $('#error_attribute').html('');
                 $.ajax({
                     type: "POST",
                     url: compare_url,
                     data: {
-                          user_id       : user_id,
-                          sorting_col   : val[0],
-                          sorting_order : val[1]
+                            user_id       : $("#user_id").val(),
+                            sorting_col   : val[0],
+                            sorting_order : val[1],
                         },
+                    //contentType: "application/json; charset=utf-8",
                     traditional: true,
                     success: function(response){
                         $(".ajax_loader").hide();
                         $('#summary_ajax').html(response);
-                        $('#heading').html('Try on Products');
+                        $('#heading').html('Shopping Cart Items');
+
                     },
                     failure: function(response) {
                         $(".ajax_loader").hide();

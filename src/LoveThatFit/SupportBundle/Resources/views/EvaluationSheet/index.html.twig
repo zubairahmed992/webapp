@@ -3,8 +3,6 @@
     <li class="active"> Product list with recomended sizes & fit index</li>
 {% endblock %}
 {% block body %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
     <h3>Evaluation Product Sheet</h3>
     <a id='print' class='print' href="javascrip:;">Print >></a> or
     <a id='download' class='download' href="javascript:;" target="_parent"> CSV >></a>
@@ -21,48 +19,54 @@ $(document).ready(function(){
 
     //-----------------------------------------------------------
     $('a.compare_with_product_ids').click(function (event){
-     event.preventDefault();
 
-     var ar = {
-         user_id:$("#user_id").val(),
-         ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
+        //grid code start here
+        event.preventDefault();
 
-     var compare_url = "evaluation_sheet/sample";
-     if ($("#user_id").val() != "") {
-        $('#error_attribute').html('');
-        $(".ajax_loader").show();
-         $.ajax({
-           type: "POST",
-           url: compare_url,
-           data: JSON.stringify(ar),
-          contentType: "application/json; charset=utf-8",
-            traditional: true,
-           success: function(response){
-                $(".ajax_loader").hide();
-                $('#summary_ajax').html(response);
-                $('#heading').html('Try on Products');
+        var ar = {
+        user_id:$("#user_id").val(),
+            ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
 
-           },
-           failure: function(response) {
-               $(".ajax_loader").hide();
-               $('#summary_ajax').html(response);
-           }
-        });
-     } else {
-        $('#summary_ajax').html('');
-        $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
-     }
+        var compare_url = "evaluation_sheet/sample";
+        if ($("#user_id").val() != "") {
+            $('#error_attribute').html('');
+            $(".ajax_loader").show();
+            $.ajax({
+                type: "POST",
+                url: compare_url,
+                //data: JSON.stringify(ar),
+                data: {
+                        user_id       : $("#user_id").val(),
+                        sorting_col   : "",
+                        sorting_order : ""
+                    },
+                traditional: true,
+                success: function(response){
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                    $('#heading').html('Try on Products');
 
-     //return false; //for good measure
+                },
+                failure: function(response) {
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                }
+            });
+        } else {
+            $('#summary_ajax').html('');
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+        }
+
+        //return false; //for good measure
     });
     //-----------------------------------------------------------
     $('a.cart').click(function (event){
         event.preventDefault();
-
+        /*
         var ar = {
             user_id:$("#user_id").val(),
             ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
-
+        */
         var compare_url = "evaluation_sheet/cart";
         if ($("#user_id").val() != "") {
             $(".ajax_loader").show();
@@ -70,8 +74,13 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: compare_url,
-                data: JSON.stringify(ar),
-                contentType: "application/json; charset=utf-8",
+                //data: JSON.stringify(ar),
+                data: {
+                        user_id       : $("#user_id").val(),
+                        sorting_col   : "",
+                        sorting_order : "",
+                    },
+                //contentType: "application/json; charset=utf-8",
                 traditional: true,
                 success: function(response){
                     $(".ajax_loader").hide();
@@ -94,11 +103,11 @@ $(document).ready(function(){
     //-----------------------------------------------------------
     $('a.favourite').click(function (event){
         event.preventDefault();
-
+        /*
         var ar = {
             user_id:$("#user_id").val(),
             ids: '490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554'};
-
+        */
         var compare_url = "evaluation_sheet/favourite";
         if ($("#user_id").val() != "") {
             $(".ajax_loader").show();
@@ -106,8 +115,13 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: compare_url,
-                data: JSON.stringify(ar),
-                contentType: "application/json; charset=utf-8",
+                //data: JSON.stringify(ar),
+                data: {
+                        user_id       : $("#user_id").val(),
+                        sorting_col   : "",
+                        sorting_order : ""
+                    },
+                //contentType: "application/json; charset=utf-8",
                 traditional: true,
                 success: function(response){
                     $(".ajax_loader").hide();
@@ -128,6 +142,40 @@ $(document).ready(function(){
     });
 
     //-----------------------------------------------------------
+    //for onhand fit index
+    $('a.onhand_fit_index').click(function (event){
+        event.preventDefault();
+        var compare_url = "evaluation_sheet/onhand_fit_index";
+        if ($("#user_id").val() != "") {
+            $(".ajax_loader").show();
+            $('#error_attribute').html('');
+            $.ajax({
+                type: "POST",
+                url: compare_url,
+                data: {
+                        user_id       : $("#user_id").val(),
+                        sorting_col   : "",
+                        sorting_order : ""
+                    },
+                traditional: true,
+                success: function(response){
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                    $('#heading').html('On Hand Fit Index');
+                },
+                failure: function(response) {
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                }
+            });
+        } else {
+            $('#summary_ajax').html('');
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+        }
+
+        //return false; //for good measure
+    });
+
     //-----------------------------------------------------------
     $('a.print').click(function (event){
         event.preventDefault();
@@ -188,9 +236,11 @@ $(document).ready(function(){
         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
            Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
            &nbsp;
-           <a id='compare_with_product_ids' class='compare_with_product_ids' href="#">Try on Products </a> |
-            <a id='cart' class='cart' href="#">Shopping cart items </a> |
-            <a id='cart' class='favourite' href="#">Favourite items </a>
+           <a id='compare_with_product_ids' class='compare_with_product_ids' href="javascript:;">
+           Try on Products </a> |
+            <a id='cart' class='cart' href="javascript:;">Shopping cart items </a> |
+            <a id='favourite' class='favourite' href="javascript:;">Favourite items </a> |
+            <a id='onhand_fit_index' class='onhand_fit_index' href="javascript:;">On Hand Fit Index</a>
         {{ form_rest(userForm) }}
         </form>                 
         </div>

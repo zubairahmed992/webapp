@@ -26,26 +26,34 @@ class EvaluationSheetController extends Controller {
 
     #-------------------------------------------------- User Test Demo Products Ajax Call copy of Marathon
     public function sampleAction() {
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        $arr=$this->test_demo_data($decoded['user_id']);
+        //$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        //$arr=$this->test_demo_data($decoded['user_id']);
+        $decoded = $this->get('request')->request->all();
+
+        $arr=$arr=$this->test_demo_data(
+            $decoded['user_id'],
+            $decoded['sorting_col'],
+            $decoded['sorting_order']
+        );
+
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', $arr);
     }
-
     #-------------------------------------------------- User Test Demo Products Ajax Call copy of Marathon
     public function cartAction() {
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        //$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $decoded = $this->get('request')->request->all();
         $user = $this->get('user.helper.user')->find($decoded['user_id']);
         $cart=$user->getCart();
         $pa= array();
 
         $algo = new FitAlgorithm2($user);
         $serial = 1;
-$arr=array();
-//        foreach ($cart as $c) {
-//            $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
-//        }
-//        return new response(json_encode($arr));
-//        die;
+        $arr=array();
+        //foreach ($cart as $c) {
+        //    $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
+        //}
+        //return new response(json_encode($arr));
+        //die;
         foreach ($cart as $c) {
             $p=$c->getProductItem()->getProduct();
             $algo->setProduct($p);
@@ -74,12 +82,21 @@ $arr=array();
                 }
             $serial++;
         }
-        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', array('products' => $pa,'user' => $user));
+        if ($decoded['sorting_col'] != "" && $decoded['sorting_order'] != "") {
+            if ($decoded['sorting_order'] == "up") {
+                uasort($pa, $this->make_comparer(array($decoded['sorting_col'], SORT_ASC)));
+            } elseif($decoded['sorting_order'] == "down") {
+                uasort($pa, $this->make_comparer(array($decoded['sorting_col'], SORT_DESC)));
+            }
+        }
+
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:cart.html.twig', array('products' => $pa,'user' => $user));
     }
 
     #-------------------------------------------------- Favourite products of user
     public function favouriteAction() {
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        //$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $decoded = $this->get('request')->request->all();
         $user = $this->get('user.helper.user')->find($decoded['user_id']);
         $favourite=$user->getProductItems();
         $pa= array();
@@ -87,11 +104,11 @@ $arr=array();
         $algo = new FitAlgorithm2($user);
         $serial = 1;
         $arr=array();
-//        foreach ($cart as $c) {
-//            $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
-//        }
-//        return new response(json_encode($arr));
-//        die;
+        //foreach ($cart as $c) {
+        //    $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
+        //}
+        //return new response(json_encode($arr));
+        //die;
         foreach ($favourite as $c) {
             $p=$c->getProduct();
             $algo->setProduct($p);
@@ -120,11 +137,36 @@ $arr=array();
             }
             $serial++;
         }
-        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', array('products' => $pa,'user' => $user));
+
+        if ($decoded['sorting_col'] != "" && $decoded['sorting_order'] != "") {
+            if ($decoded['sorting_order'] == "up") {
+                uasort($pa, $this->make_comparer(array($decoded['sorting_col'], SORT_ASC)));
+            } elseif($decoded['sorting_order'] == "down") {
+                uasort($pa, $this->make_comparer(array($decoded['sorting_col'], SORT_DESC)));
+            }
+        }
+
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:favourite.html.twig', array('products' => $pa,'user' => $user));
     }
 
     #--------------------------------------------------
-    private function test_demo_data($user_id){
+
+    public function onhandFitIndexAction() {
+        $decoded = $this->get('request')->request->all();
+
+        $arr=$arr=$this->test_demo_data_fit_index(
+            $decoded['user_id'],
+            $decoded['sorting_col'],
+            $decoded['sorting_order']
+        );
+
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:onhandFitIndex.html.twig', $arr);
+    }
+
+
+    #--------------------------------------------------
+    private function test_demo_data($user_id, $sorting_col, $sorting_order)
+    {
         $user = $this->get('user.helper.user')->find($user_id);
         $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
         $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
@@ -153,33 +195,133 @@ $arr=array();
                 }
             }
             else{
-            $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
-            if (is_array($fb) && array_key_exists('feedback', $fb)) {
-                $pa[$p->getId()] = array('name' => $p->getName(),
-                    'brand' => $p->getBrand()->getName(),
-                    'fit_index'=>$fb["feedback"]['fit_index'],
-                    'clothing_type' => $p->getClothingType()->getName(),
-                    #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
-                    'size'=> $fb["feedback"]['title'],
-                    'color'=> $p->getdisplayProductColor()->getTitle(),
-                    'serial'=>$serial,
-                    'fits'=>$fb["feedback"]['fits'],
-                    'recommended_size'=> '',
-                    'recommended_fit_index'=>'',
-                );
-                if(is_array($fb) && array_key_exists('recommendation', $fb)){
-                        $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
-                        $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+                if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                    $pa[$p->getId()] = array('name' => $p->getName(),
+                        'brand' => $p->getBrand()->getName(),
+                        'fit_index'=>$fb["feedback"]['fit_index'],
+                        'clothing_type' => $p->getClothingType()->getName(),
+                        #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
+                        'size'=> $fb["feedback"]['title'],
+                        'color'=> $p->getdisplayProductColor()->getTitle(),
+                        'serial'=>$serial,
+                        'fits'=>$fb["feedback"]['fits'],
+                        'recommended_size'=> '',
+                        'recommended_fit_index'=>'',
+                    );
+                    if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                            $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                            $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                    }
                 }
-            }
             }
             $serial++;
         }
-                return array(
+        if ($sorting_col != "" && $sorting_order != "") {
+            if ($sorting_order == "up") {
+                uasort($pa, $this->make_comparer(array($sorting_col, SORT_ASC)));
+            } elseif($sorting_order == "down") {
+                uasort($pa, $this->make_comparer(array($sorting_col, SORT_DESC)));
+            }
+        }
+
+        return array(
             'products' => $pa,
             'user' => $user,
         );
     }
+
+    private function test_demo_data_fit_index($user_id, $sorting_col, $sorting_order)
+    {
+        $user = $this->get('user.helper.user')->find($user_id);
+        $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
+        $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
+        $products = $this->get('admin.helper.product')->listProductByIds($ids);
+        
+        $pa     = array();
+        $result = array();
+
+        $algo = new FitAlgorithm2($user);
+        $serial = 1;
+        foreach ($products as $p) {
+            $algo->setProduct($p);
+            if ($try_sizes[$p->getId()] !='NA'){
+                $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+                if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                    $pa[$p->getId()] = array('name' => $p->getName(),
+                        'brand' => $p->getBrand()->getName(),
+                        'fit_index'=>$fb["feedback"]['fit_index'],
+                        'clothing_type' => $p->getClothingType()->getName(),
+                        'size'=> $fb["feedback"]['title'],
+                        'color'=> $p->getdisplayProductColor()->getTitle(),
+                        'serial'=>$serial,
+                        'fits'=>$fb["feedback"]['fits'],
+                        'recommended_size'=> '',
+                        'recommended_fit_index'=>'',
+                    );
+                    if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                            $pa[$p->getId()]['recommended_size']= $fb["recommendation"]['title'];
+                            $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                    }
+                }
+            }
+            $serial++;
+        }
+
+        foreach ($pa as $res) {
+            if ($res['size'] == $res['recommended_size']) {
+                if ($res['fit_index'] > 0 && $res['recommended_fit_index'] > 0) {
+                    $result[] = $res;
+                }
+            }
+        }
+
+        if ($sorting_col != "" && $sorting_order != "") {
+            if ($sorting_order == "up") {
+                uasort($result, $this->make_comparer(array($sorting_col, SORT_ASC)));
+            } elseif($sorting_order == "down") {
+                uasort($result, $this->make_comparer(array($sorting_col, SORT_DESC)));
+            }
+        }
+
+        return array(
+            'products' => $result,
+            'user' => $user,
+        );
+    }
+
+    private function make_comparer() {
+        $criteriaNames = func_get_args();
+        $comparer = function($first, $second) use ($criteriaNames) {
+            // Do we have anything to compare?
+            while(!empty($criteriaNames)) {
+                // What will we compare now?
+                $criterion = array_shift($criteriaNames);
+
+                // Used to reverse the sort order by multiplying
+                // 1 = ascending, -1 = descending
+                $sortOrder = 1; 
+                if (is_array($criterion)) {
+                    $sortOrder = $criterion[1] == SORT_DESC ? -1 : 1;
+                    $criterion = $criterion[0];
+                }
+
+                // Do the actual comparison
+                if ($first[$criterion] < $second[$criterion]) {
+                    return -1 * $sortOrder;
+                }
+                else if ($first[$criterion] > $second[$criterion]) {
+                    return 1 * $sortOrder;
+                }
+
+            }
+            // Nothing more to compare with, so $first == $second
+            return 0;
+        };
+        return $comparer;
+    }
+
+
     #--------------------------------------------------
     public function printAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());

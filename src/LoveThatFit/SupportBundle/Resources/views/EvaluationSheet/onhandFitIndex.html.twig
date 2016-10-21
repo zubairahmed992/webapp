@@ -119,7 +119,7 @@
             str = $(this).attr("data-id");
             val = str.split("|")
             user_id = $("#user_id").val();
-            var compare_url = "evaluation_sheet/sample";
+            var compare_url = "evaluation_sheet/onhand_fit_index";
 
             if (user_id != "") {
                 $('#error_attribute').html('');
@@ -136,7 +136,7 @@
                     success: function(response){
                         $(".ajax_loader").hide();
                         $('#summary_ajax').html(response);
-                        $('#heading').html('Try on Products');
+                        $('#heading').html('On Hand Fit Index');
                     },
                     failure: function(response) {
                         $(".ajax_loader").hide();
