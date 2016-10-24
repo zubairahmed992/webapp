@@ -17,3 +17,7 @@ visitor_register:
 visitor_update:
     pattern:  /visitor/update
     defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:update }
+
+visitor_registration:
+    pattern:  /visitor/registration
+    defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:registration }

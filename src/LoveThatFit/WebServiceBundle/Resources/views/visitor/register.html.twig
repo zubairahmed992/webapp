@@ -36,6 +36,16 @@
 </script>
 </head>
 <body>
+
+{% if error %}
+    <div class="login_error" >
+        <div id="error_content">
+            {{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}
+        </div>
+
+    </div>
+{% endif %}
+
 <div class="container">
     <div class="col m1 loginbtn" style="z-index:1;"><a href="#" id="showlogin">Login</a></div>
     <div id="content-splash">

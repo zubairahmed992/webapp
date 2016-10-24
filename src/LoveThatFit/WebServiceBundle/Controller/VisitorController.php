@@ -5,6 +5,7 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\SiteBundle\Entity\Visitor;
+use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 
 class VisitorController extends Controller {
 
@@ -12,6 +13,42 @@ class VisitorController extends Controller {
         return $this->render('LoveThatFitWebServiceBundle:Visitor:email.html.twig');
     }
 
+//--------------- Login Eror Set ------------------------------
+    public function registrationAction() {
+
+        $request = $this->getRequest();
+        $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+
+        $referer = $request->headers->get('referer');
+        $url_bits = explode('/', $referer);
+        $security_context['referer'] = $url_bits[sizeof($url_bits) - 1];
+
+        $routeName = $request->get('_route');
+
+
+        if (array_key_exists('error', $security_context) and $security_context['error']) {
+            $security_context['referer'] = "login";
+        }
+        if($routeName=='login'){
+            $security_context['referer'] = "login";
+        }
+
+        $user = $this->get('user.helper.user')->createNewUser();
+        $form = $this->createForm(new RegistrationType(), $user);
+
+        $twitter_helper = $this->get('twitter_helper');
+
+        $twitters = array();
+        $twitters = $twitter_helper->twitter_latest();
+
+        return $this->render('LoveThatFitWebServiceBundle:Visitor:register.html.twig', array(
+            'form' => $form->createView(),
+            'last_username' => $security_context['last_username'],
+            'error' => $security_context['error'],
+            'referer' => $security_context['referer'],
+            'twitters' => $twitters,
+        ));
+    }
     #---------------------------------------------------
 
     public function registerAction() {

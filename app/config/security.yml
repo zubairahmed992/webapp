@@ -49,14 +49,13 @@ security:
             anonymous: ~
             context: primary_auth
             form_login:
-                login_path:  /login
                 check_path:  /login_check
                 username_parameter: _username
                 password_parameter: _password
                 
             logout:
                path:   /logout
-               target: /login       
+               target: /visitor/register
 
 
                
