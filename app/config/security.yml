@@ -49,6 +49,7 @@ security:
             anonymous: ~
             context: primary_auth
             form_login:
+                login_path:  /visitor/registration
                 check_path:  /login_check
                 username_parameter: _username
                 password_parameter: _password
