@@ -180,9 +180,13 @@
                         <!-- Zip code  -->
 
                         <div class="input-field">
-                            <input id="zip" type="text" name="zip" ng-model="regform.zip" required>
+                            <input id="zip" type="text" name="zip" ng-model="regform.zip" ng-minlength="5" ng-maxlength="5" required>
                             <span ng-show="formData.zip.$error.required" class="error">*</span>
-                            <span ng-show="!formData.zip.$valid && formData.zip.$dirty" class="error">Zipcode Required</span>
+                            <span ng-show="formData.zip.$error.$dirty" class="error">Zipcode Required</span>
+                            <span ng-show="formData.zip.$error.minlength" class="error">Zipcode must be 5 characters long.</span>
+                            <span ng-show="formData.zip.$error.maxlength" class="error">Zipcode should not more than 5 characters.</span>
+
+
                             <label for="zip_code">Zip Code</label>
                         </div>
 
@@ -225,7 +229,7 @@
                         <br>
                         <div class="row col s11">
                             <div class="input-field">
-                                <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes showHide" type="submit" name="action" ng-disabled="formData.email.$error.required || formData.email.$error.email || formData.password.$error.required || formData.password.$error.minlength || formData.password_c.$error.noMatch || formData.password_c.$error.required || formData.zip.$error.required || formData.dob.$error.required">
+                                <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes showHide" type="submit" name="action" ng-disabled="formData.email.$error.required || formData.email.$error.email || formData.password.$error.required || formData.password.$error.minlength || formData.password_c.$error.noMatch || formData.password_c.$error.required || formData.zip.$error.required || formData.dob.$error.required || formData.zip.$error.minlength">
                             </div>
                         </div>
                     </div>
@@ -251,17 +255,22 @@
                     <div class="rowGroup">
                         <div class="row">
                             <div class="input-field col m6">
-                                <input id="pheight" type="text" class="validate"  name="pheight" ng-model="regform.pheight" required>
+                                <input id="pheight" type="text" class="validate" name="pheight" ng-model="regform.pheight" required>
+
+
+                                <span class="error" ng-show="formData.pheight.$error.required">*</span>
+
                                 <label style="padding-left:10px;" for="pheight">Height</label>
                             </div>
 
 
                             <div class="input-field col m6">
-                                <select  ng-model="regform.ftin" name="ftin">
+                                <select  ng-model="regform.ftin" name="ftin" ng-model="regform.ftin" required>
                                     <option value="" disabled selected>Select Measurement</option>
                                     <option value="Feet" selected> Feet </option>
                                     <option value="Inches" >Inches</option>
                                 </select>
+                                <span class="error_select" ng-show="formData.ftin.$error.required">*</span>
 
                             </div>
 
@@ -270,12 +279,15 @@
                             <div class="col m6">
                                 <div class="input-field">
                                     <input id="pweight" type="text" class="validate"  ng-model="regform.pweight" name="pweight" required>
+
+                                    <span class="error" ng-show="formData.pweight.$error.required">*</span>
+
                                     <label for="pweight">Weight</label>
                                 </div>
                             </div>
                             <div class="col m6">
                                 <div class="input-field">
-                                    <select ng-model="regform.kglbs" name="kglbs">
+                                    <select ng-model="regform.kglbs" name="kglbs" ng-model="regform.kglbs" required>
                                         <option value="" disabled selected>Select Mass</option>
                                         <option value="kg" selected> Kg </option>
                                         <option value="lbs">lbs</option>
@@ -345,7 +357,7 @@
                     <!--Clothing Type-->
                     <div class="row col s11">
                         <div class="input-field">
-                            <input id="register_btn" type="submit" value="Submit" class="btn black col s7 center offset-s3 save-changes showHide" ng-disabled="formData.clothing_type.$error.required || formData.body_shape.$error.required || formData.bra_size.$error.required || formData.device_type.$error.required">
+                            <input id="register_btn" type="submit" value="Submit" class="btn black col s7 center offset-s3 save-changes showHide" ng-disabled="formData.clothing_type.$error.required || formData.body_shape.$error.required || formData.bra_size.$error.required || formData.device_type.$error.required || formData.pheight.$error.required || formData.pweight.$error.required || formData.ftin.$error.required || formData.kglbs.$error.required">
 
 
 
