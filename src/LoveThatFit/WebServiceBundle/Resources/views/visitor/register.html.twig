@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html>
 <head>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -27,6 +27,21 @@
 
 <script>
     $(document).ready(function(e) {
+
+        var $myDiv = $('#error_content');
+
+        if ( $myDiv.length){
+
+            $("#content-splash").hide();
+            $("#content-login").show();
+            $('.loginbtn').hide();
+            $("#content-login").css("left", 207);
+            //alert('yes its');
+            //you can now reuse  $myDiv here, without having to select it again.
+        }
+
+
+
         $("#greetBox").hide();
         $('select').material_select();
         $( "#content-splash" ).parent().css( "width", "100%" );
@@ -35,16 +50,9 @@
 
 </script>
 </head>
-<body>
+<body ng-app="myApp">
 
-{% if error %}
-    <div class="login_error" >
-        <div id="error_content">
-            {{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}
-        </div>
 
-    </div>
-{% endif %}
 
 <div class="container">
     <div class="col m1 loginbtn" style="z-index:1;"><a href="#" id="showlogin">Login</a></div>
@@ -67,24 +75,23 @@
                     </div>
 
 
-                    <form name="user" ng-controller="mainController">
-
-
-
-                        <div class="row col s7">
-
-                            <div class="input-field">
-
-
-                                <input id="showsplash" style="float:left;" value="Join" class="btn black save-changes col m3 offset-m0" type="submit" name="action" ng-disabled="user.$invalid">
 
 
 
 
-                            </div>
+                    <div class="row col s7">
+
+                        <div class="input-field">
+
+                            <input id="showsplash" style="float:left;" value="Join" class="btn black save-changes col m3 offset-m0" type="submit">
+
+
+
+
                         </div>
+                    </div>
 
-                    </form>
+
 
                 </div>
 
@@ -97,214 +104,259 @@
         </div>
     </div>
 
-                        
-<div Id="greetBox">
-  
-    <div class="mdl-layout-spacer"></div>
-    <div class="row">    
-    <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
-           <div class="center">
-            <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
-            <div class="row center"> <span class="title_txt">Snap - Style - Share - Shop</span> </div>
-            <br/>
-            <br/>
-            <h4>Thank You for your interest</h4>
-            <!-- <h5>Let's Get Started!</h5>-->
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            
-           </div> 
+
+    <div Id="greetBox">
+
+        <div class="mdl-layout-spacer"></div>
+        <div class="row">
+            <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
+                <div class="center">
+                    <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+                    <div class="row center"> <span class="title_txt">Snap - Style - Share - Shop</span> </div>
+                    <br/>
+                    <br/>
+                    <h4>Thank You for your interest</h4>
+                    <!-- <h5>Let's Get Started!</h5>-->
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                </div>
+            </div>
         </div>
-    </div>        
-    <div class="mdl-layout-spacer"></div>
-   
-</div>                     
-                        
-<!--Registaration form!-->                        
- <form id="regform" name="user" ng-controller="mainController" ng-submit="submitForm()">
-  <div id="content-register">
-    <div class="row">
-      <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
-        <div>
-          <div class="center">
-            <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
-            <div class="row center"> <span class="title_txt">Snap - Style - Share - Shop</span> </div>
-            <h4>Registration</h4>
-            
-            <!-- <h5>Let's Get Started!</h5>-->
-            <br/> 
-            <div class="text-center">Style your image with SelfieStyler.</div>
-            <br/>
-          </div>
-          <div class="input-field">
-            <input id="email" type="email" class="validate" ng-model="formData.email" name="email" required>
-            <span class="error" ng-show="user.email.$error.required && user.email.$dirty">Email Required</span> <span class="error" ng-show="!user.email.$error.required && user.email.$error.email && user.email.$dirty">Invalid Email Address</span> <span ng-show="user.email.$error.required" class="error">*</span>
-            <label for="email">Email</label>
-          </div>
-          <!--// password -->
-          <div class="input-field">
-            <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
-            <span ng-show="user.password.$error.required" class="error">*</span> <span ng-show="user.password.$error.minlength" class="error"> Passwords must be between 8 and 20 characters.</span> 
-            <!--<span ng-show="user.password.$error.pattern" class="error">
-                              Must contain one lower &amp; uppercase letter.</span>-->
-            
-            <label for="password">Password</label>
-          </div>
-          <!--// password --> 
-          <!--//  confirm password -->
-          <div class="input-field">
-            <label for="password_c">Confirm Password</label>
-            <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" valid-password-c="formData.password" required />
-            <span ng-show="user.password_c.$error.noMatch" class="error">Passwords do not match.</span> <span ng-show="user.password_c.$error.required" class="error">*</span> </div>
-          <!--//  end confirm password -->
-          <div class="input-field">
-            <input id="zip" type="text" name="zip" ng-model="formData.zip" required>
-            <span ng-show="user.zip.$error.required" class="error">*</span> <span ng-show="!user.zip.$valid && user.zip.$dirty" class="error">Zipcode Required</span>
-            <label for="zip_code">Zip Code</label>
-          </div>
-          <div class="input-field">
-            <input type="date" id="dat_of_birth" class="datepicker">
-            <label for="dob">Date Of Birth</label>
-            <script>
+        <div class="mdl-layout-spacer"></div>
+
+    </div>
+
+    <!--Registaration form!-->
+    <form id="regform" name="formData" ng-controller="mainController" ng-submit="submitForm()">
+        <div id="content-register">
+            <div class="row">
+                <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
+                    <div>
+                        <div class="center">
+                            <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+                            <div class="row center"> <span class="title_txt">Snap - Style - Share - Shop</span> </div>
+                            <h4>Registration</h4>
+
+                            <!-- <h5>Let's Get Started!</h5>-->
+
+                            <div class="text-center">Style your image with SelfieStyler.</div>
+
+                        </div>
+                        <div class="input-field">
+                            <input id="email" type="email" class="validate" ng-model="regform.email" name="email" required>
+
+                            <span class="error" ng-show="formData.email.$error.required && formData.email.$dirty">Email Required</span>
+                            <span class="error" ng-show="!formData.email.$error.required && formData.email.$error.email && formData.email.$dirty">Invalid Email Address</span>
+                            <span ng-show="formData.email.$error.required" class="error">*</span>
+                            <label for="email">Email</label>
+
+                        </div>
+
+
+                        <!--// password -->
+                        <div class="input-field">
+                            <input type="password" id="password" name="password" ng-model="regform.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+                            <span ng-show="formData.password.$error.required" class="error">*</span>
+                            <span ng-show="formData.password.$error.minlength" class="error">Passwords must be between 8 and 20 characters.</span>
+                            <!--<span ng-show="user.password.$error.pattern" class="error">
+                                              Must contain one lower &amp; uppercase letter.</span>-->
+
+                            <label for="password">Password</label>
+                        </div>
+                        <!--// password -->
+
+                        <!--//  confirm password -->
+                        <div class="input-field">
+                            <label for="password_c">Confirm Password</label>
+                            <input type="password" id="password_c" name="password_c" ng-model="regform.password_c" valid-password-c="regform.password" required />
+                            <span ng-show="formData.password_c.$error.noMatch" class="error">Passwords do not match.</span>
+                            <span ng-show="formData.password_c.$error.required" class="error">*</span> </div>
+                        <!--//  end confirm password -->
+
+
+                        <!-- Zip code  -->
+
+                        <div class="input-field">
+                            <input id="zip" type="text" name="zip" ng-model="regform.zip" required>
+                            <span ng-show="formData.zip.$error.required" class="error">*</span>
+                            <span ng-show="!formData.zip.$valid && formData.zip.$dirty" class="error">Zipcode Required</span>
+                            <label for="zip_code">Zip Code</label>
+                        </div>
+
+                        <!-- Zip code End  -->
+
+
+                        <!-- Date picker start  -->
+
+                        <div class="input-field">
+                            <input type="date" id="dat_of_birth" class="datepicker" name="dob" ng-model="regform.dob" required>
+                            <span ng-show="formData.dob.$error.required" class="error">*</span>
+                            <label for="dob">Date Of Birth</label>
+                            <script>
                                 $('.datepicker').pickadate({
                                     selectMonths: true, // Creates a dropdown to control month
                                     selectYears: 15 // Creates a dropdown of 15 years to control year
                                 });
-                            </script> 
-          </div>
-          <div class="input-field center">
-            <input name="group1" type="radio" id="female" checked/>
-            <label for="female">Female</label>
-            <input name="group1" type="radio" id="male" />
-            <label for="male">Male</label>
-          </div>
-          <br>
-          <br>
-          <div class="row col s11">
-            <div class="input-field">
-              <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes showHide" type="submit" name="action" ng-disabled="formData.$invalid">
+                            </script>
+                        </div>
+
+                        <!--    Date picker Ends   -->
+
+                        <!--  Gender  -->
+
+                        <div class="input-field center">
+                            <input name="group1" type="radio" id="female"/>
+                            <label for="female">Female</label>
+                            <input name="group1" type="radio" id="male" checked />
+                            <label for="male">Male</label>
+                        </div>
+
+                        <!--  Gender Ends   -->
+
+
+
+
+
+
+                        <br>
+                        <br>
+                        <div class="row col s11">
+                            <div class="input-field">
+                                <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes showHide" type="submit" name="action" ng-disabled="formData.email.$error.required || formData.email.$error.email || formData.password.$error.required || formData.password.$error.minlength || formData.password_c.$error.noMatch || formData.password_c.$error.required || formData.zip.$error.required || formData.dob.$error.required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div id="content-register-step-2">
-    <div class="row">
-      <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
-        
-          <div class="center">
-            <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
-            <div class="row center"> <span class="title_txt">Snap - Style - Share - Shop</span> </div>
-            <h4>Registration Step 2</h4>
-            
-            <!-- <h5>Let's Get Started!</h5>-->
-            <br/> 
-            <div class="text-center">Style your image with SelfieStyler.</div>
-           
-          </div>
-         
-          <!--Clothing Type--> 
-          <div class="rowGroup">
-          <div class="row">
-            <div class="input-field col m8">
-                <input id="pheight" type="text" class="validate"  name="pheight" ng-model="formData.pheight"  required>
-                <label style="padding-left:10px;" for="pheight">Height</label>
+        <div id="content-register-step-2">
+            <div class="row">
+                <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
+
+                    <div class="center">
+                        <div class="logo"><img src="{{ asset('bundles/lovethatfit/site/images/Logo_home.png') }}" width="30%" class="responsive-img"></div>
+                        <div class="row center"> <span class="title_txt">Snap - Style - Share - Shop</span> </div>
+                        <h4>Registration Step 2</h4>
+
+                        <!-- <h5>Let's Get Started!</h5>-->
+
+                        <div class="text-center">Style your image with SelfieStyler.</div>
+
+                    </div>
+
+                    <!--Clothing Type-->
+                    <div class="rowGroup">
+                        <div class="row">
+                            <div class="input-field col m6">
+                                <input id="pheight" type="text" class="validate"  name="pheight" ng-model="regform.pheight" required>
+                                <label style="padding-left:10px;" for="pheight">Height</label>
+                            </div>
+
+
+                            <div class="input-field col m6">
+                                <select  ng-model="regform.ftin" name="ftin">
+                                    <option value="" disabled selected>Select Measurement</option>
+                                    <option value="Feet" selected> Feet </option>
+                                    <option value="Inches" >Inches</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col m6">
+                                <div class="input-field">
+                                    <input id="pweight" type="text" class="validate"  ng-model="regform.pweight" name="pweight" required>
+                                    <label for="pweight">Weight</label>
+                                </div>
+                            </div>
+                            <div class="col m6">
+                                <div class="input-field">
+                                    <select ng-model="regform.kglbs" name="kglbs">
+                                        <option value="" disabled selected>Select Mass</option>
+                                        <option value="kg" selected> Kg </option>
+                                        <option value="lbs">lbs</option>
+                                    </select>
+                                    <span class="error_select" ng-show="formData.kglbs.$error.required">*</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Clothing Type-->
+                    <div class="input-field">
+                        <select  ng-model="regform.clothing_type" name="clothing_type" required>
+                            <option value="" disabled selected>Fit Types</option>
+                            <option value="regular">Regular</option>
+                            <option value="petite">Petite</option>
+                            <option value="tall">Tall</option>
+                            <option value="plus">Plus</option>
+                        </select>
+                        <span class="error_select" ng-show="formData.clothing_type.$error.required">*</span>
+
+                    </div>
+
+                    <!--Clothing Type-->
+
+                    <!--Clothing Type-->
+                    <div class="input-field">
+                        <select  ng-model="regform.body_shape" name="body_shape" required>
+                            <option value="" selected>Body Shapes</option>
+                            <option value="Apple">Apple</option>
+                            <option value="banana">Banana</option>
+                            <option value="hourglass">Hourglass</option>
+                            <option value="pear">Pear</option>
+                            <option value="triangle">Triangle</option>
+                        </select>
+                        <span class="error_select" ng-show="formData.body_shape.$error.required">*</span>
+                    </div>
+
+                    <!--Clothing Type-->
+
+                    <!--Clothing Type-->
+                    <div class="input-field">
+                        <select  ng-model="regform.body_shape" name="bra_size" required>
+                            <option value="" selected>Bra</option>
+                            <option value="28aa">28aa</option>
+                            <option value="28a">28a</option>
+                            <option value="28b">28b</option>
+                            <option value="28c">28c</option>
+                        </select>
+                        <span class="error_select" ng-show="formData.bra_size.$error.required">*</span>
+                    </div>
+
+                    <!--Clothing Type-->
+
+                    <!--Clothing Type-->
+                    <div class="input-field">
+                        <select ng-model="regform.device_type" name="device_type" required>
+                            <option value="" selected>Device Sizes</option>
+                            <option value="iphone5"> iphone5 </option>
+                            <option value="iphone5s"> iphone5s </option>
+                            <option value="iphone6">iphone6</option>
+                            <option value="iphone6s">iphone6s</option>
+                            <option value="iphone7">iphone7</option>
+                        </select>
+                        <span class="error_select" ng-show="formData.device_type.$error.required">*</span>
+                    </div>
+
+                    <!--Clothing Type-->
+                    <div class="row col s11">
+                        <div class="input-field">
+                            <input id="register_btn" type="submit" value="Submit" class="btn black col s7 center offset-s3 save-changes showHide" ng-disabled="formData.clothing_type.$error.required || formData.body_shape.$error.required || formData.bra_size.$error.required || formData.device_type.$error.required">
+
+
+
+                        </div>
+                    </div>
+                </div>
             </div>
-              
-           
-           <div class="input-field col m4"> 
-               <select  ng-model="formData.ftin" name="ftin">
-              <option value="Feet" selected> Feet </option>
-              <option value="Inches" >Inches</option>
-            </select>
-                 </div>
-             
-         </div> 
-           <div class="row">
-               <div class="col m8">  
-          <div class="input-field">
-            <input id="pweight" type="text" class="validate"  ng-model="formData.pweight" name="pweight" required>
-                 <label for="pweight">Weight</label>
-          </div>
-          </div>
-          <div class="col m4">
-               <select  ng-model="formData.kglbs" name="kglbs">
-              <option value="kg" selected> Kg </option>
-              <option value="lbs">lbs</option>
-            </select>
-          </div>
-         </div>      
-          </div>
-              <!--Clothing Type-->
-                 <div class="input-field"> 
-            <select  ng-model="formData.clothing_type" name="clothing_type">
-              <option value="" selected>Fit Types</option>
-              <option value="regular">Regular</option>
-              <option value="petite">Petite</option>
-              <option value="tall">Tall</option>
-              <option value="plus">Plus</option>
-            </select>
-                 </div>
-             
-          <!--Clothing Type-->
-     
-              <!--Clothing Type-->
-               <div class="input-field"> 
-            <select  ng-model="formData.body_shape" name="body_shape">
-              <option value="" selected>Body Shapes</option>
-              <option value="Apple">Apple</option>
-              <option value="banana">Banana</option>
-              <option value="hourglass">Hourglass</option>
-              <option value="pear">Pear</option>
-              <option value="triangle">Triangle</option>
-            </select>
-               </div>
-             
-              <!--Clothing Type-->
-          
-           <!--Clothing Type-->
-             <div class="input-field"> 
-           <select  ng-model="formData.body_shape" name="bra_size">
-                <option value="" selected>Bra</option>
-                <option value="28aa">28aa</option>
-                <option value="28a">28a</option>
-                <option value="28b">28b</option>
-                <option value="28c">28c</option>
-            </select>
-             </div>
-          
-               <!--Clothing Type-->
-         
-           <!--Clothing Type-->
-            <div class="input-field">
-            <select ng-model="formData.device_type" name="device_type">
-                <option value="" selected>Device Sizes</option>
-                <option value="iphone5"> iphone5 </option>
-                <option value="iphone5s"> iphone5s </option>
-                <option value="iphone6">iphone6</option>
-                <option value="iphone6s">iphone6s</option>
-                 <option value="iphone7">iphone7</option>
-            </select>
-            </div>
-           
-          <!--Clothing Type-->
-          <div class="row col s11">
-             <div class="input-field">
-            <button id="register_btn" type="submit" class="btn black col s7 center offset-s3">Submit</button>
-             </div>
-              </div>
-      </div>
-    </div>
-  </div>
-</form>
+        </div>
+    </form>
 
-
-
-                        
-<!--Registaration form!-->   
+    <!--Registaration form!-->
     <div id="content-login">
         <div class="row">
             <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
@@ -325,15 +377,44 @@
 
 
                     {#<form name="user" ng-controller="mainController">#}
-                    <form action="/webapp/web/app_dev.php/login_check" method="post"  class="form" name="loginform" id="loginform">
-                      <input type="hidden" name="_target_path" value="/inner_site/index">
+                    <form ng-controller="loginController" action="/webapp/web/app_dev.php/login_check" method="post" class="form" name="loginform" id="loginform1">
+                        <input type="hidden" name="_target_path" value="/inner_site/index">
+
+
+
+                        {% if error %}
+                            <div class="login_error" >
+                                <div id="error_content">
+
+                                    <div style="color:#900; background:pink; border-radius:3px; padding:5px; text-align:center;" class="errorDiv alert alert-danger col-md-offset-3 col-md-6 col-xs-12">{{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}</div>
+
+
+
+                                </div>
+
+                            </div>
+                        {% endif %}
+
+
+
+
                         <div class="input-field">
-                            <input id="email" type="email" class="validate" name="_username" required>
-                                <label for="email">Email</label>
+
+                            <input id="email" type="email" class="validate" ng-model="loginform1.username" name="_username" required>
+
+                            <span class="error" ng-show="loginform._username.$error.required && loginform._username.$dirty">Email Required</span>
+                            <span class="error" ng-show="!loginform._username.$error.required && loginform._username.$error.email && loginform._username.$dirty">Invalid Email Address</span>
+                            <span ng-show="loginform._username.$error.required" class="error">*</span>
+                            <label for="email">Email</label>
+
                         </div>
 
                         <div class="input-field">
-                            <input  type="password" name="_password"  required>
+                            <input  type="password" name="_password" ng-model="loginform1.password" required>
+
+
+                            <span ng-show="loginform._password.$error.required" class="error">*</span>
+
 
                             <label for="password">Password </label>
                         </div>
@@ -342,7 +423,11 @@
                         <div class="row col s11">
                             <div class="input-field">
                                 {#<input id="showregister2" value="Sign Up" class="btn black col s5 offset-s1 save-changes" type="submit">#}
-                                <input type="submit"  class="btn black darken-6 col s5 offset-s1" value="Submit"/>
+                                <input type="submit" class="btn black col s7 center offset-s3 save-changes showHide" value="Submit" ng-disabled="loginform._username.$error.required || loginform._username.$error.email || loginform._password.$error.required">
+
+
+
+
                                 {#<a class="btn grey darken-6 col s5 offset-s1">Login</a>#}
                             </div>
                         </div>
@@ -360,6 +445,9 @@
 
 
     </div>
+
+
+
 </div>
 
 
