@@ -379,10 +379,8 @@
                     {#<form name="user" ng-controller="mainController">#}
                     <form ng-controller="loginController" action="/webapp/web/app_dev.php/login_check" method="post" class="form" name="loginform" id="loginform1">
                         <input type="hidden" name="_target_path" value="/inner_site/index">
-
-
-
-                        {% if error %}
+                      
+                        {% if error.message is defined %}
                             <div class="login_error" >
                                 <div id="error_content">
 
