@@ -33,3 +33,8 @@ device_browser_foo:
 ajax_fitting_room_bg_cropped_image_update:
     pattern:  /ajax/fitting_room/bg_cropped_image_update
     defaults: { _controller: LoveThatFitUserBundle:Registration:bgCroppedImageUpload }
+
+### Multiple Svg path for Standalone app
+device_browser_multiple_svg_path:
+    pattern:   /device_browser/multiple_svg_path/{auth_token}/{edit_type}/{device_type}
+    defaults: { _controller: LoveThatFitUserBundle:Device:multipleSvgPath, auth_token: null, edit_type: null, device_type: null}
