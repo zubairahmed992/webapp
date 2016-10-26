@@ -45,4 +45,4 @@ love_that_fit_admin:
 
 _welcome:
     pattern:  /
-    defaults: { _controller: LoveThatFitUserBundle:Registration:registration}
+    defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:registration}
