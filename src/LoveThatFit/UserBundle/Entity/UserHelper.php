@@ -1045,4 +1045,9 @@ class UserHelper {
     {
         return $this->repo->findAllUsersAsc();
     }
+
+    public function findAllUsersAuthDeviceToken()
+    {
+        return $this->repo->findAllUsersAuthDeviceToken();   
+    }
 }

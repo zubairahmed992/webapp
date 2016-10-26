@@ -40,6 +40,7 @@ class WebServiceHelper {
                     $response_array['retailer'] = $retailer_brands['retailer'];
                     $response_array['brand'] = $retailer_brands['brand'];
                 }
+
                 if(array_key_exists('device_token', $request_array) ){
                     $this->container->get('user.helper.user')->updateDeviceToken($user,$request_array);
                 }
@@ -48,6 +49,8 @@ class WebServiceHelper {
                 return $this->response_array(false, 'Invalid Password');
             }
         } else {
+            echo "333";
+            die();
             return $this->response_array(false, 'Invalid Email');
         }
     }
@@ -751,4 +754,6 @@ class WebServiceHelper {
 	$this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
   }
 	#end feedback service
+
+    
 }
