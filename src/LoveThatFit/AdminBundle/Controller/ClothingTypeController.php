@@ -6,12 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\ClothingTypes;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClothingTypeController extends Controller {
 
 //-----------------------------Clothing Type List-------------------------------------------------------------
 
     public function indexAction($page_number, $sort = 'id') {
+
         $clothing_types = $this->get('admin.helper.clothingtype')->findAll();
         return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
     }
@@ -132,7 +134,16 @@ class ClothingTypeController extends Controller {
        
        return new \Symfony\Component\HttpFoundation\Response (json_encode($standards));
     }
-    
-    
-}
 
+    public function sendNotificationsAction()
+    {
+        $decoded = $this->get('user.helper.user')->findAllUsersAuthDeviceToken();
+        $push_response = $this->get('pushnotification.helper')
+            ->sendNotifyClothingType("AB740BC0B1BC8C9EC0859274557BCE434631DA34C1D97498A5552AC564F44D8A");
+        // foreach ($decoded as $user) {
+        //     $push_response = $this->get('pushnotification.helper')
+        //         ->sendNotifyClothingType($user["device_tokens"]);
+        // }
+        return new Response("true");
+    }
+}

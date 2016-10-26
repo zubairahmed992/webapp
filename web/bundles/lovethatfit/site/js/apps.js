@@ -19,19 +19,38 @@ app.directive('validPasswordC', function() {
     }
 });
 app.controller('mainController', function($scope, $http) {
-    $scope.regform = {};
+    //$scope.regform = {};
+
     $scope.submitForm = function(){
-        var fdata = angular.toJson($scope.regform);
+
+
+        var dataObj = {
+            email : $scope.regform.email,
+            passsword : $scope.regform.passsword,
+            passsword_c : $scope.regform.password_c,
+            zip : $scope.regform.zip,
+            dob : $scope.regform.dob,
+            height : $scope.regform.height +','+ $scope.regform.ftin,
+            weight : $scope.regform.weight +','+ $scope.regform.kglbs,
+            clothing_type : $scope.regform.clothing_type,
+            body_shape : $scope.regform.body_shape,
+            device_type : $scope.regform.device_type,
+
+
+        };
+
+
+        var fdata = angular.toJson(dataObj);
         console.log(fdata);
         $http({
-            method  : 'POST',
-            url     : '../visitor/update',
-            data    : fdata, //forms user object
-            headers : {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(data){
-            console.log(data);
+          method  : 'POST',
+           url     : '../visitor/update',
+           data    : fdata, //forms user object
+           headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+       }).success(function(data){
+           console.log(data);
             // alert('successfull save in db');
-        });
+       });
     }
 
 });// JavaScript Document

@@ -1,4 +1,4 @@
-admin_users:
+admin_users_old:
     pattern:  /admin/users/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:User:index , page_number: 1, sort:id }
 
@@ -77,8 +77,8 @@ admin_retailer_site_user_update:
     pattern:  /admin/retailer/site/user/{user_id}/update/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:updateRetailerSiteUser}
 
-admin_users_new:
-    pattern:  /admin/user/new_users
+admin_users:
+    pattern:  /admin/users
     defaults: { _controller: LoveThatFitAdminBundle:User:newIndex}
 
 admin_users_paginate:
