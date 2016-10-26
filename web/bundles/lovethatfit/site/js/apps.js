@@ -44,7 +44,7 @@ app.controller('mainController', function($scope, $http) {
         console.log(fdata);
         $http({
           method  : 'POST',
-           url     : '../visitor/update',
+           url     : '/webapp/web/app_dev.php/visitor/update',
            data    : fdata, //forms user object
            headers : {'Content-Type': 'application/x-www-form-urlencoded'}
        }).success(function(data){

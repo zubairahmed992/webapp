@@ -130,7 +130,8 @@
     </div>
 
     <!--Registaration form!-->
-    <form id="regform" action="{{ path('visitor_update') }}" name="formData" ng-controller="mainController" ng-submit="submitForm()">
+    <form id="regform" name="formData" ng-controller="mainController" ng-submit="submitForm()">
+        <input type="hidden" value="{{ path('visitor_update') }}" class="dataForm">
         <div id="content-register">
             <div class="row">
                 <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
@@ -389,8 +390,8 @@
 
 
                     {#<form name="user" ng-controller="mainController">#}
-                    <form ng-controller="loginController" action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform1">
-                        {#<input type="hidden" name="_target_path" value="{{ path('inner_site_index') }}" />#}
+                    <form ng-controller="loginController" method="post" class="form" name="loginform" id="loginform1">
+                        <input type="hidden" value="{{ path('login_check') }}" class="loginForm">
                         <input type="hidden" name="_target_path" value="/inner_site/index">
 
                         {% if error.message is defined %}
