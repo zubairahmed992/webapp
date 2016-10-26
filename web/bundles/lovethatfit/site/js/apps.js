@@ -23,7 +23,7 @@ app.controller('mainController', function($scope, $http) {
 
     $scope.submitForm = function(){
 
-
+        var regform = $('.dataForm').val();
         var dataObj = {
             email : $scope.regform.email,
             passsword : $scope.regform.passsword,
@@ -44,7 +44,7 @@ app.controller('mainController', function($scope, $http) {
         console.log(fdata);
         $http({
           method  : 'POST',
-           url     : '/webapp/web/app_dev.php/visitor/update',
+           url     : regform,
            data    : fdata, //forms user object
            headers : {'Content-Type': 'application/x-www-form-urlencoded'}
        }).success(function(data){
@@ -56,12 +56,19 @@ app.controller('mainController', function($scope, $http) {
 });// JavaScript Document
 
 app.controller('loginController', function($scope, $http) {
+
+    
+    var logform = $('.loginsec').val();
+
     $scope.loginData = {};
     $scope.loginfrom = function(){
+
+
+
         var ldata = angular.toJson($scope.loginData);
         $http({
             method  : 'POST',
-            url     : '/webapp/web/app_dev.php/login_check',
+            url     : logform,
             data    : ldata, //forms user object
             headers : {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data){

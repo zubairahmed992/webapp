@@ -131,6 +131,7 @@
 
     <!--Registaration form!-->
     <form id="regform" name="formData" ng-controller="mainController" ng-submit="submitForm()">
+        <input type="hidden" value="{{ path('visitor_update') }}" class="dataForm">
         <div id="content-register">
             <div class="row">
                 <div class="col m5 s12 offset-s4 offset-m4 z-depth-2 opacity90 card">
@@ -229,7 +230,7 @@
                         <br>
                         <div class="row col s11">
                             <div class="input-field">
-                                <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes showHide" type="submit" name="action" ng-disabled="formData.email.$error.required || formData.email.$error.email || formData.password.$error.required || formData.password.$error.minlength || formData.password_c.$error.noMatch || formData.password_c.$error.required || formData.zip.$error.required || formData.dob.$error.required || formData.zip.$error.minlength">
+                                <input id="showregister" value="Next" class="btn black col s7 center offset-s3 save-changes showHide" type="submit" name="action" ng-disabled="formData.email.$error.required || formData.email.$error.email || formData.password.$error.required || formData.password.$error.minlength || formData.password_c.$error.noMatch || formData.password_c.$error.required || formData.zip.$error.required || formData.dob.$error.required || formData.zip.$error.minlength || formData.zip.$error.maxlength">
                             </div>
                         </div>
                     </div>
@@ -255,12 +256,12 @@
                     <div class="rowGroup">
                         <div class="row">
                             <div class="input-field col m6">
-                                <input id="pheight" type="text" class="validate" name="pheight" ng-model="regform.pheight" required>
+                                <input id="height" type="text" class="validate" name="height" ng-model="regform.height" required>
 
 
-                                <span class="error" ng-show="formData.pheight.$error.required">*</span>
+                                <span class="error" ng-show="formData.height.$error.required">*</span>
 
-                                <label style="padding-left:10px;" for="pheight">Height</label>
+                                <label style="padding-left:10px;" for="height">Height</label>
                             </div>
 
 
@@ -278,11 +279,11 @@
                         <div class="row">
                             <div class="col m6">
                                 <div class="input-field">
-                                    <input id="pweight" type="text" class="validate"  ng-model="regform.pweight" name="pweight" required>
+                                    <input id="weight" type="text" class="validate"  ng-model="regform.weight" name="weight" required>
 
-                                    <span class="error" ng-show="formData.pweight.$error.required">*</span>
+                                    <span class="error" ng-show="formData.weight.$error.required">*</span>
 
-                                    <label for="pweight">Weight</label>
+                                    <label for="weight">Weight</label>
                                 </div>
                             </div>
                             <div class="col m6">
@@ -357,7 +358,7 @@
                     <!--Clothing Type-->
                     <div class="row col s11">
                         <div class="input-field">
-                            <input id="register_btn" type="submit" value="Submit" class="btn black col s7 center offset-s3 save-changes showHide" ng-disabled="formData.clothing_type.$error.required || formData.body_shape.$error.required || formData.bra_size.$error.required || formData.device_type.$error.required || formData.pheight.$error.required || formData.pweight.$error.required || formData.ftin.$error.required || formData.kglbs.$error.required">
+                            <input id="register_btn" type="submit" value="Submit" class="btn black col s7 center offset-s3 save-changes showHide" ng-disabled="formData.clothing_type.$error.required || formData.body_shape.$error.required || formData.bra_size.$error.required || formData.device_type.$error.required || formData.height.$error.required || formData.weight.$error.required || formData.ftin.$error.required || formData.kglbs.$error.required">
 
 
 
@@ -389,9 +390,9 @@
 
 
                     {#<form name="user" ng-controller="mainController">#}
-                    <form ng-controller="loginController" action="/webapp/web/app_dev.php/login_check" method="post" class="form" name="loginform" id="loginform1">
-                        <input type="hidden" name="_target_path" value="/inner_site/index">
-                      
+                    <form action="{{ path('login_check') }}" ng-controller="loginController" method="post" class="form" name="loginform" id="loginform1">
+                       <input type="hidden" name="_target_path" value="/inner_site/index">
+
                         {% if error.message is defined %}
                             <div class="login_error" >
                                 <div id="error_content">
