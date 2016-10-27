@@ -160,7 +160,8 @@ class WebServiceHelper {
         array_key_exists('gender', $request_array) ? $user->setGender($request_array['gender']) :  null;
         array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) :  null;
         array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
-        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;        
+        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;
+        array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) :  null;
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)){
           $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;  
         } 
