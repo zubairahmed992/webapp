@@ -1,0 +1,32 @@
+  attribute_specs:    
+    brand: selection
+    clothing_type:  text
+    gender: selection
+    name: text      
+    description: text
+    styling_type: text
+    hem_length: text
+    neckline: text
+    sleeve_styling: text
+    rise: text
+    stretch_type: text
+    horizontal_stretch: text
+    vertical_stretch: text
+    fabric_weight: text
+    layering: text
+    structural_detail: text
+    fit_type: text
+    fit_priority: text
+    fabric_content: text
+    garment_detail: text
+    size_title_type: selection
+    retailer_reference: text
+    control_number: text
+  select_options:
+    gender:
+      m:  m
+      f:  f
+    size_title_type:
+      man:
+      woman:
+    

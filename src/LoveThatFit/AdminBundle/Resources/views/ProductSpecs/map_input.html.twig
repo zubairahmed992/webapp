@@ -4,11 +4,26 @@
 {% endblock %}
 
 {% block body %}
-<span id="select_cell_div"></span>  
+  <div id="pq-grid-in-popup-btn-div"></div>
+<span id="select_cell_div"  hidden="true"></span>  
 <div id="product_specs_json" hidden="true">{{ product_specs_json }}</div>
+<div id="size_specs_json" hidden="true">{{ size_specs_json }}</div>
 <div id="basic_fields_div"></div>
-  
-<div id="pq-grid-in-popup-btn-div"></div>
+<div id="select_fields_div" style="visibility: hidden;">    
+    <span style='display:block; width:100px;'><lable>Gender</lable></span>
+    <select id="sel_gender">
+        <option value="woman">woman</option>
+        <option value="man">man</option>        
+    </select>
+    <br>
+    <span style='display:block; width:100px;'><lable>Size Title Type</lable></span>    
+    <select id="sel_size_title_type">
+        <option value="number">number</option>
+        <option value="letter">letter</option>
+        <option value="waist">waist</option>
+    </select>
+</div>
+<div id="size_fields_div"></div>
 
 <div id="pq-dialog-cont">
 <div id="pq-grid-in-popup-dialog" title="Resizable Grid in Dialog" style="overflow:hidden;padding:0px;">
@@ -27,14 +42,42 @@ $(function(){
 //draw fields
     var specs = $("#product_specs_json").text();
     var obj = jQuery.parseJSON(specs);
-    var attr = obj.attributes;
-    var attr_specs=['brand', 'size_title_type', 'retailer_reference'];
-    
-    for(var i = 0; i < attr.length; i++) {
-     if (attr_specs.indexOf(attr[i])==-1){   
-        $("#basic_fields_div").append("<span style='display:block; width:100px;'><lable>"+attr[i]+"</lable> <span><input name='txt_"+attr[i]+"' id='txt_"+attr[i]+"' type='text'><br>");                
+    var attr_specs = obj.attribute_specs;
+       var size_specs = $("#size_specs_json").text();
+    var size_obj = jQuery.parseJSON(size_specs);
+    //var attr = obj.attributes;    
+    //var attr_specs=['brand', 'retailer_reference'];    
+    //for(var i = 0; i < attr.length; i++) {
+     //if (attr_specs.indexOf(attr[i])==-1){   
+       // $("#basic_fields_div").append("<span style='display:block; width:100px;'><lable>"+attr[i]+"</lable> <span><input name='txt_"+attr[i]+"' id='txt_"+attr[i]+"' type='text'><br>");                
+        //}
+    //}
+    $.each( attr_specs, function( key, value ) {
+        if(value=="text"){
+            $("#basic_fields_div").append(create_text(key));
         }
-    }
+        if(value=="selection"){
+            $("#basic_fields_div").append(create_select(key));
+        }
+        
+    });
+
+function create_select(attr){    
+    
+    var size_title_types = size_obj['size_title_type'];    
+    str = "<span style='display:block; width:100px;'><lable>"+attr+"</lable> <span><select>"
+    $.each( size_title_types, function( key, value ) {
+        str = str + "<option value='"+key+"'>"+key+"</option>";
+    });
+    
+    str = str + "</select>";
+    return str;
+    
+}
+function create_text(str){
+    str = "<span style='display:block; width:100px;'><lable>"+str+"</lable> <span><input name='txt_"+str+"' id='txt_"+str+"' type='text'><br>"
+    return str;
+}
 
     $('input, textarea').focus(function() {
        $('#select_cell_div').text($(this).attr('id'));
@@ -72,7 +115,7 @@ $(function(){
 				$('#' + $('#select_cell_div').text()).val(rowIndx + ", " + colIndx);
             }
         }
-//------------------        
+//------------------------------------        
         $("<input type='button' value='Show Popup' />").
             appendTo($("#pq-grid-in-popup-btn-div")).button().click(function (evt) {
               show_csv_popup();
@@ -117,6 +160,12 @@ function show_csv_popup(){
                     }
                 });
 }
+
+    $("#sel_size_title_type").change(function () {
+        
+        $("#size_fields_div").text('sdaadadasdasdasd');
+    });
+
 });
 
 
