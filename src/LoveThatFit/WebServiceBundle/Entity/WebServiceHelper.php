@@ -335,7 +335,11 @@ class WebServiceHelper {
                    } else {
                        return $this->response_array(false, 'Image not uploaded');
                    }                   
-                
+            } elseif ($ra['upload_type'] == 'fitting_room_back' || $ra['upload_type'] == 'fitting_room_side') {
+                    $user_archive = $this->container->get('user.helper.userarchives')->getPendingArchive($user->getId());
+                    if (!move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath(substr($ra['upload_type'], 13)))) {                                                                
+                        return $this->response_array(false, 'Image not uploaded');
+                   }                       
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);
@@ -363,6 +367,9 @@ class WebServiceHelper {
         } else {
             return $this->response_array(false, 'member not found');
         }
+    }
+    private function save_user_image(){
+        
     }
     #----------------------------------------------------------------------------------------
 

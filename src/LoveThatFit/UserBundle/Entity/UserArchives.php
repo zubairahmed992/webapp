@@ -470,6 +470,14 @@ class UserArchives
                 $ar=explode('.', $this->image);
                 return 'cropped.'.$ar[1];                
                 break;
+            case 'back':
+                $ar=explode('.', $this->image);
+                return 'back_'.$this->image;
+                break;
+            case 'side':
+                $ar=explode('.', $this->image);
+                return 'side_'.$this->image;
+                break;
             default:
                 return $this->image;
                 break;
