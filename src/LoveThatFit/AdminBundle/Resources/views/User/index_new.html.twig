@@ -3,9 +3,20 @@
    <li class="active">Users</li>
 {% endblock %}
 
-
 {% block body %}
-<div class="p_listing">
+<style >
+ .custom_search{ position:relative; bottom:-40px;}
+ .custom_search label, .custom_search select{ width:80%;  padding-left:10px;  position:relative; z-index: 1; }
+ .custom_search label{ display:inline-block;}
+.dataTables_wrapper .dataTables_length{ float: right !important; margin-left:12px;}
+  @media only screen and (max-width : 767px) {
+      .custom_search{bottom:0px;}
+    }
+    
+    
+</style>
+
+    <div class="p_listing">
     <div class="clearfix"></div>
       {% block header_right_links %}
         <div class="adjustment_links" style="margin-top: 20px; float:right;">
@@ -31,23 +42,37 @@
       <div class="clearfix"></div>
     </div>
     <div class="bs-docs-grid">
-      <div class="custom_search_user">
-        Gender:&nbsp;
-        <select id="gender">
+       
+        <div class="container">
+          <div class="row">
+              <div class="span3">
+                  <div class="custom_search">
+                    <select id="gender">
           <option value="">Select Gender</option>
           <option value="m">Male</option>
           <option value="f">Female</option>
         </select>
-        &nbsp;&nbsp;Age:&nbsp;
+                  </div>
+              </div>
+             
+              <div class="span3">
+                  <div class="custom_search">
+        
         <select id="age">
           <option value="">Select Age</option>
           {% for i in 15..50 %}
             <option value="{{ i }}">{{ i }}</option>
           {% endfor %}
         </select>
+                  </div>
+              </div>
+         <div class="span6">&nbsp</div>
       </div>
-
-      <table id="example" class="display" cellspacing="0" width="100%">
+        </div>
+        <div class="container">
+            <div class="row">
+               
+        <table id="example" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>User ID</th>
@@ -61,6 +86,10 @@
           <tbody>
           </tbody>
       </table>  
+                
+            </div>
+        </div>    
+        
     </div>
   </div> 
 </div>
