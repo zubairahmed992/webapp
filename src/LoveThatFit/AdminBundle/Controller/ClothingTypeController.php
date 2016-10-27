@@ -134,16 +134,4 @@ class ClothingTypeController extends Controller {
        
        return new \Symfony\Component\HttpFoundation\Response (json_encode($standards));
     }
-
-    public function sendNotificationsAction()
-    {
-        $decoded = $this->get('user.helper.user')->findAllUsersAuthDeviceToken();
-        $push_response = $this->get('pushnotification.helper')
-            ->sendNotifyClothingType("AB740BC0B1BC8C9EC0859274557BCE434631DA34C1D97498A5552AC564F44D8A");
-        // foreach ($decoded as $user) {
-        //     $push_response = $this->get('pushnotification.helper')
-        //         ->sendNotifyClothingType($user["device_tokens"]);
-        // }
-        return new Response("true");
-    }
 }

@@ -49,8 +49,6 @@ class WebServiceHelper {
                 return $this->response_array(false, 'Invalid Password');
             }
         } else {
-            echo "333";
-            die();
             return $this->response_array(false, 'Invalid Email');
         }
     }
