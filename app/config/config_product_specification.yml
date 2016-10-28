@@ -836,7 +836,31 @@ constants:
       belted: Belted
    
   attributes: [clothing_type, brand, name, gender, description, styling_type, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, retailer_reference, control_number]
-
+  attribute_specs:
+      brand: selection
+      clothing_type:  text
+      gender: selection
+      name: text      
+      description: text
+      styling_type: text
+      hem_length: text
+      neckline: text
+      sleeve_styling: text
+      rise: text
+      stretch_type: text
+      horizontal_stretch: text
+      vertical_stretch: text
+      fabric_weight: text
+      layering: text
+      structural_detail: text
+      fit_type: text
+      fit_priority: text
+      fabric_content: text
+      garment_detail: text
+      size_title_type: selection
+      retailer_reference: text
+      control_number: text
+    
         
  clothing_type_target:
   Blouse : top

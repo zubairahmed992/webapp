@@ -6,7 +6,11 @@ dashboard_banner:
     index: 1
     type: stylist_recommendations
     id: 0
-    product_ids: [572,576,571,579,569]
+    product_ids: [572,605,571,606,569]
+    group_ids:
+      bottom: 572
+      top: 605
+      dress: 571
     disable: false
   2:
     image: uploads/ltf/products/banner/2.png
@@ -14,7 +18,11 @@ dashboard_banner:
     price: 40
     index: 2
     type: stylist_recommendations
-    product_ids: [587,577,570,594,582,584]
+    product_ids: [587,577,570,594,604,584]
+    group_ids:
+      bottom: 587
+      top: 604
+      top: 570
     id: 0
     disable: false
   3:
@@ -23,7 +31,10 @@ dashboard_banner:
     price: 40
     index: 3
     type: stylist_recommendations
-    product_ids: [588,580,582,566,592,570,591]
+    product_ids: [588,580,604,566,592,570,591]
+    group_ids:
+      bottom: 588
+      top: 580
     id: 0
     disable: false
   4:
@@ -33,6 +44,10 @@ dashboard_banner:
     index: 4
     type: stylist_recommendations
     product_ids: [593,573,602,581]
+    group_ids:
+      bottom: 593
+      dress: 573
+      dress: 602
     id: 0
     disable: false
   5:
@@ -41,7 +56,10 @@ dashboard_banner:
     price: 40
     index: 5
     type: stylist_recommendations
-    product_ids: [565,569,582,592,576,571]
+    product_ids: [565,569,604,592,605,571]
+    group_ids:
+      bottom: 565
+      top: 569
     id: 0
     disable: false
   6:
@@ -51,6 +69,10 @@ dashboard_banner:
     index: 6
     type: stylist_recommendations
     product_ids: [564, 581, 578, 580]
+    group_ids:
+      bottom: 564
+      dress: 581
+      dress: 578
     id: 0
     disable: false
     

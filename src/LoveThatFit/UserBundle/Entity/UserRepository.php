@@ -445,16 +445,5 @@ class UserRepository extends EntityRepository {
         //echo $query->getSql();
         return $query->getResult();
     }
-
-    public function findAllUsersAuthDeviceToken()
-    {
-      $query = $this->getEntityManager()->createQueryBuilder();
-      
-      return $query->select('u.authToken, u.device_tokens')
-              ->from('LoveThatFitUserBundle:User', 'u')
-              ->where('u.device_tokens != :null')->setParameter('null', 'N;')
-              ->getQuery()
-              ->getResult();
-    }
 }
 

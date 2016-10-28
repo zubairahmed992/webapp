@@ -360,7 +360,16 @@ class User implements UserInterface, \Serializable {
      * @var string $iphoneImage
      * @ORM\Column(name="iphoneImage", type="string", length=255, nullable=true)
     */
-    private $iphoneImage; 
+    private $iphoneImage;
+
+
+    /**
+     * @var string $release_name
+     *
+     * @ORM\Column(name="release_name", type="text", nullable=true)
+     * )
+     */
+    private $release_name;
 
     /**
      * @var dateTime $createdAt
@@ -958,6 +967,29 @@ class User implements UserInterface, \Serializable {
     public function getDeviceTokens() {
         return $this->device_tokens;
     }
+#-----------------------------------------
+
+#-----------------------------------------
+  /**
+   * Set release_name
+   *
+   * @param string $release_name
+   * @return User
+   */
+  public function setReleaseName($release_name) {
+    $this->release_name = $release_name;
+
+    return $this;
+  }
+
+  /**
+   * Get release_name
+   *
+   * @return string
+   */
+  public function getReleaseName() {
+    return $this->release_name;
+  }
 #-----------------------------------------
     /**
      * Set zipcode

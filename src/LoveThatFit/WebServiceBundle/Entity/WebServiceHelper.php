@@ -49,8 +49,6 @@ class WebServiceHelper {
                 return $this->response_array(false, 'Invalid Password');
             }
         } else {
-            echo "333";
-            die();
             return $this->response_array(false, 'Invalid Email');
         }
     }
@@ -162,7 +160,8 @@ class WebServiceHelper {
         array_key_exists('gender', $request_array) ? $user->setGender($request_array['gender']) :  null;
         array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) :  null;
         array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
-        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;        
+        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;
+        array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) :  null;
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)){
           $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;  
         } 
@@ -337,7 +336,11 @@ class WebServiceHelper {
                    } else {
                        return $this->response_array(false, 'Image not uploaded');
                    }                   
-                
+            } elseif ($ra['upload_type'] == 'fitting_room_back' || $ra['upload_type'] == 'fitting_room_side') {
+                    $user_archive = $this->container->get('user.helper.userarchives')->getPendingArchive($user->getId());
+                    if (!move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath(substr($ra['upload_type'], 13)))) {                                                                
+                        return $this->response_array(false, 'Image not uploaded');
+                   }                       
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);
@@ -365,6 +368,9 @@ class WebServiceHelper {
         } else {
             return $this->response_array(false, 'member not found');
         }
+    }
+    private function save_user_image(){
+        
     }
     #----------------------------------------------------------------------------------------
 
