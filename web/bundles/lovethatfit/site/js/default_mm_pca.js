@@ -28,7 +28,7 @@ var liquid_mask = {
 if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android"){
 
   if(liquid_mask.device_model == "iphone5"){
-        fixed_px_inch_ratio = 6.891;
+        fixed_px_inch_ratio = 6.647154471544715;
         adj_btm_fix = 0; // Adjustment of iPhone5S
         //alert("iPhone5: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         //full_adj_btm_fix = 30.333; //30.333 for iPhone 5s // Temp, not in scope fo iphone5
@@ -36,7 +36,7 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
   }
   if(liquid_mask.device_model == "iphone5c"){
       //alert("iPhone5C: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        fixed_px_inch_ratio = 6.891;
+        fixed_px_inch_ratio = 6.647154471544715;
 
         // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
         //
@@ -71,7 +71,7 @@ if(liquid_mask.device_type == "iphone6"){
          //alert("iPhone6: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         //fixed_px_inch_ratio = 8.094;
 
-        fixed_px_inch_ratio = 6.5375;
+        fixed_px_inch_ratio = 6.647154471544715;
 
         // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
         // 4.49 is 1% value
@@ -79,18 +79,11 @@ if(liquid_mask.device_type == "iphone6"){
 
         //fix adjustment for iphone6 camera view.
 
-        fix_add_btm = 11.5;
-
-        adj_btm_fix = 15.333 + fix_add_btm;
-
-        adj_btm_fix = adj_btm_fix - 19;
-
-
-        //adj_btm_fix = 0;
+        adj_btm_fix = 33.5;
     }
     if(liquid_mask.device_model == "iphone6s"){
         //alert("iPhone6S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        fixed_px_inch_ratio = 6.891;
+        fixed_px_inch_ratio = 6.647154471544715;
 
         fix_add_btm = 8.5;
 
@@ -128,9 +121,9 @@ mid_area_path.opacity = 0.6;
 side_area_path = new Path(side_path_data);
 side_area_path.opacity = 0.6;
 
-var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+//var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
-//var p_user_height = 76.875;
+var p_user_height = 70;
 
 
 //handleOut_41 = new Point(mid_area_path.segments[41].handleOut);
@@ -377,69 +370,56 @@ if(chk_no_img_path == true){
         mid_area_path.segments[40].handleOut = new Point(0,14);
 
         mid_area_path.segments[29].point.y += 9.375;
-        mid_area_path.segments[29].handleIn = new Point(10,0);
-        mid_area_path.segments[30].handleIn = new Point(0,14);
+        mid_area_path.segments[29].handleIn = new Point(9,0);
+        mid_area_path.segments[30].handleIn = new Point(0,9);
 
 
 
         mask_retake_full.segments[41].point.y += 12.5; 
-        mask_retake_full.segments[41].handleOut = new Point(-13.33,0);
-        mask_retake_full.segments[40].handleOut = new Point(0,18.66);
+        mask_retake_full.segments[41].handleOut = new Point(-12.5,0);
+        mask_retake_full.segments[40].handleOut = new Point(0,12.5);
 
         mask_retake_full.segments[29].point.y += 12.5;
-        mask_retake_full.segments[29].handleIn = handleIn_29;
-        mask_retake_full.segments[30].handleIn = handleIn_30;
+        mask_retake_full.segments[29].handleIn = new Point(13.33,0);;
+        mask_retake_full.segments[30].handleIn = new Point(0,12.5);
         
     }
+    
+    
     if (liquid_mask.device_type == "iphone6"){
 
       //
       //New fix
-      mid_area_path.scale(1.174,1.174);
+      mid_area_path.scale(1.172,1.172);
+      mask_retake_full.scale(1.172,1.172);
+            
+      mid_area_path.scale(0.750, 0.750);
       
-      mask_retake_full.scale(1.174,1.174);
-      mask_retake_full.scale(1, 1.01);
-      mask_retake_full.scale(0.952, 0.952);
-      
-      //mid_area_path.scale(0.9, 0.9);
-      mid_area_path.scale(0.748, 0.748);
-      //One percent adjustment
-      mid_area_path.scale(1, 1.01);
-      
-      
-      
-      mid_area_path.scale(0.952, 0.952);
-      
-      
-
-			mid_area_path.scale(1.081, 1.081);
-                        
-                        mask_retake_full.scale(1.081, 1.081);
+      //side_area_path.pivot = new Point(side_area_path.bounds.bottomCenter.x,side_area_path.bounds.bottomCenter.y);
+      //side_area_path.position = new Point(50,30);
 
       mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-      mid_area_path.position = new Point(screen.width/2,466);
+      mid_area_path.position = new Point(screen.width/2,500 - 25.125);
       
       mask_retake_full.pivot = new Point(mask_retake_full.bounds.bottomCenter.x,mask_retake_full.bounds.bottomCenter.y);
-      //mask_retake_full.position = new Point(screen.width/2,466);
-      
-      mask_retake_full.position = new Point(screen.width/2,623); //Fixed for iphone 6 "621"
+      mask_retake_full.position = new Point(screen.width/2,667 - adj_btm_fix); //Fixed for iphone 6 "621"
       
 
-        mid_area_path.segments[41].point.y += 19;
-        mid_area_path.segments[41].handleOut = handleOut_41;
-        mid_area_path.segments[40].handleOut = handleOut_40;
-
-        mid_area_path.segments[29].point.y += 19;
-        mid_area_path.segments[29].handleIn = handleIn_29;
-        mid_area_path.segments[30].handleIn = handleIn_30;
-        
-        mask_retake_full.segments[41].point.y += 24.5; 
-        mask_retake_full.segments[41].handleOut = handleOut_41;
-        mask_retake_full.segments[40].handleOut = handleOut_40;
- 
-        mask_retake_full.segments[29].point.y += 24.5;
-        mask_retake_full.segments[29].handleIn = handleIn_29;
-        mask_retake_full.segments[30].handleIn = handleIn_30;
+//        mid_area_path.segments[41].point.y += 19;
+//        mid_area_path.segments[41].handleOut = handleOut_41;
+//        mid_area_path.segments[40].handleOut = handleOut_40;
+//
+//        mid_area_path.segments[29].point.y += 19;
+//        mid_area_path.segments[29].handleIn = handleIn_29;
+//        mid_area_path.segments[30].handleIn = handleIn_30;
+//        
+//        mask_retake_full.segments[41].point.y += 24.5; 
+//        mask_retake_full.segments[41].handleOut = handleOut_41;
+//        mask_retake_full.segments[40].handleOut = handleOut_40;
+// 
+//        mask_retake_full.segments[29].point.y += 24.5;
+//        mask_retake_full.segments[29].handleIn = handleIn_29;
+//        mask_retake_full.segments[30].handleIn = handleIn_30;
         
     }
 
@@ -459,13 +439,21 @@ if(chk_no_img_path == true){
     mask_retake_full.strokeWidth = 1;
     mask_retake_full.strokeColor = new Color(1, 0, 0);
     mask_retake_full.opacity = 0.85;
-    
+
+    //side_mask = new Path("M0,0h100v400h-100V-400z");
+    //side_mask.pivot = new Point(50,400);
+    //side_mask.position = new Point(160, 420);
+
+var side_m_point = new Point(80, 420 - 300);
+var side_m_size = new Size(160, 300);
+var side_m_path = new Path.Rectangle(side_m_point, side_m_size);
+
 
     $("#svg_path_data").attr("value", mid_area_path.pathData);
     $("#svg_path_data_full").attr("value", mask_retake_full.pathData);
     
-    $("#side_svg_path_data").attr("value", "M199.7,15.3h80v450h-80V15.3z");
-    $("#side_svg_path_data_full").attr("value", "M199.7,15.3h80v450h-80V15.3z");
+    $("#side_svg_path_data").attr("value", side_path_data.pathData);
+    $("#side_svg_path_data_full").attr("value", side_path_data.pathData);
     
     $("#back_svg_path_data").attr("value", mid_area_path.pathData);
     $("#back_svg_path_data_full").attr("value", mask_retake_full.pathData);
