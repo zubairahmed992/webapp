@@ -80,6 +80,9 @@ if(liquid_mask.device_type == "iphone6"){
         //fix adjustment for iphone6 camera view.
 
         adj_btm_fix = 33.5;
+        
+        6.647154471544715
+        
     }
     if(liquid_mask.device_model == "iphone6s"){
         //alert("iPhone6S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
@@ -121,9 +124,12 @@ mid_area_path.opacity = 0.6;
 side_area_path = new Path(side_path_data);
 side_area_path.opacity = 0.6;
 
-//var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
-var p_user_height = 70;
+var urs_height_inch = parseInt($('#user_height_frm_3').attr('value'));
+var height_track_1 = urs_height_inch * 6.647154471544715;
+
+//var p_user_height = 72;
 
 
 //handleOut_41 = new Point(mid_area_path.segments[41].handleOut);
@@ -380,7 +386,7 @@ if(chk_no_img_path == true){
         mask_retake_full.segments[40].handleOut = new Point(0,12.5);
 
         mask_retake_full.segments[29].point.y += 12.5;
-        mask_retake_full.segments[29].handleIn = new Point(13.33,0);;
+        mask_retake_full.segments[29].handleIn = new Point(12.5,0);;
         mask_retake_full.segments[30].handleIn = new Point(0,12.5);
         
     }
@@ -388,10 +394,11 @@ if(chk_no_img_path == true){
     
     if (liquid_mask.device_type == "iphone6"){
 
+    
       //
       //New fix
-      mid_area_path.scale(1.172,1.172);
-      mask_retake_full.scale(1.172,1.172);
+      mid_area_path.scale(1.19725415851272,1.19725415851272);
+      mask_retake_full.scale(1.19725415851272,1.19725415851272);
             
       mid_area_path.scale(0.750, 0.750);
       
@@ -405,6 +412,46 @@ if(chk_no_img_path == true){
       mask_retake_full.position = new Point(screen.width/2,667 - adj_btm_fix); //Fixed for iphone 6 "621"
       
 
+
+        mid_area_path.segments[41].point.y += 16.5;
+        mid_area_path.segments[41].handleOut = new Point(-16.5,0);
+        mid_area_path.segments[40].handleOut = new Point(0,16.5);
+
+        mid_area_path.segments[29].point.y += 16.5;
+        mid_area_path.segments[29].handleIn = new Point(16.5,0);
+        mid_area_path.segments[30].handleIn = new Point(0,16.5);
+
+
+
+
+
+        mask_retake_full.segments[41].point.y += 22; 
+        mask_retake_full.segments[41].handleOut = new Point(-22,0);
+        mask_retake_full.segments[40].handleOut = new Point(0,22);
+
+        mask_retake_full.segments[29].point.y += 22;
+        mask_retake_full.segments[29].handleIn = new Point(22,0);
+        mask_retake_full.segments[30].handleIn = new Point(0,22);
+        
+        
+        var final_height_point = 667 - ((height_track_1 * 1.19725415851272) + 33.5);
+        var final_height = (height_track_1 * 1.19725415851272) + 22;
+        
+        
+        var final_height_point_short = final_height_point * 0.75;
+        var final_height_short = final_height * 0.75;
+        
+
+        var side_m_point_full = new Point(87.5, final_height_point);
+        var side_m_size_full = new Size(200, final_height);
+        var side_m_path_full = new Path.Rectangle(side_m_point_full, side_m_size_full);
+        
+        var side_m_point_short = new Point(87.5, final_height_point_short);
+        var side_m_size_short = new Size(200, final_height_short);
+        var side_m_path_short = new Path.Rectangle(side_m_point_short, side_m_size_short);
+
+
+        
 //        mid_area_path.segments[41].point.y += 19;
 //        mid_area_path.segments[41].handleOut = handleOut_41;
 //        mid_area_path.segments[40].handleOut = handleOut_40;
@@ -444,16 +491,14 @@ if(chk_no_img_path == true){
     //side_mask.pivot = new Point(50,400);
     //side_mask.position = new Point(160, 420);
 
-var side_m_point = new Point(80, 420 - 300);
-var side_m_size = new Size(160, 300);
-var side_m_path = new Path.Rectangle(side_m_point, side_m_size);
+
 
 
     $("#svg_path_data").attr("value", mid_area_path.pathData);
     $("#svg_path_data_full").attr("value", mask_retake_full.pathData);
     
-    $("#side_svg_path_data").attr("value", side_path_data.pathData);
-    $("#side_svg_path_data_full").attr("value", side_path_data.pathData);
+    $("#side_svg_path_data").attr("value", side_m_path_short.pathData);
+    $("#side_svg_path_data_full").attr("value", side_m_path_full.pathData);
     
     $("#back_svg_path_data").attr("value", mid_area_path.pathData);
     $("#back_svg_path_data_full").attr("value", mask_retake_full.pathData);
