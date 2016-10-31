@@ -15,11 +15,11 @@ class PushNotificationHelper{
    //-------------------------------------------------------
 
     public function sendPushNotification($user, $msg=''){
-    //echo "test";
+    	//echo "test";
 	  //print_r($deviceToken);die;
 	  $pass = '';
 	  #$msg='This is my third message';
-   // Get the parameters from http get or from command line
+   		// Get the parameters from http get or from command line
 	  //$id = $this->get('security.context')->getToken()->getUser()->getId();
 	  //echo $id;
 
@@ -58,8 +58,8 @@ class PushNotificationHelper{
 	   $cert= dirname(__FILE__).'/SSPush.pem';
 	   }
 
-	//echo $cert;
-   //die;
+		//echo $cert;
+   		//die;
 	  if($server=='production'){
       $appleServer='ssl://gateway.sandbox.push.apple.com:2195';
       $certpem = $cert;
@@ -72,7 +72,7 @@ class PushNotificationHelper{
         stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
         // assume the private key passphase was removed.
          stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
-        $fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
+        $fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
         $payload = json_encode($body);
 
@@ -94,7 +94,7 @@ class PushNotificationHelper{
  #-------------------------------------------
 
   public function sendPushNotificationWithDeviceToken($deviceToken,$data=''){
-	$pass = '';
+  	$pass = '';
 	$message ='Your image has been calibrated';
 	$badge = 1 ;
 	$sound = 'default';
@@ -132,10 +132,12 @@ class PushNotificationHelper{
 	stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
 	// assume the private key passphase was removed.
 	stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
-	$fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
+	$fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 	$payload = json_encode($body);
 
+	//echo $deviceToken . "====";
+	//die();
 	if ($deviceToken){
 	  //foreach($deviceToken as $token){
 		$msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $deviceToken)) . pack("n",strlen($payload)).$payload;
@@ -208,7 +210,7 @@ class PushNotificationHelper{
 		stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
 		// assume the private key passphase was removed.
 		stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
-		$fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
+		$fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 		$payload = json_encode($body);
 
@@ -225,5 +227,57 @@ class PushNotificationHelper{
 			return "device token not found: notification not sent.";
 		}
 	}
+
+
+	public function sendNotifyClothingType($deviceToken)
+    {
+    	$pass = '';
+        $message ='Clothing type has been updated';
+        $badge = 1 ;
+        $sound = 'default';
+        $body = array();
+        $body['aps'] = array('alert' => $message);
+        
+        if ($badge)
+          $body['aps']['badge'] = $badge;
+        if ($sound)
+          $body['aps']['sound'] = $sound;
+
+        $server = 'developement';
+        if($server=='production'){
+          $cert= dirname(__FILE__).'/pushcert.pem';
+        }else{
+
+          //$cert= dirname(__FILE__).'/certificates.pem';
+        	$cert= dirname(__FILE__).'/SSPush.pem';
+        }
+
+        if($server=='production'){
+          $appleServer='ssl://gateway.sandbox.push.apple.com:2195';
+          $certpem = $cert;
+        }
+        else{
+          $appleServer='ssl://gateway.sandbox.push.apple.com:2195';
+          $certpem = $cert;
+        }
+        $ctx = stream_context_create();
+        stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
+        // assume the private key passphase was removed.
+        stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
+        $fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+        $payload = json_encode($body);
+
+        if ($deviceToken){
+            $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $deviceToken)) . pack("n",strlen($payload)).$payload;
+
+            fwrite($fp, $msg);
+          fclose($fp);
+          return "sending message :" . $payload;
+        }else{
+          return "device token not found: notification not sent.";
+        }
+        
+    }
 
 }

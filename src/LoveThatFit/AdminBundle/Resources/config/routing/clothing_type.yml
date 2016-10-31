@@ -34,4 +34,8 @@ admin_clothing_type_delete:
     
 admin_clothing_type_standards:
     pattern:  /admin/clothing_type/standards
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:standards }        
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:standards }    
+
+admin_clothing_type_notifications:
+    pattern:  /admin/clothing_type/send_notifications
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:sendNotifications }    
