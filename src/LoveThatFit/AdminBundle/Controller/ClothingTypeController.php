@@ -137,7 +137,6 @@ class ClothingTypeController extends Controller {
 
     public function sendNotificationsAction()
     {
-        //$device_token = "5ae55eedf9a0f50135fff762a1753ca54840b9c873dc673a5d3990e0ba67d39e";//kamran
         $decoded = $this->get('user.helper.user')->findAllUsersAuthDeviceToken();
         foreach ($decoded as $user) {
             $tokens = json_decode($user['device_tokens'], true);
@@ -149,6 +148,7 @@ class ClothingTypeController extends Controller {
                 }
             }
         }
-        return new Response("true");
+        $this->get('session')->setFlash('success', 'Push Notifications Send To All Users!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 }
