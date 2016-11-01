@@ -150,7 +150,7 @@
                             <input id="email" type="email" class="validate" ng-model="regform.email" name="email" required>
 
                             <span class="error" ng-show="formData.email.$error.required && formData.email.$dirty">Email Required</span>
-                            <span class="error" ng-show="!formData.email.$error.required && formData.email.$error.email && formData.email.$dirty">Invalid Email Address</span>
+                            <span class="error" ng-show="!formData.email.$error.required && formData.$error.email && formData.email.$dirty">Invalid Email Address</span>
                             <span ng-show="formData.email.$error.required" class="error">*</span>
                             <label for="email">Email</label>
 
@@ -203,7 +203,8 @@
                             <script>
                                 $('.datepicker').pickadate({
                                     selectMonths: true, // Creates a dropdown to control month
-                                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                                    selectYears: 50, // Creates a dropdown of 15 years to control year
+                                    max: true
                                 });
                             </script>
                         </div>
@@ -347,6 +348,7 @@
                         <select ng-model="regform.device_type" name="device_type" required>
                             <option value="" selected>Device Sizes</option>
                             <option value="iphone5"> iphone5 </option>
+                            <option value="iphone5c"> iphone5c </option>
                             <option value="iphone5s"> iphone5s </option>
                             <option value="iphone6">iphone6</option>
                             <option value="iphone6s">iphone6s</option>
