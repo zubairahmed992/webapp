@@ -216,7 +216,7 @@
                                 <span id="select_cell_div"></span>  
                                 <div id="pq-grid-in-popup-btn-div"></div>
                                 <div id="pq-dialog-cont">
-                                    <div id="pq-grid-in-popup-dialog" title="Resizable Grid in Dialog" style="overflow:hidden;padding:0px;">
+                                    <div id="pq-grid-in-popup-dialog" title="Product sprecification file data" style="overflow:hidden;padding:0px;">
                                         <div id="grid_in_popup_grid"></div>
                                     </div>
                                 </div>  
@@ -291,63 +291,12 @@
                 //tableData += "</table>";
                 siz_genrate.append(tableData);
 
-                 $('input, textarea').focus(function() {
+               //---------- textbox id on selection ~~~~~~~~~~>
+    $('input, textarea').focus(function() {
        $('#select_cell_div').text($(this).attr('id'));
     });
-
-                // Fill Text Box Valuw auto
-                var $vl;
-                var $ctrlKey = 17;
-                var $cKey = 67;
-                var $sum = 0;
-                var $text_box_value;
-                $(".formFill  input").each(function () {
-                    $(this).keydown(function (e) {
-                        $text_box_value = $(this).val();
-                        var $fld_value = $(this).val().split(',');
-                        $sum += Number(e.keyCode);
-                        // Ctrl + C increase Column value in text box
-                        if ($sum == 67) {
-                            $sum = 84;
-                        }
-                        if (e.keyCode == 17) {
-                            $sum = 0;
-                        }
-                        if ($sum == 84) {
-                            $sum = 0;
-                            $vl = parseInt($fld_value[0]) + 1;
-                            $(this).val($vl + "," + $fld_value[1]);
-                        }
-
-                        if ($sum == 84) {
-                            $sum = 0;
-                            $(this).val($vl);
-                        }
-                        // Ctrl + B increase Row value in text box
-                        if ($sum == 66) {
-                            $sum = 83;
-                        }
-                        if (e.keyCode == 17) {
-                            $sum = 0;
-                        }
-                        if ($sum == 83) {
-                            $sum = 0;
-                            $vl = parseInt($fld_value[1]) + 1;
-                            $(this).val($fld_value[0] + "," + $vl);
-                        }
-                        if ($sum == 83) {
-                            $sum = 0;
-                            $(this).val($vl);
-                        }
-                    });
-                    // Copy text box value into next one text box
-                    $(this).keyup(function (e) {
-                        if (e.keyCode == 9) {
-                            $(this).val($text_box_value);
-                        }
-                    });
-                });
-                // End auto fill value
+    //---------------------------------------
+                
             });
 
 
@@ -375,9 +324,12 @@
                     });
                     tableData += "</tr></table>";
                     siz_genrate.append(tableData);
-                    $('input, textarea').focus(function() {
+                  //---------- textbox id on selection ~~~~~~~~~~>
+    $('input, textarea').focus(function() {
        $('#select_cell_div').text($(this).attr('id'));
     });
+    //---------------------------------------
+
                 }
                 
             });
@@ -416,7 +368,7 @@
 //-------------------------------------------- 	
 //-------------------------------------------- 	
 $(function(){
-
+//---------- textbox id on selection ~~~~~~~~~~>
     $('input, textarea').focus(function() {
        $('#select_cell_div').text($(this).attr('id'));
     });
@@ -502,5 +454,6 @@ function show_csv_popup(){
 
 
  </script>  
+ 
 {% endblock %}
      
