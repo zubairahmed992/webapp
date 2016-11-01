@@ -1,5 +1,5 @@
 visitor_index:
-    pattern:  /visitor/index
+    pattern:  /
     defaults: { _controller: LoveThatFitWebServiceBundle:Visitor:index }
 
 visitor_save_info:

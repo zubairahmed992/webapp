@@ -10,7 +10,7 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 class VisitorController extends Controller {
 
     public function indexAction() {
-        return $this->render('LoveThatFitWebServiceBundle:Visitor:email.html.twig');
+        return $this->render('LoveThatFitWebServiceBundle:Visitor:index.html.twig');
     }
 
 //--------------- Login Eror Set ------------------------------
