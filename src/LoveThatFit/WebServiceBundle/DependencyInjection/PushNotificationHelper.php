@@ -233,10 +233,11 @@ class PushNotificationHelper{
     {
     	$pass = '';
         $message ='Clothing type has been updated';
+        $dataMsg = array('clothing_type' => "yes");
         $badge = 1 ;
         $sound = 'default';
         $body = array();
-        $body['aps'] = array('alert' => $message);
+        $body['aps'] = array('alert' => $message, 'data'=> json_encode($dataMsg));
         
         if ($badge)
           $body['aps']['badge'] = $badge;
