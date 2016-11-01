@@ -55,8 +55,17 @@ class WSUserController extends Controller {
 		  $push_response = $this->get('pushnotification.helper')->sendPushNotificationWithDeviceToken($decoded["device_token"], $json_data);
 		}
 	  return new Response(json_encode($push_response));
-    }    
-    
+    }
+  #~~~~~~~~~~~~~~~~~~~ ws_push_notification_clothing type   /ws/push_notification_clothing_type
+
+  public function sendPushNotificationClothingTypeAction() {
+    $decoded  = $this->process_request();
+    $json_data = $this->get('webservice.helper')->userDetail($decoded);
+    $user=$this->get('user.helper.user')->findByAuthToken($decoded['auth_token']);
+    $push_response = $this->get('pushnotification.helper')->sendNotifyClothingType($decoded["device_token"]);
+    return new Response(json_encode($push_response));
+  }
+
 #~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
 
     public function registrationAction() {
