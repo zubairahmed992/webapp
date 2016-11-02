@@ -148,7 +148,24 @@ class ClothingTypeController extends Controller {
                 }
             }
         }
+        
+        $entity = $this->get('admin.helper.cronNotification')->findByCronType("clothing_type");
+        $this->get('admin.helper.cronNotification')->update($entity, 0);
+
         $this->get('session')->setFlash('success', 'Push Notifications Send To All Users!');
-            return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
+
+    public function addCronNotificationsAction()
+    {
+        $entity = $this->get('admin.helper.cronNotification')->findByCronType("clothing_type");
+        if(!$entity) {
+            $this->get('session')->setFlash('warning', 'The Cron Type not found!');
+        } else {
+            $this->get('admin.helper.cronNotification')->update($entity, 1);
+            $this->get('session')->setFlash('success', 'Cron has been set to send notifications!');
+        }
+
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 }

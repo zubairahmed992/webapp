@@ -233,7 +233,7 @@ class PushNotificationHelper{
     {
     	$pass = '';
         $message ='Clothing type has been updated';
-        $dataMsg = array('clothing_type' => "yes");
+        $dataMsg = array('notification_type' => "clothing_type");
         $badge = 1 ;
         $sound = 'default';
         $body = array();

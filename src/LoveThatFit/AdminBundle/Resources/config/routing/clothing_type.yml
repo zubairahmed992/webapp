@@ -38,4 +38,8 @@ admin_clothing_type_standards:
 
 admin_clothing_type_notifications:
     pattern:  /admin/clothing_type/send_notifications
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:sendNotifications }    
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:sendNotifications }
+
+admin_clothing_type_add_cron:
+    pattern:  /admin/clothing_type/add_cron
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:addCronNotifications }    
