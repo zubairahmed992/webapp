@@ -35,7 +35,8 @@ dv_model = $("#dv_model").attr("value");
 
 
 dv_gap_top = 26;
-dv_gap_bottom = 32;
+
+
 
 //Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
 //fixed_px_inch_ratio = 6.891;
@@ -61,7 +62,7 @@ if(dv_edit_type == "edit" && image_actions_setting == ""){
     }
 }
 
-//alert(dv_type +" - "+ dv_model);
+
 if(dv_type == "iphone5"){
     fixed_px_inch_ratio = 6.891;
     scr_width = 160;
@@ -90,14 +91,17 @@ if(dv_type == "iphone5"){
         //adj_btm_fix = 17.333;
         adj_btm_fix = 0;
         diff_dv = 31 + adj_btm_fix;
+        dv_gap_bottom = diff_dv;
     }
     if(dv_model == "iphone5c"){
         adj_btm_fix = 0;
-        diff_dv = 31 + adj_btm_fix;
+        diff_dv = 30.333 + adj_btm_fix;
+        dv_gap_bottom = diff_dv;
     }
     if(dv_model == "iphone5s"){
-        adj_btm_fix = 5;
-        diff_dv = 31 + adj_btm_fix;
+        adj_btm_fix = 0;
+        diff_dv = 30.333 + adj_btm_fix;
+        dv_gap_bottom = diff_dv;
     }
 }
 if(dv_type == "iphone6"){
@@ -115,6 +119,7 @@ if(dv_type == "iphone6"){
     //Static value "28px" adjusted based on screen test
     adj_btm_fix = 5.5;
     diff_dv = 38 + adj_btm_fix;
+    dv_gap_bottom = diff_dv;
 
     //alert("ip6");
 
@@ -575,6 +580,22 @@ function createBlob() {
 
         mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
 
+        if(dv_iPhone6){
+//    alert("its 6....");
+
+
+            mid_area_path.scale(1.174,1.174);
+            mid_area_path.scale(0.952,0.952);
+
+            mid_area_path.scale(1.081, 1.081); /// April 6, 2016 - new setting
+            
+            mid_area_path.position = new Point(mid_area_path.position.x - 1, mid_area_path.position.y - 1);
+
+        }
+
+
+        if(dv_type == "iphone5"){
+
         mid_area_path.segments[41].point.y += 22;
         mid_area_path.segments[41].handleOut = handleOut_41;
         mid_area_path.segments[40].handleOut = handleOut_40;
@@ -582,16 +603,21 @@ function createBlob() {
         mid_area_path.segments[29].point.y += 22;
         mid_area_path.segments[29].handleIn = handleIn_29;
         mid_area_path.segments[30].handleIn = handleIn_30;
+        
+        
+    }
+    if (dv_type == "iphone6"){
 
+        mid_area_path.segments[41].point.y += 24.5;
+        mid_area_path.segments[41].handleOut = handleOut_41;
+        mid_area_path.segments[40].handleOut = handleOut_40;
 
-        if(dv_iPhone6){
-//    alert("its 6....");
-            mid_area_path.scale(1.174,1.174);
-            mid_area_path.scale(0.952,0.952);
-
-            mid_area_path.scale(1.081, 1.081); /// April 6, 2016 - new setting
-
-        }
+        mid_area_path.segments[29].point.y += 24.5;
+        mid_area_path.segments[29].handleIn = handleIn_29;
+        mid_area_path.segments[30].handleIn = handleIn_30;
+        
+        
+    }
 
 
 
@@ -970,7 +996,8 @@ but_bp_lft_foot.position = new Point(mid_area_path.segments[40].point);
 var but_bp_rgt_foot = new Raster(bigger_point_url);
 but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
 
-
+but_bp_lft_foot.opacity = 0;
+but_bp_rgt_foot.opacity = 0;
 
 var single_item = null;
 function hide_big_points(){
