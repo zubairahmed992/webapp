@@ -24,9 +24,11 @@ $(document).ready(function(){
 
 
     /* display the register page */
-    $("#showsplash").on("click", function(e){
+    $(".showsplash").on("click", function(e){
 
         e.preventDefault();
+
+        $(clogin).css("display", "none");
         $(cregister).css("display", "block");
 
         $(csplash).stop().animate({
@@ -85,6 +87,8 @@ $(document).ready(function(){
     /* display the login page */
     $("#showlogin").on("click", function(e){
         e.preventDefault();
+
+        $('.regshow').css("display", "block");
         $(clogin).css("display", "block");
         $('.loginbtn').hide();
         $('#greetBox').hide();

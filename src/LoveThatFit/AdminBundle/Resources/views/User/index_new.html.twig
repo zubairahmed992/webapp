@@ -95,7 +95,8 @@
 </div>
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    
+    var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+
     var table = $('#example').DataTable({
       "processing": true, 
       "serverSide": true, 
@@ -155,6 +156,9 @@
       "createdRow": function ( row, data, index ) {
           if ( data["original_user_id"] != null ) {
             $('td', row).addClass('duplicate_user_class');
+          }
+          if(jQuery.inArray(data["id"], notShownIDs) != -1) {
+            $('td', row).addClass('hide_grid_row'); 
           }
       },
     });

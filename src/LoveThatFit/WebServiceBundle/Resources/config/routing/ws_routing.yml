@@ -6,6 +6,10 @@ ws_send_push_notification:
     pattern:  /ws/send_push_notification
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sendPushNotification }
 
+ws_send_push_notification_clothing_type:
+   pattern:  /ws/send_push_notification_clothing_type
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sendPushNotificationClothingType }
+
 ws_user_login:
     pattern:  /ws/login
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:login }

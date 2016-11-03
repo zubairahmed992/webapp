@@ -7,6 +7,11 @@
 <div class="p_listing">
   <h1>Clothing Types</h1>
   <div class="clearfix"></div>
+    {% block header_right_links %}
+    <div class="adjustment_links" style="margin-top: 20px; float:right;">
+      <a href="{{ path('admin_clothing_type_add_cron') }}" >Send Notifications</a> 
+    </div>
+    {% endblock %}
     <div class="clearfix"></div>
     <div class="clearfix"></div>
     <div class="bs-docs-grid">

@@ -19,15 +19,14 @@
 <div class="span12">
     <div class="span9">*Duplicate User</div>
     <div>
+        {% if duplicate_list.id in ['2725', '2735', '2731', '2680', '2703', '2444', '2729'] %}
+        {% else %}
         <table width="100%" border="0">
-
-
-                <tr>
-                    <td>This is the duplicate user of <a href="{{ path('admin_user_detail_show',{'id':duplicate_list.id}) }}">{{duplicate_list.email}}</a></td>
-
-                </tr>
-
+            <tr>
+                <td>This is the duplicate user of <a href="{{ path('admin_user_detail_show',{'id':duplicate_list.id}) }}">{{duplicate_list.email}}</a></td>
+            </tr>
         </table>
+        {% endif %}
     </div>
 </div>
 <div class="clearfix"></div>

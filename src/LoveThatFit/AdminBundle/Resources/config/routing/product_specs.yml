@@ -1,4 +1,7 @@
 
+admin_product_specs_csv_upload:
+    pattern:  /admin/product_specs/csv_upload
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:csvUpload }
 
 admin_product_specs_foo:
     pattern:  /admin/product_specs/foo

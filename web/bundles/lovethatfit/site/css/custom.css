@@ -44,6 +44,24 @@ body {
 
 }
 
+.rgbtn{
+	position:absolute;
+	top:0px;
+
+	right:20px!important;
+}
+
+.rgbtn a{
+	background: #000;
+	color: #fff;
+	padding: 10px 30px;
+	width: 51%!important;
+	border-radius: 3px;
+	top: 6px!important;
+	position: relative;
+
+}
+
 .bottom_txt span{
 	font-style:italic;
 	font-weight:500;
@@ -196,3 +214,6 @@ input:disabled {
 }
 
 
+.regshow{
+	display:none;
+}

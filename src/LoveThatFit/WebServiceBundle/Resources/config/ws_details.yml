@@ -1,3 +1,12 @@
+ws_send_push_notification_clothing_type:
+    pattern:  /ws/send_push_notification_clothing_type
+    title: send_push_notification_clothing_type
+    params:
+          auth_token:
+          device_token:
+    request_type: post
+    description: For testing functionalities & work in progress.Send user detail in push notification
+#______________________
 ws_send_push_notification:
     pattern:  /ws/send_push_notification
     title: send_push_notification

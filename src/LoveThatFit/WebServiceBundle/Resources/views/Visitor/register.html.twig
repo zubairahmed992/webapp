@@ -56,6 +56,7 @@
 
 <div class="container">
     <div class="col m1 loginbtn" style="z-index:1;"><a href="#" id="showlogin">Login</a></div>
+    <div class="col m1 rgbtn regshow" style="z-index:1;"><a href="#" class="showsplash">Register</a></div>
     <div id="content-splash">
         <div id="opc"></div>
         <div class="row">
@@ -83,7 +84,7 @@
 
                         <div class="input-field">
 
-                            <input id="showsplash" style="float:left;" value="Join" class="btn black save-changes col m3 offset-m0" type="submit">
+                            <input style="float:left;" value="Join" class="showsplash btn black save-changes col m3 offset-m0" type="submit">
 
 
 
@@ -150,7 +151,7 @@
                             <input id="email" type="email" class="validate" ng-model="regform.email" name="email" required>
 
                             <span class="error" ng-show="formData.email.$error.required && formData.email.$dirty">Email Required</span>
-                            <span class="error" ng-show="!formData.email.$error.required && formData.email.$error.email && formData.email.$dirty">Invalid Email Address</span>
+                            <span class="error" ng-show="!formData.email.$error.required && formData.$error.email && formData.email.$dirty">Invalid Email Address</span>
                             <span ng-show="formData.email.$error.required" class="error">*</span>
                             <label for="email">Email</label>
 
@@ -203,7 +204,8 @@
                             <script>
                                 $('.datepicker').pickadate({
                                     selectMonths: true, // Creates a dropdown to control month
-                                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                                    selectYears: 50 // Creates a dropdown of 15 years to control year
+
                                 });
                             </script>
                         </div>
@@ -347,6 +349,7 @@
                         <select ng-model="regform.device_type" name="device_type" required>
                             <option value="" selected>Device Sizes</option>
                             <option value="iphone5"> iphone5 </option>
+                            <option value="iphone5c"> iphone5c </option>
                             <option value="iphone5s"> iphone5s </option>
                             <option value="iphone6">iphone6</option>
                             <option value="iphone6s">iphone6s</option>
@@ -384,7 +387,7 @@
                             <span class="title_txt">Snap - Style - Share - Shop</span>
                         </div>
                         <!-- <h5>Let's Get Started!</h5>-->
-                        <p>Creat an account so you can try clothes on and see
+                        <p>Create an account so you can try clothes on and see
                             look, fit and size on your own body.</p>
                     </div>
 
@@ -411,7 +414,7 @@
 
                         <div class="input-field">
 
-                            <input id="email" type="email" class="validate" ng-model="loginform1.username" name="_username" required>
+                            <input id="email" type="email" autocomplete="off" class="validate" ng-model="loginform1.username" name="_username" required>
 
                             <span class="error" ng-show="loginform._username.$error.required && loginform._username.$dirty">Email Required</span>
                             <span class="error" ng-show="!loginform._username.$error.required && loginform._username.$error.email && loginform._username.$dirty">Invalid Email Address</span>
@@ -421,7 +424,7 @@
                         </div>
 
                         <div class="input-field">
-                            <input  type="password" name="_password" ng-model="loginform1.password" required>
+                            <input id="password2"  type="password" name="_password" ng-model="loginform1.password" required>
 
 
                             <span ng-show="loginform._password.$error.required" class="error">*</span>

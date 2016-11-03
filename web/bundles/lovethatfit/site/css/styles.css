@@ -1,0 +1,173 @@
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900,100italic,300italic,400italic,500italic,700italic,900italic);
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {  margin-bottom: 98px;}
+
+
+.full {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-attachment: fixed;
+	background-image: url(../images/bg.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-color: none;
+}
+
+
+.logo-margin { margin-bottom:38px;}
+.login-box {
+	background-image: url(../images/login-bg.png);
+	background-repeat: repeat;
+	background-position: left top;
+	padding: 3%;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #c8c8c8;
+	border-bottom-color: #c8c8c8;
+	line-height: normal;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.row-centered {
+    text-align:center;
+}
+
+.login-box .img-responsive {
+    margin: 0 auto;
+}
+
+.login-box .form-control {
+	font-family: 'Roboto', sans-serif;
+	width: 100%;
+	font-size: 20px;
+	color: #808082;
+	height: 60px;
+	padding-top: 16px;
+	padding-right: 38px;
+	padding-bottom: 16px;
+	padding-left: 18px;
+	background-repeat: no-repeat;
+	background-position: 94% 19px;
+}
+.login-box .btn-primary {
+	color: #fff;
+	background-color: #464545;
+	border-color: #bbbbb9;
+	opacity: .6;
+	padding-right: 40px;
+	padding-left: 40px;
+}
+
+
+
+
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  background-color: #000;
+  border-color: #bbbbb9;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #000;
+  border-color: #bbbbb9;
+}
+
+
+.footer-border { border-top:1px solid #bbbbb9; padding-top:10px; margin-top:10px;}
+
+#footer-links{}
+
+#footer-links a {
+	font-family: 'Roboto', sans-serif;
+	color: #5a5a55;
+	font-size: 13px;
+	text-decoration: none;
+	padding-right: 6px;
+	margin-right: 6px;
+	font-weight: bold;
+}
+
+#footer-links a:hover { color:#000;}
+
+#footer-links p {	font-family: 'Roboto', sans-serif;
+	color: #5a5a55;
+	font-size: 13px;
+	 }
+.margin-none { margin-bottom:0px;}
+
+.social-icons { }
+.social-icons p, a {  color:#5a5a55; font-size:11px;}
+
+
+
+
+
+
+
+/*==================*/
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 98px;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+.about-us-box {
+	background-color: #FFF;
+	opacity: .8;
+	padding: 30px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #c6c6c6;
+	border-bottom-color: #c6c6c6;
+}
+
+.about-us-box a { font-family:font-family: 'Roboto', sans-serif; font-size:14px;}
+.about-us-box p {font-family:font-family: 'Roboto', sans-serif; font-size:16px; line-height:24px;}
+
+.small-text { font-size:13px; margin-top:-20px; line-height:18px;}
+
+@media (min-width: 768px) {
+	
+	.social-icons p, a { text-align:right;}
+	 }

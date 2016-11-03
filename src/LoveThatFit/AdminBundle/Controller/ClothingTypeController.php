@@ -134,4 +134,38 @@ class ClothingTypeController extends Controller {
        
        return new \Symfony\Component\HttpFoundation\Response (json_encode($standards));
     }
+
+    public function sendNotificationsAction()
+    {
+        $decoded = $this->get('user.helper.user')->findAllUsersAuthDeviceToken();
+        foreach ($decoded as $user) {
+            $tokens = json_decode($user['device_tokens'], true);
+            if (!empty($tokens['iphone'][0])) {
+                $device_token =  $tokens['iphone'][0];
+                if ($device_token != "") {
+                    $push_response = $this->get('pushnotification.helper')
+                        ->sendNotifyClothingType($device_token);
+                }
+            }
+        }
+        
+        $entity = $this->get('admin.helper.cronNotification')->findByCronType("clothing_type");
+        $this->get('admin.helper.cronNotification')->update($entity, 0);
+
+        $this->get('session')->setFlash('success', 'Push Notifications Send To All Users!');
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
+
+    public function addCronNotificationsAction()
+    {
+        $entity = $this->get('admin.helper.cronNotification')->findByCronType("clothing_type");
+        if(!$entity) {
+            $this->get('session')->setFlash('warning', 'The Cron Type not found!');
+        } else {
+            $this->get('admin.helper.cronNotification')->update($entity, 1);
+            $this->get('session')->setFlash('success', 'Cron has been set to send notifications!');
+        }
+
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
 }
