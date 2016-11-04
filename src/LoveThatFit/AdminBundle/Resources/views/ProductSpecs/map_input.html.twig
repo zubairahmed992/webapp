@@ -13,7 +13,7 @@
     <div id="detail_wrapper">
         <div id="product_content">
             {#{{ dump(brandNames) }}#}
-            <form action="{{ path('admin_product_data_save_brand_specification') }}" method="post" class="formFill">
+            <form action="{{ path('admin_product_specs_mapping_save') }}" method="post" >
                 <div id="detail_wrapper">
                     <div id="p_hd">Product Brand CSV Format Configure</div>
                     <div class="clearfix"></div>
@@ -307,7 +307,7 @@
                 $.each(result, function (k, fit_point_value) {
                     tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
                     $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + fit_point_value + "_" + v + "  id=" + fit_point_value + "_" + v + " style='width: 40px'/> </td>";
+                        tableData += "<td>  <input type='text' name=" + fit_point_value + "-" + v + "  id=" + fit_point_value + "-" + v + " style='width: 40px'/> </td>";
                     });
                     tableData += "</tr>";
                 });
@@ -343,7 +343,7 @@
                     var tableData = '';
                     tableData += "<table><tr><td class='span2'>" + siz_lable_value + "</td>";
                     $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + siz_lable_value + "_" + v + " id=" + siz_lable_value + "_" + v + " style='width: 40px'/> </td>";
+                        tableData += "<td>  <input type='text' name=" + siz_lable_value + "-" + v + " id=" + siz_lable_value + "-" + v + " style='width: 40px'/> </td>";
                     });
                     tableData += "</tr></table>";
                     siz_genrate.append(tableData);

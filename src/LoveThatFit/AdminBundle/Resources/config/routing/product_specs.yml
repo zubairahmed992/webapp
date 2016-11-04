@@ -1,4 +1,8 @@
 
+admin_product_specs_mapping_save:
+    pattern:  /admin/product_specs/mapping_save
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:mappingSave }
+    
 admin_product_specs_csv_upload:
     pattern:  /admin/product_specs/csv_upload
     defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:csvUpload }

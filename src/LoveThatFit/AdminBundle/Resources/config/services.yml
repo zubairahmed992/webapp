@@ -190,7 +190,15 @@ services:
 
      admin.helper.device:
         class: LoveThatFit\AdminBundle\DependencyInjection\DeviceHelper
-
+     
+     admin.helper.product_specification_mapping:
+        class: LoveThatFit\AdminBundle\Entity\ProductSpecificationMappingHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\ProductSpecificationMapping
+            container: "@service_container"
+            
      admin.helper.productimagegenrate:
          class: LoveThatFit\AdminBundle\Entity\ProductImageGenrateHelper
 

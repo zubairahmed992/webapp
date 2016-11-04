@@ -106,4 +106,26 @@ class ProductSpecsController extends Controller {
         }
          return new Response(json_encode($str));
     }
+    
+    #-----------------------------------------------------
+     public function mappingSaveAction(Request $request){        
+         $decoded = $request->request->all();
+         foreach ($decoded as $k => $v) {
+             
+         }
+        return new Response(json_encode($request->request->all()));
+         
+        $str=array();
+         $file=$request->files->get('csv_file');
+         $i=0;
+        if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+            while(($row = fgetcsv($handle)) !== FALSE) {
+            for ($j=0;$j<count($row);$j++){
+                $str[$i][$j] =    $row[$j];                
+                }
+            $i++;
+            }
+        }
+         return new Response(json_encode($str));
+    }
 }
