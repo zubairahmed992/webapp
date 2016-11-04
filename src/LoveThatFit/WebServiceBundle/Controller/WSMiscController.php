@@ -150,11 +150,12 @@ class WSMiscController extends Controller {
 
     public function eventsListAction(Request $request)
     {
+        $eventsList = [];
         $decoded = $request->request->all();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        $decoded['eventsList'] = $this->get('admin.helper.eventManagement')->findAll();
+        $eventsList['data'] = $this->get('admin.helper.eventManagement')->findAll();
 
-        return new Response(json_encode($decoded['eventsList']));
+        return new Response(json_encode($eventsList));
     }
 }
 
