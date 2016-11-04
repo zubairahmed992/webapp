@@ -414,3 +414,11 @@ ws_image_approval:
      comment: test test test
      caliboration_status: reject
    request_type: post
+
+ws_events_list:
+    pattern:  /ws/events_list
+    title: events_list
+    params:
+          api_key: 00000000000000000000000000000          
+    request_type: post
+    description: return events list against authentication token 

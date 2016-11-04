@@ -152,3 +152,7 @@ ws_show_user_cart:
 ws_image_approval:
     pattern:  /ws/image_approval
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:imageApproval}
+
+ws_events_list:
+    pattern:  /ws/events_list
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:eventsList}

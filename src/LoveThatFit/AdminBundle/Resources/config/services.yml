@@ -173,6 +173,14 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\CronNotification
             container: "@service_container"
+
+     admin.helper.eventManagement:
+        class: LoveThatFit\AdminBundle\Entity\EventManagementHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\EventManagement
+            container: "@service_container"
      
      admin.helper.user.mannequin:
         class: LoveThatFit\UserBundle\Entity\MannequinHelper
