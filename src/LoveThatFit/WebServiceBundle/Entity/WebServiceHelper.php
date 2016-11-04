@@ -82,8 +82,20 @@ class WebServiceHelper {
             return $this->response_array(false, 'Email already exists.');
         } else {
             #--- 1) User
+            ##code for event if event name found then regenrate email address
+            if (array_key_exists("event_name", $request_array)) {
+                ##break this email if this event_name is available start
+                $decodeEvent = $this->container->get('user.helper.user')
+                    ->findByEventName($request_array['event_name']);
+                if ($decodeEvent == 0) {
+                    $breakEmail = explode("@",$request_array['email']);
+                    $request_array['email'] = $breakEmail[0].".1@".$breakEmail[1];
+                } else {
+                    $breakEmail = explode("@",$request_array['email']);
+                    $request_array['email'] = $breakEmail[0].".".($decodeEvent+1)."@".$breakEmail[1];
+                }
+            }
             $user = $this->createUserWithParams($request_array);
-            
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
             
@@ -162,6 +174,7 @@ class WebServiceHelper {
         array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
         array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;
         array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) :  null;
+         array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) :  null;
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)){
           $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;  
         } 

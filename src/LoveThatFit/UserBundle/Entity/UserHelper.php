@@ -1051,4 +1051,8 @@ class UserHelper {
         return $this->repo->findAllUsersAuthDeviceToken();   
     }
 
+    public function findByEventName($event_name) {
+        return $this->repo->findByEventName($event_name);
+    }
+
 }

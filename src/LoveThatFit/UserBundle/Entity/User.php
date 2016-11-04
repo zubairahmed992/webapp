@@ -372,6 +372,14 @@ class User implements UserInterface, \Serializable {
     private $release_name;
 
     /**
+     * @var string $event_name
+     *
+     * @ORM\Column(name="event_name", type="string", length=255, nullable=true)
+     * )
+     */
+    private $event_name;
+
+    /**
      * @var dateTime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -990,6 +998,32 @@ class User implements UserInterface, \Serializable {
   public function getReleaseName() {
     return $this->release_name;
   }
+  
+  #-----------------------------------------
+
+  #-----------------------------------------
+   /**
+   * Set event_name
+   *
+   * @param string $event_name
+   * @return User
+   */
+  public function setEventName($event_name) {
+    $this->event_name = $event_name;
+
+    return $this;
+  }
+
+  /**
+   * Get event_name
+   *
+   * @return string
+   */
+  public function getEventName() {
+    return $this->event_name;
+  }
+
+
 #-----------------------------------------
     /**
      * Set zipcode

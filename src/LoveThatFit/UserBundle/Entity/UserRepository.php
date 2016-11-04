@@ -456,5 +456,16 @@ class UserRepository extends EntityRepository {
               ->getQuery()
               ->getResult();
     }
+
+    public function findByEventName($event_name)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        return $query->select('COUNT(u)')
+              ->from('LoveThatFitUserBundle:User', 'u')
+              ->where('u.event_name=:event_name')
+              ->setParameter('event_name', $event_name)
+              ->getQuery()
+              ->getSingleScalarResult();
+    }
 }
 
