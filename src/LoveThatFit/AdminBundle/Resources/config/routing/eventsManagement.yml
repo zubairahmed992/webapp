@@ -1,0 +1,29 @@
+admin_events:
+    pattern:  /admin/events
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:index}
+
+admin_events_paginate:
+    pattern:  /admin/events/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:paginate}
+
+admin_events_new:
+    pattern:  /admin/events/new
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:new }
+
+admin_events_create:
+    pattern:  /admin/events/create
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:create }
+    requirements: 
+      _method: post 
+
+admin_events_edit:
+    pattern:  /admin/events/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:edit }
+
+admin_events_update:
+    pattern:  /admin/events/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:update }
+
+admin_events_delete:
+    pattern:  /admin/events/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:EventsManagement:delete }

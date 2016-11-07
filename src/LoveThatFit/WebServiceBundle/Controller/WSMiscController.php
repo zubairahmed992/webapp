@@ -152,7 +152,7 @@ class WSMiscController extends Controller {
     {
         $decoded = $request->request->all();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        $eventsList = $this->get('admin.helper.eventManagement')->findAll();
+        $eventsList = $this->get('admin.helper.eventsManagement')->findAll();
 
         $conf= array(
             'data' => $eventsList,

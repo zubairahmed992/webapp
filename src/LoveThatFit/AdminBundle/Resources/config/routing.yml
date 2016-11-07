@@ -114,3 +114,8 @@ admin_copy_user_routes:
 support_admin_user_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/support_admin_user.yml"
     prefix:   /
+
+#---------- Copy event Data ----------------------
+admin_events:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/eventsManagement.yml"
+    prefix:   /

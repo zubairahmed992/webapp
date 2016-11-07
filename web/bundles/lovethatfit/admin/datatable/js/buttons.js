@@ -1,4 +1,4 @@
-var DeleteButton     = '',
+var DeleteButton     = '<button class="btn btn-cyan btn-xs delete" data-action="Delete" title="Delete"><i class="icon-remove"></i></button>',
 AddButton        = '<button class="btn btn-cyan btn-xs" data-action="Add" title="Add"><i class="icon-plus-sign"></i></button>';
 DetailPageButton = '<button class="btn btn-cyan btn-xs detail" data-action="Detail" title="View"><i class="icon-eye-open"></i></button>';
 ReasonButton 	 = '<button class="btn btn-detail btn-xs add-reason marginLeft10" data-action="Reason" title="Reason"><i class="fa fa-folder-open noMargin folder-icon"></i></button>';

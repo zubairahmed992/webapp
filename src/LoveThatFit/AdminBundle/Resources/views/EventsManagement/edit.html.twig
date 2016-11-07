@@ -1,0 +1,147 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_brands') }}" >Brands</a> <span class="divider">/</span></li>
+<li class="active">Edit</li>
+<script>
+function validates()
+{
+var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+   
+var image_file = document.getElementById('form_file').value;
+var image_length = document.getElementById('form_file').length;
+
+var pos = image_file.lastIndexOf('.') + 1;
+var ext = image_file.substring(pos, image_length);
+if(image_file!="")
+{
+var final_ext = ext.toLowerCase();
+for (i = 0; i < extensions.length; i++)
+{
+if(extensions[i] == final_ext)
+{
+return true;
+}
+
+}
+document.getElementById('error').style.display="block";
+return false;
+
+}
+return true;
+}    
+</script> 
+{% endblock %}
+
+{% block h1 %}Brand{% endblock %}
+
+{% block title %}Brand{% endblock %}
+
+
+{% block body %}
+
+    
+  
+    <div>      
+    <h1 style="float:left;">Edit Brand</h1>
+     <div class="btn_wrapper">     
+<a href="{{ path('admin_brands') }}" class="btn">back</a>
+             
+{%if entity.id %}
+      <a href="{{ path('admin_brand_edit', {'id': entity.Id}) }}" class="btn">Edit</a>      
+      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+      {% endif %}
+      </div>
+      <div class="clearfix"></div>   
+      {%if entity.id %}
+    <form action="{{ path('admin_brand_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+ {{ form_errors(form) }}
+
+            <div id="detail_wrapper">      
+                <div id="p_hd">Brand Detail</div>
+                
+                
+                <div style="width: 400px; margin:10px auto auto auto; background: #f6f4f4;  box-shadow: 0px 0px 2px 2px #999;">
+                <div style="width:290px; margin: auto auto auto 90px;">                  
+                    
+                    <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+                    <div class="span3">
+                        <strong><br/>  Upload Brand Logo</strong>
+                    </div> 
+                    <div id="pro_img"><img src="{{ asset(entity.WebPath) }}"/>
+                    </div><!--/.well -->
+
+                    <div class="clearfix"></div>
+                    <div style="margin-top:20px; margin-left:5px;">
+    {{ form_errors(form.file) }}
+    {{ form_widget(form.file) }}
+                        </div> 
+                    
+                    
+                    
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container edt_new">         
+                                <div style="width:220px; overflow: hidden;">
+                                    <div class="span3">Name</div>
+                                    <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
+                                   
+                               
+                                
+                                <div>
+                                   
+                                    <div class="span3">&nbsp;</div>
+                                          {{ form_rest(form) }}
+                                    <div style="margin:10px auto auto auto; width:97px;">
+				
+                                            <div style="margin:0 auto; width: 97px;"> <input type="submit" value="SAVE" class="btn btn-primary"/>                                     
+                           
+                                            </div>                                    
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                </div> 
+                                    
+                                
+                                </div>                                    
+
+
+                                </div>      
+                            </div><!-- End pro_detail --> 
+                    
+                     </div>     
+                 </div>
+
+                 
+                        </div><!-- End product_content --> 
+                    </div> <!-- End detail_wrapper -->
+                </form> 
+      
+          {% endif %}
+            </div> 
+    
+    
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Brand</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Brand <b>{{entity.name }}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_brand_delete', {'id': entity.id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>    
+    
+
+{% endblock %}
+
