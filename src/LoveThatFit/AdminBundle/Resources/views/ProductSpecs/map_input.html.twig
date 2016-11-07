@@ -24,8 +24,8 @@
                                     <div class="span3">Please Select Brand</div>
                                     <div class="span3">
                                         <select name="brand_name">
-                                            {% for key, brandName in brandNames %}
-                                                <option value="{{ brandName.name }}"> {{ brandName.name }}</option>
+                                            {% for b in brands %}
+                                                <option value="{{ b.name }}"> {{ b.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -42,9 +42,9 @@
                                 <div class="row-fluid show-grid" id="brand_1">
                                     <div class="span3">Clothing Type</div>
                                     <div class="span3">
-                                        <select name="brand_name">
-                                            {% for key, brandName in brandNames %}
-                                                <option value="{{ brandName.name }}"> {{ brandName.name }}</option>
+                                        <select name="clothing_type">
+                                            {% for k, v in clothing_types.woman %}
+                                                <option value="{{ k }}"> {{ v }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -53,6 +53,12 @@
                                     <div class="span3">Description</div>
                                     <div class="span3">
                                         <textarea name="mapping_description"></textarea>
+                                    </div>
+                                </div>
+                                 <div class="row-fluid show-grid">
+                                    <div class="span3">Title</div>
+                                    <div class="span3">
+                                        <input type="text" id="mapping_title" name="mapping_title">
                                     </div>
                                 </div>
                                 <div>
@@ -307,7 +313,7 @@
                 $.each(result, function (k, fit_point_value) {
                     tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
                     $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + fit_point_value + "-" + v + "  id=" + fit_point_value + "-" + v + " style='width: 40px'/> </td>";
+                        tableData += "<td>  <input type='text' name=" + v + "-" + fit_point_value + "  id=" + v + "-" + fit_point_value + " style='width: 40px'/> </td>";
                     });
                     tableData += "</tr>";
                 });
@@ -343,7 +349,7 @@
                     var tableData = '';
                     tableData += "<table><tr><td class='span2'>" + siz_lable_value + "</td>";
                     $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + siz_lable_value + "-" + v + " id=" + siz_lable_value + "-" + v + " style='width: 40px'/> </td>";
+                        tableData += "<td>  <input type='text' name=" + v + "-" + siz_lable_value + " id=" + v + "-" + siz_lable_value + " style='width: 40px'/> </td>";
                     });
                     tableData += "</tr></table>";
                     siz_genrate.append(tableData);

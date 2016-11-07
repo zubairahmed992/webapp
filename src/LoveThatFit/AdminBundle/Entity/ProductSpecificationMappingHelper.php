@@ -39,7 +39,10 @@ class ProductSpecificationMappingHelper {
 
     public function createNew() {
         $class = $this->class;
-        return  new $class();        
+        $c = new $class();
+        $c->setCreatedAt(new \DateTime('now'));
+        $c->setDisabled(false);
+        return  $c;        
     }
 
 //--------------------------Save Brand----------------------------------------------------------------
