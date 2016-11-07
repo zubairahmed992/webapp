@@ -35,20 +35,26 @@ class EventsManagementHelper {
 
     public function createNew() {
         $class = $this->class;
-        $clothing_types = new $class();
-        return $clothing_types;
+        $eventsManagement = new $class();
+        return $eventsManagement;
     }
 
-    public function save($entity) {
-        //$msg_array = null;        
-        $name = $entity->getName();
-        $msg_array = $this->validateForCreate($name);
-        if ($msg_array == null and $name != null) {
+    public function save($entity, $data)
+    {
+        $msg_array = $this->validateForCreate($data['event_name']);
+        if ($msg_array == null) {
+            if (!isset($data["disabled"])) {
+                $entity->setDisabled(0);
+            }else {
+                $entity->setDisabled($data["disabled"]);
+            }
+            $entity->setEventName($data["event_name"]);
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
+
             $this->em->persist($entity);
             $this->em->flush();
-            return array('message' => 'Clothing Type succesfully created.',
+            return array('message' => 'Event succesfully created.',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -56,23 +62,22 @@ class EventsManagementHelper {
         } else {
             return $msg_array;
         }
+
     }
 
     public function find($id) {
         return $this->repo->find($id);
     }
 
-    public function update($entity) {
-
+    public function update($entity, $data)
+    {
         $msg_array = $this->validateForUpdate($entity);
-
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
-            $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
 
-            return array('message' => 'ClothingType ' . $entity->getName() . ' succesfully updated!',
+            return array('message' => 'Event updated succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -85,30 +90,15 @@ class EventsManagementHelper {
     
     public function delete($id) {
         $entity = $this->repo->find($id);
-        $entity_name = $entity->getName();
-        if ($entity) {
-            $this->em->remove($entity);
-            $this->em->flush();
-            return array('clothing_types' => $entity,
-                'message' => 'The Clothing Type ' . $entity_name . ' has been Deleted!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        } else {
-
-            return array('clothing_types' => $entity,
-                'message' => 'clothing types not found!',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
+        $this->em->remove($entity);
+        $this->em->flush();
+        return array('eventsManagement' => $entity,
+            'message' => 'The Event has been Deleted!',
+            'message_type' => 'success',
+            'success' => true,
+        );
     }
 
-    //-------------------------------------------------------    
-    public function findOneByName($name) {
-        return $this->repo->findOneByName($name);
-    }
-    
     #-----------------------------------------------
     public function findAll(){
         return $this->repo->findAllRecord();
@@ -121,10 +111,11 @@ class EventsManagementHelper {
     //-------------------------------------------------------
     //Private Methods    
     //----------------------------------------------------------
-    private function validateForCreate($name) {
-        if (count($this->findClothingTypeByName($name)) > 0) {
-            return array('message' => 'clothing types Name already exists!',
-                'field' => 'name',
+    private function validateForCreate($event_name)
+    {
+        if (count($this->findByEventName($event_name)) > 0) {
+            return array('message' => 'The Event Name already exists!',
+                'field' => 'event_name',
                 'message_type' => 'warning',
                 'success' => false,
             );
@@ -133,10 +124,10 @@ class EventsManagementHelper {
     }
 
 //----------------------------------------------------------
-    private function validateForUpdate($entity) {
-        //$clothing_types = $this->findClothingTypeByName($entity->getName());
-        $clothing_type = $this->findOneByGenderName($entity->getGender(), $entity->getName());
-        if ($clothing_type && $clothing_type->getId() != $entity->getId()) {
+    private function validateForUpdate($entity)
+    {
+        $events = $this->findByEventName($entity->getEventName());
+        if ($events && $events[0]['id'] != $entity->getId()) {
             return array('message' => 'Clothing Type Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -144,6 +135,10 @@ class EventsManagementHelper {
             );
         }
         return;
+    }
+
+    public function findByEventName($name) {
+        return $this->repo->findByEventName($name);
     }
 
     public function search($data)
@@ -176,7 +171,7 @@ class EventsManagementHelper {
             $output['data'][] = [ 
                 'id'         => $fData["id"],
                 'event_name' => $fData["event_name"],
-                'disabled'   => ($fData["disabled"] == 1) ? "Active" : "Inactive",
+                'disabled'   => ($fData["disabled"] == 1) ? "Disabled" : "Enable",
                 'created_at' => ($fData["created_at"]->format('d-m-Y'))
             ];
             

@@ -25,7 +25,7 @@ param:limit, page_number,limit,sort
     $query = $this->getEntityManager()
       ->createQuery('SELECT e.id, e.event_name 
         FROM LoveThatFitAdminBundle:EventsManagement e 
-        where e.disabled = 1
+        where e.disabled = 0
         order by e.id Desc
     ');
     try {
@@ -35,25 +35,22 @@ param:limit, page_number,limit,sort
     }
   }
     
-  public function findClothingTypeByName($name) {
-      $record = $this->getEntityManager()
-                      ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
-                              WHERE c.name = :name")
-                      ->setParameters(array('name' =>$name));
-      try {
-          return $record->getResult();
-      } catch (\Doctrine\ORM\NoResultException $e) {
-          return null;
-      }
+  public function findByEventName($event_name)
+  {
+    $query = $this->getEntityManager()->createQueryBuilder();
+    $query 
+        ->select('e.id, e.event_name')
+        ->from('LoveThatFitAdminBundle:EventsManagement', 'e')
+        ->where('e.event_name=:event_name')
+        ->setParameter('event_name', $event_name);
+
+    return $query->getQuery()->getResult();
   }
+
   #--------------Find Clothing Type By ID---------------------------------#
   public function findById($id){
        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT ct.name as name,ct.target as target FROM LoveThatFitAdminBundle:ClothingType ct     
-     WHERE
-     ct.id=:id     
-    "  )->setParameters(array('id' => $id)) ;
+                        ->createQuery("SELECT e FROM LoveThatFitAdminBundle:EventsManagement e WHERE e.id=:id"  )->setParameters(array('id' => $id)) ;
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -80,7 +77,7 @@ param:limit, page_number,limit,sort
         )
         ->from('LoveThatFitAdminBundle:EventsManagement', 'e')
         ->where('e.disabled=:status')
-        ->setParameter('status', 1);
+        ->setParameter('status', 0);
     if ($search) {
         $query 
             ->andWhere('e.event_name like :search')
