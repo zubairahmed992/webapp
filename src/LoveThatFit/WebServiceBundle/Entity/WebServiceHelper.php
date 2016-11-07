@@ -100,8 +100,12 @@ class WebServiceHelper {
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
             
             $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
-            #---- 2) send registration email ....            
-            $this->container->get('mail_helper')->sendRegistrationEmail($user);
+
+            ##email not send if the event is available against user
+            if (!array_key_exists("event_name", $request_array)) {
+                #---- 2) send registration email ....
+                $this->container->get('mail_helper')->sendRegistrationEmail($user);
+            }
             
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array); 
@@ -115,14 +119,12 @@ class WebServiceHelper {
  #------------------------ User -----------------------
 
     public function userAdminList() {
-        $users = $this->container->get('webservice.repo')->userAdminList();                
+        $users = $this->container->get('webservice.repo')->userAdminList();
         return $this->response_array(true, 'measurement updated', true, array('user' => $users));
-       
-        
-    }    
+    }
   #------------------------ measurementUpdate -----------------------
 
-  public function measurementUpdate($ra) {
+    public function measurementUpdate($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $user->getMeasurement();
         $base_path=$ra['base_path'];
@@ -139,16 +141,16 @@ class WebServiceHelper {
         $measurement->setMeasurementJson(json_encode($ar));
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         #return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
-    return $this->response_array(true, 'measurement updated', true, array('user' => $this->user_array($user, $ra)));
-        
+        return $this->response_array(true, 'measurement updated', true, array('user' => $this->user_array($user, $ra)));
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
-        $user = $this->findUserByAuthToken($ra['auth_token']);        
+        $user = $this->findUserByAuthToken($ra['auth_token']);
          if ($user) {
-             $user = $this->setUserWithParams($user, $ra);
-             $this->container->get('user.helper.user')->saveUser($user);             
-             return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true,$ra['base_path'])));
+            ##code for event if event name found then regenrate email address
+            $user = $this->setUserWithParams($user, $ra);
+            $this->container->get('user.helper.user')->saveUser($user);
+            return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true,$ra['base_path'])));
         } else {
             return $this->response_array(false, 'Member not found');
         }
