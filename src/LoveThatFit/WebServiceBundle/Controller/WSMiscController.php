@@ -59,6 +59,7 @@ class WSMiscController extends Controller {
             'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
             'beta'=>array('build_type'=>'beta','url'=>'beta.selfiestyler.com'),
             'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
+            'photoresearch'=>array('build_type'=>'photoresearch','url'=>'photoresearch.selfiestyler.com'),
         ),
             'count'=>3,
             'message' => 'configuration for build deployment',
