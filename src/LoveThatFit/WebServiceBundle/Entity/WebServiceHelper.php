@@ -81,20 +81,6 @@ class WebServiceHelper {
         if (count($user) > 0) {
             return $this->response_array(false, 'Email already exists.');
         } else {
-            #--- 1) User
-            ##code for event if event name found then regenrate email address
-            if (array_key_exists("event_name", $request_array)) {
-                ##break this email if this event_name is available start
-                $decodeEvent = $this->container->get('user.helper.user')
-                    ->findByEventName($request_array['event_name']);
-                if ($decodeEvent == 0) {
-                    $breakEmail = explode("@",$request_array['email']);
-                    $request_array['email'] = $breakEmail[0].".1@".$breakEmail[1];
-                } else {
-                    $breakEmail = explode("@",$request_array['email']);
-                    $request_array['email'] = $breakEmail[0].".".($decodeEvent+1)."@".$breakEmail[1];
-                }
-            }
             $user = $this->createUserWithParams($request_array);
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
@@ -147,7 +133,6 @@ class WebServiceHelper {
     public function updateProfile($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
          if ($user) {
-            ##code for event if event name found then regenrate email address
             $user = $this->setUserWithParams($user, $ra);
             $this->container->get('user.helper.user')->saveUser($user);
             return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true,$ra['base_path'])));

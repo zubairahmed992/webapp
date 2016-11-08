@@ -54,21 +54,30 @@ class WSMiscController extends Controller {
     #~~~~~~~~~~~~~~~~~~~ ws_build_config   /ws/build_config
 
     public function buildConfigAction() {
-        $conf= array(
-            'data' => array(
-            'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
-            'beta'=>array('build_type'=>'beta','url'=>'beta.selfiestyler.com'),
-            'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
-            'photoresearch'=>array('build_type'=>'photoresearch','url'=>'photoresearch.selfiestyler.com'),
-        ),
-            'count'=>3,
-            'message' => 'configuration for build deployment',
-            'success' => 'true',
-        );
-        
-        
-            return new Response(json_encode($conf));
-        
+        $decoded = $this->process_request();
+        if($decoded["app_name"] == 'photo') {
+            $conf = array(
+                'data' => array(
+                    'dev' => array('build_type' => 'dev', 'url' => 'dev.selfiestyler.com'),
+                    'photoresearch' => array('build_type' => 'photoresearch', 'url' => 'photoresearch.selfiestyler.com'),
+                ),
+                'count' => 3,
+                'message' => 'configuration for build deployment',
+                'success' => 'true',
+            );
+        }else{
+            $conf= array(
+                'data' => array(
+                    'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
+                    'beta'=>array('build_type'=>'beta','url'=>'beta.selfiestyler.com'),
+                    'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
+                ),
+                'count'=>3,
+                'message' => 'configuration for build deployment',
+                'success' => 'true',
+            );
+        }
+        return new Response(json_encode($conf));
     }
     
       public function response_array($success, $message = null, $json = true, $data = null) {

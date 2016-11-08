@@ -401,6 +401,7 @@ ws_build_config:
    pattern:  /ws/build_config
    title: build_config
    params:
+     app_name: photo
    request_type: get
 
 ws_image_approval:
