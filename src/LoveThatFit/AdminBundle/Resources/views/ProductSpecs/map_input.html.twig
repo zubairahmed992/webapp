@@ -5,7 +5,7 @@
 
 {% block body %}
   
-  
+  <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
    <h1 style="float:left;">Product Brand CSV Format Configure</h1>
     <div class="btn_wrapper"><a href="{{ path('admin_products') }}" class="btn">back to list</a></div>
     <div class="clearfix"></div>
@@ -33,7 +33,7 @@
                                      <div class="row-fluid show-grid">
                                     <div class="span3">Please Select Gender</div>
                                     <div class="span3">
-                                        <select name="brand_name">
+                                        <select name="sel_gender" id="sel_gender">
                                                 <option value="m"> Man </option>                                            
                                                 <option value="f"> Woman </option>                                            
                                         </select>
@@ -256,7 +256,7 @@
                                     <div class="span3">Slect Sizes</div>
 
                                     <div class="span3">
-                                        <select name="select_size" class="selectSize">
+                                        <select name="select_size" id="sel_size_type" class="selectSize">
                                             <option selected> Select Size</option>
                                             <option value="{{ size_fit_points[1]|json_encode() }}"> letter</option>
                                             <option value="{{ size_fit_points[2]|json_encode() }}"> number</option>
@@ -397,8 +397,26 @@
 //-------------------------------------------- 	
 //-------------------------------------------- 	
 $(function(){
+    size_specs=jQuery.parseJSON( $('#size_specs_json').text());
+    $( "#sel_gender" ).change(function() {
+        fill_clothing_type_list(this.value);
+});
+    //---------------------------------------
+    function fill_clothing_type_list(gender){
+        gender=gender=='m'?'man':'woman';
+        
+        $('#sel_size_type').empty();
+        var option = '<option value="">Select Size</option>';
+        $.each(size_specs.size_title_type[gender], function(val, text) {
+            option += '<option value="'+ val + '">' + text + '</option>';
+                });
+         $('#sel_size_type').append(option);         
+    }
     
     
+    //---------------------------------------
+    
+    //alert(size_specs.genders.titles.m);
     //#################################################
     $('#csv_file').on('change', function(){     
         var val = $(this).val();
