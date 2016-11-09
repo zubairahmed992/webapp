@@ -22,8 +22,9 @@ class ProductSpecsController extends Controller {
 
     public function fooAction(){
         
-        $size_specs=$this->get('admin.helper.size')->getByGender('f');
+        $size_specs=$this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
+        return new Response(json_encode($size_specs));
         return new Response(json_encode($product_specs));
         
         #$size_specs=$this->get('admin.helper.size')->getAllSizeTitleType();
@@ -56,31 +57,20 @@ class ProductSpecsController extends Controller {
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
-        #return new Response(json_encode($size_specs));
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         
+        #return new Response(json_encode($size_specs));
         
-
-        $size_types1 = array(
-            'woman' => array('letter' => array('XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
-                '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X'
-            ),
-                'number' => array(00, 0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30),
-                'waist' => array(23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36)));
-
-        $size_types_letters = array('Calculation', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL',
-            '1XL', '2XL', '3XL', '4XL', '1X', '2X', '3X', '4X');
-        $size_types_number = array('Calculation', '00', 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30);
-        $size_types_waist = array('Calculation', 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);
-
+     
+        
         $fit_points = array('tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
             'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
 
-        $size_fit_points = array($fit_points, $size_types_letters, $size_types_number, $size_types_waist);
+        
 
         
         return $this->render('LoveThatFitAdminBundle:ProductSpecs:map_input.html.twig', array(
-            'size_fit_points' => $size_fit_points,
+            'fit_points' => $fit_points,
             'brands' => $brands,
             'clothing_types' => $clothing_types,
             'product_specs' => $product_specs,

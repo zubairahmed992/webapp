@@ -6,6 +6,7 @@
 {% block body %}
   
   <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
+  <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
    <h1 style="float:left;">Product Brand CSV Format Configure</h1>
     <div class="btn_wrapper"><a href="{{ path('admin_products') }}" class="btn">back to list</a></div>
     <div class="clearfix"></div>
@@ -42,10 +43,8 @@
                                 <div class="row-fluid show-grid" id="brand_1">
                                     <div class="span3">Clothing Type</div>
                                     <div class="span3">
-                                        <select name="clothing_type">
-                                            {% for k, v in clothing_types.woman %}
-                                                <option value="{{ k }}"> {{ v }}</option>
-                                            {% endfor %}
+                                        <select name="clothing_type" id="sel_clothing_type">
+                                                <option value=""> Select </option>                                            
                                         </select>
                                     </div>
                                 </div>
@@ -258,13 +257,10 @@
                                     <div class="span3">
                                         <select name="select_size" id="sel_size_type" class="selectSize">
                                             <option selected> Select Size</option>
-                                            <option value="{{ size_fit_points[1]|json_encode() }}"> letter</option>
-                                            <option value="{{ size_fit_points[2]|json_encode() }}"> number</option>
-                                            <option value="{{ size_fit_points[3]|json_encode() }}"> waist</option>
-
+                                            
                                         </select>
                                     </div>
-                                    <input type="hidden" value="{{ size_fit_points[0]|json_encode() }}"
+                                    <input type="hidden" value="{{ fit_points|json_encode() }}"
                                            name="fit_point" class="fit_point">
                                 </div>
                                 <div class="size_genrate"></div>
@@ -298,29 +294,35 @@
         var $ = jQuery.noConflict();
         jQuery(document).ready(function () {
             $(".selectSize").change(function () {
+                
+                var siz_genrate = $('.size_genrate'); 
                 $('.add_size_row').show();
-                var size_type = $.parseJSON(this.value);
-                var siz_genrate = $('.size_genrate');
+                size_specs = $.parseJSON($('#size_specs_json').text());                
                 var fit_points = $('.fit_point').val();
-                var result = $.parseJSON(fit_points);
+                gender=$('sel_gender').val()=='m'?'man':'woman';
+                var size_type = this.value
+                
                 siz_genrate.empty();
                 var tableData = '';
                 tableData += "<table><tr><th> Size Lable </th>";
-                $.each(size_type, function (k, size_label) {
+                $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
                     tableData += "<th>" + size_label + "</th>";
                 });
+                
                 tableData += "</tr>";
+                var result = $.parseJSON(fit_points);
+                
                 $.each(result, function (k, fit_point_value) {
                     tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
-                    $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + v + "-" + fit_point_value + "  id=" + v + "-" + fit_point_value + " style='width: 40px'/> </td>";
-                    });
+                    $.each(size_specs.sizes[gender][size_type], function (k, v) {                    
+                    tableData += "<td>  <input type='text' name=" + v + "-" + fit_point_value + "  id=" + v + "-" + fit_point_value + " style='width: 40px'/> </td>";
+                });
                     tableData += "</tr>";
                 });
-                //tableData += "</table>";
+                
                 siz_genrate.append(tableData);
 
-               //---------- textbox id on selection ~~~~~~~~~~>
+    //---------- textbox id on selection ~~~~~~~~~~>
     $('input, textarea').focus(function() {
        $('#select_cell_div').text($(this).attr('id'));
     });
@@ -398,13 +400,25 @@
 //-------------------------------------------- 	
 $(function(){
     size_specs=jQuery.parseJSON( $('#size_specs_json').text());
+    product_specs = jQuery.parseJSON( $('#product_specs_json').text());
+    
     $( "#sel_gender" ).change(function() {
         fill_clothing_type_list(this.value);
+        sel_size_type(this.value);    
 });
     //---------------------------------------
-    function fill_clothing_type_list(gender){
-        gender=gender=='m'?'man':'woman';
-        
+    function fill_clothing_type_list(gender){        
+        gender=gender=='m'?'man':'women';                
+        $('#sel_clothing_type').empty();
+        var option = '<option value="">Select </option>';
+        $.each(product_specs[gender].clothing_type, function(val, text) {
+            option += '<option value="'+ val + '">' + text + '</option>';
+                });
+         $('#sel_clothing_type').append(option);         
+    }
+    //---------------------------------------
+    function sel_size_type(gender){
+        gender=gender=='m'?'man':'woman';        
         $('#sel_size_type').empty();
         var option = '<option value="">Select Size</option>';
         $.each(size_specs.size_title_type[gender], function(val, text) {
@@ -412,7 +426,6 @@ $(function(){
                 });
          $('#sel_size_type').append(option);         
     }
-    
     
     //---------------------------------------
     
