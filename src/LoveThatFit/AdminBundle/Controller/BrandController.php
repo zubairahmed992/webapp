@@ -17,7 +17,6 @@ class BrandController extends Controller {
         $brands_with_pagination = $this->get('admin.helper.brand')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', $brands_with_pagination);
     }
-
 //-----------------------Display Single brand Detail by Id-----------------------------------------------------------------
 
     public function showAction($id) {
