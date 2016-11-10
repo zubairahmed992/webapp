@@ -1,3 +1,4 @@
+
 hitOptions = {
 	segments: true,
 	stroke: false,
@@ -15,7 +16,8 @@ var liquid_mask = {
     def_zoom_ratio: 1,
     scr_empty_top: 26,
     px_per_inch_ratio: function(){return 6.891},
-    adjusted_user_mask: function(){return}
+    adjusted_user_mask: function(){return},
+    user_gender: $('#user_gender').attr('value')
 }
 //alert("asdf");
 
@@ -68,10 +70,15 @@ if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android")
 }
 if(liquid_mask.device_type == "iphone6"){
     if(liquid_mask.device_model == "iphone6"){
+       
          //alert("iPhone6: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
         //fixed_px_inch_ratio = 8.094;
-
-        fixed_px_inch_ratio = 6.647154471544715;
+        if(liquid_mask.user_gender == "m"){
+            fixed_px_inch_ratio = 6.647154471544715;
+        }
+        if(liquid_mask.user_gender == "f"){
+            fixed_px_inch_ratio = 6.623577235772357;
+        }
 
         // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
         // 4.49 is 1% value
