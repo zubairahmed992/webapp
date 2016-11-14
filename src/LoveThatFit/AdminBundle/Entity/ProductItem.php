@@ -130,8 +130,8 @@ class ProductItem
     #----------------------------------------------------------------------------------------
        /**
 
-     * @var float $price
-     * @ORM\Column(name="price", type="float", nullable=true,options={"default" = 0})
+     * @var decimal $price
+     * @ORM\Column(name="price", type="decimal", nullable=true, precision=14, scale=2,options={"default" = 0})
      */
     
     private $price = 0;
@@ -143,7 +143,7 @@ class ProductItem
     /**
      * Set price
      *
-     * @param float $price
+     * @param decimal $price
      * @return Measurement
      */
     public function setPrice($price) {
@@ -158,7 +158,7 @@ class ProductItem
     /**
      * Get price
      *
-     * @return float 
+     * @return decimal
      */
     public function getPrice() {
         if ($this->price != null) {
