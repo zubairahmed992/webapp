@@ -53,8 +53,14 @@ class ProductSpecificationMapping  {
     private $mapping_json;
     
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $mapping_file_name;
+    
+    /**
      * @ORM\Column(type="datetime")
      */
+    
     protected $created_at;
 
   
@@ -63,12 +69,15 @@ class ProductSpecificationMapping  {
      */
     public $file;
 
+    
     /**
      * @var string $disabled
      * @ORM\Column(name="disabled", type="boolean")
      */
     private $disabled;
     #-------------------------------------------
+    
+    
     /**
      * Get id
      *
@@ -164,7 +173,25 @@ class ProductSpecificationMapping  {
 
 
 #----------------------------------------
-    
+     /**
+     * Set mapping_file_name
+     *
+     * @param string $mapping_file_name
+     * @return ProductSpecificationMapping
+     */
+    public function setMappingFileName($file_name){
+        $this->mapping_file_name = $file_name;    
+        return $this;
+    }
+
+    /**
+     * Get mapping_file_name
+     *
+     * @return string 
+     */
+    public function getMappingFileName(){
+        return $this->mapping_file_name;
+    }
    #-------------------------------------------
     
     /**
@@ -213,17 +240,6 @@ class ProductSpecificationMapping  {
     }
 
    
-    //-------------------------------------------------
-    //-------------- Image Upload ---------------------
-    //-------------------------------------------------
-    
-    public function upload() {
-        // the file property can be empty if the field is not required
-        if (null === $this->file) {
-            return;
-        }   
-        return true;   
-    }
 //---------------------------------------------------
     
   
@@ -232,6 +248,46 @@ class ProductSpecificationMapping  {
      */
     public function __construct()
     {
+    }
+      //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+
+    public function upload() {
+      // the file property can be empty if the field is not required
+      if (null === $this->file) {
+        return;
+      }
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->mapping_file_name = uniqid() .'.'. $ext;
+        $this->file->move(
+                $this->getUploadRootDir(), $this->mapping_file_name
+        );
+      
+    }
+  //---------------------------------------------------
+
+    public function getAbsolutePath()
+    {
+      return null === $this->mapping_file_name
+          ? null
+          : $this->getUploadRootDir().'/'.$this->mapping_file_name;
+    }
+  //---------------------------------------------------
+    public function getWebPath()
+    {
+      return null === $this->mapping_file_name
+          ? null
+          : $this->getUploadDir().'/'.$this->mapping_file_name;
+    }
+  //---------------------------------------------------
+    protected function getUploadRootDir()
+    {
+      return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+  //---------------------------------------------------
+    protected function getUploadDir(){    
+      return 'uploads/ltf/products/product_csv';
     }
     
     

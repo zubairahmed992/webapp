@@ -130,13 +130,19 @@ class ProductSpecsController extends Controller {
             }
         }
 
-        return new Response(json_encode($apecs_arr));
           $mapping = $this->container->get('admin.helper.product_specification_mapping')->createNew();
           $mapping->setBrand($decoded['brand_name']);
-          $mapping->setTitle('rodney');
+          $mapping->setTitle($decoded['mapping_title']);
           $mapping->setDescription($decoded['mapping_description']);
           $mapping->setMappingJson(json_encode($apecs_arr));
           $this->container->get('admin.helper.product_specification_mapping')->save($mapping);
+          $mapping->setMappingFileName('csv_mapping_'. $mapping->getId() .'.csv');          
+           if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $mapping->getAbsolutePath())){
+               $this->container->get('admin.helper.product_specification_mapping')->save($mapping);
+               return new Response($mapping->getId());
+           }else{
+               return new Response('no');
+           }
           
         return new Response(json_encode($apecs_arr));
     }

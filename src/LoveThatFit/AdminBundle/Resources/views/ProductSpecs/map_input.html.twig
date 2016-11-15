@@ -14,7 +14,7 @@
     <div id="detail_wrapper">
         <div id="product_content">
             {#{{ dump(brandNames) }}#}
-            <form action="{{ path('admin_product_specs_mapping_save') }}" method="post" >
+            <form action="{{ path('admin_product_specs_mapping_save') }}" method="post" enctype="multipart/form-data">
                 <div id="detail_wrapper">
                     <div id="p_hd">Product Brand CSV Format Configure</div>
                     <div class="clearfix"></div>
@@ -62,10 +62,10 @@
                                 </div>
                                 <div>
                                     <div id='uploading_image'></div>
-                                     <form action="upload.php" method="post" enctype="multipart/form-data">
+                                     
                                          Select csv to upload: <span id="file_message"></span>
                                          <input type="file" name="csv_file" id="csv_file">
-                                     </form>
+                                     
                                  </div>
                                     <span id="select_cell_div" hidden="true"></span>                                  
                                 <div id="pq-dialog-cont">
