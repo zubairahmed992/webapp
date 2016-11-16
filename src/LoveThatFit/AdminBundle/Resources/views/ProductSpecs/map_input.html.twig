@@ -267,9 +267,9 @@
                                 <div class="row-fluid show-grid add_size_row" style="display: none">
                                     <div class="span3">Enter Size Lable</div>
                                     <div class="span3">
-                                        <input type="text" id="product_fit_modle_size" name="product_fit_modle_size"
+                                        <input type="text" id="new_fit_point" name="new_fit_point"
                                                maxlength="255">
-                                        <button type="button" class="add_size">Add Size Lable</button>
+                                        <button type="button" class="add_size">Add Fit point Lable</button>
                                     </div>
 
                                 </div>
@@ -330,36 +330,21 @@
 
             var fit_poit_condition = true;
             $(".add_size").click(function () {
-                var siz_lable_value = $('#product_fit_modle_size').val();
-                if (siz_lable_value) {
-                    var fit_point_labels = '';
-                    var fit_point = $('.fit_point').val();
-                    if (fit_poit_condition) {
-                        fit_point_labels = $.parseJSON(fit_point)
-                        fit_poit_condition = false;
-                    } else {
-                        fit_point_labels = fit_point
-                    }
-                    fit_point_labels += "," + siz_lable_value;
-                    $('.fit_point').val(fit_point_labels)
-                    var size_type = $('.selectSize :selected').val();
-                    size_type = $.parseJSON(size_type);
-                    var siz_genrate = $('.size_genrate');
-                    var tableData = '';
-                    tableData += "<table><tr><td class='span2'>" + siz_lable_value + "</td>";
-                    $.each(size_type, function (k, v) {
-                        tableData += "<td>  <input type='text' name=" + v + "-" + siz_lable_value + " id=" + v + "-" + siz_lable_value + " style='width: 40px'/> </td>";
-                    });
-                    tableData += "</tr></table>";
-                    siz_genrate.append(tableData);
-                  //---------- textbox id on selection ~~~~~~~~~~>
-    $('input, textarea').focus(function() {
-       $('#select_cell_div').text($(this).attr('id'));
-    });
-    //---------------------------------------
-
-                }
+                var siz_genrate = $('.size_genrate');
+                var new_fit_point = $('#new_fit_point').val();                
+                size_specs = $.parseJSON($('#size_specs_json').text());                
+                gender=$('#sel_gender').val()=='m'?'man':'woman';
+                size_type=$(".selectSize").val();
                 
+                var tableData = "<table><tr><td class='span2'>"+ new_fit_point + "  </td>";
+                      nfp =  new_fit_point.split(' ').join('_');
+                $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                    tableData += "<td>  <input type='text' name=" + size_label + "-" + nfp + "  id=" + size_label + "-" + nfp + " style='width: 40px'/> </td>";
+                });
+                
+                tableData += "</tr><table>";
+                siz_genrate.append(tableData);                    
+            
             });
 
             // add_fit_priority
