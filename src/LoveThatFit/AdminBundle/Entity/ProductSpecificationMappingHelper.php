@@ -90,7 +90,13 @@ class ProductSpecificationMappingHelper {
     public function findOneByTitle($title) {
         return $this->repo->findOneByTitle($title);
     }
-
+    #--------------------------------------------
+    
+    public function getAllMappingArray() {
+        return $this->repo->allMappingArray();
+    }
+    
+    #--------------------------------------------
   public function toArray(){
       return array(
           'title' =>  $this->getTitle(),

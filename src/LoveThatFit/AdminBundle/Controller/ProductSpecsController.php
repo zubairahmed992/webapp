@@ -42,7 +42,7 @@ class ProductSpecsController extends Controller {
 
          return new Response(json_encode($product_specs));
     }
-
+ #-----------------------------------------------------
       public function barAction(){        
           return $this->render('LoveThatFitAdminBundle:ProductSpecs:bar.html.twig');
           
@@ -52,24 +52,15 @@ class ProductSpecsController extends Controller {
         ));
         
     }
-
+ #-----------------------------------------------------
      public function mappingInputAction(){        
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        
-        #return new Response(json_encode($size_specs));
-        
-     
-        
         $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
             'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
-
-        
-
-        
-        return $this->render('LoveThatFitAdminBundle:ProductSpecs:map_input.html.twig', array(
+       return $this->render('LoveThatFitAdminBundle:ProductSpecs:map_input.html.twig', array(
             'fit_points' => $fit_points,
             'brands' => $brands,
             'clothing_types' => $clothing_types,
@@ -146,4 +137,19 @@ class ProductSpecsController extends Controller {
           
         return new Response(json_encode($apecs_arr));
     }
+    #-----------------------------------------------------
+     public function csvDataInputAction(){        
+        $brands = $this->get('admin.helper.brand')->getBrnadArray();
+        $mapping = $this->get('admin.helper.product_specification_mapping')->getAllMappingArray();
+        #return new Response(json_encode($mapping));
+        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_data_input.html.twig', array(
+            'brands' => $brands,
+            'mapping' => $mapping,            
+            'mapping_json' => json_encode($mapping),            
+        ));
+        
+    }
+    #-----------------------------------------------------
+    
+    
 }

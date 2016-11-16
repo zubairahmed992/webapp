@@ -7,6 +7,10 @@ admin_product_specs_csv_upload:
     pattern:  /admin/product_specs/csv_upload
     defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:csvUpload }
 
+admin_product_specs_csv_data_input:
+    pattern:  /admin/product_specs/csv_data_input
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:csvDataInput }
+
 admin_product_specs_foo:
     pattern:  /admin/product_specs/foo
     defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:foo }
