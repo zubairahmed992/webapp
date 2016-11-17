@@ -1,7 +1,7 @@
 dashboard_banner:
   1:
     image: uploads/ltf/products/banner/1.png
-    caption: Ebony and Ivory 
+    caption: Black and White
     price: 40
     index: 1
     type: stylist_recommendations
@@ -14,7 +14,7 @@ dashboard_banner:
     disable: false
   2:
     image: uploads/ltf/products/banner/2.png
-    caption: Easy Breezy
+    caption: Light and Casual
     price: 40
     index: 2
     type: stylist_recommendations
@@ -52,7 +52,7 @@ dashboard_banner:
     disable: false
   5:
     image: uploads/ltf/products/banner/5.png
-    caption: Contemporary Fun
+    caption: Contemporary
     price: 40
     index: 5
     type: stylist_recommendations
