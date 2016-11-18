@@ -3,6 +3,16 @@
     <h4 id="heading"></h4>
 <table class="table table-condensed table-bordered  table-hover" >
     <tr class="evaluation_tr">
+        <th>Style Number
+            <span style="float: right;">
+                <a id="control_number_up" href="javascript:;" data-id="control_number|up" title="Asc">
+                    <i class="icon-upload"></i>
+                </a>
+                <a id="control_number_down" href="javascript:;" data-id="control_number|down" title="Desc">
+                    <i class="icon-download"></i>
+                </a>
+            </span>
+        </th>
         <th>Clothing Type
             <span style="float: right;">
                 <a id="clothing_type_up" href="javascript:;" data-id="clothing_type|up" title="Asc">
@@ -45,12 +55,12 @@
         </th>
         <th>Size
             <span style="float: right;">
-                <a id="size_up" href="javascript:;" data-id="size|up" title="Asc">
+                <!--<a id="size_up" href="javascript:;" data-id="size|up" title="Asc">
                     <i class="icon-upload"></i>
                 </a>
                 <a id="size_down" href="javascript:;" data-id="size|down" title="Desc">
                     <i class="icon-download"></i>
-                </a>
+                </a>-->
             </span>
         </th>
         <th>Fits
@@ -96,15 +106,16 @@
     </tr>
     {% for id, p in products %} 
     <tr>
+        <td width="10%">{{p.control_number}}</td>
         <td width="10%">{{p.clothing_type}}</td>
-        <td width="14%">{{p.brand}}</td>
-        <td width="26%">{{p.name}}</td>
-        <td width="10%">{{p.color}}</td>
-        <td width="7%">{{p.size}}</td>
-        <td width="7%">{{p.fits}}</td>
+        <td width="12%">{{p.brand}}</td>
+        <td width="20%">{{p.name}}</td>
+        <td width="8%">{{p.color}}</td>
+        <td width="8%">{{p.size}}</td>
+        <td width="6%">{{p.fits}}</td>
         <td width="8%">{{p.fit_index}}</td>
         <td width="8%">{{p.recommended_size}}</td>
-        <td width="10%">{{p.recommended_fit_index}}</td>
+        <td width="12%">{{p.recommended_fit_index}}</td>
 
     </tr>
     {% endfor %}
@@ -114,7 +125,7 @@
 {% endif %}
 <script>
     $(document).ready(function(){
-        $('#clothing_type_up, #clothing_type_down, #brand_up, #brand_down, #name_up, #name_down, #color_up, #color_down, #size_up, #size_down, #fits_up, #fits_down, #fit_index_up, #fit_index_down, #rec_size_up, #rec_size_down, #rec_fit_index_up, #rec_fit_index_down').click(function (event){
+        $('#control_number_up, #control_number_down, #clothing_type_up, #clothing_type_down, #brand_up, #brand_down, #name_up, #name_down, #color_up, #color_down, #size_up, #size_down, #fits_up, #fits_down, #fit_index_up, #fit_index_down, #rec_size_up, #rec_size_down, #rec_fit_index_up, #rec_fit_index_down').click(function (event){
             
             str = $(this).attr("data-id");
             val = str.split("|")

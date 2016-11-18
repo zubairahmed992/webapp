@@ -25,22 +25,19 @@ class EvaluationSheetController extends Controller {
     }
 
     #-------------------------------------------------- User Test Demo Products Ajax Call copy of Marathon
-    public function sampleAction() {
-        //$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        //$arr=$this->test_demo_data($decoded['user_id']);
+    public function sampleAction()
+    {
         $decoded = $this->get('request')->request->all();
-
         $arr=$arr=$this->test_demo_data(
             $decoded['user_id'],
             $decoded['sorting_col'],
             $decoded['sorting_order']
         );
-
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:sample.html.twig', $arr);
     }
     #-------------------------------------------------- User Test Demo Products Ajax Call copy of Marathon
-    public function cartAction() {
-        //$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+    public function cartAction()
+    {
         $decoded = $this->get('request')->request->all();
         $user = $this->get('user.helper.user')->find($decoded['user_id']);
         $cart=$user->getCart();
@@ -49,11 +46,6 @@ class EvaluationSheetController extends Controller {
         $algo = new FitAlgorithm2($user);
         $serial = 1;
         $arr=array();
-        //foreach ($cart as $c) {
-        //    $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
-        //}
-        //return new response(json_encode($arr));
-        //die;
         foreach ($cart as $c) {
             $p=$c->getProductItem()->getProduct();
             $algo->setProduct($p);
@@ -63,6 +55,7 @@ class EvaluationSheetController extends Controller {
                 if (is_array($fb) && array_key_exists('feedback', $fb)) {
                     $pa[$c->getId()] = array(
                         'product_id' => $p->getId(),
+                        'control_number' => $p->getControlNumber(),
                         'brand' => $p->getBrand()->getName(),
                         'name' => $p->getName(),
                         'fit_index'=>$fb["feedback"]['fit_index'],
@@ -94,8 +87,8 @@ class EvaluationSheetController extends Controller {
     }
 
     #-------------------------------------------------- Favourite products of user
-    public function favouriteAction() {
-        //$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+    public function favouriteAction()
+    {
         $decoded = $this->get('request')->request->all();
         $user = $this->get('user.helper.user')->find($decoded['user_id']);
         $favourite=$user->getProductItems();
@@ -104,11 +97,6 @@ class EvaluationSheetController extends Controller {
         $algo = new FitAlgorithm2($user);
         $serial = 1;
         $arr=array();
-        //foreach ($cart as $c) {
-        //    $arr[$c->getId()] = $c->getProductItem()->getProduct()->getId();
-        //}
-        //return new response(json_encode($arr));
-        //die;
         foreach ($favourite as $c) {
             $p=$c->getProduct();
             $algo->setProduct($p);
@@ -118,6 +106,7 @@ class EvaluationSheetController extends Controller {
             if (is_array($fb) && array_key_exists('feedback', $fb)) {
                 $pa[$c->getId()] = array(
                     'product_id' => $p->getId(),
+                    'control_number' => $p->getControlNumber(),
                     'brand' => $p->getBrand()->getName(),
                     'name' => $p->getName(),
                     'fit_index'=>$fb["feedback"]['fit_index'],
@@ -145,13 +134,13 @@ class EvaluationSheetController extends Controller {
                 uasort($pa, $this->make_comparer(array($decoded['sorting_col'], SORT_DESC)));
             }
         }
-
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:favourite.html.twig', array('products' => $pa,'user' => $user));
     }
 
     #--------------------------------------------------
 
-    public function onhandAction() {
+    public function onhandAction()
+    {
         $decoded = $this->get('request')->request->all();
 
         $arr=$arr=$this->test_demo_data_fit_index(
@@ -159,7 +148,6 @@ class EvaluationSheetController extends Controller {
             $decoded['sorting_col'],
             $decoded['sorting_order']
         );
-
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:onhandFitIndex.html.twig', $arr);
     }
 
@@ -168,12 +156,24 @@ class EvaluationSheetController extends Controller {
     private function test_demo_data($user_id, $sorting_col, $sorting_order)
     {
         $user = $this->get('user.helper.user')->find($user_id);
-        $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
-        $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
-        $products = $this->get('admin.helper.product')->listProductByIds($ids);
-        
-        $pa= array();
+        // $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
+        // $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
+        $ids= array (564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574,
+                575, 577, 578, 580, 581, 583, 584, 585, 586, 587, 588, 591,
+                592, 593, 594, 602, 603, 604, 605, 606);
 
+        $try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
+            '566'=>'S,M,L', '567'=>'S,M,L,XL', '568'=>'S,M,L,XL',
+            '569'=>'S,M,L,XL', '570'=>'S,M,L', '571'=>'XS,S,M,L,XL',
+            '572'=>'0,2,4,6,8,10,12,14,16', '573'=>'XS,S,M,L', '574'=>'XS,S,M,L',
+            '575'=>'S,M,L', '577'=>'XS,S,M,L', '578'=>'XS,S,M,L,XL', '580'=>'XS,S,M,L,XL',
+            '581'=>'XS,S,M,L,XL', '583'=>'SM,ML', '584'=>'SM,ML', '585'=>'SM,ML', '586'=>'SM,ML',
+            '587'=>'24,25,26,27,28,29,30,31,32', '588'=>'24,25,26,27,28,29,30,31,32', '591'=>'OS',
+            '592'=>'S,M,L', '593'=>'2,4,6,8,10,12,14,16', '594'=>'S,M,L', '602'=>'XS,S,M,L',
+            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');
+
+        $products = $this->get('admin.helper.product')->listProductByIds($ids);
+        $pa= array();
         $algo = new FitAlgorithm2($user);
         $serial = 1;
         foreach ($products as $p) {
@@ -182,6 +182,7 @@ class EvaluationSheetController extends Controller {
                 $fb = $algo->getFeedBack();
                 if (array_key_exists('recommendation', $fb)) {
                     $pa[$p->getId()] = array('name' => $p->getName(),
+                        'control_number' => $p->getControlNumber(),
                         'brand' => $p->getBrand()->getName(),
                         'fit_index'=>$fb['recommendation']['fit_index'],
                         'clothing_type' => $p->getClothingType()->getName(),
@@ -193,16 +194,24 @@ class EvaluationSheetController extends Controller {
                         'recommended_fit_index'=>'-',
                     );
                 }
-            }
-            else{
-                $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+            } else {
+                if (strpos($try_sizes[$p->getId()], ',') !== false) {
+                    $breakSizes = explode(",",$try_sizes[$p->getId()]);
+                    for ($i=0; $i <count($breakSizes) ; $i++) { 
+                        $fb = $algo->getFeedBackForSizeTitle($breakSizes[$i]);
+                    }
+                } else {
+                    $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+                }
+
                 if (is_array($fb) && array_key_exists('feedback', $fb)) {
                     $pa[$p->getId()] = array('name' => $p->getName(),
+                        'control_number' => $p->getControlNumber(),
                         'brand' => $p->getBrand()->getName(),
                         'fit_index'=>$fb["feedback"]['fit_index'],
                         'clothing_type' => $p->getClothingType()->getName(),
-                        #'size'=> $this->getEncodedSize($fb["feedback"]['title']),
-                        'size'=> $fb["feedback"]['title'],
+                        #'size'=> $fb["feedback"]['title'],
+                        'size'=> $try_sizes[$p->getId()],
                         'color'=> $p->getdisplayProductColor()->getTitle(),
                         'serial'=>$serial,
                         'fits'=>$fb["feedback"]['fits'],
@@ -214,9 +223,11 @@ class EvaluationSheetController extends Controller {
                             $pa[$p->getId()]['recommended_fit_index']=$fb["recommendation"]['fit_index'];
                     }
                 }
+                
             }
             $serial++;
         }
+        
         if ($sorting_col != "" && $sorting_order != "") {
             if ($sorting_order == "up") {
                 uasort($pa, $this->make_comparer(array($sorting_col, SORT_ASC)));
@@ -224,7 +235,6 @@ class EvaluationSheetController extends Controller {
                 uasort($pa, $this->make_comparer(array($sorting_col, SORT_DESC)));
             }
         }
-
         return array(
             'products' => $pa,
             'user' => $user,
@@ -233,9 +243,23 @@ class EvaluationSheetController extends Controller {
 
     private function test_demo_data_fit_index($user_id, $sorting_col, $sorting_order)
     {
+        // $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
+        // $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
+
         $user = $this->get('user.helper.user')->find($user_id);
-        $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
-        $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
+        $ids= array (564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574,
+                575, 577, 578, 580, 581, 583, 584, 585, 586, 587, 588, 591,
+                592, 593, 594, 602, 603, 604, 605, 606);
+
+        $try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
+            '566'=>'S,M,L', '567'=>'S,M,L,XL', '568'=>'S,M,L,XL',
+            '569'=>'S,M,L,XL', '570'=>'S,M,L', '571'=>'XS,S,M,L,XL',
+            '572'=>'0,2,4,6,8,10,12,14,16', '573'=>'XS,S,M,L', '574'=>'XS,S,M,L',
+            '575'=>'S,M,L', '577'=>'XS,S,M,L', '578'=>'XS,S,M,L,XL', '580'=>'XS,S,M,L,XL',
+            '581'=>'XS,S,M,L,XL', '583'=>'SM,ML', '584'=>'SM,ML', '585'=>'SM,ML', '586'=>'SM,ML',
+            '587'=>'24,25,26,27,28,29,30,31,32', '588'=>'24,25,26,27,28,29,30,31,32', '591'=>'OS',
+            '592'=>'S,M,L', '593'=>'2,4,6,8,10,12,14,16', '594'=>'S,M,L', '602'=>'XS,S,M,L',
+            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');
         $products = $this->get('admin.helper.product')->listProductByIds($ids);
         
         $pa     = array();
@@ -246,13 +270,23 @@ class EvaluationSheetController extends Controller {
         foreach ($products as $p) {
             $algo->setProduct($p);
             if ($try_sizes[$p->getId()] !='NA'){
-                $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+
+                if (strpos($try_sizes[$p->getId()], ',') !== false) {
+                    $breakSizes = explode(",",$try_sizes[$p->getId()]);
+                    for ($i=0; $i <count($breakSizes) ; $i++) { 
+                        $fb = $algo->getFeedBackForSizeTitle($breakSizes[$i]);
+                    }
+                } else {
+                    $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+                }
                 if (is_array($fb) && array_key_exists('feedback', $fb)) {
                     $pa[$p->getId()] = array('name' => $p->getName(),
+                        'control_number' => $p->getControlNumber(),
                         'brand' => $p->getBrand()->getName(),
                         'fit_index'=>$fb["feedback"]['fit_index'],
                         'clothing_type' => $p->getClothingType()->getName(),
-                        'size'=> $fb["feedback"]['title'],
+                        #'size'=> $fb["feedback"]['title'],
+                        'size'=> $try_sizes[$p->getId()],
                         'color'=> $p->getdisplayProductColor()->getTitle(),
                         'serial'=>$serial,
                         'fits'=>$fb["feedback"]['fits'],
@@ -269,9 +303,18 @@ class EvaluationSheetController extends Controller {
         }
 
         foreach ($pa as $res) {
-            if ($res['size'] == $res['recommended_size']) {
-                if ($res['fit_index'] > 0 && $res['recommended_fit_index'] > 0) {
-                    $result[] = $res;
+            if (strpos($res['size'], ',') !== false) {
+                $breakSizes = explode(",", $res['size']);
+                if (in_array($res['recommended_size'], $breakSizes)) {
+                    if ($res['fit_index'] > 0 && $res['recommended_fit_index'] > 0) {
+                        $result[] = $res;
+                    }
+                }
+            } else {
+                if ($res['size'] == $res['recommended_size']) {
+                    if ($res['fit_index'] > 0 && $res['recommended_fit_index'] > 0) {
+                        $result[] = $res;
+                    }
                 }
             }
         }
@@ -468,6 +511,5 @@ class EvaluationSheetController extends Controller {
             if(array_key_exists($size,$size_array)){
                 return $size_array[$size];
             }
-
     }
 }
