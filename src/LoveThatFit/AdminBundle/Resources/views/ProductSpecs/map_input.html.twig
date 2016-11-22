@@ -69,7 +69,7 @@
                                  </div>
                                     <span id="select_cell_div" hidden="true"></span>                                  
                                 <div id="pq-dialog-cont">
-                                    <div id="pq-grid-in-popup-dialog" title="Product sprecification file data" style="overflow:hidden;padding:0px;">
+                                    <div id="pq-grid-in-popup-dialog" title="Product sprecification file data" >
                                         <div id="grid_in_popup_grid"></div>
                                     </div>
                                 </div>      
@@ -312,7 +312,7 @@
                 $.each(result, function (k, fit_point_value) {
                     tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
                     $.each(size_specs.sizes[gender][size_type], function (k, v) {                    
-                    tableData += "<td>  <input type='text' name=" + v + "-" + fit_point_value + "  id=" + v + "-" + fit_point_value + " style='width: 40px'/> </td>";
+                    tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
                 });
                     tableData += "</tr>";
                 });
@@ -339,7 +339,7 @@
                 var tableData = "<table><tr><td class='span2'>"+ new_fit_point + "  </td>";
                       nfp =  new_fit_point.split(' ').join('_');
                 $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
-                    tableData += "<td>  <input type='text' name=" + size_label + "-" + nfp + "  id=" + size_label + "-" + nfp + " style='width: 40px'/> </td>";
+                    tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
                 });
                 
                 tableData += "</tr><table>";
@@ -388,7 +388,14 @@ $(function(){
         fill_clothing_type_list(this.value);
         sel_size_type(this.value);    
 });
-    //---------------------------------------
+   //---------------------------------------
+    
+    $(window).on('scroll', function(event) {
+		var scrollTop = $(window).scrollTop();
+                $("#pq-dialog-cont").css({top: scrollTop, left: 200});
+    });
+    
+   //---------------------------------------
     function fill_clothing_type_list(gender){        
         gender=gender=='m'?'man':'women';                
         $('#sel_clothing_type').empty();

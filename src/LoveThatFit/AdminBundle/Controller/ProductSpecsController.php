@@ -150,6 +150,52 @@ class ProductSpecsController extends Controller {
         
     }
     #-----------------------------------------------------
-    
-    
+
+    public function csvDataUploadAction(Request $request) {
+
+        #-------------- CSV to array
+        $csv_array = array();
+        $file = $request->files->get('csv_file');
+        $i = 0;
+        if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+            while (($row = fgetcsv($handle)) !== FALSE) {
+                for ($j = 0; $j < count($row); $j++) {
+                    $csv_array[$i][$j] = $row[$j];
+                }
+                $i++;
+            }
+        }
+        $mapping_id = $request->request->get('sel_mapping');
+        $product_specs_mapping = $this->get('admin.helper.product_specification_mapping')->find($mapping_id);
+        $map = json_decode($product_specs_mapping->getMappingJson(), true);
+        #-------------- use mapping to read csv array
+        $parsed_data = array();
+        foreach ($map as $k => $v) {
+            if (is_array($v) || is_object($v)) {                
+                foreach ($v as $size_key => $fit_points) {
+                    foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
+                        $coordins=$this->extracts_coordinates($fit_model_measurement);
+                        $parsed_data[$k][$size_key][$fit_pont_key] = $csv_array[$coordins['r']][$coordins['c']];
+                    }
+                }
+            } else {
+                $cdns=$this->extracts_coordinates($v);                
+                if(count($cdns)>1){
+                    $parsed_data[$k] = $csv_array[$cdns['r']][$cdns['c']];
+                }
+                
+            }
+        }
+        return new Response(json_encode($parsed_data));
+    }
+
+    private function extracts_coordinates($str) {
+        $cdns = explode(',', $str);
+        $c = array();
+        if (count($cdns) > 1) {
+            $c['r'] = intval($cdns[0]);
+            $c['c'] = intval($cdns[1]);
+        }
+        return $c;
+    }
 }
