@@ -16,7 +16,7 @@ class AlgoritumTestlType extends AbstractType
                     'class'         => 'LoveThatFitUserBundle:User',
                     'query_builder' => function ($repository) {
                             return $repository->createQueryBuilder('u')
-                            ->orderBy('u.email', 'ASC');
+                            ->orderBy('u.id', 'DESC');
                             },
                     'expanded'      => false,
                     'multiple'      => false,
@@ -29,8 +29,6 @@ class AlgoritumTestlType extends AbstractType
     {
         return 'algorithm';
     }
-
-    
 }
 
 ?>

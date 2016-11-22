@@ -1,6 +1,11 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 {% if products %}
-    <h4 id="heading"></h4>
+    <div width="100%">
+        <div width="50%" style="float:left"><h4 id="heading"></h4></div>
+        <div width="50%" style="float:right;font-size: 14px;font-weight: bold">
+            <a href="javascript:;" class="cart_print" target="_blank">Shopping Cart Report</a>
+        </div>
+    </div>
 <table class="table table-condensed table-bordered  table-hover" >
     <tr class="evaluation_tr">
         <th>Style Number
@@ -156,6 +161,25 @@
                         $('#summary_ajax').html(response);
                     }
                 });
+            } else {
+                $('#summary_ajax').html('');
+                $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+            }
+        });
+
+        $('a.cart_print').click(function (event){
+            event.preventDefault();
+            
+            if ($("#user_id").val() != "") {
+                $('#error_attribute').html('');
+                var ar = {
+                    user_id:$("#user_id").val()};
+
+                var compare_url = "evaluation_sheet/cart_print";
+                var form = $('<form action="' + compare_url + '" method="post" target="_blank">' +
+                        '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="sorting_col"  id="sorting_col" value="recommended_fit_index" /><input type="hidden" name="sorting_order"  id="sorting_order" value="down" />' +'</form>');
+                $('body').append(form);
+                form.submit();
             } else {
                 $('#summary_ajax').html('');
                 $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');

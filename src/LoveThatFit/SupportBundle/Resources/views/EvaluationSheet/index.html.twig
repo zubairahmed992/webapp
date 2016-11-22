@@ -37,7 +37,7 @@ $(document).ready(function(){
                 //data: JSON.stringify(ar),
                 data: {
                         user_id       : $("#user_id").val(),
-                        sorting_col   : "fit_index",
+                        sorting_col   : "recommended_fit_index",
                         sorting_order : "down"
                     },
                 traditional: true,
@@ -126,7 +126,7 @@ $(document).ready(function(){
                 success: function(response){
                     $(".ajax_loader").hide();
                     $('#summary_ajax').html(response);
-                    $('#heading').html('Favourite');
+                    $('#heading').html('Favorite');
                 },
                 failure: function(response) {
                     $(".ajax_loader").hide();
@@ -154,14 +154,14 @@ $(document).ready(function(){
                 url: compare_url,
                 data: {
                         user_id       : $("#user_id").val(),
-                        sorting_col   : "fit_index",
+                        sorting_col   : "recommended_fit_index",
                         sorting_order : "down"
                     },
                 traditional: true,
                 success: function(response){
                     $(".ajax_loader").hide();
                     $('#summary_ajax').html(response);
-                    $('#heading').html('On Hand Fit Index');
+                    $('#heading').html('Highest Fit Index');
                 },
                 failure: function(response) {
                     $(".ajax_loader").hide();
@@ -239,7 +239,7 @@ $(document).ready(function(){
            <a id='compare_with_product_ids' class='compare_with_product_ids' href="javascript:;">
            Try on Products </a> |
             <a id='cart' class='cart' href="javascript:;">Shopping cart items </a> |
-            <a id='favourite' class='favourite' href="javascript:;">Favourite items </a> |
+            <a id='favourite' class='favourite' href="javascript:;">Favorite items </a> |
             <a id='onhand_fit_index' class='onhand_fit_index' href="javascript:;">Highest Fit Index</a>
         {{ form_rest(userForm) }}
         </form>                 

@@ -1054,5 +1054,4 @@ class UserHelper {
     public function findByEventName($event_name) {
         return $this->repo->findByEventName($event_name);
     }
-
 }

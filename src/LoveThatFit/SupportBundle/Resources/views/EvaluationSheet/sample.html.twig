@@ -65,22 +65,22 @@
         </th>
         <th>Fits
             <span style="float: right;">
-                <a id="fits_up" href="javascript:;" data-id="fits|up" title="Asc">
+                <!--<a id="fits_up" href="javascript:;" data-id="fits|up" title="Asc">
                     <i class="icon-upload"></i>
                 </a>
                 <a id="fits_down" href="javascript:;" data-id="fits|down" title="Desc">
                     <i class="icon-download"></i>
-                </a>
+                </a>-->
             </span>
         </th>
         <th>Fit Index
             <span style="float: right;">
-                <a id="fit_index_up" href="javascript:;" data-id="fit_index|up" title="Asc">
+                <!--<a id="fit_index_up" href="javascript:;" data-id="fit_index|up" title="Asc">
                     <i class="icon-upload"></i>
                 </a>
                 <a id="fit_index_down" href="javascript:;" data-id="fit_index|down" title="Desc">
                     <i class="icon-download"></i>
-                </a>
+                </a>-->
             </span>
         </th>
         <th>Rec. Size
@@ -105,29 +105,48 @@
         </th>
     </tr>
     
-    {% for id, p in products %} 
+    {% for product in products %} 
     <tr>
-        <td width="10%">{{p.control_number}}</td>
-        <td width="10%">{{p.clothing_type}}</td>
-        <td width="12%">{{p.brand}}</td>
-        <td width="20%">{{p.name}}</td>
-        <td width="8%">{{p.color}}</td>
+        <td width="10%">{{product.control_number}}</td>
+        <td width="10%">{{product.clothing_type}}</td>
+        <td width="12%">{{product.brand}}</td>
+        <td width="20%">{{product.name}}</td>
+        <td width="8%">{{product.color}}</td>
         <td width="8%">
-            {%if ',' in p.size == true %}
-                {% set sizes = p.size|split(',') %}
+            {% if product.multiSizes is defined %}
                 <table class="table table-condensed table-bordered  table-hover">
-                    {% for s in sizes %}
-                        <tr><td>{{s}}</td></tr>
+                    {% for s in product.multiSizes %}
+                    <tr><td>{{s.size}}</td></tr>
                     {% endfor %}
                 </table>
             {% else %}
-                {{p.size}}
+                {{product.size}}
             {% endif %}
         </td>
-        <td width="6%">{{p.fits}}</td>
-        <td width="8%">{{p.fit_index}}</td>
-        <td width="8%">{{p.recommended_size}}</td>
-        <td width="12%">{{p.recommended_fit_index}}</td>
+        <td width="6%">
+            {% if product.multiSizes is defined %}
+                <table class="table table-condensed table-bordered  table-hover">
+                    {% for f in product.multiSizes %}
+                    <tr><td>{{(f.fits == "") ? "0":f.fits  }}</td></tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                {{product.fits}}
+            {% endif %}
+        </td>
+        <td width="8%">
+            {% if product.multiSizes is defined %}
+                <table class="table table-condensed table-bordered  table-hover">
+                    {% for fi in product.multiSizes %}
+                    <tr><td>{{fi.fit_index}}</td></tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                {{product.fit_index}}
+            {% endif %}
+        </td>
+        <td width="8%">{{product.recommended_size}}</td>
+        <td width="12%">{{product.recommended_fit_index}}</td>
     </tr>
     {% endfor %}
     <!--code copy from here-->

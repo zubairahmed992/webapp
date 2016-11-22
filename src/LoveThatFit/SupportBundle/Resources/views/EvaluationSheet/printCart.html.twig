@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style>
+
+body{
+	font-size:80%;
+font-family:Arial, Helvetica, sans-serif;	
+}
+
+.sur_tbl{
+border-top:1px solid #333;
+border-right:1px solid #333;
+}
+
+.sur_tbl td{
+border-bottom:1px solid #333;
+border-left:1px solid #333;
+padding:5px;
+}
+
+.tbl_hds{
+font-weight:bold;
+font-size:1.5em!important;
+background:#CCC;
+padding:20px!important;
+}
+
+.extrapadding{
+padding-top:30px!important;
+padding-bottom:30px!important;
+font-size:2em;	
+}
+.mar-top {
+  margin-top: 20px;
+}
+
+</style>
+</head>
+
+<body>
+<table cellspacing="0" cellpadding="0" width="100%" class="sur_tbl">
+  <col width="163" />
+  <col width="167" />
+  <col width="128" />
+  <col width="101" />
+  <col width="108" />
+  <col width="101" span="6" />
+  <tr>
+    <td colspan="2" width="330" class="tbl_hds">ID#:{{user.id}}</td>
+    <td colspan="5" width="539" align="center" class="tbl_hds">Member Fit Sheet</td>
+    <td colspan="4" width="404" class="tbl_hds">Date:{{ "now"|date("m-d-Y") }}</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#CCCCCC">Member Name: {{user.fullName}}</td>
+    <td colspan="4" bgcolor="#CCCCCC">Email: {{user.email}}</td>
+    <td colspan="4" bgcolor="#CCCCCC">Fit Liaison Name:</td>
+  </tr>
+  <tr>
+    <td colspan="3" rowspan="2" align="center" valign="middle" class="extrapadding">Measurements:</td>
+    <td rowspan="2" align="center" valign="top">Height
+        <div class="mar-top">{{user.measurement.height}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Weight
+        <div class="mar-top">{{user.measurement.weight}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Bra Size
+        <div class="mar-top">{{user.measurement.braSize}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Bust
+        <div class="mar-top">{{user.measurement.bust}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Waist
+        <div class="mar-top">{{user.measurement.waist}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Hip
+        <div class="mar-top">{{user.measurement.hip}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Thigh
+        <div class="mar-top">{{user.measurement.thigh}}</div>
+    </td>
+    <td rowspan="2" align="center" valign="top">Inseam
+        <div class="mar-top">{{user.measurement.inseam}}</div>
+    </td>
+  </tr>
+  <tr> </tr>
+  <tr>
+    <td align="center" bgcolor="#CCCCCC">Brand</td>
+    <td align="center" bgcolor="#CCCCCC">Style</td>
+    <td align="center" bgcolor="#CCCCCC">Size</td>
+    <td align="center" bgcolor="#CCCCCC">Fit Index</td>
+    <td width="108" align="center" bgcolor="#CCCCCC">Member    Fit Rating (1-10)</td>
+    <td width="101" align="center" bgcolor="#CCCCCC">Technical    Fit Rating (1-10)</td>
+    <td width="101" align="center" bgcolor="#CCCCCC">Best    Technical Fit for Sizes Tried</td>
+    <td colspan="4" align="center" bgcolor="#CCCCCC">Comments/Notes</td>
+  </tr>
+  {% for p in products %}
+  <tr>
+    <td rowspan="3">{{p.brand}}</td>
+    <td rowspan="3">{{p.control_number}}</td>
+    <td>{{p.recommended_size}}</td>
+    <td>{{p.recommended_fit_index}}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="4" rowspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  {% endfor %}
+</table>
+</body>
+</html>

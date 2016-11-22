@@ -1,5 +1,10 @@
 {% if products %}
-    <h4 id="heading"></h4>
+<div width="100%">
+    <div width="50%" style="float:left"><h4 id="heading"></h4></div>
+    <div width="50%" style="float:right;font-size: 14px;font-weight: bold">
+        <a href="javascript:;" class="onhand_print" target="_blank">Member Fit Report</a>
+    </div>
+</div>
 <table class="table table-condensed table-bordered  table-hover" >
     <tr class="evaluation_tr">
         <th>Style Number
@@ -64,22 +69,22 @@
         </th>
         <th>Fits
             <span style="float: right;">
-                <a id="fits_up" href="javascript:;" data-id="fits|up" title="Asc">
+                <!--<a id="fits_up" href="javascript:;" data-id="fits|up" title="Asc">
                     <i class="icon-upload"></i>
                 </a>
                 <a id="fits_down" href="javascript:;" data-id="fits|down" title="Desc">
                     <i class="icon-download"></i>
-                </a>
+                </a>-->
             </span>
         </th>
         <th>Fit Index
-            <span style="float: right;">
+            <!--<span style="float: right;">
                 <a id="fit_index_up" href="javascript:;" data-id="fit_index|up" title="Asc">
                     <i class="icon-upload"></i>
                 </a>
                 <a id="fit_index_down" href="javascript:;" data-id="fit_index|down" title="Desc">
                     <i class="icon-download"></i>
-                </a>
+                </a>-->
             </span>
         </th>
         <th>Rec. Size
@@ -110,18 +115,7 @@
         <td width="12%">{{p.brand}}</td>
         <td width="20%">{{p.name}}</td>
         <td width="8%">{{p.color}}</td>
-        <td width="8%">
-            {%if ',' in p.size == true %}
-                {% set sizes = p.size|split(',') %}
-                <table class="table table-condensed table-bordered  table-hover">
-                    {% for s in sizes %}
-                        <tr><td>{{s}}</td></tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                {{p.size}}
-            {% endif %}
-        </td>
+        <td width="8%">{{p.size}}</td>
         <td width="6%">{{p.fits}}</td>
         <td width="8%">{{p.fit_index}}</td>
         <td width="8%">{{p.recommended_size}}</td>
@@ -156,13 +150,33 @@
                     success: function(response){
                         $(".ajax_loader").hide();
                         $('#summary_ajax').html(response);
-                        $('#heading').html('On Hand Fit Index');
+                        $('#heading').html('Highest Fit Index');
                     },
                     failure: function(response) {
                         $(".ajax_loader").hide();
                         $('#summary_ajax').html(response);
                     }
                 });
+            } else {
+                $('#summary_ajax').html('');
+                $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+            }
+        });
+
+
+        $('a.onhand_print').click(function (event){
+            event.preventDefault();
+            
+            if ($("#user_id").val() != "") {
+                $('#error_attribute').html('');
+                var ar = {
+                    user_id:$("#user_id").val()};
+
+                var compare_url = "evaluation_sheet/onhand_print";
+                var form = $('<form action="' + compare_url + '" method="post" target="_blank">' +
+                        '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="sorting_col"  id="sorting_col" value="recommended_fit_index" /><input type="hidden" name="sorting_order"  id="sorting_order" value="down" />' +'</form>');
+                $('body').append(form);
+                form.submit();
             } else {
                 $('#summary_ajax').html('');
                 $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
