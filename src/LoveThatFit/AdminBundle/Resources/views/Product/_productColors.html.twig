@@ -78,7 +78,6 @@
         
 
         //For Pattern image Upload Request/////
-        $('.patternupload').live('change', function()	{ 
         $("#preview_pattern").html('');
           var val = $(this).val();
         flag=1;
@@ -112,7 +111,8 @@
         {%else %}
 
           //For Edit image Upload Request/////
-         $('#product_color_file').live('change', function()	{ 
+         $('#product_color_file').on('change', function()	{
+             //alert("test");return false;
                var val = $(this).val();
                flag=1;
          if( (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='gif') || (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='jpg')||(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='png'  ) )
@@ -143,7 +143,6 @@
         })
 
         //For Eidt Pattern image Upload Request/////
-        $('.patternupload').live('change', function()	{ 
           var val = $(this).val();
            flag=1;
          if( (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='gif') || (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='jpg')||(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='png'  ) )
