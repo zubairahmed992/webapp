@@ -1,0 +1,20 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="user-scalable=no, width=device-width, minimal-ui">
+        
+        <title>{{app_detail.name}}</title>
+        <link href="{{ asset('bundles/lovethatfit/site/css/mask_makeover/mask_makeover.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/mask_makeover/jquery-3.1.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/mask_makeover/paper_v0.10.2-full.min.js') }}"></script>
+    </head>
+    <body class="mask_makeover_hldr">
+        {% block mask_makeover_view %}
+        {% endblock %}
+    </body>
+</html>
