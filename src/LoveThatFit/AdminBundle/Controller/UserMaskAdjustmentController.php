@@ -224,6 +224,89 @@ class UserMaskAdjustmentController extends Controller {
                     'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                 ));
     }
+ #----------------------------------------------------------------------------    
+  
+    public function profileArchivesTestAction($user_id, $archive_id = null, $mode=null) {
+        $archive = null;
+        if ($archive_id) {
+            $archive = $this->get('user.helper.userarchives')->find($archive_id);
+            if ($archive) {
+                $user = $archive->getUser();
+            } else {
+                $user = $this->container->get('user.helper.user')->find($user_id);
+            }
+        } else {
+            $user = $this->container->get('user.helper.user')->find($user_id);
+        }
+
+        $default_archive_id = null;
+       
+  #find all archives associated with user
+        foreach ($user->getUserArchives() as $a) {
+            if ($a->getStatus() == -1) {#pick the pending one
+                $default_archive_id = $a->getId();
+            } elseif ($a->getStatus() == 1 && !$default_archive_id) {            #pick the active one
+                $default_archive_id = $a->getId();
+            }
+        }
+        
+        if ($default_archive_id && !$archive) {
+            $archive = $this->get('user.helper.userarchives')->find($default_archive_id);
+            $archive_id = $default_archive_id;
+        }
+
+        if (!$archive) {
+            return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:create_archive.html.twig', array(
+                    'user' => $user, #------>
+                    ));
+        
+        }
+
+        if (!$user) {
+            return new Response('Authentication error');
+        }
+
+        $measurement_archive = json_decode($archive->getMeasurementJson(), 1);
+        $image_actions_archive = json_decode($archive->getImageActions(), 1);
+
+        $device_type = $image_actions_archive['device_type'];
+        $device_type=$device_type?$device_type:$user->getImageDeviceType();
+        $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $edit_type = "registration";
+        
+        if ($archive->getSvgPaths() && !$mode) {
+            $edit_type = "edit";
+            $marker = $this->get('user.marker.helper')->arrayToObject($user, $archive->getMarkerArray());
+        } else {
+            $edit_type = "registration";
+            $marker = $this->get('user.marker.helper')->getDefaultObject($user);
+        }
+        $mode=$archive->getSvgPaths()?$mode:null;
+        $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
+        $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+
+        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
+                    'form' => $form->createView(), #------>
+                    'entity' => $user, #------>
+                    'user_image_spec' => $image_specs, #------->
+                    'measurement' => $measurement, #------>
+                    'edit_type' => $edit_type, #------>
+                    'marker' => $marker, #------->default marker
+                    'default_marker' => $default_marker, #-------->
+                    'user_pixcel_height' => $measurement->getHeight() * $image_actions_archive['height_per_inch'], #------>
+                    'top_bar' => $measurement->getIphoneHeadHeight(), #------>
+                    'bottom_bar' => $measurement->getIphoneFootHeight(), #------>
+                    'per_inch_pixcel' => $image_actions_archive['height_per_inch'], #------>
+                    'device_type' => $device_type, #------>
+                    'device_screen_height' => $device_screen_height['pixel_height'], #------>
+                    'archive' => $archive, #------>
+                    'mode' => $mode, #------>
+                    'archives' => $user->getUserArchives(), #------>
+                    'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
+                ));
+    }
 
     #----------------------------------------------------------------------------
      private function process_request(){

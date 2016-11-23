@@ -42,3 +42,9 @@ admin_user_create_archives_data:
 admin_archive_delete_with_images:
     pattern:  /admin/archive_delete_with_images/{archive_id}
     defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:deleteArchiveWithImages}    
+    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~> *
+    
+admin_user_profile_archives_test:
+    pattern:  /admin/user_profile_archives_test/{user_id}/{archive_id}/{mode}
+    defaults: { _controller: LoveThatFitAdminBundle:UserMaskAdjustment:profileArchivesTest,archive_id: null, mode: null }

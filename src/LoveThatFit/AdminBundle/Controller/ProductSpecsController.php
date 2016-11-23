@@ -187,6 +187,9 @@ class ProductSpecsController extends Controller {
             }
         }
         return new Response(json_encode($parsed_data));
+        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_data_input.html.twig', array(
+            
+        ));
     }
 
     private function extracts_coordinates($str) {
