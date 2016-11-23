@@ -91,17 +91,17 @@ font-size:2em;
     <td align="center" bgcolor="#CCCCCC">Style</td>
     <td align="center" bgcolor="#CCCCCC">Size</td>
     <td align="center" bgcolor="#CCCCCC">Fit Index</td>
-    <td width="108" align="center" bgcolor="#CCCCCC">Member    Fit Rating (1-10)</td>
-    <td width="101" align="center" bgcolor="#CCCCCC">Technical    Fit Rating (1-10)</td>
-    <td width="101" align="center" bgcolor="#CCCCCC">Best    Technical Fit for Sizes Tried</td>
+    <td width="108" align="center" bgcolor="#CCCCCC">Member<br>Fit Rating<br>(1-10)</td>
+    <td width="101" align="center" bgcolor="#CCCCCC">Technical<br>Fit Rating<br>(1-10)</td>
+    <td width="101" align="center" bgcolor="#CCCCCC">Best<br>Technical Fit for<br>Sizes Tried</td>
     <td colspan="4" align="center" bgcolor="#CCCCCC">Comments/Notes</td>
   </tr>
   {% for p in products %}
   <tr>
     <td rowspan="3">{{p.brand}}</td>
     <td rowspan="3">{{p.control_number}}</td>
-    <td>{{p.recommended_size}}</td>
-    <td>{{p.recommended_fit_index}}</td>
+    <td>{{p.size}}</td>
+    <td>{{p.fit_index}}</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
