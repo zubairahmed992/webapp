@@ -78,6 +78,7 @@
         
 
         //For Pattern image Upload Request/////
+        $('.patternupload').on('change', function()	{
         $("#preview_pattern").html('');
           var val = $(this).val();
         flag=1;
@@ -143,6 +144,7 @@
         })
 
         //For Eidt Pattern image Upload Request/////
+        $('.patternupload').on('change', function()	{
           var val = $(this).val();
            flag=1;
          if( (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='gif') || (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='jpg')||(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='png'  ) )
