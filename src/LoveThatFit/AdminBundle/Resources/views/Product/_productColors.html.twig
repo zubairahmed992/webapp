@@ -41,7 +41,7 @@
         $( document ).ready(function() { 
           {% if(color_id is not defined)%}  
              //For  image Upload Request/////
-         $('#product_color_file').live('change', function()	{
+         $('#product_color_file').on('change', function()	{
              var val = $(this).val();
 
     flag=1;
