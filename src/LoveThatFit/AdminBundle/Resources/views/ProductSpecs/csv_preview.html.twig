@@ -1,7 +1,60 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-    
 {% block body %}
-    
+<div>
+    <table>
+        <tr>
+            <td>
+                <table>
+                    {% for specs_k, specs_v in parsed_data %}
+                       {% if (specs_k!='sizes') %}
+                        <tr>
+                            <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>            
+                            <td>
+                                <span>{{specs_v}}</span>
+                            </td>
+                        </tr>
+                        {% endif%}
+                    {% endfor %}
+                    </table>
+                </td>
+            </tr>
+
+                <tr>
+                    <td>
+                        <table class="table table-bordered ">                           
+                            {% for sizes, fit_point in parsed_data.sizes %}            
+                                <tr class="Active">
+                                    <th>{{sizes}}</th>    
+                                    <th>garment_dimension</th>                     
+                                    <th>garment_stretch</th>                     
+                                    <th>min_calc</th>                     
+                                    <th>min_actual</th>                     
+                                    <th>ideal_low</th>                     
+                                    <th>fit_model</th>                     
+                                    <th>ideal_high</th>                     
+                                    <th>max_calc</th>                     
+                                    <th>max_actual</th>         
+                                </tr>   
+                                {% for measurement_k, measurement_v in fit_point %}            
+                                 <tr>
+                                    <th>{{measurement_k}}</th>    
+                                    <td>{{measurement_v.garment_dimension}}</td>                     
+                                    <td>{{measurement_v.garment_stretch}}</td>
+                                    <td>{{measurement_v.min_calc}}</td>
+                                    <td>{{measurement_v.min_actual}}</td>
+                                    <td>{{measurement_v.ideal_low}}</td>
+                                    <td>{{measurement_v.fit_model}}</td>                                    
+                                    <td>{{measurement_v.ideal_high}}</td>
+                                    <td>{{measurement_v.max_calc}}</td>
+                                    <td>{{measurement_v.max_actual}}</td>                              
+                                </tr>   
+                                {% endfor %}    
+                            {% endfor %}    
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
 
 {% endblock %}
-     

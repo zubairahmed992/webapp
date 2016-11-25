@@ -170,28 +170,45 @@ class ProductSpecsController extends Controller {
         $map = json_decode($product_specs_mapping->getMappingJson(), true);
         #-------------- use mapping to read csv array
         $parsed_data = array();
-        foreach ($map as $k => $v) {
-            if (is_array($v) || is_object($v)) {                
-                foreach ($v as $size_key => $fit_points) {
+        $previous_key=null;
+        foreach ($map as $specs_k => $specs_v) {
+            if (is_array($specs_v) || is_object($specs_v)) {                
+                $previous_size_key=null;
+                foreach ($specs_v as $size_key => $fit_points) {                    
                     foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
                         $coordins=$this->extracts_coordinates($fit_model_measurement);
-                        $parsed_data[$k][$size_key][$fit_pont_key] = $csv_array[$coordins['r']][$coordins['c']];
+                        #$parsed_data[$k][$size_key][$fit_pont_key] = $csv_array[$coordins['r']][$coordins['c']];
+                        $fmm_value =  intval($csv_array[$coordins['r']][$coordins['c']]);                        
+                        $grade_rule = 0;
+                        if($previous_size_key!=null){                            
+                            #$grade_rule = $fmm_value - $sizes[$previous_size_key][$fit_pont_key]['fit_model'];
+                            $grade_rule = 1;
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value, $grade_rule);
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule'] = $grade_rule;
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['prev_size'] = $previous_size_key;
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule_ps'] = $fmm_value - $parsed_data[$specs_k][$previous_size_key][$fit_pont_key]['fit_model'];
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_prev'] = $parsed_data[$specs_k][$previous_size_key][$fit_pont_key]['fit_model'];
+                        }else{
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value);    
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule'] = 1;    
+                        }
                     }
+                    $previous_size_key=$size_key;                    
                 }
             } else {
-                $cdns=$this->extracts_coordinates($v);                
+                $cdns=$this->extracts_coordinates($specs_v);                
                 if(count($cdns)>1){
-                    $parsed_data[$k] = $csv_array[$cdns['r']][$cdns['c']];
+                    $parsed_data[$specs_k] = $csv_array[$cdns['r']][$cdns['c']];
                 }
                 
             }
         }
-        return new Response(json_encode($parsed_data));
-        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_data_input.html.twig', array(
-            
+        #return new Response(json_encode($parsed_data));
+        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
+            'parsed_data'=>$parsed_data,
         ));
     }
-
+#----------------------------------------------------------------    
     private function extracts_coordinates($str) {
         $cdns = explode(',', $str);
         $c = array();
@@ -200,5 +217,25 @@ class ProductSpecsController extends Controller {
             $c['c'] = intval($cdns[1]);
         }
         return $c;
+    }
+#----------------------------------------------------------------    
+    private function ranges_calculations($fit_model, $grade_rule=0) {        
+        $fit_model=  intval($fit_model);
+        $grade_rule=$grade_rule==0?$grade_rule:1;
+        $max_calc = $fit_model + (2.5 * $grade_rule);        
+        $min_calc = $fit_model - (2.5 * $grade_rule);                
+        return array(
+        'garment_dimension' => 0,
+        'garment_stretch' => 0,        
+        'min_calc' => $min_calc,
+        'min_actual' => $min_calc,
+        'ideal_low' => $fit_model - $grade_rule,
+        'fit_model' => $fit_model ,
+        'ideal_high' => $fit_model + $grade_rule,        
+        'max_calc' => $max_calc,        
+        'max_actual' => $max_calc,            
+        );
+        #$grade_rule = $medium_size - $small_size;
+        #$range_configuration = $max_actual - $min_actual; # next_Size
     }
 }
