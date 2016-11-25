@@ -170,7 +170,7 @@ class ProductSpecsController extends Controller {
         $map = json_decode($product_specs_mapping->getMappingJson(), true);
         #-------------- use mapping to read csv array
         $parsed_data = array();
-        $previous_key=null;
+        
         foreach ($map as $specs_k => $specs_v) {
             if (is_array($specs_v) || is_object($specs_v)) {                
                 $previous_size_key=null;
@@ -179,6 +179,17 @@ class ProductSpecsController extends Controller {
                         $coordins=$this->extracts_coordinates($fit_model_measurement);
                         #$parsed_data[$k][$size_key][$fit_pont_key] = $csv_array[$coordins['r']][$coordins['c']];
                         $fmm_value =  intval($csv_array[$coordins['r']][$coordins['c']]);                        
+                        #----------------------*                            
+                            $raw_value = $csv_array[$coordins['r']][$coordins['c']];                            
+                            $converted_number=0;
+                            if (strpos($raw_value, '/')){
+                               $raw_exploded = explode(' ', $raw_value);
+                               $frac = explode('/', $raw_exploded[1]);
+                               $converted_number = intval($raw_exploded[0]) + (intval($frac[0])/intval($frac[1]));
+                            }else{
+                                $converted_number = $fmm_value;
+                            }
+                        #----------------------*
                         $grade_rule = 0;
                         if($previous_size_key!=null){                            
                             #$grade_rule = $fmm_value - $sizes[$previous_size_key][$fit_pont_key]['fit_model'];
@@ -192,6 +203,7 @@ class ProductSpecsController extends Controller {
                             $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value);    
                             $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule'] = 1;    
                         }
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['frac'] =$converted_number;
                     }
                     $previous_size_key=$size_key;                    
                 }
