@@ -272,6 +272,8 @@ class UserMarkerHelper {
       if(array_key_exists($gender,$mask_type_array['mask_type'])){
           if(array_key_exists($body_type, $mask_type_array['mask_type'][$gender])){
               return $mask_type_array['mask_type'][$gender][$body_type];
+          }else{
+              return $mask_type_array['mask_type'][$gender]['regular'];
           }
       }
     }    
