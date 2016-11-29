@@ -8,7 +8,11 @@
   <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
   <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
    <h1 style="float:left;">Product Brand CSV Format Configure</h1>
-    <div class="btn_wrapper"><a href="{{ path('admin_products') }}" class="btn">back to list</a></div>
+    
+     <div class="btn-group" role="group" aria-label="..." style="float:right;">
+            <a href="{{ path('admin_products') }}" class="btn btn-default">Products</a>
+           <a href="{{ path('admin_product_specs_csv_data_input') }}" class="btn btn-default">Specs</a>
+        </div>
     <div class="clearfix"></div>
 
     <div id="detail_wrapper">

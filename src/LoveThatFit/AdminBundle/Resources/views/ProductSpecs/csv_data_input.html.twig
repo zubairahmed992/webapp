@@ -1,7 +1,4 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-{% block breadcrumb %}
-    <li><a href="{{ path('admin_products') }}">Products</a> <span class="divider">/</span>Import CSV</li>
-{% endblock %}
 {% block body %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
@@ -35,7 +32,12 @@
             {{mapping_json}}
         </span>
         <h1 style="float:left;">Upload Product CSV File </h1>
-        <div class="btn_wrapper"><a href="{{ path('admin_products') }}" class="btn">back to list</a></div>
+        
+        <div class="btn-group" role="group" aria-label="..." style="float:right;">
+            <a href="{{ path('admin_products') }}" class="btn btn-default">Products</a>
+           <a href="{{ path('admin_product_specs_map') }}" class="btn btn-default">Mapping</a>
+        </div>
+        
         <div class="clearfix"></div>
 
         <div id="detail_wrapper">
