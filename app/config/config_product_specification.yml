@@ -860,7 +860,33 @@ constants:
       size_title_type: selection
       retailer_reference: text
       control_number: text
-    
+ 
+ fit_points:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    chest: Chest
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+    outseam: Outseam
+    inseam: inseam
+    thigh: Thigh
+    knee: Knee 
+    calf: Calf
+    ankle: Ankle
+    outseam: Outseam
+    inseam: inseam
+    hem_length: hem_length   
         
  clothing_type_target:
   Blouse : top

@@ -193,17 +193,15 @@ class ProductSpecsController extends Controller {
                         $grade_rule = 0;
                         if($previous_size_key!=null){                            
                             #$grade_rule = $fmm_value - $sizes[$previous_size_key][$fit_pont_key]['fit_model'];
-                            $grade_rule = 1;
                             $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value, $grade_rule);
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule'] = $grade_rule;
                             $parsed_data[$specs_k][$size_key][$fit_pont_key]['prev_size'] = $previous_size_key;
                             $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule_ps'] = $fmm_value - $parsed_data[$specs_k][$previous_size_key][$fit_pont_key]['fit_model'];
                             $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_prev'] = $parsed_data[$specs_k][$previous_size_key][$fit_pont_key]['fit_model'];
                         }else{
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value);    
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule'] = 1;    
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value);                                
                         }
                         $parsed_data[$specs_k][$size_key][$fit_pont_key]['frac'] =$converted_number;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['raw_frac'] =$raw_value;
                     }
                     $previous_size_key=$size_key;                    
                 }
@@ -233,7 +231,7 @@ class ProductSpecsController extends Controller {
 #----------------------------------------------------------------    
     private function ranges_calculations($fit_model, $grade_rule=0) {        
         $fit_model=  intval($fit_model);
-        $grade_rule=$grade_rule==0?$grade_rule:1;
+        $grade_rule=$grade_rule==0?1:$grade_rule;
         $max_calc = $fit_model + (2.5 * $grade_rule);        
         $min_calc = $fit_model - (2.5 * $grade_rule);                
         return array(
@@ -245,7 +243,8 @@ class ProductSpecsController extends Controller {
         'fit_model' => $fit_model ,
         'ideal_high' => $fit_model + $grade_rule,        
         'max_calc' => $max_calc,        
-        'max_actual' => $max_calc,            
+        'max_actual' => $max_calc,
+        'grade_rule' => $grade_rule,
         );
         #$grade_rule = $medium_size - $small_size;
         #$range_configuration = $max_actual - $min_actual; # next_Size
