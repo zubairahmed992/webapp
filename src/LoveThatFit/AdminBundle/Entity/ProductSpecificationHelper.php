@@ -17,6 +17,11 @@ class ProductSpecificationHelper {
 public function getProductSpecification(){
     return $this->conf["constants"]["product_specification"];
 }
+#------------------------------------------
+public function getFitPoints(){
+    return $this->conf["constants"]["fit_points"];
+}
+
 #--------------Reading Garment Type------------------------#
 public function getWomenClothingType(){
     return $this->conf["constants"]["product_specification"]["women"]["clothing_type"];

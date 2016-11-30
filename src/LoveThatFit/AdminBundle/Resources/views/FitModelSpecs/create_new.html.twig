@@ -1,16 +1,63 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block body %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-         alert();
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+         
         
-    });
-                    
-    </script>
-    <div>
-    I was lost!
-    </div>
+});
+</script>   
 
+<div class="container">
+  <h2>Fit Model Measurements</h2>
+  <form class="form-horizontal" >
+    <div class="form-group">
+      <label class="control-label col-sm-2" for=""> Brand: </label>
+      <div class="col-sm-4">
+             <select name="sel_brand" id="sel_brand" class="sel_brand">
+                <option>Select Brand</option>
+                {% for k, v in brands %}
+                    <option value="{{ v.name }}"> {{ v.name }}</option>
+                {% endfor %}
+            </select>
+      </div>
+    </div>
+      <br>
+       <div class="form-group">
+      <label class="control-label col-sm-2" for=""> Gender: </label>
+      <div class="col-sm-4">
+             <select name="sel_gender" id="sel_gender" class="sel_gender">
+                <option>Select Gender</option>               
+                <option value="man"> man</option>
+                <option value="woman"> woman</option>
+               
+            </select>
+      </div>
+    </div>
+      <br>
+         <div class="form-group">
+      <label class="control-label col-sm-2" for="title">title : </label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="txt_title" placeholder="Enter Title">
+      </div>
+    </div>
+      <br>
+     {% for k, v in fit_points %}            
+      <div class="form-group">
+      <label class="control-label col-sm-2" for="{{k}}">{{v}} : </label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="txt_{{k}}" placeholder="Enter {{v}}">
+      </div>
+    </div>
+      <br>
+    {% endfor %}    
+          
+    <div class="form-group">        
+      <div class="col-sm-offset-5 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+    
 {% endblock %}
-     
