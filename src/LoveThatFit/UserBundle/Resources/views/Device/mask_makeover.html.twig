@@ -2,11 +2,20 @@
 
 {% block mask_makeover_view %}
 <script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_makeover/mask_makeover.js?time='~ date().timestamp) }}" canvas="canv_mask_makeover"></script>
-
 <h1>Masked Marker Makeover</h1>
-<div style="display: none">
-    
-    <input type="text" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
+<div id="action_bar">
+    <ul class="action_buttons">
+        <li><a href="#">Move Left</a></li>
+        <li><a href="#">Move Right</a></li>
+        <li><a href="#">Move Up</a></li>
+        <li><a onClick="set_img('user_image')">Move Down</a></li>
+        <li><a href="#">Rotate Left</a></li>
+        <li><a href="#">Rotate Right</a></li>
+    </ul>
+</div>
+{{entity.id}}
+<div style="display: none">    
+    <input type="text" id="hdn_user_cropped_image_url" value="http://dev.selfiestyler.com/uploads/ltf/users/2817/test_image.png?rand=5832d1b42daf3"/>
     <input id="img_path_json" type="text" value="{{marker.markerJson}}" />
     <input id="dv_edit_type" type="text" value="{{ edit_type }}" />
     <input id="marker_update_url" type="text" value="{{ path('admin_archive_save_marker')}}" />{#path('user_maker_save')#}

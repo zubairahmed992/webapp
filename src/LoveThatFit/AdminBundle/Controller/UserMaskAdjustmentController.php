@@ -204,7 +204,7 @@ class UserMaskAdjustmentController extends Controller {
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
 
-        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending_test.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
                     'entity' => $user, #------>
                     'user_image_spec' => $image_specs, #------->
@@ -287,7 +287,7 @@ class UserMaskAdjustmentController extends Controller {
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
 
-        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending_test.html.twig', array(
                     'form' => $form->createView(), #------>
                     'entity' => $user, #------>
                     'user_image_spec' => $image_specs, #------->

@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base_pending.html.twig' %}
+{% extends 'LoveThatFitAdminBundle::base_makeover_pending.html.twig' %}
 
 
 
@@ -166,11 +166,11 @@
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
-<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas></div>
 {% endif %}
 {% if (device_type == "iphone6")%}
 <div class="txt_center">
-    <canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas>
+    <canvas id="canv_mask_makeover" width="960" height="1280" style="width:960px; height: 1280px; position: relative;"></canvas>
 </div>
 {% endif %}
 </div>
@@ -228,7 +228,7 @@
     </tr>
 </table>-->
 
-                <div>
+<div style="display:none;">
                     <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
                     <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
                     {% if (archives is defined)%}
@@ -310,7 +310,7 @@ var path = new CompoundPath({
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/paper.js') }}"></script>
 
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/admin/js/main_admin_mask_marker.js?grrhy6edd662ssdwsw5erssg') }}" canvas="canv_mask"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/mask_makeover/mask_makeover.js?time='~ date().timestamp) }}"></script>
 
 <script>
     function me_triggered(){

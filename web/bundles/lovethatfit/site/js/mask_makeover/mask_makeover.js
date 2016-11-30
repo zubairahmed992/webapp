@@ -1,27 +1,27 @@
 paper.install(window);
+var tool_1, tool_2;
 $(document).ready(function() {
    paper.setup('canv_mask_makeover');
    
+    tool_1 = new Tool();
+    tool_1.onMouseDown = onMouseDown;
+    tool_1.onMouseDrag = onMouseDrag;
+    tool_1.onMouseUp = onMouseUp;
+
+   
 //   lyr_user_img = new Layer();
 //   project.addLayer(lyr_user_img);
-      
+   
    init();
    
-   lyr_default_mask = new Layer();
-   project.addLayer(lyr_default_mask);
+
    load_user_masks();
    
-   
-    lyr_cle = new Layer();
-    project.addLayer(lyr_cle);
-    lyr_cle.activate();
+
    
     full_mask.insertAbove(set_circle_in());
     full_mask.insertAbove(set_circle_out());
    
-   lyr_action_bar = new Layer();
-   project.addLayer(lyr_action_bar);
-   lyr_action_bar.activate();
    
    set_action_bar();
    
@@ -31,22 +31,46 @@ $(document).ready(function() {
 });
 
 function set_action_bar(){
-    scr1_but_save_icon_url = "../../../../../bundles/lovethatfit/site/images/scr1_save_btn.png";
+    scr1_but_save_icon_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/scr1_save_btn.png";
     scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
-    scr1_but_save_icon.position = new Point(60, 18);
+    scr1_but_save_icon.position = new Point(920, 1250);
+    
+    but_move_left_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
+    but_move_left = new Raster(but_move_left_url);
+    but_move_left.position = new Point(50, 30);
+
+    but_move_right_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
+    but_move_right = new Raster(but_move_right_url);
+    but_move_right.position = new Point(100, 30);
+
+    but_move_up_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_up.png";
+    but_move_up = new Raster(but_move_up_url);
+    but_move_up.position = new Point(150, 30);
+
+    but_move_down_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_down.png";
+    but_move_down = new Raster(but_move_down_url);
+    but_move_down.position = new Point(200, 30);
+
+    but_rotate_left_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/rotate_left.png";
+    but_rotate_left = new Raster(but_rotate_left_url);
+    but_rotate_left.position = new Point(250, 30);
+
+    but_rotate_right_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
+    but_rotate_right = new Raster(but_rotate_right_url);
+    but_rotate_right.position = new Point(300, 30);
 }
 
 function set_circle_in(){
-    circle_in = new Path.Circle({
-        center: new Point(10, 10),
+    circle_in = new paper.Path.Circle({
+        center: new paper.Point(10, 10),
         radius: 2,
         fillColor: 'red'
     });
     return circle_in;
 }
 function set_circle_out(){
-    circle_out = new Path.Circle({
-        center: new Point(10, 10),
+    circle_out = new paper.Path.Circle({
+        center: new paper.Point(10, 10),
         radius: 2,
         fillColor: 'blue'
     });
@@ -61,21 +85,39 @@ var maskConfig = {
     dv_px_per_inch_ratio: 15.29166666666667,
     globle_pivot:64,
     user_gender: $('#user_gender').attr('value'),
-    default_user_mask: function(){return "M500,1000c-2.38736,11.35776 -2.26905,16.3611 -1.54415,18.50617c-3.62453,-1.27388 -1.11636,8.25141 -0.74665,9.86215c2.14331,9.22043 3.38085,8.82214 3.6237,8.25683c0.83243,2.34254 5.2947,13.40318 6.51375,15.78702c0.18243,4.26174 1.30028,16.64583 -1.38671,19.04644c-6.85278,6.08027 -9.6741,10.29194 -32.15949,17.59704c-12.56263,4.56762 -14.44599,5.79914 -19.37536,39.35227c-0.26097,4.57537 -6.37872,23.93648 -9.2276,44.1107c-3.39256,31.76558 -11.66357,36.79734 -12.34619,96.76628c-5.99618,16.68041 5.20711,34.14104 20.40719,45.79435c1.65399,1.47393 18.40491,1.79477 4.1907,-26.28728c1.35437,-2.67553 -9.23922,-17.32562 -12.46989,-30.50836c0.50139,-1.77981 13.19708,-27.59342 24.21807,-88.22705c2.81264,-24.87607 7.05409,-17.80689 8.15474,-27.5681c0.37937,-2.16572 -5.67212,-21.09574 -3.67138,-21.09574c0.96292,0.07486 2.31106,8.95043 2.72546,14.55832c3.4566,23.70544 7.94507,32.24829 8.09368,51.23382c-0.61013,11.13834 -1.55372,10.27283 -3.96041,17.66957c-2.68215,7.34124 -4.52648,8.17862 -7.59042,25.42434c-1.84489,21.13833 -5.22165,14.2581 -6.01301,34.20258c1.52351,22.32702 -3.04196,17.09033 0.94261,49.31022c6.6631,34.99221 13.00829,36.12566 14.89547,66.39279c-0.00846,13.94423 1.49898,2.0413 0.18327,22.32651c-1.53197,24.22687 -3.85558,24.63368 -3.08959,36.94523c3.74535,30.02448 6.54301,36.59262 8.65974,53.47438c0.9605,10.55884 4.91049,12.31929 4.49487,31.22737c-1.05836,12.05213 -4.46645,14.47082 -6.72816,20.10194c-1.48485,5.51109 -3.90519,21.63114 18.91366,21.58765c2.81626,0.04646 9.46291,9.88861 11.97108,-15.60635c0.32138,-7.07666 -7.26873,-35.38836 -8.64726,-40.58066c2.06478,-33.89387 3.47161,-41.53116 5.64754,-67.7224c0.23439,-8.63835 3.71881,-30.64942 3.44456,-37.42535c3.77555,-17.28831 -0.7482,-45.82158 1.1728,-89.20175c0.00604,-9.4734 2.9687,-21.75362 5.94202,-21.75362c2.85372,0 4.43338,7.567 4.95531,20.69812c1.03541,43.41889 0.41295,71.18319 3.96258,88.07011c-0.1184,6.63267 4.02671,29.88509 4.0545,38.49117c2.51543,26.29708 2.77951,33.85435 5.23211,67.86567c-1.60446,5.02839 -5.60116,33.71228 -6.05181,40.91026c2.28708,25.45147 8.90185,14.8245 11.03549,14.74965c21.18298,0.07128 19.25092,-17.85405 17.07983,-23.0799c-2.12398,-5.68146 -3.66274,-7.30278 -4.05056,-19.12259c-0.68141,-18.79063 1.85583,-19.10271 2.90815,-29.68995c1.85455,-17.0418 2.40223,-17.06863 5.95185,-46.80917c0.85901,-12.57613 -0.13857,-20.02296 -1.74786,-44.20207c-1.58875,-19.7754 -0.4724,-6.56427 -0.76961,-20.10323c1.76031,-30.36264 9.67093,-31.75035 15.92084,-66.5709c4.52583,-31.94498 -0.08435,-25.80973 1.05013,-47.77021c-0.92063,-20.11226 -8.63569,-21.28753 -10.22927,-42.18838c-3.17509,-17.19538 -2.85028,-9.41221 -5.77527,-16.44499c-2.6145,-7.55291 -0.93708,-9.72482 -1.67648,-20.61149c-0.38662,-19.33271 4.52593,-23.43751 8.07555,-46.76737c0.72007,-5.82601 2.25288,-13.51573 3.02974,-13.51573c1.55492,-0.00129 -4.67017,24.78805 -4.49136,27.00539c1.01245,9.82704 0.91682,-4.50801 4.10762,20.54874c9.57601,60.64267 25.92811,77.09065 26.47662,78.78915c-3.55204,12.91816 -11.91348,38.0215 -11.12816,40.93709c-10.20789,27.67162 3.53271,15.32574 5.65427,13.86601c18.06467,-11.98501 20.67922,-20.64865 17.03777,-37.31099c-0.33104,-60.25289 -9.41998,-65.52988 -12.52258,-96.75209c-3.76347,-20.20777 -7.11143,-44.56759 -7.7433,-49.16103c-4.32407,-33.72221 -8.2013,-32.56472 -22.40101,-36.8626c-23.75519,-7.3335 -21.2397,-8.23747 -28.80289,-14.14221c-3.61366,-2.651 -2.57258,-16.24469 -2.78522,-20.33219c1.34229,-2.12054 6.27332,-15.93777 6.55362,-16.96771c2.29433,2.31414 3.89154,-9.23644 4.3591,-10.64971c3.23187,-10.02451 -0.29842,-9.17707 -0.72611,-8.8828c4.11868,-7.42771 -1.97389,-15.71732 -2.39071,-17.55134c-4.61041,-17.13214 -24.65407,-17.56709 -24.65407,-17.56709c-20.93409,0 -24.35565,16.36937 -24.73743,17.56709z"},
+    dv_edit_type : $('#dv_edit_type').attr('value'),
+    default_user_mask: function(){
+        if(this.dv_edit_type == "edit"){
+            default_mask_ratio = this.default_user_mask_height_px / this.user_height_inch;
+            required_mask_ratio = 1;
+            image_actions_count = JSON.parse($('#image_actions').attr('value'));
+            alert(image_actions_count.move_up_down);
+            return $('#img_path_paper').attr('value');
+        }else{
+            image_actions_count = {
+                move_up_down: 0,
+                move_left_right: 0,
+                img_rotate: 0
+            };
+            default_mask_ratio = this.default_user_mask_height_px / this.user_height_inch;
+            required_mask_ratio = this.dv_px_per_inch_ratio / default_mask_ratio;
+            return "M101.981,17.702c0,0,16.212-1.743,19.603,15.583c0.009,1.918,0.591,4.187-0.328,14.223c0.353-0.227,4.353-1.519,2.602,6.979c-0.386,1.092-1.204,7.784-3.599,7.163c-0.232,0.796-1.149,7.858-2.257,9.497c0.175,3.158-0.109,11.927,1.122,13.392c6.244,4.563,15.563,10.799,38.178,16.299c11.723,3.321,13.953,20.679,12.016,46.907c0.271,3.717-0.938,27.021,0.25,38.299c-0.091,20.908-2.881,36.976-5.639,58.339c2.09,12.8,6.088,28.382-9.13,37.033c-1.752,1.128-12.064,7.058-7.76-12.266c-0.649-2.253-2.682-19.773,6.588-24.794c-1.603-15.352-7.945-36.479-8.09-52.304c-0.131-9.101,1.919-34.793,2.253-40.301c-0.149-1.713-0.469-15.521-1.753-15.52c-0.64,0-1.658,3.007-2.253,7.509c-2.93,18.029-5.742,32.704-6.258,39.551c0.193,6.076,1.263,9.599,2.504,19.024c0.913,4.851,1.551,10.408,2.753,17.022c1.315,16.151,1.994,8.238,2.754,23.78c0.132,16.513,0.29,21.971-1.002,36.046c-2.335,26.526-2.323,37.381-4.005,52.066c0.397,7.333,0.281,9.988,0.751,15.27c1.1,16.243,1.602,23.199,1.502,29.788c-1.249,17.258-2.744,27.257-4.506,37.297c-0.716,6.73-1.191,11.331-2.002,18.523c-0.215,4.554,2.111,12.407,3.254,15.27c1.105,2.969,15.524,21.59,0.25,19.775c-8.555,0.745-17.71,1.656-19.828-19.66c-0.315-4.494-0.442-14.59,0.804-17.638c0.212-13.266-2.656-37.211-3.003-53.567c1.603-11.838,1.428-14.517,0-31.541c-2.07-8.744-6.422-41.502-8.261-65.583c-0.923-8.426-2.794-22.779-6.258-22.779c-3.316,0-5.085,14.539-5.758,22.779c-1.586,33.524-4.893,52.225-8.01,65.583c-3.362,11.495-0.975,21.611-0.5,31.541c0.637,14.314-2.502,34.992-3.254,53.567c2.302,5.388,1.266,12.054,1.001,17.522c-2.812,25.174-17.2,19.812-19.525,19.775c-14.499,0-2.601-11.707,0-19.775c1.867-4.351,3.266-10.718,3.504-15.27c-0.609-4.773-1.71-10.112-2.503-18.272c-1.473-10.711-3.62-20.224-4.005-37.548c-0.633-9.515-0.013-11.065,1.252-29.788c-0.082-4.662,0.744-10.585,1.001-15.27c-1.725-18.468-3.678-35.371-4.005-52.317c-1.537-19.225-0.578-23.548-1.252-36.045c1.071-10.49,2.398-18.042,3.004-23.53c1.027-4.149,1.374-10.431,2.253-17.022c1.486-6.384,2.25-10.417,2.753-19.024c-1.207-14.005-2.904-21.231-5.757-39.551c-0.342-4.334-0.957-7.451-1.752-7.509c-1.652,0-1.439,13.846-1.752,15.52c-0.909,7.543,3.824,21.077,1.502,40.301c-0.754,15.4-7.596,42.013-7.76,52.317c8.675,5.266,7.376,22.713,6.258,24.782c4.142,19.615-6.896,13.404-8.26,12.266c-10.879-4.833-13.711-24.156-8.761-37.047c-1.438-12.051-5.054-34.861-5.507-58.324c0.601-12.921,0.201-21.329-0.25-38.299c-0.103-23.176-1.944-41.611,12.266-47.06c19.647-3.392,32.891-11.322,38.549-16.021c1.006-1.289,0.901-10.224,0.751-13.517c-1.006-1.842-1.007-7.354-1.752-9.512c-0.433,0.554-2.352,0-4.005-7.259c-0.537-2.463,0.846-7.278,2.503-6.758c-0.599-1.657-0.975-9.218,0-14.519C85.942,31.674,89.597,17.794,101.981,17.702z"
+        }
+    },
     default_user_mask_height_px: 430,
     adjusted_user_mask: function(){return},
     user_img_url: $("#hdn_user_cropped_image_url").attr('value'),
-    user_height_inch: 72,
-    user_height_px: 72 * 15.29166666666667, 
+    user_height_inch: parseInt($('#user_height_frm_3').attr('value')),
+    user_height_px: parseInt($('#user_height_frm_3').attr('value')) * 15.29166666666667, 
     head_percent: 12,
     neck_percent: 4,
     torso_percent: 42,
     inseam_percent:42,
     arm_percent:46,
-    toe_shape_px: 42
+    toe_shape_px: 42,
+    curr_path_prefix: $("#hdn_serverpath").attr("value")
 }
-var default_mask_ratio = maskConfig.default_user_mask_height_px / maskConfig.user_height_inch;
-var required_mask_ratio = maskConfig.dv_px_per_inch_ratio / default_mask_ratio;
+
 
 var active_items = {
     segment: -1,
@@ -169,7 +211,6 @@ function getPathArrayJson(){
     return JSON.stringify(mp_array);
 }
 
-
 function onMouseDown(event) {
     var hitResult = paper.project.hitTest(event.point, hitOptions);
     
@@ -190,9 +231,11 @@ function onMouseDown(event) {
                 
                 active_items.segment = full_mask.segments[i];
                 //active_items.segment.selected = true;                
-                circle_in.position = new Point(full_mask.segments[i].point + full_mask.segments[i].handleIn);
-                circle_out.position = new Point(full_mask.segments[i].point + full_mask.segments[i].handleOut);
+                
+                //circle_in.position = new paper.Point(paper.full_mask.segments[i].point + paper.full_mask.segments[i].handleIn);
+                //circle_out.position = new paper.Point(paper.full_mask.segments[i].point + paper.full_mask.segments[i].handleOut);
                 console.log(active_items.segment);
+                
             }
         }
         if(hitResult.item == circle_in){
@@ -207,34 +250,89 @@ function onMouseDown(event) {
         }
     }else {
         if(hitResult.type == 'stroke') {
-            alert(hitResult.location);
+            //alert(hitResult.location);
             var hit_location = hitResult.location;
             full_mask.insert(hit_location.index + 1, event.point);}
         }
         
         
     if(hitResult.item == scr1_but_save_icon){
-        upload();
-    }    
+      
+                    $("#img_path_json").attr("value", getPathArrayJson());
+
+                    $("#page_wrap").fadeIn(160);
+                    //image_export_layer = new Layer();
+                    //image_export_layer.activate();
+                    //image_export_layer.addChild(user_image);
+                    
+                    upload();
+                    
+                    //to_image();
+
+                    //show_loader();
+
+                    //setTimeout(function(){ to_image(); }, 500);
+                    //$("#me_button").trigger( "click" );
+                    //alert("Browser Support: " + supportsToDataURL());
+
+                    //
+                    //
+                    //
+                    //alert("Save Button Tap");
+                    //$("#scr1_but_save_mask").trigger( "click" );
+
+
+                    console.log("scr1_but_save_icon");
+
+                
+            }
+        
+       
+    
+    if(hitResult.item == but_move_left){
+        user_image.position.x -= 1;
+        //image_actions_count.move_left_right -= 1;
+    }
+    if(hitResult.item == but_move_right){
+        user_image.position.x += 1;
+        image_actions_count.move_left_right += 1;
+    }
+    if(hitResult.item == but_move_up){
+        user_image.position.y -= 1;
+        image_actions_count.move_up_down -= 1;
+    }
+    if(hitResult.item == but_move_down){
+        user_image.position.y += 1;
+        image_actions_count.move_up_down += 1;
+    }
+    if(hitResult.item == but_rotate_left){
+        user_image.rotate(-0.1);
+        image_actions_count.img_rotate += -0.1;
+    }
+    if(hitResult.item == but_rotate_right){
+        user_image.rotate(0.1);
+        image_actions_count.img_rotate += 0.1;
+
+    }
     
 }
 
 
 function onMouseDrag(event) {
     if(active_items.drag){
-        active_items.segment.point += event.delta;
-        circle_in.position += event.delta;
-        circle_out.position += event.delta;
+        active_items.segment.point = event.point;
+        circle_in.position = event.point;
+        circle_out.position = event.point;
     }
     if(active_items.cir_in){
         active_items.cir_out = false;
-        circle_in.position += event.delta;
-        active_items.segment.handleIn += new Point(event.delta);
+        circle_in.position = event.point;
+        active_items.segment.handleIn = new Point(event.point);
     }
     if(active_items.cir_out){
         active_items.cir_in = false;
-        circle_out.position += event.delta;
-        active_items.segment.handleOut += new Point(event.delta);
+        circle_out.position = event.point;
+        active_items.segment.handleOut = new Point(event.point);
     }
     
 }
@@ -245,22 +343,49 @@ function onMouseUp(event) {
 }
 
 function upload(){
-    $("#img_path_json").attr("value",getPathArrayJson());
+//    $("#img_path_json").attr("value",getPathArrayJson());
+//    
+//    var $url=$('#marker_update_url').attr('value');
+//    var value_ar = {
+//        auth_token:$('#user_auth_token').attr('value'),
+//        mask_x: $('#mask_x').attr('value'),
+//        mask_y: $('#mask_y').attr('value'),
+//        marker_json:$('#img_path_json').attr('value'),
+//        svg_path:$('#img_path_paper').attr('value')};
+//    
+//    
+//    if(old_account_img){
+//        $('#image_actions').attr('value',"");
+//    }else{
+//        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
+//    }
+    $('#img_path_paper').attr('value', full_mask.pathData);
     
     var $url=$('#marker_update_url').attr('value');
+
     var value_ar = {
+        archive_id:$('#hdn_archive_id').attr('value'),
         auth_token:$('#user_auth_token').attr('value'),
+        rect_x: $('#p_selected_pic_x').attr('value'),
+        rect_y: $('#p_selected_pic_y').attr('value'),
+        rect_height: $('#p_selected_pic_h').attr('value'),
+        rect_width:$('#p_selected_pic_w').attr('value'),
         mask_x: $('#mask_x').attr('value'),
         mask_y: $('#mask_y').attr('value'),
         marker_json:$('#img_path_json').attr('value'),
-        svg_path:$('#img_path_paper').attr('value')};
-
+        default_marker_json:$('#default_marker_json').attr('value'),
+        default_marker_svg:$('#default_marker_svg').attr('value'),
+        shoulder_height: 160,
+        hip_height: 337,
+        svg_path:$('#img_path_paper').attr('value'),
+        image_actions:$('#image_actions').attr('value')};
+console.log(value_ar);
     $.ajax({
         type: "POST",
         url: "$url",//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,
         success: function(data){
-            console.log(data);
+            alert(data);
         },
         failure: function(errMsg) {
             alert(errMsg);
