@@ -235,7 +235,7 @@ class ProductSpecsController extends Controller {
         $max_calc = $fit_model + (2.5 * $grade_rule);        
         $min_calc = $fit_model - (2.5 * $grade_rule);                
         return array(
-        'garment_dimension' => 0,
+        'garment_dimension' => $fit_model,
         'garment_stretch' => 0,        
         'min_calc' => $min_calc,
         'min_actual' => $min_calc,
