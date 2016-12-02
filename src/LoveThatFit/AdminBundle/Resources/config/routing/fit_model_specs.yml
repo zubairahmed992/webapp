@@ -2,3 +2,7 @@
 admin_fit_model_specs_create_new:
     pattern:  /admin/fit_model_specs/create_new
     defaults: { _controller: LoveThatFitAdminBundle:FitModelSpecs:createNew }
+
+admin_fit_model_specs_save:    
+    pattern:  /admin/fit_model_specs/save
+    defaults: { _controller: LoveThatFitAdminBundle:FitModelSpecs:save } 

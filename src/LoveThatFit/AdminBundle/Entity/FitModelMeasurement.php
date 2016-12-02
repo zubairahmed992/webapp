@@ -35,7 +35,7 @@ class FitModelMeasurement {
     protected $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $description;
     
@@ -45,12 +45,12 @@ class FitModelMeasurement {
     protected $size;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $size_title_type;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $clothing_type;
 
@@ -61,12 +61,12 @@ class FitModelMeasurement {
     protected $measurement_json;  
     
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated_at;
 
@@ -74,7 +74,7 @@ class FitModelMeasurement {
     /**
      * @var string $disabled
      *
-     * @ORM\Column(name="disabled", type="boolean")
+     * @ORM\Column(name="disabled", type="boolean", nullable=true)
      */
     private $disabled;
     
@@ -199,7 +199,7 @@ class FitModelMeasurement {
      * @return FitModelMeasurement
      */
     public function setClothingType($clothing_type) {
-        $this->description = $clothing_type;
+        $this->clothing_type = $clothing_type;
         return $this;
     }
 
