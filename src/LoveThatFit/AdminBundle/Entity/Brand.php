@@ -30,6 +30,13 @@ class Brand {
     private $brandspecification;
     
     /**
+     * Bidirectional (INVERSE SIDE)
+     * 
+     * @ORM\OneToOne(targetEntity="FitModelMeasurement", mappedBy="brand", cascade={"ALL"}, orphanRemoval=true)
+     * */
+    private $fit_model_measurement;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="Retailer", mappedBy="brands")
      **/
     private $retailers;
@@ -458,7 +465,7 @@ public function deleteImages()
     {
         return $this->dress_brand;
     }
-
+#---------------------------------------------------
     /**
      * Set brandspecification
      *
@@ -481,4 +488,25 @@ public function deleteImages()
     {
         return $this->brandspecification;
     }
+    #---------------------------------------------------
+    /**
+     * Set fit_model_measurement
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement
+     * @return Brand
+     */
+    public function setFitModelMeasurement(\LoveThatFit\AdminBundle\Entity\BrandSpecification $fit_model_measurement = null)   {
+        $this->fit_model_measurement = $fit_model_measurement;    
+        return $this;
+    }
+
+    /**
+     * Get fit_model_measurement
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\FitModelMeasurement 
+     */
+    public function getFitModelMeasurement(){
+        return $this->fit_model_measurement;
+    }
+    
 }
