@@ -3,85 +3,158 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-         
+    size_specs=jQuery.parseJSON( $('#size_specs_json').text());
+    product_specs = jQuery.parseJSON( $('#product_specs_json').text());
+    
+    //---------------------------------------
+    
+     $( "#sel_gender" ).change(function() {
+        fil_size();
+});
+   
+   $( "#sel_size_type" ).change(function() {
+        fil_size();
+});
+   //---------------------------------------
+    
+    function fill_clothing_type_list(gender){        
+        gender=gender=='m'?'man':'women';             
+        $('#sel_clothing_type').empty();
+        var option = '<option value="">Select </option>';
+        $.each(product_specs[gender].clothing_type, function(val, text) {
+            option += '<option value="'+ val + '">' + text + '</option>';
+                });
+         $('#sel_clothing_type').append(option);         
+    }
+    //---------------------------------------
+    function sel_size_type(gender){
+        gender=gender=='m'?'man':'woman';        
+        $('#sel_size_type').empty();
+        var option = '<option value="">Select Size</option>';
+        $.each(size_specs.size_title_type[gender], function(val, text) {
+            option += '<option value="'+ val + '">' + text + '</option>';
+                });
+         $('#sel_size_type').append(option);         
+    }
+    //---------------------------------------
+    function fil_size(){
+            
+        gender=$('#sel_gender').val()=='m'?'man':'woman';        
+        $('#sel_size').empty();        
+        var option = '<option value="">Select Size</option>';
+        $.each(size_specs.sizes[gender][$('#sel_size_type').val()], function(val, text) {
+            option += '<option value="'+ val + '">' + text + '</option>';
+                });
+         $('#sel_size').append(option);         
+    }
+    
         
 });
-</script>   
+    </script>   
 
-<div class="container">
-  <h2>Fit Model Measurements</h2>
-  <form action="{{ path('admin_fit_model_specs_save')}}" method="post" class="form-horizontal"  >
-    <div class="form-group">
-      <label class="control-label col-sm-2" for=""> Brand: </label>
-      <div class="col-sm-4">
-             <select name="sel_brand" id="sel_brand" class="sel_brand">
-                <option>Select Brand</option>
-                {% for k, v in brands %}
-                    <option value="{{ v.name }}"> {{ v.name }}</option>
-                {% endfor %}
-            </select>
-      </div>
+    <div class="container">
+        <h2>Fit Model Measurements</h2>
+        <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
+  <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
+        <form action="{{ path('admin_fit_model_specs_save')}}" method="post" class="form-horizontal"  >
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Brand: </label>
+                <div class="col-sm-4">
+                    <select name="sel_brand" id="sel_brand" class="sel_brand">
+                        <option>Select Brand</option>
+                        {% for k, v in brands %}
+                             <option value="{{ v.name }}"> {{ v.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Gender: </label>
+                <div class="col-sm-4">
+                    <select name="sel_gender" id="sel_gender" class="sel_gender">
+                        <option>Select Gender</option>               
+                        <option value="m"> man</option>
+                        <option value="f"> woman</option>               
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Size Title Type: </label>
+                <div class="col-sm-4">
+                    <select name="sel_size_type" id="sel_size_type" class="sel_size_type">
+                        <option>Size</option>               
+                        <option value="number"> number</option>
+                        <option value="letter"> letter</option>
+                        <option value="waist"> waist</option>
+                        <option value="chest"> chest</option>
+                        <option value="bra"> bra</option>
+                        <option value="shirt"> shirt</option>
+                        <option value="neck"> neck</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Clothing Type: </label>
+                <div class="col-sm-4">
+                    <select name="sel_clothing_type" id="sel_clothing_type" class="sel_clothing_type">
+                        <option>Clothing Type</option>               
+                        <option value="blouse"> Blouse </option>
+                        <option value="tunic"> Tunic </option>
+                        <option value="tee_knit"> Tee knit </option>
+                        <option value="tank_knit"> Tank knit </option>
+                        <option value="jacket"> Jacket </option>
+                        <option value="sweater"> Sweater </option>
+                        <option value="trouser"> Trouser </option>
+                        <option value="jean"> Jean </option>
+                        <option value="skirt"> Skirt </option>
+                        <option value="dress"> Dress </option>
+                        <option value="coat"> Coat </option>
+                        <option value="shirt"> Shirt </option>
+                        <option value="casual_jacket"> Casual Jacket </option>
+                        <option value="sport_jacket"> Sport Jacket </option>
+                        <option value="dress_jacket">  Dress Jacket </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Size: </label>
+                <div class="col-sm-4">
+                    <select name="sel_size" id="sel_size" class="sel_size">
+                        <option>Size</option>               
+                        <option value="S"> S</option>
+                        <option value="M"> M</option>
+
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="title">title : </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="txt_title" name="txt_title" placeholder="Enter Title">
+                </div>
+            </div>
+            <br>
+        {% for k, v in fit_points %}            
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="{{k}}">{{v}} : </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="{{k}}" name="{{k}}" placeholder="Enter {{v}}">
+                </div>
+            </div>
+            <br>
+        {% endfor %}    
+
+            <div class="form-group">        
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
-      <br>
-       <div class="form-group">
-      <label class="control-label col-sm-2" for=""> Gender: </label>
-      <div class="col-sm-4">
-             <select name="sel_gender" id="sel_gender" class="sel_gender">
-                <option>Select Gender</option>               
-                <option value="man"> man</option>
-                <option value="woman"> woman</option>
-               
-            </select>
-      </div>
-    </div>
-      <br>
-      <div class="form-group">
-      <label class="control-label col-sm-2" for=""> Size Title Type: </label>
-      <div class="col-sm-4">
-             <select name="sel_gender" id="sel_gender" class="sel_gender">
-                <option>Size</option>               
-                <option value="letter"> Letter</option>
-                <option value="number"> Number</option>
-               
-            </select>
-      </div>
-    </div>
-      <br>
-      <div class="form-group">
-      <label class="control-label col-sm-2" for=""> Size: </label>
-      <div class="col-sm-4">
-             <select name="sel_gender" id="sel_gender" class="sel_gender">
-                <option>Size</option>               
-                <option value="S"> S</option>
-                <option value="M"> M</option>
-               
-            </select>
-      </div>
-    </div>
-      <br>
-         <div class="form-group">
-      <label class="control-label col-sm-2" for="title">title : </label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="txt_title" placeholder="Enter Title">
-      </div>
-    </div>
-      <br>
-     {% for k, v in fit_points %}            
-      <div class="form-group">
-      <label class="control-label col-sm-2" for="{{k}}">{{v}} : </label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="txt_{{k}}" placeholder="Enter {{v}}">
-      </div>
-    </div>
-      <br>
-    {% endfor %}    
-          
-    <div class="form-group">        
-      <div class="col-sm-offset-5 col-sm-10">
-        <button type="submit" class="btn btn-default">Submit</button>
-      </div>
-    </div>
-  </form>
-</div>
-    
+
 {% endblock %}

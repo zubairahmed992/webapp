@@ -35,6 +35,12 @@ class FitModelMeasurement {
     protected $title;
 
     /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * @Assert\NotBlank(groups={"add", "edit"}, message = "Please enter Gender!")
+     */
+    protected $gender;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $description;
@@ -110,6 +116,27 @@ class FitModelMeasurement {
     public function getTitle() {
         return $this->title;
     }
+#------------------------------------------------------    
+    
+     /**
+     * Set gender
+     * @param string $gender
+     * @return User
+     */
+    public function setGender($gender) {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string 
+     */
+    public function getGender() {
+        return $this->gender;
+    }
+    
 #--------------------------------------------------------
   /**
      * Set size
