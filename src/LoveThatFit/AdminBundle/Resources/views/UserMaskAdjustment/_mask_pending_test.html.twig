@@ -133,7 +133,7 @@
 
 <input id="shoulder_height" type="hidden" value="" />
 <input id="hip_height" type="hidden" value="" />
-<input id="image_actions" type="hidden" value="{{marker.imageActions}}" />
+<input id="image_actions" type="text" value="{{marker.imageActions}}" />
 
 
 
@@ -169,7 +169,7 @@
 <div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas></div>
 {% endif %}
 {% if (device_type == "iphone6")%}
-<div class="txt_center">
+<div class="txt_center canv_hldr_2">
     <canvas id="canv_mask_makeover" width="960" height="1280" style="width:960px; height: 1280px; position: relative;"></canvas>
 </div>
 {% endif %}
