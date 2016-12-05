@@ -69,7 +69,7 @@
                 </span></div>
     {% endfor %}
      <div>
-        <a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
+        <!--<a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>-->
     </div>
     {%else%}
     <div>
@@ -133,7 +133,7 @@
 
 <input id="shoulder_height" type="hidden" value="" />
 <input id="hip_height" type="hidden" value="" />
-<input id="image_actions" type="text" value="{{marker.imageActions}}" />
+<input id="image_actions" type="hidden" value="{{marker.imageActions}}" />
 
 
 

@@ -420,7 +420,6 @@ function upload(){
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);
     
-    full_mask.closed = ture;
     $('#img_path_paper').attr('value', full_mask.pathData);
     
     
@@ -449,6 +448,7 @@ console.log(value_ar);
         data: value_ar,
         success: function(data){
             alert(data);
+            window.location.reload();
         },
         failure: function(errMsg) {
             alert(errMsg);
