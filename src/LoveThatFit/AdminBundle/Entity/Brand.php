@@ -34,7 +34,7 @@ class Brand {
      * 
      * @ORM\OneToOne(targetEntity="FitModelMeasurement", mappedBy="brand", cascade={"ALL"}, orphanRemoval=true)
      * */
-    private $fit_model_measurement;
+    private $fit_model_measurements;
     
     /**
      * @ORM\ManyToMany(targetEntity="Retailer", mappedBy="brands")
@@ -495,18 +495,26 @@ public function deleteImages()
      * @param \LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement
      * @return Brand
      */
-    public function setFitModelMeasurement(\LoveThatFit\AdminBundle\Entity\BrandSpecification $fit_model_measurement = null)   {
-        $this->fit_model_measurement = $fit_model_measurement;    
+    public function setFitModelMeasurements(\LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurements = null)   {
+        $this->fit_model_measurements[] = $fit_model_measurements;    
         return $this;
     }
 
     /**
-     * Get fit_model_measurement
+     * Get fit_model_measurements
      *
      * @return \LoveThatFit\AdminBundle\Entity\FitModelMeasurement 
      */
-    public function getFitModelMeasurement(){
-        return $this->fit_model_measurement;
+    public function getFitModelMeasurements(){
+        return $this->fit_model_measurements;
     }
-    
+     /**
+     * Remove fit_model_measurements
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurements
+     */
+    public function removeFitModelMeasurement(\LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurements)
+    {
+        $this->products->removeElement($fit_model_measurements);
+    }
 }

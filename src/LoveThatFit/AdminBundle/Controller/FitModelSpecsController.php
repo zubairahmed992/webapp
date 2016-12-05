@@ -18,7 +18,8 @@ class FitModelSpecsController extends Controller {
          ));        
     }
     public function saveAction(Request $request){        
-        
+        $decoded = $request->request->all();
+        return new Response(json_encode($decoded));
         $fmm = $this->get('admin.fit_model_measurement')->createNew();
         $brand = $this->get('admin.helper.brand')->find(11);        
         $fmm->setBrand($brand);
