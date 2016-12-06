@@ -7,44 +7,41 @@
             <a href="{{ path('admin_fit_model_specs_index') }}" class="btn btn-default">List</a>
             <a href="#" class="btn btn-default">Edit</a>
         </div>
-        
-  <div class="row">
-                <span>Brand: </span>
+        <div class="row">
+                <span><b>Brand</b> &nbsp;:&nbsp; </span>
                 <span>{{fit_model_measurement.brand?fit_model_measurement.brand.name:''}}</span>
             </div>
- <br>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=""> Gender: </label>
-                <div class="col-sm-4">{{fit_model_measurement.gender}}</div>
+        <br>
+        <div class="row">
+                <span><b>Gender</b> &nbsp;:&nbsp; </span>
+                <span>{{fit_model_measurement.gender}}</span>
+            </div>
+        <br>
+        <div class="row">
+                <span><b>Size Title Type</b> &nbsp;:&nbsp; </span>
+                <span>{{fit_model_measurement.SizeTitleType}}</span>
             </div>
             <br>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=""> Size Title Type: </label>
-                <div class="col-sm-4">{{fit_model_measurement.SizeTitleType}}</div>
+           <div class="row">
+                <span><b>Clothing Type</b> &nbsp;:&nbsp; </span>
+                <span>{{fit_model_measurement.ClothingType}}</span>
             </div>
             <br>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=""> Clothing Type: </label>
-                <div class="col-sm-4">{{fit_model_measurement.ClothingType}}</div>
+            <div class="row">
+                <span><b>Size</b> &nbsp;:&nbsp; </span>
+                <span>{{fit_model_measurement.Size}}</span>
             </div>
             <br>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=""> Size: </label>
-                <div class="col-sm-4">{{fit_model_measurement.Size}}</div>
-            </div>
-            <br>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="title">title :{{fit_points.shoulder_across_back}} </label>
-                <div class="col-sm-4">{{fit_model_measurement.title}}</div>
+            <div class="row">
+                <span><b>title :</b> &nbsp;:&nbsp; </span>
+                <span>{{fit_model_measurement.title}}</span>
             </div>
             <br>        
-    {% for k, v in fit_points %}              
+        {% for k, v in fit_points %}              
             <div class="row">
-                <span>{{k}}</span>
+                <span><b>{{k}}</b> &nbsp;:&nbsp; </span>
                 <span>{{v}}</span>
             </div>
-    {% endfor %}
-
-  
+        {% endfor %}
   </div>
 {% endblock %}
