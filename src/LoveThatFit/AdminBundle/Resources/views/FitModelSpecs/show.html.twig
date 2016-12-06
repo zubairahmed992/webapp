@@ -1,0 +1,50 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block body %}
+
+    <div class="container">
+        <h2>Fit Model Measurements</h2>
+        <div class="btn-group" role="group" aria-label="..." style="float:right;">
+            <a href="{{ path('admin_fit_model_specs_index') }}" class="btn btn-default">List</a>
+            <a href="#" class="btn btn-default">Edit</a>
+        </div>
+        
+  <div class="row">
+                <span>Brand: </span>
+                <span>{{fit_model_measurement.brand?fit_model_measurement.brand.name:''}}</span>
+            </div>
+ <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Gender: </label>
+                <div class="col-sm-4">{{fit_model_measurement.gender}}</div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Size Title Type: </label>
+                <div class="col-sm-4">{{fit_model_measurement.SizeTitleType}}</div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Clothing Type: </label>
+                <div class="col-sm-4">{{fit_model_measurement.ClothingType}}</div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Size: </label>
+                <div class="col-sm-4">{{fit_model_measurement.Size}}</div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="title">title :{{fit_points.shoulder_across_back}} </label>
+                <div class="col-sm-4">{{fit_model_measurement.title}}</div>
+            </div>
+            <br>        
+    {% for k, v in fit_points %}              
+            <div class="row">
+                <span>{{k}}</span>
+                <span>{{v}}</span>
+            </div>
+    {% endfor %}
+
+  
+  </div>
+{% endblock %}
