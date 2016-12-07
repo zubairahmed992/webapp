@@ -61,7 +61,8 @@ class ProductSpecsController extends Controller {
         $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
             'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
        return $this->render('LoveThatFitAdminBundle:ProductSpecs:map_input.html.twig', array(
-            'fit_points' => $fit_points,
+           'fit_model_measurement' => $this->get('admin.fit_model_measurement')->findAll(), 
+           'fit_points' => $fit_points,
             'brands' => $brands,
             'clothing_types' => $clothing_types,
             'product_specs' => $product_specs,
@@ -123,6 +124,7 @@ class ProductSpecsController extends Controller {
 
           $mapping = $this->container->get('admin.helper.product_specification_mapping')->createNew();
           $mapping->setBrand($decoded['brand_name']);
+          $mapping->setFitModelMeasurement($decoded['brand_name']);
           $mapping->setTitle($decoded['mapping_title']);
           $mapping->setDescription($decoded['mapping_description']);
           $mapping->setMappingJson(json_encode($apecs_arr));
