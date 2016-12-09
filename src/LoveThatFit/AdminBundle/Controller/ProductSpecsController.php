@@ -92,7 +92,7 @@ class ProductSpecsController extends Controller {
      public function mappingSaveAction(Request $request) {
         $decoded = $request->request->all();
         $apecs_arr=array();
-        #return new Response(json_encode($decoded));
+        #return new Response(json_encode($decoded['fit_model_measurement']));
         foreach ($decoded as $k => $v) {
             if(!in_array($k, array('select_size', 'fit_point'))){
             if (strlen($v) > 0) {
@@ -121,10 +121,10 @@ class ProductSpecsController extends Controller {
             
             }
         }
-
+          $fit_model_measurement = $this->get('admin.fit_model_measurement')->find($decoded['fit_model_measurement']);
           $mapping = $this->container->get('admin.helper.product_specification_mapping')->createNew();
           $mapping->setBrand($decoded['brand_name']);
-          $mapping->setFitModelMeasurement($decoded['brand_name']);
+          $mapping->setFitModelMeasurement($fit_model_measurement);
           $mapping->setTitle($decoded['mapping_title']);
           $mapping->setDescription($decoded['mapping_description']);
           $mapping->setMappingJson(json_encode($apecs_arr));

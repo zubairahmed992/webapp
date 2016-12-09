@@ -32,7 +32,7 @@ class Brand {
     /**
      * Bidirectional (INVERSE SIDE)
      * 
-     * @ORM\OneToOne(targetEntity="FitModelMeasurement", mappedBy="brand", cascade={"ALL"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="FitModelMeasurement", mappedBy="brand")
      * */
     private $fit_model_measurements;
     
@@ -495,8 +495,8 @@ public function deleteImages()
      * @param \LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement
      * @return Brand
      */
-    public function setFitModelMeasurements(\LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurements = null)   {
-        $this->fit_model_measurements[] = $fit_model_measurements;    
+    public function setFitModelMeasurement(\LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement = null)   {
+        $this->fit_model_measurements[] = $fit_model_measurement;    
         return $this;
     }
 

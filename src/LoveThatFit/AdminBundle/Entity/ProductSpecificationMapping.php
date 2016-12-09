@@ -13,6 +13,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ProductSpecificationMapping  {
     
+    /**     
+     * Bidirectional (OWNING SIDE - FK)
+     * 
+     * @ORM\ManyToOne(targetEntity="FitModelMeasurement", inversedBy="product_specification_mappings")
+     * @ORM\JoinColumn(name="fit_model_measurement_id", referencedColumnName="id", onDelete="CASCADE")
+     * */
+    private $fit_model_measurement;  
     
     /**
      * @ORM\Id
@@ -290,5 +297,26 @@ class ProductSpecificationMapping  {
       return 'uploads/ltf/products/product_csv';
     }
     
+    #--------------------------------------------------------
     
+      /**
+     * Set fit_model_measurement
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement
+     * @return FitModelMeasurement
+     */
+    public function setFitModelMeasurement(\LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement = null){
+        $this->fit_model_measurement = $fit_model_measurement;    
+        return $this;
+    }
+
+    /**
+     * Get fit_model_measurement
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\FitModelMeasurement
+     */
+    public function getFitModelMeasurement(){
+        return $this->fit_model_measurement;
+    }
+
 }
