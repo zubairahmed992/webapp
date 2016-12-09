@@ -26,6 +26,31 @@
 
 
     <div class="row">
+        
+        <style>
+             .navigation1{position: fixed !important; top: 60px; left: 30%; z-index: 2000 !important; background: #ccc;} 
+             .navigation1 a,
+             .navigation1 a:visited {
+                 display: inline-block !important;
+                 padding:0 8px;
+                 border-right: 1px solid #666;
+                 cursor: pointer;
+             }
+    </style>
+    <div class="navigation1">
+    <a onClick="move_left();">Move Left</a>
+    <a onClick="move_right();">Move Right</a>
+    <a onClick="move_up();">Move Up</a>
+    <a onClick="move_down();">Move Down</a>
+    <a onClick="rotate_left();">Rotate Left</a>
+    <a onClick="rotate_right();">Rotate Right</a>
+    <a onClick="zoom_in();">Zoom In</a>
+    <a onClick="zoom_out();">Zoom Out</a>
+    <a onClick="save();">Save</a>
+</div>
+        
+        
+        
 {% if (user_image_spec)%}
         <div class="span3 firstnav bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -3px 1px 15px #000;">
             <div style="padding-top:20px;">
@@ -162,7 +187,9 @@
 
 
 <div class="span8 maindiv">
-
+    
+    
+    
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
@@ -170,7 +197,7 @@
 {% endif %}
 {% if (device_type == "iphone6")%}
 <div class="txt_center canv_hldr_2">
-    <canvas id="canv_mask_makeover" width="960" height="1280" style="width:960px; height: 1280px; position: relative;"></canvas>
+    <canvas id="canv_mask_makeover" width="960" height="1280" style="margin-top: 50px; width:960px; height: 1280px; position: relative; border: 1px solid;"></canvas>
 </div>
 {% endif %}
 </div>

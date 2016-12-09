@@ -1,38 +1,42 @@
 paper.install(window);
-var tool_1;
+var dom_event_interaction_s1;
 $(document).ready(function() {
    paper.setup('canv_mask_makeover');
    
-    tool_1 = new Tool();
-    tool_1.onMouseDown = onMouseDown;
-    tool_1.onMouseDrag = onMouseDrag;
-    tool_1.onMouseUp = onMouseUp;
-    tool_1.onKeyDown = onKeyDown;
+   dom_event_interaction_s1 = new Tool();
+   dom_event_interaction_s1.onMouseDown = onMouseDown;
+   dom_event_interaction_s1.onMouseDrag = onMouseDrag;
+   dom_event_interaction_s1.onMouseUp = onMouseUp;
+   dom_event_interaction_s1.onKeyDown = onKeyDown;
+   dom_event_interaction_s1.onKeyUp = onKeyUp;
    
-//   lyr_user_img = new Layer();
-//   project.addLayer(lyr_user_img);
-   
+   lyr_user_img = new Layer();
+   lyr_user_img.activate();
    init();
    
-
+   lyr_path = new Layer();
+   lyr_path.activate();
+   
    load_user_masks();
+      
+full_mask.insertAbove(set_circle_in());
+   full_mask.insertAbove(set_circle_out());   
+   
+   lyr_misc = new Layer();
+   lyr_misc.activate();
+   
+   //set_action_bar();
    
 
+   group_view_level = new Group([lyr_user_img, lyr_path]);
    
-    full_mask.insertAbove(set_circle_in());
-    full_mask.insertAbove(set_circle_out());
+   lyr_user_img.position = new Point(0,0);
    
+        
+   //group_view_level.pivot = new Point(view.center);
+   //alert(group_view_level.pivot);
    
-   set_action_bar();
-   
-   console.log(project.layers);
-   
-   
-   
-   //paper.project.view.scale(5,5);
-
 });
-
 function set_action_bar(){
     scr1_but_save_icon_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/scr1_save_btn.png";
     scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
@@ -40,7 +44,7 @@ function set_action_bar(){
     
     but_move_left_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
     but_move_left = new Raster(but_move_left_url);
-    but_move_left.position = new Point(50, 30);
+    but_move_left.position = new Point(0,0);
 
     but_move_right_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
     but_move_right = new Raster(but_move_right_url);
@@ -61,26 +65,15 @@ function set_action_bar(){
     but_rotate_right_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
     but_rotate_right = new Raster(but_rotate_right_url);
     but_rotate_right.position = new Point(300, 30);
-    
-//    but_show_seg_numbers_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
-//    but_show_seg_numbers = new Raster(but_show_seg_numbers_url);
-//    but_show_seg_numbers.position = new Point(900, 30);
-    
-//    but_zoom_in_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
-//    but_zoom_in = new Raster(but_zoom_in_url);
-//    but_zoom_in.position = new Point(30, 60);
-//    
-//    but_zoom_out_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/zoom_out.png";
-//    but_zoom_out = new Raster(but_zoom_out_url);
-//    but_zoom_out.position = new Point(30, 90);
 }
-
+change_x_pos_diff = 0;
+change_y_pos_diff = 0;
 function set_circle_in(){
     circle_in = new paper.Path.Circle({
         center: new paper.Point(10, 10),
         radius: 2,
         fillColor: 'red',
-        opacity: 0
+        opacity: 1
     });
     return circle_in;
 }
@@ -89,7 +82,7 @@ function set_circle_out(){
         center: new paper.Point(10, 10),
         radius: 2,
         fillColor: 'blue',
-        opacity: 0
+        opacity: 1
     });
     return circle_out;
 }
@@ -139,7 +132,6 @@ var maskConfig = {
     curr_path_prefix: $("#hdn_serverpath").attr("value")
 }
 
-
 var active_items = {
     segment: -1,
     drag: false,
@@ -148,6 +140,12 @@ var active_items = {
 }
 var recent_items = {
     mask: []
+}
+current_status ={
+    control_indi: false,
+    min_zoom_level: 1,
+    max_zoom_level: 2,
+    zoom_level: 1
 }
 hitOptions = {
     segments: true,
@@ -159,7 +157,7 @@ function init(){
     var user_img_path = maskConfig.user_img_url;
     user_image = new Raster(user_img_path);
     user_image.on('load', function() {
-        user_image.position = new Point(maskConfig.dv_scr_w/2,maskConfig.dv_scr_h/2);
+        user_image.position = new Point(view.center);
         preset_user_image(parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
     });
 }
@@ -243,11 +241,84 @@ function show_index_numbers(){
         $("#i_note_" + a).css('z-index','1000');
         $("#i_note_" + a).css('background-color','#ffcc00');
         $("#i_note_" + a).css('font-size','10px');
-        $("#i_note_" + a).css('top',full_mask.segments[a].point.y);
+        $("#i_note_" + a).css('top',full_mask.segments[a].point.y + 50);
         $("#i_note_" + a).css('left', full_mask.segments[a].point.x + 100);
     }
 }
+function set_out_update(){
+    $('#image_actions').attr('value',JSON.stringify(image_actions_count));
+    view.update();
+}
+function move_left(){
+    user_image.position.x -= 1;
+    image_actions_count.move_left_right -= 1;
+    set_out_update();
+}
+function move_right(){
+    user_image.position.x += 1;
+    image_actions_count.move_left_right += 1;
+    set_out_update();
+}
+function move_up(){
+    user_image.position.y -= 1;
+    image_actions_count.move_up_down -= 1;
+    set_out_update();
+}
+function move_down(){
+    user_image.position.y += 1;
+    image_actions_count.move_up_down += 1;
+    set_out_update();
+}
+function rotate_left(){
+    user_image.rotate(-0.1);
+    image_actions_count.img_rotate += -0.1;
+    set_out_update();
+}
+function rotate_right(){
+    user_image.rotate(0.1);
+    image_actions_count.img_rotate += 0.1;
+    set_out_update();
+}
+function zoom_in(){
+    
+  if(current_status.zoom_level < 2){
+        current_status.zoom_level *= 2;
+        group_view_level.scale(2);
+        view.update();
+    }
+}
+function zoom_out(){
+    if(current_status.zoom_level > 1){
+        current_status.zoom_level /= 2;
+        group_view_level.scale(0.5);
+        group_view_level.position = new Point(view.center);
 
+        view.update();
+    }
+}
+function save(){
+    if(current_status.zoom_level > 1){
+        zoom_out();
+        
+        $("#img_path_json").attr("value", getPathArrayJson());
+        $("#page_wrap").fadeIn(160);
+        //image_export_layer = new Layer();
+        //image_export_layer.activate();
+        //image_export_layer.addChild(user_image);
+        upload();
+    }else{
+        $("#img_path_json").attr("value", getPathArrayJson());
+        $("#page_wrap").fadeIn(160);
+        //image_export_layer = new Layer();
+        //image_export_layer.activate();
+        //image_export_layer.addChild(user_image);
+        upload();
+    }
+}
+function chk(){
+    group_view_level.position = new Point(but_move_left.position);
+    view.update();
+}
 function getPathArrayJson(){
     var mp_array=[];
     for(var i = 0; i < full_mask.segments.length; i++) {
@@ -267,13 +338,30 @@ function onKeyDown(event) {
         }
     }
 }
+function onKeyUp(){
+}
 function onMouseDown(event) {
-    var hitResult = paper.project.hitTest(event.point, hitOptions);
-    if(hitResult.type == "segment"){
-        
-        if (event.modifiers.control) {
-            
+    //alert(event.modifiers);
+    
+    
+    if(event.modifiers.control && event.modifiers.space && event.modifiers.option){
+        if(current_status.zoom_level > current_status.min_zoom_level){
+            zoom_out();
         }
+    }else if(event.modifiers.control && event.modifiers.space){
+        if(current_status.zoom_level < current_status.max_zoom_level){
+            zoom_in();
+        }
+    }else if(event.modifiers.control && current_status.zoom_level != 1){
+        current_status.control_indi = true;
+    }else{
+        current_status.control_indi = false;
+    }
+   
+    var hitResult = paper.project.hitTest(event.point, hitOptions);
+     
+    
+    if(hitResult.type == "segment"){
         
         active_items.drag = true;
         
@@ -284,8 +372,8 @@ function onMouseDown(event) {
             if(full_mask.segments[i].point == hitResult.segment.point){
                 active_items.segment = full_mask.segments[i];
                 //active_items.segment.selected = true;
-                //circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
-                //circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
+                circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
+                circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
             }
         }
         if(hitResult.item == circle_in){
@@ -307,105 +395,40 @@ function onMouseDown(event) {
         
         
     if(hitResult.item == scr1_but_save_icon){
-      
-                    $("#img_path_json").attr("value", getPathArrayJson());
-
-                    $("#page_wrap").fadeIn(160);
-                    //image_export_layer = new Layer();
-                    //image_export_layer.activate();
-                    //image_export_layer.addChild(user_image);
-                    
-                    upload();
-                    
-                    //to_image();
-
-                    //show_loader();
-
-                    //setTimeout(function(){ to_image(); }, 500);
-                    //$("#me_button").trigger( "click" );
-                    //alert("Browser Support: " + supportsToDataURL());
-
-                    //
-                    //
-                    //
-                    //alert("Save Button Tap");
-                    //$("#scr1_but_save_mask").trigger( "click" );
-
-
-                    console.log("scr1_but_save_icon");
-
-                
-            }
         
-       
-    
-    if(hitResult.item == but_move_left){
-        user_image.position.x -= 1;
-        image_actions_count.move_left_right -= 1;
-        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
     }
-    if(hitResult.item == but_move_right){
-        user_image.position.x += 1;
-        image_actions_count.move_left_right += 1;
-        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-    }
-    if(hitResult.item == but_move_up){
-        user_image.position.y -= 1;
-        image_actions_count.move_up_down -= 1;
-        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-    }
-    if(hitResult.item == but_move_down){
-        user_image.position.y += 1;
-        image_actions_count.move_up_down += 1;
-        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-    }
-    if(hitResult.item == but_rotate_left){
-        user_image.rotate(-0.1);
-        image_actions_count.img_rotate += -0.1;
-        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-    }
-    if(hitResult.item == but_rotate_right){
-        user_image.rotate(0.1);
-        image_actions_count.img_rotate += 0.1;
-        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-    }
-    if(hitResult.item == but_show_seg_numbers){
-        
-        
-        for(a=0; a<full_mask.segments.length; a++){
-            $(".canv_hldr_2").prepend('<div id="i_note_'+a+'" class="index_note">' + a +'</div>');
-             $("#i_note_" + a).css('position','absolute');
-             $("#i_note_" + a).css('z-index','1000');
-             $("#i_note_" + a).css('background-color','#ffcc00');
-             $("#i_note_" + a).css('font-size','10px');
-             $("#i_note_" + a).css('top',full_mask.segments[a].point.y);
-             $("#i_note_" + a).css('left', full_mask.segments[a].point.x + 100);
-        }
-        //full_mask.segments[1].point.x += 20;
-    }
-    
-    //alert(active_items.segment.point.x + active_items.segment.handleIn.x);
-    
 }
+
 function onMouseDrag(event) {
-   
-    
     if(active_items.drag){
         active_items.segment.point = event.point;
-        //circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
-        //circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
+        circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
+        circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
     }
     if(active_items.cir_in){
         active_items.cir_out = false;
         circle_in.position = event.point;
-        //active_items.segment.handleIn.x = circle_in.position.x - active_items.segment.point.x;
-        //active_items.segment.handleIn.y = circle_in.position.y - active_items.segment.point.y;
+        active_items.segment.handleIn.x = circle_in.position.x - active_items.segment.point.x;
+        active_items.segment.handleIn.y = circle_in.position.y - active_items.segment.point.y;
     }
     if(active_items.cir_out){
         active_items.cir_in = false;
         circle_out.position = event.point;
-        //active_items.segment.handleOut.x = circle_out.position.x - active_items.segment.point.x;
-        //active_items.segment.handleOut.y = circle_out.position.y - active_items.segment.point.y;
+        active_items.segment.handleOut.x = circle_out.position.x - active_items.segment.point.x;
+        active_items.segment.handleOut.y = circle_out.position.y - active_items.segment.point.y;
+    }
+    
+    if(current_status.control_indi){
+        
+        
+        if(group_view_level.position.x + event.delta.x >= 0 && group_view_level.position.x + event.delta.x <= 960){
+            group_view_level.position.x += event.delta.x;
+            change_x_pos_diff += event.delta.x;
+        }
+        if(group_view_level.position.y + event.delta.y >= 0 && group_view_level.position.y + event.delta.y <= 1280){
+            group_view_level.position.y += event.delta.y;
+            change_y_pos_diff += event.delta.y;
+        }
     }
     
 }
@@ -417,33 +440,12 @@ function onMouseUp(event) {
 }
 
 function upload(){
-//    $("#img_path_json").attr("value",getPathArrayJson());
-//    
-//    var $url=$('#marker_update_url').attr('value');
-//    var value_ar = {
-//        auth_token:$('#user_auth_token').attr('value'),
-//        mask_x: $('#mask_x').attr('value'),
-//        mask_y: $('#mask_y').attr('value'),
-//        marker_json:$('#img_path_json').attr('value'),
-//        svg_path:$('#img_path_paper').attr('value')};
-//    
-//    
-//    if(old_account_img){
-//        $('#image_actions').attr('value',"");
-//    }else{
-//        $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-//    }
-    
-    $('#image_actions').attr('value',JSON.stringify(image_actions_count));
-    
+    $('#image_actions').attr('value',JSON.stringify(image_actions_count));    
     $("#mask_x").attr("value", full_mask.pivot);
-    $("#mask_y").attr("value", full_mask.position);
-    
-    $('#img_path_paper').attr('value', full_mask.pathData);
-    
+    $("#mask_y").attr("value", full_mask.position);    
+    $('#img_path_paper').attr('value', full_mask.pathData);    
     
     var $url=$('#marker_update_url').attr('value');
-
     var value_ar = {
         archive_id:$('#hdn_archive_id').attr('value'),
         auth_token:$('#user_auth_token').attr('value'),
@@ -460,7 +462,7 @@ function upload(){
         hip_height: 337,
         svg_path:$('#img_path_paper').attr('value'),
         image_actions:$('#image_actions').attr('value')};
-console.log(value_ar);
+    
     $.ajax({
         type: "POST",
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
