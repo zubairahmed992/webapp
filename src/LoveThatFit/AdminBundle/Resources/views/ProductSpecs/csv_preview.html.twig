@@ -35,7 +35,7 @@
                                     <th>max_calc</th>                     
                                     <th>max_actual</th>         
                                     <th>grade rule</th>     
-                                    <th>frac</th>     
+                                       
                                 </tr>   
                                 {% for measurement_k, measurement_v in fit_point %}            
                                  <tr>
@@ -50,7 +50,7 @@
                                     <td>{{measurement_v.max_calc}}</td>
                                     <td>{{measurement_v.max_actual}}</td>
                                     <td>{{measurement_v.grade_rule}}</td>
-                                    <td>{{measurement_v.frac}} ({{measurement_v.raw_frac }})</td>
+                                    
                                 </tr>   
                                 {% endfor %}    
                             {% endfor %}    
