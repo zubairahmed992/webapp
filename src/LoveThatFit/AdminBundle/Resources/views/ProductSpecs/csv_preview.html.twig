@@ -38,20 +38,22 @@
                                        
                                 </tr>   
                                 {% for measurement_k, measurement_v in fit_point %}            
+                                {% if (measurement_v.garment_dimension>0) %}
                                  <tr>
                                     <th>{{measurement_k}}</th>    
-                                    <td>{{measurement_v.garment_dimension}}</td>                     
-                                    <td>{{measurement_v.garment_stretch}}</td>
-                                    <td>{{measurement_v.min_calc}}</td>
-                                    <td>{{measurement_v.min_actual}}</td>
-                                    <td>{{measurement_v.ideal_low}}</td>
-                                    <td>{{measurement_v.fit_model}}</td>                                    
-                                    <td>{{measurement_v.ideal_high}}</td>
-                                    <td>{{measurement_v.max_calc}}</td>
-                                    <td>{{measurement_v.max_actual}}</td>
-                                    <td>{{measurement_v.grade_rule}}</td>
+                                    <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>                     
+                                    <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>                                    
+                                    <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+                                    <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
                                     
                                 </tr>   
+                                {% endif %}
                                 {% endfor %}    
                             {% endfor %}    
                             </table>
