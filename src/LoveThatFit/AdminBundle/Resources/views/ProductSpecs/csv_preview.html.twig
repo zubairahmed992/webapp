@@ -1,65 +1,120 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block body %}
-<div>
-    <table>
-        <tr>
-            <td>
-                <table>
+
+<script>
+$(document).ready(function(){
+    $("#dv_measurement_table").hide();
+  $('#a_measurement_table').click(function (event){ 
+         $("#dv_measurement_table").toggle('slow');
+    });
+    $('#a_validate_measurement_data').click(function (event){ 
+         $("#dv_validate_measurement_data").toggle('slow');
+    });
+
+});        
+
+    </script>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <table>
                     {% for specs_k, specs_v in parsed_data %}
                        {% if (specs_k!='sizes') %}
-                        <tr>
-                            <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>            
-                            <td>
-                                <span>{{specs_v}}</span>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>            
+                                <td>
+                                    <span>{{specs_v}}</span>
+                                </td>
+                            </tr>
                         {% endif%}
                     {% endfor %}
-                    </table>
-                </td>
-            </tr>
-
+                        </table>
+                    </td>
+                </tr>
                 <tr>
                     <td>
-                        <table class="table table-bordered ">                           
+                        <a href="#" id="a_measurement_table"> measurements chart</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="dv_measurement_table">
+                            <table class="table table-bordered ">                           
                             {% for sizes, fit_point in parsed_data.sizes %}            
-                                <tr class="Active">
-                                    <th>{{sizes}}</th>    
-                                    <th>garment_dimension</th>                     
-                                    <th>garment_stretch</th>                     
-                                    <th>min_calc</th>                     
-                                    <th>min_actual</th>                     
-                                    <th>ideal_low</th>                     
-                                    <th>fit_model</th>                     
-                                    <th>ideal_high</th>                     
-                                    <th>max_calc</th>                     
-                                    <th>max_actual</th>         
-                                    <th>grade rule</th>     
-                                       
-                                </tr>   
+                                    <tr class="Active">
+                                        <th>{{sizes}}</th>    
+                                        <th>garment_dimension</th>                     
+                                        <th>garment_stretch</th>                     
+                                        <th>min_calc</th>                     
+                                        <th>min_actual</th>                     
+                                        <th>ideal_low</th>                     
+                                        <th>fit_model</th>                     
+                                        <th>ideal_high</th>                     
+                                        <th>max_calc</th>                     
+                                        <th>max_actual</th>         
+                                        <th>grade rule</th>     
+                                    </tr>   
                                 {% for measurement_k, measurement_v in fit_point %}            
-                                {% if (measurement_v.garment_dimension>0) %}
-                                 <tr>
-                                    <th>{{measurement_k}}</th>    
-                                    <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>                     
-                                    <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>                                    
-                                    <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
-                                    <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
-                                    
-                                </tr>   
-                                {% endif %}
+                                    {% if (measurement_v.garment_dimension>0) %}
+                                        <tr>
+                                            <th>{{measurement_k}}</th>    
+                                            <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>                     
+                                            <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>                                    
+                                            <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+                                            <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                        </tr>   
+                                    {% endif %}
                                 {% endfor %}    
                             {% endfor %}    
-                            </table>
+                                </table>
+                            </div>
                         </td>
                     </tr>
-
+                    <tr>
+                    <td>
+                        <a href="#" id="a_validate_measurement_data"> validate measurements </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="dv_validate_measurement_data">
+                            <table class="table table-bordered ">                           
+                            {% for sizes, fit_point in parsed_data.sizes %}            
+                                    <tr class="Active">
+                                        <th>{{sizes}}</th>    
+                                        <th>Garment dimension</th>                     
+                                        <th>Prev</th>
+                                        <th>Fit_model</th>                     
+                                        <th>Ratio</th>
+                                        <th>Grade Rule</th>
+                                        
+                                    </tr>   
+                                {% for measurement_k, measurement_v in fit_point %}            
+                                    {% if (measurement_v.garment_dimension>0) %}
+                                        <tr>
+                                            <th>{{measurement_k}}</th>    
+                                            <td><span {{measurement_v.ratio > 1?'style="font-weight: bold;color: #E53935;"':''}}>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</span></td>
+                                            <td><span>{{measurement_v.prev_garment_dimension}}</span></td>
+                                            <td><span {{measurement_v.fit_model_size?'style="font-weight: bold;color: #1565C0;"':''}}>{{measurement_v.fit_model | number_format(2, '.', '')}}</span></td>    
+                                            <td><span {{measurement_v.ratio > 1?'style="font-weight: bold;color: #E53935;"':''}}>{{(measurement_v.ratio * 100)| number_format(2, '.', '')}}%</span></td>
+                                            <td><span>{{(measurement_v.grade_rule)| number_format(2, '.', '')}}</span></td>
+                                            
+                                            
+                                        </tr>   
+                                    {% endif %}
+                                {% endfor %}    
+                            {% endfor %}    
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
 

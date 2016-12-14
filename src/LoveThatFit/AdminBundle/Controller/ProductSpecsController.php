@@ -201,13 +201,15 @@ class ProductSpecsController extends Controller {
                         $parsed_data[$specs_k][$size_key][$fit_pont_key]['ideal_low']=0;
                         $parsed_data[$specs_k][$size_key][$fit_pont_key]['ideal_high']=0;
                         $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['prev_garment_dimension']=0;
                         $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_size']=false;
                         
                         if($size_key==$fit_model->getSize() && $fmm_value>0){
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['percentage'] = ($fit_model_fit_points[$fit_pont_key]/$fmm_value);                            
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_size']=true;
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['ratio'] = ($fit_model_fit_points[$fit_pont_key]/$fmm_value);                            
                             $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model'] = $fit_model_fit_points[$fit_pont_key];
-                            $fit_model_ratio[$fit_pont_key] = ($fit_model_fit_points[$fit_pont_key]/$fmm_value);
-                            
+                            $fit_model_ratio[$fit_pont_key] = ($fit_model_fit_points[$fit_pont_key]/$fmm_value);                            
                         }
                     }                    
                 }
@@ -218,21 +220,17 @@ class ProductSpecsController extends Controller {
                 }                
             }
         }
-        $str=array();
-        $pass_fit_model_size=false;
         $prev_size=null;
         #--------------------- caalculate fit model measrements & ratio
         foreach ($parsed_data['sizes'] as $size => $fps) {            
             foreach ($fps as $fpk => $fpv) {
                 if (array_key_exists($fpk, $fit_model_ratio) ){
-                    $str[$fpk]= $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
-                    $str[$fpk.'_raw']= $fpv['garment_dimension'] ;
                     $parsed_data['sizes'][$size][$fpk]['fit_model'] = $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
                     $parsed_data['sizes'][$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
                     if ($prev_size){
-                        $parsed_data['sizes'][$size][$fpk]['grade_rule'] = $parsed_data['sizes'][$size][$fpk]['fit_model']-$parsed_data['sizes'][$prev_size][$fpk]['fit_model'];    
-                    }
-                    
+                        $parsed_data['sizes'][$size][$fpk]['grade_rule'] = $parsed_data['sizes'][$prev_size][$fpk]['garment_dimension']>0?$parsed_data['sizes'][$size][$fpk]['garment_dimension'] - $parsed_data['sizes'][$prev_size][$fpk]['garment_dimension']:0;    
+                        $parsed_data['sizes'][$size][$fpk]['prev_garment_dimension'] = $parsed_data['sizes'][$prev_size][$fpk]['garment_dimension'];    
+                    }                    
                 }
             }
             $prev_size=$size;
@@ -248,10 +246,17 @@ class ProductSpecsController extends Controller {
                         if($prev_size_key && array_key_exists('fit_model', $parsed_data['sizes'][$size_key][$fit_point])                                
                                 && array_key_exists('fit_model', $parsed_data['sizes'][$prev_size_key][$fit_point])                                
                                 ){
-                            $parsed_data['sizes'][$size_key][$fit_point]['grade_rule']=$parsed_data['sizes'][$size_key][$fit_point]['fit_model']-$parsed_data['sizes'][$prev_size_key][$fit_point]['fit_model'];
+                                                #$parsed_data['sizes'][$size_key][$fit_point]['grade_rule']=$parsed_data['sizes'][$size_key][$fit_point]['fit_model']-$parsed_data['sizes'][$prev_size_key][$fit_point]['fit_model'];
+                            $grade_rule=$parsed_data['sizes'][$size_key][$fit_point]['fit_model']-$parsed_data['sizes'][$prev_size_key][$fit_point]['fit_model'];
+                            $fit_model=  $parsed_data['sizes'][$size_key][$fit_point]['fit_model'];
+                            $parsed_data['sizes'][$size_key][$fit_point]['max_calc'] = $fit_model + (2.5 * $grade_rule);        
+                            $parsed_data['sizes'][$size_key][$fit_point]['min_calc'] = $fit_model - (2.5 * $grade_rule);                
+                            $parsed_data['sizes'][$size_key][$fit_point]['ideal_high'] = $fit_model + $grade_rule;        
+                            $parsed_data['sizes'][$size_key][$fit_point]['ideal_low'] = $fit_model - $grade_rule;                
+                            $parsed_data['sizes'][$size_key][$fit_point]['max_actual'] = $parsed_data['sizes'][$size_key][$fit_point]['max_calc'];         
+                            $parsed_data['sizes'][$size_key][$fit_point]['min_actual'] = $parsed_data['sizes'][$size_key][$fit_point]['min_calc'];                
                         }
-                    }
-                    
+                    }                    
                 }
                 $prev_size_key=$size_key;
             }
