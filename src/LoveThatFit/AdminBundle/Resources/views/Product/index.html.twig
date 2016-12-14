@@ -341,28 +341,32 @@ $(document).ready(function(){
 
         <div class="row-fluid show-grid product_main space_wrap_product">
             <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}">
-                
-            <div class="span1">{{p.Id}}</div>
-            <div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
-            <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
-            <div class="span1">{{p.Gender}}</div>
-            <div class="span1">{{p.Name}}</div>
-                       
-            <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>    
-            <div class="span1">
-                {%if(p.disabled==1)%}
-                    <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
-                 {%else%}   
-                {%if(p.displayProductColor)%}                  
-                  <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
-                    {%endif%}  
-                  {%endif%}
-            </div>
+              <div class="span1">{{p.Id}}</div>
+              <div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
+              <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
+              <div class="span1">{{p.Gender}}</div>
+              <div class="span1">{{p.Name}}</div>
+              <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>
+            
+              <div class="span1">
+                  {%if(p.disabled==1)%}
+                      <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
+                   {%else%}   
+                  {%if(p.displayProductColor)%}                  
+                    <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
+                      {%endif%}  
+                    {%endif%}
+              </div>
             </a>
-         <div class="span1 edits_btn">           
-         <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
-         <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
-         <a href="#myModaldetail{{p.Id}}" role="button" data-toggle="modal" title="Delete {{p.name}}"><i class="icon-remove"></i></a>
+         <div class="span1 edits_btn">
+          {%if(p.disabled==1)%}
+            <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled"><i class="icon-thumbs-down"></i></a>
+          {%else%} 
+            <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-thumbs-up"></i></a>
+          {%endif%}
+          <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
+          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
+          <a href="#myModaldetail{{p.Id}}" role="button" data-toggle="modal" title="Delete {{p.name}}"><i class="icon-remove"></i></a>
          
          </div>
             
@@ -404,4 +408,22 @@ $(document).ready(function(){
  </div>      
    
 </div>
+ <script>
+  $( ".status_pro" ).click(function() {
+    var val = $(this).attr("data-id");
+    var res = val.split("_");
+    $.ajax({
+        type: "POST",
+        url: "{{ path('admin_product_status_change') }}",
+        data: {
+           status: res[1],
+           id: res[0],
+        },
+        success: function(response) {
+          location.reload();
+        }
+    });
+    
+  });
+ </script>
  {% endblock %}
