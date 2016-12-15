@@ -152,8 +152,133 @@ class ProductSpecsController extends Controller {
         
     }
     #-----------------------------------------------------
+  public function csvDataUploadAction(Request $request) {
 
-    public function csvDataUploadAction(Request $request) {
+        #-------------- CSV to array
+        $csv_array = array();
+        $file = $request->files->get('csv_file');
+        $i = 0;
+        if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+            while (($row = fgetcsv($handle)) !== FALSE) {
+                for ($j = 0; $j < count($row); $j++) {
+                    $csv_array[$i][$j] = $row[$j];
+                }
+                $i++;
+            }
+        }
+        #------------------------
+        $mapping_id = $request->request->get('sel_mapping');
+        $product_specs_mapping = $this->get('admin.helper.product_specification_mapping')->find($mapping_id);
+        $map = json_decode($product_specs_mapping->getMappingJson(), true);
+        $fit_model = $product_specs_mapping->getFitModelMeasurement();
+        $parsed_data = array();
+        $fit_model_ratio = array();
+        $fit_model_fit_points = json_decode($fit_model->getMeasurementJson(),true);
+        #----------------- fill array with csv data
+        foreach ($map as $specs_k => $specs_v) {
+            if (is_array($specs_v) || is_object($specs_v)) {                                
+                foreach ($specs_v as $size_key => $fit_points) {                    
+                    foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
+                        $coordins=$this->extracts_coordinates($fit_model_measurement);                
+                        $fmm_value =  intval($csv_array[$coordins['r']][$coordins['c']]);                        
+                        #----------------------*   handle fractional values                         
+                            $raw_value = $csv_array[$coordins['r']][$coordins['c']];                            
+                            $converted_number=0;
+                            if (strpos($raw_value, '/')){
+                               $raw_exploded = explode(' ', $raw_value);
+                               $frac = explode('/', $raw_exploded[1]);
+                               $converted_number = intval($raw_exploded[0]) + (intval($frac[0])/intval($frac[1]));
+                            }else{
+                                $converted_number = $fmm_value;
+                            }
+                        #----------------------* parsed data array calculate fit modle values for fit model size
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['garment_dimension']=$fmm_value; 
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['garment_stretch']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['min_calc']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['max_calc']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['min_actual']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['max_actual']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['ideal_low']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['ideal_high']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['prev_garment_dimension']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule']=0;
+                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_size']=false;
+                        
+                        if($size_key==$fit_model->getSize() && $fmm_value>0){
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_size']=true;
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['ratio'] = ($fit_model_fit_points[$fit_pont_key]/$fmm_value);                            
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model'] = $fit_model_fit_points[$fit_pont_key];
+                            $fit_model_ratio[$fit_pont_key] = ($fit_model_fit_points[$fit_pont_key]/$fmm_value);                            
+                        }
+                    }                    
+                }
+            } else {#----------------------* if not related to measurements add as a field
+                $cdns=$this->extracts_coordinates($specs_v);                
+                if(count($cdns)>1){
+                    $parsed_data[$specs_k] = $csv_array[$cdns['r']][$cdns['c']];
+                }                
+            }
+        }
+        $prev_size=null;
+        #--------------------- caalculate fit model measrements & ratio
+        foreach ($parsed_data['sizes'] as $size => $fps) {            
+            foreach ($fps as $fpk => $fpv) {
+                if (array_key_exists($fpk, $fit_model_ratio) ){
+                    $parsed_data['sizes'][$size][$fpk]['fit_model'] = $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
+                    $parsed_data['sizes'][$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
+                    if ($prev_size){
+                        $parsed_data['sizes'][$size][$fpk]['grade_rule'] = $parsed_data['sizes'][$prev_size][$fpk]['garment_dimension']>0?$parsed_data['sizes'][$size][$fpk]['garment_dimension'] - $parsed_data['sizes'][$prev_size][$fpk]['garment_dimension']:0;    
+                        $parsed_data['sizes'][$size][$fpk]['prev_garment_dimension'] = $parsed_data['sizes'][$prev_size][$fpk]['garment_dimension'];    
+                    }                    
+                }
+            }
+            $prev_size=$size;
+        }
+        #return new Response(json_encode($parsed_data['sizes']));
+        #------------------------ Grade Rule calculation
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();        
+        $prev_size_key=null;
+        foreach ($size_specs['sizes'][$fit_model->getGender()=='m'?'man':'woman'][$fit_model->getSizeTitleType()] as $size_key => $size_title) {        
+            if(array_key_exists($size_key, $parsed_data['sizes'])){                
+                foreach ($parsed_data['sizes'][$size_key] as $fit_point => $fit_point_value) {        
+                    if(array_key_exists($fit_point, $fit_model_fit_points)){                
+                        if($prev_size_key && array_key_exists('fit_model', $parsed_data['sizes'][$size_key][$fit_point])                                
+                                && array_key_exists('fit_model', $parsed_data['sizes'][$prev_size_key][$fit_point])                                
+                                ){
+                                                #$parsed_data['sizes'][$size_key][$fit_point]['grade_rule']=$parsed_data['sizes'][$size_key][$fit_point]['fit_model']-$parsed_data['sizes'][$prev_size_key][$fit_point]['fit_model'];
+                            $grade_rule=$parsed_data['sizes'][$size_key][$fit_point]['fit_model']-$parsed_data['sizes'][$prev_size_key][$fit_point]['fit_model'];
+                            $fit_model=  $parsed_data['sizes'][$size_key][$fit_point]['fit_model'];
+                            $parsed_data['sizes'][$size_key][$fit_point]['max_calc'] = $fit_model + (2.5 * $grade_rule);        
+                            $parsed_data['sizes'][$size_key][$fit_point]['min_calc'] = $fit_model - (2.5 * $grade_rule);                
+                            $parsed_data['sizes'][$size_key][$fit_point]['ideal_high'] = $fit_model + $grade_rule;        
+                            $parsed_data['sizes'][$size_key][$fit_point]['ideal_low'] = $fit_model - $grade_rule;                
+                            $parsed_data['sizes'][$size_key][$fit_point]['max_actual'] = $parsed_data['sizes'][$size_key][$fit_point]['max_calc'];         
+                            $parsed_data['sizes'][$size_key][$fit_point]['min_actual'] = $parsed_data['sizes'][$size_key][$fit_point]['min_calc'];                
+                        }
+                    }                    
+                }
+                $prev_size_key=$size_key;
+            }
+        }
+         return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
+            'parsed_data'=>$parsed_data,
+        ));
+         
+        return new Response(json_encode($parsed_data['sizes']));
+        return new Response(json_encode($size_specs['sizes'][$fit_model->getGender()=='m'?'man':'woman'][$fit_model->getSizeTitleType()]));
+        return new Response(json_encode($parsed_data));        
+        return new Response(json_encode($fit_model_ratio));
+        return new Response(json_encode( $parsed_data['sizes'][$fit_model->getSize()]));
+        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
+            'parsed_data'=>$parsed_data,
+        ));
+    }
+    
+    
+
+
+    public function _csvDataUploadAction(Request $request) {
 
         #-------------- CSV to array
         $csv_array = array();
@@ -170,6 +295,8 @@ class ProductSpecsController extends Controller {
         $mapping_id = $request->request->get('sel_mapping');
         $product_specs_mapping = $this->get('admin.helper.product_specification_mapping')->find($mapping_id);
         $map = json_decode($product_specs_mapping->getMappingJson(), true);
+        $fit_model = $product_specs_mapping->getFitModelMeasurement();
+        $fm_percent_to_gd=0;
         #-------------- use mapping to read csv array
         $parsed_data = array();
         
@@ -215,7 +342,7 @@ class ProductSpecsController extends Controller {
                 
             }
         }
-        #return new Response(json_encode($parsed_data));
+        return new Response(json_encode($parsed_data));
         return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
             'parsed_data'=>$parsed_data,
         ));
@@ -236,6 +363,12 @@ class ProductSpecsController extends Controller {
         $grade_rule=$grade_rule==0?1:$grade_rule;
         $max_calc = $fit_model + (2.5 * $grade_rule);        
         $min_calc = $fit_model - (2.5 * $grade_rule);                
+        
+        return array(
+        'garment_dimension' => $fit_model,
+       
+        );
+        
         return array(
         'garment_dimension' => $fit_model,
         'garment_stretch' => 0,        

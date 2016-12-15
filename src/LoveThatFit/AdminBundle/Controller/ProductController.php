@@ -68,7 +68,6 @@ class ProductController extends Controller {
      * *********************************************************************** */
 
     public function productDetailNewAction() {
-        
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType()));
@@ -82,7 +81,6 @@ class ProductController extends Controller {
 #-----------------------------Product Detail ----------------------------------#
 
     public function productDetailCreateAction(Request $request) {
-
         $data = $request->request->all();
         $entity = new Product();        
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
@@ -398,15 +396,21 @@ class ProductController extends Controller {
 
 #--------------------Product Detail Size----------------------------------------#
 
-    public function productDetailSizeEditAction($id, $size_id) {
+    public function productDetailSizeEditAction($id, $size_id)
+    {
         $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
+        
         $product_size = $this->get('admin.helper.productsizes')->findMeasurementArray($size_id);
+
         $productsize = $this->get('admin.helper.productsizes')->find($size_id);
         $clothingType = strtolower($product->getClothingType()->getName());
         $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
+
+
+
         $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);
         $form = $this->createForm(new ProductSizeMeasurementType('edit'));
         return $this->render('LoveThatFitAdminBundle:Product:product_size_detail_show.html.twig', array(
@@ -984,6 +988,9 @@ public function itemPriceUpdateAction() {
 #-----------------------------------------------------------------------
 
     public function productSizeMeasurementEditUpdateAction(Request $request, $id, $size_id, $measurement_id, $title) {
+
+        
+
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -994,12 +1001,12 @@ public function itemPriceUpdateAction() {
                 ->find($measurement_id);
         $form = $this->createForm(new ProductSizeMeasurementType('edit'), $entity);
         $form->bindRequest($request);
+        
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Updated.');
         }
-
         $id = $product_size->getProduct()->getId();
         $entity = $this->getProduct($id);
         return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
@@ -1170,5 +1177,25 @@ public function _multplieImageUploadAction(Request $request){
  */
        }
        return new response('{"status":"error"}');       
- }
+    }
+
+    public function statusChangeAction(Request $request)
+    {
+        $status = $request->get('status');
+        $id = $request->get('id');
+        $entity = $this->get('admin.helper.product')->find($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        if ($status == "disable") {
+            $entity->setDisabled(1);
+        } else {
+            $entity->setDisabled(0);
+        }
+        $this->get('admin.helper.product')->update($entity);
+        return new response('{"status":"ok"}'); 
+    }
+
+
+
 }
