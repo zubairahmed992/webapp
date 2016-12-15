@@ -197,7 +197,6 @@ param:limit, page_number,limit,sort
                         ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
                                 WHERE c.name LIKE :name AND c.gender = :gender")
                         ->setParameters(array('name' => $name.'%', 'gender' => $gender));
-        echo $record->getSQL();
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
