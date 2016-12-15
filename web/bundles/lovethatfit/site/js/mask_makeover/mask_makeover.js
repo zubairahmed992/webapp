@@ -281,20 +281,20 @@ function rotate_right(){
 }
 function zoom_in(){
     
-  if(current_status.zoom_level < 2){
-        current_status.zoom_level *= 2;
-        group_view_level.scale(2);
-        view.update();
-    }
+//  if(current_status.zoom_level < 2){
+//        current_status.zoom_level *= 2;
+//        group_view_level.scale(2);
+//        view.update();
+//    }
 }
 function zoom_out(){
-    if(current_status.zoom_level > 1){
-        current_status.zoom_level /= 2;
-        group_view_level.scale(0.5);
-        group_view_level.position = new Point(view.center);
-
-        view.update();
-    }
+//    if(current_status.zoom_level > 1){
+//        current_status.zoom_level /= 2;
+//        group_view_level.scale(0.5);
+//        group_view_level.position = new Point(view.center);
+//
+//        view.update();
+//    }
 }
 function save(){
     if(current_status.zoom_level > 1){
