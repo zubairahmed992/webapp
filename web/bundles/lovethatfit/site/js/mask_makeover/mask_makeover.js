@@ -169,7 +169,10 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
 }
 
 function load_user_masks(){    
+    
     full_mask = new Path(maskConfig.default_user_mask());
+    
+ if(maskConfig.dv_edit_type != "edit"){   
     full_mask.segments[41].handleIn = 0;
     full_mask.segments[41].handleOut = 0;
     
@@ -194,42 +197,47 @@ function load_user_masks(){
     full_mask.segments[28].point.y = full_mask.segments[40].point.y;
     full_mask.segments[30].point.y = full_mask.segments[40].point.y;
     
+   
+    
     if(full_mask.segments[70]){
         full_mask.segments[70].remove();
         full_mask.segments[69].handleOut = new Point(4,-36);
     }
     
     
+    
+    
+    
+//Setting Position    
+        full_mask.scale(required_mask_ratio);
+
+        full_mask.pivot = new Point(full_mask.bounds.bottomCenter.x,full_mask.bounds.bottomCenter.y);
+        full_mask.position = new Point(maskConfig.dv_scr_w/2 + 4,maskConfig.dv_scr_h - maskConfig.globle_pivot);
+     
+        $("#mask_x").attr("value", full_mask.pivot);
+        $("#mask_y").attr("value", full_mask.position);
+        
+        full_mask.segments[41].point.y += maskConfig.toe_shape_px; 
+        full_mask.segments[41].handleOut = new Point(-maskConfig.toe_shape_px,0);
+        full_mask.segments[40].handleOut = new Point(0,maskConfig.toe_shape_px);
+
+        full_mask.segments[29].point.y += maskConfig.toe_shape_px;
+        full_mask.segments[29].handleIn = new Point(maskConfig.toe_shape_px,0);
+        full_mask.segments[30].handleIn = new Point(0,maskConfig.toe_shape_px);
+    }else{
+        full_mask.scale(required_mask_ratio);
+        $("#mask_x").attr("value", full_mask.pivot);
+        full_mask.pivot = new Point($("#mask_x").attr("value"));
+        full_mask.position = new Point($("#mask_y").attr("value"));
+    }
     full_mask.style = {
         strokeColor: 'white',
         strokeWidth: 1
     };
     full_mask.opacity = 0.1;
     full_mask.selected = true;
-    full_mask.scale(required_mask_ratio);
     
     
-//Setting Position    
-    
-    if(maskConfig.dv_edit_type != "edit"){
-        full_mask.pivot = new Point(full_mask.bounds.bottomCenter.x,full_mask.bounds.bottomCenter.y);
-        full_mask.position = new Point(maskConfig.dv_scr_w/2 + 4,maskConfig.dv_scr_h - maskConfig.globle_pivot);
-     
-        $("#mask_x").attr("value", full_mask.pivot);
-        $("#mask_y").attr("value", full_mask.position);
-    }else{
-        $("#mask_x").attr("value", full_mask.pivot);
-        full_mask.pivot = new Point($("#mask_x").attr("value"));
-        full_mask.position = new Point($("#mask_y").attr("value"));
-    }
-    
-    full_mask.segments[41].point.y += maskConfig.toe_shape_px; 
-    full_mask.segments[41].handleOut = new Point(-maskConfig.toe_shape_px,0);
-    full_mask.segments[40].handleOut = new Point(0,maskConfig.toe_shape_px);
-
-    full_mask.segments[29].point.y += maskConfig.toe_shape_px;
-    full_mask.segments[29].handleIn = new Point(maskConfig.toe_shape_px,0);
-    full_mask.segments[30].handleIn = new Point(0,maskConfig.toe_shape_px);
 }
 function remove_index_numbers(){
     $(".index_note").remove();
