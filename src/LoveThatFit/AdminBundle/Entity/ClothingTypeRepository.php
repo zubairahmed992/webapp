@@ -191,6 +191,20 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
+    //change by umer
+    public function findOneByGenderNameCSV($gender, $name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
+                                WHERE c.name LIKE :name AND c.gender = :gender")
+                        ->setParameters(array('name' => $name.'%', 'gender' => $gender));
+        echo $record->getSQL();
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
     
     public function findClothingTypeByProduct($product)
   {

@@ -176,9 +176,9 @@ class ProductDataController extends Controller {
             $rows++;
         }
 
-//        $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-//            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
-//            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        //        $fit_points = array('sizes', 'tee_knit', 'neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
+        //            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist',
+        //            'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
         $sizes = array('Garment Dimension', 'Garment Stretch', 'Grade Rule', 'Min Calc',	'Min Actual', 'Ideal Low', 'Fit Model','Ideal High', 'Max Actual', 'Max Calc', 'Range Conf');
         $fit_point_trim = trim($productData['fit_point'],'[');
         $fit_point_trim_value = trim($fit_point_trim,']');
@@ -188,7 +188,7 @@ class ProductDataController extends Controller {
         $product_size_value = trim($product_size, ']');
         $size = explode(',', $product_size_value);
         echo "<pre>";
-      // print_r($productSave);
+        // print_r($productSave);
 
         foreach ($fit_points as $keys => $fit_point_val) {
             if($fit_point_val == 'sizes') continue;
@@ -218,7 +218,7 @@ class ProductDataController extends Controller {
         echo "<pre>";
        // print_r($data);
        // die();
-      //////////////////////////////        Size Code ///////////////////////////////////////////////
+        //////////////////////////////        Size Code ///////////////////////////////////////////////
 
         echo "<br>";
         echo "<p><table>";
@@ -328,47 +328,47 @@ class ProductDataController extends Controller {
 
                 //echo $b."-";
                 //echo $grade_rule_value;
-//                echo "</tr><tr><td>" . $fit_point_vals . "</td>";
-//                if (!empty($productData[$fit_points_key])){
-//                    echo "<td>" . $na . "</td>";
-//                    echo "<td>" . $na . "</td>";
-//                    echo "<td>" . $grade_rule_value . "</td>";
-//                    echo "<td>" . $min_calc . "</td>";
-//                    echo "<td>" . $min_calc . "</td>";
-//                    echo "<td>" . $ideal_low . "</td>";
-//                    echo "<td>" . $fit_model . "</td>";
-//                    echo "<td>" . $ideal_heigh . "</td>";
-//                    echo "<td>" . $max_calc . "</td>";
-//                    echo "<td>" . $max_calc . "</td>";
-//                    echo "<td>" . $ideal_low . "</td>";
-//                } else {
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                    echo "<td></td>";
-//                }
+                    //echo "</tr><tr><td>" . $fit_point_vals . "</td>";
+                    //if (!empty($productData[$fit_points_key])){
+                    //    echo "<td>" . $na . "</td>";
+                    //    echo "<td>" . $na . "</td>";
+                    //    echo "<td>" . $grade_rule_value . "</td>";
+                    //    echo "<td>" . $min_calc . "</td>";
+                    //    echo "<td>" . $min_calc . "</td>";
+                    //    echo "<td>" . $ideal_low . "</td>";
+                    //    echo "<td>" . $fit_model . "</td>";
+                    //    echo "<td>" . $ideal_heigh . "</td>";
+                    //    echo "<td>" . $max_calc . "</td>";
+                    //    echo "<td>" . $max_calc . "</td>";
+                    //    echo "<td>" . $ideal_low . "</td>";
+                    //} else {
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //    echo "<td></td>";
+                    //}
                 // }
-//                        $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
-//                        if (array_key_exists($fit_points_key, $result_array)) {
-//                            echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
-//                            $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
-//                            if (isset($result_array[$gr])) {
-//                                $gr_value = $result_array[$gr] - $result_array[$fit_points_key];
-//                                echo "<td><input type='text' style='width:40px' value=" . $gr_value . "> </td>";
-//                            } else {
-//                                echo "<td><input type='text' style='width:40px'> </td>";
-//                            }
-//                        } else {
-//                            echo "<td><input type='text' style='width:40px'></td>";
-//                            echo "<td><input type='text' style='width:40px'></td>";
-//                        }
+                // $fit_points_key = $fit_point_val . "_" . trim($selected_size_val, '""');
+                // if (array_key_exists($fit_points_key, $result_array)) {
+                //     echo "<td><input type='text' style='width:40px' value=" . $result_array[$fit_points_key] . "> </td>";
+                //     $gr = $fit_point_val . "_" . trim($size[$grade_rule], '"');
+                //     if (isset($result_array[$gr])) {
+                //         $gr_value = $result_array[$gr] - $result_array[$fit_points_key];
+                //         echo "<td><input type='text' style='width:40px' value=" . $gr_value . "> </td>";
+                //     } else {
+                //         echo "<td><input type='text' style='width:40px'> </td>";
+                //     }
+                // } else {
+                //     echo "<td><input type='text' style='width:40px'></td>";
+                //     echo "<td><input type='text' style='width:40px'></td>";
+                // }
 
 
 
@@ -416,8 +416,7 @@ class ProductDataController extends Controller {
         $keydimentionvaluew = $keysizedimensionvalue[0];
 
         $dimension = array_keys($data['sizes'][$keysize][$keydimentionvaluew]);
-       // print_r($dimension);
-      //  die("okay");
+       
         echo "<table border=5>";
         foreach ($data['sizes'] as $keys => $item) {
             echo "<tr><th>" . $keys . "</th>";
@@ -462,21 +461,21 @@ class ProductDataController extends Controller {
        // $data['fabric_weight']   = '';
        // $data['fit_type']   = '';
 
-      //  print_r($data);
+        //  print_r($data);
         //die();
-//        $em = $this->getDoctrine()->getManager();
-//        $pcsv = new ProductCSVDataUploader();
-//        $product = $pcsv->fillProduct($data);
-//        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
-//        $brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
-//        $product->setBrand($brand);
-//        $product->setClothingType($clothingType);
-//        $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
-//        $product->setRetailer($retailer);
-//        $em->persist($product);
-//        $em->flush();
-//        $this->addProductSizesFromArray($product, $data);
-//        $this->addProductColorsFromArray($product, $data);
+        //$em = $this->getDoctrine()->getManager();
+        //$pcsv = new ProductCSVDataUploader();
+        //$product = $pcsv->fillProduct($data);
+        //$clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
+        //$brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+        //$product->setBrand($brand);
+        //$product->setClothingType($clothingType);
+        //$retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
+        //$product->setRetailer($retailer);
+        //$em->persist($product);
+        //$em->flush();
+        //$this->addProductSizesFromArray($product, $data);
+        //$this->addProductColorsFromArray($product, $data);
         //$src = str_replace('\\', '/', getcwd()). '/uploads/ltf/csvproducts/';
         $src =  getcwd(). '/uploads/ltf/products/raw_products_csv/';
         $name = $_FILES['productImport']['name'];
@@ -484,20 +483,20 @@ class ProductDataController extends Controller {
         rename($src.$name, $src.$brand_description_value.".csv");
         die("save Data");
     }
-#-------------------- End Multiple Product CSV Pars ------------------------#
-#------------------------------------------------------------#
-      public function csvUploadAction(Request $request) {
+    #-------------------- End Multiple Product CSV Pars ------------------------#
+    #------------------------------------------------------------#
+    
+    public function csvUploadAction(Request $request)
+    {
         $form = $this->getCsvUploadForm();
         $form->bindRequest($request);
-        $product_id=$form->get('products')->getData();        
+        $product_id=$form->get('products')->getData();
         $preview_only = $form->get('preview')->getData();
         $raw_only = $form->get('raw')->getData();
                 
         $file = $form->get('csvfile');
         $filename = $file->getData();
-        $pcsv = new ProductCSVDataUploader($filename);        
-        
-        ########################################
+        $pcsv = new ProductCSVDataUploader($filename);
         
         if ($preview_only) {
             if ($product_id) {
@@ -505,7 +504,6 @@ class ProductDataController extends Controller {
                 $db_product = $pcsv->DBProductToArray($product);                
                 #$csv_product = $pcsv->read();                
                 #return new Response(json_encode($pcsv->compare_color_array($db_product['product_color'], $csv_product['product_color'])));
-                
                 return $this->render('LoveThatFitAdminBundle:ProductData:preview_db.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv, 'db_product' => $db_product));
             } else {
                 return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product' => $pcsv->read(), 'pcsv' => $pcsv));
@@ -550,7 +548,7 @@ class ProductDataController extends Controller {
     private function savecsvdata($pcsv) {
         $data = $pcsv->read();
         $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
-        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
+        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
         $return_ar = array();
         $return_ar['msg'] = '';
