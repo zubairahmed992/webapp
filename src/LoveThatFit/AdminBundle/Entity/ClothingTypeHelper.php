@@ -150,6 +150,11 @@ class ClothingTypeHelper {
     public function findOneByGenderName($gender, $name) {
         return $this->repo->findOneByGenderName($gender, $name);
     }
+
+    //change by umer
+    public function findOneByGenderNameCSV($gender, $name) {
+        return $this->repo->findOneByGenderNameCSV($gender, $name);
+    }
     #-----------------------------------------------
    public function findAll(){
         return $this->repo->findAllRecord();      

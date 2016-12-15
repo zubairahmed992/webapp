@@ -128,8 +128,6 @@ class ProductCSVDataUploader {
         }
 
         $this->readMeasurement($data);
-    
-        
     }
 #---------------------------------------------------------------
     public function map($row_length=1000, $col=20) {
@@ -211,6 +209,9 @@ class ProductCSVDataUploader {
         if($ct=='Pant/ Trouser') return 'trouser';
         if($ct=='Pant/ Jean') return "jean";
         if($ct=='Tee/Polo/Tank *knit') return 'tee_knit';
+        ##umer modification
+        if($ct=='Jeans') return "jean";
+        if($ct=='Trousers') return "trouser";
         return $ct;
     }
 
@@ -269,14 +270,14 @@ class ProductCSVDataUploader {
     }
   
     #---------------------------------------------------------------
-    private function fitPoint($i){
+    private function fitPoint($i) {
         if ($this->product['gender']=='f'){
         if($i==3) return 'central_front_waist';
         if($i==4) return 'back_waist';
         if($i==5)return 'waist_to_hip';
         
         if($i==6){
-            if ($this->product['clothing_type'] == 'trouser' || $this->product['clothing_type'] == "jean"){
+            if ($this->product['clothing_type'] == 'trouser' || $this->product['clothing_type'] == "jean") {
                return 'inseam';
             }else{
                return 'hem_length'; 
