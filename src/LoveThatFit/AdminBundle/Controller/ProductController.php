@@ -412,7 +412,6 @@ class ProductController extends Controller {
 
 
         $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);
-        die();
         $form = $this->createForm(new ProductSizeMeasurementType('edit'));
         return $this->render('LoveThatFitAdminBundle:Product:product_size_detail_show.html.twig', array(
                     'product' => $product,
