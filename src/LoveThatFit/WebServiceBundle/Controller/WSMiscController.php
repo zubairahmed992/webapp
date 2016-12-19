@@ -95,7 +95,7 @@ class WSMiscController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $decoded['supportUsers'] = $this->get('admin.helper.support')->findOneByUserName($decoded["support_user_name"]);
         $decoded['archive'] = $this->get('user.helper.userarchives')->find($decoded["archive"]);
-        $getID   = $this->get('support.helper.supporttasklog')->findByAssingnedIdSupportIDMemberEmail(
+        $getID = $this->get('support.helper.supporttasklog')->findByAssingnedIdSupportIDMemberEmail(
                 $decoded['archive'],
                 $decoded['supportUsers'],
                 $decoded['member_email']
@@ -110,10 +110,13 @@ class WSMiscController extends Controller {
             } else {
                 $decoded['start_time'] = $getID[0]['start_time'];
             }
+            $this->get('support.helper.supporttasklog')->update($decoded);
+            return new Response("1");
+        } else {
+            
+            $res= $this->get('webservice.helper')->response_array(false, "Record is unavailable.");
+            return new Response($res);
         }
-
-        $this->get('support.helper.supporttasklog')->update($decoded);
-        return new Response("1");
 	}
 
     #---------------------------------- /ws/image_approval

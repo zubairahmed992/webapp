@@ -160,6 +160,7 @@
           $(".val-slow").text(formatSecondsAsTime(max, 'hh:mm:ss'));
         }
     });
+    $.fn.dataTable.ext.errMode = 'none';
 
     $('#members').change( function() {
         var memberid = $("#members").val();
