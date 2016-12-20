@@ -10,33 +10,73 @@ $(document).ready(function() {
    dom_event_interaction_s1.onKeyDown = onKeyDown;
    dom_event_interaction_s1.onKeyUp = onKeyUp;
    
-   lyr_user_img = new Layer();
-   lyr_user_img.activate();
+   lyr_ref_rect = new Layer();
+   lyr_ref_rect.activate();
+   canvas_ref_rect();
+   
+   lyr_stage_coor = new Layer();
+   lyr_stage_coor.activate();
+   canvas_area_hldr();
+   
+   lyr_area_hldr = new Layer();
+   lyr_area_hldr.activate();
+   
    init();
-   
-   lyr_path = new Layer();
-   lyr_path.activate();
-   
-   load_user_masks();
       
-full_mask.insertAbove(set_circle_in());
+   load_user_masks();
+   
+   full_mask.insertAbove(set_circle_in());
    full_mask.insertAbove(set_circle_out());   
+   
+   
    
    lyr_misc = new Layer();
    lyr_misc.activate();
    
+   
+   console.log("lyr_area_hldr: "+lyr_area_hldr.position);
+   console.log("lyr_stage_coor: "+lyr_stage_coor.position);
+   console.log("canvas_area_hldr: "+canvas_area_hldr.position);
+   console.log("canv_ref_rect: "+canv_ref_rect.position);
    //set_action_bar();
    
-
-   group_view_level = new Group([lyr_user_img, lyr_path]);
-   
-   lyr_user_img.position = new Point(0,0);
-   
+//   group_view_level = new Group([lyr_ref_rect, lyr_user_img, lyr_path]);
+//   group_view_level.pivot = new Point(view.center);
+//   group_view_level.position = new Point(view.center);
         
    //group_view_level.pivot = new Point(view.center);
    //alert(group_view_level.pivot);
    
 });
+function canvas_area_hldr(){
+    canvas_area_hldr = new Path.Rectangle({
+        from: [0, 0],
+        to: [960, 1280]
+    });
+    canvas_area_hldr.style = {
+        fillColor: 'green',
+        opacity: 0.5
+    };
+    canvas_area_hldr.pivot = new Point(480,640);
+    canvas_area_hldr.position = new Point(480,640);
+}
+function canvas_ref_rect(){
+//    var canv_ref_rect_size = new Size(50, 50);
+//    var canv_ref_rect = new Rectangle(new Point(25, 15), canv_ref_rect_size);
+//    canv_ref_rect.selected = true;
+//    
+    canv_ref_rect = new Path.Rectangle({
+        from: [0, 0],
+        to: [960, 1280]
+    });
+    canv_ref_rect.style = {
+        fillColor: 'red',
+        opacity: 0.5
+    };
+    canv_ref_rect.pivot = new Point(480,640);
+    canv_ref_rect.position = new Point(480,640);
+    
+}
 function set_action_bar(){
     scr1_but_save_icon_url = maskConfig.curr_path_prefix + "bundles/lovethatfit/site/images/scr1_save_btn.png";
     scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
@@ -145,7 +185,8 @@ current_status ={
     control_indi: false,
     min_zoom_level: 1,
     max_zoom_level: 2,
-    zoom_level: 1
+    zoom_level: 1,
+    zoom: false
 }
 hitOptions = {
     segments: true,
@@ -157,7 +198,7 @@ function init(){
     var user_img_path = maskConfig.user_img_url;
     user_image = new Raster(user_img_path);
     user_image.on('load', function() {
-        user_image.position = new Point(view.center);
+        user_image.position = new Point(480,640);
         preset_user_image(parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
     });
 }
@@ -255,54 +296,138 @@ function show_index_numbers(){
 }
 function set_out_update(){
     $('#image_actions').attr('value',JSON.stringify(image_actions_count));
+    //alert($('#image_actions').attr('value'));
     view.update();
 }
 function move_left(){
-    user_image.position.x -= 1;
-    image_actions_count.move_left_right -= 1;
+    if(current_status.zoom){
+        user_image.position.x -= 0.5;
+        image_actions_count.move_left_right -= 0.5;
+    }else{
+        user_image.position.x -= 1;
+        image_actions_count.move_left_right -= 1;
+    }
     set_out_update();
 }
 function move_right(){
-    user_image.position.x += 1;
-    image_actions_count.move_left_right += 1;
+    if(current_status.zoom){
+        user_image.position.x += 0.5;
+        image_actions_count.move_left_right += 0.5;
+    }else{
+        user_image.position.x += 1;
+        image_actions_count.move_left_right += 1;
+    }
     set_out_update();
 }
 function move_up(){
-    user_image.position.y -= 1;
-    image_actions_count.move_up_down -= 1;
+    if(current_status.zoom){
+        user_image.position.y -= 0.5;
+        image_actions_count.move_up_down -= 0.5;
+    }else{
+        user_image.position.y -= 1;
+        image_actions_count.move_up_down -= 1;
+    }
     set_out_update();
 }
 function move_down(){
-    user_image.position.y += 1;
-    image_actions_count.move_up_down += 1;
+    if(current_status.zoom){
+        user_image.position.y += 0.5;
+        image_actions_count.move_up_down += 0.5;
+    }else{
+        user_image.position.y += 1;
+        image_actions_count.move_up_down += 1;
+    }
     set_out_update();
 }
 function rotate_left(){
-    user_image.rotate(-0.1);
-    image_actions_count.img_rotate += -0.1;
+    if(current_status.zoom){
+        user_image.rotate(-0.05);
+        image_actions_count.img_rotate += -0.05;
+    }else{
+        user_image.rotate(-0.1);
+        image_actions_count.img_rotate += -0.1;
+    }
     set_out_update();
 }
 function rotate_right(){
-    user_image.rotate(0.1);
-    image_actions_count.img_rotate += 0.1;
+    if(current_status.zoom){
+        user_image.rotate(0.05);
+        image_actions_count.img_rotate += 0.05;
+    }else{
+        user_image.rotate(0.1);
+        image_actions_count.img_rotate += 0.1;
+    }
     set_out_update();
 }
 function zoom_in(){
-    
-//  if(current_status.zoom_level < 2){
-//        current_status.zoom_level *= 2;
-//        group_view_level.scale(2);
-//        view.update();
-//    }
+  if(current_status.zoom_level < 2){
+      
+//        console.log("group_view_level: "+group_view_level.position);
+//        console.log("canvas_area_hldr: "+canvas_area_hldr.position);
+//        console.log("canv_ref_rect: "+canv_ref_rect.position);
+      
+        current_status.zoom_level *= 2;
+        lyr_area_hldr.scale(2);
+        lyr_stage_coor.scale(2);
+        
+        current_status.zoom = true;
+        
+        view.update();
+        
+        console.log("lyr_area_hldr: "+lyr_area_hldr.position);
+        console.log("lyr_stage_coor: "+lyr_stage_coor.position);
+        console.log("canvas_area_hldr: "+canvas_area_hldr.position);
+        console.log("canv_ref_rect: "+canv_ref_rect.position);
+    }
 }
 function zoom_out(){
-//    if(current_status.zoom_level > 1){
-//        current_status.zoom_level /= 2;
-//        group_view_level.scale(0.5);
-//        group_view_level.position = new Point(view.center);
-//
-//        view.update();
-//    }
+    if(current_status.zoom_level > 1){
+        current_status.zoom_level /= 2;
+        lyr_area_hldr.scale(0.5);
+        lyr_stage_coor.scale(0.5);
+        
+        
+        lyr_x = 480 - parseFloat(lyr_area_hldr.position.x);
+        lyr_y = 640 - parseFloat(lyr_area_hldr.position.y);
+        
+        stage_x = 480 - parseFloat(lyr_stage_coor.position.x);
+        stage_y = 640 - parseFloat(lyr_stage_coor.position.y);
+        
+        
+        console.log("lyr_area_hldr: " + lyr_x + "----" + lyr_y);
+        console.log("lyr_stage_coor: " + stage_x + "----" + stage_y);
+        
+        lyr_area_hldr.position.x += stage_x;
+        lyr_area_hldr.position.y += stage_y;
+        
+        lyr_stage_coor.position.x += stage_x;
+        lyr_stage_coor.position.y += stage_y;
+        
+        
+        //alert(lyr_area_hldr.position);
+        
+        //lyr_area_hldr.position = new Point(lyr_area_hldr.position.x + (change_x_pos_diff/2),lyr_area_hldr.position.y + (change_y_pos_diff/2));
+        
+        
+        console.log("lyr_area_hldr: "+lyr_area_hldr.position);
+        console.log("lyr_stage_coor: "+lyr_stage_coor.position);
+        console.log("canvas_area_hldr: "+canvas_area_hldr.position);
+        console.log("canv_ref_rect: "+canv_ref_rect.position);
+        
+        current_status.zoom = false;
+        
+        //zoom_pos_diff = new Point(canvas_area_hldr.position.x - canv_ref_rect.position.x,canv_ref_rect.position.y - canvas_area_hldr.position.y);
+        
+        //group_view_level.position.x += zoom_pos_diff.x;
+        //group_view_level.position.y += zoom_pos_diff.y;
+        view.update();
+        //console.log("zoom_pos_diff: "+zoom_pos_diff);
+        
+        //group_view_level.position.x = parseFloat(canv_ref_rect.position.x);
+        
+        //alert(canv_ref_rect.position.x +" ::: "+ canv_ref_rect.position.y);
+        
+    }
 }
 function save(){
     if(current_status.zoom_level > 1){
@@ -367,7 +492,10 @@ function onMouseDown(event) {
     }
    
     var hitResult = paper.project.hitTest(event.point, hitOptions);
-     
+    
+    if (!hitResult){
+            return;
+        }
     
     if(hitResult.type == "segment"){
         
@@ -395,16 +523,13 @@ function onMouseDown(event) {
             active_items.cir_out = true;            
         }
     }else {
-        if(hitResult.type == 'stroke') {
-            //alert(hitResult.location);
-            var hit_location = hitResult.location;
-            full_mask.insert(hit_location.index + 1, event.point);}
+            if(hitResult.type == 'stroke') {
+                //alert(hitResult.location);
+                var hit_location = hitResult.location;
+                full_mask.insert(hit_location.index + 1, event.point);
+            }
         }
         
-        
-    if(hitResult.item == scr1_but_save_icon){
-        
-    }
 }
 
 function onMouseDrag(event) {
@@ -429,14 +554,21 @@ function onMouseDrag(event) {
     if(current_status.control_indi){
         
         
-        if(group_view_level.position.x + event.delta.x >= 0 && group_view_level.position.x + event.delta.x <= 960){
-            group_view_level.position.x += event.delta.x;
+        if(lyr_area_hldr.position.x + event.delta.x >= 0 && lyr_area_hldr.position.x + event.delta.x <= 960){
+            lyr_area_hldr.position.x += event.delta.x;
+            lyr_stage_coor.position.x += event.delta.x;
             change_x_pos_diff += event.delta.x;
         }
-        if(group_view_level.position.y + event.delta.y >= 0 && group_view_level.position.y + event.delta.y <= 1280){
-            group_view_level.position.y += event.delta.y;
+        if(lyr_area_hldr.position.y + event.delta.y >= 0 && lyr_area_hldr.position.y + event.delta.y <= 1280){
+            lyr_area_hldr.position.y += event.delta.y;
+            lyr_stage_coor.position.y += event.delta.y;
             change_y_pos_diff += event.delta.y;
         }
+        
+        console.log("lyr_area_hldr: " + lyr_area_hldr.position);
+        console.log("lyr_stage_coor" +  lyr_stage_coor.position);
+        console.log(canvas_area_hldr.position);
+        
     }
     
 }
