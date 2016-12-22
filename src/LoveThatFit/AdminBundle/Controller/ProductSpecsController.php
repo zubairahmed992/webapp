@@ -189,12 +189,13 @@ class ProductSpecsController extends Controller {
                         foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
                             $coordins = $this->extracts_coordinates($fit_model_measurement);
                             $fmm_value = $this->fraction_to_number(intval($csv_array[$coordins['r']][$coordins['c']]));
+                            #~~~~~~>convert to measuring unit
                             $fmm_value =  array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter' ? $fmm_value * 0.393700787 : $fmm_value;
-                            #$this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
+                            #~~~~~~>calculate formula
+                            #$fmm_value =  $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
                             #----------------------* parsed data array calculate fit modle values for fit model size
                             $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'garment_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
                                 'fit_model_size' => $size_key == $fit_model->getSize() ? true : false);
-
                             #------> fit model ratio to garment dimensions
                             if ($size_key == $fit_model->getSize() && $fmm_value > 0) {
                                 $fit_model_ratio[$fit_pont_key] = ($fit_model_fit_points[$fit_pont_key] / $fmm_value);
@@ -292,8 +293,8 @@ class ProductSpecsController extends Controller {
     private function upply_formula($formula, $fit_pont_key, $fmm_value) {
         if (array_key_exists($fit_pont_key, $formula)) {
             $st = str_replace("x",$fmm_value,$formula[$fit_pont_key]);
-            $st_exploded = explode(' ', $st);
-            return (intval($raw_exploded[0]) + (intval($frac[0]) / intval($frac[1])));
+            $p = eval('return '.$st.';');
+            return $p;
         } else {
             return $fmm_value;
         }
