@@ -1,3 +1,11 @@
+admin_product_specs_list:
+    pattern:  /admin/product_specs/list
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:list }
+    
+admin_product_specs_edit:
+    pattern:  /admin/product_specs/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:edit }
+    
 
 admin_product_specs_mapping_save:
     pattern:  /admin/product_specs/mapping_save

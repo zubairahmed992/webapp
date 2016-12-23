@@ -19,6 +19,38 @@ use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 class ProductSpecsController extends Controller {
+#----------------------- /admin/product_specs/list
+    public function listAction() {
+        $product_specs_mappings = $this->get('admin.helper.product_specification_mapping')->findAll();        
+        #return new response(json_encode($clothing_types['woman']));
+        return $this->render('LoveThatFitAdminBundle:ProductSpecs:index.html.twig', array(
+                    'specs_mappings' => $product_specs_mappings,
+                    ));
+    }
+#----------------------- /admin/product_specs/edit
+    public function editAction($id) {
+       $product_specs_mappings = $this->get('admin.helper.product_specification_mapping')->find($id);        
+        $mapping_json_decoded = json_decode($product_specs_mappings->getMappingJson());
+        $brands = $this->get('admin.helper.brand')->getBrnadArray();
+        $clothing_types = $this->get('admin.helper.clothing_type')->getMixArray();
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
+        $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length', 'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        
+       return $this->render('LoveThatFitAdminBundle:ProductSpecs:map_edit.html.twig', array(
+            'fit_model_measurement' => $this->get('admin.fit_model_measurement')->findAll(), 
+            'fit_points' => $fit_points,
+            'brands' => $brands,
+            'clothing_types' => $clothing_types,
+            'product_specs' => $product_specs,
+            'size_specs' => $size_specs,
+            'product_specs_json' => json_encode($product_specs),
+            'size_specs_json' => json_encode($size_specs),
+            'specs_mappings' => $product_specs_mappings,
+            'specs_decoded' => $mapping_json_decoded,
+        ));
+    }
+
 #----------------------- /admin/product_specs/foo
     public function fooAction() {
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
@@ -402,8 +434,7 @@ class ProductSpecsController extends Controller {
         $min_calc = $fit_model - (2.5 * $grade_rule);                
         
         return array(
-        'garment_dimension' => $fit_model,
-       
+        'garment_dimension' => $fit_model,       
         );
         
         return array(
