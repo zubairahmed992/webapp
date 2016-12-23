@@ -209,23 +209,23 @@ services:
      admin.helper.productimagegenrate:
          class: LoveThatFit\AdminBundle\Entity\ProductImageGenrateHelper
 
-      admin.helper.categories:
-        class: LoveThatFit\AdminBundle\Entity\CategoriesHelper
-        arguments:
+     admin.helper.categories:
+         class: LoveThatFit\AdminBundle\Entity\CategoriesHelper
+         arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Categories
 
      admin.helper.banner:
-        class: LoveThatFit\AdminBundle\Entity\BannerHelper
-        arguments:
+         class: LoveThatFit\AdminBundle\Entity\BannerHelper
+         arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Banner
-            
+        
      admin.helper.productimage:
-        class: LoveThatFit\AdminBundle\Entity\ProductImageHelper
-        arguments:
+         class: LoveThatFit\AdminBundle\Entity\ProductImageHelper
+         arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ProductImage      
