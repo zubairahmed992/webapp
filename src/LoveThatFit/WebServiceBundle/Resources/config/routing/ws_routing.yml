@@ -156,3 +156,11 @@ ws_image_approval:
 ws_events_list:
     pattern:  /ws/events_list
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:eventsList}
+
+ws_banner_category:
+    pattern:  /ws/banner_category
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerCategoryList}
+    
+product_list:
+    pattern:  /ws/product_list
+    defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsList}    

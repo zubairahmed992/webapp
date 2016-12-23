@@ -574,6 +574,88 @@ class WebServiceHelper {
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
         return $this->response_array(true, "Product Detail ", true, $p);
     }
+	
+	//Method is using Version 3
+	public function productDetail3($id, $user) {
+        $product = $this->container->get('admin.helper.product')->find($id);
+        $p = array();
+        $default_color_id = $product->getDisplayProductColor()->getId();         
+        foreach ($product->getProductColors() as $pc) {
+            //$pc->getTitle()
+            $p['colors'][] = array(
+                'color_id' => $pc->getId(),
+                'product_id' => $product->getId(),
+                'title' => $pc->getTitle(),
+                'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
+                'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
+                'recommended' => $default_color_id == $pc->getId() ? true : false,
+            );
+        }
+
+        $algo = new FitAlgorithm2($user, $product);
+        $fb = $algo->getStrippedFeedBack();
+        $default_item = $algo->getRecommendedFromStrippedFeedBack($fb);
+        $p['sizes'] = $fb['feedback'];
+        $recommended_product_item = null;
+        $favouriteItemIds=$user->getFavouriteItemIdArray();
+        foreach ($product->getProductItems() as $pi) {
+            $pc_id = $pi->getProductColor()->getId();
+            $ps_id = $pi->getProductSize()->getId();
+            # get the highest price of all the items/color for a particular size
+            $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+
+            if (array_key_exists('price', $p['sizes'][$s_desc])) {
+                $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
+            } else {
+                $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
+            }
+
+            //Added new Array Sizes clone where we will add sizes_clone without Keys, We are doing this because
+            //Dont want to change the Algorithem functionalities
+            $p['sizes_clone'] = array_values($p['sizes']);
+
+            $p['items'][] = array(
+                'item_id' => $pi->getId(),
+                'product_id' => $product->getId(),
+                'color_id' => $pc_id,
+                'size_id' => $ps_id,
+                'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
+                'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
+                'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
+                'price' => $pi->getPrice()?$pi->getPrice():0,
+                'favourite' => in_array($pi->getId(), $favouriteItemIds),
+            );
+         
+            if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
+                $recommended_product_item = $pi;
+            }
+        }
+
+        //Just Remove Old functionality Sizes and replaced it by sizes_clone
+        unset($p['sizes']);
+        $p['sizes'] = $p['sizes_clone'];
+        unset($p['sizes_clone']);
+
+        foreach ($product->getProductImages() as $key => $pimage) {
+            $image = $pimage->getImage();
+
+            //$pimage->getId()
+            $p['model_images'][] = array(
+                'id' => $pimage->getId(),
+                'image_title' => $pimage->getImagaeTitle(),
+                'image' => $pimage->getImage(),
+                'image_sort' => $pimage->getImageSort(),
+            );
+        }
+
+        $p['model_height'] = $product->getProductModelHeight();
+
+        $default_size_fb = array();
+        $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
+        $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
+        return $this->response_array(true, "Product Detail ", true, $p);
+    }
+	
 
     #------------------------------------------------------------------------------
 
@@ -760,6 +842,12 @@ class WebServiceHelper {
 	$this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
   }
 	#end feedback service
+  public function getProductListByCategory($gender,array $id) {
+      $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);     
+    return $productlist;
+    //return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
+
+  }
 
     
 }

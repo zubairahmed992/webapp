@@ -124,6 +124,16 @@ admin_events:
 support_admin_fit_model_specs_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/fit_model_specs.yml"
     prefix:   /
+    
+#-------------- Categories ------------------------
+admin_categories_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/categories.yml"
+    prefix:   /
+
+#-------------- Banner ------------------------
+admin_banner_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/banner.yml"
+    prefix:   /
 
 #-------------- Product Image ------------------------
 admin_productimage_routes:

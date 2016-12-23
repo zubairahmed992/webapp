@@ -215,4 +215,31 @@ class WSRepo {
                         ->getQuery()
                         ->getResult(); 
             }
+			
+			
+        #--------------Get Product list By Category and Gender -----------------------------------------------------
+        public function productListCategory($gender,$id) {           
+            $query = $this->em
+                ->createQueryBuilder()
+                ->select('p.id product_id,p.name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->leftJoin('p.categories', 'c')
+                ->innerJoin('p.displayProductColor', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')                        
+                ->innerJoin('p.product_items', 'pi')                       
+                ->where('p.gender=:gender')
+                ->andWhere('c.id IN (:id)')
+                ->andWhere("p.displayProductColor!=''")
+                ->andWhere ('p.disabled=0')
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender,'id' => $id))                        
+                ->getQuery();              
+            
+            try {
+            return $query->getResult();
+			} catch (\Doctrine\ORM\NoResultException $e) {
+				return null;
+			}
+        }
 }

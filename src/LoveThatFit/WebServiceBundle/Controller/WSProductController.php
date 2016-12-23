@@ -4,6 +4,8 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Parser;
 
 class WSProductController extends Controller {
 

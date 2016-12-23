@@ -1,0 +1,40 @@
+admin_banners:
+    pattern:  /admin/banners/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:index ,page_number: 1, sort:id }
+
+admin_banner_show:
+    pattern:  /admin/banner/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:show }
+    
+admin_banner_new:
+    pattern:  /admin/banner/new
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:new }
+
+admin_banner_create:
+    pattern:  /admin/banner/create
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:create }
+    requirements: 
+      _method: post 
+    
+admin_banner_edit:
+    pattern:  /admin/banner/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:edit }
+    requirements:
+        _method:  GET
+        
+admin_banner_update:
+    pattern:  /admin/banner/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:update }
+
+        
+admin_banner_delete:
+    pattern:  /admin/banner/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:delete }
+    
+admin_banner_standards:
+    pattern:  /admin/banner/standards
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:standards }
+
+admin_banner_paginate:
+    pattern:  /admin/banner/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:Banner:paginate}

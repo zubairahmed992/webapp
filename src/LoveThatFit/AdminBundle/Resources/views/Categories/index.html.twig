@@ -1,0 +1,117 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+  <li class="active">Categories </li>
+{% endblock %}
+
+{% block body %}
+<div class="p_listing">
+  <h1>Categories </h1>
+  <div class="clearfix"></div>
+    {% block header_right_links %}
+    <div class="adjustment_links" style="margin-top: 20px; float:right;">
+      <a href="{{ path('admin_category_new') }}" class="btn">Add New</a>
+      {#<a href="{{ path('admin_categories_add_cron') }}" >Send Notifications</a>#}
+    </div>
+    {% endblock %}
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="bs-docs-grid">
+      <table id="example_categories" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Created At</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>
+    </div> 
+  </div>
+</div>
+<div id="deleteMyModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Category</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Category?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href=""  class="btn btn-primary delete_url">Delete</a>
+  </div>
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    var table = $('#example_categories').DataTable({
+       "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "{{ path('admin_category_paginate') }}",
+            "type": "POST"
+        },
+        "sAjaxDataProp": "data",
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+        "order": [[ 0, "asc" ]],
+        "columns": [
+          {
+              "data"  : "id",
+              "sortable" : false,
+          },
+          {
+              "data"  : "name",
+          },
+          {
+              "data"  : "gender",
+              "sortable" : false,
+          },
+          {
+              "data"  : "created_at",
+              "sortable" : false,
+          },
+          {
+              "data"  : "disabled",
+              "sortable" : false,
+          },
+          {
+              "title"         : "Actions",
+              "targets"       : -1,
+              "data"          : null,
+              "orderable"     : false,
+              "searchable"    : false,
+              "defaultContent": DetailPageButton+" "+EditButton+" "+ DeleteButton,
+          },
+        ]
+    });
+
+    jQuery('#example_categories tbody').on( 'click', 'button, a, img', function () {
+        var dataAction = $(this).attr('data-action');
+        var data = table.row( $(this).parents('tr') ).data();
+        if (dataAction == 'Edit') {
+            var url = '{{ path('admin_category_edit', {'id': ":id"}) }}';
+            url     = url.replace(':id', data.id);
+            window.top.location = url;
+        }
+        if (dataAction == 'Detail') {
+          var url = '{{ path('admin_category_show', {'id': ":id"}) }}';
+          url     = url.replace(':id', data.id);
+          window.top.location = url;
+        }
+        if (dataAction == 'Delete') {
+          var url = '{{ path('admin_category_delete', {'id': ":id"}) }}';
+          url     = url.replace(':id', data.id);
+
+          $(".delete_url").attr("href", url);
+      }
+    });
+  });
+
+</script>
+{% endblock %}
