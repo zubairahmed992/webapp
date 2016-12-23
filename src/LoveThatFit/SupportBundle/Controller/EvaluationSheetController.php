@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\SupportBundle\Form\Type\AlgoritumTestlType;
 use LoveThatFit\SupportBundle\Form\Type\AlgoritumProductTestlType;
+use LoveThatFit\SupportBundle\Entity\EvaluationDefaultProducts;
 use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 
@@ -229,6 +230,57 @@ class EvaluationSheetController extends Controller {
     }
 
 
+    /*
+     * Return Array
+     * */
+    private function getEvaluationSheetDefaultProducts(){
+        $em = $this->getDoctrine()->getManager();
+        $defaultProductList = $em->getRepository('LoveThatFitSupportBundle:EvaluationDefaultProducts')->findAll();
+        $defaultProductsArray['def_product_ids'] = array();
+        $defaultProductsArray['def_product_ids_sizes'] = array();
+        $defaultProductsArray['product_id_sizes'] = array();
+        if($defaultProductList){
+            //Old product Id's
+            foreach ($defaultProductList as $defaultProduct){
+                $defaultProductsArray['def_product_ids'][] = $defaultProduct->getProductID();
+                $defaultProductsArray['def_product_ids_sizes'][$defaultProduct->getProductID()] = $defaultProduct->getProductSizes();
+            }
+
+            //Get Product ID's With their sizes
+            $defaultProductSizesList = $this->get('admin.helper.product')->listProductByIds($defaultProductsArray['def_product_ids']);
+            //$defaultProductSizesList =  $em->getRepository('LoveThatFitAdminBundle:Product')->findById($defaultProductsArray['def_product_ids']);
+            //Iterate products
+            foreach ($defaultProductSizesList as $product){
+                //get Product sizes
+                $productSize = $product->getProductSizes();
+                if ($productSize) {
+                    $explodedProductSizes = array();
+                    $explodedProductSizesarray = array();
+                    $explodedProductSizes = explode(',',$defaultProductsArray['def_product_ids_sizes'][$product->getID()]);
+                    foreach ($productSize as $size) {
+                        //Check selected size exists in product sizes
+                        if(in_array($size->getID(),$explodedProductSizes)) {
+                            $explodedProductSizesarray[]=  $size->getTitle();
+                        }
+
+                        $productSizes[$size->getID()] = $size->getTitle();
+
+                    }//end foreach loop. iteration for product sizes
+                    //store product ID with their sizes
+                    $defaultProductsArray['product_id_sizes'][$product->getID()] = implode(',',$explodedProductSizesarray);
+
+                } //end if condition check product size exists
+
+
+            } //End foreach loop for product iteration
+
+        }//End if condition. Check default product selected
+
+        //Hold default product info
+        return $defaultProductsArray;
+
+    }//End function that get Default evaluation default product
+
     #--------------------------------------------------
     private function test_demo_data($user_id, $sorting_col, $sorting_order)
     {
@@ -237,12 +289,19 @@ class EvaluationSheetController extends Controller {
         // $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
         ##reason ids 514, 539
 
-        //new ids
-        $ids= array (564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574,
+        //Get Default products
+        $defaultProducts = $this->getEvaluationSheetDefaultProducts();
+
+        /*$ids= array (564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574,
                 575, 577, 578, 580, 581, 583, 584, 585, 586, 587, 588, 591,
-                592, 593, 594, 602, 603, 604, 605, 606);
+                592, 593, 594, 602, 603, 604, 605, 606);*/
+        //Get Default Product IDs
+        $ids = array_keys($defaultProducts['product_id_sizes']);
+
+
+
         
-        $try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
+        /*$try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
             '566'=>'S,M,L', '567'=>'S,M,L,XL', '568'=>'S,M,L,XL',
             '569'=>'S,M,L,XL', '570'=>'S,M,L', '571'=>'XS,S,M,L,XL',
             '572'=>'0,2,4,6,8,10,12,14,16', '573'=>'XS,S,M,L', '574'=>'XS,S,M,L',
@@ -250,8 +309,12 @@ class EvaluationSheetController extends Controller {
             '581'=>'XS,S,M,L,XL', '583'=>'SM,ML', '584'=>'SM,ML', '585'=>'SM,ML', '586'=>'SM,ML',
             '587'=>'24,25,26,27,28,29,30,31,32', '588'=>'24,25,26,27,28,29,30,31,32', '591'=>'OS',
             '592'=>'S,M,L', '593'=>'2,4,6,8,10,12,14,16', '594'=>'S,M,L', '602'=>'XS,S,M,L',
-            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');
-        
+            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');*/
+
+        //Get Default Product sizes
+        $try_sizes = $defaultProducts['product_id_sizes'];
+
+
         $products = $this->get('admin.helper.product')->listProductByIds($ids);
 
         $pa= array();
@@ -351,11 +414,26 @@ class EvaluationSheetController extends Controller {
         // $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
 
         $user = $this->get('user.helper.user')->find($user_id);
-        $ids= array (564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574,
-                575, 577, 578, 580, 581, 583, 584, 585, 586, 587, 588, 591,
-                592, 593, 594, 602, 603, 604, 605, 606);
 
-        $try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
+
+        //Get Default product
+        $defaultProducts = $this->getEvaluationSheetDefaultProducts();
+
+        //Get Default Product IDs
+        $ids = array_keys($defaultProducts['product_id_sizes']);
+
+        //Get Default Product IDs & sizes
+        $try_sizes = $defaultProducts['product_id_sizes'];
+
+
+
+
+
+      /*  $ids= array (564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574,
+                575, 577, 578, 580, 581, 583, 584, 585, 586, 587, 588, 591,
+                592, 593, 594, 602, 603, 604, 605, 606);*/
+
+        /*$try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
             '566'=>'S,M,L', '567'=>'S,M,L,XL', '568'=>'S,M,L,XL',
             '569'=>'S,M,L,XL', '570'=>'S,M,L', '571'=>'XS,S,M,L,XL',
             '572'=>'0,2,4,6,8,10,12,14,16', '573'=>'XS,S,M,L', '574'=>'XS,S,M,L',
@@ -363,7 +441,9 @@ class EvaluationSheetController extends Controller {
             '581'=>'XS,S,M,L,XL', '583'=>'SM,ML', '584'=>'SM,ML', '585'=>'SM,ML', '586'=>'SM,ML',
             '587'=>'24,25,26,27,28,29,30,31,32', '588'=>'24,25,26,27,28,29,30,31,32', '591'=>'OS',
             '592'=>'S,M,L', '593'=>'2,4,6,8,10,12,14,16', '594'=>'S,M,L', '602'=>'XS,S,M,L',
-            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');
+            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');*/
+
+
         $products = $this->get('admin.helper.product')->listProductByIds($ids);
         
         $pa     = array();

@@ -61,11 +61,18 @@
                     </a></li>
                 {% endif %}
                 {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
+                    <li><a href="{{ path('evaluationdefaultproducts') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "evaluationdefaultproducts") %} support-tabs-open {% endif %}'>
+                        Manage Reports</span>
+                        </a></li>
+                {% endif %}
+                {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
                     <li><a href="{{ path('support_evaluation_sheet_index') }}">
                         <span class='{% if (app.request.attributes.get("_route") == "support_evaluation_sheet_index") %} support-tabs-open {% endif %}'>
                         Evaluation Sheet</span>
                     </a></li>
                 {% endif %}
+
                 {% if app.session.get('Permissions')['shoppingCart']['view'] == 1 %}
                     <li><a href="{{ path('support_cart_index') }}">
                         <span class='{% if (app.request.attributes.get("_route") == "support_cart_index") %} support-tabs-open {% endif %}'>Shopping Cart</span>

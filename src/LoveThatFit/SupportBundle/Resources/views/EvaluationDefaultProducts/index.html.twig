@@ -1,0 +1,78 @@
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active">Evaluation Default Products</li>
+{% endblock %}
+
+
+{% block body %}
+    <div class="p_listing">
+        <h5>
+            <a href="{{ path('evaluationdefaultproducts_new') }}">
+                Create a new entry
+            </a>
+        </h5>
+
+        <table class="records_list" id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Product Name</th>
+                <th>Product Sizes</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for entity in entities if entity.productid in products|keys  %}
+                <tr>
+                    <td>{{ loop.index }} </td>
+                    <td>{{ products[entity.productid] }}</td>
+                    <td>
+                        {% set exp_sizes = entity.productsizes|split(',') %}
+                        {% for key, size in exp_sizes %}
+                            {{ product_sizes[size] }}
+                            {% if loop.last %}
+                            {% else %}
+                                ,
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <ul class="def_products">
+                            {#  <li>
+                                  <a href="{{ path('evaluationdefaultproducts_show', { 'id': entity.id }) }}">show</a>
+                              </li>#}
+                            <li>
+                                <a href="{{ path('evaluationdefaultproducts_edit', { 'id': entity.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <style>
+        .def_products {
+            list-style: none;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "order": [[1, "asc"]],
+                "aoColumnDefs": [
+                    {'bSortable': false, 'aTargets': [3]}
+                ],
+                "buttons": [
+                    {
+                        text: 'My button',
+                        action: function (e, dt, node, config) {
+                            alert('Button activated');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+{% endblock %}

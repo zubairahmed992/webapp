@@ -1,0 +1,67 @@
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active">Evaluation Default Products</li>
+{% endblock %}
+
+
+{% block body %}
+    {# Load files for choosen select#}
+    <link href="{{ asset('bundles/lovethatfit/support/chosen/chosen.css') }}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/chosen/chosen.jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/chosen/prism.js') }}"></script>
+    {# Load files for choosen select#}
+    <script>
+        var url = "{{ path('get_product_sizes') }}";
+        $(document).ready(function () {
+            var config = {
+                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes': {},
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+        });
+    </script>
+
+    <div class="p_listing">
+        <div class="form-style-2">
+            <p>
+                <a href="{{ path('evaluationdefaultproducts') }}">
+                    Back to the list
+                </a>
+            </p>
+            <div class="form-style-2-heading">Add new product</div>
+
+
+            <form action="{{ path('evaluationdefaultproducts_create') }}" name="productSizes"
+                  method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+                <p>
+                    <label for="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" class="required">Available
+                        Sizes</label>
+                <div class="load-sizes-loader" style="display: none">
+                    <img src="{{ asset('bundles/lovethatfit/support/ajax-loader.gif') }}"/>
+                </div>
+                <select name="lovethatfit_supportbundle_evaluationdefaultproductstype[product_sizes][]"
+                        id="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" required="required"
+                        multiple>
+                </select>
+                </p>
+                <p>
+
+                    <input type="submit" value="Create">
+                </p>
+            </form>
+
+
+        </div>
+    </div>
+    {#Disable Already Exists products#}
+
+    <script>
+        {% for product in exists_products %}
+        $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id option[value='{{ product }}']").remove();
+        {% endfor %}
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/ajax-script.js') }}"></script>
+    <link href="{{ asset('bundles/lovethatfit/support/custom.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}

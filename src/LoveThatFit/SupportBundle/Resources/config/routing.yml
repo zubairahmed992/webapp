@@ -114,3 +114,10 @@ support_caliboration:
     resource: "@LoveThatFitSupportBundle/Resources/config/routing/caliboration.yml"
     prefix:   /
 ## caliboration process routes end ##
+
+
+## caliboration process routes start ##
+evaluation_default_products:
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/evaluation_default_products.yml"
+    prefix:   /
+## caliboration process routes end ##

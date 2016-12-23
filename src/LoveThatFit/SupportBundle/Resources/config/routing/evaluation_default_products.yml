@@ -1,0 +1,48 @@
+evaluationdefaultproducts:
+    pattern:   /support/evaluation-default-products
+    defaults:
+        _controller:  LoveThatFitSupportBundle:EvaluationDefaultProducts:index
+
+evaluationdefaultproducts_show:
+    pattern:   /support/evaluation-default-products/{id}/show
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:show }
+
+evaluationdefaultproducts_new:
+    pattern:   /support/evaluation-default-products/new
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:new }
+
+
+evaluationdefaultproducts_edit:
+    pattern:   /support/evaluation-default-products/{id}/edit
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:edit }
+
+evaluationdefaultproducts_create:
+    pattern:   /support/evaluation-default-products/create
+    defaults:
+        _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:create
+        template:     'LoveThatFitSupportBundle:EvaluationDefaultProducts:new.html.twig'
+    requirements:
+        _method:  POST
+
+evaluationdefaultproducts_update:
+    pattern:   /support/evaluation-default-products/{id}/update
+    defaults:
+        _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:update
+        template: 'LoveThatFitSupportBundle:EvaluationDefaultProducts:edit.html.twig'
+    requirements:
+        _method:  POST
+
+evaluationdefaultproducts_delete:
+    pattern:   /support/evaluation-default-products/{id}/delete
+    defaults: {_controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:delete }
+    requirements:
+        _method:  POST
+
+# Ajax Request #
+
+get_product_sizes:
+    pattern:   /support/evaluation-default-products/get-product-sizes
+    defaults:
+        _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:sizes
+    requirements:
+        _method:  POST
