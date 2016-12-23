@@ -24,13 +24,14 @@ class Categories
      * @ORM\OneToMany(targetEntity="Categories", mappedBy="parent")
      */
     private $children;
-
+    
     /**
      * @ORM\ManyToMany(targetEntity="LoveThatFit\AdminBundle\Entity\Product", inversedBy="categories")
      * @ORM\JoinTable(name="category_products")
      * */
     private $category_products;
 
+    
     /**
      * Many Categories have One Category.
      * @ORM\ManyToOne(targetEntity="Categories", inversedBy="children")

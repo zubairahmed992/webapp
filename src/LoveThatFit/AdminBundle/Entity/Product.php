@@ -25,6 +25,11 @@ class Product {
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $brand;
+    
+     /**
+     * @ORM\ManyToMany(targetEntity="LoveThatFit\AdminBundle\Entity\Categories", mappedBy="category_products")
+     **/
+    private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity="Retailer", inversedBy="products")
@@ -51,6 +56,11 @@ class Product {
      * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product", orphanRemoval=true)
      */
     protected $product_items;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ProductImage", mappedBy="product", orphanRemoval=true)
+     */
+    protected $product_image;
 
     /**
      * @ORM\OneToOne(targetEntity="ProductColor") 
@@ -70,6 +80,7 @@ class Product {
         $this->product_sizes = new ArrayCollection();
         $this->product_items = new ArrayCollection();
         $this->user_item_try_history = new ArrayCollection();
+        $this->product_image = new ArrayCollection();
     }
 
     /**
@@ -1348,6 +1359,41 @@ class Product {
     {
         return $this->product_color_view;
     }
+    
+    
+     //----------------------------------------------------------
+
+    /**
+     * Add product_image
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductImage $productImages
+     * @return Product
+     */
+    public function addProductImage(\LoveThatFit\AdminBundle\Entity\ProductImage $productImages) {
+        $this->product_image[] = $productImages;
+
+        return $this;
+    }
+
+    /**
+     * Remove product_images
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductImage $productImages
+     */
+    public function removeProductImage(\LoveThatFit\AdminBundle\Entity\ProductImage $productImages) {
+        $this->product_image->removeElement($productImages);
+    }
+
+    /**
+     * Get product_images
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getProductImages() {
+        return $this->product_image;
+    }
+    
+    
 
     /**
      * Set retailer_reference_id
