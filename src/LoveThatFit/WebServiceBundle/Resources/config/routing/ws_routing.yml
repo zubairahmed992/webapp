@@ -145,6 +145,10 @@ ws_remove_user_cart:
 ws_show_user_cart:
     pattern:  /ws/show_user_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart}
+
+ws_show_user_cart_web3:
+    pattern:  /ws/show_user_cart_web3
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart3}
 #-------------------------Shopping Cart Routes-------------------------------------
 
 #-------------------------Caliboration Image Approved/Reject Routes-------------------------------------

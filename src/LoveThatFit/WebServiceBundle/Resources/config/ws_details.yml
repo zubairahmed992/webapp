@@ -350,6 +350,15 @@ ws_misc_banner:
 #     item_id: 4126
 #   request_type: post
 
+ws_cart_item_add_to_cart:
+   pattern:  /ws/add_item_to_cart
+   title: product_add_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     item_id: 4126
+   request_type: post
+
 ws_cart_items_add_to_cart:
    pattern:  /ws/add_items_to_cart
    title: product_add_to_cart
@@ -379,6 +388,14 @@ ws_remove_user_cart:
 ws_show_user_cart:
    pattern:  /ws/show_user_cart
    title: show_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: get
+   
+# #show user cart web3
+ws_show_user_cart_web3:
+   pattern:  /ws/show_user_cart_web3
+   title: show_user_cart_web3
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
    request_type: get
