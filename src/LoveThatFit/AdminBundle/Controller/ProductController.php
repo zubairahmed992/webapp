@@ -164,7 +164,13 @@ class ProductController extends Controller {
         $clothingTypeAttributes = $this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
         return new response(json_encode($clothingTypeAttributes));
     }
+#------------Clothing type  base on clothing type --------------------#
 
+    public function productClothingTypeAction(Request $request) {
+        $target_array = $request->request->all();       
+        $clothingType = $this->get('admin.helper.product')->productClothingType($target_array);
+        return new response(json_encode($clothingType));
+    }    
 #-------------------------------Product Delete --------------------------------#
 
     public function productDetailDeleteAction($id) {

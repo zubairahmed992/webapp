@@ -192,7 +192,11 @@ admin_product_gender_base_clothing_type:
 
 admin_product_get_attribute:
     pattern:  /admin/product/get/attribute
-    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute }       
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute }  
+    
+admin_product_get_clothingtype:
+    pattern:  /admin/product/get/clothingtype
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingType }      
     
 #-------New product Dpecification Ajax ---------------------------------------#
 admin_product_gender_base_clothing_type:

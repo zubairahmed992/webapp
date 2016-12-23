@@ -807,6 +807,16 @@ public function productClothingTypeAttribute($target_array){
     
   return $clothingTypeAttributes;  
 }
+
+#----------------------Product Cloting type  ------------------------#
+public function productClothingType($target_array){
+    $clothing_type_id = $target_array['clothing_type'];
+    $gender=$target_array['gender'];
+       $clothing_type=$this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
+       $clothing=$this->container->get('admin.helper.clothingtype')->findByTargetGender($clothing_type['target'],$gender);
+    return $clothing;  
+}
+
 #---------------Delete Product------------------------------------------------#
 public function productDelete($id){
   return $this->delete($id);
