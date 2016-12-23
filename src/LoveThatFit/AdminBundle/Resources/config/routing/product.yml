@@ -203,6 +203,11 @@ admin_product_get_attribute:
     pattern:  /admin/product/get/attribute
     defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute } 
     
+#-------------------enable disable product ajax request ----------------------------------#
+admin_product_status_change:
+   pattern:  /admin/product/status_change
+   defaults: { _controller: LoveThatFitAdminBundle:Product:statusChange }    
+    
 admin_product_get_clothingtype:
     pattern:  /admin/product/get/clothingtype
     defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingType }     
