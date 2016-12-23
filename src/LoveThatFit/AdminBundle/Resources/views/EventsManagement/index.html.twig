@@ -85,6 +85,7 @@
         ]
     });
     $.fn.dataTable.ext.errMode = 'none';
+    
     jQuery('#example tbody').on( 'click', 'button, a, img', function () {
       var dataAction = $(this).attr('data-action');
       var data = table.row( $(this).parents('tr') ).data();

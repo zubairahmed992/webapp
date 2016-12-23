@@ -210,8 +210,8 @@ class ProductCSVDataUploader {
         if($ct=='Pant/ Jean') return "jean";
         if($ct=='Tee/Polo/Tank *knit') return 'tee_knit';
         ##umer modification
-        if($ct=='Jeans') return "jean";
-        if($ct=='Trousers') return "trouser";
+        if(strtolower($ct)=='jeans' || strtolower($ct)=='jean') return "jean";
+        if(strtolower($ct)=='trousers' || strtolower($ct)=='trouser') return "trouser";
         return $ct;
     }
 
