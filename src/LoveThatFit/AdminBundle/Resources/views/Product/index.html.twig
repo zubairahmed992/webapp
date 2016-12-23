@@ -12,147 +12,160 @@
 {% endblock %}
 
 {% block body %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script>
-  var page;
-  function SearchForm(page){
-    if(page==null) {
-      page=1;
-    } 
-    
-    var brand=$('#brand').val();
-    var category = []
-
-    $("#category_select:checked").each(function() {
-      category.push($(this).val());
-    });
-
-    var genders = []
-    $("#genders:checked").each(function() {
-      genders.push($(this).val());
-    });
-
-    var target = []
-    $("#target:checked").each(function() {
-      target.push($(this).val());
-    });
-    $('#loading-indicator').show();
-
-    $.ajax({
-      type:'POST',
-      url: $('#url').text(),
-      data: {brand: brand, category: category,genders:genders,target:target,page:page},  
-      success: function(response) {
-        $('#loading-indicator').hide();
-        $('#all_data').hide();
-        $('#all_data_search').empty('');
-        $('#all_data_search').show();
-        $('#all_data_search').html(response);
-        $('#pagination').hide();
-        }
-      });
-    return false;
-  }
-
-  function getTargetBaseCat(){
-    var category = []
-  }
+    var page;
+ function SearchForm(page){
+  if(page==null)
+  {page=1;
+  } 
   
-  function getTargetCategory(){
+var brand=$('#brand').val();
+
+var category = []
+   $("#category_select:checked").each(function() {
+       category.push($(this).val());
+   });
+
+var genders = []
+   $("#genders:checked").each(function() {
+       genders.push($(this).val());
+   });
+
+var target = []
+   $("#target:checked").each(function() {
+       target.push($(this).val());
+   });
+    $('#loading-indicator').show();
+$.ajax({
+        type:'POST',
+        url: $('#url').text(),
+        data: {brand: brand, category: category,genders:genders,target:target,page:page},  
+        success: function(response) {
+       $('#loading-indicator').hide();
+       $('#all_data').hide();
+       $('#all_data_search').empty('');
+       $('#all_data_search').show();
+       $('#all_data_search').html(response);
+       $('#pagination').hide();
+       
+    }});
+    return false;
+}
+
+function getTargetBaseCat(){
+    var category = []
+
+}
+function getTargetCategory(){
     var category = []
     var woman_msg=null;
     var man_msg=null;
-    count1 =false;
-    count2 =false;
-    $("#category:not(:checked)").each(function() {
-      category.push($(this).val());
-    });
+     count1 =false;
+     count2 =false;
+   $("#category:not(:checked)").each(function() {
+       category.push($(this).val());
+   });
    
 
-    var target = []
-    $("#target:checked").each(function() {
-      target.push($(this).val());
-    });
+var target = []
+   $("#target:checked").each(function() {
+       target.push($(this).val());
+   });
   
-    if(target!==null) {
-
+   
+    if(target!==null){
        $.ajax({
-        type:'POST',
-        url: $('#url_target').text(),
-        data: {target:target},  
-        dataType: 'json',
-        success: function(ar) {
-          $('#catwoman').text('');
-          $('#catman').text('');
-          //$('#category_empty').text('');
-          if(ar!='null') {
-            var playlist=[];
-            playlist.push.apply(playlist, ar);
-            $('#all_category').hide();
-            $('#category_empty').addClass('frm_ele');
-            
-            for(i=0;i<playlist.length;i++){
-              if(playlist[i]['gender']=='f'){
-                $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catwoman');
-                $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catwoman');
-              }
-            }
-            
-            $('#catwoman').prepend('<div class="adv_srch_hd">Woman</div>')
-
-
-            for(i=0;i<playlist.length;i++){
-
-              if(playlist[i]['gender']=='m') {
-                 $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catman');
-                 $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catman');
-              }
-            }
-            
-            $('#catman').prepend('<div class="adv_srch_hd">Man</div>')
-       
-            //if(inArray(playlist[i]['id'],category)=="yes"){
-            //}else{
-            //$("#category").attr("disabled", true);
-            //}
-          }else{
-            $('#category_empty').text('');
-            $('#category_empty').removeClass('frm_ele');
-            $('#all_category').show();
+       type:'POST',
+       url: $('#url_target').text(),
+       data: {target:target},  
+       dataType: 'json',
+       success: function(ar) {
+          
+     $('#catwoman').text('');
+     $('#catman').text('');
+    //  $('#category_empty').text('');
+     if(ar!='null'){
+     var playlist=[];
+     playlist.push.apply(playlist, ar);
+     $('#all_category').hide();
+      $('#category_empty').addClass('frm_ele');
+    
+        for(i=0;i<playlist.length;i++){
+          if(playlist[i]['gender']=='f'){
+             $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catwoman');
+             $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catwoman');
           }
-        }
-      });
-        return false; 
-    }
-  }
-
-  function inArray(needle, haystack)
-  {
-    var length = haystack.length;
-    for(var i = 0; i < length; i++) {
-      if(haystack[i] == needle) { 
-        return "yes";
       }
-    }
-  }
+          $('#catwoman').prepend('<div class="adv_srch_hd">Woman</div>')
 
-  function backToListing(){
+
+           for(i=0;i<playlist.length;i++){
+          if(playlist[i]['gender']=='m'){
+             $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catman');
+             $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catman');
+          }
+      }
+          $('#catman').prepend('<div class="adv_srch_hd">Man</div>')
+       
+    // if(inArray(playlist[i]['id'],category)=="yes"){
+       
+       
+      
+    
+    //}else{
+   //    $("#category").attr("disabled", true);
+  //  }
+    
+    
+    
+    }else{
+ $('#category_empty').text('');
+ $('#category_empty').removeClass('frm_ele');
+ 
+  $('#all_category').show();
+
+}}});
+    return false; 
+
+
+   }
+}
+function inArray(needle, haystack) {
+
+    var length = haystack.length;
+    
+    for(var i = 0; i < length; i++) {
+        
+        if(haystack[i] == needle){ 
+        return "yes";
+        }
+    }
+   
+}
+function backToListing(){
     $('#all_data').show();
     $('#all_data_search').hide();
     $('#pagination').show();
-  }
+}
 
 $(document).ready(function(){
-  var genders=$('#genders').val();
-  if(genders=='M') {
-    $('#genders').prop('checked', true);
-  }
+     var genders=$('#genders').val();
+                    
+                    if(genders=='M'){
+                        
+                        $('#genders').prop('checked', true);
+                    }
 
-  //SearchForm(1);  // For first time page load default results
-  $('.pagination li.active').on('click',function(){
-    var page = $(this).attr('p');
-      SearchForm(page);
-    });
-  });
+ //SearchForm(1);  // For first time page load default results
+                $('.pagination li.active').live('click',function(){
+                    var page = $(this).attr('p');
+                   
+                    SearchForm(page);
+                    
+                   
+                });           
+                });
                 
 
 
@@ -185,19 +198,13 @@ $(document).ready(function(){
 
 
         </div>
-        <a style="display:none" href="{{ path('admin_product_data_multiple_brand_csv') }}" class="btn">Import Multiple Brand CSV</a>
-        <a style="display:none" href="{{ path('admin_product_data_csv_brand_specification') }}" class="btn">Add Brand CSV Format</a>
+        <a href="{{ path('admin_product_data_multiple_brand_csv') }}" class="btn">Import Multiple Brand CSV</a>
+        <a href="{{ path('admin_product_data_csv_index') }}" class="btn">Import CSV</a>
+        <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
+        <a href="{{ path('admin_product_data_csv_brand_specification') }}" class="btn">Add Brand CSV Format</a>
         <a href="{{ path('admin_product_data_product_image_genrate') }}" >Generate Images</a>
-        | <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a> 
-        <a  style="display:none" href="{{ path('admin_product_data_import_index') }}" >import & update</a>
-        
-    
-        <div class="btn-group" role="group" aria-label="..." style="float:right;">
-              <a href="{{ path('admin_fit_model_specs_index') }}" class="btn btn-default">Fit Model</a>
-  <a href="{{ path('admin_product_specs_csv_data_input') }}" class="btn btn-default">Specs</a>
- <a href="{{ path('admin_product_data_csv_index') }}" class="btn btn-default">Import CSV</a>
- <a href="{{ path('admin_product_detail_new') }}" class="btn btn-default">Add New</a>
-</div>
+        | <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a> |  <a href="{{ path('admin_product_data_import_index') }}" >import & update</a>
+
     </div>
     
     
@@ -341,34 +348,30 @@ $(document).ready(function(){
 
         <div class="row-fluid show-grid product_main space_wrap_product">
             <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}">
-              <div class="span1">{{p.Id}}</div>
-              <div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
-              <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
-              <div class="span1">{{p.Gender}}</div>
-              <div class="span1">{{p.Name}}</div>
-              <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>
-            
-              <div class="span1">
-                  {%if(p.disabled==1)%}
-                      <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
-                   {%else%}   
-                  {%if(p.displayProductColor)%}                  
-                    <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
-                      {%endif%}  
-                    {%endif%}
-              </div>
+                
+            <div class="span1">{{p.Id}}</div>
+            <div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
+            <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
+            <div class="span1">{{p.Gender}}</div>
+            <div class="span1">{{p.Name}}</div>
+                       
+            <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>    
+            <div class="span1">
+                {%if(p.disabled==1)%}
+                    <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
+                 {%else%}   
+                {%if(p.displayProductColor)%}                  
+                  <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
+                    {%endif%}  
+                  {%endif%}
+            </div>
             </a>
-         <div class="span1 edits_btn">
-          {%if(p.disabled==1)%}
-            <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled">
-            <i class="icon-ban-circle"></i></a>
-          {%else%} 
-            <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-play-circle"></i></a>
-          {%endif%}
-          <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
-          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
-          <a href="#myModaldetail{{p.Id}}" role="button" data-toggle="modal" title="Delete {{p.name}}"><i class="icon-remove"></i></a>
-         
+         <div class="span1 edits_btn">           
+         <a href="#" title="price edit"><i class="icon-plus-sign"></i></a>
+         <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
+         <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+         <a href="{{ path('admin_productimage_upload', {'product_id': p.Id}) }}" title="Add Images {{p.Name}}"><i class="icon-picture"></i></a>
+         <a href="{{ path('admin_product_categories', {'id': p.Id}) }}" title="Category Assortment {{p.Name}}"><i class="icon-th-list"></i></a>
          </div>
             
          
@@ -409,22 +412,4 @@ $(document).ready(function(){
  </div>      
    
 </div>
- <script>
-  $( ".status_pro" ).click(function() {
-    var val = $(this).attr("data-id");
-    var res = val.split("_");
-    $.ajax({
-        type: "POST",
-        url: "{{ path('admin_product_status_change') }}",
-        data: {
-           status: res[1],
-           id: res[0],
-        },
-        success: function(response) {
-          location.reload();
-        }
-    });
-    
-  });
- </script>
  {% endblock %}

@@ -23,22 +23,6 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-  blouses:
-    neck: Neck
-    shoulder_across_front: Shoulder across front
-    shoulder_across_back: Shoulder across back
-    shoulder_length: Shoulder length
-    arm_length: Arm length
-    bicep: Bicep
-    triceps : Triceps
-    wrist: Wrist
-    bust: Bust
-    back_waist: Back Waist
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip  : Waist to Hip  
-    hip: Hip
   tunic:
     tee_knit:
     neck: Neck
@@ -104,41 +88,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-  jackets:
-    neck: Neck
-    shoulder_across_front: Shoulder across front
-    shoulder_across_back: Shoulder across back
-    shoulder_length: Shoulder length
-    arm_length: Arm length
-    bicep: Bicep
-    triceps : Triceps
-    wrist: Wrist
-    bust: Bust
-    chest: Chest
-    back_waist: Back Waist
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip  : Waist to Hip  
-    hip: Hip
   sweater:
-    neck: Neck
-    shoulder_across_front: Shoulder across front
-    shoulder_across_back: Shoulder across back
-    shoulder_length: Shoulder length
-    arm_length: Arm length
-    bicep: Bicep
-    triceps : Triceps
-    wrist: Wrist
-    bust: Bust
-    chest: Chest
-    back_waist: Back Waist
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip  : Waist to Hip  
-    hip: Hip
-  sweaters:
     neck: Neck
     shoulder_across_front: Shoulder across front
     shoulder_across_back: Shoulder across back
@@ -167,18 +117,6 @@ constants:
     knee: Knee 
     calf: Calf
     ankle: Ankle
-  trousers:
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip: Waist to Hip
-    hip: Hip
-    outseam: Outseam
-    inseam: inseam
-    thigh: Thigh
-    knee: Knee 
-    calf: Calf
-    ankle: Ankle
   jean:
     waist: Waist
     cf_waist: CF Waist
@@ -191,28 +129,7 @@ constants:
     knee: Knee 
     calf: Calf
     ankle: Ankle
-  jeans:
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip: Waist to Hip
-    hip: Hip
-    outseam: Outseam
-    inseam: inseam
-    thigh: Thigh
-    knee: Knee 
-    calf: Calf
-    ankle: Ankle
   skirt:
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip: Waist to Hip
-    hip: Hip
-    outseam: Outseam
-    inseam: inseam
-    hem_length: hem_length
-  skirts:
     waist: Waist
     cf_waist: CF Waist
     back_waist: Back Waist
@@ -239,44 +156,7 @@ constants:
     hip: Hip
     inseam: inseam
     hem_length: hem_length
-  dresses:
-    neck: Neck
-    shoulder_across_front: Shoulder across front
-    shoulder_across_back: Shoulder across back
-    shoulder_length: Shoulder length
-    arm_length: Arm length
-    bicep: Bicep
-    triceps : Triceps
-    wrist: Wrist
-    bust: Bust
-    back_waist: Back Waist
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip  : Waist to Hip  
-    hip: Hip
-    inseam: inseam
-    hem_length: hem_length
   coat:
-    neck: Neck
-    shoulder_across_front: Shoulder across front
-    shoulder_across_back: Shoulder across back
-    shoulder_length: Shoulder length
-    arm_length: Arm length
-    bicep: Bicep
-    triceps : Triceps
-    wrist: Wrist
-    bust: Bust
-    chest: Chest
-    back_waist: Back Waist
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip  : Waist to Hip  
-    hip: Hip
-    inseam: inseam
-    hem_length: hem_length
-  coats:
     neck: Neck
     shoulder_across_front: Shoulder across front
     shoulder_across_back: Shoulder across back
@@ -343,13 +223,6 @@ constants:
          hip: Hip
          neck: Neck
          thigh: Thigh
-        dresses: 
-         shoulder_across_back: Shoulder across back
-         bust: Bust 
-         waist: Waist
-         hip: Hip
-         neck: Neck
-         thigh: Thigh
   
   fit_type:   
        stretch_skin_tight: Stretch - skin tight
@@ -392,34 +265,19 @@ constants:
   women:
     clothing_type:
       blouse: Blouse
-      blouses: Blouse
       tunic: Tunic
       tee_knit: Tee knit
       tank_knit: Tank knit
       jacket: Jacket
-      jackets: Jacket
       sweater: Sweater
-      sweaters: Sweater
       trouser: Trouser
-      trousers: Trouser
       jean: Jean
-      jeans: Jean
       skirt: Skirt
-      skirts: Skirt
       dress: Dress
-      dresses: Dress
       coat: Coat
-      coats: Coat
     
     style_type:
       blouse:
-        tailored: Tailored
-        princess_fit: princess_fit
-        loose: Loose
-        full: Full
-        shell: Shell
-        camisole: Camisole
-      blouses:
         tailored: Tailored
         princess_fit: princess_fit
         loose: Loose
@@ -443,28 +301,10 @@ constants:
         loosy: Loosy
         swing: Swing
         vest: Vest
-      jackets: 
-        blazer: Blazer
-        loosy: Loosy
-        swing: Swing
-        vest: Vest
       sweater:
         pull_over: pull_over
         cardigan: Cardigan
-      sweaters:
-        pull_over: pull_over
-        cardigan: Cardigan
       trouser:
-        legging: Legging
-        straight_leg: straight_leg
-        skinny: Skinny
-        boot_cut: boot_cut
-        palazzo: Palazzo
-        pleated: Pleated
-        peg: Peg
-        wide_leg: wide_leg
-        bell: Bell
-      trousers:
         legging: Legging
         straight_leg: straight_leg
         skinny: Skinny
@@ -480,27 +320,8 @@ constants:
         skinny: Skinny
         boot_cut: boot_cut
         wide_leg: wide_leg
-        bell: Bell 
-      jeans:
-        legging: legging
-        straight_leg: straight_leg
-        skinny: Skinny
-        boot_cut: boot_cut
-        wide_leg: wide_leg
         bell: Bell  
       skirt:
-        fitted_skinned_tight: fitted_skinned_tight
-        fitted_tailored: fitted_tailored
-        a_line: a_line
-        gathered_dirndl: gathered_dirndl
-        pleated: Pleated
-        yoke_fitted: yoke_fitted
-        peg: Peg
-        wrapped: Wrapped
-        gored: Gored
-        flared: Flared
-        full_with_shaping_layers: full_with_shaping_layers
-      skirts:
         fitted_skinned_tight: fitted_skinned_tight
         fitted_tailored: fitted_tailored
         a_line: a_line
@@ -522,22 +343,7 @@ constants:
         shirt_dress: shirt_dres
         coat_dress: coat_dress
         formal_with_structured_fit: formal_with_structured_fit
-      dresses:
-        fitted_princess_to_waist: fitted_princess_to_waist
-        fitted_princess_through_hips: fitted_princess_through_hips
-        fitted_sheath: fitted_sheath
-        empire: Empire
-        loose: Loose
-        wrap: Wrap
-        shirt_dress: shirt_dres
-        coat_dress: coat_dress
-        formal_with_structured_fit: formal_with_structured_fit
       coat:
-       blazer_single_breasted: blazer_single_breasted
-       blazer_double_breasted: blazer_double_breasted
-       lossy: Lossy
-       swing: Swing
-      coats:
        blazer_single_breasted: blazer_single_breasted
        blazer_double_breasted: blazer_double_breasted
        lossy: Lossy
@@ -545,11 +351,6 @@ constants:
 
     hem_length:
       blouse:
-        cropped: Cropped
-        waist: Waist
-        top_of_hip: top_of_hip
-        bottom_of_hip: bottom_of_hip
-      blouses:
         cropped: Cropped
         waist: Waist
         top_of_hip: top_of_hip
@@ -573,17 +374,7 @@ constants:
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
-      jackets:
-        cropped: cropped
-        waist: waist
-        top_of_hip: top_of_hip
-        bottom_of_hip: bottom_of_hip
       sweater:
-        cropped: cropped
-        waist: waist
-        top_of_hip: top_of_hip
-        bottom_of_hip: bottom_of_hip
-      sweaters:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
@@ -594,19 +385,7 @@ constants:
         cropped: cropped
         ankle: ankle
         full_length: full_length
-      trousers:
-        short: short
-        capri: capri 
-        cropped: cropped
-        ankle: ankle
-        full_length: full_length
       jean:
-        short: short
-        capri: capri 
-        cropped: cropped
-        ankle: ankle
-        full_length: full_length
-      jeans:
         short: short
         capri: capri 
         cropped: cropped
@@ -620,23 +399,7 @@ constants:
          maxi: maxi
          floor_length: floor_length
          with_train: with_train
-      skirts:
-         mini: mini
-         knee_length: knee_length
-         mid_calf: mid_calf
-         tea_length: tea_length
-         maxi: maxi
-         floor_length: floor_length
-         with_train: with_train 
       dress:
-         mini: mini
-         knee_length: knee_length
-         mid_calf: mid_calf
-         tea_length: tea_length
-         maxi: maxi
-         floor_length: floor_length
-         with_train: with_train
-      dresses:
          mini: mini
          knee_length: knee_length
          mid_calf: mid_calf
@@ -653,31 +416,9 @@ constants:
         mid_calf: mid_calf
         tea_length: tea_length
         maxi: maxi
-      coats:
-        cropped: cropped
-        waist: waist
-        top_of_hip: top_of_hip
-        bottom_of_hip: bottom_of_hip
-        knee_length: knee_length
-        mid_calf: mid_calf
-        tea_length: tea_length
-        maxi: maxi
 
     neck_line:
       blouse:
-        crew_neck: crew_neck
-        jewel_neck: jewel_neck
-        bateau neck: bateau neck
-        scoop_neck: scoop_neck
-        ballet_neck: ballet_neck
-        v_neck: v_neck
-        plunge_v_neck: plunge_v_neck
-        button_down : button_down
-        mandarin: mandarin
-        lapel_button_down: lapel_button_down
-        peter_pan: peter_pan
-        cowl_draped: cowl_draped
-      blouses:
         crew_neck: crew_neck
         jewel_neck: jewel_neck
         bateau neck: bateau neck
@@ -739,29 +480,7 @@ constants:
        v_neck:  v_neck
        jewel_neck:  jewel_neck
        wrap:  Wrap
-      jackets:
-       single_breasted_lapels: single_breasted_lapels
-       double_breasted_ lapels:  double_breasted_ lapels
-       shawl_single_breasted:  shawl_single_breasted
-       shawl_double_breasted:  shawl_double_breasted
-       v_neck:  v_neck
-       jewel_neck:  jewel_neck
-       wrap:  Wrap
       sweater:
-        turtle_neck: turtle_neck
-        crew_neck: crew_neck
-        jewel_neck: jewel_neck
-        bateau neck: bateau neck
-        scoop_neck: scoop_neck
-        ballet_neck: ballet_neck
-        v_neck: v_neck
-        plunge_v_neck: plunge_v_neck
-        button_down : button_down
-        mandarin: Mandarin
-        lapel_button_down: lapel_button_down
-        peter_pan: peter_pan
-        cowl_draped: cowl_draped
-      sweaters:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
         jewel_neck: jewel_neck
@@ -789,20 +508,6 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
-      dresses:
-        turtle_neck: turtle_neck
-        crew_neck: crew_neck
-        jewel_neck: jewel_neck
-        bateau neck: bateau neck
-        scoop_neck: scoop_neck
-        ballet_neck: ballet_neck
-        v_neck: v_neck
-        plunge_v_neck: plunge_v_neck
-        button_down : button_down
-        mandarin: Mandarin
-        lapel_button_down: lapel_button_down
-        peter_pan: peter_pan
-        cowl_draped: cowl_draped
       coat:
        single_breasted_lapels: single_breasted_lapels
        double_breasted_ lapels:  double_breasted_ lapels
@@ -810,29 +515,10 @@ constants:
        shawl_double_breasted:  shawl_double_breasted
        v_neck:  v_neck
        jewel_neck:  jewel_neck
-       wrap:  Wrap
-      coats:
-       single_breasted_lapels: single_breasted_lapels
-       double_breasted_ lapels:  double_breasted_ lapels
-       shawl_single_breasted:  shawl_single_breasted
-       shawl_double_breasted:  shawl_double_breasted
-       v_neck:  v_neck
-       jewel_neck:  jewel_neck
        wrap:  Wrap 
-
     
     sleeve_styling:
       blouse:
-         strapless: strapless
-         spaghetti_straps: spaghetti_straps
-         narrow_straps: narrow_straps
-         sleeveless: sleeveless
-         cap_sleeved: cap_sleeved
-         short_sleeved: short_sleeved
-         3/4_length_sleeve: 3/4_length_sleeve
-         long_sleeved: long_sleeved
-
-      blouses:
          strapless: strapless
          spaghetti_straps: spaghetti_straps
          narrow_straps: narrow_straps
@@ -874,22 +560,7 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
-      jackets:
-         strapless: strapless
-         spaghetti_straps: spaghetti_straps
-         narrow_straps: narrow_straps
-         sleeveless: sleeveless
-         cap_sleeved: cap_sleeved
-         short_sleeved: short_sleeved
-         3/4_length_sleeve: 3/4_length_sleeve
-         long_sleeved: long_sleeved
       sweater:
-         sleeveless: sleeveless
-         cap_sleeved: cap_sleeved
-         short_sleeved: short_sleeved
-         3/4_length_sleeve: 3/4_length_sleeve
-         long_sleeved: long_sleeved
-      sweaters:
          sleeveless: sleeveless
          cap_sleeved: cap_sleeved
          short_sleeved: short_sleeved
@@ -904,20 +575,7 @@ constants:
          short_sleeved: short_sleeved
          short_sleeved: short_sleeved
          long_sleeved: long_sleeved
-      dresses:
-         strapless: Strapless
-         spaghetti_straps: spaghetti_straps
-         narrow_straps: narrow_straps
-         sleeveless: Sleeveless
-         cap_sleeved: cap_sleeved
-         short_sleeved: short_sleeved
-         short_sleeved: short_sleeved
-         long_sleeved: long_sleeved
       coat:
-         short_sleeved: short_sleeved
-         3/4_length_sleeve: 3/4_length_sleeve
-         long_sleeved: long_sleeved
-      coats:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
@@ -928,17 +586,7 @@ constants:
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
-      trousers:
-        high_rise: high_rise
-        mid_rise: mid_rise
-        low_rise: low_rise
-        ultra_low_rise: ultra_low_rise
       jean:
-        high_rise: high_rise
-        mid_rise: mid_rise
-        low_rise: low_rise
-        ultra_low_rise: ultra_low_rise
-      jeans:
         high_rise: high_rise
         mid_rise: mid_rise
         low_rise: low_rise
@@ -948,16 +596,9 @@ constants:
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
-      skirts:
-        high_rise: high_rise
-        mid_rise: mid_rise
-        low_rise: low_rise
-        ultra_low_rise: ultra_low_rise
       dress:
-      dresses:
 
       coat:
-      coats:
 
     stretch_type:
       woven_straight_grain: woven_straight_grain
@@ -994,15 +635,11 @@ constants:
       tank_knit: Tank knit
       casual_jacket: Casual Jacket
       sweater: Sweater
-      sweaters: Sweater
       trouser: Trouser
-      trousers: Trouser
       jean: Jean
-      jeans: Jean
       sport_jacket: Sport Jacket
       dress_jacket:  Dress Jacket
       coat: Coat 
-      coats: Coat
     style_type:
       shirt:
         tailored: Tailored
@@ -1026,9 +663,6 @@ constants:
       sweater:
         pull_over: pull_over
         cardigan: Cardigan
-      sweaters:
-        pull_over: pull_over
-        cardigan: Cardigan
       trouser:
         tailored: Tailored
         straight: Straight
@@ -1036,20 +670,7 @@ constants:
         relaxed: Relaxed
         chino: Chino
         cords: Cords
-      trousers:
-        tailored: Tailored
-        straight: Straight
-        skinny: Skinny
-        relaxed: Relaxed
-        chino: Chino
-        cords: Cords
       jean:
-        straight: Straight
-        skinny: Skinny
-        boot_cut: Boot Cut
-        relaxed: Relaxed
-        cords: Cords
-      jeans:
         straight: Straight
         skinny: Skinny
         boot_cut: Boot Cut
@@ -1080,17 +701,6 @@ constants:
         vest: Vest
         down: Down
         skinny: Skinny
-      coats:
-        single_breasted: single_breasted
-        double_breasted: double_breasted
-        trench_single_breasted: trench_single_breasted
-        trench_double_breasted: trench_double_breasted
-        technical: Technical
-        duffle: Duffle
-        parka: Parka
-        vest: Vest
-        down: Down
-        skinny: Skinny
     hem_length:
       shirt:
         hip_straight: hip_straight
@@ -1109,26 +719,12 @@ constants:
         waist: Waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
-      sweaters:
-        waist: Waist
-        top_of_hip: top_of_hip
-        bottom_of_hip: bottom_of_hip
       trouser:
         short: Short 
         cropped:  Cropped
         ankle:  Ankle
         full_length: full_length
-      trousers:
-        short: Short 
-        cropped:  Cropped
-        ankle:  Ankle
-        full_length: full_length
       jean:
-        short: Short 
-        cropped:  Cropped
-        ankle:  Ankle
-        full_length: full_length
-      jeans:
         short: Short 
         cropped:  Cropped
         ankle:  Ankle
@@ -1140,12 +736,6 @@ constants:
         single_vented: single_vented
         double_vented: double_vented
       coat:
-        top_of_hip: top_of_hip
-        bottom_of_hip: bottom_of_hip
-        knee_length: knee_length
-        mid_calf: mid_calf
-        full_length: full_length
-      coats:
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
         knee_length: knee_length
@@ -1182,13 +772,6 @@ constants:
         v_neck: v_neck
         mock_turtle: mock_turtle
         bateau_neck: bateau_neck
-      sweaters:
-        turtle_neck: turtle_neck
-        crew_neck: crew_neck
-        shawl: shawl
-        v_neck: v_neck
-        mock_turtle: mock_turtle
-        bateau_neck: bateau_neck
       sport_jacket:
         notch: Notch
         peak: Peak
@@ -1197,14 +780,6 @@ constants:
         peak: Peak
         shawl: shawl
       coat:
-        notch: Notch
-        peak: Peak
-        shawl: Shawl
-        no_collar: no_collar
-        mandarin: Mandarin
-        hooded: Hooded
-        stand_up_collar: Stand-up Collar
-      coats:
         notch: Notch
         peak: Peak
         shawl: Shawl
@@ -1227,10 +802,6 @@ constants:
         short_sleeved: short_sleeved
         long_sleeved: long_sleeved
         sleeveless: Sleeveless  
-      sweaters:
-        short_sleeved: short_sleeved
-        long_sleeved: long_sleeved
-        sleeveless: Sleeveless  
       sport_jacket:
         long_sleeved: long_sleeved
         sleeveless: Sleeveless  
@@ -1238,9 +809,6 @@ constants:
         long_sleeved: long_sleeved
         sleeveless: Sleeveless  
       coat:
-        long_sleeved: long_sleeved
-        sleeveless: Sleeveless  
-      coats:
         long_sleeved: long_sleeved
         sleeveless: Sleeveless  
     stretch_type:
@@ -1292,33 +860,7 @@ constants:
       size_title_type: selection
       retailer_reference: text
       control_number: text
- 
- fit_points:
-    neck: Neck
-    shoulder_across_front: Shoulder across front
-    shoulder_across_back: Shoulder across back
-    shoulder_length: Shoulder length
-    arm_length: Arm length
-    bicep: Bicep
-    triceps : Triceps
-    wrist: Wrist
-    bust: Bust
-    chest: Chest
-    back_waist: Back Waist
-    waist: Waist
-    cf_waist: CF Waist
-    back_waist: Back Waist
-    waist_to_hip  : Waist to Hip  
-    hip: Hip
-    outseam: Outseam
-    inseam: inseam
-    thigh: Thigh
-    knee: Knee 
-    calf: Calf
-    ankle: Ankle
-    outseam: Outseam
-    inseam: inseam
-    hem_length: hem_length   
+    
         
  clothing_type_target:
   Blouse : top

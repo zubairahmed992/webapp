@@ -1,5 +1,10 @@
 image_category:
 
+  product_models:    
+    original:
+      prefix: 
+      dir:  'uploads/ltf/product_models/'
+  
   retailer:    
     original:
       prefix: 
@@ -50,6 +55,37 @@ image_category:
       width: 126
       prefix:
       dir:  'uploads/ltf/clothing_type/iphone'
+      
+  categories:
+    original:
+      prefix:
+      dir:  'uploads/ltf/categories'
+
+    web:
+      height: 126
+      width: 126
+      prefix:
+      dir:  'uploads/ltf/categories/web'
+
+    iphone:
+      height: 126
+      width: 126
+      prefix:
+      dir:  'uploads/ltf/categories/iphone'
+
+
+  banner:
+    original:
+      prefix:
+      dir:  'uploads/ltf/banner'
+
+    web:
+      prefix:
+      dir:  'uploads/ltf/banner/web'
+
+    iphone:
+      prefix:
+      dir:  'uploads/ltf/banner/iphone'
 
   product:
     original:

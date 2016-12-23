@@ -204,6 +204,11 @@ class Product {
      */
     private $disabled;
     
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $product_model_height;
+    
     
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -956,6 +961,29 @@ class Product {
     {
         return $this->garment_detail;
     }
+    
+    /* Set product_model_height
+     *
+     * @param string $productModelHeight
+     * @return Product
+     */
+    public function setProductModelHeight($productModelHeight)
+    {
+        $this->product_model_height = $productModelHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get product_model_height
+     *
+     * @return string 
+     */
+    public function getProductModelHeight()
+    {
+        return $this->product_model_height;
+    }
+    
 
     /**
      * Set layering

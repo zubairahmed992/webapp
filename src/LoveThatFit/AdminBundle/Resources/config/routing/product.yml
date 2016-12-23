@@ -1,0 +1,220 @@
+#-------------------------------------------------------------
+admin_product_image_upload_index:
+    pattern:  /admin/product_image_upload_index/{product_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:imageUploadIndex, product_id : 0}
+#-------------------------------------------------------------
+admin_product_image_upload:
+    pattern:  /admin/product_image_upload
+    defaults: { _controller: LoveThatFitAdminBundle:Product:imageUpload}
+
+#-------------------------------------------------------------
+admin_product_foo:
+    pattern:  /admin/product_foo/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:foo , id: 0}
+
+#-------------------------------------------------------------
+admin_products:
+    pattern:  /admin/products/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:index , page_number: 1, sort:id}
+
+
+#--------------------------- Product Details --------------    
+admin_product_raw_edit:
+    pattern:  /admin/product_raw/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productRawEdit }
+admin_product_raw_update:
+   pattern:  /admin/product_raw/{id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productRawUpdate }
+   
+admin_product_detail_new:
+     pattern:  /admin/product/product_detail/new
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailNew }
+
+admin_product_detail_create:
+     pattern:  /admin/product/product_detail/create
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailCreate}
+
+admin_product_detail_show:
+    pattern:  /admin/productdetail/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailShow }     
+admin_product_detail_edit:
+    pattern:  /admin/productdetail/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailEdit }
+admin_product_detail_update:
+   pattern:  /admin/productdetail/{id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailUpdate }
+
+admin_product_detail_delete:
+   pattern:  /admin/productdetail/{id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDelete }
+   
+admin_product_stats:
+   pattern:  /admin/product/stats
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productStats }
+
+admin_product_detail_download:
+   pattern:  /admin/productdetail/{id}/download
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDownload }
+admin_product_detail_zipdownlaod:     
+    pattern:  /admin/product/zip_download
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailZipDownload}
+#--------------------------- Product Color --------------       
+
+admin_product_detail_color_image_upload:
+   pattern:  /admin/productdetail/{id}/color/image_upload
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productColorTemporaryImageUpload,_format: json} 
+
+admin_product_detail_color_create:
+   pattern:  /admin/productdetail/{id}/color/create
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorCreate }   
+
+admin_product_detail_color_add:
+   pattern:  /admin/productdetail/{id}/color/add
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorAddNew }
+   
+admin_product_detail_color_edit:
+   pattern:  /admin/productdetail/{id}/color/{color_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorEdit }
+admin_product_detail_color_update:
+   pattern:  /admin/productdetail/{id}/color/{color_id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorUpdate }   
+admin_product_detail_color_delete:
+   pattern:  /admin/productdetail/{id}/color/{color_id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorDelete }  
+  
+#--------------------------- Product Sizes --------------       
+   
+
+  
+admin_product_detail_size_update:
+   pattern:  /admin/productdetail/{id}/size/{size_id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailSizeUpdate }   
+admin_product_detail_size_delete:
+   pattern:  /admin/productdetail/{id}/size/{size_id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailSizeDelete }   
+    
+#--------------------------- Product Items --------------       
+   
+admin_product_detail_item_edit:
+   pattern:  /admin/productdetail/{id}/item/{item_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemEdit }   
+  
+admin_product_detail_item_update:
+   pattern:  /admin/productdetail/{id}/item/{item_id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemUpdate } 
+
+admin_product_price_update:
+   pattern:  /admin/product_price/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:itemPriceUpdate } 
+
+admin_product_detail_item_delete:
+   pattern:  /admin/productdetail/{id}/delete/{item_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemDelete }   
+   
+admin_product_detail_item_two_piece_new:
+   pattern:  /admin/productdetail/{id}/piece/{item_id}/new
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceAddNew } 
+   
+admin_product_detail_item_two_piece_create:
+   pattern:  /admin/productdetail/{id}/piece/{item_id}/create
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceCreate } 
+
+admin_product_detail_item_two_piece_delete:
+   pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceDelete } 
+
+admin_product_detail_item_two_piece_edit:   
+   pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceEdit }
+   
+admin_product_detail_item_two_piece_update:   
+   pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceUpdate }
+   
+   
+admin_product_detail_item_raw_image_edit:
+   pattern:  /admin/productdetail/{id}/raw_image/{item_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageEdit }   
+
+admin_product_detail_item_raw_image_download:
+   pattern:  /admin/productdetail/{id}/raw_image/{item_id}/download
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDownload } 
+admin_product_detail_item_raw_image_delete:   
+   pattern:  /admin/productdetail/{id}/delete/{item_id}/raw_image_delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDelete }   
+   
+#--------------------------- Product Search -----------------------------------#  
+admin_product_search_from:
+     pattern:  /admin/product/searchForm
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachForm}
+admin_product_search_result:
+     pattern:  /admin/product/searchResult/{page_number}/{sort}
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachResult,page_number: 1, sort:id}
+admin_product_search_category_with_target:
+     pattern:  /admin/product/searchCategory
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachCategory} 
+     
+admin_product_detail_size_edit:
+   pattern:  /admin/productdetail/{id}/size/{size_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailSizeEdit }     
+
+admin_product_size_measurement_edit:
+   pattern:  /admin/product/{id}/size/{size_id}/meaurement/{measurement_id}/{title}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementEdit }
+
+admin_product_size_measurement_editUpdate:
+     pattern:  /admin/product/{id}/size/{size_id}/meaurement/{measurement_id}/{title}/edit/Update
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementEditUpdate }
+
+admin_product_detail_size_measurement_create:
+   pattern:  /admin/product/{id}/size_meaurement/{size_id}/{title}/create
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementCreate } 
+   
+admin_product_size_measurement_create:
+     pattern:  /admin/product/{id}/sizemeaurement/{size_id}/create
+     defaults: { _controller: LoveThatFitAdminBundle:Product:createProductSizeMeasurement }
+
+admin_product_size_measurement_new:
+     pattern:  /admin/product/{id}/size_meaurement/{size_id}/{title}/new
+     defaults: { _controller: LoveThatFitAdminBundle:Product:SizeMeasurementNew }
+
+admin_product_size_measurement_update:
+     pattern:  /admin/product/{id}/size_meaurement/{size_id}/{title}/update
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementupdate }     
+     
+admin_product_size_measurement_delete:
+     pattern:  /admin/product/{id}/size/{size_id}/meaurement/{title}/delete/{measurement_id}
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementdelete }     
+     
+admin_product_gender_base_clothing_type:
+    pattern:  /admin/product/gender/clothing_type
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productGenderBaseClothingType }
+
+admin_product_get_attribute:
+    pattern:  /admin/product/get/attribute
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute }       
+    
+#-------New product Dpecification Ajax ---------------------------------------#
+admin_product_gender_base_clothing_type:
+    pattern:  /admin/product/gender_base/clothing_type
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productGenderBaseClothingType }
+
+admin_product_get_attribute:
+    pattern:  /admin/product/get/attribute
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute } 
+    
+admin_product_get_clothingtype:
+    pattern:  /admin/product/get/clothingtype
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingType }     
+    
+admin_product_get_retailer_base_brand:
+    pattern:  /admin/product/retailer/brand
+    defaults: { _controller: LoveThatFitAdminBundle:Product:findBrandBaseOnRetailer }    
+ 
+ #-------------------Multiple image uploading ----------------------------------#
+admin_product_detail_multiple_images_uploading:
+   pattern:  /admin/productdetail/multiple_images/uploading
+   defaults: { _controller: LoveThatFitAdminBundle:Product:multplieImageUpload }     
+
+
+      
