@@ -146,9 +146,6 @@ ws_show_user_cart:
     pattern:  /ws/show_user_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart}
 
-ws_show_user_cart_web3:
-    pattern:  /ws/show_user_cart_web3
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart3}
 #-------------------------Shopping Cart Routes-------------------------------------
 
 #-------------------------Caliboration Image Approved/Reject Routes-------------------------------------
@@ -161,10 +158,19 @@ ws_events_list:
     pattern:  /ws/events_list
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:eventsList}
 
-ws_banner_category:
-    pattern:  /ws/banner_category
+#// APP 3.0------------------------------------------------------- 
+nws_banner_category:
+    pattern:  /nws/banner_category
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerCategoryList}
     
-product_list:
-    pattern:  /ws/product_list
-    defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsList}    
+nws_product_list:
+    pattern:  /nws/product_list
+    defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsList}  
+    
+nws_product_detail:
+    pattern:  /nws/product_detail
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productDetailWithImages } 
+    
+nws_show_user_cart:
+    pattern:  /nws/show_user_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart3}    

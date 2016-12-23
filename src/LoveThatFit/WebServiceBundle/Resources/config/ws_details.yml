@@ -440,9 +440,10 @@ ws_events_list:
           api_key: 00000000000000000000000000000          
     request_type: post
     description: return events list against authentication token 
-    
-ws_banner_category:
-    pattern:  /ws/banner_category
+
+#//////////////////// APP 3.0///////////////////////////////////    
+nws_banner_category:
+    pattern:  /nws/banner_category
     title: banner_category
     params:
        gender: f
@@ -450,11 +451,18 @@ ws_banner_category:
     request_type: post
     description: return Category list against authentication token
     
-product_list:
-    pattern:  /ws/product_list
+nws_product_list:
+    pattern:  /nws/product_list
     title: product_list
     params:
       gender: f
       auth_token: 56565656566
       category_ids: [17,18,19]
       display_screen: product_list
+
+nws_show_user_cart:
+   pattern:  /nws/show_user_cart
+   title: show_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: get      
