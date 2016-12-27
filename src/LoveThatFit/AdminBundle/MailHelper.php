@@ -125,11 +125,12 @@ class MailHelper {
 
   public function sendFeedbackEmail($user,$content) {
 
-	$from = $this->conf['parameters']['mailer_user'];
+	$from = $user->getEmail();
+	//$from = $this->conf['parameters']['mailer_user'];
 	//$to = $user->getEmail();
 	$to = "membersupport@selfiestyler.com";
 	$body = "Following feedback sent by ".$user->getEmail()."<br><br>".$content;
-	$subject = 'SelfieStyler: Feedback Received. ';
+	$subject = 'SelfieStyler: Feedback Received. '."<br>";
 	//return 'emailing is currently disabled';
 	$message = \Swift_Message::newInstance()
 	  ->setSubject($subject)
@@ -137,7 +138,10 @@ class MailHelper {
 	  ->setTo($to)
 	  ->setContentType("text/html")
 	  ->setBody($body);
+
     if($this->server!='local') {
+
+
       try {
         $this->mailer->send($message);
       } catch (\Swift_TransportException $e) {

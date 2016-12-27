@@ -173,9 +173,15 @@ class WSUserController extends Controller {
         $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
 
         if (count($user) > 0) {
+
             $ufb = new \LoveThatFit\UserBundle\Entity\UserFeedback();
             $ufb->setUser($user);
-            $ufb->setMessage($ra['message']);
+            //Added for debugging To make sure which environment we are wokring
+            $environmentURL = $this->getRequest()->getHost();
+            // Concatenate with environment we are working now!
+            $message = $ra['message'] . '<br><br> Environment: '.$environmentURL;
+
+            $ufb->setMessage($message);
             $ufb->setCreatedAt(new \DateTime('now'));
 
             $em = $this->getDoctrine()->getManager();

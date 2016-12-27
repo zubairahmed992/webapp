@@ -17,7 +17,7 @@ class EvaluationPopUpProductsType extends AbstractType
         $builder
             ->add('product_id', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Product',
-                    'property' => 'name',
+                    'property' => 'NameAndController', //get this method from the LoveThatFit\AdminBundle\Entity\Product
                     'empty_value'   => 'Please Select Product',
                     'label'=>'Select Product',
                     'query_builder' => function (EntityRepository $er) {

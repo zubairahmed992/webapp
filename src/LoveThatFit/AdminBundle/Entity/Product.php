@@ -1377,4 +1377,13 @@ class Product {
             'layering' => $this->layering,                        
         );
     }
+
+    /*
+     * This function use in EvaluationPopUpProductsType & EvaluationDefaultProductsType
+     * for generate product with their controller number
+     */
+    public function getNameAndController()
+    {
+        return $this->name .' ('. $this->control_number.')';
+    }
 }
