@@ -460,7 +460,7 @@ nws_cart_item_add_to_cart:
    request_type: post
 
 nws_product_detail:
-   pattern:  /nws/product_detail
+   pattern:  /nws/product_detail_with_images
    title: product_detail
    params:
      auth_token: 56565656566
