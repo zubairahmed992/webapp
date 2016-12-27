@@ -1,0 +1,39 @@
+evaluationpopupproducts:
+    pattern:   /support/evaluation-popup-products
+    defaults:
+        _controller:  LoveThatFitSupportBundle:EvaluationPopUpProducts:index
+
+evaluationpopupproducts_show:
+    pattern:   /support/evaluation-popup-products/{id}/show
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:show }
+
+evaluationpopupproducts_new:
+    pattern:   /support/evaluation-popup-products/new
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:new }
+
+
+evaluationpopupproducts_edit:
+    pattern:   /support/evaluation-popup-products/{id}/edit
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:edit }
+
+evaluationpopupproducts_create:
+    pattern:   /support/evaluation-popup-products/create
+    defaults:
+        _controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:create
+        template:     'LoveThatFitSupportBundle:EvaluationPopUpProducts:new.html.twig'
+    requirements:
+        _method:  POST
+
+evaluationpopupproducts_update:
+    pattern:   /support/evaluation-popup-products/{id}/update
+    defaults:
+        _controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:update
+        template: 'LoveThatFitSupportBundle:EvaluationPopUpProducts:edit.html.twig'
+    requirements:
+        _method:  POST
+
+evaluationpopupproducts_delete:
+    pattern:   /support/evaluation-popup-products/{id}/delete
+    defaults: {_controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:delete }
+    requirements:
+        _method:  POST

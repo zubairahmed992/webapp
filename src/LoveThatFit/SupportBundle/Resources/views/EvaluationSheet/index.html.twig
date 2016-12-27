@@ -223,6 +223,29 @@ $(document).ready(function(){
         }
     });
 
+    //Pop-up
+    $('a.pop_up_store').click(function (event){
+        event.preventDefault();
+
+        if ($("#user_id").val() != "") {
+
+
+            $('#error_attribute').html('');
+            var ar = {
+                user_id:$("#user_id").val()};
+
+            var compare_url = "evaluation_sheet/onhand_print_pop_up";
+
+            var form = $('<form action="' + compare_url + '" method="post" target="_blank">' +
+                    '<input type="hidden" name="user_id"  id="user_id" value="' + $("#user_id").val() + '" /><input type="hidden" name="sorting_col"  id="sorting_col" value="recommended_fit_index" /><input type="hidden" name="sorting_order"  id="sorting_order" value="down" />' +'</form>');
+            $('body').append(form);
+            form.submit();
+        } else {
+            $('#summary_ajax').html('');
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+        }
+    });
+
 });
     </script>
 
@@ -240,7 +263,8 @@ $(document).ready(function(){
            Try on Products </a> |
             <a id='cart' class='cart' href="javascript:;">Shopping cart items </a> |
             <a id='favourite' class='favourite' href="javascript:;">Favorite items </a> |
-            <a id='onhand_fit_index' class='onhand_fit_index' href="javascript:;">Highest Fit Index</a>
+            <a id='onhand_fit_index' class='onhand_fit_index' href="javascript:;">Highest Fit Index</a> |
+            <a id='pop_up_store' class='pop_up_store' href="javascript:;">Pop Up Store</a>
         {{ form_rest(userForm) }}
         </form>                 
         </div>

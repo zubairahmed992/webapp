@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\SupportBundle\Form\Type\AlgoritumTestlType;
 use LoveThatFit\SupportBundle\Form\Type\AlgoritumProductTestlType;
 use LoveThatFit\SupportBundle\Entity\EvaluationDefaultProducts;
+use LoveThatFit\SupportBundle\Entity\EvaluationPopUpProducts;
 use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 
@@ -231,11 +232,154 @@ class EvaluationSheetController extends Controller {
 
 
     /*
+     * Pop up evaluation sheet
+     * */
+
+    public function onhandPopUpPrintAction()
+    {
+        $decoded = $this->get('request')->request->all();
+        $arr = $this->test_demo_data_fit_index_pop_up(
+            $decoded['user_id'],
+            $decoded['sorting_col'],
+            $decoded['sorting_order']
+        );
+        $result=[];
+        $f = 0;
+        foreach ($arr['products'] as $product) {
+            foreach ($result as $value) {
+                if ($product['recommended_fit_index'] < $value['recommended_fit_index'] &&
+                    $product['clothing_type'] == $value['clothing_type']
+                ) {
+                    $f = 1;
+                }
+            }
+            if ($f == 0) {
+                $result[] = $product;
+            }
+            $f = 0;
+        }
+
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndex.html.twig', array('products' => $result, 'user'=> $arr['user']));
+    }
+
+    private function test_demo_data_fit_index_pop_up($user_id, $sorting_col, $sorting_order)
+    {
+
+        $user = $this->get('user.helper.user')->find($user_id);
+
+        //Get Default product
+        //Call LoveThatFitSupportBundle:EvaluationPopUpProducts
+        $defaultProducts = $this->getEvaluationSheetDefaultProducts('LoveThatFitSupportBundle:EvaluationPopUpProducts');
+        
+        //Get Default Product IDs
+        $ids = array_keys($defaultProducts['product_id_sizes']);
+
+
+        //Get Default Product IDs & sizes
+        $try_sizes = $defaultProducts['product_id_sizes'];
+
+
+        $products = $this->get('admin.helper.product')->listProductByIds($ids);
+
+        $pa     = array();
+        $result = array();
+
+        $algo = new FitAlgorithm2($user);
+        $serial = 1;
+        foreach ($products as $p) {
+            $algo->setProduct($p);
+            if ($try_sizes[$p->getId()] !='NA'){
+                if (strpos($try_sizes[$p->getId()], ',') !== false) {
+                    $breakSizes = explode(",",$try_sizes[$p->getId()]);
+                    $fb = "";
+                    $fbExists = 0;
+                    $nameArray = array(
+                        'name' => $p->getName(),
+                        'control_number' => $p->getControlNumber(),
+                        'brand' => $p->getBrand()->getName(),
+                        'clothing_type' => $p->getClothingType()->getName(),
+                        'color'=> $p->getdisplayProductColor()->getTitle(),
+                        'serial'=>$serial,
+                    );
+                    for ($i=0; $i <count($breakSizes) ; $i++) {
+                        $fb = $algo->getFeedBackForSizeTitle($breakSizes[$i]);
+                        if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                            if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                                $nameArray['recommended_size']= $fb["recommendation"]['title'];
+                                $nameArray['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+                            }
+                            if ($nameArray['recommended_size'] == $breakSizes[$i]) {
+                                if ($nameArray['recommended_fit_index'] > 0 &&
+                                    $fb["feedback"]['fit_index'] > 0
+                                ) {
+                                    $fbExists = 1;
+                                    $nameArray['fit_index'] = $fb["feedback"]['fit_index'];
+                                    $nameArray['size'] = $fb["feedback"]['title'];
+                                    $nameArray['fits'] = $fb["feedback"]['fits'];
+                                }
+                            }
+                        }
+                        if ($fbExists == 1) {
+                            $pa[$p->getId()] = $nameArray;
+                        }
+                    }
+                } else {
+                    $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+                    if (is_array($fb) && array_key_exists('feedback', $fb)) {
+                        if(is_array($fb) && array_key_exists('recommendation', $fb)){
+                            $rec_size= $fb["recommendation"]['title'];
+                            $rec_fit_ind=$fb["recommendation"]['fit_index'];
+                        }
+
+                        if ($rec_size == $fb["feedback"]['title']) {
+                            if ($rec_fit_ind > 0 && $fb["feedback"]['fit_index'] > 0) {
+                                $pa[$p->getId()] = array('name' => $p->getName(),
+                                    'control_number' => $p->getControlNumber(),
+                                    'brand' => $p->getBrand()->getName(),
+                                    'fit_index'=>$fb["feedback"]['fit_index'],
+                                    'clothing_type' => $p->getClothingType()->getName(),
+                                    'size'=> $fb["feedback"]['title'],
+                                    'color'=> $p->getdisplayProductColor()->getTitle(),
+                                    'serial'=>$serial,
+                                    'fits'=>$fb["feedback"]['fits'],
+                                    'recommended_size'=> $fb["recommendation"]['title'],
+                                    'recommended_fit_index'=>$fb["recommendation"]['fit_index'],
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+
+            $serial++;
+        }
+
+        if ($sorting_col != "" && $sorting_order != "") {
+            if ($sorting_order == "up") {
+                uasort($pa, $this->make_comparer(array($sorting_col, SORT_ASC)));
+            } elseif($sorting_order == "down") {
+                uasort($pa, $this->make_comparer(array($sorting_col, SORT_DESC)));
+            }
+        }
+
+        return array(
+            'products' => $pa,
+            'user' => $user,
+        );
+    }
+
+    /*
+     * End Pop-up
+     * */
+
+    /*
      * Return Array
      * */
-    private function getEvaluationSheetDefaultProducts(){
+    private function getEvaluationSheetDefaultProducts($popUpStore = false){
+
+        $dynamicEntity = ($popUpStore) ? $popUpStore:  'LoveThatFitSupportBundle:EvaluationDefaultProducts' ;
         $em = $this->getDoctrine()->getManager();
-        $defaultProductList = $em->getRepository('LoveThatFitSupportBundle:EvaluationDefaultProducts')->findAll();
+        $defaultProductList = $em->getRepository($dynamicEntity)->findAll();
         $defaultProductsArray['def_product_ids'] = array();
         $defaultProductsArray['def_product_ids_sizes'] = array();
         $defaultProductsArray['product_id_sizes'] = array();

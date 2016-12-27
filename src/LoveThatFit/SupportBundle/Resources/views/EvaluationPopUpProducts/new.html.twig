@@ -14,7 +14,7 @@
         var url = "{{ path('get_product_sizes') }}";
         $(document).ready(function () {
             var config = {
-                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes': {},
+                '#lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes': {},
             }
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
@@ -23,27 +23,27 @@
     </script>
 
     <div class="p_listing">
-        <h2>Add</h2>
         <div class="form-style-2">
+            <h2>Add</h2>
             <p>
-                <a href="{{ path('evaluationdefaultproducts') }}">
+                <a href="{{ path('evaluationpopupproducts') }}">
                     Back to the list
                 </a>
             </p>
             <div class="form-style-2-heading">Add new product</div>
 
 
-            <form action="{{ path('evaluationdefaultproducts_create') }}" name="productSizes"
+            <form action="{{ path('evaluationpopupproducts_create') }}" name="productSizes"
                   method="post" {{ form_enctype(form) }}>
                 {{ form_widget(form) }}
                 <p>
-                    <label for="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" class="required">Available
+                    <label for="lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes" class="required">Available
                         Sizes</label>
                 <div class="load-sizes-loader" style="display: none">
                     <img src="{{ asset('bundles/lovethatfit/support/ajax-loader.gif') }}"/>
                 </div>
-                <select name="lovethatfit_supportbundle_evaluationdefaultproductstype[product_sizes][]"
-                        id="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" required="required"
+                <select name="lovethatfit_supportbundle_evaluationpopupproductstype[product_sizes][]"
+                        id="lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes" required="required"
                         multiple>
                 </select>
                 </p>
@@ -60,7 +60,7 @@
 
     <script>
         {% for product in exists_products %}
-        $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id option[value='{{ product }}']").remove();
+        $("#lovethatfit_supportbundle_evaluationpopupproductstype_product_id option[value='{{ product }}']").remove();
         {% endfor %}
     </script>
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/ajax-script.js') }}"></script>

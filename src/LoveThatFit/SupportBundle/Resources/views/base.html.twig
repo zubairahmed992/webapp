@@ -61,11 +61,47 @@
                     </a></li>
                 {% endif %}
                 {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
-                    <li><a href="{{ path('evaluationdefaultproducts') }}">
+                    <li>
+
+                        <div class="dropdown">
+                            <div class="dropdown-toggle" type="button" data-toggle="dropdown" style="padding-bottom: 10px;margin-top: 10px; color: #999999; cursor: pointer;">
+                                Manage Reports
+                                <span class="caret"></span>
+                            </div>
+
+                            <ul class="dropdown-menu" style="background-color: #0c0c0c;">
+                                <li>
+                                    <a href="{{ path('evaluationdefaultproducts') }}" style="color: #999999;">
+                                        <span class='{% if (app.request.attributes.get("_route") == "evaluationdefaultproducts") %} support-tabs-open {% endif %}'>
+                                            Default Store
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('evaluationpopupproducts') }}" style="color: #999999;">
+                                        <span class='{% if (app.request.attributes.get("_route") == "evaluationpopupproducts") %} support-tabs-open {% endif %}'>
+                                            Pop-up Store
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                        </div>
+
+                       {# <a href="{{ path('evaluationdefaultproducts') }}">
                         <span class='{% if (app.request.attributes.get("_route") == "evaluationdefaultproducts") %} support-tabs-open {% endif %}'>
                         Manage Reports</span>
-                        </a></li>
+                        </a>#}
+
+                    </li>
                 {% endif %}
+              {#  {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
+                    <li><a href="{{ path('evaluationpopupproducts') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "evaluationpopupproducts") %} support-tabs-open {% endif %}'>
+                        Pop-Up Manage Reports</span>
+                        </a></li>
+                {% endif %}#}
                 {% if app.session.get('Permissions')['evaluationSheet']['view'] == 1 %}
                     <li><a href="{{ path('support_evaluation_sheet_index') }}">
                         <span class='{% if (app.request.attributes.get("_route") == "support_evaluation_sheet_index") %} support-tabs-open {% endif %}'>
@@ -251,6 +287,7 @@
         
 	});	
 	</script>
+
 
     </body>
 </html>

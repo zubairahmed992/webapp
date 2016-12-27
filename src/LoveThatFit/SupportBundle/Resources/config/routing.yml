@@ -120,4 +120,8 @@ support_caliboration:
 evaluation_default_products:
     resource: "@LoveThatFitSupportBundle/Resources/config/routing/evaluation_default_products.yml"
     prefix:   /
+
+evaluation_popup_products:
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/evaluation_popup_products.yml"
+    prefix:   /
 ## caliboration process routes end ##

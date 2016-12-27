@@ -95,7 +95,7 @@ function editPieceView(product_id,item_id,id){
 }
 </style>
 <div id="pro_clr"> 
-    <h2> Product Items</h2>
+    <h2> Product Items123</h2>
     <span style="visibility: hidden" id='update_item_price_url'>{{path('admin_product_price_update')}}</span>
     <input type="text" id='txt_item_price_for_update' placeholder="price">&nbsp;
     <input type="hidden" id='hdn_product_id' value="{{product.id}}">&nbsp;
@@ -189,7 +189,7 @@ function editPieceView(product_id,item_id,id){
 
                 <div class="row-fluid show-grid p_title" style="position: relative">
                      <div class="span1">{{pi.sku}} </div>
-                     <div class="span1">{{pi.price>0?'$'~pi.price:pi.price}} </div>
+                     <div class="span1">{{pi.price>0?'$'~pi.price|number_format(2) :pi.price|number_format(2) }} </div>
                     <div class="span2">{{pi.productSize.bodyType}} {{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
                     <div class="span2" onmouseover="document.getElementById('myimg_'+{{ pi.id }}).style.display='block';"
@@ -301,7 +301,11 @@ function editPieceView(product_id,item_id,id){
                }
          });     
     });
-    
-    
-    
+
+
+ var priceFloatUpdate = $('#product_price');
+ if (priceFloatUpdate.length > 0 ) {
+     var num = parseFloat(priceFloatUpdate.val());
+     var new_num = priceFloatUpdate.val(num.toFixed(2));
+ }
 </script>

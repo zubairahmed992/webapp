@@ -1,7 +1,21 @@
 $(document).ready(function () {
+
     var sizesDropdown = $('#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes');
+    var productIdDropdown = $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id");
+
+    //If CRUD for Pop-Up reporting
+    if ( !sizesDropdown.length){
+        sizesDropdown = $('#lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes');
+    }
+
+    //If CRUD for Pop-Up reporting
+    if ( !productIdDropdown.length){
+        productIdDropdown = $("#lovethatfit_supportbundle_evaluationpopupproductstype_product_id");
+    }
+
+
     var chosenContainer = $('.chosen-container');
-    $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id").change(function () {
+    productIdDropdown.change(function () {
         $('.load-sizes-loader').css('display', 'inline-block');
         chosenContainer.css('display', 'none');
         var selectedProduct = $(this).val();

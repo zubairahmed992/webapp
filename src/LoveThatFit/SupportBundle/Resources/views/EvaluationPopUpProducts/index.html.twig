@@ -6,9 +6,9 @@
 
 {% block body %}
     <div class="p_listing">
-        <h2>Default Store</h2>
+        <h2>Pop-up Store</h2>
         <h5>
-            <button onclick="location.href = '{{path('evaluationdefaultproducts_new') }}'">
+            <button onclick="location.href = '{{path('evaluationpopupproducts_new') }}'">
                 Add New Product
             </button>
         </h5>
@@ -41,11 +41,10 @@
                     <td>
                         <ul class="def_products">
                             {#  <li>
-                                  <a href="{{ path('evaluationdefaultproducts_show', { 'id': entity.id }) }}">show</a>
+                                  <a href="{{ path('evaluationpopupproducts_show', { 'id': entity.id }) }}">show</a>
                               </li>#}
                             <li>
-
-                                <a href="{{ path('evaluationdefaultproducts_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i></a>
+                                <a href="{{ path('evaluationpopupproducts_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i></a>
                             </li>
                         </ul>
                     </td>
