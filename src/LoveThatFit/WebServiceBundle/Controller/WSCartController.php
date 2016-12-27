@@ -25,24 +25,6 @@ class WSCartController extends Controller {
         return new Response($res);
 
     }
-	// Add Single Item to Cart Version 3.0
-    public function addItemToCart3Action() {
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-
-        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
-        if ($user) {
-            $item_id = $decoded["item_id"];
-            $qty = $decoded["quantity"];
-
-            $this->container->get('cart.helper.cart')->fillCartforService($item_id,$user,$qty);
-            $resp = 'Item has been added to Cart Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
-        } else {
-            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
-        }
-        return new Response($res);
-
-    }
     // Add Multiple Item to Cart
     public function addItemsToCartAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
@@ -117,14 +99,17 @@ class WSCartController extends Controller {
         return new Response($res);
 
     }
-	
+
+//*********************************************
+// Webservice For 3.0
+//**********************************************
     // Show User Cart Web 3.0
-    public function showUserCart3Action() {
+    public function showUserCartWithNameDescriptionAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $resp = $this->container->get('cart.helper.cart')->getUserCart($user);
+            $resp = $this->container->get('cart.helper.cart')->getUserCartWithNameDescription($user);
             $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
             foreach($resp as $key => $value)
             {
@@ -139,5 +124,24 @@ class WSCartController extends Controller {
 
     }
     #----------------------------------------------------Shopping Cart Services -------------------------#
+
+    // Add Single Item to Cart Version 3.0
+    public function addItemToCartNewAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $item_id = $decoded["item_id"];
+            $qty = $decoded["quantity"];
+
+            $this->container->get('cart.helper.cart')->fillCartforService($item_id,$user,$qty);
+            $resp = 'Item has been added to Cart Successfully';
+            $res = $this->get('webservice.helper')->response_array(true, $resp);
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+
+    }
 }
 

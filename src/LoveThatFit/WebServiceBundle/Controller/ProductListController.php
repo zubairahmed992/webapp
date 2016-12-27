@@ -20,7 +20,6 @@ class ProductListController extends Controller {
             $bannerlist = $this->get('admin.helper.Banner')->getBannerListForService($base_path);
         }
 
-
         $bannerconf= array(
             'data' => $bannerlist,
             'count'=> count($bannerlist),

@@ -350,15 +350,6 @@ ws_misc_banner:
 #     item_id: 4126
 #   request_type: post
 
-ws_cart_item_add_to_cart:
-   pattern:  /ws/add_item_to_cart
-   title: product_add_to_cart
-   params:
-     auth_token: 121c421783cd4d71d871ec16a1296091
-     quantity: 1
-     item_id: 4126
-   request_type: post
-
 ws_cart_items_add_to_cart:
    pattern:  /ws/add_items_to_cart
    title: product_add_to_cart
@@ -376,26 +367,18 @@ ws_remove_user_cart:
    request_type: post
 
 #remove single item from user cart
-#ws_remove_user_cart_item:
-#   pattern:  /ws/remove_user_item
-#   title: remove_user_cart
-#   params:
-#     auth_token: 121c421783cd4d71d871ec16a1296091
-#     item_id: 4126
-#   request_type: post
+ws_remove_user_cart_item:
+   pattern:  /ws/remove_user_item
+   title: remove_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     item_id: 4126
+   request_type: post
 
 #show user cart
 ws_show_user_cart:
    pattern:  /ws/show_user_cart
    title: show_user_cart
-   params:
-     auth_token: 121c421783cd4d71d871ec16a1296091
-   request_type: get
-   
-# #show user cart web3
-ws_show_user_cart_web3:
-   pattern:  /ws/show_user_cart_web3
-   title: show_user_cart_web3
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
    request_type: get
@@ -465,4 +448,20 @@ nws_show_user_cart:
    title: show_user_cart
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
-   request_type: get      
+   request_type: get
+
+nws_cart_item_add_to_cart:
+   pattern:  /nws/add_item_to_cart
+   title: product_add_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     item_id: 4126
+   request_type: post
+
+nws_product_detail:
+   pattern:  /nws/product_detail
+   title: product_detail
+   params:
+     auth_token: 56565656566
+     product_id: 505

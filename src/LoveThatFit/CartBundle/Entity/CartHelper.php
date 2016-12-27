@@ -124,19 +124,20 @@ class CartHelper {
 	return $cart_array;
   }
 #------------------------------Get User Cart for service--------------------------------#
-  public function getUserCart($user){
-    $cart_array=array();
-    $counter=0;
-    foreach($user->getCart() as $ci){
-      $cart_array[$counter]['price']=$ci->getProductItem()->getPrice();
-      $cart_array[$counter]['qty']=$ci->getQty();
-      $cart_array[$counter]['item_id']=$ci->getProductItem()->getId();
-      $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
-      $cart_array[$counter]['image']= $get_path["iphone6_list"];
-      $counter++;
+    public function getUserCart($user){
+        $cart_array=array();
+        $counter=0;
+        foreach($user->getCart() as $ci){
+          $cart_array[$counter]['price']=$ci->getProductItem()->getPrice();
+          $cart_array[$counter]['qty']=$ci->getQty();
+          $cart_array[$counter]['item_id']=$ci->getProductItem()->getId();
+          $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
+          $cart_array[$counter]['image']= $get_path["iphone6_list"];
+          $counter++;
+        }
+        return $cart_array;
     }
-    return $cart_array;
-  }
+
 	//-------------------------
 	public function save($cart) {
 	  $class = $this->class;
@@ -191,6 +192,52 @@ class CartHelper {
 //----------------------Find Cart By name----------------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
+    }
+
+
+//*********************************************
+// Webservice For 3.0
+//**********************************************
+
+
+//------------------------------- Add to Cart clicked Clone this after discusion with Ovais -----------------------///////////
+    public function fillCartforService($product_item_id,$user,$qty) {
+        $product_item=$this->container->get('admin.helper.productitem')->find($product_item_id);
+        $result = $this->findCartByUserId($user,$product_item);
+        if(isset($result['qty']) >  0){
+            $id = $result["id"];
+            $cart=$this->findCartById($id);
+            $setQty = $result["qty"]+$qty;
+            $cart->setQty($setQty);
+            return $this->save($cart);
+        }else{
+            $cart = $this->createNew();
+            $cart->setProductitem($product_item);
+            $cart->setUser($user);
+            $cart->setQty($qty);
+            return $this->save($cart);
+
+        }
+    }
+
+
+// Show User Cart
+    public function getUserCartWithNameDescription($user){
+        $cart_array=array();
+        $counter=0;
+        foreach($user->getCart() as $ci){
+            $cart_array[$counter]['color']=$ci->getProductItem()->getProductColor()->getTitle();
+            $cart_array[$counter]['size']=$ci->getProductItem()->getProductSize()->getTitle();
+            $cart_array[$counter]['name']=$ci->getProductItem()->getProduct()->getName();
+            $cart_array[$counter]['description']=$ci->getProductItem()->getProduct()->getDescription();
+            $cart_array[$counter]['price']=$ci->getProductItem()->getPrice();
+            $cart_array[$counter]['qty']=$ci->getQty();
+            $cart_array[$counter]['item_id']=$ci->getProductItem()->getId();
+            $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
+            $cart_array[$counter]['image']= $get_path["iphone6_list"];
+            $counter++;
+        }
+        return $cart_array;
     }
 
    

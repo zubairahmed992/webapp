@@ -141,6 +141,11 @@ ws_remove_user_cart:
     pattern:  /ws/remove_user_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:removeUserCart}
 
+#remove single item from user cart
+ws_remove_user_cart_item:
+    pattern:  /ws/remove_user_item
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:removeUserItem}
+
 #Show User Cart
 ws_show_user_cart:
     pattern:  /ws/show_user_cart
@@ -173,4 +178,9 @@ nws_product_detail:
     
 nws_show_user_cart:
     pattern:  /nws/show_user_cart
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCart3}    
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showUserCartWithNameDescription}
+
+#Add Single Item to Cart
+nws_cart_single_item:
+    pattern:  /nws/add_item_to_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
