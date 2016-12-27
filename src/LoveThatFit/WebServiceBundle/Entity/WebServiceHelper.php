@@ -848,6 +848,9 @@ class WebServiceHelper {
         }
 
         $p['model_height'] = $product->getProductModelHeight();
+        $p['description'] = $product->getDescription();
+        $p['title'] = $product->getName();
+        $p['fitting_room_status'] = 0;
 
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
