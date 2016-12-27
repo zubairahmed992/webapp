@@ -226,7 +226,14 @@ class ClothingTypeHelper {
         }
         return $cat_array;
     }
-    
+    #----------------------------------------------
+    public function getMixArray(){        
+        $cat_array=array();
+        foreach($this->repo->findAllRecord() as $key=>$value){
+            $cat_array[$value->getName()]=$value->getName();            
+        }
+        return $cat_array;
+    }    
   #-------------------------------------------------------------------------------#
     public function getDescriptionArray($gender=null,$base_path){
         $cat_list=$this->repo->findAllAvailableRecords();

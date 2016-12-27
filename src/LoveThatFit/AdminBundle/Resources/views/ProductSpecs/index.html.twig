@@ -1,0 +1,40 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active">Product Specification mapping</li>
+{% endblock %}
+
+{% block body %}
+
+<div class="p_listing">     
+    <h1>Product Specification mappings</h1>
+    <div class="btn_wrapper2">
+        <a href="{{ path('admin_product_specs_csv_data_input') }}" class="btn">Add New</a>     
+    </div>    
+    <div class="clearfix"></div>      
+    <div class="bs-docs-grid">              
+
+        <div class="row-fluid">
+            <div class="span1 hds">ID</div>
+            <div class="span1 hds">Title</div>            
+            <div class="span1 hds">Brand    </div>
+
+            <div class="span1 hds"></div>
+
+        </div>  
+
+          {% for sm in specs_mappings %}
+        <div class="row-fluid show-grid">
+            <div class="span1">{{sm.Id}}</div>
+            <div class="span1">{{sm.Title}}</div>
+            <div class="span1">{{sm.Brand}}</div>
+            <div class="span1">
+                <a href="{{ path('admin_product_specs_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}"><i class="icon-edit"></i></a>
+                <div>                    
+                </div> 
+            </div>              
+        </div>
+{% endfor %}
+
+    </div>
+</div>
+{% endblock %}
