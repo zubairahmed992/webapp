@@ -237,6 +237,7 @@ class EvaluationSheetController extends Controller {
 
     public function onhandPopUpPrintAction()
     {
+
         $decoded = $this->get('request')->request->all();
         $arr = $this->test_demo_data_fit_index_pop_up(
             $decoded['user_id'],
@@ -245,7 +246,36 @@ class EvaluationSheetController extends Controller {
         );
         $result=[];
         $f = 0;
-        foreach ($arr['products'] as $product) {
+
+        /**/
+
+        /*foreach ($arr['products'] as $product) {
+            $brands = $product->getBrand();
+            echo $brands->getName();
+            echo "<hr>";
+            $clothTypeInfo = $product->getClothingType();
+            echo $clothTypeInfo->getName();
+            echo "<hr>";
+            echo $product->getControlNumber();
+
+            exit;
+            foreach ($result as $value) {
+                if ($product['recommended_fit_index'] < $value['recommended_fit_index'] &&
+                    $product['clothing_type'] == $value['clothing_type']
+                ) {
+                    $f = 1;
+                }
+            }
+            if ($f == 0) {
+                $result[] = $product;
+            }
+            $f = 0;
+        }*/
+        /**/
+
+
+        //Disable this becauswe client recent comment on Web-2293/12-28-2016
+       /* foreach ($arr['products'] as $product) {
             foreach ($result as $value) {
                 if ($product['recommended_fit_index'] < $value['recommended_fit_index'] &&
                     $product['clothing_type'] == $value['clothing_type']
@@ -259,7 +289,8 @@ class EvaluationSheetController extends Controller {
             $f = 0;
         }
 
-        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndex.html.twig', array('products' => $result, 'user'=> $arr['user']));
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndexPopup.html.twig', array('products' => $result, 'user'=> $arr['user']));*/
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndexPopup.html.twig', array('products' =>$arr['products'], 'user'=> $arr['user'],'default_products'=>$arr['default_products']));
     }
 
     private function test_demo_data_fit_index_pop_up($user_id, $sorting_col, $sorting_order)
@@ -283,10 +314,13 @@ class EvaluationSheetController extends Controller {
 
         $pa     = array();
         $result = array();
-
-        $algo = new FitAlgorithm2($user);
+        //This ALgo disable due to the lated client reply on WEB-2293
+        /*$algo = new FitAlgorithm2($user);
         $serial = 1;
         foreach ($products as $p) {
+
+
+
             $algo->setProduct($p);
             if ($try_sizes[$p->getId()] !='NA'){
                 if (strpos($try_sizes[$p->getId()], ',') !== false) {
@@ -360,11 +394,12 @@ class EvaluationSheetController extends Controller {
             } elseif($sorting_order == "down") {
                 uasort($pa, $this->make_comparer(array($sorting_col, SORT_DESC)));
             }
-        }
+        }*/
 
         return array(
-            'products' => $pa,
+            'products' => $products,
             'user' => $user,
+            'default_products'=>$try_sizes
         );
     }
 

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Untitled Document</title>
+    <style>
+
+        body {
+            font-size: 80%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .sur_tbl {
+            border-top: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        .sur_tbl td {
+            border-bottom: 1px solid #333;
+            border-left: 1px solid #333;
+            padding: 5px;
+        }
+
+        .sur_tbl td table td {
+            border-right: 1px solid #000 !important;
+            border-left: 0px solid #000 !important;
+            border-bottom: 1px solid #000 !important;
+        }
+
+        .sur_tbl td table tr:last-child td {
+            border-bottom: 0px solid #000 !important;
+        }
+
+        .sur_tbl td table td:last-child {
+            border-right: 0px solid #000 !important;
+
+        }
+
+        .nogap {
+            padding: 0px !important;
+        }
+
+        .tbl_hds {
+            font-weight: bold;
+            font-size: 1.5em !important;
+            background: #CCC;
+            padding: 20px !important;
+        }
+
+        .extrapadding {
+            padding-top: 30px !important;
+            padding-bottom: 30px !important;
+            font-size: 2em;
+        }
+
+        .mar-top {
+            margin-top: 20px;
+        }
+
+        .alert {
+            padding: 20px;
+            background-color: #ff9800;
+            color: white;
+            text-align: center;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+{% if not user.getUserImageSpec %}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Calibration not completed yet.</strong>
+    </div>
+{% endif %}
+
+
+<table cellspacing="0" cellpadding="0" width="100%" class="sur_tbl">
+    <col width="163"/>
+    <col width="167"/>
+    <col width="128"/>
+    <col width="101"/>
+    <col width="108"/>
+    <col width="101" span="6"/>
+    <tr>
+        <td colspan="3" width="330" class="tbl_hds">ID#:{{ user.id }}</td>
+        <td colspan="5" width="539" align="center" class="tbl_hds">Member Fit Sheet</td>
+        <td colspan="4" width="404" class="tbl_hds">Date:{{ "now"|date("m-d-Y") }}</td>
+    </tr>
+    <tr>
+        <td colspan="4" bgcolor="#CCCCCC">Member Name: {{ user.fullName }}</td>
+        <td colspan="4" bgcolor="#CCCCCC">Email: {{ user.email }}</td>
+        <td colspan="4" bgcolor="#CCCCCC">Fit Liaison Name:</td>
+    </tr>
+    <tr>
+        <td colspan="4" rowspan="2" align="center" valign="middle" class="extrapadding">Measurements:</td>
+        <td rowspan="2" align="center" valign="top">Height
+            <div class="mar-top">
+                {#
+                  User ID
+                  {{ dump(user.id) }}
+                  User Image Specifications
+                  {{ dump(user.getUserImageSpec) }}
+                  User Archive Specifications
+                  {{ dump(user.getUserArchives) }}
+                  #}
+                {# Check calliberation is default or callibeated#}
+                {% if user.getUserImageSpec %}  {{ user.measurement.height }} {% endif %}
+            </div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Weight
+            <div class="mar-top"> {% if user.getUserImageSpec %}  {{ user.measurement.weight }} {% endif %}</div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Bra Size
+            <div class="mar-top"> {% if user.getUserImageSpec %} {{ user.measurement.braSize }}  {% endif %}</div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Bust
+            <div class="mar-top"> {% if user.getUserImageSpec %} {{ user.measurement.bust }} {% endif %}</div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Waist
+            <div class="mar-top"> {% if user.getUserImageSpec %} {{ user.measurement.waist }} {% endif %}</div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Hip
+            <div class="mar-top"> {% if user.getUserImageSpec %} {{ user.measurement.hip }} {% endif %}</div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Thigh
+            <div class="mar-top"> {% if user.getUserImageSpec %} {{ user.measurement.thigh }} {% endif %} </div>
+        </td>
+        <td rowspan="2" align="center" valign="top">Inseam
+            <div class="mar-top"> {% if user.getUserImageSpec %} {{ user.measurement.inseam }}  {% endif %} </div>
+        </td>
+    </tr>
+    <tr></tr>
+    <tr>
+        <td align="center" bgcolor="#CCCCCC">Brand</td>
+        <td align="center" bgcolor="#CCCCCC">Style Number</td>
+        <td align="center" bgcolor="#CCCCCC">Clothing Type</td>
+        <td align="center" bgcolor="#CCCCCC">Size</td>
+        <td align="center" bgcolor="#CCCCCC">Fit Index</td>
+        <td width="108" align="center" bgcolor="#CCCCCC">Member<br>Fit Rating <br>(1-10)</td>
+        <td width="101" align="center" bgcolor="#CCCCCC">Technical<br>Fit Rating <br>(1-10)</td>
+        <td width="101" align="center" bgcolor="#CCCCCC">Best<br>Technical Fit for<br> Sizes Tried</td>
+        <td colspan="4" align="center" bgcolor="#CCCCCC">Comments/Notes</td>
+    </tr>
+    {% for p in products %}
+        <tr>
+            {% set brand = p.getBrand() %}
+            <td>{{ brand.getName }}{#{{ p.getBrand}}#}</td>
+            <td>{{ p.getControlNumber }} {#{{p.control_number}}#}</td>
+            {% set clothType = p.getClothingType() %}
+            <td>{{ clothType.getName }} {#{{p.clothing_type}}#}</td>
+
+
+            <td colspan="5" class="nogap">
+
+                <table border="0" cellspacing="0" cellpadding="0">
+
+
+                    {% set productSizes = default_products[p.getID ]|split(',') %}
+                    {% for s in productSizes %}
+                        <tr>
+                            <td width="72" align="center">{{ s }}</td>
+                            <td width="81" align="center"></td>
+                            <td width="92" align="center"></td>
+                            <td width="88" align="center"></td>
+                            <td width="102" align="center"></td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </td>
+
+
+            <td colspan="4">&nbsp;</td>
+        </tr>
+
+    {% endfor %}
+
+    {% for i in 0..3%}
+
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+
+        <td colspan="5" class="nogap">
+
+            <table border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+                    <td width="72" align="center">&nbsp;</td>
+                    <td width="81" align="center"></td>
+                    <td width="92" align="center"></td>
+                    <td width="88" align="center"></td>
+                    <td width="102" align="center"></td>
+
+                </tr><tr>
+                    <td width="72" align="center">&nbsp;</td>
+                    <td width="81" align="center"></td>
+                    <td width="92" align="center"></td>
+                    <td width="88" align="center"></td>
+                    <td width="102" align="center"></td>
+
+                </tr>
+                <tr>
+                    <td width="72" align="center">&nbsp;</td>
+                    <td width="81" align="center"></td>
+                    <td width="92" align="center"></td>
+                    <td width="88" align="center"></td>
+                    <td width="102" align="center"></td>
+
+                </tr>
+
+            </table>
+
+        </td>
+
+
+        <td colspan="4">&nbsp;</td>
+    </tr>
+    {% endfor %}
+
+
+    {#  End Extra Grid for 2287 #}
+</table>
+</body>
+</html>
