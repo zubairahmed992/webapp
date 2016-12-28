@@ -39,6 +39,13 @@ class UserFeedback {
     private $message;
 
     /**
+     * @var string $category
+     *
+     * @ORM\Column(name="category", type="string", length=250, nullable=true)
+     */
+    private $category;
+
+    /**
      * @var dateTime $created_at
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -100,6 +107,31 @@ class UserFeedback {
     {
         return $this->message;
     }
+
+    #-------------------------------------------------
+    
+     /**
+     * Set category
+     *
+     * @param string $category
+     * @return UserFeedback
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;    
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
     #-------------------------------------------------
 
      /**

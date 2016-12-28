@@ -262,6 +262,7 @@ ws_user_feedback_add:
     params:
       auth_token: 97fc8d115394f3f1947f315783e29e0e
       message:
+      category:
     request_type: post
     description: This service will be used to email user feedback to support & store in db    
       
@@ -423,3 +424,11 @@ ws_events_list:
           api_key: 00000000000000000000000000000          
     request_type: post
     description: return events list against authentication token 
+
+ws_feedback_category_list:
+    pattern:  /ws/feedback_category_list
+    title: events_list
+    params:
+          api_key: 00000000000000000000000000000          
+    request_type: post
+    description: return feedback category list against authentication token
