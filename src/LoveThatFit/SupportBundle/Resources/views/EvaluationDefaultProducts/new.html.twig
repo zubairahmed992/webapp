@@ -14,7 +14,9 @@
         var url = "{{ path('get_product_sizes') }}";
         $(document).ready(function () {
             var config = {
-                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes': {},
+                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id': {},
+                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes': {}
+
             }
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
@@ -37,12 +39,13 @@
                   method="post" {{ form_enctype(form) }}>
                 {{ form_widget(form) }}
                 <p>
+                    <p></p>
                     <label for="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" class="required">Available
                         Sizes</label>
                 <div class="load-sizes-loader" style="display: none">
                     <img src="{{ asset('bundles/lovethatfit/support/ajax-loader.gif') }}"/>
                 </div>
-                <select name="lovethatfit_supportbundle_evaluationdefaultproductstype[product_sizes][]"
+                <select  name="lovethatfit_supportbundle_evaluationdefaultproductstype[product_sizes][]"
                         id="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" required="required"
                         multiple>
                 </select>
@@ -63,6 +66,12 @@
         $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id option[value='{{ product }}']").remove();
         {% endfor %}
     </script>
+    <style>
+        #lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes_chosen > .chosen-drop {
+            overflow-y: scroll;
+            height: 150px;
+        }
+    </style>
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/ajax-script.js') }}"></script>
     <link href="{{ asset('bundles/lovethatfit/support/custom.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}

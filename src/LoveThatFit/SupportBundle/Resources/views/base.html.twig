@@ -65,7 +65,7 @@
 
                         <div class="dropdown">
                             <div class="dropdown-toggle" type="button" data-toggle="dropdown" style="padding-bottom: 10px;margin-top: 10px; color: #999999; cursor: pointer;">
-                                Manage Reports
+                                Manage Products
                                 <span class="caret"></span>
                             </div>
 
@@ -73,14 +73,14 @@
                                 <li>
                                     <a href="{{ path('evaluationdefaultproducts') }}" style="color: #999999;">
                                         <span class='{% if (app.request.attributes.get("_route") == "evaluationdefaultproducts") %} support-tabs-open {% endif %}'>
-                                            Default Store
+                                           Default Products
                                         </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ path('evaluationpopupproducts') }}" style="color: #999999;">
                                         <span class='{% if (app.request.attributes.get("_route") == "evaluationpopupproducts") %} support-tabs-open {% endif %}'>
-                                            Pop-up Store
+                                            Pop-up Products
                                         </span>
                                     </a>
                                 </li>

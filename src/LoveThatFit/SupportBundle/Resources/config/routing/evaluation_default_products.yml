@@ -46,3 +46,7 @@ get_product_sizes:
         _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:sizes
     requirements:
         _method:  POST
+
+evaluationdefaultproducts_delete_url:
+    pattern:   /support/evaluation-default-products/{id}/delete
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationDefaultProducts:createDeleteUrlBase }

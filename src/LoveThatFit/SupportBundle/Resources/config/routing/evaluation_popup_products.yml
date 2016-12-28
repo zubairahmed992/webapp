@@ -37,3 +37,8 @@ evaluationpopupproducts_delete:
     defaults: {_controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:delete }
     requirements:
         _method:  POST
+
+
+evaluationpopupproducts_delete_url:
+    pattern:   /support/evaluation-popup-products/{id}/delete
+    defaults:  { _controller: LoveThatFitSupportBundle:EvaluationPopUpProducts:createDeleteUrlBase }

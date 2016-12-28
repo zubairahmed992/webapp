@@ -34,6 +34,8 @@ class EvaluationPopUpProductsController extends Controller
         $entities = $em->getRepository('LoveThatFitSupportBundle:EvaluationPopUpProducts')->findAll();
         $products = array();
         $productSizes = array();
+
+
         if ($entities) {
             $productId = array();
             foreach ($entities as $entity) {
@@ -47,19 +49,25 @@ class EvaluationPopUpProductsController extends Controller
 
 
             foreach ($productsList as $product) {
-                $products[$product->getID()] = $product->getName();
+
+
+
+                $products[$product->getID()]['title'] = $product->getName();
+                $products[$product->getID()]['brand'] = $product->getBrand()->getName();
+
+
                 $productSize = $product->getProductSizes();
                 if ($productSize) {
                     foreach ($productSize as $size) {
                         $productSizes[$size->getID()] = $size->getTitle();
+
                     }
                 }
 
             }
 
         }
-
-
+        
 
         return $this->render('LoveThatFitSupportBundle:EvaluationPopUpProducts:index.html.twig',
             array(
@@ -153,7 +161,7 @@ class EvaluationPopUpProductsController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('evaluationpopupproducts_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('evaluationpopupproducts'));
         }
         return array(
             'entity' => $entity,
@@ -313,7 +321,28 @@ class EvaluationPopUpProductsController extends Controller
         return $this->redirect($this->generateUrl('evaluationpopupproducts'));
     }
 
-    private function createDeleteForm($id)
+    /**
+     * This will delete entry from the database base on the URL
+     *
+     */
+    public function createDeleteUrlBaseAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('LoveThatFitSupportBundle:EvaluationPopUpProducts')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find product.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('evaluationpopupproducts'));
+    }
+
+        private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')

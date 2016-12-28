@@ -1384,6 +1384,7 @@ class Product {
      */
     public function getNameAndController()
     {
-        return $this->name .' ('. $this->control_number.')';
+
+        return $this->name .' ('. $this->control_number.' # '.$this->brand->getName().')';
     }
 }

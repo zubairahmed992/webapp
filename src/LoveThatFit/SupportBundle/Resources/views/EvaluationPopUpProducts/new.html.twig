@@ -14,6 +14,7 @@
         var url = "{{ path('get_product_sizes') }}";
         $(document).ready(function () {
             var config = {
+                '#lovethatfit_supportbundle_evaluationpopupproductstype_product_id': {},
                 '#lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes': {},
             }
             for (var selector in config) {
@@ -26,6 +27,7 @@
         <div class="form-style-2">
             <h2>Add</h2>
             <p>
+
                 <a href="{{ path('evaluationpopupproducts') }}">
                     Back to the list
                 </a>
@@ -36,6 +38,7 @@
             <form action="{{ path('evaluationpopupproducts_create') }}" name="productSizes"
                   method="post" {{ form_enctype(form) }}>
                 {{ form_widget(form) }}
+                <p></p>
                 <p>
                     <label for="lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes" class="required">Available
                         Sizes</label>
@@ -63,6 +66,12 @@
         $("#lovethatfit_supportbundle_evaluationpopupproductstype_product_id option[value='{{ product }}']").remove();
         {% endfor %}
     </script>
+    <style>
+        #lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes_chosen > .chosen-drop{
+            overflow-y: scroll;
+            height: 150px;
+        }
+    </style>
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/ajax-script.js') }}"></script>
     <link href="{{ asset('bundles/lovethatfit/support/custom.css') }}" rel="stylesheet" type="text/css"/>
 {% endblock %}

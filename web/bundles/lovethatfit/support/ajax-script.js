@@ -2,10 +2,12 @@ $(document).ready(function () {
 
     var sizesDropdown = $('#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes');
     var productIdDropdown = $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id");
+    var chosenContainer = $('#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes_chosen');
 
     //If CRUD for Pop-Up reporting
     if ( !sizesDropdown.length){
         sizesDropdown = $('#lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes');
+        chosenContainer = $('#lovethatfit_supportbundle_evaluationpopupproductstype_product_sizes_chosen');
     }
 
     //If CRUD for Pop-Up reporting
@@ -14,7 +16,7 @@ $(document).ready(function () {
     }
 
 
-    var chosenContainer = $('.chosen-container');
+
     productIdDropdown.change(function () {
         $('.load-sizes-loader').css('display', 'inline-block');
         chosenContainer.css('display', 'none');

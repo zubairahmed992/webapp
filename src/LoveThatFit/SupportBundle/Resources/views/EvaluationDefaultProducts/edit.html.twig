@@ -10,17 +10,7 @@
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/chosen/chosen.jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/chosen/prism.js') }}"></script>
     {# Load files for choosen select#}
-    <script>
-        var url = "{{ path('get_product_sizes') }}";
-        $(document).ready(function () {
-            var config = {
-                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes': {},
-            }
-            for (var selector in config) {
-                $(selector).chosen(config[selector]);
-            }
-        });
-    </script>
+
     <div class="p_listing">
         <div class="form-style-2">
             <h2>Edit</h2>
@@ -44,20 +34,20 @@
                 <form action="{{ path('evaluationdefaultproducts_update', { 'id': entity.id }) }}"
                       method="post" {{ form_enctype(edit_form) }}>
                     {{ form_widget(edit_form) }}
-
-                    <label for="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" class="required">Available
-                        Sizes</label>
-                    <div class="load-sizes-loader" style="display: none">
-                        <img src="{{ asset('bundles/lovethatfit/support/ajax-loader.gif') }}"/>
-                    </div>
-                    <select name="lovethatfit_supportbundle_evaluationdefaultproductstype[product_sizes][]"
-                            id="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes"
-                            required="required"
-                            multiple>
-                        {% for key, size in product_sizes %}
-                            <option value="{{ key }}" {% if key in selected_sizes %} selected="selected" {% endif %}>{{ size }}</option>
-                        {% endfor %}
-                    </select>
+            <p></p>
+            <label for="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes" class="required">Available
+                Sizes</label>
+            <div class="load-sizes-loader" style="display: none">
+                <img src="{{ asset('bundles/lovethatfit/support/ajax-loader.gif') }}"/>
+            </div>
+            <select name="lovethatfit_supportbundle_evaluationdefaultproductstype[product_sizes][]"
+                    id="lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes"
+                    required="required"
+                    multiple>
+                {% for key, size in product_sizes %}
+                    <option value="{{ key }}" {% if key in selected_sizes %} selected="selected" {% endif %}>{{ size }}</option>
+                {% endfor %}
+            </select>
             <p>
             <p></p>
             <input type="submit" value="Edit">
@@ -68,9 +58,17 @@
 
         </div>
     </div>
-
+    <style>
+        #lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes_chosen > .chosen-drop {
+            overflow-y: scroll;
+            height: 150px;
+        }
+    </style>
 
     <script>
+
+        var url = "{{ path('get_product_sizes') }}";
+
         $(document).ready(function () {
             {% for product in exists_products %}
             {% if entity.getProductID() != product %}
@@ -80,8 +78,15 @@
 
             //Selected Default Value
             $("#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id").val({{ entity.getProductId }});
-        });
 
+            var config = {
+                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_id': {},
+                '#lovethatfit_supportbundle_evaluationdefaultproductstype_product_sizes': {},
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+        });
     </script>
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/support/ajax-script.js') }}"></script>
     <link href="{{ asset('bundles/lovethatfit/support/custom.css') }}" rel="stylesheet" type="text/css"/>
