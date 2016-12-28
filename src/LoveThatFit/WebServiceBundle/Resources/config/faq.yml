@@ -1,217 +1,203 @@
 1:
   faq_type: photos_n_measurement
   question: Why do you need to know my height, weight, bra size, and body shape?
-  answer: SelfieStyler projects a red alignment silhouette on screen directing you where to stand for your full height selfie. This field is unique to you, so please be as accurate as possible for the best results.
+  answer: SelfieStyler projects a red alignment silhouette on screen directing you where to stand for your selfie. This field is unique to you, so please be as accurate as possible for the best results.
   tags: height, weight, bra size, body shape, accuracy, accurate
   index: 1
   disabled: false 
 2:
   faq_type: photos_n_measurement
   question: Do I have to be honest and accurate about my height, weight, bra size, and body shape?
-  answer: Just like the saying, <em>mirrors  never lie</em>, SelfieStyler accurately reflects your dimension, but only if you work with us! Guessing your answers may decrease our ability to accurately recommend your best size.
+  answer: Just like the saying, mirrors never lie, SelfieStyler accurately reflects your dimension, but only if you work with us! Guessing your answers may decrease our ability to accurately recommend your best size.
   tags: height, weight, bra size, body shape, accuracy, accurate
   index: 2
   disabled: false
 3:
   faq_type: photos_n_measurement
-  question: Does the table height really matter when I take my picture?
-  answer: SelfieStyler’s full height selfie is more than just a pretty picture. Our full height selfie process scans your unique silhouette into our database for our algorithmic processors. It is essential that you place your device at the height indicated in the tutorial for your device. *<em>Please note, different devices have  different height requirements.</em> Please place your device accordingly.
-  tags: selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
-  index:  3
+  question: Do I really need to use the Selfie Photo Stand to take my picture?
+  answer: SelfieStyler’s selfie is more than just a pretty picture. Our selfie process scans your unique silhouette into our database for our algorithmic processors. It is essential that you place your device in the Selfie Photo Stand as indicated in the tutorial.
+  tags: selfie, full height, algorithm, height, weight, bra size, body shape, accuracy, accurate
+  index: 3
   disabled: false
 4:
   faq_type: photos_n_measurement
-  question: My table is not tall enough to take the photo. What should I do?
-  answer: Standard heights for tables and desks range from 28&rdquo; - 30&rdquo;. If your table is not tall enough, place your device on top of a book, a box, a stack of post it notes, or a deck of cards to raise your device to the height indicated. Be sure to use the green check mark at the top left of the screen to confirm the device is level at the new height.
-  tags: level, green checkmark, selfie full height, algorithm, table, height, weight, bra size, body shape, accuracy, accurate
-  index:  4
-  disabled:  false
+  question: How can I take a picture when I cannot reach my device to press the button?
+  answer: SelfieStyler provides two ways to snap your selfie. There is a timer button to the left and a large photo button at the center. Use the timer button once your device is placed in the Selfie Photo Stand and you can see the green check mark at the top left of the screen indicating that the device is level. Step back about six steps until you are aligned with the red outline. (The top of your head and the tips of your toes will fit into the red outline and your arms and legs should be positioned to also fit into the red outline.) The timer gives you a count of ten to get into position. Alternately, you can ask a friend to press the larger photo button at the center once you are aligned and ready. Smile!
+  tags: level, green checkmark, selfie, full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered
+  index:   4
+  disabled: false
 5:
   faq_type: photos_n_measurement
-  question: How can I take a picture when I cannot reach my device to press the button?
-  answer: SelfieStyler provides two ways to snap your full body selfie. There is a timer button to the left and a large photo button at the center. Use the timer button once your device is placed at the correct height on a table and you can see the green check mark at the top left of the screen indicating that the device is level. Step back about six steps until you are aligned with the red outline. (The top of your head and the tips of your toes will fit into the red outline and your arms and legs should be positioned to also fit into the red outline.) The timer gives you a count of ten to get into position. Alternately, you can ask a friend to press the larger photo button at the center once you are aligned and ready. Smile!
-  tags: level, green checkmark, selfie full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered
+  question: Can my friend take my picture instead?
+  answer: While we all love a little help from our friends, the SelfieStyler selfie photo is a hands free process. It is essential that your device is completely still while displaying the green checkmark when your photo is taken. The device must be placed in the Selfie Photo Stand as shown in the tutorial. Your friend can help by letting you know when you are perfectly lined up in the red silhouette. They can even push the big button at the center of the screen to take the photo (instead of using the timer).
+  tags: friend, level, green checkmark, selfie, full height, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered
   index:   5
   disabled: false
 6:
   faq_type: photos_n_measurement
-  question: Can my friend take my picture instead?
-  answer: While, we all love a little help from our friends, the SelfieStyler full body selfie photo is a hands free process. It is essential that your device is completely still while displaying the green checkmark when your photo is taken. The device must be placed on a table at the height indicated for your device in the tutorial. Your friend can help by letting you know when you are perfectly lined up in the red silhouette. They can even push the big button at the center of the screen to take the photo (instead of using the timer).
-  tags: friend, level, green checkmark, selfie full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered
+  question: Why can’t I get myself lined up with the red outline?
+  answer: There are a few reasons why you may not be able to align yourself with your red alignment silhouette:</p><ol><li>1. Height and Body information provided are not accurate: measure your height standing against a wall. Stand up straight and do not lean backwards against the wall. *This may be easier with help from a friend. Reconfirm your weight and bra size.</li><li>Your device is in a phone case: remove your device and take the photo with it inserted into the Selfie Photo Stand.</li><li>The device is not level: make sure there are no objects between the bottom of the stand and the floor. Check to make sure your Selfie Photo Stand photo stand is placed on a flat area of floor and that you are standing on the same flooring surface. If you are still having trouble try moving your stand to a hard flooring surface like hardwood, laminate, tile, etc. <em>*High pile carpeting may disrupt the stand<em></li><li>You are not barefoot: remove shoes and stand barefoot</li><li>You can always ask for help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</li></ol>
+  tags: device, phone, stand, stand up, rest, balance, balanced, level, green checkmark, selfie, full height, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered, friend, height, weight, bra size, accuracy, accurate, measure, barefoot, shoes, floor
   index:   6
-  disabled: false
+  disabled:  false
 7:
   faq_type: photos_n_measurement
-  question: How can I make my device stand up so the green checkmark is displayed?
-  answer: <ol><li>Be sure to place your device far enough back on the  table that if it falls over, it only falls onto the tabletop and does not fall  to the floor.</li><li>Use something to balance and prop the device. The back  of a laptop screen works well for making small adjustments to the angle. You  can use anything to prop your device that works for you. Here are a few other  prop suggestions: handbag, a canned good like soup, a heavy bottle, a box, a  shoe. Let us know if you found a clever way to &ldquo;make it work&rdquo;.</li><li>If your device falls forward, place a small object in  front of it to steady it, like a deck of cards or a stack of post it notes -  something that will not obscure your view of the screen for the photo.</li></ol>
-  tags: device, phone, stand, stand up, rest, balance, prop, balanced, level, green checkmark, selfie full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered
+  question: How do I know which body shape to choose?
+  answer:   These body shapes have been around forever. Sometimes they feel silly or just old fashioned. SelfieStyler uses these tried and true descriptions to simplify our process and make it more unique to you. Here are general descriptions for body shapes in order of most to least common:</p><p><em>Rectangle</em> - your hips and your bust are about the same and your waist is slightly smaller than than your hips and waist. You do not consider yourself curvy. Your pant size, shirt size and dress size are often the same size for each of your favorite brands.</p><p><em>Pear </em>- your bust and waist are smaller than your hips. You consider yourself curvy when buying bottoms and jeans. Your shirt size is often a size or two smaller than your pant size in each of your favorite brands. You may need to have pants and dresses taken in at the waist.</p><p><em>Apple</em> - your bust, waist and hip are all about the same size. You consider yourself curvy. Your pant size, shirt size, and dress size are often the same size for each of your favorite brands.</p><p><em>Triangle</em> - your bust is a bit larger than your waist and hips. You consider yourself curvy, or perhaps even busty, when buying shirts and dresses. Your pant size is often a size or two smaller than your shirt size in each of your favorite brands.</p><p><em>Hourglass</em> - your hips and your bust are about the same and your waist is smaller than than your hips and waist. You consider yourself curvy. Your pant size, shirt size and dress size are often the same size for each of your favorite brands, but you may need to have pants and dresses taken in at the waist.
+  tags: height, weight, bra size, body shape, accuracy, accurate, rectangle, pear, apple, triangle, hourglass, spoon, banana
   index:   7
   disabled: false
 8:
   faq_type: photos_n_measurement
-  question: Why can’t I get myself lined up with the red outline?
-  answer: There are a few reasons why you may not be able to align  yourself with your red alignment silhouette:</p><ol><li>Height and Body information provided are not accurate:  measure your height standing against a wall. Stand up straight and do not lean  backwards against the wall. *This may be easier with help from a friend.  Reconfirm your weight and bra size.</li><li>The table height is not the correct height for your  device: stack items on the table to achieve the designated height for your  device.</li><li>Your device is in a phone case: remove your device and  take the photo with it resting directly on the table (or modified surface) that  is at the designated height for your device</li><li>The device is not level: use items like a laptop,  books, box, etc to prop your device until you can see the green level check  mark in the top left corner and the words &ldquo;HOLD&rdquo; just below the photo window.</li><li>You are not barefoot: remove shoes and stand barefoot</li><li>Your table is not on the same floor level where you are  standing for the picture: assure that you stand on the same floor level where  the device has been placed at the designated height.</li><li>You can always ask for help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.</li></ol>
-  tags: device, phone, stand, stand up, rest, balance, prop, balanced, level, green checkmark, selfie full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered, friend, height, weight, bra size, accuracy, accurate, measure, barefoot, shoes, floor
+  question: I think I am lined up with the red outline for my photo, but I cannot tell for sure. What can I do?
+  answer:   This is when it may help to have a friend look at the screen more closely to tell you when you are aligned. They can press the photo button at the center or activate the timer to let the app snap your photo. If you are taking the photo solo, line up the best you can. On the next screen, with the silhouette marker, you will be able to confirm if you were within the outline area. Look for the following:</p><ol><li>1.  If the outline is just above your hairline at the top of your skull and outlines most of the tips of your toes at the bottom, you are perfect!</li><li>2. If the outline is below your hairline and above your toes, retake the photo and move a little further away from the device.</li><li>If the outline is above head and below your toes, retake the photo and move a little closer to the device.</li><li>4. If the outline is mostly above your head and your toes fit fine,check the Selfie Photo Stand to confirm it is level on the floor and that the app is showing the green check mark and the words &ldquo;HOLD&rdquo; just below the photo window.</li><li>5.  If the outline is mostly below your toes and your head fits fine,check the Selfie Photo Stand to and confirm it is level on the floor and the app is showing the green check mark and the word &ldquo;HOLD&rdquo; just below the photo  window.</li><li>You can always ask for help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</li></ol>
+  tags: device, phone, stand, stand up, rest, balance, prop, balanced, level, green checkmark, selfie, full height, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered, friend, height, weight, bra size, accuracy, accurate, measure, barefoot, shoes, floor, toes, head, hair, hairline
   index:   8
   disabled:  false
 9:
   faq_type: photos_n_measurement
-  question: How do I know which body shape to choose?
-  answer:   These body shapes have been around forever. Sometimes they  feel silly or just old fashioned. SelfieStyler uses these tried and true  descriptions to simplify our process and make it more unique to you. Here are  general descriptions for body shapes in order of most to least common:</p><p><em>Rectangle</em> - your  hips and your bust are about the same and your waist is slightly smaller than  than your hips and waist. You do not consider yourself curvy. Your pant size,  shirt size and dress size are often the same size for each of your favorite  brands.</p><p><em>Pear </em>- your bust  and waist are smaller than your hips. You consider yourself curvy when buying  bottoms and jeans. Your shirt size is often a size or two smaller than your  pant size in each of your favorite brands. You may need to have pants and  dresses taken in at the waist.</p><p><em>Apple</em> - your bust,  waist and hip are all about the same size. You consider yourself curvy. Your  pant size, shirt size, and dress size are often the same size for each of your  favorite brands.</p><p><em>Triangle</em> - your  bust is a bit larger than your waist and hips. You consider yourself curvy, or  perhaps even busty, when buying shirts and dresses. You pant size is often a  size or two smaller than your shirt size in each of your favorite brands.</p><p><em>Hourglass</em> - your  hips and your bust are about the same and your waist is smaller than than your  hips and waist. You consider yourself curvy. Your pant size, shirt size and  dress size are often the same size for each of your favorite brands, but you  may need to have pants and dresses taken in at the waist.
-  tags: height, weight, bra size, body shape, accuracy, accurate, rectangle, pear, apple, triangle, hourglass, spoon, banana
+  question: Can anyone see my selfie photo?
+  answer: <p>Your selfie is yours and yours alone! We take your privacy seriously at SelfieStyler. Feel free to review our privacy policy. (hyperlink if possible)</p><p>Trained team members may view your selfie when called upon for technical assistance, but rest assured your selfie is locked away in your account and will never be shared. You can use our social media sharing features to share your look. We recommend getting dressed with SelfieStyler before sharing your look!</p>
+  tags: selfie, photo, privacy, security
   index:   9
-  disabled: false
+  disabled:  false
 10:
   faq_type: photos_n_measurement
-  question: I think I am lined up with the red outline for my photo, but I cannot tell for sure. What can I do?
-  answer:   This is when it may help to have a friend look at the screen  more closely to tell you when you are aligned. They can press the photo button  at the center or activate the timer to let the app snap your photo. If you are  taking the photo solo, line up the best you can. On the next screen, with the  silhouette marker, you will be able to confirm if you were within the outline  area. Look for the following:</p><ol><li>If the outline is just above your hairline at the top  of your skull and outlines most of the tips of your toes at the bottom, you are  perfect!</li><li>If the outline is below your hairline and above your  toes, retake the photo and move a little further away from the device.</li><li>If the outline is above head and below your toes,  retake the photo and move a little closer to the device.</li><li>If the outline is mostly above your head and your toes  fit fine, check the table height and confirm the device indicates it is level  by showing the green check mark and the words &ldquo;HOLD&rdquo; just below the photo  window.</li><li>If the outline is mostly below your toes and your head  fits fine, check the table height and confirm the device indicates it is level  by showing the green check mark and the word &ldquo;HOLD&rdquo; just below the photo  window.</li><li>You can always ask for help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.</li></ol>
-  tags: device, phone, stand, stand up, rest, balance, prop, balanced, level, green checkmark, selfie full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered, friend, height, weight, bra size, accuracy, accurate, measure, barefoot, shoes, floor, toes, head, hair, hairline
+  question: I have taken my selfie, what’s next?
+  answer: <p>Your silhouette is unique to you. SelfieStyler learns about you algorithmically to give you the best size in each style and to show you how it looks in our fitting room. Our team will calibrate your image and let you know as soon as it is ready. In the meanwhile you can enjoy shopping on the app in the demo mode. Keep in mind that the best size for you will be shown only once you can see your personal selfie image in the app. If you have any other concerns, please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile</p>
+  tags: selfie, full height, outline, silhouette, accuracy, accurate, photo, recommendations, sizes, height, measure
   index:   10
   disabled:  false
 11:
   faq_type: photos_n_measurement
-  question: Can anyone see my selfie photo?
-  answer: <p>Your selfie is yours and yours alone! We take your privacy  seriously at SelfieStyler. Feel free to review our privacy policy. (hyperlink  if possible)</p><p>Trained team members may view your selfie when called upon  for technical assistance, but rest assured your selfie is locked away in your  account and will never be shared. You can use our social media sharing features  to share your look. We recommend getting dressed with SelfieStyler before  sharing your look</p>
-  tags: selfie, photo, privacy, security
+  question: I took my selfie, but the outline on the silhouette screen does not align with my body?
+  answer: A little variation is normal, but you should mostly be close to edge of the lines - especially for your total height<em>*Note that hairstyles can add height to your image. The outline should align with the crown of your head as if your hair was pulled back into a tight bun.</em>If the height of the mask is much taller or shorter than your image please review descriptions below to correct your image:<ol><li>If the outline is just above your hairline at the top of your skull and outlines most of the tips of your toes at the bottom, you are perfect!</li><li>If the outline is below your hairline and above your toes, retake the photo and move a little further back.</li><li>If the outline is above head and below your toes, retake the photo and move a little further forward.</li><li>If the outline is mostly above your head and your toes fit fine, check the Selfie Photo Stand to confirm it is level on the floor and that the app is showing the green check mark and the words &ldquo;HOLD&rdquo; just below the photo window.</li><li>If the outline is mostly below your toes and your head fits fine, check the Selfie Photo Stand to confirm it is level on the floor and that the app is showing the green check mark and the words &ldquo;HOLD&rdquo; just below the photo window.</li><li>You can always ask for help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</li></ol>
+  tags: selfie, full height, outline, silhouette, check mark, accuracy, accurate, photo, recommendations, sizes, height, measure, device, phone, stand, stand up, rest, balance, prop, balanced, table, timer, align, aligned, alignment, lined up, centered, weight, bra size, barefoot, shoes, floor, toe, toes, head, hair, hairline, crown
   index:   11
   disabled:  false
 12:
   faq_type: photos_n_measurement
-  question: I have taken my full height selfie, do I really need to adjust the silhouette markers?
-  answer: Your silhouette is unique to you. SelfieStyler learns about you algorithmically to give you the best size in each style and to show you how it looks in our fitting room. If you skip this step you will be able to see clothes on top of your image, but they may not look like you are wearing them and the size recommendations may not be true to size. For the best results please complete this step. You can always ask for help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.
-  tags: selfie, full height, outline, silhouette, accuracy, accurate, photo, recommendations, sizes, height, accuracy, accurate, measure
-  index:   12
-  disabled:  false
+  question: The measurements listed for me on the Measurement page are close, but not exactly my measurements. What can I do?
+  answer: <p>If three professional tailors measured you right now, they would all come up with slightly different measurements for you. Your unique shape is more than just the sum of your bust, waist and hips. SelfieStyler’s proprietary technology analyzes your unique shape from head to toe. We have a systematic process that identifies your fit points to achieve the most accurate results with our algorithms. Generally, if your measurements are close, it is best to keep the assigned dimensions. It is possible to override the system measurements from the measurements link in the main menu. New values that are added will overwrite the system measurements. Any edited values will be overwritten by the system the next time you adjust and save your silhouette marker. We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile</p>
+  tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, problem, photo, prefer, preference, personal, fit points
+  index:  12
+  disabled: false
 13:
   faq_type: photos_n_measurement
-  question: I took my full height selfie, but the outline on the silhouette marker screen does not align with my body.
-  answer: <p>A little variation is normal, but you should mostly be close  to edge of the lines - especially for your total height. <em>*Note that hairstyles can add height to your image. The outline should  align with the crown of your head as if your hair was pulled back into a tight  bun.</em> If the height of the mask is much taller or shorter than your image  please review descriptions below to correct your image:</p><ol><li>If the outline is just above your hairline at the top  of your skull and outlines most of the tips of your toes at the bottom, you are  perfect!</li><li>If the outline is below your hairline and above your  toes, retake the photo and move a little further back.</li><li>If the outline is above head and below your toes,  retake the photo and move a little further forward.</li><li>If the outline is mostly above your head and your toes  fit fine, check the table height and confirm the device indicates it is level  by showing the green check mark and the words &ldquo;HOLD&rdquo; just below the photo  window.</li><li>If the outline is mostly below your toes and your head  fits fine, check the table height and confirm the device indicates it is level  by showing the green check mark and the word &ldquo;HOLD&rdquo; just below the photo  window.</li><li>If the outline is the right height, but the silhouette  shaping does not align with your body: confirm your weight, bra size, and body  shape. Go to the main menu at the left and select Measurement. You can update  your details here. Be sure to click SAVE. Then select &ldquo;Edit Full Height Selfie&rdquo;  from the main menu at the left. Click the reset button. The silhouette thing  should be more closely aligned with your image now. Adjust the silhouette  marker points to customize your fit.</li><li>You can always ask for help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.</li></ol>
-  tags: selfie, full height, outline, silhouette, check mark, level, accuracy, accurate, photo, recommendations, sizes, height, accuracy, accurate, measure, device, phone, stand, stand up, rest, balance, prop, balanced, table, timer, align, aligned, alignment, lined up, centered, weight, bra size, barefoot, shoes, floor, toe, toes, head, hair, hairline, crown
-  index:   13
-  disabled:  false
-14:
-  faq_type: photos_n_measurement
-  question: The measurements listed for me on the Measurement page are close, but not exactly my measurements. What can I do?
-  answer: If three professional tailors measured you right now, they would all come up with slightly different measurements for you. Your unique shape is more than just the sum of your bust, waist and hips. SelfieStyler’s proprietary technology analyzes your unique shape from head to toe. We have a systematic process that identifies your fit points to achieve the most accurate results with our algorithms. Generally, if your measurements are close, it is best to keep the assigned dimensions. It is possible to override the system measurements from the measurements link in the main menu. New values that are added will overwrite the system measurements. Any edited values will be overwritten by the system the next time you adjust and save your silhouette marker. We are here to help. lease contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.
-  tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, problem, photo, prefer, preference, personal, fit points
-  index:   14
-  disabled: false
-15:
-  faq_type: photos_n_measurement
   question: The measurements listed for me on the Measurement page are not my measurements at all. What can I do?
-  answer: <p>It is likely there was a problem when you uploaded your  Selfie image or set and saved your silhouette marker. You may need to try  taking the photo again. Please review the tutorial and the &ldquo;how it works&rdquo;  directions. You can also review these FAQ&rsquo;s:</p><p><em><u>Why can&rsquo;t I get  myself lined up with the red outline?</u></em> (hyper link to this question if  possible)</p><p><em>I took my full height  selfie, but the outline on the silhouette marker screen does not align with my  body. </em>(hyper link to this question if possible)</p><p>We are here to help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.</p>
-  tags: device, phone, stand, stand up, rest, balance, prop, balanced, level, green checkmark, selfie full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered, friend, height, weight, bra size, accuracy, accurate, measure, barefoot, shoes, floor
-  index:  15
+  answer: <p>How long has it been since you took your selfie? If it has been some time and your size has changed, take a new selfie to confirm your measurements. If you have recently uploaded your image please keep in mind that even trained professionals measure differently and that slight variations are normal. If you have noticed a large difference in your measurements please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile. You can also review the tutorial and the “how it works” directions. You can also review these FAQ&rsquo;s:</p><p><em><u>Why can&rsquo;t I get myself lined up with the red outline?</u></em> (hyper link to this question if  possible)</p><p><em>I took my full height  selfie, but the outline on the silhouette marker screen does not align with my  body.</em></p><p><em><u>I took my selfie, but the outline on the silhouette marker screen does not align with my body.</u></em></p><p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</p>
+  tags: device, phone, stand, stand up, rest, balance, prop, balanced, level, green checkmark, selfie, full height, table, outline, silhouette, accuracy, accurate, photo, timer, align, aligned, alignment, lined up, centered, friend, height, weight, bra size, accuracy, accurate, measure, barefoot, shoes, floor
+  index:  13
   disabled: false
-16:
+14:
   faq_type: fitting_room
   question: What exactly is the Fitting Alert and the Fit Index all about?
-  answer: <p>The Fit Index is a number that captures how well each size  in a any style fits your unique shape. The range is from 0 to 10 with a 10  being the perfect fit. So what exactly is a perfect fit? A perfect fit would  mean that the garment fits like it was custom made to your exact measurements.  A Fit Index of 8 or more generally indicates a great fit for you. Lower Fit  index numbers suggest that there may be some fit compromises in this style.  Expect some of the fit points to fit exactly while others may be a close  fitting or a little loose. This is normal.</p><p>When we try clothes on in the fitting room we have to find  items that we 1. fit into and 2. that flatter us. The Fit Index takes care of  1 - fitting into items by only only providing a Fit Index value for clothes  that are a possible fit. If a particular size in an item is listed as too small  and your Fit Index is 0,  it is most  likely too tight to wear. Likewise, if a particular size in an item is listed  as too loose and the Fit Index is 0, it is most likely this items is a few  sizes too big and might even fall off of you. </p><p>The Fit Index suggested the most flattering size for you  based on the your dimension and how it relates to styling profile of each  designer/manufacturer. Items with the highest Fit Index are most likely to be  the most flattering. Items with lower Fit Indexes can still be appealing, but  note the specific advice in the Fitting Alert to understand how some of the  ways this garment fits you, may not be the most ideal fit for you. Since beauty  is in the eye of the beholder, keep in mind that you should follow your  personal preferences. If the Fit Index says your best size is &ldquo;close fitting&rdquo;  in the waist and you know that you dislike anything that fits too tightly in  the waist, look to the next larger size to see if it is a perfect fit in the  waist. </p><p>You can always ask for help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with choosing the best size for  you.
+  answer: <p>The Fit Index is a number that captures how well each size in any style fits your unique shape. The range is from 0 to 10 with a 10 being the perfect fit. So what exactly is a perfect fit? A perfect fit would mean that the garment fits like it was custom made to your exact measurements. A Fit Index of 8 or more generally indicates a great fit for you. Lower Fit index numbers suggest that there may be some fit compromises in this style. Expect some of the fit points to fit exactly while others may be a close fitting or a little loose. This is normal.</p><pWhen we try clothes on in the fitting room we have to find items that we 1. fit into and 2. that flatter us. The Fit Index takes care of 1 - fitting into items by only only providing a Fit Index value for clothes that are a possible fit. If a particular size in an item is listed as too small and your Fit Index is 0,  it is most likely too tight to wear. Likewise, if a particular size in an item is listed as too loose and the Fit Index is 0, it is most likely this items is a few sizes too big and might even fall off of you.</p><p>The Fit Index suggested the most flattering size for you based on your dimension and how it relates to the styling profile of each designer/manufacturer. Items with the highest Fit Index are most likely to be the most flattering. Items with lower Fit Indexes can still be appealing, but note the specific advice in the Fitting Alert to understand how some of the ways this garment fits you may not be the most ideal fit for you. Since beauty is in the eye of the beholder, keep in mind that you should follow your personal preferences. If the Fit Index says your best size is “close fitting” in the waist and you know that you dislike anything that fits too tightly in the waist, look to the next larger size to see if it is a perfect fit in the waist.</p><p>You can always ask for help. Please contact us at MemberSupport@SelfieStyler.com for assistance with choosing the best size for you.</p>
   tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference
   index:   1
   disabled: false
-17:
+15:
   faq_type: fitting_room
   question: Why can I see my clothes in my selfie photo while trying on clothes in the fitting room?
   answer: At SelfieStyler we work with what your are comfortable with. The less clothing visible in your selfie, the less interference you will have with clothing from your selfie in the fitting room. Anything that would not be covered trying clothes on in real life will also show up in our fitting room if you wear it in your selfie photo. A nude strapless bra and underwear is ideal.
   tags: selfie, photo, background, visible, fitting room
   index:   2
   disabled: false
-18:
+16:
   faq_type: fitting_room
-  question: Why do I see some of my arm or legs, behind the clothing?
+  question: Why do I see some of my arm or legs behind the clothing?
   answer: With SelfieStyler, your styled looks are built on your body. We like to keep it real. In some cases, your posture may cause a little bit of an arm or leg to show. No worries, if the fitting alert indicates you have a good fit in this area, trust the alert. We are working to enhance these functions for more true-to-life effects!
   tags: selfie, photo, background, visible, fitting room, fit, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, close fit, close fitting, loose, preference
   index:  3
   disabled: false
-19:
+17:
   faq_type: fitting_room
   question: Is there any way to remove the background in my selfie so it looks like your demo account?
-  answer: You may have noticed a “crop” icon button on the screen where you can edit your full height selfie. On this screen only, you can see your image without a background. Soon, you will be able to select this view for your fitting room image. Please be patient while we develop another great feature.
+  answer: This feature in under development in the app. Standby.
   tags: selfie, photo, background, white, silhouette, outline
   index:  4
   disabled:  false
-20:
+18:
   faq_type: fitting_room
   question: How can I see a blouse tucked in, or show a sweater on top of a blouse?
-  answer: You can use the fitting alerts section to set which items are on top. The last item you select in this area will appear on top. Just swipe and click on each item until they appear in your desired order. We are working to add more even features for more true to life layering effects!
+  answer: You can use the fitting alerts section to set which items are on top. The last item you select in this area will appear on top. Just swipe and click on each item until they appear in your desired order. We are working to add even more features for more true to life layering effects!
   tags: layering, top, bottom, first, last, middle, arrange, layer, order, tops, bottoms, fitting alert
   index:   5
   disabled: false
-21:
+19:
   faq_type: fitting_room
   question: Why are some clothes too high or too low only on one side of my shoulder? It looks right on the other side.
   answer: While we consider our bodies to be symmetrical, your left and right side are not mirror images. Your posture is unique and means that you will shift your weight a little more to one side. We take an average of your shoulders to determine how you wear your shirts. In some cases, this may mean that our clothing fits one shoulder but not the other in your selfie image. Rest assured, in real life the clothing will fit just fine.
   tags: selfie, photo, background, visible, fitting room, fit, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, close fit, close fitting, loose, preference, silhouette, marker, too low, align, alignment, edge, points, shoulder, tops, tee, tank, blouse, sweater, jacket, coat, dress, placement
   index:   6
   disabled: false
-22:
+20:
   faq_type: fitting_room
   question: Why are tops, dresses, jackets, sweaters, coats etc too low in the neck area?
-  answer: <p>The silhouette marker may be placed below your shoulder. If  tops are placed too low on your shoulder adjust the shoulder points a little  higher until the edge of the marker aligns with the edge of your shoulder. <em>*Note some shoulders are more curved than  others. In this case, you may need to move the edge slightly past the edge of  your shoulder.</em></p><p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.
+  answer: <p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</p>
   tags: selfie, photo, background, visible, fitting room, fit, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, close fit, close fitting, loose, preference, silhouette, marker, too low, align, alignment, edge, points, shoulder, tops, tee, tank, blouse, sweater, jacket, coat, dress, placement
   index:   7
   disabled: false
-23:
+21:
   faq_type: fitting_room
   question: Why are tops, dresses, jackets, sweaters, coats etc too high in the neck area?
-  answer: <p>The silhouette marker may show background image above your  shoulder. If tops are placed too high in the neck area, adjust the shoulder  points a little lower.<em>*Note some  shoulders are more curved than others. In this case, you may need to move the edge slightly past the edge of your shoulder.</em></p><p>We are here to help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.<br />
+  answer: <p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</p>
   tags: selfie, photo, background, visible, fitting room, fit, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, close fit, close fitting, loose, preference, silhouette, marker, too high, align, alignment, edge, points, shoulder, tops, tee, tank, blouse, sweater, jacket, coat, dress, placement
   index:   8
   disabled:  false
-24:
+22:
   faq_type: fitting_room
   question: Why are pants and skirts showing up too low on my selfie?
-  answer: <p>The hip markers have been set too low on the silhouette  marker. In the full body view, drag the red points on your hips a little higher  to set the placement correctly on your hips. Assure that the marker edge aligns  with the edge of your body after adjusting the points. <em>*Note the fullest part of the hip is generally close to your crotch  level.</em></p><p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.
+  answer: <p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</p>
   tags: selfie, photo, background, visible, fitting room, fit, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, close fit, close fitting, loose, preference, silhouette, marker, too low, align, alignment, edge, points, bottoms, pants, skirts, trousers, shorts, leggings, placement
   index:   9
   disabled: false
-25:
+23:
   faq_type: fitting_room
   question: Why are pants and skirts showing up too high on my selfie?
-  answer: <p>The hip markers have been set too high on the silhouette  marker. In the full body view, drag the red points on your hips a little lower  to set the placement correctly on your hips. Assure that the marker edge aligns  with the edge of your body after adjusting the points. <em>*Note the fullest part of the hip is generally close to your crotch  level.</em></p><p>We are here to help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.
+  answer: <p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</p>
   tags: selfie, photo, background, visible, fitting room, fit, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, close fit, close fitting, loose, preference, silhouette, marker, too high, align, alignment, edge, points, bottoms, pants, skirts, trousers, shorts, leggings, placement
   index:   10
   disabled:  false
-26:
+24:
   faq_type: fitting_room
   question: Why is the recommended size not even close to my real life size?
-  answer: <p>There may be a problem with your full height selfie. Please  click here and review the requirements for the full height selfie. Be sure to  wear very tight fitting clothing like bike shorts, a swimsuit with a smooth  surface (no ruffles, fringe, etc), leggings, tight camisole top, etc…</p><p>We are here to help. Please contact us at  MemberSupport@SelfieStyler.com for assistance with perfecting your account  profile.
+  answer: <p>There may be a problem with your full height selfie. Please click here and review the requirements for the full height selfie. Be sure to wear very tight fitting clothing like bike shorts, a swimsuit with a smooth surface (no ruffles, fringe, etc), leggings, tight camisole top, etc…</p><p>We are here to help. Please contact us at MemberSupport@SelfieStyler.com for assistance with perfecting your account profile.</p>
   tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, problem, photo
   index:   11
   disabled:  false
-27:
+25:
   faq_type: more
   question: How can I assure the most accurate fit recommendations using SelfieStyler?
-  answer: <ol><li>Wear tight clothing or as little clothing as you are  comfortable with for you selfie image.</li><li>Wear a bra that you like, feel good in and the gives  you your best shape.</li><li>Ask for help. The SelfieStyler team can perfect your  silhouette marker to assure the most accurate recommendations. </li><li>Tell us what you like! We are continually working to  personalize your experience and our algorithms.</li></ol>
+  answer: <ol><li>Wear tight clothing or as little clothing as you are comfortable with for you selfie image.</li><li>Wear a bra that you like, feel good in and the gives you your best shape.</li><li>Ask for help. The SelfieStyler team can perfect your silhouette marker to assure the most accurate recommendations.</li><li>Tell us what you like! We are continually working to personalize your experience and our algorithms</li></ol>
   tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, problem, photo, prefer, preference, personal
   index:  1
   disabled: false
-28:
+26:
   faq_type: more
   question: My clothes arrived. They fit okay, but I like my clothes a bit tighter (or a bit looser). How can I get the best fit for my style on SelfieStyler?
-  answer: <p>Style is so much more than just the clothes you wear. It is  how you put it all together. Our algorithms are tuned to ensure that all of our  members find a great fit every time you shop with us. We are continually  working to personalize SelfieStyler to accurately reflect your style. Rest  assured, we are incorporating your feedback into our algorithms. </p><p>SelfieStyler recommends the best size for you in each style  based on general fitting guidelines. You are free to order any size you like.  Think about how the clothes in your closet currently fit. Do you wear baggy  jeans, or skin tight jeans? Are your favorite shirts loose and oversized or  snug? If most of your tops fit closely through the bust then you may prefer  items on SelfieStyler with the alert &ldquo;close fitting&rdquo; over items with the  &ldquo;perfect fit&rdquo; alert. If you love a relaxed look and all your tops are roomy,  you may prefer items with the alert &ldquo;loose&rdquo; or even &ldquo;extra loose&rdquo;. Note that  items with the alert &ldquo;too small&rdquo; will generally be too small to wear.
-  tags: fit, fit index, index, my size, recommended size,  best size, size, selected size, too big, too small, poor fit, good fit, great  fit, flattering, scale, rating, ideal size, fit alert, suggested size, which  size, fitting room, close fit, close fitting, loose, preference, selfie,  problem, photo, prefer, preference, personal
+  answer: <p>Style is so much more than just the clothes you wear. It is how you put it all together. Our algorithms are tuned to ensure that all of our members find a great fit every time you shop with us. We are continually working to personalize SelfieStyler to accurately reflect your style. Rest assured, we are incorporating your feedback into our algorithms.</p><p>SelfieStyler recommends the best size for you in each style based on general fitting guidelines. You are free to order any size you like. Think about how the clothes in your closet currently fit. Do you wear baggy jeans, or skin tight jeans? Are your favorite shirts loose and oversized or snug? If most of your tops fit closely through the bust then you may prefer items on SelfieStyler with the alert &ldquo;close fitting&rdquo; over items with the &ldquo;perfect fit&rdquo; alert. If you love a relaxed look and all your tops are roomy, you may prefer items with the alert &ldquo;loose&rdquo; or even &ldquo;extra loose&rdquo;. Note that  items with the alert &ldquo;too small&rdquo; will generally be too small to wear.
+  tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, problem, photo, prefer, preference, personal
   index:  2
+  disabled: false
+27:
+  faq_type: more
+  question: I love how SelfieStyler works, but I wish you carried my favorite brands. How can I shop for the brands I want on SelfieStyler?
+  answer: SelfieStyler is a revolutionary way to shop and we are thrilled that you are ready to take the lead with a new way of shopping. Please contact us at MemberSupport@SelfieStyler.com to tell us what you are looking for and we will work to bring you the brands that you desire.
+  tags: retailers, designers, favorites, new, selection, assortment
+  index:  3
+  disabled: false
+28:
+  faq_type: more
+  question: Why am I a size 2 in one brand and a size 6 in another?
+  answer: At SelfieStyler, we love this question! It is not you, it is the system. You are perfect, but designers and manufacturers all play by different rules when it comes to setting sizes. This leads to chaos in the fitting room. Sometimes we even wear different sizes of the same brand. Rest assured, with SelfieStyler, this is the last thing <em>you </em>need to worry about. We have taken all the guesswork out of finding your best size. Our algorithms fit your unique shape into every size of every style you try. Start with our recommended size in every style. Then, if you prefer, see if you can shift a size down for a closer fit, or a size up for a looser fit.
+  tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, prefer, preference, personal
+  index:  4
   disabled: false
 29:
   faq_type: more
-  question: I love how SelfieStyler works, but I wish you carried my favorite brands. How can I shop for the brands I want on SelfieStyler?
-  answer: SelfieStyler is a revolutionary way to shop and we are  thrilled that you are ready to take the lead with a new way of shopping. Please  contact us at MemberSupport@SelfieStyler.com to tell us what you are looking  for and we will work to bring you the brands that you desire.
-  tags: retailers, designers, favorites, new, selection, assortment
-  index:  14
-  disabled: false
-30:
-  faq_type: more
-  question: Why am I a size 2 in one brand and a size 6 in another?
-  answer: At SelfieStyler, we love this question! It is not you, it is  the system. You are perfect, but designers and manufacturers all play by  different rules when it comes to setting sizes. This leads to chaos in the  fitting room. Sometimes we even wear different sizes of the same brand. Rest  assured, with SelfieStyler, this is the last thing <em>you </em>need to worry about. We have taken all the guesswork out of  finding your best size. Our algorithms fit your unique shape into every size of  every style you try. Start with our recommended size in every style. Then, if  you prefer, you can see if you can shift a size down for a closer fit, or a  size up for a looser fit.
-  tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, prefer, preference, personal
-  index:  3
-  disabled: false
-31:
-  faq_type: more
   question: If I lose or gain weight do I need to update my selfie image?
-  answer: We have all been there, that moment when you know your  clothes no longer work and it is time to shop. Suddenly all your tried and true  brands and sizes mean nothing. SelfieStyler makes this easy. We will fit the  new you into a whole new wardrobe. We all gain and lose weight throughout the  day every day. It is normal to add an inch or so to your waist over a meal. As  long as you have not noticed a big difference in the way the clothes in your  closet fit, you can keep your Selfie image. When you find your pants and skirts  will not stay up, or you struggle to button and zip clothes closed, you need to  replace your Selfie image.
-  tags: fit, fit index, index, my size, recommended size,  best size, size, selected size, too big, too small, poor fit, good fit, great  fit, flattering, scale, rating, ideal size, fit alert, suggested size, which  size, fitting room, close fit, close fitting, loose, preference, selfie,  problem, photo, prefer, preference, personal, weight, gain, lose, loss, diet
-  index:  4
+  answer: We have all been there, that moment when you know your clothes no longer work and it is time to shop. Suddenly all your tried and true brands and sizes mean nothing. SelfieStyler makes this easy. We will fit the new you into a whole new wardrobe. We all gain and lose weight throughout the day every day. It is normal to add an inch or so to your waist over a meal. As long as you have not noticed a big difference in the way the clothes in your closet fit, you can keep your Selfie image. When you find your pants and skirts will not stay up, or you struggle to button and zip clothes closed, you need to replace your Selfie image.
+  tags: fit, fit index, index, my size, recommended size, best size, size, selected size, too big, too small, poor fit, good fit, great fit, flattering, scale, rating, ideal size, fit alert, suggested size, which size, fitting room, close fit, close fitting, loose, preference, selfie, problem, photo, prefer, preference, personal, weight, gain, lose, loss, diet
+  index:  5
   disabled: false
