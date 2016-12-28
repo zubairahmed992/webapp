@@ -156,3 +156,7 @@ ws_image_approval:
 ws_events_list:
     pattern:  /ws/events_list
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:eventsList}
+
+ws_feedback_category_list:
+    pattern:  /ws/feedback_category_list
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:feedbackCategoryList}

@@ -165,6 +165,7 @@ class WSUserController extends Controller {
 #~~~~~~~~~~~~~~~~~~~ ws_user_feedback_add   /ws/user_feedback_add
 
     public function feedbackAddAction() {
+
         $ra=$this->process_request();
         if (!array_key_exists('auth_token', $ra)) {
             return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
@@ -173,15 +174,16 @@ class WSUserController extends Controller {
         $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
 
         if (count($user) > 0) {
-
             $ufb = new \LoveThatFit\UserBundle\Entity\UserFeedback();
             $ufb->setUser($user);
             //Added for debugging To make sure which environment we are wokring
             $environmentURL = $this->getRequest()->getHost();
             // Concatenate with environment we are working now!
             $message = $ra['message'] . '<br><br> Environment: '.$environmentURL;
+            $category = $ra['category'];
 
             $ufb->setMessage($message);
+            $ufb->setCategory($category);
             $ufb->setCreatedAt(new \DateTime('now'));
 
             $em = $this->getDoctrine()->getManager();
@@ -209,7 +211,7 @@ class WSUserController extends Controller {
  #~~~~~~~~~~~~~~~~~~~~~~ ws_selfieshare_create	/ws/selfieshare/create
  
     
- public function selfieshareCreateAction() {
+    public function selfieshareCreateAction() {
         $ra = $this->process_request();
         #return new Response(json_encode($ra));
         if (!array_key_exists('auth_token', $ra)) {
@@ -238,6 +240,13 @@ class WSUserController extends Controller {
         } else {
             return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
         }
+    }
+
+    public function feedbackCategoryListAction()
+    {
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/category.yml'));
+        return new Response(json_encode($conf));
     }
 }
 
