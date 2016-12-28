@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Yaml\Parser;
 
 class ProductListController extends Controller {
-    #---------------------------------- /ltf_ws/get_category_products_list ------------------------------------------
-    public function getCategoryProductsListAction() {
+    #---------------------------------- /ltf_ws/get_category_products_list_with_banner ------------------------------------------
+    public function getCategoryProductsListBannerAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
 
-        $productlist = $this->get('webservice.helper')->getProductListByCategory($decoded['gender'], $decoded['category_ids']);
+        $productlist = $this->get('webservice.helper')->getProductListByCategoryBanner($decoded['gender'], $decoded['category_ids']);
         if (array_key_exists('display_screen', $decoded)) {
             $bannerlist = $this->get('admin.helper.Banner')->getBannerListForService($base_path,$decoded['display_screen']);
         } else {
@@ -43,6 +43,14 @@ class ProductListController extends Controller {
         $data['bannerlist'] = $bannerconf;
 
     return new Response(json_encode($data));
+    }
+	
+	
+	    #---------------------------------- /ltf_ws/get_category_products_list ------------------------------------------
+    public function getCategoryProductsListAction() {
+     $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());   
+     $productlist = $this->get('webservice.helper')->getProductListByCategory($decoded['gender'], $decoded['category_ids']);
+    return new Response($productlist);
     }
         
 }

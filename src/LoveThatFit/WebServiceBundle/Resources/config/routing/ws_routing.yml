@@ -172,6 +172,10 @@ nws_product_list:
     pattern:  /nws/product_list
     defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsList}  
     
+nws_product_list_banner:
+    pattern:  /nws/product_list_with_banner
+    defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsListBanner}
+    
 nws_product_detail_with_images:
     pattern:  /nws/product_detail_with_images
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productDetailWithImages } 

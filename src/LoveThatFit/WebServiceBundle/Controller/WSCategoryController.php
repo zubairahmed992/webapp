@@ -36,7 +36,7 @@ class WSCategoryController extends Controller {
             $categoryList = $this->get('admin.helper.Categories')->getCategoryListForService($base_path);
         }
 
-        $bannerList = $this->get('admin.helper.Banner')->getBannerListForService($base_path);
+        $bannerList = $this->get('admin.helper.Banner')->getBannerListForService($base_path, 'shop');
 
         $bannerconf= array(
             'data' => $bannerList,

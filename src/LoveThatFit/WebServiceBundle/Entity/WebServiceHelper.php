@@ -761,12 +761,18 @@ class WebServiceHelper {
   public function feedbackService($user,$content) {
 	$this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
   }
+  
 	#end feedback service
-  public function getProductListByCategory($gender,array $id) {
+  public function getProductListByCategoryBanner($gender,array $id) {
       $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);     
     return $productlist;
     //return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
 
+  }
+   public function getProductListByCategory($gender,array $id) {
+      $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);     
+    return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
+  	
   }
 
 
