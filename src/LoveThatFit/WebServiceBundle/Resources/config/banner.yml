@@ -58,8 +58,8 @@ dashboard_banner:
     type: stylist_recommendations
     product_ids: [565,569,604,592,605,571]
     group_ids:
-      bottom: 565
       top: 569
+      bottom: 565
     id: 0
     disable: false
   6:
