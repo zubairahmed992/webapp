@@ -28,7 +28,7 @@ admin_product_specs_foo:
     defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:foo }
 
 admin_product_specs_bar:
-    pattern:  /admin/product_specs/bar  
+    pattern:  /admin/product_specs/bar/{id}  
     defaults: { _controller: LoveThatFitAdminBundle:ProductSpecs:bar }
 
 admin_product_specs_map:
