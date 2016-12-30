@@ -17,8 +17,8 @@
             <thead>
             <tr>
                 <th>No</th>
-                <th>Product Name</th>
                 <th>Brand</th>
+                <th>Product Name</th>
                 <th>Product Sizes</th>
                 <th>Actions</th>
             </tr>
@@ -28,8 +28,8 @@
             {% for entity in entities if entity.productid in products|keys  %}
                 <tr>
                     <td>{{ loop.index }} </td>
-                    <td>{{ products[entity.productid]['title'] }}{#{{ products[entity.productid] }}#}</td>
                     <td>{{ products[entity.productid]['brand'] }}{#{{ products[entity.productid] }} {{ dump(entity)}}#}</td>
+                    <td>{{ products[entity.productid]['title'] }}{#{{ products[entity.productid] }}#}</td>
                     <td>
                         {% set exp_sizes = entity.productsizes|split(',') %}
                         {% for key, size in exp_sizes %}
