@@ -4,6 +4,8 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Parser;
 
 class WSProductController extends Controller {
 
@@ -109,6 +111,24 @@ class WSProductController extends Controller {
         }
         return new Response($res);
         
+    }
+
+
+//*********************************************
+// Webservice For 3.0
+//**********************************************
+    #----------------------------------------------------
+    public function productDetailWithImagesAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $res = $this->get('webservice.helper')->productDetailWithImages($decoded['product_id'], $user);
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+
     }
     
 }

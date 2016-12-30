@@ -1,0 +1,12 @@
+admin_productcategories_save:
+    pattern:  /admin/savecategories/save
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:savecategories }
+    requirements: 
+      _method: post 
+      
+#--------------- Product Categoriers ------------------------------------
+admin_product_categories:
+    pattern:  /admin/loadcategories/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:loadcategories }
+   
+            

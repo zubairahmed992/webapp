@@ -1,0 +1,262 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_banners') }}" >Banner</a> <span class="divider">/</span></li>
+<li class="active">New</li>
+{% endblock %}
+
+{% block h1 %}Banner{% endblock %}
+
+{% block title %}Banner{% endblock %}
+
+{% block body %}
+
+<style type="text/css">
+.categoryerror{
+    border-color: #e9322d;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    -moz-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+}
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+
+function submitform(){
+    $( "#banner_sorting" ).error(function() {
+        alert( "Handler for .error() called." )
+        });
+
+    if($('#category_id').val() == '0'){
+        $('#category_id').addClass('categoryerror');
+        event.preventDefault();
+    }else{
+        $('#banner_catid').val($('#category_id').val());
+        $('#category_id').removeClass('categoryerror');
+    }
+    if($('#banner_list_id').val() != '0'){
+        $('#banner_parentid').val($('#banner_list_id :selected').val());
+    }
+    return true;
+}
+
+function validates(){
+    var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+
+    var image_file = document.getElementById('form_file').value;
+    var image_length = document.getElementById('form_file').length;
+
+    var pos = image_file.lastIndexOf('.') + 1;
+    var ext = image_file.substring(pos, image_length);
+    if(image_file!=""){
+        var final_ext = ext.toLowerCase();
+        for (i = 0; i < extensions.length; i++){
+            if(extensions[i] == final_ext){
+                return true;
+            }
+
+        }
+        document.getElementById('error').style.display="block";
+        return false;
+
+    }
+    return true;
+}
+$(document).ready(function(){
+
+    /* Hide All divs*/
+    hideUnuseddiv();
+
+    $('#banner_price_min').change(function(){
+        checkValue();
+    });
+
+    $('#banner_price_max').change(function(){
+        checkValue();
+    });
+
+    $('#banner_banner_type').change(function(){
+        var banner_option= $('#banner_banner_type').val();
+        hideUnuseddiv();
+        switch (banner_option) {
+            case '2':
+                document.getElementById("banner_image_position").required = true;
+                $('#banner-name-div').show();
+                $('#banner-imagepoistion-div').show();
+                break;
+            case '3':
+                document.getElementById("banner_image_position").required = true;
+                $('#banner-name-div').show();
+                $('#banner-name-div').show();
+                $('#banner-description-div').show();
+                $('#banner-pricemin-div').show();
+                $('#banner-pricemax-div').show();
+                $('#banner-imagepoistion-div').show();
+                break;
+
+        }
+    });
+
+
+    /* On Banner type selection, Dropdown will be populated bannertype data */
+    $('#banner_banner_type').change(function(){
+        var banner_type = $(this).val();
+        $("#banner_list_id > option").each(function() {
+            $(this).attr('disabled',false);
+
+            if($(this).attr('data-bannertype') != banner_type && $(this).attr('data-bannertype') != undefined){
+                $(this).attr('disabled',true);
+            }
+        });
+    });
+});
+
+
+//Hide All divs
+function hideUnuseddiv(){
+    $('#banner-description-div').hide();
+    $('#banner-pricemin-div').hide();
+    $('#banner-pricemax-div').hide();
+    $('#banner-displayscreen-div').show();
+    $('#banner-imagepoistion-div').hide();
+    $('#banner_catid').val('');
+    $('#banner_name').val('');
+    $('#banner_description').text('');
+    $('#banner_price_min').val('');
+    $('#banner_price_max').val('');
+    $('#banner_image_position').val('0');
+    document.getElementById("banner_image_position").required = false;
+}
+
+//Check minimum and maximum value
+function checkValue(){
+    var min_value = $('#banner_price_min').val();
+    var max_value = $('#banner_price_max').val();
+
+    if(parseFloat(min_value) > parseFloat(max_value)){
+        $('#banner_price_min').val(parseFloat(max_value));
+        $('#banner_price_max').val(parseFloat(min_value));
+    }
+}
+
+//On Banner_id populated, this event will be trigger
+function setSelection(){
+    var selectedoption = $('#banner_id option:selected').attr('data_parent');
+    $('#banner_id').val(selectedoption);
+}
+
+</script>
+<div>      
+    <h1 style="float:left;">New Banner </h1>
+    <div class="btn_wrapper">     
+        <a href="{{ path('admin_banners') }}" class="btn">back</a>
+    </div>
+    <div class="clearfix"></div>   
+    <form action="{{ path('admin_banner_create') }}" method="post" {{ form_enctype(form) }}  onsubmit="submitform()">
+        {{ form_errors(form) }}
+
+            <div id="detail_wrapper">      
+                <div id="p_hd">Banner Detail</div>
+
+                <div id="product_content">
+                    <div id="pro_detail">
+                        <div class="edt_container">
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Banner Type</div>
+                                <div class="span3">{{ form_widget(form.banner_type) }}{{ form_errors(form.banner_type) }}</div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="banner_level_div" style="margin-bottom:10px !important;">
+                                <div class="span3" style="padding-top:0px !important;">Select Associated Banner</div>
+                                <div class="span3" style="padding-top:0px !important;">
+                                    <select id="banner_list_id" name="banner_list_id" style="height: 100% !important;" required="required">
+                                    <option value="0">Select Associated Banner</option>
+                                        {% for banners in getbannerlist %}
+                                            <option value="{{ banners.id }}" data-bannertype="{{ banners.banner_type }}" {% if banners.banner_type != 1  %} disabled="disabled" {% endif %} >{{ banners.name }}</option>
+                                            {% if loop.last %}
+                                                <script>
+                                                    setSelection();
+                                                </script>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    {{ form_errors(form.catid) }}
+                                </div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="banner-name-div">
+                                <div class="span3">Name</div>
+                                <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
+                            </div>
+
+
+                            <div class="row-fluid show-grid" id="banner-description-div" style="display:none; margin-bottom:10px !important;">
+                                <div class="span3" style="padding-top:0px !important;">Description</div>
+                                <div class="span3" style="padding-top:0px !important;">{{ form_widget(form.description) }}{{ form_errors(form.description) }}</div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="banner-pricemin-div" style="display:none;">
+                                <div class="span3">Price Minimum</div>
+                                <div class="span3">{{ form_widget(form.price_min) }}{{ form_errors(form.price_min) }}</div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="banner-pricemax-div" style="display:none;">
+                                <div class="span3">Price Maximum</div>
+                                <div class="span3">{{ form_widget(form.price_max) }}{{ form_errors(form.price_max) }}</div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="banner-displayscreen-div" style="">
+                                <div class="span3">Display Screen</div>
+                                <div class="span3">{{ form_widget(form.display_screen) }}{{ form_errors(form.display_screen) }}</div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="category_level_div" style="margin-bottom:10px !important;">
+                                <div class="span3" style="padding-top:0px !important;">Select Targeted Category</div>
+                                <div class="span3" style="padding-top:0px !important;">
+                                    <select id="category_id" name="category_id" style="height: 100% !important;" required="required">
+                                    <option value="0">Select Targeted Category</option>
+                                        {% for category in getcategoriestreeview %}
+                                            <option value="{{ category.id }}" >{{ category.name }}</option>
+                                            {% if loop.last %}
+                                                <script>
+                                                    setSelection();
+                                                </script>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    {{ form_errors(form.catid) }}
+                                </div>
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Sort Order</div>
+                                <div class="span3">{{ form_widget(form.sorting) }}{{ form_errors(form.sorting) }}</div>
+                            </div>
+
+                            <div class="row-fluid show-grid" id="banner-imagepoistion-div">
+                                <div class="span3">Image Position</div>
+                                <div class="span3">{{ form_widget(form.image_position) }}{{ form_errors(form.image_position) }}</div>
+                            </div>
+                            <div>
+                                <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+                                    <div class="span3">
+                                        <strong><br/>  Upload Banner Image</strong>
+                                    </div>
+                                    {{ form_rest(form) }}
+                            </div>
+
+                            <div class="row-fluid show-grid">                                   
+                                <div class="span3">&nbsp;</div>                                   
+                                <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></div>                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>      
+            </div><!-- End pro_detail -->      
+    </div><!-- End product_content --> 
+
+</form>    
+</div>  
+{% endblock %}
+

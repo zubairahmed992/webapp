@@ -7,6 +7,7 @@ app/logs/*
 build/
 vendor
 composer.phar
+web/uploads
 web/uploads/ltf
 web/uploads/acme
 *.php~

@@ -192,7 +192,11 @@ admin_product_gender_base_clothing_type:
 
 admin_product_get_attribute:
     pattern:  /admin/product/get/attribute
-    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute }       
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute }  
+    
+admin_product_get_clothingtype:
+    pattern:  /admin/product/get/clothingtype
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingType }      
     
 #-------New product Dpecification Ajax ---------------------------------------#
 admin_product_gender_base_clothing_type:
@@ -202,7 +206,16 @@ admin_product_gender_base_clothing_type:
 admin_product_get_attribute:
     pattern:  /admin/product/get/attribute
     defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute } 
-
+    
+#-------------------enable disable product ajax request ----------------------------------#
+admin_product_status_change:
+   pattern:  /admin/product/status_change
+   defaults: { _controller: LoveThatFitAdminBundle:Product:statusChange }    
+    
+admin_product_get_clothingtype:
+    pattern:  /admin/product/get/clothingtype
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingType }     
+    
 admin_product_get_retailer_base_brand:
     pattern:  /admin/product/retailer/brand
     defaults: { _controller: LoveThatFitAdminBundle:Product:findBrandBaseOnRetailer }    
@@ -210,12 +223,7 @@ admin_product_get_retailer_base_brand:
  #-------------------Multiple image uploading ----------------------------------#
 admin_product_detail_multiple_images_uploading:
    pattern:  /admin/productdetail/multiple_images/uploading
-   defaults: { _controller: LoveThatFitAdminBundle:Product:multplieImageUpload }
-
-#-------------------enable disable product ajax request ----------------------------------#
-admin_product_status_change:
-   pattern:  /admin/product/status_change
-   defaults: { _controller: LoveThatFitAdminBundle:Product:statusChange }
+   defaults: { _controller: LoveThatFitAdminBundle:Product:multplieImageUpload }     
 
 
       

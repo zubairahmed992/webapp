@@ -1,0 +1,45 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}   
+{% endblock %}
+
+
+
+{% block body %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link href="{{ asset('bundles/chosen/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/chosen/chosen.css') }}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{ asset('bundles/chosen/chosen.jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/chosen/prism.js') }}"></script>
+
+<script>
+$(document).ready(function(){
+    var config = {
+      '.chosen-select'           : {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+    });
+  </script>
+<div class="wrapper">
+    <br>    <br>
+    <br>
+    <br>
+    <h2> Categories Assortment with Product </h2>
+
+    <a href="{{ path('admin_products') }}" class="btn">back to list</a>
+    <h3>{{ message is defined? message:'' }} </h3>
+
+    <form action="{{ path('admin_productcategories_save') }}" method="post" enctype="multipart/form-data">
+        <select data-placeholder="Choose a Category(s)..." class="chosen-select" multiple style="width:350px;" tabindex="4" id="category" name="category[]">
+            {% for category in getallcategorieslist %}
+                <option value="{{ category.id }}" {% if category.id in selectedcategories %} selected="selected" {% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" id="product_id" name="product_id" value="{{ productId }}" />
+        <input type="submit" name="btn" id="btn" />
+    </form>
+
+
+</div>
+ {% endblock %}

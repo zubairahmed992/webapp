@@ -32,6 +32,7 @@ class ProductDetailType extends AbstractType
        // $builder->add('ClothingType', 'choice', array('choices' => $this->clothingType, 'required' => false,'empty_value' => 'Clothing Type',));
         $builder->add('name');
         $builder->add('control_number');
+        $builder->add('product_model_height');
         $builder->add('styling_type','choice', array( 'required' => false,'empty_value' => 'Select Styling Type',));
         $builder->add('hem_length','choice', array( 'required' => false,'empty_value' => 'Select Hem Length',));
         $builder->add('neckline','choice', array( 'required' => false,'empty_value' => 'Select Neck Line',));
@@ -50,14 +51,14 @@ class ProductDetailType extends AbstractType
         $builder->add('description');        
         $builder->add('gender', 'choice', array('choices'=> array('m'=>'Male','f'=>'Female')));               
         
-        $builder ->add('Retailer', 'entity', array(
-                    'class' => 'LoveThatFitAdminBundle:Retailer',
-                    'expanded' => false,
-                    'multiple' => false,
-                     'required' => false,
-                    'property' => 'title',
-                    'empty_value' => 'Select Retailer'
-                ));            
+//        $builder ->add('Retailer', 'entity', array(
+//                    'class' => 'LoveThatFitAdminBundle:Retailer',
+//                    'expanded' => false,
+//                    'multiple' => false,
+//                     'required' => false,
+//                    'property' => 'title',
+//                    'empty_value' => 'Select Retailer'
+//                ));            
         
         $builder ->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',

@@ -1,0 +1,21 @@
+admin_productimage_create:
+    pattern:  /admin/productimage/create
+    defaults: { _controller: LoveThatFitAdminBundle:ProductImages:create }
+    requirements: 
+      _method: post 
+      
+#--------------- Product Modle Images Upload ------------------------------------
+admin_productimage_upload:
+    pattern:  /admin/productimage/{product_id}
+    defaults: { _controller: LoveThatFitAdminBundle:ProductImages:index }
+    
+#-------------------------------------------------------------
+admin_productimage_delete:
+    pattern:  /admin/productimage/{id}/delete/{product_id}
+    defaults: { _controller: LoveThatFitAdminBundle:ProductImages:delete }  
+   
+admin_productimage_update:
+   pattern:  /admin/productimage/{id}/update/{product_id}
+   defaults: { _controller: LoveThatFitAdminBundle:ProductImages:Update } 
+      
+            

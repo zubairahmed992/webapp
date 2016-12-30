@@ -1,0 +1,80 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}   
+{% endblock %}
+
+{% block body %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+ 
+<script>
+$(document).ready(function(){
+    
+    /////////////// Add Images/////////////////////
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var fieldHTML = '<div>Image Title<input type="text" required name="image_title[]" value=""/><br>Image Sort <input type="number" required name="image_sort[]" value=""/><br> <input type="file" name="productimages[]" required id="file"><a href="#" class="remove_button" title="Remove field">Remove Image</a></div>'; //New input field html 
+    var x = 1; //Initial field counter is 1
+    $(addButton).click(function(){ //Once add button is clicked
+        if(x < maxField){ //Check maximum number of input fields
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); // Add field html
+            $('.countImages').val(x);
+        }
+    });
+    $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+    });
+    
+    
+    ///////////// End Images //////////////////////
+  </script>
+<div class="wrapper">
+    <br>    <br>
+    <br>
+    <br>
+    <h2> Add Product Model Images </h2>
+    <a href="{{ path('admin_products') }}" class="btn">back to list</a>
+    <h3>{{ message is defined? message:'' }} </h3> 
+
+    <form enctype="multipart/form-data" action="{{ path('admin_productimage_create') }}" method="post" >
+                <div class="field_wrapper">
+                    <input type="file" name="productimages[]" required accept="image/*" >
+                 <a href="#" class="add_button" title="Add field">Add More Image</a><br>
+                 Image Title    <input type="text" required name="image_title[]" value=""/><br>
+                Image Sort     <input type="number" name="image_sort[]" value=""/><br><br>
+                </div>
+                <input type="hidden" name="product_id" value="{{ app.request.get('product_id') }}">              
+                <button type="submit" value="Submit">Save</button>
+    </form>   
+      
+
+  {% if product_image is defined %}  
+    {% for key,value in product_image %}
+        <tr>
+            <td>
+            <form enctype="multipart/form-data" action="{{ path('admin_productimage_update',{'id': value.productImageId,'product_id': app.request.get('product_id')}) }}" method="post" >
+                <table><tr>
+                <td>Image Title <input type="text" name="image_title" value="{{value.ImageTtle}}"/></td>
+                <td>Image Sort <input type="number" name="image_sort" value="{{value.ImageSort}}"/></td>
+                <td> <img src="{{ image_path }}{{ value.ProductImage }}" placeholder="{{value.ImageTtle}}" width="100" height="100" > <td>
+                <td>
+                   {% if app.request.get('product_id') is defined %}
+                        <a href="{{ path('admin_productimage_delete', {'id': value.productImageId,'product_id': app.request.get('product_id')}) }}" title="Delete {{value.ImageTtle}}"><i class="icon-remove"></i></a>
+                   {% else %}
+                       <a href="{{ path('admin_productimage_delete', {'id': value.productImageId}) }}" title="Delete {{value.ImageTtle}}"><i class="icon-remove"></i></a>
+                   {% endif %}
+                   <button type="submit" value="Submit"><i class="icon-ok-sign"></i></button>
+                </td>
+                    </tr></table>
+                 </form> 
+            </td>
+        </tr>  
+    {% endfor %}   
+{% endif %}
+
+</div>
+ {% endblock %}

@@ -276,7 +276,20 @@ param:limit, page_number,limit,sort
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }
-      
+        }      
   }
+   #--------------Find Clothing Type By ID and Gender ---------------------------------#
+    public function findByTargetGender($target,$gender){
+         $query = $this->getEntityManager()
+                          ->createQuery("
+       SELECT ct1.name as name,ct1.target as target,ct1.id as id FROM LoveThatFitAdminBundle:ClothingType ct1     
+       where ct1.target=:target AND ct1.gender=:gender
+      "  )->setParameters(array('target' => $target,'gender'=>$gender)) ;
+          try {
+              return $query->getResult();
+          } catch (\Doctrine\ORM\NoResultException $e) {
+              return null;
+          }
+
+    }
 }

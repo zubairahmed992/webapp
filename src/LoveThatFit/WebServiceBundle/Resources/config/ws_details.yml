@@ -368,13 +368,13 @@ ws_remove_user_cart:
    request_type: post
 
 #remove single item from user cart
-#ws_remove_user_cart_item:
-#   pattern:  /ws/remove_user_item
-#   title: remove_user_cart
-#   params:
-#     auth_token: 121c421783cd4d71d871ec16a1296091
-#     item_id: 4126
-#   request_type: post
+ws_remove_user_cart_item:
+   pattern:  /ws/remove_user_item
+   title: remove_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     item_id: 4126
+   request_type: post
 
 #show user cart
 ws_show_user_cart:
@@ -425,6 +425,7 @@ ws_events_list:
     request_type: post
     description: return events list against authentication token 
 
+
 ws_feedback_category_list:
     pattern:  /ws/feedback_category_list
     title: events_list
@@ -432,3 +433,54 @@ ws_feedback_category_list:
           api_key: 00000000000000000000000000000          
     request_type: post
     description: return feedback category list against authentication token
+
+#//////////////////// APP 3.0///////////////////////////////////    
+nws_banner_category:
+    pattern:  /nws/banner_category
+    title: banner_category
+    params:
+       gender: f
+       date: 1388577600
+    request_type: post
+    description: return Category list against authentication token
+    
+nws_product_list:
+    pattern:  /nws/product_list
+    title: product_list
+    params:
+      gender: f
+      auth_token: 56565656566
+      category_ids: [17,18,19]
+      
+nws_product_list_banner:
+    pattern:  /nws/product_list_with_banner
+    title: product_list_with_banner
+    params:
+      gender: f
+      auth_token: 56565656566
+      category_ids: [32,34,60,61,62,63,64,65,66]
+      display_screen: product_list
+
+nws_show_user_cart:
+   pattern:  /nws/show_user_cart
+   title: show_user_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: get
+
+nws_cart_item_add_to_cart:
+   pattern:  /nws/add_item_to_cart
+   title: product_add_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     item_id: 4126
+   request_type: post
+
+nws_product_detail:
+   pattern:  /nws/product_detail_with_images
+   title: product_detail
+   params:
+     auth_token: 56565656566
+     product_id: 505
+

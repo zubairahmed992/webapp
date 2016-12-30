@@ -1,0 +1,48 @@
+admin_categories:
+    pattern:  /admin/categories/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:index ,page_number: 1, sort:id }
+
+admin_category_show:
+    pattern:  /admin/category/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:show }
+    
+admin_category_new:
+    pattern:  /admin/category/new
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:new }
+
+admin_category_create:
+    pattern:  /admin/category/create
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:create }
+    requirements: 
+      _method: post 
+    
+admin_category_edit:
+    pattern:  /admin/category/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:edit }
+    requirements:
+        _method:  GET
+        
+admin_category_update:
+    pattern:  /admin/category/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:update }
+
+        
+admin_category_delete:
+    pattern:  /admin/category/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:delete }
+    
+admin_category_standards:
+    pattern:  /admin/category/standards
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:standards }
+
+admin_category_notifications:
+    pattern:  /admin/category/send_notifications
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:sendNotifications }
+
+admin_category_add_cron:
+    pattern:  /admin/category/add_cron
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:addCronNotifications }
+
+admin_category_paginate:
+    pattern:  /admin/category/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:Categories:paginate}
