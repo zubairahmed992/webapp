@@ -177,9 +177,9 @@ class WSUserController extends Controller {
             $ufb = new \LoveThatFit\UserBundle\Entity\UserFeedback();
             $ufb->setUser($user);
             //Added for debugging To make sure which environment we are wokring
-            $environmentURL = $this->getRequest()->getHost();
+            $environmentURL = "<p>" .'Environment: '.$this->getRequest()->getHost()."</p>";
             // Concatenate with environment we are working now!
-            $message = $ra['message'] . '<br><br> Environment: '.$environmentURL;
+            $message = $ra['message'] .$environmentURL;
             $category = $ra['category'];
 
             $ufb->setMessage($message);
@@ -191,7 +191,7 @@ class WSUserController extends Controller {
             $em->flush();
 
 		  	#feedback email
-		  	$this->get('webservice.helper')->feedbackService($user,$ra['message']);
+		  	$this->get('webservice.helper')->feedbackService($user,$ra['message'].$environmentURL);
 		  	#feedback email end
             
             return  new Response($this->get('webservice.helper')->response_array(true, 'Feedback added'));
