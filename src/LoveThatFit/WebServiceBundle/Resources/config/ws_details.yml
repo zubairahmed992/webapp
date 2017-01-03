@@ -66,6 +66,7 @@ ws_user_registration:
       password: ltf123
       gender: f
       device_token: 11223344556677889900112233445566778899000
+      phone_number:
       zipcode:
       birth_date:  
       weight: 80.00
@@ -100,6 +101,7 @@ ws_user_registration_default_values:
       password: ltf123
       device_token: 1122334455667788990011223344556677889900
       gender: f
+      phone_number:
       zipcode:
       birth_date:  
       device_type: iphone6
@@ -249,6 +251,7 @@ ws_user_profile_update:
       first_name:
       last_name:
       birth_date:
+      phone_number:
       zipcode:
       auth_token: 97fc8d115394f3f1947f315783e29e0e
     request_type: post
