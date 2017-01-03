@@ -55,7 +55,7 @@
 	    <div class="span1">{{b.CreatedAt|date('d-m-Y')}}</div>
 	    <div class="span3_2">
             <div>
-                    <a href="{{ path('admin_pending_user_show_test', {'archive_id': b.id}) }}" title="Show Mass Marker"><i class="icon-eye-open"></i></a>
+                    <a href="{{ path('admin_pending_user_show', {'archive_id': b.id}) }}" title="Show Mass Marker"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('admin_update_status', {'user_id': b.user.id}) }}" title="Revert Status"><i class="icon-undo" style="background-position: -215px -24px"></i></a>
                 <a href="{{ path('admin_discard_status', {'user_id': b.user.id}) }}" title="Delete Archive"><i class="icon-delete" style="background-position: -312px -1px;"></i></a>
                 </div>
