@@ -290,7 +290,7 @@ class EvaluationSheetController extends Controller {
         }
 
         return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndexPopup.html.twig', array('products' => $result, 'user'=> $arr['user']));*/
-        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndexPopup.html.twig', array('products' =>$arr['products'], 'user'=> $arr['user'],'default_products'=>$arr['default_products']));
+        return $this->render('LoveThatFitSupportBundle:EvaluationSheet:printHighestFitIndexPopup.html.twig', array('products' =>$arr['products'], 'user'=> $arr['user'],'default_products'=>$arr['default_products'],'product_sizes_fit_index'=>$arr['pop_up_product_fit_index'],'recommended_size_info'=>$arr['recommended_size_info']));
     }
 
     private function test_demo_data_fit_index_pop_up($user_id, $sorting_col, $sorting_order)
@@ -309,19 +309,18 @@ class EvaluationSheetController extends Controller {
         //Get Default Product IDs & sizes
         $try_sizes = $defaultProducts['product_id_sizes'];
 
-
         $products = $this->get('admin.helper.product')->listProductByIds($ids);
 
         $pa     = array();
         $result = array();
-        //This ALgo disable due to the lated client reply on WEB-2293
-        /*$algo = new FitAlgorithm2($user);
+
+        $algo = new FitAlgorithm2($user);
         $serial = 1;
+        $popUpProductFitIndex= array();
         foreach ($products as $p) {
-
-
-
             $algo->setProduct($p);
+            /* echo $p->getId()." -> ". $p->getName();
+             echo "<hr>";*/
             if ($try_sizes[$p->getId()] !='NA'){
                 if (strpos($try_sizes[$p->getId()], ',') !== false) {
                     $breakSizes = explode(",",$try_sizes[$p->getId()]);
@@ -335,14 +334,39 @@ class EvaluationSheetController extends Controller {
                         'color'=> $p->getdisplayProductColor()->getTitle(),
                         'serial'=>$serial,
                     );
+
+
+                    //exit;
                     for ($i=0; $i <count($breakSizes) ; $i++) {
+
                         $fb = $algo->getFeedBackForSizeTitle($breakSizes[$i]);
+
+                        $popUpProductFitIndex[$p->getId()][$breakSizes[$i]] = '0';
                         if (is_array($fb) && array_key_exists('feedback', $fb)) {
+
+                            $popUpProductFitIndex[$p->getId()][$breakSizes[$i]] = $fb["feedback"]['fit_index'];
+
                             if(is_array($fb) && array_key_exists('recommendation', $fb)){
                                 $nameArray['recommended_size']= $fb["recommendation"]['title'];
                                 $nameArray['recommended_fit_index']=$fb["recommendation"]['fit_index'];
+
+
                             }
                             if ($nameArray['recommended_size'] == $breakSizes[$i]) {
+
+                                /*echo "<pre>";
+                                echo "<prE>";
+                                echo $p->getID();
+                                echo "<hr>";
+                                echo $p->getName();
+                                echo "<hr>";
+                                print_R($breakSizes);
+                                echo "<PrE>";
+                                print_r($fb);
+                                echo "<hr>";
+                                echo  $breakSizes[$i];
+                                echo "Echo Current Sizes Matched";
+                                exit;*/
                                 if ($nameArray['recommended_fit_index'] > 0 &&
                                     $fb["feedback"]['fit_index'] > 0
                                 ) {
@@ -359,10 +383,16 @@ class EvaluationSheetController extends Controller {
                     }
                 } else {
                     $fb = $algo->getFeedBackForSizeTitle($try_sizes[$p->getId()]);
+
+
                     if (is_array($fb) && array_key_exists('feedback', $fb)) {
+
+                        $popUpProductFitIndex[$p->getId()][$try_sizes[$p->getId()]] = $fb["feedback"]['fit_index'];
+
                         if(is_array($fb) && array_key_exists('recommendation', $fb)){
                             $rec_size= $fb["recommendation"]['title'];
                             $rec_fit_ind=$fb["recommendation"]['fit_index'];
+
                         }
 
                         if ($rec_size == $fb["feedback"]['title']) {
@@ -394,12 +424,25 @@ class EvaluationSheetController extends Controller {
             } elseif($sorting_order == "down") {
                 uasort($pa, $this->make_comparer(array($sorting_col, SORT_DESC)));
             }
-        }*/
+        }
+
+        //Iterate fit index products
+        foreach ($popUpProductFitIndex as $PID=>$PFitIndex){
+            $highFitIndex =  max($PFitIndex);
+            $fitIndexSize = array_search($highFitIndex, $PFitIndex);
+
+            $popUpProductFitIndex[$PID]['highFitIndex']['size'] = $fitIndexSize;
+            $popUpProductFitIndex[$PID]['highFitIndex']['fit_index'] = $highFitIndex;
+
+        }
+
 
         return array(
+            'recommended_size_info' => $pa,
             'products' => $products,
             'user' => $user,
-            'default_products'=>$try_sizes
+            'default_products'=>$try_sizes,
+            'pop_up_product_fit_index' => $popUpProductFitIndex,
         );
     }
 
@@ -463,6 +506,19 @@ class EvaluationSheetController extends Controller {
     #--------------------------------------------------
     private function test_demo_data($user_id, $sorting_col, $sorting_order)
     {
+
+
+        /*$try_sizes = array ('564'=>'24,25,26,27,28,29,30,31,32','565'=>'S,M,L',
+            '566'=>'S,M,L', '567'=>'S,M,L,XL', '568'=>'S,M,L,XL',
+            '569'=>'S,M,L,XL', '570'=>'S,M,L', '571'=>'XS,S,M,L,XL',
+            '572'=>'0,2,4,6,8,10,12,14,16', '573'=>'XS,S,M,L', '574'=>'XS,S,M,L',
+            '575'=>'S,M,L', '577'=>'XS,S,M,L', '578'=>'XS,S,M,L,XL', '580'=>'XS,S,M,L,XL',
+            '581'=>'XS,S,M,L,XL', '583'=>'SM,ML', '584'=>'SM,ML', '585'=>'SM,ML', '586'=>'SM,ML',
+            '587'=>'24,25,26,27,28,29,30,31,32', '588'=>'24,25,26,27,28,29,30,31,32', '591'=>'OS',
+            '592'=>'S,M,L', '593'=>'2,4,6,8,10,12,14,16', '594'=>'S,M,L', '602'=>'XS,S,M,L',
+            '603'=>'XS,S,M,L', '604'=>'OS', '605'=>'OS', '606'=>'OS');*/
+
+
         $user = $this->get('user.helper.user')->find($user_id);
         // $ids= array (472,473,474,475,476,479,540,541,490,491,492,494,495,496,497,499,500,501,502,503,504,505,506,507,508,509,510,512,513,514,515,516,517,518,519,520,522,524,525,532,535,536,537,538,539,544,546,547,548,549,552,554);
         // $try_sizes = array ('472'=>'NA','473'=>'NA','474'=>'NA','475'=>'NA','476'=>'NA','479'=>'NA','540'=>'NA','541'=>'NA','490'=>'2', '491'=>'S', '492'=>'2', '494'=>'4', '495'=>'XS', '496'=>'XS', '497'=>'XS', '499'=>'S', '500'=>'XS', '501'=>'XS', '502'=>'S', '503'=>'XS', '504'=>'S', '505'=>'XS', '506'=>'XS', '507'=>'S', '508'=>'XS', '509'=>'S', '510'=>'S', '512'=>'XS', '513'=>'S', '514'=>'XS', '515'=>'S', '516'=>'S', '517'=>'S', '518'=>'S', '519'=>'4', '520'=>'2', '522'=>'S', '524'=>'4', '525'=>'2', '532'=>'XS', '535'=>'0', '536'=>'XS', '537'=>'XS', '538'=>'S', '539'=>'S', '544'=>'4', '546'=>'25', '547'=>'25', '548'=>'25', '549'=>'25', '552'=>'25', '554'=>'2');
@@ -632,6 +688,8 @@ class EvaluationSheetController extends Controller {
         $serial = 1;
         foreach ($products as $p) {
             $algo->setProduct($p);
+           /* echo $p->getId()." -> ". $p->getName();
+            echo "<hr>";*/
             if ($try_sizes[$p->getId()] !='NA'){
                 if (strpos($try_sizes[$p->getId()], ',') !== false) {
                     $breakSizes = explode(",",$try_sizes[$p->getId()]);
@@ -645,14 +703,34 @@ class EvaluationSheetController extends Controller {
                             'color'=> $p->getdisplayProductColor()->getTitle(),
                             'serial'=>$serial,
                         );
+
+
+                    //exit;
                     for ($i=0; $i <count($breakSizes) ; $i++) {
+
                         $fb = $algo->getFeedBackForSizeTitle($breakSizes[$i]);
+
+
                         if (is_array($fb) && array_key_exists('feedback', $fb)) {
                             if(is_array($fb) && array_key_exists('recommendation', $fb)){
                                 $nameArray['recommended_size']= $fb["recommendation"]['title'];
                                 $nameArray['recommended_fit_index']=$fb["recommendation"]['fit_index'];
                             }
                             if ($nameArray['recommended_size'] == $breakSizes[$i]) {
+
+                                /*echo "<pre>";
+                                echo "<prE>";
+                                echo $p->getID();
+                                echo "<hr>";
+                                echo $p->getName();
+                                echo "<hr>";
+                                print_R($breakSizes);
+                                echo "<PrE>";
+                                print_r($fb);
+                                echo "<hr>";
+                                echo  $breakSizes[$i];
+                                echo "Echo Current Sizes Matched";
+                                exit;*/
                                 if ($nameArray['recommended_fit_index'] > 0 &&
                                         $fb["feedback"]['fit_index'] > 0
                                     ) {
