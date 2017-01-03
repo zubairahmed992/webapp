@@ -300,6 +300,15 @@ class User implements UserInterface, \Serializable {
      */
     private $gender;
 
+
+
+    /**
+     * @var string $phoneNumber
+     * @ORM\Column(name="phone_number", type="string", length=100, nullable=true)
+
+     */
+    private $phoneNumber;
+
     /**
      * @var datetime $birthDate
      *
@@ -714,6 +723,25 @@ class User implements UserInterface, \Serializable {
      */
     public function getAvatar() {
         return $this->avatar;
+    }
+
+    #-------------------------------------------
+    /**
+     * Set phoneNumber
+     * @param string $phoneNumber
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber) {
+        $this->phoneNumber = $phoneNumber;
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     * @return string
+     */
+    public function getPhoneNumber() {
+        return $this->phoneNumber;
     }
 
     /**
@@ -2107,6 +2135,7 @@ class User implements UserInterface, \Serializable {
 	$obj['first_name'] = $this->getFirstName();
 	$obj['last_name'] = $this->getLastName();
 	$obj['zipcode'] = $this->getZipcode();
+    $obj['phone_number'] = $this->getPhoneNumber();
 	$obj['gender'] = $this->getGender();
 	$obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;
 	$obj['auth_token'] = $this->getAuthToken();
@@ -2165,6 +2194,7 @@ class User implements UserInterface, \Serializable {
                 'first_name' => $this->getFirstName(),
                 'last_name' => $this->getLastName(),
                 'zipcode' => $this->getZipcode(),
+                'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
                 'auth_token' => $this->getAuthToken(),
                 'birth_date' => $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
@@ -2235,6 +2265,7 @@ class User implements UserInterface, \Serializable {
                 $this->getEmail(),
                 $this->getFullName(),
                 $this->getZipcode(),
+                $this->getPhoneNumber(),
                 $this->getGender(),
                 $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
                 $this->measurement ? $this->measurement->getWeight() : 0,

@@ -161,15 +161,17 @@ class WebServiceHelper {
         array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
         array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;
         array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) :  null;
-         array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) :  null;
+        array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) :  null;
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)){
           $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;  
         } 
         
         #this dob line will be removed with the new build
         $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
-        array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) :  null;                        
-        
+        array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) :  null;
+
+        array_key_exists('phone_number', $request_array) ? $user->setPhoneNumber($request_array['phone_number']) :  null;
+
         return $user;
     }
 
