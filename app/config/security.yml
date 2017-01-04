@@ -110,6 +110,7 @@ security:
                     khurram: { password: 9a9200395b52630e4e29516db927a91eb655933b, roles: 'ROLE_ADMIN' }
                     jackson: { password: f7454a2230b6cbbac5ee2f810f3ad06f6ab560b3, roles: 'ROLE_ADMIN' }
                     calibrationlead: { password: ca685ca2eb41016030ccead6dcab0d067ebbe908, roles: 'ROLE_ADMIN' }
+                    carly: { password: 6f4189e70c065f53c21d8bb5aa133ddf6a76462d, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
