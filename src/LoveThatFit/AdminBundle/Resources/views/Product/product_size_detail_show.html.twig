@@ -12,10 +12,10 @@
 {% block body %}
 <div> 
 <h1 style="float:left;">{{product.name }} Size-{{sizetitle}}</h1>
-<div style="color:red; text-align:left; float:left; clear:both;">* The product size is Disable</div>
+{% if(sizeStatus == 1) %}
+    <div style="color:red; text-align:left; float:left; clear:both;">* The product size is Disable</div>
+{% endif %}
 <div class="btn_wrapper">
-    {% if(sizeStatus == 1) %}
-    {% endif %}
     {% if(sizeStatus == 0 or sizeStatus == "") %}
         <a href="#myModal2" role="button" data-toggle="modal" data-id="disable" class="btn statusSize">Disable Size</a>
     {% elseif(sizeStatus == 1) %}
