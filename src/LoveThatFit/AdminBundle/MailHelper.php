@@ -130,7 +130,7 @@ class MailHelper {
 	//$to = $user->getEmail();
 	$to = "membersupport@selfiestyler.com";
 	$body = "Following feedback sent by ".$user->getEmail()."<br><br>".$content;
-	$subject = 'SelfieStyler: Feedback Received. '."<br>";
+	$subject = 'SelfieStyler: Feedback Received. ';
 	//return 'emailing is currently disabled';
 	$message = \Swift_Message::newInstance()
 	  ->setSubject($subject)

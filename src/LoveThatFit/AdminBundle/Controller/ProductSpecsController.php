@@ -59,7 +59,8 @@ class ProductSpecsController extends Controller {
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
             'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
-
+        return new response(json_encode($product_specs));
+        
         $product_specs_mapping = $this->get('admin.helper.product_specification_mapping')->find(9);
         
         #return new response(json_encode($clothing_types['woman']));
@@ -316,9 +317,11 @@ class ProductSpecsController extends Controller {
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
 
-
+        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
                     'parsed_data' => $parsed_data,
+                    'product_specs_json' => json_encode($product_specs),
+                    
                 ));
 
         return new Response(json_encode($parsed_data['sizes']));

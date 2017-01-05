@@ -14,6 +14,7 @@ $(document).ready(function(){
 });        
 
     </script>
+    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
     <div>
         <table>
             <tr>
@@ -32,6 +33,217 @@ $(document).ready(function(){
                         </table>
                     </td>
                 </tr>
+{#---------------------------------------------------------------------------------------------#}    
+                 <tr>
+                    <td>
+                         <div class="row-fluid show-grid">
+                                    <div class="span3">Control Number</div>
+                                    <div class="span3">
+                                        <input type="text" id="product_control_number" name="control_number"
+                                               maxlength="255">
+                                    </div>
+                                </div>
+                            <div class="row-fluid show-grid">
+                                    <div class="span3">Please Select Gender</div>
+                                    <div class="span3">
+                                            <input type="radio" name="sel_gender" id="sel_gender_m" value="m"> Man<br>
+                                            <input type="radio" name="sel_gender" id="sel_gender_f" value="f"> Woman<br>
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid" id="brand_1">
+                                    <div class="span3">Clothing Type</div>
+                                    <div class="span3">
+                                        <select name="clothing_type" id="sel_clothing_type">
+                                                <option value=""> Select </option>                                            
+                                        </select>
+                                    </div>
+                                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Hem length</div>
+                    <div class="span3">                        
+                        <select name="hem_length" id="hem_length">
+                            <option value=""> Select</option>
+                        </select>                            
+                    </div>
+                </div>
+                <div class="row-fluid show-grid" id="neckline">
+                    <div class="span3">Neckline</div>
+                    <div class="span3">
+                        <select name="neck_line" id="neck_line">
+                            <option value=""> Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Sleeve Styling</div>
+                    <div class="span3">
+                        <select name="sleeve_styling" id="sleeve_styling">
+                            <option value=""> Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Rise</div>
+                    <div class="span3">                        
+                        <select name="rise" id="rise">
+                            <option value=""> Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Stretch Type</div>
+                    <div class="span3">
+                        <select name="stretch_type" id="stretch_type">
+                            <option value=""> Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Fit Type</div>
+                    <div class="span3">
+                        <select name="fit_type" id="fit_type">
+                            <option value=""> Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Layering</div>
+                    <div class="span3">
+                        <select name="layering" id="layering">
+                            <option value=""> Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Fabric Content</div>
+                    <div class="span3">
+                         <input type="text" id="fabric_content" name="fabric_content" maxlength="255">
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Fit Priority</div>
+                    <div class="span3">
+                         <input type="text" id="fit_priority" name="fit_priority" maxlength="255">
+                    </div>
+                </div>
+                <div class="row-fluid show-grid">
+                    <div class="span3">Colors</div>
+                    <div class="span3">
+                         <input type="text" id="color" name="color" maxlength="255">
+                    </div>
+                </div>
+                            
+                    <div class="row-fluid show-grid">
+                                    <div class="span3">Styling Type</div>
+                                    <div class="span3">
+                                        <input type="text" id="styling_type" name="styling_type"
+                                               maxlength="255">
+                                    </div>
+                                </div>
+                                
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Horizontal Stretch</div>
+                                    <div class="span3">
+                                        <input type="text" id="horizontal_stretch"
+                                               name="horizontal_stretch">
+                                    </div>
+
+                                </div>
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Wearable Horizontal Stretch</div>
+                                    <div class="span3">
+                                        <input type="text" id="wearable_horizontal_stretch"
+                                               name="wearable_horizontal_stretch">
+                                    </div>
+
+                                </div>    
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Vertical Stretch</div>
+                                    <div class="span3">
+                                        <input type="text" id="vertical_stretch"
+                                               name="vertical_stretch">
+
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Wearable Vertical Stretch</div>
+                                    <div class="span3">
+                                        <input type="text" id="wearable_vertical_stretch"
+                                               name="wearable_vertical_stretch">
+
+                                    </div>
+                                </div>
+                                 <div class="row-fluid show-grid">
+                                    <div class="span3">Waist Stretch</div>
+                                    <div class="span3">
+                                        <input type="text" id="waist_strech"
+                                               name="waist_strech">
+                                    </div>
+
+                                </div>
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Wearable Waist Stretch</div>
+                                    <div class="span3">
+                                        <input type="text" id="wearable_waist_stretch"
+                                               name="wearable_waist_stretch">
+
+                                    </div>
+                                </div>
+    
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Fabric Weight</div>
+                                    <div class="span3">
+                                        <input type="text" id="fabric_weight" name="fabric_weight"
+                                               maxlength="255">
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Structural Detail</div>
+                                    <div class="span3">
+                                        <input type="text" id="structural_detail"
+                                               name="structural_detail" maxlength="255">
+                                    </div>
+                                </div>
+                                
+
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Body Type</div>
+                                    <div class="span3">
+                                        <input type="text" id="body_type" name="body_type"
+                                               maxlength="255">
+                                    </div>
+                                </div>
+
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Styling Detail</div>
+                                    <div class="span3">
+                                        <input type="text" id="styling_detail" name="styling_detail"
+                                               maxlength="255">
+                                    </div>
+                                </div>
+
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Fit Model Size</div>
+                                    <div class="span3">
+                                        <input type="text" id="fit_priority_value" name="fit_model_size"
+                                               maxlength="255">
+                                    </div>
+                                </div>
+                             
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Product Color </div>
+                                    <div class="span3">
+                                        <input type="text" name="product_color" id="product_color" maxlength="255">
+                                        
+                                    </div>
+                                </div>                            
+
+</td>
+                </tr>
+
+{#---------------------------------------------------------------------------------------------#}                                
+
+
                 <tr>
                     <td>
                         <a href="#" id="a_measurement_table"> measurements chart</a>
@@ -57,19 +269,19 @@ $(document).ready(function(){
                                     </tr>   
                                 {% for measurement_k, measurement_v in fit_point %}            
                                     {% if (measurement_v.garment_dimension>0) %}
-                                        <tr>
-                                            <th {{measurement_v.fit_model_size?'bgcolor="#fdebd0"':'bgcolor="#f2f3f4"'}}>{{measurement_k}}</th>    
-                                            <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>                     
-                                            <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>                                    
-                                            <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
-                                            <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
-                                        </tr>   
+                                    <tr>
+                                        <th {{measurement_v.fit_model_size?'bgcolor="#fdebd0"':'bgcolor="#f2f3f4"'}}>{{measurement_k}}</th>    
+                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>                     
+                                        <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>                                    
+                                        <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                    </tr>   
                                     {% endif %}
                                 {% endfor %}    
                             {% endfor %}    
@@ -78,24 +290,24 @@ $(document).ready(function(){
                         </td>
                     </tr>
                     <tr>
-                    <td>
-                        <a href="#" id="a_validate_measurement_data"> validate measurements </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div id="dv_validate_measurement_data">
-                            <table class="table table-bordered ">                           
+                        <td>
+                            <a href="#" id="a_validate_measurement_data"> validate measurements </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="dv_validate_measurement_data">
+                                <table class="table table-bordered ">                           
                             {% for sizes, fit_point in parsed_data.sizes %}            
-                                    <tr class="Active">
-                                        <th>{{sizes}}</th>    
-                                        <th>Garment dimension</th>                     
-                                        <th>Prev</th>
-                                        <th>Fit_model</th>                     
-                                        <th>Ratio</th>
-                                        <th>Grade Rule</th>
-                                        
-                                    </tr>   
+                                        <tr class="Active">
+                                            <th>{{sizes}}</th>    
+                                            <th>Garment dimension</th>                     
+                                            <th>Prev</th>
+                                            <th>Fit_model</th>                     
+                                            <th>Ratio</th>
+                                            <th>Grade Rule</th>
+
+                                        </tr>   
                                 {% for measurement_k, measurement_v in fit_point %}            
                                     {% if (measurement_v.garment_dimension>0) %}
                                         <tr>
@@ -105,17 +317,75 @@ $(document).ready(function(){
                                             <td><span {{measurement_v.fit_model_size?'style="font-weight: bold;color: #1565C0;"':''}}>{{measurement_v.fit_model | number_format(2, '.', '')}}</span></td>    
                                             <td><span {{measurement_v.ratio > 1?'style="font-weight: bold;color: #E53935;"':''}}>{{(measurement_v.ratio * 100)| number_format(2, '.', '')}}%</span></td>
                                             <td><span>{{(measurement_v.grade_rule)| number_format(2, '.', '')}}</span></td>
-                                            
-                                            
+
+
                                         </tr>   
                                     {% endif %}
                                 {% endfor %}    
                             {% endfor %}    
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
+     <script>
+//-------------------------------------------- 	
+//-------------------------------------------- 	
+//-------------------------------------------- 	
+$(function(){
+product_specs = jQuery.parseJSON( $('#product_specs_json').text());
+      fill_list('fit_type', product_specs.fit_type);
+      fill_list('layering', product_specs.layering);
+      fill_list('fabric_content', product_specs.fabric_content);
+
+     $('input[type=radio][name=sel_gender]').change(function() {              
+        gender=this.value=='m'?'man':'women';
+        fill_list('sel_clothing_type', product_specs[gender].clothing_type);
+    });
+   //---------------------------------------
+    $( "#sel_clothing_type" ).change(function() {
+      fill_list('hem_length', product_specs[gender].hem_length[this.value]);
+      fill_list('neck_line', product_specs[gender].neck_line[this.value]);
+      fill_list('sleeve_styling', product_specs[gender].sleeve_styling[this.value]);
+      fill_list('rise', product_specs[gender].rise[this.value]);
+      fill_list('stretch_type', product_specs[gender].stretch_type);
+
+});
+   
+   //---------------------------------------
+   
+    function fill_clothing_type_list(gender){        
+        gender=gender=='m'?'man':'women';                
+        $('#sel_clothing_type').empty();
+        var option = '<option value="">Select </option>';
+        str='';
+        $.each(product_specs[gender].clothing_type, function(val, text) {
+                if(str != text){
+            option += '<option value="'+ val + '">' + text + '</option>';
+            str=text;
+                }
+                });
+         $('#sel_clothing_type').append(option);         
+    }
+    
+      //---------------------------------------
+    function fill_list(ctrl, arr){
+        $('#' + ctrl).empty();
+        var option = '<option value="">Select </option>';
+        str='';
+        $.each(arr, function(val, text) {
+                if(str != text){
+                    option += '<option value="'+ val + '">' + text + '</option>';
+                    str=text;
+                }
+                });
+                
+         $('#'+ctrl).append(option);         
+         
+    }
+
+});
+    </script>
 {% endblock %}
