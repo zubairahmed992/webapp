@@ -1,10 +1,10 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Products</li>
+    <li class="active">Products</li>
 {% endblock %}
 
 {% block header_right_links %}
-   <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a> |  <a href="{{ path('admin_product_data_import_index') }}" >import & update</a>
+    <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a> |  <a href="{{ path('admin_product_data_import_index') }}" >import & update</a>
 
     <br>
     <a  style="visibility: hidden" href="{{ path('admin_product_stats') }}" >Product Stats</a>
@@ -12,404 +12,412 @@
 {% endblock %}
 
 {% block body %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script>
     var page;
- function SearchForm(page){
-  if(page==null)
-  {page=1;
-  } 
-  
-var brand=$('#brand').val();
+    function SearchForm(page){
+        if(page==null){
+            page=1;
+        }
 
-var category = []
-   $("#category_select:checked").each(function() {
-       category.push($(this).val());
-   });
+        var brand=$('#brand').val();
+        var category = []
+        $("#category_select:checked").each(function() {
+            category.push($(this).val());
+        });
 
-var genders = []
-   $("#genders:checked").each(function() {
-       genders.push($(this).val());
-   });
+        var genders = []
+        $("#genders:checked").each(function() {
+            genders.push($(this).val());
+        });
 
-var target = []
-   $("#target:checked").each(function() {
-       target.push($(this).val());
-   });
-    $('#loading-indicator').show();
-$.ajax({
-        type:'POST',
-        url: $('#url').text(),
-        data: {brand: brand, category: category,genders:genders,target:target,page:page},  
-        success: function(response) {
-       $('#loading-indicator').hide();
-       $('#all_data').hide();
-       $('#all_data_search').empty('');
-       $('#all_data_search').show();
-       $('#all_data_search').html(response);
-       $('#pagination').hide();
-       
-    }});
-    return false;
-}
+        var target = []
+        $("#target:checked").each(function() {
+                target.push($(this).val());
+        });
+        $('#loading-indicator').show();
+        $.ajax({
+            type:'POST',
+            url: $('#url').text(),
+            data: {brand: brand, category: category,genders:genders,target:target,page:page},
+            success: function(response) {
+            $('#loading-indicator').hide();
+            $('#all_data').hide();
+            $('#all_data_search').empty('');
+            $('#all_data_search').show();
+            $('#all_data_search').html(response);
+            $('#pagination').hide();
+            }
+        });
+        return false;
+    }
 
-function getTargetBaseCat(){
-    var category = []
+    function getTargetBaseCat(){
+        var category = []
+    }
 
-}
-function getTargetCategory(){
-    var category = []
-    var woman_msg=null;
-    var man_msg=null;
-     count1 =false;
-     count2 =false;
-   $("#category:not(:checked)").each(function() {
-       category.push($(this).val());
-   });
-   
-
-var target = []
-   $("#target:checked").each(function() {
-       target.push($(this).val());
-   });
-  
-   
-    if(target!==null){
-       $.ajax({
-       type:'POST',
-       url: $('#url_target').text(),
-       data: {target:target},  
-       dataType: 'json',
-       success: function(ar) {
-          
-     $('#catwoman').text('');
-     $('#catman').text('');
-    //  $('#category_empty').text('');
-     if(ar!='null'){
-     var playlist=[];
-     playlist.push.apply(playlist, ar);
-     $('#all_category').hide();
-      $('#category_empty').addClass('frm_ele');
-    
-        for(i=0;i<playlist.length;i++){
-          if(playlist[i]['gender']=='f'){
-             $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catwoman');
-             $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catwoman');
-          }
-      }
-          $('#catwoman').prepend('<div class="adv_srch_hd">Woman</div>')
+    function getTargetCategory(){
+        var category = []
+        var woman_msg=null;
+        var man_msg=null;
+        count1 =false;
+        count2 =false;
+        $("#category:not(:checked)").each(function() {
+        category.push($(this).val());
+        });
 
 
-           for(i=0;i<playlist.length;i++){
-          if(playlist[i]['gender']=='m'){
-             $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catman');
-             $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catman');
-          }
-      }
-          $('#catman').prepend('<div class="adv_srch_hd">Man</div>')
-       
-    // if(inArray(playlist[i]['id'],category)=="yes"){
-       
-       
-      
-    
-    //}else{
-   //    $("#category").attr("disabled", true);
-  //  }
-    
-    
-    
-    }else{
- $('#category_empty').text('');
- $('#category_empty').removeClass('frm_ele');
- 
-  $('#all_category').show();
+        var target = []
+        $("#target:checked").each(function() {
+        target.push($(this).val());
+        });
 
-}}});
-    return false; 
+        if(target!==null){
+            $.ajax({
+            type:'POST',
+            url: $('#url_target').text(),
+            data: {target:target},
+            dataType: 'json',
+            success: function(ar) {
+            $('#catwoman').text('');
+            $('#catman').text('');
+            //$('#category_empty').text('');
+            if(ar!='null') {
+                var playlist=[];
+                playlist.push.apply(playlist, ar);
+                $('#all_category').hide();
+                $('#category_empty').addClass('frm_ele');
 
+                for(i=0;i<playlist.length;i++){
+                    if(playlist[i]['gender']=='f'){
+                        $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catwoman');
+                        $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catwoman');
+                    }
+                }
+                $('#catwoman').prepend('<div class="adv_srch_hd">Woman</div>')
+                for(i=0;i<playlist.length;i++){
+                    if(playlist[i]['gender']=='m'){
+                        $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catman');
+                        $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catman');
+                    }
+                }
 
-   }
-}
-function inArray(needle, haystack) {
+                $('#catman').prepend('<div class="adv_srch_hd">Man</div>')
 
-    var length = haystack.length;
-    
-    for(var i = 0; i < length; i++) {
-        
-        if(haystack[i] == needle){ 
-        return "yes";
+                //if(inArray(playlist[i]['id'],category)=="yes"){
+                //}else{
+                //$("#category").attr("disabled", true);
+                //}
+            }else{
+                $('#category_empty').text('');
+                $('#category_empty').removeClass('frm_ele');
+                $('#all_category').show();
+                }
+            }
+        });
+        return false;
         }
     }
-   
+
+    function inArray(needle, haystack){
+        var length = haystack.length;
+        for(var i = 0; i < length; i++){
+            if(haystack[i] == needle){
+                return "yes";
+            }
+        }
+    }
+
+    function backToListing(){
+        $('#all_data').show();
+        $('#all_data_search').hide();
+        $('#pagination').show();
+    }
+
+    $(document).ready(function(){
+    var genders=$('#genders').val();
+    if(genders=='M'){
+        $('#genders').prop('checked', true);
+    }
+
+    //SearchForm(1);  // For first time page load default results
+    $('.pagination li.active').on('click',function(){
+        var page = $(this).attr('p');
+        SearchForm(page);
+    });
+    });
+
+
+
+
+</script>
+<style>
+#loading-indicator {
+position: absolute;
+left: 500px;
+top: 200px;
 }
-function backToListing(){
-    $('#all_data').show();
-    $('#all_data_search').hide();
-    $('#pagination').show();
-}
-
-$(document).ready(function(){
-     var genders=$('#genders').val();
-                    
-                    if(genders=='M'){
-                        
-                        $('#genders').prop('checked', true);
-                    }
-
- //SearchForm(1);  // For first time page load default results
-                $('.pagination li.active').live('click',function(){
-                    var page = $(this).attr('p');
-                   
-                    SearchForm(page);
-                    
-                   
-                });           
-                });
-                
+</style>
 
 
 
- </script>
- <style>
- #loading-indicator {
-  position: absolute;
-  left: 500px;
-  top: 200px;
-}
-     </style> 
-   
- 
-     
-  <span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
-<div class="p_listing">     
-    <h1>Products</h1>
-    
-    
-   
-    <div class="btn_wrapper2">
-     
-        <div id="chart_figures" class="product_chart_figures">
-         <div class="facts">
-                    <div><span>Total Products:</span>{{rec_count}}</div>
-                    <div><span>Female Product:</span>{{femaleProduct}}</div>
-                    <div><span>Male Products:</span>{{maleProduct}}</div>
-     </div>
+<span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
+<div class="p_listing">
+<h1>Products</h1>
 
 
-        </div>
-        <a href="{{ path('admin_product_data_multiple_brand_csv') }}" class="btn">Import Multiple Brand CSV</a>
-        <a href="{{ path('admin_product_data_csv_index') }}" class="btn">Import CSV</a>
-        <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
-        <a href="{{ path('admin_product_data_csv_brand_specification') }}" class="btn">Add Brand CSV Format</a>
-        <a href="{{ path('admin_product_data_product_image_genrate') }}" >Generate Images</a>
-        | <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a> |  <a href="{{ path('admin_product_data_import_index') }}" >import & update</a>
 
-    </div>
-    
-    
-    
-     <div>  
-        <button type="button" class="btn" data-toggle="collapse" data-target="#demo">
-        Search
-        </button>
-    </div>
-    <img src="{{asset('bundles/lovethatfit/site/images/loading.gif')}}" id="loading-indicator"  style="display:none;" /> 
-    <div id="demo" class="collapse">    
-        <div id="adv_srch_wrap"><!--Main wrap -->
-    <span id="url" style="display:none;">{{path('admin_product_search_result')}}</span>
-    <span id="url_target" style="display:none;">{{path('admin_product_search_category_with_target')}}</span>
-          <div class="frm_wrap">
-            <div class="adv_srch_hd">Brands</div>           
-            <div class="frm_ele">
-            <select name="brand" id="brand">
-                {% for b in brandList %}
-           <option value="{{b.id}}">{{b.name}}</option> 
-                {%endfor%}        
-            </select>
-                 </div>
-          </div>
-          
-          <div class="frm_wrap">
-            <div class="adv_srch_hd">Gender</div>   
-            
-           {# <div class="frm_ele">
-           {% for g in genders %}
-          <span class="adv_radio">
-         <input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" ></span>
-          <span class="adv_gdr">{{g|capitalize}}</span>
-          {%endfor%}
-           </div>#}
-            
-            
-            
-            
-          <div class="frm_ele">
-            {% for gender in size_specs['genders']['titles'] %}
-            <span class="adv_radio"><input type="checkbox" name="genders" id="genders" value="{{gender|capitalize}}" ></span>
-            <span class="adv_gdr">{{gender|capitalize}}</span>
-          {%endfor%}
-           </div>
-            
-            
-            
-            
-            
-           </div>         
-          
-          <div class="frm_wrap">
-            <div class="adv_srch_hd">Clothing Type Target</div>           
-           {# <div class="frm_ele">
-           {% for t in target %}
-         <span class="adv_radio">
-                <input type="checkbox" name="target" id="target" value="{{t|capitalize }}" onclick="getTargetCategory()">
-              </span>
-              <span class="adv_gdr">{{t|capitalize }}
-              </span>
-              {%endfor%}       
-            </div>#}
-            
-            
-            <div class="frm_ele">
-                {% for target in size_specs['targets']['woman'] %}
-                <span class="adv_radio">
-                 <input type="checkbox" name="target" id="target" value="{{target }}" onclick="getTargetCategory()">
-                </span>
-                <span class="adv_gdr">{{target|capitalize}}</span>
-              {%endfor%}
-            </div>
-            
-          </div>
-            
-          <div class="frm_wrap">
-            <div class="adv_srch_hd">Categories</div>           
-             <span id="all_category" style="display:none;">
-            
-                {% for  key,c in category['woman'] %}
-             <span class="adv_radio" id="category_empty_span">
-             <input type="checkbox" name="category" id="category" value="{{key}}"></span>
-             <span class="adv_gdr" id="category_empty_label">{{c}}</span>
-            {%endfor%} 
-             
-              {% for  key,c in category['man'] %}
-             <span class="adv_radio" id="category_empty_span">
-             <input type="checkbox" name="category" id="category" value="{{key}}"></span>
-             <span class="adv_gdr" id="category_empty_label">{{c}}</span>
-            {%endfor%}
-             </span>
-            
-            <div class="frm_ele" id="category_empty">   
-                 <div id="catwoman">
-                <div class="adv_srch_hd">Woman </div> 
-           {% for key,c in category['woman'] %}
-                <span class="adv_radio" id="category_empty_span">
-                 <input type="checkbox" name="category_select" id="category_select" value="{{key}}">
-                 </span>
-                  <span class="adv_gdr" id="category_empty_label">{{c|capitalize}}</span>
-                  {%endfor%}  
-                 </div>
-                 <div id="catman">   
-                  <div class="adv_srch_hd">Man </div> 
-           {% for key,c in category['man'] %}
-                <span class="adv_radio" id="category_empty_span">
-                 <input type="checkbox" name="category_select" id="category_select" value="{{key}}">
-                 </span>
-                  <span class="adv_gdr" id="category_empty_label">{{c|capitalize}}</span>
-                  {%endfor%}  
-                </div>  
-            </div>
-           
-          </div>
-            
-          <button type="button" class="btn" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
-        Search Product
-        </button>
-        </div> <!--End Main wrap --> 
-    </div>
-    
-    
-     <div class="clearfix"></div> 
-     <div class="bs-docs-grid" id="all_data">              
+<div class="btn_wrapper2">
 
-        <div class="row-fluid product_main">
-            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>                        
-            
-            <div class="span1 hds">Created At</div>             
-            <div class="span1 hds"></div>  
-            <div class="span1 hds">Actions</div>  
-            
-        </div>  
+<div id="chart_figures" class="product_chart_figures">
+<div class="facts">
+<div><span>Total Products:</span>{{rec_count}}</div>
+<div><span>Female Product:</span>{{femaleProduct}}</div>
+<div><span>Male Products:</span>{{maleProduct}}</div>
+</div>
 
-          {% for p in products %}
 
-        <div class="row-fluid show-grid product_main space_wrap_product">
-            <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}">
-                
-            <div class="span1">{{p.Id}}</div>
-            <div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
-            <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
-            <div class="span1">{{p.Gender}}</div>
-            <div class="span1">{{p.Name}}</div>
-                       
-            <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>    
-            <div class="span1">
-                {%if(p.disabled==1)%}
-                    <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
-                 {%else%}   
-                {%if(p.displayProductColor)%}                  
-                  <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
-                    {%endif%}  
-                  {%endif%}
-            </div>
-            </a>
-         <div class="span1 edits_btn">           
-         <a href="#" title="price edit"><i class="icon-plus-sign"></i></a>
-         <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
-         <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-         <a href="{{ path('admin_productimage_upload', {'product_id': p.Id}) }}" title="Add Images {{p.Name}}"><i class="icon-picture"></i></a>
-         <a href="{{ path('admin_product_categories', {'id': p.Id}) }}" title="Category Assortment {{p.Name}}"><i class="icon-th-list"></i></a>
-         </div>
-            
-         
-        </div>
-   
- <!-- ModalDetail -->
+</div>
+<a style="display:none" href="{{ path('admin_product_data_multiple_brand_csv') }}" class="btn">Import Multiple Brand CSV</a>
+<a style="display:none" href="{{ path('admin_product_data_csv_brand_specification') }}" class="btn">Add Brand CSV Format</a>
+<a href="{{ path('admin_product_data_product_image_genrate') }}" >Generate Images</a>
+| <a href="{{ path('admin_fit_algorithm2_index') }}" >Algorithm 2.0</a>
+<a  style="display:none" href="{{ path('admin_product_data_import_index') }}" >import & update</a>
+
+
+<div class="btn-group" role="group" aria-label="..." style="float:right;">
+<a href="{{ path('admin_fit_model_specs_index') }}" class="btn btn-default">Fit Model</a>
+<a href="{{ path('admin_product_specs_csv_data_input') }}" class="btn btn-default">Specs</a>
+<a href="{{ path('admin_product_data_csv_index') }}" class="btn btn-default">Import CSV</a>
+<a href="{{ path('admin_product_detail_new') }}" class="btn btn-default">Add New</a>
+</div>
+</div>
+
+
+
+<div>
+<button type="button" class="btn" data-toggle="collapse" data-target="#demo">
+Search
+</button>
+</div>
+<img src="{{asset('bundles/lovethatfit/site/images/loading.gif')}}" id="loading-indicator"  style="display:none;" />
+<div id="demo" class="collapse">
+<div id="adv_srch_wrap"><!--Main wrap -->
+<span id="url" style="display:none;">{{path('admin_product_search_result')}}</span>
+<span id="url_target" style="display:none;">{{path('admin_product_search_category_with_target')}}</span>
+<div class="frm_wrap">
+<div class="adv_srch_hd">Brands</div>
+<div class="frm_ele">
+<select name="brand" id="brand">
+{% for b in brandList %}
+<option value="{{b.id}}">{{b.name}}</option>
+{%endfor%}
+</select>
+</div>
+</div>
+
+<div class="frm_wrap">
+<div class="adv_srch_hd">Gender</div>
+
+{# <div class="frm_ele">
+{% for g in genders %}
+<span class="adv_radio">
+<input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" ></span>
+<span class="adv_gdr">{{g|capitalize}}</span>
+{%endfor%}
+</div>#}
+
+
+
+
+<div class="frm_ele">
+{% for gender in size_specs['genders']['titles'] %}
+<span class="adv_radio"><input type="checkbox" name="genders" id="genders" value="{{gender|capitalize}}" ></span>
+<span class="adv_gdr">{{gender|capitalize}}</span>
+{%endfor%}
+</div>
+
+
+
+
+
+</div>
+
+<div class="frm_wrap">
+<div class="adv_srch_hd">Clothing Type Target</div>
+{# <div class="frm_ele">
+{% for t in target %}
+<span class="adv_radio">
+<input type="checkbox" name="target" id="target" value="{{t|capitalize }}" onclick="getTargetCategory()">
+</span>
+<span class="adv_gdr">{{t|capitalize }}
+</span>
+{%endfor%}
+</div>#}
+
+
+<div class="frm_ele">
+{% for target in size_specs['targets']['woman'] %}
+<span class="adv_radio">
+<input type="checkbox" name="target" id="target" value="{{target }}" onclick="getTargetCategory()">
+</span>
+<span class="adv_gdr">{{target|capitalize}}</span>
+{%endfor%}
+</div>
+
+</div>
+
+<div class="frm_wrap">
+<div class="adv_srch_hd">Categories</div>
+<span id="all_category" style="display:none;">
+
+{% for  key,c in category['woman'] %}
+<span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category" id="category" value="{{key}}"></span>
+<span class="adv_gdr" id="category_empty_label">{{c}}</span>
+{%endfor%}
+
+{% for  key,c in category['man'] %}
+<span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category" id="category" value="{{key}}"></span>
+<span class="adv_gdr" id="category_empty_label">{{c}}</span>
+{%endfor%}
+</span>
+
+<div class="frm_ele" id="category_empty">
+<div id="catwoman">
+<div class="adv_srch_hd">Woman </div>
+{% for key,c in category['woman'] %}
+<span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category_select" id="category_select" value="{{key}}">
+</span>
+<span class="adv_gdr" id="category_empty_label">{{c|capitalize}}</span>
+{%endfor%}
+</div>
+<div id="catman">
+<div class="adv_srch_hd">Man </div>
+{% for key,c in category['man'] %}
+<span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category_select" id="category_select" value="{{key}}">
+</span>
+<span class="adv_gdr" id="category_empty_label">{{c|capitalize}}</span>
+{%endfor%}
+</div>
+</div>
+
+</div>
+
+<button type="button" class="btn" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
+Search Product
+</button>
+</div> <!--End Main wrap -->
+</div>
+
+
+<div class="clearfix"></div>
+<div class="bs-docs-grid" id="all_data">
+
+<div class="row-fluid product_main">
+<div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
+<div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
+<div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
+<div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
+<div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+
+<div class="span1 hds">Created At</div>
+<div class="span1 hds"></div>
+<div class="span1 hds">Actions</div>
+
+</div>
+
+{% for p in products %}
+
+<div class="row-fluid show-grid product_main space_wrap_product">
+<a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}">
+<div class="span1">{{p.Id}}</div>
+<div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
+<div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
+<div class="span1">{{p.Gender}}</div>
+<div class="span1">{{p.Name}}</div>
+<div class="span1">{{p.createdAt|date('d-m-Y') }}</div>
+<div class="span1">
+    {%if(p.disabled==1)%}
+        <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
+    {%else%}
+        {%if(p.displayProductColor)%}
+            <img src="{{ asset(p.displayProductColor.WebPath) }}"/>
+        {%endif%}
+    {%endif%}
+</div>
+</a>
+<div class="span1 edits_btn">
+{%if(p.disabled==1)%}
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled">
+    <i class="icon-ban-circle"></i></a>
+{%else%}
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-play-circle"></i></a>
+{%endif%}
+<a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
+<a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
+<a href="#myModaldetail{{p.Id}}" role="button" data-toggle="modal" title="Delete {{p.name}}"><i class="icon-remove"></i></a>
+<a href="{{ path('admin_productimage_upload', {'product_id': p.Id}) }}" title="Add Images {{p.Name}}"><i class="icon-picture"></i></a>
+<a href="{{ path('admin_product_categories', {'id': p.Id}) }}" title="Category Assortment {{p.Name}}"><i class="icon-th-list"></i></a>
+</div>
+
+
+</div>
+
+<!-- ModalDetail -->
 <div id="myModaldetail{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Product</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Product Detail <b>{{p.Name ~ ', ' ~ p.Brand.Name}}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_product_detail_delete', {'id': p.Id}) }}"  class="btn btn-primary">Delete</a>
-    
-  </div>
-</div>        
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h3 id="myModalLabel">Delete Product</h3>
+</div>
+<div class="modal-body">
+<p>Are you sure you want to Delete this Product Detail <b>{{p.Name ~ ', ' ~ p.Brand.Name}}</b>?</p>
+</div>
+<div class="modal-footer">
+<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+<a href="{{ path('admin_product_detail_delete', {'id': p.Id}) }}"  class="btn btn-primary">Delete</a>
+
+</div>
+</div>
 
 
 {% endfor %}
 
- </div>
-  
-     
-      <div class="bs-docs-grid" id="all_data_search"> 
-          <div class="pagination"></div>
-       </div>
-
-    </div>
-  <div id="pagination">
- {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-,'controller_name':'admin_products','sort':sort}
- %}        
- </div>      
-   
 </div>
- {% endblock %}
+
+
+<div class="bs-docs-grid" id="all_data_search">
+<div class="pagination"></div>
+</div>
+
+</div>
+<div id="pagination">
+{% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'admin_products','sort':sort}
+%}
+</div>
+
+</div>
+<script>
+$( ".status_pro" ).click(function() {
+    var val = $(this).attr("data-id");
+    var res = val.split("_");
+    $.ajax({
+        type: "POST",
+        url: "{{ path('admin_product_status_change') }}",
+        data: {
+        status: res[1],
+        id: res[0],
+        },
+        success: function(response) {
+        location.reload();
+        }
+    });
+
+});
+</script>
+{% endblock %}
