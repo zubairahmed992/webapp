@@ -186,6 +186,7 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
+
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'page_number' => $page_number,
@@ -421,6 +422,7 @@ class ProductController extends Controller {
                     'addform' => $form->createView(),
                     'product_size' => $product_size,
                     'sizetitle' => $productsize->getTitle(),
+                    'sizeStatus' => $productsize->getDisabled(),
                 ));
     }
 
@@ -1165,7 +1167,7 @@ public function _multplieImageUploadAction(Request $request){
                 }
                
                #--------------------------------------------------------------
-/*               
+            /*               
                if(!in_array(strtolower($extension), $allowed)){
                    return new response('{"status":"error"}');                       
                }
@@ -1173,8 +1175,8 @@ public function _multplieImageUploadAction(Request $request){
                if(move_uploaded_file($_FILES['upl']['tmp_name'], $dirpath.$_FILES['upl']['name'])){
                        return new response('{"status":"success"}');
                }
- * 
- */
+                * 
+            */
        }
        return new response('{"status":"error"}');       
     }
@@ -1193,9 +1195,30 @@ public function _multplieImageUploadAction(Request $request){
             $entity->setDisabled(0);
         }
         $this->get('admin.helper.product')->update($entity);
-        return new response('{"status":"ok"}'); 
+        return new response('{"status":"ok"}');
     }
 
+    public function productSizeDisableAction(Request $request)
+    {
+        $product_id = $request->get('id');
+        $size_id = $request->get('size_id');
+        $status = $request->get('status');
+        $entity = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Size.');
+            return new response('{"status":"error"}');
+        } else {
+            if ($status == "disable") {
+                $entity->setDisabled(1);
+            } else {
+                $entity->setDisabled(0);
+            }
+            
+            $this->get('admin.helper.productsizes')->update($entity);
+            $this->get('session')->setFlash('success', 'Successfully Updated Size.');
+            return new response('{"status":"ok"}');
+        }
+    }
 
 
 }

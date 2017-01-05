@@ -19,7 +19,7 @@
      {% set plus=NULL %}   
      {% set athletic=NULL %}   
     {% set portley=NULL %}   
-    {% for ps in product.productSizes%} 
+  {% for ps in product.productSizes%} 
     {% if(ps.bodyType=="Petite")%}
         {% set  petite="Petite" %}
     {%endif%}      
@@ -48,10 +48,7 @@
  <div id="ret_pro_sizes">
  {% if(ps.bodyType=="Petite")%}
 <div class="span1">                        
-                          
-<a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-{{ps.title}}
-    </a>
+  <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}'>{{ps.title}}</a>
 </div>
   {%endif%}
   
@@ -59,17 +56,18 @@
 <br>{#~~~~~~~~~~~~~~~~ Regular ------------#}         
 <div class="span1">{{regular}}</div> 
 {% for ps in product.productSizes%} 
- 
  {% if(ps.bodyType=="Regular")%}
-<div class="span1">                        
-                          
-<a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-{{ps.title}}
+  <div class="span1">                        
+    <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}'>
+      {% if(ps.disabled == 1)%}  
+        <span style="color:red">{{ps.title}}</span>
+      {% else %}
+        {{ps.title}}
+      {% endif %}
     </a>
-</div>
-  {%endif%}
- 
-{%endfor%}  
+  </div>
+  {% endif %}
+{%endfor%}
 {#~~~~~~~~~~~~~~~~ Tall ------------#}
 <div class="span1">{{tall}}</div> 
 {% for ps in product.productSizes%} 
@@ -128,6 +126,8 @@
  
 {%endfor%}  
  </div>
-                    </table> 
-                    </div>
-                    <div style="clear:both;"></div>
+
+</table>
+</div>
+<div style="clear:both;"></div>
+<div style="clear:both; margin-left:20px; margin-top:20px; color:red;">The red highlighted product's size is disabled</div>

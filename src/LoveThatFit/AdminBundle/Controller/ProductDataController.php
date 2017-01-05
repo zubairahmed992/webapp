@@ -513,7 +513,7 @@ class ProductDataController extends Controller {
             return new Response(json_encode($data));
         }else{
             if ($product_id) {
-                $product = $this->get('admin.helper.product')->find($product_id);                
+                $product = $this->get('admin.helper.product')->find($product_id);
                 $ar = $this->updateProduct($pcsv, $product);
             } else {
                 $ar = $this->savecsvdata($pcsv);
@@ -584,7 +584,7 @@ class ProductDataController extends Controller {
     private function updateProduct($pcsv, $product) {
         $data = $pcsv->read();
         $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
-        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
+        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
         $return_ar = array();
         $return_ar['msg'] = '';

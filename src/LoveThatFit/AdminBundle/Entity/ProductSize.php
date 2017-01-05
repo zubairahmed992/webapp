@@ -76,7 +76,14 @@ class ProductSize
      *
      * @ORM\Column(name="index_value", type="integer",nullable=true)
      */
-    private $index_value;  
+    private $index_value;
+
+    /**
+     * @var string $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean", nullable=true)
+     */
+    private $disabled;
     
     public function getId()
     {
@@ -306,6 +313,28 @@ class ProductSize
     public function getIndexValue()
     {
         return $this->index_value;
+    }
+
+    //----------------------------------------------------------
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     * @return Product
+     */
+    public function setDisabled($disabled) {
+        $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean 
+     */
+    public function getDisabled() {
+        return $this->disabled;
     }
     
     function toArray(){
