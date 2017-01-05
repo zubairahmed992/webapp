@@ -73,7 +73,7 @@ class WSMiscController extends Controller {
                     'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
                     'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
-                    'Asif testing Server for 2.8'=>array('build_type'=>'qa','url'=>'asif.selfiestyler.com'),
+                    'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
                 ),
                 'count'=>3,
                 'message' => 'configuration for build deployment',
