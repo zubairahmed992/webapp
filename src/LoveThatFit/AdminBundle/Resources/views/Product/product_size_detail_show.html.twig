@@ -1,118 +1,83 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-
 {% block breadcrumb %} 
 <link rel="stylesheet" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/colorpicker.css')}}" type="text/css" />
 <link rel="stylesheet" media="screen" type="text/css" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/layout.css')}}" />
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
 <li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}">{{product.name}}</a><span class="divider">/</span>Size {{sizetitle}}<span class="divider">/</span></li>
 <li class="active">Show</li>         
 {% endblock %}
-
 {% block h1 %}Products{% endblock %}
-
 {% block title %}Products{% endblock %}
-
-
 {% block body %}
 <div> 
 <h1 style="float:left;">{{product.name }} Size-{{sizetitle}}</h1>
-<div class="btn_wrapper">     
+<div style="color:red; text-align:left; float:left; clear:both;">* The product size is Disable</div>
+<div class="btn_wrapper">
+    {% if(sizeStatus == 1) %}
+    {% endif %}
+    {% if(sizeStatus == 0 or sizeStatus == "") %}
+        <a href="#myModal2" role="button" data-toggle="modal" data-id="disable" class="btn statusSize">Disable Size</a>
+    {% elseif(sizeStatus == 1) %}
+        <a href="#myModal2" role="button" data-toggle="modal" data-id="enable" class="btn statusSize">Enable Size</a>
+    {% endif %}
     <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete Size</a>
-<a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
-      </div>
+    <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
+</div>
 <div class="clearfix"></div>   
-
     <div id="detail_wrapper">
         {% include 'LoveThatFitAdminBundle:Product:_productSizes.html.twig'%}
          <div class="clearfix"></div>  
-         
         <div id="p_hd">Product Specification</div>
-
-        
-        
         <div id="product_info">
             <div id="pro_detail">
                 <div class="edt_container">
-                    
-                    
-                    
-                    
                     <div id="product_info_left">
-                    
-                        <div class="p_left_blk">
+                    <div class="p_left_blk">
                     <div class="product_fld">
                         <div class="p_hd">Brand</div>
                         <div>{{product.brand.name }}</div>
-
-                    </div> 
-                                
+                    </div>
                        <div class="product_fld">
                         <div class="p_hd">Gender</div>
                         <div>{{product.gender }}</div>
                     </div> 
-                                
                      <div class="product_fld">
                         <div class="p_hd">Hem Length</div>
                         <div>{{product.HemLength}}</div>
                     </div>
-                                
                      <div class="product_fld">
                         <div class="p_hd">Sleeve Styling</div>
                         <div>{{product.SleeveStyling}}</div>
                     </div> 
-                                
                      <div class="product_fld">
                         <div class="p_hd">Stretch Type</div>
                         <div>{{product.StretchType}}</div>
                     </div>
-                                
-                          
-                                
-                                
-                             
-                                
-                     </div> 
-                        
-                        
-                        
+                     </div>
                         <div class="p_right_blk">
-                            
-                             <div class="product_fld">    
+                        <div class="product_fld">
                         <div class="p_hd">Clothing Type</div>
                         <div>{{product.clothingType.name }}</div>                        
                     </div>
-                            
-                            
-                            <div class="product_fld">
+                    <div class="product_fld">
                         <div class="p_hd">Styling Type</div>
                         <div>{{product.StylingType}}</div>
                     </div>
-                            
-                            
-                             <div class="product_fld">
+                    <div class="product_fld">
                         <div class="p_hd">Neck line</div>
                         <div>{{product.Neckline}}</div>
                     </div> 
-                            
                       <div class="product_fld">
                         <div class="p_hd">Rise</div>
                         <div>{{product.Rise}}</div>
                     </div>
-                            
-                      <div class="product_fld">
+                    <div class="product_fld">
                         <div class="p_hd">Horizontal Stretch</div>
                         <div>{{product.HorizontalStretch}}</div>
                     </div> 
-                            
-                       
-                            
-                        </div>
-                                
-                   
+                    </div>
                    <div class="p_right_blk3">
-                       
                         <div class="product_fld">
                         <div class="p_hd">Vertical Stretch</div>
                         <div>{{product.VerticalStretch}}</div>
@@ -155,10 +120,7 @@
                     </div> 
                         </div>     
                     {%endif%}
-                      
                    </div>
-                    
-                   
                     <div style="clear:both;"></div>
                     <div class="btn_wrapper" style="margin-top: 0px;">  
                         {% if(page_number is defined )%}
@@ -167,15 +129,9 @@
                         <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
                         {%endif%}
                         <a href="{{ path('admin_product_detail_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
-                        
-                    </div>       
-
-                </div> 
-                
-                
-                
-            </div> 
-        
+                    </div>
+                </div>
+            </div>
         {{ include('LoveThatFitAdminBundle:Product:_adminProductSizes.html.twig',{'id':product.id,'size_id':size_id,})}}
      
         </div>
@@ -208,18 +164,47 @@
         <a href="{{ path('admin_product_detail_size_delete',{'id':product.Id,'size_id':size_id}) }}"  class="btn btn-primary">Delete</a>
     </div>
 </div> 
+<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="statush3Text" id="myModalLabel">asdasdasdasd</h3>
     </div>
+    <div class="modal-body">
+        <p class="statush3Textp"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="javascript:;" class="disableSize btn btn-primary"></a>
+        <input type="hidden" name="size_status" value="">
+    </div>
+</div> 
+    </div>
+<script>
+    $(".statusSize").on("click", function() {
+        status = $(this).attr("data-id");
+        if (status == "disable") {
+            $(".statush3Text").html("<b>Disable Product Size {{sizetitle }}</b>");
+            $(".statush3Textp").html("Are you sure you want Disable this Product Size <b>{{sizetitle }}</b>?");
+            $(".disableSize").html("Disable");
+        } else {
+            $(".statush3Text").html("<b>Enable Product Size {{sizetitle }}</b>");
+            $(".statush3Textp").html("Are you sure you want to Enable this Product Size <b>{{sizetitle }}</b>?");
+            $(".disableSize").html("Enable");
+        }
+        $("input[name=size_status]").val(status);
+    });
+
+    $(".disableSize").on("click", function() {
+        $('#myModal2').modal('toggle');
+        status = $("input[name=size_status]").val();
+        $.ajax({
+            type:'POST',
+            url: "{{ path('admin_product_detail_size_disable', {'id':product.Id,'size_id':size_id}) }}",
+            data: {status, status},
+            success: function(response) {
+                location.reload();
+            }
+        });
+    });
+</script>
 {% endblock %}
-
-
-
-
-
-
-         
-
-
-
-
-
-

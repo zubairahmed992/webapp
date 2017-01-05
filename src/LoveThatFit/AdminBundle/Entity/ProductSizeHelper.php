@@ -189,7 +189,7 @@ class ProductSizeHelper {
          if($all_sizes->petite!=NULL){
         $sizesForPetiteBodyType=$all_sizes->petite;
         $bodyTypePetite="Petite";
-#-------------------- For Petite BodyType--------------------------------------#
+        #-------------------- For Petite BodyType--------------------------------------#
         foreach ($sizesForPetiteBodyType as $s) {
                $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypePetite);
                $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
@@ -209,16 +209,16 @@ class ProductSizeHelper {
                 $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);        
                 }
             }
-        }
-}   
+            }
+        }   
          
      
      
-#-------------------End of Petite Size-----------------------------------------# 
-    if($all_sizes->regular!=Null){
-       $sizesForRegularBodyType=$all_sizes->regular;
-        $bodyTypeRegular="Regular";
- #---------------- For Regular BodyType--------------------------------------#
+        #-------------------End of Petite Size-----------------------------------------# 
+        if($all_sizes->regular!=Null){
+           $sizesForRegularBodyType=$all_sizes->regular;
+            $bodyTypeRegular="Regular";
+        #---------------- For Regular BodyType--------------------------------------#
         foreach ($sizesForRegularBodyType as $s) {
             $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeRegular);
              $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
@@ -395,9 +395,18 @@ class ProductSizeHelper {
  
  public function findSizesByProductId($id)
  {
-     return $this->repo->findSizesByProductId($id);
+    return $this->repo->findSizesByProductId($id);
  }
- 
- 
- 
+
+    public function update($entity)
+    {
+        $this->em->persist($entity);
+        $this->em->flush();
+        return array('message' => 'Product ' . $entity->getTitle() . ' succesfully updated!',
+            'field' => 'all',
+            'message_type' => 'success',
+            'success' => true,
+        );
+    }
+
 }

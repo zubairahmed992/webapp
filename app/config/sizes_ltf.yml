@@ -29,175 +29,184 @@ constants:
   size_titles:
     woman:
       letter:
+        XXXS:
+          title: XXXS
+          index: 1
         XXS:
           title: XXS
-          index: 1
+          index: 2
         XS: 
           title: XS
-          index: 2
+          index: 3
         S: 
           title: S
-          index: 3
+          index: 4
         M: 
           title: M
-          index: 4
+          index: 5
         L:
           title: L
-          index: 5
+          index: 6
         XL: 
           title: XL
-          index: 6
+          index: 7
         XXL: 
           title: XXL
-          index: 7
+          index: 8
         XXXL: 
           title: XXXL
-          index: 8
+          index: 9
         XXXXL: 
           title: XXXXL
-          index: 9  
+          index: 10  
         1XL:
           title: 1XL
-          index: 10
+          index: 11
         2XL:
           title: 2XL
-          index: 11
+          index: 12
         3XL:
           title: 3XL
-          index: 12
+          index: 13
         4XL:
           title: 4XL
-          index: 13
+          index: 14
         1X:
           title: 1X
-          index: 14
+          index: 15
         2X:
           title: 2X
-          index: 15
+          index: 16
         3X:
           title: 3X
-          index: 16
+          index: 17
         4X:
           title: 4X
-          index: 17     
+          index: 18     
           
         0S1:
           title: 0S1
-          index: 18
+          index: 19
         0Sl:
           title: 0Sl
-          index: 19
+          index: 20
         0SI:
           title: 0SI
-          index: 20
+          index: 21
         OS1:
           title: OS1
-          index: 21
+          index: 22
         OSl:
           title: OSl
-          index: 22
+          index: 23
         OSI:
           title: OSI
-          index: 23
+          index: 24
           
       number:
+        '000':
+          title: '000'
+          index: 1
         '00':
           title: '00'
-          index: 1
+          index: 2
         0: 
           title: 0
-          index: 2
+          index: 3
         1: 
           title: 1
-          index: 3
+          index: 4
         2:
           title: 2
-          index: 4
+          index: 5
         4: 
           title: 4
-          index: 5
+          index: 6
         6: 
           title: 6
-          index: 6
+          index: 7
         8: 
           title: 8
-          index: 7
+          index: 8
         10: 
           title: 10
-          index: 8
+          index: 9
         12: 
           title: 12
-          index: 9
+          index: 10
         14: 
           title: 14
-          index: 10
+          index: 11
         16: 
           title: 16
-          index: 11
+          index: 12
         18:
           title: 18
-          index: 12
+          index: 13
         20: 
           title: 20
-          index: 13
+          index: 14
         22: 
           title: 22
-          index: 14
+          index: 15
         24: 
           title: 24
-          index: 15
+          index: 16
         26: 
           title: 26
-          index: 16
+          index: 17
         28:
           title: 28
-          index: 17
+          index: 18
         30: 
           title: 30
-          index: 18                  
+          index: 19                  
       waist:
+        22: 
+          title: 22
+          index: 1
         23: 
           title: 23
-          index: 1
+          index: 2
         24:
           title: 24
-          index: 2
+          index: 3
         25: 
           title: 25
-          index: 3
+          index: 4
         26: 
           title: 26
-          index: 4
+          index: 5
         27: 
           title: 27 
-          index: 5
+          index: 6
         28:
           title: 28 
-          index: 6
+          index: 7
         29:
           title: 29 
-          index: 7
+          index: 8
         30: 
           title: 30 
-          index: 8
+          index: 9
         31: 
           title: 31 
-          index: 9
+          index: 10
         32: 
           title: 32 
-          index: 10
+          index: 11
         33: 
           title: 33 
-          index: 11
+          index: 12
         34: 
           title: 34 
-          index: 12
+          index: 13
         35: 
           title: 35 
-          index: 13
+          index: 14
         36: 
           title: 36
-          index: 14
+          index: 15
       bra:
         28aa:
             index_value: 1
@@ -1501,57 +1510,60 @@ constants:
             shoulder_across_front: 18.375            
     man:
       letter:
+        XXXS: 
+          title: XXXS
+          index: 1
         XXS: 
           title: XXS
-          index: 1
+          index: 2
         XS: 
           title: XS
-          index: 2
+          index: 3
         S: 
           title: S
-          index: 3
+          index: 4
         M: 
           title: M
-          index: 4
+          index: 5
         L: 
           title: L
-          index: 5
+          index: 6
         XL:
           title: XL
-          index: 6
+          index: 7
         XXL: 
           title: XXL
-          index: 7
+          index: 8
         XXXL: 
           title: XXXL
-          index: 8
+          index: 9
         XXXXL: 
           title: XXXXL
-          index: 9  
+          index: 10  
         1XL:
           title: 1XL
-          index: 10
+          index: 11
         2XL:
           title: 2XL
-          index: 11
+          index: 12
         3XL:
           title: 3XL
-          index: 12
+          index: 13
         4XL:
           title: 4XL
-          index: 13
+          index: 14
         1X:
           title: 1X
-          index: 14
+          index: 15
         2X:
           title: 2X
-          index: 15
+          index: 16
         3X:
           title: 3X
-          index: 16
+          index: 17
         4X:
           title: 4X
-          index: 17   
+          index: 18   
       chest:
         35: 
           title: 35
@@ -2620,7 +2632,7 @@ constants:
      petite: petite
      tall: tall
      plus: plus
-     
+       
       
     
            
@@ -2665,7 +2677,8 @@ constants:
            
            
            
-  size_charts:
+size_charts:
+    xxxs: 00
     xxs: 0
     xs: 1
     xs: 2
@@ -2683,7 +2696,7 @@ constants:
     xxl: 26
     xxl: 28
  
-  bra_size:
+bra_size:
     28a: 28a 
     28b: 28b
     28c: 28c
@@ -2722,7 +2735,7 @@ constants:
     40d: 40d
     40dd: 40dd
     
-  bra_numbers:
+bra_numbers:
     28: 28         
     30: 30
     32: 32
@@ -2731,7 +2744,7 @@ constants:
     38: 38
     40: 40
   
-  bra_letters:
+bra_letters:
     a: a         
     b: b
     c: c

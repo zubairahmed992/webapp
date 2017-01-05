@@ -225,5 +225,9 @@ admin_product_detail_multiple_images_uploading:
    pattern:  /admin/productdetail/multiple_images/uploading
    defaults: { _controller: LoveThatFitAdminBundle:Product:multplieImageUpload }     
 
+admin_product_detail_size_disable:
+   pattern:  /admin/productdetail/{id}/size/{size_id}/disable
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeDisable }   
+
 
       
