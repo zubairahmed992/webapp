@@ -73,12 +73,15 @@
 {% for ps in product.productSizes%} 
  
  {% if(ps.bodyType=="Tall")%}
-<div class="span1">                        
-                          
-<a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-{{ps.title}}
+  <div class="span1">
+    <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
+      {% if(ps.disabled == 1)%}  
+        <span style="color:red">{{ps.title}}</span>
+      {% else %}
+        {{ps.title}}
+      {% endif %}
     </a>
-</div>
+  </div>
   {%endif%}
  
 {%endfor%} 
@@ -90,7 +93,11 @@
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-{{ps.title}}
+{% if(ps.disabled == 1)%}  
+        <span style="color:red">{{ps.title}}</span>
+      {% else %}
+        {{ps.title}}
+      {% endif %}
     </a>
 </div>
   {%endif%}
@@ -105,7 +112,11 @@
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-{{ps.title}}
+{% if(ps.disabled == 1)%}  
+        <span style="color:red">{{ps.title}}</span>
+      {% else %}
+        {{ps.title}}
+      {% endif %}
     </a>
 </div>
   {%endif%}
@@ -119,7 +130,11 @@
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-{{ps.title}}
+{% if(ps.disabled == 1)%}  
+        <span style="color:red">{{ps.title}}</span>
+      {% else %}
+        {{ps.title}}
+      {% endif %}
     </a>
 </div>
   {%endif%}
@@ -130,4 +145,10 @@
 </table>
 </div>
 <div style="clear:both;"></div>
-<div style="clear:both; margin-left:20px; margin-top:20px; color:red;">The red highlighted product's size is disabled</div>
+{% for ps in product.productSizes%} 
+  {% if(ps.disabled == 1)%}  
+  <div style="clear:both; margin-left:20px; margin-top:20px; color:red;">
+    The red highlighted product's size is disabled
+  </div>
+{%endif%}
+{%endfor%} 
