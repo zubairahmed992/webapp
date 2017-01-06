@@ -18,9 +18,9 @@ dashboard_banner:
     price: 40
     index: 2
     type: stylist_recommendations
-    product_ids: [587,577,570,594,604,584]
+    product_ids: [716,577,570,594,604,584]
     group_ids:
-      bottom: 587
+      bottom: 716
       top: 604
       top: 570
     id: 0
