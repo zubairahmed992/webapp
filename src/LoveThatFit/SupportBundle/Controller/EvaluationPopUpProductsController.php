@@ -212,7 +212,9 @@ class EvaluationPopUpProductsController extends Controller
         if ($productsInfo->getProductSizes()) {
             $productSizes = $productsInfo->getProductSizes();
             foreach ($productSizes as $size) {
-                $options[$size->getID()] = $size->getTitle();
+                if($size->getDisabled() == 0) {
+                    $options[$size->getID()] = $size->getTitle();
+                }
             }
         }
 

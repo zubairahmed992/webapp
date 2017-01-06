@@ -324,6 +324,7 @@ class EvaluationSheetController extends Controller {
             if ($try_sizes[$p->getId()] !='NA'){
                 if (strpos($try_sizes[$p->getId()], ',') !== false) {
                     $breakSizes = explode(",",$try_sizes[$p->getId()]);
+
                     $fb = "";
                     $fbExists = 0;
                     $nameArray = array(
@@ -463,6 +464,7 @@ class EvaluationSheetController extends Controller {
         $defaultProductsArray['product_id_sizes'] = array();
         if($defaultProductList){
             //Old product Id's
+
             foreach ($defaultProductList as $defaultProduct){
                 $defaultProductsArray['def_product_ids'][] = $defaultProduct->getProductID();
                 $defaultProductsArray['def_product_ids_sizes'][$defaultProduct->getProductID()] = $defaultProduct->getProductSizes();
@@ -481,7 +483,7 @@ class EvaluationSheetController extends Controller {
                     $explodedProductSizes = explode(',',$defaultProductsArray['def_product_ids_sizes'][$product->getID()]);
                     foreach ($productSize as $size) {
                         //Check selected size exists in product sizes
-                        if(in_array($size->getID(),$explodedProductSizes)) {
+                        if(in_array($size->getID(),$explodedProductSizes) && $size->getDisabled() == 0) {
                             $explodedProductSizesarray[]=  $size->getTitle();
                         }
 
