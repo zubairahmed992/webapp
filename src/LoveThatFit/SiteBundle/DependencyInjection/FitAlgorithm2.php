@@ -130,53 +130,60 @@ class FitAlgorithm2 {
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
         $fpwp = $this->product->getFitPointsWithPriority();
-        foreach ($sizes as $size) {
-            $size_specs = $size->getMeasurementArray(); #~~~~~~~~>
-            $size_identifier = $size->getDescription();
-            $fb[$size_identifier]['id'] = $size->getId();
-            $fb[$size_identifier]['description'] = $size_identifier;
-            $fb[$size_identifier]['title'] = $size->getTitle();
-            $fb[$size_identifier]['body_type'] = $size->getBodyType();
-            $fb[$size_identifier]['fit_index']=0;
-            $fb[$size_identifier]['min_fx'] =0;
-            $fb[$size_identifier]['max_fx'] =0;
-            $fb[$size_identifier]['high_fx'] =0;
-            $fb[$size_identifier]['low_fx'] =0;
-            $fb[$size_identifier]['avg_fx'] =0;
-            $fb[$size_identifier]['status'] =6;
-            $fb[$size_identifier]['variance']=0;
-            $fb[$size_identifier]['fits']=true;
-            if (is_array($size_specs)) {
-             foreach($fpwp as $pfp_key=>$pfp_value){
-                    if (array_key_exists($pfp_key, $size_specs)) {
-                        $fb[$size_identifier]['fit_points'][$pfp_key] =
-                                $this->get_fit_point_array($size_specs[$pfp_key], $body_specs);                        
-                        $fb[$size_identifier]['min_fx'] =$fb[$size_identifier]['min_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['min_fx'];
-                        $fb[$size_identifier]['max_fx'] =$fb[$size_identifier]['max_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['max_fx'];
-                        $fb[$size_identifier]['high_fx'] =$fb[$size_identifier]['high_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['high_fx'];
-                        $fb[$size_identifier]['low_fx'] =$fb[$size_identifier]['low_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['low_fx'];
-                        $fb[$size_identifier]['avg_fx'] =$fb[$size_identifier]['avg_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['avg_fx'];
-                        $fb[$size_identifier]['variance']=$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
-                        
-                        if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
-                            $fb[$size_identifier]['status'] =$this->status['beyond_max'];
-                            $fb[$size_identifier]['fit_index'] = 0;
-                            $fb[$size_identifier]['fits']=false;
-                        }elseif($fb[$size_identifier]['status'] != $this->status['beyond_max']){
-                            $fb[$size_identifier]['fit_index'] = $fb[$size_identifier]['fit_index']+$fb[$size_identifier]['fit_points'][$pfp_key]['body_fx'];                        
-                        }
-                        
-                    }else{
-                        $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
-                    }
-             }
-             $fb[$size_identifier]['message'] =$this->get_fitting_alert_message($fb[$size_identifier]['status']);
-             $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
-             if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
-            }
-            
-        }
         
+        foreach ($sizes as $size) {
+            /*
+                condition that check disable sizes bcz 
+                the disable sizes should not be shown 
+                on product detail service
+            */
+            if ($size->getDisabled() != 1) {
+                
+                $size_specs = $size->getMeasurementArray(); #~~~~~~~~>
+                $size_identifier = $size->getDescription();
+                $fb[$size_identifier]['id'] = $size->getId();
+                $fb[$size_identifier]['description'] = $size_identifier;
+                $fb[$size_identifier]['title'] = $size->getTitle();
+                $fb[$size_identifier]['body_type'] = $size->getBodyType();
+                $fb[$size_identifier]['fit_index']=0;
+                $fb[$size_identifier]['min_fx'] =0;
+                $fb[$size_identifier]['max_fx'] =0;
+                $fb[$size_identifier]['high_fx'] =0;
+                $fb[$size_identifier]['low_fx'] =0;
+                $fb[$size_identifier]['avg_fx'] =0;
+                $fb[$size_identifier]['status'] =6;
+                $fb[$size_identifier]['variance']=0;
+                $fb[$size_identifier]['fits']=true;
+                if (is_array($size_specs)) {
+                 foreach($fpwp as $pfp_key=>$pfp_value){
+                        if (array_key_exists($pfp_key, $size_specs)) {
+                            $fb[$size_identifier]['fit_points'][$pfp_key] =
+                                    $this->get_fit_point_array($size_specs[$pfp_key], $body_specs);                        
+                            $fb[$size_identifier]['min_fx'] =$fb[$size_identifier]['min_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['min_fx'];
+                            $fb[$size_identifier]['max_fx'] =$fb[$size_identifier]['max_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['max_fx'];
+                            $fb[$size_identifier]['high_fx'] =$fb[$size_identifier]['high_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['high_fx'];
+                            $fb[$size_identifier]['low_fx'] =$fb[$size_identifier]['low_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['low_fx'];
+                            $fb[$size_identifier]['avg_fx'] =$fb[$size_identifier]['avg_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['avg_fx'];
+                            $fb[$size_identifier]['variance']=$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
+                            
+                            if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
+                                $fb[$size_identifier]['status'] =$this->status['beyond_max'];
+                                $fb[$size_identifier]['fit_index'] = 0;
+                                $fb[$size_identifier]['fits']=false;
+                            }elseif($fb[$size_identifier]['status'] != $this->status['beyond_max']){
+                                $fb[$size_identifier]['fit_index'] = $fb[$size_identifier]['fit_index']+$fb[$size_identifier]['fit_points'][$pfp_key]['body_fx'];                        
+                            }
+                            
+                        }else{
+                            $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
+                        }
+                 }
+                 $fb[$size_identifier]['message'] =$this->get_fitting_alert_message($fb[$size_identifier]['status']);
+                 $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
+                 if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
+                }
+            } #end if condition for size disable checking
+        }
         $sorted_array=$this->array_sort($fb);
         $recommendation = $this->get_recommended_size($sorted_array);
         if($recommendation==null){
