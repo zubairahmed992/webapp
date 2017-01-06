@@ -537,39 +537,49 @@ class WebServiceHelper {
 
         $algo = new FitAlgorithm2($user, $product);
         $fb = $algo->getStrippedFeedBack();
+
+        $sizes = $product->getProductSizes();
         $default_item = $algo->getRecommendedFromStrippedFeedBack($fb);
         $p['sizes'] = $fb['feedback'];
+
         $recommended_product_item = null;
         $favouriteItemIds=$user->getFavouriteItemIdArray();
+
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
-            $ps_id = $pi->getProductSize()->getId();
-            # get the highest price of all the items/color for a particular size
-            $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
-            if (array_key_exists('price', $p['sizes'][$s_desc])) {
-                $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
-            } else {
-                $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
-            }
-            
-            
-            $p['items'][$pi->getId()] = array(
-                'item_id' => $pi->getId(),
-                'product_id' => $product->getId(),
-                'color_id' => $pc_id,
-                'size_id' => $ps_id,
-                'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
-                'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
-                'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
-                'price' => $pi->getPrice()?$pi->getPrice():0,
-                'favourite' => in_array($pi->getId(), $favouriteItemIds),
-            );
-         
-            if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
-            $recommended_product_item = $pi;
+            /*
+                condition that check disable sizes bcz 
+                the disable sizes should not be shown 
+                on product detail service
+            */
+            if ($pi->getProductSize()->getDisabled() != 1) {
+                
+                $ps_id = $pi->getProductSize()->getId();
+                # get the highest price of all the items/color for a particular size
+                $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+                if (array_key_exists('price', $p['sizes'][$s_desc])) {
+                    $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
+                } else {
+                    $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
+                }
+                
+                $p['items'][$pi->getId()] = array(
+                    'item_id' => $pi->getId(),
+                    'product_id' => $product->getId(),
+                    'color_id' => $pc_id,
+                    'size_id' => $ps_id,
+                    'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
+                    'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
+                    'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
+                    'price' => $pi->getPrice()?$pi->getPrice():0,
+                    'favourite' => in_array($pi->getId(), $favouriteItemIds),
+                );
+             
+                if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
+                    $recommended_product_item = $pi;
+                }
+            }#end if condition for size disable checking
         }
-        }
-        
 
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
