@@ -207,7 +207,9 @@ class EvaluationDefaultProductsController extends Controller
         if ($productsInfo->getProductSizes()) {
             $productSizes = $productsInfo->getProductSizes();
             foreach ($productSizes as $size) {
-                $options[$size->getID()] = $size->getTitle();
+                if($size->getDisabled() == 0) {
+                    $options[$size->getID()] = $size->getTitle();
+                }
             }
         }
 
@@ -379,7 +381,10 @@ class EvaluationDefaultProductsController extends Controller
         if ($productsInfo->getProductSizes()) {
             $productSizes = $productsInfo->getProductSizes();
             foreach ($productSizes as $size) {
-                $options .= '<option value="' . $size->getID() . '">' . $size->getTitle() . '</option>';
+                if($size->getDisabled() == 0 ) {
+                    $options .= '<option value="' . $size->getID() . '">' . $size->getTitle() . '</option>';
+                }
+
             }
         }
 

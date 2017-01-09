@@ -125,19 +125,20 @@ class MailHelper {
 
   public function sendFeedbackEmail($user,$content) {
 
-	$from = $user->getEmail();
-	//$from = $this->conf['parameters']['mailer_user'];
+	//$from = $user->getEmail();
+	$from = $this->conf['parameters']['mailer_user'];
 	//$to = $user->getEmail();
 	$to = "membersupport@selfiestyler.com";
 	$body = "Following feedback sent by ".$user->getEmail()."<br><br>".$content;
 	$subject = 'SelfieStyler: Feedback Received. ';
 	//return 'emailing is currently disabled';
-	$message = \Swift_Message::newInstance()
-	  ->setSubject($subject)
-	  ->setFrom($from)
-	  ->setTo($to)
-	  ->setContentType("text/html")
-	  ->setBody($body);
+      $message = \Swift_Message::newInstance()
+          ->setSubject($subject)
+          ->setFrom($from)
+          ->setTo($to)
+          ->setContentType("text/html")
+          ->setBody($body)
+          ->setReplyTo($user->getEmail());
 
     if($this->server!='local') {
 
