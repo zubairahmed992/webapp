@@ -764,15 +764,15 @@ private function calculate_fitindex($fp_specs){
                     $level=4;
                     if (4.5 < $diff) {
                         $str = 'too long, hem';
-                    } elseif (3.25 <= $diff && $diff <= 4.5) {
+                    } elseif (3.25 < $diff && $diff <= 4.5) {
                         $str = 'very long, hem or wear with 4 – 5 inches heels';
-                    } elseif (2.25 <= $diff && $diff <= 3.5) {
+                    } elseif (2.25 < $diff && $diff <= 3.25) {
                         $str = 'long, hem or wear with 3 – 4 inches heels';
-                    } elseif (1.25 <= $diff && $diff <= 2.5) {
+                    } elseif (1.25 < $diff && $diff <= 2.25) {
                         $str = 'long, hem or wear with 2 - 3 inches heels';
-                    } elseif (0 <= $diff && $diff <= 1.5) {
+                    } elseif (0 < $diff && $diff <= 1.25) {
                         $str = 'long, hem or wear with 1 – 2 inches heels';
-                    } elseif (-1 <= $diff && $diff <= -0.5) {
+                    } elseif (-1 <= $diff && $diff <= 0) {
                         $str = 'perfect fit wear with flats or heels';
                     }
                 }
