@@ -53,6 +53,7 @@ class ProductSpecsController extends Controller {
 
 #----------------------- /admin/product_specs/foo
     public function fooAction() {
+        return $this->render('LoveThatFitAdminBundle:ProductSpecs:foo.html.twig');
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
