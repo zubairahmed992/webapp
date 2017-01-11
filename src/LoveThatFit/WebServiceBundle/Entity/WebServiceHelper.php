@@ -865,7 +865,7 @@ class WebServiceHelper {
             );
         }
 
-        $p['model_height'] = $product->getProductModelHeight();
+        $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
         $p['fitting_room_status'] = 0;
