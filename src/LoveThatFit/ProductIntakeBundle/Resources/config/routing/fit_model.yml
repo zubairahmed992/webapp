@@ -1,0 +1,19 @@
+product_intake_fit_model_index:
+    pattern:  /product_intake/fit_model/index
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:index }
+
+product_intake_fit_model_create_new:
+    pattern:  /product_intake/fit_model/create_new
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:createNew }
+
+product_intake_fit_model_save:    
+    pattern:  /product_intake/fit_model/save
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:save } 
+    
+product_intake_fit_model_show:
+    pattern:  /product_intake/fit_model/{id}/show
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:show }
+    
+product_intake_fit_model_edit:
+    pattern:  /product_intake/fit_model/{id}/edit
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:edit }    

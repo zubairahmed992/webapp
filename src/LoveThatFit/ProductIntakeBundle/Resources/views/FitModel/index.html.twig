@@ -6,7 +6,7 @@
     <h1>Fit Model Measurement</h1>
     
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
-            <a href="{{ path('admin_fit_model_specs_create_new') }}" class="btn btn-default">New</a>           
+            <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>           
         </div>
         
      <div class="clearfix"></div> 
@@ -24,9 +24,9 @@
                 <div class="span1">{{fmm.Id}}</div>
                 <div class="span1">{{fmm.Title}}</div>
                 <div class="span1">
-                    <div>                    
-                        <a href="{{ path('admin_fit_model_specs_show', {'id': fmm.Id}) }}" title="Show "><i class="icon-eye-open"></i></a>
-                        <a href="{{ path('admin_fit_model_specs_edit', {'id': fmm.Id}) }}" title="Edit "><i class="icon-edit"></i></a>
+                    <div>                   
+                        <a href="{{ path('product_intake_fit_model_show', {'id': fmm.Id}) }}" title="Show "><i class="icon-eye-open"></i></a>
+                        <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" title="Edit "><i class="icon-edit"></i></a>
 
                     </div> 
                 </div>                          

@@ -1,13 +1,13 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Entity;
+namespace LoveThatFit\ProductIntakeBundle\Entity;
 use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\FitModelMeasurementRepository")
+ * @ORM\Entity(repositoryClass="LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurementRepository")
  * @ORM\Table(name="fit_model_measurement")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -16,18 +16,11 @@ class FitModelMeasurement {
     /**     
      * Bidirectional (OWNING SIDE - FK)
      * 
-     * @ORM\ManyToOne(targetEntity="Brand", inversedBy="fit_model_measurements")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="fit_model_measurements")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      * */
     private $brand;  
       
-    /**
-     * Bidirectional (INVERSE SIDE)
-     * 
-     * @ORM\OneToMany(targetEntity="ProductSpecificationMapping", mappedBy="fit_model_measurement")
-     * */
-    private $product_specification_mappings;
-    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -336,36 +329,7 @@ class FitModelMeasurement {
     public function getBrand(){
         return $this->brand;
     }
- #---------------------------------------------------
-    /**
-     * Set product_specification_mapping
-     *
-     * @param \LoveThatFit\AdminBundle\Entity\ProductSpecificationMapping $product_specification_mapping
-     * @return Brand
-     */
-    public function setProductSpecificationMapping(\LoveThatFit\AdminBundle\Entity\ProductSpecificationMapping $product_specification_mapping = null)   {
-        $this->product_specification_mappings[] = $product_specification_mapping;    
-        return $this;
-    }
-
-    /**
-     * Get product_specification_mappings
-     *
-     * @return \LoveThatFit\AdminBundle\Entity\ProductSpecificationMapping 
-     */
-    public function getProductSpecificationMappings(){
-        return $this->product_specification_mappings;
-    }
-     /**
-     * Remove product_specification_mappings
-     *
-     * @param \LoveThatFit\AdminBundle\Entity\ProductSpecificationMapping $product_specification_mappings
-     */
-    public function removeProductSpecificationMapping(\LoveThatFit\AdminBundle\Entity\ProductSpecificationMapping $product_specification_mappings)
-    {
-        $this->products->removeElement($product_specification_mappings);
-    }
-
+ 
 ######################################################################
     
       /**

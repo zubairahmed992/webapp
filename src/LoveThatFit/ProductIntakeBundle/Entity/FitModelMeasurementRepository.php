@@ -1,6 +1,6 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Entity;
+namespace LoveThatFit\ProductIntakeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

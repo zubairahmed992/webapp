@@ -23,13 +23,7 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Brand
             container: "@service_container"
-     admin.fit_model_measurement:
-        class: LoveThatFit\AdminBundle\Entity\FitModelMeasurementHelper
-        arguments:
-            dispatcher: "@event_dispatcher"
-            em: "@doctrine.orm.entity_manager"
-            class: LoveThatFit\AdminBundle\Entity\FitModelMeasurement
-            container: "@service_container"            
+                 
      admin.helper.sizechart:
         class: LoveThatFit\AdminBundle\Entity\SizeChartHelper
         arguments:
@@ -37,8 +31,6 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\SizeChart
             container: "@service_container"
-  
-    
             
      admin.helper.clothingtype:
         class: LoveThatFit\AdminBundle\Entity\ClothingTypeHelper

@@ -1,3 +1,7 @@
-admin_product_intake_list:
-    pattern:  /admin/product_intake/mapping/index
-    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:index }
+product_intake_fit_model_routes:
+    resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/fit_model.yml"
+    prefix:   /
+    
+product_intake_specs_mapping_routes:
+    resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/specs_mapping.yml"
+    prefix:   /    

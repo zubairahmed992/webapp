@@ -1,13 +1,33 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Controller;
+namespace LoveThatFit\ProductIntakeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FitModelSpecsController extends Controller {
-    #------------------------/admin/fit_model_specs/create_new
+class FitModelController extends Controller {
+    
+     #------------------------/product_intake/fit_model_specs/index
+
+    public function indexAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:index.html.twig', array(
+                    'fit_model_measurements' => $this->get('admin.fit_model_measurement')->findAll(),
+                ));
+    }
+
+    #------------------------/product_intake/fit_model_specs/show/id
+
+    public function showAction($id) {
+        $fit_model_measurement = $this->get('admin.fit_model_measurement')->find($id);
+        $fit_points = json_decode($fit_model_measurement->getMeasurementJson(), true);
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:show.html.twig', array(
+                    'fit_model_measurement' => $fit_model_measurement,
+                    'fit_points' => $fit_points,
+                ));
+    }
+    
+    #------------------------/product_intake/fit_model_specs/create_new
 
     public function createNewAction() {
         #return new Response(json_encode($this->get('admin.helper.product.specification')->getFitPoints()));
@@ -17,7 +37,7 @@ class FitModelSpecsController extends Controller {
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         #return new Response(json_encode($size_specs));
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
-        return $this->render('LoveThatFitAdminBundle:FitModelSpecs:create_new.html.twig', array(
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
                     'brands' => $brands,
                     'clothing_types' => $clothing_types,
@@ -26,7 +46,7 @@ class FitModelSpecsController extends Controller {
                 ));
     }
 
-    #------------------------/admin/fit_model_specs/save
+    #------------------------/product_intake/fit_model_specs/save
 
     public function saveAction(Request $request) {
         $decoded = $request->request->all();
@@ -51,26 +71,7 @@ class FitModelSpecsController extends Controller {
         return new Response('saved!');
     }
 
-    #------------------------/admin/fit_model_specs/index
-
-    public function indexAction() {
-        return $this->render('LoveThatFitAdminBundle:FitModelSpecs:index.html.twig', array(
-                    'fit_model_measurements' => $this->get('admin.fit_model_measurement')->findAll(),
-                ));
-    }
-
-    #------------------------/admin/fit_model_specs/show/id
-
-    public function showAction($id) {
-        $fit_model_measurement = $this->get('admin.fit_model_measurement')->find($id);
-        $fit_points = json_decode($fit_model_measurement->getMeasurementJson(), true);
-        return $this->render('LoveThatFitAdminBundle:FitModelSpecs:show.html.twig', array(
-                    'fit_model_measurement' => $fit_model_measurement,
-                    'fit_points' => $fit_points,
-                ));
-    }
-
-    #------------------------/admin/fit_model_specs/edit/id
+    #------------------------/product_intake/fit_model_specs/edit/id
 
     public function editAction($id) {
         $fit_model_measurement = $this->get('admin.fit_model_measurement')->find($id);
@@ -80,7 +81,7 @@ class FitModelSpecsController extends Controller {
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
-        return $this->render('LoveThatFitAdminBundle:FitModelSpecs:create_new.html.twig', array(
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,
                     'fit_points' => $fit_points,
