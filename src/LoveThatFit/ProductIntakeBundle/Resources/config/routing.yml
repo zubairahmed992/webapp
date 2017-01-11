@@ -1,0 +1,3 @@
+admin_product_intake_list:
+    pattern:  /admin/product_intake/mapping/index
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:index }
