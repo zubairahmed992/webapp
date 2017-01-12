@@ -23,11 +23,10 @@
         <div class="row-fluid">
             <div class="span1 hds"><a href="{{  path('admin_retailers')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
             <div class="span1 hds"><a href="{{  path('admin_retailers')~'/'~ 1~'/'~'title' }}" style=" text-decoration: none;">Title</a></div>
-            <div class="span3 hds">Brand</div>
+            <div class="span6 hds">Brand</div>
                             
             <div class="span1 hds">Actions</div>
-            <div class="span1 hds"></div>            
-            <div class="span1 hds"></div>      
+
             
         </div>             
           {% for r in retailers %}         
@@ -35,7 +34,7 @@
             <div class="span1">{{r.id}}</div>
             <div class="span1">{{r.title}}  
             <img src="{{ asset(r.WebPath) }}"></div> 
-            <div class="span3">{{r.getBrandNames}}</div>  
+            <div class="span6">{{r.getBrandNames}}</div>
            
             <div class="span1">
             <div>
@@ -45,8 +44,7 @@
                     <a href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.title}}"><i class="icon-remove"></i></a>
                 </div> 
             </div>
-                 <div class="span1"></div>
-            <div class="span1"></div> 
+
         </div>
         <!-- Modal -->
 <div id="myModal{{r.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
