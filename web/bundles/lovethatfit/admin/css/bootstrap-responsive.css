@@ -1320,6 +1320,13 @@
    padding-top:20px;
    overflow:hidden;
   }
+
+.space_wrap_rt_ad .span6:not(.hds) {
+  min-height:90px;
+  max-height:90px;
+  padding-top:20px;
+  overflow:hidden;
+}
   
 
   
