@@ -194,3 +194,6 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
+nws_add_to_fitting_room:
+    pattern:  /nws/add_to_fitting_room
+    defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:addToFittingRoom}

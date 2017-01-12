@@ -252,5 +252,17 @@ class UserFittingRoomItemHelper {
         }
     }
 
+
+#------------------------------------------------------
+    public function findByUserItemIdNew($user_id, $item_id) {
+        return $this->repo->findByUserItemIdNew($user_id, $item_id);
+    }
+
+    #------------------------------------------------------
+    public function getItemArrayByUser($user,$item_id) {
+        $fris = $this->findByUserItemIdNew($user->getId(), $item_id);
+        return $fris;
+    }
+
 }
 
