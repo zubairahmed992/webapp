@@ -774,6 +774,8 @@ private function calculate_fitindex($fp_specs){
                         $str = 'long, hem or wear with 1 – 2 inches heels';
                     } elseif (-1 <= $diff && $diff <= 0) {
                         $str = 'perfect fit wear with flats or heels';
+                    } else {
+                        $str = 'between ankle & floor';
                     }
                 }
             }
