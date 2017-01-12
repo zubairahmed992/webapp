@@ -264,5 +264,23 @@ class UserFittingRoomItemHelper {
         return $fris;
     }
 
+    #------------------------------------------------------
+
+    public function createUserFittingRoomItemWithProductId($user, $productItem, $product) {
+        $userFittingRoomitem = new UserFittingRoomItem();
+        $userFittingRoomitem->setCreatedAt(new \DateTime('now'));
+        $userFittingRoomitem->setUpdatedAt(new \DateTime('now'));
+        $userFittingRoomitem->setProductitem($productItem);
+        $userFittingRoomitem->setProductId($product);
+        $userFittingRoomitem->setUser($user);
+        return $this->save($userFittingRoomitem);
+    }
+
+
+#------------------------------------------------------
+    public function deleteByUserItemByProduct($user, $product_id) {
+        return $this->repo->deleteByUserItemByProduct($user->getId(), $product_id);
+    }
+
 }
 

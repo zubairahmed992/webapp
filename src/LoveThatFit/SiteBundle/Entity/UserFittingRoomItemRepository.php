@@ -58,4 +58,34 @@ class UserFittingRoomItemRepository extends EntityRepository {
         }
     }
 
+
+    //Get the records entity by productId
+    public function findByUserItemByProduct($user_id, $product_id) {
+        $total_record = $this->getEntityManager()
+            ->createQuery("SELECT ut
+                                FROM LoveThatFitSiteBundle:UserFittingRoomItem ut
+                                WHERE
+                                ut.user=:user_id AND ut.product_id=:product_id"
+            )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id));
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    //Delete by Product ID
+    public function deleteByUserItemByProduct($user_id, $product_id) {
+        $total_record = $this->getEntityManager()
+            ->createQuery("DELETE LoveThatFitSiteBundle:UserFittingRoomItem ut
+                        WHERE ut.user = :user_id AND ut.product_id = :product_id"
+            )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id));
+        try {
+            return $total_record->execute();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }
