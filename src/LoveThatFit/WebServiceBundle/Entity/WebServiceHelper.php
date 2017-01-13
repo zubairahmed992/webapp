@@ -775,15 +775,30 @@ class WebServiceHelper {
   }
   
 	#end feedback service
-  public function getProductListByCategoryBanner($gender,array $id) {
-      $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);     
-    return $productlist;
-    //return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
+    public function getProductListByCategoryBanner($gender,array $id, $user_id) {
+        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);
+        foreach($productlist as $key=>$product){
+            if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
+                $productlist[$key]['fitting_room_status'] = 1;
+            }else {
+                $productlist[$key]['fitting_room_status'] = 0;
+            }
+        }
+        return $productlist;
+    }
 
-  }
-   public function getProductListByCategory($gender,array $id) {
-      $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);     
-    return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
+    //$gender,array $id
+    public function getProductListByCategory($gender,array $id, $user_id) {
+
+        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);
+        foreach($productlist as $key=>$product){
+            if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
+                $productlist[$key]['fitting_room_status'] = 1;
+            }else {
+                $productlist[$key]['fitting_room_status'] = 0;
+            }
+        }
+        return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
   	
   }
 
@@ -868,7 +883,13 @@ class WebServiceHelper {
         $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
+
+        $user_data =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProduct($user->getId(), $product->getId());
         $p['fitting_room_status'] = 0;
+        if($user_data == "1"){
+            $p['fitting_room_status'] = 1;
+        }
+
 
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);

@@ -194,10 +194,14 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
-nws_add_update_to_fitting_room:
-    pattern:  /nws/add_update_to_fitting_room
+nws_add_update_fitting_room:
+    pattern:  /nws/add_update_fitting_room
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:addUpdateToFittingRoom}
 
-nws_delete_to_fitting_room:
-    pattern:  /nws/delete_to_fitting_room
+nws_delete_fitting_room_item:
+    pattern:  /nws/delete_fitting_room_item
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:deleteToFittingRoom}
+
+nws_get_all_fitting_room:
+    pattern:  /nws/get_all_fitting_room
+    defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:getAllFittingRoom}
