@@ -776,7 +776,7 @@ class WebServiceHelper {
   
 	#end feedback service
     public function getProductListByCategoryBanner($gender,array $id, $user_id) {
-        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);
+        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = 1;
@@ -790,7 +790,7 @@ class WebServiceHelper {
     //$gender,array $id
     public function getProductListByCategory($gender,array $id, $user_id) {
 
-        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id);
+        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = 1;
