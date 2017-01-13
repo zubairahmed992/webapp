@@ -1,41 +1,32 @@
-{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 
 {% block body %}
-  
+
 <div class="p_listing">     
     <h1>Fit Model Measurement</h1>
-    
-        <div class="btn-group" role="group" aria-label="..." style="float:right;">
-            <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>           
-        </div>
-        
-     <div class="clearfix"></div> 
-     
-    <div class="bs-docs-grid">              
 
-        <div class="row-fluid">
-            <div class="span1 hds">Id</div>
-            <div class="span1 hds">Title</div>                        
-            <div class="span1 hds">Actions</div>
-        </div>  
-
-          {% for fmm in fit_model_measurements %}
-            <div class="row-fluid show-grid">
-                <div class="span1">{{fmm.Id}}</div>
-                <div class="span1">{{fmm.Title}}</div>
-                <div class="span1">
-                    <div>                   
-                        <a href="{{ path('product_intake_fit_model_show', {'id': fmm.Id}) }}" title="Show "><i class="icon-eye-open"></i></a>
-                        <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" title="Edit "><i class="icon-edit"></i></a>
-
-                    </div> 
-                </div>                          
-            </div>        
-        {% endfor %}
-
-
-
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+        <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>           
     </div>
+    <div class="clearfix"></div> 
+
+    <table class="table table-bordered table-striped table-hover table-condensed">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th></th>
+        </tr>
+        {% for fmm in fit_model_measurements %}
+        <tr>
+            <td>{{fmm.Id}}</td>
+            <td>{{fmm.Title}}</td>
+            <td>
+                <a href="{{ path('product_intake_fit_model_show', {'id': fmm.Id}) }}" title="Show ">show</a> &nbsp;| &nbsp;
+                <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" title="Edit ">edit</a>
+            </td>
+        </tr>
+         {% endfor %}
+    </table> 
 </div>
 
 
