@@ -41,6 +41,12 @@ class Product {
      * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product", orphanRemoval=true)
      */
     protected $product_colors;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="product_id")
+     */
+    private $user_fitting_room_ittem;
     
     /**
      * @ORM\OneToMany(targetEntity="ProductColorView", mappedBy="product", orphanRemoval=true)
@@ -510,6 +516,40 @@ class Product {
         return $this->product_items;
     }
 
+
+#--------------------------------------------------------------------------------
+    /**
+     * Add user_fitting_room_ittem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem
+     * @return ProductItem
+     */
+    public function addUserFittingRoomIttem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem)
+    {
+        $this->user_fitting_room_ittem[] = $userFittingRoomIttem;
+
+        return $this;
+    }
+
+    /**
+     * Remove user_fitting_room_ittem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem
+     */
+    public function removeUserFittingRoomIttem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem)
+    {
+        $this->user_fitting_room_ittem->removeElement($userFittingRoomIttem);
+    }
+
+    /**
+     * Get user_fitting_room_ittem
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserFittingRoomIttem()
+    {
+        return $this->user_fitting_room_ittem;
+    }
   
 
 //----------------------------------------------------------

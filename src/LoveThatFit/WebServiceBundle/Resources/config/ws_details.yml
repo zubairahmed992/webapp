@@ -487,3 +487,18 @@ nws_product_detail:
      auth_token: 56565656566
      product_id: 505
 
+nws_add_update_to_fitting_room:
+   pattern:  /nws/add_update_to_fitting_room
+   title: add_update_to_fitting_room
+   params:
+     auth_token: 56565656566
+     product_item_id: 4082
+     product_id: 506
+
+
+nws_delete_to_fitting_room:
+   pattern:  /nws/delete_to_fitting_room
+   title: delete_to_fitting_room
+   params:
+     auth_token: 56565656566
+     product_id: 506

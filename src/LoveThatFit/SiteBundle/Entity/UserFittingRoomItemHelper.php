@@ -252,5 +252,35 @@ class UserFittingRoomItemHelper {
         }
     }
 
+
+#------------------------------------------------------
+    public function findByUserItemIdNew($user_id, $item_id) {
+        return $this->repo->findByUserItemIdNew($user_id, $item_id);
+    }
+
+    #------------------------------------------------------
+    public function getItemArrayByUser($user,$item_id) {
+        $fris = $this->findByUserItemIdNew($user->getId(), $item_id);
+        return $fris;
+    }
+
+    #------------------------------------------------------
+
+    public function createUserFittingRoomItemWithProductId($user, $productItem, $product) {
+        $userFittingRoomitem = new UserFittingRoomItem();
+        $userFittingRoomitem->setCreatedAt(new \DateTime('now'));
+        $userFittingRoomitem->setUpdatedAt(new \DateTime('now'));
+        $userFittingRoomitem->setProductitem($productItem);
+        $userFittingRoomitem->setProductId($product);
+        $userFittingRoomitem->setUser($user);
+        return $this->save($userFittingRoomitem);
+    }
+
+
+#------------------------------------------------------
+    public function deleteByUserItemByProduct($user, $product_id) {
+        return $this->repo->deleteByUserItemByProduct($user->getId(), $product_id);
+    }
+
 }
 
