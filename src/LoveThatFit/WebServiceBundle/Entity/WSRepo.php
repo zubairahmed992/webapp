@@ -6,16 +6,20 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 
-class WSRepo {
+class WSRepo
+{
 
     private $em;
 
-    public function __construct(EntityManager $entityManager){
+    public function __construct(EntityManager $entityManager)
+    {
         $this->em = $entityManager;
     }
+
     #-------------------------------------------------------------------
-    public function productSync($gender,$date_format=Null) {
-        if($date_format){
+    public function productSync($gender, $date_format = Null)
+    {
+        if ($date_format) {
             return $this->em
                 ->createQueryBuilder()
                 ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price')
@@ -28,13 +32,13 @@ class WSRepo {
                 ->where('p.gender=:gender')
                 ->andWhere('p.updated_at>=:update_date')
                 ->andWhere("p.displayProductColor!=''")
-                ->andWhere ('p.disabled=0')
+                ->andWhere('p.disabled=0')
                 ->groupBy('p.id')
-                ->setParameters(array('gender' => $gender,'update_date'=>$date_format))
+                ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
                 ->getResult();
 
-        }else{
+        } else {
 
             return $this->em
                 ->createQueryBuilder()
@@ -47,15 +51,17 @@ class WSRepo {
                 ->leftJoin('p.retailer', 'r')
                 ->where('p.gender=:gender')
                 ->andWhere("p.displayProductColor!=''")
-                ->andWhere ('p.disabled=0')
+                ->andWhere('p.disabled=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
                 ->getResult();
-        }}
+        }
+    }
 
 #-------------------------------------------------------
-    public function userLikedProductIds($user_id) {
+    public function userLikedProductIds($user_id)
+    {
         $query = $this->em
             ->createQuery(
                 "SELECT distinct p.id product_id
@@ -70,6 +76,7 @@ class WSRepo {
             return null;
         }
     }
+
 #-------------------------------------------------------------------
     public function productList($user, $list_type = null)
     {
@@ -103,7 +110,7 @@ class WSRepo {
                        product_item.id                  AS product_item_id, 
                        CASE 
                          WHEN ( ltf_users.id IS NULL ) THEN 'false' 
-                         ELSE 'true' 
+                         ELSE 'false' 
                        END                               AS favourite 
                        FROM   $productTableName product 
                        INNER JOIN $brandTableName brand 
@@ -132,10 +139,12 @@ class WSRepo {
                        AND product.display_product_color_id <> '' 
                 ORDER  BY useritemtryhistory.updated_at DESC ";
                 $params['user_id'] = $user->getId();
+
                 //$em = $this->em->getManager();
                 $stmt = $this->em->getConnection()->prepare($sql);
                 $stmt->execute($params);
-                $dataRecentProducts = $stmt->fetchAll();
+                $dataRecentProducts = self::checkFavInRecentTry($stmt->fetchAll(), $user->getId());
+
 
 
                 break;
@@ -186,13 +195,15 @@ class WSRepo {
                 break;
         };
         try {
-            return  ($list_type == 'recent') ? $dataRecentProducts : $query->getResult();
+            return ($list_type == 'recent') ? $dataRecentProducts : $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
+
 #--------------------------------------------------------------
-    public function productDetail($id, $user) {
+    public function productDetail($id, $user)
+    {
         $query = $this->em
             ->createQuery("
             SELECT p.id product_id, p.name, p.description,p.description,
@@ -221,7 +232,8 @@ class WSRepo {
 ############################################################
 #################################################################
 
-    public function findUser($id) {
+    public function findUser($id)
+    {
         return $this->em
             ->createQueryBuilder()
             ->select('u.id as user_id,  u.email,  u.firstName as first_name, u.lastName as last_name,  u.gender,  u.birthDate as birth_date,  u.image, u.authToken as auth_token,  u.authTokenCreatedAt as auth_token_created_at,  u.avatar,  u.zipcode,  u.authTokenWebService  as auth_token_web_service,
@@ -235,7 +247,8 @@ class WSRepo {
             ->getResult();
     }
 
-    public function findUserByAuthToken($token) {
+    public function findUserByAuthToken($token)
+    {
         return $this->em
             ->createQueryBuilder()
             ->select('u.id as user_id,  u.salt,  u.password,  u.email,  u.is_active,  u.first_name,  u.last_name,  u.gender,  u.birth_date,  u.image,  u.created_at,  u.updated_at,  u.auth_token,  u.auth_token_created_at,  u.avatar,  u.zipcode,  u.auth_token_web_service,  u.iphoneImage,  u.secret_question,  u.secret_answer,  u.time_spent,  u.image_updated_at,  u.image_device_type')
@@ -250,7 +263,8 @@ class WSRepo {
 
     #--------------------------------------------------------------
 
-    public function userAdminList() {
+    public function userAdminList()
+    {
         return $this->em
             ->createQueryBuilder()
             ->select('u.id as user_id,  u.email,  u.gender,  u.image, u.authToken as auth_token, u.image_device_type')
@@ -261,7 +275,8 @@ class WSRepo {
 
 
     #--------------Get Product list By Category and Gender -----------------------------------------------------
-    public function productListCategory($gender,$id, $user_id) {
+    public function productListCategory($gender, $id, $user_id)
+    {
         $query = $this->em
             ->createQueryBuilder()
             ->select('p.id product_id,p.name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id')
@@ -275,9 +290,9 @@ class WSRepo {
             ->where('p.gender=:gender')
             ->andWhere('c.id IN (:id)')
             ->andWhere("p.displayProductColor!=''")
-            ->andWhere ('p.disabled=0')
+            ->andWhere('p.disabled=0')
             ->groupBy('p.id')
-            ->setParameters(array('gender' => $gender,'id' => $id, 'user' => $user_id))
+            ->setParameters(array('gender' => $gender, 'id' => $id, 'user' => $user_id))
             ->getQuery();
 
         try {
@@ -286,4 +301,42 @@ class WSRepo {
             return null;
         }
     }
+
+    private function checkFavInRecentTry($recentTriedProducts, $userID)
+    {
+
+        if (is_array($recentTriedProducts) && count($recentTriedProducts) > 0) {
+            $product_item_id = array_column($recentTriedProducts, 'product_item_id');
+            $recentTriedItemsID = implode(',', $product_item_id);
+
+
+            $sql = "SELECT * from users_product_items WHERE user_id = $userID AND productitem_id IN ($recentTriedItemsID)";
+            $fav = $this->em->getConnection()->prepare($sql);
+            $fav->execute();
+            $favItems = $fav->fetchAll();
+            if (count($favItems) > 0) {
+                $favItemsID = array_column($favItems, 'productitem_id');
+
+                $UpdatedProductForFav = array();
+                foreach ($recentTriedProducts as $value) {
+                    if (in_array($value['product_item_id'], $favItemsID)) {
+                        $value['favourite'] = true;
+                        $UpdatedProductForFav[] = $value;
+                    } else {
+                        $value['favourite'] = false;
+                        $UpdatedProductForFav[] = $value;
+                    }
+
+                }
+
+                $recentTriedProducts = array();
+                $recentTriedProducts = $UpdatedProductForFav;
+            }
+        }
+
+        return $recentTriedProducts;
+
+    }
+
+
 }
