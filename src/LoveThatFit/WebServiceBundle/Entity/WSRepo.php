@@ -76,6 +76,17 @@ class WSRepo {
         switch ($list_type) {
 
             case 'recent':
+
+                $productTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:Product')->getTableName();
+                $userItemTryHistoryTableName = $this->em->getClassMetadata('LoveThatFitSiteBundle:UserItemTryHistory')->getTableName();
+                $brandTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:Brand')->getTableName();
+                $retailerTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:Retailer')->getTableName();
+                $productItemTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:ProductItem')->getTableName();
+                $productColorTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:ProductColor')->getTableName();
+                $clothingTypeTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:ClothingType')->getTableName();
+                $userTableName = $this->em->getClassMetadata('LoveThatFitUserBundle:User')->getTableName();
+
+
                 //Added Custom Query due the In valid response by the entity joins.
                 $sql = "SELECT 
                        product.id                       AS product_id, 
@@ -94,24 +105,24 @@ class WSRepo {
                          WHEN ( ltf_users.id IS NULL ) THEN 'false' 
                          ELSE 'true' 
                        END                               AS favourite 
-                       FROM   product product 
-                       INNER JOIN brand brand 
+                       FROM   $productTableName product 
+                       INNER JOIN $brandTableName brand 
                                ON product.brand_id = brand.id 
-                       LEFT JOIN ltf_retailer ltf_retailer 
+                       LEFT JOIN $retailerTableName ltf_retailer 
                               ON product.retailer_id = ltf_retailer.id 
-                       INNER JOIN useritemtryhistory useritemtryhistory 
+                       INNER JOIN $userItemTryHistoryTableName useritemtryhistory 
                                ON product.id = useritemtryhistory.product_id 
-                       INNER JOIN product_item product_item 
+                       INNER JOIN $productItemTableName product_item 
                                ON useritemtryhistory.product_item_id = product_item.id 
-                       INNER JOIN product_color product_color 
+                       INNER JOIN $productColorTableName product_color 
                                ON product_item.product_color_id = product_color.id 
-                       INNER JOIN clothing_type clothing_type 
+                       INNER JOIN $clothingTypeTableName clothing_type 
                                ON product.clothing_type_id = clothing_type.id 
                                
                 --        LEFT JOIN users_product_items users_product_items 
                 --               ON product_item.id = users_product_items.productitem_id 
                 -- 
-                        LEFT JOIN ltf_users ltf_users 
+                        LEFT JOIN $userTableName ltf_users 
                               ON ltf_users.id = useritemtryhistory.user_id 
                 
                 WHERE  ( ltf_users.id IS NULL 
