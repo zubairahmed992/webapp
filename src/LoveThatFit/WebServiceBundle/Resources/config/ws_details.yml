@@ -453,7 +453,7 @@ nws_product_list:
     params:
       gender: f
       auth_token: 56565656566
-      category_ids: [17,18,19]
+      category_ids: [1,8,10,11]
       
 nws_product_list_banner:
     pattern:  /nws/product_list_with_banner
@@ -487,18 +487,23 @@ nws_product_detail:
      auth_token: 56565656566
      product_id: 505
 
-nws_add_update_to_fitting_room:
-   pattern:  /nws/add_update_to_fitting_room
+nws_add_update_fitting_room:
+   pattern:  /nws/add_update_fitting_room
    title: add_update_to_fitting_room
    params:
      auth_token: 56565656566
      product_item_id: 4082
      product_id: 506
 
-
-nws_delete_to_fitting_room:
-   pattern:  /nws/delete_to_fitting_room
+nws_delete_fitting_room_item:
+   pattern:  /nws/delete_fitting_room_item
    title: delete_to_fitting_room
    params:
      auth_token: 56565656566
      product_id: 506
+
+nws_get_all_fitting_room:
+   pattern:  /nws/get_all_fitting_room
+   title: get_all_fitting_room
+   params:
+     auth_token: 56565656566
