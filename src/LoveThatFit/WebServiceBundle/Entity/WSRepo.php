@@ -332,7 +332,28 @@ class WSRepo
                 $recentTriedProducts = array();
                 $recentTriedProducts = $UpdatedProductForFav;
             }
+
+            //Changing type casting in array
+
+            //product_id
+            //retailer_id
+            //brand_id
+            //product_item_id
+
+            $typeCastedRecentProducts = array();
+            foreach ($recentTriedProducts as $recenProduct) {
+                $recenProduct['product_id'] = intval($recenProduct['product_id']);
+                $recenProduct['retailer_id'] = intval($recenProduct['retailer_id']);
+                $recenProduct['brand_id'] = intval($recenProduct['brand_id']);
+                $recenProduct['product_item_id'] = intval($recenProduct['product_item_id']);
+
+                $typeCastedRecentProducts[] = $recenProduct;
+            }
+
+            $recentTriedProducts = array();
+            $recentTriedProducts = $typeCastedRecentProducts;
         }
+
 
         return $recentTriedProducts;
 
