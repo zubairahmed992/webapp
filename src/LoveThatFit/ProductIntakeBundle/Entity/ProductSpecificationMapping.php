@@ -1,13 +1,12 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Entity;
-use LoveThatFit\AdminBundle\ImageHelper;
+namespace LoveThatFit\ProductIntakeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductSpecificationMappingRepository")
+ * @ORM\Entity(repositoryClass="LoveThatFit\ProductIntakeBundle\Entity\ProductSpecificationMappingRepository")
  * @ORM\Table(name="product_specification_mapping")
  * @ORM\HasLifecycleCallbacks()
  */

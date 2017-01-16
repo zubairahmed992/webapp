@@ -58,16 +58,16 @@
             <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
         </div>
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
-  <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
+        <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
         <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
             <div class="form-group">
                 <label class="control-label col-sm-2" for=""> Brand: </label>
                 <div class="col-sm-4">
-                    
+
                     <select name="sel_brand" id="sel_brand" class="sel_brand form-control">
                         <option>Select Brand</option>
                         {% for k, v in brands %}
-                             <option value="{{ v.name }}"> {{ v.name }}</option>
+                        <option value="{{ v.name }}"> {{ v.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -144,7 +144,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="{{k}}">{{v}} : </label>
                 <div class="col-sm-4">
-                        <input type="text" class="form-control" id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="">                        
+                    <input type="text" class="form-control" id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="">                        
                 </div>
             </div>
             <br>

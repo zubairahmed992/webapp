@@ -1,0 +1,19 @@
+product_intake_specs_mapping_index:
+    pattern:  /product_intake/specs_mapping/index
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:index }
+
+product_intake_specs_mapping_new:
+    pattern:  /product_intake/specs_mapping/new
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:new }
+
+product_intake_specs_mapping_create:
+    pattern:  /product_intake/specs_mapping/create
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:create }    
+    
+product_intake_specs_mapping_edit:
+    pattern:  /product_intake/specs_mapping/edit
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:edit }    
+
+product_intake_specs_mapping_update:
+    pattern:  /product_intake/specs_mapping/update
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:update }    

@@ -12,14 +12,14 @@ class FitModelController extends Controller {
 
     public function indexAction() {
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:index.html.twig', array(
-                    'fit_model_measurements' => $this->get('admin.fit_model_measurement')->findAll(),
+                    'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
                 ));
     }
 
     #------------------------/product_intake/fit_model_specs/show/id
 
     public function showAction($id) {
-        $fit_model_measurement = $this->get('admin.fit_model_measurement')->find($id);
+        $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
         $fit_points = json_decode($fit_model_measurement->getMeasurementJson(), true);
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:show.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
@@ -50,7 +50,7 @@ class FitModelController extends Controller {
 
     public function saveAction(Request $request) {
         $decoded = $request->request->all();
-        $fmm = $this->get('admin.fit_model_measurement')->createNew();
+        $fmm = $this->get('productIntake.fit_model_measurement')->createNew();
         $brand = $this->get('admin.helper.brand')->find($decoded['sel_brand']);
         $fmm->setBrand($brand);
         $fmm->setTitle($decoded['txt_title']);
@@ -67,14 +67,14 @@ class FitModelController extends Controller {
             }
         }
         $fmm->setMeasurementJson(json_encode($measurements));
-        $this->get('admin.fit_model_measurement')->save($fmm);
+        $this->get('productIntake.fit_model_measurement')->save($fmm);
         return new Response('saved!');
     }
 
     #------------------------/product_intake/fit_model_specs/edit/id
 
     public function editAction($id) {
-        $fit_model_measurement = $this->get('admin.fit_model_measurement')->find($id);
+        $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();

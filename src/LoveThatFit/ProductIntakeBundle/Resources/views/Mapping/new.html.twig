@@ -1,0 +1,362 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <h2>Product Specs Mapping</h2>
+
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+        <a href="{{ path('product_intake_specs_mapping_index') }}" class="btn btn-default">List</a>
+    </div>
+    <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
+    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
+
+    <form action="{{ path('admin_product_specs_mapping_save') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="brand_name"> Brand: </label>
+            <div class="col-sm-4">                    
+                <select name="brand_name"  id="brand_name" class="form-control">
+                        {% for b in brands %}
+                        <option value="{{ b.name }}"> {{ b.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>                
+            <div class="form-group"  class="form-control">
+                <label class="control-label col-sm-2" for="fit_model_measurement"> Fit Model: </label>
+                <div class="col-sm-4">                    
+                    <select name="fit_model_measurement"  class="form-control">
+                                            {% for fmm in fit_model_measurement %}
+                            <option value="{{ fmm.id }}"> {{ fmm.title }}</option>
+                                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br>    
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for=""> Gender: </label>
+                    <div class="col-sm-4">
+                        <select name="sel_gender" id="sel_gender" class="sel_gender form-control">
+                            <option>Select Gender</option>               
+                            <option value="m"> man</option>
+                            <option value="f"> woman</option>               
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for=""> Clothing Type: </label>
+                    <div class="col-sm-4">
+                        <select name="clothing_type" id="sel_clothing_type"  class="form-control">
+                            <option value=""> Select </option>                                            
+                        </select>
+                    </div>
+                </div>
+                <br>    
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="mapping_description">Mapping Description : </label>
+                    <div class="col-sm-4">
+                        <textarea name="mapping_description" class="form-control" ></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="mapping_title">Mapping Title : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="mapping_title" name="mapping_title" placeholder="Enter mapping title">
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
+                    <div class="col-sm-4">                    
+                        <input type="file" name="csv_file" id="csv_file">
+                    </div>
+                </div>
+                <span id="select_cell_div" hidden="true"></span>                                  
+                <div id="pq-dialog-cont">
+                    <div id="pq-grid-in-popup-dialog" title="Product sprecification file data" >
+                        <div id="grid_in_popup_grid"></div>
+                    </div>
+                </div>      
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="style">Style Number : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="style" name="style" placeholder="Enter style">
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="garment_name">Garment Name : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="garment_name" name="garment_name" placeholder="Enter Garment Name">
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="sel_size_type">Select Size Type: </label>
+                    <div class="col-sm-4">
+                        <select name="select_size" id="sel_size_type" class="selectSize form-control">
+                            <option selected> Select Size</option>                                            
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" value="{{ fit_points|json_encode() }}" name="fit_point" class="fit_point">
+                <div class="size_genrate"></div>
+                <br>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="select_size">Measuring Unit: </label>
+                    <div class="col-sm-4">
+                        <select name="measuring_unit" id="sel_gender"  class="form-control">
+                            <option value="inch"> inch </option>                                            
+                            <option value="centimeter"> centimeter </option>                                            
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">        
+                    <div class="col-sm-offset-5 col-sm-10">
+                        <button type="submit" class="btn btn-default">Save</button>
+                    </div>
+                </div>
+                <br>
+                <div class="row-fluid show-grid add_size_row" style="display: none">
+                    <div class="span3">Enter Size label</div>
+                    <div class="span3">
+                        <input type="text" id="new_fit_point" name="new_fit_point"
+                               maxlength="255">
+                        <button type="button" class="add_size">Add Fit point Label</button>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+            <script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="  crossorigin="anonymous"></script>        
+            <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" />
+            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>  
+            <link href="{{ asset('bundles/lovethatfit/admin/paramquery/pqgrid.min.css') }}" rel="stylesheet" type="text/css" />
+            <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/paramquery/pqgrid.min.js') }}"></script>
+            <script type="application/javascript">
+                var $ = jQuery.noConflict();
+                jQuery(document).ready(function () {
+                $(".selectSize").change(function () {                
+                var siz_genrate = $('.size_genrate'); 
+                $('.add_size_row').show();
+                size_specs = $.parseJSON($('#size_specs_json').text());                
+                var fit_points = $('.fit_point').val();
+                gender=$('#sel_gender').val()=='m'?'man':'woman';
+                var size_type = this.value                
+                siz_genrate.empty();
+                var tableData = '';
+                tableData += "<table><tr><th> Size Lable </th><th> formula </th>";
+                        $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                        tableData += "<th>" + size_label + "</th>";
+                        });
+
+                        tableData += "</tr>";
+                    var result = $.parseJSON(fit_points);
+
+                    $.each(result, function (k, fit_point_value) {
+                    tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
+                        tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
+                        $.each(size_specs.sizes[gender][size_type], function (k, v) {                    
+                        tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
+                        });
+                        tableData += "</tr>";
+                    });
+
+                    siz_genrate.append(tableData);
+
+                    //---------- textbox id on selection ~~~~~~~~~~>
+                    $('input, textarea').focus(function() {
+                    $('#select_cell_div').text($(this).attr('id'));
+                    });
+                    //---------------------------------------
+
+                    });
+
+
+                    var fit_poit_condition = true;
+                    $(".add_size").click(function () {
+                    var siz_genrate = $('.size_genrate');
+                    var new_fit_point = $('#new_fit_point').val();                
+                    size_specs = $.parseJSON($('#size_specs_json').text());                
+                    gender=$('#sel_gender').val()=='m'?'man':'woman';
+                    size_type=$(".selectSize").val();
+
+                    var tableData = "<table><tr><td class='span2'>"+ new_fit_point + "  </td>";
+                            nfp =  new_fit_point.split(' ').join('_');
+                            $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                            tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
+                            });
+
+                            tableData += "</tr><table>";
+                            siz_genrate.append(tableData);                    
+
+                            });
+
+                            })
+                            </script>
+
+                            <script>
+                          //-------------------------------------------- 	
+                          //-------------------------------------------- 	
+                          //-------------------------------------------- 	
+                          $(function(){
+                              size_specs=jQuery.parseJSON( $('#size_specs_json').text());
+                              product_specs = jQuery.parseJSON( $('#product_specs_json').text());
+                            //---------------------------------------
+                              $( "#sel_gender" ).change(function() {
+                                  fill_clothing_type_list(this.value);
+                                  sel_size_type(this.value);                                                                        
+                          });
+             
+             
+                            //---------------------------------------
+                              $(window).on('scroll', function(event) {
+                                          var scrollTop = $(window).scrollTop();
+                                          $("#pq-dialog-cont").css({top: scrollTop, left: 200});
+                              });
+    
+                             //---------------------------------------
+                              function fill_clothing_type_list(gender){        
+                                  gender=gender=='m'?'man':'women';                
+                                  $('#sel_clothing_type').empty();
+                                  var option = '<option value="">Select </option>';
+                                  str='';
+                                  $.each(product_specs[gender].clothing_type, function(val, text) {
+                                          if(str != text){
+                                      option += '<option value="'+ val + '">' + text + '</option>';
+                                      str=text;
+                                          }
+                                          });
+                                   $('#sel_clothing_type').append(option);         
+                              }
+                              //---------------------------------------
+                              function sel_size_type(gender){
+                                  gender=gender=='m'?'man':'woman';        
+                                  $('#sel_size_type').empty();
+                                  var option = '<option value="">Select Size</option>';
+                                  $.each(size_specs.size_title_type[gender], function(val, text) {
+                                      option += '<option value="'+ val + '">' + text + '</option>';
+                                          });
+                                   $('#sel_size_type').append(option);         
+                              }
+    
+                              //#################################################
+                              $('#csv_file').on('change', function(){     
+                                  var val = $(this).val();
+                                   if(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='csv'){
+                                       $("#uploading_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');                
+             
+                                      var formData = new FormData();
+                                      formData.append('csv_file', $('input[type=file]')[0].files[0]); 
+                                      $.ajax({
+                                          url: '../product_specs/csv_upload',
+                                          data: formData,
+                                          type: 'POST',
+                                          contentType: false,
+                                          processData: false,
+                                          success: function (response) {                    
+                                            $("#csv_file_json").text(response);
+                                            $("#uploading_image").html('');                  
+                                            show_csv_popup(response);
+                                          }
+                                      });
+
+                                  }else{
+                                       alert("Invalid file");
+                                      }          
+                              });        
+            
+    
+    
+                          //---------- textbox id on selection ~~~~~~~~~~>
+                              $('input, textarea').focus(function() {
+                                 $('#select_cell_div').text($(this).attr('id'));
+                              });
+      
+                          function show_csv_popup(str){
+                             data = JSON.parse(str);
+                              var obj = {
+                                      width: 700,
+                                      selectionModel: { type: 'cell' },
+                                      editModel: { clicksToEdit: 2 },
+                                      scrollModel: {autoFit: true},
+                                      showTop: false,
+                                      showBottom: false,            
+                                      dataModel: { data: data}
+            
+                                  };
+                                  // data model 
+                              var colModel = [];
+                              for (var j = 0; j < 170; j++) {
+                                  colModel[j] = { title: j, width: 150 };
+                              }
+                              obj.colModel = colModel;
+                          //selection-------------
+                           obj.cellSelect = function (evt, ui) {
+                                      if (ui.rowData) {
+                                          var rowIndx = ui.rowIndx,
+                                              colIndx = ui.colIndx,
+                                              dataIndx = ui.dataIndx,
+                                              cellData = ui.rowData[dataIndx];
+                                          $("#select_cell_display_div").html("Cell selected rowIndx: " + rowIndx + ", colIndx: " + colIndx + ", dataIndx: " + dataIndx + ", value: " + cellData);
+                                                          $('#' + $('#select_cell_div').text()).val(rowIndx + ", " + colIndx);
+                                  }
+                                  }
+                          //------------------------------------     
+                            $("#pq-grid-in-popup-dialog").dialog({
+                                              height: 300,
+                                              width: 500,
+                                              open: function (evt, ui) {
+                                                  var $grid = $("#grid_in_popup_grid");
+                                                  var ht = $grid.parent().height() - 2;
+                                                  var wd = $grid.parent().width() - 2;
+                        
+                                                  if ($grid.hasClass('pq-grid')) {
+                                                      $grid.pqGrid("option", { height: ht, width: wd });
+                                                  }
+                                                  else {
+                                                      obj.width = wd;
+                                                      obj.height = ht;
+                                                      $grid.pqGrid(obj);
+                                                  }
+                                              },
+                                              close: function () {
+                                                  var $grid = $("#grid_in_popup_grid");
+                                                  $grid.pqGrid('destroy');
+                                              },
+                                              resizeStop: function (evt, ui) {
+                                                  var $grid = $("#grid_in_popup_grid");
+                                                  var ht = $grid.parent().height();
+                                                  var wd = $grid.parent().width();
+                                                  $grid.pqGrid("option", { height: ht - 2, width: wd - 2 });
+                                                  $grid.pqGrid("refresh");
+                                              },
+                                              show: {
+                                                  effect: "blind",
+                                                  duration: 500
+                                              },
+                                              hide: {
+                                                  effect: "explode",
+                                                  duration: 500
+                                              }
+                                          });
+                          }
+
+
+
+                          });
+
+
+                                </script>  
+
+{% endblock %}

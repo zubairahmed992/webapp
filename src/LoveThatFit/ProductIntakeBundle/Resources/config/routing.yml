@@ -3,5 +3,5 @@ product_intake_fit_model_routes:
     prefix:   /
     
 product_intake_specs_mapping_routes:
-    resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/specs_mapping.yml"
+    resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/mapping.yml"
     prefix:   /    
