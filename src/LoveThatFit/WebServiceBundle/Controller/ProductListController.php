@@ -11,9 +11,11 @@ class ProductListController extends Controller {
     #---------------------------------- /ltf_ws/get_category_products_list_with_banner ------------------------------------------
     public function getCategoryProductsListBannerAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $user_id = $user->getId();
         $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
 
-        $productlist = $this->get('webservice.helper')->getProductListByCategoryBanner($decoded['gender'], $decoded['category_ids']);
+        $productlist = $this->get('webservice.helper')->getProductListByCategoryBanner($decoded['gender'], $decoded['category_ids'], $user_id);
         if (array_key_exists('display_screen', $decoded)) {
             $bannerlist = $this->get('admin.helper.Banner')->getBannerListForService($base_path,$decoded['display_screen']);
         } else {
@@ -48,8 +50,10 @@ class ProductListController extends Controller {
 	
 	    #---------------------------------- /ltf_ws/get_category_products_list ------------------------------------------
     public function getCategoryProductsListAction() {
-     $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());   
-     $productlist = $this->get('webservice.helper')->getProductListByCategory($decoded['gender'], $decoded['category_ids']);
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $user_id = $user->getId();
+        $productlist = $this->get('webservice.helper')->getProductListByCategory($decoded['gender'], $decoded['category_ids'], $user_id);
     return new Response($productlist);
     }
         

@@ -32,6 +32,13 @@ class UserFittingRoomItem
    * @ORM\JoinColumn(name="product_item_piece_id", referencedColumnName="id", onDelete="CASCADE")
    */
     protected $product_item_piece;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Product", inversedBy="user_fitting_room_ittem")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $product_id;
     
     #---------------------------------------------------
      public function __construct()
@@ -145,6 +152,27 @@ class UserFittingRoomItem
      */
     public function getProductItemPiece(){
         return $this->product_item_piece;
+    }
+
+    #---------------------------------------------------
+    /**
+     * Set product_id
+     *
+     * @param LoveThatFit\AdminBundle\Entity\Product $product_id
+     * @return UserFittingRoomItem
+     */
+    public function setProductId(\LoveThatFit\AdminBundle\Entity\Product $product_id = null){
+        $this->product_id = $product_id;
+        return $this;
+    }
+
+    /**
+     * Get product_id
+     *
+     * @return LoveThatFit\AdminBundle\Entity\ProductId
+     */
+    public function getProductId(){
+        return $this->product_id;
     }
 #------------------------------------------------   
    
