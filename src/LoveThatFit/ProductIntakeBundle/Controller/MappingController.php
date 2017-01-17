@@ -4,6 +4,7 @@ namespace LoveThatFit\ProductIntakeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class MappingController extends Controller
@@ -16,7 +17,7 @@ class MappingController extends Controller
                     ));
     }
     
-    #----------------------- /product_intake/product_specs/new
+    #----------------------- /product_intake/specs_mapping/new
     public function newAction() {
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
@@ -34,6 +35,22 @@ class MappingController extends Controller
                     'product_specs_json' => json_encode($product_specs),
                     'size_specs_json' => json_encode($size_specs),
                 ));
+    }
+    
+    #--------------------------------- /product_intake/specs_mapping/csv_upload
+     public function csvUploadAction(Request $request){                   
+        $str=array();
+         $file=$request->files->get('csv_file');
+         $i=0;
+        if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+            while(($row = fgetcsv($handle)) !== FALSE) {
+            for ($j=0;$j<count($row);$j++){
+                $str[$i][$j] = $row[$j];                
+                }
+            $i++;
+            }
+        }
+         return new Response(json_encode($str));
     }
     
     #----------------------- /product_intake/specs_mapping/create

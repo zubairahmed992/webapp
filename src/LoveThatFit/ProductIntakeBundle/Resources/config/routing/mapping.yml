@@ -17,3 +17,7 @@ product_intake_specs_mapping_edit:
 product_intake_specs_mapping_update:
     pattern:  /product_intake/specs_mapping/update
     defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:update }    
+
+product_intake_specs_mapping_csv_upload:
+    pattern:  /product_intake/specs_mapping/csv_upload
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:csvUpload }
