@@ -487,3 +487,10 @@ nws_product_detail:
      auth_token: 56565656566
      product_id: 505
 
+nws_save_user_look:
+   pattern: /nws/save_user_look
+   title: save_user_look
+   file_upload: true
+   params:
+     auth_token: ad72e439e67bcee6a799a267bdec48f6
+     item_ids: [3892, 3914, 3925, 3930]

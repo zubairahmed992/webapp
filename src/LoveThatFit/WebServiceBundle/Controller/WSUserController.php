@@ -3,6 +3,7 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Parser;
+
 class WSUserController extends Controller {
 
      

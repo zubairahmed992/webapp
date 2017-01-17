@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,6 +23,12 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="User", mappedBy="original_user")
      */
     private $duplicate_users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="ltf_users", orphanRemoval=true)
+     */
+
+    protected $save_look;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="duplicate_users")
@@ -186,8 +193,9 @@ class User implements UserInterface, \Serializable {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->product_items = new \Doctrine\Common\Collections\ArrayCollection();
-	$this->cart = new \Doctrine\Common\Collections\ArrayCollection();
+	    $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
         $this->duplicate = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->save_look = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 //---------------------------------------------------------------------
@@ -2468,4 +2476,126 @@ class User implements UserInterface, \Serializable {
         return;
     }
   
+
+    /**
+     * Add user_addresses
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserAddresses $userAddresses
+     * @return User
+     */
+    public function addUserAddresse(\LoveThatFit\CartBundle\Entity\UserAddresses $userAddresses)
+    {
+        $this->user_addresses[] = $userAddresses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_addresses
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserAddresses $userAddresses
+     */
+    public function removeUserAddresse(\LoveThatFit\CartBundle\Entity\UserAddresses $userAddresses)
+    {
+        $this->user_addresses->removeElement($userAddresses);
+    }
+
+    /**
+     * Get user_addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserAddresses()
+    {
+        return $this->user_addresses;
+    }
+
+    /**
+     * Add user_orders
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserOrder $userOrders
+     * @return User
+     */
+    public function addUserOrder(\LoveThatFit\CartBundle\Entity\UserOrder $userOrders)
+    {
+        $this->user_orders[] = $userOrders;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_orders
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserOrder $userOrders
+     */
+    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UserOrder $userOrders)
+    {
+        $this->user_orders->removeElement($userOrders);
+    }
+
+    /**
+     * Get user_orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserOrders()
+    {
+        return $this->user_orders;
+    }
+
+    /**
+     * Add user_archives
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserArchives $userArchives
+     * @return User
+     */
+    public function addUserArchive(\LoveThatFit\UserBundle\Entity\UserArchives $userArchives)
+    {
+        $this->user_archives[] = $userArchives;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_archives
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserArchives $userArchives
+     */
+    public function removeUserArchive(\LoveThatFit\UserBundle\Entity\UserArchives $userArchives)
+    {
+        $this->user_archives->removeElement($userArchives);
+    }
+
+    /**
+     * Add save_look
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\SaveLook $saveLook
+     * @return User
+     */
+    public function addSaveLook(\LoveThatFit\AdminBundle\Entity\SaveLook $saveLook)
+    {
+        $this->save_look[] = $saveLook;
+    
+        return $this;
+    }
+
+    /**
+     * Remove save_look
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\SaveLook $saveLook
+     */
+    public function removeSaveLook(\LoveThatFit\AdminBundle\Entity\SaveLook $saveLook)
+    {
+        $this->save_look->removeElement($saveLook);
+    }
+
+    /**
+     * Get save_look
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSaveLook()
+    {
+        return $this->save_look;
+    }
 }

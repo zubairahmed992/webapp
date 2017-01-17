@@ -20,7 +20,12 @@ class ProductItem
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_items")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */    
-    protected $product; 
+    protected $product;
+
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLookItem", mappedBy="items")
+     */
+    protected $save_look_item;
     
      /**
      * @ORM\ManyToOne(targetEntity="ProductSize", inversedBy="product_items")
@@ -634,4 +639,116 @@ class ProductItem
 
 #----------------------------------------------    
 
+
+    /**
+     * Add cart
+     *
+     * @param \LoveThatFit\CartBundle\Entity\Cart $cart
+     * @return ProductItem
+     */
+    public function addCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
+    {
+        $this->cart[] = $cart;
+    
+        return $this;
+    }
+
+    /**
+     * Remove cart
+     *
+     * @param \LoveThatFit\CartBundle\Entity\Cart $cart
+     */
+    public function removeCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
+    {
+        $this->cart->removeElement($cart);
+    }
+
+    /**
+     * Get cart
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    /**
+     * Add user_order_detail
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail
+     * @return ProductItem
+     */
+    public function addUserOrderDetail(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
+    {
+        $this->user_order_detail[] = $userOrderDetail;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_order_detail
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail
+     */
+    public function removeUserOrderDetail(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
+    {
+        $this->user_order_detail->removeElement($userOrderDetail);
+    }
+
+    /**
+     * Get user_order_detail
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserOrderDetail()
+    {
+        return $this->user_order_detail;
+    }
+
+    /**
+     * Set save_look_item
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem
+     * @return ProductItem
+     */
+    public function setSaveLookItem(\LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem = null)
+    {
+        $this->save_look_item = $saveLookItem;
+    
+        return $this;
+    }
+
+    /**
+     * Get save_look_item
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\SaveLookItem
+     */
+    public function getSaveLookItem()
+    {
+        return $this->save_look_item;
+    }
+
+    /**
+     * Add save_look_item
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem
+     * @return ProductItem
+     */
+    public function addSaveLookItem(\LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem)
+    {
+        $this->save_look_item[] = $saveLookItem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove save_look_item
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem
+     */
+    public function removeSaveLookItem(\LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem)
+    {
+        $this->save_look_item->removeElement($saveLookItem);
+    }
 }

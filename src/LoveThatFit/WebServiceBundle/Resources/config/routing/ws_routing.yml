@@ -194,3 +194,7 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
+nws_save_user_look:
+    pattern: /nws/save_user_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:saveLook}
+
