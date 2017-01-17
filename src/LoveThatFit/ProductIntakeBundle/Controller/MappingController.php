@@ -54,7 +54,55 @@ class MappingController extends Controller
     }
     
     #----------------------- /product_intake/specs_mapping/create
-    
+     
+     public function createAction(Request $request) {
+        $decoded = $request->request->all();
+        $apecs_arr=array();        
+        foreach ($decoded as $k => $v) {
+            if(!in_array($k, array('select_size', 'fit_point'))){
+            if (strlen($v) > 0) {
+                $ar = explode('-', $k);
+                if (is_array($ar) && count($ar) > 1) {
+                    switch (count($ar)) {
+                        case 2:
+                            $apecs_arr[$ar[0]][$ar[1]] = $v;
+                            break;
+                        case 3:
+                            $apecs_arr[$ar[0]][$ar[1]][$ar[2]] = $v;
+                            break;
+                        case 4:
+                            $apecs_arr[$ar[0]][$ar[1]][$ar[2]][$ar[3]] = $v;
+                            break;
+                        case 5:
+                            $apecs_arr[$ar[0]][$ar[1]][$ar[2]][$ar[3]][$ar[4]] = $v;
+                            break;
+                        case 6:
+                            $apecs_arr[$ar[0]][$ar[1]][$ar[2]][$ar[3]][$ar[4]][$ar[5]] = $v;
+                    }
+                } else {
+                    $apecs_arr[$k] = $v;
+                }
+            }
+            
+            }
+        }
+          $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement']);
+          $mapping = $this->container->get('productIntake.product_specification_mapping')->createNew();
+          $mapping->setBrand($decoded['brand_name']);          
+          $mapping->setTitle($decoded['mapping_title']);
+          $mapping->setDescription($decoded['mapping_description']);
+          $mapping->setMappingJson(json_encode($apecs_arr));
+          $this->container->get('productIntake.product_specification_mapping')->save($mapping);
+          $mapping->setMappingFileName('csv_mapping_'. $mapping->getId() .'.csv');          
+           if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $mapping->getAbsolutePath())){
+               $this->container->get('productIntake.product_specification_mapping')->save($mapping);
+               return new Response($mapping->getId().'Mapping created. CSV file is saved.');
+           }else{
+               return new Response('Mapping created. CSV file is not saved.');
+           }
+          
+        return new Response(json_encode($apecs_arr));
+    }
     #----------------------- /product_intake/specs_mapping/edit
     
     #----------------------- /product_intake/specs_mapping/update

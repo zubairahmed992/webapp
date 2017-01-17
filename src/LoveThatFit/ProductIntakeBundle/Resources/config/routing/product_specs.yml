@@ -1,0 +1,4 @@
+product_intake_product_specs_index:
+    pattern:  /product_intake/product_specs/index
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:index }
+
