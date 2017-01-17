@@ -43,6 +43,8 @@ class UserFittingRoomItemRepository extends EntityRepository {
     }
 
 
+
+/* ------------------ New Serrvices ---------------------------------*/
     //Get the Count of the added item
     public function findByUserItemIdNew($user_id, $item_id) {
         $total_record = $this->getEntityManager()
@@ -57,6 +59,24 @@ class UserFittingRoomItemRepository extends EntityRepository {
             return null;
         }
     }
+
+
+
+    //Get the Count of the added item
+    public function findCountProductItemByUserid($user_id, $product_id) {
+        $total_record = $this->getEntityManager()
+            ->createQuery("SELECT count(ut)
+                                FROM LoveThatFitSiteBundle:UserFittingRoomItem ut
+                                WHERE
+                                ut.user=:user_id AND ut.product_id=:product_id"
+            )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id));
+        try {
+            return $total_record->getSingleScalarResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 
 
     //Get the records entity by productId

@@ -277,10 +277,27 @@ class UserFittingRoomItemHelper {
     }
 
 
-#------------------------------------------------------
+    #------------------------------------------------------
     public function deleteByUserItemByProduct($user, $product_id) {
         return $this->repo->deleteByUserItemByProduct($user->getId(), $product_id);
     }
 
+
+    #------------------------------------------------------
+
+    public function getAllFittingRoom($user) {
+        $fris = $this->findByUserId($user->getId());
+        $ar = array();
+        foreach ($fris as $fri) {
+#        $ar[$fri->getId()] = array('item_id'=>$fri->getProductItem()->getId(), 'target'=>$fri->getProductItem()->getProduct()->getclothingType()->getTarget());
+            $ar['categories'][] = array('item_id'=>$fri->getProductItem()->getProduct()->getCategories()->getId(), 'target'=>$fri->getProductItem()->getProduct()->getclothingType()->getTarget());
+        }
+        return $ar;
+    }
+
+    #------------------------------------------------------
+    public function findByUserItemByProduct($user_id, $product_id) {
+        return $this->repo->findCountProductItemByUserid($user_id, $product_id);
+    }
 }
 
