@@ -8,28 +8,47 @@
         });
             
          //---------------------------------------
-function fill_mapping_list(brand){        
-    $('#sel_mapping').empty();
-    product_specs = jQuery.parseJSON( $('#mapping_json').text());
-    var option = '<option value="">select</option>';
-    $.each(product_specs, function(k, v) {
-        if (v.brand==brand){            
-        option += '<option value="'+ v.id + '">' + v.title + '</option>';            
+        function fill_mapping_list(brand){        
+            $('#sel_mapping').empty();
+            product_specs = jQuery.parseJSON( $('#mapping_json').text());
+            var option = '<option value="">select</option>';
+            $.each(product_specs, function(k, v) {
+                if (v.brand==brand){            
+                option += '<option value="'+ v.id + '">' + v.title + '</option>';            
+                }
+                    });
+             $('#sel_mapping').append(option);                  
         }
-            });
-     $('#sel_mapping').append(option);                  
-}
          //---------------------------------------
+          
+            $( "#sel_gender" ).change(function() {                            
+                sel_size_type(this.value);                                                                        
+        });
+        //---------------------------------------
+        size_specs=jQuery.parseJSON( $('#size_specs_json').text());
+            function sel_size_type(gender){
+                gender=gender=='m'?'man':'woman';        
+                $('#sel_size_type').empty();
+                var option = '<option value="">Select Size</option>';
+                $.each(size_specs.size_title_type[gender], function(val, text) {
+                    option += '<option value="'+ val + '">' + text + '</option>';
+                        });
+                 $('#sel_size_type').append(option);         
+            }
+//---------------------------------------
+
         
 });            
     </script>
     <div class="container">    
-        <span id="mapping_json" hidden="false">
-            {{mapping_json}}
-            </span>
-            <h2 style="float:left;">Upload Product CSV File </h2>    
+        <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
+        <span id="mapping_json" hidden="false">{{mapping_json}}</span>
+        
+        <h2 style="float:left;">Upload Product CSV File </h2>    
         </div>
-        <form action="{{ path('admin_product_specs_csv_data_upload') }}" method="post"
+    
+    
+        <form action="{{ path('product_intake_product_specs_csv_upload') }}" method="post"
               enctype="multipart/form-data"  class="form-horizontal" >
 
             <div class="form-group">
@@ -49,6 +68,26 @@ function fill_mapping_list(brand){
                 <div class="col-sm-4">
                     <select name="sel_mapping" id="sel_mapping" class=" form-control" >
                         <option>Select mapping</option>                                
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Gender: </label>
+                <div class="col-sm-4">
+                    <select name="sel_gender" id="sel_gender" class="sel_gender form-control">
+                        <option>Select Gender</option>               
+                        <option value="m"> man</option>
+                        <option value="f"> woman</option>               
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sel_size_type">Select Size Type: </label>
+                <div class="col-sm-4">
+                    <select name="sel_size_type" id="sel_size_type" class="selectSize form-control">
+                        <option selected> Select Size</option>                                            
                     </select>
                 </div>
             </div>

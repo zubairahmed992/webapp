@@ -2,3 +2,7 @@ product_intake_product_specs_index:
     pattern:  /product_intake/product_specs/index
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:index }
 
+product_intake_product_specs_csv_upload:
+    pattern:  /product_intake/product_specs/csv_upload
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:csvUpload }
+
