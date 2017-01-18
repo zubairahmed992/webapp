@@ -54,9 +54,10 @@ class SaveLookHelper
         $this->em->flush();
     }
 
-    public function uploadUserLook()
+    public function uploadUserLook( $user )
     {
-        $saveLook=  $this->createNew();
+        $saveLook =  $this->createNew();
+        $saveLook->setUsers( $user );
 
         if (array_key_exists("image", $_FILES)) {
             $saveLook->file = $_FILES["image"];
@@ -80,5 +81,26 @@ class SaveLookHelper
         $this->save($saveLookObj);
 
         return $saveLookObj;
+    }
+
+    public function getLooksByUserId( $user_id)
+    {
+        return $this->repo->getAllUserSaveLooks( $user_id );
+    }
+
+    public function findByLookId( $look_id )
+    {
+        return $this->repo->find( $look_id );
+    }
+
+    public function removeUserLook( $saveLookEntity, $user = null )
+    {
+        $saveLookObj = new SaveLook();
+        $saveLookObj->setUsers($user);
+
+        $saveLookObj->deleteImages( $saveLookEntity->getUserLookImage() );
+
+        $this->em->remove( $saveLookEntity );
+        $this->em->flush();
     }
 }

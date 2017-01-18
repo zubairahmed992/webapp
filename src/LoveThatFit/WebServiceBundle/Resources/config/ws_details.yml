@@ -495,6 +495,18 @@ nws_save_user_look:
      auth_token: ad72e439e67bcee6a799a267bdec48f6
      item_ids: [3892, 3914, 3925, 3930]
 
+nws_get_user_looks:
+   pattern: /nws/get_user_looks
+   title: get_user_looks
+   params:
+     auth_token: ad72e439e67bcee6a799a267bdec48f6
+nws_remove_user_look:
+   pattern: /nws/remove_user_look
+   title: remove_user_look
+   params:
+      auth_token: ad72e439e67bcee6a799a267bdec48f6
+      look_id: 1
+
 nws_add_update_fitting_room:
    pattern:  /nws/add_update_fitting_room
    title: add_update_to_fitting_room

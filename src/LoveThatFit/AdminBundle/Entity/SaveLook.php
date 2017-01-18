@@ -29,7 +29,7 @@ class SaveLook
     private $user_look_image;
 
     /**
-     * @ORM\OneToMany(targetEntity="SaveLookItem", mappedBy="save_look", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="SaveLookItem", mappedBy="savelook", orphanRemoval=true)
      */
 
     protected $save_look_item;
@@ -146,11 +146,15 @@ class SaveLook
         }
 
         $ext = pathinfo($this->file['name'], PATHINFO_EXTENSION);
-        $this->user_look_image = 'save_user_look'.substr(uniqid(),0,10) .'.'. $ext;
+        $this->user_look_image = 'save_user_look_'.substr(uniqid(),0,10) .'.'. $ext;
 
         if (!is_dir($this->getUploadRootDir())) {
-            @mkdir($this->getUploadRootDir(), 0700);
+            try {
+                @mkdir($this->getUploadRootDir(), 0700);
+            }catch (\Exception $e)
+            { $e->getMessage();}
         }
+
         move_uploaded_file($this->file["tmp_name"], $this->getAbsolutePath());
         #$this->file->move($this->getUploadRootDir(), $this->image);
 
@@ -163,10 +167,22 @@ class SaveLook
     }
 
     public function getUploadDir() {
-        return 'uploads/savedLooks';
+        return 'uploads/saved_looks/users/'.$this->getUsers()->getId();
     }
 
     public function getAbsolutePath() {
         return null === $this->user_look_image ? null : $this->getUploadRootDir() . '/' . $this->user_look_image;
+    }
+
+    public function deleteImages( $image )
+    {
+
+        if ($image) {
+            $generated_file_name = $this->getUploadRootDir() . '/' . $image;
+            if (is_readable($generated_file_name)) {
+                @unlink($generated_file_name);
+            }
+
+        }
     }
 }

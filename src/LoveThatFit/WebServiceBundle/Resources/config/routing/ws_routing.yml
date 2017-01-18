@@ -198,6 +198,14 @@ nws_save_user_look:
     pattern: /nws/save_user_look
     defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:saveLook}
 
+nws_get_user_looks:
+    pattern: /nws/get_user_looks
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:getUserLooks}
+
+nws_remove_user_look:
+    pattern: /nws/remove_user_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:removeUserLook}
+
 nws_add_update_fitting_room:
     pattern:  /nws/add_update_fitting_room
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:addUpdateToFittingRoom}

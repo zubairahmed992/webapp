@@ -12,5 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class SaveLookRepository extends EntityRepository
 {
+    public function getAllUserSaveLooks($user_id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                select sli,sl,i FROM LoveThatFitAdminBundle:SaveLook sl 
+                 join sl.users u
+                 join sl.save_look_item sli
+                 join sli.items i
+                 WHERE
+                  u.id = :id
+                ")->setParameters(array('id' => $user_id));
 
+        try {
+            // echo $query->getSQL();
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
