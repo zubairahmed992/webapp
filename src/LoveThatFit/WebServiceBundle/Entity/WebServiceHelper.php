@@ -779,9 +779,9 @@ class WebServiceHelper {
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
-                $productlist[$key]['fitting_room_status'] = 1;
+                $productlist[$key]['fitting_room_status'] = true;
             }else {
-                $productlist[$key]['fitting_room_status'] = 0;
+                $productlist[$key]['fitting_room_status'] = false;
             }
         }
         return $productlist;
@@ -793,9 +793,9 @@ class WebServiceHelper {
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
-                $productlist[$key]['fitting_room_status'] = 1;
+                $productlist[$key]['fitting_room_status'] = true;
             }else {
-                $productlist[$key]['fitting_room_status'] = 0;
+                $productlist[$key]['fitting_room_status'] = false;
             }
         }
         return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
@@ -885,9 +885,9 @@ class WebServiceHelper {
         $p['title'] = $product->getName();
 
         $user_data =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProduct($user->getId(), $product->getId());
-        $p['fitting_room_status'] = 0;
+        $p['fitting_room_status'] = false;
         if($user_data == "1"){
-            $p['fitting_room_status'] = 1;
+            $p['fitting_room_status'] = true;
         }
 
 
@@ -895,6 +895,67 @@ class WebServiceHelper {
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
         return $this->response_array(true, "Product Detail ", true, $p);
+    }
+
+
+
+    //Method is using Version 3 - Calling FitAlgo class has been removed.
+    public function productDetailWithImagesForFitRoom($id, $product_item, $user) {
+        $product = $this->container->get('admin.helper.product')->find($id);
+        $p = array();
+        $default_color_id = $product->getDisplayProductColor()->getId();
+        foreach ($product->getProductColors() as $pc) {
+            //$pc->getTitle()
+            $p['colors'][] = array(
+                'color_id' => $pc->getId(),
+                'product_id' => $product->getId(),
+                'title' => $pc->getTitle(),
+                'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
+                'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
+                'recommended' => $default_color_id == $pc->getId() ? true : false,
+            );
+        }
+
+        $recommended_product_item = null;
+        $favouriteItemIds=$user->getFavouriteItemIdArray();
+        foreach ($product->getProductItems() as $pi) {
+            $pc_id = $pi->getProductColor()->getId();
+            $ps_id = $pi->getProductSize()->getId();
+            $ps_title = $pi->getProductSize()->getTitle();
+            # get the highest price of all the items/color for a particular size
+            $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+
+            $p['items'][] = array(
+                'item_id' => $pi->getId(),
+                'product_id' => $product->getId(),
+                'color_id' => $pc_id,
+                'size_id' => $ps_id,
+                'size_title' => $ps_title,
+                'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
+                'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
+                //'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
+                'price' => $pi->getPrice()?$pi->getPrice():0,
+                'favourite' => in_array($pi->getId(), $favouriteItemIds),
+                'added_in_fitting_room' => $product_item == $pi->getId() ? true : false,
+            );
+        }
+
+        foreach ($product->getProductImages() as $key => $pimage) {
+            $image = $pimage->getImage();
+
+            //$pimage->getId()
+            $p['model_images'][] = array(
+                'id' => $pimage->getId(),
+                'image_title' => $pimage->getImagaeTitle(),
+                'image' => $pimage->getImage(),
+                'image_sort' => $pimage->getImageSort(),
+            );
+        }
+
+        $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
+        $p['description'] = $product->getDescription();
+        $p['title'] = $product->getName();
+        return $p;
     }
 
     

@@ -283,15 +283,26 @@ class UserFittingRoomItemHelper {
     }
 
 
-    #------------------------------------------------------
+    #-------------------- Used in Get all Fitting Room service --------
 
     public function getAllFittingRoom($user) {
         $fris = $this->findByUserId($user->getId());
         $ar = array();
-        foreach ($fris as $fri) {
-#        $ar[$fri->getId()] = array('item_id'=>$fri->getProductItem()->getId(), 'target'=>$fri->getProductItem()->getProduct()->getclothingType()->getTarget());
-            $ar['categories'][] = array('item_id'=>$fri->getProductItem()->getProduct()->getCategories()->getId(), 'target'=>$fri->getProductItem()->getProduct()->getclothingType()->getTarget());
+        $product_id = array();
+        $getAllCategoriesByProductItem = $this->repo->getAllCategoriesByProductItem($user->getId());
+        $a = 0;
+        $previous_category = '';
+        foreach($getAllCategoriesByProductItem as $key => $getAllCategoryByProductItem ){
+
+                if($previous_category != '' && $previous_category != $getAllCategoryByProductItem['top_category_name']){
+                    $a++;
+                }
+                $ar['categories'][$a]['category_id'] = $getAllCategoryByProductItem['top_category_id'];
+                $ar['categories'][$a]['name'] = $getAllCategoryByProductItem['top_category_name'];
+                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $getAllCategoryByProductItem['product_item_id'], $user);
+                $previous_category = $ar['categories'][$a]['name'];
         }
+
         return $ar;
     }
 
