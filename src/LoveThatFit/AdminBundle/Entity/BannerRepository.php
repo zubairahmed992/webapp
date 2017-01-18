@@ -145,7 +145,7 @@ param:limit, page_number,limit,sort
                 LEFT JOIN c.children d
                 WHERE c.disabled=0 AND c.display_screen = :display_screen
                 GROUP BY c.id
-                order by c.sorting")
+                order by c.sorting, c.updated_at desc")
                 ->setParameters(array('display_screen' => $displayscreen));
         }else{
             $query = $this->getEntityManager()
@@ -159,7 +159,7 @@ param:limit, page_number,limit,sort
                 LEFT JOIN c.children d
                 WHERE c.disabled=0
                 GROUP BY c.id
-                order by c.sorting");
+                order by c.sorting, c.updated_at desc");
         }
 
 
