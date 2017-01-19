@@ -386,6 +386,21 @@ ws_show_user_cart:
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
    request_type: get
+
+ws_get_authtoken:
+  pattern:  /ws/get_authtoken
+  title: get_authtoken
+  params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+
+ws_braintree_payment:
+  pattern:  /ws/braintree_payment
+  title: make_payment
+  params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     order_amount: 200
+     payment_method_nonce: nonceFromTheClient
+
 #---------------------------- End Shopping cart ---------------------------------
 
 #------------------------ Task Log
