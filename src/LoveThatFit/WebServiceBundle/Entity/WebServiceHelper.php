@@ -978,7 +978,7 @@ class WebServiceHelper {
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 'added_in_fitting_room' => $product_item == $pi->getId() ? true : false,
-                'quantity' => $product_qty,
+                'qty' => $product_qty,
             );
         }
 
