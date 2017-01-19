@@ -113,9 +113,9 @@ class ProductSpecsController extends Controller
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        return new Response(json_encode($parsed_data));
+        #return new Response(json_encode($parsed_data));
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:preview.html.twig', array(
                     'parsed_data' => $parsed_data,
                     'product_specs_json' => json_encode($product_specs),
                     

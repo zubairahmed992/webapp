@@ -86,7 +86,7 @@ class MappingController extends Controller
             
             }
         }
-          $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement']);
+
           $mapping = $this->container->get('productIntake.product_specification_mapping')->createNew();
           $mapping->setBrand($decoded['brand_name']);          
           $mapping->setTitle($decoded['mapping_title']);

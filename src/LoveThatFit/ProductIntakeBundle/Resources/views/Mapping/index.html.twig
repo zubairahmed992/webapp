@@ -7,8 +7,7 @@
 
 <div class="p_listing">     
     <h1>Product Specification mappings</h1>    
-    <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="{{ path('admin_product_specs_csv_data_input') }}" class="btn btn-default">Upload CSV</a>     
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">        
         <a href="{{ path('product_intake_specs_mapping_new') }}" class="btn  btn-default">Add New</a>     
     </div>
     
@@ -26,7 +25,7 @@
             <td>{{sm.Title}}</td>
             <td>{{sm.Brand}}</td>            
             <td>
-                <a href="{{ path('admin_product_specs_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>
+                {#<a href="{{ path('admin_product_specs_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>#}
             </td>
         </tr>
          {% endfor %}
