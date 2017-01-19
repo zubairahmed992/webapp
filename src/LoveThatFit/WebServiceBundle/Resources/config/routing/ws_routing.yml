@@ -194,8 +194,8 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
-ws_get_authtoken:
-   pattern:  /ws/get_authtoken
+ws_get_braintree_authtoken:
+   pattern:  /ws/get_braintree_authtoken
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAuthToken}
 
 ws_braintree_payment:

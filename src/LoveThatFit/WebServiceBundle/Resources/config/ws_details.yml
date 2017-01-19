@@ -387,9 +387,9 @@ ws_show_user_cart:
      auth_token: 121c421783cd4d71d871ec16a1296091
    request_type: get
 
-ws_get_authtoken:
-  pattern:  /ws/get_authtoken
-  title: get_authtoken
+ws_get_braintree_authtoken:
+  pattern:  /ws/get_braintree_authtoken
+  title: get_braintree_authtoken
   params:
      auth_token: 121c421783cd4d71d871ec16a1296091
 
