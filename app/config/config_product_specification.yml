@@ -1310,7 +1310,19 @@ constants:
     ankle: Ankle
     outseam: Outseam
     inseam: inseam
-    hem_length: hem_length   
+    hem_length: hem_length
+    
+ fit_point_measurement_attributes:
+    min_body_measurement: min_body_measurement
+    fit_model_measurement: fit_model_measurement
+    ideal_body_size_low: ideal_body_size_low
+    ideal_body_size_high: ideal_body_size_high
+    max_body_measurement: max_body_measurement
+    garment_measurement_flat: garment_measurement_flat
+    garment_measurement_stretch_fit: garment_measurement_stretch_fit
+    stretch_type_percentage: stretch_type_percentage
+    vertical_stretch: vertical_stretch
+    horizontal_stretch: horizontal_stretch
         
  clothing_type_target:
   Blouse : top
@@ -1326,7 +1338,7 @@ constants:
   Coat : dress
   Shirt : dress
 
-      
+ 
       
 
 
