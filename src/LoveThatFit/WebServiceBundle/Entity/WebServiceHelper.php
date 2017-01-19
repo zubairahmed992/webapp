@@ -904,7 +904,36 @@ class WebServiceHelper {
         return $this->response_array(true, "Product Detail ", true, $p);
     }
 
+    public function parseUserSaveLooksData( $user_id = 0, $base_path )
+    {
+        // echo $baseURL = $this->container->getParameter('base_url'); die;
+        $responseArray = array();
+        $entities = $this->container->get('savelook.helper.savelook')->getLooksByUserId($user_id);
 
+        foreach ($entities as $entity) {
+            $items = array();
+            $totalPrice = 0;
+            $base_path .= $entity->getUploadDir();
+            $responseArray[$entity->getId()]['image'] = $base_path . "/" . $entity->getUserLookImage();
+            $responseArray[$entity->getId()]['user_id'] = $entity->getUsers()->getId();
+            $responseArray[$entity->getId()]['look_id'] = $entity->getId();
+
+
+            foreach ($entity->getSaveLookItem() as $saveLookItem) {
+                $temp['image'] = $saveLookItem->getItems()->getImage();
+                $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
+                $temp['item_id'] = $saveLookItem->getItems()->getId();
+                $temp['price'] = $saveLookItem->getItems()->getPrice();
+                $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
+
+                array_push($items, $temp);
+            }
+            $responseArray[$entity->getId()]['items'] = $items;
+            $responseArray[$entity->getId()]['totalPrice'] = "$" . number_format($totalPrice) . " USD";
+        }
+
+        return $this->response_array(true, "Product Items ", true, $responseArray);
+    }
 
     //Method is using Version 3 - Calling FitAlgo class has been removed.
     public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
@@ -970,6 +999,4 @@ class WebServiceHelper {
         $p['title'] = $product->getName();
         return $p;
     }
-
-    
 }

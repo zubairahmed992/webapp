@@ -386,6 +386,21 @@ ws_show_user_cart:
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
    request_type: get
+
+ws_get_braintree_authtoken:
+  pattern:  /ws/get_braintree_authtoken
+  title: get_braintree_authtoken
+  params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+
+ws_braintree_payment:
+  pattern:  /ws/braintree_payment
+  title: make_payment
+  params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     order_amount: 200
+     payment_method_nonce: nonceFromTheClient
+
 #---------------------------- End Shopping cart ---------------------------------
 
 #------------------------ Task Log
@@ -486,6 +501,26 @@ nws_product_detail:
    params:
      auth_token: 56565656566
      product_id: 505
+
+nws_save_user_look:
+   pattern: /nws/save_user_look
+   title: save_user_look
+   file_upload: true
+   params:
+     auth_token: ad72e439e67bcee6a799a267bdec48f6
+     item_ids: [3892, 3914, 3925, 3930]
+
+nws_get_user_looks:
+   pattern: /nws/get_user_looks
+   title: get_user_looks
+   params:
+     auth_token: ad72e439e67bcee6a799a267bdec48f6
+nws_remove_user_look:
+   pattern: /nws/remove_user_look
+   title: remove_user_look
+   params:
+      auth_token: ad72e439e67bcee6a799a267bdec48f6
+      look_id: 1
 
 nws_add_update_fitting_room:
    pattern:  /nws/add_update_fitting_room

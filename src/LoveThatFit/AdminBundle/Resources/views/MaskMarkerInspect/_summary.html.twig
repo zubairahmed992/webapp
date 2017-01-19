@@ -1,75 +1,154 @@
 <style>
 .fixed_px {
-color: red;	
+  color: red;
 }
-
 </style>
 
-
 <div class='col-md-9'>
-    <h3>{{user.fullName }}</h3>
+  <h3>{{user.fullName }}</h3>
+  <table class="table table-condensed table-hover table-bordered">
+    <tr>
+      <th></th>    
+      <th colspan="2">Measurement 1</th>
+      <th colspan="2">Measurement 2</th>
+      <th style="background-color: #CEF6F5" colspan="2">Average <span class="fixed_px">(5 px)</span></th>
+      <th>Actual</th>
+      <th>Difference</th>
+    </tr>
+    <tr style="background-color: #c4e3f3">
+      <th>Fit Points</th>    
+      <th>Segment</th>
+      <th>pixel</th> 
+      <th>Segment</th>
+      <th>pixel</th> 
+      <th>pixel</th> 
+      <th>inches </th> 
+      <th>inches</th> 
+      <th>inches</th> 
+    </tr>
     
-    <table class="table table-condensed table-hover table-bordered">
-            <tr>
-                <th></th>    
-                <th colspan="2">Measurement 1</th>
-                <th colspan="2">Measurement 2</th>
-                <th  style="background-color: #CEF6F5" colspan="2">Average <span class="fixed_px">(5 px)</span></th>
-                <th>Actual</th>
-                <th>Difference</th>
-            </tr>
-            <tr style="background-color: #c4e3f3">
-                <th>Fit Points</th>    
-                <th>Segment</th>
-                <th>pixel</th> 
-                <th>Segment</th>
-                <th>pixel</th> 
-                <th>pixel</th> 
-                <th>inches </th> 
-                <th>inches</th> 
-                <th>inches</th> 
-                
-            </tr>
-{% for fp, seg in specs_comparison %} 
+    {% for fp, seg in specs_comparison %} 
+      {% set px_dist1 =  seg.pixels.s1>0?seg.pixels.s1 | number_format(2):'-' %}
+      {% set inch_dist1 = seg.pixels.s1>0?(px_dist1/6) | number_format(2):'-' %}
+      {% set px_dist2 = seg.pixels.s2>0?seg.pixels.s2 | number_format(2):'-' %}
+      {% set inch_dist2 = seg.pixels.s2>0?(px_dist2/6) | number_format(2):'-' %}
+      {% set avg = seg.pixels.avg>0?seg.pixels.avg | number_format(2):'-' %}
+      {% set predictive =seg.predicted!=0?seg.predicted | number_format(2):'-' %}
+      {% set body = seg.body>0?seg.body:'-' %}
+      {% set diff = seg.body>0?(body>predictive?(body-predictive):predictive-body)|  number_format(2):'-' %}
+      {% set seg1= '('~seg.segments.s1.a ~', '~ seg.segments.s1.b~')'%}
+      {% set seg2= px_dist2>0? '('~seg.segments.s2.a ~', '~ seg.segments.s2.b~')':'-' %}
+      
+      <tr>
+        <th>{{fp}}</th> 
+        <td>{{seg1}}</td> 
+        <td>{{px_dist1}}</td> 
+        <td> {{seg2}} </td>
+        <td>{{px_dist2}}</td> 
+        <td style="background-color: #CEF6F5">{{avg}}</td>
+        {%if (predictive<0)%}
+          <td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>
+        {%else%}
+          <td style="background-color: #CEF6F5">{{predictive}}</td>
+        {%endif%}
+        <td>{{body}}</td>
+        <td>{{diff}}</td>
+      </tr>
+    {% endfor %}
+    <tr><td colspan="9">
+      <span class="fixed_px">Red indicates fixed (5 px) per pixel measurement, fit points that do not have pixel to inch ratio charts
+      </span>
+    </td></tr>
+  </table>
+  <table class="table table-condensed table-hover table-bordered">  
+    <tr>
+      <th></th>
+      <th style="background-color: #CEF6F5;" colspan="2">Average <span class="fixed_px">(5 px)</span></th>
+      <th>Actual</th>
+      <th colspan="2">Calculations</th>
+    </tr>
+    <tr style="background-color: #c4e3f3">
+      <th>Fit Points</th>    
+      <th>pixel</th> 
+      <th>inches</th>
+      <th>inches</th>
+      <th>Inseam <span class="fixed_px">(Trousers, Jeans)</span></th>
+      <th>Outseam <span class="fixed_px">(Skirts, Dresses, Coats)</span></th>
+    </tr>
+    <tr><th>outseam</th>
+    <td></td><td></td><td></td><td></td>
+    <td>
+      {% set outseam = body_measurement.outseam != 0 ? body_measurement.outseam : (0.6 * body_measurement.height) %}
+        {{outseam}}
+    </td>
+    </tr>
+    {% for fp, seg in specs_comparison %}
+      {% set fp_selected = ['inseam', 'knee', 'calf', 'ankle'] %}
+      {% if fp in fp_selected%}
+        {% set avg = seg.pixels.avg>0?seg.pixels.avg | number_format(2):'-' %}
+        {% set predictive =seg.predicted!=0?seg.predicted | number_format(2):'-' %}
+        {% set body = seg.body>0?seg.body:'-' %}
+        <tr>
+          <th>{{fp}}</th>
+          <td style="background-color: #CEF6F5">{{avg}}</td>
+          {%if (predictive<0)%}
+            <td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>
+          {%else%}
+            <td style="background-color: #CEF6F5">{{predictive}}</td>
+          {%endif%}
+          <td>{{body}}</td>
+          <td>
+            {% if "inseam" in fp %}
+              {% set inseam = seg.body != 0 ? seg.body : (0.269 * body_measurement.height) %}
+            {% endif %}
+            {% if "knee" in fp %}
+              {% set knee = seg.body %}
+              {% set knee_height = 0.574 * inseam %}
+              {% set inseam_knee = inseam - knee_height %}
+              {% set final_knee = inseam_knee != 0 ? inseam_knee | number_format(2):'-' %}
+              {{ final_knee }}
+            {% endif %}
+            {% if "calf" in fp %}
+              {% set calf = seg.body %}
+              {% set calf_height = 0.4022 * inseam %}
+              {% set inseam_calf = inseam - calf_height %}
+              {% set final_calf = inseam_calf != 0 ? inseam_calf | number_format(2):'-' %}
+              {{ final_calf }}
+            {% endif %}
+            {% if "ankle" in fp %}
+              {% set ankle = seg.body %}
+              {% set ankle_height = 0.0797 * inseam %}
+              {% set inseam_ankle = inseam - ankle_height %}
+              {% set final_ankle = inseam_ankle != 0 ? inseam_ankle | number_format(2):'-' %}
+              {{ final_ankle }}
+            {% endif %}
+          </td>
+          <td>
             
-            {% set px_dist1 =  seg.pixels.s1>0?seg.pixels.s1 |  number_format(2):'-' %}
-            {% set inch_dist1 = seg.pixels.s1>0?(px_dist1/6) |  number_format(2):'-' %}            
-            
-            {% set px_dist2 = seg.pixels.s2>0?seg.pixels.s2 |  number_format(2):'-' %}            
-            {% set inch_dist2 = seg.pixels.s2>0?(px_dist2/6) |  number_format(2):'-' %}
-            {% set avg = seg.pixels.avg>0?seg.pixels.avg |  number_format(2):'-' %}            
-            {% set predictive =seg.predicted!=0?seg.predicted | number_format(2):'-' %}            
-            {% set body = seg.body>0?seg.body:'-' %}
-            {% set diff = seg.body>0?(body>predictive?(body-predictive):predictive-body)|  number_format(2):'-' %}
-            {% set seg1= '('~seg.segments.s1.a ~', '~ seg.segments.s1.b~')'%}                
-            {% set seg2= px_dist2>0? '('~seg.segments.s2.a ~', '~ seg.segments.s2.b~')':'-' %}                
-            
-            <tr>
-                <th>{{fp}}</th> 
-                <td>{{seg1}}</td> 
-                <td>{{px_dist1}}</td> 
-                <td> {{seg2}} </td>
-                <td>{{px_dist2}}</td> 
-                <td style="background-color: #CEF6F5">{{avg}}</td>
-                {%if (predictive<0)%}
-                    <td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>
-                {%else%}
-                    <td style="background-color: #CEF6F5">{{predictive}}</td>
-                {%endif%}
-                
-                <td>{{body}}</td>
-                <td>{{diff}}</td>
-          
-            </tr>
- {% endfor %}   
-            <tr><td colspan="9"><span class="fixed_px">Red indicates fixed (5 px) per pixel measurement, fit points that do not have pixel to inch ratio charts</span></td></tr>
-    
-    
-  
-  
-</table>
-    </div>
+            {% if "knee" in fp %}
+              {% set knee_o_height = body_measurement.height * 0.2695 %}
+              {% set outseam_knee_o = outseam - knee_o_height %}
+              {% set final_knee_o = outseam_knee_o != 0 ? outseam_knee_o | number_format(2):'-' %}
+              {{ final_knee_o }}
+            {% endif %}
+            {% if "calf" in fp %}
+              {% set calf_o_height = body_measurement.height * 0.1888 %}
+              {% set outseam_calf_o = outseam - calf_o_height %}
+              {% set final_calf_o = outseam_calf_o != 0 ? outseam_calf_o | number_format(2):'-' %}
+              {{ final_calf_o }}
+            {% endif %}
+            {% if "ankle" in fp %}
+              {% set ankle_o_height = body_measurement.height * 0.0374 %}
+              {% set outseam_ankle_o = outseam - ankle_o_height %}
+              {% set final_ankle_o = outseam_ankle_o != 0 ? outseam_ankle_o | number_format(2):'-' %}
+              {{ final_ankle_o }}
+            {% endif %}
+          </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+  </table>
+</div>
 <div>
-    <img src="{{asset(user.webPath)}}" >
-    
-    </div>
+  <img src="{{asset(user.webPath)}}" >
+</div>

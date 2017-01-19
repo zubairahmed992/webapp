@@ -1,6 +1,6 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Entity;
+namespace LoveThatFit\ProductIntakeBundle\Entity;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;

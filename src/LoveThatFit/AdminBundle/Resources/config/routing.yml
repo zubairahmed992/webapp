@@ -120,11 +120,6 @@ admin_events:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/eventsManagement.yml"
     prefix:   /
     
-    #---------- Copy User Data ----------------------
-support_admin_fit_model_specs_routes:
-    resource: "@LoveThatFitAdminBundle/Resources/config/routing/fit_model_specs.yml"
-    prefix:   /
-    
 #-------------- Categories ------------------------
 admin_categories_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/categories.yml"

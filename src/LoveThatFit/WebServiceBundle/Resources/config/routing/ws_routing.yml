@@ -194,6 +194,26 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
+ws_get_braintree_authtoken:
+   pattern:  /ws/get_braintree_authtoken
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAuthToken}
+
+ws_braintree_payment:
+  pattern:  /ws/braintree_payment
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:makePayment}
+
+nws_save_user_look:
+    pattern: /nws/save_user_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:saveLook}
+
+nws_get_user_looks:
+    pattern: /nws/get_user_looks
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:getUserLooks}
+
+nws_remove_user_look:
+    pattern: /nws/remove_user_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:removeUserLook}
+
 nws_add_update_fitting_room:
     pattern:  /nws/add_update_fitting_room
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:addUpdateToFittingRoom}
@@ -205,3 +225,4 @@ nws_delete_fitting_room_item:
 nws_get_all_fitting_room:
     pattern:  /nws/get_all_fitting_room
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:getAllFittingRoom}
+

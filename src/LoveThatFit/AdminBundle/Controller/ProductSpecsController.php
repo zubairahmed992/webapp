@@ -54,43 +54,12 @@ class ProductSpecsController extends Controller {
 #----------------------- /admin/product_specs/foo
     public function fooAction() {
         return $this->render('LoveThatFitAdminBundle:ProductSpecs:foo.html.twig');
-        $brands = $this->get('admin.helper.brand')->getBrnadArray();
-        $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
-        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
-        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
-        return new response(json_encode($product_specs));
-        
-        $product_specs_mapping = $this->get('admin.helper.product_specification_mapping')->find(9);
-        
-        #return new response(json_encode($clothing_types['woman']));
-        return $this->render('LoveThatFitAdminBundle:ProductSpecs:foo.html.twig', array(
-                    'product_specs_mapping' => $product_specs_mapping,
-                    'fit_model_measurement' => $this->get('admin.fit_model_measurement')->findAll(),
-                    'fit_points' => $fit_points,
-                    'brands' => $brands,
-                    'clothing_types' => $clothing_types,
-                    'product_specs' => $product_specs,
-                    'size_specs' => $size_specs,
-                    'product_specs_json' => json_encode($product_specs),
-                    'size_specs_json' => json_encode($size_specs),
-                        )
-        );
     }
  #----------------------------------------------- /admin/product_specs/bar 
       public function barAction($id){        
        $product_specs_mappings = $this->get('admin.helper.product_specification_mapping')->find($id);        
-       
-       $mapping_json_decoded = json_decode($product_specs_mappings->getMappingJson());
+        $mapping_json_decoded = json_decode($product_specs_mappings->getMappingJson());
         return new Response($product_specs_mappings->getMappingJson()); 
-        $brands = $this->get('admin.helper.brand')->getBrnadArray();
-        $clothing_types = $this->get('admin.helper.clothing_type')->getMixArray();
-        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
-        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length', 'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
-        
-        
     }
  #----------------------------------------------------- /admin/product_specs/mapping_input
      public function mappingInputAction(){        
@@ -172,9 +141,9 @@ class ProductSpecsController extends Controller {
           $mapping->setMappingFileName('csv_mapping_'. $mapping->getId() .'.csv');          
            if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $mapping->getAbsolutePath())){
                $this->container->get('admin.helper.product_specification_mapping')->save($mapping);
-               return new Response($mapping->getId());
+               return new Response($mapping->getId().'Mapping created. CSV file is saved.');
            }else{
-               return new Response('no');
+               return new Response('Mapping created. CSV file is not saved.');
            }
           
         return new Response(json_encode($apecs_arr));
@@ -356,76 +325,7 @@ class ProductSpecsController extends Controller {
             return intval($raw_value);
         }
     }
-#----------------------------    
-    public function _csvDataUploadAction(Request $request) {
 
-        #-------------- CSV to array
-        $csv_array = array();
-        $file = $request->files->get('csv_file');
-        $i = 0;
-        if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
-            while (($row = fgetcsv($handle)) !== FALSE) {
-                for ($j = 0; $j < count($row); $j++) {
-                    $csv_array[$i][$j] = $row[$j];
-                }
-                $i++;
-            }
-        }
-        $mapping_id = $request->request->get('sel_mapping');
-        $product_specs_mapping = $this->get('admin.helper.product_specification_mapping')->find($mapping_id);
-        $map = json_decode($product_specs_mapping->getMappingJson(), true);
-        $fit_model = $product_specs_mapping->getFitModelMeasurement();
-        $fm_percent_to_gd=0;
-        #-------------- use mapping to read csv array
-        $parsed_data = array();
-        
-        foreach ($map as $specs_k => $specs_v) {
-            if (is_array($specs_v) || is_object($specs_v)) {                
-                $previous_size_key=null;
-                foreach ($specs_v as $size_key => $fit_points) {                    
-                    foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
-                        $coordins=$this->extracts_coordinates($fit_model_measurement);
-                        #$parsed_data[$k][$size_key][$fit_pont_key] = $csv_array[$coordins['r']][$coordins['c']];
-                        $fmm_value =  intval($csv_array[$coordins['r']][$coordins['c']]);                        
-                        #----------------------*                            
-                            $raw_value = $csv_array[$coordins['r']][$coordins['c']];                            
-                            $converted_number=0;
-                            if (strpos($raw_value, '/')){
-                               $raw_exploded = explode(' ', $raw_value);
-                               $frac = explode('/', $raw_exploded[1]);
-                               $converted_number = intval($raw_exploded[0]) + (intval($frac[0])/intval($frac[1]));
-                            }else{
-                                $converted_number = $fmm_value;
-                            }
-                        #----------------------*
-                        $grade_rule = 0;
-                        if($previous_size_key!=null){                            
-                            #$grade_rule = $fmm_value - $sizes[$previous_size_key][$fit_pont_key]['fit_model'];
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value, $grade_rule);
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['prev_size'] = $previous_size_key;
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['grade_rule_ps'] = $fmm_value - $parsed_data[$specs_k][$previous_size_key][$fit_pont_key]['fit_model'];
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key]['fit_model_prev'] = $parsed_data[$specs_k][$previous_size_key][$fit_pont_key]['fit_model'];
-                        }else{
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = $this->ranges_calculations($fmm_value);                                
-                        }
-                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['frac'] =$converted_number;
-                        $parsed_data[$specs_k][$size_key][$fit_pont_key]['raw_frac'] =$raw_value;
-                    }
-                    $previous_size_key=$size_key;                    
-                }
-            } else {
-                $cdns=$this->extracts_coordinates($specs_v);                
-                if(count($cdns)>1){
-                    $parsed_data[$specs_k] = $csv_array[$cdns['r']][$cdns['c']];
-                }
-                
-            }
-        }
-        return new Response(json_encode($parsed_data));
-        return $this->render('LoveThatFitAdminBundle:ProductSpecs:csv_preview.html.twig', array(
-            'parsed_data'=>$parsed_data,
-        ));
-    }
 #----------------------------------------------------------------    
     private function extracts_coordinates($str) {
         $cdns = explode(',', $str);
@@ -436,30 +336,5 @@ class ProductSpecsController extends Controller {
         }
         return $c;
     }
-#----------------------------------------------------------------    
-    private function ranges_calculations($fit_model, $grade_rule=0) {        
-        $fit_model=  intval($fit_model);
-        $grade_rule=$grade_rule==0?1:$grade_rule;
-        $max_calc = $fit_model + (2.5 * $grade_rule);        
-        $min_calc = $fit_model - (2.5 * $grade_rule);                
-        
-        return array(
-        'garment_dimension' => $fit_model,       
-        );
-        
-        return array(
-        'garment_dimension' => $fit_model,
-        'garment_stretch' => 0,        
-        'min_calc' => $min_calc,
-        'min_actual' => $min_calc,
-        'ideal_low' => $fit_model - $grade_rule,
-        'fit_model' => $fit_model ,
-        'ideal_high' => $fit_model + $grade_rule,        
-        'max_calc' => $max_calc,        
-        'max_actual' => $max_calc,
-        'grade_rule' => $grade_rule,
-        );
-        #$grade_rule = $medium_size - $small_size;
-        #$range_configuration = $max_actual - $min_actual; # next_Size
-    }
+
 }

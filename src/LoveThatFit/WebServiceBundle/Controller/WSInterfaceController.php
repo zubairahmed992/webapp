@@ -11,7 +11,12 @@ class WSInterfaceController extends Controller {
     
     public function indexAction() {
         $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/ws_details.yml'));        
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/ws_details.yml'));
+
+        /*echo "<pre>";
+        print_r( $conf);
+        echo "</pre>";
+        die;*/
         
         $user_list= $this->get('user.helper.user')->getListWithPagination(0,'email');
         return $this->render('LoveThatFitWebServiceBundle:WSInterface:index.html.twig', array(

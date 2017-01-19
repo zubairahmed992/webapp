@@ -1,6 +1,6 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Entity;
+namespace LoveThatFit\ProductIntakeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -15,7 +15,7 @@ class FitModelMeasurementRepository extends EntityRepository
 	
  public function getArray() {
      $query = $this->getEntityManager()
-                    ->createQuery('SELECT * FROM LoveThatFitAdminBundle:FitModelMeasurement');
+                    ->createQuery('SELECT * FROM LoveThatFitProductIntakeBundle:FitModelMeasurement');
   try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

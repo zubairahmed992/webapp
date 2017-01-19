@@ -168,7 +168,10 @@ $( "#btn_hit_service" ).click(function() {
                 //image upload or file upload condition
                 if($('#sel_service').val() == '/ws/user_file_uploader'){
                     hit_file_upload_service();
-                }else if($('#sel_service').val() == '/ws/selfieshare/create'){
+                }else if($('#sel_service').val() == '/nws/save_user_look'){
+                    hit_savelook_service();
+                }
+                else if($('#sel_service').val() == '/ws/selfieshare/create'){
                     hit_selfieshare_service();
                 }else{
                     hit_image_upload_service();
@@ -222,7 +225,35 @@ $( "#btn_hit_service" ).click(function() {
         }
 
 //-------------------------------------------------------------
+function hit_savelook_service()
+{
+    var value_ar = "";
+    if($("#txt_request_params").val()){
+        value_ar = JSON.parse($("#txt_request_params").val());
+        input_file = document.getElementById('image_to_upload');
 
+        data= new FormData();
+        data.append("image", input_file.files[0]);
+        data.append("auth_token",value_ar['auth_token']);
+        data.append("item_ids","["+ value_ar['item_ids'] + "]");
+        data.append("user_id",value_ar['user_id']);
+
+       $.ajax({
+            type: "POST",
+            url: ".." + $("#service_url").text(),
+            data: data,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            success: function(data){
+                display_response(data);
+            },
+            failure: function(errMsg) {
+                display_response(errMsg);
+            }
+        });
+    }
+}
 function hit_service(){
     var value_ar = "";
         if($("#txt_request_params").val()){
