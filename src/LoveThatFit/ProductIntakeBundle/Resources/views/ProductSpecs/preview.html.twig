@@ -1,0 +1,98 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+
+<script>
+$(document).ready(function(){
+    $("#dv_validate_measurement_data").hide();
+  $('#a_measurement_table').click(function (event){
+         $("#dv_measurement_table").toggle('slow');
+    });
+    
+});
+
+    </script>
+    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                    {% for specs_k, specs_v in parsed_data %}
+                       {% if (specs_k!='sizes') %}
+                            <tr>
+                                <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
+                                <td>
+                                    <span>{{specs_v}}</span>
+                                </td>
+                            </tr>
+                        {% endif%}
+                    {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+{#---------------------------------------------------------------------------------------------#}
+            </table>
+
+           
+
+{#---------------------------------------------------------------------------------------------#}
+            <table>
+
+                <tr>
+                    <td>
+                        <a href="#" id="a_measurement_table"> measurements chart</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="dv_measurement_table">
+                            <table class="table table-bordered ">
+                            {% for size, fit_point in parsed_data.sizes %}
+                                    <tr class="Active">
+                                        <th >{{size}}</th>
+                                        <th >garment_dimension</th>
+                                        <th >garment_stretch</th>
+                                        <th >min_calc</th>
+                                        <th >min_actual</th>
+                                        <th >ideal_low</th>
+                                        <th >fit_model</th>
+                                        <th >ideal_high</th>
+                                        <th >max_calc</th>
+                                        <th >max_actual</th>
+                                        <th >grade rule</th>
+                                    </tr>
+                                {% for measurement_k, measurement_v in fit_point %}
+                                    {% if (measurement_v.garment_dimension>0) %}
+                                    <tr>
+                                        <th>{{measurement_k}}</th>
+                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                   
+                    </table>
+                </div>
+
+                <script>
+           //--------------------------------------------
+           //--------------------------------------------
+           //--------------------------------------------
+           $(function(){
+          
+           });
+                    </script>
+{% endblock %}

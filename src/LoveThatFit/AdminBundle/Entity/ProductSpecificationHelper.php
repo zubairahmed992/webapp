@@ -21,7 +21,14 @@ public function getProductSpecification(){
 public function getFitPoints(){
     return $this->conf["constants"]["fit_points"];
 }
-
+#------------------------------------------
+public function getAllAttributes(){
+    return $this->conf["constants"]["attributes"];
+}
+#------------------------------------------
+public function getFitPointMeasurementAttributes(){
+    return $this->conf["constants"]["fit_point_measurement_attributes"];
+}
 #--------------Reading Garment Type------------------------#
 public function getWomenClothingType(){
     return $this->conf["constants"]["product_specification"]["women"]["clothing_type"];

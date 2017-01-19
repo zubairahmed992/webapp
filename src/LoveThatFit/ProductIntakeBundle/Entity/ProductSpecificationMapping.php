@@ -1,26 +1,18 @@
 <?php
 
-namespace LoveThatFit\AdminBundle\Entity;
-use LoveThatFit\AdminBundle\ImageHelper;
+namespace LoveThatFit\ProductIntakeBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductSpecificationMappingRepository")
+ * @ORM\Entity(repositoryClass="LoveThatFit\ProductIntakeBundle\Entity\ProductSpecificationMappingRepository")
  * @ORM\Table(name="product_specification_mapping")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductSpecificationMapping  {
-    
-    /**     
-     * Bidirectional (OWNING SIDE - FK)
-     * 
-     * @ORM\ManyToOne(targetEntity="FitModelMeasurement", inversedBy="product_specification_mappings")
-     * @ORM\JoinColumn(name="fit_model_measurement_id", referencedColumnName="id", onDelete="CASCADE")
-     * */
-    private $fit_model_measurement;  
-    
+class ProductSpecificationMapping {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -33,58 +25,61 @@ class ProductSpecificationMapping  {
      */
     protected $title;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $brand;
-    
-     /**
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $gender;
-    
-     /**
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $size_title_type;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $clothing_type;
-/**
+
+    /**
      * @var string $description
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-    
+
     /**
      * @var string $mapping_json
      * @ORM\Column(name="mapping_json", type="text", nullable=true)
      */
     private $mapping_json;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $mapping_file_name;
-    
+
     /**
      * @ORM\Column(type="datetime")
      */
-    
     protected $created_at;
 
-  
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
 
-    
     /**
      * @var string $disabled
      * @ORM\Column(name="disabled", type="boolean")
      */
     private $disabled;
+
     #-------------------------------------------
-    
-    
+
     /**
      * Get id
      *
@@ -93,6 +88,7 @@ class ProductSpecificationMapping  {
     public function getId() {
         return $this->id;
     }
+
 #-------------------------------------------
     /**
      * Set title
@@ -100,9 +96,9 @@ class ProductSpecificationMapping  {
      * @param string $title
      * @return ProductSpecificationMapping
      */
+
     public function setTitle($title) {
         $this->title = $title;
-
         return $this;
     }
 
@@ -114,13 +110,15 @@ class ProductSpecificationMapping  {
     public function getTitle() {
         return $this->title;
     }
-#-------------------------------------------
+
+#-------------------------------------------    
     /**
      * Set brand
      *
      * @param string $brand
      * @return ProductSpecificationMapping
      */
+
     public function setBrand($brand) {
         $this->brand = $brand;
         return $this;
@@ -133,6 +131,51 @@ class ProductSpecificationMapping  {
      */
     public function getBrand() {
         return $this->brand;
+    }
+
+#-------------------------------------------
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return ProductSpecificationMapping
+     */
+
+    public function setGender($gender) {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string 
+     */
+    public function getGender() {
+        return $this->gender;
+    }
+
+#-------------------------------------------
+    /**
+     * Set size_title_type
+     *
+     * @param string $size_title_type
+     * @return ProductSpecificationMapping
+     */
+
+    public function setSizeTitleType($size_title_type) {
+        $this->size_title_type = $size_title_type;
+
+        return $this;
+    }
+
+    /**
+     * Get size_title_type
+     *
+     * @return string 
+     */
+    public function getSizeTitleType() {
+        return $this->size_title_type;
     }
 
     //----------------------------------------------------------
@@ -164,8 +207,9 @@ class ProductSpecificationMapping  {
      * @param string $mapping_json
      * @return ProductSpecificationMapping
      */
-    public function setMappingJson($mapping_json){
-        $this->mapping_json = $mapping_json;    
+
+    public function setMappingJson($mapping_json) {
+        $this->mapping_json = $mapping_json;
         return $this;
     }
 
@@ -174,20 +218,20 @@ class ProductSpecificationMapping  {
      *
      * @return string 
      */
-    public function getMappingJson(){
+    public function getMappingJson() {
         return $this->mapping_json;
     }
 
-
 #----------------------------------------
-     /**
+    /**
      * Set mapping_file_name
      *
      * @param string $mapping_file_name
      * @return ProductSpecificationMapping
      */
-    public function setMappingFileName($file_name){
-        $this->mapping_file_name = $file_name;    
+
+    public function setMappingFileName($file_name) {
+        $this->mapping_file_name = $file_name;
         return $this;
     }
 
@@ -196,11 +240,12 @@ class ProductSpecificationMapping  {
      *
      * @return string 
      */
-    public function getMappingFileName(){
+    public function getMappingFileName() {
         return $this->mapping_file_name;
     }
-   #-------------------------------------------
-    
+
+    #-------------------------------------------
+
     /**
      * Set created_at
      *
@@ -229,10 +274,10 @@ class ProductSpecificationMapping  {
      * @param boolean $disabled
      * @return ProductSpecificationMapping
      */
-    public function setDisabled($disabled)
-    {
+
+    public function setDisabled($disabled) {
         $this->disabled = $disabled;
-    
+
         return $this;
     }
 
@@ -241,82 +286,54 @@ class ProductSpecificationMapping  {
      *
      * @return boolean 
      */
-    public function getDisabled()
-    {
+    public function getDisabled() {
         return $this->disabled;
     }
 
-   
 //---------------------------------------------------
-    
-  
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
+        
     }
-      //-------------------------------------------------
+
+    //-------------------------------------------------
     //-------------- Image Upload ---------------------
     //-------------------------------------------------
 
     public function upload() {
-      // the file property can be empty if the field is not required
-      if (null === $this->file) {
-        return;
-      }
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->mapping_file_name = uniqid() .'.'. $ext;
+        $this->mapping_file_name = uniqid() . '.' . $ext;
         $this->file->move(
                 $this->getUploadRootDir(), $this->mapping_file_name
         );
-      
-    }
-  //---------------------------------------------------
-
-    public function getAbsolutePath()
-    {
-      return null === $this->mapping_file_name
-          ? null
-          : $this->getUploadRootDir().'/'.$this->mapping_file_name;
-    }
-  //---------------------------------------------------
-    public function getWebPath()
-    {
-      return null === $this->mapping_file_name
-          ? null
-          : $this->getUploadDir().'/'.$this->mapping_file_name;
-    }
-  //---------------------------------------------------
-    protected function getUploadRootDir()
-    {
-      return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-  //---------------------------------------------------
-    protected function getUploadDir(){    
-      return 'uploads/ltf/products/product_csv';
-    }
-    
-    #--------------------------------------------------------
-    
-      /**
-     * Set fit_model_measurement
-     *
-     * @param \LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement
-     * @return FitModelMeasurement
-     */
-    public function setFitModelMeasurement(\LoveThatFit\AdminBundle\Entity\FitModelMeasurement $fit_model_measurement = null){
-        $this->fit_model_measurement = $fit_model_measurement;    
-        return $this;
     }
 
-    /**
-     * Get fit_model_measurement
-     *
-     * @return \LoveThatFit\AdminBundle\Entity\FitModelMeasurement
-     */
-    public function getFitModelMeasurement(){
-        return $this->fit_model_measurement;
+    //---------------------------------------------------
+
+    public function getAbsolutePath() {
+        return null === $this->mapping_file_name ? null : $this->getUploadRootDir() . '/' . $this->mapping_file_name;
+    }
+
+    //---------------------------------------------------
+    public function getWebPath() {
+        return null === $this->mapping_file_name ? null : $this->getUploadDir() . '/' . $this->mapping_file_name;
+    }
+
+    //---------------------------------------------------
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    //---------------------------------------------------
+    protected function getUploadDir() {
+        return 'uploads/ltf/products/product_csv';
     }
 
 }
