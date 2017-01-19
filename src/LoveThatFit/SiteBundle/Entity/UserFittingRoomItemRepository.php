@@ -65,13 +65,14 @@ class UserFittingRoomItemRepository extends EntityRepository {
     //Get the Count of the added item
     public function findCountProductItemByUserid($user_id, $product_id) {
         $total_record = $this->getEntityManager()
-            ->createQuery("SELECT count(ut)
+            ->createQuery("SELECT count(ut), ut.qty
                                 FROM LoveThatFitSiteBundle:UserFittingRoomItem ut
                                 WHERE
                                 ut.user=:user_id AND ut.product_id=:product_id"
             )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id));
         try {
-            return $total_record->getSingleScalarResult();
+            return $total_record->getResult();
+            //return $total_record->getSingleScalarResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
@@ -110,7 +111,7 @@ class UserFittingRoomItemRepository extends EntityRepository {
 
 
     #--------------Get Product list By Category and Gender -----------------------------------------------------
-    public function getAllCategoriesByProductItem($user_id = '2222') {
+    public function getAllCategoriesByProductItem($user_id = '0') {
 
         $userItemTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitSiteBundle:UserFittingRoomItem')->getTableName();
         $categoriesTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Categories')->getTableName();
@@ -122,7 +123,8 @@ class UserFittingRoomItemRepository extends EntityRepository {
                       c.id                  AS category_id,
                       c.name                AS category_name,
                       ufri.product_item_id  AS product_item_id,
-                      ufri.product_id       AS product_id
+                      ufri.product_id       AS product_id,
+                      ufri.qty              AS qty
                       FROM $userItemTableName ufri
 
                       LEFT JOIN category_products cp ON ufri.product_id = cp.product_id

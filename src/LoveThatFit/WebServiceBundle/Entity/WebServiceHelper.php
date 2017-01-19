@@ -780,8 +780,10 @@ class WebServiceHelper {
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
             }else {
                 $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
             }
         }
         return $productlist;
@@ -794,8 +796,10 @@ class WebServiceHelper {
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
             }else {
                 $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
             }
         }
         return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
@@ -885,9 +889,12 @@ class WebServiceHelper {
         $p['title'] = $product->getName();
 
         $user_data =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProduct($user->getId(), $product->getId());
+
         $p['fitting_room_status'] = false;
-        if($user_data == "1"){
+        $p['qty'] = 0;
+        if($user_data[0][1] != "0"){
             $p['fitting_room_status'] = true;
+            $p['qty'] = $user_data[0]['qty'];
         }
 
 
@@ -900,7 +907,7 @@ class WebServiceHelper {
 
 
     //Method is using Version 3 - Calling FitAlgo class has been removed.
-    public function productDetailWithImagesForFitRoom($id, $product_item, $user) {
+    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
@@ -925,6 +932,11 @@ class WebServiceHelper {
             # get the highest price of all the items/color for a particular size
             $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
 
+            $product_qty = 0;
+            if($product_item == $pi->getId()){
+                $product_qty = $qty;
+            }
+
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -937,6 +949,7 @@ class WebServiceHelper {
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 'added_in_fitting_room' => $product_item == $pi->getId() ? true : false,
+                'quantity' => $product_qty,
             );
         }
 
