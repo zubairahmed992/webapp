@@ -119,6 +119,7 @@ class WSProductController extends Controller {
 //**********************************************
     #----------------------------------------------------
     public function productDetailWithImagesAction() {
+
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;

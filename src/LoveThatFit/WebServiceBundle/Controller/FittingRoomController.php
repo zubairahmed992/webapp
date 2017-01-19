@@ -27,6 +27,10 @@ class FittingRoomController extends Controller {
 
             $item_id = $decoded["product_item_id"];
             $product_id = $decoded["product_id"];
+            $qty = 1;
+            if(isset($decoded["qty"])){
+                $qty = $decoded["qty"];
+            }
 
             //Get Product item Object by item_id and also verify thhe product item and product id
             $productItem = $this->get('admin.helper.productitem')->getProductItemById($item_id);
@@ -48,7 +52,7 @@ class FittingRoomController extends Controller {
             $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
 
             //Add entry in userfittingroom table
-            $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItemWithProductId($user, $productItem, $product);
+            $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItemWithProductId($user, $productItem, $product, $qty);
             $resp = 'Item has been Add/Update to Fitting Room Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {

@@ -527,6 +527,7 @@ nws_add_update_fitting_room:
      auth_token: 56565656566
      product_item_id: 4082
      product_id: 506
+     qty: 1
 
 nws_delete_fitting_room_item:
    pattern:  /nws/delete_fitting_room_item
