@@ -167,7 +167,7 @@ class SaveLook
     }
 
     public function getUploadDir() {
-        return 'uploads/saved_looks/users/'.$this->getUsers()->getId();
+        return 'uploads/ltf/users/'.$this->getUsers()->getId();
     }
 
     public function getAbsolutePath() {
