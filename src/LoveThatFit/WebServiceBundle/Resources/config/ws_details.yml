@@ -390,9 +390,7 @@ ws_show_user_cart:
 ws_get_braintree_authtoken:
   pattern:  /ws/get_braintree_authtoken
   title: get_braintree_authtoken
-  params:
-     auth_token: 121c421783cd4d71d871ec16a1296091
-
+  
 ws_braintree_payment:
   pattern:  /ws/braintree_payment
   title: make_payment
