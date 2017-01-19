@@ -108,4 +108,37 @@ class UserFittingRoomItemRepository extends EntityRepository {
         }
     }
 
+
+    #--------------Get Product list By Category and Gender -----------------------------------------------------
+    public function getAllCategoriesByProductItem($user_id = '2222') {
+
+        $userItemTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitSiteBundle:UserFittingRoomItem')->getTableName();
+        $categoriesTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Categories')->getTableName();
+        $categories_productTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Product')->getTableName();
+
+        $sql = "SELECT
+                      cn.id                 AS top_category_id,
+                      cn.name               AS top_category_name,
+                      c.id                  AS category_id,
+                      c.name                AS category_name,
+                      ufri.product_item_id  AS product_item_id,
+                      ufri.product_id       AS product_id
+                      FROM $userItemTableName ufri
+
+                      LEFT JOIN category_products cp ON ufri.product_id = cp.product_id
+                      LEFT JOIN $categoriesTableName c ON cp.categories_id = c.id
+                      LEFT JOIN $categoriesTableName cn ON c.top_id = cn.id
+                      where ufri.user_id = :user_id
+                      GROUP BY ufri.product_item_id
+                      ORDER BY cn.name";
+
+        $params['user_id'] = $user_id;
+        $query = $this->getEntityManager()->getConnection()->prepare($sql);
+        $query->execute($params);
+        $result_query = $query->fetchAll();
+        return $result_query;
+    }
+
+
+
 }

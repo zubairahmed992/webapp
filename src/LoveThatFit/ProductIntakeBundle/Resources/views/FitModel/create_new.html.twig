@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
@@ -55,18 +55,19 @@
     <div class="container">
         <h2>Fit Model Measurements</h2>
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
-            <a href="{{ path('admin_fit_model_specs_index') }}" class="btn btn-default">List</a>           
+            <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
         </div>
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
-  <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
-        <form action="{{ path('admin_fit_model_specs_save')}}" method="post" class="form-horizontal"  >
+        <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
+        <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
             <div class="form-group">
                 <label class="control-label col-sm-2" for=""> Brand: </label>
                 <div class="col-sm-4">
-                    <select name="sel_brand" id="sel_brand" class="sel_brand">
+
+                    <select name="sel_brand" id="sel_brand" class="sel_brand form-control">
                         <option>Select Brand</option>
                         {% for k, v in brands %}
-                             <option value="{{ v.name }}"> {{ v.name }}</option>
+                        <option value="{{ v.name }}"> {{ v.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -75,7 +76,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for=""> Gender: </label>
                 <div class="col-sm-4">
-                    <select name="sel_gender" id="sel_gender" class="sel_gender">
+                    <select name="sel_gender" id="sel_gender" class="sel_gender form-control">
                         <option>Select Gender</option>               
                         <option value="m"> man</option>
                         <option value="f"> woman</option>               
@@ -86,7 +87,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for=""> Size Title Type: </label>
                 <div class="col-sm-4">
-                    <select name="sel_size_type" id="sel_size_type" class="sel_size_type">
+                    <select name="sel_size_type" id="sel_size_type" class="sel_size_type form-control">
                         <option>Size</option>               
                         <option value="number"> number</option>
                         <option value="letter"> letter</option>
@@ -102,7 +103,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for=""> Clothing Type: </label>
                 <div class="col-sm-4">
-                    <select name="sel_clothing_type" id="sel_clothing_type" class="sel_clothing_type">
+                    <select name="sel_clothing_type" id="sel_clothing_type" class="sel_clothing_type form-control">
                         <option>Clothing Type</option>               
                         <option value="blouse" > Blouse </option>
                         <option value="tunic"> Tunic </option>
@@ -126,11 +127,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for=""> Size: </label>
                 <div class="col-sm-4">
-                    <select name="sel_size" id="sel_size" class="sel_size">
-                        <option>Size</option>               
-                        <option value="S"> S</option>
-                        <option value="M"> M</option>
-
+                    <select name="sel_size" id="sel_size" class="sel_size form-control">
+                        <option>Size</option>                                       
                     </select>
                 </div>
             </div>
@@ -146,7 +144,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="{{k}}">{{v}} : </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="{{fit_point_values is defined?fit_point_values[k]:''}}">
+                    <input type="text" class="form-control" id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="">                        
                 </div>
             </div>
             <br>
@@ -154,7 +152,7 @@
 
             <div class="form-group">        
                 <div class="col-sm-offset-5 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Save</button>
                 </div>
             </div>
         </form>

@@ -49,7 +49,7 @@ class FittingRoomController extends Controller {
 
             //Add entry in userfittingroom table
             $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItemWithProductId($user, $productItem, $product);
-            $resp = 'Item has been deleted to Fitting Room Successfully';
+            $resp = 'Item has been Add/Update to Fitting Room Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
@@ -78,7 +78,7 @@ class FittingRoomController extends Controller {
 
             //Checked that item is already then remove this
             $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
-            $resp = 'Producthas been deleted from Fitting Room Successfully';
+            $resp = 'Products has been deleted from Fitting Room Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');

@@ -1,0 +1,38 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active">Product Specification mapping</li>
+{% endblock %}
+
+{% block body %}
+
+<div class="p_listing">     
+    <h1>Product Specification mappings</h1>    
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">        
+        <a href="{{ path('product_intake_specs_mapping_new') }}" class="btn  btn-default">Add New</a>     
+    </div>
+    
+    <div class="clearfix"></div>      
+     <table class="table table-bordered table-striped table-hover table-condensed">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Brand Name</th>
+            <th></th>
+        </tr>
+        {% for sm in specs_mappings %}
+        <tr>
+            <td>{{sm.Id}}</td>
+            <td>{{sm.Title}}</td>
+            <td>{{sm.Brand}}</td>            
+            <td>
+                {#<a href="{{ path('admin_product_specs_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>#}
+            </td>
+        </tr>
+         {% endfor %}
+    </table> 
+    
+    
+    
+    
+</div>
+{% endblock %}
