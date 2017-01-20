@@ -780,8 +780,10 @@ class WebServiceHelper {
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
             }else {
                 $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
             }
         }
         return $productlist;
@@ -794,8 +796,10 @@ class WebServiceHelper {
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
             }else {
                 $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
             }
         }
         return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
@@ -845,7 +849,13 @@ class WebServiceHelper {
             //Added new Array Sizes clone where we will add sizes_clone without Keys, We are doing this because
             //Dont want to change the Algorithem functionalities
             $p['sizes_clone'] = array_values($p['sizes']);
-
+            $fitting_room_status_result =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
+            $fitting_room_status = false;
+            $qty = 0;
+            if($fitting_room_status_result[0][1] != "0"){
+                $fitting_room_status = true;
+                $qty = $fitting_room_status_result[0]['qty'];
+            }
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -856,6 +866,8 @@ class WebServiceHelper {
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
+                'fitting_room_status' => $fitting_room_status,
+                'qty' => $qty,
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -884,23 +896,45 @@ class WebServiceHelper {
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
 
-        $user_data =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProduct($user->getId(), $product->getId());
-        $p['fitting_room_status'] = false;
-        if($user_data == "1"){
-            $p['fitting_room_status'] = true;
-        }
-
-
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
         return $this->response_array(true, "Product Detail ", true, $p);
     }
 
+    public function parseUserSaveLooksData( $user_id = 0, $base_path )
+    {
+        // echo $baseURL = $this->container->getParameter('base_url'); die;
+        $responseArray = array();
+        $entities = $this->container->get('savelook.helper.savelook')->getLooksByUserId($user_id);
 
+        foreach ($entities as $entity) {
+            $items = array();
+            $totalPrice = 0;
+            $base_path .= $entity->getUploadDir();
+            $responseArray[$entity->getId()]['image'] = $base_path . "/" . $entity->getUserLookImage();
+            $responseArray[$entity->getId()]['user_id'] = $entity->getUsers()->getId();
+            $responseArray[$entity->getId()]['look_id'] = $entity->getId();
+
+
+            foreach ($entity->getSaveLookItem() as $saveLookItem) {
+                $temp['image'] = $saveLookItem->getItems()->getImage();
+                $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
+                $temp['item_id'] = $saveLookItem->getItems()->getId();
+                $temp['price'] = $saveLookItem->getItems()->getPrice();
+                $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
+
+                array_push($items, $temp);
+            }
+            $responseArray[$entity->getId()]['items'] = $items;
+            $responseArray[$entity->getId()]['totalPrice'] = "$" . number_format($totalPrice) . " USD";
+        }
+
+        return $this->response_array(true, "Product Items ", true, $responseArray);
+    }
 
     //Method is using Version 3 - Calling FitAlgo class has been removed.
-    public function productDetailWithImagesForFitRoom($id, $product_item, $user) {
+    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
@@ -925,6 +959,11 @@ class WebServiceHelper {
             # get the highest price of all the items/color for a particular size
             $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
 
+            $product_qty = 0;
+            if($product_item == $pi->getId()){
+                $product_qty = (int)$qty;
+            }
+
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -937,6 +976,7 @@ class WebServiceHelper {
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 'added_in_fitting_room' => $product_item == $pi->getId() ? true : false,
+                'qty' => $product_qty,
             );
         }
 
@@ -957,6 +997,4 @@ class WebServiceHelper {
         $p['title'] = $product->getName();
         return $p;
     }
-
-    
 }

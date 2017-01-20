@@ -143,5 +143,40 @@ class WSCartController extends Controller {
         return new Response($res);
 
     }
+
+    public function getAuthTokenAction()
+    {
+        /*$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $clientToken = $this->get('cart.helper.payment')->getClientToken();
+            $res = $clientToken;
+        } else{
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }*/
+
+        $clientToken = $this->get('cart.helper.payment')->getClientToken();
+        if($clientToken){
+            $res = $clientToken;
+        }else {
+            $res = "some thing went wrong, try again later";
+        }
+
+
+        return new Response($res);
+    }
+
+    public function makePaymentAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $result = $this->get('cart.helper.payment')->webServiceTransaction($user, $decoded );
+            $res = $result;
+        } else{
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+    }
 }
 

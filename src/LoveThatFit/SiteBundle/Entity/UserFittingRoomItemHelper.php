@@ -266,13 +266,15 @@ class UserFittingRoomItemHelper {
 
     #------------------------------------------------------
 
-    public function createUserFittingRoomItemWithProductId($user, $productItem, $product) {
+    public function createUserFittingRoomItemWithProductId($user, $productItem, $product, $qty = 1) {
         $userFittingRoomitem = new UserFittingRoomItem();
         $userFittingRoomitem->setCreatedAt(new \DateTime('now'));
         $userFittingRoomitem->setUpdatedAt(new \DateTime('now'));
         $userFittingRoomitem->setProductitem($productItem);
         $userFittingRoomitem->setProductId($product);
         $userFittingRoomitem->setUser($user);
+        $userFittingRoomitem->setQty($qty);
+
         return $this->save($userFittingRoomitem);
     }
 
@@ -303,7 +305,7 @@ class UserFittingRoomItemHelper {
                 $ar['categories'][$a]['category_id'] = $getAllCategoryByProductItem['top_category_id'];
                 $ar['categories'][$a]['name'] = $getAllCategoryByProductItem['top_category_name'];
 
-                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $getAllCategoryByProductItem['product_item_id'], $user);
+                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $getAllCategoryByProductItem['product_item_id'], $getAllCategoryByProductItem['qty'], $user);
                 $previous_category = $ar['categories'][$a]['name'];
             }
         }
@@ -313,6 +315,12 @@ class UserFittingRoomItemHelper {
     #------------------------------------------------------
     public function findByUserItemByProduct($user_id, $product_id) {
         return $this->repo->findCountProductItemByUserid($user_id, $product_id);
+    }
+
+
+    #------------------------------------------------------
+    public function findByUserItemByProductWithItemId($user_id, $product_id, $product_item_id) {
+        return $this->repo->findCountProductItemByUseridWithProductItem($user_id, $product_id, $product_item_id);
     }
 }
 

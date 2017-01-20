@@ -23,7 +23,31 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Brand
             container: "@service_container"
-                 
+
+     savelook.helper.savelook:
+        class: LoveThatFit\AdminBundle\Entity\SaveLookHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\SaveLook
+            container: "@service_container"
+
+     savelookItem.helper.savelookItem:
+         class: LoveThatFit\AdminBundle\Entity\SaveLookItemHelper
+         arguments:
+             dispatcher: "@event_dispatcher"
+             em: "@doctrine.orm.entity_manager"
+             class: LoveThatFit\AdminBundle\Entity\SaveLookItem
+             container: "@service_container"
+
+     admin.fit_model_measurement:
+        class: LoveThatFit\AdminBundle\Entity\FitModelMeasurementHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\FitModelMeasurement
+            container: "@service_container"            
+
      admin.helper.sizechart:
         class: LoveThatFit\AdminBundle\Entity\SizeChartHelper
         arguments:

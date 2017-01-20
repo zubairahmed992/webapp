@@ -4,12 +4,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Yaml\Parser;
+
 class WSMiscController extends Controller {
     
     private function process_request(){
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
         $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
-        return $decoded;        
+        return $decoded;
     }
 #~~~~~~~~~~~~~~~~~~~ ws_misc_faq   /ws/misc_faq
 

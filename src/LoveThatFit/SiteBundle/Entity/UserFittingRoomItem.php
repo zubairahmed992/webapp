@@ -39,6 +39,14 @@ class UserFittingRoomItem
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $product_id;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="qty", type="integer")
+     */
+    private $qty;
     
     #---------------------------------------------------
      public function __construct()
@@ -120,19 +128,41 @@ class UserFittingRoomItem
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt(){
         return $this->updated_at;
     }
 
+
+    /**
+     * Set qty
+     *
+     * @param integer $qty
+     * @return User Fitting Room
+     */
+    public function setQty($qty)
+    {
+        $this->qty = $qty;
+        return $this;
+    }
+
+    /**
+     * Get qty
+     *
+     * @return integer
+     */
+    public function getQty()
+    {
+        return $this->qty;
+    }
  #---------------------------------------------------
     /**
      * Set product_item_piece
