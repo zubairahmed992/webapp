@@ -150,7 +150,7 @@ class PaymentHelper
 
         try {
             $result = Braintree_Transaction::sale(array(
-                "amount" => $decoded['order_amount'] + $decoded['shipping_amount'],
+                "amount" => $decoded['order_amount'],
                 "paymentMethodNonce" => $decoded['payment_method_nonce'],
             ));
 
