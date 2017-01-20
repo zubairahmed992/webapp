@@ -811,6 +811,8 @@ private function calculate_fitindex($fp_specs){
                     $str = 'between calf & ankle';$level=3;
                 } elseif ($item_measure == $body_specs[$fit_point.'_ankle']) {
                     $str = 'ankle length';$level=3;
+                } else {
+                    $str = 'ankle length or long';$level=3;
                 }
             }
         }
