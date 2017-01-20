@@ -849,7 +849,13 @@ class WebServiceHelper {
             //Added new Array Sizes clone where we will add sizes_clone without Keys, We are doing this because
             //Dont want to change the Algorithem functionalities
             $p['sizes_clone'] = array_values($p['sizes']);
-
+            $fitting_room_status_result =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
+            $fitting_room_status = false;
+            $qty = 0;
+            if($fitting_room_status_result[0][1] != "0"){
+                $fitting_room_status = true;
+                $qty = $fitting_room_status_result[0]['qty'];
+            }
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -860,6 +866,8 @@ class WebServiceHelper {
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
+                'fitting_room_status' => $fitting_room_status,
+                'qty' => $qty,
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -887,16 +895,6 @@ class WebServiceHelper {
         $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
-
-        $user_data =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProduct($user->getId(), $product->getId());
-
-        $p['fitting_room_status'] = false;
-        $p['qty'] = 0;
-        if($user_data[0][1] != "0"){
-            $p['fitting_room_status'] = true;
-            $p['qty'] = $user_data[0]['qty'];
-        }
-
 
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
@@ -963,7 +961,7 @@ class WebServiceHelper {
 
             $product_qty = 0;
             if($product_item == $pi->getId()){
-                $product_qty = $qty;
+                $product_qty = (int)$qty;
             }
 
             $p['items'][] = array(
