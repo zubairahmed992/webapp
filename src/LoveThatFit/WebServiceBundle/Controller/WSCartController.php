@@ -5,18 +5,20 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class WSCartController extends Controller {
+class WSCartController extends Controller
+{
 
     #----------------------------------------------------Shopping Cart Services -------------------------#
     // Add Single Item to Cart
-    public function addItemToCartAction() {
+    public function addItemToCartAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $item_id = $decoded["item_id"];
             $qty = $decoded["quantity"];
-            $this->container->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
+            $this->container->get('cart.helper.cart')->fillCart($item_id, $user, $qty);
             $resp = 'Item has been added to Cart Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
@@ -25,21 +27,23 @@ class WSCartController extends Controller {
         return new Response($res);
 
     }
+
     // Add Multiple Item to Cart
-    public function addItemsToCartAction() {
+    public function addItemsToCartAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $items = isset($decoded["items"])?$decoded["items"]:"0";
-            if($items != 0){
+            $items = isset($decoded["items"]) ? $decoded["items"] : "0";
+            if ($items != 0) {
                 $this->container->get('cart.helper.cart')->removeUserCart($user);
-            foreach($items as $detail){
-                $this->container->get('cart.helper.cart')->fillCart($detail["item_id"],$user,$detail["quantity"]);
-            }
-            $resp = 'Items has been added to Cart Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
-            }else{
+                foreach ($items as $detail) {
+                    $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
+                }
+                $resp = 'Items has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
                 $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
             }
         } else {
@@ -48,13 +52,15 @@ class WSCartController extends Controller {
         return new Response($res);
 
     }
+
     // Remove User Cart
-    public function removeUserCartAction() {
+    public function removeUserCartAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-                $this->container->get('cart.helper.cart')->removeUserCart($user);
+            $this->container->get('cart.helper.cart')->removeUserCart($user);
             $resp = 'Cart has been removed';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
@@ -63,13 +69,15 @@ class WSCartController extends Controller {
         return new Response($res);
 
     }
+
     // Remove User Cart
-    public function removeUserItemAction() {
+    public function removeUserItemAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $product_item = $decoded["item_id"];
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.cart')->removeCartByItem($user,$product_item);
+            $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
             $resp = 'Cart Item has been removed';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
@@ -80,16 +88,16 @@ class WSCartController extends Controller {
     }
 
     // Show User Cart
-    public function showUserCartAction() {
+    public function showUserCartAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $resp = $this->container->get('cart.helper.cart')->getUserCart($user);
             $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
-            foreach($resp as $key => $value)
-            {
-                $resp[$key]['image'] = $base_path.$value['image'];
+            foreach ($resp as $key => $value) {
+                $resp[$key]['image'] = $base_path . $value['image'];
             }
 
             $res = $this->get('webservice.helper')->response_array(true, json_encode($resp));
@@ -104,16 +112,16 @@ class WSCartController extends Controller {
 // Webservice For 3.0
 //**********************************************
     // Show User Cart Web 3.0
-    public function showUserCartWithNameDescriptionAction() {
+    public function showUserCartWithNameDescriptionAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $resp = $this->container->get('cart.helper.cart')->getUserCartWithNameDescription($user);
             $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
-            foreach($resp as $key => $value)
-            {
-                $resp[$key]['image'] = $base_path.$value['image'];
+            foreach ($resp as $key => $value) {
+                $resp[$key]['image'] = $base_path . $value['image'];
             }
 
             $res = $this->get('webservice.helper')->response_array(true, 'success', true, $resp);
@@ -126,7 +134,8 @@ class WSCartController extends Controller {
     #----------------------------------------------------Shopping Cart Services -------------------------#
 
     // Add Single Item to Cart Version 3.0
-    public function addItemToCartNewAction() {
+    public function addItemToCartNewAction()
+    {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
@@ -134,7 +143,7 @@ class WSCartController extends Controller {
             $item_id = $decoded["item_id"];
             $qty = $decoded["quantity"];
 
-            $this->container->get('cart.helper.cart')->fillCartforService($item_id,$user,$qty);
+            $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
             $resp = 'Item has been added to Cart Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
@@ -156,9 +165,9 @@ class WSCartController extends Controller {
         }*/
 
         $clientToken = $this->get('cart.helper.payment')->getClientToken();
-        if($clientToken){
+        if ($clientToken) {
             $res = $clientToken;
-        }else {
+        } else {
             $res = "some thing went wrong, try again later";
         }
 
@@ -171,12 +180,50 @@ class WSCartController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $result = $this->get('cart.helper.payment')->webServiceTransaction($user, $decoded );
+            $result = $this->get('cart.helper.payment')->webServiceTransaction($user, $decoded);
             $res = $result;
-        } else{
+        } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
         return new Response($res);
     }
-}
 
+    public function brainTreePaymentWithAddItemToCartAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            if($this->addItemToUserCart( $user, $decoded)){
+                $result = $this->get('cart.helper.payment')->webServiceBrainTreeTransaction($user, $decoded);
+                if($result['success'] == 0)
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
+                }else if($result['success'] < 0)
+                {
+                    $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
+                }
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+    }
+
+    private function addItemToUserCart($user, $post_variable)
+    {
+        $items = isset($post_variable["items"]) ? $post_variable["items"] : "0";
+        if ($items != 0) {
+            $this->container->get('cart.helper.cart')->removeUserCart($user);
+            foreach ($items as $detail) {
+                $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
+            }
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
