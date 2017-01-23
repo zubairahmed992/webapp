@@ -138,5 +138,69 @@ class PaymentHelper
             return $exception->getMessage();
         }
     }
+
+    public function webServiceBrainTreeTransaction( $user, $decoded)
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse["love_that_fit_cart"]["environment"]);
+        Braintree_Configuration::merchantId($parse["love_that_fit_cart"]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse["love_that_fit_cart"]["public_key"]);
+        Braintree_Configuration::privateKey($parse["love_that_fit_cart"]["private_key"]);
+
+        try {
+            $result = Braintree_Transaction::sale(array(
+                "amount" => $decoded['order_amount'],
+                "paymentMethodNonce" => $decoded['payment_method_nonce'],
+            ));
+
+            if( $result->success )
+            {
+                $payment_json = json_encode($result);
+                $shipping_amount    = $decoded['shipping_amount'];
+                $order_amount       = $decoded['order_amount'];
+
+                $transaction_id = $result->transaction->id;
+                $transaction_status = $result->transaction->status;
+                $payment_method = $result->transaction->paymentInstrumentType;
+
+
+                $entity = $this->container->get('cart.helper.order')->saveBillingShipping($decoded, $user, $shipping_amount);
+                $order_id = $entity->getId();
+                $this->container->get('cart.helper.userAddresses')->saveAddress($decoded, $user, 1, 1);
+
+                $order_number = $order_id . rand(100, 100000);
+                $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
+                $response = $this->container->get('cart.helper.orderDetail')->saveOrderDetail($user_cart, $entity);
+                $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number);
+
+                $data = array(
+                    'success' => 0
+                );
+                $data["order_number"] = $order_number;
+                $data["transaction_status"] = $transaction_status;
+                $data["response_code"] = $result->transaction->processorResponseCode;
+
+                $remove_user_cart = $this->container->get('cart.helper.cart')->removeUserCart($user);
+                return $data;
+            }
+            else{
+                $transaction_status = $result->transaction;
+                $data = array(
+                    'success' => -1,
+                );
+                $data["order_number"] = '';
+                $data["transaction_status"] = $transaction_status;
+                $data["response_code"] = $result->message;
+                return $data;
+            }
+        } catch (\Braintree_Exception $exception) {
+
+            return array(
+                'success' => -1,
+                'response_code' => $exception->getMessage()
+            );
+        }
+    }
 #------------------------------------- End of Braintree Transaction ------------#
 }

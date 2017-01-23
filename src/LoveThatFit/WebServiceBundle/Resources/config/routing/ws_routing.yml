@@ -226,3 +226,7 @@ nws_get_all_fitting_room:
     pattern:  /nws/get_all_fitting_room
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:getAllFittingRoom}
 
+ws_braintree_payment_and_create_order:
+   pattern: /ws/braintree_payment_and_create_order
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreePaymentWithAddItemToCart}
+

@@ -717,7 +717,8 @@ private function calculate_fitindex($fp_specs){
         }
         
         if ($body_specs['inseam']==0) {
-            $body_specs['inseam'] = 0.269 * $body_specs['height'];
+            //$body_specs['inseam'] = 0.269 * $body_specs['height'];
+            $body_specs['inseam'] = 0.455 * $body_specs['height'];
         }
 
         $knee_height = 0.574 * $body_specs['inseam'];
@@ -811,6 +812,8 @@ private function calculate_fitindex($fp_specs){
                     $str = 'between calf & ankle';$level=3;
                 } elseif ($item_measure == $body_specs[$fit_point.'_ankle']) {
                     $str = 'ankle length';$level=3;
+                } else {
+                    $str = 'ankle length or long';$level=3;
                 }
             }
         }
