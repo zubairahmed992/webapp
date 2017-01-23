@@ -113,6 +113,28 @@ class ProductSpecificationMapping {
 
 #-------------------------------------------    
     /**
+     * Set clothing_type
+     *
+     * @param string $clothing_type
+     * @return ProductSpecificationMapping
+     */
+
+    public function setClothingType($clothing_type) {
+        $this->clothing_type = $clothing_type;
+        return $this;
+    }
+
+    /**
+     * Get clothing_type
+     *
+     * @return string 
+     */
+    public function getClothingType() {
+        return $this->clothing_type;
+    }
+
+#-------------------------------------------        
+    /**
      * Set brand
      *
      * @param string $brand

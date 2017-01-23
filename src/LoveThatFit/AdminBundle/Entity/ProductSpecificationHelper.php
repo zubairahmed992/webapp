@@ -1,16 +1,18 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 
 class ProductSpecificationHelper {
 
     protected $conf;
+    private $container;
    
-    public function __construct() {
+    public function __construct(Container $container) {
         $conf_yml = new Parser();
         $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_product_specification.yml'));
+            $this->container = $container;
         
     }
 #-GEtting All Product Specification-------------------------#
@@ -495,6 +497,26 @@ public function gettingBottomWomenFittingPriority(){
 }
 public function gettingDressWomenFittingPriority(){
     return $this->conf["constants"]["product_specification"]["fit_priority"]["women"]["dress"];   
+}
+
+public function getStructure($gender=null, $size_type=null){        
+    $structure=$this->conf["constants"]['product_specification']["attributes"];       
+    if ($gender!=null &&  $size_type!=null){
+        
+        $sizes=$this->container->get('admin.helper.size')->getDefaultArray();
+        $sizes=$sizes['sizes'][$gender][$size_type];        
+        $fit_points=$this->conf["constants"]['fit_points'];           
+        $ranges=$this->conf["constants"]['fit_point_measurement_attributes'];   
+        
+        foreach ($sizes as $s => $sv) {
+            foreach ($fit_points as $fp => $fpv) {
+                foreach ($ranges as $r => $rv) {                
+                    $structure['sizes'][$s][$fp][$r]=0;
+                }
+            }
+        }        
+    }    
+    return $structure;    
 }
 
 

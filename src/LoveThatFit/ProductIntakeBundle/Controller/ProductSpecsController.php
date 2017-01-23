@@ -11,6 +11,9 @@ class ProductSpecsController extends Controller
 {
     #----------------------- /product_intake/product_specs/index
     public function indexAction(){
+        #$specs=$this->get('admin.helper.product.specification')->getStructure('woman','letter');
+        #return new Response(json_encode($specs));
+        
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();        
@@ -34,8 +37,8 @@ class ProductSpecsController extends Controller
         $map = json_decode($product_specs_mapping->getMappingJson(), true);        
         #-------------->
         $parsed_data = array();
-        $parsed_data['gender'] = $request->request->get('sel_gender');
-        $parsed_data['size_title_type'] = $request->request->get('sel_size_type');
+        $parsed_data['gender'] = $product_specs_mapping->getGender();
+        $parsed_data['size_title_type'] = $product_specs_mapping->getSizeTitleType();
         
         #----------------- fill array with csv data
         #return new Response($product_specs_mapping->getMappingJson());
@@ -61,7 +64,6 @@ class ProductSpecsController extends Controller
                                 'original_value'=>$original_value,
                                 'unit_converted_value'=>$unit_converted_value,
                                 );
-                            
                         }
                     }
                 } else {#----------------------* if not related to measurements add as a field
@@ -75,7 +77,7 @@ class ProductSpecsController extends Controller
             }
         }
         
-        $prev_size = null;
+        
         #--------------------- calculate fit model measrements & ratio
         if (!array_key_exists('sizes', $parsed_data)) {
             return new Response('Measurements & sizes are missing');

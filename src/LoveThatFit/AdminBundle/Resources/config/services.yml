@@ -151,7 +151,9 @@ services:
      
      admin.helper.product.specification:
         class: LoveThatFit\AdminBundle\Entity\ProductSpecificationHelper
-    
+        arguments:
+            container: "@service_container"
+            
      admin.helper.brand.specification:
         class: LoveThatFit\AdminBundle\Entity\BrandSpecificationHelper
         arguments:
