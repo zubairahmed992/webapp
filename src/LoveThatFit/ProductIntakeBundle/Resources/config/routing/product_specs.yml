@@ -6,3 +6,6 @@ product_intake_product_specs_csv_upload:
     pattern:  /product_intake/product_specs/csv_upload
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:csvUpload }
 
+product_intake_product_specs_new:
+    pattern:  /product_intake/product_specs/new
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:new }
