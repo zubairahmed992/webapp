@@ -500,13 +500,17 @@ public function gettingDressWomenFittingPriority(){
 }
 
 public function getStructure($gender=null, $size_type=null){        
-    $structure=$this->conf["constants"]['product_specification']["attributes"];       
-    if ($gender!=null &&  $size_type!=null){
-        
-        $sizes=$this->container->get('admin.helper.size')->getDefaultArray();
-        $sizes=$sizes['sizes'][$gender][$size_type];        
-        $fit_points=$this->conf["constants"]['fit_points'];           
-        $ranges=$this->conf["constants"]['fit_point_measurement_attributes'];   
+    $structure = array();       
+    
+    foreach($this->conf["constants"]['product_specification']["attributes"] as $attrib){
+        $structure[$attrib]='';
+    }
+    
+    if ($gender!=null &&  $size_type!=null){        
+        $sizes = $this->container->get('admin.helper.size')->getDefaultArray();
+        $sizes = $sizes['sizes'][$gender][$size_type];        
+        $fit_points = $this->conf["constants"]['fit_points'];           
+        $ranges = $this->conf["constants"]['fit_point_measurement_attributes'];   
         
         foreach ($sizes as $s => $sv) {
             foreach ($fit_points as $fp => $fpv) {
