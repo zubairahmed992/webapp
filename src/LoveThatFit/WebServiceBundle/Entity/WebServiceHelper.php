@@ -975,7 +975,7 @@ class WebServiceHelper {
                 //'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
-                'added_in_fitting_room' => $product_item == $pi->getId() ? true : false,
+                'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'qty' => $product_qty,
             );
         }
