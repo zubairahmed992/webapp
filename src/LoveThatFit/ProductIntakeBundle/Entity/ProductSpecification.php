@@ -22,7 +22,7 @@ class ProductSpecification {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * @ORM\Column(type="string", length=255, unique=false, nullable=false)
      * @Assert\NotBlank(groups={"add", "edit"}, message = "Please enter Title!")
      */
     protected $title;
@@ -36,7 +36,7 @@ class ProductSpecification {
     
       /**
      * @var string $specs_json
-     * @ORM\Column(type="string", length=1000, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $specs_json;  
     

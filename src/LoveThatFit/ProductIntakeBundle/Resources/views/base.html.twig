@@ -4,9 +4,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title></title>
         <link href="{{ asset('bundles/lovethatfit/product_specification/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/product_specification/js/jquery-1.9.1.js') }}"></script>
+        {#<script type="text/javascript" src="{{ asset('bundles/lovethatfit/product_specification/js/jquery-1.9.1.js') }}"></script>#}
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/product_specification/js/bootstrap.js') }}"></script>
-        
+        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     </head>
     <body>
         <!-- nav start form here!-->
@@ -34,6 +36,15 @@
             </div><!--/.container-fluid -->
         </nav>
         <div class="container-fluid">
+            {% if app.session.hasFlash('warning') %}
+                <div class="alert alert-error">{{ app.session.flash('warning') }}</div>   
+             {% elseif app.session.hasFlash('success')%}
+                <div class="alert alert-success">{{ app.session.flash('success') }}</div>   
+            {% elseif app.session.hasFlash('info')%}
+                <div class="alert alert-info">{{ app.session.flash('info') }}</div>   
+            {% endif %}
+                
+                
              {% block body %}
                 
             {% endblock %}

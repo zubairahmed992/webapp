@@ -11,15 +11,9 @@ class ProductSpecsController extends Controller
 {
     #----------------------- /product_intake/product_specs/index
     public function indexAction(){
-        
-        $brands = $this->get('admin.helper.brand')->getBrnadArray();
-        $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
-        $size_specs = $this->get('admin.helper.size')->getDefaultArray();        
+        $ps = $this->get('pi.product_specification')->findAll();        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:index.html.twig', array(
-            'brands' => $brands,
-            'mapping' => $mapping,            
-            'mapping_json' => json_encode($mapping),            
-            'size_specs_json' => json_encode($size_specs),
+            'specs' => $ps,            
         ));
     }
     
@@ -35,7 +29,15 @@ class ProductSpecsController extends Controller
             'size_specs_json' => json_encode($size_specs),
         ));
     }
-    
+     #----------------------- /product_intake/product_specs/edit
+    public function editAction($id){                
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
+        $ps = $this->get('pi.product_specification')->find($id);             
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:preview.html.twig', array(
+                    'parsed_data' => json_decode($ps->getSpecsJson(),true),
+                    'product_specs_json' => json_encode($gen_specs),                    
+                ));
+    }
      #------------------------------------ /product_intake/product_specs/csv_upload
 public function csvUploadAction(Request $request) {
         #-------------- CSV to array
@@ -123,15 +125,17 @@ public function csvUploadAction(Request $request) {
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        #return new Response(json_encode($struct));
+        
         
         #---------> Save to DB
-        /*
-        $this->get('pi.product_specification')->createNew(
+        
+        $specs=$this->get('pi.product_specification')->createNew(
                 $product_specs_mapping->getTitle(),
                 $product_specs_mapping->getDescription(),
                 json_encode($parsed_data));
-        */
+        $this->get('session')->setFlash('success', 'New Product specification added!');
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs->getId())));
+        
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:preview.html.twig', array(
                     'parsed_data' => $parsed_data,
