@@ -912,8 +912,8 @@ class WebServiceHelper {
             $items = array();
             $saveLookArray = array();
             $totalPrice = 0;
-            $base_path .= $entity->getUploadDir();
-            $saveLookArray['image'] = $base_path . "/" . $entity->getUserLookImage();
+            $url = $base_path.$entity->getUploadDir();
+            $saveLookArray['image'] = $url . "/" . $entity->getUserLookImage();
             $saveLookArray['user_id'] = $entity->getUsers()->getId();
             $saveLookArray['look_id'] = $entity->getId();
 
