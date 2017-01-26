@@ -87,23 +87,21 @@ class MappingController extends Controller
         }
 
         $mapping = $this->container->get('productIntake.product_specification_mapping')->createNew();
-        $mapping->setBrand($decoded['brand_name']);
+        $mapping->setBrand($decoded['brand']);
         $mapping->setSizeTitleType($decoded['size_title_type']);
         $mapping->setClothingType($decoded['clothing_type']);
-        $mapping->setGender($decoded['sel_gender']);
+        $mapping->setGender($decoded['gender']);
         $mapping->setTitle($decoded['mapping_title']);
         $mapping->setDescription($decoded['mapping_description']);
         $mapping->setMappingJson(json_encode($apecs_arr));
         $this->container->get('productIntake.product_specification_mapping')->save($mapping);
         $mapping->setMappingFileName('csv_mapping_' . $mapping->getId() . '.csv');
         if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $mapping->getAbsolutePath())) {
-            $this->container->get('productIntake.product_specification_mapping')->save($mapping);
-            return new Response($mapping->getId() . 'Mapping created. CSV file is saved.');
-        } else {
-            return new Response('Mapping created. CSV file is not saved.');
-        }
+            $this->container->get('productIntake.product_specification_mapping')->save($mapping);          
+        } 
 
-        return new Response(json_encode($apecs_arr));
+        $this->get('session')->setFlash('info', 'New Product specification Mapping created.');        
+        return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
     }
     #----------------------- /product_intake/specs_mapping/edit
     

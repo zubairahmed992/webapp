@@ -19,7 +19,9 @@
             <td>{{sp.Id}}</td>
             <td>{{sp.Title}}</td>            
             <td>
-                <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id}) }}" title="Edit {{sp.Title}}">edit</a>
+                <a href="{{ path('product_intake_product_specs_show', {'id': sp.Id}) }}" title="Show {{sp.Title}}">show</a> &nbsp;|&nbsp;
+                <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id}) }}" title="Edit {{sp.Title}}">edit</a> &nbsp;|&nbsp;
+                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" title="Show {{sp.Title}}">del</a> 
             </td>
         </tr>
          {% endfor %}

@@ -13,4 +13,12 @@ product_intake_product_specs_new:
 product_intake_product_specs_edit:
     pattern:  /product_intake/product_specs/edit/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:edit }    
+
+product_intake_product_specs_show:
+    pattern:  /product_intake/product_specs/show/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:show }    
+
+product_intake_product_specs_delete:
+    pattern:  /product_intake/product_specs/delete/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:delete }        
     

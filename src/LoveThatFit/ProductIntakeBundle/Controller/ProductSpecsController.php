@@ -32,11 +32,27 @@ class ProductSpecsController extends Controller
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
+        #return new Response(json_encode($gen_specs));
         $ps = $this->get('pi.product_specification')->find($id);             
-        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:preview.html.twig', array(
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
                 ));
+    }
+    #----------------------- /product_intake/product_specs/show
+    public function showAction($id){                
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
+        #return new Response(json_encode($gen_specs));
+        $ps = $this->get('pi.product_specification')->find($id);             
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
+                    'parsed_data' => json_decode($ps->getSpecsJson(),true),
+                    'product_specs_json' => json_encode($gen_specs),                    
+                ));
+    }
+    #----------------------- /product_intake/product_specs/delete
+    public function deleteAction($id){                
+        $this->get('session')->setFlash('info', 'Product specification deleted!');        
+        return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
      #------------------------------------ /product_intake/product_specs/csv_upload
 public function csvUploadAction(Request $request) {
