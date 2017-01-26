@@ -15,7 +15,14 @@ class FitModelController extends Controller {
                     'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
                 ));
     }
-
+  
+#------------------------
+    public function fooAction() {
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
+        $ind = $this->get('admin.helper.product.specification')->getIndividuals();
+        return new Response(json_encode($ind));
+    }
     #------------------------/product_intake/fit_model_specs/show/id
 
     public function showAction($id) {

@@ -17,3 +17,7 @@ product_intake_fit_model_show:
 product_intake_fit_model_edit:
     pattern:  /product_intake/fit_model/{id}/edit
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:edit }    
+
+product_intake_foo:
+    pattern:  /product_intake/foo
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:foo }        
