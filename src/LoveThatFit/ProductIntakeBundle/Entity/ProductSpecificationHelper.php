@@ -73,14 +73,14 @@ public function getNew() {
             $this->em->remove($entity);
             $this->em->flush();
             return array(
-                'message' => 'The' . $title . ' has been Deleted!',
+                'message' => 'The product specs for ' . $title . ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
         } else {
 
             return array(
-                'message' => 'Specs not found!',
+                'message' => 'Product specs not found!',
                 'message_type' => 'warning',
                 'success' => false,
             );

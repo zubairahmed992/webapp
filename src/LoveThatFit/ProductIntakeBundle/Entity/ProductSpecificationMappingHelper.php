@@ -63,7 +63,7 @@ class ProductSpecificationMappingHelper {
             $this->em->remove($entity);
             $this->em->flush();
             return array(
-                'message' => 'The Brand ' . $title . ' has been Deleted!',
+                'message' => 'The Mapping ' . $title . ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );

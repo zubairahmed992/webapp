@@ -51,7 +51,8 @@ class ProductSpecsController extends Controller
     }
     #----------------------- /product_intake/product_specs/delete
     public function deleteAction($id){                
-        $this->get('session')->setFlash('info', 'Product specification deleted!');        
+        $msg_ar = $this->get('pi.product_specification')->delete($id);             
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
      #------------------------------------ /product_intake/product_specs/csv_upload
