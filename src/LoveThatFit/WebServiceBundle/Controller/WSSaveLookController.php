@@ -28,17 +28,22 @@ class WSSaveLookController extends Controller
         if ($user) {
             try{
                 $savedImageFile = $this->container->get('savelook.helper.savelook')->uploadUserLook( $user );
-                if(is_array($item_ids) && $savedImageFile['isFileExists'])
+                if(is_array($item_ids))
                 {
-                    $saveLookEntity = $this->container->get('savelook.helper.savelook')->addItem($savedImageFile['image'], $user);
-                    foreach($item_ids as $id)
-                    {
-                        $productItems = $this->container->get('savelookItem.helper.savelookItem')->getItemById($id);
-                        $this->container->get('savelookItem.helper.savelookItem')->addProductItem($saveLookEntity, $productItems);
+                    if($savedImageFile['isFileExists']){
+                        $saveLookEntity = $this->container->get('savelook.helper.savelook')->addItem($savedImageFile['image'], $user);
+                        foreach($item_ids as $id)
+                        {
+                            $productItems = $this->container->get('savelookItem.helper.savelookItem')->getItemById($id);
+                            $this->container->get('savelookItem.helper.savelookItem')->addProductItem($saveLookEntity, $productItems);
+                        }
+                        $res = $this->get('webservice.helper')->response_array(true, 'Items added Successfully.');
+                    }else{
+                        $res = $this->get('webservice.helper')->response_array(false, 'Image not provided.');
                     }
-                    $res = $this->get('webservice.helper')->response_array(true, 'Items added Successfully.');
+
                 }else{
-                    $res = $this->get('webservice.helper')->response_array(false, 'Item Ids are emtpy or image not provided.');
+                    $res = $this->get('webservice.helper')->response_array(false, 'Item Ids are emtpy');
                 }
             }catch (\Exception $e)
             {
