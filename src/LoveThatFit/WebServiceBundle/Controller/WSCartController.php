@@ -175,6 +175,20 @@ class WSCartController extends Controller
         return new Response($res);
     }
 
+    public function brainTreeGetClientTokerAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $result = $this->get('cart.helper.payment')->getClientTokenById( $user );
+            $res = $this->get('webservice.helper')->response_array(true, 'success', true, $result);
+        } else{
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response($res);
+    }
+
     public function makePaymentAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
@@ -234,7 +248,7 @@ class WSCartController extends Controller
 
         if ($user) {
             if($this->addItemToUserCart( $user, $decoded)) {
-                $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessTestTransaction($user, $decoded);
+                $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
                 if ($result['success'] == 0) {
                     $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
                 } else if ($result['success'] < 0) {

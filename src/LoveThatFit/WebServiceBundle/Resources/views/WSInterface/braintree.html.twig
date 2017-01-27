@@ -1,0 +1,130 @@
+<style>
+    #checkout-form .hosted-field iframe {
+        height: 5%;
+    }
+</style>
+<form id="checkout-form" action="/ws/braintree_processuser_transaction" method="post">
+    <div id="error-message"></div>
+
+    <label for="card-number">Card Number</label>
+    <div class="hosted-field" id="card-number"></div>
+
+    <label for="cvv">CVV</label>
+    <div class="hosted-field" id="cvv"></div>
+
+    <label for="expiration-date">Expiration Date</label>
+    <div class="hosted-field" id="expiration-date"></div>
+
+    <input type="hidden" name="payment_method_nonce">
+    <input type="hidden" name="auth_token" value="4307cf295b59752f3353c7b9c8b9cd9c">
+    <input type="hidden" name="billing[billing_first_name]" value="Drew">
+    <input type="hidden" name="billing[billing_last_name]" value="Smith">
+    <input type="hidden" name="billing[company]" value="Braintree">
+    <input type="hidden" name="billing[billing_address1]" value="1 E Main St">
+    <input type="hidden" name="billing[billing_address2]" value="xyz">
+    <input type="hidden" name="billing[billing_phone]" value="312-555-1234">
+    <input type="hidden" name="billing[billing_city]" value="Chicago">
+    <input type="hidden" name="billing[billing_postcode]" value="60622">
+    <input type="hidden" name="billing[billing_country]" value="xyz">
+    <input type="hidden" name="billing[billing_state]" value="xyz">
+    <input type="hidden" name="billing[shipping_first_name]" value="Jen">
+    <input type="hidden" name="billing[shipping_last_name]" value="Smith">
+    <input type="hidden" name="billing[shipping_address1]" value="1 E 1st St">
+    <input type="hidden" name="billing[shipping_address2]" value="xyz">
+    <input type="hidden" name="billing[shipping_phone]" value="12345678">
+    <input type="hidden" name="billing[shipping_city]" value="xys">
+    <input type="hidden" name="billing[shipping_postcode]" value="60103">
+    <input type="hidden" name="billing[shipping_country]" value="12345678">
+    <input type="hidden" name="billing[shipping_state]" value="xyz">
+    <input type="hidden" name="items[0][item_id]" value="4126">
+    <input type="hidden" name="items[0][quantity]" value="1">
+    <input type="hidden" name="items[1][item_id]" value="4127">
+    <input type="hidden" name="items[1][quantity]" value="1">
+    <input type="hidden" name="shipping_amount" value="0">
+    <input type="hidden" name="order_amount" value="20">
+    <input type="submit" value="Pay $10" disabled>
+</form>
+
+<!-- Load the Client component. -->
+<script src="https://js.braintreegateway.com/web/3.6.3/js/client.min.js"></script>
+
+<!-- Load the Hosted Fields component. -->
+<script src="https://js.braintreegateway.com/web/3.6.3/js/hosted-fields.min.js"></script>
+
+<script>
+    // We generated a client token for you so you can test out this code
+    // immediately. In a production-ready integration, you will need to
+    // generate a client token on your server (see section below).
+    var authorization = 'eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiJmMjFhYTcwNThiYjc3MTA3MTAzMjFlZWNmYTgxODQ1MzM1YTc5NmY1MTc5YmE3ZjMyN2NmMzE0OTRjNzY1MjY2fGNyZWF0ZWRfYXQ9MjAxNy0wMS0yNlQxMTo1NTowMi4xMzI3NTgzOTkrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTk5OXh0YnFjMnM1NWJ4OWNcdTAwMjZwdWJsaWNfa2V5PWpnMno3N3QzamtwNDNqOGciLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvOTk5eHRicWMyczU1Yng5Yy9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbImN2diJdLCJlbnZpcm9ubWVudCI6InNhbmRib3giLCJjbGllbnRBcGlVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvOTk5eHRicWMyczU1Yng5Yy9jbGllbnRfYXBpIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhdXRoVXJsIjoiaHR0cHM6Ly9hdXRoLnZlbm1vLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhbmFseXRpY3MiOnsidXJsIjoiaHR0cHM6Ly9jbGllbnQtYW5hbHl0aWNzLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20vOTk5eHRicWMyczU1Yng5YyJ9LCJ0aHJlZURTZWN1cmVFbmFibGVkIjpmYWxzZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiYWJjIiwiY2xpZW50SWQiOm51bGwsInByaXZhY3lVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vcHAiLCJ1c2VyQWdyZWVtZW50VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3RvcyIsImJhc2VVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFzc2V0c1VybCI6Imh0dHBzOi8vY2hlY2tvdXQucGF5cGFsLmNvbSIsImRpcmVjdEJhc2VVcmwiOm51bGwsImFsbG93SHR0cCI6dHJ1ZSwiZW52aXJvbm1lbnROb05ldHdvcmsiOnRydWUsImVudmlyb25tZW50Ijoib2ZmbGluZSIsInVudmV0dGVkTWVyY2hhbnQiOmZhbHNlLCJicmFpbnRyZWVDbGllbnRJZCI6Im1hc3RlcmNsaWVudDMiLCJiaWxsaW5nQWdyZWVtZW50c0VuYWJsZWQiOnRydWUsIm1lcmNoYW50QWNjb3VudElkIjoiYWJjIiwiY3VycmVuY3lJc29Db2RlIjoiVVNEIn0sImNvaW5iYXNlRW5hYmxlZCI6ZmFsc2UsIm1lcmNoYW50SWQiOiI5OTl4dGJxYzJzNTVieDljIiwidmVubW8iOiJvZmYifQ==';
+    var form = document.querySelector('#checkout-form');
+    var submit = document.querySelector('input[type="submit"]');
+
+    braintree.client.create({
+        authorization: authorization
+    }, function (clientErr, clientInstance) {
+        if (clientErr) {
+            // Handle error in client creation
+            return;
+        }
+
+        braintree.hostedFields.create({
+            client: clientInstance,
+            styles: {
+                'input': {
+                    'font-size': '14pt'
+                },
+                'input.invalid': {
+                    'color': 'red'
+                },
+                'input.valid': {
+                    'color': 'green'
+                }
+            },
+            fields: {
+                number: {
+                    selector: '#card-number',
+                    placeholder: '4111 1111 1111 1111'
+                },
+                cvv: {
+                    selector: '#cvv',
+                    placeholder: '123'
+                },
+                expirationDate: {
+                    selector: '#expiration-date',
+                    placeholder: '10/2019'
+                }
+            }
+        }, function (hostedFieldsErr, hostedFieldsInstance) {
+            if (hostedFieldsErr) {
+                // Handle error in Hosted Fields creation
+                return;
+            }
+
+            var elements = document.getElementsByTagName("iframe")
+            submit.removeAttribute('disabled');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                    if (tokenizeErr) {
+                        // Handle error in Hosted Fields tokenization
+                        return;
+                    }
+
+                    // Put `payload.nonce` into the `payment-method-nonce` input, and then
+                    // submit the form. Alternatively, you could send the nonce to your server
+                    // with AJAX.
+                    // console.log( payload ); return;
+                    document.querySelector('input[name="payment_method_nonce"]').value = payload.nonce;
+                    form.submit();
+                });
+            }, false);
+
+            for( ele in elements){
+                if( elements[ele].style.height !== undefined )
+                    elements[ele].style.height = "5%";
+            }
+        });
+    });
+</script>
