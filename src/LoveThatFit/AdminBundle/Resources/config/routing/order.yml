@@ -1,3 +1,11 @@
+admin_order:
+    pattern:  /admin/order
+    defaults: { _controller: LoveThatFitAdminBundle:Order:index}
+
+admin_order_paginate:
+    pattern:  /admin/order/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:Order:paginate}
+
 admin_order_show:
     pattern:  /admin/order/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:Order:show }
@@ -11,6 +19,6 @@ admin_order_delete:
     pattern:  /admin/order/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Order:delete }
     
-admin_order:
+admin_order_old:
     pattern:  /admin/order/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Order:index ,page_number: 1, sort:id }
