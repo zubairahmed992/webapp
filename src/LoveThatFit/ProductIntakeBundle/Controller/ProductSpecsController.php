@@ -29,16 +29,20 @@ class ProductSpecsController extends Controller
             'size_specs_json' => json_encode($size_specs),
         ));
     }
+    
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id){                
-        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
-        #return new Response(json_encode($gen_specs));
-        $ps = $this->get('pi.product_specification')->find($id);             
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
+        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+        $ps = $this->get('pi.product_specification')->find($id);    
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
-                    'product_specs_json' => json_encode($gen_specs),                    
+                    'product_specs_json' => json_encode($gen_specs),  
+                    'drop_down_values' =>$drop_down_values
                 ));
     }
+   
+      
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
@@ -55,6 +59,23 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
+    
+    #----------------------- /product_intake/Prod_specs/update
+    public function updateAction($id){  
+           $output = array();
+        foreach ($_POST as $key => $value)
+        {
+            $output[htmlspecialchars($key)] = htmlspecialchars($value);
+   //       echo "Field ".htmlspecialchars($key)." is ".htmlspecialchars($value)."<br>";
+        }
+
+echo json_encode($output, 128);
+        die('update');
+        $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
+    }
+    
      #------------------------------------ /product_intake/product_specs/csv_upload
 public function csvUploadAction(Request $request) {
         #-------------- CSV to array

@@ -20,5 +20,9 @@ product_intake_product_specs_show:
 
 product_intake_product_specs_delete:
     pattern:  /product_intake/product_specs/delete/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:delete }        
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:delete }   
+    
+product_intake_product_specs_update:
+    pattern:  /product_intake/product_specs/update/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:update }     
     
