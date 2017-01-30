@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\WebServiceBundle\Controller;
 
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -250,6 +251,7 @@ class WSCartController extends Controller
             if($this->addItemToUserCart( $user, $decoded)) {
                 $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
                 if ($result['success'] == 0) {
+                    $this->sendEmailToUser( $user, $decoded, $result);
                     $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
                 } else if ($result['success'] < 0) {
                     $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
@@ -262,5 +264,38 @@ class WSCartController extends Controller
         }
 
         return new Response( $res );
+    }
+
+    private function sendEmailToUser( User $user, $decode, $result)
+    {
+        $current = date('d-m-Y');
+        $items = isset($decode["items"]) ? $decode["items"] : "0";
+        $itemsArray = array();
+        foreach ($items as $detail) {
+            $entity = $this->container->get('admin.helper.productitem')->find($detail['item_id']);
+            $itemsArray[] = array(
+                'pname' => $entity->getProduct()->getName(),
+                'quantity' => $detail['quantity'],
+                'price'     => $entity->getPrice() * $detail['quantity']
+            );
+        }
+        $orderNummber = $result['order_number'];
+        $orderAmount = $decode['order_amount'];
+        $creditCard = $result['result']->transaction->creditCard;
+
+        $dataArray = array(
+            'purchase_date' => $current,
+            'items'         => $itemsArray,
+            'order_numnber' => $orderNummber,
+            'card_type'     => $creditCard['cardType'],
+            'last_four_number' => $creditCard['last4'],
+            'contact_number'    => '4444-4456-46532',
+            'email'         => $user->getEmail(),
+            'frist_name'    => $user->getFirstName(),
+            'order_amount'  => $orderAmount
+        );
+
+        $this->get('mail_helper')->sendSuccessPurchaseEmail($user, $dataArray);
+        return;
     }
 }

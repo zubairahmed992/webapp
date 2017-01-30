@@ -243,7 +243,7 @@ class PaymentHelper
             $order_amount       = $decoded['order_amount'];
 
             $transaction_id = $result->transaction->id;
-                $transaction_status = $result->transaction->status;
+            $transaction_status = $result->transaction->status;
             $payment_method = $result->transaction->paymentInstrumentType;
 
 
