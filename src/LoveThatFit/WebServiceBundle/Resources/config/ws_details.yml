@@ -391,16 +391,16 @@ ws_show_user_cart:
 #  pattern:  /ws/get_braintree_authtoken
 #  title: get_braintree_authtoken
 
-ws_braintree_payment_and_add_item_to_cart:
-  pattern: /ws/braintree_payment_and_add_item_to_cart
-  title:  add_item_and_make_payment
-  params:
-    auth_token: 121c421783cd4d71d871ec16a1296091
-    items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
-    order_amount: 200
-    shipping_amount : 0
-    payment_method_nonce: nonceFromTheClient
-    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
+#ws_braintree_payment_and_add_item_to_cart:
+#  pattern: /ws/braintree_payment_and_add_item_to_cart
+#  title:  add_item_and_make_payment
+#  params:
+#    auth_token: 121c421783cd4d71d871ec16a1296091
+#    items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
+#    order_amount: 200
+#    shipping_amount : 0
+#    payment_method_nonce: nonceFromTheClient
+#    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
 
 ws_braintree_payment:
   pattern:  /ws/braintree_payment
@@ -461,6 +461,31 @@ ws_feedback_category_list:
     request_type: post
     description: return feedback category list against authentication token
 
+#ws_braintree_payment_and_create_order:
+#  pattern: /ws/braintree_payment_and_create_order
+#  title:  add_item_and_make_payment
+#  params:
+#    auth_token: 121c421783cd4d71d871ec16a1296091
+#    items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
+#    order_amount: 200
+#    payment_method_nonce: nonceFromTheClient
+#    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
+
+ws_braintree_processuser_transaction:
+    pattern: /ws/braintree_processuser_transaction
+    title: process_payment_and_add_item
+    params:
+      auth_token: 121c421783cd4d71d871ec16a1296091
+      items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
+      order_amount: 200
+      payment_method_nonce: nonceFromTheClient
+      billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
+
+ws_get_braintree_client_token:
+    pattern: /ws/get_braintree_client_token
+    title: get_braintree_clienttoken
+    params:
+      auth_token: 121c421783cd4d71d871ec16a1296091
 #//////////////////// APP 3.0///////////////////////////////////    
 nws_banner_category:
     pattern:  /nws/banner_category
@@ -554,12 +579,3 @@ nws_get_all_fitting_room:
      auth_token: 56565656566
 
 
-ws_braintree_payment_and_create_order:
-  pattern: /ws/braintree_payment_and_create_order
-  title:  add_item_and_make_payment
-  params:
-    auth_token: 121c421783cd4d71d871ec16a1296091
-    items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
-    order_amount: 200
-    payment_method_nonce: nonceFromTheClient
-    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}

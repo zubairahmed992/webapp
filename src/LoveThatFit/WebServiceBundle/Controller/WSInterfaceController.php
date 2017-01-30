@@ -29,5 +29,10 @@ class WSInterfaceController extends Controller {
         $user=$this->get('user.helper.user')->findByEmail($email);
         return new Response(json_encode($user->toDataArray()));
     }
+
+    public function brainTreeTestTransactionAction()
+    {
+        return $this->render('LoveThatFitWebServiceBundle:WSInterface:braintree.html.twig', array());
+    }
     
 }

@@ -56,6 +56,41 @@ class MailHelper {
         return $result;
     }
 
+    private function sendHtmlEmail($from, $to, $body, $subject = '', $dataArray = array()) {
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom($from)
+            ->setTo($to)
+            ->setContentType("text/html")
+            ->setBody(
+                $this->templating->render($body, array( 'dataArray' => $dataArray)));
+        if($this->server!='local')
+        {
+            try {
+                $this->mailer->send($message);
+            } catch (\Swift_TransportException $e) {
+                $result = array(
+                    false,
+                    'There was a problem sending email: ' . $e->getMessage()
+                );
+                return $result;
+            }
+
+
+            $result = array(
+                true,
+                'email has been sent.'
+            );
+        }else{
+            $result = array(
+                true,
+                'email not sent.'
+            );
+        }
+        return $result;
+    }
+
     public function sendRegistrationEmail($user) {
 
         $from = $this->conf['parameters']['mailer_user'];
@@ -66,6 +101,17 @@ class MailHelper {
         return $this->sendEmail($from, $to, $body, $user, $subject);
                             
         
+    }
+
+    public function sendSuccessPurchaseEmail( $user, $dataArray )
+    {
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $dataArray['email'];
+
+        $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
+        $subject = 'SelfieStyler: Thank you very much for your order. ';
+
+        return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray);
     }
 
     public function sendParentRegistrationEmail($user) {

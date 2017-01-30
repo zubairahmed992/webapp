@@ -11,24 +11,43 @@ use LoveThatFit\CartBundle\Form\Type\StateType;
 
 class OrderController extends Controller {
 
-    //----------------All Orders Display List --------------------------------------------------------------------------
+    //----------------All Orders Display List 
+    public function indexAction()
+    {
+        return $this->render('LoveThatFitAdminBundle:Order:index.html.twig');
+    }
+
+    public function paginateAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output = $this->get('cart.helper.order')->search($requestData);
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
+    }
+
+    /*    
     public function indexAction($page_number, $sort = 'id') {
         $orders_with_pagination = $this->get('cart.helper.order')->getListWithPagination($page_number, $sort);
-	 // print_r($orders_with_pagination);die;
         return $this->render('LoveThatFitAdminBundle:Order:index.html.twig', $orders_with_pagination);
     }
+    */
 
 //-----------------------Display Single order Detail by Id-----------------------------------------------------------------
 
     public function showAction($id) {
         $entity = $this->get('cart.helper.order')->find($id);
         $order_limit = $this->get('cart.helper.order')->getRecordsCountWithCurrentOrderLimit($id);
+
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($order_limit[0]['id']));
-        $page_number=$page_number==0?1:$page_number;        
+        $page_number=$page_number==0?1:$page_number;
         if(!$entity){        
             $this->get('session')->setFlash('warning', 'Order not found!');
         }
 	    $user_order=$this->container->get('cart.helper.order')->find($id);
+
+        // echo "<pre>";
+        // print_r($user_order);
+        // die();
         return $this->render('LoveThatFitAdminBundle:Order:show.html.twig', array(
                     'order' => $entity,
                     'order_id' => $id,

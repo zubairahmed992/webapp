@@ -230,3 +230,11 @@ ws_braintree_payment_and_create_order:
    pattern: /ws/braintree_payment_and_create_order
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreePaymentWithAddItemToCart}
 
+ws_braintree_processuser_transaction:
+    pattern: /ws/braintree_processuser_transaction
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeProcessTransaction}
+
+ws_get_braintree_client_token:
+    pattern: /ws/get_braintree_client_token
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeGetClientToker}
+
