@@ -419,4 +419,16 @@ class BannerHelper {
         $result = $this->repo->findAllBannerDropdown($parent);
         return $result;
     }
+
+    #-----------------Get all Banner which Parent id is null---------------------------------#
+    public function editBannerSorting($sorting_number, $action, $parent_id, $display_screen,$db_banner_sorting = 0){
+        $result = $this->repo->editBannerSorting($sorting_number, $action, $parent_id, $display_screen,$db_banner_sorting);
+        return $result;
+    }
+
+    #-----------------Get Maximum sorting Number---------------------------------#
+    public function maxSortingNumber($sorting_number, $parent_id, $display_screen){
+        $result = $this->repo->maxSortingNumber($sorting_number, $parent_id, $display_screen);
+        return $result;
+    }
 }

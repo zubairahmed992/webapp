@@ -5,3 +5,7 @@ ws_interface_index:
 ws_interface_user:
     pattern:  /ws_interface/user/{email}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:user}
+
+braintree_test_transaction:
+    pattern: /ws/braintree_test_transaction
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:brainTreeTestTransaction}

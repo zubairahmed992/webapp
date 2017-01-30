@@ -108,4 +108,56 @@ class UserOrderRepository extends EntityRepository
 	  return null;
 	}
   }
+
+	public function search(
+		$data,
+		$page = 0,
+		$max = NULL,
+		$order,
+		$getResult = true
+	) 
+	{
+		$query = $this->getEntityManager()->createQueryBuilder();
+		$search = isset($data['query']) && $data['query']?$data['query']:null;
+		$query 
+		    ->select('
+		    	o.id,
+		        o.order_number,
+				o.billing_first_name,
+				o.billing_last_name,
+				o.order_date,
+				o.order_amount,
+				o.payment_json'
+		    )
+		    ->from('LoveThatFitCartBundle:UserOrder', 'o');
+		if ($search) {
+		    $query 
+		        ->andWhere('o.billing_first_name like :search')
+                ->orWhere('o.billing_last_name like :search')
+                ->setParameter('search', "%".$search."%");
+		}
+		if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "o.order_number";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "o.billing_first_name";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "o.order_date";
+            } elseif ($orderByColumn == 3) {
+                $orderByColumn = "o.order_amount";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+
+		if ($max) {
+		    $preparedQuery = $query->getQuery() 
+		        ->setMaxResults($max)
+		        ->setFirstResult(($page) * $max);
+		} else {
+		    $preparedQuery = $query->getQuery(); 
+		}
+		return $getResult?$preparedQuery->getResult():$preparedQuery; 
+	}
 }

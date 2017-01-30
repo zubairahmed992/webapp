@@ -288,5 +288,44 @@ class OrderHelper
         return $this->repo->findOneByName($name);
     }
 
+    public function search($data)
+    {
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : 0; 
+        //limit
+        $start   = $data['start']; 
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0; 
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = $data['search'];
+        $filters = [
+            'query' => @$search['value']
+        ];
+
+        $finalData = $this->repo->search($filters, $start, $length, $order);
+
+        $output = array( 
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)), 
+            'recordsTotal'    => count($this->repo->search(array(), 0, false, $order)),
+            'data'            => array()
+        );
+        foreach ($finalData as $fData) {
+            $output['data'][] = [ 
+                'id'           => $fData["id"],
+                'order_number' => $fData["order_number"],
+                'user_name'    => ($fData["billing_first_name"] . " ". $fData["billing_last_name"]),
+                'order_date'   => ($fData["order_date"]->format('d-m-Y')),
+                'order_amount' => $fData["order_amount"],
+                'credit_card'  => json_decode($fData['payment_json'])
+                    ->transaction->_attributes->creditCard->last4
+            ];
+        }
+
+        return $output;
+    }
 
 }

@@ -145,7 +145,7 @@ param:limit, page_number,limit,sort
                 LEFT JOIN c.children d
                 WHERE c.disabled=0 AND c.display_screen = :display_screen
                 GROUP BY c.id
-                order by c.sorting, c.updated_at desc")
+                order by c.sorting")
                 ->setParameters(array('display_screen' => $displayscreen));
         }else{
             $query = $this->getEntityManager()
@@ -159,7 +159,7 @@ param:limit, page_number,limit,sort
                 LEFT JOIN c.children d
                 WHERE c.disabled=0
                 GROUP BY c.id
-                order by c.sorting, c.updated_at desc");
+                order by c.sorting");
         }
 
 
@@ -396,4 +396,66 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
+
+
+    #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
+    public function editBannerSorting($sorting_number, $action, $parent_id, $display_screen, $current_value = 0){
+
+        $bannerTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Banner')->getTableName();
+        if($parent_id == null){
+            $parent_id_condition = " AND parent_id IS NULL ";
+        }else{
+            $parent_id_condition = " AND parent_id = $parent_id";
+        }
+
+        if($action == 'add'){
+            $sql = "UPDATE $bannerTableName SET sorting = sorting + 1 where sorting >= :sorting_number $parent_id_condition AND display_screen = :display_screen ";
+        }elseif($action == 'delete'){
+            $sql = "UPDATE $bannerTableName SET sorting = sorting - 1 where sorting >= :sorting_number $parent_id_condition AND display_screen = :display_screen ";
+        }elseif($action == 'update'){
+
+            if($current_value > $sorting_number){
+                //if current move to less position then +1
+                $sql = "UPDATE $bannerTableName SET sorting = sorting + 1 where sorting >= :sorting_number AND sorting <= :current_value $parent_id_condition AND display_screen = :display_screen ";
+
+            }elseif($current_value < $sorting_number){
+                $sql = "UPDATE $bannerTableName SET sorting = sorting - 1 where sorting >= :current_value AND sorting <= :sorting_number $parent_id_condition AND display_screen = :display_screen ";
+            }
+            $params['current_value'] = $current_value;
+        }
+        //set parameters
+        $params['sorting_number'] = $sorting_number;
+        $params['display_screen'] = $display_screen;
+        $query = $this->getEntityManager()->getConnection()
+            ->prepare($sql);
+        $result = $query->execute($params);
+
+        return true;
+    }
+
+
+    #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
+    public function maxSortingNumber($sorting_number, $parent_id, $display_screen){
+
+        $bannerTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Banner')->getTableName();
+        if($parent_id == null){
+            $parent_id_condition = " AND parent_id IS NULL ";
+        }else{
+            $parent_id_condition = " AND parent_id = $parent_id";
+        }
+
+        $sql = "SELECT MAX(sorting) as max_sort FROM $bannerTableName where display_screen = :display_screen $parent_id_condition";
+
+        //set parameters
+        $params['display_screen'] = $display_screen;
+        $query = $this->getEntityManager()->getConnection()
+            ->prepare($sql);
+        $query->execute($params);
+        $result_query = $query->fetchAll();
+        return $result_query;
+
+    }
+
+
+
 }

@@ -1,0 +1,32 @@
+<div>Hi, {{ dataArray['frist_name'] }},</div>
+    <br>
+    <div>Thank you very much for your order! Here's a confirmation of your order placed on {{ dataArray['purchase_date'] }}.</div>
+    <br>
+    <div>Your box of goodies includes:</div>
+    <br>
+<div>
+    <table width="300" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <th align="left">Product Name</th>
+        <th align="left">Quantity</th>
+        <th align="left">Price</th>
+    </tr>
+{% for key in  dataArray['items'] %}
+    <tr>
+        <td align="left"><span>{{ key['pname'] }}</span></td>
+        <td align="left"><span>{{ key['quantity'] }}</span></td>
+        <td align="left"><span>${{ key['price'] }}</span></td>
+    </tr>
+{%endfor%}
+    </table>
+</div>
+    <br>
+<div>Total amount: ${{ dataArray['order_amount'] }}</div>
+    <br>
+    <div>Amount paid using your {{ dataArray['card_type'] }} ending in {{ dataArray['last_four_number'] }}</div>
+    <br>
+    <div>If you have questions, call us anytime at {{ dataArray['contact_number'] }} and reference your unique order #{{ dataArray['order_numnber'] }}</div>
+    <br>
+    <div>Thank you for hanging out with us at Selfiestyler!</div>
+<br>
+<br>

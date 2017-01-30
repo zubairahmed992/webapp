@@ -910,11 +910,12 @@ class WebServiceHelper {
 
         foreach ($entities as $entity) {
             $items = array();
+            $saveLookArray = array();
             $totalPrice = 0;
-            $base_path .= $entity->getUploadDir();
-            $responseArray[$entity->getId()]['image'] = $base_path . "/" . $entity->getUserLookImage();
-            $responseArray[$entity->getId()]['user_id'] = $entity->getUsers()->getId();
-            $responseArray[$entity->getId()]['look_id'] = $entity->getId();
+            $url = $base_path.$entity->getUploadDir();
+            $saveLookArray['image'] = $url . "/" . $entity->getUserLookImage();
+            $saveLookArray['user_id'] = $entity->getUsers()->getId();
+            $saveLookArray['look_id'] = $entity->getId();
 
 
             foreach ($entity->getSaveLookItem() as $saveLookItem) {
@@ -922,12 +923,14 @@ class WebServiceHelper {
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
+                $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
                 array_push($items, $temp);
             }
-            $responseArray[$entity->getId()]['items'] = $items;
-            $responseArray[$entity->getId()]['totalPrice'] = "$" . number_format($totalPrice) . " USD";
+            $saveLookArray['items'] = $items;
+            $saveLookArray['totalPrice'] = "$" . number_format($totalPrice) . " USD";
+            array_push( $responseArray, $saveLookArray);
         }
 
         return $this->response_array(true, "Product Items ", true, $responseArray);
