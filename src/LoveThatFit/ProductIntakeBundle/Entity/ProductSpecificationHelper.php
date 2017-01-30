@@ -87,6 +87,19 @@ public function getNew() {
         }
     }
 
+    
+    public function update($entity) {       
+        $title = $entity->getTitle();
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($entity);
+        $this->em->flush();
+            return array(
+                'message' => 'The product specs for ' . $title . ' has been Updated!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+    }
+    
 //----------------------Find ProductSpecifications By ID----------------------------------------------------------------
 
     public function find($id) {

@@ -45,9 +45,10 @@ class ProductSpecsController extends Controller
       
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
-        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
+
         #return new Response(json_encode($gen_specs));
-        $ps = $this->get('pi.product_specification')->find($id);             
+        $ps = $this->get('pi.product_specification')->find($id); 
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
@@ -62,16 +63,20 @@ class ProductSpecsController extends Controller
     
     #----------------------- /product_intake/Prod_specs/update
     public function updateAction($id){  
-           $output = array();
+           $output = array();          
         foreach ($_POST as $key => $value)
-        {
-            $output[htmlspecialchars($key)] = htmlspecialchars($value);
-   //       echo "Field ".htmlspecialchars($key)." is ".htmlspecialchars($value)."<br>";
-        }
-
-echo json_encode($output, 128);
-        die('update');
-        $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
+        {   
+            $sizes = explode('-',$key);//[sizes-XS-neck-garment_dimension]
+            $array_length =  count($sizes);      
+            if($array_length == '4' ){  
+                 $output['sizes'][$sizes[1]][$sizes[2]][$sizes[3]] = $value;
+            } else {
+                $output[$key] = $value;
+            } 
+        }      
+        $entity = $this->get('pi.product_specification')->find($id);
+        $entity->setSpecsJson(json_encode($output));
+        $msg_ar = $this->get('pi.product_specification')->update($entity);
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
     }
