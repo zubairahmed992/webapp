@@ -18,6 +18,9 @@ $(document).ready(function(){
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
    {# {{dump(drop_down_values.hem_length)}}#}
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
+       {{ dump(drop_down_values.style_type)}} 
+       {{ dump(drop_down_values)}}
+
     <div>
         <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>
         <table>
@@ -36,7 +39,7 @@ $(document).ready(function(){
                                                     {{ key }}<input type="text" value="{{val}}" name="{{ specs_k}}[]" style="width:50px">%
                                                 {% endfor %}
                                                {% else %}
-                                                <select name="{{ specs_k }} "data-width="100%">
+                                                <select name="{{ specs_k }}" data-width="100%">
                                                 {% for key,val in drop_down_values[specs_k] %}
                                                    <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
     {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
