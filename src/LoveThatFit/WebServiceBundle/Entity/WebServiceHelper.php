@@ -923,6 +923,7 @@ class WebServiceHelper {
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
+                $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
                 array_push($items, $temp);
