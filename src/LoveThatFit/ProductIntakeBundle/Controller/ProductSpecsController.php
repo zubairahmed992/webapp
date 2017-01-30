@@ -168,7 +168,9 @@ public function csvUploadAction(Request $request) {
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        
+        $parsed_data['fit_priority'] = array("shoulder_across_back"=>0,"waist"=>0, "hip"=>0, "neck"=>0, "thigh"=>0);
+        $parsed_data['fabric_content'] = array("cotton "=>0, "poly"=>0, "rayon"=>0, "acrylic"=>0, "linen"=>0, "other"=>0);
+        $parsed_data['garment_detail'] = array("silk"=>0, "nylon"=>0, "lycra"=>0, "wool"=>0,"other"=>0);
         
         #---------> Save to DB
         
@@ -177,14 +179,7 @@ public function csvUploadAction(Request $request) {
                 $product_specs_mapping->getDescription(),
                 json_encode($parsed_data));
         $this->get('session')->setFlash('success', 'New Product specification added!');
-        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs->getId())));
-        
-        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:preview.html.twig', array(
-                    'parsed_data' => $parsed_data,
-                    'product_specs_json' => json_encode($product_specs),
-                    
-                ));
+        return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specs->getId())));
     }
     
     public function _csvUploadAction(Request $request) {

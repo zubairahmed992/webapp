@@ -15,11 +15,13 @@ $(document).ready(function(){
 });
 
     </script>
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+        <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
+    </div>
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
-   {# {{dump(drop_down_values.hem_length)}}#}
+   
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
-    <div>
-        {#{{ dump(parsed_data.fit_priority['0'])}}#}
+    <div>        
         <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>
         <table>
             <tr>
@@ -32,7 +34,7 @@ $(document).ready(function(){
                                     <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
                                     <td>
                                         <span>
-                                              {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  %}
+                                              {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  or specs_k == 'garment_detail'%}
 {#                                                  {% set array_fit = array_combine(drop_down_values[specs_k],parsed_data[specs_k]) %}#}
                                                    {% for key,val in parsed_data[specs_k] %}
                                                     {{ key }} : <input type="text" value="{{val}}" name="{{ specs_k }}[{{key}}]" style="width:50px">%

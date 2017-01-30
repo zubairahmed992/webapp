@@ -526,7 +526,7 @@ public function getStructure($gender=null, $size_type=null){
 public function getIndividuals(){        
     $sp=$this->conf["constants"]['product_specification'];
     $spf=$this->conf["constants"]['product_specification']['women'];
-    #return $sp['fit_priority'];
+    #return $sp;
     
     $ind = array(
         'fit_type'=> $sp["fit_type"],
@@ -534,18 +534,24 @@ public function getIndividuals(){
         'layering'=>$sp["layering"],
         'fabric_content'=>$sp["fabric_content"],
         'garment_detail'=>$sp["garment_detail"],
-        'style_type'=>  $this->merge_sub($spf['style_type']),
+        'styling_type'=>  $this->merge_sub($spf['style_type']),
         'hem_length'=>  $this->merge_sub($spf['hem_length']),
-        'neck_line'=>  $this->merge_sub($spf['neck_line']),
-        
-        
+        'neckline'=>  $this->merge_sub($spf['neck_line']),
+        'sleeve_styling'=>  $this->merge_sub($spf['sleeve_styling']),
+        'rise'=>  $this->merge_sub($spf['rise']),
+        'stretch_type'=>  $spf['stretch_type'],
+        'fabric_weight'=>  $spf['fabric_weight'],
+        'structural_detail'=>  $spf['structural_details'],
+        'styling_details'=>  $spf['styling_details'],
     );           
     return $ind;    
 }
 private function merge_sub($arr){
     $ma=array();
      foreach ($arr as $k => $v) {
-        $ma = array_merge($ma,$v);
+         if (is_array($v)){
+            $ma = array_merge($ma,$v);
+         }
      }
      return $ma;
 }
