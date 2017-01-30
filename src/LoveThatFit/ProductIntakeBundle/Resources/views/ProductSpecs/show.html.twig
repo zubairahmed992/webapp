@@ -27,7 +27,14 @@ $(document).ready(function(){
                             <tr>
                                 <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
                                 <td>
-                                    <span>{{specs_v}}</span>
+                                    {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  %}
+                                        {% for key,val in parsed_data[specs_k] %}
+                                            <span>{{ val }} % </span>
+                                                    
+                                        {% endfor %}
+                                     {% else %}
+                                    <span>{{ specs_v }}</span>
+                                    {% endif %}   
                                 </td>
                             </tr>
                         {% endif%}
