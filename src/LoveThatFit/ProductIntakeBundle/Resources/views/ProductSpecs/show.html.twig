@@ -29,8 +29,7 @@ $(document).ready(function(){
                                 <td>
                                     {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  %}
                                         {% for key,val in parsed_data[specs_k] %}
-                                            <span>{{ val }} % </span>
-                                                    
+                                            {{ key }} : <span>{{ val }} % </span>                                                    
                                         {% endfor %}
                                      {% else %}
                                     <span>{{ specs_v }}</span>
