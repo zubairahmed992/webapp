@@ -34,7 +34,10 @@ class ProductSpecsController extends Controller
     public function editAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
-        $ps = $this->get('pi.product_specification')->find($id);    
+        $ps = $this->get('pi.product_specification')->find($id);   
+       // echo "<pre>";
+        //print_r(json_decode($ps->getSpecsJson(),true));
+       // die;
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),  

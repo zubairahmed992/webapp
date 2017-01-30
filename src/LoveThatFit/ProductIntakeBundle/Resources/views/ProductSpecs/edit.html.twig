@@ -50,7 +50,7 @@ $(document).ready(function(){
                             <tr>
                                 <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
                                 <td>
-                                    <span><input type="text" value="{{specs_v}}" name="{{specs_v}}"> </span>
+                                    <span><input type="text" value="{{specs_v}}" name="{{specs_k}}"> </span>
                                 </td>
                             </tr>
                         {% endif %}
@@ -101,7 +101,7 @@ $(document).ready(function(){
                                         <td><input type="text" value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px"></td>
                                         <td><input type="text" value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px"></td>
                                         <td><input type="text" value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calch" style="width:50px"></td>
+                                        <td><input type="text" value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px"></td>
                                         <td><input type="text" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px"></td>
                                         <td><input type="text" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade rule" style="width:50px"></td>
                                        {# <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
