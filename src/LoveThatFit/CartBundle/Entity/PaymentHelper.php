@@ -259,6 +259,8 @@ class PaymentHelper
             $data = array(
                 'success' => 0
             );
+
+            $data['order_id']      = $order_id;
             $data["order_number"] = $order_number;
             $data["transaction_status"] = $transaction_status;
             $data["response_code"] = $result->transaction->processorResponseCode;

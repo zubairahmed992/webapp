@@ -323,16 +323,21 @@ class WSCartController extends Controller
                 'pname' => $entity->getProduct()->getName(),
                 'quantity' => $detail['quantity'],
                 'price'     => $entity->getPrice() * $detail['quantity'],
-                'sku'       => $entity->getSku()
+                'sku'       => $entity->getProduct()->getControlNumber(),
+                'size'      => $entity->getProductSize()->getTitle(),
+                'color'     => $entity->getProductColor()->getTitle()
             );
         }
         $orderNummber = $result['order_number'];
         $orderAmount = $decode['order_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
+        $order_id = $result['order_id'];
+
+        $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $current,
+            'purchase_date' => $orderEntity->getOrderDate()->format('Y-m-d H:i:s'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
@@ -353,7 +358,9 @@ class WSCartController extends Controller
             'shipping_postcode' => $billing['shipping_postcode'],
             'shipping_country' => $billing['shipping_country'],
             'shipping_country' => $billing['shipping_country'],
-            'shipping_state' => $billing['shipping_state']
+            'shipping_state' => $billing['shipping_state'],
+            'billing_first_name' => $billing['billing_first_name']. " ". $billing['billing_last_name'],
+            'billing_phone_no'  => $billing['billing_phone']
         );
 
         $this->get('mail_helper')->sendPurchaseEmailToAdmin($user, $dataArray);
