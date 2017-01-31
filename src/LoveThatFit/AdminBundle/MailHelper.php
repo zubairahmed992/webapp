@@ -117,7 +117,9 @@ class MailHelper {
     public function sendPurchaseEmailToAdmin( $user, $dataArray )
     {
         $from = $this->conf['parameters']['mailer_user'];
-        $to = "milwaukeestore1@selfiestyler.com";
+        $to = $dataArray['email'];
+
+        // $to = "milwaukeestore1@selfiestyler.com";
 
         $body = "LoveThatFitAdminBundle::email/email_order_detail.html.twig";
         $subject = 'SelfieStyler: Thank you very much for your order. ';
