@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
-
+use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +62,13 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
-    
+    #----------------------- /product_intake/product_specs/create_product
+    public function createProductAction($id){            
+        $entity = $this->get('pi.product_specification')->find($id);
+        $this->create_product(json_decode($entity->getSpecsJson(),true));
+        $this->get('session')->setFlash('success', 'Product created.');   
+        return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
+    }
     #----------------------- /product_intake/Prod_specs/update
     public function updateAction($id){  
            $output = array();          
@@ -337,5 +343,17 @@ public function csvUploadAction(Request $request) {
     }
 
 #----------------------------
+    private function create_product($data){
+        $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
+        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
+        $pcsv = new ProductCSVHelper(null);
+        $product = $pcsv->fillProduct($data);
+        $product->setClothingType($clothing_type);
+        $product->setBrand($brand);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
+        
+    }
     
 }

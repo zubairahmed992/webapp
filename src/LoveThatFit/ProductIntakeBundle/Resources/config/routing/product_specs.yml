@@ -25,4 +25,8 @@ product_intake_product_specs_delete:
 product_intake_product_specs_update:
     pattern:  /product_intake/product_specs/update/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:update }     
+
+product_intake_product_create:
+    pattern:  /product_intake/product_specs/create_product/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createProduct }     
     

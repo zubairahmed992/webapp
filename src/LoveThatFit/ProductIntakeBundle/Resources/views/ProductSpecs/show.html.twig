@@ -17,6 +17,7 @@ $(document).ready(function(){
     </script>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
+        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" class="btn btn-default">Create Product</a> 
     </div>
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
     <div>
