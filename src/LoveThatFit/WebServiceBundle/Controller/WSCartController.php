@@ -252,6 +252,7 @@ class WSCartController extends Controller
                 $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
                 if ($result['success'] == 0) {
                     $this->sendEmailToUser( $user, $decoded, $result);
+                    $this->sendEmailToAdmin( $user, $decoded, $result);
                     $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
                 } else if ($result['success'] < 0) {
                     $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
@@ -282,6 +283,7 @@ class WSCartController extends Controller
         $orderNummber = $result['order_number'];
         $orderAmount = $decode['order_amount'];
         $creditCard = $result['result']->transaction->creditCard;
+        $billing    = $decode['billing'];
 
         $dataArray = array(
             'purchase_date' => $current,
@@ -289,13 +291,72 @@ class WSCartController extends Controller
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
             'last_four_number' => $creditCard['last4'],
-            'contact_number'    => '4444-4456-46532',
+            'contact_number'    => '262-391-3403',
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFirstName(),
-            'order_amount'  => $orderAmount
+            'order_amount'  => $orderAmount,
+            'shipping_first_name' => $billing['shipping_first_name'],
+            'shipping_last_name' => $billing['shipping_last_name'],
+            'shipping_address1' => $billing['shipping_address1'],
+            'shipping_address2' => $billing['shipping_address2'],
+            'shipping_phone' => $billing['shipping_phone'],
+            'shipping_city' => $billing['shipping_city'],
+            'shipping_postcode' => $billing['shipping_postcode'],
+            'shipping_country' => $billing['shipping_country'],
+            'shipping_country' => $billing['shipping_country'],
+            'shipping_state' => $billing['shipping_state']
+
         );
 
         $this->get('mail_helper')->sendSuccessPurchaseEmail($user, $dataArray);
+        return;
+    }
+
+    private function sendEmailToAdmin( User $user, $decode, $result)
+    {
+        $current = date('d-m-Y');
+        $items = isset($decode["items"]) ? $decode["items"] : "0";
+        $itemsArray = array();
+        foreach ($items as $detail) {
+            $entity = $this->container->get('admin.helper.productitem')->find($detail['item_id']);
+            $itemsArray[] = array(
+                'pname' => $entity->getProduct()->getName(),
+                'quantity' => $detail['quantity'],
+                'price'     => $entity->getPrice() * $detail['quantity'],
+                'sku'       => $entity->getSku()
+            );
+        }
+        $orderNummber = $result['order_number'];
+        $orderAmount = $decode['order_amount'];
+        $creditCard = $result['result']->transaction->creditCard;
+        $billing    = $decode['billing'];
+
+        $dataArray = array(
+            'purchase_date' => $current,
+            'items'         => $itemsArray,
+            'order_numnber' => $orderNummber,
+            'card_type'     => $creditCard['cardType'],
+            'last_four_number' => $creditCard['last4'],
+            'contact_number'    => '262-391-3403',
+            'email'         => $user->getEmail(),
+            'frist_name'    => $user->getFullName(),
+            'order_amount'  => $orderAmount,
+            'phone_number'  => $user->getPhoneNumber(),
+            'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
+            'cardholderName' => $creditCard['cardholderName'],
+            'shipping_first_name' => $billing['shipping_first_name'],
+            'shipping_last_name' => $billing['shipping_last_name'],
+            'shipping_address1' => $billing['shipping_address1'],
+            'shipping_address2' => $billing['shipping_address2'],
+            'shipping_phone' => $billing['shipping_phone'],
+            'shipping_city' => $billing['shipping_city'],
+            'shipping_postcode' => $billing['shipping_postcode'],
+            'shipping_country' => $billing['shipping_country'],
+            'shipping_country' => $billing['shipping_country'],
+            'shipping_state' => $billing['shipping_state']
+        );
+
+        $this->get('mail_helper')->sendPurchaseEmailToAdmin($user, $dataArray);
         return;
     }
 }

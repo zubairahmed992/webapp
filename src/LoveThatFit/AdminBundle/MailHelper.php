@@ -114,6 +114,19 @@ class MailHelper {
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray);
     }
 
+    public function sendPurchaseEmailToAdmin( $user, $dataArray )
+    {
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $dataArray['email'];
+
+        // $to = "milwaukeestore1@selfiestyler.com";
+
+        $body = "LoveThatFitAdminBundle::email/email_order_detail.html.twig";
+        $subject = 'SelfieStyler: Thank you very much for your order. ';
+
+        return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray);
+    }
+
     public function sendParentRegistrationEmail($user) {
 
         $from = $this->conf['parameters']['mailer_user'];
