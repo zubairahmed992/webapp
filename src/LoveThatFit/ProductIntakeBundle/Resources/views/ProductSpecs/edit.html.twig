@@ -2,71 +2,101 @@
 {% block body %}
 
 <script>
-$(document).ready(function(){    
-    $.fn.editable.defaults.mode = 'popup';     
-    $('#username').editable();
-    
-    
-    $("#dv_validate_measurement_data").hide();
-  $('#a_measurement_table').click(function (event){
-         $("#dv_measurement_table").toggle('slow');
-    });
-    
-});
+    $(document).ready(function(){    
+        $.fn.editable.defaults.mode = 'popup';     
+        $('#username').editable();
 
-    </script>
+
+        $("#dv_validate_measurement_data").hide();
+      $('#a_measurement_table').click(function (event){
+             $("#dv_measurement_table").toggle('slow');
+        });
+
+    });
+
+</script>
+    <style type="text/css">
+    .tblData input[type="text"], .tblData select
+    {
+        width: 30%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        margin:10px;
+    }
+    .hlist .singleField{ display:inline-block;} 
+    .hlist .singleField label{
+        float: left;
+        position: relative;
+        top: 16px;
+        margin-right: 5px;
+    }
+    </style>    
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
     </div>
-    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
-   
+    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>   
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
-    <div>        
-        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>
-        <table>
+       <div class="container">        
+{#        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>#}
+        <table class="tblData">
             <tr>
                 <td>
                     <table>
-                    {% for specs_k, specs_v in parsed_data %}
-                       {% if (specs_k!='sizes') %}
-                            {% if specs_k in drop_down_values|keys %}
+                        {% for specs_k, specs_v in parsed_data %}
+                           {% if (specs_k!='sizes') %}
+                                {% if specs_k in drop_down_values|keys %}
+                                    <tr>
+                                        <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
+                                        <td>
+                                            <div class="hlist">
+                                                  {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  or specs_k == 'garment_detail'%}
+                                                       {% for key,val in parsed_data[specs_k] %}
+                                                            <div class="singleField">
+                                                               <label>
+                                                                   {{ key }} : 
+                                                               </label> 
+                                                                  <input type="text" value="{{val}}" name="{{ specs_k }}[{{key}}]" style="width:50px">%
+                                                            </div>
+                                                    {% endfor %}
+                                                   {% else %}
+                                                    <select name="{{ specs_k }}" data-width="100%">
+                                                        {% for key,val in drop_down_values[specs_k] %}
+                                                           <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
+            {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
+                                                        {% endfor %}
+                                                    </select>   
+                                                  {% endif %}                      
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}                               
                                 <tr>
-                                    <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
                                     <td>
-                                        <span>
-                                              {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  or specs_k == 'garment_detail'%}
-{#                                                  {% set array_fit = array_combine(drop_down_values[specs_k],parsed_data[specs_k]) %}#}
-                                                   {% for key,val in parsed_data[specs_k] %}
-                                                    {{ key }} : <input type="text" value="{{val}}" name="{{ specs_k }}[{{key}}]" style="width:50px">%
-                                                {% endfor %}
-                                               {% else %}
-                                                <select name="{{ specs_k }}" data-width="100%">
-                                                {% for key,val in drop_down_values[specs_k] %}
-                                                   <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
-    {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
-                                                {% endfor %}
-                                              </select>   
-                                              {% endif %}                      
-                                        </span>
+                                        <span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;
+                                    </td>
+                                    <td>
+                                        <span><input type="text" value="{{specs_v}}" name="{{specs_k}}"> </span>
                                     </td>
                                 </tr>
-                            {% else %}                               
-                            <tr>
-                                <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                <td>
-                                    <span><input type="text" value="{{specs_v}}" name="{{specs_k}}"> </span>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                        </table>
-                    </td>
-                </tr>
-{#---------------------------------------------------------------------------------------------#}
-            </table>
-
-           
+                            {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
 
 {#---------------------------------------------------------------------------------------------#}
             <table>
@@ -96,27 +126,19 @@ $(document).ready(function(){
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {% if (measurement_v.garment_dimension>0) %}
-                                    <tr>
-                                        <th>{{measurement_k}}</th>
-                                        <td><input type="text" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> </td>
-                                        <td><input type="text" value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px"></td>
-                                        <td><input type="text" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade rule" style="width:50px"></td>
-                                       {# <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>#}
-                                    </tr>
+                                        <tr>
+                                            <th>{{measurement_k}}</th>
+                                            <td><input type="text" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> </td>
+                                            <td><input type="text" value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px"></td>
+                                            <td><input type="text" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade rule" style="width:50px"></td>
+                                        </tr>
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
@@ -124,11 +146,10 @@ $(document).ready(function(){
                             </div>
                         </td>
                     </tr>
-                   
-                    </table>
-                                <input type="submit" value="Save">                              
+                </table>
+            <input type="submit" value="Save">                              
     </div>
-   </form>                                
+</form>                                
   <br>  <br>  <br>
                 <script>
            //--------------------------------------------
