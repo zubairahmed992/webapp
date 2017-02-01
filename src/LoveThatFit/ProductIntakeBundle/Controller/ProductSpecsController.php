@@ -33,14 +33,15 @@ class ProductSpecsController extends Controller
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
-        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints(); 
+        #$fit_points = $this->get('admin.helper.product.specification')->getFitPoints(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $ps = $this->get('pi.product_specification')->find($id);  
+        #return new Response(json_encode($ps->getFitPointArray()));
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
-                    'fit_points' => $fit_points,
+                    'fit_points' => $ps->getFitPointArray(),
                 ));
     }
    
@@ -65,7 +66,7 @@ class ProductSpecsController extends Controller
     #----------------------- /product_intake/product_specs/create_product
     public function createProductAction($id){            
         $entity = $this->get('pi.product_specification')->find($id);
-        $this->create_product(json_decode($entity->getSpecsJson(),true));
+        #$this->create_product(json_decode($entity->getSpecsJson(),true));
         $this->get('session')->setFlash('success', 'Product created.');   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }

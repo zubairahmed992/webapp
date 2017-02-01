@@ -187,5 +187,20 @@ class ProductSpecification {
           'updated_at' =>  $this->getUpdatedAt(),          
       );
   }
+  
+  public function getFitPointArray() {
+        $deco = json_decode($this->getSpecsJson(), true);
+        $fit_points = array();
+        if (is_array($deco) && array_key_exists('sizes', $deco)) {
+            foreach ($deco['sizes'] as $s => $fp) {
+                if (is_array($fp)) {
+                    foreach ($fp as $fit_point => $ranges) {
+                        $fit_points[$fit_point] = $fit_point;
+                    }
+                }
+            }
+        }
+        return $fit_points;
+    }
     
 }
