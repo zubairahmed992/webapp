@@ -2,21 +2,37 @@
 {% block body %}
 
 <script>
+    var fit_array=[];
+    var values = [];
     $(document).ready(function(){ 
-        $('.fit_point_selected').click(function () {
+        var values = $("input[class='fit']").map(function(){return $(this).attr('id');}).get(); 
+        $('.fit_point_selected').click(function () {               
             var fit_point_val = $('.fit_point option:selected').val();
+            if($.inArray(fit_point_val, fit_array) != -1 || $.inArray(fit_point_val, values)!= -1 )
+            {
+                alert("Ops! Already Fit Priority Added");    
+            } else {
+            fit_array.push(fit_point_val);
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";          
             $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='text'  name="+fit_priority+" style='width:50px'>%");
-            $('.fit_point option:selected').remove();
+            }
+           
+        
         });
         
-         $('.add_fabric_content').click(function () {
-             var fabric_content_val = $('.fabric_content_value').val();
-             var fabric_content = [];
+         $('.add_fabric_content').click(function () {                     
+            var fabric_content_val = $('.fabric_content_value').val();           
+            if($.inArray(fabric_content_val, values) != -1 )
+            {
+                alert("Ops! Already Fit Priority Added");    
+            } else {
+                   var fabric_content = [];
             var fabric_content = "fabric_content["+fabric_content_val+"]"; 
             $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='text'  name="+fabric_content+" style='width:50px'>%");
-         });
+    
+            }
+            });
         
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();
@@ -82,7 +98,7 @@
                                                                <label>
                                                                    {{ key }} : 
                                                                </label> 
-                                                                  <input type="text" value="{{val}}" name="{{ specs_k }}[{{key}}]" style="width:50px">%
+                                                                   <input type="text" value="{{val}}" id="{{key}}" class="fit" name="{{ specs_k }}[{{key}}]" style="width:50px">%
                                                             </div>
                                                     {% endfor %}
                                                     
