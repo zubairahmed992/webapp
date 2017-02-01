@@ -4,9 +4,10 @@
 <script>
     $(document).ready(function(){ 
         $('.fit_point_selected').click(function () {
-            var fit_point_val = $('.fit_point option:selected').text();
+            var fit_point_val = $('.fit_point option:selected').val();
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";          
+            alert(fit_priority)
            $('.fit_priority').append(" <label>"+fit_point_val+":</label> <input type='text'  name="+fit_priority+" style='width:50px'>%");
         });
         
@@ -52,8 +53,7 @@
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
     </div>
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
- {#   {{ dump(fit_points) }}#}
-   
+       
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">        
 {#        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>#}
@@ -81,8 +81,7 @@
                                                       {% if specs_k == 'fit_priority' %}
                                                        <select name="{{ specs_k }}" class="fit_point" data-width="100%">   
                                                         {% for key,val in fit_points %}
-                                                           <option value="{{ val }}"> {{ key }}</option>
-            {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
+                                                           <option value="{{val}}"> {{key}}</option>
                                                         {% endfor %}
                                                     </select>   <input class="fit_point_selected" type="button" value="Add">
                                                        </div>
