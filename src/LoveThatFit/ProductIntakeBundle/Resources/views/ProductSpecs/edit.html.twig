@@ -3,6 +3,7 @@
 
 <script>
     var fit_array=[];
+    var faberic_array = [];
     var values = [];
     $(document).ready(function(){ 
         var values = $("input[class='fit']").map(function(){return $(this).attr('id');}).get(); 
@@ -21,18 +22,18 @@
         
         });
         
-         $('.add_fabric_content').click(function () {                     
-            var fabric_content_val = $('.fabric_content_value').val();           
-            if($.inArray(fabric_content_val, values) != -1 )
-            {
-                alert("Ops! Already Fit Priority Added");    
-            } else {
-                   var fabric_content = [];
-            var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-            $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='text'  name="+fabric_content+" style='width:50px'>%");
-    
-            }
-            });
+        $('.add_fabric_content').click(function () {                     
+                var fabric_content_val = $.trim($('.fabric_content_value').val());               
+                if( $.inArray(fabric_content_val, faberic_array) != -1 || $.inArray(fabric_content_val, values) != -1 )
+                {
+                    alert("Ops! Already Fit Priority Added");    
+                } else {
+                    faberic_array.push(fabric_content_val);
+                    var fabric_content = [];
+                   var fabric_content = "fabric_content["+fabric_content_val+"]"; 
+                   $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='text' class='fit'  name="+fabric_content+" style='width:50px'>%");
+                }
+        });
         
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();
