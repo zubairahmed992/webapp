@@ -7,15 +7,15 @@
             var fit_point_val = $('.fit_point option:selected').val();
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";          
-            alert(fit_priority)
-           $('.fit_priority').append(" <label>"+fit_point_val+":</label> <input type='text'  name="+fit_priority+" style='width:50px'>%");
+            $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='text'  name="+fit_priority+" style='width:50px'>%");
+            $('.fit_point option:selected').remove();
         });
         
          $('.add_fabric_content').click(function () {
              var fabric_content_val = $('.fabric_content_value').val();
              var fabric_content = [];
             var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-            $('.fabric_content').append(" <label>"+fabric_content_val+":</label> <input type='text'  name="+fabric_content+" style='width:50px'>%");
+            $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='text'  name="+fabric_content+" style='width:50px'>%");
          });
         
         $.fn.editable.defaults.mode = 'popup';     
@@ -87,9 +87,9 @@
                                                     {% endfor %}
                                                     
                                                      {% if specs_k == 'fabric_content' %}
-                                                          <label>
+                                                          {#<label>
                                                                  Enter fabric Content : 
-                                                               </label> 
+                                                               </label> #}
                                                           <input type="text" class="fabric_content_value" value="" name="" style="width:50px">%
                                                         
                                                      <input class="add_fabric_content" type="button" value="Add">
