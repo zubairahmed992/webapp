@@ -11,6 +11,13 @@
            $('.fit_priority').append(" <label>"+fit_point_val+":</label> <input type='text'  name="+fit_priority+" style='width:50px'>%");
         });
         
+         $('.add_fabric_content').click(function () {
+             var fabric_content_val = $('.fabric_content_value').val();
+             var fabric_content = [];
+            var fabric_content = "fabric_content["+fabric_content_val+"]"; 
+            $('.fabric_content').append(" <label>"+fabric_content_val+":</label> <input type='text'  name="+fabric_content+" style='width:50px'>%");
+         });
+        
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();
         $("#dv_validate_measurement_data").hide();
@@ -78,6 +85,17 @@
                                                                   <input type="text" value="{{val}}" name="{{ specs_k }}[{{key}}]" style="width:50px">%
                                                             </div>
                                                     {% endfor %}
+                                                    
+                                                     {% if specs_k == 'fabric_content' %}
+                                                          <label>
+                                                                 Enter fabric Content : 
+                                                               </label> 
+                                                          <input type="text" class="fabric_content_value" value="" name="" style="width:50px">%
+                                                        
+                                                     <input class="add_fabric_content" type="button" value="Add">
+                                                      
+                                                     {% endif %} 
+                                                     
                                                       {% if specs_k == 'fit_priority' %}
                                                        <select name="{{ specs_k }}" class="fit_point" data-width="100%">   
                                                         {% for key,val in fit_points %}
