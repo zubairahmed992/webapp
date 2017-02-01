@@ -73,7 +73,15 @@
                     </div>
                 </div>      
                 <br>
-               
+               <div class="form-group">
+                    <label class="control-label col-sm-2" for="fit_type">Select Fit Type: </label>
+                    <div class="col-sm-4">
+                        <select name="fit_type" id="fit_type" class="fit_type form-control">
+                            <option selected> Select Size</option>                                            
+                        </select>
+                    </div>
+                </div>
+                <br>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="sel_size_type">Select Size Type: </label>
                     <div class="col-sm-4">
@@ -194,7 +202,8 @@
                             //---------------------------------------
                               $( "#sel_gender" ).change(function() {
                                   fill_clothing_type_list(this.value);
-                                  sel_size_type(this.value);                                                                        
+                                  sel_size_type(this.value);   
+                                  fill_fit_type(this.value);   
                           });
              
              
@@ -217,6 +226,17 @@
                                           }
                                           });
                                    $('#sel_clothing_type').append(option);         
+                              }
+                               //---------------------------------------
+                              function fill_fit_type(gender){                                          
+                                  gender=gender=='m'?'man':'woman';                                    
+                                  $('#fit_type').empty();
+                                  var option = '<option value="">Select </option>';
+                                  str='';
+                                 $.each(size_specs.fit_types[gender], function(val, text) {
+                                      option += '<option value="'+ val + '">' + text + '</option>';
+                                          });                       
+                                   $('#fit_type').append(option);         
                               }
                               //---------------------------------------
                               function sel_size_type(gender){

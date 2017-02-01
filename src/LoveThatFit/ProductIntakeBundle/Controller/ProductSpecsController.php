@@ -5,7 +5,8 @@ use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
+use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\Product;
 
 class ProductSpecsController extends Controller
 {
@@ -36,7 +37,7 @@ class ProductSpecsController extends Controller
         #$fit_points = $this->get('admin.helper.product.specification')->getFitPoints(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $ps = $this->get('pi.product_specification')->find($id);  
-        #return new Response(json_encode($ps->getFitPointArray()));
+        #return new Response($ps->getSpecsJson());
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),  
@@ -49,9 +50,8 @@ class ProductSpecsController extends Controller
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-
-        #return new Response(json_encode($gen_specs));
         $ps = $this->get('pi.product_specification')->find($id); 
+        #return new Response($ps->getSpecsJson());
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
@@ -66,7 +66,7 @@ class ProductSpecsController extends Controller
     #----------------------- /product_intake/product_specs/create_product
     public function createProductAction($id){            
         $entity = $this->get('pi.product_specification')->find($id);
-        #$this->create_product(json_decode($entity->getSpecsJson(),true));
+        $this->create_product(json_decode($entity->getSpecsJson(),true));
         $this->get('session')->setFlash('success', 'Product created.');   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
@@ -177,9 +177,6 @@ public function csvUploadAction(Request $request) {
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        $parsed_data['fit_priority'] = array("shoulder_across_back"=>0,"waist"=>0, "hip"=>0, "neck"=>0, "thigh"=>0);
-        $parsed_data['fabric_content'] = array("cotton "=>0, "poly"=>0, "rayon"=>0, "acrylic"=>0, "linen"=>0, "other"=>0);
-        $parsed_data['garment_detail'] = array("silk"=>0, "nylon"=>0, "lycra"=>0, "wool"=>0,"other"=>0);
         
         #---------> Save to DB
         
@@ -354,7 +351,47 @@ public function csvUploadAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
+        $this->create_product_sizes($product, $data);
         
     }
-    
+        #------------------------------------------------------------
+    private function create_product_sizes($product, $data) {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($data['sizes'] as $key => $value) {            
+                $ps = new ProductSize();
+                $ps->setTitle($key);
+                $ps->setProduct($product);
+                $ps->setBodyType($data['fit_type']);                                
+                $em->persist($ps);
+                $em->flush();
+                #$this->create_product_size_measurements($ps, $value);            
+        }
+        return $product;
+    }
+     #------------------------------------------------------
+    private function create_product_size_measurements($size, $data) {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($data as $key => $value) {
+            if($key!='key'){
+            $psm = new ProductSizeMeasurement;
+            $psm->setTitle($key);
+            $psm->setProductSize($size);
+            array_key_exists('garment_measurement_flat',$value)?$psm->setGarmentMeasurementFlat($value['garment_measurement_flat']):null;
+            array_key_exists('stretch_type_percentage',$value)?$psm->setStretchTypePercentage($value['stretch_type_percentage']):null;
+            array_key_exists('garment_measurement_stretch_fit',$value)?$psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']):null;
+            $psm->setMaxBodyMeasurement($value['maximum_body_measurement']);
+            $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
+            $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
+            $psm->setMinBodyMeasurement($value['min_body_measurement']);
+            $psm->setFitModelMeasurement($value['fit_model']);
+            $psm->setMaxCalculated($value['max_calculated']);
+            $psm->setMinCalculated($value['min_calculated']);
+            $psm->setGradeRule($value['grade_rule']);
+            $em->persist($psm);
+            $em->flush();
+            }
+            
+        }
+        return;
+    }
 }
