@@ -52,7 +52,8 @@
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
     </div>
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
-    {#{{ dump(drop_down_values) }}#}
+ {#   {{ dump(fit_points) }}#}
+   
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">        
 {#        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>#}
@@ -77,14 +78,15 @@
                                                                   <input type="text" value="{{val}}" name="{{ specs_k }}[{{key}}]" style="width:50px">%
                                                             </div>
                                                     {% endfor %}
-                                                       </div>
-                                                   {% elseif specs_k == 'fit_type' %}
+                                                      {% if specs_k == 'fit_priority' %}
                                                        <select name="{{ specs_k }}" class="fit_point" data-width="100%">   
-                                                        {% for key,val in drop_down_values[specs_k] %}
-                                                           <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
+                                                        {% for key,val in fit_points %}
+                                                           <option value="{{ val }}"> {{ key }}</option>
             {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
                                                         {% endfor %}
                                                     </select>   <input class="fit_point_selected" type="button" value="Add">
+                                                       </div>
+                                                     {% endif %} 
                                                     {% else %}
                                                     <select name="{{ specs_k }}" data-width="100%">
                                                         {% for key,val in drop_down_values[specs_k] %}
