@@ -277,24 +277,34 @@ class WSCartController extends Controller
             $itemsArray[] = array(
                 'pname' => $entity->getProduct()->getName(),
                 'quantity' => $detail['quantity'],
-                'price'     => $entity->getPrice() * $detail['quantity']
+                'item_price'     => $entity->getPrice(),
+                'price'     => $entity->getPrice() * $detail['quantity'],
+                'sku'       => $entity->getProduct()->getControlNumber(),
+                'size'      => $entity->getProductSize()->getTitle(),
+                'color'     => $entity->getProductColor()->getTitle()
             );
         }
         $orderNummber = $result['order_number'];
         $orderAmount = $decode['order_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
+        $order_id = $result['order_id'];
+
+        $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $current,
+            'purchase_date' => $orderEntity->getOrderDate()->format('Y-m-d H:i:s'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
             'last_four_number' => $creditCard['last4'],
             'contact_number'    => '262-391-3403',
             'email'         => $user->getEmail(),
-            'frist_name'    => $user->getFirstName(),
+            'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
+            'phone_number'  => $user->getPhoneNumber(),
+            'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
+            'cardholderName' => $creditCard['cardholderName'],
             'shipping_first_name' => $billing['shipping_first_name'],
             'shipping_last_name' => $billing['shipping_last_name'],
             'shipping_address1' => $billing['shipping_address1'],
@@ -304,8 +314,10 @@ class WSCartController extends Controller
             'shipping_postcode' => $billing['shipping_postcode'],
             'shipping_country' => $billing['shipping_country'],
             'shipping_country' => $billing['shipping_country'],
-            'shipping_state' => $billing['shipping_state']
-
+            'shipping_state' => $billing['shipping_state'],
+            'billing_first_name' => $billing['billing_first_name']. " ". $billing['billing_last_name'],
+            'billing_phone_no'  => $billing['billing_phone'],
+            'billing_address1'  => $billing['billing_address1']
         );
 
         $this->get('mail_helper')->sendSuccessPurchaseEmail($user, $dataArray);
