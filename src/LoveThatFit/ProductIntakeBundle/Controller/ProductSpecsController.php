@@ -32,17 +32,23 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id){                
-        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
-        #$fit_points = $this->get('admin.helper.product.specification')->getFitPoints(); 
+    public function editAction($id, $fit_model_measurement_id=null){                
+        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
+        $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
+        if ($fm)
+            return new Response($fm->getTitle());
+        
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();         
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $ps = $this->get('pi.product_specification')->find($id);  
-        #return new Response($ps->getSpecsJson());
+        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
                     'fit_points' => $ps->getFitPointArray(),
+                    'fit_model_list' => $fms,
+                    'fit_model' => $fm,
                 ));
     }
    

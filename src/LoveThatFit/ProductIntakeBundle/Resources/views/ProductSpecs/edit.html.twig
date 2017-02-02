@@ -220,7 +220,17 @@
 
 {#---------------------------------------------------------------------------------------------#}
             <table>
-
+                <tr>
+                    <td>
+                    <select name="fit_model_size" data-width="100%">
+                        <option value="">Select</option>
+                         {% for key,val in fit_model_list %}
+                            <option value="{{ val }}">{{ key }}</option>
+                         {% endfor %}
+                     </select>  
+                    <a href="#" id="a_fit_model"> Apply Fit Model</a>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <a href="#" id="a_measurement_table"> measurements chart</a>
