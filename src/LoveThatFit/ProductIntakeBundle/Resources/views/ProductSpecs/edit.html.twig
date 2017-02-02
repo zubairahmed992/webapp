@@ -3,7 +3,8 @@
 
 <script>
     var fit_array=[];
-    var faberic_array = [];
+    var fabric_array = [];
+    var garment_array = [];
     var array_key = [];
     var fit_values = [];
     $(document).ready(function(){ 
@@ -39,14 +40,31 @@
         $('.add_fabric_content').click(function () {                     
                 var fabric_content_val = $.trim($('.fabric_content_value').val());   
                 array_key = $("input[class='fabric_content']").map(function(){return $(this).attr('id');}).get(); 
-                if( $.inArray(fabric_content_val, faberic_array) != -1 || $.inArray(fabric_content_val, array_key) != -1 )
+                if( $.inArray(fabric_content_val, fabric_array) != -1 || $.inArray(fabric_content_val, array_key) != -1 )
                 {
-                    alert("Ops! Already Fit Priority Added");    
+                    alert("Ops! Already Fabric Content Added");    
                 } else {
                     faberic_array.push(fabric_content_val);
                     var fabric_content = [];
                    var fabric_content = "fabric_content["+fabric_content_val+"]"; 
                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number' class='fabric_content'  name="+fabric_content+" style='width:50px'>%");
+                }
+        });
+        
+        
+        
+        //--------------- Check garment detail Already Added
+        $('.add_garment_detail').click(function () {                     
+                var garment_detail_val = $.trim($('.garment_detail_value').val());                 
+                array_key = $("input[class='garment_detail']").map(function(){return $(this).attr('id');}).get(); 
+                if( $.inArray(garment_detail_val, garment_array) != -1 || $.inArray(garment_detail_val, array_key) != -1 )
+                {
+                    alert("Ops! Already garment detail Added");    
+                } else {
+                    garment_array.push(garment_detail_val);
+                    var garment_detail = [];
+                    var garment_detail = "garment_detail["+garment_detail_val+"]"; 
+                   $('.garment_detail').prepend(" <label>"+garment_detail_val+":</label> <input type='number' class='garment_detail'  name="+garment_detail+" style='width:50px'>%");
                 }
         });
         
@@ -83,8 +101,7 @@
     .hlist .singleField{ display:inline-block;} 
     .hlist .singleField label{
         float: left;
-        position: relative;
-        top: 16px;
+        position: relative;        
         margin-right: 5px;
     }
     </style>    
@@ -125,6 +142,16 @@
                                                           <input type="text" class="fabric_content_value" value="" name="" style="width:50px">%
                                                         
                                                      <input class="add_fabric_content" type="button" value="Add">
+                                                      
+                                                     {% endif %} 
+                                                     
+                                                     {% if specs_k == 'garment_detail' %}
+                                                          {#<label>
+                                                                 Enter fabric Content : 
+                                                               </label> #}
+                                                          <input type="text" class="garment_detail_value" value="" name="" style="width:50px">%
+                                                        
+                                                     <input class="add_garment_detail" type="button" value="Add">
                                                       
                                                      {% endif %} 
                                                      
