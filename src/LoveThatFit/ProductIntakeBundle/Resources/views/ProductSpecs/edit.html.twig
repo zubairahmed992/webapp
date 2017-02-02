@@ -51,7 +51,20 @@
                 }
         });
         
-        
+        //------------ Count Garment detail Sum Equal to 100 Validation
+        $('.fabric_content').keyup(function() {
+            var sum=0;
+            $("input[class='fabric_content']").each(function() {
+               var value = +this.value || 0;
+               sum += value;
+            });
+            if(sum > 100){
+                alert("ops! Your can't Enter sum of fabric content grater then 100");
+                $("input[class='fabric_content']").focus(function() {
+                     $(this).val("");
+                });                
+            }           
+        })  
         
         //--------------- Check garment detail Already Added
         $('.add_garment_detail').click(function () {                     
@@ -67,6 +80,20 @@
                    $('.garment_detail').prepend(" <label>"+garment_detail_val+":</label> <input type='number' class='garment_detail'  name="+garment_detail+" style='width:50px'>%");
                 }
         });
+        //------------ Count Garment detail Sum Equal to 100 Validation
+        $('.garment_detail').keyup(function() {
+            var sum=0;
+            $("input[class='garment_detail']").each(function() {
+               var value = +this.value || 0;
+               sum += value;
+            });
+            if(sum > 100){
+                alert("ops! Your can't Enter sum of garment detail grater then 100");
+                $("input[class='garment_detail']").focus(function() {
+                     $(this).val("");
+                });                
+            }           
+        })  
         
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();
