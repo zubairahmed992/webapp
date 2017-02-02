@@ -50,8 +50,8 @@ class ProductSpecsController extends Controller
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $ps = $this->get('pi.product_specification')->find($id); 
-        #return new Response($ps->getSpecsJson());
+        $ps = $this->get('pi.product_specification')->find($id);         
+        $data =  json_decode($ps->getSpecsJson(),true);        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
@@ -94,8 +94,6 @@ class ProductSpecsController extends Controller
 public function csvUploadAction(Request $request) {
         #-------------- CSV to array
         $csv_array = $this->csv_to_array($request->files->get('csv_file'));
-        #$struct = $this->get('admin.helper.product.specification')->getStructure('woman','letter');
-        
         #------------------------ get mapping        
         $product_specs_mapping = $this->get('product_intake.product_specification_mapping')->find($request->request->get('sel_mapping'));
         $map = json_decode($product_specs_mapping->getMappingJson(), true);        
@@ -342,12 +340,33 @@ public function csvUploadAction(Request $request) {
 
 #----------------------------
     private function create_product($data){
+                
         $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
-        $pcsv = new ProductCSVHelper(null);
-        $product = $pcsv->fillProduct($data);
-        $product->setClothingType($clothing_type);
+        $product=new Product;
         $product->setBrand($brand);
+        $product->setClothingType($clothing_type);        
+        $product->setName(array_key_exists('name', $data)?$data['name']:'');
+        $product->setStretchType(array_key_exists('stretch_type', $data)?$data['stretch_type']:'');
+        $product->setHorizontalStretch($data['horizontal_stretch']);
+        $product->setVerticalStretch($data['vertical_stretch']);        
+        $product->setCreatedAt(new \DateTime('now'));
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setGender($data['gender']);
+        $product->setStylingType($data['styling_type']);
+        $product->setNeckline(array_key_exists('neck_line', $data)?$data['neck_line']:$data['neckline']);
+        $product->setSleeveStyling($data['sleeve_styling']);
+        $product->setRise($data['rise']);
+        $product->setHemLength($data['hem_length']);
+        $product->setFabricWeight($data['fabric_weight']);
+        $product->setStructuralDetail($data['structural_detail']);
+        $product->setFitType($data['fit_type']);
+        $product->setLayering(array_key_exists('layring', $data)?$data['layring']:$data['layering']);
+        $product->setFitPriority(json_encode($data['fit_priority']));
+        $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data)?$data['fabric_content']:''));
+        $product->setDisabled(false);        
+        $product->setSizeTitleType($data['size_title_type']);    
+        #------------------------
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
@@ -357,14 +376,20 @@ public function csvUploadAction(Request $request) {
         #------------------------------------------------------------
     private function create_product_sizes($product, $data) {
         $em = $this->getDoctrine()->getManager();
-        foreach ($data['sizes'] as $key => $value) {            
+        $size_titles = $this->get('admin.helper.size')->getSizeArray($data['gender'],$data['size_title_type']);        
+        $i=1;
+        foreach ($size_titles['regular'] as $size_title => $value) {
+            if(array_key_exists($size_title, $data['sizes'])){
                 $ps = new ProductSize();
-                $ps->setTitle($key);
+                $ps->setTitle($size_title);
                 $ps->setProduct($product);
-                $ps->setBodyType($data['fit_type']);                                
+                $ps->setBodyType($data['body_type']);                                
+                $ps->setIndexValue($i);
                 $em->persist($ps);
                 $em->flush();
                 #$this->create_product_size_measurements($ps, $value);            
+            }
+            $i++;
         }
         return $product;
     }
@@ -394,4 +419,5 @@ public function csvUploadAction(Request $request) {
         }
         return;
     }
+    
 }

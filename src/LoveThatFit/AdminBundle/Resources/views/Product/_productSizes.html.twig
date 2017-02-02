@@ -56,7 +56,7 @@
 <br>{#~~~~~~~~~~~~~~~~ Regular ------------#}         
 <div class="span1">{{regular}}</div> 
 {% for ps in product.productSizes%} 
- {% if(ps.bodyType=="Regular")%}
+ {% if(ps.bodyType|lower=="regular")%}
   <div class="span1">                        
     <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}'>
       {% if(ps.disabled == 1)%}  
@@ -72,7 +72,7 @@
 <div class="span1">{{tall}}</div> 
 {% for ps in product.productSizes%} 
  
- {% if(ps.bodyType=="Tall")%}
+ {% if(ps.bodyType|lower=="tall")%}
   <div class="span1">
     <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
       {% if(ps.disabled == 1)%}  
@@ -89,7 +89,7 @@
 <div class="span1">{{plus}}</div> 
 {% for ps in product.productSizes%} 
  
- {% if(ps.bodyType=="Plus")%}
+ {% if(ps.bodyType|lower=="plus")%}
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
@@ -108,7 +108,7 @@
 <div class="span1">{{portley}}</div> 
 {% for ps in product.productSizes%} 
  
- {% if(ps.bodyType=="Portley")%}
+ {% if(ps.bodyType|lower=="portley")%}
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
@@ -126,7 +126,7 @@
 <div class="span1">{{athletic}}</div> 
 {% for ps in product.productSizes%} 
  
- {% if(ps.bodyType=="Athletic")%}
+ {% if(ps.bodyType|lower=="athletic")%}
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
