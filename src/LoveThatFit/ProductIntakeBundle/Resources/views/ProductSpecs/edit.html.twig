@@ -4,34 +4,49 @@
 <script>
     var fit_array=[];
     var faberic_array = [];
-    var values = [];
+    var array_key = [];
+    var fit_values = [];
     $(document).ready(function(){ 
-        var values = $("input[class='fit']").map(function(){return $(this).attr('id');}).get(); 
+        //-------------- Check Fit Priority Alredy Added
         $('.fit_point_selected').click(function () {               
             var fit_point_val = $('.fit_point option:selected').val();
-            if($.inArray(fit_point_val, fit_array) != -1 || $.inArray(fit_point_val, values)!= -1 )
+            array_key = $("input[class='fit_priority']").map(function(){return $(this).attr('id');}).get();            
+            if($.inArray(fit_point_val, fit_array) != -1 || $.inArray(fit_point_val, array_key)!= -1 )
             {
                 alert("Ops! Already Fit Priority Added");    
             } else {
             fit_array.push(fit_point_val);
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";          
-            $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='text'  name="+fit_priority+" style='width:50px'>%");
+            $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='number' class='fit_priority'  name="+fit_priority+" style='width:50px'>%");
             }
-           
-        
         });
-        
+        //------------ Count Summ Equal to 100 Validation
+        $('.fit_priority').keyup(function() {
+            var sum=0;
+            $("input[class='fit_priority']").each(function() {
+               var value = +this.value || 0;
+               sum += value;
+            });
+            if(sum > 100){
+                alert("ops! Your can't Enter sum of fit Priority grater then 100");
+                $("input[class='fit_priority']").focus(function() {
+                     $(this).val("");
+                });                
+            }           
+        })  
+        //--------------- Check Fabric Content Already Added
         $('.add_fabric_content').click(function () {                     
-                var fabric_content_val = $.trim($('.fabric_content_value').val());               
-                if( $.inArray(fabric_content_val, faberic_array) != -1 || $.inArray(fabric_content_val, values) != -1 )
+                var fabric_content_val = $.trim($('.fabric_content_value').val());   
+                array_key = $("input[class='fabric_content']").map(function(){return $(this).attr('id');}).get(); 
+                if( $.inArray(fabric_content_val, faberic_array) != -1 || $.inArray(fabric_content_val, array_key) != -1 )
                 {
                     alert("Ops! Already Fit Priority Added");    
                 } else {
                     faberic_array.push(fabric_content_val);
                     var fabric_content = [];
                    var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-                   $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='text' class='fit'  name="+fabric_content+" style='width:50px'>%");
+                   $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number' class='fabric_content'  name="+fabric_content+" style='width:50px'>%");
                 }
         });
         
@@ -48,7 +63,7 @@
     <style type="text/css">
     .tblData input[type="text"], .tblData select
     {
-        width: 30%;
+        width: 60%;
         height: 34px;
         padding: 6px 12px;
         font-size: 14px;
@@ -99,7 +114,7 @@
                                                                <label>
                                                                    {{ key }} : 
                                                                </label> 
-                                                                   <input type="text" value="{{val}}" id="{{key}}" class="fit" name="{{ specs_k }}[{{key}}]" style="width:50px">%
+                                                                   <input type="number" value="{{val}}" id="{{key}}" class="{{ specs_k }}" name="{{ specs_k }}[{{key}}]" style="width:50px">%
                                                             </div>
                                                     {% endfor %}
                                                     
