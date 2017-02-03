@@ -113,6 +113,28 @@ class ProductSpecificationMapping {
 
 #-------------------------------------------    
     /**
+     * Set clothing_type
+     *
+     * @param string $clothing_type
+     * @return ProductSpecificationMapping
+     */
+
+    public function setClothingType($clothing_type) {
+        $this->clothing_type = $clothing_type;
+        return $this;
+    }
+
+    /**
+     * Get clothing_type
+     *
+     * @return string 
+     */
+    public function getClothingType() {
+        return $this->clothing_type;
+    }
+
+#-------------------------------------------        
+    /**
      * Set brand
      *
      * @param string $brand
@@ -333,7 +355,11 @@ class ProductSpecificationMapping {
 
     //---------------------------------------------------
     protected function getUploadDir() {
-        return 'uploads/ltf/products/product_csv';
+        $directory_path = 'uploads/ltf/products/product_csv';
+        if (!file_exists($directory_path)) {
+            mkdir($image_path, 0777, true);
+        }
+        return $directory_path;
     }
 
 }

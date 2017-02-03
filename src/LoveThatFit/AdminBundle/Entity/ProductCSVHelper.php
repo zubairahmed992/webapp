@@ -281,7 +281,7 @@ class ProductCSVHelper {
         #$product->setBrand($brand);
         #$product->setClothingType($clothingType);
         #$product->setRetailer($retailer);
-        $product->setName($data['garment_name']);
+        $product->setName(array_key_exists('garment_name', $data)?$data['garment_name']:$data['name']);
         $product->setStretchType($data['stretch_type']);
         $product->setHorizontalStretch($data['horizontal_stretch']);
         $product->setVerticalStretch($data['vertical_stretch']);        
@@ -289,14 +289,14 @@ class ProductCSVHelper {
         $product->setUpdatedAt(new \DateTime('now'));
         $product->setGender($data['gender']);
         $product->setStylingType($data['styling_type']);
-        $product->setNeckline($data['neck_line']);
+        $product->setNeckline(array_key_exists('neck_line', $data)?$data['neck_line']:$data['neckline']);
         $product->setSleeveStyling($data['sleeve_styling']);
         $product->setRise($data['rise']);
         $product->setHemLength($data['hem_length']);
         $product->setFabricWeight($data['fabric_weight']);
         $product->setStructuralDetail($data['structural_detail']);
         $product->setFitType($data['fit_type']);
-        $product->setLayering($data['layring']);
+        $product->setLayering(array_key_exists('layring', $data)?$data['layring']:$data['layering']);
         $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode($data['fabric_content']));
         $product->setDisabled(false);        

@@ -15,6 +15,10 @@ $(document).ready(function(){
 });
 
     </script>
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+        <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
+        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" class="btn btn-default">Create Product</a> 
+    </div>
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
     <div>
         <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>
@@ -27,7 +31,13 @@ $(document).ready(function(){
                             <tr>
                                 <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
                                 <td>
-                                    <span>{{specs_v}}</span>
+                                    {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  or specs_k == 'garment_detail'  %}
+                                        {% for key,val in parsed_data[specs_k] %}
+                                            {{ key }}:<b>{{ val }}%</b>&nbsp;&nbsp;|&nbsp;&nbsp;                                                    
+                                        {% endfor %}
+                                     {% else %}
+                                    <span>{{ specs_v }}</span>
+                                    {% endif %}   
                                 </td>
                             </tr>
                         {% endif%}

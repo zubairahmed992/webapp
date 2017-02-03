@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
 
-class ProductSpecificationMappingHelper {
+class ProductSpecificationHelper {
 
     protected $dispatcher;
 
@@ -35,17 +35,27 @@ class ProductSpecificationMappingHelper {
         $this->class = $class;
         $this->repo = $em->getRepository($class);
     }
-    //-------------------------Create New Brand--------------------------------------------   
-
-    public function createNew() {
+    //-------------------------Create --------------------------------------------   
+public function getNew() {
         $class = $this->class;
         $c = new $class();
-        $c->setCreatedAt(new \DateTime('now'));
-        $c->setDisabled(false);
+        $c->setCreatedAt(new \DateTime('now'));        
+        return  $c;        
+    }
+    
+    public function createNew($title, $desc, $json) {
+        $class = $this->class;
+        $c = new $class();
+        $c->setTitle($title);
+        $c->setDescription($desc);
+        $c->setSpecsJson($json);
+        $c->setCreatedAt(new \DateTime('now'));        
+        $c->setUpdatedAt(new \DateTime('now'));        
+        $this->save($c);
         return  $c;        
     }
 
-//--------------------------Save Brand----------------------------------------------------------------
+//--------------------------Save ----------------------------------------------------------------
 
     public function save($entity) {       
         $this->em->persist($entity);
@@ -63,26 +73,39 @@ class ProductSpecificationMappingHelper {
             $this->em->remove($entity);
             $this->em->flush();
             return array(
-                'message' => 'The Mapping ' . $title . ' has been Deleted!',
+                'message' => 'The product specs for ' . $title . ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
         } else {
 
             return array(
-                'message' => 'Mapping not found!',
+                'message' => 'Product specs not found!',
                 'message_type' => 'warning',
                 'success' => false,
             );
         }
     }
 
-//----------------------Find Mappings By ID----------------------------------------------------------------
+    
+    public function update($entity) {       
+        $title = $entity->getTitle();
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($entity);
+        $this->em->flush();
+            return array(
+                'message' => 'The product specs for ' . $title . ' has been Updated!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+    }
+    
+//----------------------Find ProductSpecifications By ID----------------------------------------------------------------
 
     public function find($id) {
         return $this->repo->find($id);
     }
-   #--------------------Find All Mappings---------------------------------------------------------------------------------
+   #--------------------Find All ProductSpecifications---------------------------------------------------------------------------------
   public function findAll(){
   return $this->repo->findAll();      
     }
@@ -90,23 +113,6 @@ class ProductSpecificationMappingHelper {
     public function findOneByTitle($title) {
         return $this->repo->findOneByTitle($title);
     }
-    #--------------------------------------------
     
-    public function getAllMappingArray() {
-        return $this->repo->allMappingArray();
-    }
     
-    #--------------------------------------------
-  public function toArray(){
-      return array(
-          'title' =>  $this->getTitle(),
-          'brand' =>  $this->getBrand(),
-          'gender' =>  $this->getGender(),
-          'clothing_type' =>  $this->getClothingType(),
-          'description' =>  $this->getDescription(),
-          'mapping_json' =>  $this->getMappingJson(),
-          'created_at' =>  $this->getCreatedAt(),
-          'disabled' =>  $this->getDisabled(),
-      );
-  }
 }

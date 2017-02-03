@@ -2,21 +2,10 @@
 
 namespace LoveThatFit\AdminBundle\Controller;
 
-use LoveThatFit\AdminBundle\Entity\BrandFormatImport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LoveThatFit\AdminBundle\Entity\Product;
-use LoveThatFit\AdminBundle\Entity\ProductColor;
-use LoveThatFit\AdminBundle\Entity\ProductSize;
-use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
-use LoveThatFit\AdminBundle\Entity\ProductItem;
-use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
-use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
+
 
 class ProductSpecsController extends Controller {
 #----------------------- /admin/product_specs/list

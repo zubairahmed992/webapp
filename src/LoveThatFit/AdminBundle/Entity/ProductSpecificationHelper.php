@@ -1,16 +1,18 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 
 class ProductSpecificationHelper {
 
     protected $conf;
+    private $container;
    
-    public function __construct() {
+    public function __construct(Container $container) {
         $conf_yml = new Parser();
         $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_product_specification.yml'));
+            $this->container = $container;
         
     }
 #-GEtting All Product Specification-------------------------#
@@ -497,8 +499,62 @@ public function gettingDressWomenFittingPriority(){
     return $this->conf["constants"]["product_specification"]["fit_priority"]["women"]["dress"];   
 }
 
+public function getStructure($gender=null, $size_type=null){        
+    $structure = array();       
+    
+    foreach($this->conf["constants"]['product_specification']["attributes"] as $attrib){
+        $structure[$attrib]='';
+    }
+    
+    if ($gender!=null &&  $size_type!=null){        
+        $sizes = $this->container->get('admin.helper.size')->getDefaultArray();
+        $sizes = $sizes['sizes'][$gender][$size_type];        
+        $fit_points = $this->conf["constants"]['fit_points'];           
+        $ranges = $this->conf["constants"]['fit_point_measurement_attributes'];   
+        
+        foreach ($sizes as $s => $sv) {
+            foreach ($fit_points as $fp => $fpv) {
+                foreach ($ranges as $r => $rv) {                
+                    $structure['sizes'][$s][$fp][$r]=0;
+                }
+            }
+        }        
+    }    
+    return $structure;    
+}
 
-
+public function getIndividuals(){        
+    $sp=$this->conf["constants"]['product_specification'];
+    $spf=$this->conf["constants"]['product_specification']['women'];
+    #return $sp;
+    
+    $ind = array(
+        'fit_type'=> $sp["fit_type"],
+        'fit_priority'=> $this->merge_sub($sp['fit_priority']['women']),
+        'layering'=>$sp["layering"],
+        'fabric_content'=>$sp["fabric_content"],
+        'garment_detail'=>$sp["garment_detail"],
+        'styling_type'=>  $this->merge_sub($spf['style_type']),
+        'hem_length'=>  $this->merge_sub($spf['hem_length']),
+        'neckline'=>  $this->merge_sub($spf['neck_line']),
+        'sleeve_styling'=>  $this->merge_sub($spf['sleeve_styling']),
+        'rise'=>  $this->merge_sub($spf['rise']),
+        'stretch_type'=>  $spf['stretch_type'],
+        'fabric_weight'=>  $spf['fabric_weight'],
+        'structural_detail'=>  $spf['structural_details'],
+        'styling_details'=>  $spf['styling_details'],
+    );           
+    return $ind;    
+}
+private function merge_sub($arr){
+    $ma=array();
+     foreach ($arr as $k => $v) {
+         if (is_array($v)){
+            $ma = array_merge($ma,$v);
+         }
+     }
+     return $ma;
+}
 
  
 
