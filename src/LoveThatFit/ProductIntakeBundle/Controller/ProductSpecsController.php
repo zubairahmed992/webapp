@@ -36,20 +36,26 @@ class ProductSpecsController extends Controller
     public function editAction($id, $fit_model_measurement_id=null){                
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
         $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
-        if ($fm)
-            return new Response($fm->getTitle());
         
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();         
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $ps = $this->get('pi.product_specification')->find($id);  
+        $parsed_data = json_decode($ps->getSpecsJson(),true);
+        $parsed_data['fit_model_size']=  array_key_exists('fit_model_size',$parsed_data)?$parsed_data['fit_model_size']:'';
+        $drop_down_values['fit_model_size'] = $this->get('productIntake.fit_model_measurement')->getTitleArray();
+        
+        if ($fm){            
+            return new Response(json_encode($parsed_data));           
+         }
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
-                    'parsed_data' => json_decode($ps->getSpecsJson(),true),
+                    'parsed_data' => $parsed_data,
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
                     'fit_points' => $ps->getFitPointArray(),
                     'fit_model_list' => $fms,
                     'fit_model' => $fm,
+                    'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
    
@@ -137,13 +143,7 @@ public function csvUploadAction(Request $request) {
                     }
                 } else {#----------------------* if not related to measurements add as a field
                     $cdns = $this->extracts_coordinates($specs_v);
-                    if (count($cdns) > 1) {
-                        $parsed_data[$specs_k] = $csv_array[$cdns['r']][$cdns['c']];
-                        $struct[$specs_k] = $csv_array[$cdns['r']][$cdns['c']];
-                    }else{
-                        $parsed_data[$specs_k] = $specs_v;
-                        $struct[$specs_k] = $specs_v;
-                    }
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']]:$specs_v;                    
                 }
             }
         }

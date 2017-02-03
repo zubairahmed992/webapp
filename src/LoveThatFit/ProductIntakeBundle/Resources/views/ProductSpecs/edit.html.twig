@@ -127,11 +127,7 @@
         })  
         
         $.fn.editable.defaults.mode = 'popup';     
-        $('#username').editable();
-        $("#dv_validate_measurement_data").hide();
-      $('#a_measurement_table').click(function (event){
-             $("#dv_measurement_table").toggle('slow');
-        });
+        $('#username').editable();              
 
     });
 
@@ -221,50 +217,37 @@
                                                         {% endif %} 
                                                     {% else %}
                                                         <select name="{{ specs_k }}" data-width="100%">
+                                                            <option  >Select</option>
                                                             {% for key,val in drop_down_values[specs_k] %}
                                                                <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
                 {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
                                                             {% endfor %}
-                                                        </select>   
+                                                        </select>  
+                                                        {% if specs_k == 'fit_model_size'%}
+                                                            <a href="#" id="a_fit_model_size">Calculate</a> 
+                                                        {% endif %}                      
+                                                    
                                                     {% endif %}                      
                                             </div>
                                         </td>
                                     </tr>
                                 {% else %}                               
                                 <tr>
-                                    <td>
-                                        <span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;
-                                    </td>
-                                    <td>
-                                        <span><input type="text" value="{{specs_v}}" name="{{specs_k}}"> </span>
-                                    </td>
+                                    <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
+                                    <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'disabled':''}} value="{{specs_v}}" name="{{specs_k}}"> </span></td>
                                 </tr>
                             {% endif %}
+                                
                             {% endif %}
                         {% endfor %}
                     </table>
                 </td>
             </tr>
         </table>
+<br>
 
 {#---------------------------------------------------------------------------------------------#}
-            <table>
-                <tr>
-                    <td>
-                    <select name="fit_model_size" data-width="100%">
-                        <option value="">Select</option>
-                         {% for key,val in fit_model_list %}
-                            <option value="{{ val }}">{{ key }}</option>
-                         {% endfor %}
-                     </select>  
-                    <a href="#" id="a_fit_model"> Apply Fit Model</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#" id="a_measurement_table"> measurements chart</a>
-                    </td>
-                </tr>
+            <table>                
                 <tr>
                     <td>
                         <div id="dv_measurement_table">
@@ -309,13 +292,6 @@
             <input type="submit" value="Save">                              
     </div>
 </form>                                
-  <br>  <br>  <br>
-                <script>
-           //--------------------------------------------
-           //--------------------------------------------
-           //--------------------------------------------
-           $(function(){
-          
-           });
-                    </script>
+  <br>  
+               
 {% endblock %}

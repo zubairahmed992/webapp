@@ -1259,7 +1259,7 @@ constants:
       peplum: Peplum
       belted: Belted
    
-  attributes: [clothing_type, brand, name, gender, description, styling_type, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, retailer_reference, control_number]
+  attributes: [clothing_type, brand, name, gender, description, styling_type, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, retailer_reference, control_number, colors]
   attribute_specs:
       brand: selection
       clothing_type:  text
@@ -1284,6 +1284,7 @@ constants:
       size_title_type: selection
       retailer_reference: text
       control_number: text
+      colors: text
  
  fit_points:
     neck: Neck
