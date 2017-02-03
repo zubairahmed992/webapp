@@ -24,13 +24,17 @@
             fit_array.push(fit_point_val);
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";                   
-             $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='number' name="+fit_priority+" style='width:50px'>%");
+             $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='number' min='1' max='100' name="+fit_priority+" style='width:50px'>%");
             }
         });
         //------------ Count Summ Equal to 100 Validation
         $('.fit_priority').keyup(function() {
             var sum=0;
-            $(".fit_priority > input[type='number']").each(function() {
+            $(".fit_priority >  input[type='number']").each(function() {
+               var value = +this.value || 0;
+               sum += value;
+            });
+            $(".fit_priority > .singleField > input[type='number']").each(function() {
                var value = +this.value || 0;
                sum += value;
             });
@@ -38,7 +42,10 @@
                 alert("ops! Your can't Enter sum of fit Priority grater then 100");
                 $(".fit_priority > input[type='number']").focus(function() {
                      $(this).val("");
-                });                
+                });   
+                $(".fit_priority .singleField > input[type='number']").focus(function() {
+                     $(this).val("");
+                }); 
             }           
         })  
         //--------------- Check Fabric Content Already Added
@@ -55,7 +62,7 @@
                     fabric_array.push(fabric_content_val);
                     var fabric_content = [];
                     var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number'  name="+fabric_content+" style='width:50px'>%");
+                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number' min='1' max='100' name="+fabric_content+" style='width:50px'>%");
             }
         });
         
@@ -66,11 +73,18 @@
                var value = +this.value || 0;
                sum += value;
             });
+            $(".fabric_content > .singleField > input[type='number']").each(function() {
+               var value = +this.value || 0;
+               sum += value;
+            });
             if(sum > 100){
                 alert("ops! Your can't Enter sum of fabric content grater then 100");
                 $(".fabric_content > input[type='number']").focus(function() {
                      $(this).val("");
-                });                
+                });   
+                 $(".fabric_content > .singleField > input[type='number']").focus(function() {
+                     $(this).val("");
+                }); 
             }           
         })  
         
@@ -87,7 +101,7 @@
                     garment_array.push(garment_detail_val);
                     var garment_detail = [];
                     var garment_detail = "garment_detail["+garment_detail_val+"]"; 
-                   $('.garment_detail').prepend(" <label>"+garment_detail_val+":</label> <input type='number'  name="+garment_detail+" style='width:50px'>%");
+                   $('.garment_detail').prepend(" <label>"+garment_detail_val+":</label> <input type='number' min='1' max='100' name="+garment_detail+" style='width:50px'>%");
             }
         });
         //------------ Count Garment detail Sum Equal to 100 Validation
@@ -97,11 +111,18 @@
                var value = +this.value || 0;
                sum += value;
             });
+            $(".garment_detail > .singleField > input[type='number']").each(function() {
+               var value = +this.value || 0;
+               sum += value;
+            });
             if(sum > 100){
                 alert("ops! Your can't Enter sum of garment detail grater then 100");
                 $(".garment_detail > input[type='number']").focus(function() {
                      $(this).val("");
-                });                
+                });   
+                $(".garment_detail > .singleField > input[type='number']").focus(function() {
+                     $(this).val("");
+                });   
             }           
         })  
         
@@ -169,7 +190,7 @@
                                                                <label>
                                                                    {{ key }} : 
                                                                </label> 
-                                                                   <input type="number" value="{{val}}" id="{{key}}"  name="{{ specs_k }}[{{key}}]" style="width:70px">
+                                                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="{{ specs_k }}[{{key}}]" style="width:70px">
                                                             </div>
                                                         {% endfor %}
                                                     
@@ -177,7 +198,7 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="fabric_content_value" value="" name="" style="width:70px; background-color: #cccccc"">
+                                                          <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_fabric_content" type="button" value="Add">
                                                         {% endif %} 
                                                      
@@ -185,7 +206,7 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="garment_detail_value" value="" name="" style="width:70px; background-color: #cccccc"">
+                                                          <input type="text" class="garment_detail_value" min="1" max="100" value="" name="" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_garment_detail" type="button" value="Add">
                                                         {% endif %} 
                                                      
