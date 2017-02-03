@@ -1,23 +1,32 @@
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+    }
+</style>
 <div>Hello:</div> <br>
 <div>Order {{ dataArray['order_numnber'] }} was placed at {{ dataArray['purchase_date'] }}</div> <br><br>
 
 <div>Order for:  </div><br>
-<div>Customer Name:{{ dataArray['frist_name'] }}</div>
-<div>Phone Number: {{ dataArray['phone_number'] }}</div><br><br>
+<div>Customer Name:{{ dataArray['billing_first_name'] }}</div>
+<div>Phone Number: {{ dataArray['billing_phone_no'] }}</div><br><br>
 
 <div>Order details:</div><br>
 <div>
-    <table width="300" border="0" cellspacing="0" cellpadding="0">
+    <table width="550" border="0" cellspacing="0" cellpadding="0">
         <tr>
             <th align="left">Product Name</th>
-            {#<th align="left">Sku</th>#}
+            <th align="left">Control Number</th>
             <th align="left">Quantity</th>
             <th align="left">Price</th>
         </tr>
         {% for key in  dataArray['items'] %}
             <tr>
-                <td align="left"><span>{{ key['pname'] }}</span></td>
-                {#<td align="left"><span>{{ key['sku'] }}</span></td>#}
+                <td align="left"><span>{{ key['pname'] }} ({{ key['size'] }}) ( {{ key['color'] }} )</span></td>
+                <td align="left"><span>{{ key['sku'] }}</span></td>
                 <td align="left"><span>{{ key['quantity'] }}</span></td>
                 <td align="left"><span>${{ key['price'] }}</span></td>
             </tr>
@@ -29,13 +38,16 @@
 
 <div>Charge ${{ dataArray['order_amount'] }} to {{ dataArray['card_type'] }} {{ dataArray['frist_name'] }} {{ dataArray['last_four_number'] }} {{ dataArray['expirate_date'] }}</div> <br><br>
 
+<div>Ship From: SelfieStyler </div> <br>
+
 <div>Ship to:</div>
 <div>First Name: {{ dataArray['shipping_first_name'] }}</div>
 <div>Last Name: {{ dataArray['shipping_last_name'] }}</div>
-<div>Shipping Address #1: {{ dataArray['shipping_address1'] }}</div>
-<div>Shipping Address #2: {{ dataArray['shipping_address2'] }}</div>
 <div>Phone Number: {{ dataArray['shipping_phone'] }}</div>
-<div>City: {{ dataArray['shipping_city'] }}</div>
-<div>Post Code: {{ dataArray['shipping_postcode'] }}</div>
 <div>Country: {{ dataArray['shipping_country'] }}</div>
 <div>State: {{ dataArray['shipping_state'] }}</div>
+<div>City: {{ dataArray['shipping_city'] }}</div>
+<div>Zip Code: {{ dataArray['shipping_postcode'] }}</div>
+<div>Shipping Address #1: {{ dataArray['shipping_address1'] }}</div>
+<div>Shipping Address #2: {{ dataArray['shipping_address2'] }}</div>
+<br>

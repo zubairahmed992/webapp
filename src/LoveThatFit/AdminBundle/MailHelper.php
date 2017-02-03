@@ -122,7 +122,7 @@ class MailHelper {
         // $to = "milwaukeestore1@selfiestyler.com";
 
         $body = "LoveThatFitAdminBundle::email/email_order_detail.html.twig";
-        $subject = 'SelfieStyler: Thank you very much for your order. ';
+        $subject = 'SelfieStyler: New order has been received. ';
 
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray);
     }
