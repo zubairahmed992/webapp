@@ -6,13 +6,20 @@
     var fabric_array = [];
     var garment_array = [];   
     var fit_values = [];
+    var fit_priority_array_key = [];
+    var garment_detail_array_key = [];
+    var fabric_content_array_key = [];
     $(document).ready(function(){ 
         //-------------- Check Fit Priority Alredy Added
         $('.fit_point_selected').click(function () {               
-            var fit_point_val = $.trim($('.fit_point option:selected').val());                     
-            if($.inArray(fit_point_val, fit_array) != -1 )
+            var fit_point_val = $.trim($('.fit_point option:selected').val());           
+            $(".fit_priority > .singleField > input[type='number']").each(function() {                 
+                  fit_priority_array_key.push($(this).attr('id'));
+            });  
+                 
+            if($.inArray(fit_point_val, fit_array) != -1  || $.inArray(fit_point_val, fit_priority_array_key)!= -1  )
             {
-                alert("Ops! Already Fit Priority Added");    
+                alert("Ops! Already Fit Priority "+ fit_point_val +" Added");    
             } else {
             fit_array.push(fit_point_val);
             var fit_priority = [];
@@ -36,16 +43,20 @@
         })  
         //--------------- Check Fabric Content Already Added
         $('.add_fabric_content').click(function () {                     
-                var fabric_content_val = $.trim($('.fabric_content_value').val()); 
-                if( $.inArray(fabric_content_val, fabric_array) != -1 )
+            var fabric_content_val = $.trim($('.fabric_content_value').val()); 
+            $(".fabric_content > .singleField > input[type='number']").each(function() {                 
+                fabric_content_array_key.push($(this).attr('id'));
+            });      
+            
+            if( $.inArray(fabric_content_val, fabric_array) != -1 || $.inArray(fabric_content_val, fabric_content_array_key)!= -1 )
                 {
-                    alert("Ops! Already Fabric Content Added");    
+                    alert("Ops! Already Fabric Content "+ fabric_content_val +" Added");    
                 } else {
                     fabric_array.push(fabric_content_val);
                     var fabric_content = [];
-                   var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-                   $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number'  name="+fabric_content+" style='width:50px'>%");
-                }
+                    var fabric_content = "fabric_content["+fabric_content_val+"]"; 
+                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number'  name="+fabric_content+" style='width:50px'>%");
+            }
         });
         
         //------------ Count Garment detail Sum Equal to 100 Validation
@@ -65,16 +76,19 @@
         
         //--------------- Check garment detail Already Added
         $('.add_garment_detail').click(function () {                     
-                var garment_detail_val = $.trim($('.garment_detail_value').val()); 
-                if( $.inArray(garment_detail_val, garment_array) != -1 )
+            var garment_detail_val = $.trim($('.garment_detail_value').val());                
+            $(".garment_detail > .singleField > input[type='number']").each(function() {                 
+                garment_detail_array_key.push($(this).attr('id'));
+            });              
+            if( $.inArray(garment_detail_val, garment_array) != -1 || $.inArray(garment_detail_val, garment_detail_array_key)!= -1 )
                 {
-                    alert("Ops! Already garment detail Added");    
+                   alert("Ops! Already garment detail "+ garment_detail_val +" Added");    
                 } else {
                     garment_array.push(garment_detail_val);
                     var garment_detail = [];
                     var garment_detail = "garment_detail["+garment_detail_val+"]"; 
                    $('.garment_detail').prepend(" <label>"+garment_detail_val+":</label> <input type='number'  name="+garment_detail+" style='width:50px'>%");
-                }
+            }
         });
         //------------ Count Garment detail Sum Equal to 100 Validation
         $('.garment_detail').keyup(function() {
@@ -127,6 +141,7 @@
         position: relative;        
         margin-right: 5px;
     }
+    
     </style>    
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
@@ -154,7 +169,7 @@
                                                                <label>
                                                                    {{ key }} : 
                                                                </label> 
-                                                                   <input type="number" value="{{val}}" id="{{key}}"  name="{{ specs_k }}[{{key}}]" style="width:50px">%
+                                                                   <input type="number" value="{{val}}" id="{{key}}"  name="{{ specs_k }}[{{key}}]" style="width:70px">
                                                             </div>
                                                         {% endfor %}
                                                     
@@ -162,7 +177,7 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="fabric_content_value" value="" name="" style="width:50px">%
+                                                          <input type="text" class="fabric_content_value" value="" name="" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_fabric_content" type="button" value="Add">
                                                         {% endif %} 
                                                      
@@ -170,12 +185,12 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="garment_detail_value" value="" name="" style="width:50px">%
+                                                          <input type="text" class="garment_detail_value" value="" name="" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_garment_detail" type="button" value="Add">
                                                         {% endif %} 
                                                      
                                                        {% if specs_k == 'fit_priority' %}
-                                                            <select name="" class="fit_point" data-width="100%">   
+                                                           <select name="" class="fit_point" style="width:auto; background-color: #cccccc" data-width="100%">   
                                                                 {% for key,val in fit_points %}
                                                                    <option value="{{val}}"> {{key}}</option>
                                                                 {% endfor %}
