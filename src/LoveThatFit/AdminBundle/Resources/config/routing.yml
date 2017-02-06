@@ -39,7 +39,7 @@ admin_order_routes:
     prefix:   /
 
 #-------------- CLOTHING TYPE ------------------------
-    
+
 admin_clothing_type_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/clothing_type.yml"
     prefix:   /

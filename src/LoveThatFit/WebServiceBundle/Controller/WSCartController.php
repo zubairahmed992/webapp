@@ -377,5 +377,20 @@ class WSCartController extends Controller
 
         $this->get('mail_helper')->sendPurchaseEmailToAdmin($user, $dataArray);
         return;
+    #----------------------------------------------------Order Detail Services -------------------------#
+    public function orderDetailAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
+            $resp = 'Cart Item has been removed';
+            
+
+            //$res = $this->get('webservice.helper')->response_array(true, $resp);
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
     }
 }

@@ -238,3 +238,6 @@ ws_get_braintree_client_token:
     pattern: /ws/get_braintree_client_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeGetClientToker}
 
+ws_order_detail:
+   pattern: /ws/order_detail
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:orderDetail}
