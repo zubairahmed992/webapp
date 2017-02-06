@@ -377,6 +377,7 @@ class WSCartController extends Controller
 
         $this->get('mail_helper')->sendPurchaseEmailToAdmin($user, $dataArray);
         return;
+    }
     #----------------------------------------------------Order Detail Services -------------------------#
     public function orderDetailAction()
     {
