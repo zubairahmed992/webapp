@@ -80,8 +80,20 @@ class FitModelMeasurementHelper {
     
     //-------------------------
  public function getArray() {
-     return  $this->repo->getBrnadArray();  
+     return  $this->repo->getArray();  
  }
  
-    
+    //-------------------------
+ public function getTitleArray($brand=null) {
+     $title=array();
+     foreach($this->repo->findAll() as $fm){
+         if(!$brand){
+            $title[$fm->getTitle()]=$fm->getId();
+         }
+         elseif($brand==$fm->getBrand()->getName()){
+             $title[$fm->getTitle()]=$fm->getId();
+         }
+     }
+     return $title;     
+ }
 }
