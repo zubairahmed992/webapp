@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserOrderDetailRepository extends EntityRepository
 {
+	public function findByOrderID($order_id)
+	{
+		$query = $this->getEntityManager()->createQueryBuilder();
+      	return $query->select('ud.id as order_detail_id, ud.qty, ud.amount, ud.item_description, ud.sku, i.id as item_id, i.image')
+      	  	->from('LoveThatFitCartBundle:UserOrderDetail', 'ud')
+      	  	->leftJoin("LoveThatFitAdminBundle:ProductItem","i", "WITH","ud.product_item = i.id")
+          	->where('ud.user_order=:order_id')->setParameter('order_id', $order_id)
+          	->getQuery()
+          	->getResult();
+	}
 }

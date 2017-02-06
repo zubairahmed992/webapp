@@ -384,11 +384,14 @@ class WSCartController extends Controller
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
-            $resp = 'Cart Item has been removed';
-            
+            $orders = $this->get('cart.helper.order')->findOrderListByUserID($user->getId());
+            $a = 0;
+            foreach ($orders as $order) {
+                $orders[$a]['orderItem'] = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $a++;
+            }
 
-            //$res = $this->get('webservice.helper')->response_array(true, $resp);
+            $res = $this->get('webservice.helper')->response_array(true, $orders);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
