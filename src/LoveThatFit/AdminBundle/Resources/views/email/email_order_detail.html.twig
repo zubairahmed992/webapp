@@ -49,5 +49,7 @@
 <div>City: {{ dataArray['shipping_city'] }}</div>
 <div>Zip Code: {{ dataArray['shipping_postcode'] }}</div>
 <div>Shipping Address #1: {{ dataArray['shipping_address1'] }}</div>
-<div>Shipping Address #2: {{ dataArray['shipping_address2'] }}</div>
+{% if dataArray['shipping_address2'] is not empty %}
+    <div>Shipping Address #2: {{ dataArray['shipping_address2'] }}</div>
+{% endif %}
 <br>
