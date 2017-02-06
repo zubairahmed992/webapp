@@ -32,4 +32,4 @@ product_intake_product_create:
 
 product_intake_product_specs_measurements_with_fitmodel:
     pattern:  /product_intake/product_specs/measurements_with_fitmodel
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementsWithFitModed}    
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementsWithFitModel}    

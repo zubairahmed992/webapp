@@ -59,8 +59,9 @@ class ProductSpecsController extends Controller
                 ));
     }
     #----------------------- /product_intake/product_specs/measurements_with_fitmodel
-    public function measurementsWithFitModleAction(Request $request){                        
-        $decoded = $request->request->all();                
+    public function measurementsWithFitModelAction(Request $request){                        
+        $decoded = $request->request->all();      
+       // return new Response(json_encode($decoded));
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
         $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
         $parsed_data = json_decode($ps->getSpecsJson(),true);        
