@@ -58,6 +58,14 @@ class ProductSpecsController extends Controller
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
+    #----------------------- /product_intake/product_specs/measurements_with_fitmodel
+    public function measurementsWithFitModleAction(Request $request){                        
+        $decoded = $request->request->all();                
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
+        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
+        $parsed_data = json_decode($ps->getSpecsJson(),true);        
+        return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));        
+    }
    #-------------------------------
    private function apply_fit_model($sizes, $fit_model) {
         $fit_model_ratio = array();
