@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\Product;
 
@@ -86,7 +87,7 @@ class ProductSpecsController extends Controller
                 $sizes[$size][$fpk]['ideal_low'] = number_format($fit_model - $grade_rule, 2, '.', '');
                 $sizes[$size][$fpk]['max_actual'] = $sizes[$size][$fpk]['max_calc'];
                 $sizes[$size][$fpk]['min_actual'] = $sizes[$size][$fpk]['min_calc'];
-                $sizes[$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
+                #$sizes[$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
             }
         }
         return $sizes;     
@@ -270,7 +271,6 @@ public function csvUploadAction(Request $request) {
 
 #----------------------------
     private function create_product($data){
-                
         $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
         $product=new Product;
@@ -303,6 +303,7 @@ public function csvUploadAction(Request $request) {
         $em->persist($product);
         $em->flush();
         $this->create_product_sizes($product, $data);
+        $this->create_product_colors($data, $product);
         
     }
         #------------------------------------------------------------
@@ -349,5 +350,18 @@ public function csvUploadAction(Request $request) {
         }
         return;
     }
-    
+    #------------------------------------------------------------
+    private function create_product_colors($data, $product) {        
+        $color_names=explode(",", $data['colors']);        
+            $em = $this->getDoctrine()->getManager();
+            foreach ($color_names as $cn) {
+                $pc = new ProductColor();
+                $pc->setTitle(trim($cn));
+                $pc->setProduct($product);
+                $em->persist($pc);
+                $em->flush();
+            }
+                
+        return $product;
+    }
 }
