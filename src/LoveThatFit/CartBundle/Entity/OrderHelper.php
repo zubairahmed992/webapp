@@ -319,13 +319,18 @@ class OrderHelper
                 'order_number' => $fData["order_number"],
                 'user_name'    => ($fData["billing_first_name"] . " ". $fData["billing_last_name"]),
                 'order_date'   => ($fData["order_date"]->format('d-m-Y')),
-                'order_amount' => $fData["order_amount"],
-                'credit_card'  => json_decode($fData['payment_json'])
+                'order_amount' => "$" . number_format((float)$fData["order_amount"], 2, '.', ''),
+                'credit_card'  => "xxxx-xxxx-xxxx-".json_decode($fData['payment_json'])
                     ->transaction->_attributes->creditCard->last4
             ];
         }
 
         return $output;
+    }
+
+    public function findOrderListByUserID($user_id)
+    {
+        return $this->repo->findOrderListByUserID($user_id);
     }
 
 }

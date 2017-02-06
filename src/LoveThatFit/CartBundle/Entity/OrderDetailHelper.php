@@ -115,7 +115,10 @@ class OrderDetailHelper {
         return $this->repo->findOneByName($name);
     }
 
-
+    public function findByOrderID($order_id)
+    {
+      return $this->repo->findByOrderID($order_id);
+    }
 
 
    

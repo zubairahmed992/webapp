@@ -160,4 +160,20 @@ class UserOrderRepository extends EntityRepository
 		}
 		return $getResult?$preparedQuery->getResult():$preparedQuery; 
 	}
+
+	public function findOrderListByUserID($user_id)
+	{
+		$query = $this->getEntityManager()->createQueryBuilder();
+      	return $query->select('o.id, o.order_date, o.billing_first_name, o.billing_last_name, 
+      			o.billing_address1, o.billing_address2, o.billing_city, o.billing_postcode, 
+      			o.billing_country, o.billing_state, o.shipping_first_name, o.shipping_last_name,
+				o.shipping_address1, o.shipping_address2, o.shipping_city, o.shipping_postcode,
+				o.shipping_country, o.shipping_state, o.order_status, o.order_amount,
+				o.transaction_status, o.transaction_id, o.payment_method, o.billing_phone,
+				o.shipping_phone, o.order_number, o.shipping_amount')
+      	  	->from('LoveThatFitCartBundle:UserOrder', 'o')
+          	->where('o.user=:user_id')->setParameter('user_id', $user_id)
+          	->getQuery()
+          	->getResult();
+	}
 }

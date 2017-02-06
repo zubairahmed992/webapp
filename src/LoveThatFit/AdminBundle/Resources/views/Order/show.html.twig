@@ -129,26 +129,32 @@
 					<table class="order_table">
 					  <tr>
 					    <th>Item Image</th>
-					    <th>SKU</th>
 					    <th>Product Description</th>
 					    <th>Quantity</th>
 					    <th>Price</th>
 					    <th>Sub Total</th>
 					  </tr>
+					  	{% set total_price='0' %}
+					  	{% set total_sub='0' %}
 						{% for c in user_order.userOrderDetail %}
+							{% set total_price = c.productItem.price + total_price %}
 						  <tr>
 						    <td><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
-						    <td>{{ c.productItem.sku}}</td>
 						    <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
 
-						    <td>{{ c.qty }}</td>
-						    <td>${{ c.productItem.price| number_format(2)}}</td>
-						    <td>
+						    <td style="text-align:right">{{ c.qty }}</td>
+						    <td style="text-align:right">${{ c.productItem.price| number_format(2)}}</td>
+						    <td style="text-align:right">
 						    	{% set sub_total = c.productItem.price * c.qty %}
 						    	${{ sub_total| number_format(2)}}
+						    	{% set total_sub = sub_total + total_sub %}
 						   	</td>
 						  </tr>
 						{% endfor %}
+						<tr>
+							<th colspan="4" style="text-align:right"><b>${{ total_price| number_format(2)}}</b></th>
+							<th style="text-align:right"><b>${{ total_sub| number_format(2)}}</b></th>
+						</tr>
 					</table>
 				</div>
 					
