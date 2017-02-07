@@ -294,7 +294,7 @@
                                 {% else %}                               
                                 <tr>
                                     <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                    <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'disabled':''}} value="{{specs_v}}" name="{{specs_k}}"> </span></td>
+                                    <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}"> </span></td>
                                 </tr>
                             {% endif %}
                                 
