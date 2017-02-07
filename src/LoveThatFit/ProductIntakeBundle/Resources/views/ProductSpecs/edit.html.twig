@@ -10,6 +10,66 @@
     var garment_detail_array_key = [];
     var fabric_content_array_key = [];
     $(document).ready(function(){ 
+      
+      //---------------- Fit Model Calcultion on Ajax Hit
+        $(".fit_model_size").change(function() {
+            var pro_speci_id = $('.product_spec_size').val();            
+            fit_model_id = this.value;
+                $.ajax({
+                    type: "POST",
+                    url: "../measurements_with_fitmodel",
+                    data: {fit_model_measurement_id:fit_model_id,product_specification_id: pro_speci_id},
+                    dataType: "json",
+                    success: function (response) {    
+                        $('#dv_measurement_table').empty();
+                        var tableData = '<table class="table table-bordered">';
+                        $.each(response, function (size_label, size_measurements) { 
+                            tableData+="<tr class='Active'><th >"+size_label+"</th><th >garment_dimension</th><th >garment_stretch</th><th >min_calc</th><th >min_actual</th><th >ideal_low</th><th >fit_model</th><th >ideal_high</th><th >max_calc</th> <th >max_actual</th><th >grade rule</th></tr>" 
+                            $.each(size_measurements, function (size_measurements_label, size_measurements_dimention) {                               
+                                tableData+= "<tr><th>"+size_measurements_label+"</th>" 
+                                $.each(size_measurements_dimention, function (size_measurements_dimention_label, size_measurements_dimention_value) {                                   
+                                      tableData+="<td><input type='text' value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_label+"-"+size_measurements_dimention_label+"' style='width:50px'> </td>";
+                                })
+                                tableData+= "</tr>"; 
+                            });                                     
+                        });
+                        tableData+= "</table>";
+                        $('#dv_measurement_table').append(tableData); 
+                    },
+                    failure: function (errMsg) {
+                      display_response(errMsg);
+                      console.log(errMsg);
+                    }
+                });
+             //alert(sizes)
+            
+             {#var tableData = '<table class="table table-bordered">';
+             $.each(sizes, function (size_label, size_measurements) {
+                    //tableData += "<th>" + size_label + "</th>";
+                    console.log(size_label);
+                  tableData+="<tr class='Active'><th >"+size_label+"</th><th >garment_dimension</th><th >garment_stretch</th><th >min_calc</th><th >min_actual</th><th >ideal_low</th><th >fit_model</th><th >ideal_high</th><th >max_calc</th> <th >max_actual</th><th >grade rule</th></tr>" 
+                    $.each(size_measurements, function (size_measurements_label, size_measurements_dimention) {
+                        console.log(size_measurements_label);
+                        tableData+= "<tr><th>"+size_measurements_label+"</th>" 
+                                          
+                        $.each(size_measurements_dimention, function (size_measurements_dimention_label, size_measurements_dimention_value) {
+                             console.log(size_measurements_dimention_label);
+                              tableData+="<td><input type='text' value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_dimention_label+"-garment_dimension' style='width:50px'> </td>";
+                                         
+                         })
+                         tableData+= "</tr>"; 
+                    });
+                   // console.log(tableData);
+                  
+                });
+                 tableData+= "</table>";
+                   $('.size_calculate').append(tableData);#}
+      
+         //alert( $('option:selected', this).text() );
+         
+        });
+        
+       
         //-------------- Check Fit Priority Alredy Added
         $('.fit_point_selected').click(function () {               
             var fit_point_val = $.trim($('.fit_point option:selected').val());           
@@ -216,16 +276,16 @@
                                                     </div>
                                                         {% endif %} 
                                                     {% else %}
-                                                        <select name="{{ specs_k }}" data-width="100%">
+                                                        <select name="{{ specs_k }}" class="{{ specs_k }}" data-width="100%">
                                                             <option  >Select</option>
                                                             {% for key,val in drop_down_values[specs_k] %}
                                                                <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
                 {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
                                                             {% endfor %}
                                                         </select>  
-                                                        {% if specs_k == 'fit_model_size'%}
+                                                       {# {% if specs_k == 'fit_model_size'%}
                                                             <a href="#" id="a_fit_model_size">Calculate</a> 
-                                                        {% endif %}                      
+                                                        {% endif %}  #}                    
                                                     
                                                     {% endif %}                      
                                             </div>
@@ -234,7 +294,7 @@
                                 {% else %}                               
                                 <tr>
                                     <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                    <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'disabled':''}} value="{{specs_v}}" name="{{specs_k}}"> </span></td>
+                                    <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}"> </span></td>
                                 </tr>
                             {% endif %}
                                 
@@ -292,6 +352,8 @@
             <input type="submit" value="Save">                              
     </div>
 </form>                                
-  <br>  
-               
+  <br>                
+  <input type="hidden" class="product_spec_size" value="{{ app.request.get('id') }} ">
+
+  
 {% endblock %}
