@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\Product;
 
@@ -44,8 +45,8 @@ class ProductSpecsController extends Controller
         $parsed_data['fit_model_size']=  array_key_exists('fit_model_size',$parsed_data)?$parsed_data['fit_model_size']:'';
         $drop_down_values['fit_model_size'] = $this->get('productIntake.fit_model_measurement')->getTitleArray();
         
-        if ($fm){            
-            return new Response(json_encode($parsed_data));           
+        if ($fm){                        
+            return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));            
          }
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
@@ -58,7 +59,39 @@ class ProductSpecsController extends Controller
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
-   
+    #----------------------- /product_intake/product_specs/measurements_with_fitmodel
+    public function measurementsWithFitModelAction(Request $request){                        
+        $decoded = $request->request->all();      
+       // return new Response(json_encode($decoded));
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
+        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
+        $parsed_data = json_decode($ps->getSpecsJson(),true);        
+        return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));        
+    }
+   #-------------------------------
+   private function apply_fit_model($sizes, $fit_model) {
+        $fit_model_ratio = array();
+        $fit_model_fit_points = json_decode($fit_model->getMeasurementJson(), true);
+
+        foreach ($sizes[$fit_model->getSize()] as $fit_point => $measure) {
+            $fit_model_ratio[$fit_point] = ($fit_model_fit_points[$fit_point] / $measure['garment_dimension']);
+        }
+        foreach ($sizes as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                $fit_model = $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
+                $grade_rule = $sizes[$size][$fpk]['grade_rule'];
+                $sizes[$size][$fpk]['fit_model'] = number_format($fit_model, 2, '.', '');
+                $sizes[$size][$fpk]['max_calc'] = number_format($fit_model + (2.5 * $grade_rule), 2, '.', '');
+                $sizes[$size][$fpk]['min_calc'] = number_format($fit_model - (2.5 * $grade_rule), 2, '.', '');
+                $sizes[$size][$fpk]['ideal_high'] = number_format($fit_model + $grade_rule, 2, '.', '');
+                $sizes[$size][$fpk]['ideal_low'] = number_format($fit_model - $grade_rule, 2, '.', '');
+                $sizes[$size][$fpk]['max_actual'] = $sizes[$size][$fpk]['max_calc'];
+                $sizes[$size][$fpk]['min_actual'] = $sizes[$size][$fpk]['min_calc'];
+                #$sizes[$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
+            }
+        }
+        return $sizes;     
+    }
       
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
@@ -238,7 +271,6 @@ public function csvUploadAction(Request $request) {
 
 #----------------------------
     private function create_product($data){
-                
         $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
         $product=new Product;
@@ -271,6 +303,7 @@ public function csvUploadAction(Request $request) {
         $em->persist($product);
         $em->flush();
         $this->create_product_sizes($product, $data);
+        $this->create_product_colors($data, $product);
         
     }
         #------------------------------------------------------------
@@ -317,5 +350,18 @@ public function csvUploadAction(Request $request) {
         }
         return;
     }
-    
+    #------------------------------------------------------------
+    private function create_product_colors($data, $product) {        
+        $color_names=explode(",", $data['colors']);        
+            $em = $this->getDoctrine()->getManager();
+            foreach ($color_names as $cn) {
+                $pc = new ProductColor();
+                $pc->setTitle(trim($cn));
+                $pc->setProduct($product);
+                $em->persist($pc);
+                $em->flush();
+            }
+                
+        return $product;
+    }
 }
