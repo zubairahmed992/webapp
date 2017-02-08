@@ -9,7 +9,33 @@
     var fit_priority_array_key = [];
     var garment_detail_array_key = [];
     var fabric_content_array_key = [];
+    var input_value  = [];
+   
     $(document).ready(function(){ 
+      
+       
+           //-------------------------- Fit Model Validation Sizes Dimention
+           $("tr#validation_fit_model").on('click', function() {
+             //event.preventDefault();  
+              input_value = [];
+                row_class = $(this).attr('class');
+                $("."+row_class).closest('tr').find("input").each(function() {
+                  input_value.push($(this).val());              
+                });              
+            });
+            console.log(input_value);
+            
+                //        var text = '';
+           $("table tr td input").keyup(function() {               
+               input_val = $.trim(this.value);
+               val_index = ($(this).parent().index())-1;
+               //alert(input_value)
+               if(input_val > input_value[5] && val_index == 0 || input_val > input_value[5] && val_index == 2 ||input_val > input_value[5] && val_index == 3 ||input_val > input_value[5] && val_index == 4){
+                   alert("Ops! Must be value lsss then Fit Model");
+               } 
+               input_value = [];
+            });
+          
       
       //---------------- Fit Model Calcultion on Ajax Hit
         $(".fit_model_size").change(function() {
@@ -328,11 +354,11 @@
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {% if (measurement_v.garment_dimension>0) %}
-                                        <tr>
+                                        <tr class="{{ size }}_{{ measurement_k }}" id="validation_fit_model" >
                                             <th>{{measurement_k}}</th>
                                             <td><input type="text" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> </td>
-                                            <td><input type="text" value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>
-                                            <td><input type="text" value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px"></td>
+                                            <td><input class="{{ size }}_{{ measurement_k }}" type="text" value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>
+                                            <td><input class="{{ size }}_{{ measurement_k }}" type="text" value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px"></td>
                                             <td><input type="text" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px"></td>
                                             <td><input type="text" value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px"></td>
                                             <td><input type="text" value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px"></td>
