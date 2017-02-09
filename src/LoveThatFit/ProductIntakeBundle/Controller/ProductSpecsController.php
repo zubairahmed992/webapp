@@ -61,36 +61,22 @@ class ProductSpecsController extends Controller
     }
     #----------------------- /product_intake/product_specs/measurements_with_fitmodel
     public function measurementsWithFitModelAction(Request $request){                        
-        $decoded = $request->request->all();      
-       // return new Response(json_encode($decoded));
+        $decoded = $request->request->all();             
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
         $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
         $parsed_data = json_decode($ps->getSpecsJson(),true);        
-        return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));        
+        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($parsed_data['sizes'], $fm);  
+        return new Response(json_encode($updated_measurements));        
     }
-   #-------------------------------
-   private function apply_fit_model($sizes, $fit_model) {
-        $fit_model_ratio = array();
-        $fit_model_fit_points = json_decode($fit_model->getMeasurementJson(), true);
-
-        foreach ($sizes[$fit_model->getSize()] as $fit_point => $measure) {
-            $fit_model_ratio[$fit_point] = ($fit_model_fit_points[$fit_point] / $measure['garment_dimension']);
-        }
-        foreach ($sizes as $size => $fit_points) {
-            foreach ($fit_points as $fpk => $fpv) {
-                $fit_model = $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
-                $grade_rule = $sizes[$size][$fpk]['grade_rule'];
-                $sizes[$size][$fpk]['fit_model'] = number_format($fit_model, 2, '.', '');
-                $sizes[$size][$fpk]['max_calc'] = number_format($fit_model + (2.5 * $grade_rule), 2, '.', '');
-                $sizes[$size][$fpk]['min_calc'] = number_format($fit_model - (2.5 * $grade_rule), 2, '.', '');
-                $sizes[$size][$fpk]['ideal_high'] = number_format($fit_model + $grade_rule, 2, '.', '');
-                $sizes[$size][$fpk]['ideal_low'] = number_format($fit_model - $grade_rule, 2, '.', '');
-                $sizes[$size][$fpk]['max_actual'] = $sizes[$size][$fpk]['max_calc'];
-                $sizes[$size][$fpk]['min_actual'] = $sizes[$size][$fpk]['min_calc'];
-                #$sizes[$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
-            }
-        }
-        return $sizes;     
+      #----------------------- /product_intake/product_specs/measurements_with_stretch
+    public function measurementsWithStretchAction(Request $request){                        
+        $decoded = $request->request->all();             
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);          
+        $specs_data = json_decode($ps->getSpecsJson(),true);        
+        $specs_data['horizontal_stretch'] = array_key_exists('horizontal_stretch',$decoded)?$decoded['horizontal_stretch']:0;
+        $specs_data['vertical_stretch'] = array_key_exists('vertical_stretch',$decoded)?$decoded['vertical_stretch']:0;        
+        $updated_measurements =  $this->get('pi.product_specification')->calculateWithStretch($specs);  
+        return new Response(json_encode($updated_measurements));        
     }
       
     #----------------------- /product_intake/product_specs/show
@@ -363,5 +349,41 @@ public function csvUploadAction(Request $request) {
             }
                 
         return $product;
+    }
+    #------------------------------------------------------------
+    private function validate_specs($data) {        
+            foreach ($data['sizes'] as $s=>$fp) {
+                
+                # garment_dimension ~~~~~~~>
+                
+                
+                # garment_stretch ~~~~~~~>	
+                
+                
+                # min_calc	 ~~~~~~~>
+                
+                
+                # min_actual	 ~~~~~~~>
+                
+                
+                # ideal_low	 ~~~~~~~>
+                
+                
+                # fit_model	 ~~~~~~~>
+                
+                
+                # ideal_high	 ~~~~~~~>
+                
+                
+                # max_calc	 ~~~~~~~>
+                
+                
+                # max_actual	 ~~~~~~~>
+                
+                
+                # grade rule    ~~~~~~~>                
+                
+                
+            }
     }
 }
