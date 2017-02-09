@@ -9,11 +9,9 @@
     var fit_priority_array_key = [];
     var garment_detail_array_key = [];
     var fabric_content_array_key = [];
-    var input_value  = [];
-    var focus_satus = true;
+    var input_value  = [];  
     $(document).ready(function(){ 
-      
-       
+        
            //-------------------------- Fit Model Validation Sizes Dimention
             $("tr#validation_fit_model").on('click', function() {
              //event.preventDefault();  
@@ -23,29 +21,38 @@
                   input_value.push($(this).val());              
                 });              
             });
-            console.log(input_value);
-             $("table tr td input").on('focusout', function(e) {
+           
+            //--------------- Focus nave Lost on Wron enter value into Sizes
+           {# $("table tr td input").on('focusout', function(e) {
                  if ($(this).hasClass("error")) {
                      $(this).focus();
                  }
-             })
+            });#}
                 //        var text = '';
             $("table tr td input").on('keyup', function(e) {
                 if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) { 
                     input_val = $.trim(this.value);
                     val_index = $(this).attr('class');
                     //alert(input_value[5])
-                    if(input_val > input_value[5] && val_index == 0 || input_val > input_value[5] && val_index == 2 || input_val > input_value[5] && val_index == 3 || input_val > input_value[5] && val_index == 4){
+                    if( input_val > input_value[5] && val_index == 2 || input_val > input_value[5] && val_index == 3 || input_val > input_value[5] && val_index == 4){
                         $(this).css("color","red");                        
-                        alert("Ops! Must be value less then Fit Model");
-                         $(this).addClass("error");
-                    } else if(input_val < input_value[5] && val_index == 6 || input_val < input_value[5] && val_index == 7 || input_val < input_value[5] && val_index == 8 || input_val < input_value[5] && val_index == 9){
-                        $(this).css("color","red");
-                        alert("Ops! Must be value greater then Fit Model");
+                        //alert("Ops! Must be value less then Fit Model");
                         $(this).addClass("error");
-                    } else {
-                         $(this).css("color","black");
-                         $(this).removeClass("error");
+                    } else if( input_val < input_value[5] && val_index == 6 || input_val < input_value[5] && val_index == 7 || input_val < input_value[5] && val_index == 8 ){
+                        $(this).css("color","red");
+                        //alert("Ops! Must be value greater then Fit Model");
+                        $(this).addClass("error");
+                    } else if( input_val > input_value[4] && val_index == 2 || input_val > input_value[4] && val_index == 3 ){
+                        $(this).css("color","red");
+                        //alert("Ops! Must be value greater then Fit Model");
+                        $(this).addClass("error");                                 
+                    } else if( input_val < input_value[8] && val_index == 6 || input_val < input_value[8] && val_index == 7 ){
+                        $(this).css("color","red");
+                        //alert("Ops! Must be value greater then Fit Model");
+                        $(this).addClass("error");                                 
+                    } esle{
+                        $(this).css("color","black");
+                        $(this).removeClass("error");
                     }
                 }
               // input_value = [];
