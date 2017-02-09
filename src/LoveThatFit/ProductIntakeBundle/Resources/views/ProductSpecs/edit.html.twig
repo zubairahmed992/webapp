@@ -50,7 +50,7 @@
                         $(this).css("color","red");
                         //alert("Ops! Must be value greater then Fit Model");
                         $(this).addClass("error");                                 
-                    } esle{
+                    } else {
                         $(this).css("color","black");
                         $(this).removeClass("error");
                     }
@@ -71,18 +71,21 @@
                     success: function (response) {    
                         $('#dv_measurement_table').empty();
                         var tableData = '<table class="table table-bordered">';
+                        var class_count = 0;
                         $.each(response, function (size_label, size_measurements) { 
+                            console.log(k)
                             tableData+="<tr class='Active'><th >"+size_label+"</th><th >garment_dimension</th><th >garment_stretch</th><th >min_calc</th><th >min_actual</th><th >ideal_low</th><th >fit_model</th><th >ideal_high</th><th >max_calc</th> <th >max_actual</th><th >grade rule</th></tr>" 
                             $.each(size_measurements, function (size_measurements_label, size_measurements_dimention) {                               
                                 tableData+= "<tr><th>"+size_measurements_label+"</th>" 
                                 $.each(size_measurements_dimention, function (size_measurements_dimention_label, size_measurements_dimention_value) {                                   
-                                      tableData+="<td><input type='number' value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_label+"-"+size_measurements_dimention_label+"' style='width:50px'> </td>";
+                                      tableData+="<td><input type='number' class="+class_count+" value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_label+"-"+size_measurements_dimention_label+"' style='width:50px'> </td>";
                                 })
                                 tableData+= "</tr>"; 
-                            });                                     
+                            });   
+                            class_count++;
                         });
                         tableData+= "</table>";
-                        $('#dv_measurement_table').append(tableData); 
+                        $('#dv_measurement_table').append(tableData);                         
                     },
                     failure: function (errMsg) {
                       display_response(errMsg);
