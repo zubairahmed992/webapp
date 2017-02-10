@@ -368,9 +368,9 @@ public function getBrandRetailerList($date_fromat = null) {
 
     public function getBrandListWithBannerForService($position = 0) {
         $data = $this->repo->getBrandRetailerWithBannerList($position);
-        $path = $_SERVER['HTTP_HOST'].'/uploads/ltf/brands/';
+        $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/brands/';
         if($position == 1){
-            $path = $_SERVER['HTTP_HOST'].'/uploads/ltf/brands/brand_top/';
+            $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/brands/brand_top/';
         }
 
         foreach ($data as $key) {
