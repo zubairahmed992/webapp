@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Parser;
 
 class ProductSpecificationHelper {
 
+    protected $conf;
     protected $dispatcher;
 
     /**
@@ -34,6 +35,8 @@ class ProductSpecificationHelper {
         $this->em = $em;
         $this->class = $class;
         $this->repo = $em->getRepository($class);
+        $conf_yml = new Parser();
+        $this->conf = $conf_yml->parse(file_get_contents('../src/LoveThatFit/ProductIntakeBundle/Resources/config/specs_config.yml'));
     }
     //-------------------------Create --------------------------------------------   
 public function getNew() {
@@ -109,10 +112,97 @@ public function getNew() {
   public function findAll(){
   return $this->repo->findAll();      
     }
-//----------------------Find By title----------------------------------------------------------------
+#----------------------Find By title----------------------------------------------------------------
     public function findOneByTitle($title) {
         return $this->repo->findOneByTitle($title);
     }
-    
-    
+#----------------------    
+    public function calculateWithFitModel($sizes, $fit_model){
+        $fit_model_ratio = array();
+        $fit_model_fit_points = json_decode($fit_model->getMeasurementJson(), true);
+
+        foreach ($sizes[$fit_model->getSize()] as $fit_point => $measure) {
+            $fit_model_ratio[$fit_point] = ($fit_model_fit_points[$fit_point] / $measure['garment_dimension']);
+        }
+        foreach ($sizes as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                $fit_model = $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
+                $grade_rule = $sizes[$size][$fpk]['grade_rule'];
+                $sizes[$size][$fpk]['fit_model'] = number_format($fit_model, 2, '.', '');
+                $sizes[$size][$fpk]['max_calc'] = number_format($fit_model + (2.5 * $grade_rule), 2, '.', '');
+                $sizes[$size][$fpk]['min_calc'] = number_format($fit_model - (2.5 * $grade_rule), 2, '.', '');
+                $sizes[$size][$fpk]['ideal_high'] = number_format($fit_model + $grade_rule, 2, '.', '');
+                $sizes[$size][$fpk]['ideal_low'] = number_format($fit_model - $grade_rule, 2, '.', '');
+                $sizes[$size][$fpk]['max_actual'] = $sizes[$size][$fpk]['max_calc'];
+                $sizes[$size][$fpk]['min_actual'] = $sizes[$size][$fpk]['min_calc'];
+                #$sizes[$size][$fpk]['ratio'] = $fit_model_ratio[$fpk];
+                if(array_key_exists('grade_rule_stretched', $sizes[$size][$fpk])){
+                    $grade_rule_stretched = $sizes[$size][$fpk]['grade_rule_stretched'];
+                    $sizes[$size][$fpk]['max_calc_stretched'] = number_format($fit_model + (2.5 * $grade_rule_stretched), 2, '.', '');
+                    $sizes[$size][$fpk]['ideal_high_stretched'] = number_format($fit_model + $grade_rule_stretched, 2, '.', '');
+                    $sizes[$size][$fpk]['max_actual_stretched'] = $sizes[$size][$fpk]['max_calc_stretched'];
+                }
+                
+            }
+        }
+        return $sizes;     
+    }
+    #----------------------    
+    public function calculateWithStretch($specs){
+        
+        $horizontal=array('clothing_type', 'brand', 'name', 'gender', 'description', 'styling_type', 'hem_length', 'neckline', 'sleeve_styling', 'rise', 'stretch_type', 'horizontal_stretch', 'vertical_stretch', 'fabric_weight', 'layering', 'structural_detail', 'fit_type', 'fit_priority', 'fabric_content', 'garment_detail', 'size_title_type', 'retailer_reference', 'control_number', 'colors');
+        
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                
+            }
+        }
+        return $specs;     
+    }
+    #------------------------
+    public function getFitPointArray(){
+        $fp=array();
+        foreach ($this->conf['fit_points'] as $fpk => $fpv) {
+            #$fp[$fpv['axis']=='x'?'horizontal':'vertical'][$fpk]=$fpv['title'];
+            $fp[$fpv['axis']][$fpk]=$fpv['title'];
+        }
+        return $fp;
+    }
+    #----------------------------------
+    public function calculateGradeRule($specs) {
+        $fpa = $this->getFitPointArray();
+        $prev_size_key = null;
+        $size_no = 0;
+        foreach ($specs['sizes'] as $size_key => $fit_points) {
+            $size_no = $size_no + 1;
+            foreach ($fit_points as $fit_point => $ranges) {
+                if ($prev_size_key) {
+                    $grade_rule = $specs['sizes'][$size_key][$fit_point]['garment_dimension'] - $specs['sizes'][$prev_size_key][$fit_point]['garment_dimension'];
+                    if (array_key_exists($fit_point, $fpa['x'])) {
+                        if ($specs['horizontal_stretch'] > 0) {
+                            $grade_rule = $grade_rule + (($grade_rule * $specs['horizontal_stretch']) / 100);                            
+                            $specs['sizes'][$size_key][$fit_point]['grade_rule_stretched'] = $grade_rule;
+                            if ($size_no == 2) {                                    
+                                $specs['sizes'][$prev_size_key][$fit_point]['grade_rule_stretched'] = $grade_rule;                                    
+                            }                            
+                        }
+                    } else {
+                        if ($specs['vertical_stretch'] > 0) {
+                            $grade_rule = $grade_rule + (($grade_rule * $specs['vertical_stretch']) / 100);
+                            $specs['sizes'][$size_key][$fit_point]['grade_rule_stretched'] = $grade_rule;
+                            if ($size_no == 2) {                                    
+                                $specs['sizes'][$prev_size_key][$fit_point]['grade_rule_stretched'] = $grade_rule;                                    
+                            }                            
+                        }
+                    }
+                }
+            }
+            $prev_size_key = $size_key;
+        }
+        return $specs;
+    }
+    #----------------------------------
+    public function calculateFitModelAndRanges(){
+        
+    }
 }
