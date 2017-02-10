@@ -215,26 +215,26 @@ iphone6:
 iphone5:    
   f:
     measurements:
-      bra_size: "32 c"
-      body_shape: hourglass
+      bra_size: "30 b"
+      body_shape: rectangle
       body_type: regular
-      weight: 130
-      height: 66
-      waist:  25
+      weight: 125
+      height: 65.75
+      waist: 25.73
       belt: 0
-      hip:  37.02
-      bust: 35.28
-      chest:  33.7
+      hip: 34.23
+      bust: 33.28
+      chest: 33.7
       arm:  0
-      inseam: 30
-      shoulder_height:  143.76
+      inseam: 30.54
+      shoulder_height:  164.84
       outseam:  0
       sleeve: 26.8
-      neck: 13.5  
-      thigh: 21.40
+      neck: 13.5
+      thigh: 21.23
       center_front_waist: 16.2
-      shoulder_across_front: 12.27
-      shoulder_across_back: 15.77
+      shoulder_across_front: 11.29
+      shoulder_across_back: 14.125
       bicep: 9.8
       tricep: 9.8
       wrist: 5.8
@@ -246,7 +246,7 @@ iphone5:
       shoulder_width: 0
       bust_height: 0
       waist_height: 0
-      hip_height: 302.31
+      hip_height: 308.22
       bust_width: 0
       waist_width: 0
       hip_width: 0
