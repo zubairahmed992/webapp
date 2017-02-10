@@ -12,11 +12,42 @@
 
 {% block body %}
 <script>
+    jQuery(document).ready(function() {
+
+        if(jQuery('#brand_screen_position:checkbox:checked').length > 0){
+            jQuery('#banner_image_div').show();
+        }else{
+            jQuery('#banner_image_div').hide();
+        }
+
+        jQuery('#top_banner_file_error').remove();
+        jQuery('#brand_screen_position').change(function(){
+            jQuery('#brand_banner_file').val('');
+            if(this.checked){
+                jQuery('#banner_image_div').show();
+            }else{
+                jQuery('#banner_image_div').hide();
+            }
+
+        });
+
+        jQuery( "#brand_form_submition" ).submit(function( event ) {
+            jQuery('#top_banner_file_error').remove();
+            var top_banner_checkbox = jQuery('#brand_screen_position:checkbox:checked').length;
+            if(top_banner_checkbox > 0){
+                if(jQuery('#brand_banner_file').val() == ""){
+                    jQuery("#banner_image_div").append("<span id='top_banner_file_error' style='color:red !important;'>Please Select the File</span>");
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
 function validates()
 {
 var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
    
-var image_file = document.getElementById('form_file').value;
+var image_file = document.getElementById('form_file').val();
 var image_length = document.getElementById('form_file').length;
 
 var pos = image_file.lastIndexOf('.') + 1;
@@ -49,7 +80,7 @@ return true;
      <a href="{{ path('admin_brands') }}" class="btn">back</a>     
      </div>
       <div class="clearfix"></div>   
-    <form action="{{ path('admin_brand_create') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+    <form id="brand_form_submition" action="{{ path('admin_brand_create') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
  {{ form_errors(form) }}
 
             <div id="detail_wrapper" class="detail_wrap">      
@@ -79,8 +110,17 @@ return true;
                                     <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
                                    
                                 </div>
-                                    
-                                       
+
+                                <div>
+                                    <label>Top Banner</label>
+                                    {{ form_widget(form.screen_position) }}{{ form_errors(form.screen_position) }}
+                                </div>
+
+                                <div id="banner_image_div" style="display:none;">
+                                    <label>Top Banner Image</label>
+                                    {{ form_widget(form.banner_file) }}{{ form_errors(form.banner_file) }}
+                                </div>
+
                                 <div class="row-fluid show-grid">
                                    
                                     <div class="span3">&nbsp;</div>

@@ -52,6 +52,18 @@ class BrandHelper {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->upload();
+
+            //Banner Image Added
+            if(null != $entity->banner_file) {
+                $ext = pathinfo($entity->banner_file->getClientOriginalName(), PATHINFO_EXTENSION);
+                $bannerimage = uniqid() . '.' . $ext;
+                $entity->setTopBannerImage($bannerimage);
+                $entity->banner_file->move(
+                    __DIR__ . '/../../../../web/uploads/ltf/brands/brand_top/', $bannerimage
+                );
+            }
+            //Banner Image Added
+
             $this->em->persist($entity);
             $this->em->flush();
             return array('message' => 'Brand succesfully created.',
@@ -71,6 +83,26 @@ class BrandHelper {
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->upload();
+
+            //Banner Image Added
+            if(null != $entity->banner_file) {
+                $previous_image = $entity->getTopBannerImage();
+                $ext = pathinfo($entity->banner_file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+                $bannerimage = uniqid() . '.' . $ext;
+                $entity->setTopBannerImage($bannerimage);
+                $entity->banner_file->move(
+                    __DIR__ . '/../../../../web/uploads/ltf/brands/brand_top/', $bannerimage
+                );
+                //if record is being updated, then delete previous images
+                //original image is being deleted
+                $root_image_path = __DIR__ . '/../../../../web/uploads/ltf/brands/brand_top/' . $previous_image;
+                if (is_readable($root_image_path)) {
+                    @unlink($root_image_path);
+                }
+            }
+            //Banner Image Added
+
             $this->em->persist($entity);
             $this->em->flush();
 
@@ -331,5 +363,20 @@ public function getBrandRetailerList($date_fromat = null) {
         $ret['retailer'] = $retList;
         $ret['brand'] = $arr2;
         return $ret;
+    }
+
+
+    public function getBrandListWithBannerForService($position = 0) {
+        $data = $this->repo->getBrandRetailerWithBannerList($position);
+        $path = "";
+        if($position == 1){
+            $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/brands/brand_top/';
+        }
+
+        foreach ($data as $key) {
+            $arr2[] = array('brand_id' => $key['brand_id'], 'name' => $key['brand_name'], 'image' => $path.$key['brand_image']);
+        }
+
+        return $arr2;
     }
 }
