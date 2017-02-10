@@ -385,7 +385,7 @@ class BrandRepository extends EntityRepository {
 
             $query = $this->getEntityManager()
                 ->createQuery("
-                  SELECT b.id as brand_id,b.name as brand_name,b.top_banner_image as banner_image
+                  SELECT b.id as brand_id,b.name as brand_name,b.top_banner_image as brand_image
                  FROM LoveThatFitAdminBundle:Brand b
                  WHERE b.disabled=0 and  b.screen_position>=:screen_position")
                 ->setParameters(array('screen_position' => $position));
