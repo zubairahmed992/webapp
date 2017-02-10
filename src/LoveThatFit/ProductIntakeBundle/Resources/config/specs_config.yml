@@ -14,13 +14,11 @@ fit_points:
     shoulder_length: 
       title:  Shoulder length
       axis:  y
-      
-      
+            
     arm_length: 
       title:  Arm length
       axis:  y
-      
-      
+            
     bicep: 
       title:  Bicep
       axis:  x

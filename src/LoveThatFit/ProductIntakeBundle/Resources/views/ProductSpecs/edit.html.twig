@@ -80,7 +80,13 @@
                                 var class_count = 0;
                                 tableData+= "<tr><th>"+size_measurements_label+"</th>" 
                                 $.each(size_measurements_dimention, function (size_measurements_dimention_label, size_measurements_dimention_value) {                                   
-                                      tableData+="<td><input type='number' class="+class_count+" value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_label+"-"+size_measurements_dimention_label+"' style='width:50px'> </td>";
+                                     if(!size_measurements_dimention_label.match('stretched'))
+                                        if(size_measurements_dimention[size_measurements_dimention_label+"_stretched"]){
+                                            tableData+="<td><input type='number' class="+class_count+" value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_label+"-"+size_measurements_dimention_label+"' style='width:50px'>("+size_measurements_dimention[size_measurements_dimention_label+"_stretched"]+") </td>";
+                                        }else{
+                                        tableData+="<td><input type='number' class="+class_count+" value="+size_measurements_dimention_value+" name='sizes-"+size_label+"-"+size_measurements_label+"-"+size_measurements_dimention_label+"' style='width:50px'> </td>";
+                                      
+                                      }
                                       class_count++;    
                             })
                                 

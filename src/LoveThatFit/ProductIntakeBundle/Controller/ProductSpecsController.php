@@ -35,6 +35,8 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $fit_model_measurement_id=null){                
+        #$conf = $this->get('pi.product_specification')->getFitPointArray();  
+        #return new Response(json_encode($conf));
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
         $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
         
@@ -65,7 +67,8 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
         $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
         $parsed_data = json_decode($ps->getSpecsJson(),true);        
-        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($parsed_data['sizes'], $fm);  
+        $ps = $this->get('pi.product_specification')->calculateGradeRule($parsed_data);  
+        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($ps['sizes'], $fm);  
         return new Response(json_encode($updated_measurements));        
     }
       #----------------------- /product_intake/product_specs/measurements_with_stretch
