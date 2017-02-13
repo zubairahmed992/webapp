@@ -28,7 +28,7 @@
                     <div id="pro_img"> <img src="{{ asset(brand.WebPath) }}" />
                     </div><!--/.well -->
                     <div class="clearfix"></div>
-                    {%if (brand.getTopBannerImage!=null)%}
+                    {%if (brand.getScreenPosition !=0 )%}
                         <strong><br/>  Top Banner Image</strong>
                         <div id="pro_img" style="clear:both !important;"> <img src="{{ asset('uploads/ltf/brands/brand_top/' ~ brand.getTopBannerImage) }}" /></div><!--/.well -->
                         <div class="clearfix"></div>
