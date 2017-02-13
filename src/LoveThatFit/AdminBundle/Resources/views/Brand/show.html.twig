@@ -27,11 +27,16 @@
                 <div class="span3">
                     <div id="pro_img"> <img src="{{ asset(brand.WebPath) }}" />
                     </div><!--/.well -->
-                    <div class="clearfix"></div>                    
+                    <div class="clearfix"></div>
+                    {%if (brand.getTopBannerImage!=null)%}
+                        <strong><br/>  Top Banner Image</strong>
+                        <div id="pro_img" style="clear:both !important;"> <img src="{{ asset('uploads/ltf/brands/brand_top/' ~ brand.getTopBannerImage) }}" /></div><!--/.well -->
+                        <div class="clearfix"></div>
+                    {%endif%}
                     </div>
                     <div id="product_content">
                         <div id="pro_detail">
-                            <div class="edt_container">         
+                            <div class="edt_container">
                                 <div class="row-fluid show-grid edt_span">
                                     <div class="span8">
                                     <div class="span3">Id</div>
@@ -57,7 +62,7 @@
                                     </div>
                                     </div>          
                                         
-                                </div> 
+                                </div>
                                     {%if (brand.getBrandspecification!=null)%}
                                      {% include 'LoveThatFitAdminBundle:Brand:show_brand_specification.html.twig'%}
                                      {%else%}
