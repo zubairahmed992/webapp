@@ -71,14 +71,15 @@ class ProductSpecsController extends Controller
         $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($ps['sizes'], $fm);  
         return new Response(json_encode($updated_measurements));        
     }
-      #----------------------- /product_intake/product_specs/measurements_with_stretch
-    public function measurementsWithStretchAction(Request $request){                        
-        $decoded = $request->request->all();             
+      #----------------------- /product_intake/product_specs/measurement_recalculate
+    public function measurementRecalculateAction(Request $request){                        
+        $decoded = $request->request->all();    
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);          
         $specs_data = json_decode($ps->getSpecsJson(),true);        
         $specs_data['horizontal_stretch'] = array_key_exists('horizontal_stretch',$decoded)?$decoded['horizontal_stretch']:0;
         $specs_data['vertical_stretch'] = array_key_exists('vertical_stretch',$decoded)?$decoded['vertical_stretch']:0;        
-        $updated_measurements =  $this->get('pi.product_specification')->calculateWithStretch($specs);  
+        $specs_data['fit_model_measurement_id'] = array_key_exists('fit_model_measurement_id',$decoded)?$decoded['fit_model_measurement_id']:0;                
+        $updated_measurements =  $this->get('pi.product_specification')->calculateRanges($specs_data);  
         return new Response(json_encode($updated_measurements));        
     }
       
