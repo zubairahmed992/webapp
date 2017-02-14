@@ -38,7 +38,7 @@ class WSCartController extends Controller
         if ($user) {
             $items = isset($decoded["items"]) ? $decoded["items"] : "0";
             if ($items != 0) {
-                $this->container->get('cart.helper.cart')->removeUserCart($user);
+                // $this->container->get('cart.helper.cart')->removeUserCart($user);
                 foreach ($items as $detail) {
                     $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
                 }
