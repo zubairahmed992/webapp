@@ -127,7 +127,7 @@ ws_support_task_log_add:
 #-------------------------Shopping Cart Routes-------------------------------------
 
 #Add Single Item to Cart
-ws_cart_single_item:
+ws_cart_item_add_to_cart:
     pattern:  /ws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCart}
 

@@ -347,7 +347,7 @@ ws_misc_banner:
 #---------------------------- Shopping Cart -------------------------------------
 ws_cart_item_add_to_cart:
    pattern:  /ws/add_item_to_cart
-   title: product_add_to_cart
+   title: product_item_add_to_cart
    params:
      auth_token: 121c421783cd4d71d871ec16a1296091
      quantity: 1
