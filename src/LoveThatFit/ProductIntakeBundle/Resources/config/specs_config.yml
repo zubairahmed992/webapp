@@ -1,0 +1,90 @@
+fit_points:
+    neck: 
+      title:  Neck
+      axis:  x
+      
+    shoulder_across_front: 
+      title:  Shoulder across front
+      axis:  x
+      
+    shoulder_across_back: 
+      title:  Shoulder across back
+      axis:  x
+      
+    shoulder_length: 
+      title:  Shoulder length
+      axis:  y
+            
+    arm_length: 
+      title:  Arm length
+      axis:  y
+            
+    bicep: 
+      title:  Bicep
+      axis:  x
+      
+    triceps : 
+      title:  Triceps
+      axis:  x
+      
+    wrist: 
+      title:  Wrist
+      axis:  x
+      
+    bust: 
+      title:  Bust
+      axis:  x
+      
+    chest: 
+      title:  Chest
+      axis:  x
+      
+    back_waist: 
+      title:  Back Waist
+      axis:  y
+      
+    waist: 
+      title:  Waist
+      axis:  x
+      
+    cf_waist: 
+      title:  CF Waist
+      axis:  y
+      
+    waist_to_hip: 
+      title:  Waist to Hip  
+      axis:  y
+      
+    hip: 
+      title:  Hip
+      axis:  x
+      
+    outseam: 
+      title:  Outseam
+      axis:  y
+      
+    inseam: 
+      title:  Inseam
+      axis:  y
+      
+    thigh: 
+      title:  Thigh
+      axis:  x
+      
+    knee: 
+      title:  Knee 
+      axis:  x
+      
+    calf: 
+      title:  Calf
+      axis:  x
+      
+    ankle: 
+      title:  Ankle
+      axis:  x
+      
+    hem_length: 
+      title:  hem_length
+      axis:  y
+      
+      

@@ -2189,6 +2189,11 @@ class User implements UserInterface, \Serializable {
                 #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
                 $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 16.5;
             }
+            if ($device_type=='iphone5' || $device_type=='iphone5s' || $device_type=='iphone5c'){
+                $x_calculation=($this->measurement->bottom_placement * ($resize_ratio_jt-1)); # 0.08% value calculation
+                #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
+                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 8;
+            }
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
             ##$this->measurement->bottom_placement + 10.5;
             

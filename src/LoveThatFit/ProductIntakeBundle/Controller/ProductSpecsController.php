@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\Product;
 
@@ -34,6 +35,8 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $fit_model_measurement_id=null){                
+        #$conf = $this->get('pi.product_specification')->getFitPointArray();  
+        #return new Response(json_encode($conf));
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
         $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
         
@@ -44,8 +47,8 @@ class ProductSpecsController extends Controller
         $parsed_data['fit_model_size']=  array_key_exists('fit_model_size',$parsed_data)?$parsed_data['fit_model_size']:'';
         $drop_down_values['fit_model_size'] = $this->get('productIntake.fit_model_measurement')->getTitleArray();
         
-        if ($fm){            
-            return new Response(json_encode($parsed_data));           
+        if ($fm){                        
+            return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));            
          }
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
@@ -58,7 +61,26 @@ class ProductSpecsController extends Controller
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
-   
+    #----------------------- /product_intake/product_specs/measurements_with_fitmodel
+    public function measurementsWithFitModelAction(Request $request){                        
+        $decoded = $request->request->all();             
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
+        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
+        $parsed_data = json_decode($ps->getSpecsJson(),true);        
+        $ps = $this->get('pi.product_specification')->calculateGradeRule($parsed_data);  
+        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($ps['sizes'], $fm);  
+        return new Response(json_encode($updated_measurements));        
+    }
+      #----------------------- /product_intake/product_specs/measurements_with_stretch
+    public function measurementsWithStretchAction(Request $request){                        
+        $decoded = $request->request->all();             
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);          
+        $specs_data = json_decode($ps->getSpecsJson(),true);        
+        $specs_data['horizontal_stretch'] = array_key_exists('horizontal_stretch',$decoded)?$decoded['horizontal_stretch']:0;
+        $specs_data['vertical_stretch'] = array_key_exists('vertical_stretch',$decoded)?$decoded['vertical_stretch']:0;        
+        $updated_measurements =  $this->get('pi.product_specification')->calculateWithStretch($specs);  
+        return new Response(json_encode($updated_measurements));        
+    }
       
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
@@ -238,7 +260,6 @@ public function csvUploadAction(Request $request) {
 
 #----------------------------
     private function create_product($data){
-                
         $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
         $product=new Product;
@@ -271,6 +292,7 @@ public function csvUploadAction(Request $request) {
         $em->persist($product);
         $em->flush();
         $this->create_product_sizes($product, $data);
+        $this->create_product_colors($data, $product);
         
     }
         #------------------------------------------------------------
@@ -317,5 +339,54 @@ public function csvUploadAction(Request $request) {
         }
         return;
     }
-    
+    #------------------------------------------------------------
+    private function create_product_colors($data, $product) {        
+        $color_names=explode(",", $data['colors']);        
+            $em = $this->getDoctrine()->getManager();
+            foreach ($color_names as $cn) {
+                $pc = new ProductColor();
+                $pc->setTitle(trim($cn));
+                $pc->setProduct($product);
+                $em->persist($pc);
+                $em->flush();
+            }
+                
+        return $product;
+    }
+    #------------------------------------------------------------
+    private function validate_specs($data) {        
+            foreach ($data['sizes'] as $s=>$fp) {
+                
+                # garment_dimension ~~~~~~~>
+                
+                
+                # garment_stretch ~~~~~~~>	
+                
+                
+                # min_calc	 ~~~~~~~>
+                
+                
+                # min_actual	 ~~~~~~~>
+                
+                
+                # ideal_low	 ~~~~~~~>
+                
+                
+                # fit_model	 ~~~~~~~>
+                
+                
+                # ideal_high	 ~~~~~~~>
+                
+                
+                # max_calc	 ~~~~~~~>
+                
+                
+                # max_actual	 ~~~~~~~>
+                
+                
+                # grade rule    ~~~~~~~>                
+                
+                
+            }
+    }
 }

@@ -363,4 +363,38 @@ class BrandRepository extends EntityRepository {
         }
     }
 
+
+
+
+    #---------------------------Get all retailer brand list for web service---------#
+
+    public function getBrandRetailerWithBannerList($position = 0) {
+        if ($position == 0) {
+            $query = $this->getEntityManager()
+                ->createQuery("
+                 SELECT b.id as brand_id,b.name as brand_name,b.image as brand_image
+                 FROM LoveThatFitAdminBundle:Brand b
+                 WHERE b.disabled=0 and  b.screen_position = :screen_position")
+                ->setParameters(array('screen_position' => $position));
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        } else {
+
+            $query = $this->getEntityManager()
+                ->createQuery("
+                  SELECT b.id as brand_id,b.name as brand_name,b.top_banner_image as brand_image
+                 FROM LoveThatFitAdminBundle:Brand b
+                 WHERE b.disabled=0 and  b.screen_position = :screen_position")
+                ->setParameters(array('screen_position' => $position));
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        }
+    }
+
 }

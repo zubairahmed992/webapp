@@ -55,6 +55,11 @@ class Brand {
     protected $image;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $top_banner_image;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $created_at;
@@ -66,9 +71,14 @@ class Brand {
 
     /**
      * @Assert\File(maxSize="6000000")
-     * @Assert\NotBlank(groups={"add"}, message = "must upload brand logo image!") 
+     * @Assert\NotBlank(groups={"add"}, message = "must upload brand logo image!")
      */
     public $file;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $banner_file;
 
     /**
      * @var string $disabled
@@ -76,6 +86,14 @@ class Brand {
      * @ORM\Column(name="disabled", type="boolean")
      */
     private $disabled;
+
+
+    /**
+     * @var string $screen_position
+     *
+     * @ORM\Column(name="screen_position", type="boolean", options={"default" = false})
+     */
+    private $screen_position;
     
     /**
      * Get id
@@ -126,6 +144,28 @@ class Brand {
      */
     public function getImage() {
         return $this->image;
+    }
+
+
+    /**
+     * Set image
+     *
+     * @param string $top_banner_image
+     * @return Brand
+     */
+    public function setTopBannerImage($top_banner_image) {
+        $this->top_banner_image = $top_banner_image;
+
+        return $this;
+    }
+
+    /**
+     * Get top_banner_image
+     *
+     * @return string
+     */
+    public function getTopBannerImage() {
+        return $this->top_banner_image;
     }
 
     /**
@@ -183,6 +223,7 @@ class Brand {
        $ih=new ImageHelper('brand', $this);
         $ih->upload();
     }
+
 //---------------------------------------------------
     
   public function getAbsolutePath()
@@ -281,6 +322,31 @@ public function deleteImages()
     public function getDisabled()
     {
         return $this->disabled;
+    }
+
+
+
+    /**
+     * Set screen_position
+     *
+     * @param boolean $screen_position
+     * @return Brand
+     */
+    public function setScreenPosition($screen_position)
+    {
+        $this->screen_position = $screen_position;
+
+        return $this;
+    }
+
+    /**
+     * Get screen_position
+     *
+     * @return boolean
+     */
+    public function getScreenPosition()
+    {
+        return $this->screen_position;
     }
 
     /**

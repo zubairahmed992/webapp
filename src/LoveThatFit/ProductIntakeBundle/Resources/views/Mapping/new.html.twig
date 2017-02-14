@@ -355,7 +355,9 @@
 
                           });
 
-
+                         $(window).scroll(function(){
+                            $(".ui-dialog").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, "slow" );
+                          });
                                 </script>  
 
 {% endblock %}
