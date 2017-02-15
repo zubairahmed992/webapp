@@ -61,6 +61,7 @@
           
       
       //---------------- Fit Model Calcultion on Ajax Hit
+      {#
         $(".fit_model_size").change(function() {
             var pro_speci_id = $('.product_spec_size').val();
             var fit_model_id = this.value;
@@ -78,8 +79,10 @@
                                 }
                             });
         });
+#}
        //---------------------------
        $("#btn_recalculate").on('click', function() {      
+            event.preventDefault();
             $.ajax({
                     type: "POST",
                     url: "../measurement_recalculate",
@@ -91,7 +94,7 @@
                         },
                     dataType: "json",
                     success: function (response) {    
-                        console.log(response);                                                        
+                        fill_table(response);                        
                     },
                     failure: function (errMsg) {
                       display_response(errMsg);

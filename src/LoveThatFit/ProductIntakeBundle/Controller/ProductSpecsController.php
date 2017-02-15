@@ -79,7 +79,9 @@ class ProductSpecsController extends Controller
         $specs_data['horizontal_stretch'] = array_key_exists('horizontal_stretch',$decoded)?$decoded['horizontal_stretch']:0;
         $specs_data['vertical_stretch'] = array_key_exists('vertical_stretch',$decoded)?$decoded['vertical_stretch']:0;        
         $specs_data['fit_model_measurement_id'] = array_key_exists('fit_model_measurement_id',$decoded)?$decoded['fit_model_measurement_id']:0;                
+        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);
         $updated_measurements =  $this->get('pi.product_specification')->calculateRanges($specs_data);  
+        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($updated_measurements['sizes'], $fm);  
         return new Response(json_encode($updated_measurements));        
     }
       
