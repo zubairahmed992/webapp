@@ -47,7 +47,7 @@ class CartHelper
         if (isset($result['qty']) > 0) {
             $id = $result["id"];
             $cart = $this->findCartById($id);
-            $setQty = $result["qty"] + 1;
+            $setQty = $result["qty"] + $qty;
             $cart->setQty($setQty);
             return $this->save($cart);
         } else {

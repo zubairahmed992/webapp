@@ -130,7 +130,9 @@ return true;
 
                                 <div id="banner_image_div">
                                 <strong><br/>  Top Banner Image</strong>
+                                {% if(entity.getTopBannerImage) %}
                                 <div id="pro_img" style="margin-left: 2px !important; width: 205px !important;"><img src="{{ asset('uploads/ltf/brands/brand_top/' ~ entity.getTopBannerImage) }}"/></div>
+                                {% endif %}
                                 <div class="clearfix"></div>
                                     {{ form_widget(form.banner_file) }}{{ form_errors(form.banner_file) }}
                                     <input type="hidden" id="checkedimage" value="{{ entity.getTopBannerImage }}" />
