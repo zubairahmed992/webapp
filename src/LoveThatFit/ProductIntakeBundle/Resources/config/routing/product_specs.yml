@@ -33,3 +33,7 @@ product_intake_product_create:
 product_intake_product_specs_measurements_with_fitmodel:
     pattern:  /product_intake/product_specs/measurements_with_fitmodel
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementsWithFitModel}    
+
+product_intake_product_specs_measurement_recalculate:
+    pattern:  /product_intake/product_specs/measurement_recalculate
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementRecalculate}    
