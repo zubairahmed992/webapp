@@ -123,7 +123,7 @@ public function getNew() {
         $updated_sizes=array();
 
         foreach ($sizes[$fit_model->getSize()] as $fit_point => $measure) {
-            $fit_model_ratio[$fit_point] = ($measure['garment_dimension'] > 0 )?($fit_model_fit_points[$fit_point] / $measure['garment_dimension']):0;
+            $fit_model_ratio[$fit_point] = ($measure['garment_dimension'] > 0 ) ? ($fit_model_fit_points[$fit_point] / $measure['garment_dimension']) : 0;            
         }
         foreach ($sizes as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
