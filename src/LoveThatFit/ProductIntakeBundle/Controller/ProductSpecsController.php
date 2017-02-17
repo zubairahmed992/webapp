@@ -148,7 +148,7 @@ public function csvUploadAction(Request $request) {
                     foreach ($specs_v as $size_key => $fit_points) {
                         foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
                             $coordins = $this->extracts_coordinates($fit_model_measurement);
-                            $fmm_value = $this->fraction_to_number(intval($csv_array[$coordins['r']][$coordins['c']]));
+                            $fmm_value = $this->fraction_to_number(floatval($csv_array[$coordins['r']][$coordins['c']]));
                             $original_value = $fmm_value;
                             #~~~~~~>convert to measuring unit
                             if(array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter'){
@@ -246,7 +246,7 @@ public function csvUploadAction(Request $request) {
             $frac = explode('/', $raw_exploded[1]);
             return (intval($raw_exploded[0]) + (intval($frac[0]) / intval($frac[1])));
         } else {
-            return intval($raw_value);
+            return floatval($raw_value);
         }
     }
 
