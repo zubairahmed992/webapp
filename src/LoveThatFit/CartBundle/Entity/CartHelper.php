@@ -152,6 +152,7 @@ class CartHelper
         $cart_array = array();
         $counter = 0;
         foreach ($user->getCart() as $ci) {
+            $cart_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
             $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
             $cart_array[$counter]['qty'] = $ci->getQty();
             $cart_array[$counter]['item_id'] = $ci->getProductItem()->getId();
