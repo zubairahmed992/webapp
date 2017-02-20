@@ -176,4 +176,15 @@ class UserOrderRepository extends EntityRepository
           	->getQuery()
           	->getResult();
 	}
+
+	public function findOrderList()
+	{
+		$query = $this->getEntityManager()->createQueryBuilder();
+      	return $query->select('o.id, o.order_number, o.billing_first_name, 
+      		o.billing_last_name, o.order_date, o.order_amount, o.payment_json')
+      	  	->from('LoveThatFitCartBundle:UserOrder', 'o')
+      	  	->OrderBy('o.id', 'DESC')
+          	->getQuery()
+          	->getResult();
+	}
 }
