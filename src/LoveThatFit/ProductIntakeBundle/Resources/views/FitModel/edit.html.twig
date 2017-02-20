@@ -1,0 +1,47 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+
+    <h2>Fit Model Measurements</h2>
+        <div class="btn-group" role="group" aria-label="..." style="float:right;">
+            <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
+        </div>
+       <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
+{#   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >#}
+       <div class="container">        
+       {{  dump(fit_point_values['sel_brand']) }}
+        <td><span style="font-weight: bold ">Select Brand</span>: &nbsp;</td>
+            <select name="product_Brand" class="product_Brand">
+                <option>Select Brand</option>
+                {% for key, brandName in brands %}
+                    <option value="{{ brandName.id }}"{{brandName.name =='' and brandName.id == 0 ? 'selected':brandName.name==fit_point_values['sel_brand']?'selected':'' }}   >{{ brandName.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for=""> Gender: </label>
+                <div class="col-sm-4">
+                    <select name="sel_gender" id="sel_gender" class="sel_gender form-control">
+                        <option>Select Gender</option>               
+                        <option value="m"> man</option>
+                        <option value="f"> woman</option>               
+                    </select>
+                </div>
+            </div>
+        <table class="tblData" id="tbl_data">
+            {% for fit_point_k, fit_point_v in fit_point_values %}
+                {% if fit_point_v == fit_point_values['sel_brand'] %}
+                
+                 {% else %}   
+                <tr>
+                    <td><span style="font-weight: bold ">{{fit_point_k}}</span>: &nbsp;</td>
+                    <td><input type="text" class="fabric_content_value"  min="1" max="100" value="{{fit_point_v}}" name="" ></td>
+                </tr>
+                {% endif %}   
+            {% endfor %}
+        </table>
+       <input type="submit" value="Save">                              
+    </div>
+</form>                                
+
+
+  
+{% endblock %}

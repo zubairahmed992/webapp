@@ -58,7 +58,7 @@ class FitModelController extends Controller {
     public function saveAction(Request $request) {
         $decoded = $request->request->all();
         $fmm = $this->get('productIntake.fit_model_measurement')->createNew();
-        $brand = $this->get('admin.helper.brand')->find($decoded['sel_brand']);
+        $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $fmm->setBrand($brand);
         $fmm->setTitle($decoded['txt_title']);
         $fmm->setDescription($decoded['txt_title']);
@@ -73,7 +73,7 @@ class FitModelController extends Controller {
                 $measurements[$fp] = $decoded[$fp];
             }
         }
-        $fmm->setMeasurementJson(json_encode($measurements));
+        $fmm->setMeasurementJson(json_encode($decoded));
         $this->get('productIntake.fit_model_measurement')->save($fmm);
         return new Response('saved!');
     }
@@ -84,11 +84,13 @@ class FitModelController extends Controller {
         $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
+//       print_R($brands);
+//        die;
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
-        return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,
                     'fit_points' => $fit_points,
