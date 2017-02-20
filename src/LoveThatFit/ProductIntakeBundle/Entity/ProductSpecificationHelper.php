@@ -128,10 +128,12 @@ public function getNew() {
         foreach ($sizes as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
                 $fit_model = $fpv['garment_dimension'] * $fit_model_ratio[$fpk];
-                $grade_rule = $sizes[$size][$fpk]['grade_rule'];
+
+                $grade_rule = array_key_exists('grade_rule_stretch', $sizes[$size][$fpk])?$sizes[$size][$fpk]['grade_rule_stretch']:$sizes[$size][$fpk]['grade_rule'];
                 #------------------------------------------------
                 $updated_sizes[$size][$fpk]['garment_dimension']=$fpv['garment_dimension'];
                 $updated_sizes[$size][$fpk]['garment_stretch']=$fpv['garment_stretch'];
+                $updated_sizes[$size][$fpk]['stretch_value']=$fpv['stretch_value'];
                 $updated_sizes[$size][$fpk]['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule), 2, '.', '') : 0;
                 $updated_sizes[$size][$fpk]['min_actual'] = $updated_sizes[$size][$fpk]['min_calc'];
                 $updated_sizes[$size][$fpk]['ideal_low'] = $fit_model > 0 ? number_format($fit_model - $grade_rule, 2, '.', ''):0;
@@ -139,21 +141,68 @@ public function getNew() {
                 $updated_sizes[$size][$fpk]['ideal_high'] = $fit_model > 0 ? number_format($fit_model + $grade_rule, 2, '.', ''):0;
                 $updated_sizes[$size][$fpk]['max_calc']=$fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule), 2, '.', ''):0;
                 $updated_sizes[$size][$fpk]['max_actual']=$updated_sizes[$size][$fpk]['max_calc'];
-                $updated_sizes[$size][$fpk]['grade_rule']=$grade_rule;                
+                $updated_sizes[$size][$fpk]['grade_rule']=$sizes[$size][$fpk]['grade_rule'];                
+                $updated_sizes[$size][$fpk]['grade_rule_stretch']=$sizes[$size][$fpk]['grade_rule_stretch'];
                 #------------------------------------------------                
                 if(array_key_exists('grade_rule_stretched', $sizes[$size][$fpk])){
                     $grade_rule_stretched = $sizes[$size][$fpk]['grade_rule_stretched'];
                     $updated_sizes[$size][$fpk]['max_calc'] = $fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule_stretched), 2, '.', '') : 0;
                     $updated_sizes[$size][$fpk]['ideal_high'] = $fit_model > 0 ? number_format($fit_model + $grade_rule_stretched, 2, '.', '') : 0;
                     $updated_sizes[$size][$fpk]['max_actual'] =  $updated_sizes[$size][$fpk]['max_calc'];
+                    
+                    $updated_sizes[$size][$fpk]['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule_stretched), 2, '.', '') : 0;
+                    $updated_sizes[$size][$fpk]['ideal_low'] = $fit_model > 0 ? number_format($fit_model - $grade_rule_stretched, 2, '.', '') : 0;
+                    $updated_sizes[$size][$fpk]['min_actual'] =  $updated_sizes[$size][$fpk]['min_calc'];
                 }
-                
             }
         }
         return $updated_sizes;     
     }
     #----------------------    
     public function calculateRanges($specs) {        
+        $fpa = $this->getFitPointArray();
+        $size_no = 1;
+        $prev_size_key = null;        
+        $specs_updated=array();
+        
+        
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                $specs_updated['sizes'][$size][$fpk] = array('garment_dimension' => $fpv['garment_dimension'], 
+                                                             'garment_stretch' => $fpv['garment_stretch'], 'stretch_value' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'min_actual' => 0, 'ideal_low' => 0, 'fit_model' => 0, 'ideal_high' => 0, 'max_calc' => 0, 'max_actual' => 0, 'grade_rule' => 0);
+                if ($prev_size_key) {                    
+                    $grade_rule = $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension'];                    
+                    $specs_updated['sizes'][$size][$fpk]['grade_rule'] = $grade_rule;
+
+                    #----------------                    
+                    if (array_key_exists($fpk, $fpa['x'])) {
+                        if($specs['horizontal_stretch'] > 0 ){
+                            $specs_updated['sizes'][$size][$fpk]['stretch_value'] = ($specs['horizontal_stretch'] / 100) * $fpv['garment_dimension'];
+                            $specs_updated['sizes'][$size][$fpk]['grade_rule_stretch'] = $grade_rule + (($grade_rule * $specs['vertical_stretch']) / 100);
+                        }
+                    } else {
+                        if($specs['vertical_stretch'] > 0 ){
+                            $specs_updated['sizes'][$size][$fpk]['stretch_value'] = ($specs['vertical_stretch'] / 100) * $fpv['garment_dimension'];
+                            $specs_updated['sizes'][$size][$fpk]['grade_rule_stretch'] = $grade_rule + (($grade_rule * $specs['vertical_stretch']) / 100);
+                        }                        
+                    }
+                    $specs_updated['sizes'][$size][$fpk]['garment_stretch'] = $fpv['garment_dimension'] + $specs_updated['sizes'][$size][$fpk]['stretch_value'];
+                    if ($size_no == 2) {
+                        $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule'] = $grade_rule;
+                        $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule_stretch'] = $specs_updated['sizes'][$size][$fpk]['grade_rule_stretch'];
+                        $specs_updated['sizes'][$prev_size_key][$fpk]['garment_stretch'] = $specs_updated['sizes'][$size][$fpk]['garment_stretch'];
+                        $specs_updated['sizes'][$prev_size_key][$fpk]['stretch_value'] = $specs_updated['sizes'][$size][$fpk]['stretch_value'];
+                        
+                    }                    
+                }                
+            }
+            $size_no = $size_no + 1;            
+            $prev_size_key = $size;
+        }
+        return $specs_updated;
+    }
+    
+    public function _calculateRanges($specs) {        
         $fpa = $this->getFitPointArray();
         $size_no = 1;
         $prev_size_key = null;
@@ -164,17 +213,15 @@ public function getNew() {
                 $specs_updated['sizes'][$size][$fpk] = array('garment_dimension' => $fpv['garment_dimension'], 
                                                              'garment_stretch' => $fpv['garment_stretch'], 'min_calc' => 0, 'min_actual' => 0, 'ideal_low' => 0, 'fit_model' => 0, 'ideal_high' => 0, 'max_calc' => 0, 'max_actual' => 0, 'grade_rule' => 0);
                 if ($prev_size_key) {
-                    $grade_rule = $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension'];
-                    #----------------- grade rule calculations
-                    if (array_key_exists($fpk, $fpa['x'])) {
-                            $grade_rule = $specs['horizontal_stretch'] > 0?$grade_rule + (($grade_rule * $specs['horizontal_stretch']) / 100):$grade_rule;                            
-                    } else {
-                            $grade_rule = ($specs['vertical_stretch'] > 0)?$grade_rule + (($grade_rule * $specs['vertical_stretch']) / 100):$grade_rule;                                                    
-                    }
-                    #------------------------------------
+                    $grade_rule = $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension'];                    
+                    $stretch = $this->calculate_stretch($fpk, $fpa, $specs);
+                    $specs_updated['sizes'][$size][$fpk]['garment_stretch'] = $stretch > 0 ? $stretch : $specs_updated['sizes'][$size][$fpk]['garment_stretch'];
+                    $grade_rule = $grade_rule + (($grade_rule * $stretch) / 100);
+                    
                     $specs_updated['sizes'][$size][$fpk]['grade_rule'] = $grade_rule;
                     if ($size_no == 2) {
                         $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule'] = $grade_rule;
+                        $specs_updated['sizes'][$prev_size_key][$fpk]['garment_stretch'] = $stretch > 0 ? $stretch : $specs_updated['sizes'][$prev_size_key][$fpk]['garment_stretch'];
                     }                    
                 }
                 $prev_garment_dimension = $fpv['garment_dimension'];
@@ -184,6 +231,16 @@ public function getNew() {
         }
         return $specs_updated;
     }
+
+    #------------------------
+    private function calculate_stretch($fpk, $fpa, $specs) {
+        if (array_key_exists($fpk, $fpa['x'])) {
+            return $specs['horizontal_stretch'] > 0 ? $specs['horizontal_stretch'] : 0;
+        } else {
+            return $specs['vertical_stretch'] > 0 ? $specs['vertical_stretch'] : 0;
+        }
+    }
+
 
     #------------------------
     public function getFitPointArray(){
