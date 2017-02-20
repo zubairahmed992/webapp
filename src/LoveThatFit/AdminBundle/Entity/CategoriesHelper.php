@@ -413,7 +413,13 @@ class CategoriesHelper {
 
     #-----------------Get Selected Categories pull from category_product---------------------------------#
     public function saveProductCategories($productId, $getselectedcategories){
-        return $this->repo->saveProductCategories($productId, $getselectedcategories);
+        $this->repo->saveProductCategories($productId, $getselectedcategories);
+        $entity = $this->em->getRepository('LoveThatFitAdminBundle:Product')->find($productId);
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return true;
     }
 
 }
