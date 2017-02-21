@@ -70,7 +70,12 @@ class FitModelMeasurementHelper {
         $entity = $this->repo->find($id);        
         if ($entity) {
             $this->em->remove($entity);
-            $this->em->flush();            
+            $this->em->flush();    
+             return array(
+                'message' => 'The Fit Model Measurments has been Deleted.',
+                'message_type' => 'success',
+                'success' => true,
+            );
         }         
     }
 
