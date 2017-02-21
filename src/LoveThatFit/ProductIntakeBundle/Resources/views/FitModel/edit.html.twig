@@ -3,13 +3,20 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+         //---------------------------------------
+          
+            $( ".sel_gender" ).change(function() {                            
+                set_size_type(this.value);  
+                fill_clothing_list(this.value);
+                fill_size();
+        });
       
          //---------------------------------------
         function fill_clothing_list(gender){        
             $('.clothing_types').empty();
             product_specs = jQuery.parseJSON( $('#clothing_types').text());
             console.log(product_specs);
-             gender=gender=='m'?'man':'woman';        
+             gender=$('input[type="radio"]:checked').val()=='m'?'man':'woman';          
                 $('.clothing_types').empty();
                 var option = '<option value="">Select clothing</option>';
                 $.each(product_specs[gender], function(val, text) {
@@ -17,17 +24,12 @@
                         });
                  $('.clothing_types').append(option);                     
         }
-         //---------------------------------------
-          
-            $( ".sel_gender" ).change(function() {                            
-                sel_size_type(this.value);  
-                fill_clothing_list(this.value);
-        });
+        
         //---------------------------------------
-        size_specs=jQuery.parseJSON( $('#size_specs_json').text());
-            function sel_size_type(gender){
-                console.log(size_specs);
-                gender=gender=='m'?'man':'woman';        
+        
+            function set_size_type(gender){
+                size_specs=jQuery.parseJSON( $('#size_specs_json').text());               
+                gender=$('input[type="radio"]:checked').val()=='m'?'man':'woman';        
                 $('#sel_size_type').empty();
                 var option = '<option value="">Select Size</option>';
                 $.each(size_specs.size_title_type[gender], function(val, text) {
@@ -36,17 +38,17 @@
                  $('#sel_size_type').append(option);         
             }
         //---------------------------------------
-           $("#sel_size_type" ).change(function() {  
-
-                fil_size(this.value);
+           $("#sel_size_type" ).change(function() {
+               fill_size();
            });
          //---------------------------------------
-            function fil_size(){     
+            function fill_size(){     
                 size_specse=jQuery.parseJSON( $('#size_specs_json').text());        
-                gender=$('.sel_gender').val()=='m'?'man':'woman';      
+                gender=$('input[type="radio"]:checked').val()=='m'?'man':'woman'; 
                 $('#sel_size').empty();        
                 var option = '<option value="">Select Size</option>';
-                $.each(size_specs.sizes[gender][$('#sel_size_type').val()], function(val, text) {
+                $.each(size_specse.sizes[gender][$('#sel_size_type').val()], function(val, text) {
+                   // alert(val)
                     option += '<option value="'+ val + '">' + text + '</option>';
                         });
                  $('#sel_size').append(option);         
@@ -55,17 +57,16 @@
     });            
     </script>
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
-        <span id="mapping_json" hidden="false">{{mapping_json}}</span>   
+{#        <span id="mapping_json" hidden="false">{{mapping_json}}</span>   #}
         <span id="clothing_types" hidden="false">{{clothing_types}}</span>
     <h2>Fit Model Measurements</h2>
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
             <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
-        </div>
-     
+        </div>   
     <form action="{{ path('product_intake_fit_model_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">      
             {% for fit_point_k, fit_point_v in fit_point_values %}
-                {% if fit_point_v == fit_point_values['sel_brand'] %}
+                {% if fit_point_k == 'sel_brand' %}
                     <div class="form-group">
                         <label class="control-label col-sm-2" for=""> Select Brand: </label>
                         <div class="col-sm-4">
@@ -77,20 +78,20 @@
                             </select>
                         </div>
                     </div>                
-                {% elseif fit_point_v == fit_point_values['sel_gender'] %}                     
+                {% elseif fit_point_k == 'sel_gender' %}                     
                 <div class="form-group">
                      <label class="control-label col-sm-2" for=""> Gender: </label>
                      <div class="col-sm-4">
-                         {% if fit_point_v == 'f' %}
+                         {% if fit_point_v == 'f' %}                             
                              <input type="radio" class="sel_gender" name="sel_gender" value="m" > Male<br>
                              <input type="radio" class="sel_gender" checked name="sel_gender" value="f"> Female<br>
                          {% else %}
-                           <input type="radio" class="sel_gender" name="sel_gender" value="m" checked > Male<br>
+                           <input type="radio" class="sel_gender"  name="sel_gender" value="m" checked > Male<br>
                            <input type="radio" class="sel_gender"  name="sel_gender" value="f"> Female<br>
                          {% endif %}
                      </div>
                  </div>
-                {% elseif fit_point_v == fit_point_values['sel_size_type'] %}
+                {% elseif fit_point_k == 'sel_size_type' %}
                  <div class="form-group">
                      <label class="control-label col-sm-2" for=""> Size Title Type: </label>
                      <div class="col-sm-4">
@@ -102,19 +103,19 @@
                          </select>
                      </div>
                  </div> 
-                {% elseif fit_point_v == fit_point_values['sel_clothing_type'] %}
+                {% elseif fit_point_k == 'sel_clothing_type' %}
                 <div class="form-group">
                     <label class="control-label col-sm-2" for=""> Clothing Type: </label>
                     <div class="col-sm-4">
                         <select name="sel_clothing_type" class="clothing_types form-control">
-                            <option>Size Title Type</option>
+                            <option>Select Clothing Type</option>
                             {% for clothing_k, clothing_v in colthing_types_man_woman %}
                                 <option value="{{ clothing_v }}"{{clothing_v =='' and clothing_k == 0 ? 'selected':clothing_v==fit_point_values['sel_clothing_type']?'selected':'' }}> {{ clothing_v }} </option>
                             {% endfor %}
                         </select>
                     </div>
                 </div> 
-                {% elseif fit_point_v == fit_point_values['sel_size'] %}
+                {% elseif fit_point_k == 'sel_size' %}
                 <div class="form-group">
                     <label class="control-label col-sm-2" for=""> Size: </label>
                     <div class="col-sm-4">

@@ -88,6 +88,8 @@ class FitModelController extends Controller {
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $colthing_types_man_woman = ($fit_model_measurement->getGender()=='m' ? $clothing_types['man'] : $clothing_types['woman']);
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+       // print_r(json_encode($size_specs['sizes']['woman']['bra']));
+       // die;
         $all_size_title = $this->get('admin.helper.size')->getAllSizeTitleType();
         $all_size_title_man_woman =($fit_model_measurement->getGender()=='m' ? $all_size_title['man'] : $all_size_title['woman']); 
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
