@@ -46,6 +46,7 @@ class ProductImageHelper {
             $entity->setImage($this->upload($file['name'][$key],$file['tmp_name'][$key]));
             $entity->setImageTitle($decoded['image_title'][$key]);
             $entity->setImageSort($decoded['image_sort'][$key]);
+            $entity->getProduct()->setUpdatedAt(new \DateTime('now'));
             $this->em->persist($entity);
             $this->em->flush();
             }  
@@ -76,9 +77,11 @@ class ProductImageHelper {
         return $this->repo->find($id);
     }
     
-     public function delete($id) {        
+     public function delete($id) {
+
         $entity = $this->repo->find($id);
         if ($entity) {
+            $entity->getProduct()->setUpdatedAt(new \DateTime('now'));
             $this->em->remove($entity);
             $this->em->flush();
             return array('productimage' => $entity,
@@ -96,7 +99,8 @@ class ProductImageHelper {
         }
     }
     
-     public function update($entity) {         
+     public function update($entity) {
+         $entity->getProduct()->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($entity);    
         $this->em->flush();
         return array('message' => 'Product Modle Images succesfully updated!',

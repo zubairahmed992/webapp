@@ -120,6 +120,10 @@ class OrderDetailHelper {
       return $this->repo->findByOrderID($order_id);
     }
 
+    public function findByOrderIDExport($order_id)
+    {
+      return $this->repo->findByOrderIDExport($order_id); 
+    }
 
    
 }

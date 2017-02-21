@@ -17,9 +17,42 @@ and open the template in the editor.
         <script>
             $(document).ready(function() {
                 
-                var act_value = $("$bar_val").attr("value");
-                
-                
+                var act_value = $("#bar_val").attr("value");
+
+                $('#clientsOpen').click(function () {
+
+
+                    if ($('#clientsDashboard').is(':visible')){
+
+                        $('#clientsOpen').css({'background':'#333','color':'#fff'});
+                        $('#clientsDropDown').css({'border-bottom':'20px solid #333'});
+                        $('.logosm3').css({'display':'inline-block','height':'10%', 'position':'absolute','top':'370px','left':'10px','z-index':'200'});
+
+
+                        $('#upicon').css({'display':'inline-block'});
+                        $('#downicon').css({'display':'none'});
+
+                    }
+                    else{
+
+                        $('#clientsOpen').addClass("clientsOpen_new");
+
+
+
+                        $('#clientsDropDown').css({'border-bottom':'0px'});
+                        $('.logosm3').css({'display':'none'});
+                        $('#downicon').css({'display':'inline-block'});
+                        $('#upicon').css({'display':'none'});
+                    }
+
+
+
+                    $('#clientsDropDown #clientsDashboard').slideToggle({
+                        direction: "up"
+                    }, 300);
+                    $(this).toggleClass('clientsClose');
+
+                }); // end click
                 
                 });
         </script>
@@ -41,7 +74,7 @@ and open the template in the editor.
   <div class="logosm"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" width="70" height="auto" /></div> 
   
   
-   <div class="share_img_hldr">  
+   <div class="share_img_hldr">
       
    <img src="{{ asset(selfieshare.webPath) }}"/>
    
@@ -55,9 +88,17 @@ and open the template in the editor.
   
   
   
-  <div class="clr"></div>  
+  <div class="clr"></div>
+
+
+    <div id="clientsDropDown">
+        <p id="clientsOpen">View Feedback
+            <span id="downicon">▼</span>
+            <span id="upicon">▲</span>
+        </p>
         
-  <table class="table">
+  <div id="clientsDashboard">
+        <table class="table">
     <thead>
       <tr>
         <th>Friends</th>
@@ -120,6 +161,11 @@ and open the template in the editor.
       
     </tbody>
   </table>
+      </div>
+
+    </div>
+
+
 </div>
         
         
