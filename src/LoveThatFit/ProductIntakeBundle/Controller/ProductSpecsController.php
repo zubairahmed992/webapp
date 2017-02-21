@@ -123,9 +123,10 @@ class ProductSpecsController extends Controller
         }      
         $entity = $this->get('pi.product_specification')->find($id);
         $entity->setSpecsJson(json_encode($output));
-        $msg_ar = $this->get('pi.product_specification')->update($entity);
+        $msg_ar = $this->get('pi.product_specification')->update($entity);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+        #return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
     
      #------------------------------------ /product_intake/product_specs/csv_upload
@@ -160,7 +161,7 @@ public function csvUploadAction(Request $request) {
                                 $fmm_value =  $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);                            
                             }
                             #----------------------* parsed data array calculate fit modle values for fit model size
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'garment_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_value' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
                                 'original_value'=>$original_value,
                                 'unit_converted_value'=>$unit_converted_value,
                                 );

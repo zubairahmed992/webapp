@@ -66,7 +66,10 @@ $(document).ready(function(){
                                     <tr class="Active">
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
+                                        <th >stretch_value</th>
                                         <th >garment_stretch</th>
+                                        <th >grade rule</th>
+                                        <th >grade rule stretch</th>
                                         <th >min_calc</th>
                                         <th >min_actual</th>
                                         <th >ideal_low</th>
@@ -74,14 +77,17 @@ $(document).ready(function(){
                                         <th >ideal_high</th>
                                         <th >max_calc</th>
                                         <th >max_actual</th>
-                                        <th >grade rule</th>
+                                        
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {% if (measurement_v.garment_dimension>0) %}
                                     <tr>
                                         <th>{{measurement_k}}</th>
                                         <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.stretch_value is defined ? measurement_v.stretch_value | number_format(2, '.', ''):0}}</td>
                                         <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
                                         <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
@@ -89,7 +95,7 @@ $(document).ready(function(){
                                         <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                        
                                     </tr>
                                     {% endif %}
                                 {% endfor %}
