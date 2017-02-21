@@ -5,19 +5,18 @@
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
             <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
         </div>
-       <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
-{#   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >#}
+     
+    <form action="{{ path('product_intake_fit_model_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">      
-        <table class="tblData" id="tbl_data">
             {% for fit_point_k, fit_point_v in fit_point_values %}
                 {% if fit_point_v == fit_point_values['sel_brand'] %}
                     <div class="form-group">
                         <label class="control-label col-sm-2" for=""> Select Brand: </label>
                         <div class="col-sm-4">
-                            <select name="product_Brand" class="sel_brand form-control">
+                            <select name="sel_brand" class="form-control">
                                 <option>Select Brand</option>
                                 {% for key, brandName in brands %}
-                                    <option value="{{ brandName.id }}"{{brandName.name =='' and brandName.id == 0 ? 'selected':brandName.name==fit_point_values['sel_brand']?'selected':'' }}   >{{ brandName.name }}</option>
+                                    <option value="{{ brandName.name }}"{{brandName.name =='' and brandName.id == 0 ? 'selected':brandName.name==fit_point_values['sel_brand']?'selected':'' }}   >{{ brandName.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -40,7 +39,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for=""> Size Title Type: </label>
                         <div class="col-sm-4">
-                            <select name="product_Brand" class="sel_brand form-control">
+                            <select name="sel_size_type" class="sel_brand form-control">
                                 <option>Size Title Type</option>
                                 {% for size_k, size_v in all_size_title_man_woman %}
                                     <option value="{{ size_k }}"{{size_v =='' and size_k == 0 ? 'selected':size_v==fit_point_values['sel_size_type']?'selected':'' }}> {{ size_v }} </option>
@@ -53,26 +52,35 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for=""> Size Title Type: </label>
                         <div class="col-sm-4">
-                            <select name="product_Brand" class="sel_brand form-control">
+                            <select name="sel_clothing_type" class="sel_brand form-control">
                                 <option>Size Title Type</option>
                                 {% for clothing_k, clothing_v in colthing_types_man_woman %}
                                     <option value="{{ clothing_v }}"{{clothing_v =='' and clothing_k == 0 ? 'selected':clothing_v==fit_point_values['sel_clothing_type']?'selected':'' }}> {{ clothing_v }} </option>
                                 {% endfor %}
                             </select>
                         </div>
-                    </div>         
+                    </div> 
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for=""> Size: </label>
+                        <div class="col-sm-4">
+                            <select name="sel_size" id="sel_size" class="sel_size form-control">
+                                <option>Size</option>                                       
+                            </select>
+                        </div>
+                    </div>
                 {% else %}
                     <div class="form-group">
                         <label class="control-label col-sm-2" for=""> {{fit_point_k}}: </label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="" ></td>
+                            <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}">
                         </div>
                     </div>   
 
                 {% endif %}   
-            {% endfor %}
-        </table>
-       <input type="submit" value="Save">                              
+            {% endfor %} 
+               <div class="form-group">
+                <input type="submit" value="Save">                              
+               </div>
     </div>
 </form>                                
 

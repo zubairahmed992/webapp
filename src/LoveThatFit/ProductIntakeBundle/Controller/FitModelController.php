@@ -104,5 +104,25 @@ class FitModelController extends Controller {
 
                 ));
     }
+    
+    #----------------------- /product_intake/fit_model/update
+    public function updateAction(Request $request,$id){  
+        $decoded = $request->request->all();
+        
+        $entity = $this->get('productIntake.fit_model_measurement')->find($id);
+        $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
+        $entity->setBrand($brand);
+        $entity->setTitle($decoded['txt_title']);
+        $entity->setDescription($decoded['txt_title']);
+        $entity->setSize($decoded['sel_size']);
+        $entity->setClothingType($decoded['sel_clothing_type']);
+        $entity->setGender($decoded['sel_gender']);
+        $entity->setSizeTitleType($decoded['sel_size_type']);          
+        $entity->setMeasurementJson(json_encode($decoded));      
+        $msg_ar = $this->get('productIntake.fit_model_measurement')->update($entity);
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
+    }
+    
 
 }
