@@ -75,12 +75,13 @@ class FitModelController extends Controller {
         }
         $fmm->setMeasurementJson(json_encode($decoded));
         $this->get('productIntake.fit_model_measurement')->save($fmm);
-        return new Response('saved!');
+        return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
     }
 
     #------------------------/product_intake/fit_model_specs/edit/id
 
     public function editAction($id) {
+        $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
         $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
@@ -96,11 +97,12 @@ class FitModelController extends Controller {
                     'fit_point_values' => $fit_point_values,
                     'fit_points' => $fit_points,
                     'brands' => $brands,
-                    'clothing_types' => $clothing_types,
+                    'clothing_types' =>  json_encode($clothing_types),
                     'product_specs_json' => json_encode($product_specs),
                     'size_specs_json' => json_encode($size_specs),
                     'all_size_title_man_woman' => $all_size_title_man_woman,
                     'colthing_types_man_woman' => $colthing_types_man_woman,
+                    'mapping_json' => json_encode($mapping),          
 
                 ));
     }
@@ -108,7 +110,6 @@ class FitModelController extends Controller {
     #----------------------- /product_intake/fit_model/update
     public function updateAction(Request $request,$id){  
         $decoded = $request->request->all();
-        
         $entity = $this->get('productIntake.fit_model_measurement')->find($id);
         $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $entity->setBrand($brand);
