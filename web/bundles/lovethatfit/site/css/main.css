@@ -6494,9 +6494,15 @@ padding-bottom: 10px;
 }
 
 .share_img_hldr {
+	text-align: center;
+	width:100%;
+	margin-bottom: 120px;
+}
+
+.share_img_hldr_show {
     text-align: center;
     width:100%;
-    margin-bottom: 120px;
+    margin-bottom: 20px;
 }
 .share_img_hldr img {
     width: 75%;
