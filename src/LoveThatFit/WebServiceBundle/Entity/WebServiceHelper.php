@@ -580,7 +580,7 @@ class WebServiceHelper {
                 }
             }#end if condition for size disable checking
         }
-
+        $p['target'] = $product->getclothingType()->getTarget();
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
@@ -895,6 +895,7 @@ class WebServiceHelper {
         $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
+        $p['target'] = $product->getclothingType()->getTarget();
 
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
@@ -998,6 +999,7 @@ class WebServiceHelper {
         $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
+        $p['target'] = $product->getclothingType()->getTarget();
         return $p;
     }
 }
