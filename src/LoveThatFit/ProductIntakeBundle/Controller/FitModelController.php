@@ -84,10 +84,11 @@ class FitModelController extends Controller {
         $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
-//       print_R($brands);
-//        die;
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
+        $colthing_types_man_woman = array_merge($clothing_types['man'], $clothing_types['woman']);
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+        $all_size_title = $this->get('admin.helper.size')->getAllSizeTitleType();
+        $all_size_title_man_woman = array_merge($all_size_title['man'], $all_size_title['woman']);        
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
@@ -98,6 +99,9 @@ class FitModelController extends Controller {
                     'clothing_types' => $clothing_types,
                     'product_specs_json' => json_encode($product_specs),
                     'size_specs_json' => json_encode($size_specs),
+                    'all_size_title_man_woman' => $all_size_title_man_woman,
+                    'colthing_types_man_woman' => $colthing_types_man_woman,
+
                 ));
     }
 
