@@ -35,22 +35,24 @@
                         });
                  $('#sel_size_type').append(option);         
             }
-//---------------------------------------
-   $("#sel_size_type" ).change(function() {      
-        fil_size(this.value);
-   });
- //---------------------------------------
-    function fil_size(sizes){            
-        gender=$('.sel_gender').val()=='m'?'man':'woman';        
-        $('#sel_size').empty();        
-        var option = '<option value="">Select Size</option>';
-        $.each(size_specs.sizes[gender][sizes], function(val, text) {
-            option += '<option value="'+ val + '">' + text + '</option>';
-                });
-         $('#sel_size').append(option);         
-    }
-        
-});            
+        //---------------------------------------
+           $("#sel_size_type" ).change(function() {  
+
+                fil_size(this.value);
+           });
+         //---------------------------------------
+            function fil_size(){     
+                size_specse=jQuery.parseJSON( $('#size_specs_json').text());        
+                gender=$('.sel_gender').val()=='m'?'man':'woman';      
+                $('#sel_size').empty();        
+                var option = '<option value="">Select Size</option>';
+                $.each(size_specs.sizes[gender][$('#sel_size_type').val()], function(val, text) {
+                    option += '<option value="'+ val + '">' + text + '</option>';
+                        });
+                 $('#sel_size').append(option);         
+            }
+
+    });            
     </script>
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
         <span id="mapping_json" hidden="false">{{mapping_json}}</span>   

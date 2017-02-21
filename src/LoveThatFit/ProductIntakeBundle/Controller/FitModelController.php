@@ -82,14 +82,14 @@ class FitModelController extends Controller {
 
     public function editAction($id) {
         $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
-        $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
+        $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);       
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
-        $colthing_types_man_woman = array_merge($clothing_types['man'], $clothing_types['woman']);
+        $colthing_types_man_woman = ($fit_model_measurement->getGender()=='m' ? $clothing_types['man'] : $clothing_types['woman']);
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $all_size_title = $this->get('admin.helper.size')->getAllSizeTitleType();
-        $all_size_title_man_woman = array_merge($all_size_title['man'], $all_size_title['woman']);        
+        $all_size_title_man_woman =($fit_model_measurement->getGender()=='m' ? $all_size_title['man'] : $all_size_title['woman']); 
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
