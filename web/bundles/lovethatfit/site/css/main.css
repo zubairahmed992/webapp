@@ -6508,6 +6508,10 @@ padding-bottom: 10px;
     width: 75%;
 }
 
+.share_img_hldr_show img {
+	width: 75%;
+}
+
 .fitting_image_holder{
 	background:#f2f2f2; 
 	position:relative; 
