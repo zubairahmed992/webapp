@@ -71,19 +71,42 @@ class OrderController extends Controller {
                 'Customer Name',
                 'Order Date',
                 'Order Amount',
-                'Credit Card No'
+                'Credit Card No',
+                'Brand name',
+                'Item Description',
+                'Style ID',
                 )
             );
+            $csvArray = array();
             foreach ($orders as $order) {
-                $pa = array(
-                    'order_number' => $order["order_number"],
-                    'user_name'    => ($order["billing_first_name"] . " ". $order["billing_last_name"]),
-                    'order_date'   => ($order["order_date"]->format('d-m-Y')),
-                    'order_amount' => "$" . number_format((float)$order["order_amount"], 2, '.', ''),
-                    'credit_card'  => "xxxx-xxxx-xxxx-".json_decode($order['payment_json'])
-                        ->transaction->_attributes->creditCard->last4
-                    );
-                fputcsv($output, $pa);
+                $orderDetail = $this->get('cart.helper.orderDetail')->findByOrderIDExport($order['id']);
+                $firstIteration = 1;
+                foreach ($orderDetail as $detail) {
+
+                    $csvSingle['order_number'] = "";
+                    $csvSingle['user_name']    = "";
+                    $csvSingle['order_date']   = "";
+                    $csvSingle['order_amount'] = "";
+                    $csvSingle['credit_card']  = "";
+
+                    if ($firstIteration == 1) {
+
+                        $csvSingle['order_number']=$order["order_number"];
+                        $csvSingle['user_name']   =($order["billing_first_name"] . " ". $order["billing_last_name"]);
+                        $csvSingle['order_date']  =($order["order_date"]->format('d-m-Y'));
+                        $csvSingle['order_amount']="$" . number_format((float)$order["order_amount"], 2, '.', '');
+                        $csvSingle['credit_card'] ="xxxx-xxxx-xxxx-".json_decode($order['payment_json'])
+                            ->transaction->_attributes->creditCard->last4;
+                        
+                        $firstIteration = 0;
+                    }
+
+                    $csvSingle['brand_name']       = $detail["brand_name"];
+                    $csvSingle['item_description'] = $detail["item_description"];
+                    $csvSingle['control_number']   = $detail["control_number"];
+
+                    fputcsv($output, $csvSingle);
+                }
             }
             # Close the stream off
             fclose($output);
