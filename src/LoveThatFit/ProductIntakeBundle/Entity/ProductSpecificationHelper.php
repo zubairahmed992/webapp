@@ -144,7 +144,7 @@ public function getNew() {
                 $grade_rule = array_key_exists('grade_rule_stretch', $sizes[$size][$fpk])?$sizes[$size][$fpk]['grade_rule_stretch']:$sizes[$size][$fpk]['grade_rule'];
                 #------------------------------------------------
                 $us['garment_dimension']=$fpv['garment_dimension'];
-                $us['stretch']=$fpv['stretch'];
+                #$us['stretch']=$fpv['stretch'];
                 $us['stretch_value']=$fpv['stretch_value'];
                 $us['garment_stretch']=$fpv['garment_stretch'];
                 $us['grade_rule']=$sizes[$size][$fpk]['grade_rule'];                
@@ -196,13 +196,13 @@ public function getNew() {
                         if($specs['horizontal_stretch'] > 0 ){                            
                             $us['stretch_value'] = ($specs['horizontal_stretch'] / 100) * $fpv['garment_dimension'];
                             $us['grade_rule_stretch'] = $grade_rule + (($grade_rule * $specs['horizontal_stretch']) / 100);
-                            $us['stretch'] = $specs['horizontal_stretch'];                            
+                            #$us['stretch'] = $specs['horizontal_stretch'];                            
                         }
                     } else {
                         if($specs['vertical_stretch'] > 0 ){                            
                             $us['stretch_value'] = ($specs['vertical_stretch'] / 100) * $fpv['garment_dimension'];
                             $us['grade_rule_stretch'] = $grade_rule + (($grade_rule * $specs['vertical_stretch']) / 100);
-                            $us['stretch'] = $specs['vertical_stretch'];
+                           # $us['stretch'] = $specs['vertical_stretch'];
                         }                        
                     }
                     $us['garment_stretch'] = $fpv['garment_dimension'] + $us['stretch_value'];
@@ -211,7 +211,7 @@ public function getNew() {
                         $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule_stretch'] = $us['grade_rule_stretch'];
                         $specs_updated['sizes'][$prev_size_key][$fpk]['garment_stretch'] = $us['garment_stretch'];
                         $specs_updated['sizes'][$prev_size_key][$fpk]['stretch_value'] = $us['stretch_value'];
-                        $specs_updated['sizes'][$prev_size_key][$fpk]['stretch'] = $us['stretch'];                        
+                        #$specs_updated['sizes'][$prev_size_key][$fpk]['stretch'] = $us['stretch'];                        
                     }                    
                 }                
                 $specs_updated['sizes'][$size][$fpk] = $us;
