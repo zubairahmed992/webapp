@@ -250,13 +250,21 @@ class WSCartController extends Controller
     public function brainTreeProcessTransactionAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $discount_amount    = $decoded['discount_amount'];
+
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {
             $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
             if ($result['success'] == 0) {
+                if($discount_amount > 0){
+                    $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
+                    $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                }
+
                 $this->sendEmailToUser( $user, $decoded, $result);
                 $this->sendEmailToAdmin( $user, $decoded, $result);
+
                 $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
             } else if ($result['success'] < 0) {
                 $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
@@ -311,7 +319,7 @@ class WSCartController extends Controller
             );
         }
         $orderNummber = $result['order_number'];
-        $orderAmount = $decode['order_amount'];
+        $orderAmount = $decode['total_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
@@ -367,7 +375,7 @@ class WSCartController extends Controller
             );
         }
         $orderNummber = $result['order_number'];
-        $orderAmount = $decode['order_amount'];
+        $orderAmount = $decode['total_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];

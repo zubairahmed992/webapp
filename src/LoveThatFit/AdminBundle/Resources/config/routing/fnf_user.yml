@@ -1,0 +1,3 @@
+fnf_users:
+  pattern:  /admin/fnf/users/{page_number}/{sort}
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:index , page_number: 1, sort:id }

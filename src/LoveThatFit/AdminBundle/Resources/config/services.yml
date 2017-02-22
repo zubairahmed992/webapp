@@ -242,3 +242,10 @@ services:
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+     fnfuser.helper.fnfuser:
+         class: LoveThatFit\AdminBundle\Entity\FNFUserHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\FNFUser
+            container: "@service_container"

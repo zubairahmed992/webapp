@@ -40,6 +40,7 @@ class SaveLook
      */
 
     protected $users;
+
     public $file;
 
 
