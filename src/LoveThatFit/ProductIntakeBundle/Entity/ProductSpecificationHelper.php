@@ -152,20 +152,21 @@ public function getNew() {
                 
                 $us['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule), 2, '.', '') : 0;
                 $us['min_actual'] = $us['min_calc'];
-                $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - $grade_rule, 2, '.', ''):0;
+                $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - (2 * $grade_rule), 2, '.', ''):0;
                 $us['fit_model']=number_format($fit_model, 2, '.', '');
-                $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + $grade_rule, 2, '.', ''):0;
+                $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + (2 * $grade_rule), 2, '.', ''):0;
                 $us['max_calc']=$fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule), 2, '.', ''):0;
                 $us['max_actual']=$us['max_calc'];
+                
                 #------------------------------------------------                
                 if(array_key_exists('grade_rule_stretched', $sizes[$size][$fpk])){
                     $grade_rule_stretched = $sizes[$size][$fpk]['grade_rule_stretched'];
                     $us['max_calc'] = $fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule_stretched), 2, '.', '') : 0;
-                    $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + $grade_rule_stretched, 2, '.', '') : 0;
+                    $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + (2 * $grade_rule_stretched), 2, '.', '') : 0;
                     $us['max_actual'] =  $us['max_calc'];
                     
                     $us['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule_stretched), 2, '.', '') : 0;
-                    $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - $grade_rule_stretched, 2, '.', '') : 0;
+                    $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - (2 * $grade_rule_stretched), 2, '.', '') : 0;
                     $us['min_actual'] =  $us['min_calc'];
                 }
                 $updated_sizes[$size][$fpk]=$us;
@@ -194,7 +195,7 @@ public function getNew() {
                     if (array_key_exists($fpk, $fpa['x'])) {
                         if($specs['horizontal_stretch'] > 0 ){                            
                             $us['stretch_value'] = ($specs['horizontal_stretch'] / 100) * $fpv['garment_dimension'];
-                            $us['grade_rule_stretch'] = $grade_rule + (($grade_rule * $specs['vertical_stretch']) / 100);
+                            $us['grade_rule_stretch'] = $grade_rule + (($grade_rule * $specs['horizontal_stretch']) / 100);
                             $us['stretch'] = $specs['horizontal_stretch'];                            
                         }
                     } else {

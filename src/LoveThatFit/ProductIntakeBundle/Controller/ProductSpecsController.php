@@ -121,10 +121,13 @@ class ProductSpecsController extends Controller
                 $output[$key] = $value;
             } 
         }      
+        
         $entity = $this->get('pi.product_specification')->find($id);
         $entity->setSpecsJson(json_encode($output));
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        $specs = $this->get('pi.product_specification')->find($id);
+        #return new Response($specs->getSpecsJson());
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
         #return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
