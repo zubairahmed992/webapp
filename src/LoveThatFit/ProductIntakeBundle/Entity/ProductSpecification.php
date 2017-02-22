@@ -41,6 +41,12 @@ class ProductSpecification {
     protected $specs_json;  
     
     /**
+    * @var string $undo_specs_json
+    * @ORM\Column(name="undo_specs_json", type="text", nullable=true)
+    */
+     private $undo_specs_json;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
@@ -124,6 +130,28 @@ class ProductSpecification {
         return $this->specs_json;
     }
     
+    #------------------------------------------------
+    /**
+     * Set undo_specs_json
+     *
+     * @param string $undo_specs_json
+     * @return ProductSpecificationMapping
+     */
+
+    public function setUndoSpecsJson($undo_specs_json) {
+        $this->undo_specs_json = $undo_specs_json;
+        return $this;
+    }
+
+    /**
+     * Get undo_specs_json
+     *
+     * @return string 
+     */
+    public function getUndoSpecsJson() {
+        return $this->undo_specs_json;
+    }
+
 #--------------------------------------------------------
     /**
      * Set created_at

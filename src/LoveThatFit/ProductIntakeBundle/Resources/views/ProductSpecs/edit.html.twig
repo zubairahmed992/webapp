@@ -441,7 +441,8 @@
                         </td>
                     </tr>
                 </table>
-            <input type="submit" value="Save">                              
+            <input type="submit" value="Save">     
+             <a href="{{ path('product_intake_product_specs_undo', {'id': app.request.get('id')}) }}"><input type="Button" value="Undo"> </a> 
     </div>
 </form>                                
   <br>                
