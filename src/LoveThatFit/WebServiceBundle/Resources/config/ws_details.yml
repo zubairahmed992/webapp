@@ -471,6 +471,12 @@ ws_feedback_category_list:
 #    payment_method_nonce: nonceFromTheClient
 #    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
 
+ws_get_applicablefnf_user:
+    pattern: /ws/get_applicablefnf_user
+    title: get_applicablefnf_user
+    params:
+      auth_token: 121c421783cd4d71d871ec16a1296091
+
 ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     title: process_payment_and_add_item
@@ -478,6 +484,8 @@ ws_braintree_processuser_transaction:
       auth_token: 121c421783cd4d71d871ec16a1296091
 #      items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
       order_amount: 200
+      discount_amount: 50
+      total_amount: 200
       payment_method_nonce: nonceFromTheClient
       billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
 

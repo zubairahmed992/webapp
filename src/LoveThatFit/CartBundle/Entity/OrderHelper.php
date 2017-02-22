@@ -70,6 +70,8 @@ class OrderHelper
         $user_billing_shipping_info->setShippingState($billing["shipping_state"]);
         $user_billing_shipping_info->setOrderStatus('Pending');
         $user_billing_shipping_info->setOrderAmount($decoded["order_amount"]);
+        $user_billing_shipping_info->setDiscountAmount($decoded['discount_amount']);
+        $user_billing_shipping_info->setTotalAmount($decoded['total_amount']);
         $user_billing_shipping_info->setShippingAmount($shipping_amount);
         return $this->save($user_billing_shipping_info);
 

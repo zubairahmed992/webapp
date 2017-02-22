@@ -31,6 +31,12 @@ class User implements UserInterface, \Serializable {
     protected $save_look;
 
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\FNFUser", mappedBy="users", orphanRemoval=true)
+     */
+
+    protected $fnfusers;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="duplicate_users")
      * @ORM\JoinColumn(name="original_user_id", referencedColumnName="id", nullable=true)
      */
@@ -196,6 +202,7 @@ class User implements UserInterface, \Serializable {
 	    $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
         $this->duplicate = new \Doctrine\Common\Collections\ArrayCollection();
         $this->save_look = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fnfusers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 //---------------------------------------------------------------------
@@ -2607,5 +2614,38 @@ class User implements UserInterface, \Serializable {
     public function getSaveLook()
     {
         return $this->save_look;
+    }
+
+    /**
+     * Add fnfusers
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FNFUser $fnfusers
+     * @return User
+     */
+    public function addFnfuser(\LoveThatFit\AdminBundle\Entity\FNFUser $fnfusers)
+    {
+        $this->fnfusers[] = $fnfusers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove fnfusers
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FNFUser $fnfusers
+     */
+    public function removeFnfuser(\LoveThatFit\AdminBundle\Entity\FNFUser $fnfusers)
+    {
+        $this->fnfusers->removeElement($fnfusers);
+    }
+
+    /**
+     * Get fnfusers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFnfusers()
+    {
+        return $this->fnfusers;
     }
 }

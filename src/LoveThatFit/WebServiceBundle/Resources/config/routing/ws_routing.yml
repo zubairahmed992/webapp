@@ -230,6 +230,11 @@ ws_braintree_payment_and_create_order:
    pattern: /ws/braintree_payment_and_create_order
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreePaymentWithAddItemToCart}
 
+ws_get_applicablefnf_user:
+   pattern: /ws/get_applicablefnf_user
+   defaults: { _controller: LoveThatFitAdminBundle:FNFUser:getApplicableFNFUser}
+
+
 ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeProcessTransaction}

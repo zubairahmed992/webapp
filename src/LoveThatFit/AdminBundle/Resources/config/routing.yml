@@ -56,6 +56,11 @@ admin_user_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/user.yml"
     prefix:   /
 
+admin_fnf_users_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/fnf_user.yml"
+    prefix:   /
+
+
     #-------------- Product Wizard Route ------------------------
 admin_product_wizard_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/productwizard.yml"

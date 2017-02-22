@@ -186,6 +186,17 @@ class UserOrder
 	 */
 	private $order_amount;
 
+    /**
+     * @ORM\Column(type="float")
+     *
+     */
+    private $discount_amount = 0;
+
+    /**
+     * @ORM\Column(type="float")
+     *
+     */
+    private $total_amount = 0;
 
 	/**
 	 * @var string
@@ -923,4 +934,63 @@ class UserOrder
 	{
 	  return $this->shipping_amount;
 	}
+
+    /**
+     * Set discount_amount
+     *
+     * @param float $discountAmount
+     * @return UserOrder
+     */
+    public function setDiscountAmount($discountAmount)
+    {
+        $this->discount_amount = $discountAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get discount_amount
+     *
+     * @return float 
+     */
+    public function getDiscountAmount()
+    {
+        return $this->discount_amount;
+    }
+
+    /**
+     * Set total_amount
+     *
+     * @param float $totalAmount
+     * @return UserOrder
+     */
+    public function setTotalAmount($totalAmount)
+    {
+        $this->total_amount = $totalAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get total_amount
+     *
+     * @return float 
+     */
+    public function getTotalAmount()
+    {
+        return $this->total_amount;
+    }
+
+    /**
+     * Add user_order_detail
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail
+     * @return UserOrder
+     */
+    public function addUserOrderDetail(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
+    {
+        $this->user_order_detail[] = $userOrderDetail;
+    
+        return $this;
+    }
 }
