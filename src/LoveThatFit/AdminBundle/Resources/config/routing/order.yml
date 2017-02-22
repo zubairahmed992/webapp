@@ -14,11 +14,15 @@ admin_order_update:
     defaults: { _controller: LoveThatFitAdminBundle:Order:update }
     requirements:
         _method:  POST
-        
+
+admin_order_export:
+    pattern:  /admin/order/export
+    defaults: { _controller: LoveThatFitAdminBundle:Order:export }
+
 admin_order_delete:
     pattern:  /admin/order/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Order:delete }
-    
+
 admin_order_old:
     pattern:  /admin/order/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Order:index ,page_number: 1, sort:id }

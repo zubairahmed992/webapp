@@ -6494,12 +6494,22 @@ padding-bottom: 10px;
 }
 
 .share_img_hldr {
-    text-align: center;
-    width:100%;
-    margin-bottom: 120px;
+	text-align: center;
+	width:100%;
+	margin-bottom: 120px;
+}
+
+.share_img_hldr_show {
+    text-align: center!important;
+    width:100%!important;
+    margin-bottom: 20px!important;
 }
 .share_img_hldr img {
     width: 75%;
+}
+
+.share_img_hldr_show img {
+	width: 75%!important;
 }
 
 .fitting_image_holder{
@@ -6519,6 +6529,14 @@ min-width:320px;
 background:#fff;
 border:1px solid #ececec;
 margin:0 auto;
+}
+
+.container_show_feedback{
+	width:50%;
+	min-width:320px;
+	background:#fff;
+	border:1px solid #ececec;
+	margin:0 auto;
 }
 
 .comments_sec table thead tr:first-child{	
@@ -6641,6 +6659,16 @@ opacity: 0.3;
 	background:#fff;
 	padding:0px!important;
 	min-height:667px;
+	position:relative;
+}
+
+.container_show_feedback,
+.container{
+	width:50%;
+	min-width:375px;
+	background:#fff;
+	padding:0px!important;
+	min-height:767px;
 	position:relative;
 }
 
@@ -6863,7 +6891,7 @@ span.lable_like_rate {
     font-weight:bold;
     padding:10px;
     text-decoration: none;
-    width: 120px;
+    width: 140px;
 }
 
 
@@ -6877,7 +6905,7 @@ span.lable_like_rate {
     padding:10px;
     color:#333!important;
     text-decoration: none;
-    width: 120px!important;
+    width: 140px!important;
 }
 
 
@@ -6947,10 +6975,19 @@ and (orientation : portrait) {
             padding:0px!important;
             min-height: 560px !important;
             position:fixed;
-    }   
-    
-    
-    .rating_wrapper{
+    }
+
+	.container_show_feedback,
+	.container{
+
+		background:#fff;
+		padding:0px!important;
+		/*min-height: 560px !important;*/
+		position:fixed;
+	}
+
+
+	.rating_wrapper{
         margin-top:0;
     }
     #ss_dislike,
@@ -6979,8 +7016,18 @@ and (orientation : portrait) {
             padding:0px!important;
             min-height: 465px !important;
             position:fixed;
-    }   
-    span.lable_like_rate {
+    }
+
+	.container_show_feedback,
+	.container{
+		min-width:320px;
+		background:#fff;
+		padding:0px!important;
+		/*min-height: 465px !important;*/
+		position:fixed;
+	}
+
+	span.lable_like_rate {
         display: none !important;
     }
     .rating_wrapper{

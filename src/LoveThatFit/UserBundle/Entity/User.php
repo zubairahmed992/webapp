@@ -2199,7 +2199,7 @@ class User implements UserInterface, \Serializable {
             if ($device_type=='iphone5' || $device_type=='iphone5s' || $device_type=='iphone5c'){
                 
                 ///// Test row for ip5s account test
-                $this->measurement->top_placement = $this->measurement->top_placement + 8;
+                //$this->measurement->top_placement = $this->measurement->top_placement + 8;
                 ///// END - Test row for ip5s account test
                 
                 $x_calculation=($this->measurement->bottom_placement * ($resize_ratio_jt-1)); # 0.08% value calculation

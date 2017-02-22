@@ -58,7 +58,7 @@ class FitModelController extends Controller {
     public function saveAction(Request $request) {
         $decoded = $request->request->all();
         $fmm = $this->get('productIntake.fit_model_measurement')->createNew();
-        $brand = $this->get('admin.helper.brand')->find($decoded['sel_brand']);
+        $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $fmm->setBrand($brand);
         $fmm->setTitle($decoded['txt_title']);
         $fmm->setDescription($decoded['txt_title']);
@@ -73,30 +73,59 @@ class FitModelController extends Controller {
                 $measurements[$fp] = $decoded[$fp];
             }
         }
-        $fmm->setMeasurementJson(json_encode($measurements));
+        $fmm->setMeasurementJson(json_encode($decoded));
         $this->get('productIntake.fit_model_measurement')->save($fmm);
-        return new Response('saved!');
+        return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
     }
 
     #------------------------/product_intake/fit_model_specs/edit/id
 
     public function editAction($id) {
-        $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);
+        $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
+        $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);       
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
+        $colthing_types_man_woman = ($fit_model_measurement->getGender()=='m' ? $clothing_types['man'] : $clothing_types['woman']);
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+       // print_r(json_encode($size_specs['sizes']['woman']['bra']));
+       // die;
+        $all_size_title = $this->get('admin.helper.size')->getAllSizeTitleType();
+        $all_size_title_man_woman =($fit_model_measurement->getGender()=='m' ? $all_size_title['man'] : $all_size_title['woman']); 
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
-        return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,
                     'fit_points' => $fit_points,
                     'brands' => $brands,
-                    'clothing_types' => $clothing_types,
+                    'clothing_types' =>  json_encode($clothing_types),
                     'product_specs_json' => json_encode($product_specs),
                     'size_specs_json' => json_encode($size_specs),
+                    'all_size_title_man_woman' => $all_size_title_man_woman,
+                    'colthing_types_man_woman' => $colthing_types_man_woman,
+                    'mapping_json' => json_encode($mapping),          
+
                 ));
     }
+    
+    #----------------------- /product_intake/fit_model/update
+    public function updateAction(Request $request,$id){  
+        $decoded = $request->request->all();
+        $entity = $this->get('productIntake.fit_model_measurement')->find($id);
+        $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
+        $entity->setBrand($brand);
+        $entity->setTitle($decoded['txt_title']);
+        $entity->setDescription($decoded['txt_title']);
+        $entity->setSize($decoded['sel_size']);
+        $entity->setClothingType($decoded['sel_clothing_type']);
+        $entity->setGender($decoded['sel_gender']);
+        $entity->setSizeTitleType($decoded['sel_size_type']);          
+        $entity->setMeasurementJson(json_encode($decoded));      
+        $msg_ar = $this->get('productIntake.fit_model_measurement')->update($entity);
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
+    }
+    
 
 }

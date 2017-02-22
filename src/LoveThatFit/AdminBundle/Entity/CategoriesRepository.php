@@ -299,9 +299,8 @@ param:limit, page_number,limit,sort
             e.disabled,
             e.created_at'
             )
-            ->from('LoveThatFitAdminBundle:Categories', 'e')
-            ->where('e.disabled=:status')
-            ->setParameter('status', 0);
+            ->from('LoveThatFitAdminBundle:Categories', 'e');
+
         if ($search) {
             $query
                 ->andWhere('e.name like :search')

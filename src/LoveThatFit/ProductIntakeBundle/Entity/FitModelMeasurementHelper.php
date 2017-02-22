@@ -52,7 +52,18 @@ class FitModelMeasurementHelper {
         } 
         return $entity;
     }
-
+//--------------------------- Update    
+    public function update($entity) {       
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($entity);
+        $this->em->flush();
+            return array(
+                'message' => 'The Fit Model Measurments has been Updated!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+    }
+    
 //------------------
 
     public function delete($id) {
