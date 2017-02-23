@@ -187,7 +187,8 @@ class PaymentHelper
 
         $billing = $decoded["billing"];
         $saleObject = array(
-            "amount" => $decoded['total_amount'],
+            //"amount" => $decoded['total_amount'],
+            "amount" => $decoded['order_amount'],
             "paymentMethodNonce" => $decoded['payment_method_nonce'],
             'billing' => [
                 'firstName' => $billing['billing_first_name'],
@@ -241,8 +242,6 @@ class PaymentHelper
             $payment_json = json_encode($result);
             $shipping_amount    = $decoded['shipping_amount'];
             $order_amount       = $decoded['order_amount'];
-            $discount_amount    = $decoded['discount_amount'];
-            $total_amount       = $decoded['total_amount'];
 
             $transaction_id = $result->transaction->id;
             $transaction_status = $result->transaction->status;

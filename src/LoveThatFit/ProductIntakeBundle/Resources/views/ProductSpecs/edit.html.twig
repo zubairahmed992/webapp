@@ -13,6 +13,7 @@
     $(document).ready(function(){ 
         
            //-------------------------- Fit Model Validation Sizes Dimention
+           {#
             $("tr#validation_fit_model").on('click', function() {
              //event.preventDefault();  
               input_value = [];
@@ -21,7 +22,7 @@
                   input_value.push($(this).val());              
                 });                  
             });
-            
+            #}
            
             //--------------- Focus nave Lost on Wron enter value into Sizes
            {# $("table tr td input").on('focusout', function(e) {
@@ -30,7 +31,7 @@
                  }
             });#}
                 //        var text = '';
-            $("table tr td input").on('keyup', function(e) {               
+          {#  $("table tr td input").on('keyup', function(e) {               
                 if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) { 
                     input_val = $.trim(this.value);
                     val_index = $(this).attr('class');
@@ -58,7 +59,7 @@
                 }
               // input_value = [];
             });
-          
+          #}
       
       //---------------- Fit Model Calcultion on Ajax Hit
       {#
@@ -355,11 +356,23 @@
                                             </div>
                                         </td>
                                     </tr>
-                                {% else %}                               
-                                <tr>
-                                    <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                    <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}" id="{{specs_k}}"> </span></td>
-                                </tr>
+                                {% else %}    
+                                {% if specs_k == 'horizontal_stretch' %}
+                                    <tr>
+                                        <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
+                                        <td>
+                                            <span>
+                                                <input type="checkbox" name="stretch_enabled" id="stretch_enabled" checked> Calculate stretch values
+                                                <input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}" id="{{specs_k}}">                                             
+                                            </span>                                        
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
+                                        <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}" id="{{specs_k}}"> </span></td>
+                                    </tr>
+                                {% endif %}                                     
                             {% endif %}
                                 
                             {% endif %}

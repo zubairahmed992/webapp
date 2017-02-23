@@ -1,47 +1,24 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
 
-    <div class="container">
-        <h2>Fit Model Measurements</h2>
+    <div class="container">        
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
             <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>
-            <a href="#" class="btn btn-default">Edit</a>
+            <a href="{{ path('product_intake_fit_model_edit', {'id': app.request.get('id')}) }}" class="btn btn-default" title="Edit ">edit</a> 
+           
         </div>
-        <div class="row">
-                <span><b>Brand</b> &nbsp;:&nbsp; </span>
-                <span>{{fit_model_measurement.brand?fit_model_measurement.brand.name:''}}</span>
-            </div>
-        <br>
-        <div class="row">
-                <span><b>Gender</b> &nbsp;:&nbsp; </span>
-                <span>{{fit_model_measurement.gender}}</span>
-            </div>
-        <br>
-        <div class="row">
-                <span><b>Size Title Type</b> &nbsp;:&nbsp; </span>
-                <span>{{fit_model_measurement.SizeTitleType}}</span>
-            </div>
-            <br>
-           <div class="row">
-                <span><b>Clothing Type</b> &nbsp;:&nbsp; </span>
-                <span>{{fit_model_measurement.ClothingType}}</span>
-            </div>
-            <br>
-            <div class="row">
-                <span><b>Size</b> &nbsp;:&nbsp; </span>
-                <span>{{fit_model_measurement.Size}}</span>
-            </div>
-            <br>
-            <div class="row">
-                <span><b>title :</b> &nbsp;:&nbsp; </span>
-                <span>{{fit_model_measurement.title}}</span>
-            </div>
-            <br>        
-        {% for k, v in fit_points %}              
-            <div class="row">
-                <span><b>{{k}}</b> &nbsp;:&nbsp; </span>
-                <span>{{v}}</span>
-            </div>
-        {% endfor %}
-  </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Fit Model Measurements</div>
+            <div class="panel-body ">   
+                 {% for fit_point_k, fit_point_v in fit_points %}
+                     <div class="form-group">
+                        <label class="col-sm-4" for=""> {{fit_point_k}}: </label> 
+                         <div class="col-sm-2">
+                         {{fit_point_v}}
+                         </div>
+                    </div>   
+                 {% endfor %}             
+             </div>
+        </div>    
+    </div>        
 {% endblock %}

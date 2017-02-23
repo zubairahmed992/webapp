@@ -24,4 +24,8 @@ product_intake_foo:
     
 product_intake_fit_model_update:
     pattern:  /product_intake/fit_model/update/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:update }      
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:update } 
+    
+product_intake_fit_model_delete:
+    pattern:  /product_intake/fit_model/delete/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:delete }       
