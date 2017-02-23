@@ -136,10 +136,14 @@ class ProductSpecsController extends Controller
     #----------------------- /product_intake/Prod_specs/undo
     public function undoAction($id){  
         $entity = $this->get('pi.product_specification')->find($id);       
+        if( $entity->getUndoSpecsJson() ) {
         $entity->setSpecsJson($entity->getUndoSpecsJson());
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         $specs = $this->get('pi.product_specification')->find($id);    
+        } else {
+             $this->get('session')->setFlash('success', "Please Firstly Save Data Form then Apply Undo Action!");   
+        }
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));       
     }
     
