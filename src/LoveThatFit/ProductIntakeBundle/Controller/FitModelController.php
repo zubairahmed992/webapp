@@ -127,5 +127,12 @@ class FitModelController extends Controller {
         return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
     }
     
+    #----------------------- /product_intake/fit_model/delete
+    public function deleteAction($id){                
+        $msg_ar = $this->get('productIntake.fit_model_measurement')->delete($id);             
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
+    }
+    
 
 }
