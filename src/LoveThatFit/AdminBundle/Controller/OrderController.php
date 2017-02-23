@@ -124,7 +124,7 @@ class OrderController extends Controller {
                     }
 
                     $csvSingle['brand_name']       = $detail["brand_name"];
-                    $csvSingle['amount']           = $detail["amount"];
+                    $csvSingle['amount']           = "$".number_format((float)$detail["amount"], 2, '.', '');
                     $csvSingle['item_description'] = $detail["item_description"];
                     $csvSingle['control_number']   = $detail["control_number"];
 
