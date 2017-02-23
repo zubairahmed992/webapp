@@ -109,8 +109,18 @@ class ProductSpecsController extends Controller
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
     #----------------------- /product_intake/Prod_specs/update
+    public function _updateAction($id){  
+        $specs = $this->get('pi.product_specification')->find($id);
+        $updated_specs = $this->get('pi.product_specification')->generate(json_decode($specs->getSpecsJson(), true));
+        #return new Response(json_encode($updated_specs));
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
+                    'parsed_data' => $updated_specs,
+                    'product_specs_json' => json_encode($gen_specs),                    
+                ));
+    }
     public function updateAction($id){  
-           $output = array();          
+           $output = array();                     
         foreach ($_POST as $key => $value)
         {   
             $sizes = explode('-',$key);//[sizes-XS-neck-garment_dimension]
@@ -118,9 +128,9 @@ class ProductSpecsController extends Controller
             if($array_length == '4' ){  
                  $output['sizes'][$sizes[1]][$sizes[2]][$sizes[3]] = $value;
             } else {
-                $output[$key] = $value;
+                    $output[$key] = $value;                
             } 
-        }      
+        }              
         
         $entity = $this->get('pi.product_specification')->find($id);
         $entity->setUndoSpecsJson($entity->getSpecsJson());
