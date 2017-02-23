@@ -61,6 +61,7 @@ class OrderController extends Controller {
     public function exportAction(Request $request)
     {
         $orders = $this->get('cart.helper.order')->findOrderList();
+
         if (!empty($orders)) {
             header('Content-Type: application/csv');
             //header('Content-Type: text/csv; charset=utf-8');
@@ -71,10 +72,11 @@ class OrderController extends Controller {
                 'Order No',
                 'Customer Name',
                 'Order Date',
-                'Order Amount',
+                'Order Total Amount',
                 'Credit Card No',
                 'Shipping Address',
                 'Brand name',
+                'Item Price',
                 'Item Description',
                 'Style ID',
                 )
@@ -122,13 +124,13 @@ class OrderController extends Controller {
                     }
 
                     $csvSingle['brand_name']       = $detail["brand_name"];
+                    $csvSingle['amount']           = $detail["amount"];
                     $csvSingle['item_description'] = $detail["item_description"];
                     $csvSingle['control_number']   = $detail["control_number"];
 
                     fputcsv($output, $csvSingle);
                 }
             }
-            
             # Close the stream off
             fclose($output);
             return new Response('');
