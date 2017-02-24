@@ -152,9 +152,9 @@ public function getNew() {
                 
                 $us['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule), 2, '.', '') : 0;
                 $us['min_actual'] = $us['min_calc'];
-                $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - (2 * $grade_rule), 2, '.', ''):0;
+                $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - ($grade_rule/2), 2, '.', ''):0;
                 $us['fit_model']=number_format($fit_model, 2, '.', '');
-                $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + (2 * $grade_rule), 2, '.', ''):0;
+                $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + ($grade_rule/2), 2, '.', ''):0;
                 $us['max_calc']=$fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule), 2, '.', ''):0;
                 $us['max_actual']=$us['max_calc'];
                 
@@ -162,11 +162,10 @@ public function getNew() {
                 if(array_key_exists('grade_rule_stretched', $sizes[$size][$fpk])){
                     $grade_rule_stretched = $sizes[$size][$fpk]['grade_rule_stretched'];
                     $us['max_calc'] = $fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule_stretched), 2, '.', '') : 0;
-                    $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + (2 * $grade_rule_stretched), 2, '.', '') : 0;
-                    $us['max_actual'] =  $us['max_calc'];
-                    
+                    $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + ($grade_rule_stretched/2), 2, '.', '') : 0;
+                    $us['max_actual'] =  $us['max_calc'];                    
                     $us['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule_stretched), 2, '.', '') : 0;
-                    $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - (2 * $grade_rule_stretched), 2, '.', '') : 0;
+                    $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - ($grade_rule_stretched/2), 2, '.', '') : 0;
                     $us['min_actual'] =  $us['min_calc'];
                 }
                 $updated_sizes[$size][$fpk]=$us;
@@ -321,34 +320,20 @@ public function getNew() {
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
                 $us = array('garment_dimension' => $fpv['garment_dimension'], 'stretch_percentage' => 0, 'stretch_value' => 0, 'garment_stretch' => $fpv['garment_stretch'], 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'min_actual' => 0, 'ideal_low' => 0, 'fit_model' => 0, 'ideal_high' => 0, 'max_calc' => 0, 'max_actual' => 0);
-                if ($prev_size_key) {#----------> for all the sizes after first
+                if ($prev_size_key) {#----------> for all the sizes after first                    
                     $us['fit_model'] =  array_key_exists($fpk, $fit_model_ratio)? number_format($fpv['garment_dimension'] * $fit_model_ratio[$fpk], 2, '.', ''):0;
                     $us['grade_rule'] = array_key_exists($fpk, $specs_updated['sizes'][$prev_size_key])? $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension']:0;                                        
                     
-                    $us['min_calc'] = $fit_model > 0 ? number_format($fit_model - (2.5 * $grade_rule), 2, '.', '') : 0;
-                    $us['min_actual'] = $us['min_calc'];
-                    $us['ideal_low'] = $fit_model > 0 ? number_format($fit_model - (0.5 * $grade_rule), 2, '.', ''):0;
-                    
-                    $us['ideal_high'] = $fit_model > 0 ? number_format($fit_model + (0.5 * $grade_rule), 2, '.', ''):0;
-                    $us['max_calc']=$fit_model > 0 ? number_format($fit_model + (2.5 * $grade_rule), 2, '.', ''):0;
-                    $us['max_actual']=$us['max_calc'];                    
-                    
-                    
-                    #-------- check for overall stretch calculation enabled
-                    #~~~~~~~~> else calculate with relative Stretch                    
-                    if($stretch_enabled){
-                        $stretch_percentage = $specs['horizontal_stretch'] > 0 ?$specs['horizontal_stretch']:0;
-                        if (array_key_exists($fpk, $fpa['x'])) {                            
-                                $stretch_percentage = $specs['horizontal_stretch'] > 0 ?$specs['horizontal_stretch']:0;                            
-                        }else{
-                            $stretch_percentage = $specs['vertical_stretch'] > 0 ?$specs['vertical_stretch']:0;
-                        }
+                    #-------- stretch calculation                                    
+                    $stretch_percentage = 0;
+                    if (array_key_exists($fpk, $fpa['x'])) {                            
+                            $stretch_percentage = $specs['horizontal_stretch'] > 0 ?$specs['horizontal_stretch']:0;                            
+                    }else{
+                        $stretch_percentage = $specs['vertical_stretch'] > 0 ?$specs['vertical_stretch']:0;
                     }
-                    if($stretch_percentage>0){
-                        
-                    }
-                    
-                }                                
+                    $us=$this->grade_rules($us, $stretch_percentage);
+                }             
+                #---------- Ranges calculations
                 $specs_updated['sizes'][$size][$fpk] = $us;
             }
             $prev_size_key = $size;

@@ -230,5 +230,16 @@ class ProductSpecification {
         }
         return $fit_points;
     }
+     
+    public function getFitPointStretchArray() {
+        $fit_points =  $this->getFitPointArray();
+        $deco = json_decode($this->getSpecsJson(), true);
+        $fp_stretch = is_array($deco)&& array_key_exists('fit_point_stretch', $deco)?$deco['fit_point_stretch']:array();
+        $stretch = array();
+        foreach ($fit_points as $fp => $title) {                        
+                        $stretch[$title] = array_key_exists($title, $fp_stretch)?$fp_stretch[$title]:'';
+        }
+        return $stretch;
+    }
     
 }

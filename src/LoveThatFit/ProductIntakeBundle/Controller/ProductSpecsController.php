@@ -35,8 +35,6 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $fit_model_measurement_id=null){                
-        #$conf = $this->get('pi.product_specification')->getFitPointArray();  
-        #return new Response(json_encode($conf));
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
         $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
         
@@ -56,6 +54,7 @@ class ProductSpecsController extends Controller
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
                     'fit_points' => $ps->getFitPointArray(),
+                    'fit_point_stretch' => $ps->getFitPointStretchArray(),
                     'fit_model_list' => $fms,
                     'fit_model' => $fm,
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
@@ -125,7 +124,9 @@ class ProductSpecsController extends Controller
         {   
             $sizes = explode('-',$key);//[sizes-XS-neck-garment_dimension]
             $array_length =  count($sizes);      
-            if($array_length == '4' ){  
+            if($array_length == '2' ){  
+                 $output[$sizes[0]][$sizes[1]] = $value;
+            } elseif($array_length == '4' ){  
                  $output['sizes'][$sizes[1]][$sizes[2]][$sizes[3]] = $value;
             } else {
                     $output[$key] = $value;                
@@ -385,40 +386,5 @@ class ProductSpecsController extends Controller
                 
         return $product;
     }
-    #------------------------------------------------------------
-    private function validate_specs($data) {        
-            foreach ($data['sizes'] as $s=>$fp) {
-                
-                # garment_dimension ~~~~~~~>
-                
-                
-                # garment_stretch ~~~~~~~>	
-                
-                
-                # min_calc	 ~~~~~~~>
-                
-                
-                # min_actual	 ~~~~~~~>
-                
-                
-                # ideal_low	 ~~~~~~~>
-                
-                
-                # fit_model	 ~~~~~~~>
-                
-                
-                # ideal_high	 ~~~~~~~>
-                
-                
-                # max_calc	 ~~~~~~~>
-                
-                
-                # max_actual	 ~~~~~~~>
-                
-                
-                # grade rule    ~~~~~~~>                
-                
-                
-            }
-    }
+    
 }

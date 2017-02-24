@@ -36,7 +36,9 @@ $(document).ready(function(){
                                             {{ key }}:<b>{{ val }}%</b>&nbsp;&nbsp;|&nbsp;&nbsp;                                                    
                                         {% endfor %}
                                      {% else %}
-                                    <span>{{ specs_v }}</span>
+                                        {% if specs_k != 'fit_point_stretch' %}
+                                                <span>{{ specs_v }}</span>
+                                        {% endif %}   
                                     {% endif %}   
                                 </td>
                             </tr>
