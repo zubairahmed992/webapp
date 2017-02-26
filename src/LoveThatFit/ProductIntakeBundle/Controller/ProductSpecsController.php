@@ -108,17 +108,17 @@ class ProductSpecsController extends Controller
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
     #----------------------- /product_intake/Prod_specs/update
-    public function _updateAction($id){  
+    public function updateAction($id){  
         $specs = $this->get('pi.product_specification')->find($id);
         $updated_specs = $this->get('pi.product_specification')->generate(json_decode($specs->getSpecsJson(), true));
-        #return new Response(json_encode($updated_specs));
+        return new Response(json_encode($updated_specs));
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => $updated_specs,
                     'product_specs_json' => json_encode($gen_specs),                    
                 ));
     }
-    public function updateAction($id){  
+    public function _updateAction($id){  
            $output = array();                     
         foreach ($_POST as $key => $value)
         {   
