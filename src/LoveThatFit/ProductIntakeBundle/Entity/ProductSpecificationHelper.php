@@ -312,18 +312,29 @@ public function getNew() {
         $fit_model_ratio = array();
         $fit_model_fit_points = json_decode($fit_model_obj->getMeasurementJson(), true);        
         $fpa = $this->getFitPointArray();
-
         #--------- calculate grade rule
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
                 $us = array('garment_dimension' => $fpv['garment_dimension'], 'stretch_percentage' => 0, 'stretch_value' => 0, 'garment_stretch' => $fpv['garment_stretch'], 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'min_actual' => 0, 'ideal_low' => 0, 'fit_model' => 0, 'ideal_high' => 0, 'max_calc' => 0, 'max_actual' => 0);
 
-                if ($prev_size_key) {#----------> for all the sizes after first                    
-                    $us['grade_rule'] = array_key_exists($fpk, $specs_updated['sizes'][$prev_size_key])? $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension']:0;                                        
-                
+                if(array_key_exists($fpk, $specs['fit_point_stretch']) && $specs['fit_point_stretch'][$fpk]>0){
+                    $us['stretch_percentage']=$specs['fit_point_stretch'][$fpk];
+                }else{
+                    if(array_key_exists($fpk, $fpa['x']) && $fpa['x'][$fpk]>0){
+                        $us['stretch_percentage'] = $fpa['x'][$fpk];
+                    
+                    }elseif(array_key_exists($fpk, $fpa['y']) && $fpa['y'][$fpk]>0){
+                        $us['stretch_percentage'] = $fpa['y'][$fpk];
+                    }
                 }
+
+
+                if ($prev_size_key) {#----------> for all the sizes after first                    
+                    $us['grade_rule'] = array_key_exists($fpk, $specs_updated['sizes'][$prev_size_key])? $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension']:0;                                         
+                }   
+
                 if ($size_no==2){
-                $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule'] = $us['grade_rule'];    
+                    $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule'] = $us['grade_rule'];    
                 }
                 $specs_updated['sizes'][$size][$fpk] = $us;
 
@@ -336,17 +347,22 @@ public function getNew() {
         
         #--------- calculate fit model ratio        
         foreach ($specs_updated['sizes'][$fit_model_obj->getSize()] as $fit_point => $measure) {
-                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['min_calc'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] - (2.5 * $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['grade_rule']), 2, '.', '') : 0;
+
+                    
+                    $grade_rule = $specs_updated['sizes'][$size][$fpk]['grade_rule'] + ($specs_updated['sizes'][$size][$fpk]['grade_rule'] * ($specs_updated['sizes'][$size][$fpk]['stretch_percentage']/100));    
+                    
+
+                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['min_calc'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] - (2.5 * $grade_rule), 2, '.', '') : 0;
                     
 
                     $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['min_actual'] = $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['min_calc'];
 
-                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['ideal_low'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] - (0.5 * $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['grade_rule']), 2, '.', '') : 0;
+                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['ideal_low'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] - (0.5 * $grade_rule), 2, '.', '') : 0;
                     
                     $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['fit_model'] = $fit_model_fit_points[$fit_point];
-                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['ideal_high'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] + (0.5 * $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['grade_rule']), 2, '.', '') : 0;
+                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['ideal_high'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] + (0.5 * $grade_rule), 2, '.', '') : 0;
                     
-                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_calc'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] + (2.5 * $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['grade_rule']), 2, '.', '') : 0;
+                    $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_calc'] = $fit_model_fit_points[$fit_point] > 0 ? number_format($fit_model_fit_points[$fit_point] + (2.5 * $grade_rule), 2, '.', '') : 0;
                       
                     $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_actual'] = $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_calc'];
 
