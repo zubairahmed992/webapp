@@ -111,7 +111,7 @@ class ProductSpecsController extends Controller
     public function updateAction($id){  
         $specs = $this->get('pi.product_specification')->find($id);
         $updated_specs = $this->get('pi.product_specification')->generate(json_decode($specs->getSpecsJson(), true));
-        return new Response(json_encode($updated_specs));
+        #return new Response(json_encode($updated_specs));
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => $updated_specs,
