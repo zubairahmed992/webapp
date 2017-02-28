@@ -357,7 +357,7 @@ class ProductSpecificationMapping {
     protected function getUploadDir() {
         $directory_path = 'uploads/ltf/products/product_csv';
         if (!file_exists($directory_path)) {
-            mkdir($image_path, 0777, true);
+            mkdir($directory_path, 0777, true);
         }
         return $directory_path;
     }

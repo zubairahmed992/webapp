@@ -254,6 +254,13 @@
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();              
 
+        $( "#lnk_fit_point_stretch" ).click(function() {
+          event.preventDefault();
+          $( "#tbl_fit_point_stretch" ).toggle( "slow", function() {
+            // Animation complete.
+          });
+        });
+
     });
 
 </script>
@@ -319,7 +326,7 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="" style="width:70px; background-color: #cccccc"">
+                                                          <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="{{ specs_k }}" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_fabric_content" type="button" value="Add">
                                                         {% endif %} 
                                                      
@@ -327,12 +334,12 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="garment_detail_value" min="1" max="100" value="" name="" style="width:70px; background-color: #cccccc"">
+                                                          <input type="text" class="garment_detail_value" min="1" max="100" value="" name="{{ specs_k }}" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_garment_detail" type="button" value="Add">
                                                         {% endif %} 
                                                      
                                                        {% if specs_k == 'fit_priority' %}
-                                                           <select name="" class="fit_point" style="width:auto; background-color: #cccccc" data-width="100%">   
+                                                           <select name="{{ specs_k }}" class="fit_point" style="width:auto; background-color: #cccccc" data-width="100%">   
                                                                 {% for key,val in fit_points %}
                                                                    <option value="{{val}}"> {{key}}</option>
                                                                 {% endfor %}
@@ -357,17 +364,7 @@
                                         </td>
                                     </tr>
                                 {% else %}    
-                                {% if specs_k == 'horizontal_stretch' %}
-                                    <tr>
-                                        <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                        <td>
-                                            <span>
-                                                <input type="checkbox" name="stretch_enabled" id="stretch_enabled" checked> Calculate stretch values
-                                                <input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}" id="{{specs_k}}">                                             
-                                            </span>                                        
-                                        </td>
-                                    </tr>
-                                {% else %}
+                                {% if specs_v is not iterable   %}                                    
                                     <tr>
                                         <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
                                         <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}" id="{{specs_k}}"> </span></td>
@@ -388,6 +385,26 @@
     </div>
 #}
 {#---------------------------------------------------------------------------------------------#}
+               <div id="dv_fit_point_stretch">
+                  {# <a id="lnk_fit_point_stretch" href="#">Add Fit point stretch preference</a><br>#}
+                       <b>Add Fit point stretch preference</b><br>
+                    <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                        <tr>
+                            {% for fp, fpv in fit_point_stretch %}                
+                                <th>{{fp}}</th>                                    
+                            {% endfor %}
+                        </tr>                
+                        <tr>
+                            {% for fp, fpv in fit_point_stretch %}                
+                                <td>
+                                    <input type="number" class="form-control input-sm" placeholder="%" name="fit_point_stretch-{{ fp }}" value="{{fpv}}" style="width:80px">                                    
+                                </td>                                    
+                            {% endfor %}
+                        </tr>
+                    </table>   
+               <br>
+               </div>   
+               
             <table>                
                 <tr>
                     <td>
@@ -397,7 +414,7 @@
                                     <tr class="Active">
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
-                                        <th >stretch_value</th>
+                                        <th >stretch_percentage</th>
                                         <th >garment_stretch</th>                                        
                                         <th >grade_rule</th>
                                         <th >grade_rule_stretch</th>
@@ -415,9 +432,7 @@
                                         <tr class="{{ size }}_{{ measurement_k }}" id="validation_fit_model" >
                                             <th>{{measurement_k}}</th>
                                             <td><input class="0" type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> </td>
-                                            <td><input class="1" type="number" value="{{measurement_v.stretch_value is defined?measurement_v.stretch_value | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-stretch_value" style="width:50px">
-                                                <span style="font-size:10px">{{measurement_v.stretch is defined?measurement_v.stretch:0}}%</span>
-                                            </td>
+                                            <td><span style="font-size:10px">{{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%</span></td>
                                             <td>
                                                 {{measurement_v.garment_stretch | number_format(2, '.', '')}}
                                                 <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>
@@ -441,7 +456,8 @@
                         </td>
                     </tr>
                 </table>
-            <input type="submit" value="Save">                              
+            <input type="submit" value="Save">     
+             <a href="{{ path('product_intake_product_specs_undo', {'id': app.request.get('id')}) }}"><input type="Button" value="Undo"> </a> 
     </div>
 </form>                                
   <br>                
