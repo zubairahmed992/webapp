@@ -326,7 +326,7 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="" style="width:70px; background-color: #cccccc"">
+                                                          <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="{{ specs_k }}" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_fabric_content" type="button" value="Add">
                                                         {% endif %} 
                                                      
@@ -334,12 +334,12 @@
                                                           {#<label>
                                                                  Enter fabric Content : 
                                                                </label> #}
-                                                          <input type="text" class="garment_detail_value" min="1" max="100" value="" name="" style="width:70px; background-color: #cccccc"">
+                                                          <input type="text" class="garment_detail_value" min="1" max="100" value="" name="{{ specs_k }}" style="width:70px; background-color: #cccccc"">
                                                           <input class="add_garment_detail" type="button" value="Add">
                                                         {% endif %} 
                                                      
                                                        {% if specs_k == 'fit_priority' %}
-                                                           <select name="" class="fit_point" style="width:auto; background-color: #cccccc" data-width="100%">   
+                                                           <select name="{{ specs_k }}" class="fit_point" style="width:auto; background-color: #cccccc" data-width="100%">   
                                                                 {% for key,val in fit_points %}
                                                                    <option value="{{val}}"> {{key}}</option>
                                                                 {% endfor %}
