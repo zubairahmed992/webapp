@@ -432,7 +432,7 @@
                                         <tr class="{{ size }}_{{ measurement_k }}" id="validation_fit_model" >
                                             <th>{{measurement_k}}</th>
                                             <td><input class="0" type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> </td>
-                                            <td><span style="font-size:10px">{{measurement_v.stretch is defined?measurement_v.stretch:0}}%</span></td>
+                                            <td><span style="font-size:10px">{{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%</span></td>
                                             <td>
                                                 {{measurement_v.garment_stretch | number_format(2, '.', '')}}
                                                 <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>

@@ -44,7 +44,7 @@ class ProductSpecsController extends Controller
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         $parsed_data['fit_model_size']=  array_key_exists('fit_model_size',$parsed_data)?$parsed_data['fit_model_size']:'';
         $drop_down_values['fit_model_size'] = $this->get('productIntake.fit_model_measurement')->getTitleArray();
-        
+        #return new Response($ps->getSpecsJson());            
         if ($fm){                        
             return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));            
          }
@@ -61,7 +61,7 @@ class ProductSpecsController extends Controller
                 ));
     }
     #----------------------- /product_intake/product_specs/measurements_with_fitmodel
-    public function measurementsWithFitModelAction(Request $request){                        
+   /* public function measurementsWithFitModelAction(Request $request){                        
         $decoded = $request->request->all();             
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
         $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
@@ -83,12 +83,11 @@ class ProductSpecsController extends Controller
         $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($updated_measurements['sizes'], $fm);  
         return new Response(json_encode($updated_measurements));        
     }
-      
+      */
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
-        $data =  json_decode($ps->getSpecsJson(),true);        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
@@ -100,6 +99,7 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
+    
     #----------------------- /product_intake/product_specs/create_product
     public function createProductAction($id){            
         $entity = $this->get('pi.product_specification')->find($id);
@@ -107,21 +107,11 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash('success', 'Product created.');   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
-    #----------------------- /product_intake/Prod_specs/update
+    
+    #----------------------- /product_intake/Prod_specs/update    
     public function updateAction($id){  
-        $specs = $this->get('pi.product_specification')->find($id);
-        $updated_specs = $this->get('pi.product_specification')->generate(json_decode($specs->getSpecsJson(), true));
-        #return new Response(json_encode($updated_specs));
-        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
-                    'parsed_data' => $updated_specs,
-                    'product_specs_json' => json_encode($gen_specs),                    
-                ));
-    }
-    public function _updateAction($id){  
            $output = array();                     
-        foreach ($_POST as $key => $value)
-        {   
+        foreach ($_POST as $key => $value){   
             $sizes = explode('-',$key);//[sizes-XS-neck-garment_dimension]
             $array_length =  count($sizes);      
             if($array_length == '2' ){  
@@ -131,17 +121,18 @@ class ProductSpecsController extends Controller
             } else {
                     $output[$key] = $value;                
             } 
-        }              
+        }                      
         
+        $updated_specs = $this->get('pi.product_specification')->generate($output);        
+        #return new Response(json_encode($updated_specs));
         $entity = $this->get('pi.product_specification')->find($id);
         $entity->setUndoSpecsJson($entity->getSpecsJson());
-        $entity->setSpecsJson(json_encode($output));
+        $entity->setSpecsJson(json_encode($updated_specs));
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        $specs = $this->get('pi.product_specification')->find($id);
-        #return new Response($specs->getSpecsJson());
+        
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
-        #return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
+        
     }
     
     #----------------------- /product_intake/Prod_specs/undo
@@ -150,15 +141,15 @@ class ProductSpecsController extends Controller
         if( $entity->getUndoSpecsJson() ) {
         $entity->setSpecsJson($entity->getUndoSpecsJson());
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
-        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        $specs = $this->get('pi.product_specification')->find($id);    
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);              
         } else {
              $this->get('session')->setFlash('success', "Please Firstly Save Data Form then Apply Undo Action!");   
         }
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));       
     }
     
-     #------------------------------------ /product_intake/product_specs/csv_upload
+    ######################################################################################    
+    #------------------------------------ /product_intake/product_specs/csv_upload
     public function csvUploadAction(Request $request) {
         #-------------- CSV to array
         $csv_array = $this->csv_to_array($request->files->get('csv_file'));
@@ -190,7 +181,7 @@ class ProductSpecsController extends Controller
                                 $fmm_value =  $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);                            
                             }
                             #----------------------* parsed data array calculate fit modle values for fit model size
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_value' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
+                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
                                 'original_value'=>$original_value,
                                 'unit_converted_value'=>$unit_converted_value,
                                 );
@@ -290,8 +281,8 @@ class ProductSpecsController extends Controller
         }
         return $c;
     }
-
-#----------------------------
+######################################################################################
+    
     private function create_product($data){
         $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
