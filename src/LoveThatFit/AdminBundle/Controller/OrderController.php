@@ -61,18 +61,22 @@ class OrderController extends Controller {
     public function exportAction(Request $request)
     {
         $orders = $this->get('cart.helper.order')->findOrderList();
+
         if (!empty($orders)) {
             header('Content-Type: application/csv');
             //header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachement; filename="orders.csv";');
             $output = fopen('php://output', 'w');
+           
             fputcsv($output, array(
                 'Order No',
                 'Customer Name',
                 'Order Date',
-                'Order Amount',
+                'Order Total Amount',
                 'Credit Card No',
+                'Shipping Address',
                 'Brand name',
+                'Item Price',
                 'Item Description',
                 'Style ID',
                 )
@@ -88,20 +92,39 @@ class OrderController extends Controller {
                     $csvSingle['order_date']   = "";
                     $csvSingle['order_amount'] = "";
                     $csvSingle['credit_card']  = "";
-
+                    $csvSingle['shipping_add'] = "";
+                    
                     if ($firstIteration == 1) {
-
-                        $csvSingle['order_number']=$order["order_number"];
-                        $csvSingle['user_name']   =($order["billing_first_name"] . " ". $order["billing_last_name"]);
-                        $csvSingle['order_date']  =($order["order_date"]->format('d-m-Y'));
-                        $csvSingle['order_amount']="$" . number_format((float)$order["order_amount"], 2, '.', '');
-                        $csvSingle['credit_card'] ="xxxx-xxxx-xxxx-".json_decode($order['payment_json'])
+                        $add = "";
+                        if ($order["shipping_address1"] != "") {
+                            $add .= $order["shipping_address1"]. ", ";
+                        }
+                        if ($order["shipping_city"] != "") {
+                            $add .= $order["shipping_city"]. ", ";
+                        }
+                        if ($order["shipping_state"] != "") {
+                            $add .= $order["shipping_state"]. ", ";
+                        }
+                        if ($order["shipping_country"] != "") {
+                            $add .= $order["shipping_country"]. ", ";
+                        }
+                        if ($order["shipping_postcode"] != "") {
+                            $add .= $order["shipping_postcode"]. ", ";
+                        }
+                        
+                        $csvSingle['order_number'] = $order["order_number"];
+                        $csvSingle['user_name']    = ($order["billing_first_name"]. " ".$order["billing_last_name"]);
+                        $csvSingle['order_date']   = ($order["order_date"]->format('d-m-Y'));
+                        $csvSingle['order_amount'] = "$" . number_format((float)$order["order_amount"], 2, '.', '');
+                        $csvSingle['credit_card']  = "xxxx-xxxx-xxxx-".json_decode($order['payment_json'])
                             ->transaction->_attributes->creditCard->last4;
+                        $csvSingle['shipping_add'] = rtrim($add,', ');
                         
                         $firstIteration = 0;
                     }
 
                     $csvSingle['brand_name']       = $detail["brand_name"];
+                    $csvSingle['amount']           = "$".number_format((float)$detail["amount"], 2, '.', '');
                     $csvSingle['item_description'] = $detail["item_description"];
                     $csvSingle['control_number']   = $detail["control_number"];
 

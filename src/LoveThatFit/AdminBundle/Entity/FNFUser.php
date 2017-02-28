@@ -29,6 +29,13 @@ class FNFUser
     private $discount;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="min_amount", type="float")
+     */
+    private $minAmount;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="is_available", type="boolean")
@@ -120,5 +127,28 @@ class FNFUser
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set minAmount
+     *
+     * @param float $minAmount
+     * @return FNFUser
+     */
+    public function setMinAmount($minAmount)
+    {
+        $this->minAmount = $minAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get minAmount
+     *
+     * @return float 
+     */
+    public function getMinAmount()
+    {
+        return $this->minAmount;
     }
 }
