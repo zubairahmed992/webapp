@@ -168,27 +168,21 @@
                     //---------------------------------------
 
                     });
-
-
                     var fit_poit_condition = true;
                     $(".add_size").click(function () {
                     var siz_genrate = $('.size_genrate');
                     var new_fit_point = $('#new_fit_point').val();                
                     size_specs = $.parseJSON($('#size_specs_json').text());                
                     gender=$('#sel_gender').val()=='m'?'man':'woman';
-                    size_type=$(".selectSize").val();
-
-                    
+                    size_type=$(".selectSize").val();                    
                     var tableData = "<tr><td class='span2'>"+ new_fit_point + "  </td>";
-                            nfp =  new_fit_point.split(' ').join('_');
-                            $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
-                            tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
-                            });
-
-                            tableData += "</tr>";
-                            siz_genrate.append(tableData);                    
-                            
-
+                        nfp =  new_fit_point.split(' ').join('_');
+                        tableData += "<td>  <input type='text' name= 'formula-" + nfp + "'  id='formula-" + nfp + "' style='width: 40px'/></td>";
+                        $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                           tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
+                        });
+                        tableData += "</tr>";                           
+                        $('#tbl_mapping > tbody:last').append(tableData);
                             //---------- textbox id on selection ~~~~~~~~~~>
                                 $('input, textarea').focus(function() {
                                 $('#select_cell_div').text($(this).attr('id'));

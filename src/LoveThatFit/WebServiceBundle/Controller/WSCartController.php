@@ -257,10 +257,10 @@ class WSCartController extends Controller
         if ($user) {
             $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
             if ($result['success'] == 0) {
-                /*if($discount_amount > 0){
+                if($discount_amount > 0){
                     $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
                     $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
-                }*/
+                }
 
                 $this->sendEmailToUser( $user, $decoded, $result);
                 $this->sendEmailToAdmin( $user, $decoded, $result);
@@ -319,8 +319,7 @@ class WSCartController extends Controller
             );
         }
         $orderNummber = $result['order_number'];
-        // $orderAmount = $decode['total_amount'];
-        $orderAmount = $decode['order_amount'];
+        $orderAmount = $decode['total_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
@@ -376,8 +375,7 @@ class WSCartController extends Controller
             );
         }
         $orderNummber = $result['order_number'];
-        // $orderAmount = $decode['total_amount'];
-        $orderAmount = $decode['order_amount'];
+        $orderAmount = $decode['total_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];

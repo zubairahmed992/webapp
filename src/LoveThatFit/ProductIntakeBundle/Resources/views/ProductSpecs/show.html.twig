@@ -36,7 +36,9 @@ $(document).ready(function(){
                                             {{ key }}:<b>{{ val }}%</b>&nbsp;&nbsp;|&nbsp;&nbsp;                                                    
                                         {% endfor %}
                                      {% else %}
-                                    <span>{{ specs_v }}</span>
+                                        {% if specs_k != 'fit_point_stretch' %}
+                                                <span>{{ specs_v }}</span>
+                                        {% endif %}   
                                     {% endif %}   
                                 </td>
                             </tr>
@@ -84,7 +86,7 @@ $(document).ready(function(){
                                     <tr>
                                         <th>{{measurement_k}}</th>
                                         <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.stretch_value is defined ? measurement_v.stretch_value | number_format(2, '.', ''):0}}</td>
+                                        <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
                                         <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
