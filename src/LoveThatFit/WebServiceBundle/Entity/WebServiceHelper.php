@@ -562,7 +562,14 @@ class WebServiceHelper {
                 } else {
                     $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
                 }
-                
+
+                $width = 0;
+                $height = 0;
+                if($pi->getImage() != null){
+                    $info = getimagesize($pi->getWebPath());
+                    list($width, $height) = $info ;
+                }
+
                 $p['items'][$pi->getId()] = array(
                     'item_id' => $pi->getId(),
                     'product_id' => $product->getId(),
@@ -570,6 +577,8 @@ class WebServiceHelper {
                     'size_id' => $ps_id,
                     'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                     'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
+                    'width' => (float)$width,
+                    'height'    => (float)$height,
                     'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                     'price' => $pi->getPrice()?$pi->getPrice():0,
                     'favourite' => in_array($pi->getId(), $favouriteItemIds),
@@ -856,6 +865,14 @@ class WebServiceHelper {
                 $fitting_room_status = true;
                 $qty = $fitting_room_status_result[0]['qty'];
             }
+
+            $width = 0;
+            $height = 0;
+            if($pi->getImage() != null){
+                $info = getimagesize($pi->getWebPath());
+                list($width, $height) = $info ;
+            }
+
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -863,6 +880,8 @@ class WebServiceHelper {
                 'size_id' => $ps_id,
                 'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                 'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
+                'width' => (float)$width,
+                'height'    => (float)$height,
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
@@ -968,6 +987,13 @@ class WebServiceHelper {
                 $product_qty = (int)$qty;
             }
 
+            $width = 0;
+            $height = 0;
+            if($pi->getImage() != null){
+                $info = getimagesize($pi->getWebPath());
+                list($width, $height) = $info ;
+            }
+
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -976,6 +1002,8 @@ class WebServiceHelper {
                 'size_title' => $ps_title,
                 'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                 'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
+                'width' => (float)$width,
+                'height'    => (float)$height,
                 //'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
