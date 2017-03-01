@@ -566,7 +566,8 @@ class WebServiceHelper {
                 $width = 0;
                 $height = 0;
                 if($pi->getImage() != null){
-                    $info = getimagesize($pi->getWebPath());
+                    $webpath = str_ireplace('web','iphone5',$pi->getWebPath());
+                    $info = getimagesize($webpath);
                     list($width, $height) = $info ;
                 }
 
@@ -869,7 +870,8 @@ class WebServiceHelper {
             $width = 0;
             $height = 0;
             if($pi->getImage() != null){
-                $info = getimagesize($pi->getWebPath());
+                $webpath = str_ireplace('web','iphone5',$pi->getWebPath());
+                $info = getimagesize($webpath);
                 list($width, $height) = $info ;
             }
 
@@ -990,7 +992,8 @@ class WebServiceHelper {
             $width = 0;
             $height = 0;
             if($pi->getImage() != null){
-                $info = getimagesize($pi->getWebPath());
+                $webpath = str_ireplace('web','iphone5',$pi->getWebPath());
+                $info = getimagesize($webpath);
                 list($width, $height) = $info ;
             }
 
