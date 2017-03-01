@@ -207,7 +207,7 @@ constants:
         36: 
           title: 36
           index: 15
-      bra:
+    bra:
         28aa:
             index_value: 1
             title: 28aa
@@ -218,6 +218,17 @@ constants:
             average: 28
             shoulder_across_back: 13.325
             shoulder_across_front: 12.575
+            shoulder_across_front_px: 310
+            bust_px: 216
+            waist_px:
+                h: 216
+                p: 235
+                a: 254
+                r: 323
+            hip_px:
+                p: 351
+                t: 295
+                
         28a:
             index_value: 2
             title: 28a
@@ -228,6 +239,17 @@ constants:
             average: 29
             shoulder_across_back: 13.675
             shoulder_across_front: 12.925
+            shoulder_across_front_px: 316
+            bust_px: 287
+            waist_px:
+                h: 226
+                p: 244
+                a: 263
+                r: 332
+            hip_px:
+                p: 360
+                t: 304     
+
         28b:
             index_value: 3
             title: 28b
@@ -238,6 +260,18 @@ constants:
             average: 30
             shoulder_across_back: 13.825
             shoulder_across_front: 13.075
+            shoulder_across_front_px: 322
+            bust_px: 297
+            waist_px:
+                h: 235
+                p: 254
+                a: 272
+                r: 341
+            hip_px:
+                p: 369
+                t: 313              								  
+ 
+
         28c:
             index_value: 4
             title: 28c
@@ -248,6 +282,18 @@ constants:
             average: 31
             shoulder_across_back: 13.975
             shoulder_across_front: 13.225
+            shoulder_across_front_px: 329
+            bust_px: 308
+            waist_px:
+                h: 244
+                p: 263
+                a: 282
+                r: 351
+            hip_px:
+                p: 378
+                t: 323     
+             								  
+  
         28d:
             index_value: 5
             title: 28d
@@ -258,6 +304,18 @@ constants:
             average: 32
             shoulder_across_back: 14.125
             shoulder_across_front: 13.375
+            shoulder_across_front_px: 335
+            bust_px: 318
+            waist_px:
+                h: 254
+                p: 272
+                a: 291
+                r: 360
+            hip_px:
+                p: 387
+                t: 332     
+                									  
+
         28dd:
             index_value: 6
             title: 28dd
@@ -268,6 +326,19 @@ constants:
             average: 33
             shoulder_across_back: 14.375
             shoulder_across_front: 13.625
+            shoulder_across_front_px: 339
+            bust_px: 329
+            waist_px:
+                h: 263
+                p: 282
+                a: 300
+                r: 369
+            hip_px:
+                p: 396
+                t: 341     
+            									  
+    
+                
         28ddd:
             index_value: 7
             title: 28ddd
@@ -278,6 +349,18 @@ constants:
             average: 34
             shoulder_across_back: 14.625
             shoulder_across_front: 13.875
+            shoulder_across_front_px: 344
+            bust_px: 339
+            waist_px:
+                h: 272
+                p: 291
+                a: 310
+                r: 378
+            hip_px:
+                p: 406
+                t: 350     
+           									  
+     
         28e:
             index_value: 8
             title: 28e
@@ -288,6 +371,18 @@ constants:
             average: 33
             shoulder_across_back: 14.375
             shoulder_across_front: 13.625
+            shoulder_across_front_px: 339
+            bust_px: 329
+            waist_px:
+                h: 263
+                p: 282
+                a: 300
+                r: 369
+            hip_px:
+                p: 396
+                t: 341     
+                									  
+
         28f:
             index_value: 9
             title: 28f
@@ -298,6 +393,18 @@ constants:
             average: 34
             shoulder_across_back: 14.625
             shoulder_across_front: 13.875
+            shoulder_across_front_px: 344
+            bust_px: 339
+            waist_px:
+                h: 272
+                p: 291
+                a: 310
+                r: 378
+            hip_px:
+                p: 406
+                t: 350     
+                									  
+
         28g:
             index_value: 10
             title: 28g
@@ -308,6 +415,18 @@ constants:
             average: 35
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
+            shoulder_across_front_px: 350
+            bust_px: 350
+            waist_px:
+                h: 282
+                p: 300
+                a: 319
+                r: 387
+            hip_px:
+                p: 415
+                t: 360                     
+                									  
+
         28h:
             index_value: 11
             title: 28h
@@ -318,6 +437,18 @@ constants:
             average: 36
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
+            shoulder_across_front_px: 355
+            bust_px: 361
+            waist_px:
+                h: 291
+                p: 310
+                a: 328
+                r: 396
+            hip_px:
+                p: 424
+                t: 369       
+                									  
+
         28i:
             index_value: 12
             title: 28i
@@ -328,6 +459,19 @@ constants:
             average: 37
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
+            shoulder_across_front_px: 360
+            bust_px: 371
+            waist_px:
+                h: 300
+                p: 319
+                a: 338
+                r: 406
+            hip_px:
+                p: 433
+                t: 378      
+                									  
+
+                
         28j:
             index_value: 13
             title: 28j
@@ -338,6 +482,18 @@ constants:
             average: 38
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
+            shoulder_across_front_px: 366
+            bust_px: 382
+            waist_px:
+                h: 310
+                p: 328
+                a: 347
+                r: 415
+            hip_px:
+                p: 442
+                t: 387      
+                									  
+
         28k:
             index_value: 14
             title: 28k
@@ -348,6 +504,19 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396      
+                									  
+
+                
         28l:
             index_value: 15
             title: 28l
@@ -358,6 +527,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406      
+                									  
+
         28m:
             index_value: 16
             title: 28m
@@ -368,6 +549,18 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415      
+             									  
+   
         28n:
             index_value: 17
             title: 28n
@@ -378,6 +571,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424      
+                									  
+
         30aa:
             index_value: 18
             title: 30aa
@@ -388,6 +593,18 @@ constants:
             average: 30
             shoulder_across_back: 13.825
             shoulder_across_front: 13.075
+            shoulder_across_front_px: 322
+            bust_px: 297
+            waist_px:
+                h: 235
+                p: 254
+                a: 272
+                r: 341
+            hip_px:
+                p: 369
+                t: 313
+                									  
+
         30a:
             index_value: 19
             title: 30a
@@ -398,6 +615,18 @@ constants:
             average: 31
             shoulder_across_back: 13.975
             shoulder_across_front: 13.225
+            shoulder_across_front_px: 329
+            bust_px: 308
+            waist_px:
+                h: 244
+                p: 263
+                a: 282
+                r: 351
+            hip_px:
+                p: 378
+                t: 323
+               									  
+
         30b:
             index_value: 20
             title: 30b
@@ -408,6 +637,19 @@ constants:
             average: 32
             shoulder_across_back: 14.125
             shoulder_across_front: 13.375
+            shoulder_across_front_px: 335
+            bust_px: 318
+            waist_px:
+                h: 254
+                p: 272
+                a: 291
+                r: 360
+            hip_px:
+                p: 387
+                t: 332
+                									  
+
+                
         30c:
             index_value: 21
             title: 30c
@@ -418,6 +660,18 @@ constants:
             average: 33
             shoulder_across_back: 14.375
             shoulder_across_front: 13.625
+            shoulder_across_front_px: 339
+            bust_px: 329
+            waist_px:
+                h: 263
+                p: 282
+                a: 300
+                r: 369
+            hip_px:
+                p: 396
+                t: 341
+                									  
+
         30d:
             index_value: 22
             title: 30d
@@ -428,6 +682,18 @@ constants:
             average: 34
             shoulder_across_back: 14.625
             shoulder_across_front: 13.875
+            shoulder_across_front_px: 344
+            bust_px: 339
+            waist_px:
+                h: 272
+                p: 291
+                a: 310
+                r: 378
+            hip_px:
+                p: 406
+                t: 350
+                									  
+
         30dd:
             index_value: 23
             title: 30dd
@@ -438,6 +704,18 @@ constants:
             average: 35
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
+            shoulder_across_front_px: 350
+            bust_px: 350
+            waist_px:
+                h: 282
+                p: 300
+                a: 319
+                r: 387
+            hip_px:
+                p: 415
+                t: 360
+                									  
+
         30ddd:
             index_value: 24
             title: 30ddd
@@ -448,6 +726,18 @@ constants:
             average: 36
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
+            shoulder_across_front_px: 355
+            bust_px: 361
+            waist_px:
+                h: 291
+                p: 310
+                a: 328
+                r: 396
+            hip_px:
+                p: 424
+                t: 369
+                									  
+
         30e:
             index_value: 25
             title: 30e
@@ -458,6 +748,18 @@ constants:
             average: 35
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
+            shoulder_across_front_px: 350
+            bust_px: 350
+            waist_px:
+                h: 282
+                p: 300
+                a: 319
+                r: 387
+            hip_px:
+                p: 415
+                t: 360
+            								  
+
         30f:
             index_value: 26
             title: 30f
@@ -468,6 +770,18 @@ constants:
             average: 36
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
+            shoulder_across_front_px: 355
+            bust_px: 361
+            waist_px:
+                h: 291
+                p: 310
+                a: 328
+                r: 396
+            hip_px:
+                p: 424
+                t: 369
+                									  
+
         30g:
             index_value: 27
             title: 30g
@@ -478,6 +792,18 @@ constants:
             average: 37
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
+            shoulder_across_front_px: 360
+            bust_px: 371
+            waist_px:
+                h: 300
+                p: 319
+                a: 338
+                r: 406
+            hip_px:
+                p: 433
+                t: 378
+                									  
+
         30h:
             index_value: 28
             title: 30h
@@ -488,6 +814,18 @@ constants:
             average: 38
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
+            shoulder_across_front_px: 366
+            bust_px: 382
+            waist_px:
+                h: 310
+                p: 328
+                a: 347
+                r: 415
+            hip_px:
+                p: 442
+                t: 387
+                									  
+
         30i:
             index_value: 29
             title: 30i
@@ -498,6 +836,18 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396
+                									  
+
         30j:
             index_value: 30
             title: 30j
@@ -508,6 +858,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406
+                									  
+
         30k:
             index_value: 31
             title: 30k
@@ -518,6 +880,18 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415
+                									  
+
         30l:
             index_value: 32
             title: 30l
@@ -528,6 +902,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424
+                									  
+
         30m:
             index_value: 33
             title: 30m
@@ -538,6 +924,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433
+                									  
+
         30n:
             index_value: 34
             title: 30n
@@ -548,6 +946,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442
+                									  
+
         32a:
             index_value: 35
             title: 32a
@@ -558,6 +968,18 @@ constants:
             average: 33
             shoulder_across_back: 14.375
             shoulder_across_front: 13.625
+            shoulder_across_front_px: 339
+            bust_px: 329
+            waist_px:
+                h: 263
+                p: 282
+                a: 300
+                r: 369
+            hip_px:
+                p: 396
+                t: 341
+              									  
+  
         32b:
             index_value: 36
             title: 32b
@@ -568,6 +990,18 @@ constants:
             average: 34
             shoulder_across_back: 14.625
             shoulder_across_front: 13.875
+            shoulder_across_front_px: 344
+            bust_px: 339
+            waist_px:
+                h: 272
+                p: 291
+                a: 310
+                r: 378
+            hip_px:
+                p: 406
+                t: 350
+                									  
+
         32c:
             index_value: 37
             title: 32c
@@ -578,6 +1012,18 @@ constants:
             average: 35
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
+            shoulder_across_front_px: 350
+            bust_px: 350
+            waist_px:
+                h: 282
+                p: 300
+                a: 319
+                r: 387
+            hip_px:
+                p: 415
+                t: 360
+                									  
+
         32d:
             index_value: 38
             title: 32d
@@ -588,6 +1034,18 @@ constants:
             average: 36
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
+            shoulder_across_front_px: 355
+            bust_px: 361
+            waist_px:
+                h: 291
+                p: 310
+                a: 328
+                r: 396
+            hip_px:
+                p: 424
+                t: 369
+                									  
+
         32dd:
             index_value: 39
             title: 32dd
@@ -598,6 +1056,18 @@ constants:
             average: 37
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
+            shoulder_across_front_px: 360
+            bust_px: 371
+            waist_px:
+                h: 300
+                p: 319
+                a: 338
+                r: 406
+            hip_px:
+                p: 433
+                t: 378
+                									  
+
         32ddd:
             index_value: 40
             title: 32ddd
@@ -608,6 +1078,18 @@ constants:
             average: 38
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
+            shoulder_across_front_px: 366
+            bust_px: 382
+            waist_px:
+                h: 310
+                p: 328
+                a: 347
+                r: 415
+            hip_px:
+                p: 442
+                t: 387
+                									  
+
         32e:
             index_value: 41
             title: 32e
@@ -618,6 +1100,18 @@ constants:
             average: 37
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
+            shoulder_across_front_px: 360
+            bust_px: 371
+            waist_px:
+                h: 300
+                p: 319
+                a: 338
+                r: 406
+            hip_px:
+                p: 433
+                t: 378                									  
+
+                
         32f:
             index_value: 42
             title: 32f
@@ -628,6 +1122,18 @@ constants:
             average: 38
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
+            shoulder_across_front_px: 366
+            bust_px: 382
+            waist_px:
+                h: 310
+                p: 328
+                a: 347
+                r: 415
+            hip_px:
+                p: 442
+                t: 387
+                									  
+
         32g:
             index_value: 43
             title: 32g
@@ -638,6 +1144,18 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396
+                									  
+
         32h:
             index_value: 44
             title: 32h
@@ -648,6 +1166,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406
+                									  
+
         32i:
             index_value: 45
             title: 32i
@@ -658,6 +1188,18 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415
+                									  
+
         32j:
             index_value: 46
             title: 32j
@@ -668,6 +1210,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424
+                									  
+
         32k:
             index_value: 47
             title: 32k
@@ -678,6 +1232,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433
+                									  
+
         32l:
             index_value: 48
             title: 32l
@@ -688,6 +1254,17 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442                									  
+
         32m:
             index_value: 49
             title: 32m
@@ -698,6 +1275,18 @@ constants:
             average: 45
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
+            shoulder_across_front_px: 403
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451
+                									  
+
         32n:
             index_value: 50
             title: 32n
@@ -708,6 +1297,18 @@ constants:
             average: 46
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461
+                									  
+
         34a:
             index_value: 51
             title: 34a
@@ -718,6 +1319,18 @@ constants:
             average: 35
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
+            shoulder_across_front_px: 350
+            bust_px: 350
+            waist_px:
+                h: 282
+                p: 300
+                a: 319
+                r: 387
+            hip_px:
+                p: 415
+                t: 360
+                									  
+
         34b:
             index_value: 52
             title: 34b
@@ -727,7 +1340,19 @@ constants:
             high: 37
             average: 36
             shoulder_across_back: 15.125
-            shoulder_across_front: 14.375
+            shoulder_across_front: 14.125
+            shoulder_across_front_px: 355
+            bust_px: 361
+            waist_px:
+                h: 291
+                p: 310
+                a: 328
+                r: 396
+            hip_px:
+                p: 424
+                t: 369
+                									  
+
         34c:
             index_value: 53
             title: 34c
@@ -738,6 +1363,18 @@ constants:
             average: 37
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
+            shoulder_across_front_px: 360
+            bust_px: 371
+            waist_px:
+                h: 300
+                p: 319
+                a: 338
+                r: 406
+            hip_px:
+                p: 433
+                t: 378
+                									  
+
         34d:
             index_value: 54
             title: 34d
@@ -748,6 +1385,18 @@ constants:
             average: 38
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
+            shoulder_across_front_px: 366
+            bust_px: 382
+            waist_px:
+                h: 310
+                p: 328
+                a: 347
+                r: 415
+            hip_px:
+                p: 442
+                t: 387
+                									  
+
         34dd:
             index_value: 55
             title: 34dd
@@ -758,6 +1407,17 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396                									  
+
         34ddd:
             index_value: 56
             title: 34ddd
@@ -768,6 +1428,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406
+                									  
+
         34e:
             index_value: 57
             title: 34e
@@ -778,6 +1450,18 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396
+                									  
+
         34f:
             index_value: 58
             title: 34f
@@ -788,6 +1472,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406
+                									  
+
         34g:
             index_value: 59
             title: 34g
@@ -798,6 +1494,19 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415
+                									  
+
+
         34h:
             index_value: 60
             title: 34h
@@ -808,6 +1517,17 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424                									  
+
         34i:
             index_value: 61
             title: 34i
@@ -818,6 +1538,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433
+                									  
+
         34j:
             index_value: 62
             title: 34j
@@ -828,6 +1560,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442
+                									  
+
         34k:
             index_value: 63
             title: 34k
@@ -838,6 +1582,18 @@ constants:
             average: 45
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
+            shoulder_across_front_px: 401
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451
+                									  
+
         34l:
             index_value: 64
             title: 34l
@@ -848,6 +1604,19 @@ constants:
             average: 46
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461
+                									  
+
+
         34m:
             index_value: 65
             title: 34m
@@ -858,6 +1627,18 @@ constants:
             average: 47
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
+            shoulder_across_front_px: 410
+            bust_px: 477
+            waist_px:
+                h: 394
+                p: 412
+                a: 431
+                r: 497
+            hip_px:
+                p: 525
+                t: 470
+                									  
+
         34n:
             index_value: 66
             title: 34n
@@ -868,6 +1649,18 @@ constants:
             average: 48
             shoulder_across_back: 17.525
             shoulder_across_front: 16.775
+            shoulder_across_front_px: 415
+            bust_px: 487
+            waist_px:
+                h: 403
+                p: 422
+                a: 440
+                r: 506
+            hip_px:
+                p: 534
+                t: 479
+                									  
+
         36a:
             index_value: 67
             title: 36a
@@ -878,6 +1671,17 @@ constants:
             average: 37
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
+            shoulder_across_front_px: 360
+            bust_px: 371
+            waist_px:
+                h: 300
+                p: 431
+                a: 338
+                r: 406
+            hip_px:
+                p: 433
+                t: 378                									  
+
         36b:
             index_value: 68
             title: 36b
@@ -888,6 +1692,18 @@ constants:
             average: 38
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
+            shoulder_across_front_px: 366
+            bust_px: 382
+            waist_px:
+                h: 310
+                p: 328
+                a: 347
+                r: 415
+            hip_px:
+                p: 442
+                t: 387      
+                									  
+
         36c:
             index_value: 69
             title: 36c
@@ -898,6 +1714,18 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396      
+                									  
+
         36d:
             index_value: 70
             title: 36d
@@ -908,6 +1736,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406    
+                									  
+
         36dd:
             index_value: 71
             title: 36dd
@@ -918,6 +1758,18 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415    
+                									  
+
         36ddd:
             index_value: 72
             title: 36ddd
@@ -928,6 +1780,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424    
+                									  
+
         36e:
             index_value: 73
             title: 36e
@@ -938,6 +1802,19 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415    
+                
+                									  
+
         36f:
             index_value: 74
             title: 36f
@@ -948,6 +1825,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424    
+                									  
+
         36g:
             index_value: 75
             title: 36g
@@ -958,6 +1847,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433    
+                									  
+
         36h:
             index_value: 76
             title: 36h
@@ -968,6 +1869,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442    
+                									  
+
         36i:
             index_value: 77
             title: 36i
@@ -978,6 +1891,18 @@ constants:
             average: 45
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
+            shoulder_across_front_px: 401
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451
+                									  
+
         36j:
             index_value: 78
             title: 36j
@@ -988,6 +1913,18 @@ constants:
             average: 46
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461
+                									  
+
         36k:
             index_value: 79
             title: 36k
@@ -998,6 +1935,18 @@ constants:
             average: 47
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
+            shoulder_across_front_px: 410
+            bust_px: 477
+            waist_px:
+                h: 394
+                p: 412
+                a: 431
+                r: 497
+            hip_px:
+                p: 525
+                t: 470
+                									  
+
         36l:
             index_value: 80
             title: 36l
@@ -1008,6 +1957,18 @@ constants:
             average: 48
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
+            shoulder_across_front_px: 418
+            bust_px: 487
+            waist_px:
+                h: 403
+                p: 422
+                a: 440
+                r: 506
+            hip_px:
+                p: 534
+                t: 479
+                									  
+
         36m:
             index_value: 81
             title: 36m
@@ -1018,6 +1979,18 @@ constants:
             average: 49
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
+            shoulder_across_front_px: 424
+            bust_px: 498
+            waist_px:
+                h: 412
+                p: 431
+                a: 450
+                r: 515
+            hip_px:
+                p: 543
+                t: 488
+                									  
+
         36n:
             index_value: 82
             title: 36n
@@ -1028,6 +2001,18 @@ constants:
             average: 50
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
+            shoulder_across_front_px: 427
+            bust_px: 508
+            waist_px:
+                h: 422
+                p: 440
+                a: 459
+                r: 525
+            hip_px:
+                p: 552
+                t: 497
+               									  
+
         38a:
             index_value: 83
             title: 38a
@@ -1038,6 +2023,18 @@ constants:
             average: 39
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
+            shoulder_across_front_px: 372
+            bust_px: 392
+            waist_px:
+                h: 319
+                p: 338
+                a: 356
+                r: 424
+            hip_px:
+                p: 451
+                t: 396
+                									  
+
         38b:
             index_value: 84
             title: 38b
@@ -1048,6 +2045,18 @@ constants:
             average: 40
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
+            shoulder_across_front_px: 378
+            bust_px: 403
+            waist_px:
+                h: 328
+                p: 347
+                a: 366
+                r: 433
+            hip_px:
+                p: 461
+                t: 406
+                									  
+
         38c:
             index_value: 85
             title: 38c
@@ -1058,6 +2067,18 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415
+                									  
+
         38d:
             index_value: 86
             title: 38d
@@ -1068,6 +2089,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424                
+                									  
+
         38dd:
             index_value: 87
             title: 38dd
@@ -1078,6 +2111,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433           
+                									  
+
         38ddd:
             index_value: 88
             title: 38ddd
@@ -1088,6 +2133,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442   
+                									  
+
         38e:
             index_value: 89
             title: 38e
@@ -1098,6 +2155,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433   
+                									  
+
         38f:
             index_value: 90
             title: 38f
@@ -1108,6 +2177,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442  
+                									  
+
         38g:
             index_value: 91
             title: 38g
@@ -1118,6 +2199,18 @@ constants:
             average: 45
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
+            shoulder_across_front_px: 401
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451  
+                									  
+
         38h:
             index_value: 92
             title: 38h
@@ -1127,7 +2220,19 @@ constants:
             high: 47
             average: 46
             shoulder_across_back: 17.125
-            shoulder_across_front: 16.375
+            shoulder_across_front: 16.375	
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461  
+                								  
+
         38i:
             index_value: 93
             title: 38i
@@ -1138,6 +2243,18 @@ constants:
             average: 47
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
+            shoulder_across_front_px: 410
+            bust_px: 477
+            waist_px:
+                h: 394
+                p: 412
+                a: 431
+                r: 497
+            hip_px:
+                p: 525
+                t: 470  
+                									  
+
         38j:
             index_value: 94
             title: 38j
@@ -1148,6 +2265,18 @@ constants:
             average: 48
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
+            shoulder_across_front_px: 418
+            bust_px: 487
+            waist_px:
+                h: 403
+                p: 422
+                a: 440
+                r: 506
+            hip_px:
+                p: 534
+                t: 479  
+                									  
+
         38k:
             index_value: 95
             title: 38k
@@ -1158,6 +2287,18 @@ constants:
             average: 49
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
+            shoulder_across_front_px: 424
+            bust_px: 498
+            waist_px:
+                h: 412
+                p: 431
+                a: 450
+                r: 515
+            hip_px:
+                p: 543
+                t: 488  
+                									  
+
         38l:
             index_value: 96
             title: 38l
@@ -1168,6 +2309,18 @@ constants:
             average: 50
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
+            shoulder_across_front_px: 427
+            bust_px: 508
+            waist_px:
+                h: 422
+                p: 440
+                a: 459
+                r: 525
+            hip_px:
+                p: 552
+                t: 497  
+                									  
+
         38m:
             index_value: 97
             title: 38m
@@ -1178,6 +2331,18 @@ constants:
             average: 51
             shoulder_across_back: 18.275
             shoulder_across_front: 17.525
+            shoulder_across_front_px: 434
+            bust_px: 519
+            waist_px:
+                h: 431
+                p: 450
+                a: 468
+                r: 534
+            hip_px:
+                p: 561
+                t: 506  
+                									  
+
         38n:
             index_value: 98
             title: 38n
@@ -1188,6 +2353,18 @@ constants:
             average: 52
             shoulder_across_back: 18.425
             shoulder_across_front: 17.675
+            shoulder_across_front_px: 438
+            bust_px: 529
+            waist_px:
+                h: 440
+                p: 459
+                a: 478
+                r: 543
+            hip_px:
+                p: 570
+                t: 515  
+                									  
+
         40a:
             index_value: 99
             title: 40a
@@ -1198,6 +2375,18 @@ constants:
             average: 41
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
+            shoulder_across_front_px: 384
+            bust_px: 413
+            waist_px:
+                h: 338
+                p: 356
+                a: 375
+                r: 442
+            hip_px:
+                p: 470
+                t: 415  
+                									  
+
         40b:
             index_value: 100
             title: 40b
@@ -1208,6 +2397,18 @@ constants:
             average: 42
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
+            shoulder_across_front_px: 390
+            bust_px: 424
+            waist_px:
+                h: 347
+                p: 366
+                a: 384
+                r: 451
+            hip_px:
+                p: 479
+                t: 424  
+                									  
+
         40c:
             index_value: 101
             title: 40c
@@ -1218,6 +2419,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433  
+                									  
+
         40d:
             index_value: 102
             title: 40d
@@ -1228,6 +2441,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442  
+                									  
+
         40dd:
             index_value: 103
             title: 40dd
@@ -1238,6 +2463,18 @@ constants:
             average: 45
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
+            shoulder_across_front_px: 401
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451  
+                											  
+
         40ddd:
             index_value: 104
             title: 40ddd
@@ -1248,6 +2485,18 @@ constants:
             average: 46
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461  
+                									  
+
         40e:
             index_value: 105
             title: 40e
@@ -1258,6 +2507,18 @@ constants:
             average: 45
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
+            shoulder_across_front_px: 401
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451  
+                									  
+
         40f:
             index_value: 106
             title: 40f
@@ -1268,6 +2529,18 @@ constants:
             average: 46
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461  
+                									  
+
         40g:
             index_value: 107
             title: 40g
@@ -1275,9 +2548,21 @@ constants:
             cup: g
             low: 46
             high: 48
-            average: 47
+            average: 47          
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
+            shoulder_across_front_px: 410
+            bust_px: 477
+            waist_px:
+                h: 394
+                p: 412
+                a: 431
+                r: 497
+            hip_px:
+                p: 525
+                t: 470  
+                									  
+
         40h:
             index_value: 108
             title: 40h
@@ -1288,6 +2573,18 @@ constants:
             average: 48
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
+            shoulder_across_front_px: 418
+            bust_px: 487
+            waist_px:
+                h: 403
+                p: 422
+                a: 440
+                r: 506
+            hip_px:
+                p: 534
+                t: 479  
+                									  
+
         40i:
             index_value: 109
             title: 40i
@@ -1298,6 +2595,18 @@ constants:
             average: 49
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
+            shoulder_across_front_px: 424
+            bust_px: 498
+            waist_px:
+                h: 412
+                p: 431
+                a: 450
+                r: 515
+            hip_px:
+                p: 543
+                t: 488  
+                									  
+
         40j:
             index_value: 110
             title: 40j
@@ -1308,6 +2617,18 @@ constants:
             average: 50
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
+            shoulder_across_front_px: 427
+            bust_px: 508
+            waist_px:
+                h: 422
+                p: 440
+                a: 459
+                r: 525
+            hip_px:
+                p: 552
+                t: 497  
+                									  
+
         40k:
             index_value: 111
             title: 40k
@@ -1318,6 +2639,18 @@ constants:
             average: 51
             shoulder_across_back: 18.275
             shoulder_across_front: 17.525
+            shoulder_across_front_px: 434
+            bust_px: 519
+            waist_px:
+                h: 431
+                p: 450
+                a: 468
+                r: 534
+            hip_px:
+                p: 561
+                t: 506  
+                									  
+
         40l:
             index_value: 112
             title: 40l
@@ -1328,6 +2661,18 @@ constants:
             average: 52
             shoulder_across_back: 18.425
             shoulder_across_front: 17.675
+            shoulder_across_front_px: 438
+            bust_px: 529
+            waist_px:
+                h: 440
+                p: 459
+                a: 478
+                r: 543
+            hip_px:
+                p: 570
+                t: 515  
+                									  
+
         40m:
             index_value: 113
             title: 40m
@@ -1338,6 +2683,18 @@ constants:
             average: 53
             shoulder_across_back: 18.675
             shoulder_across_front: 17.925
+            shoulder_across_front_px: 443
+            bust_px: 540
+            waist_px:
+                h: 450
+                p: 468
+                a: 487
+                r: 552
+            hip_px:
+                p: 580
+                t: 525  
+                									  
+
         40n:
             index_value: 114
             title: 40n
@@ -1348,6 +2705,18 @@ constants:
             average: 54
             shoulder_across_back: 18.825
             shoulder_across_front: 18.075
+            shoulder_across_front_px: 447
+            bust_px: 550
+            waist_px:
+                h: 459
+                p: 478
+                a: 496
+                r: 561
+            hip_px:
+                p: 589
+                t: 534  
+                									  
+
         42a:
             index_value: 115
             title: 42a
@@ -1358,6 +2727,18 @@ constants:
             average: 43
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
+            shoulder_across_front_px: 393
+            bust_px: 434
+            waist_px:
+                h: 356
+                p: 375
+                a: 394
+                r: 461
+            hip_px:
+                p: 488
+                t: 433  
+                									  
+
         42b:
             index_value: 116
             title: 42b
@@ -1368,6 +2749,18 @@ constants:
             average: 44
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
+            shoulder_across_front_px: 397
+            bust_px: 445
+            waist_px:
+                h: 366
+                p: 384
+                a: 403
+                r: 470
+            hip_px:
+                p: 497
+                t: 442  
+                									  
+
         42c:
             index_value: 117
             title: 42c
@@ -1377,7 +2770,19 @@ constants:
             high: 46
             average: 45
             shoulder_across_back: 16.975
-            shoulder_across_front: 16.225
+            shoulder_across_front: 16.225	
+            shoulder_across_front_px: 401
+            bust_px: 456
+            waist_px:
+                h: 375
+                p: 394
+                a: 412
+                r: 479
+            hip_px:
+                p: 506
+                t: 451  
+                								  
+
         42d:
             index_value: 118
             title: 42d
@@ -1388,6 +2793,18 @@ constants:
             average: 46
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
+            shoulder_across_front_px: 406
+            bust_px: 466
+            waist_px:
+                h: 384
+                p: 403
+                a: 422
+                r: 488
+            hip_px:
+                p: 515
+                t: 461  
+                									  
+
         42dd:
             index_value: 119
             title: 42dd
@@ -1398,6 +2815,18 @@ constants:
             average: 47
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
+            shoulder_across_front_px: 410
+            bust_px: 477
+            waist_px:
+                h: 394
+                p: 412
+                a: 431
+                r: 497
+            hip_px:
+                p: 525
+                t: 470  
+                									  
+
         42ddd:
             index_value: 120
             title: 42ddd
@@ -1408,6 +2837,19 @@ constants:
             average: 48
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
+            shoulder_across_front_px: 418
+            bust_px: 487
+            waist_px:
+                h: 403
+                p: 422
+                a: 440
+                r: 506
+            hip_px:
+                p: 534
+                t: 479  
+                									  
+
+
         42e:
             index_value: 121
             title: 42e
@@ -1418,6 +2860,18 @@ constants:
             average: 47
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
+            shoulder_across_front_px: 410
+            bust_px: 477
+            waist_px:
+                h: 394
+                p: 412
+                a: 431
+                r: 497
+            hip_px:
+                p: 525
+                t: 470  
+                									  
+
         42f:
             index_value: 122
             title: 42f
@@ -1428,6 +2882,18 @@ constants:
             average: 48
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
+            shoulder_across_front_px: 418
+            bust_px: 487
+            waist_px:
+                h: 403
+                p: 422
+                a: 440
+                r: 506
+            hip_px:
+                p: 534
+                t: 479  
+                									  
+
         42g:
             index_value: 123
             title: 42g
@@ -1438,6 +2904,18 @@ constants:
             average: 49
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
+            shoulder_across_front_px: 424
+            bust_px: 498
+            waist_px:
+                h: 412
+                p: 431
+                a: 450
+                r: 515
+            hip_px:
+                p: 543
+                t: 488  
+                									  
+
         42h:
             index_value: 124
             title: 42h
@@ -1448,6 +2926,18 @@ constants:
             average: 50
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
+            shoulder_across_front_px: 427
+            bust_px: 508
+            waist_px:
+                h: 422
+                p: 440
+                a: 459
+                r: 525
+            hip_px:
+                p: 552
+                t: 497  
+                									  
+
         42i:
             index_value: 125
             title: 42i
@@ -1458,6 +2948,17 @@ constants:
             average: 51
             shoulder_across_back: 18.275
             shoulder_across_front: 17.525
+            shoulder_across_front_px: 434
+            bust_px: 519
+            waist_px:
+                h: 431
+                p: 450
+                a: 468
+                r: 534
+            hip_px:
+                p: 561
+                t: 506                  									  
+
         42j:
             index_value: 126
             title: 42j
@@ -1468,6 +2969,18 @@ constants:
             average: 52
             shoulder_across_back: 18.425
             shoulder_across_front: 17.675
+            shoulder_across_front_px: 438
+            bust_px: 529
+            waist_px:
+                h: 440
+                p: 459
+                a: 478
+                r: 543
+            hip_px:
+                p: 570
+                t: 515    
+                									  
+
         42k:
             index_value: 127
             title: 42k
@@ -1478,6 +2991,18 @@ constants:
             average: 53
             shoulder_across_back: 18.675
             shoulder_across_front: 17.925
+            shoulder_across_front_px: 443
+            bust_px: 540
+            waist_px:
+                h: 450
+                p: 468
+                a: 487
+                r: 552
+            hip_px:
+                p: 580
+                t: 525    
+                									  
+
         42l:
             index_value: 128
             title: 42l
@@ -1488,6 +3013,18 @@ constants:
             average: 54
             shoulder_across_back: 18.825
             shoulder_across_front: 18.075
+            shoulder_across_front_px: 447
+            bust_px: 550
+            waist_px:
+                h: 459
+                p: 478
+                a: 496
+                r: 561
+            hip_px:
+                p: 589
+                t: 534   
+                									  
+
         42m:
             index_value: 129
             title: 42m
@@ -1498,6 +3035,19 @@ constants:
             average: 55
             shoulder_across_back: 18.975
             shoulder_across_front: 18.225
+            shoulder_across_front_px: 452
+            bust_px: 561
+            waist_px:
+                h: 468
+                p: 487
+                a: 506
+                r: 570
+            hip_px:
+                p: 598
+                t: 543   
+                									  
+
+                
         42n:
             index_value: 130
             title: 42n
@@ -1507,7 +3057,19 @@ constants:
             high: 57
             average: 56
             shoulder_across_back: 19.125
-            shoulder_across_front: 18.375            
+            shoulder_across_front: 18.375
+            shoulder_across_front_px: 456
+            bust_px: 572
+            waist_px:
+                h: 478
+                p: 496
+                a: 515
+                r: 580
+            hip_px:
+                p: 607
+                t: 552   
+                									  
+       
     man:
       letter:
         XXXS: 

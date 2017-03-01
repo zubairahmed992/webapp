@@ -447,4 +447,26 @@ private function transformArray($arr, $key_pair=true){
         }
         return null;
     }
+    
+    #---------------------- New Prameter Add --------------------
+public function getWomanBraSizeBodyShape($bra_size,$body_type=null){    
+     $arr=$this->constant['size_titles']['woman']['bra'];     
+     $bra_size=str_replace(' ', '', $bra_size);                    
+    foreach($arr as $key=>$val){
+        if($key==$bra_size){            
+            return array(
+                    'title' => array_key_exists('title', $val)?$val['title']:null,
+                    'size' => array_key_exists('size', $val)?$val['size']:null,
+                    'cup' => array_key_exists('cup', $val)?$val['cup']:null,
+                    'low' => array_key_exists('low', $val)?$val['low']:null,
+                    'high' => array_key_exists('high', $val)?$val['high']:null,
+                    'average' => array_key_exists('average', $val)?$val['average']:null,
+                    'shoulder_across_back' => array_key_exists('shoulder_across_back', $val)?$val['shoulder_across_back']:null,
+                    'shoulder_across_front' => array_key_exists('shoulder_across_front', $val)?$val['shoulder_across_front']:null,
+                );
+            break;
+        }
+    }
+    return null;
+}
 }
