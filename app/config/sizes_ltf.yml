@@ -207,7 +207,7 @@ constants:
         36: 
           title: 36
           index: 15
-    bra:
+      bra:
         28aa:
             index_value: 1
             title: 28aa
@@ -228,7 +228,6 @@ constants:
             hip_px:
                 p: 351
                 t: 295
-                
         28a:
             index_value: 2
             title: 28a
@@ -248,8 +247,7 @@ constants:
                 r: 332
             hip_px:
                 p: 360
-                t: 304     
-
+                t: 304    
         28b:
             index_value: 3
             title: 28b
@@ -269,9 +267,7 @@ constants:
                 r: 341
             hip_px:
                 p: 369
-                t: 313              								  
- 
-
+                t: 313      
         28c:
             index_value: 4
             title: 28c
@@ -291,9 +287,7 @@ constants:
                 r: 351
             hip_px:
                 p: 378
-                t: 323     
-             								  
-  
+                t: 323   
         28d:
             index_value: 5
             title: 28d
@@ -313,9 +307,7 @@ constants:
                 r: 360
             hip_px:
                 p: 387
-                t: 332     
-                									  
-
+                t: 332   
         28dd:
             index_value: 6
             title: 28dd
@@ -335,10 +327,7 @@ constants:
                 r: 369
             hip_px:
                 p: 396
-                t: 341     
-            									  
-    
-                
+                t: 341    
         28ddd:
             index_value: 7
             title: 28ddd
@@ -358,9 +347,7 @@ constants:
                 r: 378
             hip_px:
                 p: 406
-                t: 350     
-           									  
-     
+                t: 350  
         28e:
             index_value: 8
             title: 28e
@@ -380,9 +367,7 @@ constants:
                 r: 369
             hip_px:
                 p: 396
-                t: 341     
-                									  
-
+                t: 341  
         28f:
             index_value: 9
             title: 28f
@@ -403,8 +388,6 @@ constants:
             hip_px:
                 p: 406
                 t: 350     
-                									  
-
         28g:
             index_value: 10
             title: 28g
@@ -424,9 +407,7 @@ constants:
                 r: 387
             hip_px:
                 p: 415
-                t: 360                     
-                									  
-
+                t: 360 
         28h:
             index_value: 11
             title: 28h
@@ -446,9 +427,7 @@ constants:
                 r: 396
             hip_px:
                 p: 424
-                t: 369       
-                									  
-
+                t: 369   
         28i:
             index_value: 12
             title: 28i
@@ -468,10 +447,7 @@ constants:
                 r: 406
             hip_px:
                 p: 433
-                t: 378      
-                									  
-
-                
+                t: 378     
         28j:
             index_value: 13
             title: 28j
@@ -491,9 +467,7 @@ constants:
                 r: 415
             hip_px:
                 p: 442
-                t: 387      
-                									  
-
+                t: 387     
         28k:
             index_value: 14
             title: 28k
@@ -513,10 +487,7 @@ constants:
                 r: 424
             hip_px:
                 p: 451
-                t: 396      
-                									  
-
-                
+                t: 396  
         28l:
             index_value: 15
             title: 28l
@@ -536,9 +507,7 @@ constants:
                 r: 433
             hip_px:
                 p: 461
-                t: 406      
-                									  
-
+                t: 406  
         28m:
             index_value: 16
             title: 28m
@@ -558,9 +527,7 @@ constants:
                 r: 442
             hip_px:
                 p: 470
-                t: 415      
-             									  
-   
+                t: 415    
         28n:
             index_value: 17
             title: 28n
@@ -580,9 +547,7 @@ constants:
                 r: 451
             hip_px:
                 p: 479
-                t: 424      
-                									  
-
+                t: 424   
         30aa:
             index_value: 18
             title: 30aa
@@ -603,8 +568,6 @@ constants:
             hip_px:
                 p: 369
                 t: 313
-                									  
-
         30a:
             index_value: 19
             title: 30a
@@ -625,8 +588,6 @@ constants:
             hip_px:
                 p: 378
                 t: 323
-               									  
-
         30b:
             index_value: 20
             title: 30b
@@ -647,9 +608,6 @@ constants:
             hip_px:
                 p: 387
                 t: 332
-                									  
-
-                
         30c:
             index_value: 21
             title: 30c
@@ -670,8 +628,6 @@ constants:
             hip_px:
                 p: 396
                 t: 341
-                									  
-
         30d:
             index_value: 22
             title: 30d
@@ -692,8 +648,6 @@ constants:
             hip_px:
                 p: 406
                 t: 350
-                									  
-
         30dd:
             index_value: 23
             title: 30dd
@@ -714,8 +668,6 @@ constants:
             hip_px:
                 p: 415
                 t: 360
-                									  
-
         30ddd:
             index_value: 24
             title: 30ddd
@@ -736,8 +688,6 @@ constants:
             hip_px:
                 p: 424
                 t: 369
-                									  
-
         30e:
             index_value: 25
             title: 30e
@@ -758,8 +708,6 @@ constants:
             hip_px:
                 p: 415
                 t: 360
-            								  
-
         30f:
             index_value: 26
             title: 30f
@@ -780,8 +728,6 @@ constants:
             hip_px:
                 p: 424
                 t: 369
-                									  
-
         30g:
             index_value: 27
             title: 30g
@@ -802,8 +748,6 @@ constants:
             hip_px:
                 p: 433
                 t: 378
-                									  
-
         30h:
             index_value: 28
             title: 30h
@@ -824,8 +768,6 @@ constants:
             hip_px:
                 p: 442
                 t: 387
-                									  
-
         30i:
             index_value: 29
             title: 30i
@@ -846,8 +788,6 @@ constants:
             hip_px:
                 p: 451
                 t: 396
-                									  
-
         30j:
             index_value: 30
             title: 30j
@@ -868,8 +808,6 @@ constants:
             hip_px:
                 p: 461
                 t: 406
-                									  
-
         30k:
             index_value: 31
             title: 30k
@@ -890,8 +828,6 @@ constants:
             hip_px:
                 p: 470
                 t: 415
-                									  
-
         30l:
             index_value: 32
             title: 30l
@@ -912,8 +848,6 @@ constants:
             hip_px:
                 p: 479
                 t: 424
-                									  
-
         30m:
             index_value: 33
             title: 30m
@@ -934,8 +868,6 @@ constants:
             hip_px:
                 p: 488
                 t: 433
-                									  
-
         30n:
             index_value: 34
             title: 30n
@@ -956,8 +888,6 @@ constants:
             hip_px:
                 p: 497
                 t: 442
-                									  
-
         32a:
             index_value: 35
             title: 32a
@@ -978,8 +908,6 @@ constants:
             hip_px:
                 p: 396
                 t: 341
-              									  
-  
         32b:
             index_value: 36
             title: 32b
@@ -1000,8 +928,6 @@ constants:
             hip_px:
                 p: 406
                 t: 350
-                									  
-
         32c:
             index_value: 37
             title: 32c
@@ -1022,8 +948,6 @@ constants:
             hip_px:
                 p: 415
                 t: 360
-                									  
-
         32d:
             index_value: 38
             title: 32d
@@ -1044,8 +968,6 @@ constants:
             hip_px:
                 p: 424
                 t: 369
-                									  
-
         32dd:
             index_value: 39
             title: 32dd
@@ -1066,8 +988,6 @@ constants:
             hip_px:
                 p: 433
                 t: 378
-                									  
-
         32ddd:
             index_value: 40
             title: 32ddd
@@ -1088,8 +1008,6 @@ constants:
             hip_px:
                 p: 442
                 t: 387
-                									  
-
         32e:
             index_value: 41
             title: 32e
@@ -1109,9 +1027,7 @@ constants:
                 r: 406
             hip_px:
                 p: 433
-                t: 378                									  
-
-                
+                t: 378  
         32f:
             index_value: 42
             title: 32f
@@ -1132,8 +1048,6 @@ constants:
             hip_px:
                 p: 442
                 t: 387
-                									  
-
         32g:
             index_value: 43
             title: 32g
@@ -1154,8 +1068,6 @@ constants:
             hip_px:
                 p: 451
                 t: 396
-                									  
-
         32h:
             index_value: 44
             title: 32h
@@ -1176,8 +1088,6 @@ constants:
             hip_px:
                 p: 461
                 t: 406
-                									  
-
         32i:
             index_value: 45
             title: 32i
@@ -1198,8 +1108,6 @@ constants:
             hip_px:
                 p: 470
                 t: 415
-                									  
-
         32j:
             index_value: 46
             title: 32j
@@ -1220,8 +1128,6 @@ constants:
             hip_px:
                 p: 479
                 t: 424
-                									  
-
         32k:
             index_value: 47
             title: 32k
@@ -1242,8 +1148,6 @@ constants:
             hip_px:
                 p: 488
                 t: 433
-                									  
-
         32l:
             index_value: 48
             title: 32l
@@ -1263,8 +1167,7 @@ constants:
                 r: 470
             hip_px:
                 p: 497
-                t: 442                									  
-
+                t: 442   
         32m:
             index_value: 49
             title: 32m
@@ -1285,8 +1188,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451
-                									  
-
         32n:
             index_value: 50
             title: 32n
@@ -1307,8 +1208,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461
-                									  
-
         34a:
             index_value: 51
             title: 34a
@@ -1328,9 +1227,7 @@ constants:
                 r: 387
             hip_px:
                 p: 415
-                t: 360
-                									  
-
+                t: 360	
         34b:
             index_value: 52
             title: 34b
@@ -1351,8 +1248,6 @@ constants:
             hip_px:
                 p: 424
                 t: 369
-                									  
-
         34c:
             index_value: 53
             title: 34c
@@ -1373,8 +1268,6 @@ constants:
             hip_px:
                 p: 433
                 t: 378
-                									  
-
         34d:
             index_value: 54
             title: 34d
@@ -1395,8 +1288,6 @@ constants:
             hip_px:
                 p: 442
                 t: 387
-                									  
-
         34dd:
             index_value: 55
             title: 34dd
@@ -1416,8 +1307,7 @@ constants:
                 r: 424
             hip_px:
                 p: 451
-                t: 396                									  
-
+                t: 396   
         34ddd:
             index_value: 56
             title: 34ddd
@@ -1438,8 +1328,6 @@ constants:
             hip_px:
                 p: 461
                 t: 406
-                									  
-
         34e:
             index_value: 57
             title: 34e
@@ -1460,8 +1348,6 @@ constants:
             hip_px:
                 p: 451
                 t: 396
-                									  
-
         34f:
             index_value: 58
             title: 34f
@@ -1482,8 +1368,6 @@ constants:
             hip_px:
                 p: 461
                 t: 406
-                									  
-
         34g:
             index_value: 59
             title: 34g
@@ -1504,9 +1388,6 @@ constants:
             hip_px:
                 p: 470
                 t: 415
-                									  
-
-
         34h:
             index_value: 60
             title: 34h
@@ -1526,8 +1407,7 @@ constants:
                 r: 451
             hip_px:
                 p: 479
-                t: 424                									  
-
+                t: 424  
         34i:
             index_value: 61
             title: 34i
@@ -1548,8 +1428,6 @@ constants:
             hip_px:
                 p: 488
                 t: 433
-                									  
-
         34j:
             index_value: 62
             title: 34j
@@ -1570,8 +1448,6 @@ constants:
             hip_px:
                 p: 497
                 t: 442
-                									  
-
         34k:
             index_value: 63
             title: 34k
@@ -1592,8 +1468,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451
-                									  
-
         34l:
             index_value: 64
             title: 34l
@@ -1614,9 +1488,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461
-                									  
-
-
         34m:
             index_value: 65
             title: 34m
@@ -1636,9 +1507,7 @@ constants:
                 r: 497
             hip_px:
                 p: 525
-                t: 470
-                									  
-
+                t: 
         34n:
             index_value: 66
             title: 34n
@@ -1659,8 +1528,6 @@ constants:
             hip_px:
                 p: 534
                 t: 479
-                									  
-
         36a:
             index_value: 67
             title: 36a
@@ -1680,8 +1547,7 @@ constants:
                 r: 406
             hip_px:
                 p: 433
-                t: 378                									  
-
+                t: 378  
         36b:
             index_value: 68
             title: 36b
@@ -1701,9 +1567,7 @@ constants:
                 r: 415
             hip_px:
                 p: 442
-                t: 387      
-                									  
-
+                t: 387  
         36c:
             index_value: 69
             title: 36c
@@ -1723,9 +1587,7 @@ constants:
                 r: 424
             hip_px:
                 p: 451
-                t: 396      
-                									  
-
+                t: 396  
         36d:
             index_value: 70
             title: 36d
@@ -1745,9 +1607,7 @@ constants:
                 r: 433
             hip_px:
                 p: 461
-                t: 406    
-                									  
-
+                t: 406
         36dd:
             index_value: 71
             title: 36dd
@@ -1767,9 +1627,7 @@ constants:
                 r: 442
             hip_px:
                 p: 470
-                t: 415    
-                									  
-
+                t: 415  
         36ddd:
             index_value: 72
             title: 36ddd
@@ -1789,9 +1647,7 @@ constants:
                 r: 451
             hip_px:
                 p: 479
-                t: 424    
-                									  
-
+                t: 424 
         36e:
             index_value: 73
             title: 36e
@@ -1811,10 +1667,7 @@ constants:
                 r: 442
             hip_px:
                 p: 470
-                t: 415    
-                
-                									  
-
+                t: 415   
         36f:
             index_value: 74
             title: 36f
@@ -1834,9 +1687,7 @@ constants:
                 r: 451
             hip_px:
                 p: 479
-                t: 424    
-                									  
-
+                t: 424  
         36g:
             index_value: 75
             title: 36g
@@ -1856,9 +1707,7 @@ constants:
                 r: 461
             hip_px:
                 p: 488
-                t: 433    
-                									  
-
+                t: 433   
         36h:
             index_value: 76
             title: 36h
@@ -1879,8 +1728,6 @@ constants:
             hip_px:
                 p: 497
                 t: 442    
-                									  
-
         36i:
             index_value: 77
             title: 36i
@@ -1901,8 +1748,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451
-                									  
-
         36j:
             index_value: 78
             title: 36j
@@ -1923,8 +1768,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461
-                									  
-
         36k:
             index_value: 79
             title: 36k
@@ -1945,8 +1788,6 @@ constants:
             hip_px:
                 p: 525
                 t: 470
-                									  
-
         36l:
             index_value: 80
             title: 36l
@@ -1967,8 +1808,6 @@ constants:
             hip_px:
                 p: 534
                 t: 479
-                									  
-
         36m:
             index_value: 81
             title: 36m
@@ -1989,8 +1828,6 @@ constants:
             hip_px:
                 p: 543
                 t: 488
-                									  
-
         36n:
             index_value: 82
             title: 36n
@@ -2011,8 +1848,6 @@ constants:
             hip_px:
                 p: 552
                 t: 497
-               									  
-
         38a:
             index_value: 83
             title: 38a
@@ -2033,8 +1868,6 @@ constants:
             hip_px:
                 p: 451
                 t: 396
-                									  
-
         38b:
             index_value: 84
             title: 38b
@@ -2055,8 +1888,6 @@ constants:
             hip_px:
                 p: 461
                 t: 406
-                									  
-
         38c:
             index_value: 85
             title: 38c
@@ -2077,8 +1908,6 @@ constants:
             hip_px:
                 p: 470
                 t: 415
-                									  
-
         38d:
             index_value: 86
             title: 38d
@@ -2098,9 +1927,7 @@ constants:
                 r: 451
             hip_px:
                 p: 479
-                t: 424                
-                									  
-
+                t: 424  
         38dd:
             index_value: 87
             title: 38dd
@@ -2120,9 +1947,7 @@ constants:
                 r: 461
             hip_px:
                 p: 488
-                t: 433           
-                									  
-
+                t: 433   
         38ddd:
             index_value: 88
             title: 38ddd
@@ -2142,9 +1967,7 @@ constants:
                 r: 470
             hip_px:
                 p: 497
-                t: 442   
-                									  
-
+                t: 442  
         38e:
             index_value: 89
             title: 38e
@@ -2164,9 +1987,7 @@ constants:
                 r: 461
             hip_px:
                 p: 488
-                t: 433   
-                									  
-
+                t: 433 
         38f:
             index_value: 90
             title: 38f
@@ -2187,8 +2008,6 @@ constants:
             hip_px:
                 p: 497
                 t: 442  
-                									  
-
         38g:
             index_value: 91
             title: 38g
@@ -2209,8 +2028,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451  
-                									  
-
         38h:
             index_value: 92
             title: 38h
@@ -2231,8 +2048,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461  
-                								  
-
         38i:
             index_value: 93
             title: 38i
@@ -2253,8 +2068,6 @@ constants:
             hip_px:
                 p: 525
                 t: 470  
-                									  
-
         38j:
             index_value: 94
             title: 38j
@@ -2275,8 +2088,6 @@ constants:
             hip_px:
                 p: 534
                 t: 479  
-                									  
-
         38k:
             index_value: 95
             title: 38k
@@ -2297,8 +2108,6 @@ constants:
             hip_px:
                 p: 543
                 t: 488  
-                									  
-
         38l:
             index_value: 96
             title: 38l
@@ -2319,8 +2128,6 @@ constants:
             hip_px:
                 p: 552
                 t: 497  
-                									  
-
         38m:
             index_value: 97
             title: 38m
@@ -2341,8 +2148,6 @@ constants:
             hip_px:
                 p: 561
                 t: 506  
-                									  
-
         38n:
             index_value: 98
             title: 38n
@@ -2363,8 +2168,6 @@ constants:
             hip_px:
                 p: 570
                 t: 515  
-                									  
-
         40a:
             index_value: 99
             title: 40a
@@ -2385,8 +2188,6 @@ constants:
             hip_px:
                 p: 470
                 t: 415  
-                									  
-
         40b:
             index_value: 100
             title: 40b
@@ -2407,8 +2208,6 @@ constants:
             hip_px:
                 p: 479
                 t: 424  
-                									  
-
         40c:
             index_value: 101
             title: 40c
@@ -2429,8 +2228,6 @@ constants:
             hip_px:
                 p: 488
                 t: 433  
-                									  
-
         40d:
             index_value: 102
             title: 40d
@@ -2451,8 +2248,6 @@ constants:
             hip_px:
                 p: 497
                 t: 442  
-                									  
-
         40dd:
             index_value: 103
             title: 40dd
@@ -2473,8 +2268,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451  
-                											  
-
         40ddd:
             index_value: 104
             title: 40ddd
@@ -2495,8 +2288,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461  
-                									  
-
         40e:
             index_value: 105
             title: 40e
@@ -2517,8 +2308,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451  
-                									  
-
         40f:
             index_value: 106
             title: 40f
@@ -2539,8 +2328,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461  
-                									  
-
         40g:
             index_value: 107
             title: 40g
@@ -2561,8 +2348,6 @@ constants:
             hip_px:
                 p: 525
                 t: 470  
-                									  
-
         40h:
             index_value: 108
             title: 40h
@@ -2583,8 +2368,6 @@ constants:
             hip_px:
                 p: 534
                 t: 479  
-                									  
-
         40i:
             index_value: 109
             title: 40i
@@ -2605,8 +2388,6 @@ constants:
             hip_px:
                 p: 543
                 t: 488  
-                									  
-
         40j:
             index_value: 110
             title: 40j
@@ -2627,8 +2408,6 @@ constants:
             hip_px:
                 p: 552
                 t: 497  
-                									  
-
         40k:
             index_value: 111
             title: 40k
@@ -2649,8 +2428,6 @@ constants:
             hip_px:
                 p: 561
                 t: 506  
-                									  
-
         40l:
             index_value: 112
             title: 40l
@@ -2671,8 +2448,6 @@ constants:
             hip_px:
                 p: 570
                 t: 515  
-                									  
-
         40m:
             index_value: 113
             title: 40m
@@ -2693,8 +2468,6 @@ constants:
             hip_px:
                 p: 580
                 t: 525  
-                									  
-
         40n:
             index_value: 114
             title: 40n
@@ -2715,8 +2488,6 @@ constants:
             hip_px:
                 p: 589
                 t: 534  
-                									  
-
         42a:
             index_value: 115
             title: 42a
@@ -2737,8 +2508,6 @@ constants:
             hip_px:
                 p: 488
                 t: 433  
-                									  
-
         42b:
             index_value: 116
             title: 42b
@@ -2759,8 +2528,6 @@ constants:
             hip_px:
                 p: 497
                 t: 442  
-                									  
-
         42c:
             index_value: 117
             title: 42c
@@ -2781,8 +2548,6 @@ constants:
             hip_px:
                 p: 506
                 t: 451  
-                								  
-
         42d:
             index_value: 118
             title: 42d
@@ -2803,8 +2568,6 @@ constants:
             hip_px:
                 p: 515
                 t: 461  
-                									  
-
         42dd:
             index_value: 119
             title: 42dd
@@ -2825,8 +2588,6 @@ constants:
             hip_px:
                 p: 525
                 t: 470  
-                									  
-
         42ddd:
             index_value: 120
             title: 42ddd
@@ -2847,9 +2608,6 @@ constants:
             hip_px:
                 p: 534
                 t: 479  
-                									  
-
-
         42e:
             index_value: 121
             title: 42e
@@ -2870,8 +2628,6 @@ constants:
             hip_px:
                 p: 525
                 t: 470  
-                									  
-
         42f:
             index_value: 122
             title: 42f
@@ -2892,8 +2648,6 @@ constants:
             hip_px:
                 p: 534
                 t: 479  
-                									  
-
         42g:
             index_value: 123
             title: 42g
@@ -2914,8 +2668,6 @@ constants:
             hip_px:
                 p: 543
                 t: 488  
-                									  
-
         42h:
             index_value: 124
             title: 42h
@@ -2936,8 +2688,6 @@ constants:
             hip_px:
                 p: 552
                 t: 497  
-                									  
-
         42i:
             index_value: 125
             title: 42i
@@ -2957,8 +2707,7 @@ constants:
                 r: 534
             hip_px:
                 p: 561
-                t: 506                  									  
-
+                t: 506  
         42j:
             index_value: 126
             title: 42j
@@ -2978,9 +2727,7 @@ constants:
                 r: 543
             hip_px:
                 p: 570
-                t: 515    
-                									  
-
+                t: 515   
         42k:
             index_value: 127
             title: 42k
@@ -3000,9 +2747,7 @@ constants:
                 r: 552
             hip_px:
                 p: 580
-                t: 525    
-                									  
-
+                t: 525  
         42l:
             index_value: 128
             title: 42l
@@ -3022,9 +2767,7 @@ constants:
                 r: 561
             hip_px:
                 p: 589
-                t: 534   
-                									  
-
+                t: 534 
         42m:
             index_value: 129
             title: 42m
@@ -3045,9 +2788,6 @@ constants:
             hip_px:
                 p: 598
                 t: 543   
-                									  
-
-                
         42n:
             index_value: 130
             title: 42n
@@ -3068,8 +2808,6 @@ constants:
             hip_px:
                 p: 607
                 t: 552   
-                									  
-       
     man:
       letter:
         XXXS: 
