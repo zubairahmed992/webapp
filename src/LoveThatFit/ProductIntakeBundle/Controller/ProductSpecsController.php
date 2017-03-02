@@ -70,24 +70,29 @@ class ProductSpecsController extends Controller
         $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($ps['sizes'], $fm);  
         return new Response(json_encode($updated_measurements));        
     }
-      #----------------------- /product_intake/product_specs/measurement_recalculate
-    public function measurementRecalculateAction(Request $request){                        
-        $decoded = $request->request->all();    
-        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);          
-        $specs_data = json_decode($ps->getSpecsJson(),true);        
-        $specs_data['horizontal_stretch'] = array_key_exists('horizontal_stretch',$decoded)?$decoded['horizontal_stretch']:0;
-        $specs_data['vertical_stretch'] = array_key_exists('vertical_stretch',$decoded)?$decoded['vertical_stretch']:0;        
-        $specs_data['fit_model_measurement_id'] = array_key_exists('fit_model_measurement_id',$decoded)?$decoded['fit_model_measurement_id']:0;                
-        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);
-        $updated_measurements =  $this->get('pi.product_specification')->calculateRanges($specs_data);  
-        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($updated_measurements['sizes'], $fm);  
-        return new Response(json_encode($updated_measurements));        
+    * 
+    */
+      #----------------------- /product_intake/product_specs/measurements_compare
+    public function measurementsCompareAction($id){                        
+        $ps = $this->get('pi.product_specification')->find($id);          
+        $specs = json_decode($ps->getSpecsJson(),true);        
+        $compare = array();
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                $compare[$fpk][$size]=$fpv['fit_model'];
+            }
+        }        
+        return new Response(json_encode($compare));        
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:test_preview.html.twig', array(                    
+                    'compare_data' => json_encode($compare),                    
+                ));
     }
-      */
+      
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
+        $parsed_data = json_decode($ps->getSpecsJson(),true);
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
@@ -123,8 +128,10 @@ class ProductSpecsController extends Controller
             } 
         }                      
         
-        $updated_specs = $this->get('pi.product_specification')->generate($output);        
-        #return new Response(json_encode($updated_specs));
+        $updated_specs = $this->get('pi.product_specification')->generate($output);
+        #return new Response(json_encode($updated_specs)); 
+        
+        
         $entity = $this->get('pi.product_specification')->find($id);
         $entity->setUndoSpecsJson($entity->getSpecsJson());
         $entity->setSpecsJson(json_encode($updated_specs));
