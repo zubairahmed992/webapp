@@ -60,18 +60,7 @@ class ProductSpecsController extends Controller
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
-    #----------------------- /product_intake/product_specs/measurements_with_fitmodel
-   /* public function measurementsWithFitModelAction(Request $request){                        
-        $decoded = $request->request->all();             
-        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
-        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
-        $parsed_data = json_decode($ps->getSpecsJson(),true);        
-        $ps = $this->get('pi.product_specification')->calculateGradeRule($parsed_data);  
-        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($ps['sizes'], $fm);  
-        return new Response(json_encode($updated_measurements));        
-    }
-    * 
-    */
+    
       #----------------------- /product_intake/product_specs/measurements_compare
     public function measurementsCompareAction($id){                        
         $ps = $this->get('pi.product_specification')->find($id);          
@@ -107,8 +96,7 @@ class ProductSpecsController extends Controller
     
     #----------------------- /product_intake/product_specs/create_product
     public function createProductAction($id){            
-        $entity = $this->get('pi.product_specification')->find($id);
-        $this->create_product(json_decode($entity->getSpecsJson(),true));
+        $this->get('pi.product_specification')->create_product($id);
         $this->get('session')->setFlash('success', 'Product created.');   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
@@ -288,101 +276,6 @@ class ProductSpecsController extends Controller
         }
         return $c;
     }
-######################################################################################
-    
-    private function create_product($data){
-        $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
-        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
-        $product=new Product;
-        $product->setBrand($brand);
-        $product->setClothingType($clothing_type);        
-        $product->setName(array_key_exists('name', $data)?$data['name']:'');
-        $product->setName(array_key_exists('control_number', $data)?$data['control_number']:'');        
-        $product->setDescription(array_key_exists('description', $data)?$data['description']:'');
-        $product->setStretchType(array_key_exists('stretch_type', $data)?$data['stretch_type']:'');
-        $product->setHorizontalStretch($data['horizontal_stretch']);
-        $product->setVerticalStretch($data['vertical_stretch']);        
-        $product->setCreatedAt(new \DateTime('now'));
-        $product->setUpdatedAt(new \DateTime('now'));
-        $product->setGender($data['gender']);
-        $product->setStylingType($data['styling_type']);
-        $product->setNeckline(array_key_exists('neck_line', $data)?$data['neck_line']:$data['neckline']);
-        $product->setSleeveStyling($data['sleeve_styling']);
-        $product->setRise($data['rise']);
-        $product->setHemLength($data['hem_length']);
-        $product->setFabricWeight($data['fabric_weight']);
-        $product->setStructuralDetail($data['structural_detail']);
-        $product->setFitType($data['fit_type']);
-        $product->setLayering(array_key_exists('layring', $data)?$data['layring']:$data['layering']);
-        $product->setFitPriority(json_encode($data['fit_priority']));
-        $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data)?$data['fabric_content']:''));
-        $product->setDisabled(false);        
-        $product->setSizeTitleType($data['size_title_type']);    
-        #------------------------
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($product);
-        $em->flush();
-        $this->create_product_sizes($product, $data);
-        $this->create_product_colors($data, $product);
-        
-    }
-        #------------------------------------------------------------
-    private function create_product_sizes($product, $data) {
-        $em = $this->getDoctrine()->getManager();
-        $size_titles = $this->get('admin.helper.size')->getSizeArray($data['gender'],$data['size_title_type']);        
-        $i=1;
-        foreach ($size_titles['regular'] as $size_title => $value) {
-            if(array_key_exists($size_title, $data['sizes'])){
-                $ps = new ProductSize();
-                $ps->setTitle($size_title);
-                $ps->setProduct($product);
-                $ps->setBodyType($data['body_type']);                                
-                $ps->setIndexValue($i);
-                $em->persist($ps);
-                $em->flush();
-                $this->create_product_size_measurements($ps, $data['sizes'][$size_title]);            
-            }
-            $i++;
-        }
-        return $product;
-    }
-     #------------------------------------------------------
-    private function create_product_size_measurements($size, $data) {
-        $em = $this->getDoctrine()->getManager();
-        foreach ($data as $key => $value) {
-            if($key!='key'){
-            $psm = new ProductSizeMeasurement;
-            $psm->setTitle($key);
-            $psm->setProductSize($size);            
-            array_key_exists('garment_dimension',$value)?$psm->setGarmentMeasurementFlat($value['garment_dimension']):null;
-            array_key_exists('garment_stretch',$value)?$psm->setGarmentMeasurementStretchFit($value['garment_stretch']):null;
-            $psm->setMaxBodyMeasurement($value['max_actual']);
-            $psm->setIdealBodySizeHigh($value['ideal_high']);
-            $psm->setIdealBodySizeLow($value['ideal_low']);
-            $psm->setMinBodyMeasurement($value['min_actual']);
-            $psm->setFitModelMeasurement($value['fit_model']);
-            $psm->setMaxCalculated($value['max_calc']);
-            $psm->setMinCalculated($value['min_calc']);
-            $psm->setGradeRule($value['grade_rule']);
-            $em->persist($psm);
-            $em->flush();
-            }            
-        }
-        return;
-    }
-    #------------------------------------------------------------
-    private function create_product_colors($data, $product) {        
-        $color_names=explode(",", $data['colors']);        
-            $em = $this->getDoctrine()->getManager();
-            foreach ($color_names as $cn) {
-                $pc = new ProductColor();
-                $pc->setTitle(trim($cn));
-                $pc->setProduct($product);
-                $em->persist($pc);
-                $em->flush();
-            }
-                
-        return $product;
-    }
+
     
 }
