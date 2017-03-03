@@ -208,426 +208,450 @@ constants:
           title: 36
           index: 15
       bra:
-        28aa:
-            index_value: 1
+        28aa:	
+            index_value: 1	
             title: 28aa
             size: 28
-            cup: aa
+            cup:	aa
             low: 27
-            high: 29
-            average: 28
-            shoulder_across_back: 13.325
-            shoulder_across_front: 12.575
-            shoulder_across_front_px: 310
-            bust_px: 216
-            waist_px:
-                h: 216
-                p: 235
-                a: 254
-                r: 323
-            hip_px:
-                p: 351
-                t: 295
-        28a:
-            index_value: 2
-            title: 28a
-            size: 28
-            cup: a
-            low: 28
-            high: 30
-            average: 29
-            shoulder_across_back: 13.675
-            shoulder_across_front: 12.925
-            shoulder_across_front_px: 316
-            bust_px: 287
-            waist_px:
-                h: 226
-                p: 244
-                a: 263
-                r: 332
-            hip_px:
-                p: 360
-                t: 304    
-        28b:
-            index_value: 3
-            title: 28b
-            size: 28
-            cup: b
-            low: 29
-            high: 31
-            average: 30
-            shoulder_across_back: 13.825
-            shoulder_across_front: 13.075
-            shoulder_across_front_px: 322
-            bust_px: 297
-            waist_px:
-                h: 235
-                p: 254
-                a: 272
-                r: 341
-            hip_px:
-                p: 369
-                t: 313      
-        28c:
-            index_value: 4
-            title: 28c
-            size: 28
-            cup: c
-            low: 30
-            high: 32
-            average: 31
-            shoulder_across_back: 13.975
-            shoulder_across_front: 13.225
-            shoulder_across_front_px: 329
-            bust_px: 308
-            waist_px:
-                h: 244
-                p: 263
-                a: 282
-                r: 351
-            hip_px:
-                p: 378
-                t: 323   
-        28d:
-            index_value: 5
-            title: 28d
-            size: 28
-            cup: d
-            low: 31
-            high: 33
-            average: 32
-            shoulder_across_back: 14.125
-            shoulder_across_front: 13.375
-            shoulder_across_front_px: 335
-            bust_px: 318
-            waist_px:
-                h: 254
-                p: 272
-                a: 291
-                r: 360
-            hip_px:
-                p: 387
-                t: 332   
-        28dd:
-            index_value: 6
-            title: 28dd
-            size: 28
-            cup: dd
-            low: 32
-            high: 34
-            average: 33
-            shoulder_across_back: 14.375
-            shoulder_across_front: 13.625
-            shoulder_across_front_px: 339
-            bust_px: 329
-            waist_px:
-                h: 263
-                p: 282
-                a: 300
-                r: 369
-            hip_px:
-                p: 396
-                t: 341    
-        28ddd:
-            index_value: 7
-            title: 28ddd
-            size: 28
-            cup: ddd
-            low: 33
-            high: 35
-            average: 34
-            shoulder_across_back: 14.625
-            shoulder_across_front: 13.875
-            shoulder_across_front_px: 344
-            bust_px: 339
-            waist_px:
-                h: 272
-                p: 291
-                a: 310
-                r: 378
-            hip_px:
-                p: 406
-                t: 350  
-        28e:
-            index_value: 8
-            title: 28e
-            size: 28
-            cup: e
-            low: 32
-            high: 34
-            average: 33
-            shoulder_across_back: 14.375
-            shoulder_across_front: 13.625
-            shoulder_across_front_px: 339
-            bust_px: 329
-            waist_px:
-                h: 263
-                p: 282
-                a: 300
-                r: 369
-            hip_px:
-                p: 396
-                t: 341  
-        28f:
-            index_value: 9
-            title: 28f
-            size: 28
-            cup: f
-            low: 33
-            high: 35
-            average: 34
-            shoulder_across_back: 14.625
-            shoulder_across_front: 13.875
-            shoulder_across_front_px: 344
-            bust_px: 339
-            waist_px:
-                h: 272
-                p: 291
-                a: 310
-                r: 378
-            hip_px:
-                p: 406
-                t: 350     
-        28g:
-            index_value: 10
-            title: 28g
-            size: 28
-            cup: g
-            low: 34
-            high: 36
-            average: 35
-            shoulder_across_back: 14.875
-            shoulder_across_front: 14.125
-            shoulder_across_front_px: 350
-            bust_px: 350
-            waist_px:
-                h: 282
-                p: 300
-                a: 319
-                r: 387
-            hip_px:
-                p: 415
-                t: 360 
-        28h:
-            index_value: 11
-            title: 28h
-            size: 28
-            cup: h
-            low: 35
-            high: 37
-            average: 36
-            shoulder_across_back: 15.125
-            shoulder_across_front: 14.375
-            shoulder_across_front_px: 355
-            bust_px: 361
-            waist_px:
-                h: 291
-                p: 310
-                a: 328
-                r: 396
-            hip_px:
-                p: 424
-                t: 369   
-        28i:
-            index_value: 12
-            title: 28i
-            size: 28
-            cup: i
-            low: 36
-            high: 38
-            average: 37
-            shoulder_across_back: 15.375
-            shoulder_across_front: 14.625
-            shoulder_across_front_px: 360
-            bust_px: 371
-            waist_px:
-                h: 300
-                p: 319
-                a: 338
-                r: 406
-            hip_px:
-                p: 433
-                t: 378     
-        28j:
-            index_value: 13
-            title: 28j
-            size: 28
-            cup: j
-            low: 37
-            high: 39
-            average: 38
-            shoulder_across_back: 15.525
-            shoulder_across_front: 14.775
-            shoulder_across_front_px: 366
-            bust_px: 382
-            waist_px:
-                h: 310
-                p: 328
-                a: 347
-                r: 415
-            hip_px:
-                p: 442
-                t: 387     
-        28k:
-            index_value: 14
-            title: 28k
-            size: 28
-            cup: k
-            low: 38
-            high: 40
-            average: 39
-            shoulder_across_back: 15.775
-            shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
-            waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
-            hip_px:
-                p: 451
-                t: 396  
+            high: 29	
+            average: 28	
+            shoulder_across_back: 13.325	
+            shoulder_across_front: 12.575	
+            shoulder_across_front_px: 155	
+            suny_test_shoulder_px: 166	
+            bust_px: 38	
+            waist_px:	
+                a: 108	
+                b: 117	
+                c: 127	
+            hip_px:	
+                a: 162	
+                b: 175	
+                c: 148	
+        28a:	
+            index_value: 2	
+            title: 28a	
+            size: 28	
+            cup: a	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 13.675	
+            shoulder_across_front: 12.925	
+            shoulder_across_front_px: 158	
+            suny_test_shoulder_px: 168	
+            bust_px: 143	
+            waist_px:	
+                a: 113	
+                b: 122	
+                c: 132	
+            hip_px:	
+                a: 166	
+                b: 180	
+                c: 152	
+        28b:	
+            index_value: 3	
+            title: 28b	
+            size: 28	
+            cup: b	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 13.825	
+            shoulder_across_front: 13.075	
+            shoulder_across_front_px: 161	
+            suny_test_shoulder_px: 170	
+            bust_px: 149	
+            waist_px:	
+                a: 117	
+                b: 127	
+                c: 136	
+            hip_px:	
+                a: 171	
+                b: 184	
+                c: 157	  
+        28c:	
+            index_value: 4	
+            title: 28c	
+            size: 28	
+            cup: c	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 13.975	
+            shoulder_across_front: 13.225	
+            shoulder_across_front_px: 164	
+            suny_test_shoulder_px: 171	
+            bust_px: 154	
+            waist_px:	
+                a: 122	
+                b: 132	
+                c: 141	
+            hip_px:	
+                a: 175	
+                b: 189	
+                c: 161	
+        28d:	
+            index_value: 5	
+            title: 28d	
+            size: 28	
+            cup: d	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 14.125	
+            shoulder_across_front: 13.375	
+            shoulder_across_front_px: 167	
+            suny_test_shoulder_px: 173	
+            bust_px: 159	
+            waist_px:	
+                a: 127	
+                b: 136	
+                c: 146	
+            hip_px:	
+                a: 180	
+                b: 194	
+                c: 166	                
+        28dd:	
+            index_value: 6	
+            title: 28dd	
+            size: 28	
+            cup: dd	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 14.375	
+            shoulder_across_front: 13.625	
+            shoulder_across_front_px: 169	
+            suny_test_shoulder_px: 175	
+            bust_px: 164	
+            waist_px:	
+                a: 132	
+                b: 141	
+                c: 150	
+            hip_px:	
+                a: 184	
+                b: 198	
+                c: 170	
+        28ddd:	
+            index_value: 7	
+            title: 28ddd	
+            size: 28	
+            cup: ddd	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 14.625	
+            shoulder_across_front: 13.875	
+            shoulder_across_front_px: 172	
+            suny_test_shoulder_px: 176	
+            bust_px: 170	
+            waist_px:	
+                a: 136	
+                b: 146	
+                c: 155	
+            hip_px:	
+                a: 189	
+                b: 203	
+                c: 175	
+        28e:	
+            index_value: 8	
+            title: 28e	
+            size: 28	
+            cup: e	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 14.375	
+            shoulder_across_front: 13.625	
+            shoulder_across_front_px: 169	
+            suny_test_shoulder_px: 175	
+            bust_px: 164	
+            waist_px:	
+                a: 132	
+                b: 141	
+                c: 150	
+            hip_px:	
+                a: 184	
+                b: 198	
+                c: 170	
+        28f:	
+            index_value: 9	
+            title: 28f	
+            size: 28	
+            cup: f	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 14.625	
+            shoulder_across_front: 13.875	
+            shoulder_across_front_px: 172	
+            suny_test_shoulder_px: 176	
+            bust_px: 170	
+            waist_px:	
+                a: 136	
+                b: 146	
+                c: 155	
+            hip_px:	
+                a: 189	
+                b: 203	
+                c: 175	
+        28g:	
+            index_value: 10	
+            title: 28g	
+            size: 28	
+            cup: g	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 14.875	
+            shoulder_across_front: 14.125	
+            shoulder_across_front_px: 175	
+            suny_test_shoulder_px: 178	
+            bust_px: 175	
+            waist_px:	
+                a: 141	
+                b: 150	
+                c: 160	
+            hip_px:	
+                a: 194	
+                b: 207	
+                c: 180	
+        28h:	
+            index_value: 11	
+            title: 28h	
+            size: 28	
+            cup: h	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 15.125	
+            shoulder_across_front: 14.375	
+            shoulder_across_front_px: 177	
+            suny_test_shoulder_px: 183	
+            bust_px: 180	
+            waist_px:	
+                a: 146	
+                b: 155	
+                c: 164	
+            hip_px:	
+                a: 198	
+                b: 212	
+                c: 184	
+        28i:	
+            index_value: 12	
+            title: 28i	
+            size: 28	
+            cup: i	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 15.375	
+            shoulder_across_front: 14.625	
+            shoulder_across_front_px: 180	
+            suny_test_shoulder_px: 185	
+            bust_px: 186	
+            waist_px:	
+                a: 150	
+                b: 160	
+                c: 169	
+            hip_px:	
+                a: 203	
+                b: 217	
+                c: 189	
+        28j:	
+            index_value: 13	
+            title: 28j	
+            size: 28	
+            cup: j	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 15.525	
+            shoulder_across_front: 14.775	
+            shoulder_across_front_px: 183	
+            suny_test_shoulder_px: 186	
+            bust_px: 191	
+            waist_px:	
+                a: 155	
+                b: 164	
+                c: 174	
+            hip_px:	
+                a: 207	
+                b: 221	
+                c: 194	
+        28k:	
+            index_value: 14	
+            title: 28k	
+            size: 28	
+            cup: k	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 15.775	
+            shoulder_across_front: 15.025	
+            shoulder_across_front_px: 186	
+            suny_test_shoulder_px: 188	
+            bust_px: 196	
+            waist_px:	
+                a: 160	
+                b: 169	
+                c: 178	
+            hip_px:	
+                a: 212	
+                b: 226	
+                c: 198	 
         28l:
-            index_value: 15
-            title: 28l
-            size: 28
-            cup: l
-            low: 39
-            high: 41
-            average: 40
-            shoulder_across_back: 15.925
-            shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
-            waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
-            hip_px:
-                p: 461
-                t: 406  
-        28m:
-            index_value: 16
-            title: 28m
-            size: 28
-            cup: m
-            low: 40
-            high: 42
-            average: 41
-            shoulder_across_back: 16.175
-            shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
-            waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
-            hip_px:
-                p: 470
-                t: 415    
-        28n:
-            index_value: 17
-            title: 28n
-            size: 28
-            cup: n
-            low: 41
-            high: 43
-            average: 42
-            shoulder_across_back: 16.325
-            shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
-            waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
-            hip_px:
-                p: 479
-                t: 424   
-        30aa:
-            index_value: 18
-            title: 30aa
-            size: 30
-            cup: aa
-            low: 29
-            high: 31
-            average: 30
-            shoulder_across_back: 13.825
-            shoulder_across_front: 13.075
-            shoulder_across_front_px: 322
-            bust_px: 297
-            waist_px:
-                h: 235
-                p: 254
-                a: 272
-                r: 341
-            hip_px:
-                p: 369
-                t: 313
-        30a:
-            index_value: 19
-            title: 30a
-            size: 30
-            cup: a
-            low: 30
-            high: 32
-            average: 31
-            shoulder_across_back: 13.975
-            shoulder_across_front: 13.225
-            shoulder_across_front_px: 329
-            bust_px: 308
-            waist_px:
-                h: 244
-                p: 263
-                a: 282
-                r: 351
-            hip_px:
-                p: 378
-                t: 323
-        30b:
-            index_value: 20
-            title: 30b
-            size: 30
-            cup: b
-            low: 31
-            high: 33
-            average: 32
-            shoulder_across_back: 14.125
-            shoulder_across_front: 13.375
-            shoulder_across_front_px: 335
-            bust_px: 318
-            waist_px:
-                h: 254
-                p: 272
-                a: 291
-                r: 360
-            hip_px:
-                p: 387
-                t: 332
-        30c:
-            index_value: 21
-            title: 30c
-            size: 30
-            cup: c
-            low: 32
-            high: 34
-            average: 33
-            shoulder_across_back: 14.375
-            shoulder_across_front: 13.625
-            shoulder_across_front_px: 339
-            bust_px: 329
-            waist_px:
-                h: 263
-                p: 282
-                a: 300
-                r: 369
-            hip_px:
-                p: 396
-                t: 341
+            index_value: 15	
+            title: 28l	
+            size: 28	
+            cup: l	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 15.925	
+            shoulder_across_front: 15.175	
+            shoulder_across_front_px: 189	
+            suny_test_shoulder_px: 190	
+            bust_px: 201	
+            waist_px:	
+                a: 164	
+                b: 174	
+                c: 183	
+            hip_px:	
+                a: 217	
+                b: 230	
+                c: 203	
+        28m:	
+            index_value: 16	
+            title: 28m	
+            size: 28	
+            cup: m	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 16.175	
+            shoulder_across_front: 15.425	
+            shoulder_across_front_px: 192	
+            suny_test_shoulder_px: 193	
+            bust_px: 207	
+            waist_px:	
+                a: 169	
+                b: 178	
+                c: 188	
+            hip_px:	
+                a: 221	
+                b: 235	
+                c: 207	
+        28n:	
+            index_value: 17	
+            title: 28n	
+            size: 28	
+            cup: n	
+            low: 27	
+            high: 29	
+            average: 28	
+            shoulder_across_back: 16.325	
+            shoulder_across_front: 15.575	
+            shoulder_across_front_px: 195	
+            suny_test_shoulder_px: 195	
+            bust_px: 212	
+            waist_px:	
+                a: 174	
+                b: 183	
+                c: 192	
+            hip_px:	
+                a: 226	
+                b: 239	
+                c: 212	
+                
+        30aa:	
+            index_value: 18	
+            title: 30aa	
+            size: 30	
+            cup: aa	
+            low: 29	
+            high: 31	
+            average: 30	
+            shoulder_across_back: 13.825	
+            shoulder_across_front: 13.075	
+            shoulder_across_front_px: 161	
+            suny_test_shoulder_px: 170	
+            bust_px: 149	
+            waist_px:	
+                a: 117	
+                b: 127	
+                c: 136	
+            hip_px:	
+                a: 171	
+                b: 184	
+                c: 157	
+        
+        30a:	
+            index_value: 19	
+            title: 30a	
+            size: 30	
+            cup: a	
+            low: 29	
+            high: 31	
+            average: 30	
+            shoulder_across_back: 13.975	
+            shoulder_across_front: 13.225	
+            shoulder_across_front_px: 164	
+            suny_test_shoulder_px: 171	
+            bust_px: 154	
+            waist_px:	
+                a: 122	
+                b: 132	
+                c: 141	
+            hip_px:	
+                a: 175	
+                b: 189	
+                c: 161	
+        30b:	
+            index_value: 20	
+            title: 30b	
+            size: 30	
+            cup: b	
+            low: 29	
+            high: 31	
+            average: 30	
+            shoulder_across_back: 14.125	
+            shoulder_across_front: 13.375	
+            shoulder_across_front_px: 167	
+            suny_test_shoulder_px: 173	
+            bust_px: 159	
+            waist_px:	
+                a: 127	
+                b: 136	
+                c: 146	
+            hip_px:	
+                a: 180	
+                b: 194	
+                c: 166	
+        30c:	
+            index_value: 21	
+            title: 30c	
+            size: 30	
+            cup: c	
+            low: 29	
+            high: 31	
+            average: 30	
+            shoulder_across_back: 14.375	
+            shoulder_across_front: 13.625	
+            shoulder_across_front_px: 169	
+            suny_test_shoulder_px: 175	
+            bust_px: 164	
+            waist_px:	
+                a: 132	
+                b: 141	
+                c: 150	
+            hip_px:	
+                a: 184	
+                b: 198	
+                c: 170	
+
         30d:
             index_value: 22
             title: 30d
@@ -673,2141 +697,2253 @@ constants:
             title: 30ddd
             size: 30
             cup: ddd
-            low: 35
-            high: 37
-            average: 36
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
-            shoulder_across_front_px: 355
-            bust_px: 361
+            shoulder_across_front_px: 177
+            suny_test_shoulder_px: 183
+            bust_px: 180
             waist_px:
-                h: 291
-                p: 310
-                a: 328
-                r: 396
+                a: 146
+                b: 155
+                c: 164
             hip_px:
-                p: 424
-                t: 369
+                a: 198
+                b: 212
+                c: 184
         30e:
             index_value: 25
             title: 30e
             size: 30
             cup: e
-            low: 34
-            high: 36
-            average: 35
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
-            shoulder_across_front_px: 350
-            bust_px: 350
+            shoulder_across_front_px: 175
+            suny_test_shoulder_px: 178
+            bust_px: 175
             waist_px:
-                h: 282
-                p: 300
-                a: 319
-                r: 387
+                a: 141
+                b: 150
+                c: 160
             hip_px:
-                p: 415
+                a: 194
+                b: 207
+                c: 180
                 t: 360
         30f:
             index_value: 26
             title: 30f
             size: 30
             cup: f
-            low: 35
-            high: 37
-            average: 36
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
-            shoulder_across_front_px: 355
-            bust_px: 361
+            shoulder_across_front_px: 177
+            suny_test_shoulder_px: 183
+            bust_px: 180
             waist_px:
-                h: 291
-                p: 310
-                a: 328
-                r: 396
+                a: 146
+                b: 155
+                c: 164
             hip_px:
-                p: 424
-                t: 369
+                a: 198
+                b: 212
+                c: 184
         30g:
             index_value: 27
             title: 30g
             size: 30
             cup: g
-            low: 36
-            high: 38
-            average: 37
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
-            shoulder_across_front_px: 360
-            bust_px: 371
+            shoulder_across_front_px: 180
+            suny_test_shoulder_px: 185
+            bust_px: 186
             waist_px:
-                h: 300
-                p: 319
-                a: 338
-                r: 406
+                a: 150
+                b: 160
+                c: 169
             hip_px:
-                p: 433
-                t: 378
+                a: 203
+                b: 217
+                c: 189
         30h:
             index_value: 28
             title: 30h
             size: 30
             cup: h
-            low: 37
-            high: 39
-            average: 38
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
-            shoulder_across_front_px: 366
-            bust_px: 382
+            shoulder_across_front_px: 183
+            suny_test_shoulder_px: 186
+            bust_px: 191
             waist_px:
-                h: 310
-                p: 328
-                a: 347
-                r: 415
+                a: 155
+                b: 164
+                c: 174
             hip_px:
-                p: 442
-                t: 387
+                a: 207
+                b: 221
+                c: 194
+               
         30i:
             index_value: 29
             title: 30i
             size: 30
             cup: i
-            low: 38
-            high: 40
-            average: 39
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
+            shoulder_across_front_px: 186
+            suny_test_shoulder_px: 188
+            bust_px: 196
             waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
+                a: 160
+                b: 169
+                c: 178
             hip_px:
-                p: 451
-                t: 396
+                a: 212
+                b: 226
+                c: 198
         30j:
             index_value: 30
             title: 30j
             size: 30
             cup: j
-            low: 39
-            high: 41
-            average: 40
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
+            shoulder_across_front_px: 189
+            suny_test_shoulder_px: 190
+            bust_px: 201
             waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
+                a: 164
+                b: 174
+                c: 183
             hip_px:
-                p: 461
-                t: 406
+                a: 217
+                b: 230
+                c: 203
         30k:
             index_value: 31
             title: 30k
             size: 30
             cup: k
-            low: 40
-            high: 42
-            average: 41
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415
+                a: 221
+                b: 235
+                c: 207
+                
         30l:
             index_value: 32
             title: 30l
             size: 30
             cup: l
-            low: 41
-            high: 43
-            average: 42
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424
+                a: 226
+                b: 239
+                c: 212
         30m:
             index_value: 33
             title: 30m
             size: 30
             cup: m
-            low: 42
-            high: 44
-            average: 43
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433
+                a: 230
+                b: 244
+                c: 217
         30n:
             index_value: 34
             title: 30n
             size: 30
             cup: n
-            low: 43
-            high: 45
-            average: 44
+            low: 29
+            high: 31
+            average: 30
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442
+                a: 235
+                b: 249
+                c: 221
         32a:
             index_value: 35
             title: 32a
             size: 32
             cup: a
-            low: 32
-            high: 34
-            average: 33
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 14.375
             shoulder_across_front: 13.625
-            shoulder_across_front_px: 339
-            bust_px: 329
+            shoulder_across_front_px: 169
+            suny_test_shoulder_px: 175
+            bust_px: 164
             waist_px:
-                h: 263
-                p: 282
-                a: 300
-                r: 369
+                a: 132
+                b: 141
+                c: 150
             hip_px:
-                p: 396
-                t: 341
+                a: 184
+                b: 198
+                c: 170
         32b:
             index_value: 36
             title: 32b
             size: 32
             cup: b
-            low: 33
-            high: 35
-            average: 34
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 14.625
             shoulder_across_front: 13.875
-            shoulder_across_front_px: 344
-            bust_px: 339
+            shoulder_across_front_px: 172
+            suny_test_shoulder_px: 176
+            bust_px: 170
             waist_px:
-                h: 272
-                p: 291
-                a: 310
-                r: 378
+                a: 136
+                b: 146
+                c: 155
             hip_px:
-                p: 406
-                t: 350
+                a: 189
+                b: 203
+                c: 175	
         32c:
             index_value: 37
             title: 32c
             size: 32
             cup: c
-            low: 34
-            high: 36
-            average: 35
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
-            shoulder_across_front_px: 350
-            bust_px: 350
+            shoulder_across_front_px: 175
+            suny_test_shoulder_px: 178
+            bust_px: 175
             waist_px:
-                h: 282
-                p: 300
-                a: 319
-                r: 387
+                a: 141
+                b: 150
+                c: 160
             hip_px:
-                p: 415
-                t: 360
+                a: 194
+                b: 207
+                c: 180
         32d:
             index_value: 38
             title: 32d
             size: 32
             cup: d
-            low: 35
-            high: 37
-            average: 36
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.125
             shoulder_across_front: 14.375
-            shoulder_across_front_px: 355
-            bust_px: 361
+            shoulder_across_front_px: 177
+            suny_test_shoulder_px: 183
+            bust_px: 180
             waist_px:
-                h: 291
-                p: 310
-                a: 328
-                r: 396
+                a: 146
+                b: 155
+                c: 164
             hip_px:
-                p: 424
-                t: 369
+                a: 198
+                b: 212
+                c: 184
         32dd:
             index_value: 39
             title: 32dd
             size: 32
             cup: dd
-            low: 36
-            high: 38
-            average: 37
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
-            shoulder_across_front_px: 360
-            bust_px: 371
+            shoulder_across_front_px: 180
+            suny_test_shoulder_px: 185
+            bust_px: 186
             waist_px:
-                h: 300
-                p: 319
-                a: 338
-                r: 406
+                a: 150
+                b: 160
+                c: 169
             hip_px:
-                p: 433
-                t: 378
+                a: 203
+                b: 217
+                c: 189
         32ddd:
             index_value: 40
             title: 32ddd
             size: 32
             cup: ddd
-            low: 37
-            high: 39
-            average: 38
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
-            shoulder_across_front_px: 366
-            bust_px: 382
+            shoulder_across_front_px: 183
+            suny_test_shoulder_px: 186
+            bust_px: 191
             waist_px:
-                h: 310
-                p: 328
-                a: 347
-                r: 415
+                a: 155
+                b: 164
+                c: 174
             hip_px:
-                p: 442
-                t: 387
+                a: 207
+                b: 221
+                c: 194
         32e:
             index_value: 41
             title: 32e
             size: 32
             cup: e
-            low: 36
-            high: 38
-            average: 37
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
-            shoulder_across_front_px: 360
-            bust_px: 371
+            shoulder_across_front_px: 180
+            suny_test_shoulder_px: 185
+            bust_px: 186
             waist_px:
-                h: 300
-                p: 319
-                a: 338
-                r: 406
+                a: 150
+                b: 160
+                c: 169
             hip_px:
-                p: 433
-                t: 378  
+                a: 203
+                b: 217
+                c: 189
         32f:
             index_value: 42
             title: 32f
             size: 32
             cup: f
-            low: 37
-            high: 39
-            average: 38
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
-            shoulder_across_front_px: 366
-            bust_px: 382
+            shoulder_across_front_px: 183
+            suny_test_shoulder_px: 186
+            bust_px: 191
             waist_px:
-                h: 310
-                p: 328
-                a: 347
-                r: 415
+                a: 155
+                b: 164
+                c: 174
             hip_px:
-                p: 442
-                t: 387
+                a: 207
+                b: 221
+                c: 194
         32g:
             index_value: 43
             title: 32g
             size: 32
             cup: g
-            low: 38
-            high: 40
-            average: 39
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
+            shoulder_across_front_px: 186
+            suny_test_shoulder_px: 188
+            bust_px: 196
             waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
+                a: 160
+                b: 169
+                c: 178
             hip_px:
-                p: 451
-                t: 396
+                a: 212
+                b: 226
+                c: 198
         32h:
             index_value: 44
             title: 32h
             size: 32
             cup: h
-            low: 39
-            high: 41
-            average: 40
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
+            shoulder_across_front_px: 189
+            suny_test_shoulder_px: 190
+            bust_px: 201
             waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
+                a: 164
+                b: 174
+                c: 183
             hip_px:
-                p: 461
-                t: 406
+                a: 217
+                b: 230
+                c: 203
         32i:
             index_value: 45
             title: 32i
             size: 32
             cup: i
-            low: 40
-            high: 42
-            average: 41
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415
+                a: 221
+                b: 235
+                c: 207
         32j:
             index_value: 46
             title: 32j
             size: 32
             cup: j
-            low: 41
-            high: 43
-            average: 42
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424
+                a: 226
+                b: 239
+                c: 212
         32k:
             index_value: 47
             title: 32k
             size: 32
             cup: k
-            low: 42
-            high: 44
-            average: 43
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433
+                a: 230
+                b: 244
+                c: 217
         32l:
             index_value: 48
             title: 32l
             size: 32
             cup: l
-            low: 43
-            high: 45
-            average: 44
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442   
+                a: 235
+                b: 249
+                c: 221
         32m:
             index_value: 49
             title: 32m
             size: 32
             cup: m
-            low: 44
-            high: 46
-            average: 45
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
-            shoulder_across_front_px: 403
-            bust_px: 456
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451
+                a: 239
+                b: 253
+                c: 226
         32n:
             index_value: 50
             title: 32n
             size: 32
             cup: n
-            low: 45
-            high: 47
-            average: 46
+            low: 31
+            high: 33
+            average: 32
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461
+                a: 244
+                b: 258
+                c: 230
         34a:
             index_value: 51
             title: 34a
             size: 34
             cup: a
-            low: 34
-            high: 36
-            average: 35
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
-            shoulder_across_front_px: 350
-            bust_px: 350
+            shoulder_across_front_px: 175
+            suny_test_shoulder_px: 178
+            bust_px: 175
             waist_px:
-                h: 282
-                p: 300
-                a: 319
-                r: 387
+                a: 141
+                b: 150
+                c: 160
             hip_px:
-                p: 415
-                t: 360	
+                a: 194
+                b: 207
+                c: 180
         34b:
             index_value: 52
             title: 34b
             size: 34
             cup: b
-            low: 35
-            high: 37
-            average: 36
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.125
-            shoulder_across_front: 14.125
-            shoulder_across_front_px: 355
-            bust_px: 361
+            shoulder_across_front: 14.375
+            shoulder_across_front_px: 177
+            suny_test_shoulder_px: 183
+            bust_px: 180
             waist_px:
-                h: 291
-                p: 310
-                a: 328
-                r: 396
+                a: 146
+                b: 155
+                c: 164
             hip_px:
-                p: 424
-                t: 369
+                a: 198
+                b: 212
+                c: 184
         34c:
             index_value: 53
             title: 34c
             size: 34
             cup: c
-            low: 36
-            high: 38
-            average: 37
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
-            shoulder_across_front_px: 360
-            bust_px: 371
+            shoulder_across_front_px: 180
+            suny_test_shoulder_px: 185
+            bust_px: 186
             waist_px:
-                h: 300
-                p: 319
-                a: 338
-                r: 406
+                a: 150
+                b: 160
+                c: 169
             hip_px:
-                p: 433
-                t: 378
+                a: 203
+                b: 217
+                c: 189
         34d:
             index_value: 54
             title: 34d
             size: 34
             cup: d
-            low: 37
-            high: 39
-            average: 38
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
-            shoulder_across_front_px: 366
-            bust_px: 382
+            shoulder_across_front_px: 183
+            suny_test_shoulder_px: 186
+            bust_px: 191
             waist_px:
-                h: 310
-                p: 328
-                a: 347
-                r: 415
+                a: 155
+                b: 164
+                c: 174
             hip_px:
-                p: 442
-                t: 387
+                a: 207
+                b: 221
+                c: 194
         34dd:
             index_value: 55
             title: 34dd
             size: 34
             cup: dd
-            low: 38
-            high: 40
-            average: 39
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
+            shoulder_across_front_px: 186
+            suny_test_shoulder_px: 188
+            bust_px: 196
             waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
+                a: 160
+                b: 169
+                c: 178
             hip_px:
-                p: 451
-                t: 396   
+                a: 212
+                b: 226
+                c: 198
         34ddd:
             index_value: 56
             title: 34ddd
             size: 34
             cup: ddd
-            low: 39
-            high: 41
-            average: 40
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
+            shoulder_across_front_px: 189
+            suny_test_shoulder_px: 190
+            bust_px: 201
             waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
+                a: 164
+                b: 174
+                c: 183
             hip_px:
-                p: 461
-                t: 406
+                a: 217
+                b: 230
+                c: 203
         34e:
             index_value: 57
             title: 34e
             size: 34
             cup: e
-            low: 38
-            high: 40
-            average: 39
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
+            shoulder_across_front_px: 186
+            suny_test_shoulder_px: 188
+            bust_px: 196
             waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
+                a: 160
+                b: 169
+                c: 178
             hip_px:
-                p: 451
-                t: 396
+                a: 212
+                b: 226
+                c: 198
         34f:
             index_value: 58
             title: 34f
             size: 34
             cup: f
-            low: 39
-            high: 41
-            average: 40
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
+            shoulder_across_front_px: 189
+            suny_test_shoulder_px: 190
+            bust_px: 201
             waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
+                a: 164
+                b: 174
+                c: 183
             hip_px:
-                p: 461
-                t: 406
+                a: 217
+                b: 230
+                c: 203
         34g:
             index_value: 59
             title: 34g
             size: 34
             cup: g
-            low: 40
-            high: 42
-            average: 41
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415
+                a: 221
+                b: 235
+                c: 207
         34h:
             index_value: 60
             title: 34h
             size: 34
             cup: h
-            low: 41
-            high: 43
-            average: 42
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424  
+                a: 226
+                b: 239
+                c: 212
         34i:
             index_value: 61
             title: 34i
             size: 34
             cup: i
-            low: 42
-            high: 44
-            average: 43
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433
+                a: 230
+                b: 244
+                c: 217
         34j:
             index_value: 62
             title: 34j
             size: 34
             cup: j
-            low: 43
-            high: 45
-            average: 44
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442
+                a: 235
+                b: 249
+                c: 221
         34k:
             index_value: 63
             title: 34k
             size: 34
             cup: k
-            low: 44
-            high: 46
-            average: 45
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
-            shoulder_across_front_px: 401
-            bust_px: 456
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451
+                a: 239
+                b: 253
+                c: 226
         34l:
             index_value: 64
             title: 34l
             size: 34
             cup: l
-            low: 45
-            high: 47
-            average: 46
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461
+                a: 244
+                b: 258
+                c: 230
+                
         34m:
             index_value: 65
             title: 34m
             size: 34
             cup: m
-            low: 46
-            high: 48
-            average: 47
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
-            shoulder_across_front_px: 410
-            bust_px: 477
+            shoulder_across_front_px: 205
+            suny_test_shoulder_px: 205
+            bust_px: 238
             waist_px:
-                h: 394
-                p: 412
-                a: 431
-                r: 497
+                a: 197
+                b: 206
+                c: 216
             hip_px:
-                p: 525
-                t: 
+                a: 249
+                b: 262
+                c: 235
         34n:
             index_value: 66
             title: 34n
             size: 34
             cup: n
-            low: 47
-            high: 49
-            average: 48
+            low: 33
+            high: 35
+            average: 34
             shoulder_across_back: 17.525
             shoulder_across_front: 16.775
-            shoulder_across_front_px: 415
-            bust_px: 487
+            shoulder_across_front_px: 208
+            suny_test_shoulder_px: 206
+            bust_px: 244
             waist_px:
-                h: 403
-                p: 422
-                a: 440
-                r: 506
+                a: 202
+                b: 211
+                c: 220
             hip_px:
-                p: 534
-                t: 479
+                a: 253
+                b: 267
+                c: 239    
         36a:
             index_value: 67
             title: 36a
             size: 36
             cup: a
-            low: 36
-            high: 38
-            average: 37
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 15.375
             shoulder_across_front: 14.625
-            shoulder_across_front_px: 360
-            bust_px: 371
+            shoulder_across_front_px: 180
+            suny_test_shoulder_px: 185
+            bust_px: 186
             waist_px:
-                h: 300
-                p: 431
-                a: 338
-                r: 406
+                a: 150
+                b: 216
+                c: 169
             hip_px:
-                p: 433
-                t: 378  
+                a: 203
+                b: 217
+                c: 189
         36b:
             index_value: 68
             title: 36b
             size: 36
             cup: b
-            low: 37
-            high: 39
-            average: 38
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 15.525
             shoulder_across_front: 14.775
-            shoulder_across_front_px: 366
-            bust_px: 382
+            shoulder_across_front_px: 183
+            suny_test_shoulder_px: 186
+            bust_px: 191
             waist_px:
-                h: 310
-                p: 328
-                a: 347
-                r: 415
+                a: 155
+                b: 164
+                c: 174
             hip_px:
-                p: 442
-                t: 387  
+                a: 207
+                b: 221
+                c: 194
         36c:
             index_value: 69
             title: 36c
             size: 36
             cup: c
-            low: 38
-            high: 40
-            average: 39
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
+            shoulder_across_front_px: 186
+            suny_test_shoulder_px: 188
+            bust_px: 196
             waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
+                a: 160
+                b: 169
+                c: 178
             hip_px:
-                p: 451
-                t: 396  
+                a: 212
+                b: 226
+                c: 198
         36d:
             index_value: 70
             title: 36d
             size: 36
             cup: d
-            low: 39
-            high: 41
-            average: 40
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
+            shoulder_across_front_px: 189
+            suny_test_shoulder_px: 190
+            bust_px: 201
             waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
+                a: 164
+                b: 174
+                c: 183
             hip_px:
-                p: 461
-                t: 406
+                a: 217
+                b: 230
+                c: 203
         36dd:
             index_value: 71
             title: 36dd
             size: 36
             cup: dd
-            low: 40
-            high: 42
-            average: 41
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415  
+                a: 221
+                b: 235
+                c: 207
         36ddd:
             index_value: 72
             title: 36ddd
             size: 36
             cup: ddd
-            low: 41
-            high: 43
-            average: 42
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424 
+                a: 226
+                b: 239
+                c: 212
         36e:
             index_value: 73
             title: 36e
             size: 36
             cup: e
-            low: 40
-            high: 42
-            average: 41
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415   
+                a: 221
+                b: 235
+                c: 207       
         36f:
             index_value: 74
             title: 36f
             size: 36
             cup: f
-            low: 41
-            high: 43
-            average: 42
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424  
+                a: 226
+                b: 239
+                c: 212
         36g:
             index_value: 75
             title: 36g
             size: 36
             cup: g
-            low: 42
-            high: 44
-            average: 43
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433   
+                a: 230
+                b: 244
+                c: 217
         36h:
             index_value: 76
             title: 36h
             size: 36
             cup: h
-            low: 43
-            high: 45
-            average: 44
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442    
+                a: 235
+                b: 249
+                c: 221 
         36i:
             index_value: 77
             title: 36i
             size: 36
             cup: i
-            low: 44
-            high: 46
-            average: 45
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
-            shoulder_across_front_px: 401
-            bust_px: 456
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451
+                a: 239
+                b: 253
+                c: 226
         36j:
             index_value: 78
             title: 36j
             size: 36
             cup: j
-            low: 45
-            high: 47
-            average: 46
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461
+                a: 244
+                b: 258
+                c: 230
         36k:
             index_value: 79
             title: 36k
             size: 36
             cup: k
-            low: 46
-            high: 48
-            average: 47
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
-            shoulder_across_front_px: 410
-            bust_px: 477
+            shoulder_across_front_px: 205
+            suny_test_shoulder_px: 205
+            bust_px: 238
             waist_px:
-                h: 394
-                p: 412
-                a: 431
-                r: 497
+                a: 197
+                b: 206
+                c: 216
             hip_px:
-                p: 525
-                t: 470
+                a: 249
+                b: 262
+                c: 235
         36l:
             index_value: 80
             title: 36l
             size: 36
             cup: l
-            low: 47
-            high: 49
-            average: 48
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
-            shoulder_across_front_px: 418
-            bust_px: 487
+            shoulder_across_front_px: 209
+            suny_test_shoulder_px: 206
+            bust_px: 244
             waist_px:
-                h: 403
-                p: 422
-                a: 440
-                r: 506
+                a: 202
+                b: 211
+                c: 220
             hip_px:
-                p: 534
-                t: 479
+                a: 253
+                b: 267
+                c: 239
         36m:
             index_value: 81
             title: 36m
             size: 36
             cup: m
-            low: 48
-            high: 50
-            average: 49
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
-            shoulder_across_front_px: 424
-            bust_px: 498
+            shoulder_across_front_px: 212
+            suny_test_shoulder_px: 208
+            bust_px: 249
             waist_px:
-                h: 412
-                p: 431
-                a: 450
-                r: 515
+                a: 206
+                b: 216
+                c: 225
             hip_px:
-                p: 543
-                t: 488
+                a: 258
+                b: 271
+                c: 244
         36n:
             index_value: 82
             title: 36n
             size: 36
             cup: n
-            low: 49
-            high: 51
-            average: 50
+            low: 35
+            high: 37
+            average: 36
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
-            shoulder_across_front_px: 427
-            bust_px: 508
+            shoulder_across_front_px: 214
+            suny_test_shoulder_px: #Ref!
+            bust_px: 254
             waist_px:
-                h: 422
-                p: 440
-                a: 459
-                r: 525
+                a: 211
+                b: 220
+                c: 230
             hip_px:
-                p: 552
-                t: 497
+                a: 262
+                b: 276
+                c: 249
         38a:
             index_value: 83
             title: 38a
             size: 38
             cup: a
-            low: 38
-            high: 40
-            average: 39
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 15.775
             shoulder_across_front: 15.025
-            shoulder_across_front_px: 372
-            bust_px: 392
+            shoulder_across_front_px: 186
+            suny_test_shoulder_px: 188
+            bust_px: 196
             waist_px:
-                h: 319
-                p: 338
-                a: 356
-                r: 424
+                a: 160
+                b: 169
+                c: 178
             hip_px:
-                p: 451
-                t: 396
+                a: 212
+                b: 226
+                c: 198
         38b:
             index_value: 84
             title: 38b
             size: 38
             cup: b
-            low: 39
-            high: 41
-            average: 40
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 15.925
             shoulder_across_front: 15.175
-            shoulder_across_front_px: 378
-            bust_px: 403
+            shoulder_across_front_px: 189
+            suny_test_shoulder_px: 190
+            bust_px: 201
             waist_px:
-                h: 328
-                p: 347
-                a: 366
-                r: 433
+                a: 164
+                b: 174
+                c: 183
             hip_px:
-                p: 461
-                t: 406
+                a: 217
+                b: 230
+                c: 203
         38c:
             index_value: 85
             title: 38c
             size: 38
             cup: c
-            low: 40
-            high: 42
-            average: 41
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415
+                a: 221
+                b: 235
+                c: 207
         38d:
             index_value: 86
             title: 38d
             size: 38
             cup: d
-            low: 41
-            high: 43
-            average: 42
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424  
+                a: 226
+                b: 239
+                c: 212
         38dd:
             index_value: 87
             title: 38dd
             size: 38
             cup: dd
-            low: 42
-            high: 44
-            average: 43
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433   
+                a: 230
+                b: 244
+                c: 217
         38ddd:
             index_value: 88
             title: 38ddd
             size: 38
             cup: ddd
-            low: 43
-            high: 45
-            average: 44
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442  
+                a: 235
+                b: 249
+                c: 221
         38e:
             index_value: 89
             title: 38e
             size: 38
             cup: e
-            low: 42
-            high: 44
-            average: 43
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433 
+                a: 230
+                b: 244
+                c: 217
         38f:
             index_value: 90
             title: 38f
             size: 38
             cup: f
-            low: 43
-            high: 45
-            average: 44
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442  
+                a: 235
+                b: 249
+                c: 221
         38g:
             index_value: 91
             title: 38g
             size: 38
             cup: g
-            low: 44
-            high: 46
-            average: 45
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
-            shoulder_across_front_px: 401
-            bust_px: 456
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451  
+                a: 239
+                b: 253
+                c: 226
         38h:
             index_value: 92
             title: 38h
             size: 38
             cup: h
-            low: 45
-            high: 47
-            average: 46
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 17.125
-            shoulder_across_front: 16.375	
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front: 16.375
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461  
+                a: 244
+                b: 258
+                c: 230
         38i:
             index_value: 93
             title: 38i
             size: 38
             cup: i
-            low: 46
-            high: 48
-            average: 47
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
-            shoulder_across_front_px: 410
-            bust_px: 477
+            shoulder_across_front_px: 205
+            suny_test_shoulder_px: 205
+            bust_px: 238
             waist_px:
-                h: 394
-                p: 412
-                a: 431
-                r: 497
+                a: 197
+                b: 206
+                c: 216
             hip_px:
-                p: 525
-                t: 470  
+                a: 249
+                b: 262
+                c: 235
         38j:
             index_value: 94
             title: 38j
             size: 38
             cup: j
-            low: 47
-            high: 49
-            average: 48
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
-            shoulder_across_front_px: 418
-            bust_px: 487
+            shoulder_across_front_px: 209
+            suny_test_shoulder_px: 206
+            bust_px: 244
             waist_px:
-                h: 403
-                p: 422
-                a: 440
-                r: 506
+                a: 202
+                b: 211
+                c: 220
             hip_px:
-                p: 534
-                t: 479  
+                a: 253
+                b: 267
+                c: 239 
         38k:
             index_value: 95
             title: 38k
             size: 38
             cup: k
-            low: 48
-            high: 50
-            average: 49
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
-            shoulder_across_front_px: 424
-            bust_px: 498
+            shoulder_across_front_px: 212
+            suny_test_shoulder_px: 208
+            bust_px: 249
             waist_px:
-                h: 412
-                p: 431
-                a: 450
-                r: 515
+                a: 206
+                b: 216
+                c: 225
             hip_px:
-                p: 543
-                t: 488  
+                a: 258
+                b: 271
+                c: 244
         38l:
             index_value: 96
             title: 38l
             size: 38
             cup: l
-            low: 49
-            high: 51
-            average: 50
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
-            shoulder_across_front_px: 427
-            bust_px: 508
+            shoulder_across_front_px: 214
+            suny_test_shoulder_px: #Ref!
+            bust_px: 254
             waist_px:
-                h: 422
-                p: 440
-                a: 459
-                r: 525
+                a: 211
+                b: 220
+                c: 230
             hip_px:
-                p: 552
-                t: 497  
+                a: 262
+                b: 276
+                c: 249
         38m:
             index_value: 97
             title: 38m
             size: 38
             cup: m
-            low: 50
-            high: 52
-            average: 51
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 18.275
             shoulder_across_front: 17.525
-            shoulder_across_front_px: 434
-            bust_px: 519
+            shoulder_across_front_px: 217
+            suny_test_shoulder_px: #Ref!
+            bust_px: 259
             waist_px:
-                h: 431
-                p: 450
-                a: 468
-                r: 534
+                a: 216
+                b: 225
+                c: 234
             hip_px:
-                p: 561
-                t: 506  
+                a: 267
+                b: 281
+                c: 253
         38n:
             index_value: 98
             title: 38n
             size: 38
             cup: n
-            low: 51
-            high: 53
-            average: 52
+            low: 37
+            high: 39
+            average: 38
             shoulder_across_back: 18.425
             shoulder_across_front: 17.675
-            shoulder_across_front_px: 438
-            bust_px: 529
+            shoulder_across_front_px: 219
+            suny_test_shoulder_px: #Ref!
+            bust_px: 265
             waist_px:
-                h: 440
-                p: 459
-                a: 478
-                r: 543
+                a: 220
+                b: 230
+                c: 239
             hip_px:
-                p: 570
-                t: 515  
+                a: 271
+                b: 285
+                c: 258
         40a:
             index_value: 99
             title: 40a
             size: 40
             cup: a
-            low: 40
-            high: 42
-            average: 41
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 16.175
             shoulder_across_front: 15.425
-            shoulder_across_front_px: 384
-            bust_px: 413
+            shoulder_across_front_px: 192
+            suny_test_shoulder_px: 193
+            bust_px: 207
             waist_px:
-                h: 338
-                p: 356
-                a: 375
-                r: 442
+                a: 169
+                b: 178
+                c: 188
             hip_px:
-                p: 470
-                t: 415  
+                a: 221
+                b: 235
+                c: 207
         40b:
             index_value: 100
             title: 40b
             size: 40
             cup: b
-            low: 41
-            high: 43
-            average: 42
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 16.325
             shoulder_across_front: 15.575
-            shoulder_across_front_px: 390
-            bust_px: 424
+            shoulder_across_front_px: 195
+            suny_test_shoulder_px: 195
+            bust_px: 212
             waist_px:
-                h: 347
-                p: 366
-                a: 384
-                r: 451
+                a: 174
+                b: 183
+                c: 192
             hip_px:
-                p: 479
-                t: 424  
+                a: 226
+                b: 239
+                c: 212
         40c:
             index_value: 101
             title: 40c
             size: 40
             cup: c
-            low: 42
-            high: 44
-            average: 43
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433  
+                a: 230
+                b: 244
+                c: 217
         40d:
             index_value: 102
             title: 40d
             size: 40
             cup: d
-            low: 43
-            high: 45
-            average: 44
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442  
+                a: 235
+                b: 249
+                c: 221
         40dd:
             index_value: 103
             title: 40dd
             size: 40
             cup: dd
-            low: 44
-            high: 46
-            average: 45
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
-            shoulder_across_front_px: 401
-            bust_px: 456
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451  
+                a: 239
+                b: 253
+                c: 226
         40ddd:
             index_value: 104
             title: 40ddd
             size: 40
             cup: ddd
-            low: 45
-            high: 47
-            average: 46
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461  
+                a: 244
+                b: 258
+                c: 230
         40e:
             index_value: 105
             title: 40e
             size: 40
             cup: e
-            low: 44
-            high: 46
-            average: 45
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 16.975
             shoulder_across_front: 16.225
-            shoulder_across_front_px: 401
-            bust_px: 456
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451  
+                a: 239
+                b: 253
+                c: 226
         40f:
             index_value: 106
             title: 40f
             size: 40
             cup: f
-            low: 45
-            high: 47
-            average: 46
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461  
+                a: 244
+                b: 258
+                c: 230
         40g:
             index_value: 107
             title: 40g
             size: 40
             cup: g
-            low: 46
-            high: 48
-            average: 47          
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
-            shoulder_across_front_px: 410
-            bust_px: 477
+            shoulder_across_front_px: 205
+            suny_test_shoulder_px: 205
+            bust_px: 238
             waist_px:
-                h: 394
-                p: 412
-                a: 431
-                r: 497
+                a: 197
+                b: 206
+                c: 216
             hip_px:
-                p: 525
-                t: 470  
+                a: 249
+                b: 262
+                c: 235
         40h:
             index_value: 108
             title: 40h
             size: 40
             cup: h
-            low: 47
-            high: 49
-            average: 48
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
-            shoulder_across_front_px: 418
-            bust_px: 487
+            shoulder_across_front_px: 209
+            suny_test_shoulder_px: 206
+            bust_px: 244
             waist_px:
-                h: 403
-                p: 422
-                a: 440
-                r: 506
+                a: 202
+                b: 211
+                c: 220
             hip_px:
-                p: 534
-                t: 479  
+                a: 253
+                b: 267
+                c: 239
         40i:
             index_value: 109
             title: 40i
             size: 40
             cup: i
-            low: 48
-            high: 50
-            average: 49
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
-            shoulder_across_front_px: 424
-            bust_px: 498
+            shoulder_across_front_px: 212
+            suny_test_shoulder_px: 208
+            bust_px: 249
             waist_px:
-                h: 412
-                p: 431
-                a: 450
-                r: 515
+                a: 206
+                b: 216
+                c: 225
             hip_px:
-                p: 543
-                t: 488  
+                a: 258
+                b: 271
+                c: 244        
         40j:
             index_value: 110
             title: 40j
             size: 40
             cup: j
-            low: 49
-            high: 51
-            average: 50
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
-            shoulder_across_front_px: 427
-            bust_px: 508
+            shoulder_across_front_px: 214
+            suny_test_shoulder_px: #Ref!
+            bust_px: 254
             waist_px:
-                h: 422
-                p: 440
-                a: 459
-                r: 525
+                a: 211
+                b: 220
+                c: 230
             hip_px:
-                p: 552
-                t: 497  
+                a: 262
+                b: 276
+                c: 249
         40k:
             index_value: 111
             title: 40k
             size: 40
             cup: k
-            low: 50
-            high: 52
-            average: 51
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 18.275
             shoulder_across_front: 17.525
-            shoulder_across_front_px: 434
-            bust_px: 519
+            shoulder_across_front_px: 217
+            suny_test_shoulder_px: #Ref!
+            bust_px: 259
             waist_px:
-                h: 431
-                p: 450
-                a: 468
-                r: 534
+                a: 216
+                b: 225
+                c: 234
             hip_px:
-                p: 561
-                t: 506  
+                a: 267
+                b: 281
+                c: 253
         40l:
             index_value: 112
             title: 40l
             size: 40
             cup: l
-            low: 51
-            high: 53
-            average: 52
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 18.425
             shoulder_across_front: 17.675
-            shoulder_across_front_px: 438
-            bust_px: 529
+            shoulder_across_front_px: 219
+            suny_test_shoulder_px: #Ref!
+            bust_px: 265
             waist_px:
-                h: 440
-                p: 459
-                a: 478
-                r: 543
+                a: 220
+                b: 230
+                c: 239
             hip_px:
-                p: 570
-                t: 515  
+                a: 271
+                b: 285
+                c: 258 
         40m:
             index_value: 113
             title: 40m
             size: 40
             cup: m
-            low: 52
-            high: 54
-            average: 53
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 18.675
             shoulder_across_front: 17.925
-            shoulder_across_front_px: 443
-            bust_px: 540
+            shoulder_across_front_px: 221
+            suny_test_shoulder_px: #Ref!
+            bust_px: 270
             waist_px:
-                h: 450
-                p: 468
-                a: 487
-                r: 552
+                a: 225
+                b: 234
+                c: 243
             hip_px:
-                p: 580
-                t: 525  
+                a: 276
+                b: 290
+                c: 262
         40n:
             index_value: 114
             title: 40n
             size: 40
             cup: n
-            low: 53
-            high: 55
-            average: 54
+            low: 39
+            high: 41
+            average: 40
             shoulder_across_back: 18.825
             shoulder_across_front: 18.075
-            shoulder_across_front_px: 447
-            bust_px: 550
+            shoulder_across_front_px: 224
+            suny_test_shoulder_px: #Ref!
+            bust_px: 275
             waist_px:
-                h: 459
-                p: 478
-                a: 496
-                r: 561
+                a: 230
+                b: 239
+                c: 248
             hip_px:
-                p: 589
-                t: 534  
+                a: 281
+                b: 294
+                c: 267
         42a:
             index_value: 115
             title: 42a
             size: 42
             cup: a
-            low: 42
-            high: 44
-            average: 43
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 16.575
             shoulder_across_front: 15.825
-            shoulder_across_front_px: 393
-            bust_px: 434
+            shoulder_across_front_px: 197
+            suny_test_shoulder_px: 196
+            bust_px: 217
             waist_px:
-                h: 356
-                p: 375
-                a: 394
-                r: 461
+                a: 178
+                b: 188
+                c: 197
             hip_px:
-                p: 488
-                t: 433  
+                a: 230
+                b: 244
+                c: 217
         42b:
             index_value: 116
             title: 42b
             size: 42
             cup: b
-            low: 43
-            high: 45
-            average: 44
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 16.725
             shoulder_across_front: 15.975
-            shoulder_across_front_px: 397
-            bust_px: 445
+            shoulder_across_front_px: 198
+            suny_test_shoulder_px: 198
+            bust_px: 222
             waist_px:
-                h: 366
-                p: 384
-                a: 403
-                r: 470
+                a: 183
+                b: 192
+                c: 202
             hip_px:
-                p: 497
-                t: 442  
+                a: 235
+                b: 249
+                c: 221
         42c:
             index_value: 117
             title: 42c
             size: 42
             cup: c
-            low: 44
-            high: 46
-            average: 45
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 16.975
-            shoulder_across_front: 16.225	
-            shoulder_across_front_px: 401
-            bust_px: 456
+            shoulder_across_front: 16.225
+            shoulder_across_front_px: 201
+            suny_test_shoulder_px: 200
+            bust_px: 228
             waist_px:
-                h: 375
-                p: 394
-                a: 412
-                r: 479
+                a: 188
+                b: 197
+                c: 206
             hip_px:
-                p: 506
-                t: 451  
+                a: 239
+                b: 253
+                c: 226
         42d:
             index_value: 118
             title: 42d
             size: 42
             cup: d
-            low: 45
-            high: 47
-            average: 46
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 17.125
             shoulder_across_front: 16.375
-            shoulder_across_front_px: 406
-            bust_px: 466
+            shoulder_across_front_px: 203
+            suny_test_shoulder_px: 203
+            bust_px: 233
             waist_px:
-                h: 384
-                p: 403
-                a: 422
-                r: 488
+                a: 192
+                b: 202
+                c: 211
             hip_px:
-                p: 515
-                t: 461  
+                a: 244
+                b: 258
+                c: 230
         42dd:
             index_value: 119
             title: 42dd
             size: 42
             cup: dd
-            low: 46
-            high: 48
-            average: 47
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
-            shoulder_across_front_px: 410
-            bust_px: 477
+            shoulder_across_front_px: 205
+            suny_test_shoulder_px: 205
+            bust_px: 238
             waist_px:
-                h: 394
-                p: 412
-                a: 431
-                r: 497
+                a: 197
+                b: 206
+                c: 216
             hip_px:
-                p: 525
-                t: 470  
+                a: 249
+                b: 262
+                c: 235
         42ddd:
             index_value: 120
             title: 42ddd
             size: 42
             cup: ddd
-            low: 47
-            high: 49
-            average: 48
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
-            shoulder_across_front_px: 418
-            bust_px: 487
+            shoulder_across_front_px: 209
+            suny_test_shoulder_px: 206
+            bust_px: 244
             waist_px:
-                h: 403
-                p: 422
-                a: 440
-                r: 506
+                a: 202
+                b: 211
+                c: 220
             hip_px:
-                p: 534
-                t: 479  
+                a: 253
+                b: 267
+                c: 239
         42e:
             index_value: 121
             title: 42e
             size: 42
             cup: e
-            low: 46
-            high: 48
-            average: 47
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 17.375
             shoulder_across_front: 16.625
-            shoulder_across_front_px: 410
-            bust_px: 477
+            shoulder_across_front_px: 205
+            suny_test_shoulder_px: 205
+            bust_px: 238
             waist_px:
-                h: 394
-                p: 412
-                a: 431
-                r: 497
+                    a: 197
+                    b: 206
+                    c: 216
             hip_px:
-                p: 525
-                t: 470  
+                    a: 249
+                    b: 262
+                    c: 235
         42f:
             index_value: 122
             title: 42f
             size: 42
             cup: f
-            low: 47
-            high: 49
-            average: 48
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 17.625
             shoulder_across_front: 16.875
-            shoulder_across_front_px: 418
-            bust_px: 487
+            shoulder_across_front_px: 209
+            suny_test_shoulder_px: 206
+            bust_px: 244
             waist_px:
-                h: 403
-                p: 422
-                a: 440
-                r: 506
+                a: 202
+                b: 211
+                c: 220
             hip_px:
-                p: 534
-                t: 479  
+                a: 253
+                b: 267
+                c: 239
         42g:
             index_value: 123
             title: 42g
             size: 42
             cup: g
-            low: 48
-            high: 50
-            average: 49
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 17.875
             shoulder_across_front: 17.125
-            shoulder_across_front_px: 424
-            bust_px: 498
+            shoulder_across_front_px: 212
+            suny_test_shoulder_px: 208
+            bust_px: 249
             waist_px:
-                h: 412
-                p: 431
-                a: 450
-                r: 515
+                a: 206
+                b: 216
+                c: 225
             hip_px:
-                p: 543
-                t: 488  
+                a: 258
+                b: 271
+                c: 244
         42h:
             index_value: 124
             title: 42h
             size: 42
             cup: h
-            low: 49
-            high: 51
-            average: 50
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 18.025
             shoulder_across_front: 17.275
-            shoulder_across_front_px: 427
-            bust_px: 508
+            shoulder_across_front_px: 214
+            suny_test_shoulder_px: #Ref!
+            bust_px: 254
             waist_px:
-                h: 422
-                p: 440
-                a: 459
-                r: 525
+                a: 211
+                b: 220
+                c: 230
             hip_px:
-                p: 552
-                t: 497  
+                a: 262
+                b: 276
+                c: 249
+        
         42i:
             index_value: 125
             title: 42i
             size: 42
             cup: i
-            low: 50
-            high: 52
-            average: 51
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 18.275
             shoulder_across_front: 17.525
-            shoulder_across_front_px: 434
-            bust_px: 519
+            shoulder_across_front_px: 217
+            suny_test_shoulder_px: #Ref!
+            bust_px: 259
             waist_px:
-                h: 431
-                p: 450
-                a: 468
-                r: 534
+                a: 216
+                b: 225
+                c: 234
             hip_px:
-                p: 561
-                t: 506  
+                a: 267
+                b: 281
+                c: 253
         42j:
             index_value: 126
             title: 42j
             size: 42
             cup: j
-            low: 51
-            high: 53
-            average: 52
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 18.425
             shoulder_across_front: 17.675
-            shoulder_across_front_px: 438
-            bust_px: 529
+            shoulder_across_front_px: 219
+            suny_test_shoulder_px: #Ref!
+            bust_px: 265
             waist_px:
-                h: 440
-                p: 459
-                a: 478
-                r: 543
+                b: 230
+                a: 220
+                c: 239
             hip_px:
-                p: 570
-                t: 515   
+                a: 271
+                b: 285
+                c: 258
         42k:
             index_value: 127
             title: 42k
             size: 42
             cup: k
-            low: 52
-            high: 54
-            average: 53
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 18.675
             shoulder_across_front: 17.925
-            shoulder_across_front_px: 443
-            bust_px: 540
+            shoulder_across_front_px: 221
+            suny_test_shoulder_px: #Ref!
+            bust_px: 270
             waist_px:
-                h: 450
-                p: 468
-                a: 487
-                r: 552
+                a: 225
+                b: 234
+                c: 243
             hip_px:
-                p: 580
-                t: 525  
+                a: 276
+                b: 290
+                c: 262
         42l:
             index_value: 128
             title: 42l
             size: 42
             cup: l
-            low: 53
-            high: 55
-            average: 54
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 18.825
             shoulder_across_front: 18.075
-            shoulder_across_front_px: 447
-            bust_px: 550
+            shoulder_across_front_px: 224
+            suny_test_shoulder_px: #Ref!
+            bust_px: 275
             waist_px:
-                h: 459
-                p: 478
-                a: 496
-                r: 561
+                a: 230
+                b: 239
+                c: 248
             hip_px:
-                p: 589
-                t: 534 
+                a: 281
+                b: 294
+                c: 267
         42m:
             index_value: 129
             title: 42m
             size: 42
             cup: m
-            low: 54
-            high: 56
-            average: 55
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 18.975
             shoulder_across_front: 18.225
-            shoulder_across_front_px: 452
-            bust_px: 561
+            shoulder_across_front_px: 226
+            suny_test_shoulder_px: #Ref!
+            bust_px: 280
             waist_px:
-                h: 468
-                p: 487
-                a: 506
-                r: 570
+                a: 234
+                b: 243
+                c: 253
             hip_px:
-                p: 598
-                t: 543   
+                a: 285
+                b: 299
+                c: 271
         42n:
             index_value: 130
             title: 42n
             size: 42
             cup: n
-            low: 55
-            high: 57
-            average: 56
+            low: 41
+            high: 43
+            average: 42
             shoulder_across_back: 19.125
             shoulder_across_front: 18.375
-            shoulder_across_front_px: 456
-            bust_px: 572
+            shoulder_across_front_px: 228
+            suny_test_shoulder_px: #Ref!
+            bust_px: 286
             waist_px:
-                h: 478
-                p: 496
-                a: 515
-                r: 580
+                a: 239
+                b: 248
+                c: 257
             hip_px:
-                p: 607
-                t: 552   
+                a: 290
+                b: 304
+                c: 276
     man:
       letter:
         XXXS: 

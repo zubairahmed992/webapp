@@ -449,24 +449,42 @@ private function transformArray($arr, $key_pair=true){
     }
     
     #---------------------- New Prameter Add --------------------
-public function getWomanBraSizeBodyShape($bra_size,$body_type=null){    
+public function getWomanBraSizeBodyShape($bra_size,$body_type=null){
+     $bra_size_array = array();               
      $arr=$this->constant['size_titles']['woman']['bra'];     
      $bra_size=str_replace(' ', '', $bra_size);                    
     foreach($arr as $key=>$val){
-        if($key==$bra_size){            
-            return array(
-                    'title' => array_key_exists('title', $val)?$val['title']:null,
-                    'size' => array_key_exists('size', $val)?$val['size']:null,
-                    'cup' => array_key_exists('cup', $val)?$val['cup']:null,
-                    'low' => array_key_exists('low', $val)?$val['low']:null,
-                    'high' => array_key_exists('high', $val)?$val['high']:null,
-                    'average' => array_key_exists('average', $val)?$val['average']:null,
-                    'shoulder_across_back' => array_key_exists('shoulder_across_back', $val)?$val['shoulder_across_back']:null,
-                    'shoulder_across_front' => array_key_exists('shoulder_across_front', $val)?$val['shoulder_across_front']:null,
-                );
+        if($key==$bra_size){              
+                $bra_size_array['title'] = array_key_exists('title', $val)?$val['title']:null;
+                $bra_size_array['size'] = array_key_exists('size', $val)?$val['size']:null;
+                $bra_size_array['cup'] = array_key_exists('cup', $val)?$val['cup']:null;
+                $bra_size_array['low'] = array_key_exists('low', $val)?$val['low']:null;
+                $bra_size_array['high'] = array_key_exists('high', $val)?$val['high']:null;
+                $bra_size_array['average'] = array_key_exists('average', $val)?$val['average']:null;
+                $bra_size_array['shoulder_across_back'] = array_key_exists('shoulder_across_back', $val)?$val['shoulder_across_back']:null;
+                $bra_size_array['shoulder_across_front'] = array_key_exists('shoulder_across_front', $val)?$val['shoulder_across_front']:null;
+                $bra_size_array['shoulder_across_front_px'] = array_key_exists('shoulder_across_front_px', $val)?$val['shoulder_across_front_px']:null;
+                $bra_size_array['suny_test_shoulder_px'] = array_key_exists('suny_test_shoulder_px', $val)?$val['suny_test_shoulder_px']:null;
+                $bra_size_array['bust_px'] = array_key_exists('bust_px', $val)?$val['bust_px']:null;
+
+                if( array_key_exists('waist_px', $val) && $body_type=='hourglass' || $body_type =='triangle')
+                $bra_size_array['waist_px'] = $val['waist_px']['a'];  
+                if( array_key_exists('waist_px', $val) && $body_type=='pear' || $body_type =='rectangle') 
+                 $bra_size_array['waist_px'] = $val['waist_px']['b'];  
+                if( array_key_exists('waist_px', $val) && $body_type=='apple') 
+                $bra_size_array['waist_px'] = $val['waist_px']['c']; 
+
+                if( array_key_exists('hip_px', $val) && $body_type=='hourglass' || $body_type =='rectangle' || $body_type =='apple')
+                $bra_size_array['hip_px'] = $val['hip_px']['a'];  
+                if( array_key_exists('waist_px', $val) && $body_type=='pear' ) 
+                 $bra_size_array['hip_px'] = $val['hip_px']['b'];  
+                if( array_key_exists('waist_px', $val) && $body_type=='triangle') 
+                $bra_size_array['hip_px'] = $val['hip_px']['c'];            
+             return $bra_size_array;
             break;
         }
-    }
+         
+    } 
     return null;
 }
 }

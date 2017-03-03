@@ -144,12 +144,13 @@ class DeviceController extends Controller {
         $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
         $device_spec = $user->getDeviceSpecs($device_type);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
-
+        $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
+        
         return $this->render('LoveThatFitUserBundle:Device:svg_path.html.twig', array(
                     'form' => $form->createView(),
-                    'measurement_form' => $measurement_form->createView(),
-                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
-                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                   // 'measurement_form' => $measurement_form->createView(),
+                   // 'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                   // 'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => $edit_type,
@@ -161,7 +162,10 @@ class DeviceController extends Controller {
                     'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
                     'device_type' => $device_type,
                     'device_model'=> $device_model,
-                    'device_screen_height' => $device_screen_height['pixel_height'],
+                    'device_screen_height' => $device_screen_height['pixel_height'],  
+                    'bra_size_body_shape' => json_encode($bra_size_body_shape),
+
+            
                 ));
     }
 
