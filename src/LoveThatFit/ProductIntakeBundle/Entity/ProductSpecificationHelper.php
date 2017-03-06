@@ -158,7 +158,7 @@ public function getNew() {
                     $us['garment_stretch'] = $us['garment_dimension'] + ($us['garment_dimension'] * $us['stretch_percentage']/100);
 
                 #-----------> grade rule
-                if ($prev_size_key) {#----------> for all the sizes after first                    
+                if ($size!=$prev_size_key) {#----------> for all the sizes after first                    
                     $us['grade_rule'] = array_key_exists($fpk, $specs_updated['sizes'][$prev_size_key])? $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension']:0;                                         
                     $us['grade_rule_stretch'] = $us['grade_rule'] + ($us['grade_rule'] * $us['stretch_percentage']/100);    
                 }   
@@ -167,8 +167,9 @@ public function getNew() {
                     $specs_updated['sizes'][$prev_size_key][$fpk]['grade_rule_stretch'] =$us['grade_rule_stretch'];
                     #$specs_updated['sizes'][$prev_size_key][$fpk]['garment_stretch'] = $us['garment_dimension'] + ($us['garment_dimension'] * $us['stretch_percentage']/100);
                 }
-                #--------------------------
+                #--------------------------                
                 $specs_updated['sizes'][$size][$fpk] = $us;
+                
             }
             $prev_size_key = $size;
             $size_no = $size_no + 1;
@@ -192,7 +193,7 @@ public function getNew() {
             $fit_model_ratio[$fit_point]['ideal_high'] = ($fit_model_fit_points[$fit_point] > 0 ) ? ($specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['ideal_high'] / $fit_model_fit_points[$fit_point]) : 0;            
             $fit_model_ratio[$fit_point]['max_calc'] = ($fit_model_fit_points[$fit_point] > 0 ) ? ($specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_calc'] / $fit_model_fit_points[$fit_point]) : 0;            
         }
-        #return $specs_updated;
+        
         #---------------------------------> calculate ranges
 
         foreach ($specs_updated['sizes'] as $size => $fit_points) {
