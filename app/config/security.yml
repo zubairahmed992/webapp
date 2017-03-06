@@ -111,6 +111,7 @@ security:
                     jackson: { password: f7454a2230b6cbbac5ee2f810f3ad06f6ab560b3, roles: 'ROLE_ADMIN' }
                     calibrationlead: { password: ca685ca2eb41016030ccead6dcab0d067ebbe908, roles: 'ROLE_ADMIN' }
                     carly: { password: 6f4189e70c065f53c21d8bb5aa133ddf6a76462d, roles: 'ROLE_ADMIN' }
+                    erin: { password: b85b11d9454c2147da84e2a98fb3b205b2ddab90, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
