@@ -34,16 +34,18 @@
 {#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
 <script>
 function submitform() {
-    console.log("function called");
+    // console.log("function called");
     if($('#FNFUser_users :selected').length == 0){
         $("#FNFUser_users_chosen").addClass('categoryerror');
         event.preventDefault();
     }
 
-    if($("#FNFUser_groups_0_groupTitle").val() == "" )
-    {
-        $("#FNFUser_groups_0_groupTitle").addClass('categoryerror');
-        event.preventDefault();
+    if($("#groupTitle").css('visibility') === "visible"){
+        if($("#FNFUser_groups_0_groupTitle").val() == "" )
+        {
+            $("#FNFUser_groups_0_groupTitle").addClass('categoryerror');
+            event.preventDefault();
+        }
     }
 
     if($("#FNFUser_groups_0_discount").val() == "" )
@@ -219,6 +221,8 @@ function submitform() {
 
                 $("input[name='FNFUser[groups][0][discount]']").val(data.discount);
                 $("input[name='FNFUser[groups][0][min_amount]']").val(data.min_amount);
+                $("input[name='FNFUser[groups][0][start_at]']").val(data.start_at.date);
+                $("input[name='FNFUser[groups][0][end_at]']").val(data.end_at.date);
 
                 $.each(data.users, function(index, item){
                     $("select[name='FNFUser[users][]'] option[value='"+item.id+"']").attr('selected', "selected");

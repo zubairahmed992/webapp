@@ -33,6 +33,8 @@ class FNFGroupRepository extends EntityRepository
                 fnfg.discount,
                 fnfg.min_amount,
                 fnf.is_available,
+                fnfg.startAt,
+                fnfg.endAt,
                 u.id,
                 u.email,
                 IDENTITY(u.original_user) as original_user_id'

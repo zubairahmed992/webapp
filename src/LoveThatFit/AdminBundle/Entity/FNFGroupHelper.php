@@ -130,6 +130,8 @@ class FNFGroupHelper
         foreach ($data as $row){
             $returnArray['discount']            = $row['discount'];
             $returnArray['min_amount']          = $row['min_amount'];
+            $returnArray['start_at']            = $row['startAt'];
+            $returnArray['end_at']              = $row['endAt'];
             $temp['id']                         = $row['id'];
             $temp['email']                      = $row['email'];
             $returnArray['users'][]             = $temp;

@@ -66,7 +66,7 @@ class FNFUserController extends Controller
         $fnfUserEntity  = $this->get('fnfuser.helper.fnfuser')->createNew();
         $fnfGroupEntity = $this->get('fnfgroup.helper.fnfgroup')->createNew();
 
-        $adminConfig = $this->getDoctrine()
+        /*$adminConfig = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:AdminConfig')
             ->findBy(array('config_key' => 'discount'))[0];
 
@@ -74,7 +74,9 @@ class FNFUserController extends Controller
         $discountArray = array(
             'discount' => $adminConfig->getConfigValue(),
             'min_amount' => ( $discountOptions->getConfigKey() == 'min_amount' ? $discountOptions->getConfigValue() : 0)
-        );
+        );*/
+
+        $discountArray = array();
 
         $fnfUserEntity->addGroup( $fnfGroupEntity );
 
