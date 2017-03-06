@@ -8,4 +8,5 @@ UnAssignButton   = '<button class="btn btn-cyan btn-xs unassign_button" data-act
 GoSecureButton   = '<button class="btn btn-cyan btn-xs gosecure_button" data-action="GoSecure" title="GoSecure"><i class="icon-lock"></i></button>';
 EditButton       = '<button class="btn btn-cyan btn-xs editButton" data-action="Edit" title="Edit"><i class="icon-edit"></i></button>';
 jsonButton		 = '<button class="btn btn-cyan btn-xs json_button" data-action="Json" title="Json"><i class="icon-plus-sign"></i></button>';
-archiveButton    = '<button class="btn btn-cyan btn-xs archive_button" data-action="Archive" title="Archive"><i class="icon-tasks"></i></button>';
+archiveButton    = '<button class="btn btn-cyan btn-xs archive_button" data-action="Archive" title="Archive"><i class="icon-tasks"></i></button>',
+DeleteGroupButton     = '<button class="btn btn-cyan btn-xs delete" data-action="Delete" title="Delete" data-toggle="modal" data-target="#deleteGroupModel"><i class="icon-remove"></i></button>';

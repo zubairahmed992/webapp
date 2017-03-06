@@ -249,3 +249,11 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\FNFUser
             container: "@service_container"
+
+     fnfgroup.helper.fnfgroup:
+         class: LoveThatFit\AdminBundle\Entity\FNFGroupHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\FNFGroup
+            container: "@service_container"

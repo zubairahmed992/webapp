@@ -1,0 +1,185 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active">Users</li>
+{% endblock %}
+
+{% block body %}
+    <style>
+        .custom_search {
+            position: relative;
+            bottom: -40px;
+        }
+
+        .custom_search label, .custom_search select {
+            width: 80%;
+            padding-left: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom_search label {
+            display: inline-block;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            float: right !important;
+            margin-left: 12px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .custom_search {
+                bottom: 0px;
+            }
+        }
+
+
+    </style>
+
+    <div class="p_listing">
+        <div class="clearfix"></div>
+        {% block header_right_links %}
+            <div class="adjustment_links" style="margin-top: 20px; float:right;">
+                <a href="{{ path('add_fnf_user') }}">Add FNF User</a>
+            </div>
+        {% endblock %}
+        <h1 style="float:left;">FNF User</h1>
+        <div class="clearfix"></div>
+        <div class="btn_wrapper2">
+            <div id="chart_figures" class="product_chart_figures">
+                <div class="facts">
+                    <div><span>Total Users:</span>{{ rec_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="bs-docs-grid">
+        <div class="container">
+            <div class="row">
+                <table id="example" class="display" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Group</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Discount</th>
+                        <th>Availability</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div id="deleteMyModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+            <h3 id="myModalLabel">Delete FNF User</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to Delete this FNF User?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="" class="btn btn-primary delete_url">Delete</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+
+            var table = $('#example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ path('admin_fnfusers_paginate') }}",
+                    "type": "POST",
+                    "data": {},
+                },
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "pagingType": "full_numbers",
+                "order": [[0, "desc"]],
+                "columns": [
+                    {
+                        "data": "id",
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "group_title",
+                        "width": "20%",
+                    },
+                    {
+                        "data": "full_name",
+                        "width": "20%",
+                    },
+                    {
+                        "data": "email",
+                        "width": "25%",
+                    },
+                    {
+                        "data": "discount",
+                        "orderable": true,
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "availability",
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "title": "Actions",
+                        "targets": -1,
+                        "data": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": DeleteButton,
+                        "width": "25%"
+                    },
+                    {
+                        "data": "original_user_id",
+                        "searchable": false,
+                        "visible": false
+                    }
+                ],
+                "createdRow": function (row, data, index) {
+                    if (data["original_user_id"] != null) {
+                        $('td', row).addClass('duplicate_user_class');
+                    }
+                    if (jQuery.inArray(data["id"], notShownIDs) != -1) {
+                        $('td', row).addClass('hide_grid_row');
+                    }
+                },
+            });
+
+            $.fn.dataTable.ext.errMode = 'none';
+
+            jQuery('#example tbody').on('click', 'button, a, img', function () {
+                var dataAction = $(this).attr('data-action');
+                var data = table.row($(this).parents('tr')).data();
+
+                if (dataAction == 'Edit') {
+                    var url = '{{ path('admin_fnfuser_detail_edit', {'fnf_id': ":id"}) }}';
+                    url = url.replace(':id', data.fnfid);
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'Delete') {
+                    var url = '{{ path('admin_fnfuser_delete', {'user_id': ":id", 'group_id' : ":groupId"}) }}';
+                    url = url.replace(':id', data.id);
+                    url = url.replace(':groupId', data.group_id);
+
+                    $(".delete_url").attr("href", url);
+                }
+            });
+        });
+    </script>
+{% endblock %}

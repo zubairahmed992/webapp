@@ -999,7 +999,7 @@ class UserHelper {
         //search data
         $search  = $data['search'];
         $gender  = $data['gender'];
-        
+
         if ($data['age'] != "") {
             $endDate = $this->getUserBirthDate($data['age']);
             $new_timestamp = strtotime('-12 months', strtotime($endDate));

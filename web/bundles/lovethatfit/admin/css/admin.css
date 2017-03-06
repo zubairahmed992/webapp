@@ -298,3 +298,5 @@ body {
 .text-right {
     text-align: right;
 }
+
+select#FNFUser_users.custom_select{height: 100px;}

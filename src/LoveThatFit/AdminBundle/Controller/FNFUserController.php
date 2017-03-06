@@ -19,11 +19,14 @@ class FNFUserController extends Controller
 {
     public function indexAction()
     {
-        $totalRecords = $this->get('fnfuser.helper.fnfuser')->countAllFNFUserRecord();
+        $totalUserRecords = $this->get('fnfuser.helper.fnfuser')->countAllFNFUserRecord();
+        $totalGroupRecords = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:index_new.html.twig',
-            array('rec_count' => count($totalRecords))
-        );
+            array(
+                'rec_count' => count($totalUserRecords),
+                'rec_group_count' => count($totalGroupRecords)
+            ));
     }
 
     public function paginateAction(Request $request)
@@ -34,46 +37,122 @@ class FNFUserController extends Controller
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
+    public function groupPaginateAction( Request $request )
+    {
+        $requestData = $this->get('request')->request->all();
+        $output = $this->get('fnfgroup.helper.fnfgroup')->searchFNFGroup($requestData);
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function groupDeleteAction( $id )
+    {
+        $fnfGroup = $groups = $this->get('fnfgroup.helper.fnfgroup')->findById( $id );
+        $group = $this->get('fnfgroup.helper.fnfgroup')->markedGroupAsArchived( $fnfGroup );
+
+        $this->get('session')->setFlash('success', 'FNF Group deleted!');
+        return $this->redirect($this->generateUrl('fnf_groups'));
+    }
+
+    public function getGroupDataAction( Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output = $this->get('fnfgroup.helper.fnfgroup')->getGroupDataById($requestData['groupId']);
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
+    }
+
     public function addAction()
     {
-        $entity = $this->get('fnfuser.helper.fnfuser')->createNew();
-        $form = $this->createForm(new FNFUserForm('add',$entity), $entity);
+        $fnfUserEntity  = $this->get('fnfuser.helper.fnfuser')->createNew();
+        $fnfGroupEntity = $this->get('fnfgroup.helper.fnfgroup')->createNew();
+
+        $adminConfig = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:AdminConfig')
+            ->findBy(array('config_key' => 'discount'))[0];
+
+        $discountOptions = $adminConfig->getChildren()[0];
+        $discountArray = array(
+            'discount' => $adminConfig->getConfigValue(),
+            'min_amount' => ( $discountOptions->getConfigKey() == 'min_amount' ? $discountOptions->getConfigValue() : 0)
+        );
+
+        $fnfUserEntity->addGroup( $fnfGroupEntity );
+
+        $form = $this->createForm(new FNFUserForm('add',$fnfUserEntity, $discountArray), $fnfUserEntity);
 
         $user_list = $this->get('user.helper.user')->getListWithPagination(0,'email');
+        $groups = $this->get('fnfgroup.helper.fnfgroup')->getGroups();
+
+
         return $this->render('LoveThatFitAdminBundle:FNFUser:new.html.twig',
-            array('users' => $user_list['users'], 'form' => $form->createView())
-        );
+            array(
+                'users' => $user_list['users'],
+                'form' => $form->createView(),
+                'groups' => $groups
+            ));
 
     }
 
     public function createAction(Request $request)
     {
-        $entity = $this->get('fnfuser.helper.fnfuser')->createNew();
-        $selectedUser = $request->request->get('sel_user');
-        $user = $this->get('webservice.helper')->findUserByAuthToken($selectedUser);
+        $fnfUserEntity = $this->get('fnfuser.helper.fnfuser')->createNew();
+        $fnfGroupEntity = $this->get('fnfgroup.helper.fnfgroup')->createNew();
+        $fnfUserEntity->addGroup( $fnfGroupEntity );
 
-        $fnfUser = $this->get('fnfuser.helper.fnfuser')->getFNFUserById( $user );
+        $adminConfig = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:AdminConfig')
+            ->findBy(array('config_key' => 'discount'))[0];
 
-        if(!is_object( $fnfUser )){
-            $entity->setUsers( $user );
-            $form = $this->createForm(new FNFUserForm('add',$entity), $entity);
-            $form->bind($request);
+        $discountOptions = $adminConfig->getChildren()[0];
+        $discountArray = array(
+            'discount' => $adminConfig->getConfigValue(),
+            'min_amount' => ( $discountOptions->getConfigKey() == 'min_amount' ? $discountOptions->getConfigValue() : 0)
+        );
+        $selectedGroup = $request->request->get('sel_group');
+        $postData = $request->request->get('FNFUser');
 
-            $this->get('session')->setFlash('success', 'FNF User Added!');
-            $entity = $this->get('fnfuser.helper.fnfuser')->saveFNFUser( $entity );
-            return $this->redirect($this->generateUrl('fnf_users'));
+        $groupData = $postData['groups'][0];
+        $userData = $postData['users'];
+
+
+        /*$entity = $this->get('fnfuser.helper.fnfuser')->createNew();
+        $form = $this->createForm(new FNFUserForm('add',$entity, $discountArray), $entity);
+
+        $form->bind($request);
+        $data = $form->getData();*/
+
+        if(!empty($userData)){
+            if($selectedGroup == 0){
+
+                // var_dump( $groupData ); die;
+
+                $newGroup = $groups = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup( $groupData );
+                $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userData);
+                if($userCreated){
+                    $this->get('session')->setFlash('success', 'User created and added to group!');
+                    return $this->redirect($this->generateUrl('fnf_users'));
+                }
+            } else if( $selectedGroup > 0 ) {
+                // var_dump( $userData ); die;
+                $fnfGroup = $groups = $this->get('fnfgroup.helper.fnfgroup')->findById( $selectedGroup );
+                $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($fnfGroup, $userData);
+
+                return $this->redirect($this->generateUrl('fnf_users'));
+            }
         }
 
-        $this->get('session')->setFlash('warning', 'User already exists!');
+        $this->get('session')->setFlash('warning', 'You forget to select users!');
+        $form = $this->createForm(new FNFUserForm('add',$fnfUserEntity, $discountArray), $fnfUserEntity);
 
-        $form = $this->createForm(new FNFUserForm('add',$entity), $entity);
-        $form->bind($request);
+        $groups = $this->get('fnfgroup.helper.fnfgroup')->getGroups();
         $user_list = $this->get('user.helper.user')->getListWithPagination(0,'email');
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:new.html.twig',
-            array('users' => $user_list['users'], 'form' => $form->createView())
-        );
-
+            array(
+                'users' => $user_list['users'],
+                'form' => $form->createView(),
+                'groups' => $groups
+            ));
     }
 
     public function editAction($fnf_id)
@@ -117,10 +196,10 @@ class FNFUserController extends Controller
         return $this->redirect($this->generateUrl('fnf_users'));
     }
 
-    public function deleteAction( $fnf_id)
+    public function deleteAction( $user_id, $group_id)
     {
-        $entity = $this->get('fnfuser.helper.fnfuser')->findById( $fnf_id );
-        $this->get('fnfuser.helper.fnfuser')->removeFNFUser( $entity );
+        $fnfGroup = $groups = $this->get('fnfgroup.helper.fnfgroup')->findById( $group_id );
+        $this->get('fnfuser.helper.fnfuser')->removeUsers( $fnfGroup, array( $user_id) );
 
         $this->get('session')->setFlash('success', 'FNF User deleted!');
         return $this->redirect($this->generateUrl('fnf_users'));
@@ -133,10 +212,13 @@ class FNFUserController extends Controller
 
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
+
+            // var_dump($fnfUser->getGroups()[0]->getDiscount()); die;
+
             if(is_object($fnfUser)){
                 $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
-                    'discount_amount' => $fnfUser->getDiscount(),
-                    'min_amount'      => $fnfUser->getMinAmount()
+                    'discount_amount' => $fnfUser->getGroups()[0]->getDiscount(),
+                    'min_amount'      => $fnfUser->getGroups()[0]->getMinAmount()
                 ));
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, 'user in not applicable for discount.');
