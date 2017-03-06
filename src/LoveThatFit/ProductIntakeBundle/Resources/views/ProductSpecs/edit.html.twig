@@ -136,8 +136,8 @@
     }
         
         //-------------- Check Fit Priority Alredy Added
-        $('.fit_point_selected').click(function () {               
-            var fit_point_val = $.trim($('.fit_point option:selected').val());           
+        $('.add_fit_priority').click(function () {               
+            var fit_point_val = $.trim($('.fit_priority_value').val()); 
             $(".fit_priority > .singleField > input[type='number']").each(function() {                 
                   fit_priority_array_key.push($(this).attr('id'));
             });  
@@ -300,84 +300,275 @@
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">        
 {#        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>#}
-        <table class="tblData" id="tbl_data">
-            <tr>
-                <td>
-                    <table>
-                        {% for specs_k, specs_v in parsed_data %}
-                           {% if (specs_k!='sizes') %}
-                                {% if specs_k in drop_down_values|keys %}
-                                    <tr>
-                                        <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                        <td>
-                                            <div class="hlist">
-                                                  {% if specs_k == 'fabric_content' or specs_k == 'fit_priority'  or specs_k == 'garment_detail'%}
-                                                    <div class="{{specs_k}}"> 
-                                                        {% for key,val in parsed_data[specs_k] %}
-                                                            <div class="singleField">
-                                                               <label>
-                                                                   {{ key }} : 
-                                                               </label> 
-                                                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="{{ specs_k }}[{{key}}]" style="width:70px">
-                                                            </div>
-                                                        {% endfor %}
-                                                    
-                                                        {% if specs_k == 'fabric_content' %}
-                                                          {#<label>
-                                                                 Enter fabric Content : 
-                                                               </label> #}
-                                                          <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="{{ specs_k }}" style="width:70px; background-color: #cccccc"">
-                                                          <input class="add_fabric_content" type="button" value="Add">
-                                                        {% endif %} 
-                                                     
-                                                        {% if specs_k == 'garment_detail' %}
-                                                          {#<label>
-                                                                 Enter fabric Content : 
-                                                               </label> #}
-                                                          <input type="text" class="garment_detail_value" min="1" max="100" value="" name="{{ specs_k }}" style="width:70px; background-color: #cccccc"">
-                                                          <input class="add_garment_detail" type="button" value="Add">
-                                                        {% endif %} 
-                                                     
-                                                       {% if specs_k == 'fit_priority' %}
-                                                           <select name="{{ specs_k }}" class="fit_point" style="width:auto; background-color: #cccccc" data-width="100%">   
-                                                                {% for key,val in fit_points %}
-                                                                   <option value="{{val}}"> {{key}}</option>
-                                                                {% endfor %}
-                                                            </select> 
-                                                           <input class="fit_point_selected" type="button" value="Add">
-                                                    </div>
-                                                        {% endif %} 
-                                                    {% else %}
-                                                        <select name="{{ specs_k }}" class="{{ specs_k }}" data-width="100%">
-                                                            <option  >Select</option>
-                                                            {% for key,val in drop_down_values[specs_k] %}
-                                                               <option value="{{ val }}"{{specs_v =='' and key == 0 ? 'selected':val==specs_v?'selected':'' }}   >{{ key }}</option>
-                {#                                                <option value="{{ val.value }}" {{  form.country.vars.value == '' and key == 0 ? ' selected ' :(val.value == form.country.vars.value ? ' selected ' : '') }}>{{ val.label | trans }}</option>#}
-                                                            {% endfor %}
-                                                        </select>  
-                                                       {# {% if specs_k == 'fit_model_size'%}
-                                                            <a href="#" id="a_fit_model_size">Calculate</a> 
-                                                        {% endif %}  #}                    
-                                                    
-                                                    {% endif %}                      
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% else %}    
-                                {% if specs_v is not iterable   %}                                    
-                                    <tr>
-                                        <td><span style="font-weight: bold ">{{specs_k}}</span>: &nbsp;</td>
-                                        <td><span><input type="text"  class="form-control"  {{specs_k in disabled_fields?'readonly':''}} value="{{specs_v}}" name="{{specs_k}}" id="{{specs_k}}"> </span></td>
-                                    </tr>
-                                {% endif %}                                     
-                            {% endif %}
-                                
-                            {% endif %}
+       
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for=""> Clothing Type: </label>
+            <div class="col-sm-4">                
+                <input type="text" name="clothing_type" id="sel_clothing_type" readonly value="{{ parsed_data.clothing_type }}"  class="form-control">                    
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="mapping_title">Slect Brand : </label>
+            <div class="col-sm-4">
+                <input type="text" name="brand" id="sel_clothing_type" readonly="readonly" value="{{ parsed_data.brand }}"  class="form-control">                    
+            </div>
+        </div>
+ 
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="name_title">Nme : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.name }}"  name="name" placeholder="Enter Product Name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for=""> Gender: </label>
+            <div class="col-sm-4">
+                <input type="text" name="gender" id="gender" readonly value="{{ parsed_data.gender }}"  class="form-control">                    
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="description"> Description : </label>
+            <div class="col-sm-4">
+                <input type="text" name="description" class="form-control" value="{{ parsed_data.description }}" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="styling_title">Styling type : </label>
+            <div class="col-sm-4">                
+                <select name="styling_type" class="styling_type form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['styling_type'] %}
+                       <option value="{{ val }}"{{ parsed_data.styling_type == '' and key == 0? '' : (val == parsed_data.styling_type ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>                
+            </div>
+        </div>
+      
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="hem_length">Styling type : </label>
+            <div class="col-sm-4">
+                <select name="hem_length" class="hem_length form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['hem_length'] %}
+                       <option value="{{ val }}"{{ parsed_data.hem_length == '' and key == 0? '' : (val == parsed_data.hem_length ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>             
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="neckline">Neckline : </label>
+            <div class="col-sm-4">
+                <select name="neckline" class="neckline form-control" >
+                    <option  >Select</option>
+                    {% for key,val in drop_down_values['neckline'] %}
+                       <option value="{{ val }}"{{ parsed_data.neckline == '' and key == 0? '' : (val == parsed_data.neckline ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>   
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sleeve_styling">Sleeve Styling : </label>
+            <div class="col-sm-4">
+                <select name="sleeve_styling" class="sleeve_styling form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['sleeve_styling'] %}
+                       <option value="{{ val }}"{{ parsed_data.sleeve_styling == '' and key == 0? '' : (val == parsed_data.sleeve_styling ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>  
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="rise">Rise : </label>
+            <div class="col-sm-4">
+                <select name="rise" class="rise form-control" >
+                    <option  >Select</option>
+                    {% for key,val in drop_down_values['rise'] %}
+                       <option value="{{ val }}"{{ parsed_data.rise == '' and key == 0? '' : (val == parsed_data.rise ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>  
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="stretch_type">Stretch type : </label>
+            <div class="col-sm-4">
+                <select name="stretch_type" class="stretch_type form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['stretch_type'] %}
+                       <option value="{{ val }}"{{ parsed_data.stretch_type == '' and key == 0? '' : (val == parsed_data.stretch_type ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>  
+            </div>
+        </div>
+       
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control"  name="horizontal_stretch" placeholder="Enter horizontal stretch">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control"  name="vertical_stretch" placeholder="Enter vertical stretch">
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="control-label col-sm-2" for="fabric_weight">Fabric weight : </label>
+            <div class="col-sm-4">
+                 <select name="fabric_weight" class="stretch_type form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['fabric_weight'] %}
+                       <option value="{{ val }}"{{ parsed_data.fabric_weight == '' and key == 0? '' : (val == parsed_data.fabric_weight ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>  
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="layering">layering : </label>
+            <div class="col-sm-4">
+                <select name="layering" class="stretch_type form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['layering'] %}
+                       <option value="{{ val }}"{{ parsed_data.layering == '' and key == 0? '' : (val == parsed_data.layering ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="structural_detail">Structural detail : </label>
+            <div class="col-sm-4">
+                <select name="structural_detail" class="structural_detail form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['structural_detail'] %}
+                       <option value="{{ val }}"{{ parsed_data.structural_detail == '' and key == 0? '' : (val == parsed_data.structural_detail ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="fit_type">Fit type : </label>
+            <div class="col-sm-4">
+                  <select name="fit_type" class="fit_type form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['fit_type'] %}
+                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and key == 0? 'selected' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="fit_priority">Fit priority : </label>
+            <div class="col-sm-4">   
+                 <div class="fit_priority"> 
+                        {% if  parsed_data['fit_priority']  %}
+                        {% for key,val in parsed_data['fit_priority'] %}
+                            <div class="singleField">
+                               <label>
+                                   {{ key }} : 
+                               </label> 
+                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fit_priority{{key}}" style="width:70px">
+                            </div>
                         {% endfor %}
-                    </table>
-                </td>
-            </tr>
-        </table>
+                        {% endif %}
+                    </div>                                            
+                <input type="text" class="fit_priority_value"  min="1" max="100" value="" name="fit_priority[]" style="width:70px; background-color: #cccccc">
+                <input class="add_fit_priority" type="button" value="Add">
+            </div>
+        </div> 
+
+        <div class="form-group">            
+            <label class="control-label col-sm-2" for="fabric_content">Fabric content : </label>
+            <div class="col-sm-4">
+                    <div class="fabric_content"> 
+                        {% if  parsed_data['fabric_content']  %}
+                        {% for key,val in parsed_data['fabric_content'] %}
+                            <div class="singleField">
+                               <label>
+                                   {{ key }} : 
+                               </label> 
+                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fabric_content{{key}}" style="width:70px">
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>                                            
+                <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="fabric_content[]" style="width:70px; background-color: #cccccc">
+                <input class="add_fabric_content" type="button" value="Add">
+            </div>
+        </div> 
+      
+        <div class="form-group">
+            <label class="control-label col-sm-2" for=""> Size title Type: </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control garment_detail" value="{{ parsed_data.size_title_type }}" readonly="readonly" name="size_title_type" placeholder="Enter Garment detail">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="retailer_reference">Retailer reference : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.retailer_reference }}"  name="retailer_reference" placeholder="Enter retailer reference">
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="control_number">Control number : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.control_number }}"  name="control_number" placeholder="Enter control number">
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="colors">Colors : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.colors }}" name="colors" placeholder="Enter colors">
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="mapping_description"> Mapping Description : </label>
+            <div class="col-sm-4">
+                <input type="text" value="{{ parsed_data.mapping_description }}" name="mapping_description" class="form-control" readonly="readonly" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="mapping_title">Mapping title : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.mapping_title }}" name="mapping_title"  readonly="readonly">
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="measuring_unit">Measuring unit : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.measuring_unit }}" name="measuring_unit" placeholder="Enter measuring unit">
+            </div>
+        </div> 
+      
+        <div class="form-group">
+            <label class="control-label col-sm-2" for=""> Fit model size: </label>
+            <div class="col-sm-4">
+                 <select name="fit_model_size" class="fit_model_size form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['fit_model_size'] %}
+                       <option value="{{ val }}"{{ parsed_data.fit_model_size == '' and key == 0? 'selected' : (val == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+      
+
+
 {#
     <div class="btn-group" role="group" style="float:left;">
         <a id='btn_recalculate' name='btn_recalculate' href="#" class="btn btn-primary">Re-calculate</a> 
