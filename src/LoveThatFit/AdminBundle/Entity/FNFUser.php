@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FNFUser
  *
- * @ORM\Table()
+ * @ORM\Table(name="fnf_user")
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\FNFUserRepository")
  */
 class FNFUser
