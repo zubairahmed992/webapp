@@ -187,7 +187,7 @@
                     fabric_array.push(fabric_content_val);
                     var fabric_content = [];
                     var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number' min='1' max='100' name="+fabric_content+" style='width:50px'>%");
+                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number' id="+fabric_content_val+" min='1' max='100' name="+fabric_content+" style='width:50px'>%");
             }
         });
         
@@ -250,7 +250,7 @@
                 });   
             }           
         })  
-        
+       
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();              
 
@@ -310,7 +310,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="mapping_title">Slect Brand : </label>
+            <label class="control-label col-sm-2" for="mapping_title">Select Brand : </label>
             <div class="col-sm-4">
                 <input type="text" name="brand" id="sel_clothing_type" readonly="readonly" value="{{ parsed_data.brand }}"  class="form-control">                    
             </div>
@@ -350,7 +350,7 @@
         </div>
       
         <div class="form-group">
-            <label class="control-label col-sm-2" for="hem_length">Styling type : </label>
+            <label class="control-label col-sm-2" for="hem_length">Hem length : </label>
             <div class="col-sm-4">
                 <select name="hem_length" class="hem_length form-control" >
                     <option>Select</option>
@@ -460,7 +460,7 @@
                   <select name="fit_type" class="fit_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fit_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and key == 0? 'selected' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and key == 0? '' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -469,19 +469,19 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="fit_priority">Fit priority : </label>
             <div class="col-sm-4">   
-                 <div class="fit_priority"> 
-                        {% if  parsed_data['fit_priority']  %}
-                        {% for key,val in parsed_data['fit_priority'] %}
-                            <div class="singleField">
-                               <label>
-                                   {{ key }} : 
-                               </label> 
-                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fit_priority{{key}}" style="width:70px">
-                            </div>
-                        {% endfor %}
+                    <div class="fit_priority"> 
+                        {% if  parsed_data['fit_priority'] is defined  %}
+                            {% for key,val in parsed_data['fit_priority'] %}                               
+                                <div class="singleField">
+                                   <label>
+                                       {{ key }} : 
+                                   </label> 
+                                       <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fit_priority[{{key}}]" style="width:70px">
+                                </div>
+                            {% endfor %}
                         {% endif %}
                     </div>                                            
-                <input type="text" class="fit_priority_value"  min="1" max="100" value="" name="fit_priority[]" style="width:70px; background-color: #cccccc">
+                <input type="text" class="fit_priority_value"  min="1" max="100"  style="width:70px; background-color: #cccccc">
                 <input class="add_fit_priority" type="button" value="Add">
             </div>
         </div> 
@@ -489,19 +489,19 @@
         <div class="form-group">            
             <label class="control-label col-sm-2" for="fabric_content">Fabric content : </label>
             <div class="col-sm-4">
-                    <div class="fabric_content"> 
-                        {% if  parsed_data['fabric_content']  %}
+                    <div class="fabric_content">                        
+                        {% if  parsed_data['fabric_content'] is defined  %}
                         {% for key,val in parsed_data['fabric_content'] %}
                             <div class="singleField">
                                <label>
                                    {{ key }} : 
                                </label> 
-                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fabric_content{{key}}" style="width:70px">
+                                   <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fabric_content[{{key}}]" style="width:70px">                                   
                             </div>
                         {% endfor %}
                         {% endif %}
                     </div>                                            
-                <input type="text" class="fabric_content_value"  min="1" max="100" value="" name="fabric_content[]" style="width:70px; background-color: #cccccc">
+                <input type="text" class="fabric_content_value"  min="1" max="100"  style="width:70px; background-color: #cccccc">
                 <input class="add_fabric_content" type="button" value="Add">
             </div>
         </div> 
@@ -547,7 +547,14 @@
                 <input type="text" class="form-control" value="{{ parsed_data.mapping_title }}" name="mapping_title"  readonly="readonly">
             </div>
         </div> 
-
+            
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="mapping_title">Body type : </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" value="{{ parsed_data.body_type }}" name="body_type"  readonly="readonly">
+            </div>
+        </div> 
+            
         <div class="form-group">
             <label class="control-label col-sm-2" for="measuring_unit">Measuring unit : </label>
             <div class="col-sm-4">
@@ -561,7 +568,7 @@
                  <select name="fit_model_size" class="fit_model_size form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fit_model_size'] %}
-                       <option value="{{ val }}"{{ parsed_data.fit_model_size == '' and key == 0? 'selected' : (val == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.fit_model_size == '' and key == 0? '' : (val == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>
             </div>
