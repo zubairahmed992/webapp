@@ -158,7 +158,7 @@ public function getNew() {
                     $us['garment_stretch'] = $us['garment_dimension'] + ($us['garment_dimension'] * $us['stretch_percentage']/100);
 
                 #-----------> grade rule
-                if ($prev_size_key && $size!=$prev_size_key) {#----------> for all the sizes after first                    
+                if (!is_null($prev_size_key)) {#----------> for all the sizes after first                    
                     $us['grade_rule'] = array_key_exists($fpk, $specs_updated['sizes'][$prev_size_key])? $fpv['garment_dimension'] - $specs_updated['sizes'][$prev_size_key][$fpk]['garment_dimension']:0;                                         
                     $us['grade_rule_stretch'] = $us['grade_rule'] + ($us['grade_rule'] * $us['stretch_percentage']/100);    
                 }   
