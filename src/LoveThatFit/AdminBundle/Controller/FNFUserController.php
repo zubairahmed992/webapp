@@ -125,7 +125,15 @@ class FNFUserController extends Controller
 
         if(!empty($userData)){
             if($selectedGroup == 0){
-
+                /**Code By babar*/
+                //Check if any group exists. Then make is it archive
+                $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
+                //Iterate each group 
+                foreach ($groupToArchive as $groupInfo) {
+                    //make group archived
+                    $this->get('fnfgroup.helper.fnfgroup')->markedGroupAsArchived( $groupInfo );
+                }
+                /**End Code By babar*/
                 // var_dump( $groupData ); die;
 
                 $newGroup = $groups = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup( $groupData );
