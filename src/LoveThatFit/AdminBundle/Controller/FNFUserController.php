@@ -19,6 +19,7 @@ class FNFUserController extends Controller
 {
     public function indexAction()
     {
+
         $totalUserRecords = $this->get('fnfuser.helper.fnfuser')->countAllFNFUserRecord();
         $totalGroupRecords = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
 
@@ -63,6 +64,7 @@ class FNFUserController extends Controller
 
     public function addAction()
     {
+        
         $fnfUserEntity  = $this->get('fnfuser.helper.fnfuser')->createNew();
         $fnfGroupEntity = $this->get('fnfgroup.helper.fnfgroup')->createNew();
 

@@ -2,13 +2,14 @@ admin_fnfusers_paginate:
   pattern: /admin/fnf/users/paginate
   defaults: { _controller: LoveThatFitAdminBundle:FNFUser:paginate}
 
+
+add_fnf_user:
+  pattern: /admin/fnf/users/add/new
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:add }
+
 fnf_users:
   pattern:  /admin/fnf/users/{page_number}/{sort}
   defaults: { _controller: LoveThatFitAdminBundle:FNFUser:index , page_number: 1, sort:id }
-
-add_fnf_user:
-  pattern: /admin/fnf-users/add-new
-  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:add }
 
 admin_fnfuser_create:
   pattern: /admin/fnf-users/create
