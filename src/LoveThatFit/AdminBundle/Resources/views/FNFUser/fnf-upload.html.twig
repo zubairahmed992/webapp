@@ -25,13 +25,18 @@
                 <div id="product_content">
                     <div id="pro_detail">
                         <br>
-                        <br>
-                        <br>
-                        <div class="span8">
+                        
+                        <div>
                              <form action="{{ path('admin_csv_fnf_create_user') }}" method="post" {{ form_enctype(fvfImportform) }}>
-                                {{ form_widget(fvfImportform) }}
-                            <input type="submit" name="fnf_import_submit" value="import" />
+                                <p>{{ form_widget(fvfImportform) }}</p>
+                                <p>
+                                    <input type="submit" name="fnf_import_submit" value="Submit" />
+                                </p>
                             </form>
+                            <style type="text/css"> 
+                             #form label   {float: left;
+                                padding-right: 20px;}
+                            </style>
                         </div>
                     </div>
                 </div>      

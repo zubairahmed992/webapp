@@ -76,8 +76,8 @@ function submitform() {
 <div>      
     <h1 style="float:left;">New FNF User </h1>
      <div class="row-fluid">
-            <div class="span4 text-center">
-               {#   <form action="{{ path('admin_csv_fnf_create_user') }}" method="post" enctype="multipart/form-data">
+            {#<div class="span4 text-center">
+                  <form action="{{ path('admin_csv_fnf_create_user') }}" method="post" enctype="multipart/form-data">
                     <input type="file" name="upload_csv_fnf_user">
                     <input type="submit" value="Submit" name="submit">
                 </form>  
@@ -86,8 +86,8 @@ function submitform() {
                     {{ form_widget(fvfImportform) }}
                     <input type="submit" name="fnf_import_submit" value="import" />
                 </form>
-               #}
-            </div>
+               
+            </div>#}
         </div>
     <div class="btn_wrapper">     
         <a href="{{ path('fnf_users') }}" class="btn">back</a>

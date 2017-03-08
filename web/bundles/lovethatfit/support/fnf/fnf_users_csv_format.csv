@@ -1,5 +1,5 @@
 user_id,first_name,last_name,group_title,discount_amount,minimum_amount,start_date(Day/Month/Year),end_date  (Day/Month/Year)
-3011,Andrea,Dietz,FNFFT01-babar,20,100,7/3/2017,27/3/2017
+3011,Andrea,Dietz,FNFFT01,25,50,7/3/2017,27/3/2017
 3016,Emily,Hovie,,,,,
 3023,Courtney,Horvat,,,,,
 3587,Emily ,Larsen,,,,,
