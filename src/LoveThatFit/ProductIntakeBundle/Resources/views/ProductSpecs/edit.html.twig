@@ -262,6 +262,8 @@
         });
           
            $('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
+           
+           
     });
 
 </script>
@@ -315,7 +317,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="name_title">Style Name : </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" value="{{ parsed_data.style_name }}"  name="style_name" placeholder="Enter Product Name">
+                <input type="text" class="form-control" value="{{ parsed_data.style_name is defined?parsed_data.style_name:'' }}"  name="style_name" placeholder="Enter Product Name">
             </div>
         </div>
             
@@ -323,7 +325,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="name_title">Style ID Number : </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" value="{{ parsed_data.style_id_number }}"  name="style_id_number" placeholder="Enter Style Id Number Name">
+                <input type="text" class="form-control" value="{{ parsed_data.style_id_number is defined? parsed_data.style_id_number: ''}}"  name="style_id_number" placeholder="Enter Style Id Number Name">
             </div>
         </div>
 
@@ -640,9 +642,7 @@
                                                     {{measurement_v.garment_stretch | number_format(2, '.', '')}}
                                                     <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px">
                                                 </td>
-                                                <td>
-                                                    {{measurement_v.grade_rule | number_format(2, '.', '')}}
-                                                    <input class="3" type="number" hidden value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">
+                                                <td><input class="3" type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
@@ -692,8 +692,8 @@
                                                     <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px">
                                                 </td>
                                                 <td>
-                                                    {{measurement_v.grade_rule | number_format(2, '.', '')}}
-                                                    <input class="3" type="number"  hidden value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">
+                                                    
+                                                    <input class="3" type="number"  value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}

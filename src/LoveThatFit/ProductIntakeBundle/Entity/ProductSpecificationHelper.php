@@ -227,7 +227,7 @@ public function getNew() {
     #---------------------
     private function dynamic_calculate_stretch($specs, $stretch) {
         $fpa = $this->getFitPointArray();
-        $ratio=calculate_fit_model_ratio($specs);
+        $ratio=$this->calculate_fit_model_ratio($specs);
         
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
