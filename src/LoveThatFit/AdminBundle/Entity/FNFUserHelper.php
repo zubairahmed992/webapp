@@ -164,22 +164,31 @@ class FNFUserHelper
     {
         if(is_object($fnfGroup))
         {
+
             $groupUsers = $this->container->get('fnfgroup.helper.fnfgroup')->getAllGroupUsers( $fnfGroup );
             $groupUsers = array_diff($groupUsers, $users);
 
+
             foreach($users as $user){
                 $userEntity = $this->container->get('user.helper.user')->find( $user );
+                if($userEntity){
+                    if($this->checkIfUserExists($userEntity, $fnfGroup) == null)
+                    {
+                        
+                        $fnfuserEntity = $this->repo->findOneBy(array('users'=>$user));
+                        if( $fnfuserEntity == NULL){
+                            $fnfuserEntity = $this->createNew();
+                        }
 
-                if($this->checkIfUserExists($userEntity, $fnfGroup) == null)
-                {
-                    $fnfuserEntity = $this->createNew();
-                    $fnfuserEntity->addGroup($fnfGroup);
-                    $fnfuserEntity->setUsers( $userEntity );
 
-                    $this->save( $fnfuserEntity );
+                        $fnfuserEntity->addGroup($fnfGroup);
+                        $fnfuserEntity->setUsers( $userEntity );
+
+                        $this->save( $fnfuserEntity );
+                    }
+                    $this->removeUsers($fnfGroup, $groupUsers);
+                    unset( $fnfuserEntity );
                 }
-                $this->removeUsers($fnfGroup, $groupUsers);
-                unset( $fnfuserEntity );
             }
 
             return true;

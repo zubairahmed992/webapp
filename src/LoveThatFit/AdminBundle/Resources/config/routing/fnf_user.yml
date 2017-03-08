@@ -42,3 +42,7 @@ admin_get_fnfgroups:
 fnf_groups:
   pattern:  /admin/fnf/groups/{page_number}/{sort}
   defaults: { _controller: LoveThatFitAdminBundle:FNFGroup:index , page_number: 1, sort:id }
+
+admin_csv_fnf_create_user:
+  pattern: /admin/fnf/user/upload/csv
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:getCsvFnfImport}

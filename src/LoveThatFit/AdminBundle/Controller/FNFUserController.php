@@ -62,21 +62,12 @@ class FNFUserController extends Controller
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
-    public function addAction()
+
+    public function addAction(Request $request)
     {
         
         $fnfUserEntity  = $this->get('fnfuser.helper.fnfuser')->createNew();
         $fnfGroupEntity = $this->get('fnfgroup.helper.fnfgroup')->createNew();
-
-        /*$adminConfig = $this->getDoctrine()
-            ->getRepository('LoveThatFitAdminBundle:AdminConfig')
-            ->findBy(array('config_key' => 'discount'))[0];
-
-        $discountOptions = $adminConfig->getChildren()[0];
-        $discountArray = array(
-            'discount' => $adminConfig->getConfigValue(),
-            'min_amount' => ( $discountOptions->getConfigKey() == 'min_amount' ? $discountOptions->getConfigValue() : 0)
-        );*/
 
         $discountArray = array();
 
@@ -165,6 +156,132 @@ class FNFUserController extends Controller
                 'form' => $form->createView(),
                 'groups' => $groups
             ));
+    }
+
+
+  public function getCsvFnfImportAction( Request $request)
+    {
+       $fnfCsvform = $this->createFormBuilder()
+        ->add('submitFile', 'file', array('label' => 'Upload CSV file'))
+        ->getForm();
+
+        // Check if we are posting stuff
+        if ($request->getMethod('post') == 'POST') {
+            // Bind request to the form
+            $fnfCsvform->bindRequest($request);
+
+            // If form is valid
+            if ($fnfCsvform->isValid()) {
+                 // Get file
+                $file = $fnfCsvform->get('submitFile');
+                $fileInfo = $file->getData();
+
+               if (($handle = fopen($fileInfo->getPathName(), "r")) !== FALSE) {
+                //user based info
+                    $userInfo = array();
+                    //group information
+                    $groupTitle = false;
+                    $groupDiscountAmount = false;
+                    $groupMinAmount = false;
+                    $groupStartDate = false;
+                    $groupEndDate = false;
+                    //Group information
+                    $groupInfoNew = array();
+
+                    
+                    while(($row = fgetcsv($handle)) !== FALSE) {
+                        //skip first row
+                        if(isset($row[0]) && $row[0] !== 'user_id'){
+
+
+                            //get group info
+                            $groupTitle = ($groupTitle === false) ? $row[3] : $groupTitle;
+                            $groupDiscountAmount = ($groupDiscountAmount === false) ? $row[4] : $groupDiscountAmount;
+                            $groupMinAmount = ($groupMinAmount === false) ? $row[5] : $groupMinAmount;
+                            $groupStartDate = ($groupStartDate === false) ? $row[6] : $groupStartDate;
+                            $groupEndDate = ($groupEndDate === false) ? $row[7] : $groupEndDate;
+
+                            //get user info
+                            $userInfo[$row[0]]['first_name'] = $row[1];
+                            $userInfo[$row[0]]['last_name'] = $row[2];
+
+                        }
+                        
+                    }
+
+                }
+
+
+                //Craete New group
+                if($groupTitle  && $groupDiscountAmount && $groupMinAmount && $groupStartDate && $groupEndDate){
+
+                    
+                    $expStartDate = explode('/', trim($groupStartDate));
+                    $newStartFormat = $expStartDate[1].'/'.$expStartDate[0].'/'.$expStartDate[2];
+                    
+                    $expEndDate = explode('/', trim($groupEndDate));
+                    $newEndFormat = $expEndDate[1].'/'.$expEndDate[0].'/'.$expEndDate[2];
+                    
+                    //Arrange in array
+                    $groupInfoNew['groupTitle'] = $groupTitle;
+                    $groupInfoNew['discount'] = $groupDiscountAmount;
+                    $groupInfoNew['min_amount'] =  $groupMinAmount;
+                    $groupInfoNew['start_at'] = trim($newStartFormat);
+                    $groupInfoNew['end_at'] = trim($newEndFormat);
+
+                    //Check if any group exists. Then make is it archive
+                    $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
+                    //Iterate each group 
+                    foreach ($groupToArchive as $groupInfo) {
+                        //make group archived
+                        $this->get('fnfgroup.helper.fnfgroup')->markedGroupAsArchived( $groupInfo );
+                    }
+
+
+                    //Add new group
+                    $newGroup = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup( $groupInfoNew );
+            
+                    //Insert Users in group
+                    if(is_array($userInfo) && count($userInfo) > 0){
+                        
+                        $userID = array_keys($userInfo);
+                        //Assign user to group
+                        $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userID);
+
+
+                        //Update user first & last name
+                        foreach ($userInfo as $userToUpdateKey => $userToUpdateValue) {
+
+                        
+                             $updateUserInfo = $this->get('user.helper.user')->find($userToUpdateKey);
+                             //Validate if value is given
+                             if($updateUserInfo && isset($userToUpdateValue['first_name']) 
+                                && isset($userToUpdateValue['last_name'])
+                                && $userToUpdateValue['first_name']!= ""
+                                && $userToUpdateValue['last_name']!= ""
+                                ){
+                                 $this->get('user.helper.user')->updateUserFirstAndLastName($updateUserInfo,$userToUpdateValue['first_name'],$userToUpdateValue['last_name']);
+                                }
+                            
+                             
+                        }
+                    }
+                }
+                    
+                $this->get('session')->setFlash('success', 'Group created successfully');
+                return $this->redirect($this->generateUrl('fnf_users'));
+                 
+            }
+
+         }
+
+        return $this->render('LoveThatFitAdminBundle:FNFUser:fnf-upload.html.twig', array(
+            'fvfImportform' => $fnfCsvform->createView()
+            )
+        );
+
+
+
     }
 
     public function editAction($fnf_id)

@@ -1,0 +1,43 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('fnf_users') }}" >FNF Users</a> <span class="divider">/</span></li>
+<li class="active">Upload</li>
+{% endblock %}
+
+{% block h1 %}Upload Sheet{% endblock %}
+
+{% block title %}Add Group/Users{% endblock %}
+
+{% block body %}
+    
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
+<div>      
+    <h1 style="float:left;">Add FNF Group & Users </h1>
+    <div class="btn_wrapper">     
+        <a href="{{ path('fnf_users') }}" class="btn">back</a>
+    </div>
+    <div class="clearfix"></div>   
+    
+            <div id="detail_wrapper">      
+                <div id="p_hd"><a href="{{ asset('bundles/lovethatfit/support/fnf/fnf_users_csv_format.csv') }}">Pattern File</a></div>
+
+                <div id="product_content">
+                    <div id="pro_detail">
+                        <br>
+                        <br>
+                        <br>
+                        <div class="span8">
+                             <form action="{{ path('admin_csv_fnf_create_user') }}" method="post" {{ form_enctype(fvfImportform) }}>
+                                {{ form_widget(fvfImportform) }}
+                            <input type="submit" name="fnf_import_submit" value="import" />
+                            </form>
+                        </div>
+                    </div>
+                </div>      
+            </div><!-- End pro_detail -->      
+    </div><!-- End product_content --> 
+
+</div>
+{% endblock %}
+

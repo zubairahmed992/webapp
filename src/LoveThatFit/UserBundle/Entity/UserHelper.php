@@ -70,6 +70,17 @@ class UserHelper {
         $this->em->flush();
     }
 
+//-------------------------------------------------------
+
+    public function updateUserFirstAndLastName(User $user, $firstname, $lastname) {
+        
+        $user->setFirstName($firstname);            
+        $user->setLastName($lastname);            
+
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
     
 //------------------------------------------------------------
     
