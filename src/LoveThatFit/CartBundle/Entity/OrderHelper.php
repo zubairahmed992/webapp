@@ -44,7 +44,7 @@ class OrderHelper
     }
 
 //------------------------------- When user does payment and add addres from screen 1 -----------------------------------------------------///////////
-    public function saveBillingShipping($decoded, $user, $shipping_amount)
+    public function saveBillingShipping($decoded, $user, $shipping_amount, $fnfGroup = null)
     {
         $billing = $decoded["billing"];
         $user_billing_shipping_info = $this->createNew();
@@ -73,6 +73,10 @@ class OrderHelper
         $user_billing_shipping_info->setDiscountAmount($decoded['discount_amount']);
         $user_billing_shipping_info->setTotalAmount($decoded['total_amount']);
         $user_billing_shipping_info->setShippingAmount($shipping_amount);
+        if(array_key_exists('groupId', $decoded))
+        {
+            $user_billing_shipping_info->setUserGroup( $fnfGroup );
+        }
         return $this->save($user_billing_shipping_info);
 
     }

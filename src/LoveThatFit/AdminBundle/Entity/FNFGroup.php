@@ -48,6 +48,12 @@ class FNFGroup
      */
     private $fnfUsers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrder", mappedBy="user_group", orphanRemoval=true)
+     */
+
+    protected $user_order;
+
 
     /**
      * @ORM\Column(name="is_archive", type="boolean")
@@ -258,5 +264,71 @@ class FNFGroup
     public function getEndAt()
     {
         return $this->endAt;
+    }
+
+    /**
+     * Add user_groups
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userGroups
+     * @return FNFGroup
+     */
+    public function addUserGroup(\LoveThatFit\CartBundle\Entity\UsersOrder $userGroups)
+    {
+        $this->user_groups[] = $userGroups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_groups
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userGroups
+     */
+    public function removeUserGroup(\LoveThatFit\CartBundle\Entity\UsersOrder $userGroups)
+    {
+        $this->user_groups->removeElement($userGroups);
+    }
+
+    /**
+     * Get user_groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserGroups()
+    {
+        return $this->user_groups;
+    }
+
+    /**
+     * Add user_order
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userOrder
+     * @return FNFGroup
+     */
+    public function addUserOrder(\LoveThatFit\CartBundle\Entity\UsersOrder $userOrder)
+    {
+        $this->user_order[] = $userOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_order
+     *
+     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userOrder
+     */
+    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UsersOrder $userOrder)
+    {
+        $this->user_order->removeElement($userOrder);
+    }
+
+    /**
+     * Get user_order
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserOrder()
+    {
+        return $this->user_order;
     }
 }

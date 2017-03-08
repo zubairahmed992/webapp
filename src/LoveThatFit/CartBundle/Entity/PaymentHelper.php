@@ -238,6 +238,7 @@ class PaymentHelper
     {
         if( $result->success )
         {
+            $fnfGroup = null;
             $payment_json = json_encode($result);
             $shipping_amount    = $decoded['shipping_amount'];
             $order_amount       = $decoded['order_amount'];
@@ -248,8 +249,12 @@ class PaymentHelper
             $transaction_status = $result->transaction->status;
             $payment_method = $result->transaction->paymentInstrumentType;
 
+            if(array_key_exists('groupId', $decoded))
+            {
+                $fnfGroup = $this->container->get('fnfgroup.helper.fnfgroup')->findById( $decoded['groupId'] );
+            }
 
-            $entity = $this->container->get('cart.helper.order')->saveBillingShipping($decoded, $user, $shipping_amount);
+            $entity = $this->container->get('cart.helper.order')->saveBillingShipping($decoded, $user, $shipping_amount, $fnfGroup);
             $order_id = $entity->getId();
             $this->container->get('cart.helper.userAddresses')->saveAddress($decoded, $user, 1, 1);
 
