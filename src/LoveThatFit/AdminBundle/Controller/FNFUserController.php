@@ -176,6 +176,11 @@ class FNFUserController extends Controller
                  // Get file
                 $file = $fnfCsvform->get('submitFile');
                 $fileInfo = $file->getData();
+                $fileNameInfo = explode('.', $fileInfo->getClientOriginalName());
+                if(!is_array($fileNameInfo) || !isset($fileNameInfo[1]) || !in_array('csv',$fileNameInfo)){
+                     $this->get('session')->setFlash('warning', 'Invalid File');
+                        return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
+                }
 
                if (($handle = fopen($fileInfo->getPathName(), "r")) !== FALSE) {
                 //user based info
@@ -210,6 +215,9 @@ class FNFUserController extends Controller
                         
                     }
 
+                }else{
+                      $this->get('session')->setFlash('warning', 'Invalid File');
+                        return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
                 }
 
 
@@ -267,6 +275,9 @@ class FNFUserController extends Controller
                              
                         }
                     }
+                }else{
+                      $this->get('session')->setFlash('warning', 'Invalid File');
+                        return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
                 }
                     
                 $this->get('session')->setFlash('success', 'Group created successfully');
