@@ -14,13 +14,16 @@
 {#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
 <div>      
     <h1 style="float:left;">Add FNF Group & Users </h1>
+
     <div class="btn_wrapper">     
+        <a href="{{ asset('bundles/lovethatfit/support/fnf/fnf_users_csv_format.csv') }}">CSV Pattern File</a>&nbsp; &nbsp;
         <a href="{{ path('fnf_users') }}" class="btn">back</a>
     </div>
     <div class="clearfix"></div>   
     
             <div id="detail_wrapper">      
-                <div id="p_hd"><a href="{{ asset('bundles/lovethatfit/support/fnf/fnf_users_csv_format.csv') }}">Pattern File</a></div>
+                <div id="p_hd">
+                    {# <a href="{{ asset('bundles/lovethatfit/support/fnf/fnf_users_csv_format.csv') }}">Pattern File</a> #}</div>
 
                 <div id="product_content">
                     <div id="pro_detail">
