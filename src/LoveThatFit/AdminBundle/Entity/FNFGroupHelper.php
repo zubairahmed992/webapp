@@ -154,7 +154,7 @@ class FNFGroupHelper
 
     public function removeFNFUsers( FNFGroup $group, FNFUser $fnfUser){
 
-        var_dump( $fnfUser ); die;
+        // var_dump( $fnfUser ); die;
 
         $group->removeFnfUser( $fnfUser );
         $this->em->persist( $group );
