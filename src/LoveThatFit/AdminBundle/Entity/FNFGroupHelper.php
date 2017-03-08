@@ -114,8 +114,8 @@ class FNFGroupHelper
             $output['data'][] = [
                 'id' => $fData["id"],
                 'groupTitle' => $fData["groupTitle"],
-                'discount' => $fData["discount"],
-                'min_amount' => $fData["min_amount"],
+                'discount' => "$".$fData["discount"],
+                'min_amount' => "$".$fData["min_amount"],
             ];
         }
 

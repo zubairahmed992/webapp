@@ -60,7 +60,9 @@ class FNFUserRepository extends EntityRepository
     public function countAllFNFUserRecord() {
         $total_record = $this->getEntityManager()
             ->createQuery('SELECT fnf, u FROM LoveThatFitAdminBundle:FNFUser fnf
-                            JOIN fnf.users u join fnf.groups fg');
+                            JOIN fnf.users u 
+                            join fnf.groups fg
+                            WHERE fg.isArchive = 0');
         try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

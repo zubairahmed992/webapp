@@ -9,6 +9,7 @@
 namespace LoveThatFit\AdminBundle\Form\Type;
 
 
+use LoveThatFit\UserBundle\Entity\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,9 +39,11 @@ class FNFUserForm  extends AbstractType
         ->add('users', 'entity', array(
             'class' => 'LoveThatFitUserBundle:User',
             'empty_value' => '',
-            'property' => 'email',
             'multiple' => true,
             'label' => 'users',
+            'choices'  => function ($user) {
+                return sprintf('%s (%s)', $user->getId(), $user->getEmail());
+            }
         ));
     }
 
