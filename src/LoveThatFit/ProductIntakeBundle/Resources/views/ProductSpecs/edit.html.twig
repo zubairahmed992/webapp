@@ -253,14 +253,15 @@
        
         $.fn.editable.defaults.mode = 'popup';     
         $('#username').editable();              
-
+         
         $( "#lnk_fit_point_stretch" ).click(function() {
           event.preventDefault();
           $( "#tbl_fit_point_stretch" ).toggle( "slow", function() {
             // Animation complete.
           });
         });
-
+          
+           $('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
     });
 
 </script>
@@ -295,14 +296,9 @@
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
     </div>
-{#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}
-       
+{#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}      
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
-       <div class="container">        
-{#        <a href="#" id="username" data-type="text" data-placement="right" data-title="Enter username">superuser</a>#}
-       
-
-
+       <div class="container">       
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Clothing Type: </label>
             <div class="col-sm-4">                
@@ -604,14 +600,14 @@
                     </table>   
                <br>
                </div>   
-               
+                            <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
             <table>                
                 <tr>
                     <td>
                         <div id="dv_measurement_table">
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
-                                    <tr class="Active">
+                                    <tr class="{{ size }} Active">
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_percentage</th>
@@ -629,25 +625,111 @@
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {% if (measurement_v.garment_dimension>0) %}
-                                        <tr class="{{ size }}_{{ measurement_k }}" id="validation_fit_model" >
-                                            <th>{{measurement_k}}</th>
-                                            <td><input class="0" type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> </td>
-                                            <td><span style="font-size:10px">{{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%</span></td>
-                                            <td>
-                                                {{measurement_v.garment_stretch | number_format(2, '.', '')}}
-                                                <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px"></td>
-                                            <td><input class="3" type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px"></td>
-                                            <td>{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
-                                                <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px"></td>
-                                            <td><input class="5" type="number" value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px"></td>
-                                            <td><input class="6" type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px"></td>
-                                            <td><input class="7" type="number" value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px"></td>
-                                            <td>{{measurement_v.fit_model | number_format(2, '.', '')}}
-                                                <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px"></td>
-                                            <td><input class="9" type="number" value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px"></td>
-                                            <td><input class="10" type="number" value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px"></td>
-                                            <td><input class="11" type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px"></td>
-                                        </tr>
+                                        {% if (size == fit_model_selected_size) %}
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
+                                                <th>{{measurement_k}}</th>
+                                                <td>
+                                                    <input class="0" type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> 
+                                                </td>
+                                                <td>
+                                                    <span style="font-size:10px">
+                                                        {{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.garment_stretch | number_format(2, '.', '')}}
+                                                    <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.grade_rule | number_format(2, '.', '')}}
+                                                    <input class="3" type="number" hidden value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
+                                                    <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.min_calc | number_format(2, '.', '')}}
+                                                    <input class="5" type="number" hidden value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px">
+                                                </td>
+                                                <td>                                                    
+                                                    <input class="6" type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.ideal_low | number_format(2, '.', '')}}
+                                                    <input class="7" type="number" hidden value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.fit_model | number_format(2, '.', '')}}
+                                                    <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.ideal_high | number_format(2, '.', '')}}
+                                                    <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.max_calc | number_format(2, '.', '')}}
+                                                    <input class="10" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    <input class="11" type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
+                                                <th>{{measurement_k}}</th>
+                                                <td>
+                                                    {{measurement_v.garment_dimension | number_format(2, '.', '')}}
+                                                    <input class="0" type="number" hidden value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> 
+                                                </td>
+                                                <td>
+                                                    <span style="font-size:10px">
+                                                        {{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.garment_stretch | number_format(2, '.', '')}}
+                                                    <input class="2" type="number"  hidden readonly value="{{measurement_v.garment_stretch | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_stretch" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.grade_rule | number_format(2, '.', '')}}
+                                                    <input class="3" type="number"  hidden value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
+                                                    <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.min_calc | number_format(2, '.', '')}}
+                                                    <input class="5" type="number" hidden value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.min_actual | number_format(2, '.', '')}}
+                                                    <input class="6" type="number" hidden value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.ideal_low | number_format(2, '.', '')}}
+                                                    <input class="7" type="number" hidden value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.fit_model | number_format(2, '.', '')}}
+                                                    <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.ideal_high | number_format(2, '.', '')}}
+                                                    <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.max_calc | number_format(2, '.', '')}}
+                                                    <input class="10" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
+                                                </td>
+                                                <td>
+                                                    {{measurement_v.max_actual | number_format(2, '.', '')}}
+                                                    <input class="11" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}

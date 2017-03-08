@@ -34,29 +34,28 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id, $fit_model_measurement_id=null){                
-        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
-        $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
-        
-        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();         
-        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+    public function editAction($id)
+      {                
+        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        $parsed_data['fit_model_size']=  array_key_exists('fit_model_size',$parsed_data)?$parsed_data['fit_model_size']:'';
-        $drop_down_values['fit_model_size'] = $this->get('productIntake.fit_model_measurement')->getTitleArray();
-        #return new Response($ps->getSpecsJson());            
-        if ($fm){                        
-            return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));            
-         }
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
+        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+        $drop_down_values['fit_model_size'] = $fms;       
+        if(isset($parsed_data['fit_model_size'])){ 
+            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize(); 
+        } else { 
+        $fit_model_selected = null;
+        $parsed_data['fit_model_size'] = '';
+        }       
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => $parsed_data,
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
-                    'fit_points' => $ps->getFitPointArray(),
-                    'fit_point_stretch' => $ps->getFitPointStretchArray(),
-                    'fit_model_list' => $fms,
-                    'fit_model' => $fm,
+                    'fit_model_selected_size' => $fit_model_selected,
+                    'fit_point_stretch' => $ps->getFitPointStretchArray(), 
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
