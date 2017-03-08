@@ -140,7 +140,7 @@ class FNFUserHelper
                 'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
                 'email' => $fData["email"],
                 'group_title' => $fData['group_title'],
-                'discount' => $fData["discount"],
+                'discount' => "$".$fData["discount"],
                 'availability' => ($fData["is_available"]) ? "available" : "not available",
                 'original_user_id' => $fData["original_user_id"]
             ];
