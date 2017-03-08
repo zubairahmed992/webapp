@@ -267,45 +267,12 @@ class FNFGroup
     }
 
     /**
-     * Add user_groups
-     *
-     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userGroups
-     * @return FNFGroup
-     */
-    public function addUserGroup(\LoveThatFit\CartBundle\Entity\UsersOrder $userGroups)
-    {
-        $this->user_groups[] = $userGroups;
-    
-        return $this;
-    }
-
-    /**
-     * Remove user_groups
-     *
-     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userGroups
-     */
-    public function removeUserGroup(\LoveThatFit\CartBundle\Entity\UsersOrder $userGroups)
-    {
-        $this->user_groups->removeElement($userGroups);
-    }
-
-    /**
-     * Get user_groups
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getUserGroups()
-    {
-        return $this->user_groups;
-    }
-
-    /**
      * Add user_order
      *
-     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userOrder
+     * @param \LoveThatFit\CartBundle\Entity\UserOrder $userOrder
      * @return FNFGroup
      */
-    public function addUserOrder(\LoveThatFit\CartBundle\Entity\UsersOrder $userOrder)
+    public function addUserOrder(\LoveThatFit\CartBundle\Entity\UserOrder $userOrder)
     {
         $this->user_order[] = $userOrder;
     
@@ -315,9 +282,9 @@ class FNFGroup
     /**
      * Remove user_order
      *
-     * @param \LoveThatFit\CartBundle\Entity\UsersOrder $userOrder
+     * @param \LoveThatFit\CartBundle\Entity\UserOrder $userOrder
      */
-    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UsersOrder $userOrder)
+    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UserOrder $userOrder)
     {
         $this->user_order->removeElement($userOrder);
     }
