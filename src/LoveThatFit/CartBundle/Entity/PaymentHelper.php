@@ -60,7 +60,8 @@ class PaymentHelper
                 'success'       => 0,
                 'client_token'  => $clientToken,
                 'customer_id'   => $customer->id,
-                'client_creditcard_token' => $client_creditcard_token
+                'client_creditcard_token' => $client_creditcard_token,
+                'marchant_id'             => $parse["braintree_live"]["merchant_id"]
             );
         }catch (\Braintree_Exception $exception) {
             $clientToken = Braintree_ClientToken::generate();
@@ -68,6 +69,7 @@ class PaymentHelper
                 'success'       => -1,
                 'client_token'  => $clientToken,
                 'customer_id'   => 0,
+                'marchant_id'   => $parse["braintree_live"]["merchant_id"]
             );
         }
     }
