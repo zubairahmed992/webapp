@@ -255,6 +255,13 @@ class WSCartController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {
+            $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
+            if(is_object($fnfUser))
+            {
+                $fnfGroupId = $fnfUser->getGroups()[0]->getId();
+                $decoded['groupId'] = $fnfGroupId;
+            }
+
             $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
             if ($result['success'] == 0) {
                 if($discount_amount > 0){

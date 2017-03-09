@@ -25,6 +25,13 @@ class UserOrder
 	 */
 	protected $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\FNFGroup", inversedBy="user_order")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+
+    protected $user_group;
+
 	public function __construct()
 	{
 	  $this->user = new ArrayCollection();
@@ -992,5 +999,51 @@ class UserOrder
         $this->user_order_detail[] = $userOrderDetail;
     
         return $this;
+    }
+
+    /**
+     * Set user_order
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FNFGroup $userOrder
+     * @return UserOrder
+     */
+    public function setUserOrder(\LoveThatFit\AdminBundle\Entity\FNFGroup $userOrder = null)
+    {
+        $this->user_order = $userOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_order
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\FNFGroup 
+     */
+    public function getUserOrder()
+    {
+        return $this->user_order;
+    }
+
+    /**
+     * Set user_group
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\FNFGroup $userGroup
+     * @return UserOrder
+     */
+    public function setUserGroup(\LoveThatFit\AdminBundle\Entity\FNFGroup $userGroup = null)
+    {
+        $this->user_group = $userGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_group
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\FNFGroup 
+     */
+    public function getUserGroup()
+    {
+        return $this->user_group;
     }
 }

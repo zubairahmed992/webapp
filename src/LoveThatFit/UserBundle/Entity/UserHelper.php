@@ -70,6 +70,17 @@ class UserHelper {
         $this->em->flush();
     }
 
+//-------------------------------------------------------
+
+    public function updateUserFirstAndLastName(User $user, $firstname, $lastname) {
+        
+        $user->setFirstName($firstname);            
+        $user->setLastName($lastname);            
+
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
     
 //------------------------------------------------------------
     
@@ -999,7 +1010,7 @@ class UserHelper {
         //search data
         $search  = $data['search'];
         $gender  = $data['gender'];
-        
+
         if ($data['age'] != "") {
             $endDate = $this->getUserBirthDate($data['age']);
             $new_timestamp = strtotime('-12 months', strtotime($endDate));

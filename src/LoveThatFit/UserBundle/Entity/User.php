@@ -2648,4 +2648,14 @@ class User implements UserInterface, \Serializable {
     {
         return $this->fnfusers;
     }
+
+    public function getUniqueName()
+    {
+        return sprintf('%s - %s', $this->id, $this->email);
+    }
+
+    public function __toString()
+    {
+        return $this->getId() ." (" .$this->email." )";
+    }
 }

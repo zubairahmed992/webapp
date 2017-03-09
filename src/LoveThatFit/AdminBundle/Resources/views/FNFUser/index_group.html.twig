@@ -1,0 +1,153 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active">Users</li>
+{% endblock %}
+
+{% block body %}
+    <style>
+        .custom_search {
+            position: relative;
+            bottom: -40px;
+        }
+
+        .custom_search label, .custom_search select {
+            width: 80%;
+            padding-left: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom_search label {
+            display: inline-block;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            float: right !important;
+            margin-left: 12px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .custom_search {
+                bottom: 0px;
+            }
+        }
+
+
+    </style>
+
+    <div class="p_listing">
+        <div class="clearfix"></div>
+        <h1 style="float:left;">FNF Groups</h1>
+        <div class="clearfix"></div>
+        <div class="btn_wrapper2">
+            <div id="chart_figures" class="product_chart_figures">
+                <div class="facts">
+                    <div><span>Total Groups:</span>{{ rec_group_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="bs-docs-grid">
+        <div class="container">
+            <div class="row">
+
+                <table id="groups" class="display" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Group ID</th>
+                        <th>Group Title</th>
+                        <th>Discount</th>
+                        <th>Min Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteGroupModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+            <h3 id="myModalLabel">Delete FNF Group</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to Delete this FNF Group? All User of this group will also delete.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="" class="btn btn-primary delete_url">Delete</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+            var tableGroup = $('#groups').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ path('admin_fnfgroups_paginate') }}",
+                    "type": "POST",
+                    "data": {},
+                },
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "pagingType": "full_numbers",
+                "order": [[0, "desc"]],
+                "columns": [
+                    {
+                        "data": "id",
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "groupTitle",
+                        "width": "20%",
+                    },
+                    {
+                        "data": "discount",
+                        "width": "20%",
+                    },
+                    {
+                        "data": "min_amount",
+                        "width": "20%",
+                    },
+                    {
+                        "title": "Actions",
+                        "targets": -1,
+                        "data": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": DeleteGroupButton,
+                        "width": "25%"
+                    },
+                ],
+                "createdRow": function (row, data, index) {
+                    if (jQuery.inArray(data["id"], notShownIDs) != -1) {
+                        $('td', row).addClass('hide_grid_row');
+                    }
+                },
+            });
+
+            $.fn.dataTable.ext.errMode = 'none';
+
+            jQuery('#groups tbody').on('click', 'button, a, img', function () {
+                var dataAction = $(this).attr('data-action');
+                var data = tableGroup.row($(this).parents('tr')).data();
+
+                if (dataAction == 'Delete') {
+                    var url = '{{ path('admin_fnfgroup_delete', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    $(".delete_url").attr("href", url);
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

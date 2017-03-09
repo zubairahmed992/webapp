@@ -1,3 +1,48 @@
+admin_fnfusers_paginate:
+  pattern: /admin/fnf/users/paginate
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:paginate}
+
+
+add_fnf_user:
+  pattern: /admin/fnf/users/add/new
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:add }
+
 fnf_users:
   pattern:  /admin/fnf/users/{page_number}/{sort}
   defaults: { _controller: LoveThatFitAdminBundle:FNFUser:index , page_number: 1, sort:id }
+
+admin_fnfuser_create:
+  pattern: /admin/fnf-users/create
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:create }
+
+admin_fnfuser_detail_edit:
+  pattern: /admin/fnf-user/{fnf_id}/edit
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:edit }
+
+admin_fnfuser_update:
+  pattern: /admin/fnf-user/{fnf_id}/update
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:update }
+
+admin_fnfuser_delete:
+  pattern: /admin/fnf-user/{user_id}/{group_id}/delete
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:delete }
+
+admin_fnfgroups_paginate:
+  pattern: /admin/fnf/groups/paginate
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:groupPaginate}
+
+admin_fnfgroup_delete:
+  pattern: /admin/fnf-group/{id}/delete
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:groupDelete}
+
+admin_get_fnfgroups:
+  pattern: /admin/fnf-group/get-all-groups
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:getGroupData}
+
+fnf_groups:
+  pattern:  /admin/fnf/groups/{page_number}/{sort}
+  defaults: { _controller: LoveThatFitAdminBundle:FNFGroup:index , page_number: 1, sort:id }
+
+admin_csv_fnf_create_user:
+  pattern: /admin/fnf/user/upload/csv
+  defaults: { _controller: LoveThatFitAdminBundle:FNFUser:getCsvFnfImport}
