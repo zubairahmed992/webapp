@@ -120,6 +120,12 @@ class ProductSpecsController extends Controller
         
         
         $entity = $this->get('pi.product_specification')->find($id);
+        array_key_exists('style_id_number', $updated_specs) ? $entity->setStyleIdNumber($updated_specs['style_id_number']):'';
+        array_key_exists('style_name', $updated_specs) ?$entity->setStyleName($updated_specs['style_name']):'';
+        array_key_exists('title', $updated_specs) ?$entity->setTitle($updated_specs['title']):'';
+        array_key_exists('description', $updated_specs) ?$entity->setDescription($updated_specs['description']):'';
+        array_key_exists('clothing_type', $updated_specs) ?$entity->setClothingType($updated_specs['clothing_type']):'';
+        array_key_exists('brand', $updated_specs) ?$entity->setBrandName($updated_specs['brand']):'';
         $entity->setUndoSpecsJson($entity->getSpecsJson());
         $entity->setSpecsJson(json_encode($updated_specs));
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
