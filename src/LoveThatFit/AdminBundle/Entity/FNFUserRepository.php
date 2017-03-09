@@ -125,11 +125,11 @@ class FNFUserRepository extends EntityRepository
             ->andWhere('fnfg.isArchive = 0');
         if ($search) {
             $query
-                ->andWhere('u.firstName like :search')
-                ->orWhere('u.lastName like :search')
+                ->andWhere('u.firstName like :search or u.lastName like :search or u.email like :search or fnfg.discount like :search or fnf.is_available like :search')
+                /*->orWhere('u.lastName like :search')
                 ->orWhere('u.email like :search')
                 ->orWhere('fnfg.discount like :search')
-                ->orWhere('fnf.is_available like :search')
+                ->orWhere('fnf.is_available like :search')*/
                 ->setParameter('search', "%".$search."%");
         }
 
@@ -150,6 +150,8 @@ class FNFUserRepository extends EntityRepository
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
+        /*echo $query->getSQL(); die;
+            return $query->getResult();*/
         if ($max) {
             $preparedQuery = $query->getQuery()
                 ->setMaxResults($max)
@@ -157,6 +159,8 @@ class FNFUserRepository extends EntityRepository
         } else {
             $preparedQuery = $query->getQuery();
         }
+
+        // echo $preparedQuery->getSQL(); die;
         return $getResult?$preparedQuery->getResult():$preparedQuery;
     }
 }
