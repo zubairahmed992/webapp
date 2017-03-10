@@ -110,7 +110,7 @@
          $('#dv_measurement_table').empty();
                                     var tableData = '<table class="table table-bordered">';
 
-                                    $.each(response, function (size_label, size_measurements) {                             
+                                    $.each($.parseJSON(response), function (size_label, size_measurements) {                             
                                         tableData+="<tr class='Active'><th >"+size_label+"</th><th >garment_dimension</th><th >stretch_value</th><th >garment_stretch</th><th >grade_rule</th><th >grade_rule_stretch</th><th >min_calc</th><th >min_actual</th><th >ideal_low</th><th >fit_model</th><th >ideal_high</th><th >max_calc</th> <th >max_actual</th></tr>" 
 
                                         $.each(size_measurements, function (size_measurements_label, size_measurements_dimention) {                               
@@ -134,8 +134,8 @@
                                     tableData+= "</table>";
                                     $('#dv_measurement_table').append(tableData);   
         
-    }
-        #}
+    }#}
+        
         //-------------- Check Fit Priority Alredy Added
         $('.add_fit_priority').click(function () {               
             var fit_point_val = $.trim($('.fit_priority_value').val()); 
@@ -263,11 +263,12 @@
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
             display: function(value, response) {                
-                $(this).val(value);
+                $(this).val(value);                
             },
             success: function(response, newValue) {                  
             //     $(this).val(response);                     
-
+                //fill_table(response);
+                location.reload();
             }    
         });
     });

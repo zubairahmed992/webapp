@@ -214,9 +214,18 @@ public function getNew() {
     }
     ######################################################################################
     public function dynamicCalculations($decoded){
-        $entity = $this->find($decoded['pk']);
-        $entity->setUndoSpecsJson($entity->getSpecsJson());        
+        $entity = $this->find($decoded['pk']);        
         $specs = json_decode($entity->getSpecsJson(),true);
+        $specs['horizontal_stretch']=33;
+        $specs=$this->dynamic_calculate_stretch($specs);
+        
+        $entity->setSpecsJson(json_encode($specs));
+        return $this->update($entity);  
+        return $specs['sizes'];
+        
+        
+        $entity->setUndoSpecsJson($entity->getSpecsJson());        
+        
         
         #---> hozontal/virtical stretch 
             #--------------------------------------------------------------------------------
@@ -224,6 +233,13 @@ public function getNew() {
             # calculate grade rule
             # calculate fit model ratio
             # calculate ranges
+            if($decoded['name']=='ex_horizontal_stretch'){
+                $specs['horizontal_stretch']=$decoded['value'];
+                $specs=$this->dynamic_calculate_stretch($specs, 'horizontal');            
+                #$specs=$this->calculate_grade_rule($specs);            
+                
+            }
+
         
         #---> Fit Point stretch (calculate only specific Fit Point)
             #-----------------------------------------------------------
@@ -244,10 +260,6 @@ public function getNew() {
             # calculate fit model ratio
             # calculate ranges
 
-        if($decoded['name']=='ex_horizontal_stretch'){
-            $specs['horizontal_stretch']=$decoded['value'];
-            $specs=$this->dynamic_calculate_stretch($specs, 'horizontal');            
-        }
         $entity->setSpecsJson(json_encode($specs));
         return $this->update($entity);                
     }
@@ -270,7 +282,7 @@ public function getNew() {
                     }
                 }
                 #-------------> stretch calculation
-               $specs['garment_stretch']=($fpm['garment_dimension']*['stretch_percentage']/100) + $fpm['garment_dimension']; 
+               $specs['sizes'][$size][$fpk]['garment_stretch']=($fpv['garment_dimension']*$fpv['stretch_percentage']/100) + $fpv['garment_dimension']; 
             }
         }
         return $specs;
@@ -332,8 +344,22 @@ private function calculate_grade_rule($specs){
     }
 
 #---------------------------------------- Calculate Ranges
-private function calculate_ranges(){
-
+private function calculate_ranges($specs, $fit_model_ratio, $fit_point=null){
+foreach ($specs['sizes'] as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                if ($fpk == $fit_point) {
+                    $fit_model_measurement = array_key_exists($fpk, $fit_model_ratio)?$fpv['garment_stretch'] * $fit_model_ratio[$fpk]['fit_model']:0;
+                    $specs['sizes'][$size][$fpk]['fit_model'] = $fit_model_measurement;
+                    $specs['sizes'][$size][$fpk]['min_calc'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['min_calc']:0;
+                    $specs['sizes'][$size][$fpk]['min_actual'] =$specs['sizes'][$size][$fpk]['min_calc'] ;
+                    $specs['sizes'][$size][$fpk]['ideal_low'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['ideal_low']:0;
+                    $specs['sizes'][$size][$fpk]['ideal_high'] = array_key_exists($fpk, $fit_model_ratio)? $fit_model_measurement * $fit_model_ratio[$fpk]['ideal_high']:0;
+                    $specs['sizes'][$size][$fpk]['max_calc'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['max_calc']:0;
+                    $specs['sizes'][$size][$fpk]['max_actual'] =$specs['sizes'][$size][$fpk]['max_calc'] ;
+                }
+            }
+        }
+        return $specs; 
 }
 
     ######################################################################################

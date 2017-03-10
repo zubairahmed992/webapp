@@ -138,9 +138,12 @@ class ProductSpecsController extends Controller
      #------------------------------------- /product_intake/Prod_specs/update_foo 
     public function updateDynamicAction(){  
         $decoded = $this->getRequest()->request->all();        
+        $sizes_json = $this->get('pi.product_specification')->dynamicCalculations($decoded);
+        return new Response(json_encode($sizes_json));
         return new Response(json_encode($decoded));
         
-        $msg = $this->get('pi.product_specification')->dynamicCalculations($decoded);                        
+                                
+        
         $entity = $this->get('pi.product_specification')->find($decoded['pk']);
         $entity->setUndoSpecsJson($entity->getSpecsJson());
         
