@@ -215,7 +215,7 @@ class FNFUserController extends Controller
                     }
 
                     //Craete New group
-                    if ($groupTitle && is_numeric($groupDiscountAmount) && is_numeric($groupMinAmount) && $groupStartDate && $groupEndDate) {
+                    if ($groupTitle && is_numeric($groupDiscountAmount) && is_numeric($groupMinAmount) && $groupDiscountAmount > 0 && $groupMinAmount > 0 && $groupStartDate && $groupEndDate) {
 
                         $expStartDate   = explode('/', trim($groupStartDate));
                         $newStartFormat = $expStartDate[1] . '/' . $expStartDate[0] . '/' . $expStartDate[2];
