@@ -252,53 +252,35 @@
         })  
        
         $.fn.editable.defaults.mode = 'popup';     
-        $('#username').editable();              
+                     
          
-        $( "#lnk_fit_point_stretch" ).click(function() {
-          event.preventDefault();
-          $( "#tbl_fit_point_stretch" ).toggle( "slow", function() {
-            // Animation complete.
-          });
-        });
-          
+      
            $('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
            
+            
+            
+            $('.edit_inline').editable({
+                type: 'text',
+                url: '/webapp/web/app_dev.php/product_intake/product_specs/edit/13',    
+                title: $(this).attr('placeholder'),              
+                display: function(value, response) {
+                    return false;   //disable this method
+                },
+                success: function(response, newValue) {                  
+                     $(this).val(response);                     
+                }    
+            });
+
            
     });
 
 </script>
-    <style type="text/css">
-    .tblData input[type="text"], .tblData select
-    {
-        width: 60%;
-        height: 34px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        margin:10px;
-    }
-    .hlist .singleField{ display:inline-block;} 
-    .hlist .singleField label{
-        float: left;
-        position: relative;        
-        margin-right: 5px;
-    }
-    
-    </style>    
+   
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
     </div>
-{#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}      
+{#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}    
+
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">       
         <div class="form-group">
@@ -313,11 +295,12 @@
                 <input type="text" name="brand" id="sel_clothing_type" readonly="readonly" value="{{ parsed_data.brand }}"  class="form-control">                    
             </div>
         </div>
- 
+
         <div class="form-group">
             <label class="control-label col-sm-2" for="name_title">Style Name : </label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" value="{{ parsed_data.style_name is defined?parsed_data.style_name:'' }}"  name="style_name" placeholder="Enter Product Name">
+            <div class="col-sm-4 style_name">
+{#                <span class="editable">{{ parsed_data.style_name is defined?parsed_data.style_name:'' }}</span>#}
+                <input type="text" class="form-control style_name"  value="{{ parsed_data.style_name is defined?parsed_data.style_name:'' }}"  name="style_name" placeholder="Enter Product Name">
             </div>
         </div>
             
@@ -414,14 +397,14 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control"  name="horizontal_stretch" placeholder="Enter horizontal stretch">
+                <input type="text" class="form-control edit_inline"  name="horizontal_stretch"  data-type="text"  data-pk="2" data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control"  name="vertical_stretch" placeholder="Enter vertical stretch">
+                <input type="text" class="form-control edit_inline"  name="vertical_stretch"  data-type="text"  data-pk="2" data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
             </div>
         </div>
          <div class="form-group">
