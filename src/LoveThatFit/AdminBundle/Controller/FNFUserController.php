@@ -354,13 +354,18 @@ class FNFUserController extends Controller
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
 
-            // var_dump($fnfUser->getGroups()[0]->getDiscount()); die;
-
             if(is_object($fnfUser)){
-                $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
-                    'discount_amount' => $fnfUser->getGroups()[0]->getDiscount(),
-                    'min_amount'      => $fnfUser->getGroups()[0]->getMinAmount()
-                ));
+                foreach($fnfUser->getGroups() as $group)
+                {
+                    if($group->getIsArchive() == 0)
+                    {
+                        $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
+                            'discount_amount' => $group->getDiscount(),
+                            'min_amount'      => $group->getMinAmount()
+                        ));
+                    }
+                }
+
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, 'user in not applicable for discount.');
             }

@@ -54,8 +54,20 @@ function submitform() {
         event.preventDefault();
     }
 
+    var value = $("#FNFUser_groups_0_discount").val();
+    if(isNaN(value) || value < 0) {
+        $("#FNFUser_groups_0_discount").addClass('categoryerror');
+        event.preventDefault();
+    }
+
     if($("#FNFUser_groups_0_min_amount").val() == "" )
     {
+        $("#FNFUser_groups_0_min_amount").addClass('categoryerror');
+        event.preventDefault();
+    }
+
+    var value = $("#FNFUser_groups_0_min_amount").val();
+    if(isNaN(value) || value < 0) {
         $("#FNFUser_groups_0_min_amount").addClass('categoryerror');
         event.preventDefault();
     }
