@@ -342,7 +342,7 @@ class FNFUserController extends Controller
 
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
-            
+
             if(is_object($fnfUser)){
                 foreach($fnfUser->getGroups() as $group)
                 {
