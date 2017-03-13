@@ -263,12 +263,13 @@
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
             display: function(value, response) {                
-                $(this).val(value);                
+                //$(this).val(value);                
             },
             success: function(response, newValue) {                  
             //     $(this).val(response);                     
                 //fill_table(response);
                 location.reload();
+                //alert(response);
             }    
         });
     });
@@ -396,14 +397,14 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
+                <input value="{{parsed_data.horizontal_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
+                <input value="{{parsed_data.vertical_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
             </div>
         </div>
          <div class="form-group">
