@@ -283,7 +283,8 @@ class UserAddressesHelper
                         'shipping_country' =>$address->getCountry(),
                         'shipping_postcode' => $address->getPostCode(),
                         'shipping_state' => $address->getState(),
-                        'shipping_default' => $address->getShippingDefault()
+                        'shipping_default' => $address->getShippingDefault(),
+                        'billing_id'       => $address->getId
                     );
                 }else{
                     $billingAddresses[] = array(
@@ -296,7 +297,8 @@ class UserAddressesHelper
                         'billing_country' => $address->getCountry(),
                         'billing_postcode' => $address->getPostCode(),
                         'billing_state' => $address->getState(),
-                        'billing_default' => $address->getBillingDefault()
+                        'billing_default' => $address->getBillingDefault(),
+                        'shipping_id' => $address->getId()
                     );
                 }
             }
