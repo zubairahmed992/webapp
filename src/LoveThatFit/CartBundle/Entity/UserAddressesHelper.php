@@ -284,7 +284,7 @@ class UserAddressesHelper
                         'shipping_postcode' => $address->getPostCode(),
                         'shipping_state' => $address->getState(),
                         'shipping_default' => $address->getShippingDefault(),
-                        'billing_id'       => $address->getId()
+                        'shipping_id'       => $address->getId()
                     );
                 }else{
                     $billingAddresses[] = array(
@@ -298,7 +298,7 @@ class UserAddressesHelper
                         'billing_postcode' => $address->getPostCode(),
                         'billing_state' => $address->getState(),
                         'billing_default' => $address->getBillingDefault(),
-                        'shipping_id' => $address->getId()
+                        'billing_id' => $address->getId()
                     );
                 }
             }
