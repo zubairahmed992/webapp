@@ -246,3 +246,15 @@ ws_get_braintree_client_token:
 ws_order_detail:
    pattern: /ws/order_detail
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:orderDetail}
+
+nws_save_user_shipping_address:
+  pattern: /nws/save_user_shipping_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
+
+nws_save_user_billing_address:
+  pattern: /nws/save_user_billing_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserBillingAddress}
+
+nws_get_all_user_saved_addresses:
+  pattern: /nws/get_all_user_saved_addresses
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddresses}
