@@ -224,6 +224,8 @@ public function getNew() {
             $fit_point_stretch_array = explode('-', $decoded['name']);            
             $specs['fit_point_stretch'][$fit_point_stretch_array[1]] = $decoded['value'];
             $specs = $this->generate_specs_for_fit_point_stretch($specs, $fit_point_stretch_array[1]);
+        }elseif(strpos($decoded['name'],'actual' ) !== false){            
+            $specs = $this->generate_specs_for_actual($specs, $decoded['name'], $decoded['value']);
         }else{
             return $specs;
         }
@@ -550,5 +552,23 @@ foreach ($specs['sizes'] as $size => $fit_points) {
             $specs_updated['sizes'][$size][$fp_target]['max_actual'] = $specs_updated['sizes'][$size][$fp_target]['max_calc'];
         }
         return $specs_updated;
+    }
+     
+    ##########################################################################
+    public function generate_specs_for_actual($specs, $target, $value) {        
+        $str=explode('-', $target);
+        #calculate ratio sizes-6-bust-min_actual
+        $fp=$str[2];
+        $fm_size=$str[1];
+        $attrib=$str[3];
+        
+        $specs['sizes'][$fm_size][$fp][$attrib] = $value;
+        $ratio = $value/$specs['sizes'][$fm_size][$fp]['fit_model'];
+                
+        #--------- calculate grade rule
+        foreach ($specs['sizes'] as $size => $fit_points) {            
+            $specs['sizes'][$size][$fp][$attrib] = $ratio * $fit_points[$fp]['fit_model'];                                    
+        }
+        return $specs;
     }
 }
