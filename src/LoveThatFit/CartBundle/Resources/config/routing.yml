@@ -81,3 +81,34 @@ user_profile_order_list:
     pattern:  /profile/order/{page_number}/{sort}
     defaults: { _controller: LoveThatFitCartBundle:MyOrder:index,page_number: 1, sort:id}
 
+
+
+#------------------- Wishlist
+
+wishlist_basket:
+    pattern:  /wishlist/basket/
+    defaults: { _controller: LoveThatFitCartBundle:Wishlist:basket}
+
+wishlist_process_checkout:
+    pattern:  /wishlist/process
+    defaults: { _controller: LoveThatFitCartBundle:Wishlist:processCheckout}
+
+wishlist_add_ajax:
+    pattern:  /wishlist/addajax
+    defaults: { _controller: LoveThatFitCartBundle:Wishlist:addajax}
+    requirements:
+        _method:  POST
+
+wishlist_show:
+    pattern:  /wishlist/show
+    defaults: { _controller: LoveThatFitCartBundle:Wishlist:show}
+
+wishlist_delete:
+    pattern:  /wishlist/delete/{id}
+    defaults: { _controller: LoveThatFitCartBundle:Wishlist:delete}
+
+wishlist_update_ajax:
+    pattern:  /wishlist/update_qty_ajax/{id}/{qty}
+    defaults: { _controller: LoveThatFitCartBundle:Wishlist:updateQtyAjax}
+    requirements:
+        _method:  GET

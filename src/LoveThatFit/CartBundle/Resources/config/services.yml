@@ -51,3 +51,12 @@ services:
             container: "@service_container"
 
 
+
+     cart.helper.wishlist:
+        class: LoveThatFit\CartBundle\Entity\WishlistHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\CartBundle\Entity\Wishlist
+            container: "@service_container"
+

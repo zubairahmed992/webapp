@@ -537,6 +537,32 @@ nws_cart_item_add_to_cart:
      item_id: 4126
    request_type: post
 
+#-------------wishlist
+nws_show_user_wishlist:
+   pattern:  /nws/show_user_wishlist
+   title: show_user_wishlist
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: get
+
+nws_wishlist_item_add_to_wishlist:
+   pattern:  /nws/add_item_to_wishlist
+   title: product_add_to_wishlist
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     item_id: 4126
+   request_type: post
+
+#remove single item from user cart
+nws_remove_user_wishlist_item:
+   pattern:  /nws/remove_user_item
+   title: remove_user_wishlist
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     item_id: 4126
+   request_type: post
+
 nws_product_detail:
    pattern:  /nws/product_detail_with_images
    title: product_detail

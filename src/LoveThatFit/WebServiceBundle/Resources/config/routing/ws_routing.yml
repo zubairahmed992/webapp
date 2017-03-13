@@ -194,6 +194,23 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
+#--------------------------------------Wishlist
+#show wishlist
+nws_show_user_wishlist:
+    pattern:  /nws/show_user_wishlist
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSWishlist:showUserWishlistWithNameDescription}
+
+#Add Single Item to Wishlist
+nws_wishlist_item_add_to_wishlist:
+    pattern:  /nws/add_item_to_wishlist
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSWishlist:addItemToWishlistNew}
+
+#remove single item from user wishlist
+nws_remove_user_wishlist_item:
+    pattern:  /nws/remove_user_item
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSWishlist:removeUserItem}
+
+
 ws_get_braintree_authtoken:
    pattern:  /ws/get_braintree_authtoken
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAuthToken}
