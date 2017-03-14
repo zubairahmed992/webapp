@@ -22,11 +22,12 @@ class MappingController extends Controller
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
-        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $fit_points = array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
+        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+//        array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
+//            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:new.html.twig', array(
-                    'fit_model_measurement' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                   // 'fit_model_measurement' => $this->get('productIntake.fit_model_measurement')->findAll(),
                     'fit_points' => $fit_points,
                     'brands' => $brands,
                     'clothing_types' => $clothing_types,
@@ -104,7 +105,30 @@ class MappingController extends Controller
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
     }
     #----------------------- /product_intake/specs_mapping/edit
-    
+    public function editAction($id)
+    {
+        $pm = $this->get('productIntake.product_specification_mapping')->find($id); 
+        $parsed_data = json_decode($pm->getMappingJson(),true);
+        $brands = $this->get('admin.helper.brand')->getBrnadArray();
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+        $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
+        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_type']:$product_specs['man']['clothing_type']);
+        $body_types = ($parsed_data['gender'] == 'f'? $size_specs['fit_types']['woman']:$size_specs['fit_types']['man']);
+        $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
+        return $this->render('LoveThatFitProductIntakeBundle:Mapping:edit.html.twig', array(
+                    'fit_points' => $fit_points,
+                    'brands' => $brands,
+                    'clothing_types' => $clothing_types,
+                    'product_specs' => $product_specs,
+                    'size_specs' => $size_specs,
+                    'product_specs_json' => json_encode($product_specs),
+                    'size_specs_json' => json_encode($size_specs),
+                    'parsed_data' => $parsed_data,
+                    'body_types'  => $body_types,
+                    'size_title' => $size_title,
+                ));
+    }
     #----------------------- /product_intake/specs_mapping/update
     #----------------------- /product_intake/specs_mapping/delete
     public function deleteAction($id){                
