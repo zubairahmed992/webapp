@@ -194,6 +194,23 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
+#--------------------------------------Wishlist
+#show wishlist
+nws_show_user_wishlist:
+    pattern:  /nws/show_user_wishlist
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSWishlist:showUserWishlistWithNameDescription}
+
+#Add Single Item to Wishlist
+nws_wishlist_item_add_to_wishlist:
+    pattern:  /nws/add_item_to_wishlist
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSWishlist:addItemToWishlistNew}
+
+#remove single item from user wishlist
+nws_remove_user_wishlist_item:
+    pattern:  /nws/remove_user_item
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSWishlist:removeUserItem}
+
+
 ws_get_braintree_authtoken:
    pattern:  /ws/get_braintree_authtoken
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAuthToken}
@@ -246,3 +263,15 @@ ws_get_braintree_client_token:
 ws_order_detail:
    pattern: /ws/order_detail
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:orderDetail}
+
+nws_save_user_shipping_address:
+  pattern: /nws/save_user_shipping_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
+
+nws_save_user_billing_address:
+  pattern: /nws/save_user_billing_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserBillingAddress}
+
+nws_get_all_user_saved_addresses:
+  pattern: /nws/get_all_user_saved_addresses
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddresses}

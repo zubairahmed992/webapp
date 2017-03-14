@@ -56,7 +56,7 @@ class MailHelper {
         return $result;
     }
 
-    private function sendHtmlEmail($from, $to, $body, $subject = '', $dataArray = array()) {
+    private function sendHtmlEmail($from, $to, $body, $subject = '', $dataArray = array(),$enableBCC = false) {
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
@@ -65,6 +65,15 @@ class MailHelper {
             ->setContentType("text/html")
             ->setBody(
                 $this->templating->render($body, array( 'dataArray' => $dataArray)));
+            //Enable BCC for user order
+            //Configure email through app/config/parameters.yml
+        if($enableBCC 
+            && isset($this->conf['parameters']['podio_bcc']) 
+            && filter_var($this->conf['parameters']['podio_bcc'] , FILTER_VALIDATE_EMAIL)
+            ){
+            $message->addBcc($this->conf['parameters']['podio_bcc']);
+          }
+
         if($this->server!='local')
         {
             try {
@@ -110,8 +119,9 @@ class MailHelper {
 
         $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
         $subject = 'SelfieStyler: Thank you very much for your order. ';
-
-        return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray);
+        //Enable BBC
+        $enableBCC = true;
+        return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
     }
 
     public function sendPurchaseEmailToAdmin( $user, $dataArray )

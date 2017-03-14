@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\CartBundle\Entity;
 
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
@@ -79,6 +80,239 @@ class UserAddressesHelper
             $address_info->setBillingDefault('0');
             return $this->save($address_info);
         }
+    }
+
+    public function saveUserBillingAddress($decoded, $user)
+    {
+        $address = $decoded["billing"];
+        if(!empty($address)){
+
+            if($address['shipping_same'] == 1){
+                $address_info = $this->createNew();
+                $address_info->setUser($user);
+                $address_info->setFirstName($address["billing_first_name"]);
+                $address_info->setLastName($address["billing_last_name"]);
+                $address_info->setAddress1($address["billing_address1"]);
+                $address_info->setAddress2($address["billing_address2"]);
+                $address_info->setPhone($address["billing_phone"]);
+                $address_info->setCity($address["billing_city"]);
+                $address_info->setPostCode($address["billing_postcode"]);
+                $address_info->setCountry($address["billing_country"]);
+                $address_info->setState($address["billing_state"]);
+
+                $this->markedPreviousShippingAddressNonDefault($user);
+                $address_info->setShippingDefault('1');
+                $address_info->setBillingDefault('0');
+                $address_info->setAddressType('2');
+
+                $this->save($address_info);
+            }
+
+            $address_info = $this->createNew();
+            $address_info->setUser($user);
+            $address_info->setFirstName($address["billing_first_name"]);
+            $address_info->setLastName($address["billing_last_name"]);
+            $address_info->setAddress1($address["billing_address1"]);
+            $address_info->setAddress2($address["billing_address2"]);
+            $address_info->setPhone($address["billing_phone"]);
+            $address_info->setCity($address["billing_city"]);
+            $address_info->setPostCode($address["billing_postcode"]);
+            $address_info->setCountry($address["billing_country"]);
+            $address_info->setState($address["billing_state"]);
+            if( $address["billing_default"] == 1)
+            {
+                $this->markedPreviousBillingAddressNonDefault($user);
+                $address_info->setBillingDefault('1');
+            }else {
+                $address_info->setBillingDefault('0');
+            }
+            $address_info->setShippingDefault('0');
+            $address_info->setAddressType('1');
+            return $this->save($address_info);
+        }
+
+        return false;
+    }
+
+    public function saveUserShippingAddress($decoded, $user){
+        $address = $decoded["shipping"];
+        if(!empty($address)) {
+            $address_info = $this->createNew();
+            $address_info->setUser($user);
+            $address_info->setFirstName($address["shipping_first_name"]);
+            $address_info->setLastName($address["shipping_last_name"]);
+            $address_info->setAddress1($address["shipping_address1"]);
+            $address_info->setAddress2($address["shipping_address2"]);
+            $address_info->setPhone($address["shipping_phone"]);
+            $address_info->setCity($address["shipping_city"]);
+            $address_info->setPostCode($address["shipping_postcode"]);
+            $address_info->setCountry($address["shipping_country"]);
+            $address_info->setState($address["shipping_state"]);
+
+            if( $address["shipping_default"] == 1)
+            {
+                $this->markedPreviousShippingAddressNonDefault($user);
+                $address_info->setShippingDefault('1');
+            }else {
+                $address_info->setShippingDefault('0');
+            }
+            $address_info->setBillingDefault('0');
+            $address_info->setAddressType('2');
+            return $this->save($address_info);
+        }
+
+        return false;
+    }
+
+    public function updateUserBillingAddress($decoded, $user){
+        $billing_id = $decoded['billing_id'];
+        if($billing_id > 0){
+            $address = $decoded["billing"];
+            $address_info = $this->find($billing_id);
+
+            $address_info->setFirstName($address["billing_first_name"]);
+            $address_info->setLastName($address["billing_last_name"]);
+            $address_info->setAddress1($address["billing_address1"]);
+            $address_info->setAddress2($address["billing_address2"]);
+            $address_info->setPhone($address["billing_phone"]);
+            $address_info->setCity($address["billing_city"]);
+            $address_info->setPostCode($address["billing_postcode"]);
+            $address_info->setCountry($address["billing_country"]);
+            $address_info->setState($address["billing_state"]);
+            if( $address["billing_default"] == 1)
+            {
+                $this->markedPreviousBillingAddressNonDefault($user);
+                $address_info->setBillingDefault('1');
+            }else {
+                $address_info->setBillingDefault('0');
+            }
+            $address_info->setShippingDefault('0');
+            $address_info->setAddressType('1');
+
+            return $this->save($address_info);
+        }
+        return false;
+    }
+
+    public function updateUserShippingAddress($decoded, $user){
+        $shipping_id = $decoded['shipping_id'];
+        if($shipping_id > 0){
+            $address = $decoded["shipping"];
+            $address_info = $this->find($shipping_id);
+
+            $address_info->setFirstName($address["shipping_first_name"]);
+            $address_info->setLastName($address["shipping_last_name"]);
+            $address_info->setAddress1($address["shipping_address1"]);
+            $address_info->setAddress2($address["shipping_address2"]);
+            $address_info->setPhone($address["shipping_phone"]);
+            $address_info->setCity($address["shipping_city"]);
+            $address_info->setPostCode($address["shipping_postcode"]);
+            $address_info->setCountry($address["shipping_country"]);
+            $address_info->setState($address["shipping_state"]);
+
+            if( $address["shipping_default"] == 1)
+            {
+                $this->markedPreviousShippingAddressNonDefault($user);
+                $address_info->setShippingDefault('1');
+            }else {
+                $address_info->setShippingDefault('0');
+            }
+            $address_info->setBillingDefault('0');
+            return $this->save($address_info);
+        }
+        return false;
+    }
+
+    public function markedPreviousShippingAddressNonDefault(User $user)
+    {
+        $userAddressObject = $this->repo->findOneBy(array(
+            'user' => $user->getId(),
+            'adress_type' => 2,
+            'shipping_default' => 1
+        ));
+
+        if(is_object($userAddressObject)){
+            $userAddressObject->setShippingDefault('0');
+            $this->save($userAddressObject);
+        }
+
+        return;
+    }
+
+    public function markedPreviousBillingAddressNonDefault(User $user)
+    {
+        $userAddressObject = $this->repo->findOneBy(array(
+            'user' => $user->getId(),
+            'adress_type' => 1,
+            'billing_default' => 1
+        ));
+
+        // var_dump( $userAddressObject ); die;
+
+        if(is_object($userAddressObject)){
+            $userAddressObject->setBillingDefault('0');
+            $this->save($userAddressObject);
+        }
+
+        return;
+    }
+
+    public function getAllUserSavedAddresses(User $user)
+    {
+        $shippingAddresses = array();
+        $billingAddresses = array();
+        if(is_object( $user )){
+            $userAddresses = $this->repo->findBy(array(
+                'user' => $user->getId(),
+                'adress_type' => array(1,2)
+            ));
+
+            // var_dump($userAddresses); die;
+
+            foreach($userAddresses as $address)
+            {
+                // echo $address->getAddressType();
+                if($address->getAddressType() == 2){
+                    $shippingAddresses[] = array(
+                        'shipping_first_name' => $address->getFirstName(),
+                        'shipping_last_name' => $address->getLastName(),
+                        'shipping_address1' => $address->getAddress1(),
+                        'shipping_address2' => $address->getAddress2(),
+                        'shipping_phone' => $address->getPhone(),
+                        'shipping_city' => $address->getCity(),
+                        'shipping_country' =>$address->getCountry(),
+                        'shipping_postcode' => $address->getPostCode(),
+                        'shipping_state' => $address->getState(),
+                        'shipping_default' => $address->getShippingDefault(),
+                        'shipping_id'       => $address->getId()
+                    );
+                }else{
+                    $billingAddresses[] = array(
+                        'billing_first_name' => $address->getFirstName(),
+                        'billing_last_name' => $address->getLastName(),
+                        'billing_address1' => $address->getAddress1(),
+                        'billing_address2' => $address->getAddress2(),
+                        'billing_phone' => $address->getPhone(),
+                        'billing_city' => $address->getCity(),
+                        'billing_country' => $address->getCountry(),
+                        'billing_postcode' => $address->getPostCode(),
+                        'billing_state' => $address->getState(),
+                        'billing_default' => $address->getBillingDefault(),
+                        'billing_id' => $address->getId()
+                    );
+                }
+            }
+
+            return array(
+                'billing' => $billingAddresses,
+                'shipping' => $shippingAddresses
+            );
+        }
+
+        return array(
+            'billing' => array(),
+            'shipping' => array()
+        );
     }
 
 

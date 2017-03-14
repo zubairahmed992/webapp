@@ -40,10 +40,7 @@ class FNFUserForm  extends AbstractType
             'class' => 'LoveThatFitUserBundle:User',
             'empty_value' => '',
             'multiple' => true,
-            'label' => 'users',
-            'choices'  => function ($user) {
-                return sprintf('%s (%s)', $user->getId(), $user->getEmail());
-            }
+            'label' => 'users'
         ));
     }
 

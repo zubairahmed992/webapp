@@ -124,13 +124,45 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $resp = $this->container->get('cart.helper.cart')->getUserCartWithNameDescription($user);
+            $cartresp = $this->container->get('cart.helper.cart')->getUserCartWithNameDescription($user);
             $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
-            foreach ($resp as $key => $value) {
-                $resp[$key]['image'] = $base_path . $value['image'];
+            foreach ($cartresp as $key => $value) {
+                $cartresp[$key]['image'] = $base_path . $value['image'];
             }
 
-            $res = $this->get('webservice.helper')->response_array(true, 'success', true, $resp);
+            $wishlistresp = $this->container->get('cart.helper.wishlist')->getUserWishlistWithNameDescription($user);
+            $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+            foreach ($wishlistresp as $key => $value) {
+                $wishlistresp[$key]['image'] = $base_path . $value['image'];
+            }
+
+            $cartList = $cartresp;
+            $wishlistList = $wishlistresp;
+
+            $cartconf= array(
+                'data' => $cartList,
+                'count'=> count($cartList),
+                'message' => 'Cart list',
+                'success' => 'true',
+            );
+
+            $wishlistconf= array(
+                'data' => $wishlistList,
+                'count'=> count($wishlistList),
+                'message' => 'Wish list',
+                'success' => 'true',
+            );
+
+            $data = array(
+                'count'=> 2,
+                'message' => 'Success Result',
+                'success' => 1,
+            );
+            $data['cart'] = $cartconf;
+            $data['wishlist'] = $wishlistconf;
+
+            return new Response(json_encode($data));
+
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -148,6 +180,9 @@ class WSCartController extends Controller
         if ($user) {
             $item_id = $decoded["item_id"];
             $qty = $decoded["quantity"];
+
+            /*Remove Item from wishlist */
+            $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
 
             $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
             $resp = 'Item has been added to Cart Successfully';
@@ -438,4 +473,83 @@ class WSCartController extends Controller
         }
         return new Response($res);
     }
+
+
+    #---------------------------------------------- User address Services ---------------------------#
+
+    public function saveUserBillingAddressAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $billing_id = $decoded['billing_id'];
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            if($billing_id > 0){
+                $billingObject = $this->container->get('cart.helper.userAddresses')->updateUserBillingAddress($decoded, $user);
+            }else{
+                $billingObject = $this->container->get('cart.helper.userAddresses')->saveUserBillingAddress($decoded, $user);
+            }
+
+            if($billingObject)
+            {
+                $res = $this->get('webservice.helper')->response_array(true, 'user address successfully saved', true, array(
+                    "billing_address_id" => $billingObject->getId()
+                ));
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
+            }
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
+    public function saveUserShippingAddressAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $shipping_id = $decoded['shipping_id'];
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            if($shipping_id > 0){
+                $shippingObject = $this->container->get('cart.helper.userAddresses')->updateUserShippingAddress($decoded, $user);
+            }else{
+                $shippingObject = $this->container->get('cart.helper.userAddresses')->saveUserShippingAddress($decoded, $user);
+            }
+
+            if($shippingObject)
+            {
+                $res = $this->get('webservice.helper')->response_array(true, 'user address successfully saved', true, array(
+                    "shipping_address_id" => $shippingObject->getId()
+                ));
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
+            }
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
+    public function getAllUserSavedAddressesAction(){
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $addresses = $this->container->get('cart.helper.userAddresses')->getAllUserSavedAddresses( $user );
+            $addresses['shipping_methods'][] = array(
+                "method" => "4-Day Shipping",
+                'detail' => "Deliver on or Monday",
+                'method_cost' => "Free",
+                "method_id" => '1'
+            );
+            $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
 }

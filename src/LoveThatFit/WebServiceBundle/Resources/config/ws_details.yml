@@ -537,6 +537,32 @@ nws_cart_item_add_to_cart:
      item_id: 4126
    request_type: post
 
+#-------------wishlist
+nws_show_user_wishlist:
+   pattern:  /nws/show_user_wishlist
+   title: show_user_wishlist
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+   request_type: get
+
+nws_wishlist_item_add_to_wishlist:
+   pattern:  /nws/add_item_to_wishlist
+   title: product_add_to_wishlist
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     item_id: 4126
+   request_type: post
+
+#remove single item from user cart
+nws_remove_user_wishlist_item:
+   pattern:  /nws/remove_user_item
+   title: remove_user_wishlist
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     item_id: 4126
+   request_type: post
+
 nws_product_detail:
    pattern:  /nws/product_detail_with_images
    title: product_detail
@@ -601,3 +627,25 @@ ws_order_detail:
   title:  order_detail
   params:
     auth_token: 56565656566
+
+nws_save_user_billing_address:
+  pattern: /nws/save_user_billing_address
+  title: save_user_billing_address
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz", "shipping_same": "0", "billing_default": "1"}
+    billing_id: 0
+
+nws_save_user_shipping_address:
+  pattern: /nws/save_user_shipping_address
+  title: save_user_shipping_address
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    shipping: {"shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"123334","shipping_city":"xyz","shipping_postcode":"abc-1234","shipping_country":"xyz","shipping_state":"xyz", "shipping_default": "1"}
+    shipping_id: 0
+
+nws_get_all_user_saved_addresses:
+  pattern: /nws/get_all_user_saved_addresses
+  title: get_all_user_saved_addresses
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
