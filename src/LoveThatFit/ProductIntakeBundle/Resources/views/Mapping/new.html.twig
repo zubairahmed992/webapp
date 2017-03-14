@@ -232,7 +232,7 @@
                               function fill_body_type(gender){                                          
                                   gender=gender=='m'?'man':'woman';                                    
                                   $('#body_type').empty();
-                                  var option = '<option value="">Select </option>';
+                                  var option ='';
                                   str='';
                                  $.each(size_specs.fit_types[gender], function(val, text) {
                                       option += '<option value="'+ val + '">' + text + '</option>';
