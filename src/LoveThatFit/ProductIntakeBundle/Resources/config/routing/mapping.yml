@@ -11,11 +11,11 @@ product_intake_specs_mapping_create:
     defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:create }    
     
 product_intake_specs_mapping_edit:
-    pattern:  /product_intake/specs_mapping/edit{id}
+    pattern:  /product_intake/specs_mapping/edit/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:edit }    
 
 product_intake_specs_mapping_update:
-    pattern:  /product_intake/specs_mapping/update{id}
+    pattern:  /product_intake/specs_mapping/update/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:update }    
 
 product_intake_specs_mapping_csv_upload:

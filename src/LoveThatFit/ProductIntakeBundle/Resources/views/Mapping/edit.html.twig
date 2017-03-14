@@ -44,7 +44,7 @@
                         <select name="clothing_type" id="sel_clothing_type"  class="form-control">
                             <option>Select</option>
                             {% for key,val in clothing_types %}
-                               <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                               <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (val == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
                             {% endfor %}
                         </select>                                  
                     </div>
@@ -145,7 +145,9 @@
             <script type="application/javascript">
                 var $ = jQuery.noConflict();
                 jQuery(document).ready(function () {                 
-                    $(".selectSize").change(function () {                 
+                    $(".selectSize").change(function () { 
+                        var size = $('.get_size').val();
+                        obj = JSON.parse(size);                      
                     var siz_genrate = $('.size_genrate'); 
                     $('.add_size_row').show();
                     size_specs = $.parseJSON($('#size_specs_json').text());                
@@ -166,8 +168,18 @@
                         $.each(result, function (k, fit_point_value) {
                         tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
                             tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
-                            $.each(size_specs.sizes[gender][size_type], function (k, v) {                    
-                            tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
+                            $.each(size_specs.sizes[gender][size_type], function (k, v) {  
+                                if (v in obj) {
+                                    if ( fit_point_value in obj[v] ) { 
+                                            var index_value = obj[v][fit_point_value];      
+                                            console.log(index_value)
+                                        } else {
+                                            var index_value = "";
+                                        }
+                                    } else {
+                                       var index_value = "";
+                                }
+                            tableData += "<td>  <input type='text' value='"+index_value+"' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
                             });
                             tableData += "</tr>";
                         });
@@ -267,6 +279,7 @@
                               function genrate_size_table(size_selected){
                                 var size = $('.get_size').val();
                                 obj = JSON.parse(size);
+                                //console.log(obj)
                                 var size_type = size_selected  
                                 var siz_genrate = $('.size_genrate'); 
                                 $('.add_size_row').show();
@@ -290,15 +303,15 @@
                                         tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
                                         $.each(size_specs.sizes[gender][size_type], function (k, v) {
                                             if (v in obj) {
-                                                if ( key in obj[v] ) { 
-                                                    var index_value = obj[v][key];
+                                                if ( fit_point_value in obj[v] ) { 
+                                                    var index_value = obj[v][fit_point_value];      
                                                     console.log(index_value)
                                                 } else {
                                                     var index_value = "";
                                                 }
                                             } else {
                                                     var index_value = "";
-                                                }
+                                            }
                                         tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "' value='"+index_value+"'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
                                         });
                                         tableData += "</tr>";
@@ -320,7 +333,7 @@
                                       var formData = new FormData();
                                       formData.append('csv_file', $('input[type=file]')[0].files[0]); 
                                       $.ajax({
-                                          url: '../specs_mapping/csv_upload',
+                                          url: '../csv_upload',
                                           data: formData,
                                           type: 'POST',
                                           contentType: false,

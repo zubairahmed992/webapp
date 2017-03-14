@@ -23,11 +23,9 @@ class MappingController extends Controller
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
-        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
-//        array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-//            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        $fit_points =      array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
+            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:new.html.twig', array(
-                   // 'fit_model_measurement' => $this->get('productIntake.fit_model_measurement')->findAll(),
                     'fit_points' => $fit_points,
                     'brands' => $brands,
                     'clothing_types' => $clothing_types,
@@ -112,7 +110,8 @@ class MappingController extends Controller
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
-        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        $fit_points =      array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
+            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
         $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_type']:$product_specs['man']['clothing_type']);
         $body_types = ($parsed_data['gender'] == 'f'? $size_specs['fit_types']['woman']:$size_specs['fit_types']['man']);
         $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
@@ -130,6 +129,58 @@ class MappingController extends Controller
                 ));
     }
     #----------------------- /product_intake/specs_mapping/update
+     
+    public function updateAction(Request $request, $id)
+    {  
+        $entity = $this->get('productIntake.product_specification_mapping')->find($id);
+         $decoded = $request->request->all();
+        $apecs_arr = array();
+        foreach ($decoded as $k => $v) {
+            if (!in_array($k, array('select_size', 'fit_point'))) {
+                if (strlen($v) > 0) {
+                    $ar = explode('-', $k);
+                    if (is_array($ar) && count($ar) > 1) {
+                        switch (count($ar)) {
+                            case 2:
+                                $apecs_arr[$ar[0]][$ar[1]] = $v;
+                                break;
+                            case 3:
+                                $apecs_arr[$ar[0]][$ar[1]][$ar[2]] = $v;
+                                break;
+                            case 4:
+                                $apecs_arr[$ar[0]][$ar[1]][$ar[2]][$ar[3]] = $v;
+                                break;
+                            case 5:
+                                $apecs_arr[$ar[0]][$ar[1]][$ar[2]][$ar[3]][$ar[4]] = $v;
+                                break;
+                            case 6:
+                                $apecs_arr[$ar[0]][$ar[1]][$ar[2]][$ar[3]][$ar[4]][$ar[5]] = $v;
+                        }
+                    } else {
+                        $apecs_arr[$k] = $v;
+                    }
+                }
+            }
+        }
+
+        
+        $entity->setBrand($decoded['brand']);
+        $entity->setSizeTitleType($decoded['size_title_type']);
+        $entity->setClothingType($decoded['clothing_type']);
+        $entity->setGender($decoded['gender']);
+        $entity->setTitle($decoded['mapping_title']);
+        $entity->setDescription($decoded['mapping_description']);
+        $entity->setMappingJson(json_encode($apecs_arr));
+        $this->container->get('productIntake.product_specification_mapping')->update($entity);
+        $entity->setMappingFileName('csv_mapping_' . $entity->getId() . '.csv');
+        if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $entity->getAbsolutePath())) {
+            $this->container->get('productIntake.product_specification_mapping')->update($entity);          
+        } 
+
+        $this->get('session')->setFlash('info', 'Updated Product specification Mapping created.');        
+        return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
+     
+    }
     #----------------------- /product_intake/specs_mapping/delete
     public function deleteAction($id){                
         $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
