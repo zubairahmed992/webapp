@@ -537,6 +537,15 @@ nws_cart_item_add_to_cart:
      item_id: 4126
    request_type: post
 
+
+nws_cart_items_add_to_cart:
+   pattern:  /nws/add_items_to_cart
+   title: product_add_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     items: [{"item_id":4126,"quantity":1},{"item_id":4127,"quantity":2}]
+   request_type: post
+
 #-------------wishlist
 nws_show_user_wishlist:
    pattern:  /nws/show_user_wishlist

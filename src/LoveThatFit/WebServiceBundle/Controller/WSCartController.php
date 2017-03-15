@@ -194,6 +194,32 @@ class WSCartController extends Controller
 
     }
 
+
+    // Add Multiple Item to Cart
+    public function addItemsToCartNewAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $items = isset($decoded["items"]) ? $decoded["items"] : "0";
+            if ($items != 0) {
+                //$this->container->get('cart.helper.cart')->removeUserCart($user);
+                foreach ($items as $detail) {
+                    $this->container->get('cart.helper.cart')->fillCartforService($detail["item_id"], $user, $detail["quantity"]);
+                }
+                $resp = 'Items has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+
+    }
+
     public function getAuthTokenAction()
     {
         /*$decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
