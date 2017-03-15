@@ -1,246 +1,140 @@
+paper.install(window);
+$(document).ready(function() {
+   paper.setup('canv_mask');
+   
+   var liquid_mask = {
+        user_height: parseFloat($('#user_height_frm_3').attr('value')),
+        //user_height: 74,
+        def_mask: $("#default_user_path").html(),
+        dm_body_parts_details_json: JSON.parse($("#dm_body_parts_details_json").attr('value')),
+        device_type: $("#dv_type").attr("value"),
+        device_model: $("#dv_model").attr("value"),
+        adjusted_user_mask: function(){return}
+    }
+    
+    $('#user_bust_px').attr('value',parseFloat(liquid_mask.dm_body_parts_details_json.bust_px));
+    
+    $('#user_waist_px').attr('value',parseFloat(liquid_mask.dm_body_parts_details_json.waist_px));
+    $('#user_hip_px').attr('value',parseFloat(liquid_mask.dm_body_parts_details_json.hip_px));
+    
+   px_per_inch_ratio = px_per_in_ratio(liquid_mask);
+   init(liquid_mask);
+   console.log(liquid_mask.dm_body_parts_details_json);
+   set_arm_rgt();
+});
+
 hitOptions = {
 	segments: true,
-	stroke: false,
-	fill: false,
+	stroke: true,
+	fill: true,
 	tolerance: 22
 };
 
 inc_ratio = 1;
 
-var liquid_mask = {
-    user_height: parseFloat($('#user_height_frm_3').attr('value')),
-    def_mask: $("#default_user_path").html(),
-    device_type: $("#dv_type").attr("value"),
-    device_model: $("#dv_model").attr("value"),
-    def_zoom_ratio: 1,
-    scr_empty_top: 26,
-    px_per_inch_ratio: function(){return 6.891},
-    adjusted_user_mask: function(){return}
-}
-//alert("asdf");
 
+//////// Pixel per inch Ratio based on device type and model
 
-
-//dv_gap_top = 26;
-//dv_gap_bottom = 32;
-
-//Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
-if(liquid_mask.device_type == "iphone5" || liquid_mask.device_type == "android"){
-
-  if(liquid_mask.device_model == "iphone5"){
-        fixed_px_inch_ratio = 6.891;
-        adj_btm_fix = 0; // Adjustment of iPhone5S
-        //alert("iPhone5: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        //full_adj_btm_fix = 30.333; //30.333 for iPhone 5s // Temp, not in scope fo iphone5
-        full_adj_btm_fix = 30.333; //30.333 for iPhone 5C
-  }
-  if(liquid_mask.device_model == "iphone5c"){
-      //alert("iPhone5C: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        fixed_px_inch_ratio = 6.891;
-
-        // adjusting 66.666% value of top empty area ----- 19.5/3*2 = 13
-        //
-        //
-        // 3.83 is 1% value
-        //adj_btm_fix = (13 + 3.83)-3;
-
-        //adj_btm_fix = 13; (Old setting when move mask upside)
-        adj_btm_fix = 0;
-        
-        full_adj_btm_fix = 30.333;
-    }
-    if(liquid_mask.device_model == "iphone5s"){
-        //alert("iPhone5S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        fixed_px_inch_ratio = 6.891;
-        adj_btm_fix = 0; // Adjustment of iPhone5S
-        
-        full_adj_btm_fix = 30.333;
-        
+function px_per_in_ratio(liquid_mask){
+    if(liquid_mask.device_type == "iphone6"){
+        return 7.958;
     }
 }
-if(liquid_mask.device_type == "iphone6"){
-    if(liquid_mask.device_model == "iphone6"){
-         //alert("iPhone6: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        //fixed_px_inch_ratio = 8.094;
+function init(liquid_mask){
+    adjusted_mask_height_px = parseFloat(liquid_mask.user_height) * px_per_inch_ratio;
 
-        fixed_px_inch_ratio = 6.891;
+    //version demo 1:
+    //path_data = "M70.44,0c10.469,0,19.2,7.265,20.617,16.366c0.607,3.897,2.162,11.339,1.137,15.734c0,0,3.955-0.659,2.417,6.667c-1.538,7.326-2.945,5.934-4.762,7.033c-0.881,0.533-3.637,4.958-4.249,6.886c-0.466,1.463-0.091,18.938,0.146,19.78c0.12,0.426,14.063,13.27,30.11,15.264c19.1,2.374,16.104,36.322,15.275,40.706c-0.861,4.543-0.184,37.433,1.43,45.788c1.615,8.355,7.707,56.502,6.758,69.89c-0.17,2.397,8.033,31.405-12.076,48.979c-6.162,5.387-3.592-14.754-4.461-16.235c-3.434-5.849-0.549-25.782,5.412-32.47c1.279-1.436-18.668-65.635-18.168-79.51c0.061-1.71-3.861-23.442,2.303-36.865c2.023-4.408,4.793-17.395,3.525-19.104c-0.613-0.828-1.832,8.903-5.742,18.414c-3.717,9.042-3.676,24.158-2.699,36.43c0.621,7.824,1.621,14.492,2.27,17.693c0.598,2.945,1.992,8.797,2.848,11.678c1.629,5.479,3.699,10.958,4.773,22.362s1.381,28.26-1.322,37.597c-5.258,18.157-15.748,48.396-15.253,74.054c0.051,2.624,0.05,7.408,0.212,9.959c0.309,4.881,1.482,11.912,0.273,18.836c-1.209,6.923-10.673,41.615-11.552,53.044c-0.88,11.429,1.396,21.073,2.605,26.018c1.208,4.945,7.139,14.623,5.274,14.945c-0.917,0.158-8.472-0.037-11.316-0.037c-2.888,0-10.842,0.225-10.986-0.094c-1.115-2.457-0.603-36.396,1.298-40.833c1.03-2.404-3.522-39.739-3.983-53.048c-0.163-4.729,1.154-16.23,1.738-18.846c0.452-2.023-1.027-43.093-2.373-67.322c-0.57-10.254-1.115-17.479-1.481-17.479c-0.357,0-0.953,7.225-1.523,17.479c-1.346,24.229-2.824,65.299-2.373,67.322c0.584,2.615,1.901,14.117,1.738,18.846c-0.461,13.309-5.014,50.644-3.983,53.048c1.9,4.437,2.413,38.375,1.298,40.833c-0.145,0.318-8.099,0.094-10.986,0.094c-2.845,0-10.399,0.195-11.316,0.037c-1.864-0.322,4.066-10,5.274-14.945c1.209-4.945,3.485-14.589,2.605-26.018c-0.879-11.429-10.343-46.121-11.552-53.044c-1.209-6.924-0.035-13.955,0.273-18.836c0.162-2.551,0.161-7.335,0.212-9.959c0.494-25.658-9.996-55.896-15.253-74.054c-2.703-9.337-2.396-26.192-1.322-37.597s3.145-16.883,4.773-22.362c0.855-2.881,2.25-8.733,2.848-11.678c0.648-3.201,1.648-9.869,2.27-17.693c0.977-12.272,1.018-27.389-2.699-36.43c-3.91-9.51-5.129-19.241-5.742-18.414c-1.268,1.709,1.502,14.697,3.525,19.104c6.164,13.423,2.242,35.154,2.303,36.865c0.5,13.875-19.447,78.075-18.168,79.51c5.961,6.688,8.846,26.621,5.412,32.47c-0.869,1.481,1.701,21.622-4.461,16.235c-20.109-17.573-11.906-46.581-12.076-48.979c-0.949-13.388,5.143-61.535,6.758-69.89c1.613-8.355,2.291-41.245,1.43-45.788c-0.828-4.384-3.824-38.333,15.275-40.706c16.047-1.994,29.99-14.837,30.11-15.264c0.237-0.842,0.612-18.317,0.146-19.78c-0.612-1.928-3.368-6.354-4.249-6.886c-1.816-1.099-3.224,0.293-4.762-7.033C44.685,31.441,48.64,32.1,48.64,32.1c-1.025-4.396,0.529-11.837,1.137-15.734C51.194,7.265,60.159,0,70.44,0z";
+    
+    //version demo 2:
+    //path_data = "M78.747,0c12.075,0,21.96,8.444,22.503,22.288c0.13,3.335-0.29,10.642,0,10.582c1.791-0.375,2.409,1.758,1.912,6.226c-0.452,4.071-0.219,8.469-3.127,6.733c-0.482-0.287-3.793,8.803-6.68,14.371c-1.035,1.998-3.259,11.921,0.557,16.69c3.813,4.769,26.532,11.01,28.312,11.438c10.888,2.622,17.435,15.06,16.993,30.446c-0.347,12.1,0.383,39.334,3.673,50.973c3.539,12.513,5.632,47.82,5.901,51.681c0.667,9.613,12.76,13.947-1.036,39.34c-2.212,4.072-11.6,14.246-8.454-5.186c0,0-4.971-19.542-1.782-34.4c0,0-13.877-33.461-15.607-43.675c-1.73-10.214-5.673-41.949-2.833-57.472c0,0,1.427-5.824,1.535-6.77c0.325-2.812-2.164,6.059-3.469,12.973c0,0-5.651,25.543-4.982,44.875c0,0,1.922,14.854,5.275,25.312c0,0,2.879,11.902,3.832,18.896c0.398,2.921,1.891,8.14,2.877,15.032c1.378,9.612,1.777,22.484-3.129,36.924c-8.424,24.798-14.027,40.228-13.083,52.274c0.948,12.083,0.175,23.675,0.494,28.443c0.317,4.77-0.051,19.516-3.548,32.286c-1.711,6.248-4.032,20.074-5.238,26.705c-1.258,6.919-1.005,7.731,1.104,12.929c4.133,10.17,9.064,17.521,10.142,20.064c0,0-11.75,0-13.124,0c-0.751,0-11.375,0.718-11.751,0c-2.711-8.133-4.544-19.712-3.432-32.993c0,0,1.235-5.749-1.388-25.938c0,0-2.254-16.56-1.22-34.961c0.67-11.924-2.518-60.649-1.641-78.452c0,0-0.695-20.822-1.164-20.822c-0.412,0-1.176,20.822-1.176,20.822c0.877,17.803-2.312,66.528-1.642,78.452c1.034,18.401-1.22,34.961-1.22,34.961c-2.623,20.188-1.387,25.938-1.387,25.938c1.112,13.28,0.454,25.148-3.005,32.993c-0.055,0.124-11.682,0-12.527,0c-0.168,0.155-13.918,0.124-13.883,0c0.744-2.66,7.116-9.894,11.25-20.064c2.11-5.197,2.362-6.01,1.104-12.929c-1.205-6.631-3.525-20.458-5.238-26.705c-3.496-12.77-3.865-27.517-3.548-32.286c0.318-4.769-0.454-16.36,0.494-28.443c0.944-12.046-4.659-27.476-13.083-52.274c-4.906-14.44-4.507-27.312-3.129-36.924c0.988-6.892,2.479-12.111,2.877-15.032c0.954-6.994,3.833-18.896,3.833-18.896c3.354-10.458,5.276-25.312,5.276-25.312c0.669-19.331-4.983-44.875-4.983-44.875c-1.305-6.914-3.794-15.785-3.469-12.973c0.109,0.946,1.536,6.77,1.536,6.77c2.839,15.522-1.104,47.257-2.833,57.472c-1.73,10.213-15.608,43.675-15.608,43.675c3.188,14.858-1.782,34.4-1.782,34.4c3.146,19.432-6.241,9.258-8.453,5.186c-13.797-25.393-1.703-29.727-1.036-39.34c0.269-3.86,2.361-39.167,5.9-51.681c3.291-11.639,4.021-38.874,3.673-50.973c-0.44-15.387,6.105-27.824,16.993-30.446c1.779-0.428,24.497-6.669,28.313-11.438c3.814-4.769,1.592-14.692,0.557-16.69c-2.886-5.568-6.197-14.658-6.68-14.371c-2.909,1.735-2.675-2.662-3.127-6.733c-0.497-4.467,0.121-6.601,1.913-6.226c0.289,0.06-0.131-7.247,0-10.582C53.623,8.444,67.208,0,78.747,0z";
+    
+    //version demo 3 - Abdoman points adjusted:
+    //path_data = "M80.484,0c12.341,0,22.444,8.63,22.999,22.779c0.133,3.408-0.296,10.876,0,10.815c1.831-0.383,2.462,1.797,1.955,6.363c-0.462,4.161-0.224,8.656-3.196,6.881c-0.492-0.293-3.876,8.997-6.827,14.688c-1.058,2.042-3.331,12.184,0.569,17.058c3.897,4.874,27.117,11.252,28.937,11.69c11.127,2.68,17.819,15.392,17.367,31.117c-0.354,12.367,0.392,40.201,3.754,52.096c3.617,12.789,5.756,48.874,6.031,52.82c0.682,9.825,13.041,14.254-1.059,40.207c-2.261,4.162-11.855,14.56-8.641-5.3c0,0-5.08-19.973-1.82-35.158c0,0-14.183-34.198-15.951-44.637c-1.768-10.439-5.798-42.874-2.896-58.738c0,0,1.458-5.953,1.569-6.919c0.333-2.874-2.211,6.193-3.545,13.259c0,0-5.776,29.172-5.092,48.93c0,0,1.964,7.005,5.392,17.693c0,0,2.942,13.187,3.917,20.334c0.406,2.986,1.932,8.32,2.94,15.364c1.408,9.823,1.815,27.067-3.198,41.826c-8.609,25.344-14.336,41.114-13.371,53.425c0.968,12.349,0.179,24.197,0.505,29.07c0.324,4.875-0.053,19.946-3.627,32.997c-1.749,6.386-4.12,20.517-5.353,27.294c-1.286,7.071-1.027,7.901,1.128,13.214c4.224,10.394,9.264,17.907,10.366,20.507c0,0-12.009,0-13.413,0c-0.768,0-11.625,0.734-12.01,0c-2.771-8.313-4.644-20.147-3.508-33.721c0,0,1.263-5.875-1.418-26.51c0,0-2.303-16.926-1.247-35.731c0.685-12.187-2.574-61.985-1.678-80.181c0,0-0.709-21.28-1.189-21.28c-0.421,0-1.202,21.28-1.202,21.28c0.896,18.196-2.363,67.994-1.678,80.181c1.057,18.806-1.248,35.731-1.248,35.731c-2.681,20.633-1.417,26.51-1.417,26.51c1.137,13.572,0.464,25.702-3.071,33.721c-0.056,0.125-11.939,0-12.803,0c-0.172,0.157-14.225,0.125-14.189,0c0.761-2.719,7.273-10.113,11.498-20.507c2.157-5.312,2.415-6.143,1.129-13.214c-1.232-6.778-3.603-20.909-5.354-27.294c-3.573-13.051-3.95-28.122-3.626-32.997c0.325-4.875-0.464-16.721,0.505-29.07c0.964-12.312-4.762-28.081-13.372-53.425c-5.014-14.759-4.607-32.002-3.198-41.826c1.009-7.044,2.533-12.378,2.94-15.364c0.975-7.148,3.917-20.334,3.917-20.334c3.427-10.688,5.392-17.693,5.392-17.693c0.684-19.757-5.092-48.93-5.092-48.93c-1.334-7.066-3.877-16.133-3.546-13.259c0.112,0.967,1.57,6.919,1.57,6.919c2.901,15.864-1.128,48.298-2.896,58.738c-1.768,10.438-15.951,44.637-15.951,44.637c3.257,15.186-1.822,35.158-1.822,35.158c3.215,19.86-6.378,9.462-8.639,5.3c-14.101-25.952-1.741-30.382-1.059-40.206c0.275-3.946,2.414-40.03,6.03-52.82c3.364-11.896,4.109-39.73,3.754-52.096c-0.45-15.726,6.239-28.437,17.368-31.117c1.817-0.438,25.037-6.816,28.937-11.69c3.898-4.874,1.626-15.016,0.57-17.058c-2.951-5.691-6.334-14.981-6.828-14.688c-2.973,1.773-2.733-2.721-3.196-6.881c-0.508-4.565,0.124-6.747,1.955-6.363c0.295,0.062-0.133-7.407,0-10.815C54.807,8.63,68.691,0,80.484,0z";
+    
+    //version demo 4 - after adjusting shape based on actual users images
+    //path_data = "M77.715,0c7.393,0,22.001,1.751,22.001,19.955c0,3.767,0,10.414,0,11.236c0,0.769,2.674-2.16,2.637,7.031c-0.012,3.039,0.333,7.494-3.955,9.228c-1.494,0.604-4.999,11.26-5.712,12.743c-0.714,1.483-0.92,13.083,0.439,14.208c5.932,4.907,31.597,11.261,34.274,12.597c7.527,3.755,14.08,15.717,11.195,44.271c-0.399,3.948,0.287,31.548,5.063,44.051c3.233,8.462,6.826,47.88,6.063,53.602c-0.639,4.791,16.347,25.639-5.624,47.023c-8.211,7.992-3.813-7.385-4.833-11.425c-3.516-13.915-2.05-32.517-1.318-35.153c0.732-2.637-15.377-33.138-15.909-45.313c-0.544-12.448-1.374-19.935-2.05-35.153c-0.245-5.499,1.457-31.508,0.383-31.805c-0.766-0.211-3.351,11.169-3.937,14.172c-0.585,3.002-4.53,23.544-4.822,27.279s2.014,22.017,2.893,24.434c0.879,2.417,4.403,15.854,4.988,18.856c0.586,3.003,2.697,14.485,3.839,18.771c4.196,15.735,0.967,39.163,0.994,43.331c0.056,8.876-12.833,58.676-12.304,68.03c0.227,4.002-0.231,23.292-0.439,28.781c-0.281,7.456-2.856,30.32-3.515,33.835s-3.955,23.289-3.955,27.683c0,4.395,0.32,9.867,0.878,12.963c0.697,3.863,6.162,12.972,7.47,14.28c0.129,0.13-5.48,0.368-14.828,0.368c-6.736,0-6.679,0.211-11.976,0.071c0.01-1.869,1.248-24.668,1.758-27.683c0.51-3.015,0.764-22.488,0-27.903c-0.755-5.348-0.931-29.934-1.758-33.396c-3.459-14.48-5.34-90.983-6.152-96.891c-0.805-5.859-0.822-20.424-1.788-20.424c-0.943,0-1.028,14.565-1.834,20.424c-0.812,5.907-2.693,82.411-6.151,96.891c-0.827,3.462-1.003,28.048-1.758,33.396c-0.765,5.415-0.51,24.888,0,27.903c0.51,3.015,1.748,25.813,1.758,27.683c-5.297,0.14-5.241-0.071-11.976-0.071c-9.349,0-14.958-0.238-14.828-0.368c1.309-1.309,6.773-10.417,7.47-14.28c0.558-3.096,0.879-8.568,0.879-12.963c0-4.394-3.295-24.168-3.955-27.683s-3.234-26.379-3.516-33.835c-0.208-5.489-0.666-24.779-0.439-28.781c0.529-9.354-12.36-59.154-12.304-68.03c0.026-4.168-3.203-27.596,0.993-43.331c1.143-4.286,3.253-15.768,3.839-18.771s4.11-16.44,4.989-18.856c0.878-2.417,3.186-20.699,2.893-24.434c-0.293-3.735-4.237-24.277-4.823-27.279c-0.586-3.003-3.171-14.383-3.937-14.172c-1.075,0.297,0.627,26.307,0.383,31.805c-0.677,15.218-1.506,22.705-2.05,35.153c-0.533,12.174-16.642,42.676-15.909,45.313c0.732,2.636,2.197,21.238-1.318,35.153c-1.02,4.04,3.378,19.417-4.833,11.425c-21.971-21.384-4.985-42.232-5.624-47.023c-0.763-5.722,2.83-45.14,6.063-53.602c4.777-12.503,5.463-40.103,5.064-44.051c-2.885-28.554,3.668-40.516,11.194-44.271c2.677-1.335,28.342-7.69,34.274-12.597c1.359-1.124,1.153-12.725,0.439-14.208c-0.714-1.483-4.218-12.139-5.712-12.743c-4.288-1.734-3.943-6.188-3.955-9.228c-0.037-9.191,2.636-6.262,2.636-7.031c0-0.823,0-7.47,0-11.236C55.668,1.751,70.281,0,77.715,0z";
+    
+    //version demo 5 - after improving version demo 4 shape for hourglass
+    //path_data = "M78.174,0c7.342,0,21.772,1.729,21.772,19.707c0,3.719,0,10.284,0,11.096c0,0.759,2.641-2.134,2.604,6.943c-0.012,3.001,0.329,7.4-3.906,9.113c-1.474,0.597-4.936,11.12-5.641,12.584c-0.705,1.465-0.97,13.001,0.435,14.031c6.623,4.859,31.204,11.122,33.848,12.441c7.433,3.708,13.905,15.521,11.056,43.72c-0.395,3.899,0.283,31.156,5,43.503c3.193,8.357,6.742,47.285,5.988,52.935c-0.63,4.732,16.144,25.32-5.553,46.438c-8.11,7.893-3.767-7.292-4.774-11.283c-7.337-14.65-3.574-28.7-1.302-34.715c0.724-2.604-13.962-32.584-14.487-44.607c-0.538-12.294-2.106-30.929-1.528-48.561c0.178-5.433,2.315-26.184,1.856-26.128c-0.331,0.04-0.92,14.785-1.619,17.725c-2.329,9.801-7.622,30.562-7.622,44.818c0,12.318,4.648,24.229,6.691,30.14c2.256,6.025,5.628,14.265,5.628,24.625c0,21.792-1.284,26.638-2.839,33.238c-2.136,8.412-9.848,43.047-10.442,47.12c-1.094,7.498-3.148,15.459-3.042,23.503c0.053,3.959-0.183,9.24,0.092,14.913c1.463,23.143-4.891,47.812-5.542,51.284c-0.652,3.471-3.029,17.969-3.029,22.308c0,4.34,2.786,13.368,3.336,16.425c0.687,3.817,3.285,14.908,4.578,16.203c0.127,0.127-2.613,0.361-11.846,0.361c-6.652,0-4.497,0.209-9.728,0.073c0.01-1.847,0.532-28.56,1.036-31.538c0.504-2.976-1.685-16.09-1.974-22.455c-1.642-13.073-2.283-27.295-1.653-40.21c0.765-14.718-7.733-44.065-5.991-97.752c-0.794-5.786-0.696-18.072-2.104-18.072c-1.457,0-1.334,12.286-2.129,18.072c1.743,53.688-6.755,83.034-5.991,97.752c0.63,12.915-0.01,27.137-1.652,40.21c-0.289,6.365-2.478,19.479-1.974,22.455c0.503,2.978,1.026,29.691,1.036,31.538c-5.231,0.136-3.075-0.073-9.727-0.073c-9.233,0-11.973-0.234-11.846-0.361c1.293-1.295,3.891-12.386,4.578-16.203c0.551-3.057,3.336-12.085,3.336-16.425c0-4.338-2.377-18.837-3.029-22.308c-0.65-3.472-7.005-28.142-5.541-51.284c0.274-5.672,0.039-10.954,0.091-14.913c0.106-8.044-1.948-16.005-3.042-23.503c-0.595-4.073-8.307-38.708-10.443-47.12c-1.555-6.6-2.839-11.446-2.839-33.238c0-10.36,3.372-18.599,5.628-24.625c2.042-5.911,6.69-17.822,6.69-30.14c0-14.256-5.293-35.018-7.622-44.818c-0.698-2.94-1.288-17.686-1.619-17.725c-0.459-0.056,1.678,20.695,1.856,26.128c0.578,17.632-0.99,36.267-1.528,48.561c-0.525,12.023-15.211,42.004-14.487,44.607c2.271,6.015,6.035,20.065-1.302,34.715c-1.007,3.99,3.336,19.176-4.774,11.283c-21.697-21.119-4.923-41.706-5.553-46.438c-0.754-5.65,2.795-44.578,5.988-52.935c4.718-12.347,5.395-39.604,5-43.503c-2.849-28.199,3.623-40.012,11.056-43.72c2.644-1.319,27.225-7.582,33.848-12.441c1.404-1.029,1.139-12.566,0.435-14.031c-0.705-1.464-4.167-11.988-5.641-12.584c-4.235-1.713-3.894-6.111-3.906-9.113c-0.037-9.077,2.604-6.184,2.604-6.943c0-0.812,0-7.377,0-11.096C54.977,1.729,70.245,0,78.174,0z";
+    
+    //version demo 6 - after fixing index number of version demo 5 shape for hourglass
+    path_data = "M78.186,0c7.342,0,21.773,1.729,21.773,19.707c0,3.719,0,10.284,0,11.096c0,0.759,2.641-2.134,2.604,6.943c-0.012,3.001,0.329,7.4-3.906,9.113c-1.475,0.597-4.936,11.12-5.641,12.584c-0.705,1.465-0.969,13.001,0.435,14.031c6.623,4.859,31.204,11.122,33.848,12.441c7.433,3.708,13.905,15.521,11.056,43.72c-0.394,3.899,0.283,31.156,5,43.503c3.193,8.357,6.742,47.285,5.988,52.936c-0.63,4.732,16.144,25.32-5.553,46.438c-8.11,7.893-3.767-7.293-4.774-11.283c-7.337-14.65-3.574-28.701-1.302-34.716c0.724-2.604-13.962-32.584-14.487-44.607c-0.538-12.294-2.105-30.929-1.528-48.561c0.179-5.433,2.315-26.184,1.856-26.128c-0.331,0.04-0.92,14.785-1.619,17.725c-2.328,9.801-7.622,30.562-7.622,44.818c0,4.534,0.63,9.012,1.528,13.156c1.541,7.117,3.872,13.248,5.163,16.984c2.256,6.025,4.712,14.304,5.628,24.624c1.344,15.15,0.009,22.293-2.839,33.238c-4.728,18.173-13.594,60.681-13.484,70.624c0.053,3.959-0.183,9.24,0.092,14.913c1.463,23.143-4.891,47.812-5.541,51.284c-0.652,3.471-3.03,17.969-3.03,22.308c0,4.34,2.786,13.368,3.336,16.425c0.688,3.817,3.285,14.908,4.578,16.203c0.127,0.127-2.613,0.361-11.846,0.361c-6.652,0-4.497,0.209-9.728,0.073c0.01-1.847,0.532-28.56,1.036-31.538c0.504-2.976-1.685-16.09-1.974-22.455c-1.643-13.073-2.283-27.295-1.652-40.21c0.764-14.718-7.734-44.065-5.991-97.752c-0.795-5.786-1.133-18.072-2.104-18.072c-1.031,0-1.346,12.286-2.141,18.072c1.744,53.687-6.755,83.034-5.991,97.752c0.63,12.915-0.01,27.137-1.652,40.21c-0.289,6.365-2.478,19.479-1.974,22.455c0.503,2.978,1.026,29.691,1.036,31.538c-5.231,0.136-3.075-0.073-9.727-0.073c-9.233,0-11.973-0.234-11.846-0.361c1.293-1.295,3.891-12.386,4.578-16.203c0.551-3.057,3.336-12.085,3.336-16.425c0-4.338-2.377-18.837-3.029-22.308c-0.65-3.472-7.005-28.142-5.541-51.284c0.274-5.672,0.039-10.954,0.091-14.913c0.109-9.942-8.756-52.451-13.484-70.624c-2.848-10.945-4.183-18.088-2.839-33.238c0.916-10.32,3.372-18.599,5.628-24.624c1.291-3.736,3.623-9.868,5.163-16.984c0.898-4.145,1.528-8.623,1.528-13.156c0-14.256-5.293-35.018-7.622-44.818c-0.698-2.94-1.288-17.686-1.619-17.725c-0.459-0.056,1.678,20.695,1.856,26.128c0.578,17.632-0.99,36.267-1.528,48.561C31.185,193.93,16.5,223.91,17.223,226.514c2.271,6.015,6.035,20.065-1.302,34.716c-1.007,3.99,3.336,19.176-4.774,11.283c-21.697-21.119-4.923-41.707-5.553-46.438c-0.754-5.651,2.795-44.578,5.988-52.936c4.718-12.347,5.395-39.604,5-43.503c-2.849-28.199,3.623-40.012,11.056-43.72c2.644-1.319,27.225-7.582,33.848-12.441c1.404-1.029,1.139-12.566,0.435-14.031c-0.705-1.464-4.167-11.988-5.641-12.584c-4.235-1.713-3.894-6.111-3.906-9.113c-0.037-9.077,2.604-6.184,2.604-6.943c0-0.812,0-7.377,0-11.096C54.977,1.729,70.623,0,78.186,0z";
+    
+    
+    full_scr_mask = new Path(path_data);
+    
+//    full_scr_mask = new Path();
+//    
+//    mask_seg = new Segment({point: [], handleIn: [0,0], handleOut: [0,0]});
+//    full_scr_mask.add(hair_seg);
+    
+    
+    def_mask_height = full_scr_mask.bounds.height;
+    //alert(liquid_mask.user_height +" | "+ adjusted_mask_height_px);
+    adjusted_mask_height_px = (adjusted_mask_height_px * 100) / 450;
+    
+    //alert(adjusted_mask_height_px/100);
+    full_scr_mask.scale(adjusted_mask_height_px/100);
+    
+    ////////////////////////////////////////////////////
+    ////////////// Width adjustment of Mask ////////////
+    ////////////////////////////////////////////////////
+    
+    
+  var user_shoulder_width = parseFloat(liquid_mask.dm_body_parts_details_json.shoulder_across_back);
 
-        // adjusting 66.666% value of top empty area ----- 23/3*2 = 15.333
-        // 4.49 is 1% value
-        //adj_btm_fix = 15.333 + 4.49;
-
-        //fix adjustment for iphone6 camera view.
-
-        fix_add_btm = 11.5;
-
-        adj_btm_fix = 15.333 + fix_add_btm;
-
-        adj_btm_fix = adj_btm_fix - 19;
-
-
-        //adj_btm_fix = 0;
-    }
-    if(liquid_mask.device_model == "iphone6s"){
-        //alert("iPhone6S: " + liquid_mask.device_type + " - " + liquid_mask.device_model);
-        fixed_px_inch_ratio = 6.891;
-
-        fix_add_btm = 8.5;
-
-        adj_btm_fix = 15.333 + fix_add_btm;
-
-        adj_btm_fix = adj_btm_fix - 19;
-
-    }
-}
-//////// From JS file
-chk_no_img_path = true;
-
-$(document).ready(function() {
-    createBlob();
-});
-
-function createBlob() {
-
-path_data = $("#default_user_path").html();
-
-mid_area_path = new Path(path_data);
-mid_area_path.opacity = 0.6;
-
-
-var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
-
-
-handleOut_41 = new Point(mid_area_path.segments[41].handleOut);
-handleOut_40 = new Point(mid_area_path.segments[40].handleOut);
-handleIn_29 = new Point(mid_area_path.segments[29].handleIn);
-handleIn_30 = new Point(mid_area_path.segments[30].handleIn);
-
-
-mid_area_path.segments[41].handleOut = 0;
-mid_area_path.segments[40].handleOut = 0;
-mid_area_path.segments[29].handleIn = 0;
-mid_area_path.segments[30].handleIn = 0;
-
-mid_area_path.segments[41].point.y = mid_area_path.segments[40].point.y;
-mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
-
-
-
-
-//mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
-//mid_area_path.segments[41].point.y -= 50;
-
-//var p_user_height_add = 3.75 * p_user_height / 100;
-
-//p_user_height = p_user_height + p_user_height_add;
-
-
-                //p_user_height_px = p_user_height * fixed_px_inch_ratio;
-
-//p_user_height_add_px = p_user_height_add * fixed_px_inch_ratio;
-
-                //var p_extra_foot_area = 0;
-
-
-p_user_height = p_user_height * fixed_px_inch_ratio;
-
-//p_user_height = p_user_height + p_extra_foot_area;
-
-p_user_height = p_user_height * 100 / 430;
-
-p_user_height = p_user_height / 100;
-
-if(chk_no_img_path == true){
-            mid_area_path.scale(inc_ratio, p_user_height);
-
-
-   ///////////Check Impect///////////
-        if(parseInt($('#user_height_frm_3').attr('value')) >= 75){
-            def_head_p_incr = (parseInt($('#user_height_frm_3').attr('value')) - 75)/5;
-        }
-        else{
-            def_head_p_incr = (75 - parseInt($('#user_height_frm_3').attr('value')))/6;
-        }
-
-  var head_segments = [1,2,3,4,5,6,7,69,68,67,66,65,64,63];
-  function adj_head_points(){
-      for(var i = 0; i < head_segments.length; i++) {
-          if(head_segments[i] == 5 || head_segments[i] == 65) {
-            mid_area_path.segments[head_segments[i]].point.y += def_head_p_incr * 1.5;
-          }
-
-          else {
-            mid_area_path.segments[head_segments[i]].point.y +=  def_head_p_incr;
-          }
-      };
-  }
-  adj_head_points();
-
-  var torso_adj_segments = [16,17,18,19,20,21,35,54,53,52,51,50,49];
-  function adj_torso_points(){
-
-  //var arm_pit_dis = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
-  var arm_pit_dis = 43;
-  var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
-  var final_arm_pit_dis = (arm_pit_dis - arm_pit_dis_curr) + def_head_p_incr;
-
-      for(var i = 0; i < torso_adj_segments.length; i++) {
-          if(false) {
-            mid_area_path.segments[torso_adj_segments[i]].point.y = (mid_area_path.segments[64].point.y + arm_pit_dis);
-          }
-          else {
-            mid_area_path.segments[torso_adj_segments[i]].point.y += final_arm_pit_dis;
-          }
-      };
-  }
-  adj_torso_points();
-
-
-  var inseam_adj_segments = [22,23,24,25,48,47,46,45,44];
-  function adj_inseam_points(){
-
-  var arm_pit_dis = 43;
-  var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
-  var final_arm_pit_dis = (arm_pit_dis - arm_pit_dis_curr) + def_head_p_incr;
-
-      for(var i = 0; i < inseam_adj_segments.length; i++) {
-          if(false) {
-            mid_area_path.segments[inseam_adj_segments[i]].point.y = (mid_area_path.segments[64].point.y + arm_pit_dis);
-          }
-          else {
-            mid_area_path.segments[inseam_adj_segments[i]].point.y += final_arm_pit_dis;
-          }
-      };
-  }
-  adj_inseam_points();
-
-
-  var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
-
-  user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
+  user_shoulder_width = user_shoulder_width * px_per_inch_ratio;
 
 
   var torso_w_adj_left = [54,53,52,51,50,49];
   var torso_w_adj_right = [16,17,18,19,20,21];
 
-  var dm_front_shoulder = mid_area_path.segments[7].point.x - mid_area_path.segments[63].point.x;
+  var dm_front_shoulder = full_scr_mask.segments[7].point.x - full_scr_mask.segments[63].point.x;
   var user_front_shoulder = user_shoulder_width;
 
   var front_shoulder_diff = user_front_shoulder - dm_front_shoulder;
   //alert(front_shoulder_diff/2);
-  mid_area_path.segments[7].point.x += front_shoulder_diff/2;
-  mid_area_path.segments[63].point.x -= front_shoulder_diff/2;
+  full_scr_mask.segments[7].point.x += front_shoulder_diff/2;
+  full_scr_mask.segments[63].point.x -= front_shoulder_diff/2;
+  
+  
+  function implement_body_part_px(dm_body_part_name,dm_seg_1,dm_seg_2,user_body_part_ele_id){
+    var dm_body_part = full_scr_mask.segments[dm_seg_1].point.x - full_scr_mask.segments[dm_seg_2].point.x;
+    var user_body_part_px = parseFloat($("#"+user_body_part_ele_id).attr("value"));
+    
+    user_body_part_px = user_body_part_px * 0.5213;
+//    user_body_part_px = user_body_part_px / 100;
+//    user_body_part_px = user_body_part_px * 0.5213;
+    
+    var body_part_diff = Math.abs(dm_body_part - user_body_part_px);
 
+    full_scr_mask.segments[dm_seg_1].point.x += body_part_diff/2;
+    full_scr_mask.segments[dm_seg_2].point.x -= body_part_diff/2;
+  }
+  
+  ////////////// Bust adjustment 
+  
+  implement_body_part_px("bust",17,53,"user_bust_px");
+  //implement_body_part_px("arm_pit",16,54,"user_bust_px");
+  implement_body_part_px("waist",18,52,"user_waist_px");
+  implement_body_part_px("hip",21,49,"user_hip_px");
+  //implement_body_part_px("hip",20,50,"user_hip_px");
+  
+  
+  
+  
+  
   //var front_shoulder_diff = 60;
 
   var diff_apply = front_shoulder_diff/2;
 
   function adj_torso_points_w(){
     for(var i = 0; i < torso_w_adj_left.length; i++) {
-          mid_area_path.segments[torso_w_adj_left[i]].point.x -= diff_apply;
+          full_scr_mask.segments[torso_w_adj_left[i]].point.x -= diff_apply;
     };
     for(var i = 0; i < torso_w_adj_right.length; i++) {
-          mid_area_path.segments[torso_w_adj_right[i]].point.x += diff_apply;
+          full_scr_mask.segments[torso_w_adj_right[i]].point.x += diff_apply;
     };
   }
   adj_torso_points_w();
@@ -250,188 +144,197 @@ if(chk_no_img_path == true){
   var arm_w_adj_out_right = [62,61,60];
   var diff_apply = front_shoulder_diff/4;
 
-  mid_area_path.segments[8].point.x += (diff_apply*2)+((diff_apply*32)/100);
-  mid_area_path.segments[9].point.x += (diff_apply*2)+((diff_apply*32)/100);
-  mid_area_path.segments[10].point.x += (diff_apply*2)+((diff_apply*32)/100);
-  mid_area_path.segments[62].point.x -= (diff_apply*2)-((diff_apply*32)/100);
-  mid_area_path.segments[61].point.x -= (diff_apply*2)-((diff_apply*32)/100);
-  mid_area_path.segments[60].point.x -= (diff_apply*2)-((diff_apply*32)/100);
+  full_scr_mask.segments[8].point.x += (diff_apply*2)+((diff_apply*32)/100);
+  full_scr_mask.segments[9].point.x += (diff_apply*2)+((diff_apply*32)/100);
+  //full_scr_mask.segments[10].point.x += (diff_apply*2)+((diff_apply*32)/100);
+  full_scr_mask.segments[62].point.x -= (diff_apply*2)-((diff_apply*32)/100);
+  full_scr_mask.segments[61].point.x -= (diff_apply*2)-((diff_apply*32)/100);
+  //full_scr_mask.segments[60].point.x -= (diff_apply*2)-((diff_apply*32)/100);
 
-  mid_area_path.segments[14].point.x += diff_apply*2;
-  mid_area_path.segments[15].point.x += diff_apply*2;
+  full_scr_mask.segments[14].point.x += diff_apply*2;
+  full_scr_mask.segments[15].point.x += diff_apply*2;
 
-  mid_area_path.segments[14].point.x -= ((diff_apply*32)/100);
-  mid_area_path.segments[15].point.x -= ((diff_apply*32)/100);
+  full_scr_mask.segments[14].point.x -= ((diff_apply*10)/100);
+  full_scr_mask.segments[15].point.x -= ((diff_apply*10)/100);
 
-  mid_area_path.segments[56].point.x -= diff_apply*2;
-  mid_area_path.segments[55].point.x -= diff_apply*2;
+  full_scr_mask.segments[56].point.x -= diff_apply*2;
+  full_scr_mask.segments[55].point.x -= diff_apply*2;
 
-  mid_area_path.segments[56].point.x += (diff_apply*32)/100;
-  mid_area_path.segments[55].point.x += (diff_apply*32)/100;
-
-
-  mid_area_path.segments[48].point.x -= front_shoulder_diff*54/100;
-
-  mid_area_path.segments[47].point.x -= front_shoulder_diff*44/100;
-  mid_area_path.segments[46].point.x -= front_shoulder_diff*44/100;
-  mid_area_path.segments[45].point.x -= front_shoulder_diff*44/100;
-
-  mid_area_path.segments[44].point.x -= ((front_shoulder_diff*33.5)/100);
-
-  mid_area_path.segments[43].point.x -= ((diff_apply*33.5)/100);
-
-  mid_area_path.segments[22].point.x += front_shoulder_diff*54/100;
-  mid_area_path.segments[23].point.x += ((front_shoulder_diff*44)/100);
-  mid_area_path.segments[24].point.x += ((front_shoulder_diff*44)/100);
-  mid_area_path.segments[25].point.x += ((front_shoulder_diff*44)/100);
-
-  mid_area_path.segments[26].point.x += ((front_shoulder_diff*44)/100);
-
-  mid_area_path.segments[27].point.x += ((diff_apply*33.5)/100);
+  full_scr_mask.segments[56].point.x += (diff_apply*32)/100;
+  full_scr_mask.segments[55].point.x += (diff_apply*32)/100;
 
 
+  full_scr_mask.segments[48].point.x -= front_shoulder_diff*54/100;
 
-    mid_area_path.segments[34].point.x -= ((front_shoulder_diff*14)/100);
-    mid_area_path.segments[36].point.x += ((front_shoulder_diff*14)/100);
+  full_scr_mask.segments[47].point.x -= front_shoulder_diff*44/100;
+  full_scr_mask.segments[46].point.x -= front_shoulder_diff*44/100;
+  full_scr_mask.segments[45].point.x -= front_shoulder_diff*44/100;
 
-    mid_area_path.segments[33].point.x -= ((front_shoulder_diff*11)/100);
-    mid_area_path.segments[37].point.x += ((front_shoulder_diff*11)/100);
+  full_scr_mask.segments[44].point.x -= ((front_shoulder_diff*33.5)/100);
 
-    mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
-    mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
+  full_scr_mask.segments[43].point.x -= ((diff_apply*33.5)/100);
+
+  full_scr_mask.segments[22].point.x += front_shoulder_diff*54/100;
+  full_scr_mask.segments[23].point.x += ((front_shoulder_diff*44)/100);
+  full_scr_mask.segments[24].point.x += ((front_shoulder_diff*44)/100);
+  full_scr_mask.segments[25].point.x += ((front_shoulder_diff*44)/100);
+
+  full_scr_mask.segments[26].point.x += ((front_shoulder_diff*44)/100);
+
+  full_scr_mask.segments[27].point.x += ((diff_apply*33.5)/100);
 
 
 
-}
+    full_scr_mask.segments[34].point.x -= ((front_shoulder_diff*14)/100);
+    full_scr_mask.segments[36].point.x += ((front_shoulder_diff*14)/100);
 
-//var mask_retake_full = new Path("M144.50834,98.44952c-1.976,8.97343 0.105,10.82146 0.705,12.51622c-3,-1.00645 -7.424,6.2274 -7.118,7.5c1.774,7.28479 6.626,14.18177 6.827,13.73513c0.689,1.85077 3.727,12.02949 4.736,13.91289c0.151,3.36707 -3.993,16.71134 -6.217,18.608c-5.672,4.80384 -6.603,-0.52892 -25.214,5.24262c-10.398,3.60875 -15.71376,13.16336 -19.79376,39.6727c-0.216,3.61486 -5.055,26.0108 -7.413,41.94986c-2.808,25.09705 -1.86,19.59164 -2.425,66.97135c-4.963,13.1787 0.60876,34.61533 13.18976,43.82227c1.369,1.16451 23.889,1.11861 12.124,-21.06819c1.121,-2.11385 -8.818,-15.83981 -11.492,-26.2551c0.415,-1.40618 5.60424,-13.98018 14.72624,-61.88503c2.328,-19.65385 -0.386,-31.20416 0.525,-38.91621c0.314,-1.71107 -1.83324,-13.14742 -0.17724,-13.14742c0.797,0.05914 1.499,9.25657 1.842,13.6872c2.861,18.72897 6.093,29.57772 6.216,44.57762c-0.505,8.80008 -3.786,8.6964 -5.778,14.54035c-2.22,5.8001 -1.505,6.17161 -4.041,19.79695c-1.527,16.70077 -3.925,13.98051 -4.58,29.73805c1.261,17.63992 0.11988,3.95237 3.41788,29.40835c5.515,27.64632 5.8888,24.33189 7.4508,48.24506c-0.007,11.01692 1.913,7.03263 0.824,23.05938c-1.268,19.14093 -2.122,14.25242 -1.488,23.97941c3.1,23.72146 3.74494,29.41075 5.49694,42.74853c0.795,8.34223 5.87028,18.73311 5.52629,33.67183c-0.876,9.52203 -5.3759,16.05292 -7.24791,20.5019c-1.229,4.35415 -5.32,19.97182 13.567,19.93582c2.331,0.03671 6.557,1.1723 8.633,-19.9297c0.266,-5.59106 2.2271,-23.90369 1.0861,-28.00598c1.709,-26.77855 2.9239,-40.24375 4.7249,-60.93668c0.194,-6.8249 -2.09292,-26.98045 -2.31992,-32.33391c3.125,-13.65899 3.31284,-32.64696 4.90284,-66.92036c0.005,-7.48465 0.79908,-20.79898 3.26008,-20.79898c2.362,0 2.83908,10.38062 3.27108,20.75513c0.857,34.30399 1.79084,53.47449 4.72884,66.81635c-0.098,5.24028 -2.25192,25.58651 -2.22892,32.38592c2.082,20.77655 0.7649,41.17852 2.7949,68.04986c-1.328,3.97278 0.0381,15.27216 -0.3349,20.95907c1.893,21.066 6.248,21.58464 8.014,21.52549c17.533,0.059 14.76,-17.3712 12.963,-21.5c-1.758,-4.48875 -4.77991,-12.67973 -5.10091,-22.01822c-0.564,-14.84593 3.06823,-21.27759 3.93923,-29.64226c1.535,-13.46422 2.816,-7.62088 5.754,-31.11801c0.711,-9.93603 3.213,-13.07912 1.881,-32.18233c-1.315,-15.62396 1.609,-9.68623 1.363,-20.38297c1.457,-23.98862 6.2988,-26.37508 11.4718,-53.88578c3.746,-25.23879 3.56788,-12.52641 4.50688,-29.87674c-0.762,-15.89011 -2.94,-14.71369 -4.259,-31.22683c-2.628,-13.58557 -3.773,-18.75688 -6.194,-24.31326c-2.164,-5.96733 -2.431,-7.39322 -3.043,-15.99446c-0.32,-15.2742 2.263,-23.1719 5.201,-41.60414c0.596,-4.60296 2.037,-12.08325 2.68,-12.08325c1.287,-0.00102 -3.17624,20.25388 -3.02824,22.00574c0.838,7.76405 -5.155,10.6043 -2.514,30.40091c7.926,47.91199 13.98624,64.55839 14.44024,65.90033c-2.94,10.20625 -10.773,21.9628 -10.123,24.26632c-8.449,21.86253 9.924,20.28368 11.68,19.13039c14.952,-9.46901 14.98724,-31.70475 11.97324,-44.86918c-0.274,-47.60404 -1.003,-39.29238 -3.571,-63.96013c-3.115,-15.96556 0.097,-33.86048 -0.426,-37.48962c-3.579,-26.64292 -1.65124,-39.78523 -13.40424,-43.18086c-19.662,-5.79398 -23.745,-7.61315 -30.005,-12.27831c-2.991,-2.09448 -3.957,-9.20931 -4.133,-12.43873c1.111,-1.67538 3.537,-13.40873 3.769,-14.22246c1.899,1.82834 5.721,-9.88342 6.108,-11c2.675,-7.92007 -1.747,-6.2325 -2.101,-6c3.409,-5.86842 0.177,-15.4217 -0.168,-16.87071c-3.816,-13.5356 -21.406,-15 -21.406,-15c-17.327,0 -17.159,11.37251 -17.475,12.3188z");
-   
-   var mask_retake_full = new Path(mid_area_path.pathData);
+    full_scr_mask.segments[33].point.x -= ((front_shoulder_diff*11)/100);
+    full_scr_mask.segments[37].point.x += ((front_shoulder_diff*11)/100);
 
-
-
-    if(liquid_mask.device_type == "iphone5"){
-      
-      scr_height = 568;
-      
-      mid_area_path.scale(0.750, 0.750);
-      //One percent adjustment
-      mid_area_path.scale(1, 1.01);
-      
-      mask_retake_full.scale(1, 1.01);
-      
-      mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-      mid_area_path.position = new Point(160,403.50 - adj_btm_fix);
-
-
-        
-
-        mask_retake_full.pivot = new Point(mask_retake_full.bounds.bottomCenter.x,mask_retake_full.bounds.bottomCenter.y);
-        mask_retake_full.position = new Point(160,scr_height - full_adj_btm_fix);
+    full_scr_mask.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
+    full_scr_mask.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
+    
+    
+    ////////////// End - Width adjustment of Mask ////////////
+    
+    
+    
+/// iPhone6 retake screen settings /// available screen for mask 633.5 in camera view.
+full_scr_mask.pivot = new Point(full_scr_mask.bounds.bottomCenter);
+full_scr_mask.position = new Point(187.5,667 - 33.5);
+    
+    
 
 
-        mid_area_path.segments[41].point.y += 16.56;
-        mid_area_path.segments[41].handleOut = handleOut_41;
-        mid_area_path.segments[40].handleOut = handleOut_40;
 
-        mid_area_path.segments[29].point.y += 16.56;
-        mid_area_path.segments[29].handleIn = handleIn_29;
-        mid_area_path.segments[30].handleIn = handleIn_30;
-        
-        
-        
-        mask_retake_full.segments[41].point.y += 22; 
-        mask_retake_full.segments[41].handleOut = handleOut_41;
-        mask_retake_full.segments[40].handleOut = handleOut_40;
+
+///////////// Arms settings
+
+rgt_arm_ref = new Path({});
+lft_arm_ref = new Path({});
+
+
+
+rgt_arm_ref = get_path_seg(rgt_arm_ref, full_scr_mask, 7, 16);
+
+lft_arm_ref = get_path_seg(lft_arm_ref, full_scr_mask, 55, 64);
+
+
+//rgt_arm_ref.position.x += 60;
+rgt_arm_ref.selected = true;
+lft_arm_ref.selected = true;
+
+
+//rgt_arm_ref.segments[7].point.x += 20;
+
+pivot_path = new Path();
+pivot_path.add(rgt_arm_ref.segments[0]);
+rgt_arm_ref.pivot = new Point(pivot_path.position);
+
+pivot_path_lft = new Path();
+pivot_path_lft.add(lft_arm_ref.segments[8]);
+lft_arm_ref.pivot = new Point(pivot_path_lft.position);
+
+
+//full_scr_mask.segments[19].point.x += 100;
+
+
+
+
+
+
+
+
+
+     
+//////////////////////////////////////////////    
+////////// Forward to camera screen //////////
+//////////////////////////////////////////////
+    
+    $("#svg_path_data_full").attr("value", full_scr_mask.pathData);
  
-        mask_retake_full.segments[29].point.y += 22;
-        mask_retake_full.segments[29].handleIn = handleIn_29;
-        mask_retake_full.segments[30].handleIn = handleIn_30;
-        
-        
-    }
-    if (liquid_mask.device_type == "iphone6"){
-
-      //
-      //New fix
-      mid_area_path.scale(1.174,1.174);
-      
-      mask_retake_full.scale(1.174,1.174);
-      mask_retake_full.scale(1, 1.01);
-      mask_retake_full.scale(0.952, 0.952);
-      
-      //mid_area_path.scale(0.9, 0.9);
-      mid_area_path.scale(0.748, 0.748);
-      //One percent adjustment
-      mid_area_path.scale(1, 1.01);
-      
-      
-      
-      mid_area_path.scale(0.952, 0.952);
-      
-      
-
-			mid_area_path.scale(1.081, 1.081);
-                        
-                        mask_retake_full.scale(1.081, 1.081);
-
-      mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
-      mid_area_path.position = new Point(screen.width/2,466);
-      
-      mask_retake_full.pivot = new Point(mask_retake_full.bounds.bottomCenter.x,mask_retake_full.bounds.bottomCenter.y);
-      //mask_retake_full.position = new Point(screen.width/2,466);
-      
-      mask_retake_full.position = new Point(screen.width/2,623); //Fixed for iphone 6 "621"
-      
-
-        mid_area_path.segments[41].point.y += 19;
-        mid_area_path.segments[41].handleOut = handleOut_41;
-        mid_area_path.segments[40].handleOut = handleOut_40;
-
-        mid_area_path.segments[29].point.y += 19;
-        mid_area_path.segments[29].handleIn = handleIn_29;
-        mid_area_path.segments[30].handleIn = handleIn_30;
-        
-        mask_retake_full.segments[41].point.y += 24.5; 
-        mask_retake_full.segments[41].handleOut = handleOut_41;
-        mask_retake_full.segments[40].handleOut = handleOut_40;
  
-        mask_retake_full.segments[29].point.y += 24.5;
-        mask_retake_full.segments[29].handleIn = handleIn_29;
-        mask_retake_full.segments[30].handleIn = handleIn_30;
-        
-    }
-
-
-
-
-
-
-
-
-    mid_area_path.selected = true;
-    mid_area_path.strokeWidth = 1;
-    mid_area_path.strokeColor = new Color(1, 0, 0);
-    mid_area_path.opacity = 0.85;
+ 
     
-    mask_retake_full.selected = true;
-    mask_retake_full.strokeWidth = 1;
-    mask_retake_full.strokeColor = new Color(1, 0, 0);
-    mask_retake_full.opacity = 0.85;
     
 
-    $("#svg_path_data").attr("value", mid_area_path.pathData);
-    
-    $("#svg_path_data_full").attr("value", mask_retake_full.pathData);
-    
-    if(liquid_mask.device_type == "android"){
-        testEcho();
-    }
-    window.location.href = "svg_path_created";
-    return mid_area_path;
+////////// End - Forward to camera screen //////////
+
+/////////////// End int function
 }
 
-function testEcho(){
-    var nameValue = $("#svg_path_data").attr("value");
-    window.JSInterface.doEchoTest(nameValue);
+
+
+function get_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){
+
+    ref_part_obj.removeSegments();
+
+    for(var i = int_seg_num; i < end_seg_num; i++) {
+        ref_part_obj.add(obj_path_for_ref.segments[i]);
+    }
+
+    return ref_part_obj;
 }
+
+function set_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){
+    ind = 0;
+    for(var i = int_seg_num; i < end_seg_num; i++) {
+        //debugger;
+        obj_path_for_ref.segments[i].point = ref_part_obj.segments[ind].point;
+        obj_path_for_ref.segments[i].handleIn = ref_part_obj.segments[ind].handleIn;
+        obj_path_for_ref.segments[i].handleOut = ref_part_obj.segments[ind].handleOut;
+        ind++;
+    }
+
+    return ref_part_obj;
+}
+function set_arm_rgt(){
+    if(rgt_arm_ref.segments[8].point.x <= full_scr_mask.segments[20].point.x + 2) {
+        console.log(rgt_arm_ref.segments[8].point.x +" <= "+ full_scr_mask.segments[21].point.x);
+        rgt_arm_ref.rotate(-0.5);
+        lft_arm_ref.rotate(0.5);
+        view.update();
+        set_arm_rgt();
+    }else{
+        rgt_arm_ref = set_path_seg(rgt_arm_ref, full_scr_mask, 7, 16);
+        lft_arm_ref = set_path_seg(lft_arm_ref, full_scr_mask, 55, 64);
+        set_camera_mask();
+    }
+    rgt_arm_ref.visible = false;
+    lft_arm_ref.visible = false;
+    view.update();
+}
+
+function set_camera_mask(){
+    camera_scr_mask = new Path(full_scr_mask.pathData);
+    camera_scr_mask.pivot = new Point(camera_scr_mask.bounds.bottomCenter);
+    camera_scr_mask = camera_scr_mask.scale(0.750, 0.750);
+    camera_scr_mask.selected = true;
+    
+    /// iPhone6 camera screen settings /// available screen for mask 475.125 in camera view.
+    camera_scr_mask.position = new Point(187.5,500.25 - 25.125);
+    camera_scr_mask.visible = false;
+    
+    full_scr_mask.selected = true;
+    full_scr_mask.visible = true;
+    
+    $("#svg_path_data").attr("value", camera_scr_mask.pathData);
+    view.update();
+  
+   //window.location.href = "svg_path_created";
+ }
+
+//function set_arm_lft(){
+//    //lft_arm_ref.position.x -= 40;
+//    
+//    if(lft_arm_ref.segments[1].point.x >= full_scr_mask.segments[50].point.x - 2) {
+//        lft_arm_ref.rotate(1);
+//        set_arm_lft();
+//        console.log("555");
+//    }else{
+//        lft_arm_ref = set_path_seg(lft_arm_ref, full_scr_mask, 55, 64);
+//        console.log("asdf");
+//    }
+//    view.update();
+//}
+

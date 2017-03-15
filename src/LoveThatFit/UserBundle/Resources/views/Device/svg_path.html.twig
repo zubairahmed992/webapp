@@ -2,9 +2,9 @@
 
 {% block mask_marker_view %}
 
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/default_mask_marker.js?time='~ date().timestamp) }}" canvas="canv_mask"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/default_mask_marker.js?time='~ date().timestamp) }}" canvas="canv_mask"></script>
 
-<input id="dv_user_px_height" type="text" value="{{ bra_size_body_shape }}" />
+
 <input id="dv_user_px_height" type="text" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="text" value="{{ top_bar }}" />
 <input id="dv_bottom_bar" type="text" value="{{ bottom_bar }}" />
@@ -19,7 +19,23 @@
 
 
 <input id="user_height_frm_3" type="text" value="{{ entity.measurement.height }}" />
-<input id="user_back_frm_3" type="text" value="{{ entity.measurement.shoulderAcrossBack }}" />
+
+<input id="dm_body_parts_details_json" type="text" value="{{ bra_size_body_shape }}" />
+
+<!--
+<input id="user_back_frm_3" type="text" value="14.62" />
+<input id="user_bust_px" type="text" value="339" />
+<input id="user_waist_px" type="text" value="272" />
+<input id="user_hip_px" type="text" value="378" />
+-->
+
+
+<input id="user_back_frm_3" type="text" value="15.775" />
+<input id="user_bust_px" type="text" value="392" />
+<input id="user_waist_px" type="text" value="319" />
+<input id="user_hip_px" type="text" value="424" />
+
+
 <input id="p_selected_pic_h" type="text" value="{{marker.rectHeight}}" />
 <input id="p_selected_pic_w" type="text" value="{{marker.rectWidth}}" />
 <input id="p_selected_pic_x" type="text" value="{{marker.rectX}}" />
@@ -63,7 +79,7 @@
 
 
 
-<div class="txt_center"><canvas id="canv_mask" style="width: 320px; height: 568px; position: relative; background: #ffcc00;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" style="width: 375px; height: 667px; position: relative; background: #ffcc00;"></canvas></div>
 
 
 
