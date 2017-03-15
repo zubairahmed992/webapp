@@ -34,11 +34,16 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id)
-      {                
+    public function editAction($id){                
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        
+        $target = 'sizes-4-bust-grade_rule';
+        $value = 1.2;
+        $ps = $this->get('pi.product_specification')->generate_specs_for_grade_rule_plus($parsed_data, $target, $value);  
+        return new Response(json_encode($ps));
+        
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $drop_down_values['fit_model_size'] = $fms;       
@@ -46,8 +51,8 @@ class ProductSpecsController extends Controller
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size->getSize(); 
         } else { 
-        $fit_model_selected = null;
-        $parsed_data['fit_model_size'] = '';
+            $fit_model_selected = null;
+            $parsed_data['fit_model_size'] = '';
         }       
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
