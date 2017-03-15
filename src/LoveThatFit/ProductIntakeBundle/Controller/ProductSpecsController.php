@@ -39,9 +39,9 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         
-        $target = 'sizes-4-bust-grade_rule';
+        $target = 'sizes-6-bust-grade_rule';
         $value = 1.2;
-        $ps = $this->get('pi.product_specification')->generate_specs_for_grade_rule_plus($parsed_data, $target, $value);  
+        $ps = $this->get('pi.product_specification')->generate_specs_for_grade_rule($parsed_data, $target, $value);  
         return new Response(json_encode($ps));
         
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
@@ -61,7 +61,7 @@ class ProductSpecsController extends Controller
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
                     'fit_model_selected_size' => $fit_model_selected,
-                    'fit_point_stretch' => $ps->getFitPointStretchArray(), 
+                    'fit_point_stretch' => array(),#$ps->getFitPointStretchArray(), 
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }

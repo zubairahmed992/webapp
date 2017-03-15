@@ -140,6 +140,7 @@ public function getNew() {
         $fit_model_ratio = array();
         $fit_model_fit_points = json_decode($fit_model_obj->getMeasurementJson(), true);        
         $fpa = $this->getFitPointArray();
+        !array_key_exists('fit_point_stretch', $specs)?$specs['fit_point_stretch']=array():'';
         #--------- calculate grade rule
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
@@ -308,6 +309,8 @@ private function calculate_grade_rule($specs){
 }
 #---------------------------------------- Calculate Fit Model ratio
     private function calculate_fit_model_ratio($specs){        
+        if(!array_key_exists('fit_model_size', $specs))
+            return null;
         $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
         $fit_model_ratio = array();
         $fit_model_fit_points = json_decode($fit_model_obj->getMeasurementJson(), true);
@@ -673,9 +676,51 @@ foreach ($specs['sizes'] as $size => $fit_points) {
         }
         return $specs_updated;
     }
-     
+
+##################################################################
+
+     public function generate_specs_for_grade_rule($specs, $target, $value) { 
+        
+
+        $str = explode('-', $target);     
+        $target_size = $str[1];
+        $target_fp = $str[2];
+
+       $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+        $size_keys = array_keys($specs['sizes']);               
+        $pointer=-1;     
+        foreach ($size_keys as $size_title) {            
+            if($size_title==$fit_model_obj->getSize()){
+                $pointer=0;                
+            }else{
+                $pointer=$pointer==0?1:$pointer;
+            }            
+            if ($size_title==$target_size){             
+                   break;
+            }
+        }
+        
+        switch ($pointer) {
+            case -1:
+                    $specs=$this->generate_specs_for_grade_rule_minus($specs, $target, $value);        
+                break;
+            case 0:
+                   $specs= $this->generate_specs_for_grade_rule_minus($specs, $target, $value);        
+                    $specs= $this->generate_specs_for_grade_rule_plus($specs, $target, $value);
+                break;
+            case 1:
+                    $specs=$this->generate_specs_for_grade_rule_plus($specs, $target, $value);        
+                
+                break;
+        }
+
+        
+        return $this->strip_to_fitpoint($specs, $target_fp);
+        
+        return $specs;
+    }
     ##########################################################################
-public function generate_specs_for_grade_rule_plus($specs, $target, $value) {
+public function generate_specs_for_grade_rule_minus($specs, $target, $value) {
         $str = explode('-', $target);        #calculate ratio sizes-6-bust-grade_rule
         $target_fp = $str[2];
         $target_size = $str[1];
@@ -713,7 +758,7 @@ public function generate_specs_for_grade_rule_plus($specs, $target, $value) {
         return $specs;        
     }
     ######################################################################
-    public function generate_specs_for_grade_rule_minus($specs, $target, $value) {
+    public function generate_specs_for_grade_rule_plus($specs, $target, $value) {
         $str = explode('-', $target);        #calculate ratio sizes-6-bust-grade_rule
         $target_fp = $str[2];
         $target_size = $str[1];
@@ -733,7 +778,7 @@ public function generate_specs_for_grade_rule_plus($specs, $target, $value) {
                 $specs['sizes'][$size][$target_fp]['grade_rule_stretch'] = $specs['sizes'][$size][$target_fp]['grade_rule'] + ($specs['sizes'][$size][$target_fp]['grade_rule'] * $specs['sizes'][$size][$target_fp]['stretch_percentage']/100);
             }else{
                 if($target_pointer == true){
-                    $specs['sizes'][$size][$target_fp]['garment_dimension'] = $specs['sizes'][$size_title][$target_fp]['garment_dimension'] + $specs['sizes'][$size_title][$target_fp]['grade_rule'];
+                    $specs['sizes'][$size][$target_fp]['garment_dimension'] = $specs['sizes'][$prev_size_title][$target_fp]['garment_dimension'] + $specs['sizes'][$prev_size_title][$target_fp]['grade_rule'];
                     $specs['sizes'][$size][$target_fp]['garment_stretch'] = $specs['sizes'][$size][$target_fp]['garment_dimension'] + ($specs['sizes'][$size][$target_fp]['garment_dimension'] * $specs['sizes'][$size][$target_fp]['stretch_percentage'] / 100);
                     #~~~~~~> require to do related calculations for ranges
                     $fit_model_measurement = $specs['sizes'][$size][$target_fp]['garment_stretch'] * $fit_model_ratio[$target_fp]['fit_model'];
@@ -747,5 +792,12 @@ public function generate_specs_for_grade_rule_plus($specs, $target, $value) {
             $prev_size_title = $size;
         }
         return $specs;        
+    }
+    private function strip_to_fitpoint($specs, $fp){
+        $striped=array();
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            $striped[$size][$fp]=$fit_points[$fp]['garment_dimension'];
+        }
+        return $striped;
     }
 }
