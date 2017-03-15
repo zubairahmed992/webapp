@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FNFUser
  *
- * @ORM\Table()
+ * @ORM\Table(name="fnf_user")
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\FNFUserRepository")
  */
 class FNFUser
@@ -20,21 +20,7 @@ class FNFUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="discount", type="float")
-     */
-    private $discount;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="min_amount", type="float")
-     */
-    private $minAmount;
-
+    
     /**
      * @var integer
      *
@@ -49,6 +35,23 @@ class FNFUser
 
     protected $users;
 
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="FNFGroup", inversedBy="fnfUsers")
+     * @ORM\JoinTable(name="fnfusers_groups")
+     */
+    private $groups;
+
+    /**
+     * @ORM\Column(name="is_archive", type="boolean")
+     */
+
+    private $isArchive = false;
+
+    public function __construct() {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -58,29 +61,6 @@ class FNFUser
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set discount
-     *
-     * @param float $discount
-     * @return FNFUser
-     */
-    public function setDiscount($discount)
-    {
-        $this->discount = $discount;
-    
-        return $this;
-    }
-
-    /**
-     * Get discount
-     *
-     * @return float 
-     */
-    public function getDiscount()
-    {
-        return $this->discount;
     }
 
     /**
@@ -128,27 +108,60 @@ class FNFUser
     {
         return $this->users;
     }
-
+    
     /**
-     * Set minAmount
+     * Add groups
      *
-     * @param float $minAmount
+     * @param \LoveThatFit\AdminBundle\Entity\FNFGroup $groups
      * @return FNFUser
      */
-    public function setMinAmount($minAmount)
+    public function addGroup(\LoveThatFit\AdminBundle\Entity\FNFGroup $groups)
     {
-        $this->minAmount = $minAmount;
+        $this->groups[] = $groups;
     
         return $this;
     }
 
     /**
-     * Get minAmount
+     * Remove groups
      *
-     * @return float 
+     * @param \LoveThatFit\AdminBundle\Entity\FNFGroup $groups
      */
-    public function getMinAmount()
+    public function removeGroup(\LoveThatFit\AdminBundle\Entity\FNFGroup $groups)
     {
-        return $this->minAmount;
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Set isArchive
+     *
+     * @param boolean $isArchive
+     * @return FNFUser
+     */
+    public function setIsArchive($isArchive)
+    {
+        $this->isArchive = $isArchive;
+    
+        return $this;
+    }
+
+    /**
+     * Get isArchive
+     *
+     * @return boolean 
+     */
+    public function getIsArchive()
+    {
+        return $this->isArchive;
     }
 }

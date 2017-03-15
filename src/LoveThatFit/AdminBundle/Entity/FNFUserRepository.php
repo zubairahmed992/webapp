@@ -3,6 +3,7 @@
 namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * FNFUserRepository
@@ -16,14 +17,17 @@ class FNFUserRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery("select fnf from LoveThatFitAdminBundle:FNFUser fnf
+                            join fnf.groups fg
                             JOIN fnf.users u
                             LEFT JOIN u.user_orders o
                             WHERE
                             u.id = :id AND 
                             fnf.is_available = 1
-                            and o.discount_amount = 0
+                            and o.discount_amount = 0 AND 
+                            :current_date BETWEEN fg.startAt and fg.endAt
+                            and fg.isArchive = 0
                             ")
-            ->setParameters(array('id' => $user_id ));
+            ->setParameters(array('id' => $user_id, 'current_date' => new \DateTime("now")));
 
         try {
             /*echo $query->getSQL(); die;
@@ -33,13 +37,16 @@ class FNFUserRepository extends EntityRepository
 
             $query = $this->getEntityManager()
                 ->createQuery("select fnf from LoveThatFitAdminBundle:FNFUser fnf
+                            join fnf.groups fg
                             JOIN fnf.users u
                             LEFT JOIN u.user_orders o
                             WHERE
                             u.id = :id AND 
-                            fnf.is_available = 1
+                            fnf.is_available = 1 AND 
+                            :current_date BETWEEN fg.startAt and fg.endAt
+                            and fg.isArchive = 0
                             ")
-                ->setParameters(array('id' => $user_id ));
+                ->setParameters(array('id' => $user_id, 'current_date' => new \DateTime("now")));
             try{
                 return $query->getSingleResult();
             }catch (\Doctrine\ORM\NoResultException $e){
@@ -48,5 +55,112 @@ class FNFUserRepository extends EntityRepository
 
         }
 
+    }
+
+    public function countAllFNFUserRecord() {
+        $total_record = $this->getEntityManager()
+            ->createQuery('SELECT fnf, u FROM LoveThatFitAdminBundle:FNFUser fnf
+                            JOIN fnf.users u 
+                            join fnf.groups fg
+                            WHERE fg.isArchive = 0');
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function checkUserInGroup( $groupId, $user_id)
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $query
+            ->select('
+                fnf.id as fnfid,
+                fnfg.groupTitle as group_title,
+                fnfg.discount,
+                fnf.is_available,
+                u.id,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.gender,
+                u.createdAt,
+                IDENTITY(u.original_user) as original_user_id'
+            )
+            ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
+            ->join('fnf.groups', 'fnfg')
+            ->join('fnf.users', 'u')
+            ->andWhere('fnfg.id = :groupId')
+            ->andWhere('fnf.users = :userId')
+            ->setParameter("groupId", $groupId)
+            ->setParameter('userId', $user_id);
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getOneOrNullResult();
+    }
+
+    public function searchFNFUser($data, $page = 0, $max = NULL, $order, $getResult = true)
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
+
+        $query
+            ->select('
+                fnf.id as fnfid,
+                fnfg.groupTitle as group_title,
+                fnfg.id as group_id,
+                fnfg.discount,
+                fnf.is_available,
+                u.id,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.gender,
+                u.createdAt,
+                IDENTITY(u.original_user) as original_user_id'
+            )
+            ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
+            ->join('fnf.groups', 'fnfg')
+            ->join('fnf.users', 'u')
+            ->andWhere('fnfg.isArchive = 0');
+        if ($search) {
+            $query
+                ->andWhere('u.firstName like :search or u.lastName like :search or u.email like :search or fnfg.discount like :search or fnf.is_available like :search')
+                /*->orWhere('u.lastName like :search')
+                ->orWhere('u.email like :search')
+                ->orWhere('fnfg.discount like :search')
+                ->orWhere('fnf.is_available like :search')*/
+                ->setParameter('search', "%".$search."%");
+        }
+
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "u.id";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "group_title";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "u.firstName";
+            } elseif ($orderByColumn == 3) {
+                $orderByColumn = "u.email";
+            } elseif ($orderByColumn == 4) {
+                $orderByColumn = "u.is_available";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+        /*echo $query->getSQL(); die;
+            return $query->getResult();*/
+        if ($max) {
+            $preparedQuery = $query->getQuery()
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery();
+        }
+
+        // echo $preparedQuery->getSQL(); die;
+        return $getResult?$preparedQuery->getResult():$preparedQuery;
     }
 }

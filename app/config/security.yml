@@ -95,7 +95,6 @@ security:
             memory:
                 users:
                     waq:  { password: d43051a23a3d69631f01fc55dbaa2ec62dff1720, roles: 'ROLE_ADMIN' }
-                    admin: { password: 00c7469da1fc95666e3fce191fe0476373225616, roles: 'ROLE_ADMIN' }
                     developer: { password: 9c80446cde6cbab69bb83eb452d9d882941190d5, roles: 'ROLE_ADMIN' }
                     designer: { password: 999bf90e871b2a8869c396c031b7b5ae223a0b32, roles: 'ROLE_ADMIN' }
                     julianne: { password: 4796e2401d5e278f4c3a337ba632ac0d515acfc5, roles: 'ROLE_ADMIN' }
@@ -111,6 +110,11 @@ security:
                     jackson: { password: f7454a2230b6cbbac5ee2f810f3ad06f6ab560b3, roles: 'ROLE_ADMIN' }
                     calibrationlead: { password: ca685ca2eb41016030ccead6dcab0d067ebbe908, roles: 'ROLE_ADMIN' }
                     carly: { password: 6f4189e70c065f53c21d8bb5aa133ddf6a76462d, roles: 'ROLE_ADMIN' }
+                    erin: { password: b85b11d9454c2147da84e2a98fb3b205b2ddab90, roles: 'ROLE_ADMIN' }
+                    monika: { password: b6707b70b4bd1f7801e1a6cd5c2af1826c04a78b, roles: 'ROLE_ADMIN' }
+                    qateam: { password: 97a89e03b72aa89c05cb07c0fc87b2a43a413a7e, roles: 'ROLE_ADMIN' }
+                    antal: { password: 48550753c8187041a7feb659b1de7bbc0aee1a33, roles: 'ROLE_ADMIN' }
+                    waqas: { password: a6b3ea59399a4275ce31fa37f125b6cfece3b9b6, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         

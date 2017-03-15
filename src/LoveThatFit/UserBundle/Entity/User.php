@@ -109,6 +109,12 @@ class User implements UserInterface, \Serializable {
 	 */
 	private $cart;
 
+
+	/**
+	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Wishlist", mappedBy="user")
+	 */
+	private $wishlist;
+
 	/**
 	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserAddresses", mappedBy="user")
 	 */
@@ -2435,6 +2441,41 @@ class User implements UserInterface, \Serializable {
   {
 	return $this->cart;
   }
+
+
+    ####################  Wishlist Methods ###################################
+    /**
+     * Add wishlist
+     *
+     * @param \LoveThatFit\CartBundle\Entity\Wishlist $wishlist
+     * @return User
+     */
+    public function addWishlist(\LoveThatFit\CartBundle\Entity\Wishlist $wishlist)
+    {
+        $this->wishlist[] = $wishlist;
+
+        return $this;
+    }
+
+    /**
+     * Remove wishlist
+     *
+     * @param \LoveThatFit\CartBundle\Entity\Wishlist $wishlist
+     */
+    public function removeWishlist(\LoveThatFit\CartBundle\Entity\Wishlist $wishlist)
+    {
+        $this->wishlist->removeElement($wishlist);
+    }
+
+    /**
+     * Get wishlist
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWishlist()
+    {
+        return $this->wishlist;
+    }
   ##############################################################################
   
   public function addDeviceToken($device_type, $token) {
@@ -2647,5 +2688,15 @@ class User implements UserInterface, \Serializable {
     public function getFnfusers()
     {
         return $this->fnfusers;
+    }
+
+    public function getUniqueName()
+    {
+        return sprintf('%s - %s', $this->id, $this->email);
+    }
+
+    public function __toString()
+    {
+        return $this->getId() ." (" .$this->email." )";
     }
 }

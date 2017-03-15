@@ -11,8 +11,8 @@ product_intake_product_specs_new:
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:new }
     
 product_intake_product_specs_edit:
-    pattern:  /product_intake/product_specs/edit/{id}/{fit_model_measurement_id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:edit, fit_model_measurement_id: null}    
+    pattern:  /product_intake/product_specs/edit/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:edit }    
 
 product_intake_product_specs_show:
     pattern:  /product_intake/product_specs/show/{id}
@@ -25,6 +25,14 @@ product_intake_product_specs_delete:
 product_intake_product_specs_update:
     pattern:  /product_intake/product_specs/update/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:update }   
+
+product_intake_product_specs_update_dynamic:
+    pattern:  /product_intake/product_specs/update_dynamic
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:updateDynamic }
+
+product_intake_product_specs_update_foo:
+    pattern:  /product_intake/product_specs/update_foo/{pk}/{name}/{value}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:updateFoo }
     
 product_intake_product_specs_undo:
     pattern:  /product_intake/product_specs/undo/{id}
@@ -34,10 +42,7 @@ product_intake_product_create:
     pattern:  /product_intake/product_specs/create_product/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createProduct }     
 
-product_intake_product_specs_measurements_with_fitmodel:
-    pattern:  /product_intake/product_specs/measurements_with_fitmodel
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementsWithFitModel}    
-
-product_intake_product_specs_measurement_recalculate:
-    pattern:  /product_intake/product_specs/measurement_recalculate
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementRecalculate}    
+product_intake_product_specs_measurements_compare:
+    pattern:  /product_intake/product_specs/measurements_compare/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementsCompare}    
+   

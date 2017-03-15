@@ -52,6 +52,11 @@ class ProductItem
     private $cart;
 
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Wishlist", mappedBy="productitem")
+     */
+    private $wishlist;
+
+    /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrderDetail", mappedBy="productitem")
      */
     private $user_order_detail;
@@ -692,6 +697,45 @@ class ProductItem
     {
         return $this->cart;
     }
+
+
+#----------------------------------------------
+
+
+    /**
+     * Add wishlist
+     *
+     * @param \LoveThatFit\CartBundle\Entity\Wishlist $wishlist
+     * @return ProductItem
+     */
+    public function addWishlist(\LoveThatFit\CartBundle\Entity\Wishlist $wishlist)
+    {
+        $this->wishlist[] = $wishlist;
+
+        return $this;
+    }
+
+    /**
+     * Remove wishlist
+     *
+     * @param \LoveThatFit\CartBundle\Entity\Wishlist $wishlist
+     */
+    public function removeWishlist(\LoveThatFit\CartBundle\Entity\Wishlist $wishlist)
+    {
+        $this->wishlist->removeElement($wishlist);
+    }
+
+    /**
+     * Get wishlist
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWishlist()
+    {
+        return $this->wishlist;
+    }
+
+#------------------------------------
 
     /**
      * Add user_order_detail

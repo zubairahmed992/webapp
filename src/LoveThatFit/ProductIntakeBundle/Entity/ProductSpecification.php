@@ -33,6 +33,25 @@ class ProductSpecification {
      */
     protected $description;
     
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $brand_name;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $style_id_number;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $style_name;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $clothing_type;
     
       /**
      * @var string $specs_json
@@ -67,6 +86,91 @@ class ProductSpecification {
     public function getId() {
         return $this->id;
     }
+#--------------------------------------------------------
+  
+        /**
+     * Set style_id_number
+     *
+     * @param string style_id_number
+     * @return ProductSpecification
+     */
+    public function setStyleIdNumber($style_id_number) {
+        $this->style_id_number = $style_id_number;
+        return $this;
+    }
+
+    /**
+     * Get style_id_number
+     *
+     * @return string 
+     */
+    public function getStyleIdNumber() {
+        return $this->style_id_number;
+    }
+    
+#--------------------------------------------------------
+  
+        /**
+     * Set style_name
+     *
+     * @param string style_name
+     * @return ProductSpecification
+     */
+    public function setStyleName($style_name) {
+        $this->style_name = $style_name;
+        return $this;
+    }
+
+    /**
+     * Get style_name
+     *
+     * @return string 
+     */
+    public function getStyleName() {
+        return $this->style_name;
+    }    
+#--------------------------------------------------------
+  
+        /**
+     * Set brand_name
+     *
+     * @param string brand_name
+     * @return ProductSpecification
+     */
+    public function setBrandName($brand_name) {
+        $this->brand_name = $brand_name;
+        return $this;
+    }
+
+    /**
+     * Get brand_name
+     *
+     * @return string 
+     */
+    public function getBrandName() {
+        return $this->brand_name;
+    }    
+#--------------------------------------------------------
+  
+        /**
+     * Set clothing_type
+     *
+     * @param string clothing_type
+     * @return ProductSpecification
+     */
+    public function setClothingType($clothing_type) {
+        $this->clothing_type = $clothing_type;
+        return $this;
+    }
+
+    /**
+     * Get clothing_type
+     *
+     * @return string 
+     */
+    public function getClothingType() {
+        return $this->clothing_type;
+    }        
 #--------------------------------------------------------
   
         /**

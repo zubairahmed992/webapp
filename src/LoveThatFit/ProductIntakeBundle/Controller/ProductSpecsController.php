@@ -34,60 +34,53 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id, $fit_model_measurement_id=null){                
-        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();        
-        $fm=$fit_model_measurement_id==null?null:$this->get('productIntake.fit_model_measurement')->find($fit_model_measurement_id);
-        
-        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();         
-        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+    public function editAction($id)
+      {                
+        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        $parsed_data['fit_model_size']=  array_key_exists('fit_model_size',$parsed_data)?$parsed_data['fit_model_size']:'';
-        $drop_down_values['fit_model_size'] = $this->get('productIntake.fit_model_measurement')->getTitleArray();
-        #return new Response($ps->getSpecsJson());            
-        if ($fm){                        
-            return new Response(json_encode($this->apply_fit_model($parsed_data['sizes'], $fm)));            
-         }
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
+        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+        $drop_down_values['fit_model_size'] = $fms;       
+        if(isset($parsed_data['fit_model_size'])){ 
+            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize(); 
+        } else { 
+        $fit_model_selected = null;
+        $parsed_data['fit_model_size'] = '';
+        }       
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'parsed_data' => $parsed_data,
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
-                    'fit_points' => $ps->getFitPointArray(),
-                    'fit_point_stretch' => $ps->getFitPointStretchArray(),
-                    'fit_model_list' => $fms,
-                    'fit_model' => $fm,
+                    'fit_model_selected_size' => $fit_model_selected,
+                    'fit_point_stretch' => $ps->getFitPointStretchArray(), 
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),
                 ));
     }
-    #----------------------- /product_intake/product_specs/measurements_with_fitmodel
-   /* public function measurementsWithFitModelAction(Request $request){                        
-        $decoded = $request->request->all();             
-        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);  
-        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);        
-        $parsed_data = json_decode($ps->getSpecsJson(),true);        
-        $ps = $this->get('pi.product_specification')->calculateGradeRule($parsed_data);  
-        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($ps['sizes'], $fm);  
-        return new Response(json_encode($updated_measurements));        
+    
+      #----------------------- /product_intake/product_specs/measurements_compare
+    public function measurementsCompareAction($id){                        
+        $ps = $this->get('pi.product_specification')->find($id);          
+        $specs = json_decode($ps->getSpecsJson(),true);        
+        $compare = array();
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                $compare[$fpk][$size]=$fpv['fit_model'];
+            }
+        }        
+        return new Response(json_encode($compare));        
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:test_preview.html.twig', array(                    
+                    'compare_data' => json_encode($compare),                    
+                ));
     }
-      #----------------------- /product_intake/product_specs/measurement_recalculate
-    public function measurementRecalculateAction(Request $request){                        
-        $decoded = $request->request->all();    
-        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);          
-        $specs_data = json_decode($ps->getSpecsJson(),true);        
-        $specs_data['horizontal_stretch'] = array_key_exists('horizontal_stretch',$decoded)?$decoded['horizontal_stretch']:0;
-        $specs_data['vertical_stretch'] = array_key_exists('vertical_stretch',$decoded)?$decoded['vertical_stretch']:0;        
-        $specs_data['fit_model_measurement_id'] = array_key_exists('fit_model_measurement_id',$decoded)?$decoded['fit_model_measurement_id']:0;                
-        $fm = $this->get('productIntake.fit_model_measurement')->find($decoded['fit_model_measurement_id']);
-        $updated_measurements =  $this->get('pi.product_specification')->calculateRanges($specs_data);  
-        $updated_measurements =  $this->get('pi.product_specification')->calculateWithFitModel($updated_measurements['sizes'], $fm);  
-        return new Response(json_encode($updated_measurements));        
-    }
-      */
+      
     #----------------------- /product_intake/product_specs/show
     public function showAction($id){                
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
+        $parsed_data = json_decode($ps->getSpecsJson(),true);
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specs_json' => json_encode($gen_specs),                    
@@ -102,8 +95,7 @@ class ProductSpecsController extends Controller
     
     #----------------------- /product_intake/product_specs/create_product
     public function createProductAction($id){            
-        $entity = $this->get('pi.product_specification')->find($id);
-        $this->create_product(json_decode($entity->getSpecsJson(),true));
+        $this->get('pi.product_specification')->create_product($id);
         $this->get('session')->setFlash('success', 'Product created.');   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
@@ -123,8 +115,10 @@ class ProductSpecsController extends Controller
             } 
         }                      
         
-        $updated_specs = $this->get('pi.product_specification')->generate($output);        
-        #return new Response(json_encode($updated_specs));
+        $updated_specs = $this->get('pi.product_specification')->generate($output);
+        #return new Response(json_encode($updated_specs)); 
+        
+        
         $entity = $this->get('pi.product_specification')->find($id);
         $entity->setUndoSpecsJson($entity->getSpecsJson());
         $entity->setSpecsJson(json_encode($updated_specs));
@@ -135,6 +129,33 @@ class ProductSpecsController extends Controller
         
     }
     
+    #------------------------------------- /product_intake/Prod_specs/update_foo 
+    public function updateFooAction($pk, $name, $value){  
+        #$decoded = $this->getRequest()->request->all();        
+        $decoded = array('pk' => $pk, 'name' => $name, 'value' => $value);
+        $msg = $this->get('pi.product_specification')->dynamicCalculations($decoded);                        
+        $entity = $this->get('pi.product_specification')->find($decoded['pk']);
+        $entity->setUndoSpecsJson($entity->getSpecsJson());
+        
+        if($decoded['name']=='ex_horizontal_stretch'){
+            
+        }
+        $response = new Response(json_encode($decoded));
+        $response->headers->set('Content-Type', 'application/json');
+         $response->headers->set('X-PHP-Response-Code: 200', true, 200);
+        return $response;
+        
+        
+        $updated_specs = $this->get('pi.product_specification')->generate($output);        
+        
+        
+        $entity->setSpecsJson(json_encode($updated_specs));
+        $msg_ar = $this->get('pi.product_specification')->update($entity);        
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+        
+    }
     #----------------------- /product_intake/Prod_specs/undo
     public function undoAction($id){  
         $entity = $this->get('pi.product_specification')->find($id);       
@@ -281,101 +302,6 @@ class ProductSpecsController extends Controller
         }
         return $c;
     }
-######################################################################################
-    
-    private function create_product($data){
-        $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
-        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
-        $product=new Product;
-        $product->setBrand($brand);
-        $product->setClothingType($clothing_type);        
-        $product->setName(array_key_exists('name', $data)?$data['name']:'');
-        $product->setName(array_key_exists('control_number', $data)?$data['control_number']:'');        
-        $product->setDescription(array_key_exists('description', $data)?$data['description']:'');
-        $product->setStretchType(array_key_exists('stretch_type', $data)?$data['stretch_type']:'');
-        $product->setHorizontalStretch($data['horizontal_stretch']);
-        $product->setVerticalStretch($data['vertical_stretch']);        
-        $product->setCreatedAt(new \DateTime('now'));
-        $product->setUpdatedAt(new \DateTime('now'));
-        $product->setGender($data['gender']);
-        $product->setStylingType($data['styling_type']);
-        $product->setNeckline(array_key_exists('neck_line', $data)?$data['neck_line']:$data['neckline']);
-        $product->setSleeveStyling($data['sleeve_styling']);
-        $product->setRise($data['rise']);
-        $product->setHemLength($data['hem_length']);
-        $product->setFabricWeight($data['fabric_weight']);
-        $product->setStructuralDetail($data['structural_detail']);
-        $product->setFitType($data['fit_type']);
-        $product->setLayering(array_key_exists('layring', $data)?$data['layring']:$data['layering']);
-        $product->setFitPriority(json_encode($data['fit_priority']));
-        $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data)?$data['fabric_content']:''));
-        $product->setDisabled(false);        
-        $product->setSizeTitleType($data['size_title_type']);    
-        #------------------------
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($product);
-        $em->flush();
-        $this->create_product_sizes($product, $data);
-        $this->create_product_colors($data, $product);
-        
-    }
-        #------------------------------------------------------------
-    private function create_product_sizes($product, $data) {
-        $em = $this->getDoctrine()->getManager();
-        $size_titles = $this->get('admin.helper.size')->getSizeArray($data['gender'],$data['size_title_type']);        
-        $i=1;
-        foreach ($size_titles['regular'] as $size_title => $value) {
-            if(array_key_exists($size_title, $data['sizes'])){
-                $ps = new ProductSize();
-                $ps->setTitle($size_title);
-                $ps->setProduct($product);
-                $ps->setBodyType($data['body_type']);                                
-                $ps->setIndexValue($i);
-                $em->persist($ps);
-                $em->flush();
-                $this->create_product_size_measurements($ps, $data['sizes'][$size_title]);            
-            }
-            $i++;
-        }
-        return $product;
-    }
-     #------------------------------------------------------
-    private function create_product_size_measurements($size, $data) {
-        $em = $this->getDoctrine()->getManager();
-        foreach ($data as $key => $value) {
-            if($key!='key'){
-            $psm = new ProductSizeMeasurement;
-            $psm->setTitle($key);
-            $psm->setProductSize($size);            
-            array_key_exists('garment_dimension',$value)?$psm->setGarmentMeasurementFlat($value['garment_dimension']):null;
-            array_key_exists('garment_stretch',$value)?$psm->setGarmentMeasurementStretchFit($value['garment_stretch']):null;
-            $psm->setMaxBodyMeasurement($value['max_actual']);
-            $psm->setIdealBodySizeHigh($value['ideal_high']);
-            $psm->setIdealBodySizeLow($value['ideal_low']);
-            $psm->setMinBodyMeasurement($value['min_actual']);
-            $psm->setFitModelMeasurement($value['fit_model']);
-            $psm->setMaxCalculated($value['max_calc']);
-            $psm->setMinCalculated($value['min_calc']);
-            $psm->setGradeRule($value['grade_rule']);
-            $em->persist($psm);
-            $em->flush();
-            }            
-        }
-        return;
-    }
-    #------------------------------------------------------------
-    private function create_product_colors($data, $product) {        
-        $color_names=explode(",", $data['colors']);        
-            $em = $this->getDoctrine()->getManager();
-            foreach ($color_names as $cn) {
-                $pc = new ProductColor();
-                $pc->setTitle(trim($cn));
-                $pc->setProduct($product);
-                $em->persist($pc);
-                $em->flush();
-            }
-                
-        return $product;
-    }
+
     
 }

@@ -3,3 +3,9 @@ love_that_fit_cart:
    merchant_id: 999xtbqc2s55bx9c
    public_key:  jg2z77t3jkp43j8g
    private_key: 18fee97bc8564dfec7d0c1670f592386
+
+braintree_live:
+   environment: production
+   merchant_id: dtjkgnd4hzfnwpk7
+   public_key:  x85q66f9k9f93csd
+   private_key: e6ac867aa3e49f1b59bf0793f840cd60

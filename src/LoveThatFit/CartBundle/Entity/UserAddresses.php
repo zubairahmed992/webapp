@@ -113,6 +113,12 @@ class UserAddresses
 	 */
 	private $shipping_default;
 
+    /**
+     * @var smallint $adress_type
+     * @ORM\Column(name="adress_type", type="smallint", nullable=true , options={"default":"0"})
+     */
+    private $adress_type;
+
 
     /**
      * Get id
@@ -373,6 +379,27 @@ class UserAddresses
 	{
 	  return (bool)$this->shipping_default;
 	}
+
+    /**
+     * Set adress_type
+     *
+     * @param string $adress_type
+     * @return UserAddresses
+     */
+    public function setAddressType($adress_type)
+    {
+        $this->adress_type = $adress_type;
+    }
+
+    /**
+     * Get adress_type
+     *
+     * @return string
+     */
+    public function getAddressType()
+    {
+        return (int) $this->adress_type;
+    }
 
   /**
 	 * Set user

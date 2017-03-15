@@ -1,0 +1,165 @@
+{% extends 'LoveThatFitCartBundle::basewishlist.html.twig' %}
+
+{% block profile_heading %}
+    <div id="breadcrumb">
+        <ul>
+            <li class="active">Wishlist</li>
+            <li class="bd_sep">>></li>
+            <li>Delivery &amp; Shipping</li>
+             <li class="bd_sep">>></li>
+            <li>Review &amp; Billing</li>
+        </ul>
+    </div><br>
+    <h1 class="wishlist_hd">Wishlist</h1>
+{% endblock %}
+{% block profile_section %}
+    {% if app.session.hasFlash('warning') %}
+        <div class="alert alert-error" style="text-align: center;color:#ff0000">
+            {{ app.session.flash('warning') }}
+        </div>
+    {% endif %}
+    {% if app.session.hasFlash('success') %}
+        <div class="success_alert">
+            {{ app.session.flash('success') }}
+        </div>
+    {% endif %}
+
+<script type="text/javascript">   
+    function updateWishlist(wishlist_id,qty,price){
+         $('#quantity_update_'+wishlist_id).show();
+         $('#update_btn_'+wishlist_id).hide();
+         $('#quantity_update_'+wishlist_id).css({"top":"1px","position":"relative","border":"1px solid #ccc","padding":"8px 7px 4px 6px","background":"#e9e9e9","height":"13px","width":"14px","background":"#e9e9e9"});
+     
+        if(qty == 0){
+            alert("Quantity can not be 0");
+            return false;
+        }
+        if(isNaN(qty)){
+            alert("Quantity should be number");
+            return false;
+        }
+        if(qty.indexOf(".") !== -1){
+            alert("decimal values not allowed in Quantity");
+            return false;
+        }
+        $.ajax({
+             
+            type: "GET",
+            url: "update_qty_ajax/"+wishlist_id +"/"+qty ,
+            success: function(data){
+                 $('#update_btn_'+wishlist_id).show();
+                $('#quantity_update_'+wishlist_id).hide();
+                $('#subtotal_'+wishlist_id).html(qty*price);
+                $('#grand_total').html(data);
+                $('#order_amount').val(data);
+            },
+            failure: function(errMsg) {
+                alert(errMsg);
+            }
+        });
+    }
+
+</script>
+    <table width="745" border="1" class="wishlist_tbl" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Image</td>
+            <td>SKU</td>
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Unit Price</td>
+            <td>Sub Total</td>
+            <td>Actions</td>
+
+        </tr>
+        
+     
+
+            {% for c in wishlist %}
+            <tr>
+                <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}" height="65"  ></td>
+                <td>{{ c.productItem.sku}}</td>
+                <td align="left" width="20%">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
+                <td align="center" >
+                    <input type="hidden" name="id[]" value="{{ c.id }}">
+                    <input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> 
+                    <input id="qty_{{ c.id }}" type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" >
+                   
+                    <span id="quantity_update_{{ c.id }}" class="quantity_update2"><img src="{{ asset('bundles/lovethatfit/site/images/progress.gif') }}"></span>
+                    
+                    
+                    <input id="update_btn_{{ c.id }}" type="image" onclick="updateWishlist({{ c.id }},$('#qty_'+{{ c.id }}).val(),{{ c.productItem.price }})" title="Update Quantity" src="{{ asset('bundles/lovethatfit/site/images/update_icon.png') }}" >
+                </td>
+                <td align="center">${{ c.productItem.price}}</td>
+                <td align="center">$<span id="subtotal_{{ c.id }}">{{ c.productItem.price * c.qty}}</span></td>
+
+                <td align="center">
+                    <ul class="wishlist_act" >
+                       
+                        
+                     
+                      
+                        <li>
+                    <!-- <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist">-->
+                    <input style="border:none;" type="image" title="Add to Wish List" src="{{ asset('bundles/lovethatfit/site/images/wishlist_icon.png') }}">
+                        </li>
+                        
+                           <li>|</li>
+                        
+                         <li>
+                    <a onclick="return confirm('Are you sure you want to remove this product?')" href="{{ path('wishlist_delete', {'id': c.id}) }}" title="Remove">  <img alt="Remove" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
+                        </li>
+                    </ul>
+                    </td>
+
+            </tr>
+
+            {% endfor %}
+            {% if(grand_total!=0) %}
+            <tr>
+                <td colspan="7" align="right">
+                    
+                    <div class="wishlist_total">
+
+                    <div style="float: right;">
+                    <div style="float:left;">Total:</div>
+                    <div style="float:left; margin-left: 10px;"><strong>$<span id="grand_total">{{ grand_total }}</span> </strong></div>
+                    </div>
+                    </div>
+                </td></tr>
+            {% endif %}
+            
+            
+                {% if(itemscounter != 0 ) %}
+                <tr>
+                    <td colspan="7" align="right" style="text-align: right;">
+                    <a href="{{path('inner_site_index')}}" class="update_btn">Continue Shopping</a>                   
+                   
+                    
+                    <form action="{{ path('wishlist_process_checkout')}}" method="post">
+                        <input type="hidden" id="order_amount" name="order_amount" value="{{ grand_total }}">
+                    
+                    
+                    <input style="margin-left:0px" class="checkout_btn" type="submit" name="checkout" value="Proceed to Checkout">
+                    
+                      </form>
+                    
+                    </td></tr>
+        
+                
+                {% else %}
+                <tr>
+                    <td align="center" colspan="6">
+                        <p class="no_item_wrapper">
+                            Currently there are no items in the wishlist.
+                             <div class="empty_prod_btn">
+                                 <a href="{{path('inner_site_index')}}">Click here to add items</a>
+                             </div>
+                            
+                        </p>
+                    </td>
+                </tr>
+            {% endif %}
+      
+    </table>
+
+{% endblock %}
