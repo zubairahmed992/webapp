@@ -11,14 +11,15 @@
     <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
 
-    <form action="{{ path('product_intake_specs_mapping_create') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <form action="{{ path('product_intake_specs_mapping_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data" class="form-horizontal">
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="brand_name"> Brand: </label>
             <div class="col-sm-4">                    
                 <select name="brand"  id="brand_name" class="form-control">
                         {% for b in brands %}
-                        <option value="{{ b.name }}"> {{ b.name }}</option>
+{#                        <option value="{{ b.name }}"> {{ b.name }}</option>#}
+                          <option value="{{ b.name }}"{{ b.name == '' and b.name == 0? '' : (b.name == parsed_data.brand ? ' selected ' : '')}}  >{{ b.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -31,32 +32,35 @@
                     <div class="col-sm-4">
                         <select name="gender" id="sel_gender" class="sel_gender form-control">
                             <option>Select Gender</option>               
-                            <option value="m"> man</option>
-                            <option value="f"> woman</option>               
+                            <option value="m" {{'m' == parsed_data.gender? 'selected'}}> man</option>
+                            <option value="f" {{'f' == parsed_data.gender? 'selected'}}> woman</option>               
                         </select>
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for=""> Clothing Type: </label>
-                    <div class="col-sm-4">
+                    <label class="control-label col-sm-2" for=""> Clothing Type: </label>                   
+                    <div class="col-sm-4">                    
                         <select name="clothing_type" id="sel_clothing_type"  class="form-control">
-                            <option value=""> Select </option>                                            
-                        </select>
+                            <option>Select</option>
+                            {% for key,val in clothing_types %}
+                               <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (val == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                            {% endfor %}
+                        </select>                                  
                     </div>
                 </div>
                 <br>    
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="mapping_description">Mapping Description : </label>
                     <div class="col-sm-4">
-                        <textarea name="mapping_description" class="form-control" ></textarea>
+                        <textarea name="mapping_description" class="form-control" > {{ parsed_data.mapping_description is defined?parsed_data.mapping_description:'' }} </textarea>
                     </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="mapping_title">Mapping Title : </label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="mapping_title" name="mapping_title" placeholder="Enter mapping title">
+                        <input type="text" class="form-control" value="{{ parsed_data.mapping_title is defined?parsed_data.mapping_title:'' }}"id="mapping_title" name="mapping_title" placeholder="Enter mapping title">
                     </div>
                 </div>
                 <br>
@@ -76,8 +80,11 @@
                <div class="form-group">
                     <label class="control-label col-sm-2" for="body_type"> Body Type: </label>
                     <div class="col-sm-4">
-                        <select name="body_type" id="body_type" class="body_type form-control">
-                            <option selected> Select Size</option>                                            
+                        <select name="body_type" id="body_type" class="body_type form-control">                           
+                            <option>Select</option>
+                            {% for key,val in body_types %}
+                               <option value="{{ val }}"{{ parsed_data.body_type == '' and key == 0? '' : (key == parsed_data.body_type ? ' selected ' : '')}}  >{{ val }}</option>
+                            {% endfor %}                                        
                         </select>
                     </div>
                 </div>
@@ -86,7 +93,10 @@
                     <label class="control-label col-sm-2" for="sel_size_type">Select Size Type: </label>
                     <div class="col-sm-4">
                         <select name="size_title_type" id="sel_size_type" class="selectSize form-control">
-                            <option selected> Select Size</option>                                            
+                            <option>Select</option>
+                            {% for key,val in size_title %}
+                               <option value="{{ val }}"{{ parsed_data.size_title_type == '' and key == 0? '' : (key == parsed_data.size_title_type ? ' selected ' : '')}}  >{{ val }}</option>
+                            {% endfor %}                                             
                         </select>
                     </div>
                 </div>
@@ -95,8 +105,8 @@
                     <label class="control-label col-sm-2" for="select_size">Measuring Unit: </label>
                     <div class="col-sm-4">
                         <select name="measuring_unit" id="measuring_unit"  class="form-control">
-                            <option value="inch"> inch </option>                                            
-                            <option value="centimeter"> centimeter </option>                                            
+                            <option value="inch" {{'inch' == parsed_data.measuring_unit? 'selected'}} > inch </option>                                            
+                            <option value="centimeter" {{'centimeter' == parsed_data.measuring_unit? 'selected'}} > centimeter </option>                                            
                         </select>
                     </div>
                 </div>
@@ -120,6 +130,8 @@
                         <button type="button" class="add_size">Add Fit point Label</button>
                     </div>
                 </div>
+                
+                <input type="hidden" class="get_size" value="{{ parsed_data.sizes|json_encode() }}" >
             </form>
 
 
@@ -132,63 +144,76 @@
             <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/paramquery/pqgrid.min.js') }}"></script>
             <script type="application/javascript">
                 var $ = jQuery.noConflict();
-                jQuery(document).ready(function () {
-                $(".selectSize").change(function () {                
-                var siz_genrate = $('.size_genrate'); 
-                $('.add_size_row').show();
-                size_specs = $.parseJSON($('#size_specs_json').text());                
-                var fit_points = $('.fit_point').val();
-                gender=$('#sel_gender').val()=='m'?'man':'woman';
-                var size_type = this.value                
-                siz_genrate.empty();
-                var tableData = '';
-                tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> Size Lable </th><th> formula </th>";
-                        $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
-                        tableData += "<th>" + size_label + "</th>";
-                        });
-
-                        tableData += "</tr>";
-                    var result = $.parseJSON(fit_points);
-
-                    $.each(result, function (k, fit_point_value) {
-                    tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
-                        tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
-                        $.each(size_specs.sizes[gender][size_type], function (k, v) {                    
-                        tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
-                        });
-                        tableData += "</tr>";
-                    });
-
-                    siz_genrate.append(tableData);
-
-                    //---------- textbox id on selection ~~~~~~~~~~>
-                    $('input, textarea').focus(function() {
-                    $('#select_cell_div').text($(this).attr('id'));
-                    });
-                    //---------------------------------------
-
-                    });
-                    var fit_poit_condition = true;
-                    $(".add_size").click(function () {
-                    var siz_genrate = $('.size_genrate');
-                    var new_fit_point = $('#new_fit_point').val();                
+                jQuery(document).ready(function () {                 
+                    $(".selectSize").change(function () { 
+                        var size = $('.get_size').val();
+                        obj = JSON.parse(size);                      
+                    var siz_genrate = $('.size_genrate'); 
+                    $('.add_size_row').show();
                     size_specs = $.parseJSON($('#size_specs_json').text());                
+                    var fit_points = $('.fit_point').val();
                     gender=$('#sel_gender').val()=='m'?'man':'woman';
-                    size_type=$(".selectSize").val();                    
-                    var tableData = "<tr><td class='span2'>"+ new_fit_point + "  </td>";
-                        nfp =  new_fit_point.split(' ').join('_');
-                        tableData += "<td>  <input type='text' name= 'formula-" + nfp + "'  id='formula-" + nfp + "' style='width: 40px'/></td>";
-                        $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
-                           tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
-                        });
-                        tableData += "</tr>";                           
-                        $('#tbl_mapping > tbody:last').append(tableData);
-                            //---------- textbox id on selection ~~~~~~~~~~>
-                                $('input, textarea').focus(function() {
-                                $('#select_cell_div').text($(this).attr('id'));
-                                });
-                            //---------------------------------------
+
+                    var size_type = this.value                
+                    siz_genrate.empty();
+                    var tableData = '';
+                    tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> Size Lable </th><th> formula </th>";
+                            $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                            tableData += "<th>" + size_label + "</th>";
                             });
+
+                            tableData += "</tr>";
+                        var result = $.parseJSON(fit_points);
+
+                        $.each(result, function (k, fit_point_value) {
+                        tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
+                            tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
+                            $.each(size_specs.sizes[gender][size_type], function (k, v) {  
+                                if (v in obj) {
+                                    if ( fit_point_value in obj[v] ) { 
+                                            var index_value = obj[v][fit_point_value];      
+                                            console.log(index_value)
+                                        } else {
+                                            var index_value = "";
+                                        }
+                                    } else {
+                                       var index_value = "";
+                                }
+                            tableData += "<td>  <input type='text' value='"+index_value+"' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
+                            });
+                            tableData += "</tr>";
+                        });
+
+                        siz_genrate.append(tableData);
+
+                        //---------- textbox id on selection ~~~~~~~~~~>
+                        $('input, textarea').focus(function() {
+                        $('#select_cell_div').text($(this).attr('id'));
+                        });
+                        //---------------------------------------
+
+                        });
+                        var fit_poit_condition = true;
+                        $(".add_size").click(function () {
+                        var siz_genrate = $('.size_genrate');
+                        var new_fit_point = $('#new_fit_point').val();                
+                        size_specs = $.parseJSON($('#size_specs_json').text());                
+                        gender=$('#sel_gender').val()=='m'?'man':'woman';
+                        size_type=$(".selectSize").val();                    
+                        var tableData = "<tr><td class='span2'>"+ new_fit_point + "  </td>";
+                            nfp =  new_fit_point.split(' ').join('_');
+                            tableData += "<td>  <input type='text' name= 'formula-" + nfp + "'  id='formula-" + nfp + "' style='width: 40px'/></td>";
+                            $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                               tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
+                            });
+                            tableData += "</tr>";                           
+                            $('#tbl_mapping > tbody:last').append(tableData);
+                                //---------- textbox id on selection ~~~~~~~~~~>
+                                    $('input, textarea').focus(function() {
+                                    $('#select_cell_div').text($(this).attr('id'));
+                                    });
+                                //---------------------------------------
+                                });
 
                             })
                             </script>
@@ -232,7 +257,7 @@
                               function fill_body_type(gender){                                          
                                   gender=gender=='m'?'man':'woman';                                    
                                   $('#body_type').empty();
-                                  var option ='';
+                                  var option = '';
                                   str='';
                                  $.each(size_specs.fit_types[gender], function(val, text) {
                                       option += '<option value="'+ val + '">' + text + '</option>';
@@ -249,6 +274,55 @@
                                           });
                                    $('#sel_size_type').append(option);         
                               }
+                              
+                              //----------------> Genrate Size Table with Selected Values
+                              function genrate_size_table(size_selected){
+                                var size = $('.get_size').val();
+                                obj = JSON.parse(size);
+                                //console.log(obj)
+                                var size_type = size_selected  
+                                var siz_genrate = $('.size_genrate'); 
+                                $('.add_size_row').show();
+                                size_specs = $.parseJSON($('#size_specs_json').text());                
+                                var fit_points = $('.fit_point').val();
+                                gender=$('#sel_gender').val()=='m'?'man':'woman';
+
+                                siz_genrate.empty();
+                                var tableData = '';
+                                tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> Size Lable </th><th> formula </th>";
+                                        $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
+                                        tableData += "<th>" + size_label + "</th>";
+                                        });
+
+                                        tableData += "</tr>";
+                                    var result = $.parseJSON(fit_points);
+
+                                    $.each(result, function (key, fit_point_value) {
+                                      
+                                    tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
+                                        tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
+                                        $.each(size_specs.sizes[gender][size_type], function (k, v) {
+                                            if (v in obj) {
+                                                if ( fit_point_value in obj[v] ) { 
+                                                    var index_value = obj[v][fit_point_value];      
+                                                    console.log(index_value)
+                                                } else {
+                                                    var index_value = "";
+                                                }
+                                            } else {
+                                                    var index_value = "";
+                                            }
+                                        tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "' value='"+index_value+"'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
+                                        });
+                                        tableData += "</tr>";
+                                    });
+
+                                    siz_genrate.append(tableData);
+                              }
+                                
+                                size_title = $('.selectSize').val();                             
+                                genrate_size_table(size_title)                             
+                               
     
                               //#################################################
                               $('#csv_file').on('change', function(){     
@@ -259,7 +333,7 @@
                                       var formData = new FormData();
                                       formData.append('csv_file', $('input[type=file]')[0].files[0]); 
                                       $.ajax({
-                                          url: '../specs_mapping/csv_upload',
+                                          url: '../csv_upload',
                                           data: formData,
                                           type: 'POST',
                                           contentType: false,

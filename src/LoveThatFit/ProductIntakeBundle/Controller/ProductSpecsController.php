@@ -51,6 +51,7 @@ class ProductSpecsController extends Controller
         }       
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
+                    'product_specs'=>$ps,
                     'parsed_data' => $parsed_data,
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
@@ -120,6 +121,12 @@ class ProductSpecsController extends Controller
         
         
         $entity = $this->get('pi.product_specification')->find($id);
+        array_key_exists('style_id_number', $updated_specs) ? $entity->setStyleIdNumber($updated_specs['style_id_number']):'';
+        array_key_exists('style_name', $updated_specs) ?$entity->setStyleName($updated_specs['style_name']):'';
+        array_key_exists('title', $updated_specs) ?$entity->setTitle($updated_specs['title']):'';
+        array_key_exists('description', $updated_specs) ?$entity->setDescription($updated_specs['description']):'';
+        array_key_exists('clothing_type', $updated_specs) ?$entity->setClothingType($updated_specs['clothing_type']):'';
+        array_key_exists('brand', $updated_specs) ?$entity->setBrandName($updated_specs['brand']):'';
         $entity->setUndoSpecsJson($entity->getSpecsJson());
         $entity->setSpecsJson(json_encode($updated_specs));
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
@@ -128,7 +135,37 @@ class ProductSpecsController extends Controller
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
         
     }
-    
+     #------------------------------------- /product_intake/Prod_specs/update_foo 
+    public function updateDynamicAction(){  
+        $decoded = $this->getRequest()->request->all();        
+        $sizes_json = $this->get('pi.product_specification')->dynamicCalculations($decoded);
+        return new Response(json_encode($sizes_json));
+        return new Response(json_encode($decoded));
+        
+                                
+        
+        $entity = $this->get('pi.product_specification')->find($decoded['pk']);
+        $entity->setUndoSpecsJson($entity->getSpecsJson());
+        
+        if($decoded['name']=='ex_horizontal_stretch'){
+            
+        }
+        $response = new Response(json_encode($decoded));
+        $response->headers->set('Content-Type', 'application/json');
+         $response->headers->set('X-PHP-Response-Code: 200', true, 200);
+        return $response;
+        
+        
+        $updated_specs = $this->get('pi.product_specification')->generate($output);        
+        
+        
+        $entity->setSpecsJson(json_encode($updated_specs));
+        $msg_ar = $this->get('pi.product_specification')->update($entity);        
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
+        
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+        
+    }
     #------------------------------------- /product_intake/Prod_specs/update_foo 
     public function updateFooAction($pk, $name, $value){  
         #$decoded = $this->getRequest()->request->all();        

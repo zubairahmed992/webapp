@@ -52,7 +52,16 @@ class ProductSpecificationMappingHelper {
         $this->em->flush();        
     }
 
-    
+//----------------------- Update--------------------------------
+    public function update($entity) {  
+        $this->em->persist($entity);
+        $this->em->flush();        
+            return array(
+                'message' => 'Product mapping has been Updated!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+    }    
 //------------------------------------------------------
 
     public function delete($id) {
