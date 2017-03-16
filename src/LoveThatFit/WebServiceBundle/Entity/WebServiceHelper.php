@@ -636,11 +636,20 @@ class WebServiceHelper {
          if (array_key_exists('product_id', $ra) && $ra['product_id'] != null) {
            $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
            foreach ($user->getProductItems() as $pi) {
-             if ($pi->getProduct()->getId() == $p->getId()) { #remove all items of the same product
-               $pi->removeUser($user);
-               $user->removeProductItem($pi);
-               $this->container->get('admin.helper.productitem')->save($pi);
-               $this->container->get('user.helper.user')->saveUser($user);
+             if ($pi->getProduct()->getId() == $p->getId()) {
+
+                $itemID = $pi->getID();
+                if(
+                    (is_array($ra['item_id']) && in_array($itemID, $ra['item_id']))
+                    || (isset($ra['item_id']) && is_numeric(intval($ra['item_id'])) && $ra['item_id'] == $itemID)
+                    ){
+                  #remove specific items of the same product
+                   $pi->removeUser($user);
+                   $user->removeProductItem($pi);
+                   $this->container->get('admin.helper.productitem')->save($pi);
+                   $this->container->get('user.helper.user')->saveUser($user);
+                }
+
              }
            }
 
