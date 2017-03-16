@@ -38,12 +38,12 @@ class ProductSpecsController extends Controller
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        
+        /*
         $target = 'sizes-6-bust-grade_rule';
         $value = 1.2;
         $ps = $this->get('pi.product_specification')->generate_specs_for_grade_rule($parsed_data, $target, $value);  
         return new Response(json_encode($ps));
-        
+        */
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $drop_down_values['fit_model_size'] = $fms;       
