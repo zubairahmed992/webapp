@@ -194,6 +194,11 @@ nws_cart_single_item:
     pattern:  /nws/add_item_to_cart
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemToCartNew}
 
+#Add multiple Item to Cart
+nws_cart_multiple_items:
+    pattern:  /nws/add_items_to_cart
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addItemsToCartNew}
+
 #--------------------------------------Wishlist
 #show wishlist
 nws_show_user_wishlist:

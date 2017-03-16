@@ -7,5 +7,5 @@ love_that_fit_cart:
 braintree_live:
    environment: production
    merchant_id: dtjkgnd4hzfnwpk7
-   public_key:  x85q66f9k9f93csd
-   private_key: e6ac867aa3e49f1b59bf0793f840cd60
+   public_key:  r8d83bcc2hbp46jz
+   private_key: 50791330c4da061f7afd6420e706a175
