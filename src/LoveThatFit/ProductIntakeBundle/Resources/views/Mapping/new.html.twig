@@ -102,6 +102,8 @@
                 </div>
                 <br>
                 <input type="hidden" value="{{ fit_points|json_encode() }}" name="fit_point" class="fit_point">
+                <input type="hidden" name="csv_file_data" class="csv_file_data">
+                
                 <div class="size_genrate"></div>
                 <br>
 
@@ -264,9 +266,10 @@
                                           type: 'POST',
                                           contentType: false,
                                           processData: false,
-                                          success: function (response) {                    
+                                          success: function (response) { 
                                             $("#csv_file_json").text(response);
-                                            $("#uploading_image").html('');                  
+                                            $("#uploading_image").html('');   
+                                            $(".csv_file_data").val(response);
                                             show_csv_popup(response);
                                           }
                                       });
