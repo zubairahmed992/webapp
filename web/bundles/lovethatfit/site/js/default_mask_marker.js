@@ -289,8 +289,8 @@ function set_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){
     return ref_part_obj;
 }
 function set_arm_rgt(){
-    if(rgt_arm_ref.segments[8].point.x <= full_scr_mask.segments[20].point.x + 2) {
-        console.log(rgt_arm_ref.segments[8].point.x +" <= "+ full_scr_mask.segments[21].point.x);
+    if(rgt_arm_ref.segments[7].point.x <= full_scr_mask.segments[21].point.x + 2) {
+        console.log(rgt_arm_ref.segments[7].point.x +" <= "+ full_scr_mask.segments[19].point.x);
         rgt_arm_ref.rotate(-0.5);
         lft_arm_ref.rotate(0.5);
         view.update();
