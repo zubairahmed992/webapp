@@ -66,7 +66,7 @@
                 <br>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
-                    <div class="col-sm-4">                    
+                    <div class="col-sm-4">
                         <input type="file" name="csv_file" id="csv_file">
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                 </div>
                 <br>
                 <div class="row-fluid show-grid add_size_row" style="display: none">
-                    <div class="span3">Enter Size label</div>
+                    <div class="span3">Enter Size label</div>                    
                     <div class="span3">
                         <input type="text" id="new_fit_point" name="new_fit_point"
                                maxlength="255">
@@ -132,9 +132,10 @@
                 </div>
                 
                 <input type="hidden" class="get_size" value="{{ parsed_data.sizes|json_encode() }}" >
+                <input type="hidden" name="csv_file_data" value="{{ csv_file_data }}" class="csv_file_data">
             </form>
 
-
+     
 
 
             <script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="  crossorigin="anonymous"></script>        
@@ -171,8 +172,7 @@
                             $.each(size_specs.sizes[gender][size_type], function (k, v) {  
                                 if (v in obj) {
                                     if ( fit_point_value in obj[v] ) { 
-                                            var index_value = obj[v][fit_point_value];      
-                                            console.log(index_value)
+                                            var index_value = obj[v][fit_point_value];  
                                         } else {
                                             var index_value = "";
                                         }
@@ -274,13 +274,36 @@
                                           });
                                    $('#sel_size_type').append(option);         
                               }
-                              
+                              $('#csv_file').on('change', function(){     
+                                  var val = $(this).val();
+                                   if(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='csv'){
+                                       $("#uploading_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');                
+             
+                                      var formData = new FormData();
+                                      formData.append('csv_file', $('input[type=file]')[0].files[0]); 
+                                      $.ajax({
+                                          url: '../csv_upload',
+                                          data: formData,
+                                          type: 'POST',
+                                          contentType: false,
+                                          processData: false,
+                                          success: function (response) { 
+                                            $("#csv_file_json").text(response);
+                                            $("#uploading_image").html('');   
+                                            $(".csv_file_data").val(response);
+                                            show_csv_popup(response);
+                                          }
+                                      });
+
+                                  }else{
+                                       alert("Invalid file");
+                                      }          
+                              });        
                               //----------------> Genrate Size Table with Selected Values
                               function genrate_size_table(size_selected){
                                 var size = $('.get_size').val();
                                 obj = JSON.parse(size);
-                                //console.log(obj)
-                                var size_type = size_selected  
+                                var size_type = size_selected;  
                                 var siz_genrate = $('.size_genrate'); 
                                 $('.add_size_row').show();
                                 size_specs = $.parseJSON($('#size_specs_json').text());                
@@ -304,8 +327,7 @@
                                         $.each(size_specs.sizes[gender][size_type], function (k, v) {
                                             if (v in obj) {
                                                 if ( fit_point_value in obj[v] ) { 
-                                                    var index_value = obj[v][fit_point_value];      
-                                                    console.log(index_value)
+                                                    var index_value = obj[v][fit_point_value];  
                                                 } else {
                                                     var index_value = "";
                                                 }
@@ -318,39 +340,19 @@
                                     });
 
                                     siz_genrate.append(tableData);
-                              }
+                                }
+                                                               
                                 
                                 size_title = $('.selectSize').val();                             
-                                genrate_size_table(size_title)                             
-                               
+                                genrate_size_table(size_title);
     
                               //#################################################
-                              $('#csv_file').on('change', function(){     
-                                  var val = $(this).val();
-                                   if(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='csv'){
-                                       $("#uploading_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');                
-             
-                                      var formData = new FormData();
-                                      formData.append('csv_file', $('input[type=file]')[0].files[0]); 
-                                      $.ajax({
-                                          url: '../csv_upload',
-                                          data: formData,
-                                          type: 'POST',
-                                          contentType: false,
-                                          processData: false,
-                                          success: function (response) {                    
-                                            $("#csv_file_json").text(response);
-                                            $("#uploading_image").html('');                  
-                                            show_csv_popup(response);
-                                          }
-                                      });
-
-                                  }else{
-                                       alert("Invalid file");
-                                      }          
-                              });        
-            
-    
+                             
+                                    csv_file_data = $('.csv_file_data').val();
+                                  //  console.log(csv_file_data)
+                                    $("#csv_file_json").text(csv_file_data);
+                                    $("#uploading_image").html('');                  
+                                    show_csv_popup(csv_file_data);
     
                           //---------- textbox id on selection ~~~~~~~~~~>
                               $('input, textarea').focus(function() {
