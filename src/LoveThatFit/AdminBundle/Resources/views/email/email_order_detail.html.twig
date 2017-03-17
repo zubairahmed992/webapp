@@ -34,7 +34,9 @@
     </table>
 </div>
 <br>
-<div>Total amount: ${{ dataArray['order_amount'] }}</div> <br><br>
+<div>Order amount: ${{ dataArray['order_amount'] }}</div> <br><br>
+<div>Discount amount: ${{ dataArray['discount'] }}</div> <br><br>
+<div>Total amount: ${{ dataArray['total_amount'] }}</div> <br><br>
 
 <div>Charge ${{ dataArray['order_amount'] }} to {{ dataArray['card_type'] }} {{ dataArray['frist_name'] }} {{ dataArray['last_four_number'] }} {{ dataArray['expirate_date'] }}</div> <br><br>
 
