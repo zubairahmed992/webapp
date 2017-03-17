@@ -183,8 +183,7 @@ class MappingController extends Controller
         $entity->setGender($decoded['gender']);
         $entity->setTitle($decoded['mapping_title']);
         $entity->setDescription($decoded['mapping_description']);
-        $entity->setMappingJson(json_encode($apecs_arr));
-        $entity->setCsvFileData(json_encode($decoded['csv_file_data']));
+        $entity->setMappingJson(json_encode($apecs_arr));       
         $this->container->get('productIntake.product_specification_mapping')->update($entity);
         $entity->setMappingFileName('csv_mapping_' . $entity->getId() . '.csv');
         if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $entity->getAbsolutePath())) {
