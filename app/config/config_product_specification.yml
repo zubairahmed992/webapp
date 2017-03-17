@@ -404,6 +404,8 @@ constants:
       skirts: Skirt
       dress: Dress
       dresses: Dress
+      swimsuit_one_piece: Swimsuit One Piece
+      swimsuit_two_piece: Swimsuit Two Piece
       coat: Coat
       coats: Coat    
     style_type:
