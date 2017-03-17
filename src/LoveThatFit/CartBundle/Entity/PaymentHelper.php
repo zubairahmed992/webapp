@@ -43,10 +43,10 @@ class PaymentHelper
     {
         $yaml = new Parser();
         $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
-        Braintree_Configuration::environment($parse["braintree_live"]["environment"]);
-        Braintree_Configuration::merchantId($parse["braintree_live"]["merchant_id"]);
-        Braintree_Configuration::publicKey($parse["braintree_live"]["public_key"]);
-        Braintree_Configuration::privateKey($parse["braintree_live"]["private_key"]);
+        Braintree_Configuration::environment($parse["love_that_fit_cart"]["environment"]);
+        Braintree_Configuration::merchantId($parse["love_that_fit_cart"]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse["love_that_fit_cart"]["public_key"]);
+        Braintree_Configuration::privateKey($parse["love_that_fit_cart"]["private_key"]);
 
         try {
             $customer = Braintree_Customer::find($user->getId());
@@ -61,7 +61,7 @@ class PaymentHelper
                 'client_token'  => $clientToken,
                 'customer_id'   => $customer->id,
                 'client_creditcard_token' => $client_creditcard_token,
-                'marchant_id'             => $parse["braintree_live"]["merchant_id"]
+                'marchant_id'             => $parse["love_that_fit_cart"]["merchant_id"]
             );
         }catch (\Braintree_Exception $exception) {
             $clientToken = Braintree_ClientToken::generate();
@@ -69,7 +69,7 @@ class PaymentHelper
                 'success'       => -1,
                 'client_token'  => $clientToken,
                 'customer_id'   => 0,
-                'marchant_id'   => $parse["braintree_live"]["merchant_id"]
+                'marchant_id'   => $parse["love_that_fit_cart"]["merchant_id"]
             );
         }
     }
@@ -182,10 +182,10 @@ class PaymentHelper
     public function webServiceBrainTreeProcessUserTransaction($user, $decoded){
         $yaml = new Parser();
         $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
-        Braintree_Configuration::environment($parse["braintree_live"]["environment"]);
-        Braintree_Configuration::merchantId($parse["braintree_live"]["merchant_id"]);
-        Braintree_Configuration::publicKey($parse["braintree_live"]["public_key"]);
-        Braintree_Configuration::privateKey($parse["braintree_live"]["private_key"]);
+        Braintree_Configuration::environment($parse["love_that_fit_cart"]["environment"]);
+        Braintree_Configuration::merchantId($parse["love_that_fit_cart"]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse["love_that_fit_cart"]["public_key"]);
+        Braintree_Configuration::privateKey($parse["love_that_fit_cart"]["private_key"]);
 
         $billing = $decoded["billing"];
         $saleObject = array(
