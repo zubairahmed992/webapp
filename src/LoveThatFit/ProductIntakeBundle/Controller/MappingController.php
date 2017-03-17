@@ -107,9 +107,18 @@ class MappingController extends Controller
     public function editAction($id)
     {
         $pm = $this->get('productIntake.product_specification_mapping')->find($id); 
-        //  echo $pm->getAbsolutePath();
-       // die;
-        
+        //----- Get File data 
+         $str=array();
+         $i=0;
+        if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
+            while(($row = fgetcsv($handle)) !== FALSE) {
+            for ($j=0;$j<count($row);$j++){
+                $str[$i][$j] = $row[$j];                
+                }
+            $i++;
+            }
+        }       
+         
         $parsed_data   = json_decode($pm->getMappingJson(),true);
         $csv_file_data = $pm->getCsvFileData();       
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
@@ -131,7 +140,7 @@ class MappingController extends Controller
                     'parsed_data' => $parsed_data,
                     'body_types'  => $body_types,
                     'size_title' => $size_title,
-                    'csv_file_data'  => json_decode($csv_file_data),      
+                    'csv_file_data'  => json_encode($str),      
                 ));
     }
     #----------------------- /product_intake/specs_mapping/update
