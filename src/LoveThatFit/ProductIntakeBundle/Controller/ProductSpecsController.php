@@ -39,9 +39,9 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         /*
-        $target = 'sizes-6-bust-grade_rule';
-        $value = 1.2;
-        $ps = $this->get('pi.product_specification')->generate_specs_for_grade_rule($parsed_data, $target, $value);  
+        $target = 'sizes-6-bust-garment_dimension';
+        $value = 38.5;
+        $ps = $this->get('pi.product_specification')->generate_specs_for_garment_dimension($parsed_data, $target, $value);  
         return new Response(json_encode($ps));
         */
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
