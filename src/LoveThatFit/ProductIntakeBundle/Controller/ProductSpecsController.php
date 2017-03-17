@@ -46,7 +46,8 @@ class ProductSpecsController extends Controller
         */
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
-        $drop_down_values['fit_model_size'] = array_flip($fms);      
+        #$drop_down_values['fit_model_size'] = array_flip($fms);      
+        $drop_down_values['fit_model_size'] = $fms;      
         if(isset($parsed_data['fit_model_size'])){ 
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size->getSize(); 
