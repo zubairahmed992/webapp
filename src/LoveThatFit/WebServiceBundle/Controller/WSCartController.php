@@ -308,12 +308,41 @@ class WSCartController extends Controller
         }
     }
 
+    private function addItemsToPostArray(User $user, $decoded = array())
+    {
+        $keys = array('price', 'qty', 'item_id');
+        $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
+        $itemsArray = array();
+        foreach($user_cart as $key => $items)
+        {
+            if(in_array($key, $keys))
+            {
+                for($i=0; $i < count($user_cart[$key]); $i++){
+                    if($key == 'qty'){
+                        $itemsArray[$i]['quantity'] = $user_cart[$key][$i];
+                    }else if ($key == 'price'){
+                        $itemsArray[$i]['unit_price'] = $user_cart[$key][$i];
+                    }else{
+                        $itemsArray[$i][$key] = $user_cart[$key][$i];
+                    }
+                }
+            }
+        }
+        $decoded['items'] = $itemsArray;
+        $itemsArray = array();
+
+        return $decoded;
+    }
+
     public function brainTreeProcessTransactionAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $discount_amount    = $decoded['discount_amount'];
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $decoded = $this->addItemsToPostArray($user, $decoded);
+
+        // var_dump( $decoded ); die;
 
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
@@ -387,7 +416,9 @@ class WSCartController extends Controller
             );
         }
         $orderNummber = $result['order_number'];
-        $orderAmount = $decode['total_amount'];
+        $orderAmount = $decode['order_amount'];
+        $totalAmount = $decode['total_amount'];
+        $discount   = $decode['discount_amount'];
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
@@ -404,6 +435,8 @@ class WSCartController extends Controller
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
+            'total_amount'  => $totalAmount,
+            'discount'  => $discount,
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -443,7 +476,10 @@ class WSCartController extends Controller
             );
         }
         $orderNummber = $result['order_number'];
-        $orderAmount = $decode['total_amount'];
+        $orderAmount = $decode['order_amount'];
+        $totalAmount = $decode['total_amount'];
+        $discount   = $decode['discount_amount'];
+
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
@@ -460,6 +496,8 @@ class WSCartController extends Controller
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
+            'total_amount'  => $totalAmount,
+            'discount'  => $discount,
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],

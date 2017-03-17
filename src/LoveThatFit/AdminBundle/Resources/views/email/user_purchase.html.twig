@@ -40,6 +40,8 @@
             <tr>
                 <th><strong><font size="2" face="Arial, Helvetica, sans-serif">ORDER #</font></strong></th>
                 <th><strong><font size="2" face="Arial, Helvetica, sans-serif">DATE</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">ORDER AMOUNT</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">DISCOUNT</font></strong></th>
                 <th><strong><font size="2" face="Arial, Helvetica, sans-serif">TOTAL</font></strong></th>
                 <th><strong><font size="2" face="Arial, Helvetica, sans-serif">PAYMENT METHOD</font></strong></th>
             </tr>
@@ -47,6 +49,8 @@
                 <td align="center">{{ dataArray['order_numnber'] }}</td>
                 <td align="center">{{ dataArray['purchase_date'] }}</td>
                 <td align="center">${{ dataArray['order_amount'] }}</td>
+                <td align="center">${{ dataArray['discount'] }}</td>
+                <td align="center">${{ dataArray['total_amount'] }}</td>
                 <td align="center">{{ dataArray['card_type'] }} *{{ dataArray['last_four_number'] }}</td>
             </tr>
             </tbody>
