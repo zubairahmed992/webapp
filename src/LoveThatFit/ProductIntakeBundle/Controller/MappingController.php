@@ -92,8 +92,7 @@ class MappingController extends Controller
         $mapping->setGender($decoded['gender']);
         $mapping->setTitle($decoded['mapping_title']);
         $mapping->setDescription($decoded['mapping_description']);
-        $mapping->setMappingJson(json_encode($apecs_arr));
-        $mapping->setCsvFileData(json_encode($decoded['csv_file_data']));
+        $mapping->setMappingJson(json_encode($apecs_arr));        
         $this->container->get('productIntake.product_specification_mapping')->save($mapping);
         $mapping->setMappingFileName('csv_mapping_' . $mapping->getId() . '.csv');
         if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $mapping->getAbsolutePath())) {
@@ -107,11 +106,19 @@ class MappingController extends Controller
     public function editAction($id)
     {
         $pm = $this->get('productIntake.product_specification_mapping')->find($id); 
-        //  echo $pm->getAbsolutePath();
-       // die;
-        
-        $parsed_data   = json_decode($pm->getMappingJson(),true);
-        $csv_file_data = $pm->getCsvFileData();       
+        //----- Get File data 
+         $str=array();
+         $i=0;
+        if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
+            while(($row = fgetcsv($handle)) !== FALSE) {
+            for ($j=0;$j<count($row);$j++){
+                $str[$i][$j] = $row[$j];                
+                }
+            $i++;
+            }
+        }       
+         
+        $parsed_data   = json_decode($pm->getMappingJson(),true);        
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
@@ -131,7 +138,7 @@ class MappingController extends Controller
                     'parsed_data' => $parsed_data,
                     'body_types'  => $body_types,
                     'size_title' => $size_title,
-                    'csv_file_data'  => json_decode($csv_file_data),      
+                    'csv_file_data'  => json_encode($str),      
                 ));
     }
     #----------------------- /product_intake/specs_mapping/update
@@ -176,8 +183,7 @@ class MappingController extends Controller
         $entity->setGender($decoded['gender']);
         $entity->setTitle($decoded['mapping_title']);
         $entity->setDescription($decoded['mapping_description']);
-        $entity->setMappingJson(json_encode($apecs_arr));
-        $entity->setCsvFileData(json_encode($decoded['csv_file_data']));
+        $entity->setMappingJson(json_encode($apecs_arr));       
         $this->container->get('productIntake.product_specification_mapping')->update($entity);
         $entity->setMappingFileName('csv_mapping_' . $entity->getId() . '.csv');
         if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $entity->getAbsolutePath())) {

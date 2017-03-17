@@ -272,6 +272,12 @@
                 //alert(response);
             }    
         });
+            //-------- Drop Down X- Editable    
+           $('._fit_model_size').editable({      
+               value: $('.fit_model_size').val(),    
+               source: $('.fit_points').val() 
+           });
+
     });
 
 </script>
@@ -280,6 +286,8 @@
         <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
     </div>
 {#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}    
+
+<input type="hidden" class="fit_points" value="{{ drop_down_values['fit_model_size']|json_encode() }}" >
 
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">       
@@ -548,12 +556,21 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Fit model size: </label>
             <div class="col-sm-4">
-                 <select name="fit_model_size" class="fit_model_size form-control" >
+                {#
+                 <select name="fit_model_size" data-type="select" class="fit_model_size form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['fit_model_size'] %}
+                       <option value="{{ key }}"{{ parsed_data.fit_model_size == '' and val == 0? '' : (key == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ val }}</option>
+                    {% endfor %}
+                </select>
+            #}
+                    <select name="fit_model_size" class="fit_model_size form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fit_model_size'] %}
                        <option value="{{ val }}"{{ parsed_data.fit_model_size == '' and key == 0? '' : (val == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>
+                    
             </div>
         </div>
       

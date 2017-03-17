@@ -62,11 +62,7 @@ class ProductSpecificationMapping {
      */
     protected $mapping_file_name;
     
-    /**
-     * @ORM\Column(type="string", type="text", nullable=true)
-     */
-    protected $csv_file_data;
-
+ 
     /**
      * @ORM\Column(type="datetime")
      */
@@ -271,27 +267,7 @@ class ProductSpecificationMapping {
         return $this->mapping_file_name;
     }
 
-    #----------------------------------------
-    /**
-     * Set csv_file_data
-     *
-     * @param string $csv_file_data
-     * @return ProductSpecificationMapping
-     */
-
-    public function setCsvFileData($csv_file_data) {
-        $this->csv_file_data = $csv_file_data;
-        return $this;
-    }
-
-    /**
-     * Get csv_file_data
-     *
-     * @return string 
-     */
-    public function getCsvFileData() {
-        return $this->csv_file_data;
-    }
+   
     #-------------------------------------------
 
     /**
