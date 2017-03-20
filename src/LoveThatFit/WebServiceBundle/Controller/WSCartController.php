@@ -206,6 +206,8 @@ class WSCartController extends Controller
             if ($items != 0) {
                 //$this->container->get('cart.helper.cart')->removeUserCart($user);
                 foreach ($items as $detail) {
+                    /*Remove From Wish list*/
+                    $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $detail["item_id"]);
                     $this->container->get('cart.helper.cart')->fillCartforService($detail["item_id"], $user, $detail["quantity"]);
                 }
                 $resp = 'Items has been added to Cart Successfully';
