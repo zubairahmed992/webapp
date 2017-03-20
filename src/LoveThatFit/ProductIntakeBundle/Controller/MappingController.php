@@ -107,8 +107,8 @@ class MappingController extends Controller
     {
         $pm = $this->get('productIntake.product_specification_mapping')->find($id); 
         //----- Get File data 
-         $str=array();
-         $i=0;
+        $str=array();
+        $i=0;
         if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
             while(($row = fgetcsv($handle)) !== FALSE) {
             for ($j=0;$j<count($row);$j++){

@@ -112,7 +112,6 @@ class ProductSpecificationHelper {
     }
     ###############################################
     
-    
     public function getFitPointArray(){
         $fp=array();
         foreach ($this->conf['fit_points'] as $fpk => $fpv) {            
@@ -121,8 +120,6 @@ class ProductSpecificationHelper {
         return $fp;
     }
   
-    #-----------------------------------------------
-    #-----------------------------------------------
     #-----------------------------------------------
     
     public function generate($specs) {
@@ -274,6 +271,7 @@ class ProductSpecificationHelper {
         $target_fp = $str[2];       
         return $this->strip_to_fitpoint($specs,$target_fp);
         */
+        
         $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
         $specs_obj->setSpecsJson(json_encode($specs));
         return $this->update($specs_obj);          
@@ -409,31 +407,28 @@ class ProductSpecificationHelper {
                     $specs=$this->generate_specs_for_grade_rule_plus($specs, $target, $value);                        
                 break;
         }
-        #taking the average
-        $fit_model_size_grade_rule = $this->validate_fit_model_size_grade_rule($specs, $attrib);        
-        if ($fit_model_size_grade_rule > 0){
-           $specs['sizes'][$specs['fit_model_size_title']][$attrib['fit_point']]['grade_rule']=$fit_model_size_grade_rule;
-        }
-        return $specs;
-    }
-    
-    
-        #$target = 'sizes-8-bust-grade_rule';
-        #$value = 2;
-        #$ps = $this->get('pi.product_specification')->generate_specs_for_grade_rule($parsed_data, $target, $value);  
-        #return new Response(json_encode($ps));
         
-    private function reset_fit_point_ranges($specs){
-        
+        $specs['sizes'][$specs['fit_model_size_title']][$attrib['fit_point']] = $this->reset_fit_model_size_grade_rule($specs, $attrib);        
         return $specs;
-    }
-    #------------------------------
-    private function validate_fit_model_size_grade_rule($specs, $target) {
+    }    
+    #------------------------------    
+    private function reset_fit_model_size_grade_rule($specs, $target) {
         $tracker = $this->get_fit_model_size_tracker($specs);
-        $fm_grade_rule = $specs['sizes'][$tracker['fit_model']][$target['fit_point']][$target['attribute']];
-        $avg = ($specs['sizes'][$tracker['prev']][$target['fit_point']][$target['attribute']] +
-                $specs['sizes'][$tracker['next']][$target['fit_point']][$target['attribute']]) / 2;
-        return $fm_grade_rule == $avg ? 0 : $avg;
+        $s = $tracker['fit_model'];
+        $fp = $target['fit_point'];
+        $fm_grade_rule = $specs['sizes'][$s][$fp]['grade_rule'];
+        $avg_grade_rule = ($specs['sizes'][$tracker['prev']][$target['fit_point']]['grade_rule'] +
+                $specs['sizes'][$tracker['next']][$target['fit_point']]['grade_rule']) / 2;
+        if ($fm_grade_rule != $avg_grade_rule) {
+            $specs['sizes'][$s][$fp]['fit_model'];
+            $specs['sizes'][$s][$fp]['grade_rule'] = $avg_grade_rule;
+            $specs['sizes'][$s][$fp]['grade_rule_stretch'] = $avg_grade_rule + ($avg_grade_rule * $specs['sizes'][$s][$fp]['stretch_percentage'] / 100);
+            $specs['sizes'][$s][$fp]['min_calc'] = $specs['sizes'][$s][$fp]['fit_model'] - (2.5 * $avg_grade_rule);
+            $specs['sizes'][$s][$fp]['ideal_low'] = $specs['sizes'][$s][$fp]['fit_model'] - (0.5 * $avg_grade_rule);
+            $specs['sizes'][$s][$fp]['ideal_high'] = $specs['sizes'][$s][$fp]['fit_model'] + (0.5 * $avg_grade_rule);
+            $specs['sizes'][$s][$fp]['max_calc'] = $specs['sizes'][$s][$fp]['fit_model'] + (2.5 * $avg_grade_rule);
+        }
+        return $specs['sizes'][$s][$fp];
     }
     #------------------------------
     private function break_target_params($params, $value=null){
@@ -476,9 +471,7 @@ class ProductSpecificationHelper {
             }        
         }
         return $pointer;
-    }
-    
-    
+    }    
     #------------------->4a Grade Rule Smaller than fit model size
     private function generate_specs_for_grade_rule_minus($specs, $target, $value) {
         $str = explode('-', $target);        #calculate ratio sizes-6-bust-grade_rule
@@ -487,14 +480,13 @@ class ProductSpecificationHelper {
         $target_attrib = $str[3];        
         #-------------> if size is before or after fit model size
         #$fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
-        $fit_model_ratio = $this->calculate_fit_model_ratio($specs);
-        
+        $fit_model_ratio = $this->calculate_fit_model_ratio($specs);        
         $size_keys = array_keys($specs['sizes']);               
         #-------------> if size is before the fit model size
         $size_keys = array_reverse($size_keys);
         $target_pointer = false;
         $prev_size_title = null;
-
+        
         $specs['sizes'][$target_size][$target_fp]['grade_rule'] = $value;
         $specs['sizes'][$target_size][$target_fp]['grade_rule_stretch'] = $specs['sizes'][$target_size][$target_fp]['grade_rule'] + ($specs['sizes'][$target_size][$target_fp]['grade_rule'] * $specs['sizes'][$target_size][$target_fp]['stretch_percentage']/100);
         
@@ -626,12 +618,6 @@ class ProductSpecificationHelper {
         $fp_specs['max_calc'] =  $fit_model_measurement * $ratio['max_calc']; 
         return $fp_specs;
     }
-    
-    public function reset_fit_model_size_grade_rule($specs, $fit_model_size_index) {
-        $size_keys = array_keys($specs['sizes']);               
-        return $size_keys[$fit_model_size_index];
-        
-    }  
     
     #------------------->6 Fit Model Size
     private function generate_specs_for_fit_model_size($specs, $fit_model_size_id) {
