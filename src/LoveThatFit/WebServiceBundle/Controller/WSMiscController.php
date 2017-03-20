@@ -72,7 +72,7 @@ class WSMiscController extends Controller {
                     'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
                     'beta'=>array('build_type'=>'beta','url'=>'beta.selfiestyler.com'),
                     'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
-                    'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
+                    'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5/app_dev.php/'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
                     'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
