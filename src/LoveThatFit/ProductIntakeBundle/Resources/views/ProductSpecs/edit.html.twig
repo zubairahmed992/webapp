@@ -633,7 +633,7 @@
                                                 <th>{{measurement_k}}</th>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" > #}
-                                                    <input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px" class="0 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" data-title="Enter Garment Dimension for {{measurement_k}} " >
+                                                    <input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px" class="0 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" data-title="Enter Garment Dimension for {{measurement_k}} " >
                                                 </td>
                                                 <td>
                                                     <span style="font-size:10px">
@@ -647,7 +647,7 @@
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
                                                     {#<input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">#}
-                                                    {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
+                                                    {{measurement_v.grade_rule is defined? measurement_v.grade_rule | number_format(2, '.', ''):0}}
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
@@ -659,7 +659,7 @@
                                                 </td>
                                                 <td>                                                    
                                                     {#<input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">#}
-                                                    <input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
+                                                    <input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:80px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
@@ -679,7 +679,7 @@
                                                 </td>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
-                                                    <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px" class="11 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
+                                                    <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="11 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
                                                 </td>
                                             </tr>
                                         {% else %}
@@ -687,7 +687,7 @@
                                                 <th>{{measurement_k}}</th>
                                                 <td>
                                                     {{measurement_v.garment_dimension | number_format(2, '.', '')}}
-                                                    <input class="0" type="number" hidden value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:50px"> 
+                                                    <input class="0" type="number" hidden value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px"> 
                                                 </td>
                                                 <td>
                                                     <span style="font-size:10px">
@@ -700,7 +700,7 @@
                                                 </td>
                                                 <td>
                                                     {#<input class="3" type="number"  value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
-                                                    <input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
+                                                    <input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:80px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
