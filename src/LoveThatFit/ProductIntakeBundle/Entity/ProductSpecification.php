@@ -64,6 +64,11 @@ class ProductSpecification {
     * @ORM\Column(name="undo_specs_json", type="text", nullable=true)
     */
      private $undo_specs_json;
+     
+    /**
+    * @ORM\Column(type="integer", length=9, nullable=true)
+    */
+    protected $status;
     
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -256,6 +261,27 @@ class ProductSpecification {
         return $this->undo_specs_json;
     }
 
+     #------------------------------------------------
+    /**
+     * Set status
+     *
+     * @param interger $status
+     * @return ProductSpecificationMapping
+     */
+
+    public function setStatus($status) {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus() {
+        return $this->status;
+    }
 #--------------------------------------------------------
     /**
      * Set created_at
