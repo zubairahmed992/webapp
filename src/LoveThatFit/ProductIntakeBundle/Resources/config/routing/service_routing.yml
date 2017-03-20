@@ -1,0 +1,7 @@
+
+web_service_product_specification:
+    pattern: /product_intake/product_specification
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:getProductSpecification}
+    requirements:
+        _method:  POST
+

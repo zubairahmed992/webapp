@@ -658,3 +658,10 @@ nws_get_all_user_saved_addresses:
   title: get_all_user_saved_addresses
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
+    
+web_service_product_specification:
+    pattern:  /product_intake/product_specification
+    title: product_specification
+    params: 
+      result: {'style_id_number':'220', 'style_name':'Blouse', 'title':'Blouse'}     
+      request_type: post
