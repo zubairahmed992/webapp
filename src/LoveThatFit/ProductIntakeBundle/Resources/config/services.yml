@@ -29,4 +29,13 @@ services:
                 class: LoveThatFit\ProductIntakeBundle\Entity\ProductSpecification
                 container: "@service_container"                
                 
+    service.helper:
+          class:  LoveThatFit\ProductIntakeBundle\Entity\ServiceHelper
+          arguments:
+            container: "@service_container"
+   
+    service.repo:
+          class:  LoveThatFit\ProductIntakeBundle\Entity\ServiceRepo 
+          arguments: 
+            em: "@doctrine.orm.entity_manager"                
                 

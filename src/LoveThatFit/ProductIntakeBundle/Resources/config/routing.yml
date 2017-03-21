@@ -9,3 +9,7 @@ product_intake_fit_model_routes:
 product_intake_specs_mapping_routes:
     resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/mapping.yml"
     prefix:   /    
+    
+product_intake_specs_pss_routes:
+    resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/service_routing.yml"
+    prefix:   /
