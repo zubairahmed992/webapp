@@ -61,7 +61,7 @@ class ProductSpecsController extends Controller
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
                     'fit_model_selected_size' => $fit_model_selected,
-                    'fit_point_stretch' => array(),#$ps->getFitPointStretchArray(), 
+                    'fit_point_stretch' => $ps->getFitPointStretchArray(), 
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),                    
                 ));
     }
