@@ -5,8 +5,9 @@
 
     </script>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
-        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" class="btn btn-default">Create Product</a> 
+        <a href="{{ path('product_intake_product_specs_show', {'id': product_specification_id}) }}" class="btn btn-default">Show</a> 
+        <a href="{{ path('product_intake_product_specs_edit', {'id': product_specification_id}) }}" class="btn btn-default">Edit</a> 
+        <a href="{{ path('product_intake_product_create', {'id': product_specification_id}) }}" class="btn btn-default">Create Product</a> 
     </div>
     <div class="col-sm-6" role="group" aria-label="..." style="float:right;">        
         <form action="{{ path('product_intake_product_specs_compare_upload') }}" method="post"
@@ -89,7 +90,9 @@
                                     {% if (measurement_v.garment_dimension>0) %}
                                     <tr>
                                         <th>{{measurement_k}}</th>
-                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}
+                                        ({{file_data.sizes.28.bust.garment_measurement_flat}})
+                                        </td>
                                         <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
                                         <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
                                         <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
