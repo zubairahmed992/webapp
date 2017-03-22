@@ -532,8 +532,7 @@ class WSCartController extends Controller
                 $orders[$a]['orderItem'] = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
                 $a++;
             }
-
-            $res = $this->get('webservice.helper')->response_array(true, $orders);
+            $res = $this->get('webservice.helper')->response_array(true, null, true,$orders);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
