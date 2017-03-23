@@ -29,10 +29,6 @@ product_intake_product_specs_update:
 product_intake_product_specs_update_dynamic:
     pattern:  /product_intake/product_specs/update_dynamic
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:updateDynamic }
-
-product_intake_product_specs_update_foo:
-    pattern:  /product_intake/product_specs/update_foo/{pk}/{name}/{value}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:updateFoo }
     
 product_intake_product_specs_undo:
     pattern:  /product_intake/product_specs/undo/{id}
@@ -42,7 +38,10 @@ product_intake_product_create:
     pattern:  /product_intake/product_specs/create_product/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createProduct }     
 
-product_intake_product_specs_measurements_compare:
-    pattern:  /product_intake/product_specs/measurements_compare/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:measurementsCompare}    
-   
+product_intake_product_specs_compare_upload:
+    pattern:  /product_intake/product_specs/compare_upload
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:compareUpload }   
+
+product_intake_product_specs_compare_new:
+    pattern:  /product_intake/product_specs/compare_new
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:compareNew }   

@@ -206,6 +206,8 @@ class WSCartController extends Controller
             if ($items != 0) {
                 //$this->container->get('cart.helper.cart')->removeUserCart($user);
                 foreach ($items as $detail) {
+                    /*Remove From Wish list*/
+                    $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $detail["item_id"]);
                     $this->container->get('cart.helper.cart')->fillCartforService($detail["item_id"], $user, $detail["quantity"]);
                 }
                 $resp = 'Items has been added to Cart Successfully';
@@ -530,8 +532,7 @@ class WSCartController extends Controller
                 $orders[$a]['orderItem'] = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
                 $a++;
             }
-
-            $res = $this->get('webservice.helper')->response_array(true, $orders);
+            $res = $this->get('webservice.helper')->response_array(true, null, true,$orders);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
