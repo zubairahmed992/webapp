@@ -243,7 +243,9 @@ class ProductSpecificationHelper {
     public function dynamicCalculations($decoded){
         $specs_obj = $this->find($decoded['pk']);    
         $specs = json_decode($specs_obj->getSpecsJson(),true);
-        
+        if (!array_key_exists('fit_point_stretch', $specs)){
+            $specs['fit_point_stretch'] = $specs_obj->getFitPointStretchArray();
+        }
         if ($decoded['name']=='horizontal_stretch' || $decoded['name']=='vertical_stretch'){            
             $specs[$decoded['name']] = $decoded['value']; 
             $specs = $this->generate_specs_for_stretch($specs, $decoded['name']); 
@@ -623,6 +625,15 @@ class ProductSpecificationHelper {
     private function generate_specs_for_fit_model_size($specs, $fit_model_size_id) {
         return $specs;
         }
+ 
+    ########################################################################
+    ############################## Product Creation ##########################################
+    ########################################################################
+    public function dataMix($specs, $file) {
+        $mix = $specs;
+        return $specs;
+    }
+         
     
     ########################################################################
     ############################## Product Creation ##########################################
