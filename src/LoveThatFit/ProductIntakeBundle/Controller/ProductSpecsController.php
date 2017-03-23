@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
 use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
+use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -298,18 +299,20 @@ class ProductSpecsController extends Controller
     }
     #--------------------- /product_intake/product_specs/compare_upload
     public function compareUploadAction(Request $request){                
-        $filename = $request->files->get('csv_file');
-        $pcsv = new ProductCSVHelper($filename);                
-        #return new Response(json_encode($pcsv->read()));
+        $filename = $request->files->get('csv_file');              
+        $pcsv = new ProductCSVDataUploader($filename);
+        $file_data = $pcsv->read();
+        #return new response(json_encode($file_data));
         $decoded = $request->request->all();  
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);         
+        $mix = $this->get('pi.product_specification')->dataMix(json_decode($ps->getSpecsJson(),true), $file_data);
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:compare.html.twig', array(
-                'file_data' => $pcsv->read(),
-            'parsed_data' => json_decode($ps->getSpecsJson(),true),
-                    'product_specification_id' => $ps->getId(),
-                    'product_specs_json' => json_encode($gen_specs),                    
+                'file_data' => $file_data,
+                'parsed_data' => $mix,
+                'product_specification_id' => $ps->getId(),
+                'product_specs_json' => json_encode($gen_specs),                    
                 ));
         return new response(json_encode($decoded));
     }

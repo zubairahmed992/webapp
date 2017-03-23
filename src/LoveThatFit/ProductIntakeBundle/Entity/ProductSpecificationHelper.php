@@ -625,6 +625,15 @@ class ProductSpecificationHelper {
     private function generate_specs_for_fit_model_size($specs, $fit_model_size_id) {
         return $specs;
         }
+ 
+    ########################################################################
+    ############################## Product Creation ##########################################
+    ########################################################################
+    public function dataMix($specs, $file) {
+        $mix = $specs;
+        return $specs;
+    }
+         
     
     ########################################################################
     ############################## Product Creation ##########################################
