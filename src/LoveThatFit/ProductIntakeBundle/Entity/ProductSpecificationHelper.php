@@ -6,6 +6,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
+use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
+
+
 
 class ProductSpecificationHelper {
 
@@ -15,7 +21,7 @@ class ProductSpecificationHelper {
     /**
      * @var EntityManager 
      */
-    protected $em;
+    private $em;
 
     /**
      * @var EntityRepository
@@ -27,10 +33,10 @@ class ProductSpecificationHelper {
      */
     protected $class;
 
-     private $container;
+    private $container;
 
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class,Container $container) {
-         $this->container = $container;
+        $this->container = $container;
         $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->class = $class;
@@ -642,9 +648,9 @@ class ProductSpecificationHelper {
     public function create_product($id){
         $specs = $this->find($id);
         $data = json_decode($specs->getSpecsJson(),true);
-        $clothing_type = $this->get('admin.helper.clothingtype')->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
-        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand']);
-        $product=new Product;
+        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
+        $brand = $this->container->get('admin.helper.brand')->findOneByName($data['brand']);
+        $product= new Product;
         $product->setBrand($brand);
         $product->setClothingType($clothing_type);        
         $product->setName(array_key_exists('name', $data)?$data['name']:'');
@@ -665,7 +671,7 @@ class ProductSpecificationHelper {
         $product->setStructuralDetail($data['structural_detail']);
         $product->setFitType($data['fit_type']);
         $product->setLayering(array_key_exists('layring', $data)?$data['layring']:$data['layering']);
-        $product->setFitPriority(json_encode($data['fit_priority']));
+       // $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data)?$data['fabric_content']:''));
         $product->setDisabled(false);        
         $product->setSizeTitleType($data['size_title_type']);    
@@ -677,10 +683,10 @@ class ProductSpecificationHelper {
         $this->create_product_colors($data, $product);
         
     }
-        #------------------------------------------------------------
+    #------------------------------------------------------------
     private function create_product_sizes($product, $data) {
         $em = $this->getDoctrine()->getManager();
-        $size_titles = $this->get('admin.helper.size')->getSizeArray($data['gender'],$data['size_title_type']);        
+        $size_titles = $this->container->get('admin.helper.size')->getSizeArray($data['gender'],$data['size_title_type']);        
         $i=1;
         foreach ($size_titles['regular'] as $size_title => $value) {
             if(array_key_exists($size_title, $data['sizes'])){
@@ -734,4 +740,9 @@ class ProductSpecificationHelper {
             }                
         return $product;
     }
+    
+      public function getDoctrine()
+      {
+        return $this->container->get('doctrine');
+      }
 }
