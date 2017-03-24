@@ -1641,6 +1641,12 @@ constants:
                 a: 207
                 b: 221
                 c: 194
+            belt_waist_px: 193
+            high_hip_px: 205
+            thigh_px: 101
+            triceps_px: 53
+            neck_px: 73
+            
         36c:
             index_value: 69
             title: 36c
