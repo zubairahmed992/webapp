@@ -243,7 +243,9 @@ class ProductSpecificationHelper {
     public function dynamicCalculations($decoded){
         $specs_obj = $this->find($decoded['pk']);    
         $specs = json_decode($specs_obj->getSpecsJson(),true);
-        
+        if (!array_key_exists('fit_point_stretch', $specs)){
+            $specs['fit_point_stretch'] = $specs_obj->getFitPointStretchArray();
+        }
         if ($decoded['name']=='horizontal_stretch' || $decoded['name']=='vertical_stretch'){            
             $specs[$decoded['name']] = $decoded['value']; 
             $specs = $this->generate_specs_for_stretch($specs, $decoded['name']); 
@@ -493,7 +495,7 @@ class ProductSpecificationHelper {
         foreach ($size_keys as $size) {                        
             if ($size==$target_size || $target_pointer == true){             
                 $target_pointer = true;
-                $specs['sizes'][$size][$target_fp]['garment_dimension'] = $specs['sizes'][$prev_size_title][$target_fp]['garment_dimension'] - $specs['sizes'][$prev_size_title][$target_fp]['grade_rule'];
+                $specs['sizes'][$size][$target_fp]['garment_dimension'] = $specs['sizes'][$prev_size_title][$target_fp]['garment_dimension'] - $specs['sizes'][$size][$target_fp]['grade_rule'];
                 $specs['sizes'][$size][$target_fp]['garment_stretch'] = $specs['sizes'][$size][$target_fp]['garment_dimension'] + ($specs['sizes'][$size][$target_fp]['garment_dimension'] * $specs['sizes'][$size][$target_fp]['stretch_percentage'] / 100);
                 #~~~~~~> require to do related calculations for ranges
                 $fit_model_measurement = $specs['sizes'][$size][$target_fp]['garment_stretch'] * $fit_model_ratio[$target_fp]['fit_model'];
@@ -623,6 +625,15 @@ class ProductSpecificationHelper {
     private function generate_specs_for_fit_model_size($specs, $fit_model_size_id) {
         return $specs;
         }
+ 
+    ########################################################################
+    ############################## Product Creation ##########################################
+    ########################################################################
+    public function dataMix($specs, $file) {
+        $mix = $specs;
+        return $specs;
+    }
+         
     
     ########################################################################
     ############################## Product Creation ##########################################

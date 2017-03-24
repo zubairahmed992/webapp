@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
 use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
+use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,24 +62,8 @@ class ProductSpecsController extends Controller
                     'product_specs_json' => json_encode($gen_specs),  
                     'drop_down_values' =>$drop_down_values,
                     'fit_model_selected_size' => $fit_model_selected,
-                    'fit_point_stretch' => array(),#$ps->getFitPointStretchArray(), 
+                    'fit_point_stretch' => $ps->getFitPointStretchArray(), 
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),                    
-                ));
-    }
-    
-      #----------------------- /product_intake/product_specs/measurements_compare
-    public function measurementsCompareAction($id){                        
-        $ps = $this->get('pi.product_specification')->find($id);          
-        $specs = json_decode($ps->getSpecsJson(),true);        
-        $compare = array();
-        foreach ($specs['sizes'] as $size => $fit_points) {
-            foreach ($fit_points as $fpk => $fpv) {
-                $compare[$fpk][$size]=$fpv['fit_model'];
-            }
-        }        
-        return new Response(json_encode($compare));        
-        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:test_preview.html.twig', array(                    
-                    'compare_data' => json_encode($compare),                    
                 ));
     }
       
@@ -89,6 +74,7 @@ class ProductSpecsController extends Controller
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
+                    'product_specification_id' => $ps->getId(),
                     'product_specs_json' => json_encode($gen_specs),                    
                 ));
     }
@@ -146,58 +132,8 @@ class ProductSpecsController extends Controller
         $sizes_json = $this->get('pi.product_specification')->dynamicCalculations($decoded);
         return new Response(json_encode($sizes_json));
         return new Response(json_encode($decoded));
-        
-                                
-        
-        $entity = $this->get('pi.product_specification')->find($decoded['pk']);
-        $entity->setUndoSpecsJson($entity->getSpecsJson());
-        
-        if($decoded['name']=='ex_horizontal_stretch'){
-            
-        }
-        $response = new Response(json_encode($decoded));
-        $response->headers->set('Content-Type', 'application/json');
-         $response->headers->set('X-PHP-Response-Code: 200', true, 200);
-        return $response;
-        
-        
-        $updated_specs = $this->get('pi.product_specification')->generate($output);        
-        
-        
-        $entity->setSpecsJson(json_encode($updated_specs));
-        $msg_ar = $this->get('pi.product_specification')->update($entity);        
-        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        
-        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
-        
     }
-    #------------------------------------- /product_intake/Prod_specs/update_foo 
-    public function updateFooAction($pk, $name, $value){  
-        #$decoded = $this->getRequest()->request->all();        
-        $decoded = array('pk' => $pk, 'name' => $name, 'value' => $value);
-        $msg = $this->get('pi.product_specification')->dynamicCalculations($decoded);                        
-        $entity = $this->get('pi.product_specification')->find($decoded['pk']);
-        $entity->setUndoSpecsJson($entity->getSpecsJson());
-        
-        if($decoded['name']=='ex_horizontal_stretch'){
-            
-        }
-        $response = new Response(json_encode($decoded));
-        $response->headers->set('Content-Type', 'application/json');
-         $response->headers->set('X-PHP-Response-Code: 200', true, 200);
-        return $response;
-        
-        
-        $updated_specs = $this->get('pi.product_specification')->generate($output);        
-        
-        
-        $entity->setSpecsJson(json_encode($updated_specs));
-        $msg_ar = $this->get('pi.product_specification')->update($entity);        
-        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        
-        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
-        
-    }
+    
     #----------------------- /product_intake/Prod_specs/undo
     public function undoAction($id){  
         $entity = $this->get('pi.product_specification')->find($id);       
@@ -345,5 +281,40 @@ class ProductSpecsController extends Controller
         return $c;
     }
 
+    ######################################################################################    
+    ######################################################################################    
+    ######################################################################################    
+    #----------------------- /product_intake/product_specs/compare_new
+    public function compareNewAction(){
+        
+        $brands = $this->get('admin.helper.brand')->getBrnadArray();
+        $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();        
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:new.html.twig', array(
+            'brands' => $brands,
+            'mapping' => $mapping,            
+            'mapping_json' => json_encode($mapping),            
+            'size_specs_json' => json_encode($size_specs),
+        ));
+    }
+    #--------------------- /product_intake/product_specs/compare_upload
+    public function compareUploadAction(Request $request){                
+        $filename = $request->files->get('csv_file');              
+        $pcsv = new ProductCSVDataUploader($filename);
+        $file_data = $pcsv->read();
+        #return new response(json_encode($file_data));
+        $decoded = $request->request->all();  
+        $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);         
+        $mix = $this->get('pi.product_specification')->dataMix(json_decode($ps->getSpecsJson(),true), $file_data);
+        
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:compare.html.twig', array(
+                'file_data' => $file_data,
+                'parsed_data' => $mix,
+                'product_specification_id' => $ps->getId(),
+                'product_specs_json' => json_encode($gen_specs),                    
+                ));
+        return new response(json_encode($decoded));
+    }
     
 }

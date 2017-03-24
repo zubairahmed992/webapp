@@ -1,12 +1,18 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
-
+<style>
+.compare_diff{
+color:red
+}
+    
+    </style>
 <script>
 
     </script>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
-        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" class="btn btn-default">Create Product</a> 
+        <a href="{{ path('product_intake_product_specs_show', {'id': product_specification_id}) }}" class="btn btn-default">Show</a> 
+        <a href="{{ path('product_intake_product_specs_edit', {'id': product_specification_id}) }}" class="btn btn-default">Edit</a> 
+        <a href="{{ path('product_intake_product_create', {'id': product_specification_id}) }}" class="btn btn-default">Create Product</a> 
     </div>
     <div class="col-sm-6" role="group" aria-label="..." style="float:right;">        
         <form action="{{ path('product_intake_product_specs_compare_upload') }}" method="post"
@@ -74,8 +80,7 @@
                                         <th >garment_dimension</th>
                                         <th >stretch_value</th>
                                         <th >garment_stretch</th>
-                                        <th >grade rule</th>
-                                        <th >grade rule stretch</th>
+                                        <th >grade rule</th>                                        
                                         <th >min_calc</th>
                                         <th >min_actual</th>
                                         <th >ideal_low</th>
@@ -89,17 +94,34 @@
                                     {% if (measurement_v.garment_dimension>0) %}
                                     <tr>
                                         <th>{{measurement_k}}</th>
-                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
-                                        <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
-                                        <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['garment_measurement_flat']!=measurement_v.garment_dimension| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['garment_measurement_flat']~")":""}}</span>
+                                        </td>
+                                        <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%
+                                        </td>
+                                        <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['garment_measurement_stretch_fit']!=measurement_v.garment_stretch| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['garment_measurement_stretch_fit']~")":""}}</span>
+                                        </td>
+                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['grade_rule']!=measurement_v.grade_rule| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['grade_rule']~")":""}}</span>
+                                        </td>
+                                        
+                                        <td>{{measurement_v.min_calc | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['min_body_measurement']!=measurement_v.min_calc| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['min_body_measurement']~")":""}}</span>
+                                        </td>
                                         <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                        <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['ideal_body_size_low']!=measurement_v.ideal_low| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['ideal_body_size_low']~")":""}}</span>
+                                        </td>
+                                        <td>{{measurement_v.fit_model | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['fit_model']!= measurement_v.fit_model | number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['fit_model']~")":""}}</span>
+                                        </td>
+                                        <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}
+                                            <span class="compare_diff">{{file_data['sizes'][size][measurement_k]['ideal_body_size_high']!=measurement_v.ideal_high| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['ideal_body_size_high']~")":""}}</span>
+                                        </td>
+                                        <td>{{measurement_v.max_calc | number_format(2, '.', '')}}
+                                            <span class="compare_diff"> {{file_data['sizes'][size][measurement_k]['maximum_body_measurement']!=measurement_v.max_calc| number_format(2, '.', '')?" ("~file_data['sizes'][size][measurement_k]['maximum_body_measurement']~")":""}}</span>
+                                        </td>
                                         <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
                                         
                                     </tr>
