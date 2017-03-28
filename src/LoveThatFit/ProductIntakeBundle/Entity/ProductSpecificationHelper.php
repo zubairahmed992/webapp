@@ -127,95 +127,59 @@ class ProductSpecificationHelper {
     }
   
     #-----------------------------------------------
-    private function calculate_grade_rule($specs, $fm_obj){
-          
-        $size_keys = array_keys($specs['sizes']);        
+    private function calculate_grade_rule($specs, $fm_obj) {
+        $size_keys = array_keys($specs['sizes']);
         $tracker['fit_model'] = $fm_obj->getSize();
-        $prev = null; 
-        $fm_pass=false;
-        
+        $prev = null;
+        $fm_pass = false;
+
         #--------> Grade Rule 
-        foreach ($size_keys as $sk) {                                                 
-            if ($fm_pass==true){
+        foreach ($size_keys as $sk) {
+            if ($fm_pass == true) {
                 foreach ($specs['sizes'][$sk] as $fp => $fpm) {
-                     $specs['sizes'][$sk][$fp]['grade_rule']=$specs['sizes'][$sk][$fp]['garment_dimension']-$specs['sizes'][$prev][$fp]['garment_dimension'];
-   /*                                   unset($specs['sizes'][$sk][$fp]['garment_stretch']);
-                        unset($specs['sizes'][$sk][$fp]['grade_rule_stretch']);
-                        unset($specs['sizes'][$sk][$fp]['min_calc']);
-                        unset($specs['sizes'][$sk][$fp]['min_actual']);
-                        unset($specs['sizes'][$sk][$fp]['ideal_low']);
-                        unset($specs['sizes'][$sk][$fp]['fit_model']);
-                        unset($specs['sizes'][$sk][$fp]['ideal_high']);
-                        unset($specs['sizes'][$sk][$fp]['max_calc']);
-                        unset($specs['sizes'][$sk][$fp]['max_actual']);
-    * 
-    */
-                 }                
-            }else{
-                if ($sk == $tracker['fit_model']){
-                    $tracker['prev']=$prev;
-                    $fm_pass=true;
-                    }
+                    $specs['sizes'][$sk][$fp]['grade_rule'] = $specs['sizes'][$sk][$fp]['garment_dimension'] - $specs['sizes'][$prev][$fp]['garment_dimension'];
+                }
+            } else {
+                if ($sk == $tracker['fit_model']) {
+                    $tracker['prev'] = $prev;
+                    $fm_pass = true;
+                }
             }
-            $prev=$sk;            
+            $prev = $sk;
         }
-        
+
         #---------- reverse ----->
         $size_keys = array_reverse($size_keys);
-        $prev = null; $fm_pass=false;
-        
-        foreach ($size_keys as $sk) {                                                 
-            if ($fm_pass==true){
+        $prev = null;
+        $fm_pass = false;
+        foreach ($size_keys as $sk) {
+            if ($fm_pass == true) {
                 foreach ($specs['sizes'][$sk] as $fp => $fpm) {
-                     $specs['sizes'][$sk][$fp]['grade_rule'] = $specs['sizes'][$prev][$fp]['garment_dimension']-$specs['sizes'][$sk][$fp]['garment_dimension'];
-/*                        unset($specs['sizes'][$sk][$fp]['garment_stretch']);
-                        unset($specs['sizes'][$sk][$fp]['grade_rule_stretch']);
-                        unset($specs['sizes'][$sk][$fp]['min_calc']);
-                        unset($specs['sizes'][$sk][$fp]['min_actual']);
-                        unset($specs['sizes'][$sk][$fp]['ideal_low']);
-                        unset($specs['sizes'][$sk][$fp]['fit_model']);
-                        unset($specs['sizes'][$sk][$fp]['ideal_high']);
-                        unset($specs['sizes'][$sk][$fp]['max_calc']);
-                        unset($specs['sizes'][$sk][$fp]['max_actual']);
- * 
- */
-                 }                
-            }else{
-                if ($sk == $tracker['fit_model']){
+                    $specs['sizes'][$sk][$fp]['grade_rule'] = $specs['sizes'][$prev][$fp]['garment_dimension'] - $specs['sizes'][$sk][$fp]['garment_dimension'];
+                }
+            } else {
+                if ($sk == $tracker['fit_model']) {
                     $tracker['next'] = $prev;
-                    $fm_pass=true;
-                    }
+                    $fm_pass = true;
+                }
             }
-            $prev=$sk;            
+            $prev = $sk;
         }
-  
-        
-
         #---------------------- Fit model size
-        foreach ($specs['sizes'][$tracker['fit_model']] as $fp=>$fpm) {
-             $specs['sizes'][$tracker['fit_model']][$fp]['grade_rule'] = ($specs['sizes'][$tracker['prev']][$fp]['grade_rule']+ $specs['sizes'][$tracker['next']][$fp]['grade_rule'])/2;   
+        foreach ($specs['sizes'][$tracker['fit_model']] as $fp => $fpm) {
+            $specs['sizes'][$tracker['fit_model']][$fp]['grade_rule'] = ($specs['sizes'][$tracker['prev']][$fp]['grade_rule'] + $specs['sizes'][$tracker['next']][$fp]['grade_rule']) / 2;
         }
-        
-         return $specs;
+        return $specs;
     }
-    
-    
-    public function generate($specs) {
+
+    private function calculate_stretch($specs){
         $specs_updated = $specs;
-        $prev_size_key = null; 
-        $size_no = 1;
-        $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
-        $fit_model_ratio = array();
-        $fit_model_fit_points = json_decode($fit_model_obj->getMeasurementJson(), true);        
-        $fpa = $this->getFitPointArray();
-        $specs = $this->calculate_grade_rule($specs, $fit_model_obj);
-        
-        !array_key_exists('fit_point_stretch', $specs)?$specs['fit_point_stretch']=array():'';
-        
+             
+        $fpa = $this->getFitPointArray();        
+        !array_key_exists('fit_point_stretch', $specs)?$specs['fit_point_stretch']=array():'';        
         #--------- calculate stretch
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
-#                $us = array('garment_dimension' => $fpv['garment_dimension'], 'stretch_percentage' => 0, 'stretch_value' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'min_actual' => 0, 'ideal_low' => 0, 'fit_model' => 0, 'ideal_high' => 0, 'max_calc' => 0, 'max_actual' => 0);
                 $us = $fpv;
                 $us['stretch_percentage'] = 0;
                 #---------------> stretch calculation
@@ -233,10 +197,17 @@ class ProductSpecificationHelper {
                 #--------------------------                
                 $specs_updated['sizes'][$size][$fpk] = $us;                
             }
-            $prev_size_key = $size;
-            $size_no = $size_no + 1;
         }
-        
+        return $specs_updated;
+    }
+    
+    public function generate($specs) {        
+        $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+        $fit_model_fit_points = json_decode($fit_model_obj->getMeasurementJson(), true);  
+        $specs = $this->calculate_grade_rule($specs, $fit_model_obj);        
+        $fit_model_ratio = array();
+        $specs = $this->calculate_stretch($specs);        
+        $specs_updated = $specs;
         #--------- calculate fit model ratio        
         foreach ($specs_updated['sizes'][$fit_model_obj->getSize()] as $fit_point => $measure) {                    
             $grade_rule = $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['grade_rule_stretch'];                    
@@ -247,7 +218,6 @@ class ProductSpecificationHelper {
             $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['ideal_high'] = $fit_model_fit_points[$fit_point] + (0.5 * $grade_rule);                    
             $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_calc'] = $fit_model_fit_points[$fit_point] > 0 ? $fit_model_fit_points[$fit_point] + (2.5 * $grade_rule) : 0;
             $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_actual'] = $specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['max_calc'];
-
             #---------------> Calculate ratios
             $fit_model_ratio[$fit_point]['fit_model'] = ($measure['garment_stretch'] > 0 ) ? ($fit_model_fit_points[$fit_point] / $measure['garment_stretch']) : 0;            
             $fit_model_ratio[$fit_point]['min_calc'] = ($fit_model_fit_points[$fit_point] > 0 ) ? ($specs_updated['sizes'][$fit_model_obj->getSize()][$fit_point]['min_calc'] / $fit_model_fit_points[$fit_point]) : 0;            
@@ -260,15 +230,16 @@ class ProductSpecificationHelper {
 
         foreach ($specs_updated['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
-                if ($size != $fit_model_obj->getSize()) {
-                    $fit_model_measurement = array_key_exists($fpk, $fit_model_ratio)?$fpv['garment_stretch'] * $fit_model_ratio[$fpk]['fit_model']:0;
-                    $specs_updated['sizes'][$size][$fpk]['fit_model'] = $fit_model_measurement;
-                    $specs_updated['sizes'][$size][$fpk]['min_calc'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['min_calc']:0;
-                    $specs_updated['sizes'][$size][$fpk]['min_actual'] =$specs_updated['sizes'][$size][$fpk]['min_calc'] ;
-                    $specs_updated['sizes'][$size][$fpk]['ideal_low'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['ideal_low']:0;
-                    $specs_updated['sizes'][$size][$fpk]['ideal_high'] = array_key_exists($fpk, $fit_model_ratio)? $fit_model_measurement * $fit_model_ratio[$fpk]['ideal_high']:0;
-                    $specs_updated['sizes'][$size][$fpk]['max_calc'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['max_calc']:0;
-                    $specs_updated['sizes'][$size][$fpk]['max_actual'] =$specs_updated['sizes'][$size][$fpk]['max_calc'] ;
+                if ($size != $fit_model_obj->getSize()) {                    
+//                    $fit_model_measurement = array_key_exists($fpk, $fit_model_ratio)?$fpv['garment_stretch'] * $fit_model_ratio[$fpk]['fit_model']:0;
+//                    $specs_updated['sizes'][$size][$fpk]['fit_model'] = $fit_model_measurement;
+//                    $specs_updated['sizes'][$size][$fpk]['ideal_low'] = array_key_exists($fpk, $fit_model_ratio)?$fit_model_measurement * $fit_model_ratio[$fpk]['ideal_low']:0;
+//                    $specs_updated['sizes'][$size][$fpk]['ideal_high'] = array_key_exists($fpk, $fit_model_ratio)? $fit_model_measurement * $fit_model_ratio[$fpk]['ideal_high']:0;
+//                    $specs_updated['sizes'][$size][$fpk]['min_calc'] = $fit_model_measurement - (2.5 * ($specs_updated['sizes'][$size][$fpk]['ideal_high'] - $specs_updated['sizes'][$size][$fpk]['ideal_low']));
+//                    $specs_updated['sizes'][$size][$fpk]['max_calc'] = $fit_model_measurement + (2.5 * ($specs_updated['sizes'][$size][$fpk]['ideal_high'] - $specs_updated['sizes'][$size][$fpk]['ideal_low']));
+//                    $specs_updated['sizes'][$size][$fpk]['fit_model_ratio'] = $fit_model_ratio[$fpk]['fit_model'];
+                     
+                    $specs_updated['sizes'][$size][$fpk]=$this->calculate_ranges($specs_updated['sizes'][$size][$fpk], $fit_model_ratio[$fpk]);                    
                 }
             }
         }
@@ -390,13 +361,15 @@ class ProductSpecificationHelper {
         foreach ($specs_updated['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
                 if (array_key_exists($fpk, $fpa[$axis]) && $specs[$stretch_type] > 0) {
-                    $fit_model_measurement = array_key_exists($fpk, $fit_model_ratio) ? $fpv['garment_stretch'] * $fit_model_ratio[$fpk]['fit_model'] : 0;
+                    $fit_model_measurement = array_key_exists($fpk, $fit_model_ratio) ? $fpv['garment_stretch'] * $fit_model_ratio[$fpk]['fit_model'] : 0;                    
                     $specs_updated['sizes'][$size][$fpk]['fit_model'] = $fit_model_measurement;
-                    $specs_updated['sizes'][$size][$fpk]['min_calc'] = array_key_exists($fpk, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fpk]['min_calc'] : 0;
-                    $specs_updated['sizes'][$size][$fpk]['min_actual'] = $specs_updated['sizes'][$size][$fpk]['min_calc'];
+                    #$specs_updated['sizes'][$size][$fpk]['min_calc'] = array_key_exists($fpk, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fpk]['min_calc'] : 0;
                     $specs_updated['sizes'][$size][$fpk]['ideal_low'] = array_key_exists($fpk, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fpk]['ideal_low'] : 0;
                     $specs_updated['sizes'][$size][$fpk]['ideal_high'] = array_key_exists($fpk, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fpk]['ideal_high'] : 0;
-                    $specs_updated['sizes'][$size][$fpk]['max_calc'] = array_key_exists($fpk, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fpk]['max_calc'] : 0;
+                    #$specs_updated['sizes'][$size][$fpk]['max_calc'] = array_key_exists($fpk, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fpk]['max_calc'] : 0;
+                    $specs_updated['sizes'][$size][$fpk]['max_calc'] = $fit_model_measurement + (2.5 * ($specs_updated['sizes'][$size][$fpk]['ideal_high'] - $specs_updated['sizes'][$size][$fpk]['ideal_low']));
+                    $specs_updated['sizes'][$size][$fpk]['min_calc'] = $fit_model_measurement - (2.5 * ($specs_updated['sizes'][$size][$fpk]['ideal_high'] - $specs_updated['sizes'][$size][$fpk]['ideal_low']));                
+                    $specs_updated['sizes'][$size][$fpk]['min_actual'] = $specs_updated['sizes'][$size][$fpk]['min_calc'];                    
                     $specs_updated['sizes'][$size][$fpk]['max_actual'] = $specs_updated['sizes'][$size][$fpk]['max_calc'];
                 }
             }
@@ -435,12 +408,15 @@ class ProductSpecificationHelper {
         foreach ($specs_updated['sizes'] as $size => $fit_points) {
             $fit_model_measurement = $fit_points[$fp_target]['garment_stretch'] * $fit_model_ratio[$fp_target]['fit_model'];
             $specs_updated['sizes'][$size][$fp_target]['fit_model'] = $fit_model_measurement;
-            $specs_updated['sizes'][$size][$fp_target]['min_calc'] = array_key_exists($fp_target, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fp_target]['min_calc'] : 0;
-            $specs_updated['sizes'][$size][$fp_target]['min_actual'] = $specs_updated['sizes'][$size][$fp_target]['min_calc'];
+            #$specs_updated['sizes'][$size][$fp_target]['min_calc'] = array_key_exists($fp_target, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fp_target]['min_calc'] : 0;
             $specs_updated['sizes'][$size][$fp_target]['ideal_low'] = array_key_exists($fp_target, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fp_target]['ideal_low'] : 0;
             $specs_updated['sizes'][$size][$fp_target]['ideal_high'] = array_key_exists($fp_target, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fp_target]['ideal_high'] : 0;
-            $specs_updated['sizes'][$size][$fp_target]['max_calc'] = array_key_exists($fp_target, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fp_target]['max_calc'] : 0;
-            $specs_updated['sizes'][$size][$fp_target]['max_actual'] = $specs_updated['sizes'][$size][$fp_target]['max_calc'];
+#            $specs_updated['sizes'][$size][$fp_target]['max_calc'] = array_key_exists($fp_target, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$fp_target]['max_calc'] : 0;            
+            $specs_updated['sizes'][$size][$fp_target]['max_calc'] = $fit_model_measurement + (2.5 * ($specs_updated['sizes'][$size][$fp_target]['ideal_high'] - $specs_updated['sizes'][$size][$fp_target]['ideal_low']));
+            $specs_updated['sizes'][$size][$fp_target]['min_calc'] = $fit_model_measurement - (2.5 * ($specs_updated['sizes'][$size][$fp_target]['ideal_high'] - $specs_updated['sizes'][$size][$fp_target]['ideal_low']));                
+            $specs_updated['sizes'][$size][$fp_target]['max_actual'] = $specs_updated['sizes'][$size][$fp_target]['max_calc'];                
+            $specs_updated['sizes'][$size][$fp_target]['min_actual'] = $specs_updated['sizes'][$size][$fp_target]['min_calc'];            
+
         }
         return $specs_updated;
     }     
@@ -571,10 +547,12 @@ class ProductSpecificationHelper {
                 #~~~~~~> require to do related calculations for ranges
                 $fit_model_measurement = $specs['sizes'][$size][$target_fp]['garment_stretch'] * $fit_model_ratio[$target_fp]['fit_model'];
                 $specs['sizes'][$size][$target_fp]['fit_model'] = $fit_model_measurement;
-                $specs['sizes'][$size][$target_fp]['min_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['min_calc'] : 0;
+                #$specs['sizes'][$size][$target_fp]['min_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['min_calc'] : 0;
                 $specs['sizes'][$size][$target_fp]['ideal_low'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['ideal_low'] : 0;
                 $specs['sizes'][$size][$target_fp]['ideal_high'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['ideal_high'] : 0;
-                $specs['sizes'][$size][$target_fp]['max_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['max_calc'] : 0;                    
+                #$specs['sizes'][$size][$target_fp]['max_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['max_calc'] : 0;                    
+                $specs['sizes'][$size][$target_fp]['max_calc'] = $fit_model_measurement + (2.5 * ($specs['sizes'][$size][$target_fp]['ideal_high'] - $specs['sizes'][$size][$target_fp]['ideal_low']));
+                $specs['sizes'][$size][$target_fp]['min_calc'] = $fit_model_measurement - (2.5 * ($specs['sizes'][$size][$target_fp]['ideal_high'] - $specs['sizes'][$size][$target_fp]['ideal_low']));                
             }
             $prev_size_title = $size;
         }
@@ -606,24 +584,17 @@ class ProductSpecificationHelper {
                 #~~~~~~> require to do related calculations for ranges
                 $fit_model_measurement = $specs['sizes'][$size][$target_fp]['garment_stretch'] * $fit_model_ratio[$target_fp]['fit_model'];
                 $specs['sizes'][$size][$target_fp]['fit_model'] = $fit_model_measurement;
-                $specs['sizes'][$size][$target_fp]['min_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['min_calc'] : 0;
+                #$specs['sizes'][$size][$target_fp]['min_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['min_calc'] : 0;
                 $specs['sizes'][$size][$target_fp]['ideal_low'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['ideal_low'] : 0;
                 $specs['sizes'][$size][$target_fp]['ideal_high'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['ideal_high'] : 0;
-                $specs['sizes'][$size][$target_fp]['max_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['max_calc'] : 0;                                    
+                #$specs['sizes'][$size][$target_fp]['max_calc'] = array_key_exists($target_fp, $fit_model_ratio) ? $fit_model_measurement * $fit_model_ratio[$target_fp]['max_calc'] : 0;                                    
+                $specs['sizes'][$size][$target_fp]['max_calc'] = $fit_model_measurement + (2.5 * ($specs['sizes'][$size][$target_fp]['ideal_high'] - $specs['sizes'][$size][$target_fp]['ideal_low']));
+                $specs['sizes'][$size][$target_fp]['min_calc'] = $fit_model_measurement - (2.5 * ($specs['sizes'][$size][$target_fp]['ideal_high'] - $specs['sizes'][$size][$target_fp]['ideal_low']));                
             }
             $prev_size_title = $size;
         }
         return $specs;        
-    }
-    #--------------------------------------
-    private function strip_to_fitpoint($specs, $fp){
-        $striped=array();
-        foreach ($specs['sizes'] as $size => $fit_points) {
-            $striped[$size]['garment_dimension']=$fit_points[$fp]['garment_dimension'];
-            $striped[$size]['grade_rule']=$fit_points[$fp]['grade_rule'];
-        }
-        return $striped;
-    }
+    }    
     #------------------->5 Garment Dimension
     public function generate_specs_for_garment_dimension($specs, $target, $value) {
         $str = explode('-', $target);        #sizes-6-bust-garment_dimension
@@ -682,13 +653,16 @@ class ProductSpecificationHelper {
     private function get_garment_stretch($fp){
                     return $fp['garment_dimension'] + ($fp['garment_dimension'] * $fp['stretch_percentage'] / 100);
     }
-    private function calculate_ranges($fp_specs, $ratio){
+    private function calculate_ranges($fp_specs, $ratio) {
+        $fp_specs['fit_model_ratio'] = $ratio['fit_model'];
         $fit_model_measurement = $fp_specs['garment_stretch'] * $ratio['fit_model'];
+        $fp_specs['ideal_low'] = $fit_model_measurement * $ratio['ideal_low'];
+        $fp_specs['ideal_high'] = $fit_model_measurement * $ratio['ideal_high'];
         $fp_specs['fit_model'] = $fit_model_measurement;
-        $fp_specs['min_calc'] =  $fit_model_measurement * $ratio['min_calc'];
-        $fp_specs['ideal_low'] =  $fit_model_measurement * $ratio['ideal_low'];
-        $fp_specs['ideal_high'] =  $fit_model_measurement * $ratio['ideal_high'];
-        $fp_specs['max_calc'] =  $fit_model_measurement * $ratio['max_calc']; 
+        #$fp_specs['min_calc'] =  $fit_model_measurement * $ratio['min_calc'];
+        $fp_specs['min_calc'] = $fit_model_measurement - (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
+        #$fp_specs['max_calc'] =  $fit_model_measurement * $ratio['max_calc']; 
+        $fp_specs['max_calc'] = $fit_model_measurement + (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));        
         return $fp_specs;
     }
     
@@ -806,8 +780,21 @@ class ProductSpecificationHelper {
         return $product;
     }
     
-      public function getDoctrine()
-      {
+      public function getDoctrine(){
         return $this->container->get('doctrine');
       }
 }
+
+
+/*                                   unset($specs['sizes'][$sk][$fp]['garment_stretch']);
+                        unset($specs['sizes'][$sk][$fp]['grade_rule_stretch']);
+                        unset($specs['sizes'][$sk][$fp]['min_calc']);
+                        unset($specs['sizes'][$sk][$fp]['min_actual']);
+                        unset($specs['sizes'][$sk][$fp]['ideal_low']);
+                        unset($specs['sizes'][$sk][$fp]['fit_model']);
+                        unset($specs['sizes'][$sk][$fp]['ideal_high']);
+                        unset($specs['sizes'][$sk][$fp]['max_calc']);
+                        unset($specs['sizes'][$sk][$fp]['max_actual']);
+    * 
+    */
+   
