@@ -254,8 +254,9 @@
        #}
                
                
-        $.fn.editable.defaults.mode = 'popup';     
-        $('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
+        $.fn.editable.defaults.mode = 'popup'; 
+        var fit_model_value = $('.fit_model_value').val(); 
+       (fit_model_value == "") ? "" :$('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
         
         $('.edit_inline').editable({
             type: 'text',
@@ -288,7 +289,7 @@
 {#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}    
 
 <input type="hidden" class="fit_points" value="{{ drop_down_values['fit_model_size']|json_encode() }}" >
-
+<input type="hidden" class="fit_model_value" value="{{fit_model_selected_size }}" >
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">       
         <div class="form-group">
