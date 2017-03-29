@@ -72,6 +72,7 @@ class ProductSpecsController extends Controller
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specification_id' => $ps->getId(),
@@ -204,27 +205,26 @@ class ProductSpecsController extends Controller
         $size_no = 0;
         foreach ($size_specs['sizes'][$parsed_data['gender'] == 'm' ? 'man' : 'woman'][$parsed_data['size_title_type']] as $size_key => $size_title) {
             if (array_key_exists($size_key, $parsed_data['sizes'])) {
-                $size_no = $size_no + 1;
-                foreach ($parsed_data['sizes'][$size_key] as $fit_point => $fit_point_value) {                    
-                        $parsed_data['sizes'][$size_key][$fit_point]['no'] = $size_no;
-                        if ($prev_size_key && array_key_exists('garment_dimension', $parsed_data['sizes'][$size_key][$fit_point])
-                                && array_key_exists('garment_dimension', $parsed_data['sizes'][$prev_size_key][$fit_point])
-                        ) {
-                            if ($parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'] > 0) {
-                                $grade_rule = $parsed_data['sizes'][$size_key][$fit_point]['garment_dimension'] - $parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'];                                
-                                $parsed_data['sizes'][$size_key][$fit_point]['grade_rule'] = $grade_rule;                                
-                                if ($size_no == 2) {                                    
-                                    $ordered_sizes['sizes'][$prev_size_key][$fit_point]['grade_rule'] = $grade_rule;                                    
-                                }                            
-                        }
-                    }
-                }
+//                $size_no = $size_no + 1;
+//                foreach ($parsed_data['sizes'][$size_key] as $fit_point => $fit_point_value) {                    
+//                        $parsed_data['sizes'][$size_key][$fit_point]['no'] = $size_no;
+//                        if ($prev_size_key && array_key_exists('garment_dimension', $parsed_data['sizes'][$size_key][$fit_point])
+//                                && array_key_exists('garment_dimension', $parsed_data['sizes'][$prev_size_key][$fit_point])
+//                        ) {
+//                            if ($parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'] > 0) {
+//                                $grade_rule = $parsed_data['sizes'][$size_key][$fit_point]['garment_dimension'] - $parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'];                                
+//                                $parsed_data['sizes'][$size_key][$fit_point]['grade_rule'] = $grade_rule;                                
+//                                if ($size_no == 2) {                                    
+//                                    $ordered_sizes['sizes'][$prev_size_key][$fit_point]['grade_rule'] = $grade_rule;                                    
+//                                }                            
+//                        }
+//                    }
+//                }
                 $ordered_sizes['sizes'][$size_key] = $parsed_data['sizes'][$size_key];
-                $prev_size_key = $size_key;
+                #$prev_size_key = $size_key;
             }
         }
-        $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];        
         #---------> Save to DB
         
         $specs=$this->get('pi.product_specification')->createNew(
