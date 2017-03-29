@@ -627,7 +627,7 @@
                                         
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
-                                    {% if (measurement_v.garment_dimension>0) %}
+                                    {% if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) %}
                                         {% if (size == fit_model_selected_size) %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
                                                 <th>{{measurement_k}}</th>
