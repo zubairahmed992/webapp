@@ -28,21 +28,13 @@
     <div class="row">
         
         <style>
-             .navigation1{position: fixed !important; color:#fff; top: 60px; left: 25%; z-index: 2000 !important;}
+             .navigation1{position: fixed !important; top: 60px; left: 30%; z-index: 2000 !important; background: #ccc;} 
              .navigation1 a,
              .navigation1 a:visited {
                  display: inline-block !important;
-                 padding:5px 8px;
+                 padding:0 8px;
+                 border-right: 1px solid #666;
                  cursor: pointer;
-                 color:#fff;
-                 background: #000;
-                 text-decoration: none;
-
-             }
-             .navigation1 a:hover {
-                 color:#000;
-                 background: #fff;
-
              }
     </style>
     <div class="navigation1">
@@ -55,18 +47,10 @@
     <a onClick="zoom_in();">Zoom In</a>
     <a onClick="zoom_out();">Zoom Out</a>
     <a onClick="save();">Save</a>
-
-            <a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
-
-        <span id="activate_btn">
-            <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-            <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
-            {% if (archives is defined)%}
-                <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
-            {% else %}
-                <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
-            {% endif %}
-        </span>
+    <a onClick="hair_selection();">Hair Selection</a>
+    <a onClick="clip_hair_selection();">Clip Hair</a>
+    <a onClick="back_to_calibration();">Go Back</a>
+    <a onClick="crop_user();">Crop</a>
 </div>
         
         
@@ -113,8 +97,9 @@
 
                 </span></div>
     {% endfor %}
-
-
+     <div>
+        <!--<a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>-->
+    </div>
     {%else%}
     <div>
         <a STYLE="background: #1a1a1a;
@@ -165,8 +150,6 @@
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
 <input id="mask_x" type="hidden" value="{{marker.maskX}}" />
 <input id="mask_y" type="hidden" value="{{marker.maskY}}" />
-<input id="mask_p_x" type="hidden" value="{{pivot_position.mask_p_x}}" />
-<input id="mask_p_y" type="hidden" value="{{pivot_position.mask_p_y}}" />
 <input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
@@ -180,16 +163,37 @@
 <input id="shoulder_height" type="hidden" value="" />
 <input id="hip_height" type="hidden" value="" />
 <input id="image_actions" type="hidden" value="{{marker.imageActions}}" />
+
+
+
+
+
 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
+
+
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>
+
+
+
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
+
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('admin_archive_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
+
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
+
+
+
                 </form>
+
+
+
 <div class="span8 maindiv">
+    
+    
+    
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
@@ -255,7 +259,15 @@
     </tr>
 </table>-->
 
-
+<div style="display:none;">
+                    <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+                    <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+                    {% if (archives is defined)%}
+                        <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+                    {% else %}
+                        <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
+                    {% endif %}
+                </div>
 
             </div>
         </div>
@@ -369,6 +381,13 @@ var path = new CompoundPath({
 <script>
 
 $(document).ready(function(){
+
+
+
+
+
+
+
 
 
     $( "#btn_confirm" ).click(function() {
