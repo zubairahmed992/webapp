@@ -289,6 +289,8 @@ class ProductSpecificationHelper {
     public function dynamicCalculations($decoded) {
         $specs_obj = $this->find($decoded['pk']);
         $specs = json_decode($specs_obj->getSpecsJson(), true);
+        
+        
         if (!array_key_exists('fit_point_stretch', $specs)) {
             $specs['fit_point_stretch'] = $specs_obj->getFitPointStretchArray();
         }
@@ -305,8 +307,9 @@ class ProductSpecificationHelper {
             $specs = $this->generate_specs_for_grade_rule($specs, $decoded['name'], $decoded['value']);
         } elseif (strpos($decoded['name'], 'garment_dimension') !== false) {
             $specs = $this->generate_specs_for_garment_dimension($specs, $decoded['name'], $decoded['value']);
-        } elseif (strpos($decoded['name'], 'fit_model_size') !== false) {
-            $specs = $this->generate_specs_for_fit_model_size($specs, $decoded['value']);
+        } elseif (strpos($decoded['name'], 'fit_model_size') !== false) { 
+            $specs['fit_model_size'] = $decoded['value'];
+            $specs = $this->generate_specs_for_fit_model_size($specs);
         } else {
             return array(
                 'message' => 'Nothing to update!',
@@ -700,7 +703,20 @@ class ProductSpecificationHelper {
 
     #------------------->6 Fit Model Size
 
-    private function generate_specs_for_fit_model_size($specs, $fit_model_size_id) {
+    private function generate_specs_for_fit_model_size($specs) {
+        $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+        $specs = $this->compute_grade_rule($specs, $fit_model_obj);
+        $specs = $this->compute_stretch($specs);
+        $fit_model_ratio = $this->compute_fit_model_ratio($specs, $fit_model_obj);        
+        $specs['sizes'][$fit_model_obj->getSize()] = $fit_model_ratio['fit_model_measurement'];
+        #---------------------------------> calculate ranges
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            foreach ($fit_points as $fpk => $fpv) {
+                if ($size != $fit_model_obj->getSize()) {
+                    $specs['sizes'][$size][$fpk] = $this->compute_ranges($specs['sizes'][$size][$fpk], $fit_model_ratio[$fpk]);
+                }
+            }
+        }        
         return $specs;
     }
 
