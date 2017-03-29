@@ -1226,5 +1226,57 @@ public function _multplieImageUploadAction(Request $request){
         }
     }
 
+#----------------------------------------------------------------------
+    public function imageUploadProductDetailAction() {
+        $allowed = array('png', 'jpg');
+        $product_id=$_POST['product_id'];
+        $request=$this->getRequest();
+        if(isset($_FILES['upl']) && $_FILES['upl']['error'] == 0){
+            $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
+            $file_name=$_FILES['upl']['name'];
 
+            #--------------------------------------------------------------
+
+            $parsed_details = $this->get('admin.helper.product')->breakFileNameProductDetail($file_name, $_POST['product_id']);
+
+            if ($parsed_details['success'] == 'false') {
+                #return new Response($parsed_details['message']);
+                $error_str = $error_str . $file_name .' : ' . $parsed_details['message'] . ', ';
+            } else {
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
+                $imageFile =  $request->files->get('upl');
+                #return new response(json_encode($parsed_details));
+                if (array_key_exists('view_title', $parsed_details)) {
+                    #find matching color view object
+                    $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
+                    #create new piece & set item & color view
+                    $product_item_piece = $this->get('admin.helper.product.item.piece')->findOrCreateNew($product_item, $product_color_view);
+                    #set file
+                    $product_item_piece->file = $imageFile;
+                    #save & upload
+                    $this->get('admin.helper.product.item.piece')->save($product_item_piece);
+                    #$this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
+                    return new response('{"status":"view updated"}');
+                } else {
+                    $product_item->file = $imageFile;
+                    $product_item->upload();
+                    $this->get('admin.helper.productitem')->save($product_item);
+                    return new response('{"status":"fitting room image updated"}');
+                }
+            }
+
+            #--------------------------------------------------------------
+            /*
+               if(!in_array(strtolower($extension), $allowed)){
+                   return new response('{"status":"error"}');
+               }
+               $dirpath=__DIR__ . '/../../../../web/uploads/ltf/products/display/';
+               if(move_uploaded_file($_FILES['upl']['tmp_name'], $dirpath.$_FILES['upl']['name'])){
+                       return new response('{"status":"success"}');
+               }
+                *
+            */
+        }
+        return new response('{"status":"error"}');
+    }
 }

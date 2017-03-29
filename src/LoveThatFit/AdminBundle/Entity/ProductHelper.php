@@ -1386,4 +1386,43 @@ class ProductHelper
         return $this->repo->getSearchProductData($term);
     }
     //end of autocomplete method
+
+
+#------------------------------------------------------------------------
+    public function breakFileNameProductDetail($request_array, $product_id)
+    {
+
+        var_export($request_array);
+        var_export($product_id);
+        die();
+        #Format: Regular_XL_Darl-Gray_Front-Open.png
+        #last bit, view is optional
+        $request_array = strtolower($request_array);
+        $_exploded = explode("_", $request_array);
+        $a = array('product_id' => $product_id);
+        $type = Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif');
+
+        # file name/ext with/without view name
+        if (count($_exploded) == 3) {
+            $last_bits = explode(".", $_exploded[2]);
+            $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+        } elseif (count($_exploded) == 4) {
+            $last_bits = explode(".", $_exploded[3]);
+            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            $a['view_title'] = $last_bits[0];
+        } else {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+        #validate file format
+        if (count($last_bits) != 2 || (count($last_bits) == 2 && !(in_array($last_bits[1], $type)))) {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+        # no/invalid body type given then regular
+        $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "regular" : $_exploded[0];
+        $a['file_name'] = 'item_image.' . $last_bits[1];
+        $a['size_title'] = $_exploded[1];
+        $a['message'] = 'Done';
+        $a['success'] = 'true';
+        return $a;
+    }
 }
