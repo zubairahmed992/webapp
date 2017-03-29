@@ -103,7 +103,7 @@ class ProductSpecsController extends Controller
         }                      
         
         $updated_specs = $this->get('pi.product_specification')->generate($output);
-        return new Response(json_encode($updated_specs)); 
+        #return new Response(json_encode($updated_specs)); 
         
         
         $entity = $this->get('pi.product_specification')->find($id);
