@@ -1,8 +1,10 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
 
-<script>
-
+    <script>
+     $(document).ready(function(){    
+        $('.fit_modle').children('th, td').css('background-color','#FFFF99');
+     });
     </script>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
@@ -25,7 +27,7 @@
     
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
     <div>
-        
+        {{ fit_model_selected_size}}
         <table>
             <tr>
                 <td>
@@ -69,7 +71,8 @@
                         <div id="dv_measurement_table">
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
-                                    <tr class="Active">
+                                {% if (size == fit_model_selected_size) %}
+                                    <tr class="Active fit_modle">
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_value</th>
@@ -82,27 +85,64 @@
                                         <th >fit_model</th>
                                         <th >ideal_high</th>
                                         <th >max_calc</th>
-                                        <th >max_actual</th>
-                                        
+                                        <th >max_actual</th>                                        
                                     </tr>
+                                    {% else %}
+                                      <tr class="Active">
+                                        <th >{{size}}</th>
+                                        <th >garment_dimension</th>
+                                        <th >stretch_value</th>
+                                        <th >garment_stretch</th>
+                                        <th >grade rule</th>
+                                        <th >grade rule stretch</th>
+                                        <th >min_calc</th>
+                                        <th >min_actual</th>
+                                        <th >ideal_low</th>
+                                        <th >fit_model</th>
+                                        <th >ideal_high</th>
+                                        <th >max_calc</th>
+                                        <th >max_actual</th>                                        
+                                    </tr>
+                                {%endif %}
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {% if (measurement_v.garment_dimension>0) %}
-                                    <tr>
-                                        <th>{{measurement_k}}</th>
-                                        <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
-                                        <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
-                                        <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
-                                        <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
-                                        
-                                    </tr>
+                                         {% if (size == fit_model_selected_size) %}
+                                             M
+                                             <tr class='fit_modle'>
+                                                <th>{{measurement_k}}</th>
+                                                <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
+                                                <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
+                                                <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+
+                                            </tr>
+                                         {% else %}
+                                             <tr>
+                                                <th>{{measurement_k}}</th>
+                                                <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
+                                                <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
+                                                <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+
+                                            </tr>
+                                
+                                    {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}

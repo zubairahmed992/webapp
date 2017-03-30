@@ -66,11 +66,18 @@ class ProductSpecsController extends Controller
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        
+         if(isset($parsed_data['fit_model_size'])){ 
+            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize(); 
+         } else {
+             $fit_model_selected =null;
+         }        
+         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specification_id' => $ps->getId(),
-                    'product_specs_json' => json_encode($gen_specs),                    
+                    'product_specs_json' => json_encode($gen_specs),
+                    'fit_model_selected_size' => $fit_model_selected,
                 ));
     }
     #----------------------- /product_intake/product_specs/delete
