@@ -27,6 +27,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeMeasurementType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemPieceType;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Constraints\Null;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
@@ -1243,10 +1244,31 @@ public function _multplieImageUploadAction(Request $request){
                 #return new Response($parsed_details['message']);
                 $error_str = $error_str . $file_name .' : ' . $parsed_details['message'] . ', ';
             } else {
+
+                $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
+                /* Checked Color are available for this product */
+                $color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle($parsed_details['color_title'], $parsed_details['product_id']);
+                if(count($color_id_result) == 0){
+                    /* Create Product Item for this product */
+                    $productColor = new ProductColor($product);
+
+                }
+
+
+
+                /* Checked Product item are available for this product */
+                $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id']);
+                if(count($product_id_result) == 0){
+                    /* Create Product Item for this product */
+                    echo "product item Not found";
+                }
+
                 $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
+                die();
                 $imageFile =  $request->files->get('upl');
                 #return new response(json_encode($parsed_details));
                 if (array_key_exists('view_title', $parsed_details)) {
+
                     #find matching color view object
                     $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
                     #create new piece & set item & color view

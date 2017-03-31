@@ -73,7 +73,7 @@ class ProductItemHelper {
     }
     
     #-------Raw image download functionlity-----------------------------------------#
-public function rawImageDownload($item_id){
+    public function rawImageDownload($item_id){
     
    $entity_item = $this->repo->find($item_id);
    $path=$entity_item->getRawImageAbsolutePath();
@@ -89,7 +89,7 @@ public function rawImageDownload($item_id){
    return $response;
 }
 #---------------------Add Item For product--------------------------------------#
-public function addItem($product, $p_color, $p_size) {
+    public function addItem($product, $p_color, $p_size) {
         $p_item = new ProductItem();
         $p_item->setProduct($product);
         $p_item->setProductSize($p_size);
@@ -106,4 +106,11 @@ public function addItem($product, $p_color, $p_size) {
         return $this->repo->findItemBySku($sku);
         
     }
+
+    #-------------------------------------------------------------------------
+    public function getProductItemByProductId($productId) {
+        $product_item = $this->repo->getProductItemByProductId($productId);
+        return $product_item;
+    }
+
 }

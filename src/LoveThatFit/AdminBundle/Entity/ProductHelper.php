@@ -1389,12 +1389,8 @@ class ProductHelper
 
 
 #------------------------------------------------------------------------
-    public function breakFileNameProductDetail($request_array, $product_id)
-    {
+    public function breakFileNameProductDetail($request_array, $product_id) {
 
-        var_export($request_array);
-        var_export($product_id);
-        die();
         #Format: Regular_XL_Darl-Gray_Front-Open.png
         #last bit, view is optional
         $request_array = strtolower($request_array);
