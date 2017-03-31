@@ -492,6 +492,8 @@ class UserRepository extends EntityRepository
         }
         if ($end_date != "") {
             $end = date("Y-m-d", strtotime($end_date) );
+        } else {
+            $end = date("Y-m-d");
         }
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('u.id, u.firstName, u.lastName,
