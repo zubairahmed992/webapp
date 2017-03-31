@@ -51,9 +51,8 @@ class RetailerHelper {
     public function save($entity) {
         $msg_array =null;
         //$msg_array = ;
-
-        //$retailerTitle = $entity->getTitle();        
-        //$msg_array = $this->validateForCreate($retailerTitle);
+        $retailerTitle = $entity->getTitle();
+        $msg_array = $this->validateForCreate($retailerTitle);
         if ($msg_array == null) {      
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));   

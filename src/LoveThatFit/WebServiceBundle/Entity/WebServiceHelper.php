@@ -609,7 +609,7 @@ class WebServiceHelper {
      public function likeUnlikeItem($user, $ra) {
 
        if ($ra['like'] == 'true') {
-         if (count($user->getProductItems()) < 25) {# check limit
+         if (count($user->getProductItems()) < 50) {# check limit
            $default_item = null;
            if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
              if(!is_array($ra['item_id'])){
@@ -677,7 +677,7 @@ class WebServiceHelper {
   #------------------------------------------------------------------------------
   public function __likeUnlikeItem($user, $ra) {
     if ($ra['like'] == 'true') {
-      if (count($user->getProductItems()) < 25) {# check limit
+      if (count($user->getProductItems()) < 50) {# check limit
         $default_item = null;
         if (array_key_exists('item_id', $ra) && $ra['item_id'] != null && !is_array($ra['item_id'])) {
           $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
@@ -706,7 +706,7 @@ class WebServiceHelper {
          
          
         if ($ra['like'] == 'true') {
-            if (count($user->getProductItems()) < 25) {# check limit
+            if (count($user->getProductItems()) < 50) {# check limit
                 $default_item = null;
                 if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
                     $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
@@ -741,7 +741,7 @@ class WebServiceHelper {
         $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
         if ($p) {
             if ($ra['like'] == 'true') {
-                if (count($user->getProductItems()) < 25) {# check limit
+                if (count($user->getProductItems()) < 50) {# check limit
                    $default_item = $p->getDefaultItem($user);# run algorithm get recommended item
                     if (!$user->isFavouriteItem($default_item)) { # check if already favourite
                         $user->addProductItem($default_item); #make favourite

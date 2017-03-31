@@ -274,31 +274,31 @@ class UserAddressesHelper
                 // echo $address->getAddressType();
                 if($address->getAddressType() == 2){
                     $shippingAddresses[] = array(
-                        'shipping_first_name' => $address->getFirstName(),
-                        'shipping_last_name' => $address->getLastName(),
-                        'shipping_address1' => $address->getAddress1(),
-                        'shipping_address2' => $address->getAddress2(),
-                        'shipping_phone' => $address->getPhone(),
-                        'shipping_city' => $address->getCity(),
-                        'shipping_country' =>$address->getCountry(),
-                        'shipping_postcode' => $address->getPostCode(),
-                        'shipping_state' => $address->getState(),
-                        'shipping_default' => $address->getShippingDefault(),
-                        'shipping_id'       => $address->getId()
+                        'first_name' => $address->getFirstName(),
+                        'last_name' => $address->getLastName(),
+                        'address1' => $address->getAddress1(),
+                        'address2' => $address->getAddress2(),
+                        'phone' => $address->getPhone(),
+                        'city' => $address->getCity(),
+                        'country' =>$address->getCountry(),
+                        'postcode' => $address->getPostCode(),
+                        'state' => $address->getState(),
+                        'default' => $address->getShippingDefault(),
+                        'id'       => $address->getId()
                     );
                 }else{
                     $billingAddresses[] = array(
-                        'billing_first_name' => $address->getFirstName(),
-                        'billing_last_name' => $address->getLastName(),
-                        'billing_address1' => $address->getAddress1(),
-                        'billing_address2' => $address->getAddress2(),
-                        'billing_phone' => $address->getPhone(),
-                        'billing_city' => $address->getCity(),
-                        'billing_country' => $address->getCountry(),
-                        'billing_postcode' => $address->getPostCode(),
-                        'billing_state' => $address->getState(),
-                        'billing_default' => $address->getBillingDefault(),
-                        'billing_id' => $address->getId()
+                        'first_name' => $address->getFirstName(),
+                        'last_name' => $address->getLastName(),
+                        'address1' => $address->getAddress1(),
+                        'address2' => $address->getAddress2(),
+                        'phone' => $address->getPhone(),
+                        'city' => $address->getCity(),
+                        'country' => $address->getCountry(),
+                        'postcode' => $address->getPostCode(),
+                        'state' => $address->getState(),
+                        'default' => $address->getBillingDefault(),
+                        'id' => $address->getId()
                     );
                 }
             }
