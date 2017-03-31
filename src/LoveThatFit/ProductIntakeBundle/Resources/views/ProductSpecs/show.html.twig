@@ -1,6 +1,5 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
-
     <script>
      $(document).ready(function(){    
         $('.fit_modle').children('th, td').css('background-color','#FFFF99');
@@ -24,10 +23,8 @@
             
         </form>
     </div>
-    
     <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
-    <div>
-        {{ fit_model_selected_size}}
+    <div>     
         <table>
             <tr>
                 <td>

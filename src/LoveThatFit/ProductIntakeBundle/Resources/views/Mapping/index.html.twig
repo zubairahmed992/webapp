@@ -11,13 +11,13 @@
         <a href="{{ path('product_intake_specs_mapping_new') }}" class="btn  btn-default">Add New</a>     
     </div>
     
-    <div class="clearfix"></div>      
+    <div class="clearfix"></div>   
      <table class="table table-bordered table-striped table-hover table-condensed">
         <tr>
             <th>Id</th>
             <th>Title</th>
             <th>Brand Name</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         {% for sm in specs_mappings %}
         <tr>
@@ -26,7 +26,9 @@
             <td>{{sm.Brand}}</td>            
             <td>
                 <a href="{{ path('product_intake_specs_mapping_delete', {'id': sm.Id}) }}" title="Delete {{sm.Title}}">del</a> &nbsp;|&nbsp;
-                 <a href="{{ path('product_intake_specs_mapping_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a> 
+                 <a href="{{ path('product_intake_specs_mapping_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>     &nbsp;|&nbsp;       
+                 <a href="{{ cs_file[sm.Id] }}" target="_blank" download title="Download">Download</a> 
+
             </td>
         </tr>
          {% endfor %}
