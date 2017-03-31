@@ -196,7 +196,9 @@ class MappingController extends Controller
      
     }
     #----------------------- /product_intake/specs_mapping/delete
-    public function deleteAction($id){                
+    public function deleteAction($id){  
+        $remove_csv_file = $this->get('productIntake.product_specification_mapping')->find($id);
+        unlink($remove_csv_file->getAbsolutePath());
         $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
