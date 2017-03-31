@@ -11,10 +11,11 @@ class MappingController extends Controller
 {
     #----------------------- /product_intake/specs_mapping/index
     public function indexAction(){
-        $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();                
+        $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:index.html.twig', array(
                     'specs_mappings' => $product_specs_mappings,
-                    ));
+                    'cs_file'      =>  $this->get('productIntake.product_specification_mapping')->csvDownloads($product_specs_mappings),        
+        ));
     }
     
     #----------------------- /product_intake/specs_mapping/new

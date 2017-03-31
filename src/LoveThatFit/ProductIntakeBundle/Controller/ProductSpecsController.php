@@ -39,16 +39,10 @@ class ProductSpecsController extends Controller
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        /*
-        $target = 'sizes-6-bust-garment_dimension';
-        $value = 38.5;
-        $ps = $this->get('pi.product_specification')->generate_specs_for_garment_dimension($parsed_data, $target, $value);  
-        return new Response(json_encode($ps));
-        */
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
-        #$drop_down_values['fit_model_size'] = array_flip($fms);      
-        $drop_down_values['fit_model_size'] = $fms;      
+        $drop_down_values['fit_model_size'] = array_flip($fms);      
+//        $drop_down_values['fit_model_size'] = $fms;      
         if(isset($parsed_data['fit_model_size'])){ 
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size->getSize(); 
@@ -72,11 +66,18 @@ class ProductSpecsController extends Controller
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        
+         if(isset($parsed_data['fit_model_size'])){ 
+            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize(); 
+         } else {
+             $fit_model_selected =null;
+         }        
+         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specification_id' => $ps->getId(),
-                    'product_specs_json' => json_encode($gen_specs),                    
+                    'product_specs_json' => json_encode($gen_specs),
+                    'fit_model_selected_size' => $fit_model_selected,
                 ));
     }
     #----------------------- /product_intake/product_specs/delete
