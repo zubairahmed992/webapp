@@ -107,24 +107,21 @@ class ProductSpecsController extends Controller
             } else {
                     $output[$key] = $value;                
             } 
-        }                      
-        
-        $updated_specs = $this->get('pi.product_specification')->generate($output);
-        #return new Response(json_encode($updated_specs)); 
-        
-        
+        } 
+        #$specs = $this->get('pi.product_specification')->generate($output);
+        #return new Response(json_encode($specs)); 
         $entity = $this->get('pi.product_specification')->find($id);
-        array_key_exists('style_id_number', $updated_specs) ? $entity->setStyleIdNumber($updated_specs['style_id_number']):'';
-        array_key_exists('style_name', $updated_specs) ?$entity->setStyleName($updated_specs['style_name']):'';
-        array_key_exists('title', $updated_specs) ?$entity->setTitle($updated_specs['title']):'';
-        array_key_exists('description', $updated_specs) ?$entity->setDescription($updated_specs['description']):'';
-        array_key_exists('clothing_type', $updated_specs) ?$entity->setClothingType($updated_specs['clothing_type']):'';
-        array_key_exists('brand', $updated_specs) ?$entity->setBrandName($updated_specs['brand']):'';
+        $specs =  json_decode($entity->getSpecsJson());
+        array_key_exists('style_id_number', $specs) ? $entity->setStyleIdNumber($specs['style_id_number']):'';
+        array_key_exists('style_name', $specs) ?$entity->setStyleName($specs['style_name']):'';
+        array_key_exists('title', $specs) ?$entity->setTitle($specs['title']):'';
+        array_key_exists('description', $specs) ?$entity->setDescription($specs['description']):'';
+        array_key_exists('clothing_type', $specs) ?$entity->setClothingType($specs['clothing_type']):'';
+        array_key_exists('brand', $specs) ?$entity->setBrandName($specs['brand']):'';
         $entity->setUndoSpecsJson($entity->getSpecsJson());
-        $entity->setSpecsJson(json_encode($updated_specs));
+        $entity->setSpecsJson(json_encode($specs));
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
-        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
         
     }
