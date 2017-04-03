@@ -1065,4 +1065,9 @@ class UserHelper {
     public function findByEventName($event_name) {
         return $this->repo->findByEventName($event_name);
     }
+
+    public function findUserList($start_date, $end_date)
+    {
+        return $this->repo->findUserList($start_date, $end_date);
+    }
 }

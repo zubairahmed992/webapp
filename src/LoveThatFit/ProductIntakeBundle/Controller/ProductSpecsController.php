@@ -39,16 +39,10 @@ class ProductSpecsController extends Controller
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        /*
-        $target = 'sizes-6-bust-garment_dimension';
-        $value = 38.5;
-        $ps = $this->get('pi.product_specification')->generate_specs_for_garment_dimension($parsed_data, $target, $value);  
-        return new Response(json_encode($ps));
-        */
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
-        #$drop_down_values['fit_model_size'] = array_flip($fms);      
-        $drop_down_values['fit_model_size'] = $fms;      
+        $drop_down_values['fit_model_size'] = array_flip($fms);      
+//        $drop_down_values['fit_model_size'] = $fms;      
         if(isset($parsed_data['fit_model_size'])){ 
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size->getSize(); 
@@ -72,10 +66,18 @@ class ProductSpecsController extends Controller
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);         
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+         if(isset($parsed_data['fit_model_size'])){ 
+            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize(); 
+         } else {
+             $fit_model_selected =null;
+         }        
+         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
                     'parsed_data' => json_decode($ps->getSpecsJson(),true),
                     'product_specification_id' => $ps->getId(),
-                    'product_specs_json' => json_encode($gen_specs),                    
+                    'product_specs_json' => json_encode($gen_specs),
+                    'fit_model_selected_size' => $fit_model_selected,
                 ));
     }
     #----------------------- /product_intake/product_specs/delete
@@ -105,24 +107,21 @@ class ProductSpecsController extends Controller
             } else {
                     $output[$key] = $value;                
             } 
-        }                      
-        
-        $updated_specs = $this->get('pi.product_specification')->generate($output);
-        #return new Response(json_encode($updated_specs)); 
-        
-        
+        } 
+        #$specs = $this->get('pi.product_specification')->generate($output);
+        #return new Response(json_encode($specs)); 
         $entity = $this->get('pi.product_specification')->find($id);
-        array_key_exists('style_id_number', $updated_specs) ? $entity->setStyleIdNumber($updated_specs['style_id_number']):'';
-        array_key_exists('style_name', $updated_specs) ?$entity->setStyleName($updated_specs['style_name']):'';
-        array_key_exists('title', $updated_specs) ?$entity->setTitle($updated_specs['title']):'';
-        array_key_exists('description', $updated_specs) ?$entity->setDescription($updated_specs['description']):'';
-        array_key_exists('clothing_type', $updated_specs) ?$entity->setClothingType($updated_specs['clothing_type']):'';
-        array_key_exists('brand', $updated_specs) ?$entity->setBrandName($updated_specs['brand']):'';
+        $specs =  json_decode($entity->getSpecsJson());
+        array_key_exists('style_id_number', $specs) ? $entity->setStyleIdNumber($specs['style_id_number']):'';
+        array_key_exists('style_name', $specs) ?$entity->setStyleName($specs['style_name']):'';
+        array_key_exists('title', $specs) ?$entity->setTitle($specs['title']):'';
+        array_key_exists('description', $specs) ?$entity->setDescription($specs['description']):'';
+        array_key_exists('clothing_type', $specs) ?$entity->setClothingType($specs['clothing_type']):'';
+        array_key_exists('brand', $specs) ?$entity->setBrandName($specs['brand']):'';
         $entity->setUndoSpecsJson($entity->getSpecsJson());
-        $entity->setSpecsJson(json_encode($updated_specs));
+        $entity->setSpecsJson(json_encode($specs));
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
-        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
-        
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
         
     }
@@ -204,27 +203,26 @@ class ProductSpecsController extends Controller
         $size_no = 0;
         foreach ($size_specs['sizes'][$parsed_data['gender'] == 'm' ? 'man' : 'woman'][$parsed_data['size_title_type']] as $size_key => $size_title) {
             if (array_key_exists($size_key, $parsed_data['sizes'])) {
-                $size_no = $size_no + 1;
-                foreach ($parsed_data['sizes'][$size_key] as $fit_point => $fit_point_value) {                    
-                        $parsed_data['sizes'][$size_key][$fit_point]['no'] = $size_no;
-                        if ($prev_size_key && array_key_exists('garment_dimension', $parsed_data['sizes'][$size_key][$fit_point])
-                                && array_key_exists('garment_dimension', $parsed_data['sizes'][$prev_size_key][$fit_point])
-                        ) {
-                            if ($parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'] > 0) {
-                                $grade_rule = $parsed_data['sizes'][$size_key][$fit_point]['garment_dimension'] - $parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'];                                
-                                $parsed_data['sizes'][$size_key][$fit_point]['grade_rule'] = $grade_rule;                                
-                                if ($size_no == 2) {                                    
-                                    $ordered_sizes['sizes'][$prev_size_key][$fit_point]['grade_rule'] = $grade_rule;                                    
-                                }                            
-                        }
-                    }
-                }
+//                $size_no = $size_no + 1;
+//                foreach ($parsed_data['sizes'][$size_key] as $fit_point => $fit_point_value) {                    
+//                        $parsed_data['sizes'][$size_key][$fit_point]['no'] = $size_no;
+//                        if ($prev_size_key && array_key_exists('garment_dimension', $parsed_data['sizes'][$size_key][$fit_point])
+//                                && array_key_exists('garment_dimension', $parsed_data['sizes'][$prev_size_key][$fit_point])
+//                        ) {
+//                            if ($parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'] > 0) {
+//                                $grade_rule = $parsed_data['sizes'][$size_key][$fit_point]['garment_dimension'] - $parsed_data['sizes'][$prev_size_key][$fit_point]['garment_dimension'];                                
+//                                $parsed_data['sizes'][$size_key][$fit_point]['grade_rule'] = $grade_rule;                                
+//                                if ($size_no == 2) {                                    
+//                                    $ordered_sizes['sizes'][$prev_size_key][$fit_point]['grade_rule'] = $grade_rule;                                    
+//                                }                            
+//                        }
+//                    }
+//                }
                 $ordered_sizes['sizes'][$size_key] = $parsed_data['sizes'][$size_key];
-                $prev_size_key = $size_key;
+                #$prev_size_key = $size_key;
             }
         }
-        $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];        
         #---------> Save to DB
         
         $specs=$this->get('pi.product_specification')->createNew(
