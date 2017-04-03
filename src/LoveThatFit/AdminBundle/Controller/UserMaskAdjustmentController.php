@@ -85,6 +85,7 @@ class UserMaskAdjustmentController extends Controller {
         $mode=$archive->getSvgPaths()?$mode:null;
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+        $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
         
         return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                 'form' => $form->createView(), #------>
@@ -104,6 +105,7 @@ class UserMaskAdjustmentController extends Controller {
                 'mode' => $mode, #------>
                 'device_model' => array_key_exists('device_model',$image_actions_archive)?$image_actions_archive['device_model']:'', #------>
                 'pivot_position' => $pivot_position,
+                'bra_size_body_shape' => json_encode($bra_size_body_shape),
             ));
     }
 
@@ -298,6 +300,7 @@ class UserMaskAdjustmentController extends Controller {
         $mode=$archive->getSvgPaths()?$mode:null;
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+        $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
  
         return $this->render('LoveThatFitAdminBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
@@ -318,6 +321,7 @@ class UserMaskAdjustmentController extends Controller {
                     'archives' => $user->getUserArchives(), #------>
                     'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                     'pivot_position' => $pivot_position,
+                    'bra_size_body_shape' => json_encode($bra_size_body_shape),
                 ));
     }
  #----------------------------------------------------------------------------    

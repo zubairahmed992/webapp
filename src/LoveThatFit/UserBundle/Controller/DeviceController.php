@@ -283,6 +283,7 @@ class DeviceController extends Controller {
     $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
     $device_spec = $user->getDeviceSpecs($device_type);
     $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+    $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
 
     return $this->render('LoveThatFitUserBundle:Device:multiple_svg_path.html.twig', array(
         'form' => $form->createView(),
@@ -301,6 +302,7 @@ class DeviceController extends Controller {
         'device_type' => $device_type,
         'device_model'=> $device_model,
         'device_screen_height' => $device_screen_height['pixel_height'],
+        'bra_size_body_shape' => json_encode($bra_size_body_shape),
     ));
   }
   #### End of Men Mask Marker
