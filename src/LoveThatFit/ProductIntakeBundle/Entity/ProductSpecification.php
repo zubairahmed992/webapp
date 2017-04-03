@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\ProductIntakeBundle\Entity;
-use LoveThatFit\AdminBundle\ImageHelper;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -310,7 +310,7 @@ class ProductSpecification {
      *
      * @return string 
      */
-    public function geSpecFileName() {
+    public function getSpecFileName() {
         return $this->spec_file_name;
     }
 #--------------------------------------------------------

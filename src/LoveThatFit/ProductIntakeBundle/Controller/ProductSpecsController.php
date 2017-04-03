@@ -2,7 +2,7 @@
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
 
-use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +12,10 @@ class ProductSpecsController extends Controller
 {
     #----------------------- /product_intake/product_specs/index
     public function indexAction(){
-        $ps = $this->get('pi.product_specification')->findAll();        
+        $ps = $this->get('pi.product_specification')->findAll(); 
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:index.html.twig', array(
-            'specs' => $ps,            
+            'specs' => $ps,  
+             'cs_file'      =>  $this->get('pi.product_specification')->csvDownloads($ps),        
         ));
     }
     
@@ -225,14 +226,14 @@ class ProductSpecsController extends Controller
                 #$prev_size_key = $size_key;
             }
         }
-        $parsed_data['sizes'] = $ordered_sizes['sizes'];     
-        $product_spec = new ProductSpecification;
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];   
         #---------> Save to DB
         $specs=$this->get('pi.product_specification')->createNew(
                 $product_specs_mapping->getTitle(),
                 $product_specs_mapping->getDescription(),
                 json_encode($parsed_data));
          $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
+         $this->container->get('pi.product_specification')->save($specs);
          move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());
             
         $this->get('session')->setFlash('success', 'New Product specification added!');

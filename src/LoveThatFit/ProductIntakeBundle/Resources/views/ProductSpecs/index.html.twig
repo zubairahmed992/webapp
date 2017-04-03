@@ -21,7 +21,14 @@
             <td>
                 <a href="{{ path('product_intake_product_specs_show', {'id': sp.Id}) }}" title="Show {{sp.Title}}">show</a> &nbsp;|&nbsp;
                 <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id}) }}" title="Edit {{sp.Title}}">edit</a> &nbsp;|&nbsp;
-                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" title="Show {{sp.Title}}">del</a> 
+                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" title="Show {{sp.Title}}">del</a> &nbsp;|&nbsp;
+               
+                {% if cs_file[sp.Id] != '' %}
+                 <a href="{{ cs_file[sp.Id] }}" target="_blank" download title="Download">Download</a> 
+                {% else %}
+                     <a href="#">File Not Found in Directory! </a> 
+                {% endif %}
+                 
             </td>
         </tr>
          {% endfor %}

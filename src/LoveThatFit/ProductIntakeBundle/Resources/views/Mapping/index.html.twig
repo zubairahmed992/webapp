@@ -27,7 +27,12 @@
             <td>
                 <a href="{{ path('product_intake_specs_mapping_delete', {'id': sm.Id}) }}" title="Delete {{sm.Title}}">del</a> &nbsp;|&nbsp;
                  <a href="{{ path('product_intake_specs_mapping_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>     &nbsp;|&nbsp;       
-                 <a href="{{ cs_file[sm.Id] }}" target="_blank" download title="Download">Download</a> 
+                  {% if cs_file[sm.Id] != '' %}
+                 <a href="{{ cs_file[sm.Id] }}" target="_blank" download title="Download">Download</a>  
+                {% else %}
+                     <a href="#">File Not Found in Directory! </a> 
+                {% endif %}
+                 
 
             </td>
         </tr>
