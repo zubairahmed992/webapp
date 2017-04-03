@@ -1246,21 +1246,26 @@ public function _multplieImageUploadAction(Request $request){
             } else {
 
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
+
                 /* Checked Color are available for this product */
-                $color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle($parsed_details['color_title'], $parsed_details['product_id']);
+                $color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                 if(count($color_id_result) == 0){
                     /* Create Product Item for this product */
-                    $productColor = new ProductColor($product);
-
+                    $color_id_result = new ProductColor();
+                    $color_id_result->setProduct($product);
+                    $color_id_result->setTitle(strtolower(strtolower($parsed_details['color_title'])));
+                    $this->get('admin.helper.productcolor')->save($color_id_result);
                 }
 
-
-
                 /* Checked Product item are available for this product */
-                $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id']);
+                $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], );
                 if(count($product_id_result) == 0){
+                    //**/
+                    echo $parsed_details['color_title'];
                     /* Create Product Item for this product */
-                    echo "product item Not found";
+                    $p_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+                    $p_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
+                    $this->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);
                 }
 
                 $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
