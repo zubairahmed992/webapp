@@ -93,7 +93,11 @@ class ProductSpecsController extends Controller
     
     #----------------------- /product_intake/Prod_specs/update    
     public function updateAction($id){  
-           $output = array();                     
+        $msg_ar = $this->get('pi.product_specification')->updateAndFill($id, $_POST);        
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+        
+        /*   $output = array();                     
         foreach ($_POST as $key => $value){   
             $sizes = explode('-',$key);//[sizes-XS-neck-garment_dimension]
             $array_length =  count($sizes);      
@@ -120,6 +124,8 @@ class ProductSpecsController extends Controller
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+         * 
+         */
         
     }
      #------------------------------------- /product_intake/Prod_specs/update_foo 

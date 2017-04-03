@@ -111,7 +111,32 @@ class ProductSpecificationHelper {
             'success' => true,
         );
     }
-
+    #---------------------------#---------------------------
+    public function updateAndFill($id, $posted){
+        $entity = $this->find($id);        
+        $parsed = $this->posted_values_to_array($posted);
+        $entity->fill($parsed);    
+        return $this->update($entity);
+    }
+    #----------------------------------------------
+    
+    #---------------------------
+    private function posted_values_to_array($posted) {
+        $output = array();
+        foreach ($posted as $key => $value) {
+            $sizes = explode('-', $key); //[sizes-XS-neck-garment_dimension]
+            $array_length = count($sizes);
+            if ($array_length == '2') {
+                $output[$sizes[0]][$sizes[1]] = $value;
+            } elseif ($array_length == '4') {
+                $output['sizes'][$sizes[1]][$sizes[2]][$sizes[3]] = $value;
+            } else {
+                $output[$key] = $value;
+            }
+        }
+        return $output;
+    }
+    
     ###############################################
 
     public function find($id) {
