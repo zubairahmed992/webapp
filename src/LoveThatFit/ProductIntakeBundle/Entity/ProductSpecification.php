@@ -70,6 +70,11 @@ class ProductSpecification {
     */
     protected $status;
     
+       /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $spec_file_name;
+    
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -282,6 +287,28 @@ class ProductSpecification {
     public function getStatus() {
         return $this->status;
     }
+    
+    #----------------------------------------
+    /**
+     * Set spec_file_name
+     *
+     * @param string $spec_file_name
+     * @return ProductSpecificationMapping
+     */
+
+    public function setSpecFileName($file_name) {
+        $this->spec_file_name = $file_name;
+        return $this;
+    }
+
+    /**
+     * Get spec_file_name
+     *
+     * @return string 
+     */
+    public function geSpecFileName() {
+        return $this->spec_file_name;
+    }
 #--------------------------------------------------------
     /**
      * Set created_at
@@ -370,6 +397,47 @@ class ProductSpecification {
                         $stretch[$title] = array_key_exists($title, $fp_stretch)?$fp_stretch[$title]:'';
         }
         return $stretch;
+    }
+    
+      //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->spec_file_name = uniqid() . '.' . $ext;
+        $this->file->move(
+                $this->getUploadRootDir(), $this->spec_file_name
+        );
+    }
+
+    //---------------------------------------------------
+
+    public function getAbsolutePath() {      
+        return null === $this->spec_file_name ? null : $this->getUploadRootDir() . '/' . $this->spec_file_name;
+    }
+
+    //---------------------------------------------------
+    public function getWebPath() {
+        return null === $this->spec_file_name ? null : $this->getUploadDir() . '/' . $this->spec_file_name;
+    }
+
+    //---------------------------------------------------
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    //---------------------------------------------------
+    protected function getUploadDir() {
+        $directory_path = 'uploads/ltf/products/product_spec_csv';
+        if (!file_exists($directory_path)) {
+            mkdir($directory_path, 0777, true);
+        }
+        return $directory_path;
     }
     
 }

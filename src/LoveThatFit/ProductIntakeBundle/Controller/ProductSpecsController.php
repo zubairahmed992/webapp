@@ -1,15 +1,12 @@
 <?php
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
-use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
+
 use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use LoveThatFit\AdminBundle\Entity\ProductSize;
-use LoveThatFit\AdminBundle\Entity\ProductColor;
-use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
-use LoveThatFit\AdminBundle\Entity\Product;
+
 
 class ProductSpecsController extends Controller
 {
@@ -222,13 +219,16 @@ class ProductSpecsController extends Controller
                 #$prev_size_key = $size_key;
             }
         }
-        $parsed_data['sizes'] = $ordered_sizes['sizes'];        
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];     
+        $product_spec = new ProductSpecification;
         #---------> Save to DB
-        
         $specs=$this->get('pi.product_specification')->createNew(
                 $product_specs_mapping->getTitle(),
                 $product_specs_mapping->getDescription(),
                 json_encode($parsed_data));
+         $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
+         move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());
+            
         $this->get('session')->setFlash('success', 'New Product specification added!');
         return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specs->getId())));
     }
