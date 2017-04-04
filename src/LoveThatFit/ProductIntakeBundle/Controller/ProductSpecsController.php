@@ -79,8 +79,12 @@ class ProductSpecsController extends Controller
                 ));
     }
     #----------------------- /product_intake/product_specs/delete
-    public function deleteAction($id){                
-        $msg_ar = $this->get('pi.product_specification')->delete($id);             
+    public function deleteAction($id){         
+        $remove_csv_file = $this->get('pi.product_specification')->find($id);
+        if($remove_csv_file->getAbsolutePath()){
+        unlink($remove_csv_file->getAbsolutePath());
+        }
+        $msg_ar = $this->get('pi.product_specification')->delete($id);          
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
