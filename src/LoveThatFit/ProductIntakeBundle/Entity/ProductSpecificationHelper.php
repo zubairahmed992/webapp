@@ -168,7 +168,7 @@ class ProductSpecificationHelper {
     ######################################################################################
     ##################################### Generate #################
     #####################################################################################
-
+/*
     public function generate($specs) {
         $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
         $specs = $this->compute_grade_rule($specs, $fit_model_obj);
@@ -185,7 +185,7 @@ class ProductSpecificationHelper {
         }
         return $specs;
     }
-
+*/
     #-------------------------------------------------------------
 
     private function compute_grade_rule($specs, $fm_obj) {
@@ -412,18 +412,43 @@ class ProductSpecificationHelper {
     }
 
     #------------------->4 Grade Rule
-    public function _generate_specs_for_grade_rule($specs, $target, $value) {
+    public function generate_specs_for_grade_rule($specs, $target, $value) {
         $attrib = $this->break_target_params($target, $value);
         $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
         $specs['fit_model_size_title'] = $fit_model_obj->getSize();
+        
         $pointer = $this->get_fit_model_size_pointer($specs, $attrib['size']);
+        $fit_model_ratio = $this->calculate_fit_model_ratio($specs);
+        #---> reverse order if size is smaller than fit model size
+        $size_keys = $pointer < 0 ? array_reverse(array_keys($specs['sizes'])) : array_keys($specs['sizes']);
+        $target_pointer = false;
+        $prev_size_title = null;
+        #---> grade rule for fit model size
+        $specs['sizes'][$attrib['size']][$attrib['fit_point']]['grade_rule'] = $value;
+        $specs['sizes'][$attrib['size']][$attrib['fit_point']]['grade_rule_stretch'] = $specs['sizes'][$attrib['size']][$attrib['fit_point']]['grade_rule'] + ($specs['sizes'][$attrib['size']][$attrib['fit_point']]['grade_rule'] * $specs['sizes'][$attrib['size']][$attrib['fit_point']]['stretch_percentage'] / 100);
 
-        
-        
+        foreach ($size_keys as $size) {
+            if ($size == $attrib['size'] || $target_pointer == true) { # start calculation from the target size
+                $target_pointer = true;                
+                
+                #---> garment_stretch = garment_dimension +(garment_dimension * stretch_percentage / 100)
+                $specs['sizes'][$size][$attrib['fit_point']]['garment_stretch'] = $specs['sizes'][$size][$attrib['fit_point']]['garment_dimension'] + ($specs['sizes'][$size][$attrib['fit_point']]['garment_dimension'] * $specs['sizes'][$size][$attrib['fit_point']]['stretch_percentage'] / 100);
+                
+                if($pointer>0){#---> garment_dimension = garment_dimension + grade_rule if size is smaller than fit model size
+                    $specs['sizes'][$size][$attrib['fit_point']]['garment_dimension'] = $specs['sizes'][$prev_size_title][$attrib['fit_point']]['garment_dimension'] + $specs['sizes'][$size][$attrib['fit_point']]['grade_rule'];
+                }else{#---> garment_dimension = garment_dimension - grade_rule if size is smaller than fit model size
+                    $specs['sizes'][$size][$attrib['fit_point']]['garment_dimension'] = $specs['sizes'][$prev_size_title][$attrib['fit_point']]['garment_dimension'] - $specs['sizes'][$size][$attrib['fit_point']]['grade_rule'];
+                }
+                
+                #~~~~~~> require to do related calculations for ranges
+                $specs['sizes'][$size][$attrib['fit_point']] = $this->compute_ranges_for_fit_point($specs['sizes'][$size][$attrib['fit_point']], $fit_model_ratio[$attrib['fit_point']]);
+            }
+            $prev_size_title = $size;
+        }
         
         return $specs;
     }    
-    public function generate_specs_for_grade_rule($specs, $target, $value) {
+    public function _generate_specs_for_grade_rule($specs, $target, $value) {
         $attrib = $this->break_target_params($target, $value);
         $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
         $specs['fit_model_size_title'] = $fit_model_obj->getSize();
@@ -546,7 +571,7 @@ class ProductSpecificationHelper {
         return $tracker;
     }
 
-    #------------------------------
+    #----------------------- checks if target size smaller than fit model size
     private function get_fit_model_size_pointer($specs, $target_size) {
         $pointer = -1;
         $size_keys = array_keys($specs['sizes']);
