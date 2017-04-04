@@ -2,7 +2,7 @@
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
 
-
+use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -303,23 +303,25 @@ class ProductSpecsController extends Controller
         ));
     }
     #--------------------- /product_intake/product_specs/compare_upload
-    public function compareUploadAction(Request $request){                
-        $filename = $request->files->get('csv_file');              
-        $pcsv = new ProductCSVDataUploader($filename);
+    public function compareUploadAction(Request $request){  
+        $decoded = $request->request->all();  
+        $filename = $request->files->get('csv_file');     
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);      
+        $filename_data = ($filename == '')? $ps->getAbsolutePath():$filename;        
+        $pcsv = new ProductCSVDataUploader($filename_data);
         $file_data = $pcsv->read();
         #return new response(json_encode($file_data));
-        $decoded = $request->request->all();  
+        
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);         
-        $mix = $this->get('pi.product_specification')->dataMix(json_decode($ps->getSpecsJson(),true), $file_data);
+        $mix = json_decode($ps->getSpecsJson(),true);
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:compare.html.twig', array(
                 'file_data' => $file_data,
                 'parsed_data' => $mix,
                 'product_specification_id' => $ps->getId(),
                 'product_specs_json' => json_encode($gen_specs),                    
-                ));
-        return new response(json_encode($decoded));
+                ));      
     }
     
 }
