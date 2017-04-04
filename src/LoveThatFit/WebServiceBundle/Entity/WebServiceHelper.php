@@ -515,10 +515,120 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
 
     public function productList($user, $list_type = null) {
-        $products = $this->container->get('webservice.repo')->productList($user, $list_type);
+
+
+        $productsList = $this->container->get('webservice.repo')->productList($user, $list_type);
+        if ($list_type == 'favourite') {
+            $products = self::favProductsTypeCastAndAddMissing($productsList, $user->getId());
+        } else {
+            $products = self::checkFavInRecentTry($productsList, $user->getId());
+        }
         return $this->response_array(true, "products list", true, $products);
     }
 #------------------------------------------------------------------------------
+
+    private function favProductsTypeCastAndAddMissing($favProductsHistory, $userID)
+    {
+
+        if (is_array($favProductsHistory) && count($favProductsHistory) > 0) {
+
+
+            //[product_image] => 56703b86226e6.jpg
+            //[price] => 125
+            //calling function that product item price & image
+            $UpdatedProductForFav = array();
+            foreach ($favProductsHistory as $value) {
+
+                //Get Product Item ID
+                $productItemIDExp = explode(',',$value['product_item_id']);
+                $productItemID = current($productItemIDExp);
+                $productID = $value['product_id'];
+
+                //Get Favorite status
+                $productItemFavExp = explode(',',$value['favourite']);
+                $favourite = end($productItemFavExp);
+
+                $productItemPriceImageInfo = $this->container->get('webservice.repo')->getItemPriceAndImage($productID, $productItemID);
+
+                $value['price'] = ($productItemPriceImageInfo) ? $productItemPriceImageInfo[0]['price'] : 0;
+                $value['product_image'] = ($productItemPriceImageInfo) ? $productItemPriceImageInfo[0]['product_image'] : '';
+
+                $value['product_id'] = intval($value['product_id']);
+                $value['retailer_id'] = intval($value['retailer_id']);
+                $value['brand_id'] = intval($value['brand_id']);
+                $value['product_item_id'] = intval($value['product_item_id']);
+                $value['favourite'] = intval($favourite);
+
+                $UpdatedProductForFav[] = $value;
+
+            }
+            $favProductsHistory = array();
+            $favProductsHistory = $UpdatedProductForFav;
+
+        }
+
+
+        return $favProductsHistory;
+
+    }
+    private function checkFavInRecentTry($recentTriedProducts, $userID)
+    {
+
+        if (is_array($recentTriedProducts) && count($recentTriedProducts) > 0) {
+            $product_item_id = array_column($recentTriedProducts, 'product_item_id');
+            $recentTriedItemsID = implode(',', $product_item_id);
+
+            $favItems = $this->container->get('webservice.repo')->getUserItemsLikes($userID, $recentTriedItemsID);
+
+            $faveItemsOrder = self::OrderFaveItemInArray($favItems);
+
+            $UpdatedProductForFav = array();
+            foreach ($recentTriedProducts as $value) {
+
+                if (is_array($faveItemsOrder) && array_key_exists($value['product_id'], $faveItemsOrder)) {
+
+                    if (is_array($faveItemsOrder[$value['product_id']]) && array_key_exists($value['product_item_id'], $faveItemsOrder[$value['product_id']])) {
+                        $value['favourite'] = $faveItemsOrder[$value['product_id']][$value['product_item_id']];
+                    }
+                }
+
+                $value['product_id'] = intval($value['product_id']);
+                $value['retailer_id'] = intval($value['retailer_id']);
+                $value['brand_id'] = intval($value['brand_id']);
+                $value['product_item_id'] = intval($value['product_item_id']);
+
+                $UpdatedProductForFav[] = $value;
+
+            }
+            $recentTriedProducts = array();
+            $recentTriedProducts = $UpdatedProductForFav;
+
+        }
+
+
+        return $recentTriedProducts;
+
+    }
+
+
+    private function OrderFaveItemInArray($favItems = array())
+    {
+        $itemInfoArray = array();
+        if (is_array($favItems) && count($favItems) < 0) {
+            return $itemInfoArray;
+        }
+
+
+        $i=0;
+        foreach ($favItems as $item) {
+            $itemInfoArray[$item['product_id']][] = $item['product_item_id'];
+            $itemInfoArray[$item['product_id']][$item['product_item_id']] = $item['status'];
+
+        }
+
+        return $itemInfoArray;
+    }
+
 
     public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
@@ -610,7 +720,39 @@ class WebServiceHelper {
 
        if ($ra['like'] == 'true') {
          if (count($user->getProductItems()) < 50) {# check limit
-           $default_item = null;
+			if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+				try {
+					if (!is_array($ra['item_id'])) {
+						$p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+						$items = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+						$status = 1;
+                        $page = ($ra['page']!="") ? $ra['page'] : null;
+						$this->container->get('user.helper.user')->makeLike($user, $p, $items, $status, $page);
+
+
+					} else {
+						$p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+						$status = 1;
+                        $page = ($ra['page']!="") ? $ra['page'] : null;
+						foreach ($ra['item_id'] as $items) {
+							$items = $this->container->get('admin.helper.productitem')->find($items);
+							$this->container->get('user.helper.user')->makeLike($user, $p, $items, $status, $page);
+
+						}
+					}
+					return $this->response_array(true, "Updated");
+				} catch (Exception $e) {
+					$this->response_array(false, "Params missing!");
+				}
+			}else{
+                $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+                $default_item = $p->getDefaultItem($user);
+                $status = 1;
+                $page = ($ra['page']!="") ? $ra['page'] : null;
+                $this->container->get('user.helper.user')->makeLike($user, $p, $default_item, $status, $page);
+                return $this->response_array(true, "Updated");
+            }
+           /*$default_item = null;
            if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
              if(!is_array($ra['item_id'])){
                $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
@@ -626,7 +768,7 @@ class WebServiceHelper {
              $default_item = $p->getDefaultItem($user);
              $this->container->get('user.helper.user')->makeLike($user, $default_item);
            }
-           return $this->response_array(true, "Updated");
+           return $this->response_array(true, "Updated");*/
          } else {
            return $this->response_array(false, "Favourite items reached max limit");
          }
@@ -648,6 +790,11 @@ class WebServiceHelper {
                    $user->removeProductItem($pi);
                    $this->container->get('admin.helper.productitem')->save($pi);
                    $this->container->get('user.helper.user')->saveUser($user);
+
+                    $status = 0;
+                    $page = ($ra['page']!="") ? $ra['page'] : null;
+                    $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, $status,$page);
+
                 }
 
              }
@@ -655,15 +802,20 @@ class WebServiceHelper {
 
          }
          if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+             $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
              ##----------items_id array
              foreach ($user->getProductItems() as $pi) {
-               if ($pi->getId() == $ra['item_id']){
-               $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
-               $user->removeProductItem($pi);
-                 $pi->removeUser($user);
-                $this->container->get('user.helper.user')->saveUser($user);
-                 $this->container->get('admin.helper.productitem')->save($pi);
-               }
+                if ($pi->getId() == $ra['item_id']){
+                    $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+                    $user->removeProductItem($pi);
+                    $pi->removeUser($user);
+                    $this->container->get('user.helper.user')->saveUser($user);
+                    $this->container->get('admin.helper.productitem')->save($pi);
+
+                    $status = 0;
+                    $page = ($ra['page']!="") ? $ra['page'] : null;
+                    $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, $status,$page);
+                }
              }
           }
          ###############################################################

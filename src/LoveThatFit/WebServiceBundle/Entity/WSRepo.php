@@ -78,7 +78,177 @@ class WSRepo
     }
 
 #-------------------------------------------------------------------
+    public function getUserItemsLikes($user_id, $item_list = null)
+    {
+        $userFavHistoryTableName = $this->em->getClassMetadata('LoveThatFitSiteBundle:UserItemFavHistory')->getTableName();
+
+
+        try {
+           // $sql = "SELECT * from $userFavHistoryTableName WHERE user_id = $user_id AND product_item_id IN ($item_list)";
+
+
+            $sql = "SELECT
+                user_id,product_id,product_item_id,
+                SUBSTRING_INDEX(GROUP_CONCAT(status), ',', -1) AS status
+                FROM $userFavHistoryTableName
+                WHERE user_id = :user_id 
+                AND product_item_id IN ($item_list)
+                GROUP BY product_item_id;
+                ";
+
+            $params['user_id'] = $user_id;
+            //$em = $this->em->getManager();
+            $fav = $this->em->getConnection()->prepare($sql);
+            $fav->execute($params);
+            $favItems = $fav->fetchAll();
+
+            return $favItems;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     public function productList($user, $list_type = null)
+    {
+        switch ($list_type) {
+
+            case 'recent':
+
+                $productTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:Product')->getTableName();
+                $userItemTryHistoryTableName = $this->em->getClassMetadata('LoveThatFitSiteBundle:UserItemTryHistory')->getTableName();
+                $brandTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:Brand')->getTableName();
+                $retailerTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:Retailer')->getTableName();
+                $productItemTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:ProductItem')->getTableName();
+                $productColorTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:ProductColor')->getTableName();
+                $clothingTypeTableName = $this->em->getClassMetadata('LoveThatFitAdminBundle:ClothingType')->getTableName();
+                $userTableName = $this->em->getClassMetadata('LoveThatFitUserBundle:User')->getTableName();
+                $userFavHistoryTableName = $this->em->getClassMetadata('LoveThatFitSiteBundle:UserItemFavHistory')->getTableName();
+
+                //Added Custom Query due the In valid response by the entity joins.
+                $sql = "SELECT 
+                       product.id                       AS product_id, 
+                       product.NAME                     AS name, 
+                       product.description              AS description, 
+                       clothing_type.target             AS target, 
+                       clothing_type.NAME               AS clothing_type, 
+                       product_color.image              AS product_image, 
+                       ltf_retailer.id                  AS retailer_id, 
+                       ltf_retailer.title               AS retailer_title, 
+                       brand.id                         AS brand_id, 
+                       brand.NAME                       AS brand_name, 
+                       COALESCE(product_item.price, 0)  AS price, 
+                       product_item.id                  AS product_item_id, 
+                       CASE 
+                         WHEN ( ltf_users.id IS NULL ) THEN '-1' 
+                         ELSE '-1' 
+                       END                               AS favourite 
+                       FROM   $productTableName product 
+                       INNER JOIN $brandTableName brand 
+                               ON product.brand_id = brand.id 
+                       LEFT JOIN $retailerTableName ltf_retailer 
+                              ON product.retailer_id = ltf_retailer.id 
+                       INNER JOIN $userItemTryHistoryTableName useritemtryhistory 
+                               ON product.id = useritemtryhistory.product_id 
+                       INNER JOIN $productItemTableName product_item 
+                               ON useritemtryhistory.product_item_id = product_item.id 
+                       INNER JOIN $productColorTableName product_color 
+                               ON product_item.product_color_id = product_color.id 
+                       INNER JOIN $clothingTypeTableName clothing_type 
+                               ON product.clothing_type_id = clothing_type.id                             
+                        LEFT JOIN $userTableName ltf_users 
+                              ON ltf_users.id = useritemtryhistory.user_id 
+                WHERE  ( ltf_users.id IS NULL 
+                          OR ltf_users.id = :user_id ) 
+                       AND useritemtryhistory.user_id = :user_id 
+                       AND product.disabled = 0 
+                       AND product.display_product_color_id <> '' 
+                ORDER  BY useritemtryhistory.updated_at DESC ";
+                $params['user_id'] = $user->getId();
+
+                $stmt = $this->em->getConnection()->prepare($sql);
+                $stmt->execute($params);
+                $dataRecentProducts = $stmt->fetchAll();
+
+                break;
+            case 'favourite':
+            //We have to two fields product_image,price
+                $query = $this->em
+                    ->createQuery("
+            SELECT  p.id product_id, p.name, p.description,
+                    GROUP_CONCAT(pfav.status) as favourite,
+                    ct.target as target,ct.name as clothing_type ,
+                     r.id as retailer_id, r.title as retailer_title, 
+                     GROUP_CONCAT(pfav.productitem) as product_item_id,
+                    b.id as brand_id, b.name as brand_name
+                    
+            FROM LoveThatFitAdminBundle:Product p
+            JOIN p.user_item_fav_history pfav
+
+            JOIN pfav.user u
+            JOIN p.brand b
+            LEFT JOIN p.retailer r
+            JOIN p.clothing_type ct
+            
+            WHERE u.id=:user_id AND p.disabled=0
+            GROUP BY pfav.productitem,pfav.product 
+            ORDER BY p.name"
+                    )->setParameters(array('user_id' => $user->getId()));
+
+
+
+               /* $query = $this->em
+                    ->createQuery("
+            SELECT p.id product_id, p.name, p.description,p.description,
+            ct.target as target,ct.name as clothing_type ,
+            pc.image as product_image,
+            r.id as retailer_id, r.title as retailer_title, 
+            b.id as brand_id, b.name as brand_name,
+            coalesce(pi.price, 0) as price, pi.id as product_item_id,
+            'true' AS favourite
+            FROM LoveThatFitAdminBundle:Product p
+            JOIN p.product_items pi
+            JOIN pi.product_color pc
+            JOIN p.brand b
+            LEFT JOIN p.retailer r
+            JOIN pi.users u
+            JOIN p.clothing_type ct
+            
+            WHERE u.id=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
+            ORDER BY p.name"
+                    )->setParameters(array('user_id' => $user->getId()));*/
+                break;
+            default:
+                #by default it gets the latest 10 records
+                $query = $this->em
+                    ->createQuery("
+            SELECT p.id product_id, p.name, p.description,p.description,
+            ct.target as target,ct.name as clothing_type ,
+            pc.image as product_image,
+            r.id as retailer_id, r.title as retailer_title, 
+            b.id as brand_id, b.name as brand_name,
+            coalesce(pi.price, 0) as price, pi.id as product_item_id,
+            'false' AS favourite
+            FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.displayProductColor pc            
+            JOIN p.brand b
+            JOIN p.product_items pi
+            LEFT JOIN p.retailer r
+            JOIN p.clothing_type ct
+            
+            WHERE p.gender=:gender AND p.disabled=0 AND p.displayProductColor!=''  
+            GROUP BY p.id 
+            ORDER BY p.id DESC"
+                    )->setParameters(array('gender' => $user->getGender()))->setMaxResults(10);
+                break;
+        };
+        try {
+            return ($list_type == 'recent') ? $dataRecentProducts : $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+	
+	
+	/*public function productList($user, $list_type = null)
     {
         switch ($list_type) {
 
@@ -199,8 +369,7 @@ class WSRepo
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-    }
-
+    }*/
 #--------------------------------------------------------------
     public function productDetail($id, $user)
     {
@@ -229,7 +398,28 @@ class WSRepo
 
     }
 
+
 ############################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #################################################################
 
     public function findUser($id)
