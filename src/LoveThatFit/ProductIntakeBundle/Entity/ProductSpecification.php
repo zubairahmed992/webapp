@@ -427,7 +427,7 @@ class ProductSpecification {
 
     //---------------------------------------------------
     public function getWebPath() {
-        return null === $this->spec_file_name ? null : $this->getUploadDir() . '/' . $this->spec_file_name;
+       return null === $this->spec_file_name ? null : $_SERVER['HTTP_HOST'].'/../../../../'.$this->getUploadDir() . '/' . $this->spec_file_name;
     }
 
     //---------------------------------------------------
