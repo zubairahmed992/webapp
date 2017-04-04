@@ -659,7 +659,7 @@ class WebServiceHelper {
             if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
                 ##----------items_id array
                 foreach ($user->getProductItems() as $pi) {
-                    if ($pi->getId() == $ra['item_id']){
+                    if ($pi->getId() == $ra['item_id'] ){
                         $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
                         $user->removeProductItem($pi);
                         $pi->removeUser($user);
@@ -667,6 +667,20 @@ class WebServiceHelper {
                         $this->container->get('admin.helper.productitem')->save($pi);
                         $p = $pi->getProduct();
                         $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
+                    }
+                    elseif (is_array($ra['item_id'] ) && (count($ra['item_id']) > 0)){
+                        foreach($ra['item_id'] as $pi_aray){
+                            if ($pi->getId() ==$pi_aray ){
+                                $pi = $this->container->get('admin.helper.productitem')->find($pi_aray);
+                                $user->removeProductItem($pi);
+                                $pi->removeUser($user);
+                                $this->container->get('user.helper.user')->saveUser($user);
+                                $this->container->get('admin.helper.productitem')->save($pi);
+                                $p = $pi->getProduct();
+                                $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
+                            }
+
+                        }
                     }
                 }
             }
