@@ -783,7 +783,7 @@ class UserHelper {
          return true;      
   }
   
-	public function makeLike($user, $p, $items, $status,$page)
+	/*public function makeLike($user, $p, $items, $status,$page)
     {
         foreach($user->getProductItems() as $pi){
             if ($pi->getId()==$items->getId()){
@@ -798,9 +798,9 @@ class UserHelper {
         $this->container->get('user.helper.user')->saveUser($user);
         $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $items, $status,$page);
         return true;
-    }
+    }*/
   
-  /*public function makeLike($user, $product_item){
+  public function makeLike($user, $product_item, $status, $page){
 
         foreach($user->getProductItems() as $pi){
             if ($pi->getId()==$product_item->getId()){
@@ -811,8 +811,10 @@ class UserHelper {
         $product_item->addUser($user);
         $this->container->get('admin.helper.productitem')->save($product_item);
         $this->container->get('user.helper.user')->saveUser($user);
+        $p = $product_item->getProduct();
+        $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $product_item, $status,$page);
         return true;
-  }*/
+  }
 
   //Autocomplete method
   #------------------------------------------------------

@@ -45,7 +45,7 @@ class UserItemFavHistory
     /**
      * @var int $status
      *
-     * @ORM\Column(name="status", type="integer", options={"default":1}, length=11)
+     * @ORM\Column(name="status", type="integer", length=11)
      */
     private $status;
 

@@ -61,8 +61,8 @@ class WebServiceHelper {
         if ($user) {
             #$device_type =  array_key_exists('device_type', $request_array)?$request_array['device_type']:null;
             #$data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']); 
-            $data['user'] = $this->user_array($user, $request_array); 
-            
+            $data['user'] = $this->user_array($user, $request_array);
+
             return $this->response_array(true, 'member found', true, $data);
         } else {
             return $this->response_array(false, 'Member not found');
@@ -70,7 +70,7 @@ class WebServiceHelper {
     }
 
     #------------------------ User -----------------------
-     public function registrationWithDefaultValues($request_array) {
+    public function registrationWithDefaultValues($request_array) {
 
         if (!array_key_exists('email', $request_array)) {
             return $this->response_array(false, 'Email Not provided.');
@@ -84,7 +84,7 @@ class WebServiceHelper {
             $user = $this->createUserWithParams($request_array);
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
-            
+
             $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
 
             ##email not send if the event is available against user
@@ -92,29 +92,29 @@ class WebServiceHelper {
                 #---- 2) send registration email ....
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
             }
-            
+
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
-            $detail_array = $this->user_array($user, $request_array); 
-            
+            $detail_array = $this->user_array($user, $request_array);
+
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
         }
     }
- #------------------------ User -----------------------
+    #------------------------ User -----------------------
 
     public function userAdminList() {
         $users = $this->container->get('webservice.repo')->userAdminList();
         return $this->response_array(true, 'measurement updated', true, array('user' => $users));
     }
-  #------------------------ measurementUpdate -----------------------
+    #------------------------ measurementUpdate -----------------------
 
     public function measurementUpdate($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $user->getMeasurement();
         $base_path=$ra['base_path'];
-        if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {            
+        if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {
             if(array_key_exists('base_path', $ra)) unset($ra['base_path']);
             if(array_key_exists('email', $ra)) unset($ra['email']);
             if(array_key_exists('auth_token', $ra)) unset($ra['auth_token']);
@@ -123,7 +123,7 @@ class WebServiceHelper {
         } else {
             $measurement = $this->setUserMeasurementWithParams($ra, $user);
         }
-         $ar['actual_user'] = $ra;
+        $ar['actual_user'] = $ra;
         $measurement->setMeasurementJson(json_encode($ar));
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         #return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
@@ -132,7 +132,7 @@ class WebServiceHelper {
     #-------------------------------------------------------
     public function updateProfile($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
-         if ($user) {
+        if ($user) {
             $user = $this->setUserWithParams($user, $ra);
             $this->container->get('user.helper.user')->saveUser($user);
             return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true,$ra['base_path'])));
@@ -144,7 +144,7 @@ class WebServiceHelper {
     #-------------------------------------------------------
 
     private function createUserWithParams($request_array) {
-        
+
         $user=$this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
         $user->setPassword($request_array['password']);
         $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
@@ -163,9 +163,9 @@ class WebServiceHelper {
         array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) :  null;
         array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) :  null;
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)){
-          $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;  
-        } 
-        
+            $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;
+        }
+
         #this dob line will be removed with the new build
         $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
         array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) :  null;
@@ -187,7 +187,7 @@ class WebServiceHelper {
     #-------------------------------------------------------
     public function setUserMeasurementWithParams($request_array, $user) {
         $measurement = $user->getMeasurement();
-        
+
         if (!$measurement) {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
@@ -195,30 +195,30 @@ class WebServiceHelper {
         if (!is_array($request_array)){
             return $measurement;
         }
-        
-        array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';        
+
+        array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';
         if (array_key_exists('bra_size', $request_array)) {
-            
-            $str=str_replace(' ', '', $request_array['bra_size']);        
+
+            $str=str_replace(' ', '', $request_array['bra_size']);
             preg_match_all('/^(\d+)(\w+)$/', $str, $bra_cup);
-            $b_size=trim($bra_cup[1][0]." ".$bra_cup[2][0]);            
+            $b_size=trim($bra_cup[1][0]." ".$bra_cup[2][0]);
             $measurement->setBraSize($b_size);
-            
+
             #if bust measurement is manually provided, it will still prefers the value
             #calculated from bra-size
             $this->setBraRelatedMeasurements($measurement);
         }
-        
+
         #shoulder_across_back value if manually provided will be prefered over
         #value calculated from bra-size
         array_key_exists('shoulder_across_back', $request_array) ? $measurement->setShoulderAcrossBack($request_array['shoulder_across_back']) : '';
         array_key_exists('shoulder_across_front', $request_array) ? $measurement->setShoulderAcrossFront($request_array['shoulder_across_front']) : '';
-        
+
         array_key_exists('body_type', $request_array) ? $measurement->setBodyTypes($request_array['body_type']) : '';
         array_key_exists('body_shape', $request_array) ? $measurement->setBodyShape($request_array['body_shape']) : '';
         array_key_exists('weight', $request_array) ? $measurement->setWeight($request_array['weight']) : '';
         array_key_exists('height', $request_array) ? $measurement->setHeight($request_array['height']) : '';
-        array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';        
+        array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';
         array_key_exists('center_front_waist', $request_array) ? $measurement->setCenterFrontWaist($request_array['center_front_waist']) : '';
         array_key_exists('back_waist', $request_array) ? $measurement->setBackWaist($request_array['back_waist']) : '';
         array_key_exists('chest', $request_array) ? $measurement->setChest($request_array['chest']) : '';
@@ -238,7 +238,7 @@ class WebServiceHelper {
         array_key_exists('calf', $request_array) ? $measurement->setCalf($request_array['calf']) : '';
         array_key_exists('ankle', $request_array) ? $measurement->setAnkle($request_array['ankle']) : '';
         array_key_exists('iphone_foot_height', $request_array) ? $measurement->setIphoneFootHeight($request_array['iphone_foot_height']) : '';
-        
+
         array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
         array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
         array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
@@ -249,11 +249,11 @@ class WebServiceHelper {
         $device_config['image_device_model'] = $user->extractImageDeviceModel();
         #$device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($device_config['image_device_model'],$user_device_model);
         $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'],$user_device_model);
-        
+
         if(is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)){
             $measurement->calculatePlacementPositions($device_config['conversion_ratio'] );
         }
-        
+
         #$ar = json_decode($measurement->getMeasurementJson());
         #$ar['manual'] = $measurement->getArray();
         #$measurement->setMeasurementJson(json_encode($ar));
@@ -296,7 +296,7 @@ class WebServiceHelper {
 
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
-                
+
                 if(array_key_exists('device_model', $ra)){
                     $user->setImageDeviceModel($ra['device_model']);
                 }
@@ -325,24 +325,24 @@ class WebServiceHelper {
 
                 #______________________________________> upload_pending
             } elseif ($ra['upload_type'] == 'fitting_room_pending') {
-                    $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
-                    $user_archive->setImage(uniqid().'.'.$ext);                                        
-                    
-                    if (move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath('original'))) {                                                                
-                        $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
-                        $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
-                        $parsed_array = $this->parse_request_for_archive($ra);
-                        $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);                    
+                $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
+                $user_archive->setImage(uniqid().'.'.$ext);
 
-                        $user->setStatus(-1);                    
-                   } else {
-                       return $this->response_array(false, 'Image not uploaded');
-                   }                   
+                if (move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath('original'))) {
+                    $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
+                    $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
+                    $parsed_array = $this->parse_request_for_archive($ra);
+                    $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
+
+                    $user->setStatus(-1);
+                } else {
+                    return $this->response_array(false, 'Image not uploaded');
+                }
             } elseif ($ra['upload_type'] == 'fitting_room_back' || $ra['upload_type'] == 'fitting_room_side') {
-                    $user_archive = $this->container->get('user.helper.userarchives')->getPendingArchive($user->getId());
-                    if (!move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath(substr($ra['upload_type'], 13)))) {                                                                
-                        return $this->response_array(false, 'Image not uploaded');
-                   }                       
+                $user_archive = $this->container->get('user.helper.userarchives')->getPendingArchive($user->getId());
+                if (!move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath(substr($ra['upload_type'], 13)))) {
+                    return $this->response_array(false, 'Image not uploaded');
+                }
                 #______________________________________> Avatar
             } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);
@@ -365,14 +365,14 @@ class WebServiceHelper {
             $userinfo = array();
             #$userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
             $userinfo['user'] = $this->user_array($user, $ra);
-            
+
             return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
         } else {
             return $this->response_array(false, 'member not found');
         }
     }
     private function save_user_image(){
-        
+
     }
     #----------------------------------------------------------------------------------------
 
@@ -393,66 +393,66 @@ class WebServiceHelper {
         );
         return $arr;
     }
- #----------------------------------------------------------------------------------------    
+    #----------------------------------------------------------------------------------------
 
-  public function uploadUserfile($user, $ra, $files) {
-	if ($user) {
-	  #----get file name & create dir
-	  $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
-	  $file = 'logs.txt';
-	  if (!is_dir($user->getUploadRootDir())) {
-		@mkdir($user->getUploadRootDir(), 0700);
-	  }
-	  if ($ext == 'txt') {
-		$path = $user->getUploadRootDir();
-		if (file_exists($path."/".$file)) {
-		  // Open the file to get existing content
-		  $current = file_get_contents($path."/".$file);
-		  // store file content as a string in $str
-		  $current.="\n\n-------------------------------------------------------------".date("Y-m-d")."-----".$ra["device_type"]."------------------------------\n\n";
-		  $current.= "\n".file_get_contents($files["file"]["tmp_name"]);
-		  file_put_contents($path."/".$file, $current);
-		  //method will call here which will update the db log table
-		  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
-		  return $this->response_array(false, 'File uploaded Successfully');
-		} else {
-		  $current= file_get_contents($files["file"]["tmp_name"]);
-		  file_put_contents($path."/".$file,$current);
-		  //method will call here which will update the db log table
-		  $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
-		  return $this->response_array(false, 'File uploaded Successfully');
-		}
+    public function uploadUserfile($user, $ra, $files) {
+        if ($user) {
+            #----get file name & create dir
+            $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
+            $file = 'logs.txt';
+            if (!is_dir($user->getUploadRootDir())) {
+                @mkdir($user->getUploadRootDir(), 0700);
+            }
+            if ($ext == 'txt') {
+                $path = $user->getUploadRootDir();
+                if (file_exists($path."/".$file)) {
+                    // Open the file to get existing content
+                    $current = file_get_contents($path."/".$file);
+                    // store file content as a string in $str
+                    $current.="\n\n-------------------------------------------------------------".date("Y-m-d")."-----".$ra["device_type"]."------------------------------\n\n";
+                    $current.= "\n".file_get_contents($files["file"]["tmp_name"]);
+                    file_put_contents($path."/".$file, $current);
+                    //method will call here which will update the db log table
+                    $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
+                    return $this->response_array(false, 'File uploaded Successfully');
+                } else {
+                    $current= file_get_contents($files["file"]["tmp_name"]);
+                    file_put_contents($path."/".$file,$current);
+                    //method will call here which will update the db log table
+                    $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
+                    return $this->response_array(false, 'File uploaded Successfully');
+                }
 
-		} else {
-		  return $this->response_array(false, 'Invalid file uploaded');
-		}
+            } else {
+                return $this->response_array(false, 'Invalid file uploaded');
+            }
 
-	  }
+        }
 
-  }
+    }
     #-------------------------------------------------------------
-     public function changePassword($ra) {
-         $user = $this->findUserByAuthToken($ra['auth_token']);
-         
-         if ($user) {
-             if(array_key_exists('password', $ra)){
-                 if($this->container->get('user.helper.user')->matchPassword($user, $ra['password'])){
-                     if(array_key_exists('new_password', $ra)){
-                         $user->setPassword($ra['new_password']);
-                         $user=$this->container->get('user.helper.user')->getPasswordEncoded($user);
-                         $this->container->get('user.helper.user')->saveUser($user);
-                         return $this->response_array(true, 'Password saved');
-                     }
-                     return $this->response_array(false, 'new password not provided');
-                 }else{
-                     return $this->response_array(false, 'password did not match');
-                 }
-                 return $this->response_array(false, 'old password not provided');
-             }
+    public function changePassword($ra) {
+        $user = $this->findUserByAuthToken($ra['auth_token']);
+
+        if ($user) {
+            if(array_key_exists('password', $ra)){
+                if($this->container->get('user.helper.user')->matchPassword($user, $ra['password'])){
+                    if(array_key_exists('new_password', $ra)){
+                        $user->setPassword($ra['new_password']);
+                        $user=$this->container->get('user.helper.user')->getPasswordEncoded($user);
+                        $this->container->get('user.helper.user')->saveUser($user);
+                        return $this->response_array(true, 'Password saved');
+                    }
+                    return $this->response_array(false, 'new password not provided');
+                }else{
+                    return $this->response_array(false, 'password did not match');
+                }
+                return $this->response_array(false, 'old password not provided');
+            }
         } else {
             return $this->response_array(false, 'Member not found');
         }
-     }
+    }
 #-------------------------------------------------------------
     public function forgotPasswordUpdate($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);
@@ -470,20 +470,20 @@ class WebServiceHelper {
             return $this->response_array(false, 'Member not found');
         }
     }
-    
+
 #--------------------------------------------------------------------    
- public function matchAlternateToken($ra){
+    public function matchAlternateToken($ra){
         if (!array_key_exists('auth_token', $ra)){
-                 return $this->response_array(false, 'Authentication token parameter not provided');
-         }
+            return $this->response_array(false, 'Authentication token parameter not provided');
+        }
         $user = $this->findUserByAuthToken($ra['auth_token']);
         if (count($user) > 0) {
             return $this->response_array(true, 'User Authenticated');
         } else {
             return $this->response_array(false, 'Authentication Failure');
-        };   
-   return $user;
-  }
+        };
+        return $user;
+    }
 #--------------------------------------------------------------------
 
     public function processRequest($request) {
@@ -515,126 +515,16 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
 
     public function productList($user, $list_type = null) {
-
-
-        $productsList = $this->container->get('webservice.repo')->productList($user, $list_type);
-        if ($list_type == 'favourite') {
-            $products = self::favProductsTypeCastAndAddMissing($productsList, $user->getId());
-        } else {
-            $products = self::checkFavInRecentTry($productsList, $user->getId());
-        }
+        $products = $this->container->get('webservice.repo')->productList($user, $list_type);
         return $this->response_array(true, "products list", true, $products);
     }
 #------------------------------------------------------------------------------
 
-    private function favProductsTypeCastAndAddMissing($favProductsHistory, $userID)
-    {
-
-        if (is_array($favProductsHistory) && count($favProductsHistory) > 0) {
-
-
-            //[product_image] => 56703b86226e6.jpg
-            //[price] => 125
-            //calling function that product item price & image
-            $UpdatedProductForFav = array();
-            foreach ($favProductsHistory as $value) {
-
-                //Get Product Item ID
-                $productItemIDExp = explode(',',$value['product_item_id']);
-                $productItemID = current($productItemIDExp);
-                $productID = $value['product_id'];
-
-                //Get Favorite status
-                $productItemFavExp = explode(',',$value['favourite']);
-                $favourite = end($productItemFavExp);
-
-                $productItemPriceImageInfo = $this->container->get('webservice.repo')->getItemPriceAndImage($productID, $productItemID);
-
-                $value['price'] = ($productItemPriceImageInfo) ? $productItemPriceImageInfo[0]['price'] : 0;
-                $value['product_image'] = ($productItemPriceImageInfo) ? $productItemPriceImageInfo[0]['product_image'] : '';
-
-                $value['product_id'] = intval($value['product_id']);
-                $value['retailer_id'] = intval($value['retailer_id']);
-                $value['brand_id'] = intval($value['brand_id']);
-                $value['product_item_id'] = intval($value['product_item_id']);
-                $value['favourite'] = intval($favourite);
-
-                $UpdatedProductForFav[] = $value;
-
-            }
-            $favProductsHistory = array();
-            $favProductsHistory = $UpdatedProductForFav;
-
-        }
-
-
-        return $favProductsHistory;
-
-    }
-    private function checkFavInRecentTry($recentTriedProducts, $userID)
-    {
-
-        if (is_array($recentTriedProducts) && count($recentTriedProducts) > 0) {
-            $product_item_id = array_column($recentTriedProducts, 'product_item_id');
-            $recentTriedItemsID = implode(',', $product_item_id);
-
-            $favItems = $this->container->get('webservice.repo')->getUserItemsLikes($userID, $recentTriedItemsID);
-
-            $faveItemsOrder = self::OrderFaveItemInArray($favItems);
-
-            $UpdatedProductForFav = array();
-            foreach ($recentTriedProducts as $value) {
-
-                if (is_array($faveItemsOrder) && array_key_exists($value['product_id'], $faveItemsOrder)) {
-
-                    if (is_array($faveItemsOrder[$value['product_id']]) && array_key_exists($value['product_item_id'], $faveItemsOrder[$value['product_id']])) {
-                        $value['favourite'] = $faveItemsOrder[$value['product_id']][$value['product_item_id']];
-                    }
-                }
-
-                $value['product_id'] = intval($value['product_id']);
-                $value['retailer_id'] = intval($value['retailer_id']);
-                $value['brand_id'] = intval($value['brand_id']);
-                $value['product_item_id'] = intval($value['product_item_id']);
-
-                $UpdatedProductForFav[] = $value;
-
-            }
-            $recentTriedProducts = array();
-            $recentTriedProducts = $UpdatedProductForFav;
-
-        }
-
-
-        return $recentTriedProducts;
-
-    }
-
-
-    private function OrderFaveItemInArray($favItems = array())
-    {
-        $itemInfoArray = array();
-        if (is_array($favItems) && count($favItems) < 0) {
-            return $itemInfoArray;
-        }
-
-
-        $i=0;
-        foreach ($favItems as $item) {
-            $itemInfoArray[$item['product_id']][] = $item['product_item_id'];
-            $itemInfoArray[$item['product_id']][$item['product_item_id']] = $item['status'];
-
-        }
-
-        return $itemInfoArray;
-    }
-
-
     public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         $p = array();
-        $default_color_id = $product->getDisplayProductColor()->getId();         
-        foreach ($product->getProductColors() as $pc) {            
+        $default_color_id = $product->getDisplayProductColor()->getId();
+        foreach ($product->getProductColors() as $pc) {
             $p['colors'][$pc->getTitle()] = array(
                 'color_id' => $pc->getId(),
                 'product_id' => $product->getId(),
@@ -663,7 +553,7 @@ class WebServiceHelper {
                 on product detail service
             */
             if ($pi->getProductSize()->getDisabled() != 1) {
-                
+
                 $ps_id = $pi->getProductSize()->getId();
                 # get the highest price of all the items/color for a particular size
                 $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
@@ -694,7 +584,7 @@ class WebServiceHelper {
                     'price' => $pi->getPrice()?$pi->getPrice():0,
                     'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 );
-             
+
                 if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
                     $recommended_product_item = $pi;
                 }
@@ -707,156 +597,119 @@ class WebServiceHelper {
         return $this->response_array(true, "Product Detail ", true, $p);
     }
 
-	
+
 
     #------------------------------------------------------------------------------
 
-     public function userLikedProductIds($user) {
+    public function userLikedProductIds($user) {
         $product_ids = $this->container->get('webservice.repo')->userLikedProductIds($user);
-        return $this->response_array(true, "favourite product ids", true, $product_ids);        
+        return $this->response_array(true, "favourite product ids", true, $product_ids);
     }
     #------------------------------------------------------------------------------
-     public function likeUnlikeItem($user, $ra) {
+    public function likeUnlikeItem($user, $ra) {
 
-       if ($ra['like'] == 'true') {
-         if (count($user->getProductItems()) < 50) {# check limit
-			if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
-				try {
-					if (!is_array($ra['item_id'])) {
-						$p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-						$items = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
-						$status = 1;
-                        $page = ($ra['page']!="") ? $ra['page'] : null;
-						$this->container->get('user.helper.user')->makeLike($user, $p, $items, $status, $page);
-
-
-					} else {
-						$p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-						$status = 1;
-                        $page = ($ra['page']!="") ? $ra['page'] : null;
-						foreach ($ra['item_id'] as $items) {
-							$items = $this->container->get('admin.helper.productitem')->find($items);
-							$this->container->get('user.helper.user')->makeLike($user, $p, $items, $status, $page);
-
-						}
-					}
-					return $this->response_array(true, "Updated");
-				} catch (Exception $e) {
-					$this->response_array(false, "Params missing!");
-				}
-			}else{
-                $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-                $default_item = $p->getDefaultItem($user);
-                $status = 1;
-                $page = ($ra['page']!="") ? $ra['page'] : null;
-                $this->container->get('user.helper.user')->makeLike($user, $p, $default_item, $status, $page);
+        $page = ($ra['page']!="") ? $ra['page'] : null;
+        if ($ra['like'] == 'true') {
+            if (count($user->getProductItems()) < 50) {# check limit
+                $default_item = null;
+                if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+                    if(!is_array($ra['item_id'])){
+                        $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+                        $this->container->get('user.helper.user')->makeLike($user, $default_item, 1, $page);
+                    }else{
+                        foreach($ra['item_id'] as $items){
+                            $default_item = $this->container->get('admin.helper.productitem')->find($items);
+                            $this->container->get('user.helper.user')->makeLike($user, $default_item, 1, $page);
+                        }
+                    }
+                }else{
+                    $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+                    $default_item = $p->getDefaultItem($user);
+                    $this->container->get('user.helper.user')->makeLike($user, $default_item, 1, $page);
+                }
                 return $this->response_array(true, "Updated");
+            } else {
+                return $this->response_array(false, "Favourite items reached max limit");
             }
-           /*$default_item = null;
-           if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
-             if(!is_array($ra['item_id'])){
-               $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
-               $this->container->get('user.helper.user')->makeLike($user, $default_item);
-             }else{
-               foreach($ra['item_id'] as $items){
-                 $default_item = $this->container->get('admin.helper.productitem')->find($items);
-                 $this->container->get('user.helper.user')->makeLike($user, $default_item);
-               }
-             }
-           }else{
-             $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-             $default_item = $p->getDefaultItem($user);
-             $this->container->get('user.helper.user')->makeLike($user, $default_item);
-           }
-           return $this->response_array(true, "Updated");*/
-         } else {
-           return $this->response_array(false, "Favourite items reached max limit");
-         }
-       }else{
+        }else{
 
-         ##-------- product_id
-         if (array_key_exists('product_id', $ra) && $ra['product_id'] != null) {
-           $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-           foreach ($user->getProductItems() as $pi) {
-             if ($pi->getProduct()->getId() == $p->getId()) {
+            ##-------- product_id
+            if (array_key_exists('product_id', $ra) && $ra['product_id'] != null) {
+                $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+                foreach ($user->getProductItems() as $pi) {
+                    if ($pi->getProduct()->getId() == $p->getId()) {
 
-                $itemID = $pi->getID();
-                if(
-                    (is_array($ra['item_id']) && in_array($itemID, $ra['item_id']))
-                    || (isset($ra['item_id']) && is_numeric(intval($ra['item_id'])) && $ra['item_id'] == $itemID)
-                    ){
-                  #remove specific items of the same product
-                   $pi->removeUser($user);
-                   $user->removeProductItem($pi);
-                   $this->container->get('admin.helper.productitem')->save($pi);
-                   $this->container->get('user.helper.user')->saveUser($user);
+                        $itemID = $pi->getID();
+                        if(
+                            (is_array($ra['item_id']) && in_array($itemID, $ra['item_id']))
+                            || (isset($ra['item_id']) && is_numeric(intval($ra['item_id'])) && $ra['item_id'] == $itemID)
+                        ){
+                            #remove specific items of the same product
+                            $pi->removeUser($user);
+                            $user->removeProductItem($pi);
+                            $this->container->get('admin.helper.productitem')->save($pi);
+                            $this->container->get('user.helper.user')->saveUser($user);
+                            $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
+                        }
 
-                    $status = 0;
-                    $page = ($ra['page']!="") ? $ra['page'] : null;
-                    $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, $status,$page);
-
+                    }
                 }
 
-             }
-           }
-
-         }
-         if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
-             $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-             ##----------items_id array
-             foreach ($user->getProductItems() as $pi) {
-                if ($pi->getId() == $ra['item_id']){
-                    $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
-                    $user->removeProductItem($pi);
-                    $pi->removeUser($user);
-                    $this->container->get('user.helper.user')->saveUser($user);
-                    $this->container->get('admin.helper.productitem')->save($pi);
-
-                    $status = 0;
-                    $page = ($ra['page']!="") ? $ra['page'] : null;
-                    $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, $status,$page);
+            }
+            if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
+                ##----------items_id array
+                foreach ($user->getProductItems() as $pi) {
+                    if ($pi->getId() == $ra['item_id']){
+                        $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+                        $user->removeProductItem($pi);
+                        $pi->removeUser($user);
+                        $this->container->get('user.helper.user')->saveUser($user);
+                        $this->container->get('admin.helper.productitem')->save($pi);
+                        $p = $pi->getProduct();
+                        $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
+                    }
                 }
-             }
-          }
-         ###############################################################
-         ########################################################
-         return $this->response_array(true, "Item removed");
-       }
+            }
+            ###############################################################
+            ########################################################
+            return $this->response_array(true, "Item removed");
 
-
-     }
-
-  #------------------------------------------------------------------------------
-  public function __likeUnlikeItem($user, $ra) {
-    if ($ra['like'] == 'true') {
-      if (count($user->getProductItems()) < 50) {# check limit
-        $default_item = null;
-        if (array_key_exists('item_id', $ra) && $ra['item_id'] != null && !is_array($ra['item_id'])) {
-          $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
-        }
-        if(array_key_exists('item_id', $ra) && $ra['item_id'] != null && is_array($ra['item_id'])){
-          foreach($ra['item_id'] as $items){
-            $default_item = $this->container->get('admin.helper.productitem')->find($items["item_id"]);
-            $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
-          }
-        }
-        if (!$default_item) {
-          $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-          $default_item = $p->getDefaultItem($user);
         }
 
-        $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
-        return $this->response_array(true, "Updated");
-      } else {
-        return $this->response_array(false, "Favourite items reached max limit");
-      }
+
     }
-  }
-     public function _likeUnlikeItem($user, $ra) {
-         #$default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
-         #$this->container->get('user.helper.user')->makeFavourite($user, $default_item);
-         
-         
+
+    #------------------------------------------------------------------------------
+    public function __likeUnlikeItem($user, $ra) {
+        if ($ra['like'] == 'true') {
+            if (count($user->getProductItems()) < 50) {# check limit
+                $default_item = null;
+                if (array_key_exists('item_id', $ra) && $ra['item_id'] != null && !is_array($ra['item_id'])) {
+                    $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+                }
+                if(array_key_exists('item_id', $ra) && $ra['item_id'] != null && is_array($ra['item_id'])){
+                    foreach($ra['item_id'] as $items){
+                        $default_item = $this->container->get('admin.helper.productitem')->find($items["item_id"]);
+                        $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+                    }
+                }
+                if (!$default_item) {
+                    $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+                    $default_item = $p->getDefaultItem($user);
+                }
+
+                $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+                return $this->response_array(true, "Updated");
+            } else {
+                return $this->response_array(false, "Favourite items reached max limit");
+            }
+        }
+    }
+    public function _likeUnlikeItem($user, $ra) {
+        #$default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
+        #$this->container->get('user.helper.user')->makeFavourite($user, $default_item);
+
+
         if ($ra['like'] == 'true') {
             if (count($user->getProductItems()) < 50) {# check limit
                 $default_item = null;
@@ -867,7 +720,7 @@ class WebServiceHelper {
                     $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
                     $default_item = $p->getDefaultItem($user);
                 }
-              
+
                 $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
                 return $this->response_array(true, "Updated");
             } else {
@@ -876,7 +729,7 @@ class WebServiceHelper {
         } else {
             ###############################################################
             $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-            foreach ($user->getProductItems() as $pi) {                
+            foreach ($user->getProductItems() as $pi) {
                 if ($pi->getProduct()->getId() == $p->getId()) { #remove all items of the same product
                     $pi->removeUser($user);                    # hack for like an item instead of a product 
                     $user->removeProductItem($pi);              # needs to discuss & fix
@@ -894,7 +747,7 @@ class WebServiceHelper {
         if ($p) {
             if ($ra['like'] == 'true') {
                 if (count($user->getProductItems()) < 50) {# check limit
-                   $default_item = $p->getDefaultItem($user);# run algorithm get recommended item
+                    $default_item = $p->getDefaultItem($user);# run algorithm get recommended item
                     if (!$user->isFavouriteItem($default_item)) { # check if already favourite
                         $user->addProductItem($default_item); #make favourite
                         $default_item->addUser($user);
@@ -911,7 +764,7 @@ class WebServiceHelper {
                 #at the backend the item is liked, not the whole product, in device the product is made like
                 //
                 ###############################################################
-                foreach($user->getProductItems() as $pi){ 
+                foreach($user->getProductItems() as $pi){
                     if ($pi->getProduct()->getId()==$p->getId()){ #remove all items of the same product
                         $pi->removeUser($user);                    # hack for like an item instead of a product 
                         $user->removeProductItem($pi);              # needs to discuss & fix
@@ -937,15 +790,15 @@ class WebServiceHelper {
             return $this->response_array(false, 'Size Charts not found');
         }
     }
-    
-  #feedback service
-  #------------------------ User -----------------------
 
-  public function feedbackService($user,$content) {
-	$this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
-  }
-  
-	#end feedback service
+    #feedback service
+    #------------------------ User -----------------------
+
+    public function feedbackService($user,$content) {
+        $this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
+    }
+
+    #end feedback service
     public function getProductListByCategoryBanner($gender,array $id, $user_id) {
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         foreach($productlist as $key=>$product){
@@ -974,8 +827,8 @@ class WebServiceHelper {
             }
         }
         return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist));
-  	
-  }
+
+    }
 
 
 //*********************************************
