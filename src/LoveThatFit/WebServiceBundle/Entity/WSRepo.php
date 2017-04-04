@@ -173,30 +173,6 @@ class WSRepo
             //We have to two fields product_image,price
                 $query = $this->em
                     ->createQuery("
-            SELECT  p.id product_id, p.name, p.description,
-                    GROUP_CONCAT(pfav.status) as favourite,
-                    ct.target as target,ct.name as clothing_type ,
-                     r.id as retailer_id, r.title as retailer_title, 
-                     GROUP_CONCAT(pfav.productitem) as product_item_id,
-                    b.id as brand_id, b.name as brand_name
-                    
-            FROM LoveThatFitAdminBundle:Product p
-            JOIN p.user_item_fav_history pfav
-
-            JOIN pfav.user u
-            JOIN p.brand b
-            LEFT JOIN p.retailer r
-            JOIN p.clothing_type ct
-            
-            WHERE u.id=:user_id AND p.disabled=0
-            GROUP BY pfav.productitem,pfav.product 
-            ORDER BY p.name"
-                    )->setParameters(array('user_id' => $user->getId()));
-
-
-
-               /* $query = $this->em
-                    ->createQuery("
             SELECT p.id product_id, p.name, p.description,p.description,
             ct.target as target,ct.name as clothing_type ,
             pc.image as product_image,
@@ -214,7 +190,7 @@ class WSRepo
             
             WHERE u.id=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
             ORDER BY p.name"
-                    )->setParameters(array('user_id' => $user->getId()));*/
+                    )->setParameters(array('user_id' => $user->getId()));
                 break;
             default:
                 #by default it gets the latest 10 records
