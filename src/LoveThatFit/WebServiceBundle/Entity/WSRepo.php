@@ -107,7 +107,7 @@ class WSRepo
             return null;
         }
     }
-    public function productList($user, $list_type = null)
+    /*public function productList($user, $list_type = null)
     {
         switch ($list_type) {
 
@@ -221,7 +221,7 @@ class WSRepo
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-    }
+    }*/
 	
 	
 	/*public function productList($user, $list_type = null)
