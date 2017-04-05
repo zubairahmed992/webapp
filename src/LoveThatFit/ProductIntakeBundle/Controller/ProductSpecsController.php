@@ -1,23 +1,21 @@
 <?php
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
-use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
+
 use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use LoveThatFit\AdminBundle\Entity\ProductSize;
-use LoveThatFit\AdminBundle\Entity\ProductColor;
-use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
-use LoveThatFit\AdminBundle\Entity\Product;
+
 
 class ProductSpecsController extends Controller
 {
     #----------------------- /product_intake/product_specs/index
     public function indexAction(){
-        $ps = $this->get('pi.product_specification')->findAll();        
+        $ps = $this->get('pi.product_specification')->findAll(); 
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:index.html.twig', array(
-            'specs' => $ps,            
+            'specs' => $ps,  
+             'cs_file'      =>  $this->get('pi.product_specification')->csvDownloads($ps),        
         ));
     }
     
@@ -81,8 +79,12 @@ class ProductSpecsController extends Controller
                 ));
     }
     #----------------------- /product_intake/product_specs/delete
-    public function deleteAction($id){                
-        $msg_ar = $this->get('pi.product_specification')->delete($id);             
+    public function deleteAction($id){         
+        $remove_csv_file = $this->get('pi.product_specification')->find($id);
+        if($remove_csv_file->getAbsolutePath()){
+        unlink($remove_csv_file->getAbsolutePath());
+        }
+        $msg_ar = $this->get('pi.product_specification')->delete($id);          
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
     }
@@ -96,7 +98,11 @@ class ProductSpecsController extends Controller
     
     #----------------------- /product_intake/Prod_specs/update    
     public function updateAction($id){  
-           $output = array();                     
+        $msg_ar = $this->get('pi.product_specification')->updateAndFill($id, $_POST);        
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+        
+        /*   $output = array();                     
         foreach ($_POST as $key => $value){   
             $sizes = explode('-',$key);//[sizes-XS-neck-garment_dimension]
             $array_length =  count($sizes);      
@@ -123,6 +129,8 @@ class ProductSpecsController extends Controller
         $msg_ar = $this->get('pi.product_specification')->update($entity);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));
+         * 
+         */
         
     }
      #------------------------------------- /product_intake/Prod_specs/update_foo 
@@ -222,13 +230,16 @@ class ProductSpecsController extends Controller
                 #$prev_size_key = $size_key;
             }
         }
-        $parsed_data['sizes'] = $ordered_sizes['sizes'];        
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];   
         #---------> Save to DB
-        
         $specs=$this->get('pi.product_specification')->createNew(
                 $product_specs_mapping->getTitle(),
                 $product_specs_mapping->getDescription(),
                 json_encode($parsed_data));
+         $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
+         $this->container->get('pi.product_specification')->save($specs);
+         move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());
+            
         $this->get('session')->setFlash('success', 'New Product specification added!');
         return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specs->getId())));
     }
@@ -296,23 +307,25 @@ class ProductSpecsController extends Controller
         ));
     }
     #--------------------- /product_intake/product_specs/compare_upload
-    public function compareUploadAction(Request $request){                
-        $filename = $request->files->get('csv_file');              
-        $pcsv = new ProductCSVDataUploader($filename);
+    public function compareUploadAction(Request $request){  
+        $decoded = $request->request->all();  
+        $filename = $request->files->get('csv_file');     
+        $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);      
+        $filename_data = ($filename == '')? $ps->getAbsolutePath():$filename;        
+        $pcsv = new ProductCSVDataUploader($filename_data);
         $file_data = $pcsv->read();
         #return new response(json_encode($file_data));
-        $decoded = $request->request->all();  
+        
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($decoded['product_specification_id']);         
-        $mix = $this->get('pi.product_specification')->dataMix(json_decode($ps->getSpecsJson(),true), $file_data);
+        $mix = json_decode($ps->getSpecsJson(),true);
         
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:compare.html.twig', array(
                 'file_data' => $file_data,
                 'parsed_data' => $mix,
                 'product_specification_id' => $ps->getId(),
                 'product_specs_json' => json_encode($gen_specs),                    
-                ));
-        return new response(json_encode($decoded));
+                ));      
     }
     
 }
