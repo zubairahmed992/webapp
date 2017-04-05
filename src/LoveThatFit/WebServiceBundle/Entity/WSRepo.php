@@ -22,7 +22,7 @@ class WSRepo
         if ($date_format) {
             return $this->em
                 ->createQueryBuilder()
-                ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price')
+                ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count')
                 ->from('LoveThatFitAdminBundle:Product', 'p')
                 ->innerJoin('p.displayProductColor', 'pc')
                 ->innerJoin('p.clothing_type', 'ct')
@@ -42,7 +42,7 @@ class WSRepo
 
             return $this->em
                 ->createQueryBuilder()
-                ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price')
+                ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count')
                 ->from('LoveThatFitAdminBundle:Product', 'p')
                 ->innerJoin('p.displayProductColor', 'pc')
                 ->innerJoin('p.clothing_type', 'ct')
@@ -125,8 +125,9 @@ class WSRepo
                 $userTableName = $this->em->getClassMetadata('LoveThatFitUserBundle:User')->getTableName();
 
 
+
                 //Added Custom Query due the In valid response by the entity joins.
-                $sql = "SELECT 
+                $sql = "SELECT
                        product.id                       AS product_id, 
                        product.NAME                     AS name, 
                        product.description              AS description, 
@@ -138,7 +139,8 @@ class WSRepo
                        brand.id                         AS brand_id, 
                        brand.NAME                       AS brand_name, 
                        COALESCE(product_item.price, 0)  AS price, 
-                       product_item.id                  AS product_item_id, 
+                       product_item.id                  AS product_item_id,
+
                        CASE 
                          WHEN ( ltf_users.id IS NULL ) THEN 'false' 
                          ELSE 'false' 
@@ -151,10 +153,10 @@ class WSRepo
                        INNER JOIN $userItemTryHistoryTableName useritemtryhistory 
                                ON product.id = useritemtryhistory.product_id 
                        INNER JOIN $productItemTableName product_item 
-                               ON useritemtryhistory.product_item_id = product_item.id 
-                       INNER JOIN $productColorTableName product_color 
-                               ON product_item.product_color_id = product_color.id 
-                       INNER JOIN $clothingTypeTableName clothing_type 
+                               ON useritemtryhistory.product_item_id = product_item.id
+                       INNER JOIN $productColorTableName product_color
+                               ON product_item.product_color_id = product_color.id
+                       INNER JOIN $clothingTypeTableName clothing_type
                                ON product.clothing_type_id = clothing_type.id 
                                
                 --        LEFT JOIN users_product_items users_product_items 
@@ -176,8 +178,6 @@ class WSRepo
                 $stmt->execute($params);
                 $dataRecentProducts = self::checkFavInRecentTry($stmt->fetchAll(), $user->getId());
 
-
-
                 break;
             case 'favourite':
                 $query = $this->em
@@ -188,10 +188,10 @@ class WSRepo
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
             coalesce(pi.price, 0) as price, pi.id as product_item_id,
-            'true' AS favourite
+            'true' AS favourite, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.product_items pi
-            JOIN pi.product_color pc                        
+            JOIN pi.product_color pc
             JOIN p.brand b
             LEFT JOIN p.retailer r
             JOIN pi.users u
@@ -211,7 +211,7 @@ class WSRepo
             r.id as retailer_id, r.title as retailer_title, 
             b.id as brand_id, b.name as brand_name,
             coalesce(pi.price, 0) as price, pi.id as product_item_id,
-            'false' AS favourite
+            'false' AS favourite, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count
             FROM LoveThatFitAdminBundle:Product p 
             JOIN p.displayProductColor pc            
             JOIN p.brand b
@@ -403,6 +403,14 @@ class WSRepo
 
             $recentTriedProducts = array();
             $recentTriedProducts = $typeCastedRecentProducts;
+        }
+        foreach ($recentTriedProducts as $key => $value) {
+            $product_id =  $recentTriedProducts[$key]['product_id'];
+            $sql = "SELECT count(*) as color_count from product_color npc WHERE npc.product_id = $product_id ";
+            $color_count = $this->em->getConnection()->prepare($sql);
+            $color_count->execute();
+            $color_count = $color_count->fetchAll();
+            $recentTriedProducts[$key]['color_count'] = $color_count[0]['color_count'];
         }
 
 
