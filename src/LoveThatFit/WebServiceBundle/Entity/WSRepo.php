@@ -78,7 +78,38 @@ class WSRepo
     }
 
 #-------------------------------------------------------------------
-    public function productList($user, $list_type = null)
+    public function getUserItemsLikes($user_id, $item_list = null)
+    {
+        $userFavHistoryTableName = $this->em->getClassMetadata('LoveThatFitSiteBundle:UserItemFavHistory')->getTableName();
+
+
+        try {
+           // $sql = "SELECT * from $userFavHistoryTableName WHERE user_id = $user_id AND product_item_id IN ($item_list)";
+
+
+            $sql = "SELECT
+                user_id,product_id,product_item_id,
+                SUBSTRING_INDEX(GROUP_CONCAT(status), ',', -1) AS status
+                FROM $userFavHistoryTableName
+                WHERE user_id = :user_id 
+                AND product_item_id IN ($item_list)
+                GROUP BY product_item_id;
+                ";
+
+            $params['user_id'] = $user_id;
+            //$em = $this->em->getManager();
+            $fav = $this->em->getConnection()->prepare($sql);
+            $fav->execute($params);
+            $favItems = $fav->fetchAll();
+
+            return $favItems;
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+	
+	public function productList($user, $list_type = null)
     {
         switch ($list_type) {
 
@@ -200,7 +231,6 @@ class WSRepo
             return null;
         }
     }
-
 #--------------------------------------------------------------
     public function productDetail($id, $user)
     {
@@ -229,7 +259,28 @@ class WSRepo
 
     }
 
+
 ############################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #################################################################
 
     public function findUser($id)

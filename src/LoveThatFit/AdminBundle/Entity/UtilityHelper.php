@@ -241,4 +241,24 @@ public function isBodyType($user_body_type){
 }
 
 
+    public function exportToCSV($data, $file_name)
+    {
+        if (!empty($data)) {
+            if (count($data) > 1) {
+                $keys = array_keys($data[0]);
+            }
+            header('Content-Type: application/csv');
+            //header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachement; filename="' . $file_name . '.csv";');
+            $output = fopen('php://output', 'w');
+            fputcsv($output, $keys);
+            foreach ($data as $row) {
+                fputcsv($output, array_values($row));
+            }
+            # Close the stream off
+            fclose($output);
+        }
+    }
+
+
 }
