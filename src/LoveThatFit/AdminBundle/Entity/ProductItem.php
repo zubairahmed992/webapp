@@ -60,6 +60,12 @@ class ProductItem
      * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrderDetail", mappedBy="productitem")
      */
     private $user_order_detail;
+	
+	
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemFavHistory", mappedBy="productitem")
+     */
+    private $user_item_fav_history;
 
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="productitem")
@@ -87,6 +93,7 @@ class ProductItem
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user_item_try_history = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->user_item_fav_history = new \Doctrine\Common\Collections\ArrayCollection();
         $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user_order_detail = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -674,7 +681,6 @@ class ProductItem
     public function addCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
     {
         $this->cart[] = $cart;
-
         return $this;
     }
 
@@ -698,6 +704,39 @@ class ProductItem
         return $this->cart;
     }
 
+
+#----------------------------------------------
+	/**
+     * Add user_item_fav_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
+     * @return ProductItem
+     */
+    public function addUserItemFavHistory(\LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory)
+    {
+        $this->user_item_fav_history[] = $userItemFavHistory;
+        return $this;
+    }
+	
+     /*
+	 * Remove user_item_fav_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
+     */
+    public function removeUserItemFavHistory(\LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory)
+    {
+        $this->user_item_fav_history->removeElement($userItemFavHistory);
+    }
+	
+	/**
+     * Get user_item_fav_history
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserItemFavHistory()
+    {
+        return $this->user_item_fav_history;
+    }
 
 #----------------------------------------------
 
