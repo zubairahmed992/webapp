@@ -1307,5 +1307,79 @@ class ProductRepository extends EntityRepository {
 	}
   }
 
+    public function listProductsAndItems()
+    {
+        $sql = 'SELECT 
+                 p.id as product_id ,
+                 p.name as product_name,
+                 p.gender,
+                 b.name as brand_name,
+                 ct.name AS cloth_type,
+                 pc.title as style,
+                 pretail.title as retailer,
+                 s.title size,
+                 pit.id as item_id,
+                 p.created_at,
+                 p.control_number,
+                 p.hem_length,
+                 p.neckline,
+                 p.sleeve_styling,
+                 p.rise,
+                 p.fabric_weight,
+                 p.size_title_type,
+                 p.fit_type,
+                 p.control_number,
+                 p.horizontal_stretch,
+                 p.vertical_stretch 
+                FROM `product` p
+                join `product_item` pit on pit.product_id=p.id
+                join `brand` b on b.id=p.brand_id
+                join `product_size` s on s.id=pit.product_size_id
+                join `clothing_type` ct on ct.id=p.clothing_type_id
+                JOIN product_color pc ON p.id = pc.product_id
+                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id';
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+        /*return $this->getEntityManager()
+            ->getConnection()
+            ->createQuery(
+                'SELECT 
+                 p.id as product_id ,
+                 p.name as product_name,
+                 p.gender,
+                 b.name as brand_name,
+                 ct.name AS cloth_type,
+                 pc.title as style,
+                 pretail.title as retailer,
+                 s.title size,
+                 pit.id as item_id,
+                 p.created_at,
+                 p.control_number,
+                 p.hem_length,
+                 p.neckline,
+                 p.sleeve_styling,
+                 p.rise,
+                 p.fabric_weight,
+                 p.size_title_type,
+                 p.fit_type,
+                 p.control_number,
+                 p.horizontal_stretch,
+                 p.vertical_stretch 
+                FROM Product p 
+                join ProductItem pit on pit.product_id = p.id 
+                join Brand b on b.id = p.brand_id 
+                join ProductSize s on s.id = pit.product_size_id 
+                join ClothingType ct on ct.id = p.clothing_type_id 
+                JOIN ProductColor pc ON p.id = pc.product_id 
+                JOIN Retailer pretail ON p.retailer_id = pretail.id'
+            )
+            ->getResult();*/
+    }
+
+
+
   //end of autocomplete method
 }
