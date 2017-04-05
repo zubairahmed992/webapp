@@ -11,22 +11,29 @@
      <table class="table table-bordered table-striped table-hover table-condensed">
         <tr>
             <th>Id</th>
-            <th>Title</th>            
+            <th>Style ID</th>            
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Clothing Type</th>
+            <th>Mapping</th>
             <th></th>
         </tr>
         {% for sp in specs %}
         <tr>
             <td>{{sp.Id}}</td>
-            <td>{{sp.Title}}</td>            
+            <td>{{sp.StyleIdNumber}}</td>            
+            <td>{{sp.StyleName}}</td>
+            <td>{{sp.BrandName}}</td>
+            <td>{{sp.ClothingType}}</td>
+            <td>{{sp.Title}}</td>
             <td>
                 <a href="{{ path('product_intake_product_specs_show', {'id': sp.Id}) }}" title="Show {{sp.Title}}">show</a> &nbsp;|&nbsp;
                 <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id}) }}" title="Edit {{sp.Title}}">edit</a> &nbsp;|&nbsp;
-                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" title="Show {{sp.Title}}">del</a> &nbsp;|&nbsp;
+                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" title="Show {{sp.Title}}">del</a> 
                
                 {% if cs_file[sp.Id] != '' %}
-                 <a href="{{ cs_file[sp.Id] }}" target="_blank" download title="Download">Download</a> 
-                {% else %}
-                     <a href="#">File Not Found in Directory! </a> 
+                &nbsp;|&nbsp;
+                <a href="{{ cs_file[sp.Id] }}" target="_blank" download title="Download">Download</a> 
                 {% endif %}
                  
             </td>
