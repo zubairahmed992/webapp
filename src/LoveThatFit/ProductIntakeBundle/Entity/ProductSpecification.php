@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\ProductIntakeBundle\Entity;
-use LoveThatFit\AdminBundle\ImageHelper;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -69,6 +69,11 @@ class ProductSpecification {
     * @ORM\Column(type="integer", length=9, nullable=true)
     */
     protected $status;
+    
+       /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $spec_file_name;
     
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -239,6 +244,10 @@ class ProductSpecification {
         return $this->specs_json;
     }
     
+    public function getSpecsArray() {
+        return json_decode($this->specs_json, true);
+    }
+    
     #------------------------------------------------
     /**
      * Set undo_specs_json
@@ -281,6 +290,28 @@ class ProductSpecification {
      */
     public function getStatus() {
         return $this->status;
+    }
+    
+    #----------------------------------------
+    /**
+     * Set spec_file_name
+     *
+     * @param string $spec_file_name
+     * @return ProductSpecificationMapping
+     */
+
+    public function setSpecFileName($file_name) {
+        $this->spec_file_name = $file_name;
+        return $this;
+    }
+
+    /**
+     * Get spec_file_name
+     *
+     * @return string 
+     */
+    public function getSpecFileName() {
+        return $this->spec_file_name;
     }
 #--------------------------------------------------------
     /**
@@ -371,5 +402,80 @@ class ProductSpecification {
         }
         return $stretch;
     }
+    
+      //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->spec_file_name = uniqid() . '.' . $ext;
+        $this->file->move(
+                $this->getUploadRootDir(), $this->spec_file_name
+        );
+    }
+
+    //---------------------------------------------------
+
+    public function getAbsolutePath() {      
+        return null === $this->spec_file_name ? null : $this->getUploadRootDir() . '/' . $this->spec_file_name;
+    }
+
+    //---------------------------------------------------
+    public function getWebPath() {
+       return null === $this->spec_file_name ? null : $_SERVER['HTTP_HOST'].'/../../../../'.$this->getUploadDir() . '/' . $this->spec_file_name;
+    }
+
+    //---------------------------------------------------
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    //---------------------------------------------------
+    protected function getUploadDir() {
+        $directory_path = 'uploads/ltf/products/product_spec_csv';
+        if (!file_exists($directory_path)) {
+            mkdir($directory_path, 0777, true);
+        }
+        return $directory_path;
+    }
+    #------------------------------------------------------------
+    public function fill($parsed){        
+        array_key_exists('style_id_number', $parsed) ? $this->style_id_number = ($parsed['style_id_number']) : '';
+        array_key_exists('style_name', $parsed) ? $this->style_name = ($parsed['style_name']) : '';
+        array_key_exists('title', $parsed) ? $this->title = ($parsed['title']) : '';
+        array_key_exists('description', $parsed) ? $this->description = ($parsed['description']) : '';
+        array_key_exists('clothing_type', $parsed) ? $this->clothing_type = ($parsed['clothing_type']) : '';
+        array_key_exists('brand', $parsed) ? $this->brand_name = ($parsed['brand']) : '';
+        #----------------
+        $specs = json_decode($this->specs_json,true);
+        #----------------
+        array_key_exists('style_id_number', $parsed) ? $specs['style_id_number'] = $parsed['style_id_number'] : '';
+        array_key_exists('style_name', $parsed) ? $specs['style_name'] = ($parsed['style_name']) : '';
+        array_key_exists('title', $parsed) ? $specs['title'] = ($parsed['title']) : '';
+        array_key_exists('description', $parsed) ? $specs['description'] = ($parsed['description']) : '';
+        array_key_exists('clothing_type', $parsed) ? $specs['clothing_type'] = ($parsed['clothing_type']) : '';
+        array_key_exists('brand', $parsed) ? $specs['brand'] = ($parsed['brand']) : '';
+        array_key_exists('styling_type', $parsed) ? $specs['styling_type'] = ($parsed['styling_type']) : '';
+        array_key_exists('hem_length', $parsed) ? $specs['hem_length'] = ($parsed['hem_length']) : '';
+        array_key_exists('neckline', $parsed) ? $specs['neckline'] = ($parsed['neckline']) : '';
+        array_key_exists('sleeve_styling', $parsed) ? $specs['sleeve_styling'] = ($parsed['sleeve_styling']) : '';
+        array_key_exists('rise', $parsed) ? $specs['rise'] = ($parsed['rise']) : '';
+        array_key_exists('stretch_type', $parsed) ? $specs['stretch_type'] = ($parsed['stretch_type']) : '';
+        array_key_exists('fabric_weight', $parsed) ? $specs['fabric_weight'] = ($parsed['fabric_weight']) : '';
+        array_key_exists('layering', $parsed) ? $specs['layering'] = ($parsed['layering']) : '';
+        array_key_exists('structural_detail', $parsed) ? $specs['structural_detail'] = ($parsed['structural_detail']) : '';
+        array_key_exists('fit_type', $parsed) ? $specs['fit_type'] = ($parsed['fit_type']) : '';
+        array_key_exists('control_number', $parsed) ? $specs['control_number'] = ($parsed['control_number']) : '';
+        array_key_exists('colors', $parsed) ? $specs['colors'] = ($parsed['colors']) : '';
+        array_key_exists('measuring_unit', $parsed) ? $specs['measuring_unit'] = ($parsed['measuring_unit']) : '';        
+        $this->undo_specs_json = $this->specs_json;
+        $this->specs_json =  json_encode($specs);
+    }
+
     
 }
