@@ -44,7 +44,7 @@
                         <select name="clothing_type" id="sel_clothing_type"  class="form-control">
                             <option>Select</option>
                             {% for key,val in clothing_types %}
-                               <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (val == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                               <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
                             {% endfor %}
                         </select>                                  
                     </div>
