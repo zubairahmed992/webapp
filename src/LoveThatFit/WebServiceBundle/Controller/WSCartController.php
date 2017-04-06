@@ -61,9 +61,13 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.cart')->removeUserCart($user);
-            $resp = 'Cart has been removed';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.cart')->removeUserCart($user);
+            if($response != null){
+                $resp = 'Cart has been removed';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -78,9 +82,14 @@ class WSCartController extends Controller
         $product_item = $decoded["item_id"];
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
-            $resp = 'Cart Item has been removed';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
+            if($response != null){
+                $resp = 'Cart Item has been removed';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
+
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }

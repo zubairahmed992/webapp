@@ -39,6 +39,8 @@ class WebServiceHelper {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
                     $response_array['retailer'] = $retailer_brands['retailer'];
                     $response_array['brand'] = $retailer_brands['brand'];
+                    $response_array['brand_top'] =  $this->container->get('admin.helper.brand')->getBrandListWithBannerForService(1);
+                    $response_array['brand_bottom'] =  $this->container->get('admin.helper.brand')->getBrandListWithBannerForService(0);
                 }
 
                 if(array_key_exists('device_token', $request_array) ){
