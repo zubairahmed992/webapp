@@ -11,10 +11,11 @@ class MappingController extends Controller
 {
     #----------------------- /product_intake/specs_mapping/index
     public function indexAction(){
-        $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();                
+        $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:index.html.twig', array(
                     'specs_mappings' => $product_specs_mappings,
-                    ));
+                    'cs_file'      =>  $this->get('productIntake.product_specification_mapping')->csvDownloads($product_specs_mappings),        
+        ));
     }
     
     #----------------------- /product_intake/specs_mapping/new
@@ -195,7 +196,11 @@ class MappingController extends Controller
      
     }
     #----------------------- /product_intake/specs_mapping/delete
-    public function deleteAction($id){                
+    public function deleteAction($id){  
+        $remove_csv_file = $this->get('productIntake.product_specification_mapping')->find($id);
+         if($remove_csv_file->getAbsolutePath()){
+            unlink($remove_csv_file->getAbsolutePath());
+         }
         $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));

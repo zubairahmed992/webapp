@@ -317,6 +317,7 @@ ws_product_like:
      product_id: 512   
      item_id: [4126,4127]
      like: true
+     page:
    request_type: post
 #______________________
 ws_user_liked_products:

@@ -92,6 +92,8 @@ class FitModelController extends Controller {
        // die;
         $all_size_title = $this->get('admin.helper.size')->getAllSizeTitleType();
         $all_size_title_man_woman =($fit_model_measurement->getGender()=='m' ? $all_size_title['man'] : $all_size_title['woman']); 
+        $gender =($fit_model_measurement->getGender()=='m' ? 'man' : 'woman'); 
+        $size = $size_specs['sizes'][$gender][$fit_point_values['sel_size_type']];
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
@@ -104,7 +106,8 @@ class FitModelController extends Controller {
                     'size_specs_json' => json_encode($size_specs),
                     'all_size_title_man_woman' => $all_size_title_man_woman,
                     'colthing_types_man_woman' => $colthing_types_man_woman,
-                    'mapping_json' => json_encode($mapping),          
+                    'mapping_json' => json_encode($mapping),   
+                    'size' => $size
 
                 ));
     }

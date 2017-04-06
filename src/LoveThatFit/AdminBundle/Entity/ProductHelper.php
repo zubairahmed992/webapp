@@ -1386,4 +1386,5 @@ class ProductHelper
         return $this->repo->getSearchProductData($term);
     }
     //end of autocomplete method
+    
 }
