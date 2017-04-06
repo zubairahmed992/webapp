@@ -292,6 +292,21 @@
                 //alert(response);
             }    
            });
+           
+       
+          // ------- Min Max Values Comparation 
+            $(document).on("keyup", ".input-sm", function(){
+              var min_max_calc = $(this).closest('td').prev().find('input').attr('name').substr(-8,8);
+               var min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
+               var min_max_calc_actual_val = $.trim( $(this).val() );
+              if( ( 'min_calc' == min_max_calc || 'max_calc' == min_max_calc ) && parseInt(min_max_calc_actual_val) <= parseInt(min_max_calc_val) ){
+                  console.log()
+              } else {
+                  alert("Must Be Equal or less than Value "+ min_max_calc)
+                  $(this).val('')
+              }
+             
+            });
 
     });
 
