@@ -261,6 +261,10 @@ ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeProcessTransaction}
 
+nws_braintree_processuser_transaction:
+    pattern: /nws/braintree_processuser_transaction
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBrainTreeProcessTransaction}
+
 ws_get_braintree_client_token:
     pattern: /ws/get_braintree_client_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeGetClientToker}
@@ -280,3 +284,11 @@ nws_save_user_billing_address:
 nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddresses}
+
+nws_address_verficiation:
+  pattern: /nws/address_verficiation
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addressVerification}
+
+nws_get_shipping_rates:
+  pattern: /nws/get_shipping_rates
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getShippingRates}

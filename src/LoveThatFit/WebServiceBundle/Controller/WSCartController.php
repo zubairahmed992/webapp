@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\WebServiceBundle\Controller;
 
+use LoveThatFit\CartBundle\Utils\Stamps;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,9 +62,14 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.cart')->removeUserCart($user);
-            $resp = 'Cart has been removed';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.cart')->removeUserCart($user);
+            if($response != null){
+                $resp = 'Cart has been removed';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
+
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -78,9 +84,14 @@ class WSCartController extends Controller
         $product_item = $decoded["item_id"];
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
-            $resp = 'Cart Item has been removed';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.cart')->removeCartByItem($user, $product_item);
+            if($response !== null){
+                $resp = 'Cart Item has been removed';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
+
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -334,6 +345,45 @@ class WSCartController extends Controller
         $itemsArray = array();
 
         return $decoded;
+    }
+
+    public function nwsBrainTreeProcessTransactionAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $discount_amount    = $decoded['discount_amount'];
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $decoded = $this->addItemsToPostArray($user, $decoded);
+
+        // var_dump( $decoded ); die;
+
+        if ($user) {
+            $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
+            if(is_object($fnfUser))
+            {
+                $fnfGroupId = $fnfUser->getGroups()[0]->getId();
+                $decoded['groupId'] = $fnfGroupId;
+            }
+
+            $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
+            if ($result['success'] == 0) {
+                if($discount_amount > 0){
+                    $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
+                    $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                }
+
+                $this->sendEmailToUser( $user, $decoded, $result);
+                $this->sendEmailToAdmin( $user, $decoded, $result);
+
+                $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
+            } else if ($result['success'] < 0) {
+                $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
     }
 
     public function brainTreeProcessTransactionAction()
@@ -599,22 +649,47 @@ class WSCartController extends Controller
     }
 
     public function getAllUserSavedAddressesAction(){
+        $stampsDotCom = new Stamps();
+
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $addresses = $this->container->get('cart.helper.userAddresses')->getAllUserSavedAddresses( $user );
-            $addresses['shipping_methods'][] = array(
-                "method" => "4-Day Shipping",
-                'detail' => "Deliver on or Monday",
-                'method_cost' => "Free",
-                "method_id" => '1'
-            );
+            $response = $stampsDotCom->getRates( $decoded );
+            $addresses['shipping_methods'] = array();
+            if($response['verified']){
+                $addresses['shipping_methods'] = $response['shipping_method'];
+            }
+
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
 
         return new Response( $res );
+    }
+
+    public function addressVerificationAction(){
+        $stampsDotCom = new Stamps();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $response = $stampsDotCom->addressVerfication( $decoded );
+        if($response['verified'])
+        {
+            $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $response['data']);
+        }else
+        {
+            $res = $this->get('webservice.helper')->response_array(false, $response['msg']);
+        }
+
+        return new Response( $res );
+    }
+
+    public function getShippingRatesAction(){
+        $stampsDotCom = new Stamps();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $response = $stampsDotCom->getRates( $decoded );
     }
 
 }
