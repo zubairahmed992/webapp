@@ -71,38 +71,51 @@ constants:
         4XL:
           title: 4XL
           index: 14
+        0X:
+          title: 0X
+          index: 15
         1X:
           title: 1X
-          index: 15
+          index: 16
         2X:
           title: 2X
-          index: 16
+          index: 17
         3X:
           title: 3X
-          index: 17
+          index: 18
         4X:
           title: 4X
-          index: 18     
-          
+          index: 19 
         0S1:
           title: 0S1
-          index: 19
+          index: 20
         0Sl:
           title: 0Sl
-          index: 20
+          index: 21
         0SI:
           title: 0SI
-          index: 21
+          index: 22
         OS1:
           title: OS1
-          index: 22
+          index: 23
         OSl:
           title: OSl
-          index: 23
+          index: 24
         OSI:
           title: OSI
-          index: 24
-          
+          index: 25
+        XS/S:
+          title: XS/S
+          index: 26
+        S/M:
+          title: S/M
+          index: 27
+        M/L:
+          title: M/L
+          index: 28          
+        L/XL:
+          title: L/XL
+          index: 29          
       number:
         '000':
           title: '000'
