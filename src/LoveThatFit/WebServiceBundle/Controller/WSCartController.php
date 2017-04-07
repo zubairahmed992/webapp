@@ -363,19 +363,23 @@ class WSCartController extends Controller
                 $decoded['groupId'] = $fnfGroupId;
             }
 
-            $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
-            if ($result['success'] == 0) {
-                if($discount_amount > 0){
-                    $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
-                    $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+            if(!empty($decoded['items'])) {
+                $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
+                if ($result['success'] == 0) {
+                    if ($discount_amount > 0) {
+                        $fnfUser = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
+                        $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                    }
+
+                    $this->sendEmailToUser($user, $decoded, $result);
+                    $this->sendEmailToAdmin($user, $decoded, $result);
+
+                    $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
+                } else if ($result['success'] < 0) {
+                    $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
                 }
-
-                $this->sendEmailToUser( $user, $decoded, $result);
-                $this->sendEmailToAdmin( $user, $decoded, $result);
-
-                $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
-            } else if ($result['success'] < 0) {
-                $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'no items found in cart');
             }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
