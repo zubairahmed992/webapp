@@ -1234,8 +1234,9 @@ public function _multplieImageUploadAction(Request $request){
         if (!empty($products_and_items)) {
             $count = 0;
             foreach ($products_and_items as $row) {
+                $products_and_items[$count]['status']     = ($row["status"] == 1 ? "Disabled" : "Enabled");
                 $products_and_items[$count]['gender']     = ($row["gender"] == "f" ? "Female" : "Male");
-                $products_and_items[$count]['created_at'] = (date_format(date_create($row["created_at"]), "d/m/Y"));
+                $products_and_items[$count]['created_at'] = (date_format(date_create($row["created_at"]), "d/m/Y H:i"));
                 $count++;
             }
         } else {
