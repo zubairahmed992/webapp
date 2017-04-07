@@ -295,17 +295,22 @@
            
        
           // ------- Min Max Values Comparation 
-            $(document).on("keyup", ".input-sm", function(){
-              var min_max_calc = $(this).closest('td').prev().find('input').attr('name').substr(-8,8);
+            $(document).on("change", ".input-sm", function(){
+              var min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
                var min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
                var min_max_calc_actual_val = $.trim( $(this).val() );
-              if( ( 'min_calc' == min_max_calc || 'max_calc' == min_max_calc ) && parseInt(min_max_calc_actual_val) <= parseInt(min_max_calc_val) ){
-                  console.log()
-              } else {
-                  alert("Must Be Equal or less than Value "+ min_max_calc)
+              if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
+                  console.log()                  
+              } else if(min_max_calc.match('min_calc')) {
+                  alert("Must Be Equal or Grater than Value "+ min_max_calc)
                   $(this).val('')
               }
-             
+              if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
+                  console.log()                  
+              } else if(min_max_calc.match('max_calc')) {
+                  alert("Must Be Equal or Less than Value "+ min_max_calc)
+                  $(this).val('')
+              }    
             });
 
     });
@@ -328,7 +333,7 @@
                 <select name="clothing_type" id="sel_clothing_type"  class="form-control">
                     <option>Select</option>
                     {% for key,val in clothing_types %}
-                       <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                       <option value="{{ key }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>     
             </div>
