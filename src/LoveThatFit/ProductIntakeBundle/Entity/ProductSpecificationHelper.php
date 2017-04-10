@@ -319,6 +319,7 @@ class ProductSpecificationHelper {
     #------------------->6 Fit Model Size >>>>>>>>>>>>>>>>>>>>>>>>>>>
     private function generate_specs_for_fit_model_size($specs) {
         $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+        $specs['fit_model_size_title']=$fit_model_obj->getSize();
         $specs = $this->compute_grade_rule($specs, $fit_model_obj);
         $specs = $this->compute_stretch($specs);
         #------------- compute ranges for all sizes
