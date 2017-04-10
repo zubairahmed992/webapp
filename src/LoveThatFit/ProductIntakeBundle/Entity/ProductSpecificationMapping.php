@@ -347,7 +347,7 @@ class ProductSpecificationMapping {
 
     //---------------------------------------------------
     public function getWebPath() {
-        return null === $this->mapping_file_name ? null : $this->getUploadDir() . '/' . $this->mapping_file_name;
+        return null === $this->mapping_file_name ? null : $_SERVER['HTTP_HOST'].'/../../../../'.$this->getUploadDir() . '/' . $this->mapping_file_name;
     }
 
     //---------------------------------------------------

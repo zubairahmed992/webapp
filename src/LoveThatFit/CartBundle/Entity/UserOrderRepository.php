@@ -186,7 +186,7 @@ class UserOrderRepository extends EntityRepository
 							  o.shipping_state, o.shipping_country, o.shipping_postcode
 							')
       	  	->from('LoveThatFitCartBundle:UserOrder', 'o')
-      	  	->OrderBy('o.id', 'DESC')
+      	  	->OrderBy('o.order_number', 'DESC')
           	->getQuery()
           	->getResult();
 	}
