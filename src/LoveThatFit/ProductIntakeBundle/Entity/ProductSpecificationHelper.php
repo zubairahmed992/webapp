@@ -202,7 +202,7 @@ class ProductSpecificationHelper {
                 'message_type' => 'error',
                 'success' => true,
             );
-        }
+        }        
         $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
         $specs_obj->setSpecsJson(json_encode($specs));
         return $this->update($specs_obj);
@@ -363,9 +363,16 @@ class ProductSpecificationHelper {
         $tracker = $this->get_fit_model_size_tracker($specs);
         $s = $tracker['fit_model'];
         $fp = $target['fit_point'];
-        $fm_grade_rule = $specs['sizes'][$s][$fp]['grade_rule'];
-        $avg_grade_rule = ($specs['sizes'][$tracker['prev']][$target['fit_point']]['grade_rule'] +
-                $specs['sizes'][$tracker['next']][$target['fit_point']]['grade_rule']) / 2;
+        $fm_grade_rule = $specs['sizes'][$s][$fp]['grade_rule'];        
+        #----------------->
+        if (array_key_exists('prev', $tracker) && array_key_exists('next', $tracker) && $tracker['prev'] != null && $tracker['next'] != null) {
+            $avg_grade_rule = ($specs['sizes'][$tracker['prev']][$fp]['grade_rule'] + $specs['sizes'][$tracker['next']][$fp]['grade_rule']) / 2;
+        } elseif (array_key_exists('prev', $tracker) && $tracker['prev'] != null && (!array_key_exists('next', $tracker) || (array_key_exists('next', $tracker) && $tracker['next'] == null))) {
+            $avg_grade_rule = $specs['sizes'][$tracker['prev']][$fp]['grade_rule'];
+        } elseif (array_key_exists('next', $tracker) && $tracker['next'] != null && (!array_key_exists('prev', $tracker) || (array_key_exists('prev', $tracker) && $tracker['prev'] == null))) {
+            $avg_grade_rule = $specs['sizes'][$tracker['next']][$fp]['grade_rule'];
+        }
+        #---------------->
         if ($fm_grade_rule != $avg_grade_rule) {
             $specs['sizes'][$s][$fp]['fit_model'];
             $specs['sizes'][$s][$fp]['grade_rule'] = $avg_grade_rule;
@@ -522,13 +529,27 @@ class ProductSpecificationHelper {
             }
             $prev = $sk;
         }
-        #-----------> Fit model size avg of adjuscent sizes grade rule
-        foreach ($specs['sizes'][$tracker['fit_model']] as $fp => $fpm) {
-            $specs['sizes'][$tracker['fit_model']][$fp]['grade_rule'] = ($specs['sizes'][$tracker['prev']][$fp]['grade_rule'] + $specs['sizes'][$tracker['next']][$fp]['grade_rule']) / 2;
+                
+        return $this->compute_fit_model_grade_rule($specs);
+    }
+    #------------------------------------
+    private function compute_fit_model_grade_rule($specs){
+        $tracker = $this->get_fit_model_size_tracker($specs);
+        if (array_key_exists('prev', $tracker) && array_key_exists('next', $tracker) && $tracker['prev']!=null && $tracker['next']!=null){
+            foreach ($specs['sizes'][$tracker['fit_model']] as $fp => $fpm) {
+                $specs['sizes'][$tracker['fit_model']][$fp]['grade_rule'] = ($specs['sizes'][$tracker['prev']][$fp]['grade_rule'] + $specs['sizes'][$tracker['next']][$fp]['grade_rule']) / 2;
+            }
+        }elseif (array_key_exists('prev', $tracker) && $tracker['prev']!=null && (!array_key_exists('next', $tracker) || (array_key_exists('next', $tracker) && $tracker['next']==null))){
+            foreach ($specs['sizes'][$tracker['fit_model']] as $fp => $fpm) {
+                $specs['sizes'][$tracker['fit_model']][$fp]['grade_rule'] = $specs['sizes'][$tracker['prev']][$fp]['grade_rule'];                
+            }
+        }elseif (array_key_exists('next', $tracker) && $tracker['next']!=null  && (!array_key_exists('prev', $tracker)  || (array_key_exists('prev', $tracker)  && $tracker['prev']==null))){            
+            foreach ($specs['sizes'][$tracker['fit_model']] as $fp => $fpm) {
+                $specs['sizes'][$tracker['fit_model']][$fp]['grade_rule'] = $specs['sizes'][$tracker['next']][$fp]['grade_rule'];            
+            }
         }
         return $specs;
     }
-
     #-----------------------------------------------------
     private function compute_stretch($specs) {
         $fpa = $this->getFitPointArray();

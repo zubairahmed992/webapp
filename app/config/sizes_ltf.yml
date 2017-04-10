@@ -104,17 +104,17 @@ constants:
         OSI:
           title: OSI
           index: 25
-        XS/S:
-          title: XS/S
+        XS_S:
+          title: XS_S
           index: 26
-        S/M:
-          title: S/M
+        S_M:
+          title: S_M
           index: 27
-        M/L:
-          title: M/L
+        M_L:
+          title: M_L
           index: 28          
-        L/XL:
-          title: L/XL
+        L_XL:
+          title: L_XL
           index: 29          
       number:
         '000':
