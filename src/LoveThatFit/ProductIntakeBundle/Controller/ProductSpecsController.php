@@ -49,7 +49,13 @@ class ProductSpecsController extends Controller
         } else { 
             $fit_model_selected = null;
             $parsed_data['fit_model_size'] = '';
-        }               
+        }    
+        foreach ($parsed_data['sizes'] as $key => $size) {
+            foreach ($size as $key => $value) {
+                $size_attribute[] =  $key;
+            }
+            break;
+        }      
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'product_specs'=>$ps,
                     'parsed_data' => $parsed_data,
@@ -59,6 +65,7 @@ class ProductSpecsController extends Controller
                     'fit_point_stretch' => $ps->getFitPointStretchArray(), 
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),                    
                     'clothing_types' => $clothing_types,
+                    'size_attribute' => $size_attribute,
                 ));
     }
       
