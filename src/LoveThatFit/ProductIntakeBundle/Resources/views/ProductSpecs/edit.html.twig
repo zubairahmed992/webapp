@@ -292,6 +292,26 @@
                 //alert(response);
             }    
            });
+           
+       
+          // ------- Min Max Values Comparation 
+            $(document).on("change", ".input-sm", function(){
+              var min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
+               var min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
+               var min_max_calc_actual_val = $.trim( $(this).val() );
+              if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
+                  console.log()                  
+              } else if(min_max_calc.match('min_calc')) {
+                  alert("Must Be Equal or Grater than Value "+ min_max_calc)
+                  $(this).val('')
+              }
+              if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
+                  console.log()                  
+              } else if(min_max_calc.match('max_calc')) {
+                  alert("Must Be Equal or Less than Value "+ min_max_calc)
+                  $(this).val('')
+              }    
+            });
 
     });
 
@@ -309,7 +329,13 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Clothing Type: </label>
             <div class="col-sm-4">                
-                <input type="text" name="clothing_type" id="sel_clothing_type" readonly value="{{ parsed_data.clothing_type }}"  class="form-control">                    
+{#                <input type="text" name="clothing_type" id="sel_clothing_type"  value="{{ parsed_data.clothing_type }}"  class="form-control">                    #}
+                <select name="clothing_type" id="sel_clothing_type"  class="form-control">
+                    <option>Select</option>
+                    {% for key,val in clothing_types %}
+                       <option value="{{ key }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                    {% endfor %}
+                </select>     
             </div>
         </div>
         <div class="form-group">
@@ -574,12 +600,15 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Fit model size: </label>
             <div class="col-sm-4">
+             
+{#                  <select  data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size" label="{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size ] }}" value="{{ parsed_data.fit_model_size }}"  readonly="ture" >#}
                 
-                <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
-                    <option>Select</option>
+               <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
+                    <option value="{{ parsed_data.fit_model_size }}">{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size ] }}</option>
+                  {# <option>Select</option>
                     {% for key,val in drop_down_values['fit_model_size'] %}
                        <option value="{{ key }}"{{ parsed_data.fit_model_size == '' and val == 0? '' : (key == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ val }}</option>
-                    {% endfor %}
+                    {% endfor %}#}
                 </select>
             
                  {#   <select name="fit_model_size" class="fit_model_size form-control" >
