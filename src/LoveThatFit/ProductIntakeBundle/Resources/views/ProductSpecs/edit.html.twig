@@ -600,12 +600,15 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Fit model size: </label>
             <div class="col-sm-4">
+             
+{#                  <select  data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size" label="{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size ] }}" value="{{ parsed_data.fit_model_size }}"  readonly="ture" >#}
                 
-                <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
-                    <option>Select</option>
+               <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
+                    <option value="{{ parsed_data.fit_model_size }}">{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size ] }}</option>
+                  {# <option>Select</option>
                     {% for key,val in drop_down_values['fit_model_size'] %}
                        <option value="{{ key }}"{{ parsed_data.fit_model_size == '' and val == 0? '' : (key == parsed_data.fit_model_size ? ' selected ' : '')}}  >{{ val }}</option>
-                    {% endfor %}
+                    {% endfor %}#}
                 </select>
             
                  {#   <select name="fit_model_size" class="fit_model_size form-control" >
