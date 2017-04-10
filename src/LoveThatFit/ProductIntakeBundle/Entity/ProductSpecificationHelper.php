@@ -319,6 +319,7 @@ class ProductSpecificationHelper {
     #------------------->6 Fit Model Size >>>>>>>>>>>>>>>>>>>>>>>>>>>
     private function generate_specs_for_fit_model_size($specs) {
         $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+        $specs['fit_model_size_title']=$fit_model_obj->getSize();
         $specs = $this->compute_grade_rule($specs, $fit_model_obj);
         $specs = $this->compute_stretch($specs);
         #------------- compute ranges for all sizes
@@ -343,11 +344,14 @@ class ProductSpecificationHelper {
         foreach ($specs['sizes'][$fit_model_obj->getSize()] as $fit_point => $measure) {
             $fit_model_ratio['fit_model_measurement'][$fit_point] = $specs['sizes'][$fit_model_obj->getSize()][$fit_point];
             $grade_rule = $specs['sizes'][$fit_model_obj->getSize()][$fit_point]['grade_rule_stretch'];
+            
             $fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'] = $fit_model_fit_points[$fit_point] > 0 ? $fit_model_fit_points[$fit_point] - (2.5 * $grade_rule) : 0;
             $fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_low'] = $fit_model_fit_points[$fit_point] - (0.5 * $grade_rule);
             $fit_model_ratio['fit_model_measurement'][$fit_point]['fit_model'] = $fit_model_fit_points[$fit_point];
             $fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_high'] = $fit_model_fit_points[$fit_point] + (0.5 * $grade_rule);
             $fit_model_ratio['fit_model_measurement'][$fit_point]['max_calc'] = $fit_model_fit_points[$fit_point] > 0 ? $fit_model_fit_points[$fit_point] + (2.5 * $grade_rule) : 0;
+            $fit_model_ratio['fit_model_measurement'][$fit_point]['min_actual'] = $fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'];
+            $fit_model_ratio['fit_model_measurement'][$fit_point]['max_actual'] = $fit_model_ratio['fit_model_measurement'][$fit_point]['max_calc'];
             #---------------> Calculate ratios
             $fit_model_ratio[$fit_point]['fit_model'] = ($measure['garment_stretch'] > 0 ) ? ($fit_model_fit_points[$fit_point] / $measure['garment_stretch']) : 0;
             $fit_model_ratio[$fit_point]['min_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'] / $fit_model_fit_points[$fit_point]);
