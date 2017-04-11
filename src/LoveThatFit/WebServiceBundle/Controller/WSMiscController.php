@@ -190,7 +190,7 @@ class WSMiscController extends Controller {
         $decoded = $request->request->all();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $shopLook = $this->get('admin.helper.shoplook')->findAll();
-        $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/shop_Look/';
+        $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/shop_look/';
 
         foreach($shopLook as $key => $value){
             $shopLook[$key]['id'] = (int)$shopLook[$key]['id'];
