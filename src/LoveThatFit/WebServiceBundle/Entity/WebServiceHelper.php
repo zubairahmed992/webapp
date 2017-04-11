@@ -1063,4 +1063,10 @@ class WebServiceHelper {
         $p['target'] = $product->getclothingType()->getTarget();
         return $p;
     }
+
+    public function productImageById($product_id) {
+        $products = $this->container->get('webservice.repo')->productImageById($product_id);
+        return $products;
+    }
+
 }

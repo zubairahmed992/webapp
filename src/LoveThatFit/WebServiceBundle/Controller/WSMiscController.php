@@ -182,5 +182,45 @@ class WSMiscController extends Controller {
         );
         return new Response(json_encode($conf));
     }
+
+    public function shopTheLookAction(Request $request)
+    {
+        $decoded = $request->request->all();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $shopLook = $this->get('admin.helper.shoplook')->findAll();
+        $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/shop_Look/';
+
+        foreach($shopLook as $key => $value){
+            $shopLook[$key]['id'] = (int)$shopLook[$key]['id'];
+            $shopLook[$key]['sorting'] = (int)$shopLook[$key]['sorting'];
+            $shopLook[$key]['shop_model_image'] = $path.$shopLook[$key]['shop_model_image'];
+            $shoplook_id = $shopLook[$key]['id'];
+            $product_information = $this->get('admin.helper.shoplookproduct')->getShopLookProductsById($shoplook_id);
+
+            foreach($product_information as $product_key => $product_value){
+                $product_information[$product_key]['id'] = (int)$product_information[$product_key]['id'];
+                $product_information[$product_key]['shop_look_id'] = (int)$product_information[$product_key]['shop_look_id'];
+                $product_information[$product_key]['sorting'] = (int)$product_information[$product_key]['sorting'];
+
+                if(isset($product_information[$product_key]['product_id'])){
+                    $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+                    $product_images = $this->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
+                    if (!empty($product_images)) {
+                        $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
+                    }
+                }
+            }
+            //$product_images = $this->get('webservice.helper')->productImageById($shop_look_products_information[$key]['product_id']);
+            $shopLook[$key]['products_id'] = $product_information;
+        }
+
+        $conf= array(
+            'data' => $shopLook,
+            'count'=> count($shopLook),
+            'message' => 'shop the look list',
+            'success' => 'true',
+        );
+        return new Response(json_encode($conf));
+    }
 }
 
