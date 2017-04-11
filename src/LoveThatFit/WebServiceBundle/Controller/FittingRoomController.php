@@ -49,12 +49,15 @@ class FittingRoomController extends Controller {
             }
 
             //Checked that item is already then remove this
-            $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
-
-            //Add entry in userfittingroom table
-            $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItemWithProductId($user, $productItem, $product, $qty);
-            $resp = 'Item has been Add/Update to Fitting Room Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
+            if ($response != null) {
+                //Add entry in userfittingroom table
+                $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItemWithProductId($user, $productItem, $product, $qty);
+                $resp = 'Item has been Add/Update to Fitting Room Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -81,9 +84,13 @@ class FittingRoomController extends Controller {
             $product_id = $decoded["product_id"];
 
             //Checked that item is already then remove this
-            $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
-            $resp = 'Products has been deleted from Fitting Room Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
+            if ($response != null) {
+                $resp = 'Products has been deleted from Fitting Room Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
