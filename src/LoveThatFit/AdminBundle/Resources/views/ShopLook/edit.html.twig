@@ -87,13 +87,17 @@
                                 {% for product_selected in product_ids %}
                                     {% for product in getAllProductList %}
                                         {% if product.id == product_selected  %}
-                                            <option value="{{ product.id }}" selected >{{ product.name }}</option>
+                                            {% if  product.name != '' %}
+                                                <option value="{{ product.id }}" selected >{{ product.name }}</option>
+                                            {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 {% endfor %}
                                 {% for product in getAllProductList %}
                                     {% if product.id not in product_ids %}
-                                        <option value="{{ product.id }}"  >{{ product.name }}</option>
+                                        {% if  product.name != '' %}
+                                            <option value="{{ product.id }}"  >{{ product.name }}</option>
+                                        {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             </select>
