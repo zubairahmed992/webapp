@@ -105,7 +105,7 @@
         ]
     });
 
-    jQuery('#example_banner tbody').on( 'click', 'button, a, img', function () {
+    jQuery('#shoplook_table tbody').on( 'click', 'button, a, img', function () {
         var dataAction = $(this).attr('data-action');
         var data = table.row( $(this).parents('tr') ).data();
         if (dataAction == 'Edit') {
@@ -116,7 +116,6 @@
         if (dataAction == 'Delete') {
           var url = '{{ path('admin_shop_look_delete', {'id': ":id"}) }}';
           url     = url.replace(':id', data.id);
-
           $(".delete_url").attr("href", url);
       }
     });

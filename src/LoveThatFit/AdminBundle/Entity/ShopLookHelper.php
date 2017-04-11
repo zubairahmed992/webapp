@@ -137,18 +137,6 @@ class ShopLookHelper
         return $output;
     }
 
-    public function removeUserLook( $saveLookEntity, $user = null )
-    {
-        $saveLookObj = new ShopLook();
-        $saveLookObj->setUsers($user);
-
-        $saveLookObj->deleteImages( $saveLookEntity->getUserLookImage() );
-
-        $this->em->remove( $saveLookEntity );
-        $this->em->flush();
-    }
-
-
 
     #-----------------Get all Banner which Parent id is null---------------------------------#
     public function editBannerSorting($sorting_number, $action){
@@ -160,5 +148,38 @@ class ShopLookHelper
     public function maxSortingNumber(){
         $result = $this->repo->maxSortingNumber();
         return $result;
+    }
+
+    public function find($id) {
+        return $this->repo->find($id);
+    }
+
+    public function delete($id) {
+        $entity = $this->repo->find($id);
+        if ($entity) {
+            $yaml = new Parser();
+            $productImageModelPath =  $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+            $target_path = $productImageModelPath['image_category']['shop_look']['original']['dir'];
+            $model_image = $entity->getShopModelImage();
+            $modelimage = $target_path.$model_image;
+
+            if (is_readable($modelimage )){
+                @unlink($modelimage );
+            }
+            $this->em->remove($entity);
+            $this->em->flush();
+            return array('shop_look' => $entity,
+                'message' => 'Shop the Look has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array('shop_look' => $entity,
+                'message' => 'Shop the Look not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
     }
 }

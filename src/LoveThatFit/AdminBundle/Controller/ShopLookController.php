@@ -71,6 +71,24 @@ class ShopLookController extends Controller {
         ));
     }
 
+    //----------------------------------------Delete Banner--------------------------------------------------
+    public function deleteAction($id) {
+        $entity = $this->get('admin.helper.shoplook')->find($id);
+        /*Conditions for handling Banner sorting*/
+        $selectedsortingcondition = $entity->getSorting();
+        $this->get('admin.helper.shoplook')->editBannerSorting($selectedsortingcondition, 'delete');
+        /*Conditions for handling Banner sorting*/
+
+        try {
+            $message_array = $this->get('admin.helper.shoplook')->delete($id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+            return $this->redirect($this->generateUrl('admin_shop_look'));
+        } catch (\Doctrine\DBAL\DBALException $e) {
+            $this->get('session')->setFlash('warning', 'Shop the look cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+    }
+
     public function paginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
