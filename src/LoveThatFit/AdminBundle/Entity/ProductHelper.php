@@ -1386,5 +1386,22 @@ class ProductHelper
         return $this->repo->getSearchProductData($term);
     }
     //end of autocomplete method
-    
+
+
+    #---------------------------------------------------
+    //               Methods Product listing on index page
+    #---------------------------------------------------
+    public function idNameListEnabledProduct()
+    {
+        $products = $this->repo->findAllEnableProduct(0, 0, 'name');
+        $pa = array();
+        foreach ($products as $p) {
+            //$pa[$p->getId()] = $p->getName();
+            $pa[] = array(
+                'id' => $p->getId(),
+                'name' => $p->getName()
+            );
+        }
+        return $pa;
+    }
 }
