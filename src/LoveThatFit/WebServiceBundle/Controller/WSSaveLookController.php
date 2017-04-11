@@ -37,7 +37,9 @@ class WSSaveLookController extends Controller
                             $productItems = $this->container->get('savelookItem.helper.savelookItem')->getItemById($id);
                             $this->container->get('savelookItem.helper.savelookItem')->addProductItem($saveLookEntity, $productItems);
                         }
-                        $res = $this->get('webservice.helper')->response_array(true, 'Items added Successfully.');
+                        $res = $this->get('webservice.helper')->response_array(true, 'Items added Successfully.', true, array(
+                            'look_id' => $saveLookEntity->getId()
+                        ));
                     }else{
                         $res = $this->get('webservice.helper')->response_array(false, 'Image not provided.');
                     }

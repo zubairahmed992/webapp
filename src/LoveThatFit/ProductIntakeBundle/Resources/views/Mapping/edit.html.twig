@@ -44,7 +44,7 @@
                         <select name="clothing_type" id="sel_clothing_type"  class="form-control">
                             <option>Select</option>
                             {% for key,val in clothing_types %}
-                               <option value="{{ val }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (val == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                               <option value="{{ key }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
                             {% endfor %}
                         </select>                                  
                     </div>
@@ -241,11 +241,11 @@
     
                              //---------------------------------------
                               function fill_clothing_type_list(gender){        
-                                  gender=gender=='m'?'man':'women';                
+                                  data=gender=='m'? product_specs['man'].clothing_type :product_specs['women'].clothing_types;                
                                   $('#sel_clothing_type').empty();
                                   var option = '<option value="">Select </option>';
                                   str='';
-                                  $.each(product_specs[gender].clothing_type, function(val, text) {
+                                  $.each(data, function(val, text) {
                                           if(str != text){
                                       option += '<option value="'+ val + '">' + text + '</option>';
                                       str=text;
