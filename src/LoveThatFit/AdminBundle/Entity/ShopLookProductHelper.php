@@ -66,4 +66,8 @@ class ShopLookProductHelper
         return $this->repo->getShopLookProductsById($shoplook_id);
     }
 
+    public function removeId($product_id){
+        return $this->repo->removeId($product_id);
+    }
+
 }

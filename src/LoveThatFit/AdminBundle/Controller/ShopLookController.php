@@ -72,6 +72,70 @@ class ShopLookController extends Controller {
     }
 
 
+    //------------------------------Create New Banner------------------------------------------------------------
+    public function editAction($id) {
+        $entity = $this->get('admin.helper.shoplook')->find($id);
+        $entity_product = $entity->getShopLookProduct();
+
+        $product_ids = array();
+        foreach($entity_product as $value){
+            $product_ids[] = $value->getProductId();
+        }
+        $getAllProductList = $this->get('admin.helper.product')->idNameListEnabledProduct();
+        $image_path = $this->product_image_path;
+
+        //$entity = $this->get('admin.helper.shoplook')->createNew();
+        return $this->render('LoveThatFitAdminBundle:ShopLook:edit.html.twig', array(
+            'getAllProductList' => $getAllProductList,
+            'entity' => $entity,
+            'product_ids' => $product_ids,
+        ));
+    }
+
+
+    //------------------------------update ------------------------------
+
+
+    public function updateAction(Request $request) {
+
+        $getAllProductList = $this->get('admin.helper.product')->idNameListEnabledProduct();
+        $image_path = $this->product_image_path;
+        $decoded = $request->request->all();
+
+        $file = $_FILES["shop_model_image"];
+        $entity = $this->get('admin.helper.shoplook')->find($decoded['shoplookid']);
+
+        /*If User added random sort number which is greater than max sort number then max sort will be set*/
+        $max_sorting_number = $this->get('admin.helper.shoplook')->maxSortingNumber();
+        if($decoded['sorting'] > $max_sorting_number[0]['max_sort']) {
+            $decoded['sorting'] = $max_sorting_number[0]['max_sort'] + 1;
+        }
+        $this->get('admin.helper.shoplook')->editBannerSorting($decoded['sorting'], 'add');
+        $insertParent = $this->get('admin.helper.shoplook')->update($entity, $file,$decoded);
+
+        /* Remove Product by id*/
+        $this->get('admin.helper.shoplookproduct')->removeId($decoded['shoplookid']);
+
+        if($insertParent != ''){
+            /*Inserted Record Information*/
+            $shoplook_entity = $insertParent;
+            $this->get('admin.helper.shoplookproduct')->save($entity, $shoplook_entity, $decoded);
+        }
+        $this->get('session')->setFlash('success', 'Shop Product Look Updated');
+
+        $entity_product = $entity->getShopLookProduct();
+        $product_ids = array();
+        foreach($entity_product as $value){
+            $product_ids[] = $value->getProductId();
+        }
+
+        return $this->render('LoveThatFitAdminBundle:ShopLook:edit.html.twig', array(
+            'entity' => $entity,
+            'getAllProductList' => $getAllProductList,
+            'product_ids' => $product_ids,
+        ));
+    }
+
 
     //----------------------------------------Delete Banner--------------------------------------------------
 
@@ -79,16 +143,14 @@ class ShopLookController extends Controller {
         $entity = $this->get('admin.helper.shoplook')->find($id);
 
         /*Conditions for handling Banner sorting*/
-        $selectedbannercondition = $entity->getParentId();
-        $displayscreencondition = $entity->getDisplayScreen();
         $selectedsortingcondition = $entity->getSorting();
-        $this->get('admin.helper.Banner')->editBannerSorting($selectedsortingcondition, 'delete', $selectedbannercondition, $displayscreencondition);
+        $this->get('admin.helper.shoplook')->editBannerSorting($selectedsortingcondition, 'delete');
         /*Conditions for handling Banner sorting*/
 
         try {
-            $message_array = $this->get('admin.helper.Banner')->delete($id);
+            $message_array = $this->get('admin.helper.shoplook')->delete($id);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-            return $this->redirect($this->generateUrl('admin_banners'));
+            return $this->redirect($this->generateUrl('admin_shop_look'));
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash('warning', 'This Banner cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
