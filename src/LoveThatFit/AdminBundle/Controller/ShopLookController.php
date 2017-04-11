@@ -16,6 +16,13 @@ class ShopLookController extends Controller {
         $yaml = new Parser();
         $productImageModelPath =  $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
         $this->product_image_path = $productImageModelPath['image_category']['shop_look']['original']['dir'];
+        $directory_path =  __DIR__ . '/../../../../web/uploads/ltf/shop_look/';
+        if (!is_dir($directory_path)) {
+            try {
+                @mkdir($directory_path, 0700);
+            }catch (\Exception $e)
+            { $e->getMessage();}
+        }
     }
 
 //-----------------------------Shop Look-------------------------------------------------------------
