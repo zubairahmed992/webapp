@@ -30,6 +30,12 @@ class ServiceController extends Controller {
             ]);
          }
     }
+
+#------------> /pi/ws/product_detail/{id}
+    public function productDetailAction($id) {
+        $resp=$this->get('service.helper')->getProductDetails($id);;        
+        return new Response (json_encode($resp));
+    }
    
 
 }
