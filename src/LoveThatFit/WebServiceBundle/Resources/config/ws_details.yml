@@ -666,3 +666,9 @@ web_service_product_specification:
     params: 
       result: {'style_id_number':'220', 'style_name':'Blouse', 'title':'Blouse'}     
       request_type: post
+
+ws_shop_the_look:
+  pattern: /ws/shop_the_look
+  title: shop_the_look
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091

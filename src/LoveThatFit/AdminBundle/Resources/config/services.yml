@@ -257,3 +257,19 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\FNFGroup
             container: "@service_container"
+
+     admin.helper.shoplook:
+         class: LoveThatFit\AdminBundle\Entity\ShopLookHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\ShopLook
+            container: "@service_container"
+
+     admin.helper.shoplookproduct:
+         class: LoveThatFit\AdminBundle\Entity\ShopLookProductHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\ShopLookProduct
+            container: "@service_container"

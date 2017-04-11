@@ -419,4 +419,20 @@ class WSRepo
     }
 
 
+    #-------------------------------------------------------------------
+    public function productImageById($product_id)
+    {
+        return $this->em
+                ->createQueryBuilder()
+                ->select('pc.image as product_image')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.displayProductColor', 'pc')
+                ->where('p.id=:id')
+                ->andWhere("p.displayProductColor!=''")
+                ->andWhere('p.disabled=0')
+                ->setParameters(array('id' => $product_id))
+                ->getQuery()
+                ->getResult();
+    }
+
 }
