@@ -21,7 +21,7 @@ class FittingRoomController extends Controller {
 
             if(empty($decoded["product_item_id"]) || empty($decoded["product_id"])){
                 $resp = 'Either product id or product item id not found';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
 
@@ -36,7 +36,7 @@ class FittingRoomController extends Controller {
             $productItem = $this->get('admin.helper.productitem')->getProductItemById($item_id);
             if($productItem == null){
                 $resp = 'Product Item not entered Properly';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
             $product = $productItem->getProduct();
@@ -44,7 +44,7 @@ class FittingRoomController extends Controller {
 
             if($product_id_for_verification != $product_id){
                 $resp = 'Product Item not Match with Product Id';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
 
