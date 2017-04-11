@@ -58,6 +58,14 @@ fit_points:
     hip: 
       title:  Hip
       axis:  x
+
+    high_hip: 
+      title:  High Hip
+      axis:  x
+
+    low_hip: 
+      title:  Low Hip
+      axis:  x
       
     outseam: 
       title:  Outseam

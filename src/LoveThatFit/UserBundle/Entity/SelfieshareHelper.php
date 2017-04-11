@@ -84,13 +84,16 @@ class SelfieshareHelper {
      #----------------------------------------------------------------------------
      public function updateFeedback($ra) {
         $selfieshare=$this->repo->findOneBy(array('ref' => $ra['ref']));
+         if (empty($selfieshare)) {
+             return null;
+         }
         if(array_key_exists('rating', $ra) && $ra['rating']){$selfieshare->setRating($ra['rating']);}
         if(array_key_exists('favourite', $ra) && $ra['favourite']){$selfieshare->setFavourite($ra['favourite']=='false'?false:true);}
         if(array_key_exists('comments', $ra) && $ra['comments']){$selfieshare->setComments($ra['comments']);}
         $interval  = 11;
         if($selfieshare->getUpdatedAt()){
-        $current = new \DateTime('now');        
-        $updated_at = $selfieshare->getUpdatedAt();        
+        $current = new \DateTime('now');
+        $updated_at = $selfieshare->getUpdatedAt();
         $updated_at = $updated_at->format('Y-m-d H:i:s');
         $current = $current->format('Y-m-d H:i:s');
         $to_time = strtotime($current);
@@ -103,10 +106,10 @@ class SelfieshareHelper {
             $ss_ar['template']='LoveThatFitAdminBundle::email/selfieshare_member.html.twig';
             $ss_ar['template_array']=array('user'=>$user, 'selfieshare'=>$selfieshare, 'link_type'=>'show');
             $ss_ar['subject']='SelfieStyler friend share';
-            $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);            
+            $this->container->get('mail_helper')->sendEmailWithTemplate($ss_ar);
         }
-        
-        $this->save($selfieshare);         
+
+        $this->save($selfieshare);
         return $selfieshare;
     }  
     #----------------------------------------------------------------------------

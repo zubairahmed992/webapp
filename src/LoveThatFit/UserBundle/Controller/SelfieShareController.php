@@ -24,8 +24,12 @@ class SelfieShareController extends Controller {
 
     public function feedbackUpdateAction() {
         $ra=$this->getRequest()->request->all();                
-        $selfieshare=$this->get('user.selfieshare.helper')->updateFeedback($ra);  
-        return new Response($selfieshare->getFriendName().'provided feedback updated.');
+        $selfieshare=$this->get('user.selfieshare.helper')->updateFeedback($ra);
+        if ($selfieshare != null) {
+            return new Response($selfieshare->getFriendName().'provided feedback updated.');
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, "some thing went wrong"));
+        }
     }
 
     
