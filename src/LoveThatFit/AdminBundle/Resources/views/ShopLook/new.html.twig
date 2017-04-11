@@ -85,7 +85,9 @@
                             <div>
                                 <select id="countries" class="multiselect" multiple="multiple" name="products[]" required>
                                 {% for product in getAllProductList %}
-                                    <option value="{{ product.id }}" >{{ product.name }}</option>
+                                    {% if  product.name != '' %}
+                                        <option value="{{ product.id }}" >{{ product.name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                                 </select>
                             </div>
