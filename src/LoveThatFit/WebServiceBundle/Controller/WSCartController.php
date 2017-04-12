@@ -195,15 +195,11 @@ class WSCartController extends Controller
             $qty = $decoded["quantity"];
 
             /*Remove Item from wishlist */
-            $response = $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
+            $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
+            $response = $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
             if ($response != null) {
-                $response = $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
-                if ($response != null) {
-                    $resp = 'Item has been added to Cart Successfully';
-                    $res = $this->get('webservice.helper')->response_array(true, $resp);
-                } else {
-                    $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
-                }
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
             } else {
                 $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
             }
@@ -319,15 +315,11 @@ class WSCartController extends Controller
     {
         $items = isset($post_variable["items"]) ? $post_variable["items"] : "0";
         if ($items != 0) {
-            $response = $this->container->get('cart.helper.cart')->removeUserCart($user);
-            if ($response != null) {
-                foreach ($items as $detail) {
-                    $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
-                }
-                return true;
-            } else {
-                return false;
+            $this->container->get('cart.helper.cart')->removeUserCart($user);
+            foreach ($items as $detail) {
+                $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
             }
+            return true;
         } else {
             return false;
         }
