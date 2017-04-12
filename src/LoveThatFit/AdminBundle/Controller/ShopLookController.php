@@ -105,12 +105,29 @@ class ShopLookController extends Controller {
         $file = $_FILES["shop_model_image"];
         $entity = $this->get('admin.helper.shoplook')->find($decoded['shoplookid']);
 
-        /*If User added random sort number which is greater than max sort number then max sort will be set*/
-        $max_sorting_number = $this->get('admin.helper.shoplook')->maxSortingNumber();
-        if($decoded['sorting'] > $max_sorting_number[0]['max_sort']) {
+        /*if($decoded['sorting'] > $max_sorting_number[0]['max_sort']) {
             $decoded['sorting'] = $max_sorting_number[0]['max_sort'] + 1;
         }
-        $this->get('admin.helper.shoplook')->editBannerSorting($decoded['sorting'], 'add');
+        $this->get('admin.helper.shoplook')->editBannerSorting($decoded['sorting'], 'add');*/
+
+        $form_sorting_value = (int) $decoded['sorting'];
+        $db_banner_sorting = (int) $entity->getSorting();
+
+
+        if(($db_banner_sorting !== $form_sorting_value)){
+            /*If User added random sort number which is greater than max sort number then max sort will be set*/
+            $max_sorting_number = $this->get('admin.helper.shoplook')->maxSortingNumber();
+            if($form_sorting_value > $max_sorting_number[0]['max_sort']) {
+                $entity->setSorting($max_sorting_number[0]['max_sort']);
+                $form_sorting_value = $entity->getSorting();
+            }
+
+            $this->get('admin.helper.shoplook')->editBannerSorting($form_sorting_value, 'update', $db_banner_sorting);
+            /*Conditions for handling Banner sorting*/
+        }
+
+
+
         $insertParent = $this->get('admin.helper.shoplook')->update($entity, $file,$decoded);
 
         /* Remove Product by id*/

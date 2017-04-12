@@ -156,8 +156,8 @@ class ShopLookHelper
 
 
     #-----------------Get all Banner which Parent id is null---------------------------------#
-    public function editBannerSorting($sorting_number, $action){
-        $result = $this->repo->editBannerSorting($sorting_number, $action);
+    public function editBannerSorting($sorting_number, $action, $old_id = 0){
+        $result = $this->repo->editBannerSorting($sorting_number, $action, $old_id);
         return $result;
     }
 
