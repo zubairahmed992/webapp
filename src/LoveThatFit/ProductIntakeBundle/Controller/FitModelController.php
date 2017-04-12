@@ -44,6 +44,7 @@ class FitModelController extends Controller {
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         #return new Response(json_encode($size_specs));
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        unset($fit_points['hip']);
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
                     'brands' => $brands,
@@ -96,6 +97,8 @@ class FitModelController extends Controller {
         $size = $size_specs['sizes'][$gender][$fit_point_values['sel_size_type']];
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        unset($fit_point_values['hip']);
+        !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,

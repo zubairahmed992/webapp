@@ -24,7 +24,7 @@ class FitModelMeasurement {
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\ProductIntakeBundle\Entity\ProductSpecification", mappedBy="fit_model_measurement")
      */
-    private $product_specification;
+    private $product_specifications;
 
       
     /**

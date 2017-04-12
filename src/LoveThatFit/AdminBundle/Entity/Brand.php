@@ -24,7 +24,7 @@ class Brand {
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\ProductIntakeBundle\Entity\ProductSpecification", mappedBy="brand")
      */
-    private $product_specification;
+    private $product_specifications;
     
     /**
      * Bidirectional (INVERSE SIDE)

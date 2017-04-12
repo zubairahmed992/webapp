@@ -194,7 +194,7 @@ class ProductSpecsController extends Controller
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
         #---------> Save to DB
-        $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), json_encode($parsed_data));
+        $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), $parsed_data);
         $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
         $this->container->get('pi.product_specification')->save($specs);
         move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());
