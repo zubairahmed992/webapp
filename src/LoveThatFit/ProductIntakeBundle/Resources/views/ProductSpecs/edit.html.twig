@@ -1,6 +1,15 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
+<style>
 
+    .tab-content{
+                display: none;
+		}
+    .tab-content.active{
+                    display: block;
+		}                
+    
+</style>
 <script>
     var fit_array=[];
     var fabric_array = [];
@@ -12,6 +21,21 @@
     var input_value  = [];  
     $(document).ready(function(){ 
         
+        $('ul.tabs li').click(function(){            
+		var tab_id = $(this).attr('data-tab');                
+		$('ul.tabs li').removeClass('active');
+		$('.tab-content').removeClass('active');
+		$(this).addClass('active');
+		$("#"+tab_id).addClass('active');
+	});
+        
+        if($('#default_tab').val()=='b'){
+                $("#opt-2").addClass('active');
+		$("#tab-2").addClass('active');            
+        }else{
+                $("#opt-1").addClass('active');
+		$("#tab-1").addClass('active');
+        }
            //-------------------------- Fit Model Validation Sizes Dimention
            {#
             $("tr#validation_fit_model").on('click', function() {
@@ -260,7 +284,7 @@
         
         $('.edit_inline').editable({
             type: 'text',
-            url: '../update_dynamic',  
+            url: $('#default_tab').val().length>0?'../../update_dynamic':'../update_dynamic',  
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
             display: function(value, response) {                
@@ -317,15 +341,25 @@
 
 </script>
    
-    <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
-    </div>
+<div class="btn-group" role="group" aria-label="..." style="float:right;">
+    <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
+</div>
 {#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}    
-
 <input type="hidden" class="fit_points" value="{{ drop_down_values['fit_model_size']|json_encode() }}" >
 <input type="hidden" class="fit_model_value" value="{{fit_model_selected_size }}" >
+<input type="hidden" id="default_tab" value="{{tab}}" >
+<ul class="nav nav-tabs tabs">
+    <li id="opt-1" data-tab="tab-1" role="presentation"><a href="#">Main</a></li>  
+    <li id="opt-2"  data-tab="tab-2" role="presentation"><a href="#">Measurements</a></li>
+</ul>
+
+<br>
+<br>
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">       
+        <div id="tab-1" class="tab-content"> 
+        {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
+           
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Clothing Type: </label>
             <div class="col-sm-4">                
@@ -443,19 +477,6 @@
             </div>
         </div>
        
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
-            <div class="col-sm-4">
-                <input value="{{parsed_data.horizontal_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
-            <div class="col-sm-4">
-                <input value="{{parsed_data.vertical_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
-            </div>
-        </div>
          <div class="form-group">
             <label class="control-label col-sm-2" for="fabric_weight">Fabric weight : </label>
             <div class="col-sm-4">
@@ -602,6 +623,27 @@
                 <input type="text" class="form-control" value="{{ parsed_data.measuring_unit }}"  readonly="ture" name="measuring_unit" placeholder="Enter measuring unit">
             </div>
         </div> 
+            <input type="submit" value="Save">     
+</div>     
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
+               
+           <div id="tab-2"  class="tab-content">
+                       
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.horizontal_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.vertical_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
+            </div>
+        </div>       
       
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Fit model size: </label>
@@ -804,8 +846,10 @@
                         </td>
                     </tr>
                 </table>
-            <input type="submit" value="Save">     
+            
              <a href="{{ path('product_intake_product_specs_undo', {'id': app.request.get('id')}) }}"><input type="Button" value="Undo"> </a> 
+            </div>           
+            
     </div>
 </form>                                
   <br>                
