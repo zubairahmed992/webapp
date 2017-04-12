@@ -27,7 +27,8 @@
 }
 
 .edt_container{
-    height: 500px !important;
+    height: 620px !important;
+    overflow: none !important;
 }
 </style>
 
@@ -55,11 +56,11 @@
     <div class="clearfix"></div>   
     <form action="{{ path('admin_shop_look_create') }}" method="post" enctype="multipart/form-data" onsubmit="submitform()">
 
-        <div id="">
+        <div style="border: 1px solid #8f9e71;">
             <div id="p_hd">Shop the Look</div>
             <div id="product_content">
                 <div id="pro_detail">
-                    <div class="">
+                    <div class="edt_container">
 
                         <div class="row-fluid show-grid">
                             <div class="span3">Shop Look Name</div>
