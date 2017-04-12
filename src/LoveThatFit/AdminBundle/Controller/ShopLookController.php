@@ -105,14 +105,8 @@ class ShopLookController extends Controller {
         $file = $_FILES["shop_model_image"];
         $entity = $this->get('admin.helper.shoplook')->find($decoded['shoplookid']);
 
-        /*if($decoded['sorting'] > $max_sorting_number[0]['max_sort']) {
-            $decoded['sorting'] = $max_sorting_number[0]['max_sort'] + 1;
-        }
-        $this->get('admin.helper.shoplook')->editBannerSorting($decoded['sorting'], 'add');*/
-
         $form_sorting_value = (int) $decoded['sorting'];
         $db_banner_sorting = (int) $entity->getSorting();
-
 
         if(($db_banner_sorting !== $form_sorting_value)){
             /*If User added random sort number which is greater than max sort number then max sort will be set*/
