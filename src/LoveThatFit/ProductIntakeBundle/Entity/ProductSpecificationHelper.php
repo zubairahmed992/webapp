@@ -54,12 +54,14 @@ class ProductSpecificationHelper {
 
     #---------------------------------   
 
-    public function createNew($title, $desc, $json) {
+    public function createNew($title, $desc, $data) {
+        $brand =  $this->container->get('admin.helper.brand')->findOneByName($data['brand']);        
         $class = $this->class;
         $c = new $class();
         $c->setTitle($title);
         $c->setDescription($desc);
-        $c->setSpecsJson($json);
+        $c->setSpecsJson(json_encode($data));        
+        $c->setBrand($brand);
         $c->setCreatedAt(new \DateTime('now'));
         $this->save($c);
         return $c;

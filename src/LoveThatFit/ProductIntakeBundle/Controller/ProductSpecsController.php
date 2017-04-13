@@ -33,7 +33,7 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id){                
+    public function editAction($id, $tab){                
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
         $ps = $this->get('pi.product_specification')->find($id);  
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
@@ -45,7 +45,7 @@ class ProductSpecsController extends Controller
          $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);
         if(isset($parsed_data['fit_model_size'])){ 
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
-            $fit_model_selected = $fit_model_selected_size->getSize(); 
+            $fit_model_selected = $fit_model_selected_size?$fit_model_selected_size->getSize():null; 
         } else { 
             $fit_model_selected = null;
             $parsed_data['fit_model_size'] = '';
@@ -66,6 +66,7 @@ class ProductSpecsController extends Controller
                     'disabled_fields' => array('clothing_type', 'brand', 'gender', 'size_title_type', 'mapping_description', 'mapping_title', 'body_type'),                    
                     'clothing_types' => $clothing_types,
                     'size_attribute' => $size_attribute,
+                    'tab' => $tab,
                 ));
     }
       
@@ -194,7 +195,7 @@ class ProductSpecsController extends Controller
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
         #---------> Save to DB
-        $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), json_encode($parsed_data));
+        $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), $parsed_data);
         $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
         $this->container->get('pi.product_specification')->save($specs);
         move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());

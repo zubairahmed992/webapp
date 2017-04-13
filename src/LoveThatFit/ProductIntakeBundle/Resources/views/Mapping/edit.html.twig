@@ -49,6 +49,13 @@
                         </select>                                  
                     </div>
                 </div>
+                 <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="mapping_title">Mapping Title : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{{ parsed_data.mapping_title is defined?parsed_data.mapping_title:'' }}"id="mapping_title" name="mapping_title" placeholder="Enter mapping title">
+                    </div>
+                </div>
                 <br>    
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="mapping_description">Mapping Description : </label>
@@ -56,13 +63,7 @@
                         <textarea name="mapping_description" class="form-control" > {{ parsed_data.mapping_description is defined?parsed_data.mapping_description:'' }} </textarea>
                     </div>
                 </div>
-                <br>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="mapping_title">Mapping Title : </label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" value="{{ parsed_data.mapping_title is defined?parsed_data.mapping_title:'' }}"id="mapping_title" name="mapping_title" placeholder="Enter mapping title">
-                    </div>
-                </div>
+               
                 <br>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
