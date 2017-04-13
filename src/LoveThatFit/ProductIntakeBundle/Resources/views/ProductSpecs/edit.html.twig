@@ -757,6 +757,7 @@
                                                 </td>
                                                 <td>
                                                     <span style="font-size:10px">
+                                                        <input type="number"  hidden readonly value="{{measurement_v.stretch_percentage | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-stretch_percentage" >
                                                         {{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%
                                                     </span>
                                                 </td>
@@ -766,7 +767,7 @@
                                                 </td>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
-                                                    {#<input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">#}
+                                                    <input type="hidden"  value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
                                                     {{measurement_v.grade_rule is defined? measurement_v.grade_rule | number_format(2, '.', ''):0}}
                                                 </td>
                                                 <td>
@@ -811,6 +812,7 @@
                                                 </td>
                                                 <td>
                                                     <span style="font-size:10px">
+                                                        <input type="number"  hidden readonly value="{{measurement_v.stretch_percentage | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-stretch_percentage" >
                                                         {{measurement_v.stretch_percentage is defined?measurement_v.stretch_percentage:0}}%
                                                     </span>
                                                 </td>
