@@ -570,8 +570,8 @@ class UserArchives
          //$width = $image_info[0];
          //$height = $image_info [1];
         if($device_type == 'iphone6'){
-            $width = 375;
-            $height = 667;
+            $width = 720;
+            $height = 1280;
         }else{
             $width = 320;
             $height = 568;

@@ -274,8 +274,8 @@ function canvas_area_hldr(){
         to: [960, 1280]
     });
     canvas_area_hldr.style = {
-        fillColor: 'green',
-        opacity: 0.5
+        fillColor: 'white',
+        opacity: 0.1
     };
     canvas_area_hldr.pivot = new Point(480,640);
     canvas_area_hldr.position = new Point(480,640);
@@ -287,7 +287,7 @@ function canvas_ref_rect(){
     });
     canv_ref_rect.style = {
         fillColor: 'red',
-        opacity: 0.5
+        opacity: 0.1
     };
     canv_ref_rect.pivot = new Point(480,640);
     canv_ref_rect.position = new Point(480,640);
@@ -724,9 +724,9 @@ function upload(){
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,
         success: function(data){
-            alert(data);
             $("#page_wrap").fadeOut(160);
-            act_btn();
+            to_image();
+            //act_btn();
         },
         failure: function(errMsg) {
             alert(errMsg);
@@ -737,6 +737,66 @@ function upload(){
 
 
 }
+
+////////////////// Shift image
+function canv_settings_before_save(){
+    project
+}
+function to_image(){
+    
+    canv_settings_before_save();
+    
+    var canvas_raster = new Raster();
+    var canvas = document.getElementById("canv_mask_makeover");
+    canvas_raster.setImage(canvas);
+    
+    var rect_area_pos = new Rectangle(120, 0, 720, 1280);
+    
+    
+    //var sub_can_area_raster = canvas.createImageData(rect_area_pos);
+    
+    var sub_can_area = canvas_raster.getSubRaster(rect_area_pos);
+    
+    console.log(sub_can_area);
+    var can_img_data = sub_can_area.toDataURL();
+    
+    document.getElementById("updated_img").src = can_img_data;
+    
+    ////// Posting image
+    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
+    var archive_id = $('#hdn_archive_id').attr('value');
+    
+    $.post(img_update_url, {
+        imageData : can_img_data,
+        archive_id : archive_id,
+        env: 'admin'
+    }, function(can_img_data) {
+        var obj_url = jQuery.parseJSON( can_img_data );
+
+        // console.log("i am checked bhai");
+
+
+        if(obj_url.status == "check"){
+
+            alert("All Done! - Not Reloading...");
+
+//            var curr_url = window.location + '';
+//
+//            curr_url_array = curr_url.split('/');
+//            if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
+//                curr_url = curr_url.split('/refresh')[0];
+//                window.location.assign(curr_url)
+//            }else{
+//                window.location.reload();
+//            }
+
+        }
+    });
+    
+}
+
 
 //main_layer = new Layer();
 //main_layer.activate();    
