@@ -1,5 +1,10 @@
 image_category:
 
+  shop_look:
+    original:
+      prefix:
+      dir:  'uploads/ltf/shop_look/'
+
   product_models:    
     original:
       prefix: 

@@ -13,7 +13,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ProductSpecification {
     
-      
+     /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="product_specifications")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $brand;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement", inversedBy="product_specifications")
+     * @ORM\JoinColumn(name="fit_model_measurement_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $fit_model_measurement;
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -84,6 +95,8 @@ class ProductSpecification {
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated_at;
+    
+   
 
     
 ###############################################################
@@ -95,6 +108,47 @@ class ProductSpecification {
      */
     public function getId() {
         return $this->id;
+    }
+    #----------------------------------------------------
+    /**
+     * Set brand
+     *
+     * @param LoveThatFit\AdminBundle\Entity\Brand $brand
+     * @return ProductSpecification
+     */
+    public function setBrand(\LoveThatFit\AdminBundle\Entity\Brand $brand = null){
+        $this->brand = $brand;    
+        return $this;
+    }
+    
+    /**
+     * Get brand
+     *     
+     * @return LoveThatFit\AdminBundle\Entity\Brand 
+     */
+    public function getBrand(){
+        return  $this->brand;            
+    }
+    #----------------------------------------------------
+    
+    /**
+     * Set fit_model_measurement
+     *
+     * @param LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement $fit_model_measurement
+     * @return ProductSpecification
+     */
+    public function setFitModelMeasurement(\LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement $fit_model_measurement = null){
+        $this->fit_model_measurement = $fit_model_measurement;    
+        return $this;
+    }
+    
+    /**
+     * Get fit_model_measurement
+     *
+     * @return LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement 
+     */
+    public function getFitModelMeasurement(){
+        return $this->fit_model_measurement;
     }
 #--------------------------------------------------------
   
@@ -175,7 +229,6 @@ class ProductSpecification {
 
     /**
      * Get clothing_type
-     *
      * @return string 
      */
     public function getClothingType() {
@@ -444,7 +497,10 @@ class ProductSpecification {
         return $directory_path;
     }
     #------------------------------------------------------------
-    public function fill($parsed){        
+    public function fill($parsed){     
+        $this->undo_specs_json = $this->specs_json;
+        $this->specs_json =  json_encode($parsed);
+        return;
         array_key_exists('style_id_number', $parsed) ? $this->style_id_number = ($parsed['style_id_number']) : '';
         array_key_exists('style_name', $parsed) ? $this->style_name = ($parsed['style_name']) : '';
         array_key_exists('title', $parsed) ? $this->title = ($parsed['title']) : '';

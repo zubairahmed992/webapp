@@ -45,13 +45,6 @@
                         </select>
                     </div>
                 </div>
-                <br>    
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="mapping_description">Mapping Description : </label>
-                    <div class="col-sm-4">
-                        <textarea name="mapping_description" class="form-control" ></textarea>
-                    </div>
-                </div>
                 <br>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="mapping_title">Mapping Title : </label>
@@ -59,6 +52,14 @@
                         <input type="text" class="form-control" id="mapping_title" name="mapping_title" placeholder="Enter mapping title">
                     </div>
                 </div>
+                <br>    
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="mapping_description">Mapping Description : </label>
+                    <div class="col-sm-4">
+                        <textarea name="mapping_description" class="form-control" ></textarea>
+                    </div>
+                </div>
+                
                 <br>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
@@ -217,11 +218,11 @@
     
                              //---------------------------------------
                               function fill_clothing_type_list(gender){        
-                                  gender=gender=='m'?'man':'women';                
+                                  data=gender=='m'? product_specs['man'].clothing_type :product_specs['women'].clothing_types;                
                                   $('#sel_clothing_type').empty();
                                   var option = '<option value="">Select </option>';
                                   str='';
-                                  $.each(product_specs[gender].clothing_type, function(val, text) {
+                                  $.each(data, function(val, text) {
                                           if(str != text){
                                       option += '<option value="'+ val + '">' + text + '</option>';
                                       str=text;

@@ -38,12 +38,16 @@ class WSCartController extends Controller
         if ($user) {
             $items = isset($decoded["items"]) ? $decoded["items"] : "0";
             if ($items != 0) {
-                $this->container->get('cart.helper.cart')->removeUserCart($user);
-                foreach ($items as $detail) {
-                    $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
+                $response = $this->container->get('cart.helper.cart')->removeUserCart($user);
+                if ($response != null) {
+                    foreach ($items as $detail) {
+                        $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
+                    }
+                    $resp = 'Items has been added to Cart Successfully';
+                    $res = $this->get('webservice.helper')->response_array(true, $resp);
+                } else {
+                    $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
                 }
-                $resp = 'Items has been added to Cart Successfully';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
             } else {
                 $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
             }
@@ -192,10 +196,13 @@ class WSCartController extends Controller
 
             /*Remove Item from wishlist */
             $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
-
-            $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
-            $resp = 'Item has been added to Cart Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
+            if ($response != null) {
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -312,9 +319,8 @@ class WSCartController extends Controller
             foreach ($items as $detail) {
                 $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
             }
-
             return true;
-        }else{
+        } else {
             return false;
         }
     }

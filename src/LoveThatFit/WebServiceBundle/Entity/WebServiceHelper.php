@@ -858,14 +858,16 @@ class WebServiceHelper {
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
             //$pc->getTitle()
-            $p['colors'][] = array(
-                'color_id' => $pc->getId(),
-                'product_id' => $product->getId(),
-                'title' => $pc->getTitle(),
-                'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
-                'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
-                'recommended' => $default_color_id == $pc->getId() ? true : false,
-            );
+            if(count($pc->getProductItems()) > 0) {
+                $p['colors'][] = array(
+                    'color_id' => $pc->getId(),
+                    'product_id' => $product->getId(),
+                    'title' => $pc->getTitle(),
+                    'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
+                    'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
+                    'recommended' => $default_color_id == $pc->getId() ? true : false,
+                );
+            }
         }
 
         $algo = new FitAlgorithm2($user, $product);
@@ -995,14 +997,16 @@ class WebServiceHelper {
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
             //$pc->getTitle()
-            $p['colors'][] = array(
-                'color_id' => $pc->getId(),
-                'product_id' => $product->getId(),
-                'title' => $pc->getTitle(),
-                'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
-                'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
-                'recommended' => $default_color_id == $pc->getId() ? true : false,
-            );
+            if(count($pc->getProductItems()) > 0) {
+                $p['colors'][] = array(
+                    'color_id' => $pc->getId(),
+                    'product_id' => $product->getId(),
+                    'title' => $pc->getTitle(),
+                    'image' => $pc->getImage() == null ? 'no-data' : $pc->getImage(),
+                    'pattern' => $pc->getPattern() == null ? 'no-data' : $pc->getPattern(),
+                    'recommended' => $default_color_id == $pc->getId() ? true : false,
+                );
+            }
         }
 
         $recommended_product_item = null;
@@ -1063,4 +1067,10 @@ class WebServiceHelper {
         $p['target'] = $product->getclothingType()->getTarget();
         return $p;
     }
+
+    public function productImageById($product_id) {
+        $products = $this->container->get('webservice.repo')->productImageById($product_id);
+        return $products;
+    }
+
 }

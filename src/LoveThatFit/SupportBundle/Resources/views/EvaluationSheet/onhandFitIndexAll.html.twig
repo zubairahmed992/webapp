@@ -1,0 +1,143 @@
+{% if products %}
+<div width="100%">
+    <div width="50%" style="float:left"><h4 id="heading"></h4></div>
+</div>
+<table class="table table-condensed table-bordered  table-hover" >
+    <tr class="evaluation_tr">
+        <th>Style Number
+            <span style="float: right;">
+                <a id="control_number_up" href="javascript:;" data-id="control_number|up" title="Asc">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a id="control_number_down" href="javascript:;" data-id="control_number|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+        <th>Clothing Type
+            <span style="float: right;">
+                <a id="clothing_type_up" href="javascript:;" data-id="clothing_type|up" title="Asc">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a id="clothing_type_down" href="javascript:;" data-id="clothing_type|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+        <th>Brand
+            <span style="float: right;">
+                <a id="brand_up" href="javascript:;" data-id="brand|up" title="Asc">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a id="brand_down" href="javascript:;" data-id="brand|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+        <th>Name
+            <span style="float: right;">
+                <a id="name_up" href="javascript:;" data-id="name|up" title="Asc">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a id="name_down" href="javascript:;" data-id="name|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+        <th>Color
+            <span style="float: right;">
+                <a id="color_up" href="javascript:;" data-id="color|up" title="Asc">
+                    <i class="icon-chevron-up">
+                </i>
+                <a id="color_down" href="javascript:;" data-id="color|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+        <th>Size</th>
+        <th>Fits</th>
+        <th>Fit Index</th>
+        <th>Rec. Size
+            <span style="float: right;">
+                <a id="rec_size_up" href="javascript:;" data-id="recommended_size|up" title="Asc">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a id="rec_size_down" href="javascript:;" data-id="recommended_size|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+        <th>Rec. Fit Index
+            <span style="float: right;">
+                <a id="rec_fit_index_up" href="javascript:;" data-id="recommended_fit_index|up" title="Asc">
+                    <i class="icon-chevron-up"></i>
+                </a>
+                <a id="rec_fit_index_down" href="javascript:;" data-id="recommended_fit_index|down" title="Desc">
+                    <i class="icon-chevron-down"></i>
+                </a>
+            </span>
+        </th>
+    </tr>
+    {% for id, p in products %} 
+    <tr>
+        <td width="10%">{{p.control_number}}</td>
+        <td width="10%">{{p.clothing_type}}</td>
+        <td width="12%">{{p.brand}}</td>
+        <td width="20%">{{p.name}}</td>
+        <td width="8%">{{p.color}}</td>
+        <td width="8%">{{p.size}}</td>
+        <td width="6%">{{p.fits}}</td>
+        <td width="8%">{{p.fit_index}}</td>
+        <td width="8%">{{p.recommended_size}}</td>
+        <td width="12%">{{p.recommended_fit_index}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<div>Products not found</div>
+{% endif %}
+<script>
+    $(document).ready(function(){
+        
+        var hideCol;
+
+        $('#control_number_up, #control_number_down, #clothing_type_up, #clothing_type_down, #brand_up, #brand_down, #name_up, #name_down, #color_up, #color_down, #size_up, #size_down, #fits_up, #fits_down, #fit_index_up, #fit_index_down, #rec_size_up, #rec_size_down, #rec_fit_index_up, #rec_fit_index_down').click(function (event){
+            
+            str = $(this).attr("data-id");
+            val = str.split("|");
+            hideCol = str.replace("|", "_");
+            user_id = $("#user_id").val();
+            var compare_url = "evaluation_sheet/onhand_all";
+
+            if (user_id != "") {
+                $('#error_attribute').html('');
+                $(".ajax_loader").show();
+                $.ajax({
+                    type: "POST",
+                    url: compare_url,
+                    data: {
+                          user_id       : user_id,
+                          sorting_col   : val[0],
+                          sorting_order : val[1]
+                        },
+                    traditional: true,
+                    success: function(response){
+                        $(".ajax_loader").hide();
+                        $('#summary_ajax').html(response);
+                        $('#heading').html('Highest Fit Index');
+
+                        //hide the button from here
+                        $("#" + hideCol).hide();
+                    },
+                    failure: function(response) {
+                        $(".ajax_loader").hide();
+                        $('#summary_ajax').html(response);
+                    }
+                });
+            } else {
+                $('#summary_ajax').html('');
+                $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+            }
+        });
+    });
+</script>
