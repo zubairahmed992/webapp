@@ -26,15 +26,16 @@
 		$('ul.tabs li').removeClass('active');
 		$('.tab-content').removeClass('active');
 		$(this).addClass('active');
-		$("#"+tab_id).addClass('active');
-	});
+		$("#tab-"+tab_id).addClass('active');                
+                $('#default_tab').val(tab_id);
+        });
         
         if($('#default_tab').val()=='b'){
-                $("#opt-2").addClass('active');
-		$("#tab-2").addClass('active');            
+                $("#opt-b").addClass('active');
+		$("#tab-b").addClass('active');            
         }else{
-                $("#opt-1").addClass('active');
-		$("#tab-1").addClass('active');
+                $("#opt-a").addClass('active');
+		$("#tab-a").addClass('active');
         }
            //-------------------------- Fit Model Validation Sizes Dimention
            {#
@@ -276,7 +277,19 @@
             }           
         })  
        #}
-               
+
+            function reload_page(){
+                tab_id=$('#default_tab').val();
+                url = window.location.href; 
+                var str = url.split("/");                
+                var tab=str[str.length-1].replace('#','');
+                if(tab =='b' || tab =='a'){
+                    var value = url.substring(url.lastIndexOf('/') + 1);                
+                    window.location.href = url.replace(value, tab_id);
+                }else{
+                    window.location.href = url.replace('#','')+'/'+tab_id;
+                }
+        }
                
         $.fn.editable.defaults.mode = 'popup'; 
         var fit_model_value = $('.fit_model_value').val(); 
@@ -284,7 +297,7 @@
         
         $('.edit_inline').editable({
             type: 'text',
-            url: $('#default_tab').val().length>0?'../../update_dynamic':'../update_dynamic',  
+            url: get_service_relative_url(),  
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
             display: function(value, response) {                
@@ -293,7 +306,9 @@
             success: function(response, newValue) {                  
             //     $(this).val(response);                     
                 //fill_table(response);
-                location.reload();
+                //var url = window.location.href; 
+                reload_page();
+                //location.reload();
                 //console.log(response);
                 //alert(response);
             }    
@@ -304,7 +319,7 @@
             source: $('.fit_points').val(), 
             name: 'fit_model_size',
             type: 'text',
-            url: '../update_dynamic',  
+            url: get_service_relative_url(),  
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
             display: function(value, response) {               
@@ -312,11 +327,15 @@
             },
             success: function(response, newValue) {  
                 //fill_table(response);
-                location.reload();
+                //location.reload();
                 //alert(response);
+                reload_page();
             }    
            });
            
+          function get_service_relative_url(){
+            return $('#default_tab').val().length>0?'../../update_dynamic':'../update_dynamic';
+      }
        
           // ------- Min Max Values Comparation 
             $(document).on("change", ".input-sm", function(){
@@ -349,15 +368,15 @@
 <input type="hidden" class="fit_model_value" value="{{fit_model_selected_size }}" >
 <input type="hidden" id="default_tab" value="{{tab}}" >
 <ul class="nav nav-tabs tabs">
-    <li id="opt-1" data-tab="tab-1" role="presentation"><a href="#">Main</a></li>  
-    <li id="opt-2"  data-tab="tab-2" role="presentation"><a href="#">Measurements</a></li>
+    <li id="opt-a" data-tab="a" role="presentation"><a href="#">Main</a></li>  
+    <li id="opt-b"  data-tab="b" role="presentation"><a href="#">Measurements</a></li>
 </ul>
 
 <br>
 <br>
    <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">       
-        <div id="tab-1" class="tab-content"> 
+        <div id="tab-a" class="tab-content"> 
         {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
            
         <div class="form-group">
@@ -629,7 +648,7 @@
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
                
-           <div id="tab-2"  class="tab-content">
+           <div id="tab-b"  class="tab-content">
                        
         <div class="form-group">
             <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
