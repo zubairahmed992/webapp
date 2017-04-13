@@ -398,6 +398,16 @@ class ProductSizeHelper {
     return $this->repo->findSizesByProductId($id);
  }
 
+ public function getSizesByProductId($id)
+ {
+    $sizes = $this->repo->getSizesByProductId($id);
+    $data  = [];
+    foreach ($sizes as $size) {
+        $data[$id][] = $size['title'];
+    }
+    return $data;
+ }
+
     public function update($entity)
     {
         $this->em->persist($entity);

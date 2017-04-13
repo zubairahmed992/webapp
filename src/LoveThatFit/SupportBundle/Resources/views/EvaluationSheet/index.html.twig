@@ -177,6 +177,39 @@ $(document).ready(function(){
     });
 
     //-----------------------------------------------------------
+    //for onhand fit index
+    $('a.onhand_fit_index_all').click(function (event){
+        event.preventDefault();
+        var compare_url = "evaluation_sheet/onhand_all";
+        if ($("#user_id").val() != "") {
+            $(".ajax_loader").show();
+            $('#error_attribute').html('');
+            $.ajax({
+                type: "POST",
+                url: compare_url,
+                data: {
+                        user_id       : $("#user_id").val(),
+                        sorting_col   : "recommended_fit_index",
+                        sorting_order : "down"
+                    },
+                traditional: true,
+                success: function(response){
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                    $('#heading').html('Highest Fit Index All Products');
+                },
+                failure: function(response) {
+                    $(".ajax_loader").hide();
+                    $('#summary_ajax').html(response);
+                }
+            });
+        } else {
+            $('#summary_ajax').html('');
+            $('#error_attribute').html('<p style="color:#ff0000">Please select User</p>');
+        }
+    });
+
+    //-----------------------------------------------------------
     $('a.print').click(function (event){
         event.preventDefault();
 
@@ -264,7 +297,8 @@ $(document).ready(function(){
             <a id='cart' class='cart' href="javascript:;">Shopping cart items </a> |
             <a id='favourite' class='favourite' href="javascript:;">Favorite items </a> |
             <a id='onhand_fit_index' class='onhand_fit_index' href="javascript:;">Highest Fit Index</a> |
-            <a id='pop_up_store' class='pop_up_store' href="javascript:;">Pop Up Store</a>
+            <a id='pop_up_store' class='pop_up_store' href="javascript:;">Pop Up Store</a> |
+            <a class='onhand_fit_index_all' href="javascript:;">Highest Fit Index All Products</a>
         {{ form_rest(userForm) }}
         </form>                 
         </div>

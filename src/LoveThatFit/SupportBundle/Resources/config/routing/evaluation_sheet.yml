@@ -35,6 +35,10 @@ support_highest_fit_index_print_pop_up:
     pattern:  /support/evaluation_sheet/onhand_print_pop_up
     defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:onhandPopUpPrint}
 
+support_highest_fit_index_all:
+    pattern:  /support/evaluation_sheet/onhand_all
+    defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:onhandAll}
+
 support_caet_print:
     pattern:  /support/evaluation_sheet/cart_print
     defaults: { _controller: LoveThatFitSupportBundle:EvaluationSheet:cartPrint}

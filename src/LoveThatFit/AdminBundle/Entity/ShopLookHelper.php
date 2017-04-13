@@ -50,7 +50,7 @@ class ShopLookHelper
     }
 
     public function save($entity,$file,$decoded) {
-        $entity->setShopModelImage($this->upload($file['name'],$file['tmp_name']));
+        $entity->setShopModelImage($this->upload($file['name'], $file['tmp_name']));
         $entity->setName($decoded['name']);
         $entity->setSorting($decoded['sorting']);
         $disabled = 0;
@@ -63,9 +63,26 @@ class ShopLookHelper
         $this->em->persist($entity);
         $this->em->flush();
         return $entity;
-        //$shopProduct-
+    }
 
 
+
+    public function update($entity,$file,$decoded) {
+        if($file['name'] != '') {
+            $entity->setShopModelImage($this->upload($file['name'], $file['tmp_name']));
+        }
+        $entity->setName($decoded['name']);
+        $entity->setSorting($decoded['sorting']);
+        $disabled = 0;
+        if(isset($decoded['disabled'])){
+            $disabled = 1;
+        }
+        $entity->setDisabled($disabled);
+        $entity->setCreatedAt(new \DateTime('now'));
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($entity);
+        $this->em->flush();
+        return $entity;
     }
 
 
@@ -139,8 +156,8 @@ class ShopLookHelper
 
 
     #-----------------Get all Banner which Parent id is null---------------------------------#
-    public function editBannerSorting($sorting_number, $action){
-        $result = $this->repo->editBannerSorting($sorting_number, $action);
+    public function editBannerSorting($sorting_number, $action, $old_id = 0){
+        $result = $this->repo->editBannerSorting($sorting_number, $action, $old_id);
         return $result;
     }
 

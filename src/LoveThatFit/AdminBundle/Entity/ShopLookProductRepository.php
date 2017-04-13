@@ -26,4 +26,24 @@ class ShopLookProductRepository extends EntityRepository
         $result_query = $query->fetchAll();
         return $result_query;
     }
+
+
+    public function removeId($product_id)
+    {
+        $shopProductTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:ShopLookProduct')->getTableName();
+        //Place query here, let's say you want all the users that have blue as their favorite color
+        $sql = "DELETE FROM $shopProductTableName WHERE shop_look_id = :shop_look_id";
+
+        //set parameters
+        //you may set as many parameters as you have on your query
+        $params['shop_look_id'] = $product_id;
+        $query = $this->getEntityManager()->getConnection()
+            ->prepare($sql);
+        $query->execute($params);
+
+        return true;
+
+    }
+
+
 }
