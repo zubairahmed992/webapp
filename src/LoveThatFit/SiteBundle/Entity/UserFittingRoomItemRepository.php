@@ -114,11 +114,11 @@ class UserFittingRoomItemRepository extends EntityRepository {
 
 
     //Delete by Product ID
-    public function deleteByUserItemByProduct($user_id, $product_id) {
+    public function deleteByUserItemByProduct($user_id, $product_id, $product_item_id) {
         $total_record = $this->getEntityManager()
             ->createQuery("DELETE LoveThatFitSiteBundle:UserFittingRoomItem ut
-                        WHERE ut.user = :user_id AND ut.product_id = :product_id"
-            )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id));
+                        WHERE ut.user = :user_id AND ut.product_id = :product_id AND ut.productitem = :product_item_id"
+            )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id, 'product_item_id' => $product_item_id));
         try {
             return $total_record->execute();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -139,7 +139,7 @@ class UserFittingRoomItemRepository extends EntityRepository {
                       cn.name               AS top_category_name,
                       c.id                  AS category_id,
                       c.name                AS category_name,
-                      ufri.product_item_id  AS product_item_id,
+                      GROUP_CONCAT(ufri.product_item_id)  AS product_item_id,
                       ufri.product_id       AS product_id,
                       ufri.qty              AS qty
                       FROM $userItemTableName ufri
@@ -148,7 +148,7 @@ class UserFittingRoomItemRepository extends EntityRepository {
                       LEFT JOIN $categoriesTableName c ON cp.categories_id = c.id
                       LEFT JOIN $categoriesTableName cn ON c.top_id = cn.id
                       where ufri.user_id = :user_id
-                      GROUP BY ufri.product_item_id
+                      GROUP BY ufri.product_id
                       ORDER BY cn.name";
 
         $params['user_id'] = $user_id;

@@ -280,8 +280,8 @@ class UserFittingRoomItemHelper {
 
 
     #------------------------------------------------------
-    public function deleteByUserItemByProduct($user, $product_id) {
-        return $this->repo->deleteByUserItemByProduct($user->getId(), $product_id);
+    public function deleteByUserItemByProduct($user, $product_id, $product_item_id) {
+        return $this->repo->deleteByUserItemByProduct($user->getId(), $product_id, $product_item_id);
     }
 
 
@@ -293,7 +293,6 @@ class UserFittingRoomItemHelper {
         $ar = array();
         $product_id = array();
         $getAllCategoriesByProductItem = $this->repo->getAllCategoriesByProductItem($user->getId());
-
         $a = 0;
         $previous_category = '';
         foreach($getAllCategoriesByProductItem as $key => $getAllCategoryByProductItem ){
@@ -305,7 +304,12 @@ class UserFittingRoomItemHelper {
                 $ar['categories'][$a]['category_id'] = $getAllCategoryByProductItem['top_category_id'];
                 $ar['categories'][$a]['name'] = $getAllCategoryByProductItem['top_category_name'];
 
-                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $getAllCategoryByProductItem['product_item_id'], $getAllCategoryByProductItem['qty'], $user);
+                //Old Code
+                //$ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $getAllCategoryByProductItem['product_item_id'], $getAllCategoryByProductItem['qty'], $user);
+
+                //New in Array
+                $product_item_id_in_array = explode(',',$getAllCategoryByProductItem['product_item_id']);
+                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $product_item_id_in_array, $getAllCategoryByProductItem['qty'], $user);
                 $previous_category = $ar['categories'][$a]['name'];
             }
         }
