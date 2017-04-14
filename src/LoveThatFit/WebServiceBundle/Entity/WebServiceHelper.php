@@ -524,6 +524,9 @@ class WebServiceHelper {
 
     public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
+        if(count($product)== 0){
+            return $this->response_array(false, 'Product not Available');
+        }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
@@ -854,6 +857,9 @@ class WebServiceHelper {
     //Method is using Version 3
     public function productDetailWithImages($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
+        if(count($product)== 0){
+            return $this->response_array(false, 'Product not Available');
+        }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
@@ -993,6 +999,9 @@ class WebServiceHelper {
     //Method is using Version 3 - Calling FitAlgo class has been removed.
     public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
+        if(count($product)== 0){
+            return $this->response_array(false, 'Product not Available');
+        }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
@@ -1019,7 +1028,9 @@ class WebServiceHelper {
             $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
 
             $product_qty = 0;
-            if($product_item == $pi->getId()){
+            //if($product_item == $pi->getId()){
+
+            if(in_array($pi->getId(), $product_item)){
                 $product_qty = (int)$qty;
             }
 
@@ -1044,7 +1055,8 @@ class WebServiceHelper {
                 //'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
                 'price' => $pi->getPrice()?$pi->getPrice():0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
-                'fitting_room_status' => $product_item == $pi->getId() ? true : false,
+                //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
+                'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
                 'qty' => $product_qty,
             );
         }

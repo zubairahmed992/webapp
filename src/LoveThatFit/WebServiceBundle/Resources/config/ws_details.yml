@@ -614,6 +614,7 @@ nws_delete_fitting_room_item:
    title: delete_to_fitting_room
    params:
      auth_token: 56565656566
+     product_item_id: 4082
      product_id: 506
 
 nws_get_all_fitting_room:
