@@ -277,7 +277,7 @@
             }           
         })  
        #}
-
+//----------------------------------------
             function reload_page(){
                 tab_id=$('#default_tab').val();
                 url = window.location.href; 
@@ -285,9 +285,9 @@
                 var tab=str[str.length-1].replace('#','');
                 if(tab =='b' || tab =='a'){
                     var value = url.substring(url.lastIndexOf('/') + 1);                
-                    window.location.href = url.replace(value, tab_id);
+                   // window.location.href = url.replace(value, tab_id);
                 }else{
-                    window.location.href = url.replace('#','')+'/'+tab_id;
+                 //   window.location.href = url.replace('#','')+'/'+tab_id;
                 }
         }
                
@@ -295,7 +295,7 @@
         var fit_model_value = $('.fit_model_value').val(); 
        (fit_model_value == "") ? "" :$('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
         
-        
+        //----------------------------------------
         
         $('.edit_inline').editable({
             type: 'text',
@@ -324,8 +324,7 @@
             url: get_service_relative_url(),  
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
-            display: function(value, response) {               
-                          
+            display: function(value, response) {                                         
             },
             success: function(response, newValue) {  
                 //fill_table(response);
@@ -343,18 +342,27 @@
                     pk: {{ product_specs.id }}                    
                 },
                 function(data, status){
-                    //alert("Data: " + data + "\nStatus: " + status);
                     reload_page();
                 });
                
                 
         });
         
-           
-          function get_service_relative_url(){
-            return $('#default_tab').val().length>0?'../../update_dynamic':'../update_dynamic';
-      }
-       
+        //----------------------------------------   
+          function get_service_relative_url(){                           
+            return has_url_additions()?'../../update_dynamic':'../update_dynamic';
+        }
+        //----------------------------------------
+       function has_url_additions(){
+            url = window.location.href; 
+            var str = url.split("/");                
+            var tab=str[str.length-1].replace('#','');
+            if(tab =='b' || tab =='a'){                    
+                return true;
+            }else{                    
+                return false;                    
+            }               
+       }
           // ------- Min Max Values Comparation 
             $(document).on("change", ".input-sm", function(){
               var min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
