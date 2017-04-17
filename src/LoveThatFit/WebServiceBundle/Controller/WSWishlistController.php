@@ -18,18 +18,14 @@ class WSWishlistController extends Controller
         if ($user) {
             $items = isset($decoded["items"]) ? $decoded["items"] : "0";
             if ($items != 0) {
-                $response = $this->container->get('cart.helper.wishlist')->removeUserWishlist($user);
-                if ($response != null) {
-                    foreach ($items as $detail) {
-                        /* Find this item on the cart and remove */
-                        $this->container->get('cart.helper.cart')->removeCartByItem($user, $detail["item_id"]);
-                        $this->container->get('cart.helper.cart')->fillWishlist($detail["item_id"], $user, $detail["quantity"]);
-                    }
-                    $resp = 'Items has been added to Wishlist Successfully';
-                    $res = $this->get('webservice.helper')->response_array(true, $resp);
-                } else {
-                    $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+                $this->container->get('cart.helper.wishlist')->removeUserWishlist($user);
+                foreach ($items as $detail) {
+                    /* Find this item on the cart and remove */
+                    $this->container->get('cart.helper.cart')->removeCartByItem($user, $detail["item_id"]);
+                    $this->container->get('cart.helper.cart')->fillWishlist($detail["item_id"], $user, $detail["quantity"]);
                 }
+                $resp = 'Items has been added to Wishlist Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
             } else {
                 $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
             }
@@ -141,14 +137,10 @@ class WSWishlistController extends Controller
             $qty = $decoded["quantity"];
 
             /* Find this item on the cart and remove */
-            $response = $this->container->get('cart.helper.cart')->removeCartByItem($user, $item_id);
-            if ($response != null) {
-                $this->container->get('cart.helper.wishlist')->fillWishlistforService($item_id, $user, $qty);
-                $resp = 'Item has been added to Wishlist Successfully';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
-            } else {
-                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
-            }
+            $this->container->get('cart.helper.cart')->removeCartByItem($user, $item_id);
+            $this->container->get('cart.helper.wishlist')->fillWishlistforService($item_id, $user, $qty);
+            $resp = 'Item has been added to Wishlist Successfully';
+            $res = $this->get('webservice.helper')->response_array(true, $resp);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -160,13 +152,11 @@ class WSWishlistController extends Controller
     {
         $items = isset($post_variable["items"]) ? $post_variable["items"] : "0";
         if ($items != 0) {
-            $response = $this->container->get('cart.helper.wishlist')->removeUserWishlist($user);
-            if ($response != null) {
-                foreach ($items as $detail) {
-                    $this->container->get('cart.helper.wishlist')->fillWishlist($detail["item_id"], $user, $detail["quantity"]);
-                }
-                return true;
+            $this->container->get('cart.helper.wishlist')->removeUserWishlist($user);
+            foreach ($items as $detail) {
+                $this->container->get('cart.helper.wishlist')->fillWishlist($detail["item_id"], $user, $detail["quantity"]);
             }
+            return true;
         }
         return false;
     }

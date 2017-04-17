@@ -280,3 +280,7 @@ nws_save_user_billing_address:
 nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddresses}
+
+ws_shop_the_look:
+    pattern:  /ws/shop_the_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLook }

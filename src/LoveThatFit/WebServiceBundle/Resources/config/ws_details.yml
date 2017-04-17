@@ -614,6 +614,7 @@ nws_delete_fitting_room_item:
    title: delete_to_fitting_room
    params:
      auth_token: 56565656566
+     product_item_id: 4082
      product_id: 506
 
 nws_get_all_fitting_room:
@@ -666,3 +667,9 @@ web_service_product_specification:
     params: 
       result: {'style_id_number':'220', 'style_name':'Blouse', 'title':'Blouse'}     
       request_type: post
+
+ws_shop_the_look:
+  pattern: /ws/shop_the_look
+  title: shop_the_look
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
