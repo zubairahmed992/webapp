@@ -20,7 +20,8 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "sandeepshetty/shopify_api": "dev-master",
-        "braintree/braintree_php": "dev-master"
+        "braintree/braintree_php": "dev-master",
+        "quaderno/quaderno": "^1.5"
     },
     "scripts": {
         "post-install-cmd": [
