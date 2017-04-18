@@ -1,0 +1,43 @@
+admin_shop_look_save:
+    pattern:  /admin/shoplook/save
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:savecategories }
+    requirements: 
+      _method: post 
+      
+#--------------- Shop Look ------------------------------------
+admin_shop_look_new:
+    pattern:  /admin/shoplook/new
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:new }
+
+#---------------  Shop Look ------------------------------------
+admin_shop_look_create:
+    pattern:  /admin/shoplook/create
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:create }
+    requirements:
+      _method: post
+
+admin_shop_look_edit:
+    pattern:  /admin/shoplook/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:edit }
+    requirements:
+      _method:  GET
+
+admin_shop_look_update:
+    pattern:  /admin/shoplook/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:update }
+
+admin_shop_look_delete:
+    pattern:  /admin/shoplook/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:delete }
+
+admin_shop_look_standards:
+    pattern:  /admin/shoplook/standards
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:standards }
+
+admin_shop_look_paginate:
+    pattern:  /admin/shoplook/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:paginate}
+
+admin_shop_look:
+    pattern:  /admin/shoplook/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:ShopLook:index ,page_number: 1, sort:id }

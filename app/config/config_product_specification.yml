@@ -386,6 +386,20 @@ constants:
       other: Other       
   
   women:
+    clothing_types:      
+      blouses: Blouse
+      tunic: Tunic
+      tee_knit: Tee knit
+      tank_knit: Tank knit     
+      jackets: Jacket
+      sweaters: Sweater      
+      trousers: Trouser     
+      jeans: Jean     
+      skirts: Skirt      
+      dresses: Dress
+      swimsuit_one_piece: Swimsuit One Piece
+      swimsuit_two_piece: Swimsuit Two Piece      
+      coats: Coat  
     clothing_type:
       blouse: Blouse
       blouses: Blouse
@@ -1301,10 +1315,13 @@ constants:
     chest: Chest
     back_waist: Back Waist
     waist: Waist
+    abdomen: Abdomen
     cf_waist: CF Waist
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    high_hip: High Hip
+    low_hip: Low Hip
     outseam: Outseam
     inseam: inseam
     thigh: Thigh

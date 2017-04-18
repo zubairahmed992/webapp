@@ -94,8 +94,12 @@ class WSSaveLookController extends Controller
         if ($user){
             $saveLookEntity = array_key_exists('look_id', $decoded) ? $this->get('savelook.helper.savelook')->findByLookId($decoded['look_id']) : null;
             if($saveLookEntity){
-                $this->get('savelook.helper.savelook')->removeUserLook( $saveLookEntity, $user );
-                $res = $this->get('webservice.helper')->response_array(true, 'User look removed successfully');
+                $response = $this->get('savelook.helper.savelook')->removeUserLook( $saveLookEntity, $user );
+                if ($response != null) {
+                    $res = $this->get('webservice.helper')->response_array(true, 'User look removed successfully');
+                } else {
+                    $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+                }
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, 'save look is not define.');
             }

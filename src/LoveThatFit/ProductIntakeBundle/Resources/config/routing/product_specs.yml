@@ -11,8 +11,8 @@ product_intake_product_specs_new:
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:new }
     
 product_intake_product_specs_edit:
-    pattern:  /product_intake/product_specs/edit/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:edit }    
+    pattern:  /product_intake/product_specs/edit/{id}/{tab}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:edit, tab: null}    
 
 product_intake_product_specs_show:
     pattern:  /product_intake/product_specs/show/{id}

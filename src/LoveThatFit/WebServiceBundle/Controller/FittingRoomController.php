@@ -18,10 +18,9 @@ class FittingRoomController extends Controller {
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {
-
             if(empty($decoded["product_item_id"]) || empty($decoded["product_id"])){
                 $resp = 'Either product id or product item id not found';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
 
@@ -36,7 +35,7 @@ class FittingRoomController extends Controller {
             $productItem = $this->get('admin.helper.productitem')->getProductItemById($item_id);
             if($productItem == null){
                 $resp = 'Product Item not entered Properly';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
             $product = $productItem->getProduct();
@@ -44,13 +43,15 @@ class FittingRoomController extends Controller {
 
             if($product_id_for_verification != $product_id){
                 $resp = 'Product Item not Match with Product Id';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
 
-            //Checked that item is already then remove this
-            $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
+            //Get ProductItem Id
+            $product_item_id = $productItem->getId();
 
+            //Checked that item is already then remove this
+            $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id, $product_item_id);
             //Add entry in userfittingroom table
             $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItemWithProductId($user, $productItem, $product, $qty);
             $resp = 'Item has been Add/Update to Fitting Room Successfully';
@@ -78,12 +79,35 @@ class FittingRoomController extends Controller {
                 return new Response($res);
             }
 
+
             $product_id = $decoded["product_id"];
+            $product_item_id = $decoded["product_item_id"];
+
+            //Get Product item Object by item_id and also verify thhe product item and product id
+            $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
+            if($productItem == null){
+                $resp = 'Product Item not entered Properly';
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
+                return new Response($res);
+            }
+
+            $product = $productItem->getProduct();
+            $product_id_for_verification = $product->getId();
+
+            if($product_id_for_verification != $product_id){
+                $resp = 'Product Item not Match with Product Id';
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
+                return new Response($res);
+            }
 
             //Checked that item is already then remove this
-            $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id);
-            $resp = 'Products has been deleted from Fitting Room Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id, $product_item_id);
+            if ($response != null) {
+                $resp = 'Products has been deleted from Fitting Room Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "Products item or Product not deleted from Fitting Room");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
