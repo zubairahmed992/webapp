@@ -26,6 +26,7 @@
           <a href="{{ path('admin_user_mask_compare_index') }}" >Mask Visual Compare</a>
           <a href="{{ path('admin_pending_user') }}" >Pending Users</a>
         </div>
+
       {% endblock %}
       <h1 style="float:left;">Users</h1>
       <div class="clearfix"></div>
@@ -41,6 +42,16 @@
       <p style="color:#ff0000">Duplicate users are showing in red colors</p>
       <div class="clearfix"></div>
     </div>
+    
+      <div class="adjustment_links" style="margin-right: 6%; float:right;">
+        <form action="{{ path('admin_users_export') }}" method="post" enctype="multipart/form-data">
+          From: <input type="text" id="from" name="from">
+          To: <input type="text" id="to" name="to">
+          <input type="submit" name="" class="btn export_btn" value="Export Users" />
+          {# <a href="{{ path('') }}" class="btn export_btn">Export Users</a> #}
+        </form>
+      </div>
+    <div class="clearfix"></div>
     <div class="bs-docs-grid">
        
         <div class="container">
@@ -205,5 +216,39 @@
     });
     
 });
+  $( function() {
+    var dateFormat = "mm/dd/yy",
+      from = $( "#from" )
+        .datepicker({
+          //defaultDate: "+1w",
+          changeMonth: true,
+          changeYear: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        //defaultDate: "+1w",
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+ 
+      return date;
+    }
+  });
+  
 </script>
 {% endblock %}

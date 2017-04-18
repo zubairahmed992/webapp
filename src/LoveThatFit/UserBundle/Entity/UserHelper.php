@@ -782,7 +782,25 @@ class UserHelper {
         $this->container->get('user.helper.user')->saveUser($user);
          return true;      
   }
-  public function makeLike($user, $product_item){
+  
+	/*public function makeLike($user, $p, $items, $status,$page)
+    {
+        foreach($user->getProductItems() as $pi){
+            if ($pi->getId()==$items->getId()){
+                return true;
+            }
+        }
+
+        $user->addProductItem($items);
+        $items->addUser($user);
+        $items->addUser($user);
+        $this->container->get('admin.helper.productitem')->save($items);
+        $this->container->get('user.helper.user')->saveUser($user);
+        $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $items, $status,$page);
+        return true;
+    }*/
+  
+  public function makeLike($user, $product_item, $status, $page){
 
         foreach($user->getProductItems() as $pi){
             if ($pi->getId()==$product_item->getId()){
@@ -793,6 +811,8 @@ class UserHelper {
         $product_item->addUser($user);
         $this->container->get('admin.helper.productitem')->save($product_item);
         $this->container->get('user.helper.user')->saveUser($user);
+        $p = $product_item->getProduct();
+        $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $product_item, $status,$page);
         return true;
   }
 
@@ -1064,5 +1084,10 @@ class UserHelper {
 
     public function findByEventName($event_name) {
         return $this->repo->findByEventName($event_name);
+    }
+
+    public function findUserList($start_date, $end_date)
+    {
+        return $this->repo->findUserList($start_date, $end_date);
     }
 }

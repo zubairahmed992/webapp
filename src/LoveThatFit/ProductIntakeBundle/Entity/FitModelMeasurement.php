@@ -20,6 +20,12 @@ class FitModelMeasurement {
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      * */
     private $brand;  
+    
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\ProductIntakeBundle\Entity\ProductSpecification", mappedBy="fit_model_measurement")
+     */
+    private $product_specifications;
+
       
     /**
      * @ORM\Id

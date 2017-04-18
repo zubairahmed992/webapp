@@ -1,24 +1,27 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-use Doctrine\ORM\Query\ResultSetMapping;
+
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * ProductRepository
  */
-class ProductRepository extends EntityRepository {
+class ProductRepository extends EntityRepository
+{
 
-    public function findAllProduct($page_number = 0, $limit = 0, $sort = 'id') {
+    public function findAllProduct($page_number = 0, $limit = 0, $sort = 'id')
+    {
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC');
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC')
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC')
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
         try {
             return $query->getResult();
@@ -29,10 +32,11 @@ class ProductRepository extends EntityRepository {
 
     /* ------------------------------------------------------------------ */
 
-    public function countAllRecord() {
+    public function countAllRecord()
+    {
 
         $total_record = $this->getEntityManager()
-                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p');
+            ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p');
         try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -40,66 +44,68 @@ class ProductRepository extends EntityRepository {
         }
     }
 //-------------------------------------------------------------------------------------
-    public function listAllProduct($page_number = 0, $limit = 0, $sort = 'id') {
+    public function listAllProduct($page_number = 0, $limit = 0, $sort = 'id')
+    {
 
         if ($limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p   ORDER BY p.' . $sort . ' ASC');
-        }else{
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p   ORDER BY p.' . $sort . ' ASC');
+        } else {
             if ($page_number <= 0) {
-                    $query = $this->getEntityManager()
+                $query = $this->getEntityManager()
                     ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  ORDER BY p.' . $sort . ' ASC')
                     ->setMaxResults($limit);
-            }else{
-                    $query = $this->getEntityManager()
+            } else {
+                $query = $this->getEntityManager()
                     ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  ORDER BY p.' . $sort . ' ASC')
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
             }
         }
-        
+
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return "null";
         }
     }
-    
+
     //-------------------------------------------------------------------------------------
-    public function listProductsByGender($gender, $page_number = 0, $limit = 0, $sort = 'id') {
+    public function listProductsByGender($gender, $page_number = 0, $limit = 0, $sort = 'id')
+    {
 
         if ($limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  Join
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  Join
                         LoveThatFitAdminBundle:ClothingType c
                         WITH p.clothing_type=c.id
-                        WHERE p.gender = :gender 
+                        WHERE p.gender = :gender
                         ORDER BY p.clothing_type ASC')
-                    ->setParameter('gender', $gender);
-        }else{
+                ->setParameter('gender', $gender);
+        } else {
             if ($page_number <= 0) {
-                    $query = $this->getEntityManager()
+                $query = $this->getEntityManager()
                     ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p Join
                         LoveThatFitAdminBundle:ClothingType c
                         WITH p.clothing_type=c.id
-                        WHERE p.gender = :gender 
+                        WHERE p.gender = :gender
                         ORDER BY p.clothing_type ASC')
-                    ->setParameter('gender', $gender)        
+                    ->setParameter('gender', $gender)
                     ->setMaxResults($limit);
                 echo $query->getSQL();die;
-            }else{
-                    $query = $this->getEntityManager()
+            } else {
+                $query = $this->getEntityManager()
                     ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p Join
                         LoveThatFitAdminBundle:ClothingType c
                          WITH p.clothing_type=c.id
-                        WHERE p.gender = :gender 
+                        WHERE p.gender = :gender
                         ORDER BY p.clothing_type ASC')
                     ->setParameter('gender', $gender)
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
             }
         }
-        
+
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -107,7 +113,8 @@ class ProductRepository extends EntityRepository {
         }
     }
     //-------------------------------------------------------------------------------------
-    public function listProductsByIds($ids) {
+    public function listProductsByIds($ids)
+    {
         $query = $this->getEntityManager()
             ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.id IN (:ids)')->setParameter('ids', $ids);
         try {
@@ -117,12 +124,13 @@ class ProductRepository extends EntityRepository {
         }
     }
     //-------------------------------------------------------------------------------------
-    public function listProductsByGenderAndIds($gender, $ids) {        
+    public function listProductsByGenderAndIds($gender, $ids)
+    {
         $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p 
+            ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p
                     WHERE p.id IN (:ids) AND
                     p.gender = :gender')
-                ->setParameters(array('id' => $ids, 'gender' => $gender));        
+            ->setParameters(array('id' => $ids, 'gender' => $gender));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -131,24 +139,25 @@ class ProductRepository extends EntityRepository {
     }
     /* --------------------------------------------------------- */
 
-    public function findByGender($gender, $page_number = 0, $limit = 0) {
+    public function findByGender($gender, $page_number = 0, $limit = 0)
+    {
         if ($page_number <= 0 || $limit <= 0) {
 
             $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             WHERE p.gender = :gender
             AND p.disabled=0"
-                            )->setParameter('gender', $gender);
+                )->setParameter('gender', $gender);
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             WHERE p.gender = :gender
             AND p.disabled=0 AND p.displayProductColor!=''"
-                    )->setParameter('gender', $gender)
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                )->setParameter('gender', $gender)
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
 
         try {
@@ -160,28 +169,29 @@ class ProductRepository extends EntityRepository {
 
     //-----------------------------------------------------------------
 
-    public function findByGenderLatest($gender, $page_number = 0, $limit = 0) {
+    public function findByGenderLatest($gender, $page_number = 0, $limit = 0)
+    {
         if ($page_number <= 0 || $limit <= 0) {
 
             $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             LEFT JOIN p.retailer r
             WHERE p.gender = :gender AND p.disabled=0 AND b.disabled=0 AND p.displayProductColor!=''
             AND (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0)) ORDER BY p.created_at DESC"
-                            )->setParameter('gender', $gender);
+                )->setParameter('gender', $gender);
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             LEFT JOIN p.retailer r
             WHERE p.gender = :gender AND p.disabled=0 AND b.disabled=0 AND p.brand.disabled=0 AND p.displayProductColor!=''
             AND (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0)) ORDER BY p.created_at DESC"
-                    )->setParameter('gender', $gender)
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                )->setParameter('gender', $gender)
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
 
         try {
@@ -191,18 +201,19 @@ class ProductRepository extends EntityRepository {
         }
     }
     #_-----------------------------------------------------------------
-    public function findByGenderRandom($gender, $limit) {
-        
-        $sql = "SELECT * FROM product p WHERE p.gender = '".$gender."' AND p.disabled=0 AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT ".$limit;
-        
+    public function findByGenderRandom($gender, $limit)
+    {
+
+        $sql = "SELECT * FROM product p WHERE p.gender = '" . $gender . "' AND p.disabled=0 AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT " . $limit;
+
         $rsm = new ResultSetMapping;
         $rsm->addEntityResult('LoveThatFit\AdminBundle\Entity\Product', 'p');
         $rsm->addFieldResult('p', 'id', 'id');
-        
+
         $query = $this->getEntityManager()
-                    ->createNativeQuery($sql,$rsm)
-                    ->setParameter('gender', $gender);
-        
+            ->createNativeQuery($sql, $rsm)
+            ->setParameter('gender', $gender);
+
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -212,27 +223,27 @@ class ProductRepository extends EntityRepository {
 
 //-----------------------------------------------------------------
 
-    public function findByGenderBrand($gender, $brand_id, $page_number = 0, $limit = 0) {
+    public function findByGenderBrand($gender, $brand_id, $page_number = 0, $limit = 0)
+    {
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.id = :id
             AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                            )->setParameters(array('id' => $brand_id, 'gender' => $gender));
+                )->setParameters(array('id' => $brand_id, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.id = :id
             AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                    )->setParameters(array('id' => $brand_id, 'gender' => $gender))
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                )->setParameters(array('id' => $brand_id, 'gender' => $gender))
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
-
 
         try {
             return $query->getResult();
@@ -243,26 +254,27 @@ class ProductRepository extends EntityRepository {
 
 //-----------------------------------------------------------------
 
-    public function findByGenderClothingType($gender, $clothing_type_id, $page_number = 0, $limit = 0) {
+    public function findByGenderClothingType($gender, $clothing_type_id, $page_number = 0, $limit = 0)
+    {
         if ($page_number <= 0 || $limit <= 0) {
 
             $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
             WHERE ct.id = :clothing_type_id
             AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                            )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender));
+                )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
             WHERE ct.id = :clothing_type_id
             AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                    )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender))
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender))
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
 
         try {
@@ -274,13 +286,14 @@ class ProductRepository extends EntityRepository {
 
 //-----------------------------------------------------------------
 
-    public function findSampleClothingTypeGender($gender) {
+    public function findSampleClothingTypeGender($gender)
+    {
         $query = $this->getEntityManager()
-                        ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
             WHERE p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                        )->setParameter('gender', $gender);
+            )->setParameter('gender', $gender);
 
         try {
             return $query->getResult();
@@ -290,16 +303,16 @@ class ProductRepository extends EntityRepository {
     }
 //-----------------------------------------------------------------
 
-    public function findByTitleBrandName($product_title, $brand_name) {
-        
+    public function findByTitleBrandName($product_title, $brand_name)
+    {
+
         $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.name = :brand_name
             AND p.title = :product_title AND p.disabled=0 AND p.disabled=0"
-                            )->setParameters(array('brand_name' => $brand_name, 'product_title' => $product_title));
-        
+            )->setParameters(array('brand_name' => $brand_name, 'product_title' => $product_title));
 
         try {
             return $query->getResult();
@@ -308,15 +321,16 @@ class ProductRepository extends EntityRepository {
         }
     }
 //-----------------------------------------------------------------
-    public function productList() {
+    public function productList()
+    {
 
         $query = $this->getEntityManager()
-                ->createQuery("
+            ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.disabled,ct.name as clothing_type , b.name as brand_name,
       b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
-      FROM LoveThatFitAdminBundle:Product p 
+      FROM LoveThatFitAdminBundle:Product p
       JOIN p.clothing_type ct
-      JOIN p.brand b 
+      JOIN p.brand b
       JOIN p.product_colors pc
       where p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''
       ");
@@ -329,18 +343,19 @@ class ProductRepository extends EntityRepository {
     }
 
     //-------------------------------------------------------------------------
-    public function productListByBrand($brand_id, $gender) {
+    public function productListByBrand($brand_id, $gender)
+    {
         $query = $this->getEntityManager()->createQuery("
       SELECT p.id,p.name,p.adjustment,p.disabled,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
-      FROM LoveThatFitAdminBundle:Product p 
+      FROM LoveThatFitAdminBundle:Product p
       JOIN p.clothing_type ct
-      JOIN p.brand b 
+      JOIN p.brand b
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
       AND b.id = :brand_id AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                        )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
+        )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -348,19 +363,20 @@ class ProductRepository extends EntityRepository {
         }
     }
 //-------------------------------------------------------------------------------------
-    public function productListByClothingType($clothing_type_id, $gender) {
+    public function productListByClothingType($clothing_type_id, $gender)
+    {
         $query = $this->getEntityManager()
-                        ->createQuery("
+            ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.disabled,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
-      FROM LoveThatFitAdminBundle:Product p 
+      FROM LoveThatFitAdminBundle:Product p
       JOIN p.clothing_type ct
-      JOIN p.brand b 
+      JOIN p.brand b
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                        )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
+            )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -368,20 +384,21 @@ class ProductRepository extends EntityRepository {
         }
     }
 //-------------------------------------------------------------------------------------
-    public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender) {
+    public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender)
+    {
         $query = $this->getEntityManager()
-                        ->createQuery("
+            ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.disabled=0,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
-      FROM LoveThatFitAdminBundle:Product p 
+      FROM LoveThatFitAdminBundle:Product p
       JOIN p.clothing_type ct
-      JOIN p.brand b 
+      JOIN p.brand b
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id
       AND b.id = :brand_id AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                        )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id, 'brand_id' => $brand_id));
+            )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id, 'brand_id' => $brand_id));
 
         try {
             return $query->getResult();
@@ -392,81 +409,78 @@ class ProductRepository extends EntityRepository {
 
 //-------------------------------------------------------------------------------------
 
- public function findProductItemByUser($user_id , $page_number=0 , $limit=0) {
-            $query = $this->getEntityManager()
-                        ->createQuery("
+    public function findProductItemByUser($user_id, $page_number = 0, $limit = 0)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p
      JOIN p.product_items pi
      JOIN pi.product_color pc
      JOIN pi.product_size ps
      JOIN pi.users u
      WHERE
-     u.id = :id"  )->setParameters(array('id' => $user_id)) ;
+     u.id = :id")->setParameters(array('id' => $user_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
 
-    
-//-------------------------------------------------------------------------------------    
+//-------------------------------------------------------------------------------------
     public function countMyCloset($user_id)
     {
-        $total_record= $this->getEntityManager()
-	   ->createQuery("SELECT p FROM LoveThatFitAdminBundle:ProductItem p
+        $total_record = $this->getEntityManager()
+            ->createQuery("SELECT p FROM LoveThatFitAdminBundle:ProductItem p
       JOIN p.users u
       WHERE
-      u.id = :id"      
-                        )->setParameters(array('id' => $user_id));
-	  try 
-	    {
-		 return $total_record->getResult();
-		}
-		catch (\Doctrine\ORM\NoResultException $e) 
-		 {
-		   return null;
-		 }						
-	  } 
-    
-//-------------------------------------------------------------------------------------    
+      u.id = :id"
+            )->setParameters(array('id' => $user_id));
+        try
+        {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+//-------------------------------------------------------------------------------------
     public function findPrductByGender($gender)
     {
-     $query = $this->getEntityManager()
-        ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p      
-        WHERE        
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p
+        WHERE
         p.gender=:gender"
-                        )
-             ->setParameter('gender',$gender);
+            )
+            ->setParameter('gender', $gender);
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
+//-------------------------------------------------------------------------------------
     public function findPrductByType($target)
     {
         $query = $this->getEntityManager()
-                        ->createQuery("
+            ->createQuery("
      SELECT p FROM LoveThatFitAdminBundle:Product p
-     JOIN p.clothing_type ct     
+     JOIN p.clothing_type ct
      WHERE
-     ct.target = :target"  )->setParameters(array('target' => $target)) ;
+     ct.target = :target")->setParameters(array('target' => $target));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
+//-------------------------------------------------------------------------------------
     public function findPrductByBrand()
     {
         $query = $this->getEntityManager()
-                        ->createQuery("
+            ->createQuery("
      SELECT count(p.brand) as brand,b.name FROM LoveThatFitAdminBundle:Product p
-     JOIN p.brand b group by b.name    
+     JOIN p.brand b group by b.name
      ");
         try {
             return $query->getResult();
@@ -474,209 +488,214 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
-    public function findListAllProduct() {
-     $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p');
+//-------------------------------------------------------------------------------------
+    public function findListAllProduct()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
-    public function findProductByItemId($product_item_id) {
-     $query = $this->getEntityManager()
-                        ->createQuery("
+//-------------------------------------------------------------------------------------
+    public function findProductByItemId($product_item_id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT p FROM LoveThatFitAdminBundle:Product p
-     JOIN p.product_items pi     
+     JOIN p.product_items pi
      WHERE
-     p.id=:product_id"  )->setParameters(array('product_id' => $product_item_id)) ;
+     p.id=:product_id")->setParameters(array('product_id' => $product_item_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-    
- #--------------------------------Web Service for Product list ------------------------#
-    
-         public function newproductDetailDBStructureWebService($gender,$date_format) {
-             if($date_format){
-                       $query = $this->getEntityManager()
-                             ->createQuery("
+
+    #--------------------------------Web Service for Product list ------------------------#
+
+    public function newproductDetailDBStructureWebService($gender, $date_format)
+    {
+        if ($date_format) {
+            $query = $this->getEntityManager()
+                ->createQuery("
            SELECT  p.id as productId,pc.title as colorTitle,pc.pattern as pattern, pc.image as colorImage,ps.body_type as bodyType,ps.id as sizeId,
            ps.title as sizeTitle, pi.id as itemId, pi.image as itemImage
-           FROM LoveThatFitAdminBundle:Product p 
+           FROM LoveThatFitAdminBundle:Product p
            JOIN p.product_items pi
            JOIN pi.product_color pc
            JOIN pi.product_size ps
-           WHERE  
+           WHERE
            pi.image!='' AND
-           p.disabled=0 AND  
+           p.disabled=0 AND
            p.gender=:gender AND
            p.updated_at>=:date_format AND
-           p.disabled=0 
-           AND 
-           p.displayProductColor!='' ")->setParameters (array('gender'=>$gender,'date_format'=>$date_format));
-             try {
-                 return $query->getResult();
-             } catch (\Doctrine\ORM\NoResultException $e) {
-                 return null;
+           p.disabled=0
+           AND
+           p.displayProductColor!='' ")->setParameters(array('gender' => $gender, 'date_format' => $date_format));
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
 
-             }
-                 
-             }else{
-                    $query = $this->getEntityManager()
-                             ->createQuery("
+            }
+
+        } else {
+            $query = $this->getEntityManager()
+                ->createQuery("
            SELECT  p.id as productId,pc.title as colorTitle,pc.pattern as pattern, pc.image as colorImage,ps.body_type as bodyType,ps.id as sizeId,
      ps.title as sizeTitle, pi.id as itemId, pi.image as itemImage
-           FROM LoveThatFitAdminBundle:Product p 
+           FROM LoveThatFitAdminBundle:Product p
            JOIN p.product_items pi
            JOIN pi.product_color pc
            JOIN pi.product_size ps
-           WHERE  
+           WHERE
            pi.image!='' AND
-           p.disabled=0 AND  
+           p.disabled=0 AND
            p.gender=:gender AND
-           p.disabled=0 
-           AND 
+           p.disabled=0
+           AND
            p.displayProductColor!='' ")->setParameter('gender', $gender);
-             try {
-                 return $query->getResult();
-             } catch (\Doctrine\ORM\NoResultException $e) {
-                 return null;
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
 
-             }
+            }
+        }
+
     }
 
-    }
+    public function newproductListingWebService($gender, $date_format = null)
+    {
+        if ($date_format) {
 
-
-    
-    public function newproductListingWebService($gender,$date_format=Null) {
-        if($date_format){
-         
             return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->innerJoin('p.brand', 'b')
-                        ->where('p.gender=:gender')
-                        ->andWhere('p.updated_at>=:update_date')
-                        ->andWhere("p.displayProductColor!=''")
-                        ->andWhere ('p.disabled=0')
-                        ->groupBy('p.id')
-                        ->setParameters(array('gender' => $gender,'update_date'=>$date_format))
-                        ->getQuery()
-                        ->getResult();
-            
-            
-        }else{
-         
-        return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->innerJoin('p.brand', 'b')
-                        ->where('p.gender=:gender')
-                        ->andWhere("p.displayProductColor!=''")
-                        ->andWhere ('p.disabled=0')
-                        ->groupBy('p.id')
-                        ->setParameters(array('gender' => $gender))
-                        ->getQuery()
-                        ->getResult();
-    }}
+                ->createQueryBuilder()
+                ->select('p.id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.product_colors', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')
+                ->where('p.gender=:gender')
+                ->andWhere('p.updated_at>=:update_date')
+                ->andWhere("p.displayProductColor!=''")
+                ->andWhere('p.disabled=0')
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
+                ->getQuery()
+                ->getResult();
 
- public function findProductByBrandWebService($id, $gender) {
+        } else {
+
+            return $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select('p.id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.product_colors', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')
+                ->where('p.gender=:gender')
+                ->andWhere("p.displayProductColor!=''")
+                ->andWhere('p.disabled=0')
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender))
+                ->getQuery()
+                ->getResult();
+        }}
+
+    public function findProductByBrandWebService($id, $gender)
+    {
 
         return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->innerJoin('p.brand', 'b')
-                        ->where('p.gender=:gender')
-                        ->andWhere('b.id=:brand_id')
-                        ->groupBy('p.id')
-                        ->setParameters(array('gender' => $gender, 'brand_id' => $id))
-                        ->getQuery()
-                        ->getResult();
+            ->createQueryBuilder()
+            ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.product_colors', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->where('p.gender=:gender')
+            ->andWhere('b.id=:brand_id')
+            ->groupBy('p.id')
+            ->setParameters(array('gender' => $gender, 'brand_id' => $id))
+            ->getQuery()
+            ->getResult();
     }
 
 #--------------------------------------------------------------------------------------------#
 
-    public function findProductByClothingTypeWebService($id, $gender) {
+    public function findProductByClothingTypeWebService($id, $gender)
+    {
 
         return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->where('p.gender=:gender')
-                        ->andWhere('ct.id=:clothing_type_id')
-                        ->groupBy('p.id')
-                        ->setParameters(array('gender' => $gender, 'clothing_type_id' => $id))
-                        ->getQuery()
-                        ->getResult();
+            ->createQueryBuilder()
+            ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.product_colors', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->where('p.gender=:gender')
+            ->andWhere('ct.id=:clothing_type_id')
+            ->groupBy('p.id')
+            ->setParameters(array('gender' => $gender, 'clothing_type_id' => $id))
+            ->getQuery()
+            ->getResult();
     }
 #---------------------------------------------------------------------------------------------------------#
-    public function findLattestProductWebService($gender) {
-         return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->where('p.gender=:gender')
-                        ->andWhere('p.disabled=0')
-                        ->andWhere("p.displayProductColor!=''")
-                        ->groupBy('p.id')
-                        ->orderBy('p.updated_at','desc')
-                        ->setMaxResults(10)
-                        ->setParameter('gender', $gender)
-                        ->getQuery()
-                        ->getResult();
-         
-    }
- #--------------------------------------------------------------------------------------------------------------#
-  public function findhottestProductWebService($gender) {
-         return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.user_item_try_history','uih')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->where('p.gender=:gender')
-                        ->andWhere('p.disabled=0')
-                        ->andWhere("p.displayProductColor!=''")
-                        ->groupBy('uih.product')
-                        ->orderBy('uih.count','DESC')
-                        ->setParameter('gender', $gender)
-                        ->getQuery()
-                        ->getResult();                              
+    public function findLattestProductWebService($gender)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.product_colors', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->where('p.gender=:gender')
+            ->andWhere('p.disabled=0')
+            ->andWhere("p.displayProductColor!=''")
+            ->groupBy('p.id')
+            ->orderBy('p.updated_at', 'desc')
+            ->setMaxResults(10)
+            ->setParameter('gender', $gender)
+            ->getQuery()
+            ->getResult();
 
-    }   
+    }
+    #--------------------------------------------------------------------------------------------------------------#
+    public function findhottestProductWebService($gender)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.user_item_try_history', 'uih')
+            ->innerJoin('p.product_colors', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->where('p.gender=:gender')
+            ->andWhere('p.disabled=0')
+            ->andWhere("p.displayProductColor!=''")
+            ->groupBy('uih.product')
+            ->orderBy('uih.count', 'DESC')
+            ->setParameter('gender', $gender)
+            ->getQuery()
+            ->getResult();
+
+    }
 #-----------------------------------Product Detail---------------------------------------#
-     public function productDetail($product_id) {
+    public function productDetail($product_id)
+    {
         $query = $this->getEntityManager()
-                        ->createQuery("SELECT
+            ->createQuery("SELECT
       p.id as product_id,p.name as product_name,p.description as product_description,p.gender as product_gender,
      ct.name as clothing_type ,ct.target as clothing_target ,
       b.name as brand_name,b.id as brand_id
-      FROM LoveThatFitAdminBundle:Product p 
+      FROM LoveThatFitAdminBundle:Product p
       JOIN p.clothing_type ct
-      JOIN p.brand b 
-      WHERE  
-    p.disabled=0 AND  
+      JOIN p.brand b
+      WHERE
+    p.disabled=0 AND
     p.id=:id AND p.disabled=0 AND p.displayProductColor!=''")->setParameter('id', $product_id);
         try {
             return $query->getResult();
@@ -685,11 +704,12 @@ class ProductRepository extends EntityRepository {
 
         }
     }
- 
-  #--------------------------------------------------------------------------------------------#  
-    public function productDetails($product_id) {
+
+    #--------------------------------------------------------------------------------------------#
+    public function productDetails($product_id)
+    {
         $query = $this->getEntityManager()
-                        ->createQuery("
+            ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.description,p.gender,
       ct.name as clothing_type ,ct.target as clothing_target ,
       b.name as brand_name,b.id as brand_id,b.image as brand_image,pc.title as color_title,
@@ -699,14 +719,14 @@ class ProductRepository extends EntityRepository {
       ps.length as size_lenght,ps.waist as size_waist,
       ct.id as clothing_type_id, pc.image as product_image,
       pi.id as porduct_item_id, ps.id as product_size_id , pc.id as prodcut_color_id
-      FROM LoveThatFitAdminBundle:Product p 
+      FROM LoveThatFitAdminBundle:Product p
       JOIN p.clothing_type ct
-      JOIN p.brand b 
+      JOIN p.brand b
       JOIN p.product_items pi
       JOIN pi.product_color pc
       JOIN pi.product_size ps
-      WHERE  
-    p.disabled=0 AND  
+      WHERE
+    p.disabled=0 AND
     p.id=:id AND p.disabled=0 AND p.displayProductColor!=''")->setParameter('id', $product_id);
         try {
             return $query->getResult();
@@ -715,10 +735,11 @@ class ProductRepository extends EntityRepository {
 
         }
     }
-#-------------------User Favourite List Web Service-----------------------------#     
-    public function favouriteByUser($user_id) {
+#-------------------User Favourite List Web Service-----------------------------#
+    public function favouriteByUser($user_id)
+    {
         $query = $this->getEntityManager()
-                        ->createQuery("
+            ->createQuery("
      SELECT p.id as product_id,pi.id as id,p.name as name,ct.target as target,b.name as description,ps.title,pc.image as product_image,pi.image as fitting_room_image FROM LoveThatFitAdminBundle:Product p
      JOIN p.product_items pi
      JOIN p.clothing_type ct
@@ -735,185 +756,185 @@ class ProductRepository extends EntityRepository {
         }
     }
 
-//-------------------------------------------------------------------------------------    
-    
- public function tryOnHistoryWebService($user_id) {
-         
-  return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select("p.id as productId ,p.name as productName,b.id as brandId,pc.id as colorId,ps.id as sizeId,ps.title as sizeTitle, pc.title as colorTitle,p.name as name,p.description as des,ct.target as target,pc.image as productImage,b.name as brandName, pi.image as fittingRoomImage, pi.id as itemId, 'null' as retailer,uih.updated_at ")
-                        ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
-                        ->innerJoin('pi.product','p')
-                        ->innerJoin('p.brand', 'b')
-                        ->innerJoin('pi.product_color','pc')
-                        ->innerJoin('pi.product_size','ps')
-                        ->innerJoin('pi.user_item_try_history','uih')
-                        ->innerJoin('p.clothing_type','ct')
-                        ->where('uih.user = :id')
-                        ->orderBy('uih.updated_at','DESC')
-                        ->setMaxResults(20)
-                        ->setParameter('id', $user_id)
-                        ->getQuery()
-                        ->getResult(); 
+//-------------------------------------------------------------------------------------
+
+    public function tryOnHistoryWebService($user_id)
+    {
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select("p.id as productId ,p.name as productName,b.id as brandId,pc.id as colorId,ps.id as sizeId,ps.title as sizeTitle, pc.title as colorTitle,p.name as name,p.description as des,ct.target as target,pc.image as productImage,b.name as brandName, pi.image as fittingRoomImage, pi.id as itemId, 'null' as retailer,uih.updated_at ")
+            ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
+            ->innerJoin('pi.product', 'p')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('pi.product_color', 'pc')
+            ->innerJoin('pi.product_size', 'ps')
+            ->innerJoin('pi.user_item_try_history', 'uih')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->where('uih.user = :id')
+            ->orderBy('uih.updated_at', 'DESC')
+            ->setMaxResults(20)
+            ->setParameter('id', $user_id)
+            ->getQuery()
+            ->getResult();
     }
-#---------------------------------End of Web Service----------------------------------#   
-     public function findProductByTitle($name) {
+#---------------------------------End of Web Service----------------------------------#
+    public function findProductByTitle($name)
+    {
         $record = $this->getEntityManager()
-                        ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p    
+            ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p
                                 WHERE p.name = :name")
-                        ->setParameters(array('name' => ucwords($name)));
+            ->setParameters(array('name' => ucwords($name)));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-//-------------------------------------------------------------------------------------    
+
+//-------------------------------------------------------------------------------------
     public function findMostTriedOnByGender($gender, $page_number = 0, $limit = 0)
-    {        
+    {
         $query = $this->getEntityManager()
-        ->createQuery("SELECT p.id as id,count(ut.product) as countproducts
+            ->createQuery("SELECT p.id as id,count(ut.product) as countproducts
         FROM LoveThatFitAdminBundle:Product p
         JOIN p.brand b
         JOIN p.user_item_try_history ut
         LEFT JOIN p.retailer r
-        WHERE p.gender = :gender 
-        AND 
-        p.disabled=0 
+        WHERE p.gender = :gender
+        AND
+        p.disabled=0
         AND
         b.disabled=0
         AND
-        p.displayProductColor!='' 
-        AND 
+        p.displayProductColor!=''
+        AND
         (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
         GROUP BY p.id ORDER BY countproducts DESC
-            ")->setParameter('gender', $gender);        
-        $ids = $query->getResult();    
-        if($ids){
-        if ($page_number <= 0 || $limit <= 0) {
-            $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            ")->setParameter('gender', $gender);
+        $ids = $query->getResult();
+        if ($ids) {
+            if ($page_number <= 0 || $limit <= 0) {
+                $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p
             JOIN p.user_item_try_history uih
             JOIN p.brand b
             LEFT JOIN p.retailer r
-            WHERE p.gender = :gender AND              
+            WHERE p.gender = :gender AND
             b.disabled=0
             AND
-            p.disabled=0 AND 
+            p.disabled=0 AND
             p.displayProductColor!='' AND
             p.id in (:ids)
-            ")->setParameters(array('gender'=> $gender, 'ids' => $ids));
-        } else {
-            $query = $this->getEntityManager()
+            ")->setParameters(array('gender' => $gender, 'ids' => $ids));
+            } else {
+                $query = $this->getEntityManager()
                     ->createQuery("
-            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p
             JOIN p.user_item_try_history uih
             JOIN p.brand b
-            WHERE p.gender = :gender  AND                          
+            WHERE p.gender = :gender  AND
             b.disabled=0
-            AND            
+            AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
-            AND 
-            p.disabled=0 
-            AND 
+            AND
+            p.disabled=0
+            AND
             p.displayProductColor!='' AND
             p.id in (:ids)
-            ")->setParameters(array('gender'=> $gender, 'ids' =>$ids))
+            ")->setParameters(array('gender' => $gender, 'ids' => $ids))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
-        }
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
+            }
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        } else {
             return null;
         }
-        }else{
-               return null;
-        }
     }
-    //-------------------------------------------------------------------------------------    
+    //-------------------------------------------------------------------------------------
     public function findMostFavoriteByGender($gender, $page_number = 0, $limit = 0)
-    {        
+    {
         $query = $this->getEntityManager()
-        ->createQuery("SELECT p.id as id, count(p.id) as likedproducts
+            ->createQuery("SELECT p.id as id, count(p.id) as likedproducts
         FROM LoveThatFitAdminBundle:Product p
         JOIN p.brand b
         JOIN p.product_items pi
         JOIN pi.users upi
         LEFT JOIN p.retailer r
-        WHERE p.gender = :gender 
-        AND 
+        WHERE p.gender = :gender
+        AND
         b.disabled=0
-        AND 
-        p.disabled=0    
-        AND 
+        AND
+        p.disabled=0
+        AND
         (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
         GROUP BY p.id ORDER BY likedproducts DESC
-            ")->setParameter('gender', $gender);        
-        $ids = $query->getResult();    
-        
-        if($ids){
-        if ($page_number <= 0 || $limit <= 0) {
-            $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            ")->setParameter('gender', $gender);
+        $ids = $query->getResult();
+
+        if ($ids) {
+            if ($page_number <= 0 || $limit <= 0) {
+                $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p
              JOIN p.brand b
             JOIN p.user_item_try_history uih
             LEFT JOIN p.retailer r
             WHERE p.gender = :gender AND b.disabled=0
-            AND             
-            p.disabled=0 AND           
+            AND
+            p.disabled=0 AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
             AND
             p.displayProductColor!='' AND
             p.id in (:ids)
-            ")->setParameters(array('gender'=> $gender, 'ids' => $ids));
-        } 
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
+            ")->setParameters(array('gender' => $gender, 'ids' => $ids));
+            }
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        } else {
             return null;
         }
-        }else{
-               return null;
-        }
     }
-    
-    
-//-------------------------------------------------------------------------------------    
-    
-    
+
+//-------------------------------------------------------------------------------------
+
     public function findRecentlyTriedOnByUser($user_id, $page_number = 0, $limit = 20)
     {
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p
              JOIN p.brand b
             JOIN p.user_item_try_history uih
             LEFT JOIN p.retailer r
             WHERE p.disabled=0 AND b.disabled=0 AND  p.displayProductColor!='' AND uih.user=:user_id
-            AND 
+            AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
              ORDER BY uih.updated_at DESC"
-            //ORDER BY uih.count DESC"
-                            )->setParameters(array('user_id' =>$user_id));
-       } else {
+                    //ORDER BY uih.count DESC"
+                )->setParameters(array('user_id' => $user_id));
+        } else {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p
              JOIN p.brand b
             JOIN p.user_item_try_history uih
             LEFT JOIN p.retailer r
             WHERE p.disabled=0 AND b.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
-            AND 
+            AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
             ORDER BY uih.updated_at DESC "
-                    )->setParameters(array('user_id' =>$user_id))
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                )->setParameters(array('user_id' => $user_id))
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
         try {
             return $query->getResult();
@@ -921,30 +942,29 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    //-------------------------------------------------------------------------------------    
-    
-    
+    //-------------------------------------------------------------------------------------
+
     public function findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number = 0, $limit = 20)
     {
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p
             JOIN p.user_item_try_history uih
-            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
-             
+            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''
+
             ORDER BY uih.count DESC"
-                            )->setParameters(array('user_id' =>$user_id, 'retailer_id' =>$retailer_id));
+                )->setParameters(array('user_id' => $user_id, 'retailer_id' => $retailer_id));
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.user_item_try_history uih
-            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!='' 
+            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''
             ORDER BY uih.count DESC "
-                    )->setParameters(array('user_id' =>$user_id, 'retailer_id' =>$retailer_id))
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                )->setParameters(array('user_id' => $user_id, 'retailer_id' => $retailer_id))
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
         try {
             return $query->getResult();
@@ -952,119 +972,119 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
-    public function findOneByName($name) {
+//-------------------------------------------------------------------------------------
+    public function findOneByName($name)
+    {
         $record = $this->getEntityManager()
-                        ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p     
-                             JOIN p.brand b   
+            ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p
+                             JOIN p.brand b
                              WHERE b.name = :name")
-                        ->setParameters(array('name' => $name));
+            ->setParameters(array('name' => $name));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
-    public function findByGenderBrandName($gender, $brand, $page_number=0, $limit=0)
-    {      if ($page_number <= 0 || $limit <= 0) {
-            $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.brand b
-            WHERE b.name = :name
-            AND p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''"
-                            )->setParameters(array('name'=>$brand,'gender' => $gender));
-        } else {
-            $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.brand b
-            WHERE b.name = :name
-            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                    )->setParameters(array('name'=>$brand,'gender' => $gender))
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
-        }
-
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }  
-    }    
-    
-//-------------------------------------------------------------------------------------    
-  /*  public function findProductByEllieHM($brand,$gender,$page_number, $limit)
-    {      if ($page_number <= 0 || $limit <= 0) {
-            $query = $this->getEntityManager()
-                            ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.brand b
-            WHERE b.name = :name
-            AND p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''"
-                            )->setParameters(array('name'=>$brand,'gender' => $gender));
-        } else {
-            $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
-            JOIN p.brand b
-            WHERE b.name = :name
-            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
-                    )->setParameters(array('name'=>$brand,'gender' => $gender))
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
-        }
-
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }  
-    }*/
-//-------------------------------------------------------------------------------------    
-    
-    public function findTryProductHistory($user_id , $page_number , $limit)
+//-------------------------------------------------------------------------------------
+    public function findByGenderBrandName($gender, $brand, $page_number = 0, $limit = 0)
     {
-              if ($page_number <= 0 || $limit <= 0) {
+        if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
-            JOIN pi.product_color pc
-            JOIN pi.product_size ps            
-            JOIN pi.user_item_try_history uih            
-        WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) ;                   
-        
-        }else{
-            
-             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
-            JOIN pi.product_color pc
-            JOIN pi.product_size ps            
-            JOIN pi.user_item_try_history uih            
-            WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) 
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
+            JOIN p.brand b
+            WHERE b.name = :name
+            AND p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''"
+                )->setParameters(array('name' => $brand, 'gender' => $gender));
+        } else {
+            $query = $this->getEntityManager()
+                ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p
+            JOIN p.brand b
+            WHERE b.name = :name
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
+                )->setParameters(array('name' => $brand, 'gender' => $gender))
                 ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
-        
+                ->setMaxResults($limit);
         }
-    try {
+
+        try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }      
+        }
+    }
+
+//-------------------------------------------------------------------------------------
+    /*  public function findProductByEllieHM($brand,$gender,$page_number, $limit)
+    {      if ($page_number <= 0 || $limit <= 0) {
+    $query = $this->getEntityManager()
+    ->createQuery("
+    SELECT p FROM LoveThatFitAdminBundle:Product p
+    JOIN p.brand b
+    WHERE b.name = :name
+    AND p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''"
+    )->setParameters(array('name'=>$brand,'gender' => $gender));
+    } else {
+    $query = $this->getEntityManager()
+    ->createQuery("
+    SELECT p FROM LoveThatFitAdminBundle:Product p
+    JOIN p.brand b
+    WHERE b.name = :name
+    AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
+    )->setParameters(array('name'=>$brand,'gender' => $gender))
+    ->setFirstResult($limit * ($page_number - 1))
+    ->setMaxResults($limit);
+    }
+
+    try {
+    return $query->getResult();
+    } catch (\Doctrine\ORM\NoResultException $e) {
+    return null;
+    }
+    }*/
+//-------------------------------------------------------------------------------------
+
+    public function findTryProductHistory($user_id, $page_number, $limit)
+    {
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps
+            JOIN pi.user_item_try_history uih
+        WHERE uih.user = :id ORDER BY uih.count DESC")->setParameters(array('id' => $user_id));
+
+        } else {
+
+            $query = $this->getEntityManager()
+                ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps
+            JOIN pi.user_item_try_history uih
+            WHERE uih.user = :id ORDER BY uih.count DESC")->setParameters(array('id' => $user_id))
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
+
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 //-------------------------------------------------------------------------------------
     public function findDefaultProductByColorId($product_color)
     {
         $query = $this->getEntityManager()
-                    ->createQuery('
-            SELECT p FROM LoveThatFitAdminBundle:Product p           
+            ->createQuery('
+            SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.displayProductColor pc
             where p.displayProductColor=:product_color
-            ')->setParameters(array('product_color' =>$product_color));       
+            ')->setParameters(array('product_color' => $product_color));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -1072,240 +1092,365 @@ class ProductRepository extends EntityRepository {
         }
     }
 
-    
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Product Listing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  /*  public function findByGenderMostLiked($gender,$page_number=0, $limit=0) {
-            $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p
-     JOIN p.product_items pi
-     JOIN pi.product_color pc
-     JOIN pi.product_size ps
-     JOIN pi.users u
-     where p.gender=:gender")->setParameters(array('gender' =>$gender));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+    /*  public function findByGenderMostLiked($gender,$page_number=0, $limit=0) {
+    $query = $this->getEntityManager()
+    ->createQuery("
+    SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p
+    JOIN p.product_items pi
+    JOIN pi.product_color pc
+    JOIN pi.product_size ps
+    JOIN pi.users u
+    where p.gender=:gender")->setParameters(array('gender' =>$gender));
+    try {
+    return $query->getResult();
+    } catch (\Doctrine\ORM\NoResultException $e) {
+    return null;
+    }
     }*/
-#-----------------Image Downloading Functions----------------------------------#    
-    public function getProductColorArray($product_id){
-        
-     $query = $this->getEntityManager()
-                        ->createQuery("
+#-----------------Image Downloading Functions----------------------------------#
+    public function getProductColorArray($product_id)
+    {
+
+        $query = $this->getEntityManager()
+            ->createQuery("
             SELECT p.id as product_id ,p.name as product_name,pc.image as product_color_images, pc.pattern as product_pattern_images
-            FROM LoveThatFitAdminBundle:ProductColor pc                         
+            FROM LoveThatFitAdminBundle:ProductColor pc
             JOIN pc.product p
             WHERE  p.displayProductColor!='' and p.id = :id ")->setParameters(array('id' => $product_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }   
+        }
     }
 #------------------------------------------------------------------------------#
-    public function getRecordsCountWithCurrentProductLimit($product_id){
-        
-            $query = $this->getEntityManager()
-                    ->createQuery("SELECT count(p.id) as id FROM LoveThatFitAdminBundle:Product p  WHERE p.id<=:product_id")
-                     ->setParameters(array('product_id' => $product_id));
-                     try {
-                     return $query->getResult();
-                } catch (\Doctrine\ORM\NoResultException $e) {
-                return null;
-                }
-        } 
- #-----------------------------------------------------------------------------#
-        #---------Searching Quries-------------------------------#
-  public function searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page){
-         $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";
-             if($brand_id){
-                 $str=$str." WHERE b.id = ". $brand_id;
-             }
-             if($male || $female){
-                 $str=$str." AND ";
-                if($male && $female){
-                    $str=$str."(p.gender= '".$male."' OR p.gender='".$female."') ";
-                }elseif($male){
-                    $str=$str."p.gender='".$male."'";
-                }elseif($female){
-                    $str=$str."p.gender='".$female."'";
-                }
-               
-             }
-             if($target){
-                 $str=$str." AND ct.target IN ('".implode("','", $target)."') ";
-             }
-             if($category_id){                 
-                 $str=$str." AND ct.id IN (".implode(", ", $category_id).") ";                 
-             }
-                 $str=$str." group by p.id";
-                 $query = $this->getEntityManager()
-                        ->createQuery($str)
-                        ->setFirstResult($start)
-                        ->setMaxResults($per_page);
-                     return $query->getResult();
-              
-  }
-  
-  
-#------------Count Search Record---------------------------#
- public function countSearchProduct($brand_id,$male,$female,$target,$category_id){
-       
-      return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->innerJoin('p.brand', 'b')
-                         ->Where('b.id=:brand_id')
-                        ->orWhere('p.gender=:female')
-                        ->orWhere('p.gender=:male')
-                        ->orWhere('ct.name IN(:category_id)')
-                        ->orWhere('ct.target IN(:target)')
-                        ->groupBy('p.id')
-                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
-                        ->setParameter('category_id',$category_id)
-                        ->setParameter('target',$target)
-                        ->getQuery()
-                        ->getResult(); 
-      
-  }
-  
-#------------------Search Categfory ------------------------------------------#
- public function searchCategory($target){
-    
-      $query = $this->getEntityManager()
-                    ->createQuery("SELECT ct.id as id,ct.name as name, ct.target as target, ct.gender as gender FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
-                     ->setParameter('target',$target['target']);
-                     try {
-                     return $query->getResult();
-                } catch (\Doctrine\ORM\NoResultException $e) {
-                return null;
-                }
-     
- }
- 
- public function findTryProfileProductHistory($user_id , $page_number , $limit)
+    public function getRecordsCountWithCurrentProductLimit($product_id)
     {
-              if ($page_number <= 0 || $limit <= 0) {
-            $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
-            JOIN pi.product_color pc
-            JOIN pi.product_size ps            
-            JOIN pi.user_item_try_history uih            
-            WHERE uih.user = :id ORDER BY uih.updated_at DESC"  )->setParameters(array('id' => $user_id)) ;                   
-        
-        }else{
-            
-             $query = $this->getEntityManager()
-                    ->createQuery("
-            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
-            JOIN pi.product_color pc
-            JOIN pi.product_size ps            
-            JOIN pi.user_item_try_history uih            
-            WHERE uih.user = :id ORDER BY uih.updated_at DESC"  )->setParameters(array('id' => $user_id)) 
-                ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
-        
-        }
-    try {
+
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(p.id) as id FROM LoveThatFitAdminBundle:Product p  WHERE p.id<=:product_id")
+            ->setParameters(array('product_id' => $product_id));
+        try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }      
+        }
+    }
+    #-----------------------------------------------------------------------------#
+    #---------Searching Quries-------------------------------#
+    public function searchProduct($brand_id, $male, $female, $target, $category_id, $start, $per_page)
+    {
+        $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";
+        if ($brand_id) {
+            $str = $str . " WHERE b.id = " . $brand_id;
+        }
+        if ($male || $female) {
+            $str = $str . " AND ";
+            if ($male && $female) {
+                $str = $str . "(p.gender= '" . $male . "' OR p.gender='" . $female . "') ";
+            } elseif ($male) {
+                $str = $str . "p.gender='" . $male . "'";
+            } elseif ($female) {
+                $str = $str . "p.gender='" . $female . "'";
+            }
+
+        }
+        if ($target) {
+            $str = $str . " AND ct.target IN ('" . implode("','", $target) . "') ";
+        }
+        if ($category_id) {
+            $str = $str . " AND ct.id IN (" . implode(", ", $category_id) . ") ";
+        }
+        $str   = $str . " group by p.id";
+        $query = $this->getEntityManager()
+            ->createQuery($str)
+            ->setFirstResult($start)
+            ->setMaxResults($per_page);
+        return $query->getResult();
+
+    }
+
+#------------Count Search Record---------------------------#
+    public function countSearchProduct($brand_id, $male, $female, $target, $category_id)
+    {
+
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.product_colors', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->Where('b.id=:brand_id')
+            ->orWhere('p.gender=:female')
+            ->orWhere('p.gender=:male')
+            ->orWhere('ct.name IN(:category_id)')
+            ->orWhere('ct.target IN(:target)')
+            ->groupBy('p.id')
+            ->setParameters(array('brand_id' => $brand_id, 'female' => $female, 'male' => $male))
+            ->setParameter('category_id', $category_id)
+            ->setParameter('target', $target)
+            ->getQuery()
+            ->getResult();
+
+    }
+
+#------------------Search Categfory ------------------------------------------#
+    public function searchCategory($target)
+    {
+
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT ct.id as id,ct.name as name, ct.target as target, ct.gender as gender FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
+            ->setParameter('target', $target['target']);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+
+    }
+
+    public function findTryProfileProductHistory($user_id, $page_number, $limit)
+    {
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps
+            JOIN pi.user_item_try_history uih
+            WHERE uih.user = :id ORDER BY uih.updated_at DESC")->setParameters(array('id' => $user_id));
+
+        } else {
+
+            $query = $this->getEntityManager()
+                ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps
+            JOIN pi.user_item_try_history uih
+            WHERE uih.user = :id ORDER BY uih.updated_at DESC")->setParameters(array('id' => $user_id))
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
+
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 #------------------------Find Item for Multiple Images Uploading--------------#
- public function findItemMultipleImpagesUploading($request_array){
-   try{   return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('pi.id')
-                        ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
-                        ->innerJoin('pi.product','p')
-                        ->innerJoin('pi.product_color','pc')
-                        ->innerJoin('pi.product_size','ps')
-                        ->where('p.id = :product_id')
-                        ->andwhere('pc.title = :color_title')
-                        ->andwhere('ps.body_type = :body_type')
-                        ->andwhere('ps.title = :size_title')
-                        ->setParameters(array('product_id'=>$request_array['product_id'],'color_title'=>$request_array['color_title'],'body_type'=>$request_array['body_type'],'size_title'=>$request_array['size_title']))
-                        ->getQuery()
-                        ->getSingleResult();
-   
-   }catch (\Doctrine\ORM\NoResultException $e) {
+    public function findItemMultipleImpagesUploading($request_array)
+    {
+        try {
+            return $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select('pi.id')
+                ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
+                ->innerJoin('pi.product', 'p')
+                ->innerJoin('pi.product_color', 'pc')
+                ->innerJoin('pi.product_size', 'ps')
+                ->where('p.id = :product_id')
+                ->andwhere('pc.title = :color_title')
+                ->andwhere('ps.body_type = :body_type')
+                ->andwhere('ps.title = :size_title')
+                ->setParameters(array('product_id' => $request_array['product_id'], 'color_title' => $request_array['color_title'], 'body_type' => $request_array['body_type'], 'size_title' => $request_array['size_title']))
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }                
- }   
-    
- #---------------------------------------------------------------------
- public function findProductColorSizeItemViewByTitle($request_array){
-   try{   return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('pi')
-                        ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
-                        ->innerJoin('pi.product','p')
-                        ->innerJoin('pi.product_color','pc')
-                        ->innerJoin('pi.product_size','ps')
-                        #->leftJoin('pi.product_item_pieces','pip')
-                        ->where('p.id = :product_id')
-                        ->andwhere('pc.title = :color_title')
-                        ->andwhere('ps.body_type = :body_type')
-                        ->andwhere('ps.title = :size_title')
-                        ->setParameters(array('product_id'=>$request_array['product_id'],'color_title'=>$request_array['color_title'],'body_type'=>$request_array['body_type'],'size_title'=>$request_array['size_title']))
-                        ->getQuery()
-                        ->getSingleResult();
-   
-   }catch (\Doctrine\ORM\NoResultException $e) {
+        }
+    }
+
+    #---------------------------------------------------------------------
+    public function findProductColorSizeItemViewByTitle($request_array)
+    {
+        try {
+            return $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select('pi')
+                ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
+                ->innerJoin('pi.product', 'p')
+                ->innerJoin('pi.product_color', 'pc')
+                ->innerJoin('pi.product_size', 'ps')
+            #->leftJoin('pi.product_item_pieces','pip')
+                ->where('p.id = :product_id')
+                ->andwhere('pc.title = :color_title')
+                ->andwhere('ps.body_type = :body_type')
+                ->andwhere('ps.title = :size_title')
+                ->setParameters(array('product_id' => $request_array['product_id'], 'color_title' => $request_array['color_title'], 'body_type' => $request_array['body_type'], 'size_title' => $request_array['size_title']))
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }                
- }   
- #---------------------------------------------------------------------
-  public function productDetailSizeArray($product_id){
-   try{   return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        #->select("p,ct,ps,psm")
-                        ->select("p.id, p.gender, p.styling_type, p.hem_length, p.fit_priority, p.size_title_type, 
-                            ct.name clothing_type, ps.id as product_size_id, ps.title, ps.body_type, 
+        }
+    }
+    #---------------------------------------------------------------------
+    public function productDetailSizeArray($product_id)
+    {
+        try {
+            return $this->getEntityManager()
+                ->createQueryBuilder()
+            #->select("p,ct,ps,psm")
+                ->select("p.id, p.gender, p.styling_type, p.hem_length, p.fit_priority, p.size_title_type,
+                            ct.name clothing_type, ps.id as product_size_id, ps.title, ps.body_type,
                             CONCAT( CONCAT(ps.body_type, ' '),  ps.title) as description,
-                            psm.title as fit_point, psm.title as label, psm.garment_measurement_flat, psm.max_body_measurement, psm.vertical_stretch, 
-                            psm.horizontal_stretch, psm.stretch_type_percentage, psm.ideal_body_size_high, 
+                            psm.title as fit_point, psm.title as label, psm.garment_measurement_flat, psm.max_body_measurement, psm.vertical_stretch,
+                            psm.horizontal_stretch, psm.stretch_type_percentage, psm.ideal_body_size_high,
                             psm.ideal_body_size_low, psm.garment_measurement_stretch_fit, psm.min_body_measurement,
-                            psm.fit_model_measurement as fit_model, psm.grade_rule, psm.min_calculated as calc_min_body_measurement, 
+                            psm.fit_model_measurement as fit_model, psm.grade_rule, psm.min_calculated as calc_min_body_measurement,
                             psm.max_calculated as calc_max_body_measurement")
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_sizes','ps')
-                        ->innerJoin('p.clothing_type','ct')
-                        ->innerJoin('ps.product_size_measurements','psm')
-                        ->where('p.id = :product_id')
-                        ->setParameters(array('product_id'=>$product_id))
-                        ->getQuery()
-                        ->getArrayResult();
-   
-   }catch (\Doctrine\ORM\NoResultException $e) {
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.product_sizes', 'ps')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('ps.product_size_measurements', 'psm')
+                ->where('p.id = :product_id')
+                ->setParameters(array('product_id' => $product_id))
+                ->getQuery()
+                ->getArrayResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }                
- }
+        }
+    }
 
-  //autocomplete method
-  #--------------------------------------------------------------
+    //autocomplete method
+    #--------------------------------------------------------------
 
-  public function getSearchProductData($term) {
-	$query = $this->getEntityManager()
-	  ->createQuery("
+    public function getSearchProductData($term)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT p.id,p.name FROM LoveThatFitAdminBundle:Product p
      WHERE p.name LIKE :term"
-	  )->setParameters(array('term' => $term.'%'));
+            )->setParameters(array('term' => $term . '%'));
 
-	try {
-	  return $query->getResult();
-	} catch (\Doctrine\ORM\NoResultException $e) {
-	  return null;
-	}
-  }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    //end of autocomplete method
+    public function listProductsAndItems()
+    {
+        $sql = 'SELECT 
+                 p.id as product_id ,
+                 p.name as product_name,
+                 p.disabled as status,
+                 p.gender,
+                 b.name as brand_name,
+                 ct.name AS cloth_type,
+                 pc.title as style,
+                 pretail.title as retailer,
+                 s.title size,
+                 pit.id as item_id,
+                 p.created_at,
+                 p.control_number,
+                 p.hem_length,
+                 p.neckline,
+                 p.sleeve_styling,
+                 p.rise,
+                 p.fabric_weight,
+                 p.size_title_type,
+                 p.fit_type,
+                 p.control_number,
+                 p.horizontal_stretch,
+                 p.vertical_stretch 
+                FROM `product` p
+                join `product_item` pit on pit.product_id=p.id
+                join `brand` b on b.id=p.brand_id
+                join `product_size` s on s.id=pit.product_size_id
+                join `clothing_type` ct on ct.id=p.clothing_type_id
+                JOIN product_color pc ON p.id = pc.product_id
+                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id';
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    //end of autocomplete method
 
+    public function getAllProductsIds()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
+        return $query 
+                ->select('p.id')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->Where('p.disabled=0')
+                ->getQuery()
+                ->getResult();
+    }
+
+    public function findAllEnableProduct($page_number = 0, $limit = 0, $sort = 'id') {
+
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.disabled = 0 ORDER BY p.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.disabled = 0 ORDER BY p.' . $sort . ' ASC')
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
   //end of autocomplete method
 }
+
+    /*
+    public function getAllProductsIds(
+        $data,
+        $page = 0,
+        $max = NULL,
+        $order,
+        $getResult = true
+    ) 
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
+        $query 
+            ->select('p.id')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->Where('p.disabled=0');
+
+        if ($search) {
+            $query 
+                ->andWhere('p.control_number like :search')
+                ->orWhere('p.name like :search')
+                ->setParameter('search', "%".$search."%");
+        }
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            // if ($orderByColumn == 0) {
+            //    $orderByColumn = "p.control_number";
+            // } elseif ($orderByColumn == 3) {
+            //     $orderByColumn = "p.name";
+            // } else {
+            //     $orderByColumn = "p.id";
+            // }
+            $query->orderBy("p.id", "desc");
+        }
+        
+        if ($max) {
+            $preparedQuery = $query->getQuery() 
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery(); 
+        }
+        return $getResult?$preparedQuery->getResult():$preparedQuery; 
+    }
+    */
+//}

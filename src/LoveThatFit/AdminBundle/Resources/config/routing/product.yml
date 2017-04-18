@@ -231,7 +231,12 @@ admin_product_detail_multiple_images_uploading:
 
 admin_product_detail_size_disable:
    pattern:  /admin/productdetail/{id}/size/{size_id}/disable
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeDisable }   
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeDisable }
+
+
+admin_product_export:
+    pattern:  /admin/product/export
+    defaults: { _controller: LoveThatFitAdminBundle:Product:export }
 
 
       

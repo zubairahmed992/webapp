@@ -36,5 +36,9 @@ class ServiceHelper {
             }
             return $data;        
     } 
-
+public function getProductDetails($id){
+$product = $this->container->get('admin.helper.product')->find($id);
+        $resp=array($product->toArray());        
+        return $resp;
+}
 }

@@ -83,9 +83,9 @@ class SaveLookHelper
         return $saveLookObj;
     }
 
-    public function getLooksByUserId( $user_id)
+    public function getLooksByUserId($user_id)
     {
-        return $this->repo->getAllUserSaveLooks( $user_id );
+        return $this->repo->getAllUserSaveLooks($user_id);
     }
 
     public function findByLookId( $look_id )
@@ -95,12 +95,15 @@ class SaveLookHelper
 
     public function removeUserLook( $saveLookEntity, $user = null )
     {
-        $saveLookObj = new SaveLook();
-        $saveLookObj->setUsers($user);
-
-        $saveLookObj->deleteImages( $saveLookEntity->getUserLookImage() );
-
-        $this->em->remove( $saveLookEntity );
-        $this->em->flush();
+        try {
+            $saveLookObj = new SaveLook();
+            $saveLookObj->setUsers($user);
+            $saveLookObj->deleteImages($saveLookEntity->getUserLookImage());
+            $this->em->remove($saveLookEntity);
+            $this->em->flush();
+            return true;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }
