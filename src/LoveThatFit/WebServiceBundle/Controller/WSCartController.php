@@ -19,7 +19,7 @@ class WSCartController extends Controller
         if ($user) {
             $item_id = $decoded["item_id"];
             $itemObject = $this->container->get('admin.helper.productitem')->find($item_id);
-            if(is_object($itemObject)){
+            if(is_object($itemObject) && $itemObject->getProduct()->getDisabled()){
                 $qty = $decoded["quantity"];
                 $this->container->get('cart.helper.cart')->fillCart($item_id, $user, $qty);
                 $resp = 'Item has been added to Cart Successfully';
