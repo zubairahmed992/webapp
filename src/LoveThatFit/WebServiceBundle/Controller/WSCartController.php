@@ -622,11 +622,19 @@ class WSCartController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $addresses = $this->container->get('cart.helper.userAddresses')->getAllUserSavedAddresses( $user );
-            $addresses['shipping_methods'][] = array(
+            $addresses['shipping_methods'] = array(
+                array(
                 "method" => "4-Day Shipping",
                 'detail' => "Deliver on or Monday",
                 'method_cost' => "Free",
                 "method_id" => '1'
+                ),
+                array(
+                    "method" => "2-Day Shipping",
+                    'detail' => "Deliver on or Fridat",
+                    'method_cost' => "10.25",
+                    "method_id" => '2'
+                )
             );
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
         }else {
