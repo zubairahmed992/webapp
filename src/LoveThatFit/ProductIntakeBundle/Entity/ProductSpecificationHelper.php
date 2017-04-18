@@ -587,7 +587,7 @@ class ProductSpecificationHelper {
     #------------------------------------------------------
     private function compute_all_ranges($specs, $fit_model_obj = null) {
         if ($fit_model_obj == null) {
-            if (array_key_exists('fit_model_size', $specs)) {
+            if (array_key_exists('fit_model_size', $specs) && strlen($specs['fit_model_size'])>0) {
                 $fit_model_obj = $this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
             } else {
                 return $specs; # if fit model has not been set yet
