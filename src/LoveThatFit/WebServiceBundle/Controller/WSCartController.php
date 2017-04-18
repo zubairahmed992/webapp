@@ -18,10 +18,16 @@ class WSCartController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $item_id = $decoded["item_id"];
-            $qty = $decoded["quantity"];
-            $this->container->get('cart.helper.cart')->fillCart($item_id, $user, $qty);
-            $resp = 'Item has been added to Cart Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $itemObject = $this->container->get('admin.helper.productitem')->find($item_id);
+            if(is_object($itemObject)){
+                $qty = $decoded["quantity"];
+                $this->container->get('cart.helper.cart')->fillCart($item_id, $user, $qty);
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Item does not exists or out of stock.');
+            }
+
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
