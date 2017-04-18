@@ -88,8 +88,8 @@ function overall_mask(){
     pre_init();
     function pre_init(){
         var liquid_mask = {
-            //user_height: parseFloat($('#user_height_frm_3').attr('value')),
-            user_height: 72,
+            user_height: parseFloat($('#user_height_frm_3').attr('value')),
+            //user_height: 72,
             def_mask: $("#default_user_path").html(),
             dm_body_parts_details_json: JSON.parse($("#dm_body_parts_details_json").attr('value')),
             device_type: $("#dv_type").attr("value"),
