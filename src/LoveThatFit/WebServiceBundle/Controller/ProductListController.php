@@ -14,8 +14,8 @@ class ProductListController extends Controller {
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $user_id = $user->getId();
         $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
-
-        $result_set = $this->get('webservice.helper')->getProductListByCategoryBanner($decoded['gender'], $decoded['category_ids'], $user_id, $decoded['page_no']);
+        $page_no = (isset($decoded['page_no'])) ? $decoded['page_no'] : 1 ;
+        $result_set = $this->get('webservice.helper')->getProductListByCategoryBanner($decoded['gender'], $decoded['category_ids'], $user_id, $page_no);
         $productlist = $result_set['product_list'];
         if (array_key_exists('display_screen', $decoded)) {
             $bannerlist = $this->get('admin.helper.Banner')->getBannerListForService($base_path,$decoded['display_screen']);
@@ -55,7 +55,8 @@ class ProductListController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $user_id = $user->getId();
-        $productlist = $this->get('webservice.helper')->getProductListByCategory($decoded['gender'], $decoded['category_ids'], $user_id, $decoded['page_no']);
+        $page_no = (isset($decoded['page_no'])) ? $decoded['page_no'] : 1 ;
+        $productlist = $this->get('webservice.helper')->getProductListByCategory($decoded['gender'], $decoded['category_ids'], $user_id, $page_no);
     return new Response($productlist);
     }
         
