@@ -523,7 +523,7 @@ class WebServiceHelper {
 #------------------------------------------------------------------------------
 
     public function productDetail($id, $user) {
-        $product = $this->container->get('admin.helper.product')->find($id);
+        $product = $this->container->get('admin.helper.product')->find($id, true);
         if(count($product)== 0){
             return $this->response_array(false, 'Product not Available');
         }
