@@ -36,6 +36,7 @@ class ServiceRepo
     }
     
     #--------------------------------------------------------------
+    public function getProductDetail($id)
     {
         $query = $this->em
             ->createQuery("
