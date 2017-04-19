@@ -108,8 +108,8 @@ class ProductItemHelper {
     }
 
     #-------------------------------------------------------------------------
-    public function getProductItemByProductId($productId) {
-        $product_item = $this->repo->getProductItemByProductId($productId);
+    public function getProductItemByProductId($productId, $colorId, $sizeId) {
+        $product_item = $this->repo->getProductItemByProductId($productId, $colorId, $sizeId);
         return $product_item;
     }
 

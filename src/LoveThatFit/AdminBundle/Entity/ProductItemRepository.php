@@ -152,12 +152,12 @@ class ProductItemRepository extends EntityRepository
         }  
   }
 
-    public function getProductItemByProductId($productId) {
+    public function getProductItemByProductId($productId, $colorId, $sizeId) {
         $query = $this->getEntityManager()
             ->createQuery("
      SELECT pi.id FROM LoveThatFitAdminBundle:ProductItem pi
      WHERE
-     pi.product=:product_id"  )->setParameters(array('product_id' => $productId)) ;
+     pi.product=:product_id AND pi.product_color=:color_id AND pi.product_size=:size_id"  )->setParameters(array('product_id' => $productId, 'color_id' => $colorId, 'size_id' => $sizeId)) ;
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

@@ -1406,7 +1406,11 @@ class ProductHelper
             $last_bits = explode(".", $_exploded[3]);
             $a['color_title'] = str_replace("-", " ", $_exploded[2]);
             $a['view_title'] = $last_bits[0];
-        } else {
+        } elseif(count($_exploded) == 2){
+            $last_bits = explode(".", $_exploded[1]);
+            $a['image_type'] = $_exploded[0];
+            $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+        }else {
             return array('message' => 'Invalid Format!', 'success' => 'false');
         }
         #validate file format
@@ -1416,7 +1420,7 @@ class ProductHelper
         # no/invalid body type given then regular
         $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "regular" : $_exploded[0];
         $a['file_name'] = 'item_image.' . $last_bits[1];
-        $a['size_title'] = $_exploded[1];
+        $a['size_title'] = str_replace("-", "_", $_exploded[1]);
         $a['message'] = 'Done';
         $a['success'] = 'true';
         return $a;

@@ -1258,11 +1258,44 @@ class ProductController extends Controller {
                     $this->get('admin.helper.productcolor')->save($color_id_result);
                 }
 
+
+                // Find if the new color has been successfully added
+                $added_color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+                /*Add color pattern and color image*/
+                if(array_key_exists('image_type',$parsed_details)){
+                    $imageFile = $request->files->get('upl');
+                    $updated_image_message = '';
+
+                    /*Color Pattern Type */
+                    if($parsed_details['image_type'] == 'colorpatterntype'){
+                        $added_color_id_result->file = $imageFile;
+                        $pattern_type = $added_color_id_result->uploadTemporaryImage();
+                        $added_color_id_result->tempPattern = $pattern_type['image_name'];
+                        $added_color_id_result->savePattern();
+                        $this->get('admin.helper.productcolor')->save($added_color_id_result);
+                        $updated_image_message = 'Pattern Image Updated';
+                    }
+                    /*Color Image Type */
+                    if($parsed_details['image_type'] == 'colorimagetype'){
+                        $added_color_id_result->file = $imageFile;
+                        $image_type = $added_color_id_result->uploadTemporaryImage();
+                        $added_color_id_result->tempImage = $image_type['image_name'];
+                        $added_color_id_result->saveImage();
+                        $this->get('admin.helper.productcolor')->save($added_color_id_result);
+                        $updated_image_message = 'Image Updated';
+                    }
+                    $this->get('session')->setFlash('success', $updated_image_message);
+                    return new response('{"status":'.$updated_image_message.'}');
+
+                }
+                /*Add color pattern and color image*/
+                $find_size_by_title_productid = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
+
                 /* Checked Product item are available for this product */
-                $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], );
+                $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $added_color_id_result->getId(), $find_size_by_title_productid->getId());
+
                 if (count($product_id_result) == 0) {
                     //**/
-                    echo $parsed_details['color_title'];
                     /* Create Product Item for this product */
                     $p_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                     $p_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
@@ -1270,9 +1303,8 @@ class ProductController extends Controller {
                 }
 
                 $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
-                die();
                 $imageFile = $request->files->get('upl');
-                #return new response(json_encode($parsed_details));
+
                 if (array_key_exists('view_title', $parsed_details)) {
 
                     #find matching color view object
@@ -1283,28 +1315,18 @@ class ProductController extends Controller {
                     $product_item_piece->file = $imageFile;
                     #save & upload
                     $this->get('admin.helper.product.item.piece')->save($product_item_piece);
-                    #$this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
+                    $this->get('session')->setFlash('success', 'Product Item has been created');
                     return new response('{"status":"view updated"}');
                 } else {
                     $product_item->file = $imageFile;
                     $product_item->upload();
                     $this->get('admin.helper.productitem')->save($product_item);
+                    $this->get('session')->setFlash('success', 'fitting room image updated');
                     return new response('{"status":"fitting room image updated"}');
                 }
             }
-
-            #--------------------------------------------------------------
-            /*
-               if(!in_array(strtolower($extension), $allowed)){
-                   return new response('{"status":"error"}');
-               }
-               $dirpath=__DIR__ . '/../../../../web/uploads/ltf/products/display/';
-               if(move_uploaded_file($_FILES['upl']['tmp_name'], $dirpath.$_FILES['upl']['name'])){
-                       return new response('{"status":"success"}');
-               }
-                *
-            */
         }
+        $this->get('session')->setFlash('warning', 'Size, Color not updated');
         return new response('{"status":"error"}');
 
     }

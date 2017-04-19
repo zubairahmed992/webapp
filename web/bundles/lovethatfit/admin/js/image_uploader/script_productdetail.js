@@ -1,6 +1,7 @@
 $(function(){
 
     var ul = $('#upload ul');
+    var count_li = 0;
 
     $('#drop a').click(function(){
         // Simulate a click on the file input button
@@ -43,7 +44,6 @@ $(function(){
                 });
 
             });
-
             // Automatically upload the file once it is added to the queue
             var jqXHR = data.submit();
         },
@@ -65,6 +65,16 @@ $(function(){
         fail:function(e, data){
             // Something has gone wrong!
             data.context.addClass('error');
+        }
+        ,
+
+        done:function(e, data){
+            count_li++;
+            // On Done
+           if($('#upload ul li').size() == count_li){
+                location.reload();
+            }
+
         }
 
     });
