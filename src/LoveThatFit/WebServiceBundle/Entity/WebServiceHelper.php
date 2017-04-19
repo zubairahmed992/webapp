@@ -850,6 +850,9 @@ class WebServiceHelper {
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         $page_count = (int) (count($productlist) / $records_per_page);
         $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1: $page_count;
+        if ($page_no < 1 || $page_no > $page_count) {
+            return $this->response_array(false, 'Invalid Page No');
+        }
         $productlist = array_slice($productlist, $offset, $limit);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
