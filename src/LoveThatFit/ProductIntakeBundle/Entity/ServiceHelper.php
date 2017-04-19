@@ -93,13 +93,13 @@ class ServiceHelper {
             $pc->setTitle(trim($value['title']));  
             $pc->setPattern(trim($value['pattern']));
             $pc->setImage(trim($value['image']));
-            $pc->setProduct($product);
+            $pc->setProduct($product);            
             $em->persist($pc);
             $em->flush();
             $product_colors_id[] = $pc->getId();
+           
         }
        
-        
         //--------------- Add Product Size
         foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {            
                 $ps = new ProductSize();
@@ -112,9 +112,7 @@ class ServiceHelper {
         //----------------- Add Product Items
         foreach ($product_size_value['product_items'] as $key => $value) {
             $pi = new ProductItem();
-
-            $product_color = $this->container->get('admin.helper.productitem')->find($product_colors_id[$key]);
-         
+            $product_color = $this->container->get('admin.helper.productcolor')->find($product_colors_id[$key]);
             $pi->setPrice(trim($value['price']));  
             $pi->setLineNumber(trim($value['line_number']));
             $pi->setImage(trim($value['image']));
@@ -124,7 +122,7 @@ class ServiceHelper {
             $pi->setRawImage($value['raw_image']);
             $pi->setSku($value['sku']);
             //$pi->addProductItemPiece($value['line_number']); 
-            $em->persist($pc);
+            $em->persist($pi);
             $em->flush();
         }
         
@@ -149,8 +147,7 @@ class ServiceHelper {
             $em->persist($psm);
             $em->flush();
         }
-        }
-       
+        }        
         return "Product Insert Sucessfully. ";
     }
     
