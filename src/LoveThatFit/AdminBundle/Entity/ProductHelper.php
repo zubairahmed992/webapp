@@ -314,9 +314,12 @@ class ProductHelper
     }
 
 #------------------------------------------------------
-    public function find($id)
+    public function find($id, $checkDisabled = false)
     {
-        return $this->repo->find($id);
+        if($checkDisabled == true)
+            return $this->repo->findOneBy(array("id" => $id, "disabled" => false));
+        else
+            return $this->repo->find($id);
     }
 
 
