@@ -57,7 +57,7 @@ class UserLogHelper
         if(is_object($user)){
             $userLog = $this->createNew();
             $sessionId = md5(uniqid('php_').$user->getAuthToken().time());
-            $appName = (isset($request['appname']) ? $request['appname'] : "");
+            $appName = (isset($request['appname']) ? strtolower($request['appname']) : "");
 
             $userLog->setAppName( $appName );
             $userLog->setLoginAt(new \DateTime('now'));
@@ -76,9 +76,9 @@ class UserLogHelper
     public function findUserBySessionId( User $user, $request = array())
     {
         $userLogObject = $this->repo->findOneBy(
-                array("user_id" => $user->getId(),
-                     "sessionId" => $request['sessionId'],
-                    "appName" => $request['appname']
+                array("users" => $user->getId(),
+                     "sessionId" => $request['session_id'],
+                    "appName" => strtolower($request['appname'])
                 ));
 
         if(is_object($userLogObject)){

@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\WebServiceBundle\Entity;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 
@@ -25,7 +26,24 @@ class WebServiceHelper {
         return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
     }
     #------------------------ User -----------------------
+    public  function logoutService( User $user, $request_array ){
+        if(isset($request_array['session_id']) && isset($request_array['appname'])){
+            $logObject = $this->container->get('userlog.helper.userlog')->findUserBySessionId( $user, $request_array );
+            if(is_object($logObject)){
+                return array(
+                    'success' => true,
+                    "msg" => "user has been successfully logout"
+                );
+            }else{
+                return array(
+                    'success' => false,
+                    "msg" => "some thing went wrong"
+                );
+            }
+        }
 
+        return array();
+    }
     public function loginService($request_array) {
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
