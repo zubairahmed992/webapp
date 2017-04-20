@@ -57,8 +57,9 @@ class UserLogHelper
         if(is_object($user)){
             $userLog = $this->createNew();
             $sessionId = md5(uniqid('php_').$user->getAuthToken().time());
+            $appName = (isset($request['appname']) ? $request['appname'] : "");
 
-            $userLog->setAppName($request['appname']);
+            $userLog->setAppName( $appName );
             $userLog->setLoginAt(new \DateTime('now'));
             $userLog->setLogoutAt(new \DateTime("0000-00-00 00:00:00"));
             $userLog->setUsers( $user );
