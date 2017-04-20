@@ -37,6 +37,12 @@ class User implements UserInterface, \Serializable {
     protected $fnfusers;
 
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\WebServiceBundle\Entity\UserLog", mappedBy="users", orphanRemoval=true)
+     */
+
+    protected $user_log;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="duplicate_users")
      * @ORM\JoinColumn(name="original_user_id", referencedColumnName="id", nullable=true)
      */
@@ -2736,5 +2742,38 @@ class User implements UserInterface, \Serializable {
     public function getUserItemFavHistory()
     {
         return $this->user_item_fav_history;
+    }
+
+    /**
+     * Add user_log
+     *
+     * @param \LoveThatFit\WebServiceBundle\Entity\UserLog $userLog
+     * @return User
+     */
+    public function addUserLog(\LoveThatFit\WebServiceBundle\Entity\UserLog $userLog)
+    {
+        $this->user_log[] = $userLog;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_log
+     *
+     * @param \LoveThatFit\WebServiceBundle\Entity\UserLog $userLog
+     */
+    public function removeUserLog(\LoveThatFit\WebServiceBundle\Entity\UserLog $userLog)
+    {
+        $this->user_log->removeElement($userLog);
+    }
+
+    /**
+     * Get user_log
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserLog()
+    {
+        return $this->user_log;
     }
 }
