@@ -30,10 +30,12 @@ class WebServiceHelper {
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime( $user, $request_array );
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] =  $this->user_array($user,$request_array);
+                    $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
