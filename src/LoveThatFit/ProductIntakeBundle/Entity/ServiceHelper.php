@@ -50,7 +50,7 @@ class ServiceHelper {
     }
       #------------------------------------------------------------------------------
 
-    public function createProduct($data) {
+    public function createProduct($data,$imagepath) {
         $data = json_decode($data, true);
         //return new JsonResponse($data);
         $clothing_type = $this->container->get("admin.helper.clothingtype")->find($data[0]['clothing_type_id']);
@@ -99,7 +99,10 @@ class ServiceHelper {
             $product_colors_id[] = $pc->getId();
            
         }
-       
+          
+          // $path = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/'; 
+           $destinationpath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/newimage/';
+          
         //--------------- Add Product Size
         foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {            
                 $ps = new ProductSize();
@@ -121,6 +124,7 @@ class ServiceHelper {
             $pi->setProductColor($product_color);
             $pi->setRawImage($value['raw_image']);
             $pi->setSku($value['sku']);
+            copy($imagepath.$value['image'], $destinationpath.$value['image']);
             //$pi->addProductItemPiece($value['line_number']); 
             $em->persist($pi);
             $em->flush();
