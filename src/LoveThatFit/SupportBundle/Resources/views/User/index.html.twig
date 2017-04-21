@@ -1,156 +1,168 @@
 {% extends 'LoveThatFitSupportBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Users</li>
+    <li class="active">Users</li>
 {% endblock %}
 
 
 {% block body %}
-<div class="p_listing">
-    <div class="clearfix"></div>
-      <h1 style="float:left;">Users</h1>
-      <div class="clearfix"></div>
-      <div class="btn_wrapper2">
-        <div id="chart_figures" class="product_chart_figures">
-          <div class="facts">
-            <div><span>Total Users:</span>{{rec_count}}</div>
-            <div><span>Female:</span>{{femaleUsers}}</div>
-            <div><span>Male:</span>{{maleUsers}}</div>
-          </div>
+    <div class="p_listing">
+        <div class="clearfix"></div>
+        <h1 style="float:left;">Users</h1>
+        <div class="clearfix"></div>
+        <div class="btn_wrapper2">
+            <div id="chart_figures" class="product_chart_figures">
+                <div class="facts">
+                    <div><span>Total Users:</span>{{ rec_count }}</div>
+                    <div><span>Female:</span>{{ femaleUsers }}</div>
+                    <div><span>Male:</span>{{ maleUsers }}</div>
+                </div>
+            </div>
         </div>
-      </div>
-      <p style="color:#ff0000">Duplicate users are showing in red colors</p>
-      <div class="clearfix"></div>
+        <p style="color:#ff0000">Duplicate users are showing in red colors</p>
+        <div class="clearfix"></div>
     </div>
     <div class="bs-docs-grid">
-      <div class="custom_search_user">
-        Gender:&nbsp;
-        <select id="gender">
-          <option value="">Select Gender</option>
-          <option value="m">Male</option>
-          <option value="f">Female</option>
-        </select>
-        &nbsp;&nbsp;Age:&nbsp;
-        <select id="age">
-          <option value="">Select Age</option>
-          {% for i in 15..50 %}
-            <option value="{{ i }}">{{ i }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <table id="example" class="display" cellspacing="0" width="100%">
-          <thead>
+        <div class="custom_search_user">
+            Gender:&nbsp;
+            <select id="gender">
+                <option value="">Select Gender</option>
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+            </select>
+            &nbsp;&nbsp;Age:&nbsp;
+            <select id="age">
+                <option value="">Select Age</option>
+                {% for i in 15..50 %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
             <tr>
-              <th>User ID</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Created At</th>
-              <th>Actions</th>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
             </tr>
-          </thead>
-          <tbody>
-          </tbody>
-      </table>  
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
-  </div> 
-</div>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
+    </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
 
-    if( {{app.session.get('Permissions')['users']['duplicate']}} == 1 ) {
-      visible           = true;
-      showDuplicateUser = true;
-    }
+            if ( {{ app.session.get('Permissions')['users']['duplicate'] }} == 1)
+            {
+                visible = true;
+                showDuplicateUser = true;
+            }
 
-    if( {{app.session.get('Permissions')['users']['detail']}} == 1 ) {
-      visible              = true;
-      ShowDetailPageButton = true;
-    }
-    
-    var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+            if ( {{ app.session.get('Permissions')['users']['detail'] }} == 1)
+            {
+                visible = true;
+                ShowDetailPageButton = true;
+            }
 
-    var table = $('#example').DataTable({
-      "processing": true, 
-      "serverSide": true, 
-      "ajax": {
-          "url": "{{ path('support_users_paginate') }}",
-          "type": "POST",
-          "data"  : function ( d ) {                        
-                      d.gender = $('#gender').val(),
-                      d.age    = $('#age').val()
+            var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+
+            var table = $('#example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ path('support_users_paginate') }}",
+                    "type": "POST",
+                    "data": function (d) {
+                        d.gender = $('#gender').val(),
+                            d.age = $('#age').val()
                     },
-      },
-      "sAjaxDataProp": "data", 
-      "pageLength": 10,
-      "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
-      "pagingType": "full_numbers",
-      //"scrollY"   : "500px",
-      "order": [[ 0, "desc" ]],
-      "columns": [
-        {
-            "data"  : "id",
-            "searchable" : false,
-        },
-        {
-            "data"  : "full_name",
-        },
-        {
-            "data"  : "email",
-            "orderable" : false
-        },
-        {
-            "data"  : "gender",
-            "orderable" : false
-        },
-        {
-            "data"  : "createdAt",
-            "searchable": false
-        },
-        {
-            "title"         : "Actions",
-            "targets"       : -1,
-            "data"          : null,
-            "orderable"     : false,
-            "searchable"    : false,
-            "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
-          + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
-        },
-        {
-            "data"  : "original_user_id",
-            "searchable": false,
-            "visible": false
-        }
-      ],
-      "createdRow": function ( row, data, index ) {
-          if ( data["original_user_id"] != null ) {
-            $('td', row).addClass('duplicate_user_class');
-          }
-          if(jQuery.inArray(data["id"], notShownIDs) != -1) {
-            $('td', row).addClass('hide_grid_row'); 
-          } 
+                },
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "pagingType": "full_numbers",
+                //"scrollY"   : "500px",
+                "order": [[0, "desc"]],
+                "columns": [
+                    {
+                        "data": "id",
+                        "searchable": false,
+                    },
+                    {
+                        "data": "full_name",
+                    },
+                    {
+                        "data": "email",
+                        "orderable": false
+                    },
+                    {
+                        "data": "gender",
+                        "orderable": false
+                    },
+                    {
+                        "data": "status",
+                        "orderable": false
+                    },
+                    {
+                        "data": "createdAt",
+                        "searchable": false
+                    },
+                    {
+                        "data": "updated_at",
+                        "searchable": false
+                    },
+                    {
+                        "title": "Actions",
+                        "targets": -1,
+                        "data": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
+                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
+                    },
+                    {
+                        "data": "original_user_id",
+                        "searchable": false,
+                        "visible": false
+                    }
+                ],
+                "createdRow": function (row, data, index) {
+                    if (data["original_user_id"] != null) {
+                        $('td', row).addClass('duplicate_user_class');
+                    }
+                    if (jQuery.inArray(data["id"], notShownIDs) != -1) {
+                        $('td', row).addClass('hide_grid_row');
+                    }
 
-      },
-    });
-    $.fn.dataTable.ext.errMode = 'none';
+                },
+            });
+            $.fn.dataTable.ext.errMode = 'none';
 
-    $('#gender, #age').change( function() {
-      table.draw();
-    });
-  
-    jQuery('#example tbody').on( 'click', 'button, a, img', function () {
-      var dataAction = $(this).attr('data-action');
-      var data = table.row( $(this).parents('tr') ).data();
-      if (dataAction == 'DuplicateUser') {
-          var url = '{{ path('support_duplicate_user_index', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-      if (dataAction == 'Detail') {
-          var url = '{{ path('support_user_detail_show', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-    });
-});
-</script>
+            $('#gender, #age').change(function () {
+                table.draw();
+            });
+
+            jQuery('#example tbody').on('click', 'button, a, img', function () {
+                var dataAction = $(this).attr('data-action');
+                var data = table.row($(this).parents('tr')).data();
+                if (dataAction == 'DuplicateUser') {
+                    var url = '{{ path('support_duplicate_user_index', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+                if (dataAction == 'Detail') {
+                    var url = '{{ path('support_user_detail_show', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+            });
+        });
+    </script>
 {% endblock %}

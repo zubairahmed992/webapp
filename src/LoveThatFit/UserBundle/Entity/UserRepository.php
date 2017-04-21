@@ -408,9 +408,13 @@ class UserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
-                IDENTITY(u.original_user) as original_user_id'
+                IDENTITY(u.original_user) as original_user_id,
+                ua.updated_at,
+                ua.status
+                '
             )
-            ->from('LoveThatFitUserBundle:User', 'u');
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin('u.user_archives', 'ua');
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
@@ -439,8 +443,10 @@ class UserRepository extends EntityRepository
                 $orderByColumn = "u.firstName";
             } elseif ($orderByColumn == 2) {
                 $orderByColumn = "u.email";
-            } elseif ($orderByColumn == 4) {
+            } elseif ($orderByColumn == 5) {
                 $orderByColumn = "u.createdAt";
+            }elseif ($orderByColumn == 6) {
+                $orderByColumn = "ua.updated_at";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
