@@ -56,17 +56,20 @@
         var ext = image_file.substring(pos, image_length);
         var final_ext = ext.toLowerCase();
         var verified = "no";
-
-        for (i = 0; i < extensions.length; i++){
-            if(extensions[i] == final_ext){
-                var verified = "yes";
+        $(".alert-success").hide();
+        if(image_file != "") {
+            for (i = 0; i < extensions.length; i++) {
+                if (extensions[i] == final_ext) {
+                    var verified = "yes";
+                }
             }
-        }
 
-        if(verified == "no"){
-            $("#error_shopmodel_image").show();
-            window.scrollTo(0, 0);
-            event.preventDefault()
+            if (verified == "no") {
+                $("#error_shopmodel_image").show();
+                window.scrollTo(0, 0);
+                $(".alert-success").hide();
+                event.preventDefault()
+            }
         }
         return true;
     }
