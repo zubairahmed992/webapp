@@ -151,4 +151,9 @@ admin_productcategories_routes:
 admin_shop_look_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/shop_look.yml"
     prefix:   /
+
+#---------- User Tracking data ----------------------
+admin_tracking:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/tracking.yml"
+    prefix:   /
     
