@@ -1406,6 +1406,18 @@ class ProductRepository extends EntityRepository
         }
     }
   //end of autocomplete method
+
+    public function updateProductsStatus($disabled, $brand_id)
+    {
+        try {
+            $sql = "UPDATE Product SET disabled = " . $disabled . " WHERE brand_id = " . $brand_id;
+            $conn = $this->getEntityManager()->getConnection();
+            $rowsAffected = $conn->executeUpdate($sql);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
 
     /*

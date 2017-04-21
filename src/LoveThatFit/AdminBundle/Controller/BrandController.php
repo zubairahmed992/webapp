@@ -97,6 +97,9 @@ class BrandController extends Controller {
             $message_array = $this->get('admin.helper.brand')->update($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
             if ($message_array['success'] == true) {
+                $disabled = ($entity->getDisabled()) ? 1 : 0;
+                $brand_id = $entity->getId();
+                $this->get('admin.helper.product')->setProductsStatusByBrand($disabled, $brand_id);
                 return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
             }
         } else {

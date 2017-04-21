@@ -1442,4 +1442,9 @@ class ProductHelper
         return $output;
     }
     */
+
+    public function setProductsStatusByBrand($disabled, $brand_id)
+    {
+        return $this->repo->updateProductsStatus($disabled, $brand_id);
+    }
 }
