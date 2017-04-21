@@ -72,7 +72,7 @@ $(function(){
             count_li++;
             // On Done
            if($('#upload ul li').size() == count_li){
-                location.reload();
+                //location.reload();
             }
 
         }

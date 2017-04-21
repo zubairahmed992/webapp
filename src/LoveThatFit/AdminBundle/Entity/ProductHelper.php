@@ -1400,11 +1400,21 @@ class ProductHelper
         $_exploded = explode("_", $request_array);
         $a = array('product_id' => $product_id);
         $type = Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif');
-
+        $a['set_default'] = 'no';
         # file name/ext with/without view name
         if (count($_exploded) == 3) {
-            $last_bits = explode(".", $_exploded[2]);
-            $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+            $last_bits = explode(".", $_exploded[1]);
+            if(strtolower($_exploded[2]) == 'setdefault.png'){
+                /*Color with Setdefault */
+                $last_bits = explode(".", $_exploded[1]);
+                $a['image_type'] = $_exploded[0];
+                $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+                $a['set_default'] = 'yes';
+
+            }else {
+                $last_bits = explode(".", $_exploded[2]);
+                $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+            }
         } elseif (count($_exploded) == 4) {
             $last_bits = explode(".", $_exploded[3]);
             $a['color_title'] = str_replace("-", " ", $_exploded[2]);
