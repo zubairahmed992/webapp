@@ -30,13 +30,10 @@ class ServiceController extends Controller {
     }
 
 #------------> /pi/ws/product_detail/{id}
-    public function productDetailAction($id) {               
-           $imagepath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/'; 
-          //die;
+    public function productDetailAction($id) {
             $data = $this->get('service.helper')->getProductDetails($id);  
             $url = 'http://localhost/webapp/web/app_dev.php/pi/ws/save_product';
-            $postdata['data'] =  json_encode($data);
-            $postdata['imagepath'] = $imagepath;
+            $postdata['data'] =  json_encode($data);            
             //open connection
             $ch = curl_init();
             //set the url, number of POST vars, POST data
@@ -52,7 +49,7 @@ class ServiceController extends Controller {
     
     public function saveProductAction() {        
          try {              
-        $message =  $this->get('service.helper')->createProduct($_POST['data'],$_POST['imagepath']); 
+        $message =  $this->get('service.helper')->createProduct($_POST['data']); 
         return new JsonResponse([
             'success' => true,
             'data'    =>  $message
