@@ -1403,14 +1403,12 @@ class ProductHelper
         $a['set_default'] = 'no';
         # file name/ext with/without view name
         if (count($_exploded) == 3) {
-            $last_bits = explode(".", $_exploded[1]);
             if(strtolower($_exploded[2]) == 'setdefault.png'){
                 /*Color with Setdefault */
-                $last_bits = explode(".", $_exploded[1]);
+                $last_bits = explode(".", $_exploded[2]);
                 $a['image_type'] = $_exploded[0];
-                $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+                $a['color_title'] = str_replace("-", " ", $_exploded[1]);
                 $a['set_default'] = 'yes';
-
             }else {
                 $last_bits = explode(".", $_exploded[2]);
                 $a['color_title'] = str_replace("-", " ", $last_bits[0]);

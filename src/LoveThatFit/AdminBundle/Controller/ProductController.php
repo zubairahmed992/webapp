@@ -1261,6 +1261,14 @@ class ProductController extends Controller {
 
                 // Find if the new color has been successfully added
                 $added_color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+
+
+
+                //Make Default Color
+                if($parsed_details['set_default'] == "yes"){
+                    $this->get('admin.helper.product')->updateDisplayColor($product, $added_color_id_result);
+                }
+
                 /*Add color pattern and color image*/
                 if(array_key_exists('image_type',$parsed_details)){
                     $imageFile = $request->files->get('upl');
