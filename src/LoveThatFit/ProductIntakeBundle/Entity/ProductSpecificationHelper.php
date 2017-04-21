@@ -325,7 +325,7 @@ class ProductSpecificationHelper {
         $specs = $this->compute_grade_rule($specs, $fit_model_obj);
         $specs = $this->compute_stretch($specs);
         #------------- compute ranges for all sizes
-        return $this->compute_all_ranges($specs, $fit_model_obj);
+        return $this->compute_all_ranges($specs, $fit_model_obj);        
     }
 
     ###################################################################
@@ -381,11 +381,12 @@ class ProductSpecificationHelper {
     }
     #---> grade rule for fit model size perform just using grade rule without stretch <-------..
     private function grade_rule_calculations_for_fit_model($fp){
-            $fp['grade_rule_stretch'] = $fp['grade_rule'] + ($fp['grade_rule'] * $fp['stretch_percentage'] / 100);
-            $fp['min_calc'] = $fp['fit_model'] - (2.5 * $fp['grade_rule']);
-            $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $fp['grade_rule']);
-            $fp['ideal_high'] = $fp['fit_model'] + (0.5 * $fp['grade_rule']);
-            $fp['max_calc'] = $fp['fit_model'] + (2.5 * $fp['grade_rule']);            
+            $gr_value = $fp['grade_rule'] + ($fp['grade_rule'] * $fp['stretch_percentage'] / 100);
+            $fp['grade_rule_stretch'] = $gr_value;
+            $fp['min_calc'] = $fp['fit_model'] - (2.5 * $gr_value);
+            $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $gr_value);
+            $fp['ideal_high'] = $fp['fit_model'] + (0.5 * $gr_value);
+            $fp['max_calc'] = $fp['fit_model'] + (2.5 * $gr_value);            
             $fp['max_actual'] = $fp['max_calc'] ;
             $fp['min_actual'] = $fp['min_calc'];
             return $fp;
@@ -596,6 +597,7 @@ class ProductSpecificationHelper {
         $fit_model_ratio = $this->compute_fit_model_ratio($specs, $fit_model_obj);
         #--------- copy ranges for fit model size
         $specs['sizes'][$fit_model_obj->getSize()] = $fit_model_ratio['fit_model_measurement'];
+        
         #---------------------------------> calculate ranges
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {

@@ -30,10 +30,11 @@ class ProductListController extends Controller {
             'success' => 'true',
         );
 
-        if ($page_no < 1 || $page_no > $result_set['page_count']) {
+        $page_count = $result_set['page_count'];
+        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
             $productconf= array(
                 'data' => null,
-                'page_count' => $result_set['page_count'],
+                /*'page_count' => $result_set['page_count'],*/
                 'count'=> 0,
                 'message' => 'Invalid Page No',
                 'success' => 'false',
