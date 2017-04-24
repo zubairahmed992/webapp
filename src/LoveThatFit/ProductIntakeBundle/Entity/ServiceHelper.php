@@ -50,10 +50,10 @@ class ServiceHelper {
     }
       #------------------------------------------------------------------------------
 
-    public function createProduct( $data ) {
+    public function createProduct( $data , $imagepath) {
         $data = json_decode($data, true);
-         $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
-        $imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
+        // $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+        //$imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
         $destinationpath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/newimage/';
          if(!file_exists($destinationpath)) {
              mkdir($imagepath.'newimage', 0777, true);             

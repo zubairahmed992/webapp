@@ -32,9 +32,10 @@ class ServiceController extends Controller {
 #------------> /pi/ws/product_detail/{id}
     public function productDetailAction($id) {
             $data = $this->get('service.helper')->getProductDetails($id);
-            $imagepath = $_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
             $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
-          //  echo $protocol;
+            $imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
+            $postdata['imagepath'] = $imagepath;     
+//  echo $protocol;
           //  echo $imagepath;
            // die;
             $url = 'http://localhost/webapp/web/app_dev.php/pi/ws/save_product';
@@ -54,7 +55,7 @@ class ServiceController extends Controller {
     
     public function saveProductAction() {        
          try {              
-        $message =  $this->get('service.helper')->createProduct($_POST['data']); 
+        $message =  $this->get('service.helper')->createProduct($_POST['data'],$_POST['imagepath']); 
         return new JsonResponse([
             'success' => true,
             'data'    =>  $message
