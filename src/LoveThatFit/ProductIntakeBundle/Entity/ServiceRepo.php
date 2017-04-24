@@ -20,13 +20,14 @@ class ServiceRepo
     public function getProductSpecification($decoded)
     {
             $style_id_number = $decoded['result']['style_id_number'];   
-            $style_name = $decoded['result']['style_name'];             
-            $title = $decoded['result']['title'];  
+            $style_name =  array_key_exists('style_name', $decoded['result'])?$decoded['result']['style_name']:'';             
+            $title = array_key_exists('title', $decoded['result'])?$decoded['result']['title']:'';  
             $query = $this->em
                 ->createQueryBuilder()
                 ->select('ps.specs_json')
                 ->from('LoveThatFitProductIntakeBundle:ProductSpecification', 'ps')
-                ->where("ps.style_id_number='$style_id_number'  OR  ps.style_name = '$style_name' OR  ps.title = '$title'")               
+                ->where("ps.style_id_number = '$style_id_number'")               
+                #->where("ps.style_id_number='$style_id_number'  OR  ps.style_name = '$style_name' OR  ps.title = '$title'")
                 ->getQuery();               
             try {
             return $query->getResult();
