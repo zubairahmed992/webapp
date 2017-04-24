@@ -91,11 +91,11 @@
 
     <script type="text/javascript">
         function showUserLogs(user_id) {
-            alert(user_id);
             /*var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];*/
             var tableGroup = $('#logs').DataTable({
                 "processing": true,
                 "serverSide": false,
+                "destroy": true,
                 "ajax": {
                     "url": "../admin/user_activity/" + user_id + "/show",
                     "type": "POST",
@@ -105,7 +105,7 @@
                 "pageLength": 10,
                 "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
                 "pagingType": "full_numbers",
-                "order": [[1, "asc"]],
+                "order": [[0, "asc"]],
                 "columns": [
                     {
                         "data": "app",

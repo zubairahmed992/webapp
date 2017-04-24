@@ -152,16 +152,13 @@ admin_shop_look_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/shop_look.yml"
     prefix:   /
 
-<<<<<<< HEAD
-
 #-------------- User Activity ------------------------
 admin_users_activity_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/user_activity.yml"
     prefix:   /
-=======
+
 #---------- User Tracking data ----------------------
 admin_tracking:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/tracking.yml"
     prefix:   /
-    
->>>>>>> ef99f1eac007d244a69e2ae7c15d577982928303
+
