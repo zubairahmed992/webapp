@@ -31,7 +31,12 @@ class ServiceController extends Controller {
 
 #------------> /pi/ws/product_detail/{id}
     public function productDetailAction($id) {
-            $data = $this->get('service.helper')->getProductDetails($id);  
+            $data = $this->get('service.helper')->getProductDetails($id);
+            $imagepath = $_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
+            $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+          //  echo $protocol;
+          //  echo $imagepath;
+           // die;
             $url = 'http://localhost/webapp/web/app_dev.php/pi/ws/save_product';
             $postdata['data'] =  json_encode($data);            
             //open connection

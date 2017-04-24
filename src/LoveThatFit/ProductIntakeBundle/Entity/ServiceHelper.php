@@ -52,7 +52,8 @@ class ServiceHelper {
 
     public function createProduct( $data ) {
         $data = json_decode($data, true);
-        $imagepath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/'; 
+         $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+        $imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
         $destinationpath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/newimage/';
          if(!file_exists($destinationpath)) {
              mkdir($imagepath.'newimage', 0777, true);             
@@ -135,10 +136,10 @@ class ServiceHelper {
             $pi->setProductColor($product_color);
             $pi->setRawImage($value['raw_image']);
             $pi->setSku($value['sku']);
-            if(file_exists($imagepath.$value['image']))
-            {
+           // if(file_exists($imagepath.$value['image']))
+           // {
                 copy($imagepath.$value['image'], $destinationpath.$value['image']);
-            }
+           // }
             //$pi->addProductItemPiece($value['line_number']); 
             $em->persist($pi);
             $em->flush();
