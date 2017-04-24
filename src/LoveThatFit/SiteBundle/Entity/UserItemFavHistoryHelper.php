@@ -131,7 +131,7 @@ class UserItemFavHistoryHelper
                 'image'        => $image_path,
                 'email'        => $fData["email"],
                 'product_name' => $fData["name"],
-                'price'        => $fData["price"],
+                'price'        => "$".$fData["price"],
                 'size'         => $fData["size"],
                 'color'        => $fData["color"],
                 'status'       => ($fData["status"] == 0) ? "dislike" : "like",
