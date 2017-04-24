@@ -91,6 +91,8 @@ class UserItemFavHistoryRepository extends EntityRepository
                 $orderByColumn = "f.page";
             } elseif ($orderByColumn == 3) {
                 $orderByColumn = "f.created_at";
+            } elseif ($orderByColumn == 6) {
+                $orderByColumn = "f.status";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
