@@ -1,0 +1,19 @@
+admin_tracking:
+    pattern:  /admin/tracking
+    defaults: { _controller: LoveThatFitAdminBundle:Tracking:index}
+
+admin_favorite:
+    pattern:  /admin/favorite
+    defaults: { _controller: LoveThatFitAdminBundle:Tracking:favorite}
+
+admin_favorite_paginate:
+    pattern:  /admin/favorite/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:Tracking:favoritePaginate}
+
+admin_favorite_show:
+    pattern:  /admin/favorite/{product_id}/{user_id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Tracking:showFavorite }
+
+admin_favorite_export:
+    pattern:  /admin/favorite/export
+    defaults: { _controller: LoveThatFitAdminBundle:Tracking:favoriteExport }

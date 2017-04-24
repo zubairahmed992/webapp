@@ -1,0 +1,111 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Favorite Products</li>
+{% endblock %}
+
+{% block body %}
+<div class="p_listing">
+    <div class="clearfix"></div>
+      <h1 style="float:left;">Favorite Products</h1>
+      <div class="clearfix"></div>
+      {% block header_right_links %}
+        <div class="adjustment_links" style="margin-top: 20px; float:right;">
+          <a href="{{ path('admin_favorite_export') }}" class="btn export_btn">
+            Export Favorite Products
+          </a>
+        </div>
+    {% endblock %}
+    </div>
+    <div class="clearfix"></div>
+    <div class="bs-docs-grid">
+      <table id="example" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>User Email</th>
+              <th>Product Name</th>
+              <th>Item Image</th>
+              <th>Item Price</th>
+              <th>Item Size</th>
+              <th>Item color</th>
+              <th>Status</th>
+              <th>Favorite From</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>  
+    </div>
+  </div> 
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    var table = $('#example').DataTable({
+       "processing": true, 
+        "serverSide": true, 
+        "ajax": {
+            "url": "{{ path('admin_favorite_paginate') }}",
+            "type": "POST"
+        },
+        "sAjaxDataProp": "data", 
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+        "order": [[ 0, "desc" ]],
+        "columns": [
+        {
+          "data" : "email",
+        },
+        {
+          "data" : "product_name",
+        },
+        {
+          "data" : "image",
+          "searchable": false,
+          "orderable": false,
+          "render": function(data, type, row) {
+                    var image_data = '';
+                    if(data){
+                        image_data ='<img src="'+data+'" style="height:50px !important; width:50px !important;" />';
+                    }
+                    return image_data;
+              },
+          "sortable" : false,
+        },
+        {
+          "data" : "price",
+          "searchable": false,
+          "orderable": false,
+        },
+        {
+          "data" : "size",
+          "searchable": false,
+          "orderable": false,
+        },
+        {
+          "data" : "color",
+          "searchable": false,
+          "orderable": false,
+        },
+        {
+          "data" : "status",
+          "searchable": false,
+          "orderable": false,
+        },
+        {
+          "data" : "page",
+        },
+        {
+          "data" : "created_at",
+          "searchable": false,
+          "class": "text-right"
+        },
+      ],
+    });
+    $.fn.dataTable.ext.errMode = 'none';
+  });
+
+  var root = document.location.hostname;
+  console.log(root + "/web/uploads/ltf/products/fitting_room/web/");
+  
+</script>
+{% endblock %}

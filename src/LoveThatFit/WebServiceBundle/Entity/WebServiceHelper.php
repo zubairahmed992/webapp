@@ -545,7 +545,7 @@ class WebServiceHelper {
     public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id, true);
         if(count($product)== 0){
-            return $this->response_array(false, 'Product not Available');
+            return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
@@ -896,7 +896,7 @@ class WebServiceHelper {
     public function productDetailWithImages($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         if(count($product)== 0){
-            return $this->response_array(false, 'Product not Available');
+            return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
@@ -1038,7 +1038,7 @@ class WebServiceHelper {
     public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         if(count($product)== 0){
-            return $this->response_array(false, 'Product not Available');
+            return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
