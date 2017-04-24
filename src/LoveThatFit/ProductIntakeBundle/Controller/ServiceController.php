@@ -33,7 +33,8 @@ class ServiceController extends Controller {
     public function productDetailAction($id) {
             $data = $this->get('service.helper')->getProductDetails($id);
             $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
-            $imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
+           // $imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
+            $imagepath = 'http://192.168.0.113/webapp/web/uploads/ltf/products/fitting_room/web/'; 
             $postdata['imagepath'] = $imagepath;     
 //  echo $protocol;
           //  echo $imagepath;
