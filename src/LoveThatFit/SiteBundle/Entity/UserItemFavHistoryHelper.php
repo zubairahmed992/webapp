@@ -122,17 +122,13 @@ class UserItemFavHistoryHelper
             'data'            => array()
         );
 
-        $url = $_SERVER['REQUEST_URI']; //returns the current URL
-        $parts = explode('/',$url);
         foreach ($finalData as $fData) {
             $image_path = '';
             if($fData["image"] != ''){
-                $image_path = "/".$parts[1]."/web/uploads/ltf/products/fitting_room/web/" . $fData["image"];
+                $image_path = $data['base_path'] ."/uploads/ltf/products/fitting_room/web/" . $fData["image"];
             }
-
-            //http://localhost/webapp/web/uploads/ltf/banner/iphone/587765c038dc7.png
             $output['data'][] = [ 
-                'image'        => $image_path,//$fData["image"],
+                'image'        => $image_path,
                 'email'        => $fData["email"],
                 'product_name' => $fData["name"],
                 'price'        => $fData["price"],

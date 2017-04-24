@@ -24,6 +24,8 @@ class TrackingController extends Controller {
     public function favoritePaginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
+        $requestData['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+        
         $output = $this->get('site.helper.userfavitemhistory')->search($requestData);
 
         return new Response(json_encode($output), 200, ['Content-Type' =>'application/json']); 
