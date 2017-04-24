@@ -151,4 +151,9 @@ admin_productcategories_routes:
 admin_shop_look_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/shop_look.yml"
     prefix:   /
-    
+
+
+#-------------- User Activity ------------------------
+admin_users_activity_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/user_activity.yml"
+    prefix:   /

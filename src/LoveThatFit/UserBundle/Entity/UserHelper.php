@@ -1090,4 +1090,11 @@ class UserHelper {
     {
         return $this->repo->findUserList($start_date, $end_date);
     }
+
+    public function findUserById($user_id)
+    {
+        return $this->repo->findOneById($user_id);
+    }
+
+
 }
