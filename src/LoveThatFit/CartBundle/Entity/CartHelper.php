@@ -152,15 +152,17 @@ class CartHelper
         $cart_array = array();
         $counter = 0;
         foreach ($user->getCart() as $ci) {
-            if($ci->getProductItem()->getProduct()->getDisabled() == false){
+            //if($ci->getProductItem()->getProduct()->getDisabled() == false){
                 $cart_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
                 $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
                 $cart_array[$counter]['qty'] = $ci->getQty();
                 $cart_array[$counter]['item_id'] = $ci->getProductItem()->getId();
                 $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
                 $cart_array[$counter]['image'] = $get_path["iphone6_list"];
+                $cart_array[$counter]['disabled'] = $ci->getProductItem()->getProduct()->getDisabled();
+                $cart_array[$counter]['deleted'] = $ci->getProductItem()->getProduct()->getDeleted();
                 $counter++;
-            }
+            //}
         }
         return $cart_array;
     }
