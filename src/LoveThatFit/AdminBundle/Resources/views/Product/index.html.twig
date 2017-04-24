@@ -342,7 +342,9 @@ Search Product
 <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>
 <div class="span1">
     {%if(p.disabled==1)%}
+    {%if(p.displayProductColor)%}
         <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
+    {%endif%}
     {%else%}
         {%if(p.displayProductColor)%}
             <img src="{{ asset(p.displayProductColor.WebPath) }}"/>
