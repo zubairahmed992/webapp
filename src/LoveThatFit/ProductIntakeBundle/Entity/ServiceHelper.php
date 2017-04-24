@@ -104,8 +104,8 @@ class ServiceHelper {
             if(file_exists($prodcut_Color_pattren.$value['pattern'])) {
                 copy($prodcut_Color_pattren.$value['pattern'], $destinationpath.$value['pattern']);
             }
-            if(file_exists($prodcut_Color_pattren.$value['image'])) {
-                copy($prodcut_Color_pattren.$value['image'], $destinationpath.$value['image']);
+            if(file_exists($imagepath.$value['image'])) {
+                copy($imagepath.$value['image'], $destinationpath.$value['image']);
             }
             $pc->setProduct($product);            
             $em->persist($pc);
