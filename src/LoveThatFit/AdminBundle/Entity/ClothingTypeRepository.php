@@ -193,6 +193,8 @@ param:limit, page_number,limit,sort
     }
     //change by umer
     public function findOneByGenderNameCSV($gender, $name) {
+    $plurals =  array ('blouses' => 'blouse', 'jackets' => 'jacket', 'sweaters' => 'sweater', 'trousers' => 'trouser', 'jeans' => 'jean', 'skirts' => 'skirt', 'dresses' => 'dress');
+    $name = array_key_exists($name, $plurals) ? $plurals[$name] : $name;
         $record = $this->getEntityManager()
                         ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
                                 WHERE c.name LIKE :name AND c.gender = :gender")

@@ -629,12 +629,19 @@ class ProductSpecificationHelper {
         $specs = $this->find($id);
         $data = json_decode($specs->getSpecsJson(), true);
         $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
+        
+        if($clothing_type==null)
+            return array('success'=>false, 'message'=>'Clothing type not found');
+        
         $brand = $this->container->get('admin.helper.brand')->findOneByName($data['brand']);
+        if($brand==null)
+            return array('success'=>false, 'message'=>'Brand not found');
+        
         $product = new Product;
         $product->setBrand($brand);
         $product->setClothingType($clothing_type);
-        $product->setName(array_key_exists('name', $data) ? $data['name'] : '');
-        $product->setName(array_key_exists('control_number', $data) ? $data['control_number'] : '');
+        $product->setName(array_key_exists('style_name', $data) ? $data['style_name'] : '');
+        $product->setControlNumber(array_key_exists('style_id_number', $data) ? $data['style_id_number'] : '');
         $product->setDescription(array_key_exists('description', $data) ? $data['description'] : '');
         $product->setStretchType(array_key_exists('stretch_type', $data) ? $data['stretch_type'] : '');
         $product->setHorizontalStretch($data['horizontal_stretch']);
@@ -654,6 +661,7 @@ class ProductSpecificationHelper {
         $product->setFitPriority(array_key_exists('fit_priority', $data) ? json_encode($data['fit_priority']) : 'NULL' );
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data) ? $data['fabric_content'] : ''));
         $product->setDisabled(false);
+        $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         #------------------------
         $em = $this->getDoctrine()->getManager();
@@ -661,6 +669,7 @@ class ProductSpecificationHelper {
         $em->flush();
         $this->create_product_sizes($product, $data);
         $this->create_product_colors($data, $product);
+        return array('success'=>true, 'message'=>'Product Created');
     }
 
     #------------------------------------------------------------
