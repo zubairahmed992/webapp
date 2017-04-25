@@ -122,6 +122,7 @@ class UserItemFavHistoryRepository extends EntityRepository
             ->leftJoin('f.productitem', 'i')
             ->leftJoin('i.product_size', 's')
             ->leftJoin('i.product_color', 'c')
+            ->OrderBy("f.created_at", "desc")
             ->getQuery()
             ->getResult();
     }
