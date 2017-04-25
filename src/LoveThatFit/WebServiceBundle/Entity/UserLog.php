@@ -24,7 +24,7 @@ class UserLog
     /**
      * @var string
      *
-     * @ORM\Column(name="appName", type="string", length=150)
+     * @ORM\Column(name="appName", type="string", length=150, nullable=true)
      */
     private $appName;
 

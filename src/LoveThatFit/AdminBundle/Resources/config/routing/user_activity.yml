@@ -1,0 +1,7 @@
+users_activity_home:
+    pattern:  /admin/user_activity
+    defaults: { _controller: LoveThatFitAdminBundle:UserActivity:index }
+
+users_activity_show:
+    pattern:  /admin/user_activity/{user_id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:UserActivity:show }

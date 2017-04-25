@@ -226,6 +226,15 @@ class Product {
      * @ORM\Column(name="disabled", type="boolean", nullable=true)
      */
     private $disabled;
+
+
+    /**
+     * @var string $deleted
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=true, options={"default"=false})
+     */
+    private $deleted;
+
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -600,6 +609,29 @@ class Product {
      */
     public function getDisabled() {
         return $this->disabled;
+    }
+
+
+//----------------------------------------------------------
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Product
+     */
+    public function setDeleted($deleted) {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean
+     */
+    public function getDeleted() {
+        return $this->deleted;
     }
 
     
