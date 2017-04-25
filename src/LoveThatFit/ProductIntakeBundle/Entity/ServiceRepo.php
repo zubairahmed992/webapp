@@ -19,8 +19,8 @@ class ServiceRepo
     #-------------------------------------------------------------------
     public function getProductSpecification($decoded)
     {
-            $style_id_number = $decoded['result']['style_id_number'];   
-            $brand_name =  array_key_exists('brand_name', $decoded['result'])?$decoded['result']['brand_name']:'';                         
+            $style_id_number = $decoded['style_id_number'];   
+            $brand_name =  array_key_exists('brand_name', $decoded)?$decoded['brand_name']:'';                         
             $query = $this->em
                 ->createQuery("SELECT ps.specs_json 
                     FROM LoveThatFitProductIntakeBundle:ProductSpecification ps
