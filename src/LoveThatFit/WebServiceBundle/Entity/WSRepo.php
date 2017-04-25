@@ -59,6 +59,48 @@ class WSRepo
         }
     }
 
+
+    #-------------------------------------------------------------------
+    public function productSyncWithFavouriteItem($gender, $date_format = Null, $user)
+    {
+        if ($date_format) {
+            return $this->em
+                ->createQueryBuilder()
+                ->select('p.id product_id,p.name,p.description, p.disabled as disabled, p.deleted as deleted, ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count, (SELECT count(np.id) FROM LoveThatFitAdminBundle:Product np JOIN np.product_items npi JOIN npi.users u  WHERE u.id='.$user.' AND npi.product= p.id) as favourite')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.displayProductColor', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')
+                ->innerJoin('p.product_items', 'pi')
+                ->leftJoin('p.retailer', 'r')
+                ->where('p.gender=:gender')
+                ->andWhere('p.updated_at>=:update_date')
+                ->andWhere("p.displayProductColor!=''")
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
+                ->getQuery()
+                ->getResult();
+
+        } else {
+
+            return $this->em
+                ->createQueryBuilder()
+                ->select('p.id product_id,p.name,p.description,p.disabled as disabled, p.deleted as deleted, ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count, (SELECT count(np.id) FROM LoveThatFitAdminBundle:Product np JOIN np.product_items npi JOIN npi.users u  WHERE u.id='.$user.' AND npi.product= p.id) as favourite')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.displayProductColor', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')
+                ->innerJoin('p.product_items', 'pi')
+                ->leftJoin('p.retailer', 'r')
+                ->where('p.gender=:gender')
+                ->andWhere("p.displayProductColor!=''")
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender))
+                ->getQuery()
+                ->getResult();
+        }
+    }
+
 #-------------------------------------------------------
     public function userLikedProductIds($user_id)
     {
