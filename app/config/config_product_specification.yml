@@ -1122,10 +1122,10 @@ constants:
         down: down
         ski: ski
       coat:
-       blazer_single_breasted: blazer_single_breasted
-       blazer_double_breasted: blazer_double_breasted
-       lossy: Lossy
-       swing: Swing
+        blazer_single_breasted: blazer_single_breasted
+        blazer_double_breasted: blazer_double_breasted
+        lossy: Lossy
+        swing: Swing
         romper: romper
         jumpsuit: jumpsuit
         bustier: bustier
@@ -1161,10 +1161,10 @@ constants:
         down: down
         ski: ski
       coats:
-       blazer_single_breasted: blazer_single_breasted
-       blazer_double_breasted: blazer_double_breasted
-       lossy: Lossy
-       swing: Swing
+        blazer_single_breasted: blazer_single_breasted
+        blazer_double_breasted: blazer_double_breasted
+        lossy: Lossy
+        swing: Swing
         romper: romper
         jumpsuit: jumpsuit
         bustier: bustier
@@ -1760,13 +1760,13 @@ constants:
         full_cup: full_cup
         string: string
       coat:
-       single_breasted_lapels: single_breasted_lapels
-       double_breasted_ lapels:  double_breasted_ lapels
-       shawl_single_breasted:  shawl_single_breasted
-       shawl_double_breasted:  shawl_double_breasted
-       v_neck:  v_neck
-       jewel_neck:  jewel_neck
-       wrap:  Wrap
+        single_breasted_lapels: single_breasted_lapels
+        double_breasted_ lapels:  double_breasted_ lapels
+        shawl_single_breasted:  shawl_single_breasted
+        shawl_double_breasted:  shawl_double_breasted
+        v_neck:  v_neck
+        jewel_neck:  jewel_neck
+        wrap:  Wrap
         halter: halter
         pop_over: pop_over
         bustier: bustier
@@ -1785,13 +1785,13 @@ constants:
         full_cup: full_cup
         string: string
       coats:
-       single_breasted_lapels: single_breasted_lapels
-       double_breasted_ lapels:  double_breasted_ lapels
-       shawl_single_breasted:  shawl_single_breasted
-       shawl_double_breasted:  shawl_double_breasted
-       v_neck:  v_neck
-       jewel_neck:  jewel_neck
-       wrap:  Wrap
+        single_breasted_lapels: single_breasted_lapels
+        double_breasted_ lapels:  double_breasted_ lapels
+        shawl_single_breasted:  shawl_single_breasted
+        shawl_double_breasted:  shawl_double_breasted
+        v_neck:  v_neck
+        jewel_neck:  jewel_neck
+        wrap:  Wrap
         halter: halter
         pop_over: pop_over
         bustier: bustier
