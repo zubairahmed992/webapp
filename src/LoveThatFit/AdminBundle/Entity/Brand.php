@@ -21,6 +21,10 @@ class Brand {
      */
     protected $sizechart;
     
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\ProductIntakeBundle\Entity\ProductSpecification", mappedBy="brand")
+     */
+    private $product_specifications;
     
     /**
      * Bidirectional (INVERSE SIDE)
@@ -94,6 +98,9 @@ class Brand {
      * @ORM\Column(name="screen_position", type="boolean", options={"default" = false})
      */
     private $screen_position;
+    
+    
+   
     
     /**
      * Get id

@@ -40,17 +40,19 @@ class WSWishlistController extends Controller
     public function removeUserWishlistAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.wishlist')->removeUserWishlist($user);
-            $resp = 'Wishlist has been removed';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.wishlist')->removeUserWishlist($user);
+            if ($response != null) {
+                $resp = 'Wishlist has been removed';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
         return new Response($res);
-
     }
 
     // Remove User Cart
@@ -60,14 +62,17 @@ class WSWishlistController extends Controller
         $product_item = $decoded["item_id"];
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $product_item);
-            $resp = 'Wishlist Item has been removed';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $product_item);
+            if ($response != null) {
+                $resp = 'Wishlist Item has been removed';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
         return new Response($res);
-
     }
 
     // Show User Cart
@@ -133,7 +138,6 @@ class WSWishlistController extends Controller
 
             /* Find this item on the cart and remove */
             $this->container->get('cart.helper.cart')->removeCartByItem($user, $item_id);
-
             $this->container->get('cart.helper.wishlist')->fillWishlistforService($item_id, $user, $qty);
             $resp = 'Item has been added to Wishlist Successfully';
             $res = $this->get('webservice.helper')->response_array(true, $resp);
@@ -152,10 +156,8 @@ class WSWishlistController extends Controller
             foreach ($items as $detail) {
                 $this->container->get('cart.helper.wishlist')->fillWishlist($detail["item_id"], $user, $detail["quantity"]);
             }
-
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 }

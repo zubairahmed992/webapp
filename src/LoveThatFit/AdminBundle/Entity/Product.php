@@ -79,6 +79,11 @@ class Product {
      */
     private $user_item_try_history;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemFavHistory", mappedBy="product")
+     */
+    private $user_item_fav_history;
+
     /////////////////////////////////////////////////////////////////////////////////  
 
     public function __construct() {
@@ -86,6 +91,7 @@ class Product {
         $this->product_sizes = new ArrayCollection();
         $this->product_items = new ArrayCollection();
         $this->user_item_try_history = new ArrayCollection();
+        $this->user_item_fav_history = new ArrayCollection();
         $this->product_image = new ArrayCollection();
     }
 
@@ -1500,5 +1506,91 @@ class Product {
     {
 
         return $this->name .' ('. $this->control_number.' # '.$this->brand->getName().')';
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Categories $categories
+     * @return Product
+     */
+    public function addCategorie(\LoveThatFit\AdminBundle\Entity\Categories $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Categories $categories
+     */
+    public function removeCategorie(\LoveThatFit\AdminBundle\Entity\Categories $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Get product_color_views
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductColorViews()
+    {
+        return $this->product_color_views;
+    }
+
+    /**
+     * Get product_image
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductImage()
+    {
+        return $this->product_image;
+    }
+
+    /**
+     * Add user_item_fav_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
+     * @return Product
+     */
+    public function addUserItemFavHistory(\LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory)
+    {
+        $this->user_item_fav_history[] = $userItemFavHistory;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_item_fav_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
+     */
+    public function removeUserItemFavHistory(\LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory)
+    {
+        $this->user_item_fav_history->removeElement($userItemFavHistory);
+    }
+
+    /**
+     * Get user_item_fav_history
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserItemFavHistory()
+    {
+        return $this->user_item_fav_history;
     }
 }

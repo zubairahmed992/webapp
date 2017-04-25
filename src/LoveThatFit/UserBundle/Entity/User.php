@@ -37,6 +37,12 @@ class User implements UserInterface, \Serializable {
     protected $fnfusers;
 
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\WebServiceBundle\Entity\UserLog", mappedBy="users", orphanRemoval=true)
+     */
+
+    protected $user_log;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="duplicate_users")
      * @ORM\JoinColumn(name="original_user_id", referencedColumnName="id", nullable=true)
      */
@@ -170,6 +176,12 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="User")
      */
     private $useritemtryhistory;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemFavHistory", mappedBy="User")
+     */
+    private $user_item_fav_history;
     
     
     
@@ -2534,7 +2546,6 @@ class User implements UserInterface, \Serializable {
         return;
     }
   
-
     /**
      * Add user_addresses
      *
@@ -2698,5 +2709,71 @@ class User implements UserInterface, \Serializable {
     public function __toString()
     {
         return $this->getId() ." (" .$this->email." )";
+    }
+	
+	/**
+     * Add user_item_fav_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
+     * @return User
+     */
+    public function addUserItemFavHistory(\LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory)
+    {
+        $this->user_item_fav_history[] = $userItemFavHistory;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_item_fav_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
+     */
+    public function removeUserItemFavHistory(\LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory)
+    {
+        $this->user_item_fav_history->removeElement($userItemFavHistory);
+    }
+
+    /**
+     * Get user_item_fav_history
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserItemFavHistory()
+    {
+        return $this->user_item_fav_history;
+    }
+
+    /**
+     * Add user_log
+     *
+     * @param \LoveThatFit\WebServiceBundle\Entity\UserLog $userLog
+     * @return User
+     */
+    public function addUserLog(\LoveThatFit\WebServiceBundle\Entity\UserLog $userLog)
+    {
+        $this->user_log[] = $userLog;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_log
+     *
+     * @param \LoveThatFit\WebServiceBundle\Entity\UserLog $userLog
+     */
+    public function removeUserLog(\LoveThatFit\WebServiceBundle\Entity\UserLog $userLog)
+    {
+        $this->user_log->removeElement($userLog);
+    }
+
+    /**
+     * Get user_log
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserLog()
+    {
+        return $this->user_log;
     }
 }

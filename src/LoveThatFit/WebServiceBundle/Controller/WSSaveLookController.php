@@ -37,7 +37,9 @@ class WSSaveLookController extends Controller
                             $productItems = $this->container->get('savelookItem.helper.savelookItem')->getItemById($id);
                             $this->container->get('savelookItem.helper.savelookItem')->addProductItem($saveLookEntity, $productItems);
                         }
-                        $res = $this->get('webservice.helper')->response_array(true, 'Items added Successfully.');
+                        $res = $this->get('webservice.helper')->response_array(true, 'Items added Successfully.', true, array(
+                            'look_id' => $saveLookEntity->getId()
+                        ));
                     }else{
                         $res = $this->get('webservice.helper')->response_array(false, 'Image not provided.');
                     }
@@ -92,8 +94,12 @@ class WSSaveLookController extends Controller
         if ($user){
             $saveLookEntity = array_key_exists('look_id', $decoded) ? $this->get('savelook.helper.savelook')->findByLookId($decoded['look_id']) : null;
             if($saveLookEntity){
-                $this->get('savelook.helper.savelook')->removeUserLook( $saveLookEntity, $user );
-                $res = $this->get('webservice.helper')->response_array(true, 'User look removed successfully');
+                $response = $this->get('savelook.helper.savelook')->removeUserLook( $saveLookEntity, $user );
+                if ($response != null) {
+                    $res = $this->get('webservice.helper')->response_array(true, 'User look removed successfully');
+                } else {
+                    $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+                }
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, 'save look is not define.');
             }

@@ -14,6 +14,10 @@ ws_user_login:
     pattern:  /ws/login
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:login }
 
+ws_user_logout:
+    pattern: /ws/logout
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:logout }
+
 nws_user_detail:
     pattern:  /ws/user_detail
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:detail }
@@ -292,3 +296,8 @@ nws_address_verficiation:
 nws_get_shipping_rates:
   pattern: /nws/get_shipping_rates
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getShippingRates}
+
+ws_shop_the_look:
+    pattern:  /ws/shop_the_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLook }
+

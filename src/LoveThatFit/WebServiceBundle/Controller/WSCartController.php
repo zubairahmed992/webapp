@@ -19,10 +19,16 @@ class WSCartController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $item_id = $decoded["item_id"];
-            $qty = $decoded["quantity"];
-            $this->container->get('cart.helper.cart')->fillCart($item_id, $user, $qty);
-            $resp = 'Item has been added to Cart Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $itemObject = $this->container->get('admin.helper.productitem')->find($item_id);
+            if(is_object($itemObject) && $itemObject->getProduct()->getDisabled() == false){
+                $qty = $decoded["quantity"];
+                $this->container->get('cart.helper.cart')->fillCart($item_id, $user, $qty);
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Item does not exists or out of stock.');
+            }
+
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -39,12 +45,16 @@ class WSCartController extends Controller
         if ($user) {
             $items = isset($decoded["items"]) ? $decoded["items"] : "0";
             if ($items != 0) {
-                $this->container->get('cart.helper.cart')->removeUserCart($user);
-                foreach ($items as $detail) {
-                    $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
+                $response = $this->container->get('cart.helper.cart')->removeUserCart($user);
+                if ($response != null) {
+                    foreach ($items as $detail) {
+                        $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
+                    }
+                    $resp = 'Items has been added to Cart Successfully';
+                    $res = $this->get('webservice.helper')->response_array(true, $resp);
+                } else {
+                    $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
                 }
-                $resp = 'Items has been added to Cart Successfully';
-                $res = $this->get('webservice.helper')->response_array(true, $resp);
             } else {
                 $res = $this->get('webservice.helper')->response_array(false, 'Array Item not found');
             }
@@ -69,7 +79,6 @@ class WSCartController extends Controller
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
             }
-
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -194,10 +203,13 @@ class WSCartController extends Controller
 
             /*Remove Item from wishlist */
             $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
-
-            $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
-            $resp = 'Item has been added to Cart Successfully';
-            $res = $this->get('webservice.helper')->response_array(true, $resp);
+            $response = $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
+            if ($response != null) {
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -314,9 +326,8 @@ class WSCartController extends Controller
             foreach ($items as $detail) {
                 $this->container->get('cart.helper.cart')->fillCart($detail["item_id"], $user, $detail["quantity"]);
             }
-
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -404,19 +415,23 @@ class WSCartController extends Controller
                 $decoded['groupId'] = $fnfGroupId;
             }
 
-            $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
-            if ($result['success'] == 0) {
-                if($discount_amount > 0){
-                    $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
-                    $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+            if(!empty($decoded['items'])) {
+                $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
+                if ($result['success'] == 0) {
+                    if ($discount_amount > 0) {
+                        $fnfUser = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
+                        $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                    }
+
+                    $this->sendEmailToUser($user, $decoded, $result);
+                    $this->sendEmailToAdmin($user, $decoded, $result);
+
+                    $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
+                } else if ($result['success'] < 0) {
+                    $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
                 }
-
-                $this->sendEmailToUser( $user, $decoded, $result);
-                $this->sendEmailToAdmin( $user, $decoded, $result);
-
-                $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
-            } else if ($result['success'] < 0) {
-                $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'no items found in cart');
             }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
@@ -660,7 +675,20 @@ class WSCartController extends Controller
             if($response['verified']){
                 $addresses['shipping_methods'] = $response['shipping_method'];
             }
-
+            /*$addresses['shipping_methods'] = array(
+                array(
+                "method" => "4-Day Shipping",
+                'detail' => "Deliver on or Monday",
+                'method_cost' => "Free",
+                "method_id" => '1'
+                ),
+                array(
+                    "method" => "2-Day Shipping",
+                    'detail' => "Deliver on or Fridat",
+                    'method_cost' => "10.25",
+                    "method_id" => '2'
+                )
+            );*/
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');

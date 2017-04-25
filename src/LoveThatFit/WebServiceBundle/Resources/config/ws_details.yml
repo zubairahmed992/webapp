@@ -40,7 +40,18 @@ ws_user_email_exists:
           email:  example@ltf.com
     request_type: post
     description: check if user email exists in the database. This will be used at the time of registration. 
-#______________________    
+#______________________
+ws_user_logout:
+  pattern: /ws/logout
+  title: user_logout
+  params:
+        email: example@ltf.com
+        session_id: aad4b888c2d01f67e2ca6b2d651f1ad8
+        auth_token: 121c421783cd4d71d871ec16a1296091
+        appname: FNF
+  request_type: post
+  description: logout user from system and kill his session
+
 ws_user_login:
     pattern:  /ws/login
     title: user_login
@@ -51,6 +62,7 @@ ws_user_login:
           device_token: 1122334455667788990011223344556677889900
           user_detail: true
           retailer_brand: true
+          appname: FNF
     optional_params:
           user_detail: true
           retailer_brand: true
@@ -317,6 +329,7 @@ ws_product_like:
      product_id: 512   
      item_id: [4126,4127]
      like: true
+     page:
    request_type: post
 #______________________
 ws_user_liked_products:
@@ -523,7 +536,8 @@ nws_product_list:
       gender: f
       auth_token: 56565656566
       category_ids: [1,8,10,11]
-      
+      page_no: 1
+
 nws_product_list_banner:
     pattern:  /nws/product_list_with_banner
     title: product_list_with_banner
@@ -532,6 +546,7 @@ nws_product_list_banner:
       auth_token: 56565656566
       category_ids: [32,34,60,61,62,63,64,65,66]
       display_screen: product_list
+      page_no: 1
 
 nws_show_user_cart:
    pattern:  /nws/show_user_cart
@@ -625,6 +640,7 @@ nws_delete_fitting_room_item:
    title: delete_to_fitting_room
    params:
      auth_token: 56565656566
+     product_item_id: 4082
      product_id: 506
 
 nws_get_all_fitting_room:
@@ -685,3 +701,9 @@ web_service_product_specification:
     params: 
       result: {'style_id_number':'220', 'style_name':'Blouse', 'title':'Blouse'}     
       request_type: post
+
+ws_shop_the_look:
+  pattern: /ws/shop_the_look
+  title: shop_the_look
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091

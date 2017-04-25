@@ -92,6 +92,7 @@ color:red
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {% if (measurement_v.garment_dimension>0) %}
+                                    {% if (file_data['sizes'][size][measurement_k] is defined) %}
                                     <tr>
                                         <th>{{measurement_k}}</th>
                                         <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}
@@ -125,6 +126,12 @@ color:red
                                         <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
                                         
                                     </tr>
+                                    {% else %}
+                                    <tr>
+                                        <th>{{measurement_k}}</th>
+                                        <td></td><td></td><td></td><td colspan="5"><i> fit point ({{measurement_k}}) is not present in the data file</i></td><td></td><td></td><td></td>
+                                    </tr>
+                                    {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}

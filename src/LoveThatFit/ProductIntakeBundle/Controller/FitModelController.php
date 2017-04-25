@@ -44,6 +44,7 @@ class FitModelController extends Controller {
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         #return new Response(json_encode($size_specs));
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        unset($fit_points['hip']);
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
                     'brands' => $brands,
@@ -92,8 +93,12 @@ class FitModelController extends Controller {
        // die;
         $all_size_title = $this->get('admin.helper.size')->getAllSizeTitleType();
         $all_size_title_man_woman =($fit_model_measurement->getGender()=='m' ? $all_size_title['man'] : $all_size_title['woman']); 
+        $gender =($fit_model_measurement->getGender()=='m' ? 'man' : 'woman'); 
+        $size = $size_specs['sizes'][$gender][$fit_point_values['sel_size_type']];
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        unset($fit_point_values['hip']);
+        !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,
@@ -104,7 +109,8 @@ class FitModelController extends Controller {
                     'size_specs_json' => json_encode($size_specs),
                     'all_size_title_man_woman' => $all_size_title_man_woman,
                     'colthing_types_man_woman' => $colthing_types_man_woman,
-                    'mapping_json' => json_encode($mapping),          
+                    'mapping_json' => json_encode($mapping),   
+                    'size' => $size
 
                 ));
     }

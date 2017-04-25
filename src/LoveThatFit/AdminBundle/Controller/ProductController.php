@@ -1226,5 +1226,80 @@ public function _multplieImageUploadAction(Request $request){
         }
     }
 
+    public function exportAction()
+    {
+        $products_and_items = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:Product')
+            ->listProductsAndItems();
+        if (!empty($products_and_items)) {
+            $count = 0;
+            foreach ($products_and_items as $row) {
+                $products_and_items[$count]['status']     = ($row["status"] == 1 ? "Disabled" : "Enabled");
+                $products_and_items[$count]['gender']     = ($row["gender"] == "f" ? "Female" : "Male");
+                $products_and_items[$count]['created_at'] = (date_format(date_create($row["created_at"]), "d/m/Y H:i"));
+                $count++;
+            }
+        } else {
+            $products_and_items = array('product_id' => '', 'product_name' => '', 'gender' => '', 'brand_name' => '', 'cloth_type' => '', 'style' => '', 'retailer' => '', 'size' => '', 'item_id' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '');
+            /*$this->get('session')->setFlash('warning', 'No Record Found!');
+            $totalRecords = $this->get('admin.helper.product')->countAllRecord();
+            $femaleProducts  = $this->get('admin.helper.product')->countProductsByGender('f');
+            $maleProducts    = $this->get('admin.helper.product')->countProductsByGender('m');
+            return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
+                array('rec_count' => count($totalRecords),
+                    'femaleProduct'     => $femaleProducts,
+                    'maleProduct'       => $maleProducts,
+                )
+            );*/
+        }
+        $this->get('admin.helper.utility')->exportToCSV($products_and_items, 'product_item_color_sizes_statuses');
+        return new Response('');
 
+
+        /*print_r($products); exit;
+        $decoded    = $request->request->all();
+        $start_date = $decoded['from'];
+        $end_date   = $decoded['to'];
+        $users      = $this->get('user.helper.user')->findUserList($start_date, $end_date);
+        if (!empty($users)) {
+            header('Content-Type: application/csv');
+            //header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachement; filename="users.csv";');
+            $output = fopen('php://output', 'w');
+            fputcsv($output, array(
+                    'UserID',
+                    'Name',
+                    'Email',
+                    'Gender',
+                    'Zip Code',
+                    'Created At',
+                )
+            );
+            foreach ($users as $user) {
+                $csv['id']         = $user["id"];
+                $csv['user_name']  = ($user["firstName"] . " " . $user["lastName"]);
+                $csv['email']      = $user["email"];
+                $csv['gender']     = ($user["gender"] == "f" ? "Female" : "Male");
+                $csv['zipcode']    = $user["zipcode"];
+                $csv['created_at'] = ($user["createdAt"]->format('d/m/Y'));
+
+                fputcsv($output, $csv);
+            }
+            # Close the stream off
+            fclose($output);
+            return new Response('');
+        } else {
+            $this->get('session')->setFlash('warning', 'No Record Found!');
+
+            $totalRecords = $this->get('user.helper.user')->countAllUserRecord();
+            $femaleUsers  = $this->get('user.helper.user')->countByGender('f');
+            $maleUsers    = $this->get('user.helper.user')->countByGender('m');
+            return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
+                array('rec_count' => count($totalRecords),
+                    'femaleUsers'     => $femaleUsers,
+                    'maleUsers'       => $maleUsers,
+                )
+            );
+        }*/
+    }
 }

@@ -84,3 +84,7 @@ admin_users:
 admin_users_paginate:
     pattern:  /admin/user/paginate
     defaults: { _controller: LoveThatFitAdminBundle:User:paginate}
+
+admin_users_export:
+    pattern:  /admin/user/export
+    defaults: { _controller: LoveThatFitAdminBundle:User:export }

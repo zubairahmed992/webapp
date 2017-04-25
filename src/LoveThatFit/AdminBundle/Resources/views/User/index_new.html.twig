@@ -1,209 +1,286 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Users</li>
+    <li class="active">Users</li>
 {% endblock %}
 
 {% block body %}
-<style >
- .custom_search{ position:relative; bottom:-40px;}
- .custom_search label, .custom_search select{ width:80%;  padding-left:10px;  position:relative; z-index: 1; }
- .custom_search label{ display:inline-block;}
-.dataTables_wrapper .dataTables_length{ float: right !important; margin-left:12px;}
-  @media only screen and (max-width : 767px) {
-      .custom_search{bottom:0px;}
-    }
-    
-    
-</style>
+    <style>
+        .custom_search {
+            position: relative;
+            bottom: -40px;
+        }
+
+        .custom_search label, .custom_search select {
+            width: 80%;
+            padding-left: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom_search label {
+            display: inline-block;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            float: right !important;
+            margin-left: 12px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .custom_search {
+                bottom: 0px;
+            }
+        }
+
+
+    </style>
 
     <div class="p_listing">
-    <div class="clearfix"></div>
-      {% block header_right_links %}
-        <div class="adjustment_links" style="margin-top: 20px; float:right;">
-          <!--<a href="{{ path('admin_test_demo') }}" >Test Session</a>-->
-          <a href="{{ path('admin_fit_algorithm2_product_list_index') }}" >Products Fit index lists</a> 
-          <a href="{{ path('admin_mask_marker_inspect_index') }}" >Masked Inspection</a>
-          <a href="{{ path('admin_user_mask_compare_index') }}" >Mask Visual Compare</a>
-          <a href="{{ path('admin_pending_user') }}" >Pending Users</a>
+        <div class="clearfix"></div>
+        {% block header_right_links %}
+            <div class="adjustment_links" style="margin-top: 20px; float:right;">
+                <!--<a href="{{ path('admin_test_demo') }}" >Test Session</a>-->
+                <a href="{{ path('admin_fit_algorithm2_product_list_index') }}">Products Fit index lists</a>
+                <a href="{{ path('admin_mask_marker_inspect_index') }}">Masked Inspection</a>
+                <a href="{{ path('admin_user_mask_compare_index') }}">Mask Visual Compare</a>
+                <a href="{{ path('admin_pending_user') }}">Pending Users</a>
+            </div>
+
+        {% endblock %}
+        <h1 style="float:left;">Users</h1>
+        <div class="clearfix"></div>
+        <div class="btn_wrapper2">
+            <div id="chart_figures" class="product_chart_figures">
+                <div class="facts">
+                    <div><span>Total Users:</span>{{ rec_count }}</div>
+                    <div><span>Female:</span>{{ femaleUsers }}</div>
+                    <div><span>Male:</span>{{ maleUsers }}</div>
+                </div>
+            </div>
         </div>
-      {% endblock %}
-      <h1 style="float:left;">Users</h1>
-      <div class="clearfix"></div>
-      <div class="btn_wrapper2">
-        <div id="chart_figures" class="product_chart_figures">
-          <div class="facts">
-            <div><span>Total Users:</span>{{rec_count}}</div>
-            <div><span>Female:</span>{{femaleUsers}}</div>
-            <div><span>Male:</span>{{maleUsers}}</div>
-          </div>
-        </div>
-      </div>
-      <p style="color:#ff0000">Duplicate users are showing in red colors</p>
-      <div class="clearfix"></div>
+        <p style="color:#ff0000">Duplicate users are showing in red colors</p>
+        <div class="clearfix"></div>
     </div>
+
+    <div class="adjustment_links" style="margin-right: 6%; float:right;">
+        <form action="{{ path('admin_users_export') }}" method="post" enctype="multipart/form-data">
+            From: <input type="text" id="from" name="from">
+            To: <input type="text" id="to" name="to">
+            <input type="submit" name="" class="btn export_btn" value="Export Users"/>
+            {# <a href="{{ path('') }}" class="btn export_btn">Export Users</a> #}
+        </form>
+    </div>
+    <div class="clearfix"></div>
     <div class="bs-docs-grid">
-       
+
         <div class="container">
-          <div class="row">
-              <div class="span3">
-                  <div class="custom_search">
-                    <select id="gender">
-          <option value="">Select Gender</option>
-          <option value="m">Male</option>
-          <option value="f">Female</option>
-        </select>
-                  </div>
-              </div>
-             
-              <div class="span3">
-                  <div class="custom_search">
-        
-        <select id="age">
-          <option value="">Select Age</option>
-          {% for i in 15..50 %}
-            <option value="{{ i }}">{{ i }}</option>
-          {% endfor %}
-        </select>
-                  </div>
-              </div>
-         <div class="span6">&nbsp</div>
-      </div>
+            <div class="row">
+                <div class="span3">
+                    <div class="custom_search">
+                        <select id="gender">
+                            <option value="">Select Gender</option>
+                            <option value="m">Male</option>
+                            <option value="f">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="span3">
+                    <div class="custom_search">
+
+                        <select id="age">
+                            <option value="">Select Age</option>
+                            {% for i in 15..50 %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="span6">&nbsp</div>
+            </div>
         </div>
         <div class="container">
             <div class="row">
-               
-        <table id="example" class="display" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Created At</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-      </table>  
-                
+
+                <table id="example" class="display" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
             </div>
-        </div>    
-        
+        </div>
+
     </div>
-  </div> 
-</div>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-    var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+    </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
 
-    var table = $('#example').DataTable({
-      "processing": true, 
-      "serverSide": true, 
-      "ajax": {
-          "url"   : "{{ path('admin_users_paginate') }}",
-          "type"  : "POST",
-          "data"  : function ( d ) {                        
-                      d.gender = $('#gender').val(),
-                      d.age    = $('#age').val()
+            var table = $('#example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ path('admin_users_paginate') }}",
+                    "type": "POST",
+                    "data": function (d) {
+                        d.gender = $('#gender').val(),
+                            d.age = $('#age').val()
                     },
-      },
-      "sAjaxDataProp": "data", 
-      "pageLength": 10,
-      "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
-      "pagingType": "full_numbers",
-      "order": [[ 0, "desc" ]],
-      "columns": [
-        {
-            "data"  : "id",
-            "searchable" : false,
-            "width": "10%",
-        },
-        {
-            "data"  : "full_name",
-            "width": "20%",
-        },
-        {
-            "data"  : "email",
-            "width": "25%",
-        },
-        {
-            "data"  : "gender",
-            "orderable" : false,
-            "searchable": false,
-            "width": "10%",
-        },
-        {
-            "data"  : "createdAt",
-            "searchable": false,
-            "width": "10%",
-        },
-        {
-            "title"         : "Actions",
-            "targets"       : -1,
-            "data"          : null,
-            "orderable"     : false,
-            "searchable"    : false,
-            "defaultContent": DetailPageButton +" "+ EditButton +" "+ GoSecureButton +" "+ jsonButton +" "+ DuplicateUser +" "+ archiveButton, 
-            "width": "25%"
-        },
-        {
-            "data"  : "original_user_id",
-            "searchable": false,
-            "visible": false
-        }
-      ],
-      "createdRow": function ( row, data, index ) {
-          if ( data["original_user_id"] != null ) {
-            $('td', row).addClass('duplicate_user_class');
-          }
-          if(jQuery.inArray(data["id"], notShownIDs) != -1) {
-            $('td', row).addClass('hide_grid_row'); 
-          }
-      },
-    });
+                },
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "pagingType": "full_numbers",
+                "order": [[0, "desc"]],
+                "columns": [
+                    {
+                        "data": "id",
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "full_name",
+                        "width": "10%",
+                    },
+                    {
+                        "data": "email",
+                        "width": "10%",
+                    },
+                    {
+                        "data": "gender",
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "status",
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "createdAt",
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "data": "updated_at",
+                        "searchable": false,
+                        "width": "10%",
+                    },
+                    {
+                        "title": "Actions",
+                        "targets": -1,
+                        "data": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": DetailPageButton + " " + EditButton + " " + GoSecureButton + " " + jsonButton + " " + DuplicateUser + " " + archiveButton,
+                        "width": "45%"
+                    },
+                    {
+                        "data": "original_user_id",
+                        "searchable": false,
+                        "visible": false
+                    }
+                ],
+                "createdRow": function (row, data, index) {
+                    if (data["original_user_id"] != null) {
+                        $('td', row).addClass('duplicate_user_class');
+                    }
+                    if (jQuery.inArray(data["id"], notShownIDs) != -1) {
+                        $('td', row).addClass('hide_grid_row');
+                    }
+                },
+            });
 
-    $('#gender, #age').change( function() {
-      table.draw();
-    });
-    $.fn.dataTable.ext.errMode = 'none';
-    
-    jQuery('#example tbody').on( 'click', 'button, a, img', function () {
-      var dataAction = $(this).attr('data-action');
-      var data = table.row( $(this).parents('tr') ).data();
-      
-      if (dataAction == 'Detail') {
-          var url = '{{ path('admin_user_detail_show', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-      if (dataAction == 'Edit') {
-          var url = '{{ path('admin_user_detail_edit', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-      if (dataAction == 'GoSecure') {
-          var url = '{{ path('go_secure', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.open(url, '_blank');
-      }
-      if (dataAction == 'Json') {
-          var url = '{{ path('admin_user_json', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.open(url, '_blank');
-      }
-      if (dataAction == 'DuplicateUser') {
-          var url = '{{ path('admin_copy_user_index', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-      if (dataAction == 'Archive') {
-          var url = '{{ path('admin_user_profile_archives', {'user_id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-    });
-    
-});
-</script>
+            $('#gender, #age').change(function () {
+                table.draw();
+            });
+            $.fn.dataTable.ext.errMode = 'none';
+
+            jQuery('#example tbody').on('click', 'button, a, img', function () {
+                var dataAction = $(this).attr('data-action');
+                var data = table.row($(this).parents('tr')).data();
+
+                if (dataAction == 'Detail') {
+                    var url = '{{ path('admin_user_detail_show', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+                if (dataAction == 'Edit') {
+                    var url = '{{ path('admin_user_detail_edit', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+                if (dataAction == 'GoSecure') {
+                    var url = '{{ path('go_secure', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.open(url, '_blank');
+                }
+                if (dataAction == 'Json') {
+                    var url = '{{ path('admin_user_json', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.open(url, '_blank');
+                }
+                if (dataAction == 'DuplicateUser') {
+                    var url = '{{ path('admin_copy_user_index', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+                if (dataAction == 'Archive') {
+                    var url = '{{ path('admin_user_profile_archives', {'user_id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+            });
+
+        });
+        $(function () {
+            var dateFormat = "mm/dd/yy",
+                from = $("#from")
+                    .datepicker({
+                        //defaultDate: "+1w",
+                        changeMonth: true,
+                        changeYear: true,
+                        numberOfMonths: 1
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#to").datepicker({
+                    //defaultDate: "+1w",
+                    changeMonth: true,
+                    changeYear: true,
+                    numberOfMonths: 1
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+        });
+
+    </script>
 {% endblock %}
