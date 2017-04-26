@@ -20,7 +20,7 @@ class BrandController extends Controller {
 //-----------------------Display Single brand Detail by Id-----------------------------------------------------------------
 
     public function showAction($id) {
-        $entity = $this->get('admin.helper.brand')->find($id);                
+        $entity = $this->get('admin.helper.brand')->find($id);
         $brand_limit = $this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit[0]['id']));
         $page_number=$page_number==0?1:$page_number;        
@@ -249,6 +249,86 @@ class BrandController extends Controller {
             $this->get('session')->setFlash('warning', 'This Brand specification  cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
+    }
+
+    //---------------------------For test code for brand Specification-------------------------------------------------------------------
+    public function testAction($id) {
+        $products = $this->get('admin.helper.product')->findProductsByBrand($id);
+        $count = 0;
+        foreach($products as $product) {
+            print_r($product->toArray());
+            /*echo $product->getId();
+            echo "<br>";
+            echo $product->getName();
+            echo "<br>";*/
+        }
+        exit;
+        return new response(json_encode($this->get('admin.helper.product')->findProductsByBrand($id)));
+    }
+
+    public function brandProductsAction($id)
+    {
+        $products = $this->get('admin.helper.product')->findProductsByBrand($id);
+        $count = 0;
+        foreach($products as $product) {
+            $products[$count] = $product->toArray();
+            $count++;
+        }
+        return new response(json_encode($products));
+    }
+
+    public function disableBrandAction($id)
+    {
+        $entity = $this->get('admin.helper.brand')->find($id);
+        if (!$entity) {
+            $resp = ['error' => 'Brand Not Found!'];
+        } else {
+            $entity->setDisabled(1);
+            $message_array = $this->get('admin.helper.brand')->update($entity);
+            if ($message_array['success'] == true) {
+                $disabled = 1;
+                $brand_id = $entity->getId();
+                $result = $this->get('admin.helper.product')->setProductsStatusByBrand($disabled, $brand_id);
+                if ($result) {
+                    $resp = ['success' => 'Brand Has Been Disabled!'];
+                } else {
+                    $entity->setDisabled(0);
+                    $this->get('admin.helper.brand')->update($entity);
+                    $resp = ['error' => 'Something Went Wrong!'];
+                }
+            } else {
+                $resp = ['error' => 'Something Went Wrong!'];
+            }
+        }
+        return new response(json_encode($resp));
+    }
+
+    public function enableBrandAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $entity = $this->get('admin.helper.brand')->find($requestData['brand_id']);
+        if (!$entity) {
+            $resp = ['error' => 'Brand Not Found!'];
+        } else {
+            $entity->setDisabled(0);
+            $message_array = $this->get('admin.helper.brand')->update($entity);
+            if ($message_array['success'] == true) {
+                $disabled = 0;
+                if(isset($requestData['products'])) {
+                    $result = $this->get('admin.helper.product')->setProductsStatus($disabled, $requestData['products']);
+                    if ($result) {
+                        $resp = ['success' => 'Brand Has Been Enabled!'];
+                    } else {
+                        $entity->setDisabled(1);
+                        $this->get('admin.helper.brand')->update($entity);
+                        $resp = ['error' => 'Something Went Wrong!'];
+                    }
+                } else {
+                    $resp = ['success' => 'Brand Has Been Enabled!'];
+                }
+            }
+        }
+        return new response(json_encode($resp));
     }
 
     //-------------------------------Get Product By Brand-----------------------------------------------------------
