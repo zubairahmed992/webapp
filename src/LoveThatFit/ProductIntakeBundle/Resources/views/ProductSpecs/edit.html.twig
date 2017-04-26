@@ -160,14 +160,14 @@
                                     $('#dv_measurement_table').append(tableData);   
         
     }#}
-        
-        //-------------- Check Fit Priority Alredy Added
-        $('.add_fit_priority').click(function () {               
+       
+        //-------------- Check Fit Priority Alredy Added            
+        $('.add_fit_priority').click(function () {
             var fit_point_val = $.trim($('.fit_priority_value').val()); 
             $(".fit_priority > .singleField > input[type='number']").each(function() {                 
                   fit_priority_array_key.push($(this).attr('id'));
             });  
-                 
+            
             if($.inArray(fit_point_val, fit_array) != -1  || $.inArray(fit_point_val, fit_priority_array_key)!= -1  )
             {
                 alert("Ops! Already Fit Priority "+ fit_point_val +" Added");    
@@ -176,7 +176,8 @@
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";                   
              $('.fit_priority').prepend("<div class='singleField'><label>"+fit_point_val+":</label> <input type='number' min='1' max='100' name="+fit_priority+" style='width:50px'>% <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i></div>");
-            }
+            }  
+           
         });
         //------------ Count Summ Equal to 100 Validation
         $('.fit_priority').keyup(function() {
@@ -238,11 +239,13 @@
                 }); 
             }           
         })  
-        //---------------- Remove removeFitPriority
-        $('body').on( "click", '.removeFitPriorityFebricContent', function() { 
-            var fit_point_val = $.trim($('.fit_priority_value').val()); 
-            fit_priority_array_key.pop(fit_point_val);
-             $(this).parent().remove();
+        //---------------- Remove removeFitPriorityFebricContent
+        $('body').on( "click", '.removeFitPriorityFebricContent', function() {  
+            fit_array = [];
+            fabric_array = [];
+            fit_priority_array_key = [];
+            fabric_content_array_key = [];
+            $(this).parent().remove();
         });
         
         
@@ -588,7 +591,7 @@
                                        {{ key }} : 
                                    </label> 
                                        <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fit_priority[{{key}}]" style="width:70px">
-                                       <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i>
+                                      % <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i>
                                 </div>
                             {% endfor %}
                         {% endif %}
@@ -616,7 +619,7 @@
                                    {{ key }} : 
                                </label> 
                                    <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fabric_content[{{key}}]" style="width:70px">                                   
-                                   <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i>
+                                   % <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i>
                             </div>
                         {% endfor %}
                         {% endif %}
