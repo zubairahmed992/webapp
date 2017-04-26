@@ -1,193 +1,283 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-
 {% block breadcrumb %}
-<li><a href="{{ path('admin_brands') }}" >Brands</a> <span class="divider">/</span></li>
-<li class="active">Edit</li>
-<script>
-
-    jQuery(document).ready(function() {
-
-        if(jQuery('#brand_screen_position:checkbox:checked').length > 0){
-            jQuery('#banner_image_div').show();
-        }else{
-            jQuery('#banner_image_div').hide();
-        }
-
-        jQuery('#top_banner_file_error').remove();
-        jQuery('#brand_screen_position').change(function(){
-            jQuery('#brand_banner_file').val('');
-            if(this.checked){
+    <li><a href="{{ path('admin_brands') }}">Brands</a> <span class="divider">/</span></li>
+    <li class="active">Edit</li>
+    <script>
+        jQuery(document).ready(function () {
+            if (jQuery('#brand_screen_position:checkbox:checked').length > 0) {
                 jQuery('#banner_image_div').show();
-            }else{
+            } else {
                 jQuery('#banner_image_div').hide();
             }
-
-        });
-
-        jQuery( "#brand_form_submition" ).submit(function( event ) {
-
-            if(jQuery("#checkedimage").val() == "") {
-                jQuery("#checkedimage").val(jQuery('#brand_banner_file').val());
-            }
-
             jQuery('#top_banner_file_error').remove();
-            var top_banner_checkbox = jQuery('#brand_screen_position:checkbox:checked').length;
-            if(top_banner_checkbox > 0){
-                if(jQuery('#checkedimage').val() == ""){
-                    jQuery("#banner_image_div").append("<span id='top_banner_file_error' style='color:red !important;'>Please Select the File</span>");
-                    event.preventDefault();
+            jQuery('#brand_screen_position').change(function () {
+                jQuery('#brand_banner_file').val('');
+                if (this.checked) {
+                    jQuery('#banner_image_div').show();
+                } else {
+                    jQuery('#banner_image_div').hide();
                 }
-            }
+            });
+            jQuery("#brand_form_submition").submit(function (event) {
+                if (jQuery("#checkedimage").val() == "") {
+                    jQuery("#checkedimage").val(jQuery('#brand_banner_file').val());
+                }
+                jQuery('#top_banner_file_error').remove();
+                var top_banner_checkbox = jQuery('#brand_screen_position:checkbox:checked').length;
+                if (top_banner_checkbox > 0) {
+                    if (jQuery('#checkedimage').val() == "") {
+                        jQuery("#banner_image_div").append("<span id='top_banner_file_error' style='color:red !important;'>Please Select the File</span>");
+                        event.preventDefault();
+                    }
+                }
+            });
+            $('#disablebrand').click(function () {
+                disableBrand(getBrnadId());
+            });
+            $('#enablebrand').click(function () {
+                getBrandProducts(getBrnadId());
+            });
+            /*$('#cont_btn').click(function () {
+                enableBrand(getBrnadId());
+            });*/
         });
-    });
 
-function validates()
-{
-var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
-   
-var image_file = document.getElementById('form_file').value;
-var image_length = document.getElementById('form_file').length;
+        function getBrnadId() {
+            var url = window.location.href.split('/');
+            return url[url.length - 2];
+        }
 
-var pos = image_file.lastIndexOf('.') + 1;
-var ext = image_file.substring(pos, image_length);
-if(image_file!="")
-{
-var final_ext = ext.toLowerCase();
-for (i = 0; i < extensions.length; i++)
-{
-if(extensions[i] == final_ext)
-{
-return true;
-}
+        function getBrandProducts(brand_id) {
+            $.ajax({
+                        url: "../" + brand_id + "/products",
+                        method: "GET",
+                        data: {},
+                        dataType: "json",
+                    })
+                    .done(function (data) {
+                        var html = "";
+                        if (data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                html += '<input type="checkbox" name="products" value="' + data[i]["id"] + '"> ' + data[i]["name"] + '<br><br>';
+                            }
+                            html += "<button type='button' class='btn' id='cont_btn' onclick='enableBrand(getBrnadId());'>Enable</button>";
+                            $("#p_details").hide();
+                            $('#p_hd').text('Please Select the Products, You want to Enable for this Brand.');
+                            $("#p_container").html(html);
+                        } else {
+                            $("#p_details").hide();
+                            html += "<p>No Records Found!!</p>";
+                            $('#p_hd').text('Please Select the Products, You want to Enable for this Brand.');
+                            $("#p_container").html(html);
+                        }
+                    })
+                    .fail(function (err) {
+                        console.log("error in getBrandProducts");
+                        /*console.log(err);
+                         console.log(err.responseText);*/
+                    });
+        }
 
-}
-document.getElementById('error').style.display="block";
-return false;
+        function enableBrand(brand_id) {
+            var products = [];
+            $.each($("input[name='products']:checked"), function () {
+                products.push($(this).val());
+            });
+            console.log(products);
+            $.ajax({
+                        url: "../" + brand_id + "/enable",
+                        method: "POST",
+                        data: {
+                            brand_id: brand_id,
+                            products: products
+                        },
+                        dataType: "json",
+                    })
+                    .done(function (data) {
+                        $("#p_container").html("");
+                        $('#p_hd').text('Product Detail');
+                        $("#p_details").show();
+                        if(data['success'] != undefined) {
+                            showSuccessMessage( data['success']);
+                            $('#enablebrand').hide();
+                            $('#disablebrand').show();
+                        } else {
+                            console.log(data['error']);
+                            showErrorMessage(data['error']);
+                        }
+                    })
+                    .fail(function (err) {
+                        console.log("error in enableBrand");
+                        /*console.log(err);
+                         console.log(err.responseText);*/
+                    });
+        }
 
-}
-return true;
-}    
-</script> 
+        function disableBrand(brand_id) {
+            $.ajax({
+                        url: "../" + brand_id + "/disable",
+                        method: "POST",
+                        data: {},
+                        dataType: "json",
+                    })
+                    .done(function (data) {
+                        if(data['success'] != undefined) {
+                            showSuccessMessage(data['success']);
+                            $('#disablebrand').hide();
+                            $('#enablebrand').show();
+                        } else {
+                            console.log(data['error']);
+                            showErrorMessage(data['error']);
+                        }
+                    })
+                    .fail(function (err) {
+                        console.log("error in disableBrand");
+                        /*console.log(err);
+                        console.log(err.responseText);*/
+                    });
+        }
+
+        function showSuccessMessage(message) {
+            var html = /*'<button type="button" class="close" data-dismiss="alert">&times;</button>' +*/
+                    ' <strong>Success!</strong> ' + message;
+
+            $('.alert.alert-success').html(html);
+            $('.alert.alert-success').fadeIn();
+            setTimeout(function () {
+                $('.alert.alert-success').fadeOut();
+            }, 3000);
+        }
+
+        function showErrorMessage(message) {
+            var html = /*'<button type="button" class="close" data-dismiss="alert">&times;</button>' +*/
+                    '<strong>Warning!</strong> ' + message;
+
+            $('.alert.alert-error').html(html);
+            $('.alert.alert-error').fadeIn();
+            setTimeout(function () {
+                $('.alert.alert-error').fadeOut();
+            }, 3000);
+        }
+
+        function validates() {
+            var extensions = new Array("jpg", "jpeg", "gif", "png", "bmp", "png");
+            var image_file = document.getElementById('form_file').value;
+            var image_length = document.getElementById('form_file').length;
+            var pos = image_file.lastIndexOf('.') + 1;
+            var ext = image_file.substring(pos, image_length);
+            if (image_file != "") {
+                var final_ext = ext.toLowerCase();
+                for (i = 0; i < extensions.length; i++) {
+                    if (extensions[i] == final_ext) {
+                        return true;
+                    }
+                }
+                document.getElementById('error').style.display = "block";
+                return false;
+            }
+            return true;
+        }
+    </script>
 {% endblock %}
-
 {% block h1 %}Brand{% endblock %}
-
 {% block title %}Brand{% endblock %}
-
-
 {% block body %}
-
-    
-  
-    <div>      
+    <div>
     <h1 style="float:left;">Edit Brand</h1>
-     <div class="btn_wrapper">     
-<a href="{{ path('admin_brands') }}" class="btn">back</a>
-             
-{%if entity.id %}
-      <a href="{{ path('admin_brand_edit', {'id': entity.Id}) }}" class="btn">Edit</a>      
-      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
-      {% endif %}
-      </div>
-      <div class="clearfix"></div>   
-      {%if entity.id %}
-    <form id="brand_form_submition" action="{{ path('admin_brand_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
- {{ form_errors(form) }}
-
-            <div id="detail_wrapper">      
+    <div class="btn_wrapper" style="padding: 20px !important;">
+        {% if entity.disabled %}
+            <a href="javascript:void(0);" class="btn" id="enablebrand">Enable Brand </a>
+            <a href="javascript:void(0);" class="btn hide" id="disablebrand">Disable Brand </a>
+        {% else %}
+            <a href="javascript:void(0);" class="btn hide" id="enablebrand">Enable Brand </a>
+            <a href="javascript:void(0);" class="btn" id="disablebrand">Disable Brand </a>
+        {% endif %}
+        <a href="{{ path('admin_brands') }}" class="btn">back</a>
+        {% if entity.id %}
+            <a href="{{ path('admin_brand_edit', {'id': entity.Id}) }}" class="btn">Edit</a>
+            <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+        {% endif %}
+    </div>
+    <div class="clearfix"></div>
+    {% if entity.id %}
+        <form id="brand_form_submition" action="{{ path('admin_brand_update', { 'id': entity.id }) }}"
+              method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+            {{ form_errors(form) }}
+            <div class="alert alert-error hide"></div>
+            <div class="alert alert-success  hide"></div>
+            <div id="detail_wrapper">
                 <div id="p_hd">Brand Detail</div>
-                
-                
-                <div style="width: 400px; margin:10px auto auto auto; background: #f6f4f4;  box-shadow: 0px 0px 2px 2px #999;">
-                <div style="width:290px; margin: auto auto auto 90px;">                  
-                    
-                    <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
-                    <div class="span3">
-                        <strong><br/>  Upload Brand Logo</strong>
-                    </div> 
-                    <div id="pro_img"><img src="{{ asset(entity.WebPath) }}"/>
-                    </div><!--/.well -->
-
-                    <div class="clearfix"></div>
-                    <div style="margin-top:20px; margin-left:5px;">
-    {{ form_errors(form.file) }}
-    {{ form_widget(form.file) }}
-                        </div> 
-                    
-                    
-                    
-                    <div id="product_content">
-                        <div id="pro_detail">
-                            <div class="edt_container edt_new">         
-                                <div style="width:220px; overflow: hidden;">
-                                    <div class="span3">Name</div>
-                                    <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
-                                <div>
-                                <div>
-                                    <label>Top Banner</label>
-                                    {{ form_widget(form.screen_position) }}{{ form_errors(form.screen_position) }}
-                                </div>
-
-                                <div id="banner_image_div">
-                                <strong><br/>  Top Banner Image</strong>
-                                {% if(entity.getTopBannerImage) %}
-                                <div id="pro_img" style="margin-left: 2px !important; width: 205px !important;"><img src="{{ asset('uploads/ltf/brands/brand_top/' ~ entity.getTopBannerImage) }}"/></div>
-                                {% endif %}
-                                <div class="clearfix"></div>
-                                    {{ form_widget(form.banner_file) }}{{ form_errors(form.banner_file) }}
-                                    <input type="hidden" id="checkedimage" value="{{ entity.getTopBannerImage }}" />
-                                </div>
-                                          {{ form_rest(form) }}
-                                    <div style="margin:10px auto auto auto; width:97px;">
-				
-                                            <div style="margin:0 auto; width: 97px;"> <input type="submit" value="SAVE" class="btn btn-primary"/>                                     
-                           
-                                            </div>                                    
+                <div id="p_container" style="padding: 20px;">
+                </div>
+                <div style="width: 400px; margin:10px auto auto auto; background: #f6f4f4;  box-shadow: 0px 0px 2px 2px #999;"
+                     id="p_details">
+                    <div style="width:290px; margin: auto auto auto 90px;">
+                        <p id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+                        <div class="span3">
+                            <strong><br/> Upload Brand Logo</strong>
+                        </div>
+                        <div id="pro_img"><img src="{{ asset(entity.WebPath) }}"/>
+                        </div><!--/.well -->
+                        <div class="clearfix"></div>
+                        <div style="margin-top:20px; margin-left:5px;">
+                            {{ form_errors(form.file) }}
+                            {{ form_widget(form.file) }}
+                        </div>
+                        <div id="product_content">
+                            <div id="pro_detail">
+                                <div class="edt_container edt_new">
+                                    <div style="width:220px; overflow: hidden;">
+                                        <div class="span3">Name</div>
+                                        <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
+                                        <div>
+                                            <div>
+                                                <label>Top Banner</label>
+                                                {{ form_widget(form.screen_position) }}{{ form_errors(form.screen_position) }}
+                                            </div>
+                                            <div id="banner_image_div">
+                                                <strong><br/> Top Banner Image</strong>
+                                                {% if(entity.getTopBannerImage) %}
+                                                    <div id="pro_img"
+                                                         style="margin-left: 2px !important; width: 205px !important;">
+                                                        <img src="{{ asset('uploads/ltf/brands/brand_top/' ~ entity.getTopBannerImage) }}"/>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="clearfix"></div>
+                                                {{ form_widget(form.banner_file) }}{{ form_errors(form.banner_file) }}
+                                                <input type="hidden" id="checkedimage" value="{{ entity.getTopBannerImage }}"/>
+                                            </div>
+                                            {{ form_rest(form) }}
+                                            <div style="margin:10px auto auto auto; width:97px;">
+                                                <div style="margin:0 auto; width: 97px;">
+                                                    <input type="submit" value="SAVE" class="btn btn-primary"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                </div> 
-                                    
-                                
-                                </div>                                    
-
-
-                                </div>      
-                            </div><!-- End pro_detail --> 
-                    
-                     </div>     
-                 </div>
-
-                 
-                        </div><!-- End product_content --> 
-                    </div> <!-- End detail_wrapper -->
-                </form> 
-      
-          {% endif %}
-            </div> 
-    
-    
-<!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Brand</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Brand <b>{{entity.name }}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_brand_delete', {'id': entity.id}) }}"  class="btn btn-primary">Delete</a>
-    
-  </div>
-</div>    
-    
-
+                            </div>
+                        </div><!-- End pro_detail -->
+                    </div>
+                </div>
+            </div><!-- End product_content -->
+        </div> <!-- End detail_wrapper -->
+        </form>
+    {% endif %}
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Delete Brand</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to Delete this Brand <b>{{ entity.name }}</b>?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="{{ path('admin_brand_delete', {'id': entity.id}) }}" class="btn btn-primary">Delete</a>
+        </div>
+    </div>
 {% endblock %}
 

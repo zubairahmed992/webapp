@@ -32,7 +32,11 @@ admin_brand_specification_delete:
 admin_brand_specification_create:    
     pattern:  /admin/brand/{id}/create
     defaults: { _controller: LoveThatFitAdminBundle:Brand:createBrandSpecification }
-    
+
+admin_brand_product_list:
+    pattern:  /admin/brand/{id}/products
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:brandProducts }
+
 admin_brand_products:
     pattern:  /admin/brand/{id}/products/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Brand:products ,page_number: 1, sort:id }
@@ -58,8 +62,23 @@ admin_brand_update:
     defaults: { _controller: LoveThatFitAdminBundle:Brand:update }
     requirements:
         _method:  POST
+
+admin_brand_disable:
+    pattern:  /admin/brand/{id}/disable
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:disableBrand }
+    requirements:
+        _method:  POST
+
+admin_brand_enable:
+    pattern:  /admin/brand/{id}/enable
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:enableBrand, id: 0 }
+    requirements:
+        _method:  POST
         
 admin_brand_delete:
     pattern:  /admin/brand/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Brand:delete }
-    
+
+admin_brand_test:
+    pattern:  /admin/brand/test/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:test }

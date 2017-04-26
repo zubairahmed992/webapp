@@ -1458,6 +1458,18 @@ class ProductHelper
 
     public function setProductsStatusByBrand($disabled, $brand_id)
     {
-        return $this->repo->updateProductsStatus($disabled, $brand_id);
+        return $this->repo->updateProductsStatusByBrand($disabled, $brand_id);
+    }
+
+    public function setProductsStatus($disabled, $products)
+    {
+        return $this->repo->updateProductsStatus($disabled, $products);
+    }
+
+    public function findProductsByBrand($brand_id)
+    {
+        $brand = $this->container->get('admin.helper.brand')->find($brand_id);
+        return $this->repo->findByBrand($brand);
+        /*return $this->repo->findBy(["brand" => $brand, "disabled" => 0]);*/
     }
 }
