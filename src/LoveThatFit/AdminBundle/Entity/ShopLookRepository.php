@@ -15,7 +15,7 @@ class ShopLookRepository extends EntityRepository
     public function findAllRecord()
     {
         $bannerTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:ShopLook')->getTableName();
-        $sql = "SELECT * FROM $bannerTableName";
+        $sql = "SELECT * FROM $bannerTableName where disabled = '0'";
 
         //set parameters
         $query = $this->getEntityManager()->getConnection()
