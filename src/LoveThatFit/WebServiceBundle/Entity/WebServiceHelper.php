@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\WebServiceBundle\Entity;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 
@@ -25,15 +26,34 @@ class WebServiceHelper {
         return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
     }
     #------------------------ User -----------------------
+    public  function logoutService( User $user, $request_array ){
+        if(isset($request_array['session_id']) && isset($request_array['appname'])){
+            $logObject = $this->container->get('userlog.helper.userlog')->findUserBySessionId( $user, $request_array );
+            if(is_object($logObject)){
+                return array(
+                    'success' => true,
+                    "msg" => "user has been successfully logout"
+                );
+            }else{
+                return array(
+                    'success' => false,
+                    "msg" => "some thing went wrong"
+                );
+            }
+        }
 
+        return array();
+    }
     public function loginService($request_array) {
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime( $user, $request_array );
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] =  $this->user_array($user,$request_array);
+                    $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -509,8 +529,23 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
 
-    public function productSync($gender, $date = null) {
-        $products = $this->container->get('webservice.repo')->productSync($gender, $date);
+    public function productSync($gender, $date = null, $user = null) {
+        if($user != null){
+            $user_id = $user->getId();
+            $products = $this->container->get('webservice.repo')->productSyncWithFavouriteItem($gender, $date, $user_id);
+            // Favourite will be converted in to true and false
+            foreach($products as $key => $value){
+                if($products[$key]['favourite'] == 0){
+                    $products[$key]['favourite'] = FALSE;
+                }else{
+                    $products[$key]['favourite'] = TRUE;
+                }            }
+
+
+        }else{
+            $products = $this->container->get('webservice.repo')->productSync($gender, $date);
+        }
+
         return $this->response_array(true, "products list", true, $products);
     }
 
@@ -525,7 +560,7 @@ class WebServiceHelper {
     public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id, true);
         if(count($product)== 0){
-            return $this->response_array(false, 'Product not Available');
+            return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
@@ -876,7 +911,7 @@ class WebServiceHelper {
     public function productDetailWithImages($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         if(count($product)== 0){
-            return $this->response_array(false, 'Product not Available');
+            return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
@@ -1018,7 +1053,7 @@ class WebServiceHelper {
     public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
         if(count($product)== 0){
-            return $this->response_array(false, 'Product not Available');
+            return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();

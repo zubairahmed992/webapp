@@ -325,7 +325,7 @@ class ProductSpecificationHelper {
         $specs = $this->compute_grade_rule($specs, $fit_model_obj);
         $specs = $this->compute_stretch($specs);
         #------------- compute ranges for all sizes
-        return $this->compute_all_ranges($specs, $fit_model_obj);
+        return $this->compute_all_ranges($specs, $fit_model_obj);        
     }
 
     ###################################################################
@@ -381,11 +381,12 @@ class ProductSpecificationHelper {
     }
     #---> grade rule for fit model size perform just using grade rule without stretch <-------..
     private function grade_rule_calculations_for_fit_model($fp){
-            $fp['grade_rule_stretch'] = $fp['grade_rule'] + ($fp['grade_rule'] * $fp['stretch_percentage'] / 100);
-            $fp['min_calc'] = $fp['fit_model'] - (2.5 * $fp['grade_rule']);
-            $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $fp['grade_rule']);
-            $fp['ideal_high'] = $fp['fit_model'] + (0.5 * $fp['grade_rule']);
-            $fp['max_calc'] = $fp['fit_model'] + (2.5 * $fp['grade_rule']);            
+            $gr_value = $fp['grade_rule'] + ($fp['grade_rule'] * $fp['stretch_percentage'] / 100);
+            $fp['grade_rule_stretch'] = $gr_value;
+            $fp['min_calc'] = $fp['fit_model'] - (2.5 * $gr_value);
+            $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $gr_value);
+            $fp['ideal_high'] = $fp['fit_model'] + (0.5 * $gr_value);
+            $fp['max_calc'] = $fp['fit_model'] + (2.5 * $gr_value);            
             $fp['max_actual'] = $fp['max_calc'] ;
             $fp['min_actual'] = $fp['min_calc'];
             return $fp;
@@ -596,6 +597,7 @@ class ProductSpecificationHelper {
         $fit_model_ratio = $this->compute_fit_model_ratio($specs, $fit_model_obj);
         #--------- copy ranges for fit model size
         $specs['sizes'][$fit_model_obj->getSize()] = $fit_model_ratio['fit_model_measurement'];
+        
         #---------------------------------> calculate ranges
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
@@ -627,12 +629,19 @@ class ProductSpecificationHelper {
         $specs = $this->find($id);
         $data = json_decode($specs->getSpecsJson(), true);
         $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByGenderNameCSV(strtolower($data['gender']), strtolower($data['clothing_type']));
+        
+        if($clothing_type==null)
+            return array('success'=>false, 'message'=>'Clothing type not found');
+        
         $brand = $this->container->get('admin.helper.brand')->findOneByName($data['brand']);
+        if($brand==null)
+            return array('success'=>false, 'message'=>'Brand not found');
+        
         $product = new Product;
         $product->setBrand($brand);
         $product->setClothingType($clothing_type);
-        $product->setName(array_key_exists('name', $data) ? $data['name'] : '');
-        $product->setName(array_key_exists('control_number', $data) ? $data['control_number'] : '');
+        $product->setName(array_key_exists('style_name', $data) ? $data['style_name'] : '');
+        $product->setControlNumber(array_key_exists('style_id_number', $data) ? $data['style_id_number'] : '');
         $product->setDescription(array_key_exists('description', $data) ? $data['description'] : '');
         $product->setStretchType(array_key_exists('stretch_type', $data) ? $data['stretch_type'] : '');
         $product->setHorizontalStretch($data['horizontal_stretch']);
@@ -652,6 +661,7 @@ class ProductSpecificationHelper {
         $product->setFitPriority(array_key_exists('fit_priority', $data) ? json_encode($data['fit_priority']) : 'NULL' );
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data) ? $data['fabric_content'] : ''));
         $product->setDisabled(false);
+        $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         #------------------------
         $em = $this->getDoctrine()->getManager();
@@ -659,6 +669,7 @@ class ProductSpecificationHelper {
         $em->flush();
         $this->create_product_sizes($product, $data);
         $this->create_product_colors($data, $product);
+        return array('success'=>true, 'message'=>'Product Created');
     }
 
     #------------------------------------------------------------

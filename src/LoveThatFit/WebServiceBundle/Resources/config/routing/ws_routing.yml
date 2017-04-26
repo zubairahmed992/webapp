@@ -14,6 +14,10 @@ ws_user_login:
     pattern:  /ws/login
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:login }
 
+ws_user_logout:
+    pattern: /ws/logout
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:logout }
+
 nws_user_detail:
     pattern:  /ws/user_detail
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:detail }

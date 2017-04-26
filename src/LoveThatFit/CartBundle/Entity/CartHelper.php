@@ -4,6 +4,7 @@ namespace LoveThatFit\CartBundle\Entity;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
@@ -152,13 +153,23 @@ class CartHelper
         $cart_array = array();
         $counter = 0;
         foreach ($user->getCart() as $ci) {
-            $cart_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
-            $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
-            $cart_array[$counter]['qty'] = $ci->getQty();
-            $cart_array[$counter]['item_id'] = $ci->getProductItem()->getId();
-            $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
-            $cart_array[$counter]['image'] = $get_path["iphone6_list"];
-            $counter++;
+            //if($ci->getProductItem()->getProduct()->getDisabled() == false){
+                $cart_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
+                $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
+                $cart_array[$counter]['qty'] = $ci->getQty();
+                $cart_array[$counter]['item_id'] = $ci->getProductItem()->getId();
+                $get_path = $ci->getProductItem()->getProductColor()->getImagePaths();
+                $cart_array[$counter]['image'] = $get_path["iphone6_list"];
+                $cart_array[$counter]['disabled'] = $ci->getProductItem()->getProduct()->getDisabled();
+                $cart_array[$counter]['deleted'] = $ci->getProductItem()->getProduct()->getDeleted();
+                $cart_array[$counter]['color'] = $ci->getProductItem()->getProductColor()->getTitle();
+                $cart_array[$counter]['body_type'] = $ci->getProductItem()->getProductSize()->getBodyType();
+                $cart_array[$counter]['size'] = $ci->getProductItem()->getProductSize()->getTitle();
+                $cart_array[$counter]['brand'] = $ci->getProductItem()->getProduct()->getBrand()->getName();
+                $cart_array[$counter]['style'] = $ci->getProductItem()->getProduct()->getName();
+                $product = $ci->getProductItem()->getProduct();
+                $counter++;
+            //}
         }
         return $cart_array;
     }

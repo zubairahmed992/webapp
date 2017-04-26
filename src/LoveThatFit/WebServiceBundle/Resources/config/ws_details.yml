@@ -40,7 +40,18 @@ ws_user_email_exists:
           email:  example@ltf.com
     request_type: post
     description: check if user email exists in the database. This will be used at the time of registration. 
-#______________________    
+#______________________
+ws_user_logout:
+  pattern: /ws/logout
+  title: user_logout
+  params:
+        email: example@ltf.com
+        session_id: aad4b888c2d01f67e2ca6b2d651f1ad8
+        auth_token: 121c421783cd4d71d871ec16a1296091
+        appname: FNF
+  request_type: post
+  description: logout user from system and kill his session
+
 ws_user_login:
     pattern:  /ws/login
     title: user_login
@@ -51,6 +62,7 @@ ws_user_login:
           device_token: 1122334455667788990011223344556677889900
           user_detail: true
           retailer_brand: true
+          appname: FNF
     optional_params:
           user_detail: true
           retailer_brand: true
@@ -280,6 +292,7 @@ nws_products:
    params:
      gender: f
      date: 1388577600
+     auth_token: 56565656566
 #______________________     
 ws_product_list:
    pattern:  /ws/product_list

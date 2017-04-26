@@ -20,6 +20,26 @@ class WSUserController extends Controller {
         $user_info = $this->get('webservice.helper')->loginService($decoded);             
         return new Response($user_info);
     }
+
+    public function logoutAction(){
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $user_info = $this->get('webservice.helper')->logoutService($user, $decoded);
+            if(!empty($user_info)){
+                if($user_info['success'])
+                    $res = $this->get('webservice.helper')->response_array(true, $user_info['msg']);
+                else
+                    $res = $this->get('webservice.helper')->response_array(false, $user_info['msg']);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'session id or appname is empty.');
+            }
+        }else{
+            $res = $this->get('webservice.helper')->response_array(false, 'User not found.');
+        }
+
+        return new Response($res);
+    }
 #~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts
     public function sizeChartsAction(){
        $decoded  = $this->process_request();

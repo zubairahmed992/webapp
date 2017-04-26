@@ -15,6 +15,14 @@ services:
           class:  LoveThatFit\WebServiceBundle\Entity\WSRepo
           arguments: 
             em: "@doctrine.orm.entity_manager"
+
+    userlog.helper.userlog:
+          class: LoveThatFit\WebServiceBundle\Entity\UserLogHelper
+          arguments:
+              dispatcher: "@event_dispatcher"
+              em: "@doctrine.orm.entity_manager"
+              class: LoveThatFit\WebServiceBundle\Entity\UserLog
+              container: "@service_container"
             
     pushnotification.helper:
           class:  LoveThatFit\WebServiceBundle\DependencyInjection\PushNotificationHelper

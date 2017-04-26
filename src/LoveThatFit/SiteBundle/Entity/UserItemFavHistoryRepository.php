@@ -1,7 +1,5 @@
 <?php
-
 namespace LoveThatFit\SiteBundle\Entity;
-
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,21 +10,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserItemFavHistoryRepository extends EntityRepository
 {
-    public function find($id){
+    public function find($id)
+    {
         echo $id;
         exit;
     }
-
 
     public function findUserItemAllFavHistory($user, $product, $productItem)
     {
         $total_record = $this->getEntityManager()
             ->createQuery("SELECT ut FROM LoveThatFitSiteBundle:UserItemFavHistory ut
-     WHERE
-     ut.user=:user_id
-     AND ut.productitem=:product_item_id
-     AND
-     ut.product=:product_id"
+            WHERE
+            ut.user=:user_id
+            AND ut.productitem=:product_item_id
+            AND
+            ut.product=:product_id"
             )->setParameters(array('user_id' => $user, 'product_item_id' => $productItem, 'product_id' => $product));
         try {
             return $total_record->getResult();
@@ -39,13 +37,93 @@ class UserItemFavHistoryRepository extends EntityRepository
     {
         $total_record = $this->getEntityManager()
             ->createQuery("SELECT ut FROM LoveThatFitSiteBundle:UserItemFavHistory ut
-     WHERE
-     ut.user=:user_id"
+            WHERE
+            ut.user=:user_id"
             )->setParameters(array('user_id' => $user));
         try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+
+    public function search(
+        $data,
+        $page = 0,
+        $max = NULL,
+        $order,
+        $getResult = true
+    ) 
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query'] : null;
+        $query 
+            ->select('
+                p.name, u.email,
+                f.page, f.status,
+                i.price, i.image, 
+                s.title as size, 
+                c.title as color,
+                f.created_at'
+            )
+            ->from('LoveThatFitSiteBundle:UserItemFavHistory', 'f')
+            ->leftJoin('f.product', 'p')
+            ->leftJoin('f.user', 'u')
+            ->leftJoin('f.productitem', 'i')
+            ->leftJoin('i.product_size', 's')
+            ->leftJoin('i.product_color', 'c');
+        if ($search) {
+            $query 
+                ->andWhere('f.page like :search')
+                ->orWhere('p.name like :search')
+                ->orWhere('u.email like :search')
+                ->setParameter('search', "%".$search."%");
+        }
+        //$query->groupBy('f.product');
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "u.email";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "p.name";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "f.page";
+            } elseif ($orderByColumn == 3) {
+                $orderByColumn = "f.created_at";
+            } elseif ($orderByColumn == 6) {
+                $orderByColumn = "f.status";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+        if ($max) {
+            $preparedQuery = $query->getQuery() 
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery(); 
+        }
+        return $getResult?$preparedQuery->getResult():$preparedQuery; 
+    }
+
+    public function findFavoriteList()
+    {
+        return  $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('
+                p.name, u.email,
+                f.page, f.status,
+                i.price, f.created_at,
+                s.title as size, 
+                c.title as color')
+            ->from('LoveThatFitSiteBundle:UserItemFavHistory', 'f')
+            ->leftJoin('f.product', 'p')
+            ->leftJoin('f.user', 'u')
+            ->leftJoin('f.productitem', 'i')
+            ->leftJoin('i.product_size', 's')
+            ->leftJoin('i.product_color', 'c')
+            ->OrderBy("f.created_at", "desc")
+            ->getQuery()
+            ->getResult();
     }
 }
