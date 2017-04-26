@@ -288,13 +288,18 @@ class BrandController extends Controller {
             if ($message_array['success'] == true) {
                 $disabled = 1;
                 $brand_id = $entity->getId();
-                $result = $this->get('admin.helper.product')->setProductsStatusByBrand($disabled, $brand_id);
-                if ($result) {
-                    $resp = ['success' => 'Brand Has Been Disabled!'];
+                $products = json_decode($this->brandProductsAction($brand_id));
+                if(count($products) > 0) {
+                    $result = $this->get('admin.helper.product')->setProductsStatusByBrand($disabled, $brand_id);
+                    if ($result) {
+                        $resp = ['success' => 'Brand Has Been Disabled!'];
+                    } else {
+                        $entity->setDisabled(0);
+                        $this->get('admin.helper.brand')->update($entity);
+                        $resp = ['error' => 'Something Went Wrong!'];
+                    }
                 } else {
-                    $entity->setDisabled(0);
-                    $this->get('admin.helper.brand')->update($entity);
-                    $resp = ['error' => 'Something Went Wrong!'];
+                    $resp = ['success' => 'Brand Has Been Disabled!'];
                 }
             } else {
                 $resp = ['error' => 'Something Went Wrong!'];
