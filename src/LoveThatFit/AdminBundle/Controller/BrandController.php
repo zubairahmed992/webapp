@@ -331,6 +331,8 @@ class BrandController extends Controller {
                 } else {
                     $resp = ['success' => 'Brand Has Been Enabled!'];
                 }
+            } else {
+                $resp = ['error' => 'Something Went Wrong!'];
             }
         }
         return new response(json_encode($resp));

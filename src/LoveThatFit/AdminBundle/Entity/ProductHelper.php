@@ -1463,6 +1463,11 @@ class ProductHelper
 
     public function setProductsStatus($disabled, $products)
     {
+        $count = 0;
+        foreach($products as $product) {
+            $products[$count] = (int)$product;
+            $count++;
+        }
         return $this->repo->updateProductsStatus($disabled, $products);
     }
 
