@@ -11,9 +11,10 @@ class WSProductController extends Controller {
 
     public function productsAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
         if (array_key_exists('gender', $decoded)) {
-            $res = $this->get('webservice.helper')->productSync($decoded['gender'], array_key_exists('date', $decoded) ? $decoded['date'] : null);
+            $res = $this->get('webservice.helper')->productSync($decoded['gender'], array_key_exists('date', $decoded) ? $decoded['date'] : null, $user);
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'gender not specified');
         }
