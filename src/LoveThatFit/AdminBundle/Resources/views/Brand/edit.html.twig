@@ -31,6 +31,7 @@
                     }
                 }
             });
+            $('#brand_disabled').parent().html("");
             $('#disablebrand').click(function () {
                 disableBrand(getBrnadId());
             });
@@ -65,8 +66,9 @@
                             $('#p_hd').text('Please Select the Products, You want to Enable for this Brand.');
                             $("#p_container").html(html);
                         } else {
+                            html += "<p>No Products Found!!</p>";
+                            html += "<button type='button' class='btn' id='cont_btn' onclick='enableBrand(getBrnadId());'>Enable</button>";
                             $("#p_details").hide();
-                            html += "<p>No Records Found!!</p>";
                             $('#p_hd').text('Please Select the Products, You want to Enable for this Brand.');
                             $("#p_container").html(html);
                         }

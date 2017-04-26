@@ -21,7 +21,7 @@ class BrandType extends AbstractType {
 
         $builder->add('screen_position', 'checkbox', array('label' => 'Top Banner Image', 'required' => false));
         $builder->add('banner_file',null,array('required'=>false));
-        /*$builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));*/
+        $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));
     }
 
     public function getDefaultOptions(array $options) {
