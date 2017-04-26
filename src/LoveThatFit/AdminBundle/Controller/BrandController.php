@@ -319,7 +319,7 @@ class BrandController extends Controller {
             $message_array = $this->get('admin.helper.brand')->update($entity);
             if ($message_array['success'] == true) {
                 $disabled = 0;
-                if(isset($requestData['products'])) {
+                if(!empty($requestData['products'])) {
                     $result = $this->get('admin.helper.product')->setProductsStatus($disabled, $requestData['products']);
                     if ($result) {
                         $resp = ['success' => 'Brand Has Been Enabled!'];
