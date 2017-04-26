@@ -1420,7 +1420,7 @@ class ProductRepository extends EntityRepository
     public function updateProductsStatusByBrand($disabled, $brand_id)
     {
         try {
-            $sql = "UPDATE Product SET disabled = " . $disabled . " WHERE brand_id = " . $brand_id;
+            $sql = "UPDATE product SET disabled = " . $disabled . " WHERE brand_id = " . $brand_id;
             $conn = $this->getEntityManager()->getConnection();
             $rowsAffected = $conn->executeUpdate($sql);
             return true;
@@ -1433,7 +1433,7 @@ class ProductRepository extends EntityRepository
     {
         try {
             $products = implode(',', $products);
-            $sql = "UPDATE Product SET disabled = " . $disabled . " WHERE id IN (" . $products . ")";
+            $sql = "UPDATE product SET disabled = " . $disabled . " WHERE id IN (" . $products . ")";
             $conn = $this->getEntityManager()->getConnection();
             $rowsAffected = $conn->executeUpdate($sql);
             return true;
