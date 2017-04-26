@@ -33,6 +33,7 @@ class WSRepo
                 ->andWhere('p.updated_at>=:update_date')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
@@ -52,6 +53,7 @@ class WSRepo
                 ->where('p.gender=:gender')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
@@ -77,6 +79,7 @@ class WSRepo
                 ->andWhere('p.updated_at>=:update_date')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
@@ -96,6 +99,7 @@ class WSRepo
                 ->where('p.gender=:gender')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
@@ -214,7 +218,9 @@ class WSRepo
                 WHERE  ( ltf_users.id IS NULL 
                           OR ltf_users.id = :user_id ) 
                        AND useritemtryhistory.user_id = :user_id
-                       AND product.display_product_color_id <> '' 
+                       AND product.display_product_color_id <> ''
+                       AND product.disabled = 0
+                       AND product.deleted = 0
                 ORDER  BY useritemtryhistory.updated_at DESC ";
                 $params['user_id'] = $user->getId();
 
