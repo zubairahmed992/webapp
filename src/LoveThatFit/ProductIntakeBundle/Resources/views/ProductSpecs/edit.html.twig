@@ -287,7 +287,7 @@
             }           
         })  
        #}
-//----------------------------------------
+           //----------------------------------------
             function reload_page(){
                 tab_id=$('#default_tab').val();
                 url = window.location.href; 
@@ -301,7 +301,7 @@
                 }
         }
                
-        $.fn.editable.defaults.mode = 'popup'; 
+        $.fn.editable.defaults.mode = 'inline'; 
         var fit_model_value = $('.fit_model_value').val(); 
        (fit_model_value == "") ? "" :$('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
         
@@ -700,7 +700,8 @@
              
 {#                  <select  data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size" label="{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size ] }}" value="{{ parsed_data.fit_model_size }}"  readonly="ture" >#}
                 
-               <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
+               
+                <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
                 {% if parsed_data.fit_model_size is defined and (parsed_data.fit_model_size != null or parsed_data.fit_model_size !='')%}                        
                     <option value="{{ parsed_data.fit_model_size }}">{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size] }}</option>
                 {% else%}
