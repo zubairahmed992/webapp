@@ -174,21 +174,18 @@
 }
 
 </style>
+    {% if app.session.hasFlash('error-on-addcolor') %}
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% set error_result = app.session.flash('error-on-addcolor')|split(',') %}
+            <ul>
+                {% for i in error_result %}
+                    {% if i != '' %}<li>{{ i }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
-{% if app.session.hasFlash('warning') %}
-       <div class="alert alert-error">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Warning!</strong>   
- {{ app.session.flash('warning') }}    
-</div>   
-{% endif %}
- {% if app.session.hasFlash('success') %}
-       <div class="alert alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong>   
- {{ app.session.flash('success') }}    
-</div>   
-{% endif %}         
    <div class="container-fluid">                  
     <blockquote>
         <p>Format : BodyType_SizeTitle_Color (Regular_00_Black)</p>

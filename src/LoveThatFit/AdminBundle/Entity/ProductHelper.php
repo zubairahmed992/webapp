@@ -1414,26 +1414,36 @@ class ProductHelper
         $a = array('product_id' => $product_id);
         $type = Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif');
         $a['set_default'] = 'no';
+
+        #validate file format
+        if (count($_exploded) > 3) {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+
         # file name/ext with/without view name
         if (count($_exploded) == 3) {
             if(strtolower($_exploded[2]) == 'setdefault.png'){
-                /*Color with Setdefault */
-                $last_bits = explode(".", $_exploded[2]);
-                $a['image_type'] = $_exploded[0];
-                $a['color_title'] = str_replace("-", " ", $_exploded[1]);
-                $a['set_default'] = 'yes';
+                if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
+                    /*Color with Setdefault */
+                    $last_bits = explode(".", $_exploded[2]);
+                    $a['image_type'] = $_exploded[0];
+                    $a['color_title'] = str_replace("-", " ", $_exploded[1]);
+                    $a['set_default'] = 'yes';
+                }
             }else {
-                $last_bits = explode(".", $_exploded[2]);
+                if($_exploded[0]!="colorpatterntype" && $_exploded[0]!="colorimagetype") {
+                    $last_bits = explode(".", $_exploded[2]);
+                    $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+                }else{
+                    return array('message' => 'Invalid Format!', 'success' => 'false');
+                }
+            }
+        } elseif(count($_exploded) == 2){
+            if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
+                $last_bits = explode(".", $_exploded[1]);
+                $a['image_type'] = $_exploded[0];
                 $a['color_title'] = str_replace("-", " ", $last_bits[0]);
             }
-        } elseif (count($_exploded) == 4) {
-            $last_bits = explode(".", $_exploded[3]);
-            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
-            $a['view_title'] = $last_bits[0];
-        } elseif(count($_exploded) == 2){
-            $last_bits = explode(".", $_exploded[1]);
-            $a['image_type'] = $_exploded[0];
-            $a['color_title'] = str_replace("-", " ", $last_bits[0]);
         }else {
             return array('message' => 'Invalid Format!', 'success' => 'false');
         }

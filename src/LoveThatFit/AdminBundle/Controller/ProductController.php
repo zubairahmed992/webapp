@@ -38,6 +38,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
 
 class ProductController extends Controller {
 
+    public $error_string;
 //---------------------------------------------------------------------
 
     public function indexAction($page_number, $sort = 'id') {
@@ -1242,8 +1243,8 @@ class ProductController extends Controller {
             $parsed_details = $this->get('admin.helper.product')->breakFileNameProductDetail($file_name, $_POST['product_id']);
 
             if ($parsed_details['success'] == 'false') {
-                #return new Response($parsed_details['message']);
-                $error_str = $error_str . $file_name . ' : ' . $parsed_details['message'] . ', ';
+                //return new Response($file_name.$parsed_details['message']);
+                $this->error_string .= $this->get('session')->getFlash('error-on-addcolor') . $file_name . ' : ' . $parsed_details['message']. ' , ';
             } else {
 
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
@@ -1258,11 +1259,8 @@ class ProductController extends Controller {
                     $this->get('admin.helper.productcolor')->save($color_id_result);
                 }
 
-
                 // Find if the new color has been successfully added
                 $added_color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
-
-
 
                 //Make Default Color
                 if($parsed_details['set_default'] == "yes"){
@@ -1299,6 +1297,12 @@ class ProductController extends Controller {
                 /*Add color pattern and color image*/
                 $find_size_by_title_productid = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
 
+                /* If size not available then show error */
+                if(count($find_size_by_title_productid) == 0){
+                    $this->error_string .= $this->get('session')->getFlash('error-on-addcolor') . $file_name . ' : Size not available ,';
+                    $this->get('session')->setFlash('error-on-addcolor', $this->error_string);
+                    return new response('{"status":"error"}');
+                }
                 /* Checked Product item are available for this product */
                 $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $added_color_id_result->getId(), $find_size_by_title_productid->getId());
 
@@ -1329,12 +1333,12 @@ class ProductController extends Controller {
                     $product_item->file = $imageFile;
                     $product_item->upload();
                     $this->get('admin.helper.productitem')->save($product_item);
-                    $this->get('session')->setFlash('success', 'fitting room image updated');
-                    return new response('{"status":"fitting room image updated"}');
+                    $this->get('session')->setFlash('success', 'Remaining Product Items and Colors have been added/updated');
+                    return new response('{"status":"Remaining Product Items and Colors have been added"}');
                 }
             }
         }
-        $this->get('session')->setFlash('warning', 'Size, Color not updated');
+        $this->get('session')->setFlash('error-on-addcolor', $this->error_string);
         return new response('{"status":"error"}');
 
     }

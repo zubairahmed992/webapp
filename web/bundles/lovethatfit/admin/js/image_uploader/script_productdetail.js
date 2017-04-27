@@ -63,6 +63,7 @@ $(function(){
         },
 
         fail:function(e, data){
+            count_li++;
             // Something has gone wrong!
             data.context.addClass('error');
         }
