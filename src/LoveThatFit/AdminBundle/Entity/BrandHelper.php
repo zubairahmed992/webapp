@@ -123,13 +123,41 @@ class BrandHelper {
         $entity = $this->repo->find($id);
         $entity_name = $entity->getName();
         if ($entity) {
-            $this->em->remove($entity);
-            $this->em->flush();
-            return array('brands' => $entity,
-                'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
-                'message_type' => 'success',
-                'success' => true,
-            );
+            try {
+                /* New Structure Soft Delete */
+                $entity->setDisabled(true);
+                $entity->setDeleted(true);
+                $this->update($entity);
+
+                /* Old Structure Hard Delete */
+                /*$this->em->remove($entity);
+                $this->em->flush();*/
+
+                /*deleting related products of the brand*/
+                $deleted = $this->container->get('admin.helper.product')->deleteProductsByBrand($id);
+                if ($deleted) {
+                    return array('brands' => $entity,
+                        'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
+                        'message_type' => 'success',
+                        'success' => true,
+                    );
+                } else {
+                    $entity->setDisabled(false);
+                    $entity->setDeleted(false);
+                    $this->update($entity);
+                    return array('brands' => $entity,
+                        'message' => 'Somrthing went wrong!',
+                        'message_type' => 'warning',
+                        'success' => false,
+                    );
+                }
+            } catch (\Exception $e) {
+                return array('brands' => $entity,
+                    'message' => 'Somrthing went wrong!',
+                    'message_type' => 'warning',
+                    'success' => false,
+                );
+            }
         } else {
 
             return array('brands' => $entity,

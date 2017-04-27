@@ -116,9 +116,14 @@ class BrandController extends Controller {
         try {
 
             $message_array = $this->get('admin.helper.brand')->delete($id);
-            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+            if ($message_array['success']) {
+                $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
 
-            return $this->redirect($this->generateUrl('admin_brands'));
+                return $this->redirect($this->generateUrl('admin_brands'));
+            }
+            $this->get('session')->setFlash('warning', 'This Brand cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+
         } catch (\Doctrine\DBAL\DBALException $e) {
 
             $this->get('session')->setFlash('warning', 'This Brand cannot be deleted!');
@@ -253,17 +258,14 @@ class BrandController extends Controller {
 
     //---------------------------For test code for brand Specification-------------------------------------------------------------------
     public function testAction($id) {
-        $products = $this->get('admin.helper.product')->findProductsByBrand($id);
+        /*$products = $this->get('admin.helper.brand')->delete($id);*/
+        /*var_dump($products); exit;
         $count = 0;
         foreach($products as $product) {
             print_r($product->toArray());
-            /*echo $product->getId();
-            echo "<br>";
-            echo $product->getName();
-            echo "<br>";*/
         }
-        exit;
-        return new response(json_encode($this->get('admin.helper.product')->findProductsByBrand($id)));
+        exit;*/
+        /*return new response(json_encode($products));*/
     }
 
     public function brandProductsAction($id)
