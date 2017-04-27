@@ -356,6 +356,7 @@ class ProductCSVDataUploader {
         $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode($data['fabric_content']));
         $product->setDisabled(false);        
+        $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         
         #---------

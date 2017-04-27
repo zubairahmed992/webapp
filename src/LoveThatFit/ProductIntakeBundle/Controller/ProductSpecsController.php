@@ -102,9 +102,9 @@ class ProductSpecsController extends Controller
     
     #----------------------- /product_intake/product_specs/create_product
     public function createProductAction($id){            
-        $this->get('pi.product_specification')->create_product($id);
-        $this->get('session')->setFlash('success', 'Product created.');   
-        return $this->redirect($this->generateUrl('product_intake_product_specs_index'));
+        $msg = $this->get('pi.product_specification')->create_product($id);        
+        $this->get('session')->setFlash('success', $msg['message']);   
+        return $this->redirect($this->generateUrl('product_intake_product_specs_index'));        
     }
     
     #----------------------- /product_intake/Prod_specs/update    

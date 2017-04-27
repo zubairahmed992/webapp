@@ -529,8 +529,23 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
 
-    public function productSync($gender, $date = null) {
-        $products = $this->container->get('webservice.repo')->productSync($gender, $date);
+    public function productSync($gender, $date = null, $user = null) {
+        if($user != null){
+            $user_id = $user->getId();
+            $products = $this->container->get('webservice.repo')->productSyncWithFavouriteItem($gender, $date, $user_id);
+            // Favourite will be converted in to true and false
+            foreach($products as $key => $value){
+                if($products[$key]['favourite'] == 0){
+                    $products[$key]['favourite'] = FALSE;
+                }else{
+                    $products[$key]['favourite'] = TRUE;
+                }            }
+
+
+        }else{
+            $products = $this->container->get('webservice.repo')->productSync($gender, $date);
+        }
+
         return $this->response_array(true, "products list", true, $products);
     }
 

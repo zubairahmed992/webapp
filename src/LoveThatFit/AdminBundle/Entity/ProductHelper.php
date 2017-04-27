@@ -80,6 +80,9 @@ class ProductHelper
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
 
+        if($entity->getDeleted() == null){
+            $entity->setDeleted(false);
+        }
 
         //$entity->upload();
         $this->em->persist($entity);
@@ -131,6 +134,10 @@ class ProductHelper
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
             #$entity->upload();
+
+            if($entity->getDeleted() == null){
+                $entity->setDeleted(false);
+            }
             $this->em->persist($entity);
             $this->em->flush();
 
@@ -164,9 +171,15 @@ class ProductHelper
         $entity_name = '';
 
         if ($entity) {
-            $entity_name = $entity->getName();
-            $this->em->remove($entity);
-            $this->em->flush();
+            /* New Structure Soft Delete */
+            $entity->setDisabled(true);
+            $entity->setDeleted(true);
+            $this->update($entity);
+
+            /* Old Structure Hard Delete */
+            //$entity_name = $entity->getName();
+            //$this->em->remove($entity);
+            //$this->em->flush();
 
             return array('product' => $entity,
                 'message' => 'The Product ' . $entity_name . ' has been Deleted!',
@@ -1442,4 +1455,26 @@ class ProductHelper
         return $output;
     }
     */
+
+    public function setProductsStatusByBrand($disabled, $brand_id)
+    {
+        return $this->repo->updateProductsStatusByBrand($disabled, $brand_id);
+    }
+
+    public function setProductsStatus($disabled, $products)
+    {
+        $count = 0;
+        foreach($products as $product) {
+            $products[$count] = (int)$product;
+            $count++;
+        }
+        return $this->repo->updateProductsStatus($disabled, $products);
+    }
+
+    public function findProductsByBrand($brand_id)
+    {
+        $brand = $this->container->get('admin.helper.brand')->find($brand_id);
+        return $this->repo->findByBrand($brand);
+        /*return $this->repo->findBy(["brand" => $brand, "disabled" => 0]);*/
+    }
 }

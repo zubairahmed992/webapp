@@ -1141,32 +1141,15 @@ class UserHelper
         );
 
         foreach ($finalData as $fData) {
-            $status = "";
-            switch ($fData["status"]){
-                case -1:
-                    $status = "Pending";
-                    break;
-                case 0:
-                    $status = "Inactive";
-                    break;
-                case 1:
-                    $status = "Active";
-                    break;
-                case -2:
-                    $status = "Photo Rejected";
-                    break;
-                default:
-                    $status = "Undefined";
-                    break;
-            }
+            $result = $this->getUpdatedUserArchiveTime( $fData["id"] );
             $output['data'][] = [
                 'id' => $fData["id"],
                 'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
                 'email' => $fData["email"],
                 'gender' => ($fData["gender"] == "f") ? "Female" : "Male",
                 'createdAt' => ($fData["createdAt"]->format('m-d-Y')),
-                'updated_at' => (($fData["updated_at"] != null) ? $fData["updated_at"]->format('m-d-Y'): ""),
-                'status' => $status,
+                'updated_at' => $result['updated_at'],
+                'status' => $result['status'],
                 'original_user_id' => $fData["original_user_id"]
             ];
 
@@ -1174,6 +1157,42 @@ class UserHelper
         }
 
         return $output;
+    }
+
+    public function getUpdatedUserArchiveTime( $user_id = 0)
+    {
+        $returnArray = $this->repo->getUserArchiveEntries($user_id);
+        if(!empty($returnArray)){
+            foreach($returnArray  as $fData){
+                $status = "";
+                switch ($fData["status"]){
+                    case -1:
+                        $status = "Pending";
+                        break;
+                    case 0:
+                        $status = "Inactive";
+                        break;
+                    case 1:
+                        $status = "Active";
+                        break;
+                    case -2:
+                        $status = "Photo Rejected";
+                        break;
+                    default:
+                        $status = "Undefined";
+                        break;
+                }
+                return array(
+                    'status' => $status,
+                    'updated_at' => (($fData["updated_at"] != null) ? $fData["updated_at"]->format('m-d-Y'): "")
+                );
+            }
+        }
+
+        return array(
+            'status' => "",
+            'updated_at'=> ""
+        );
     }
 
     public function countAllUserRecord()
@@ -1200,4 +1219,11 @@ class UserHelper
     {
         return $this->repo->findUserList($start_date, $end_date);
     }
+
+    public function findUserById($user_id)
+    {
+        return $this->repo->findOneById($user_id);
+    }
+
+
 }

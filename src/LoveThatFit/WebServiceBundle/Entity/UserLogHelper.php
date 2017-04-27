@@ -90,4 +90,12 @@ class UserLogHelper
 
         return false;
     }
+
+    public function findUserLogsByUserId( User $user)
+    {
+        $userLogObject = $this->repo->findBy(
+            array("users" => $user->getId()) /*, array('price' => 'ASC')*/
+        );
+        return $userLogObject;
+    }
 }
