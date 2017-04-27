@@ -862,7 +862,7 @@ class WebServiceHelper {
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         $page_count = (int) (count($productlist) / $records_per_page);
         $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1: $page_count;
-        $productlist = array_slice($productlist, $offset, $limit);
+        $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
@@ -902,7 +902,7 @@ class WebServiceHelper {
 
     }
 
-    
+
 
 
 //*********************************************
