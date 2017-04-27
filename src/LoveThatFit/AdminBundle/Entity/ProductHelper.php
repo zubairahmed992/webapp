@@ -1455,4 +1455,26 @@ class ProductHelper
         return $output;
     }
     */
+
+    public function setProductsStatusByBrand($disabled, $brand_id)
+    {
+        return $this->repo->updateProductsStatusByBrand($disabled, $brand_id);
+    }
+
+    public function setProductsStatus($disabled, $products)
+    {
+        $count = 0;
+        foreach($products as $product) {
+            $products[$count] = (int)$product;
+            $count++;
+        }
+        return $this->repo->updateProductsStatus($disabled, $products);
+    }
+
+    public function findProductsByBrand($brand_id)
+    {
+        $brand = $this->container->get('admin.helper.brand')->find($brand_id);
+        return $this->repo->findByBrand($brand);
+        /*return $this->repo->findBy(["brand" => $brand, "disabled" => 0]);*/
+    }
 }
