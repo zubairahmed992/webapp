@@ -22,7 +22,7 @@ class WSRepo
         if ($date_format) {
             return $this->em
                 ->createQueryBuilder()
-                ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count')
+                ->select('p.id product_id,p.name,p.description, p.disabled as disabled, p.deleted as deleted, ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count')
                 ->from('LoveThatFitAdminBundle:Product', 'p')
                 ->innerJoin('p.displayProductColor', 'pc')
                 ->innerJoin('p.clothing_type', 'ct')
@@ -33,6 +33,7 @@ class WSRepo
                 ->andWhere('p.updated_at>=:update_date')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
@@ -42,7 +43,7 @@ class WSRepo
 
             return $this->em
                 ->createQueryBuilder()
-                ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count')
+                ->select('p.id product_id,p.name,p.description,p.disabled as disabled, p.deleted as deleted, ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count')
                 ->from('LoveThatFitAdminBundle:Product', 'p')
                 ->innerJoin('p.displayProductColor', 'pc')
                 ->innerJoin('p.clothing_type', 'ct')
@@ -52,6 +53,53 @@ class WSRepo
                 ->where('p.gender=:gender')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender))
+                ->getQuery()
+                ->getResult();
+        }
+    }
+
+
+    #-------------------------------------------------------------------
+    public function productSyncWithFavouriteItem($gender, $date_format = Null, $user)
+    {
+        if ($date_format) {
+            return $this->em
+                ->createQueryBuilder()
+                ->select('p.id product_id,p.name,p.description, p.disabled as disabled, p.deleted as deleted, ct.target as target,ct.name as clothing_type ,pc.image as product_image,pc.title as product_color,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count, (SELECT count(np.id) FROM LoveThatFitAdminBundle:Product np JOIN np.product_items npi JOIN npi.users u  WHERE u.id='.$user.' AND npi.product= p.id) as favourite')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.displayProductColor', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')
+                ->innerJoin('p.product_items', 'pi')
+                ->leftJoin('p.retailer', 'r')
+                ->where('p.gender=:gender')
+                ->andWhere('p.updated_at>=:update_date')
+                ->andWhere("p.displayProductColor!=''")
+                ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
+                ->groupBy('p.id')
+                ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
+                ->getQuery()
+                ->getResult();
+
+        } else {
+
+            return $this->em
+                ->createQueryBuilder()
+                ->select('p.id product_id,p.name,p.description,p.disabled as disabled, p.deleted as deleted, ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name, coalesce(MAX(pi.price), 0) as price, (select count(npc) from LoveThatFitAdminBundle:ProductColor npc WHERE npc.product = p.id) as color_count, (SELECT count(np.id) FROM LoveThatFitAdminBundle:Product np JOIN np.product_items npi JOIN npi.users u  WHERE u.id='.$user.' AND npi.product= p.id) as favourite')
+                ->from('LoveThatFitAdminBundle:Product', 'p')
+                ->innerJoin('p.displayProductColor', 'pc')
+                ->innerJoin('p.clothing_type', 'ct')
+                ->innerJoin('p.brand', 'b')
+                ->innerJoin('p.product_items', 'pi')
+                ->leftJoin('p.retailer', 'r')
+                ->where('p.gender=:gender')
+                ->andWhere("p.displayProductColor!=''")
+                ->andWhere('p.disabled=0')
+                ->andWhere('p.deleted=0')
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
@@ -126,12 +174,14 @@ class WSRepo
 
 
 
-                //Added Custom Query due the In valid response by the entity joins.
+                //Added Custom Query due the In valid response by the entity joins. //Product.disabled = 0 condition removed
                 $sql = "SELECT
                        product.id                       AS product_id, 
                        product.NAME                     AS name, 
                        product.description              AS description, 
-                       clothing_type.target             AS target, 
+                       product.disabled                 AS disabled,
+                       product.deleted                  AS deleted,
+                       clothing_type.target             AS target,
                        clothing_type.NAME               AS clothing_type, 
                        product_color.image              AS product_image, 
                        ltf_retailer.id                  AS retailer_id, 
@@ -167,9 +217,10 @@ class WSRepo
                 
                 WHERE  ( ltf_users.id IS NULL 
                           OR ltf_users.id = :user_id ) 
-                       AND useritemtryhistory.user_id = :user_id 
-                       AND product.disabled = 0 
-                       AND product.display_product_color_id <> '' 
+                       AND useritemtryhistory.user_id = :user_id
+                       AND product.display_product_color_id <> ''
+                       AND product.disabled = 0
+                       AND product.deleted = 0
                 ORDER  BY useritemtryhistory.updated_at DESC ";
                 $params['user_id'] = $user->getId();
 
@@ -182,7 +233,7 @@ class WSRepo
             case 'favourite':
                 $query = $this->em
                     ->createQuery("
-            SELECT p.id product_id, p.name, p.description,p.description,
+            SELECT p.id product_id, p.name, p.description, p.disabled as disabled, p.deleted as deleted,p.description,
             ct.target as target,ct.name as clothing_type ,
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
@@ -197,7 +248,7 @@ class WSRepo
             JOIN pi.users u
             JOIN p.clothing_type ct
             
-            WHERE u.id=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
+            WHERE u.id=:user_id AND p.displayProductColor!=''
             ORDER BY p.name"
                     )->setParameters(array('user_id' => $user->getId()));
                 break;
@@ -205,7 +256,7 @@ class WSRepo
                 #by default it gets the latest 10 records
                 $query = $this->em
                     ->createQuery("
-            SELECT p.id product_id, p.name, p.description,p.description,
+            SELECT p.id product_id, p.name, p.description,p.description,p.disabled as disabled, p.deleted as deleted,
             ct.target as target,ct.name as clothing_type ,
             pc.image as product_image,
             r.id as retailer_id, r.title as retailer_title, 
@@ -219,7 +270,7 @@ class WSRepo
             LEFT JOIN p.retailer r
             JOIN p.clothing_type ct
             
-            WHERE p.gender=:gender AND p.disabled=0 AND p.displayProductColor!=''  
+            WHERE p.gender=:gender AND p.displayProductColor!=''
             GROUP BY p.id 
             ORDER BY p.id DESC"
                     )->setParameters(array('gender' => $user->getGender()))->setMaxResults(10);
@@ -405,6 +456,18 @@ class WSRepo
             $recentTriedProducts = $typeCastedRecentProducts;
         }
         foreach ($recentTriedProducts as $key => $value) {
+            if($recentTriedProducts[$key]['disabled']=="0"){
+                $recentTriedProducts[$key]['disabled'] = false;
+            }else{
+                $recentTriedProducts[$key]['disabled'] = true;
+            }
+
+            if($recentTriedProducts[$key]['deleted']=="0"){
+                $recentTriedProducts[$key]['deleted'] = false;
+            }else{
+                $recentTriedProducts[$key]['deleted'] = true;
+            }
+
             $product_id =  $recentTriedProducts[$key]['product_id'];
             $sql = "SELECT count(*) as color_count from product_color npc WHERE npc.product_id = $product_id ";
             $color_count = $this->em->getConnection()->prepare($sql);
