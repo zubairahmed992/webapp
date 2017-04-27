@@ -888,7 +888,7 @@ class WebServiceHelper {
         if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
             return $this->response_array(false, 'Invalid Page No');
         }
-        $productlist = array_slice($productlist, $offset, $limit);
+        $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
@@ -901,6 +901,8 @@ class WebServiceHelper {
         return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist, 'page_count' => $page_count));
 
     }
+
+    
 
 
 //*********************************************
