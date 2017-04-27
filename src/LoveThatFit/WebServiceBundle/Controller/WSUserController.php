@@ -24,6 +24,7 @@ class WSUserController extends Controller {
     public function logoutAction(){
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
         if ($user) {
             $user_info = $this->get('webservice.helper')->logoutService($user, $decoded);
             if(!empty($user_info)){

@@ -1147,7 +1147,7 @@ class UserHelper
                 'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
                 'email' => $fData["email"],
                 'gender' => ($fData["gender"] == "f") ? "Female" : "Male",
-                'createdAt' => ($fData["createdAt"]->format('m-d-Y')),
+                'createdAt' => ($fData["createdAt"]->format('m-d-Y h:m:s')),
                 'updated_at' => $result['updated_at'],
                 'status' => $result['status'],
                 'original_user_id' => $fData["original_user_id"]
@@ -1184,7 +1184,7 @@ class UserHelper
                 }
                 return array(
                     'status' => $status,
-                    'updated_at' => (($fData["updated_at"] != null) ? $fData["updated_at"]->format('m-d-Y'): "")
+                    'updated_at' => (($fData["updated_at"] != null) ? $fData["updated_at"]->format('m-d-Y h:m:s'): "")
                 );
             }
         }
