@@ -33,6 +33,9 @@
             });
             $('#brand_disabled').parent().hide();
             $('#disablebrand').click(function () {
+                $('#disableModal').modal();
+            });
+            $('#disable_now').click(function () {
                 disableBrand(getBrnadId());
             });
             $('#enablebrand').click(function () {
@@ -125,6 +128,7 @@
                     })
                     .done(function (data) {
                         if(data['success'] != undefined) {
+                            $('#disableModal').modal("hide");
                             showSuccessMessage(data['success']);
                             $('#disablebrand').hide();
                             $('#enablebrand').show();
@@ -281,6 +285,22 @@
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <a href="{{ path('admin_brand_delete', {'id': entity.id}) }}" class="btn btn-primary">Delete</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="disableModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Disable Brand</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to Disable this Brand <b>{{ entity.name }}</b> and its products?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="javascript:void(0);" id="disable_now" class="btn btn-primary">Disable</a>
         </div>
     </div>
 {% endblock %}
