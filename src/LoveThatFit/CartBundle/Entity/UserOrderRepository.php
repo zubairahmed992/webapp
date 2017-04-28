@@ -170,7 +170,7 @@ class UserOrderRepository extends EntityRepository
 		o.shipping_address1, o.shipping_address2, o.shipping_city, o.shipping_postcode,
 		o.shipping_country, o.shipping_state, o.order_status, o.order_amount,
 		o.transaction_status, o.transaction_id, o.payment_method, o.billing_phone,
-		o.shipping_phone, o.order_number, o.shipping_amount')
+		o.shipping_phone, o.order_number, o.shipping_amount, o.discount_amount, o.total_amount')
 		->from('LoveThatFitCartBundle:UserOrder', 'o')
 		->where('o.user =:user_id')->setParameter('user_id', $user_id)
 		->getQuery()
