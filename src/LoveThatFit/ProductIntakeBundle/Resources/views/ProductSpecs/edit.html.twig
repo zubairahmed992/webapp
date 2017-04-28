@@ -772,9 +772,9 @@
                                         <th >min_actual</th>
                                         <th >ideal_low</th>
                                         <th >fit_model</th>
-                                        <th >ideal_high</th>
-                                        <th >max_calc</th>
+                                        <th >ideal_high</th>                                        
                                         <th >max_actual</th>
+                                        <th >max_calc</th>
                                         
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
@@ -826,13 +826,14 @@
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
                                                 </td>
                                                 <td>
-                                                    {{measurement_v.max_calc | number_format(2, '.', '')}}
-                                                    <input class="10" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
+                                                    {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
+                                                    <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="10 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
                                                 </td>
                                                 <td>
-                                                    {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
-                                                    <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="11 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
+                                                    {{measurement_v.max_calc | number_format(2, '.', '')}}
+                                                    <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
+                                                
                                             </tr>
                                         {% else %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
@@ -878,14 +879,14 @@
                                                 <td>
                                                     {{measurement_v.ideal_high | number_format(2, '.', '')}}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
+                                                </td>                                                
+                                                <td>
+                                                    {{measurement_v.max_actual | number_format(2, '.', '')}}
+                                                    <input class="10" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.max_calc | number_format(2, '.', '')}}
-                                                    <input class="10" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
-                                                </td>
-                                                <td>
-                                                    {{measurement_v.max_actual | number_format(2, '.', '')}}
-                                                    <input class="11" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
+                                                    <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
                                             </tr>
                                         {% endif %}

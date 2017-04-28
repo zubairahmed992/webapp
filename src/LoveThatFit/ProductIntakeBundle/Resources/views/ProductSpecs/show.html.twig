@@ -76,9 +76,9 @@
                                         <th >min_actual</th>
                                         <th >ideal_low</th>
                                         <th >fit_model</th>
-                                        <th >ideal_high</th>
+                                        <th >ideal_high</th>                                        
+                                        <th >max_actual</th>
                                         <th >max_calc</th>
-                                        <th >max_actual</th>                                        
                                     </tr>
                                     {% else %}
                                       <tr class="Active">
@@ -92,9 +92,9 @@
                                         <th >min_actual</th>
                                         <th >ideal_low</th>
                                         <th >fit_model</th>
-                                        <th >ideal_high</th>
+                                        <th >ideal_high</th>                                        
+                                        <th >max_actual</th>
                                         <th >max_calc</th>
-                                        <th >max_actual</th>                                        
                                     </tr>
                                 {%endif %}
                                 {% for measurement_k, measurement_v in fit_point %}
@@ -112,9 +112,9 @@
                                                 <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
                                                 <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
                                                 <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>                                                
                                                 <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
 
                                             </tr>
                                          {% else %}
@@ -129,9 +129,9 @@
                                                 <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
                                                 <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
                                                 <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>                                                
                                                 <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
+                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
 
                                             </tr>
                                 

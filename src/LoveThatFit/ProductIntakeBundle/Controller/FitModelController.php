@@ -45,6 +45,7 @@ class FitModelController extends Controller {
         #return new Response(json_encode($size_specs));
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_points['hip']);
+        unset($fit_points['hem_length']);
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
                     'brands' => $brands,
@@ -82,7 +83,6 @@ class FitModelController extends Controller {
     #------------------------/product_intake/fit_model_specs/edit/id
 
     public function editAction($id) {
-        $mapping = $this->get('product_intake.product_specification_mapping')->getAllMappingArray();
         $fit_model_measurement = $this->get('productIntake.fit_model_measurement')->find($id);       
         $fit_point_values = json_decode($fit_model_measurement->getMeasurementJson(), true);
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
@@ -97,7 +97,8 @@ class FitModelController extends Controller {
         $size = $size_specs['sizes'][$gender][$fit_point_values['sel_size_type']];
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
-        unset($fit_point_values['hip']);
+        unset($fit_point_values['hip']);        
+        unset($fit_point_values['hem_length']);
         !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
@@ -109,7 +110,7 @@ class FitModelController extends Controller {
                     'size_specs_json' => json_encode($size_specs),
                     'all_size_title_man_woman' => $all_size_title_man_woman,
                     'colthing_types_man_woman' => $colthing_types_man_woman,
-                    'mapping_json' => json_encode($mapping),   
+                    'required_fields' => array('bust', 'waist', 'hip'),   
                     'size' => $size
 
                 ));
