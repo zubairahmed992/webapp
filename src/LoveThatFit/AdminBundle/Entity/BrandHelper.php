@@ -40,6 +40,7 @@ class BrandHelper {
     public function createNew() {
         $class = $this->class;
         $brand = new $class();
+        $brand->setDeleted(false);
         return $brand;
     }
 
@@ -353,7 +354,15 @@ public function getBrandRetailerList($date_fromat = null) {
  //Private Methods    
 //------Validate to check brand name exit or not for create new-----------------------------------------
     private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
+        $result = $this->findOneByName($name);
+        if (count($result) > 0) {
+            if ($result->getDeleted()) {
+                return array('message' => 'Brand Name already exists! (The Brand was deleted but exists in Archive.)',
+                    'field' => 'name',
+                    'message_type' => 'warning',
+                    'success' => false,
+                );
+            }
             return array('message' => 'Brand Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
