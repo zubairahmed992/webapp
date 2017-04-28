@@ -355,9 +355,9 @@ Search Product
 <div class="span1 edits_btn">
 {%if(p.disabled==1)%}
     <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled">
-    <i class="icon-ban-circle"></i></a>
+    <i class="icon-play-circle"></i></a>
 {%else%}
-    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-play-circle"></i></a>
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-ban-circle"></i></a>
 {%endif%}
 <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
 <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
