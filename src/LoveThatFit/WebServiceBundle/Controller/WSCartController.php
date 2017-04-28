@@ -556,7 +556,7 @@ class WSCartController extends Controller
             $a = 0;
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
-                $order_items['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
+                $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
                 foreach($order_items as $index => $item){
                     $itemObject = $this->container->get('admin.helper.productitem')->find($item['item_id']);
                     $product_color = $itemObject->getProductColor();
