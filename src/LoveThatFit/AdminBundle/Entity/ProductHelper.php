@@ -1534,4 +1534,17 @@ class ProductHelper
         return $this->repo->findByBrand($brand);
         /*return $this->repo->findBy(["brand" => $brand, "disabled" => 0]);*/
     }
+
+    public function deleteProductsByBrand($brand_id)
+    {
+        $products = $this->findProductsByBrand($brand_id);
+        if (!empty($products)) {
+            $productIds = array();
+            foreach ($products as $product) {
+                $productIds[] = $product->toArray()['id'];
+            }
+            return $this->repo->deleteBrandProducts($productIds);
+        }
+        return true;
+    }
 }

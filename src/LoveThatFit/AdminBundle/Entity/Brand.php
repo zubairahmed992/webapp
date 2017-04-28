@@ -91,6 +91,12 @@ class Brand {
      */
     private $disabled;
 
+    /**
+     * @var string $deleted
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=true, options={"default"=false})
+     */
+    private $deleted;
 
     /**
      * @var string $screen_position
@@ -98,8 +104,8 @@ class Brand {
      * @ORM\Column(name="screen_position", type="boolean", options={"default" = false})
      */
     private $screen_position;
-    
-    
+
+
    
     
     /**
@@ -554,6 +560,30 @@ public function deleteImages()
     public function getBrandspecification()
     {
         return $this->brandspecification;
+    }
+    
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Brand
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
     
 }
