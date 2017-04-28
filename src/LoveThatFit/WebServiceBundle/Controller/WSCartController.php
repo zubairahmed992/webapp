@@ -556,15 +556,20 @@ class WSCartController extends Controller
             $a = 0;
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
                 foreach($order_items as $index => $item){
                     $itemObject = $this->container->get('admin.helper.productitem')->find($item['item_id']);
                     $product_color = $itemObject->getProductColor();
+                    $product_size = $itemObject->getProductSize();
 
                     $item['color'] = $product_color->getTitle();
+                    $item['size'] = $product_size->getTitle();
+
                     $item['image'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . "/" .$itemObject->getWebPath();
                     $order_items[$index] = $item;
                 }
 
+                $orders[$a] = $order;
                 $orders[$a]['orderItem'] = $order_items;
                 $a++;
             }
