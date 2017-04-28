@@ -45,3 +45,8 @@ product_intake_product_specs_compare_upload:
 product_intake_product_specs_compare_new:
     pattern:  /product_intake/product_specs/compare_new
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:compareNew }   
+
+product_copy_intake:
+    pattern:  /product_intake/product_copy
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:productCopy } 
+    
