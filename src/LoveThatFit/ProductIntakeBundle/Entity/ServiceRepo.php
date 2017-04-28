@@ -19,15 +19,14 @@ class ServiceRepo
     #-------------------------------------------------------------------
     public function getProductSpecification($decoded)
     {
-            $style_id_number = $decoded['result']['style_id_number'];   
-            $style_name = $decoded['result']['style_name'];             
-            $title = $decoded['result']['title'];  
+            $style_id_number = $decoded['style_id_number'];   
+            $brand_name =  array_key_exists('brand_name', $decoded)?$decoded['brand_name']:'';                         
             $query = $this->em
-                ->createQueryBuilder()
-                ->select('ps.specs_json')
-                ->from('LoveThatFitProductIntakeBundle:ProductSpecification', 'ps')
-                ->where("ps.style_id_number='$style_id_number'  OR  ps.style_name = '$style_name' OR  ps.title = '$title'")               
-                ->getQuery();               
+                ->createQuery("SELECT ps.specs_json 
+                    FROM LoveThatFitProductIntakeBundle:ProductSpecification ps
+                    JOIN ps.brand b
+                    WHERE ps.style_id_number=:style_id_number
+                    AND b.name = :brand_name")->setParameters(array('style_id_number' => $style_id_number, 'brand_name' => $brand_name));                    
             try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

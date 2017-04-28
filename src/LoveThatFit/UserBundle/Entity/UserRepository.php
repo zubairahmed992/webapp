@@ -392,6 +392,23 @@ class UserRepository extends EntityRepository
     }
     //end of autocomplete method
 
+    public function getUserArchiveEntries( $user_id )
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $query
+            ->select('
+            ua.status,
+            ua.updated_at
+            ')
+            ->from('LoveThatFitUserBundle:UserArchives', 'ua')
+            ->where('ua.user = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->orderBy('ua.updated_at', 'desc');
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
+    }
+
     public function search($data, $page = 0, $max = null, $order, $getResult = true)
     {
         $query     = $this->getEntityManager()->createQueryBuilder();
@@ -408,13 +425,10 @@ class UserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
-                IDENTITY(u.original_user) as original_user_id,
-                ua.updated_at,
-                ua.status
+                IDENTITY(u.original_user) as original_user_id
                 '
             )
-            ->from('LoveThatFitUserBundle:User', 'u')
-            ->leftJoin('u.user_archives', 'ua');
+            ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
@@ -445,9 +459,9 @@ class UserRepository extends EntityRepository
                 $orderByColumn = "u.email";
             } elseif ($orderByColumn == 5) {
                 $orderByColumn = "u.createdAt";
-            }elseif ($orderByColumn == 6) {
+            }/*elseif ($orderByColumn == 6) {
                 $orderByColumn = "ua.updated_at";
-            }
+            }*/
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
         if ($max) {
