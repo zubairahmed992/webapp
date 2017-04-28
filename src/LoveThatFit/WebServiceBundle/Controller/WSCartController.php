@@ -566,6 +566,7 @@ class WSCartController extends Controller
                     $order_items[$index] = $item;
                 }
 
+                $orders[$a] = $order;
                 $orders[$a]['orderItem'] = $order_items;
                 $a++;
             }
