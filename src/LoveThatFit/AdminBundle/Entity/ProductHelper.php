@@ -1403,6 +1403,63 @@ class ProductHelper
     }
     //end of autocomplete method
 
+
+#------------------------------------------------------------------------
+    public function breakFileNameProductDetail($request_array, $product_id) {
+
+        #Format: Regular_XL_Darl-Gray_Front-Open.png
+        #last bit, view is optional
+        $request_array = strtolower($request_array);
+        $_exploded = explode("_", $request_array);
+        $a = array('product_id' => $product_id);
+        $type = Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif');
+        $a['set_default'] = 'no';
+
+        #validate file format
+        if (count($_exploded) > 3) {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+
+        # file name/ext with/without view name
+        if (count($_exploded) == 3) {
+            if(strtolower($_exploded[2]) == 'setdefault.png'){
+                if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
+                    /*Color with Setdefault */
+                    $last_bits = explode(".", $_exploded[2]);
+                    $a['image_type'] = $_exploded[0];
+                    $a['color_title'] = str_replace("-", " ", $_exploded[1]);
+                    $a['set_default'] = 'yes';
+                }
+            }else {
+                if($_exploded[0]!="colorpatterntype" && $_exploded[0]!="colorimagetype") {
+                    $last_bits = explode(".", $_exploded[2]);
+                    $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+                }else{
+                    return array('message' => 'Invalid Format!', 'success' => 'false');
+                }
+            }
+        } elseif(count($_exploded) == 2){
+            if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
+                $last_bits = explode(".", $_exploded[1]);
+                $a['image_type'] = $_exploded[0];
+                $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+            }
+        }else {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+        #validate file format
+        if (count($last_bits) != 2 || (count($last_bits) == 2 && !(in_array($last_bits[1], $type)))) {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+        # no/invalid body type given then regular
+        $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "regular" : $_exploded[0];
+        $a['file_name'] = 'item_image.' . $last_bits[1];
+        $a['size_title'] = str_replace("-", "_", $_exploded[1]);
+        $a['message'] = 'Done';
+        $a['success'] = 'true';
+        return $a;
+    }
+
     #---------------------------------------------------
     //               Methods Product listing on index page
     #---------------------------------------------------
@@ -1476,5 +1533,18 @@ class ProductHelper
         $brand = $this->container->get('admin.helper.brand')->find($brand_id);
         return $this->repo->findByBrand($brand);
         /*return $this->repo->findBy(["brand" => $brand, "disabled" => 0]);*/
+    }
+
+    public function deleteProductsByBrand($brand_id)
+    {
+        $products = $this->findProductsByBrand($brand_id);
+        if (!empty($products)) {
+            $productIds = array();
+            foreach ($products as $product) {
+                $productIds[] = $product->toArray()['id'];
+            }
+            return $this->repo->deleteBrandProducts($productIds);
+        }
+        return true;
     }
 }

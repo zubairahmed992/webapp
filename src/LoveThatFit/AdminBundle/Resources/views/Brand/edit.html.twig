@@ -33,7 +33,68 @@
             });
             $('#brand_disabled').parent().hide();
             $('#disablebrand').click(function () {
-                $('#disableModal').modal();
+                $.ajax({
+                            url: "../" + getBrnadId() + "/products",
+                            method: "GET",
+                            data: {},
+                            dataType: "json",
+                        })
+                        .done(function (data) {
+                            var html = "<h4>Products</h4><ul>";
+                            var no_products = true;
+                            if (data.length > 0) {
+                                var html = "<ul>";
+                                for (var i = 0; i < data.length; i++) {
+                                    if(data[i]["disabled"] != 1) {
+                                        html += '<li>' + data[i]["name"] + '</li>';
+                                        no_products = false;
+                                    }
+                                }
+                                html += "</ul>";
+                            }
+                            if (no_products) {
+                                html += "<li>No Products Found!!</li>";
+                            }
+
+                            $("#products_disabling").html(html);
+                            $('#disableModal').modal();
+                        })
+                        .fail(function (err) {
+                            console.log("error in getBrandProducts");
+                            /*console.log(err);
+                             console.log(err.responseText);*/
+                        });
+            });
+            $('#delete_brand').click(function () {
+                $.ajax({
+                            url: "../" + getBrnadId() + "/products",
+                            method: "GET",
+                            data: {},
+                            dataType: "json",
+                        })
+                        .done(function (data) {
+                            var html = "<h4>Products</h4><ul>";
+                            var no_products = true;
+                            if (data.length > 0) {
+                                for (var i = 0; i < data.length; i++) {
+                                    if(data[i]["deleted"] != 1) {
+                                        html += '<li>' + data[i]["name"] + '</li>';
+                                        no_products = false;
+                                    }
+                                }
+                            }
+                            if (no_products) {
+                                html += "<li>No Products Found!!</li>";
+                            }
+                            html += "</ul>";
+                            $("#products_deleting").html(html);
+                            $('#myModal').modal();
+                        })
+                        .fail(function (err) {
+                            console.log("error in getBrandProducts");
+                            /*console.log(err);
+                             console.log(err.responseText);*/
+                        });
             });
             $('#disable_now').click(function () {
                 disableBrand(getBrnadId());
@@ -88,7 +149,7 @@
             $.each($("input[name='products']:checked"), function () {
                 products.push($(this).val());
             });
-            console.log(products);
+            /*console.log(products);*/
             $.ajax({
                         url: "../" + brand_id + "/enable",
                         method: "POST",
@@ -203,7 +264,7 @@
         <a href="{{ path('admin_brands') }}" class="btn">back</a>
         {% if entity.id %}
             <a href="{{ path('admin_brand_edit', {'id': entity.Id}) }}" class="btn">Edit</a>
-            <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+            <a id="delete_brand" role="button" data-toggle="modal" class="btn">Delete</a>
         {% endif %}
     </div>
     <div class="clearfix"></div>
@@ -280,8 +341,9 @@
             <h3 id="myModalLabel">Delete Brand</h3>
         </div>
         <div class="modal-body">
-            <p>Are you sure you want to Delete this Brand <b>{{ entity.name }}</b>?</p>
+            <p>Are you sure you want to Delete this Brand <b>{{ entity.name }}</b> and its related Products?</p>
         </div>
+        <div id="products_deleting"></div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <a href="{{ path('admin_brand_delete', {'id': entity.id}) }}" class="btn btn-primary">Delete</a>
@@ -296,7 +358,8 @@
             <h3 id="myModalLabel">Disable Brand</h3>
         </div>
         <div class="modal-body">
-            <p>Are you sure you want to Disable this Brand <b>{{ entity.name }}</b> and its products?</p>
+            <p>Are you sure you want to Disable this Brand <b>{{ entity.name }}</b> and its Products?</p>
+            <div id="products_disabling"></div>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

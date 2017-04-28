@@ -1441,6 +1441,19 @@ class ProductRepository extends EntityRepository
             return false;
         }
     }
+
+    public function deleteBrandProducts($products)
+    {
+        try {
+            $products = implode(',', $products);
+            $sql = "UPDATE product SET disabled = 1, deleted = 1 WHERE id IN (" . $products . ")";
+            $conn = $this->getEntityManager()->getConnection();
+            $rowsAffected = $conn->executeUpdate($sql);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
 
     /*

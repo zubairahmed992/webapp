@@ -92,7 +92,7 @@ class ProductItemRepository extends EntityRepository
         }  
     }
 #----------------------------------Find Item By SKU---------------------------#
-  public function findItemBySku($sku){
+    public function findItemBySku($sku){
       
       
        $query = $this->getEntityManager()
@@ -107,7 +107,7 @@ class ProductItemRepository extends EntityRepository
         }  
   }
    
-  public function findDetailsByVariants($variants=null){
+    public function findDetailsByVariants($variants=null){
       $query = $this->getEntityManager()
                     ->createQuery("SELECT p.id,p.name as product_title, b.name as brand_name,
                         pi.id as item_id, 
@@ -133,7 +133,7 @@ class ProductItemRepository extends EntityRepository
             return null;
         }  
   }
-  public function _findDetailsByVariants($variants){
+    public function _findDetailsByVariants($variants){
        $query = $this->getEntityManager()
                     ->createQuery("SELECT pi,ps,pc,p,b FROM LoveThatFitAdminBundle:ProductItem pi
                         JOIN pi.product_size ps
@@ -151,5 +151,18 @@ class ProductItemRepository extends EntityRepository
             return null;
         }  
   }
+
+    public function getProductItemByProductId($productId, $colorId, $sizeId) {
+        $query = $this->getEntityManager()
+            ->createQuery("
+     SELECT pi.id FROM LoveThatFitAdminBundle:ProductItem pi
+     WHERE
+     pi.product=:product_id AND pi.product_color=:color_id AND pi.product_size=:size_id"  )->setParameters(array('product_id' => $productId, 'color_id' => $colorId, 'size_id' => $sizeId)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     
 }

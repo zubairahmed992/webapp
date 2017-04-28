@@ -1293,7 +1293,7 @@
   .space_wrap_product [class*="span"] {
     display: block;
     float: left;
-    width: 12.5%!important;
+    width: 10.5%!important;
     text-align: center;
     padding-top: 10px;   
     margin-left: 1.1241%;
@@ -1302,6 +1302,11 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
+
+
+.product_main .edits_btn{
+  width:16%!important;
+}
   
   
    .space_wrap_rt_ad .span1:not(.hds) {
