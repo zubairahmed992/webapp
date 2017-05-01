@@ -5,6 +5,7 @@ $(document).ready(function() {
 });
 
 
+       
 function overall_mask(){
      var toe_shape_px=21.885;
     
@@ -52,29 +53,11 @@ function overall_mask(){
         adjusted_mask_height_px = (adjusted_mask_height_px * 100) / 450;
         full_scr_mask.scale(init_scale_ratio(),adjusted_mask_height_px/100);
         
-        // toe shape 
-        //toe shape for camera screen 
-          
-          full_scr_mask.segments[27].handleOut = new Point(7, 19);
-          full_scr_mask.segments[28].point.y += toe_shape_px;
-          full_scr_mask.segments[28].point.x += 4;
-          full_scr_mask.segments[28].handleOut = new Point(0, 0);
-          full_scr_mask.segments[29].handleOut = new Point(2.43237, -11);
-          full_scr_mask.segments[29].handleIn = new Point(-5, 31);
-          
-          
-          full_scr_mask.segments[43].handleIn = new Point(-7, 19);
-          full_scr_mask.segments[42].point.y += toe_shape_px;
-          full_scr_mask.segments[42].point.x -= 4;
-          full_scr_mask.segments[42].handleIn = new Point(0, 0);
-          full_scr_mask.segments[41].handleIn = new Point(-2.43237, -11);
-          full_scr_mask.segments[41].handleOut = new Point(5,  31);      
-
         
     function init_scale_ratio(){
             var def_scale = full_scr_mask.segments[17].point.x - full_scr_mask.segments[53].point.x;
             var init_req_scale = parseFloat(liquid_mask.dm_body_parts_details_json.bust_px) * 0.5213;
-
+             
             var set_init_scale_ratio = init_req_scale / def_scale;
 
             return set_init_scale_ratio;
@@ -98,8 +81,24 @@ function overall_mask(){
 
     // iPhone6 retake screen settings /// available screen for mask 633.5 in camera view.
     full_scr_mask.pivot = new Point(full_scr_mask.bounds.bottomCenter);
-    full_scr_mask.position = new Point(187.5,667 - 33.5);
+    full_scr_mask.position = new Point(187.5,667 - (33.5 - toe_shape_px));
 
+         // toe shape 
+        //toe shape for camera screen 
+          full_scr_mask.segments[27].handleOut = new Point(7, 19);
+          full_scr_mask.segments[28].point.y += toe_shape_px;
+          full_scr_mask.segments[28].point.x += 4;
+          full_scr_mask.segments[28].handleOut = new Point(0, 0);
+          full_scr_mask.segments[29].handleOut = new Point(2.43237, -11);
+          full_scr_mask.segments[29].handleIn = new Point(-5, 31);
+          
+          
+          full_scr_mask.segments[43].handleIn = new Point(-7, 19);
+          full_scr_mask.segments[42].point.y += toe_shape_px;
+          full_scr_mask.segments[42].point.x -= 4;
+          full_scr_mask.segments[42].handleIn = new Point(0, 0);
+          full_scr_mask.segments[41].handleIn = new Point(-2.43237, -11);
+          full_scr_mask.segments[41].handleOut = new Point(5,  31);      
 
     // Arms settings
     rgt_arm_ref = new Path({});
