@@ -52,10 +52,13 @@ class ProductSpecsController extends Controller
         }    
         foreach ($parsed_data['sizes'] as $key => $size) {
             foreach ($size as $key => $value) {
-                $size_attribute[] =  $key;
+                $size_attribute[$key] =  $key;
             }
             break;
         }      
+//        echo "<pre>";
+//        print_r($parsed_data);
+//       die;
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'product_specs'=>$ps,
                     'parsed_data' => $parsed_data,
