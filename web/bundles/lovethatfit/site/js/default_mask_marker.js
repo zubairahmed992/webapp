@@ -64,7 +64,8 @@ function overall_mask(){
         def_mask_height = full_scr_mask.bounds.height;
         adjusted_mask_height_px = (adjusted_mask_height_px * 100) / 450;
         full_scr_mask.scale(init_scale_ratio(),adjusted_mask_height_px/100);
-         toeShape(full_scr_mask);
+         toeShape(full_scr_mask, toe_shape_px);
+         
     function init_scale_ratio(){
             var def_scale = full_scr_mask.segments[17].point.x - full_scr_mask.segments[53].point.x;
             var init_req_scale = parseFloat(liquid_mask.dm_body_parts_details_json.bust_px) * 0.5213;
@@ -87,7 +88,7 @@ function overall_mask(){
 
     // iPhone6 retake screen settings /// available screen for mask 633.5 in camera view.
     full_scr_mask.pivot = new Point(full_scr_mask.bounds.bottomCenter);
-    full_scr_mask.position = new Point(187.5,667 - 33.5);
+    full_scr_mask.position = new Point(187.5,667 - (33.5 - toe_shape_px));
 
 
     // Arms settings
@@ -160,8 +161,7 @@ function overall_mask(){
     }
 
 
-function toeShape(obj){
- var toe_shape_px=21.885;
+function toeShape(obj, toe_shape_px){
  //left foot
           obj.segments[27].handleOut = new Point(7, 19);
           obj.segments[28].point.y += toe_shape_px;
