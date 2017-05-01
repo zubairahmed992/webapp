@@ -46,7 +46,7 @@ class FitModelController extends Controller {
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_points['hip']);
         unset($fit_points['hem_length']);
-        $required_fields = array('waist_to_hip', 'shoulder_across_front', 'arm_length', 'sel_brand', 'sel_gender', 'sel_size_type', 'sel_size', 'sel_clothing_type');
+        $required_fields = array('waist_to_hip', 'shoulder_across_front', 'arm_length');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
                     'brands' => $brands,
@@ -102,6 +102,7 @@ class FitModelController extends Controller {
         unset($fit_point_values['hip']);        
         unset($fit_point_values['hem_length']);
         !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
+        $required_fields = array('waist_to_hip', 'shoulder_across_front', 'arm_length');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,
@@ -113,7 +114,8 @@ class FitModelController extends Controller {
                     'all_size_title_man_woman' => $all_size_title_man_woman,
                     'colthing_types_man_woman' => $colthing_types_man_woman,
                     'required_fields' => array('bust', 'waist', 'hip'),   
-                    'size' => $size
+                    'size' => $size,
+                    'required_fields' => $required_fields,
 
                 ));
     }
