@@ -162,7 +162,7 @@
     }#}
        
         //-------------- Check Fit Priority Alredy Added            
-        $('.add_fit_priority').click(function () {
+      {#  $('.add_fit_priority').click(function () {
             var fit_point_val = $.trim($('.fit_priority_value').val()); 
             $(".fit_priority > .singleField > input[type='number']").each(function() {                 
                   fit_priority_array_key.push($(this).attr('id'));
@@ -178,7 +178,7 @@
              $('.fit_priority').prepend("<div class='singleField'><label>"+fit_point_val+":</label> <input type='number' min='1' max='100' name="+fit_priority+" style='width:50px'>% <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i></div>");
             }  
            
-        });
+        });#}
         //------------ Count Summ Equal to 100 Validation
         $('.fit_priority').keyup(function() {
             var sum=0;
@@ -201,7 +201,7 @@
             }           
         })  
         //--------------- Check Fabric Content Already Added
-        $('.add_fabric_content').click(function () {                     
+      {#  $('.add_fabric_content').click(function () {                     
             var fabric_content_val = $.trim($('.fabric_content_value').val()); 
             $(".fabric_content > .singleField > input[type='number']").each(function() {                 
                 fabric_content_array_key.push($(this).attr('id'));
@@ -216,7 +216,7 @@
                     var fabric_content = "fabric_content["+fabric_content_val+"]"; 
                     $('.fabric_content').prepend("<div class='singleField'> <label>"+fabric_content_val+":</label> <input type='number' id="+fabric_content_val+" min='1' max='100' name="+fabric_content+" style='width:50px'>%  <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i></div>");
             }
-        });
+        });#}
         
         //------------ Count Garment detail Sum Equal to 100 Validation
         $('.fabric_content').keyup(function() {
@@ -240,13 +240,13 @@
             }           
         })  
         //---------------- Remove removeFitPriorityFebricContent
-        $('body').on( "click", '.removeFitPriorityFebricContent', function() {  
+        {#$('body').on( "click", '.removeFitPriorityFebricContent', function() {  
             fit_array = [];
             fabric_array = [];
             fit_priority_array_key = [];
             fabric_content_array_key = [];
             $(this).parent().remove();
-        });
+        });#}
         
         
  {#       //--------------- Check garment detail Already Added
@@ -391,6 +391,34 @@
                   $(this).val('')
               }    
             });
+            
+            var formSubmitting = false;
+            var setFormSubmitting = function() {
+                debugger;
+                formSubmitting = true;
+            };
+
+            window.onload = function() {               
+                window.addEventListener("beforeunload", function(e) {                    
+                    console.log('beforeunload');
+                    var confirmationMessage = 'It looks like you have been editing something. ';
+                    confirmationMessage += 'If you leave before saving, your changes will be lost.';
+                    console.log(confirmationMessage)
+                    var isDirty = false;
+                    //Here we are checking the condition
+                    if ($('#managerForm').serialize() != $('#managerForm').data('serialize')) isDirty = true;
+                    else e = null; // i.e; if form state change show warning box, else don't show it.
+
+
+                    if (formSubmitting || !isDirty) {
+                        return undefined;
+                    }
+
+                    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                     console.log(confirmationMessage)
+                    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+                });
+            };           
 
     });
 
@@ -410,7 +438,7 @@
 
 <br>
 <br>
-   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
+   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal">
        <div class="container">       
         <div id="tab-a" class="tab-content"> 
         {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
