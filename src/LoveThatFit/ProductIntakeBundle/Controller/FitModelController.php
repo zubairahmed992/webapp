@@ -46,12 +46,14 @@ class FitModelController extends Controller {
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_points['hip']);
         unset($fit_points['hem_length']);
+        $required_fields = array('waist_to_hip', 'shoulder_across_front', 'arm_length', 'sel_brand', 'sel_gender', 'sel_size_type', 'sel_size', 'sel_clothing_type');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
                     'brands' => $brands,
                     'clothing_types' => $clothing_types,
                     'product_specs_json' => json_encode($product_specs),
                     'size_specs_json' => json_encode($size_specs),
+                    'required_fields' => $required_fields,
                 ));
     }
 
