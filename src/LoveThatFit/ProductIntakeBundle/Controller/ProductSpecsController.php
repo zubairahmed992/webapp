@@ -56,9 +56,6 @@ class ProductSpecsController extends Controller
             }
             break;
         }      
-//        echo "<pre>";
-//        print_r($parsed_data);
-//       die;
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'product_specs'=>$ps,
                     'parsed_data' => $parsed_data,
