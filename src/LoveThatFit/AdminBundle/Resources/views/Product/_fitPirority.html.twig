@@ -44,28 +44,29 @@ $(document).ready(function(){
    {% endautoescape %}
        
  //Garment Detail 
- 
- {% autoescape false %}
-   var json =  {{product.GarmentDetail}} ;
-     length_obj=json.length;
-     Object.size = function(obj) {
-     var size = 0, key;
-     for (key in obj) {
-     if (obj.hasOwnProperty(key)) size++;
-     }
-     return size;
- };
- var size = Object.size(json);
- s="";
- s+='<div class="span">';
- for(var key in json) {
- s+= '<div class="p_hd">'+key+'</div><div class="span3">'+json[key]+'</div>';
-}
- s+="</div>";
- 
-       document.getElementById("garment_detail").innerHTML=s; 
-   {% endautoescape %}
-       
+    {% if product.GarmentDetail %}
+    {% autoescape false %}
+
+        var json = {{product.GarmentDetail}} ;
+            length_obj=json.length;
+            Object.size = function(obj) {
+                var size = 0, key;
+                for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+                }
+                return size;
+            };
+
+        var size = Object.size(json);
+        s="";
+        s+='<div class="span">';
+        for(var key in json) {
+            s+= '<div class="p_hd">'+key+'</div><div class="span3">'+json[key]+'</div>';
+        }
+        s+="</div>";
+        document.getElementById("garment_detail").innerHTML=s;
+    {% endautoescape %}
+    {% endif %}
      
    });    
  </script>      

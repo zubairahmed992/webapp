@@ -116,9 +116,14 @@ class BrandController extends Controller {
         try {
 
             $message_array = $this->get('admin.helper.brand')->delete($id);
-            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+            if ($message_array['success']) {
+                $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
 
-            return $this->redirect($this->generateUrl('admin_brands'));
+                return $this->redirect($this->generateUrl('admin_brands'));
+            }
+            $this->get('session')->setFlash('warning', 'This Brand cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+
         } catch (\Doctrine\DBAL\DBALException $e) {
 
             $this->get('session')->setFlash('warning', 'This Brand cannot be deleted!');
@@ -253,17 +258,14 @@ class BrandController extends Controller {
 
     //---------------------------For test code for brand Specification-------------------------------------------------------------------
     public function testAction($id) {
-        $products = $this->get('admin.helper.product')->findProductsByBrand($id);
+        /*$products = $this->get('admin.helper.brand')->delete($id);*/
+        /*var_dump($products); exit;
         $count = 0;
         foreach($products as $product) {
             print_r($product->toArray());
-            /*echo $product->getId();
-            echo "<br>";
-            echo $product->getName();
-            echo "<br>";*/
         }
-        exit;
-        return new response(json_encode($this->get('admin.helper.product')->findProductsByBrand($id)));
+        exit;*/
+        /*return new response(json_encode($products));*/
     }
 
     public function brandProductsAction($id)
@@ -288,13 +290,18 @@ class BrandController extends Controller {
             if ($message_array['success'] == true) {
                 $disabled = 1;
                 $brand_id = $entity->getId();
-                $result = $this->get('admin.helper.product')->setProductsStatusByBrand($disabled, $brand_id);
-                if ($result) {
-                    $resp = ['success' => 'Brand Has Been Disabled!'];
+                $products = json_decode($this->brandProductsAction($brand_id));
+                if(count($products) > 0) {
+                    $result = $this->get('admin.helper.product')->setProductsStatusByBrand($disabled, $brand_id);
+                    if ($result) {
+                        $resp = ['success' => 'Brand Has Been Disabled!'];
+                    } else {
+                        $entity->setDisabled(0);
+                        $this->get('admin.helper.brand')->update($entity);
+                        $resp = ['error' => 'Something Went Wrong!'];
+                    }
                 } else {
-                    $entity->setDisabled(0);
-                    $this->get('admin.helper.brand')->update($entity);
-                    $resp = ['error' => 'Something Went Wrong!'];
+                    $resp = ['success' => 'Brand Has Been Disabled!'];
                 }
             } else {
                 $resp = ['error' => 'Something Went Wrong!'];
@@ -314,7 +321,7 @@ class BrandController extends Controller {
             $message_array = $this->get('admin.helper.brand')->update($entity);
             if ($message_array['success'] == true) {
                 $disabled = 0;
-                if(isset($requestData['products'])) {
+                if(!empty($requestData['products'])) {
                     $result = $this->get('admin.helper.product')->setProductsStatus($disabled, $requestData['products']);
                     if ($result) {
                         $resp = ['success' => 'Brand Has Been Enabled!'];
@@ -326,6 +333,8 @@ class BrandController extends Controller {
                 } else {
                     $resp = ['success' => 'Brand Has Been Enabled!'];
                 }
+            } else {
+                $resp = ['error' => 'Something Went Wrong!'];
             }
         }
         return new response(json_encode($resp));

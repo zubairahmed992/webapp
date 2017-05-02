@@ -40,6 +40,7 @@ class BrandHelper {
     public function createNew() {
         $class = $this->class;
         $brand = new $class();
+        $brand->setDeleted(false);
         return $brand;
     }
 
@@ -123,13 +124,41 @@ class BrandHelper {
         $entity = $this->repo->find($id);
         $entity_name = $entity->getName();
         if ($entity) {
-            $this->em->remove($entity);
-            $this->em->flush();
-            return array('brands' => $entity,
-                'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
-                'message_type' => 'success',
-                'success' => true,
-            );
+            try {
+                /* New Structure Soft Delete */
+                $entity->setDisabled(true);
+                $entity->setDeleted(true);
+                $this->update($entity);
+
+                /* Old Structure Hard Delete */
+                /*$this->em->remove($entity);
+                $this->em->flush();*/
+
+                /*deleting related products of the brand*/
+                $deleted = $this->container->get('admin.helper.product')->deleteProductsByBrand($id);
+                if ($deleted) {
+                    return array('brands' => $entity,
+                        'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
+                        'message_type' => 'success',
+                        'success' => true,
+                    );
+                } else {
+                    $entity->setDisabled(false);
+                    $entity->setDeleted(false);
+                    $this->update($entity);
+                    return array('brands' => $entity,
+                        'message' => 'Somrthing went wrong!',
+                        'message_type' => 'warning',
+                        'success' => false,
+                    );
+                }
+            } catch (\Exception $e) {
+                return array('brands' => $entity,
+                    'message' => 'Somrthing went wrong!',
+                    'message_type' => 'warning',
+                    'success' => false,
+                );
+            }
         } else {
 
             return array('brands' => $entity,
@@ -325,7 +354,15 @@ public function getBrandRetailerList($date_fromat = null) {
  //Private Methods    
 //------Validate to check brand name exit or not for create new-----------------------------------------
     private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
+        $result = $this->findOneByName($name);
+        if (count($result) > 0) {
+            if ($result->getDeleted()) {
+                return array('message' => 'Brand Name already exists! (The Brand was deleted but exists in Archive.)',
+                    'field' => 'name',
+                    'message_type' => 'warning',
+                    'success' => false,
+                );
+            }
             return array('message' => 'Brand Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -369,6 +406,7 @@ public function getBrandRetailerList($date_fromat = null) {
     public function getBrandListWithBannerForService($position = 0) {
         $data = $this->repo->getBrandRetailerWithBannerList($position);
         $path = "";
+        $arr2=array();
         if($position == 1){
             $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/brands/brand_top/';
         }

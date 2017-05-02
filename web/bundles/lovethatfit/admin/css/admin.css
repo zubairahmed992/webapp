@@ -104,7 +104,11 @@ body {
 }
 
 .product_main .span1{
-    width:12.5% !important;
+    width:10.5% !important;
+}
+
+.product_main .hds:last-child{
+    width:16% !important;
 }
 
 .mw_col_1 {
@@ -300,3 +304,33 @@ body {
 }
 
 select#FNFUser_users.custom_select{height: 100px;}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 8px 12px;
+    left: -10px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover ul li {
+    list-style: none;
+    padding: 5px;
+    color: #fff;
+}
+
+.dropdown:hover ul li a {
+    color: #999;
+}

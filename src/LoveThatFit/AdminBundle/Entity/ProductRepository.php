@@ -297,7 +297,7 @@ class ProductRepository extends EntityRepository
             ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
-            WHERE p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
             )->setParameter('gender', $gender);
 
         try {
@@ -337,7 +337,7 @@ class ProductRepository extends EntityRepository
       JOIN p.clothing_type ct
       JOIN p.brand b
       JOIN p.product_colors pc
-      where p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''
+      where p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''
       ");
 
         try {
@@ -359,7 +359,7 @@ class ProductRepository extends EntityRepository
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
-      AND b.id = :brand_id AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+      AND b.id = :brand_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
         )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
         try {
             return $query->getResult();
@@ -380,7 +380,7 @@ class ProductRepository extends EntityRepository
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
-      AND ct.id = :clothing_type_id AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+      AND ct.id = :clothing_type_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
             )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
         try {
             return $query->getResult();
@@ -402,7 +402,7 @@ class ProductRepository extends EntityRepository
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id
-      AND b.id = :brand_id AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+      AND b.id = :brand_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
             )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id, 'brand_id' => $brand_id));
 
         try {
@@ -1420,7 +1420,7 @@ class ProductRepository extends EntityRepository
     public function updateProductsStatusByBrand($disabled, $brand_id)
     {
         try {
-            $sql = "UPDATE Product SET disabled = " . $disabled . " WHERE brand_id = " . $brand_id;
+            $sql = "UPDATE product SET disabled = " . $disabled . " WHERE brand_id = " . $brand_id;
             $conn = $this->getEntityManager()->getConnection();
             $rowsAffected = $conn->executeUpdate($sql);
             return true;
@@ -1433,7 +1433,20 @@ class ProductRepository extends EntityRepository
     {
         try {
             $products = implode(',', $products);
-            $sql = "UPDATE Product SET disabled = " . $disabled . " WHERE id IN (" . $products . ")";
+            $sql = "UPDATE product SET disabled = " . $disabled . " WHERE id IN (" . $products . ")";
+            $conn = $this->getEntityManager()->getConnection();
+            $rowsAffected = $conn->executeUpdate($sql);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function deleteBrandProducts($products)
+    {
+        try {
+            $products = implode(',', $products);
+            $sql = "UPDATE product SET disabled = 1, deleted = 1 WHERE id IN (" . $products . ")";
             $conn = $this->getEntityManager()->getConnection();
             $rowsAffected = $conn->executeUpdate($sql);
             return true;

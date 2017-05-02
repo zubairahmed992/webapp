@@ -26,7 +26,6 @@
                 <div class="span1 hds">Top Banner</div>
                 <div class="span1 hds">Status</div>
                 <div class="span1 hds">Actions</div>
-                <div class="span1 hds"></div>
             </div>
             {% for b in brands %}
                 <div class="row-fluid show-grid">
@@ -43,7 +42,7 @@
                                         class="icon-eye-open"></i></a>
                             <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}" title="Edit {{ b.name }}"><i
                                         class="icon-edit"></i></a>
-                            <a href="#myModal{{ b.Id }}" role="button" data-toggle="modal"
+                            <a onclick="getBrandProducts({{ b.Id }});" role="button" data-toggle="modal"
                                title="Delete {{ b.name }}"><i class="icon-remove"></i></a>
                         </div>
                     </div>
@@ -58,6 +57,7 @@
                     <div class="modal-body">
                         <p>Are you sure you want to Delete this Brand <b>{{ b.Name }}</b> and its related Products?</p>
                     </div>
+                    <div id="products_deleting{{ b.Id }}"></div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                         <a href="{{ path('admin_brand_delete', {'id': b.Id}) }}" class="btn btn-primary">Delete</a>
@@ -69,4 +69,37 @@
         with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
         ,'controller_name':'admin_brands','sort':sort} %}
     </div>
+    <script type="application/javascript">
+        function getBrandProducts(brand_id) {
+            $.ajax({
+                        url: window.location.href.substring(0, (window.location.href.length - 1)) + "/" + brand_id + "/products",
+                        method: "GET",
+                        data: {},
+                        dataType: "json",
+                    })
+                    .done(function (data) {
+                        var html = "<h4>Products</h4><ul>";
+                        var no_products = true;
+                        if (data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i]["deleted"] != 1) {
+                                    html += '<li>' + data[i]["name"] + '</li>';
+                                    no_products = false;
+                                }
+                            }
+                        }
+                        if (no_products) {
+                            html += "<li>No Products Found!!</li>";
+                        }
+                        html += "</ul>";
+                        $("#products_deleting" + brand_id).html(html);
+                        $('#myModal' + brand_id).modal();
+                    })
+                    .fail(function (err) {
+                        console.log("error in getBrandProducts");
+                        /*console.log(err);
+                         console.log(err.responseText);*/
+                    });
+        }
+    </script>
 {% endblock %}
