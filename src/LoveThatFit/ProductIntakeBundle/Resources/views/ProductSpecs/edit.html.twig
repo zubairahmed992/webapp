@@ -638,7 +638,7 @@
                 <div class="fit_priority">    
                     {% for key,val in size_attribute %} 
                         {{ key }} :
-                          <input type="number" min="1" max="100" value="{{parsed_data['fit_priority'][key]}}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
+                          <input type="number" min="1" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -672,7 +672,7 @@
                 <div class="fabric_content">    
                     {% for key,val in drop_down_values['fabric_content'] %}
                         {{ key }} :
-                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][val] }}" name="fabric_content[{{val}}]" style="width:70px">
+                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][val] is defined?parsed_data['fabric_content'][val]:'' }}" name="fabric_content[{{val}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
