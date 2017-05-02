@@ -1984,6 +1984,7 @@ constants:
         cuffed_sleeve: cuffed_sleeve
         peplum: Peplum
         belted: Belted
+        elastic_waist: elastic_waist
     styling_details:      
       cuffed_hem: cuffed_hem
       cuffed_sleeve: cuffed_sleeve

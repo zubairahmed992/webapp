@@ -14,12 +14,14 @@
         <tr>
             <th>Id</th>
             <th>Title</th>
+            <th>Brand</th>
             <th></th>
         </tr>
         {% for fmm in fit_model_measurements %}
         <tr>
-            <td>{{fmm.Id}}</td>
+            <td>{{fmm.Id}}</td>            
             <td>{{fmm.Title}}</td>
+            <td>{{fmm.Brand is not null?fmm.Brand.Name:''}}</td>
             <td>
                 <a href="{{ path('product_intake_fit_model_show', {'id': fmm.Id}) }}" title="Show ">show</a> &nbsp;| &nbsp;
                 <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" title="Edit ">edit</a> &nbsp;| &nbsp;
