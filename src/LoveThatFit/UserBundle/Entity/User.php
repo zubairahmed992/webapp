@@ -108,7 +108,7 @@ class User implements UserInterface, \Serializable {
     } 
     #--------------------------------------------
     
-   public $isApproved;
+    public $isApproved;
     
     /**
      * Bidirectional (INVERSE SIDE)
@@ -219,7 +219,7 @@ class User implements UserInterface, \Serializable {
 	private $user_app_access_log;
 
 
-//---------------------------------------  implement the UserInterface
+    //---------------------------------------  implement the UserInterface
     public function __construct() {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
@@ -230,7 +230,7 @@ class User implements UserInterface, \Serializable {
         $this->fnfusers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
     /**
      * @var integer $id
@@ -700,7 +700,7 @@ class User implements UserInterface, \Serializable {
     public function getImage() {
         return $this->image;
     }
-#-------------------------------------------
+    #-------------------------------------------
         /**
      * Set image_device_type
      *
@@ -868,7 +868,7 @@ class User implements UserInterface, \Serializable {
         return $this->authTokenCreatedAt;
     }
 
-//----------------------- Old password field used for resetting password only
+    //----------------------- Old password field used for resetting password only
 
     public $old_password;
 
@@ -1022,7 +1022,7 @@ class User implements UserInterface, \Serializable {
     public function getProductItems() {
         return $this->product_items;
     }
-#-----------------------------------------
+    #-----------------------------------------
     /**
      * Set device_tokens
      *
@@ -1043,56 +1043,56 @@ class User implements UserInterface, \Serializable {
     public function getDeviceTokens() {
         return $this->device_tokens;
     }
-#-----------------------------------------
+    #-----------------------------------------
 
-#-----------------------------------------
-  /**
+    #-----------------------------------------
+    /**
    * Set release_name
    *
    * @param string $release_name
    * @return User
    */
-  public function setReleaseName($release_name) {
-    $this->release_name = $release_name;
+      public function setReleaseName($release_name) {
+        $this->release_name = $release_name;
 
-    return $this;
-  }
+        return $this;
+      }
 
-  /**
-   * Get release_name
-   *
-   * @return string
-   */
-  public function getReleaseName() {
-    return $this->release_name;
-  }
+      /**
+       * Get release_name
+       *
+       * @return string
+       */
+      public function getReleaseName() {
+        return $this->release_name;
+      }
   
-  #-----------------------------------------
+      #-----------------------------------------
 
-  #-----------------------------------------
-   /**
-   * Set event_name
-   *
-   * @param string $event_name
-   * @return User
-   */
-  public function setEventName($event_name) {
-    $this->event_name = $event_name;
+      #-----------------------------------------
+       /**
+       * Set event_name
+       *
+       * @param string $event_name
+       * @return User
+       */
+      public function setEventName($event_name) {
+        $this->event_name = $event_name;
 
-    return $this;
-  }
+        return $this;
+      }
 
-  /**
-   * Get event_name
-   *
-   * @return string
-   */
-  public function getEventName() {
-    return $this->event_name;
-  }
+      /**
+       * Get event_name
+       *
+       * @return string
+       */
+      public function getEventName() {
+        return $this->event_name;
+      }
 
 
-#-----------------------------------------
+    #-----------------------------------------
     /**
      * Set zipcode
      *
@@ -1113,7 +1113,7 @@ class User implements UserInterface, \Serializable {
     public function getZipcode() {
         return $this->zipcode;
     }
-#-----------------------------------------
+    #-----------------------------------------
        /**
      * Get status
      *
@@ -1134,7 +1134,7 @@ class User implements UserInterface, \Serializable {
         return $this;
     }
 
-#-----------------------------------------    
+    #-----------------------------------------    
     public function getMyClosetListArray($product_item_id) {
         $productitem = $this->getProductItems();
         foreach ($productitem as $ps) {
@@ -1196,7 +1196,7 @@ class User implements UserInterface, \Serializable {
         return $this->authTokenWebService;
     }
 
-//--------------------- Public methods --------------------------
+    //--------------------- Public methods --------------------------
 
     public function getAge() {
         if ($this->birthDate) {
@@ -1459,7 +1459,7 @@ class User implements UserInterface, \Serializable {
         $this->file = null;
         return $this->temp_image;
     }
-//----------------------------------------------------
+    //----------------------------------------------------
     public function writeImageFromCanvas($raw_data) {
         $data = substr($raw_data, strpos($raw_data, ",") + 1);
         $decodedData = base64_decode($data);
@@ -1507,7 +1507,7 @@ class User implements UserInterface, \Serializable {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
     }
 
-//----------------------------------------------------
+    //----------------------------------------------------
     public function uploadTempImage() {
 
         if (null === $this->file) {
@@ -1536,7 +1536,7 @@ class User implements UserInterface, \Serializable {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 
-//----------------------------------------------------------
+    //----------------------------------------------------------
     public function getWebPath($rand=true) {
         if ($rand)
             return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image . '?rand=' . uniqid();
@@ -1549,18 +1549,18 @@ class User implements UserInterface, \Serializable {
         return $this->getUploadDir() . '/';
     }
 
-//----------------------------------------------------------
+    //----------------------------------------------------------
     public function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
-//----------------------------------------------------------
+    //----------------------------------------------------------
     public function getDummyUserImageRootPath($udt=null) {
         if($udt)
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_cropped.png';        
         else
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
     }
-//----------------------------------------------------------
+    //----------------------------------------------------------
     public function getUploadDir() {
         return 'uploads/ltf/users/' . $this->id;
     }
@@ -1571,18 +1571,18 @@ class User implements UserInterface, \Serializable {
         return null === $this->image ? null : $this->getUploadRootDir() . '/original.' . $ext;
     }
 
-//----------------------------------------------------------
+    //----------------------------------------------------------
     public function getOriginalImageWebPath() {
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         return null === $this->image ? null : $this->getUploadDir() . '/original.' . $ext;
     }
-  //------------------------------------------------------    
+    //------------------------------------------------------    
     public function getBGCroppedImageAbsolutePath() {
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         return null === $this->image ? null : $this->getUploadRootDir() . '/bg_cropped.' . $ext;
     }
 
-//----------------------------------------------------------
+    //----------------------------------------------------------
     public function getBGCroppedImageWebPath() {
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         return null === $this->image ? null : $this->getUploadDir() . '/bg_cropped.' . $ext;
@@ -1643,7 +1643,7 @@ class User implements UserInterface, \Serializable {
         return null === $this->avatar ? null : $this->getUploadDir() . '/' . 'avatar' . '.' . $ext;
     }
 
-//------------------------------------------------------    
+    //------------------------------------------------------    
     public function getAbsoluteAvatarPath() {
         return null === $this->avatar ? null : $this->getUploadRootDir() . '/' . $this->avatar;
     }
@@ -1654,7 +1654,7 @@ class User implements UserInterface, \Serializable {
         return null === $this->iphoneImage ? null : $this->getUploadDir() . '/' . 'iphone' . '.' . $ext;
     }
 
-//------------------------------------------------------    
+    //------------------------------------------------------    
     public function getAbsoluteIphonePath() {
         return null === $this->iphoneImage ? null : $this->getUploadRootDir() . '/' . $this->iphoneImage;
     }
@@ -1719,7 +1719,7 @@ class User implements UserInterface, \Serializable {
     {
         return $this->user_devices;
     }
-#---------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------------
   
     /**
      * Add user_archives
@@ -1753,7 +1753,7 @@ class User implements UserInterface, \Serializable {
     {
         return $this->user_archives;
     }
-#---------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------------
 
     /**
      * Add selfieshare
@@ -1786,7 +1786,7 @@ class User implements UserInterface, \Serializable {
     {
         return $this->selfieshare;
     }
-#---------------------------------------------------------------------------------    
+    #---------------------------------------------------------------------------------    
     /**
      * Add user_feedback
      *
@@ -2074,7 +2074,7 @@ class User implements UserInterface, \Serializable {
         }
     }
 
-#---------------------------------------------------
+    #---------------------------------------------------
     
 
     /**
@@ -2195,8 +2195,7 @@ class User implements UserInterface, \Serializable {
 
   }
 
-  public function 
-          toDataArray($key = true, $device_type = null, $base_path = null, $device_config = null) {
+  public function toDataArray($key = true, $device_type = null, $base_path = null, $device_config = null) {
         if ($key) {
             #$device_specs=$this->getDeviceSpecs($device_type);
             $resize_ratio_jt = is_array($device_config) && array_key_exists('resize_ratio_jt', $device_config) ? $device_config['resize_ratio_jt'] : 0;
@@ -2204,35 +2203,17 @@ class User implements UserInterface, \Serializable {
             $iphone_resize_ratio = is_array($device_config) && array_key_exists('resize_ratio', $device_config) ? $device_config['resize_ratio'] : 0;
             $neck_exclusion_px = is_array($device_config) && array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 0;
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            $this->measurement->calculatePlacementPositions($device_conversion_ratio);
+            $this->measurement->calculatePlacementPositions($device_conversion_ratio); #--> multi device
             
-            $this->measurement->top_placement = $this->measurement->top_placement - ($iphone_resize_ratio * $neck_exclusion_px);
-            #$this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt)-2.048867;            
-            
-            $this->measurement->top_placement = strpos($device_type, 'iphone6') === false ? $this->measurement->top_placement : ($this->measurement->top_placement * $resize_ratio_jt);
 
-            ##added by umer on 06-10-2016 as per ibrahim bhai instructions
-            ##$this->measurement->top_placement + 7;
-            
-            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            $this->measurement->bottom_placement = $this->measurement->bottom_placement - 94;
-            if ($device_type=='iphone6' || $device_type=='iphone6s'){
-                $x_calculation=($this->measurement->bottom_placement * ($resize_ratio_jt-1)); # 0.08% value calculation
-                #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
-                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 16.5;
-            }
-            if ($device_type=='iphone5' || $device_type=='iphone5s' || $device_type=='iphone5c'){
-                
-                ///// Test row for ip5s account test
-                //$this->measurement->top_placement = $this->measurement->top_placement + 8;
-                ///// END - Test row for ip5s account test
-                
-                $x_calculation=($this->measurement->bottom_placement * ($resize_ratio_jt-1)); # 0.08% value calculation
-                #$this->measurement->bottom_placement = ($hip_height  * $resize_ratio_jt) + 6;
-                $this->measurement->bottom_placement = ($this->measurement->bottom_placement  - $x_calculation) + 8;
-            }
-            ##added by umer on 06-10-2016 as per ibrahim bhai instructions
-            ##$this->measurement->bottom_placement + 10.5;
+            #---------------- top placement -------------------------------------
+            $top_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
+            $top_exclusion_px = $top_exclusion_ratio *  $device_config['actual_top_prod_empty_area']; 
+            $this->measurement->top_placement = $this->measurement->top_placement - $top_exclusion_px;
+            #---------------- bottom placement -------------------------------------
+            $bottom_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
+            $bottom_exclusion_px = $bottom_exclusion_ratio * $device_config['actual_bottom_prod_empty_area']; 
+            $this->measurement->bottom_placement = $this->measurement->bottom_placement - $bottom_exclusion_px;
             
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
@@ -2252,9 +2233,9 @@ class User implements UserInterface, \Serializable {
                 'height' => $this->measurement ? $this->measurement->getHeight() : 0,
                 'waist' => $this->measurement ? $this->measurement->getWaist() : 0,
                 'belt' => $this->measurement ? $this->measurement->getBelt() : 0,
-                'top_placement' => $this->measurement ? $this->measurement->top_placement : 0,
-                'bottom_placement' => $this->measurement ? $this->measurement->bottom_placement : 0,
-                'device_conversion_ratio' => $device_conversion_ratio,
+                'top_placement' => $this->measurement ? $this->measurement->top_placement : 0, #-------------------------->
+                'bottom_placement' => $this->measurement ? $this->measurement->bottom_placement : 0, #-------------------------->
+                'device_conversion_ratio' => $device_conversion_ratio,#-------------------------->
                 'hip' => $this->measurement ? $this->measurement->getHip() : 0,
                 'bust' => $this->measurement ? $this->measurement->getBust() : 0,
                 'chest' => $this->measurement ? $this->measurement->getChest() : 0,
@@ -2495,9 +2476,9 @@ class User implements UserInterface, \Serializable {
     {
         return $this->wishlist;
     }
-  ##############################################################################
+    ##############################################################################
   
-  public function addDeviceToken($device_type, $token) {
+    public function addDeviceToken($device_type, $token) {
       if (strpos(strtolower($device_type), 'iphone') !== false || strpos(strtolower($device_type), 'ipad') !== false ) {
     $device_type='iphone';
         }  
@@ -2517,7 +2498,7 @@ class User implements UserInterface, \Serializable {
     }
      ##############################################################################
   
-  public function removeDeviceToken($token) {
+    public function removeDeviceToken($token) {
       if ($this->device_tokens) {
             $temp = json_decode($this->device_tokens);
             if (is_array($temp)) {
