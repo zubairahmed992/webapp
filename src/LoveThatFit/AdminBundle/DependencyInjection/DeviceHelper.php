@@ -30,7 +30,8 @@ class DeviceHelper {
 //--------------------------------------------------------------------------------    
     private function get_additional_configuration() {
         foreach ($this->conf as $d => $c) {
-            $this->conf[$d]['resize_ratio'] = (($c['pixel_per_inch'] + $c['jt_pixel_added']) / $c['product_px_per_inch'])* $this->conf[$d]['resize_ratio_jt'];                        
+            #$this->conf[$d]['resize_ratio'] = (($c['pixel_per_inch'] + $c['jt_pixel_added']) / $c['product_px_per_inch'])* $this->conf[$d]['resize_ratio_jt'];                        
+            $this->conf[$d]['resize_ratio'] = ($c['pixel_per_inch'] / $c['product_px_per_inch']);            
         }
     }
 
