@@ -418,7 +418,18 @@
                      console.log(confirmationMessage)
                     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
                 });
-            };           
+            };  
+            
+              // --- Stay Page Position same when Reload Page 
+                $(window).scroll(function() {
+                    sessionStorage.scrollTop = $(this).scrollTop();
+                });
+
+                $(document).ready(function() {
+                    if (sessionStorage.scrollTop != "undefined") {
+                      $(window).scrollTop(sessionStorage.scrollTop);
+                    }
+                });
 
     });
 
