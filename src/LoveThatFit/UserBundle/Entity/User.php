@@ -2191,10 +2191,9 @@ class User implements UserInterface, \Serializable {
   public function toDataArray($key = true, $device_type = null, $base_path = null, $device_config = null) {
         if ($key) {
             #$device_specs=$this->getDeviceSpecs($device_type);
-            $resize_ratio_jt = is_array($device_config) && array_key_exists('resize_ratio_jt', $device_config) ? $device_config['resize_ratio_jt'] : 0;
+            
             $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 0;
-            $iphone_resize_ratio = is_array($device_config) && array_key_exists('resize_ratio', $device_config) ? $device_config['resize_ratio'] : 0;
-            $neck_exclusion_px = is_array($device_config) && array_key_exists('neck_exlusion_px', $device_config) ? $device_config['neck_exlusion_px'] : 0;
+            
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->calculatePlacementPositions($device_conversion_ratio); #--> multi device
             
