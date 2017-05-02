@@ -442,7 +442,6 @@ function load_user_masks(){
         $("#mask_x").attr("value", full_mask.pivot);
         $("#mask_y").attr("value", full_mask.position);
 
-       
           full_mask.segments[27].handleOut = new Point(18, 30);
           full_mask.segments[28].point.y += maskConfig.toe_shape_px;
           full_mask.segments[28].point.x += 4;
