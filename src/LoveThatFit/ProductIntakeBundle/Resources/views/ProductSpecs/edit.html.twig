@@ -20,14 +20,37 @@
     var fabric_content_array_key = [];
     var input_value  = [];  
     $(document).ready(function(){ 
-        
-        $('ul.tabs li').click(function(){            
-		var tab_id = $(this).attr('data-tab');                
-		$('ul.tabs li').removeClass('active');
-		$('.tab-content').removeClass('active');
-		$(this).addClass('active');
-		$("#tab-"+tab_id).addClass('active');                
-                $('#default_tab').val(tab_id);
+        var _isDirty = false;
+        $("input[type='text']").change(function(){
+          _isDirty = true;         
+        });
+        $("select").change(function(){         
+          _isDirty = true;         
+        });
+        $('ul.tabs li').click(function(e){      
+                e.preventDefault();
+                var tab_id = $(this).attr('data-tab');   
+                if(_isDirty){                  
+                    var result = confirm("It looks like you have been editing something! If you leave before saving, your changes will be lost.'");
+                        if (result) {
+                            _isDirty = false;            
+                            $('ul.tabs li').removeClass('active');
+                            $('.tab-content').removeClass('active');
+                            $(this).addClass('active');
+                            $("#tab-"+tab_id).addClass('active');                
+                            $('#default_tab').val(tab_id);
+                        } 
+                    
+                } else{
+                    //var _isDirty = false;
+                    $('ul.tabs li').removeClass('active');
+                    $('.tab-content').removeClass('active');
+                    $(this).addClass('active');
+                    $("#tab-"+tab_id).addClass('active');                
+                    $('#default_tab').val(tab_id);
+                }
+                
+		
         });
         
         if($('#default_tab').val()=='b'){
@@ -392,34 +415,6 @@
               }    
             });
             
-            var formSubmitting = false;
-            var setFormSubmitting = function() {
-                debugger;
-                formSubmitting = true;
-            };
-
-            window.onload = function() {               
-                window.addEventListener("beforeunload", function(e) {                    
-                    console.log('beforeunload');
-                    var confirmationMessage = 'It looks like you have been editing something. ';
-                    confirmationMessage += 'If you leave before saving, your changes will be lost.';
-                    console.log(confirmationMessage)
-                    var isDirty = false;
-                    //Here we are checking the condition
-                    if ($('#managerForm').serialize() != $('#managerForm').data('serialize')) isDirty = true;
-                    else e = null; // i.e; if form state change show warning box, else don't show it.
-
-
-                    if (formSubmitting || !isDirty) {
-                        return undefined;
-                    }
-
-                    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                     console.log(confirmationMessage)
-                    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-                });
-            };  
-            
               // --- Stay Page Position same when Reload Page 
                 $(window).scroll(function() {
                     sessionStorage.scrollTop = $(this).scrollTop();
@@ -430,6 +425,7 @@
                       $(window).scrollTop(sessionStorage.scrollTop);
                     }
                 });
+                
 
     });
 
