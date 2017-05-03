@@ -1086,10 +1086,13 @@ class WebServiceHelper {
             $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
 
             $product_qty = 0;
-            //if($product_item == $pi->getId()){
-
             if(in_array($pi->getId(), $product_item)){
-                $product_qty = (int)$qty;
+                $original_quantity = $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
+                if(count($original_quantity) > 0){
+                    $product_qty = (int)$original_quantity[0]['qty'];
+                }else{
+                    $product_qty = (int)$product_qty;
+                }
             }
 
             $width = 0;
