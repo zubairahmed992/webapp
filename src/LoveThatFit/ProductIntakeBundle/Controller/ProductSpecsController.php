@@ -52,7 +52,7 @@ class ProductSpecsController extends Controller
         }    
         foreach ($parsed_data['sizes'] as $key => $size) {
             foreach ($size as $key => $value) {
-                $size_attribute[] =  $key;
+                $size_attribute[$key] =  $key;
             }
             break;
         }      
@@ -287,5 +287,11 @@ class ProductSpecsController extends Controller
                 'product_specs_json' => json_encode($gen_specs),                    
                 ));      
     }
+   //--------------------   Product Copy to Next Server 
+    public function productCopyAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_copy.html.twig');
+        
+    }
     
+       
 }
