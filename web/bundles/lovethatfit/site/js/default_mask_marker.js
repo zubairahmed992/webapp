@@ -64,7 +64,7 @@ function overall_mask(){
         def_mask_height = full_scr_mask.bounds.height;
         adjusted_mask_height_px = (adjusted_mask_height_px * 100) / 450;
         full_scr_mask.scale(init_scale_ratio(),adjusted_mask_height_px/100);
-         toeShape(full_scr_mask, toe_shape_px);
+         
          
     function init_scale_ratio(){
             var def_scale = full_scr_mask.segments[17].point.x - full_scr_mask.segments[53].point.x;
@@ -88,7 +88,9 @@ function overall_mask(){
 
     // iPhone6 retake screen settings /// available screen for mask 633.5 in camera view.
     full_scr_mask.pivot = new Point(full_scr_mask.bounds.bottomCenter);
-    full_scr_mask.position = new Point(187.5,667 - (33.5 - toe_shape_px));
+    full_scr_mask.position = new Point(187.5,667 - (667 * 0.05));
+    
+    toeShape(full_scr_mask, 667 * 0.0328125);
 
 
     // Arms settings
@@ -161,23 +163,7 @@ function overall_mask(){
     }
 
 
-function toeShape(obj, toe_shape_px){
- //left foot
-          obj.segments[27].handleOut = new Point(7, 19);
-          obj.segments[28].point.y += toe_shape_px;
-          obj.segments[28].point.x += 2;
-          obj.segments[28].handleOut = new Point(0, 0);
-          obj.segments[29].handleOut = new Point(2.43237, -11);
-          obj.segments[29].handleIn = new Point(-5, 31);
-        
- //right foot
-          obj.segments[43].handleIn = new Point(-7, 19);
-          obj.segments[42].point.y += toe_shape_px;
-          obj.segments[42].point.x -= 2;
-          obj.segments[42].handleIn = new Point(0, 0);
-          obj.segments[41].handleIn = new Point(-2.43237, -11);
-          obj.segments[41].handleOut = new Point(5,  31);      
-}
+
 
     function set_camera_mask(){
         
@@ -187,7 +173,12 @@ function toeShape(obj, toe_shape_px){
         camera_scr_mask.selected = true;
 
         /// iPhone6 camera screen settings /// available screen for mask 475.125 in camera view.
-        camera_scr_mask.position = new Point(187.5,500.25 - 25.125);
+        camera_scr_mask.position = new Point(187.5,500.25 - (500.25 * 0.0171875));
+        
+        
+        
+        
+        
         camera_scr_mask.visible = false;
 
         full_scr_mask.selected = true;
@@ -213,4 +204,29 @@ function toeShape(obj, toe_shape_px){
 
     }
  
- }
+function toeShape(obj, toe_shape_px){
+ //left foot
+          obj.segments[27].handleOut = new Point(7, 19);
+          obj.segments[28].point.y += toe_shape_px;
+          obj.segments[28].point.x += 2;
+          obj.segments[28].handleOut = new Point(0, 0);
+          obj.segments[29].handleOut = new Point(2.43237, -11);
+          obj.segments[29].handleIn = new Point(-5, 31);
+        
+ //right foot
+          obj.segments[43].handleIn = new Point(-7, 19);
+          obj.segments[42].point.y += toe_shape_px;
+          obj.segments[42].point.x -= 2;
+          obj.segments[42].handleIn = new Point(0, 0);
+          obj.segments[41].handleIn = new Point(-2.43237, -11);
+          obj.segments[41].handleOut = new Point(5,  31);      
+} 
+
+
+}
+ 
+ 
+ 
+ 
+ 
+ 

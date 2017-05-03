@@ -442,6 +442,7 @@ function load_user_masks(){
         $("#mask_x").attr("value", full_mask.pivot);
         $("#mask_y").attr("value", full_mask.position);
 
+       
           full_mask.segments[27].handleOut = new Point(18, 30);
           full_mask.segments[28].point.y += maskConfig.toe_shape_px;
           full_mask.segments[28].point.x += 4;
@@ -644,9 +645,9 @@ function save(){
 function getPathArrayJson(){
     var mp_array=[];
     for(var i = 0; i < full_mask.segments.length; i++) {
-        mp_array.push([full_mask.segments[i].point.x * 2, full_mask.segments[i].point.y * 2]);
+        mp_array.push([full_mask.segments[i].point.x * 1.0421875, full_mask.segments[i].point.y * 2]);
 
-        console.log(full_mask.segments[i].point.x * 2 + " ::: "+full_mask.segments[i].point.y * 2);
+        console.log(full_mask.segments[i].point.x * 1.0421875 + " ::: "+full_mask.segments[i].point.y * 2);
     };
 
     return JSON.stringify(mp_array);
@@ -686,7 +687,7 @@ function onMouseDown(event) {
     if(hitResult.type == "segment"){
         active_items.drag = true;
       
-            horlinepath(event);
+            //horlinepath(event);
        
         if(hitResult.segment.point != active_items.segment.point){
             active_items.segment.selected = false;
@@ -749,7 +750,7 @@ function onMouseDrag(event) {
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
         circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
         
-            horlinepath(event);
+            //horlinepath(event);
         
       
     }
@@ -787,13 +788,35 @@ function onMouseUp(event) {
     active_items.drag = false;
     active_items.cir_in = false;
     active_items.cir_out = false;
-    horline.visible=false;
+    //horline.visible=false;
 }
 function upload(){
     $('#image_actions').attr('value',JSON.stringify(image_actions_count));    
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);    
     $('#img_path_paper').attr('value', full_mask.pathData);    
+    
+    
+    var sholder_left =  full_mask.segments[7].point.y;
+    var sholder_right = full_mask.segments[63].point.y;
+
+
+    if(sholder_left <= sholder_right){
+        $("#shoulder_height").attr("value", sholder_left);
+    }else{
+        $("#shoulder_height").attr("value", sholder_right);
+    }
+
+//// Remove value -66 in both lines////
+    var bottom_left = full_mask.segments[21].point.y;
+    var bottom_right = full_mask.segments[49].point.y;
+
+
+    if(bottom_left <= bottom_right){
+        $("#hip_height").attr("value", bottom_left);
+    }else{
+        $("#hip_height").attr("value", bottom_right);
+    }
     
     var $url=$('#marker_update_url').attr('value');
     var value_ar = {
@@ -808,8 +831,8 @@ function upload(){
         marker_json:$('#img_path_json').attr('value'),
         default_marker_json:$('#default_marker_json').attr('value'),
         default_marker_svg:$('#default_marker_svg').attr('value'),
-        shoulder_height: 160,
-        hip_height: 337,
+        shoulder_height: ($("#shoulder_height").attr("value") * 1.0421875) / 2,
+        hip_height: ($("#hip_height").attr("value") * 1.0421875) / 2,
         svg_path:$('#img_path_paper').attr('value'),
         image_actions:$('#image_actions').attr('value')};
     
