@@ -298,7 +298,7 @@ class WSRepo
             LEFT JOIN p.retailer r
             JOIN p.clothing_type ct
             
-            WHERE p.id=:product_id AND p.disabled=0 AND p.displayProductColor!=''  
+            WHERE p.id=:product_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''
             "
             )->setParameters(array('product_id' => $id));
         return $query->getResult();

@@ -64,7 +64,12 @@
               <li><a href="{{ path('ws_interface_index') }}">Services</a></li>
               <li><a href="{{ path('admin_order') }}">Orders</a></li>
               <li><a href="{{ path('admin_events') }}">Events</a></li>
-              <li><a href="{{ path('admin_tracking') }}">Trackings</a></li>
+              <li class="dropdown"><a>Trackings</a>
+                  <ul class="dropdown-content">
+                      <li><a href="{{ path('admin_favorite') }}">Favorite Products Log</a></li>
+                      <li><a href="{{ path('users_activity_home') }}">Users Activity Log</a></li>
+                  </ul>
+              </li>
               <li><a href="{{ path('admin_logout') }}">Logout</a></li>
             </ul>
              <!-- Top Navigation End -->

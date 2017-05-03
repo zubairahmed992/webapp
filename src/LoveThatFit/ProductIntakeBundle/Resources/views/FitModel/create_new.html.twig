@@ -1,5 +1,11 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
+    <style>
+        .form-group.required .control-label:after {
+            content:"*";
+            color:red;
+          }
+    </style>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -60,12 +66,12 @@
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
         <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
         <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=""> Brand: </label>
+            <div class="form-group required">
+                <label class="control-label col-sm-2" for=""> Brand </label>
                 <div class="col-sm-4">
 
-                    <select name="sel_brand" id="sel_brand" class="sel_brand form-control">
-                        <option>Select Brand</option>
+                    <select name="sel_brand" id="sel_brand" class="sel_brand form-control" required="required">
+                        <option value="">Select Brand</option>
                         {% for k, v in brands %}
                         <option value="{{ v.name }}"> {{ v.name }}</option>
                         {% endfor %}
@@ -73,22 +79,22 @@
                 </div>
             </div>
             <br>
-            <div class="form-group">
+            <div class="form-group required">
                 <label class="control-label col-sm-2" for=""> Gender: </label>
                 <div class="col-sm-4">
-                    <select name="sel_gender" id="sel_gender" class="sel_gender form-control">
-                        <option>Select Gender</option>               
+                    <select name="sel_gender" id="sel_gender" class="sel_gender form-control" required="required">
+                        <option value="">Select Gender</option>               
                         <option value="m"> man</option>
                         <option value="f"> woman</option>               
                     </select>
                 </div>
             </div>
             <br>
-            <div class="form-group">
+            <div class="form-group required">
                 <label class="control-label col-sm-2" for=""> Size Title Type: </label>
                 <div class="col-sm-4">
-                    <select name="sel_size_type" id="sel_size_type" class="sel_size_type form-control">
-                        <option>Size</option>               
+                    <select name="sel_size_type" id="sel_size_type" class="sel_size_type form-control" required="required">
+                        <option value="">Size</option>               
                         <option value="number"> number</option>
                         <option value="letter"> letter</option>
                         <option value="waist"> waist</option>
@@ -99,11 +105,20 @@
                     </select>
                 </div>
             </div>
+              <br>
+            <div class="form-group required">
+                <label class="control-label col-sm-2" for=""> Size: </label>
+                <div class="col-sm-4">
+                    <select name="sel_size" id="sel_size" class="sel_size form-control" required="required">
+                        <option value="">Size</option>                                       
+                    </select>
+                </div>
+            </div>
             <br>
-            <div class="form-group">
+            <div class="form-group required">
                 <label class="control-label col-sm-2" for=""> Clothing Type: </label>
                 <div class="col-sm-4">
-                    <select name="sel_clothing_type" id="sel_clothing_type" class="sel_clothing_type form-control">
+                    <select name="sel_clothing_type" required id="sel_clothing_type" class="sel_clothing_type form-control">
                         <option>Clothing Type</option>               
                         <option value="blouse" > Blouse </option>
                         <option value="tunic"> Tunic </option>
@@ -123,15 +138,7 @@
                     </select>
                 </div>
             </div>
-            <br>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=""> Size: </label>
-                <div class="col-sm-4">
-                    <select name="sel_size" id="sel_size" class="sel_size form-control">
-                        <option>Size</option>                                       
-                    </select>
-                </div>
-            </div>
+          
             <br>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="title">title : </label>
@@ -140,14 +147,14 @@
                 </div>
             </div>
             <br>
-        {% for k, v in fit_points %}            
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="{{k}}">{{v}} : </label>
+        {% for k, v in fit_points %}             
+            <div class="form-group {{  (k in required_fields)? 'required' : '' }} ">
+                <label class="control-label col-sm-2" for="{{k}}">{{v}}  </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="">                        
+                    <input type="text" class="form-control" {{  (k in required_fields)? 'required' : '' }}  id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="">                        
                 </div>
             </div>
-            <br>
+            <br>            
         {% endfor %}    
 
             <div class="form-group">        

@@ -50,15 +50,15 @@ class ServiceHelper {
     }
       #------------------------------------------------------------------------------
 
-    public function createProduct( $data , $imagepath) {
-        $data = json_decode($data, true);
+    public function createProduct( $data , $imagepath,$prodcut_Color_pattren) {
+        $data = json_decode($data, true);       
         // $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
         //$imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
         $destinationpath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/newimage/';
          if(!file_exists($destinationpath)) {
              mkdir($imagepath.'newimage', 0777, true);             
          }
-        $prodcut_Color_pattren = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/pattern/web/';
+          //$prodcut_Color_pattren = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/pattern/web/';
     
         //return new JsonResponse($data);
         $clothing_type = $this->container->get("admin.helper.clothingtype")->find($data[0]['clothing_type_id']);
@@ -101,10 +101,10 @@ class ServiceHelper {
             $pc->setTitle(trim($value['title']));  
             $pc->setPattern(trim($value['pattern']));
             $pc->setImage(trim($value['image']));
-            if(file_exists($prodcut_Color_pattren.$value['pattern'])) {
+            if($value['pattern'] && file_exists($prodcut_Color_pattren.trim($value['pattern']))) {             
                 copy($prodcut_Color_pattren.$value['pattern'], $destinationpath.$value['pattern']);
             }
-            if(file_exists($imagepath.$value['image'])) {
+            if( $value['image'] && file_exists($imagepath.$value['image']) ) {
                 copy($imagepath.$value['image'], $destinationpath.$value['image']);
             }
             $pc->setProduct($product);            
@@ -136,10 +136,10 @@ class ServiceHelper {
             $pi->setProductColor($product_color);
             $pi->setRawImage($value['raw_image']);
             $pi->setSku($value['sku']);
-           // if(file_exists($imagepath.$value['image']))
-           // {
+            if( $value['image'] && file_exists($imagepath.$value['image']) )
+            {
                 copy($imagepath.$value['image'], $destinationpath.$value['image']);
-           // }
+            }
             //$pi->addProductItemPiece($value['line_number']); 
             $em->persist($pi);
             $em->flush();
@@ -167,7 +167,7 @@ class ServiceHelper {
             $em->flush();
         }
         }        
-        return "Product Insert Sucessfully. ";
+      return "Product Insert Sucessfully. ";
     }
     
     public function getDoctrine()

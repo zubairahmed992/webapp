@@ -46,6 +46,10 @@ fit_points:
     waist: 
       title:  Waist
       axis:  x
+    
+    abdomen: 
+      title:  Abdomen
+      axis:  x
       
     cf_waist: 
       title:  CF Waist
