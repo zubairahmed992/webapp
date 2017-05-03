@@ -43,9 +43,11 @@ class PodioApiHelper
     public function __construct(Container $container)
     {
         $yaml               = new Parser();
-        $env                = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['enviorment'];
+        $env                = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['podio_enviorment'];
         if($env == 'prod') {
             $this->env = "podio_prod_credentials";
+        } else if($env == 'qa') {
+            $this->env = "podio_qa_credentials";
         } else if($env == 'dev') {
             $this->env = "podio_dev_credentials";
         } else {

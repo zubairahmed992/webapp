@@ -4,6 +4,12 @@ podio_local_credentials:
   app_id: 17819011
   app_token: 59a6cbc3d08248509b1e648ae793bed1
 
+podio_qa_credentials:
+  client_id: member-info-e12av0
+  client_secret: bl16vYqOgBQp48PRw7GPkbloLg7e60BPaoDqSAgMcseEedfQ8MfALx0Zd1HP9z93
+  app_id: 17819011
+  app_token: 59a6cbc3d08248509b1e648ae793bed1
+
 podio_dev_credentials:
   client_id: member-info-uva3ra
   client_secret: doPOWNh2lA9dkap9lgQBBCyT7PGggw9TAMde70GgwBtDlge13oJ0Zd6Pllpn0GOw
