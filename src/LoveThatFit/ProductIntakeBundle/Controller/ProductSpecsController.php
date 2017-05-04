@@ -38,6 +38,8 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);  
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        $parsed_data['horizontal_stretch']=  intval($parsed_data['horizontal_stretch']);
+        $parsed_data['vertical_stretch']=intval($parsed_data['vertical_stretch']);
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $drop_down_values['fit_model_size'] = array_flip($fms);      

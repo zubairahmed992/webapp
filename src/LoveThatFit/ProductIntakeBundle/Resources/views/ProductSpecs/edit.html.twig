@@ -862,7 +862,6 @@
                                         {% if (size == fit_model_selected_size) %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
                                                 <th>
-                                                    <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                                                     {{measurement_k}}</th>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" > #}
@@ -919,7 +918,9 @@
                                             </tr>
                                         {% else %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
-                                                <th>{{measurement_k}}</th>
+                                                <th>
+                                                <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                                                {{measurement_k}}</th>
                                                 <td>
                                                     {{measurement_v.garment_dimension | number_format(2, '.', '')}}
                                                     <input class="0" type="number" hidden value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px"> 
