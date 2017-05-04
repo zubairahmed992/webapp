@@ -46,7 +46,7 @@ device_config:
     resize_ratio_jt: 1.052199389069704
     
   iphone6:
-    pixel_per_inch: 9.21
+    pixel_per_inch: 7.968
     max_user_height_inch: 74
     device_model: iphone6
     product_px_per_inch: 17
