@@ -19,6 +19,7 @@
     var garment_detail_array_key = [];
     var fabric_content_array_key = [];
     var input_value  = [];  
+    var min_max_calc = '';
     $(document).ready(function(){ 
         var _isDirty = false;
         $("input[type='text']").change(function(){
@@ -415,10 +416,23 @@
         //alert($(this).attr("id"));
         });
           // ------- Min Max Values Comparation 
+          
+            $(document).on("focus", ".input-sm", function(){
+               var  min_max_calc_name = $(this).attr('name');
+              // console.log(min_max_calc_name);
+               if('sizes-M-bust-min_actual' == min_max_calc_name){                  
+                    min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
+                    min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
+                   // console.log(min_max_calc_val);
+               }
+               if('sizes-M-bust-max_actual' == min_max_calc_name){                  
+                    min_max_calc = $.trim($(this).closest('td').next().find('input').attr('name').substr(-8,8));
+                    min_max_calc_val = $.trim( $(this).closest('td').next().find('input').val() );
+                   // console.log(min_max_calc_val);
+               }
+            });
             $(document).on("change", ".input-sm", function(){
-              var min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
-               var min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
-               var min_max_calc_actual_val = $.trim( $(this).val() );
+                var min_max_calc_actual_val = $.trim( $(this).val() );
               if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
                   console.log()                  
               } else if(min_max_calc.match('min_calc')) {
