@@ -174,6 +174,7 @@ function overall_mask(){
 
         /// iPhone6 camera screen settings /// available screen for mask 475.125 in camera view.
         camera_scr_mask.position = new Point(187.5,500.25 - (500.25 * 0.0171875));
+        //camera_scr_mask.position = new Point(187.5,500.25 - (500.25 * 0.05));
         
         
         
@@ -206,20 +207,24 @@ function overall_mask(){
  
 function toeShape(obj, toe_shape_px){
  //left foot
-          obj.segments[27].handleOut = new Point(7, 19);
+          //obj.segments[27].handleOut = new Point(7, 19);
           obj.segments[28].point.y += toe_shape_px;
-          obj.segments[28].point.x += 2;
-          obj.segments[28].handleOut = new Point(0, 0);
-          obj.segments[29].handleOut = new Point(2.43237, -11);
-          obj.segments[29].handleIn = new Point(-5, 31);
+          //obj.segments[28].point.x += 2;
+          obj.segments[28].handleIn = new Point((toe_shape_px * 1.4), -(toe_shape_px * 0.2));
+          obj.segments[28].handleOut = new Point(-(toe_shape_px * 0.5), 0);
+          //obj.segments[28].handleOut = new Point(0, 0);
+          //obj.segments[29].handleOut = new Point(2.43237, -11);
+          //obj.segments[29].handleIn = new Point(-5, 31);
         
  //right foot
-          obj.segments[43].handleIn = new Point(-7, 19);
+          //obj.segments[43].handleIn = new Point(-7, 19);
           obj.segments[42].point.y += toe_shape_px;
-          obj.segments[42].point.x -= 2;
-          obj.segments[42].handleIn = new Point(0, 0);
-          obj.segments[41].handleIn = new Point(-2.43237, -11);
-          obj.segments[41].handleOut = new Point(5,  31);      
+          //obj.segments[42].point.x -= 2;
+          obj.segments[42].handleOut = new Point(-(toe_shape_px * 1.4), -(toe_shape_px * 0.2));
+          obj.segments[42].handleIn = new Point((toe_shape_px * 0.5), 0);
+          //obj.segments[42].handleIn = new Point(0, 0);
+          //obj.segments[41].handleIn = new Point(-2.43237, -11);
+          //obj.segments[41].handleOut = new Point(5,  31);      
 } 
 
 
