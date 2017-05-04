@@ -35,6 +35,7 @@ $(document).ready(function() {
    console.log("canvas_area_hldr: "+canvas_area_hldr.position);
    console.log("canv_ref_rect: "+canv_ref_rect.position);  
 });
+var toe_shape_px=42;
 var maskConfig = {
     dv_scr_h: 1280,
     dv_scr_w: 960,
@@ -77,7 +78,7 @@ var maskConfig = {
     torso_percent: 42,
     inseam_percent:42,
     arm_percent:46,
-    toe_shape_px: 42,
+   
   
     curr_path_prefix: $("#hdn_serverpath").attr("value")
 }
@@ -171,7 +172,7 @@ function overall_mask(){
     full_scr_mask.pivot = new Point(full_scr_mask.bounds.bottomCenter);
     full_scr_mask.position = new Point(187.5,667 - 33.5);
 
-
+   
     // Arms settings
     rgt_arm_ref = new Path({});
     lft_arm_ref = new Path({});
@@ -442,21 +443,31 @@ function load_user_masks(){
         $("#mask_x").attr("value", full_mask.pivot);
         $("#mask_y").attr("value", full_mask.position);
 
-       
-          full_mask.segments[27].handleOut = new Point(18, 30);
-          full_mask.segments[28].point.y += maskConfig.toe_shape_px;
-          full_mask.segments[28].point.x += 4;
-          full_mask.segments[28].handleOut = new Point(0, 0);
-          full_mask.segments[29].handleOut = new Point(2.43237, -11);
-          full_mask.segments[29].handleIn = new Point(-10, 42);
+        full_mask.segments[28].point.y += toe_shape_px;
+        full_mask.segments[28].handleIn = new Point((toe_shape_px * 1.4), -(toe_shape_px * 0.2));
+        full_mask.segments[28].handleOut = new Point(-(toe_shape_px * 0.5), 0);
+        
+           //right foot
+          full_mask.segments[42].point.y += toe_shape_px;
+          full_mask.segments[42].handleOut = new Point(-(toe_shape_px * 1.3), -(toe_shape_px * 0.2));
+          full_mask.segments[42].handleIn = new Point((toe_shape_px * 0.5), 0);
           
           
-          full_mask.segments[43].handleIn = new Point(-18, 30);
-          full_mask.segments[42].point.y += maskConfig.toe_shape_px;
-          full_mask.segments[42].point.x -= 4;
-          full_mask.segments[42].handleIn = new Point(0, 0);
-          full_mask.segments[41].handleIn = new Point(-2.43237, -11);
-          full_mask.segments[41].handleOut = new Point(10, 42);
+          
+//          full_mask.segments[27].handleOut = new Point(18, 30);
+//          full_mask.segments[28].point.y += maskConfig.toe_shape_px;
+//          full_mask.segments[28].point.x += 4;
+//          full_mask.segments[28].handleOut = new Point(0, 0);
+//          full_mask.segments[29].handleOut = new Point(2.43237, -11);
+//          full_mask.segments[29].handleIn = new Point(-10, 42);
+//          
+//          
+//          full_mask.segments[43].handleIn = new Point(-18, 30);
+//          full_mask.segments[42].point.y += maskConfig.toe_shape_px;
+//          full_mask.segments[42].point.x -= 4;
+//          full_mask.segments[42].handleIn = new Point(0, 0);
+//          full_mask.segments[41].handleIn = new Point(-2.43237, -11);
+//          full_mask.segments[41].handleOut = new Point(10, 42);
 
 
 //        full_mask.segments[28].point.y += maskConfig.toe_shape_px;
