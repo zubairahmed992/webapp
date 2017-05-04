@@ -1422,7 +1422,9 @@ class ProductHelper
 
         # file name/ext with/without view name
         if (count($_exploded) == 3) {
-            if(strtolower($_exploded[2]) == 'setdefault.png'){
+            $exploded_pos = strrpos($_exploded[2], '.');
+            $withOutDot = substr($_exploded[2], 0, $exploded_pos). '.';
+            if(strtolower($withOutDot) == 'setdefault.'){
                 if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
                     /*Color with Setdefault */
                     $last_bits = explode(".", $_exploded[2]);
