@@ -832,6 +832,17 @@
                             {% endfor %}
                         </tr>
                     </table>   
+               </div> 
+               <div id="dv_fit_priority">
+                       <b>Fit Priority</b><br>
+                    <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                    <tr>
+                        {% for key,val in size_attribute %} 
+                            <td><b>{{ key }}</b> : {{parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:''}}% </td>
+                        {% endfor %}
+                    </tr>                                        
+                    </table>
+                       
                <br>
                </div>   
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
