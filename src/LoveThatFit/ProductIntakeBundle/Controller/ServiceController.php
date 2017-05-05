@@ -31,11 +31,50 @@ class ServiceController extends Controller {
          }
     }
 
+#--------------->pi/ws/product_demission
+    
+    public function getExistingProductSpecificationAction() {
+        try {
+            $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());           
+            $data = $this->get('service.repo')->getProductDetail($decoded['product_id']);   
+             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+                 foreach ($product_size_value['product_size_measurements'] as  $value) {  
+                     $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
+                     $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+                   }
+             }
+        return new JsonResponse([
+            'success' => true,
+            'data'    => $result 
+             ]);
+         } catch (\Exception $exception) {
+        return new JsonResponse([
+                'success' => false,
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+         }
+    }
+    
+    
+    
 #------------> /pi/ws/product_detail
     public function productDetailAction(Request $request) {
          $product_id =  $request->get('product_id');
          $server_url =  $request->get('server_url');    
             $data = $this->get('service.helper')->getProductDetails($product_id);
+             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+                 foreach ($product_size_value['product_size_measurements'] as  $value) {  
+                     $data1[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
+                     $data1[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+                   }
+             }
+          
+            return new JsonResponse([$data1]);
+          
+                       // print_r($data[0][0]['product_sizes'] );
+
+            die;
             $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
             //$imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
             $imagepath =  str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/'; 

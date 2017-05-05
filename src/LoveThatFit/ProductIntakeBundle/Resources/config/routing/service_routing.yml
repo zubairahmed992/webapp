@@ -11,4 +11,11 @@ pi_ws_product_detail:
     
 pi_ws_save_product:
     pattern: /pi/ws/save_product
-    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:saveProduct}    
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:saveProduct} 
+    
+pi_ws_existing_product_specification:
+    pattern: /product_intake/existing_product_specification
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:getExistingProductSpecification}
+    requirements:
+        _method:  POST    
+ 
