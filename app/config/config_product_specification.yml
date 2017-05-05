@@ -430,6 +430,40 @@ constants:
         full: Full
         shell: Shell
         camisole: Camisole
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       blouses:
         tailored: Tailored
         princess_fit: princess_fit
@@ -437,34 +471,306 @@ constants:
         full: Full
         shell: Shell
         camisole: Camisole
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       tunic:
         loose: Loose
         fitted: Fitted
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       tee_knit:
         loose: Loose
         fitted: Fitted
         polo: Polo
         draped: Draped
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       tank_knit:
         loose: Loose
         fitted: Fitted
         camisole: Camisole
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       jacket: 
         blazer: Blazer
         loosy: Loosy
         swing: Swing
         vest: Vest
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       jackets: 
         blazer: Blazer
         loosy: Loosy
         swing: Swing
         vest: Vest
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       sweater:
         pull_over: pull_over
         cardigan: Cardigan
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       sweaters:
         pull_over: pull_over
         cardigan: Cardigan
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       trouser:
         legging: Legging
         straight_leg: straight_leg
@@ -475,6 +781,40 @@ constants:
         peg: Peg
         wide_leg: wide_leg
         bell: Bell
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       trousers:
         legging: Legging
         straight_leg: straight_leg
@@ -485,20 +825,122 @@ constants:
         peg: Peg
         wide_leg: wide_leg
         bell: Bell
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       jean:
         legging: legging
         straight_leg: straight_leg
         skinny: Skinny
         boot_cut: boot_cut
         wide_leg: wide_leg
-        bell: Bell 
+        bell: Bell
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       jeans:
         legging: legging
         straight_leg: straight_leg
         skinny: Skinny
         boot_cut: boot_cut
         wide_leg: wide_leg
-        bell: Bell  
+        bell: Bell
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       skirt:
         fitted_skinned_tight: fitted_skinned_tight
         fitted_tailored: fitted_tailored
@@ -511,6 +953,40 @@ constants:
         gored: Gored
         flared: Flared
         full_with_shaping_layers: full_with_shaping_layers
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       skirts:
         fitted_skinned_tight: fitted_skinned_tight
         fitted_tailored: fitted_tailored
@@ -523,6 +999,40 @@ constants:
         gored: Gored
         flared: Flared
         full_with_shaping_layers: full_with_shaping_layers
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       dress:
         fitted_princess_to_waist: fitted_princess_to_waist
         fitted_princess_through_hips: fitted_princess_through_hips
@@ -533,6 +1043,40 @@ constants:
         shirt_dress: shirt_dres
         coat_dress: coat_dress
         formal_with_structured_fit: formal_with_structured_fit
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       dresses:
         fitted_princess_to_waist: fitted_princess_to_waist
         fitted_princess_through_hips: fitted_princess_through_hips
@@ -543,117 +1087,321 @@ constants:
         shirt_dress: shirt_dres
         coat_dress: coat_dress
         formal_with_structured_fit: formal_with_structured_fit
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       coat:
-       blazer_single_breasted: blazer_single_breasted
-       blazer_double_breasted: blazer_double_breasted
-       lossy: Lossy
-       swing: Swing
+        blazer_single_breasted: blazer_single_breasted
+        blazer_double_breasted: blazer_double_breasted
+        lossy: Lossy
+        swing: Swing
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
       coats:
-       blazer_single_breasted: blazer_single_breasted
-       blazer_double_breasted: blazer_double_breasted
-       lossy: Lossy
-       swing: Swing
+        blazer_single_breasted: blazer_single_breasted
+        blazer_double_breasted: blazer_double_breasted
+        lossy: Lossy
+        swing: Swing
+        romper: romper
+        jumpsuit: jumpsuit
+        bustier: bustier
+        fitted_at_waist: fitted_at_waist
+        sweatshirt_zip: sweatshirt_zip
+        sweatshirt_pullover: sweatshirt_pullover
+        fatique: fatique
+        technical: technical
+        denim_jacket: denim_jacket
+        cargo: cargo
+        athletic_shorts: athletic_shorts
+        shorts: shorts
+        sweatpants: sweatpants
+        maillot: maillot
+        tank: tank
+        bandeau: bandeau
+        surplus: surplus
+        camisole: camisole
+        one_shoulder: one_shoulder
+        blouson: blouson
+        bikini: bikini
+        two_piece: two_piece
+        tankini: tankini
+        bikini_top: bikini_top
+        bikini_bottom: bikini_bottom
+        rashguard: rashguard
+        single_breasted: single_breasted
+        double_breasted: double_breasted
+        trench_single_breasted: trench_single_breasted
+        trench_double_breasted: trench_double_breasted
+        duffle: duffle
+        parka: parka
+        down: down
+        ski: ski
     hem_length:
       blouse:
         cropped: Cropped
         waist: Waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       blouses:
         cropped: Cropped
         waist: Waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       tunic:
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
         mid_of_thigh: mid_of_thigh
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       tee_knit:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       tank_knit:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       jacket:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       jackets:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       sweater:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       sweaters:
         cropped: cropped
         waist: waist
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       trouser:
         short: short
         capri: capri 
         cropped: cropped
         ankle: ankle
         full_length: full_length
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       trousers:
         short: short
         capri: capri 
         cropped: cropped
         ankle: ankle
         full_length: full_length
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       jean:
         short: short
         capri: capri 
         cropped: cropped
         ankle: ankle
         full_length: full_length
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       jeans:
         short: short
         capri: capri 
         cropped: cropped
         ankle: ankle
         full_length: full_length
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       skirt:
-         mini: mini
-         knee_length: knee_length
-         mid_calf: mid_calf
-         tea_length: tea_length
-         maxi: maxi
-         floor_length: floor_length
-         with_train: with_train
+        mini: mini
+        knee_length: knee_length
+        mid_calf: mid_calf
+        tea_length: tea_length
+        maxi: maxi
+        floor_length: floor_length
+        with_train: with_train
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       skirts:
-         mini: mini
-         knee_length: knee_length
-         mid_calf: mid_calf
-         tea_length: tea_length
-         maxi: maxi
-         floor_length: floor_length
-         with_train: with_train 
+        mini: mini
+        knee_length: knee_length
+        mid_calf: mid_calf
+        tea_length: tea_length
+        maxi: maxi
+        floor_length: floor_length
+        with_train: with_train
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       dress:
-         mini: mini
-         knee_length: knee_length
-         mid_calf: mid_calf
-         tea_length: tea_length
-         maxi: maxi
-         floor_length: floor_length
-         with_train: with_train
+        mini: mini
+        knee_length: knee_length
+        mid_calf: mid_calf
+        tea_length: tea_length
+        maxi: maxi
+        floor_length: floor_length
+        with_train: with_train
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       dresses:
-         mini: mini
-         knee_length: knee_length
-         mid_calf: mid_calf
-         tea_length: tea_length
-         maxi: maxi
-         floor_length: floor_length
-         with_train: with_train
+        mini: mini
+        knee_length: knee_length
+        mid_calf: mid_calf
+        tea_length: tea_length
+        maxi: maxi
+        floor_length: floor_length
+        with_train: with_train
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       coat:
         cropped: cropped
         waist: waist
@@ -663,6 +1411,12 @@ constants:
         mid_calf: mid_calf
         tea_length: tea_length
         maxi: maxi
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
       coats:
         cropped: cropped
         waist: waist
@@ -672,6 +1426,12 @@ constants:
         mid_calf: mid_calf
         tea_length: tea_length
         maxi: maxi
+        thong: thong
+        high_leg: high_leg
+        mid_hip: mid_hip
+        short_skirt: short_skirt
+        low_hip_skirt: low_hip_skirt
+        mid_thigh_skirt: mid_thigh_skirt
     neck_line:
       blouse:
         crew_neck: crew_neck
@@ -686,6 +1446,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       blouses:
         crew_neck: crew_neck
         jewel_neck: jewel_neck
@@ -699,6 +1476,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       tunic:
         crew_neck: crew_neck
         jewel_neck: jewel_neck
@@ -712,6 +1506,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       tee_knit:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
@@ -726,6 +1537,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       tank_knit:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
@@ -740,6 +1568,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       jacket:
        single_breasted_lapels: single_breasted_lapels
        double_breasted_ lapels:  double_breasted_ lapels
@@ -748,6 +1593,23 @@ constants:
        v_neck:  v_neck
        jewel_neck:  jewel_neck
        wrap:  Wrap
+       halter: halter
+       pop_over: pop_over
+       bustier: bustier
+       sweetheart: sweetheart
+       buttoned: buttoned
+       standard_collared: standard_collared
+       cowl_turtle-neck: cowl_turtle
+       bandeau: bandeau
+       one_shoulder: one_shoulder
+       athletic: athletic
+       surplus: surplus
+       tube: tube
+       insert_bra: insert_bra
+       triangle: triangle
+       demi_cup: demi_cup
+       full_cup: full_cup
+       string: string
       jackets:
        single_breasted_lapels: single_breasted_lapels
        double_breasted_ lapels:  double_breasted_ lapels
@@ -756,6 +1618,23 @@ constants:
        v_neck:  v_neck
        jewel_neck:  jewel_neck
        wrap:  Wrap
+       halter: halter
+       pop_over: pop_over
+       bustier: bustier
+       sweetheart: sweetheart
+       buttoned: buttoned
+       standard_collared: standard_collared
+       cowl_turtle-neck: cowl_turtle
+       bandeau: bandeau
+       one_shoulder: one_shoulder
+       athletic: athletic
+       surplus: surplus
+       tube: tube
+       insert_bra: insert_bra
+       triangle: triangle
+       demi_cup: demi_cup
+       full_cup: full_cup
+       string: string
       sweater:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
@@ -770,6 +1649,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       sweaters:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
@@ -784,6 +1680,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       dress:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
@@ -798,6 +1711,23 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       dresses:
         turtle_neck: turtle_neck
         crew_neck: crew_neck
@@ -812,22 +1742,73 @@ constants:
         lapel_button_down: lapel_button_down
         peter_pan: peter_pan
         cowl_draped: cowl_draped
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       coat:
-       single_breasted_lapels: single_breasted_lapels
-       double_breasted_ lapels:  double_breasted_ lapels
-       shawl_single_breasted:  shawl_single_breasted
-       shawl_double_breasted:  shawl_double_breasted
-       v_neck:  v_neck
-       jewel_neck:  jewel_neck
-       wrap:  Wrap
+        single_breasted_lapels: single_breasted_lapels
+        double_breasted_ lapels:  double_breasted_ lapels
+        shawl_single_breasted:  shawl_single_breasted
+        shawl_double_breasted:  shawl_double_breasted
+        v_neck:  v_neck
+        jewel_neck:  jewel_neck
+        wrap:  Wrap
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
       coats:
-       single_breasted_lapels: single_breasted_lapels
-       double_breasted_ lapels:  double_breasted_ lapels
-       shawl_single_breasted:  shawl_single_breasted
-       shawl_double_breasted:  shawl_double_breasted
-       v_neck:  v_neck
-       jewel_neck:  jewel_neck
-       wrap:  Wrap     
+        single_breasted_lapels: single_breasted_lapels
+        double_breasted_ lapels:  double_breasted_ lapels
+        shawl_single_breasted:  shawl_single_breasted
+        shawl_double_breasted:  shawl_double_breasted
+        v_neck:  v_neck
+        jewel_neck:  jewel_neck
+        wrap:  Wrap
+        halter: halter
+        pop_over: pop_over
+        bustier: bustier
+        sweetheart: sweetheart
+        buttoned: buttoned
+        standard_collared: standard_collared
+        cowl_turtle-neck: cowl_turtle
+        bandeau: bandeau
+        one_shoulder: one_shoulder
+        athletic: athletic
+        surplus: surplus
+        tube: tube
+        insert_bra: insert_bra
+        triangle: triangle
+        demi_cup: demi_cup
+        full_cup: full_cup
+        string: string
     sleeve_styling:
       blouse:
          strapless: strapless
@@ -838,6 +1819,7 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
 
       blouses:
          strapless: strapless
@@ -848,6 +1830,7 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
 
       tunic:
          strapless: strapless
@@ -858,6 +1841,7 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       tee_knit:
          strapless: strapless
          spaghetti_straps: spaghetti_straps
@@ -867,11 +1851,13 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       tank_knit:
          strapless: strapless
          spaghetti_straps: spaghetti_straps
          narrow_straps: narrow_straps
          sleeveless: sleeveless
+         halter: halter
       jacket:
          strapless: strapless
          spaghetti_straps: spaghetti_straps
@@ -881,6 +1867,7 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       jackets:
          strapless: strapless
          spaghetti_straps: spaghetti_straps
@@ -890,18 +1877,21 @@ constants:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       sweater:
          sleeveless: sleeveless
          cap_sleeved: cap_sleeved
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       sweaters:
          sleeveless: sleeveless
          cap_sleeved: cap_sleeved
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       dress:
          strapless: Strapless
          spaghetti_straps: spaghetti_straps
@@ -911,6 +1901,7 @@ constants:
          short_sleeved: short_sleeved
          short_sleeved: short_sleeved
          long_sleeved: long_sleeved
+         halter: halter
       dresses:
          strapless: Strapless
          spaghetti_straps: spaghetti_straps
@@ -920,14 +1911,17 @@ constants:
          short_sleeved: short_sleeved
          short_sleeved: short_sleeved
          long_sleeved: long_sleeved
+         halter: halter
       coat:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
+         halter: halter
       coats:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
-         long_sleeved: long_sleeved     
+         long_sleeved: long_sleeved
+         halter: halter
     rise:
       trouser:
         high_rise: high_rise
@@ -990,6 +1984,7 @@ constants:
         cuffed_sleeve: cuffed_sleeve
         peplum: Peplum
         belted: Belted
+        elastic_waist: elastic_waist
     styling_details:      
       cuffed_hem: cuffed_hem
       cuffed_sleeve: cuffed_sleeve

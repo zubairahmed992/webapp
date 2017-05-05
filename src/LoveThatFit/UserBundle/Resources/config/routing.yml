@@ -247,3 +247,7 @@ lost_account_secret_answer:
 go_secure:
     pattern:  /gosecure/{id}
     defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }
+
+podio_users:
+    pattern:  /podio_users
+    defaults: { _controller: LoveThatFitUserBundle:PodioUsers:index }

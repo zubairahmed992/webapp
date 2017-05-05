@@ -114,6 +114,13 @@ class WebServiceHelper {
                 #---- 2) send registration email ....
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
             }
+			
+			## add user podio log data
+            if ($user->getId()) {
+                $user_id = $user->getId();
+                $user_entity = $this->container->get('user.helper.user')->find($user_id);
+                $save_user_podio = $this->container->get('user.helper.podio')->savePodioUsers($user_entity);
+            }
 
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array);
@@ -529,8 +536,23 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
 
-    public function productSync($gender, $date = null) {
-        $products = $this->container->get('webservice.repo')->productSync($gender, $date);
+    public function productSync($gender, $date = null, $user = null) {
+        if($user != null){
+            $user_id = $user->getId();
+            $products = $this->container->get('webservice.repo')->productSyncWithFavouriteItem($gender, $date, $user_id);
+            // Favourite will be converted in to true and false
+            foreach($products as $key => $value){
+                if($products[$key]['favourite'] == 0){
+                    $products[$key]['favourite'] = FALSE;
+                }else{
+                    $products[$key]['favourite'] = TRUE;
+                }            }
+
+
+        }else{
+            $products = $this->container->get('webservice.repo')->productSync($gender, $date);
+        }
+
         return $this->response_array(true, "products list", true, $products);
     }
 
@@ -847,7 +869,10 @@ class WebServiceHelper {
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
         $page_count = (int) (count($productlist) / $records_per_page);
         $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1: $page_count;
-        $productlist = array_slice($productlist, $offset, $limit);
+        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
+            return $this->response_array(false, 'Invalid Page No');
+        }
+        $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
@@ -873,7 +898,7 @@ class WebServiceHelper {
         if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
             return $this->response_array(false, 'Invalid Page No');
         }
-        $productlist = array_slice($productlist, $offset, $limit);
+        $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach($productlist as $key=>$product){
             if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
@@ -886,6 +911,8 @@ class WebServiceHelper {
         return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist, 'page_count' => $page_count));
 
     }
+
+
 
 
 //*********************************************
@@ -1066,10 +1093,13 @@ class WebServiceHelper {
             $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
 
             $product_qty = 0;
-            //if($product_item == $pi->getId()){
-
             if(in_array($pi->getId(), $product_item)){
-                $product_qty = (int)$qty;
+                $original_quantity = $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
+                if(count($original_quantity) > 0){
+                    $product_qty = (int)$original_quantity[0]['qty'];
+                }else{
+                    $product_qty = (int)$product_qty;
+                }
             }
 
             $width = 0;

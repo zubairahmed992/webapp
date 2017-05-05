@@ -80,6 +80,9 @@ class ProductHelper
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
 
+        if($entity->getDeleted() == null){
+            $entity->setDeleted(false);
+        }
 
         //$entity->upload();
         $this->em->persist($entity);
@@ -131,6 +134,10 @@ class ProductHelper
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
             #$entity->upload();
+
+            if($entity->getDeleted() == null){
+                $entity->setDeleted(false);
+            }
             $this->em->persist($entity);
             $this->em->flush();
 
@@ -164,9 +171,15 @@ class ProductHelper
         $entity_name = '';
 
         if ($entity) {
-            $entity_name = $entity->getName();
-            $this->em->remove($entity);
-            $this->em->flush();
+            /* New Structure Soft Delete */
+            $entity->setDisabled(true);
+            $entity->setDeleted(true);
+            $this->update($entity);
+
+            /* Old Structure Hard Delete */
+            //$entity_name = $entity->getName();
+            //$this->em->remove($entity);
+            //$this->em->flush();
 
             return array('product' => $entity,
                 'message' => 'The Product ' . $entity_name . ' has been Deleted!',
@@ -1390,6 +1403,65 @@ class ProductHelper
     }
     //end of autocomplete method
 
+
+#------------------------------------------------------------------------
+    public function breakFileNameProductDetail($request_array, $product_id) {
+
+        #Format: Regular_XL_Darl-Gray_Front-Open.png
+        #last bit, view is optional
+        $request_array = strtolower($request_array);
+        $_exploded = explode("_", $request_array);
+        $a = array('product_id' => $product_id);
+        $type = Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif');
+        $a['set_default'] = 'no';
+
+        #validate file format
+        if (count($_exploded) > 3) {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+
+        # file name/ext with/without view name
+        if (count($_exploded) == 3) {
+            $exploded_pos = strrpos($_exploded[2], '.');
+            $withOutDot = substr($_exploded[2], 0, $exploded_pos). '.';
+            if(strtolower($withOutDot) == 'setdefault.'){
+                if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
+                    /*Color with Setdefault */
+                    $last_bits = explode(".", $_exploded[2]);
+                    $a['image_type'] = $_exploded[0];
+                    $a['color_title'] = str_replace("-", " ", $_exploded[1]);
+                    $a['set_default'] = 'yes';
+                }
+            }else {
+                if($_exploded[0]!="colorpatterntype" && $_exploded[0]!="colorimagetype") {
+                    $last_bits = explode(".", $_exploded[2]);
+                    $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+                }else{
+                    return array('message' => 'Invalid Format!', 'success' => 'false');
+                }
+            }
+        } elseif(count($_exploded) == 2){
+            if($_exploded[0]=="colorpatterntype" || $_exploded[0]=="colorimagetype") {
+                $last_bits = explode(".", $_exploded[1]);
+                $a['image_type'] = $_exploded[0];
+                $a['color_title'] = str_replace("-", " ", $last_bits[0]);
+            }
+        }else {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+        #validate file format
+        if (count($last_bits) != 2 || (count($last_bits) == 2 && !(in_array($last_bits[1], $type)))) {
+            return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+        # no/invalid body type given then regular
+        $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "regular" : $_exploded[0];
+        $a['file_name'] = 'item_image.' . $last_bits[1];
+        $a['size_title'] = str_replace("-", "_", $_exploded[1]);
+        $a['message'] = 'Done';
+        $a['success'] = 'true';
+        return $a;
+    }
+
     #---------------------------------------------------
     //               Methods Product listing on index page
     #---------------------------------------------------
@@ -1442,4 +1514,39 @@ class ProductHelper
         return $output;
     }
     */
+
+    public function setProductsStatusByBrand($disabled, $brand_id)
+    {
+        return $this->repo->updateProductsStatusByBrand($disabled, $brand_id);
+    }
+
+    public function setProductsStatus($disabled, $products)
+    {
+        $count = 0;
+        foreach($products as $product) {
+            $products[$count] = (int)$product;
+            $count++;
+        }
+        return $this->repo->updateProductsStatus($disabled, $products);
+    }
+
+    public function findProductsByBrand($brand_id)
+    {
+        $brand = $this->container->get('admin.helper.brand')->find($brand_id);
+        return $this->repo->findByBrand($brand);
+        /*return $this->repo->findBy(["brand" => $brand, "disabled" => 0]);*/
+    }
+
+    public function deleteProductsByBrand($brand_id)
+    {
+        $products = $this->findProductsByBrand($brand_id);
+        if (!empty($products)) {
+            $productIds = array();
+            foreach ($products as $product) {
+                $productIds[] = $product->toArray()['id'];
+            }
+            return $this->repo->deleteBrandProducts($productIds);
+        }
+        return true;
+    }
 }

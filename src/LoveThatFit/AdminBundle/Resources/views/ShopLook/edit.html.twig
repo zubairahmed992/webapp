@@ -45,6 +45,34 @@
     $(function(){
         $(".multiselect").multiselect();
     });
+
+
+    function submitform(){
+        $("#error_shopmodel_image").hide();
+        var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+        var image_file = document.getElementById('shop_model_image').value;
+        var image_length = document.getElementById('shop_model_image').length;
+        var pos = image_file.lastIndexOf('.') + 1;
+        var ext = image_file.substring(pos, image_length);
+        var final_ext = ext.toLowerCase();
+        var verified = "no";
+        $(".alert-success").hide();
+        if(image_file != "") {
+            for (i = 0; i < extensions.length; i++) {
+                if (extensions[i] == final_ext) {
+                    var verified = "yes";
+                }
+            }
+
+            if (verified == "no") {
+                $("#error_shopmodel_image").show();
+                window.scrollTo(0, 0);
+                $(".alert-success").hide();
+                event.preventDefault()
+            }
+        }
+        return true;
+    }
 </script>
 
 <div>      
@@ -73,7 +101,7 @@
 
                         <div class="row-fluid show-grid">
                                 <div class="span3">Upload Banner Image</div>
-                                <div class="span3"><input type="file" id="shop_model_image" name="shop_model_image" accept="image/*"></div>
+                                <div class="span3"><input type="file" id="shop_model_image" name="shop_model_image" accept="image/*"><span id="error_shopmodel_image" style="display:none;"><br><span style="position: relative; top: -25px; color: red; font-size: 0.80em">(Please select only image file)</span></span></div>
                                 <img src="/uploads/ltf/shop_look/{{ entity.getShopModelImage }}" />
                         </div>
                         <div class="row-fluid show-grid">
@@ -82,7 +110,7 @@
                         </div>
                         <div class="row-fluid show-grid">
                             <div><strong>Please Select any Product, its mandatory : </strong></div>
-                            <select id="countries" class="multiselect" multiple="multiple" name="products[]">
+                            <select id="countries" class="multiselect" multiple="multiple" name="products[]" required>
 
                                 {% for product_selected in product_ids %}
                                     {% for product in getAllProductList %}

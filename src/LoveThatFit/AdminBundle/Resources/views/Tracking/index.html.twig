@@ -1,16 +1,17 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">User Tracking Management</li>
+   <li class="active">Tracking Management</li>
 {% endblock %}
 
 {% block body %}
 <div class="p_listing">
     <div class="clearfix"></div>
-      <h1 style="float:left;">User Tracking Management</h1>
+      <h1 style="float:left;">Tracking Management</h1>
       <div class="clearfix"></div>
       {% block header_right_links %}
         <div class="adjustment_links" style="margin-top: 40px;">
-          <a href="{{ path('admin_favorite') }}" >Favorite Products</a>
+          <a href="{{ path('admin_favorite') }}">Favorite Products Log</a>
+          <a href="{{ path('users_activity_home') }}">Users Activity Log</a>
         </div>
 
       {% endblock %}

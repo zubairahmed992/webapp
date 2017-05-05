@@ -292,6 +292,7 @@ nws_products:
    params:
      gender: f
      date: 1388577600
+     auth_token: 56565656566
 #______________________     
 ws_product_list:
    pattern:  /ws/product_list

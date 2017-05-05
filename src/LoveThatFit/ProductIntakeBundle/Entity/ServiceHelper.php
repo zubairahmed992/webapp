@@ -50,8 +50,16 @@ class ServiceHelper {
     }
       #------------------------------------------------------------------------------
 
-    public function createProduct($data) {
-        $data = json_decode($data, true);
+    public function createProduct( $data , $imagepath,$prodcut_Color_pattren) {
+        $data = json_decode($data, true);       
+        // $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+        //$imagepath = $protocol.$_SERVER["HTTP_HOST"]. '/webapp/web/uploads/ltf/products/fitting_room/web/'; 
+        $destinationpath = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/fitting_room/web/newimage/';
+         if(!file_exists($destinationpath)) {
+             mkdir($imagepath.'newimage', 0777, true);             
+         }
+          //$prodcut_Color_pattren = str_replace('\\', '/', getcwd()). '/uploads/ltf/products/pattern/web/';
+    
         //return new JsonResponse($data);
         $clothing_type = $this->container->get("admin.helper.clothingtype")->find($data[0]['clothing_type_id']);
         $brand = $this->container->get('admin.helper.brand')->find($data[0]['brand_id'] );
@@ -88,18 +96,25 @@ class ServiceHelper {
         
         //------------------- Add Product Colors 
         $product_colors_id = '';
-        foreach ($data[0][0]['product_colors'] as $colors => $value) {
+        foreach ($data[0][0]['product_colors'] as  $value) {
             $pc = new ProductColor();
             $pc->setTitle(trim($value['title']));  
             $pc->setPattern(trim($value['pattern']));
             $pc->setImage(trim($value['image']));
+            if($value['pattern'] && file_exists($prodcut_Color_pattren.trim($value['pattern']))) {             
+                copy($prodcut_Color_pattren.$value['pattern'], $destinationpath.$value['pattern']);
+            }
+            if( $value['image'] && file_exists($imagepath.$value['image']) ) {
+                copy($imagepath.$value['image'], $destinationpath.$value['image']);
+            }
             $pc->setProduct($product);            
             $em->persist($pc);
             $em->flush();
             $product_colors_id[] = $pc->getId();
            
         }
-       
+          
+         
         //--------------- Add Product Size
         foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {            
                 $ps = new ProductSize();
@@ -121,13 +136,17 @@ class ServiceHelper {
             $pi->setProductColor($product_color);
             $pi->setRawImage($value['raw_image']);
             $pi->setSku($value['sku']);
+            if( $value['image'] && file_exists($imagepath.$value['image']) )
+            {
+                copy($imagepath.$value['image'], $destinationpath.$value['image']);
+            }
             //$pi->addProductItemPiece($value['line_number']); 
             $em->persist($pi);
             $em->flush();
         }
         
         //------------ Add Product Size Measurements
-        foreach ($product_size_value['product_size_measurements'] as $product_size_measurements => $value) {            
+        foreach ($product_size_value['product_size_measurements'] as  $value) {            
             $psm = new ProductSizeMeasurement;
             $psm->setTitle($value['title']);
             $psm->setProductSize($ps);
@@ -148,7 +167,7 @@ class ServiceHelper {
             $em->flush();
         }
         }        
-        return "Product Insert Sucessfully. ";
+      return "Product Insert Sucessfully. ";
     }
     
     public function getDoctrine()

@@ -46,7 +46,7 @@ class BrandRepository extends EntityRepository {
 
     public function countAllRecord() {
         $total_record = $this->getEntityManager()
-                ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b');
+                ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b WHERE b.deleted=0');
         try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -90,10 +90,10 @@ class BrandRepository extends EntityRepository {
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC');
+                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b WHERE b.deleted=0 ORDER BY b.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC')
+                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b WHERE b.deleted=0 ORDER BY b.' . $sort . ' ASC')
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }

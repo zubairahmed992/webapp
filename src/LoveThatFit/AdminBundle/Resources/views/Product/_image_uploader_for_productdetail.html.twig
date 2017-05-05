@@ -1,0 +1,240 @@
+<div id="pro_sizes_wrapper">
+    <h2>Batch Upload of Color, Pattern and Product Item Color (New Mechanism)</h2>
+<style>
+/*----------------------------
+    The file upload form
+-----------------------------*/
+
+
+#upload{
+    font-family:'PT Sans Narrow', sans-serif;
+    background-color:#373a3d;
+
+    background-image:-webkit-linear-gradient(top, #373a3d, #313437);
+    background-image:-moz-linear-gradient(top, #373a3d, #313437);
+    background-image:linear-gradient(top, #373a3d, #313437);
+
+    width:600px;
+    padding:30px;
+    border-radius:3px;
+
+    margin:50px auto 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#drop{
+    background-color: #2E3134;
+    padding: 40px 50px;
+    margin-bottom: 30px;
+    border: 20px solid rgba(0, 0, 0, 0);
+    border-radius: 3px;
+    border-image: url('../img/border-image.png') 25 repeat;
+    text-align: center;
+    text-transform: uppercase;
+
+    font-size:16px;
+    font-weight:bold;
+    color:#7f858a;
+}
+
+#drop a{
+    background-color:#007a96;
+    padding:12px 26px;
+    color:#fff;
+    font-size:14px;
+    border-radius:2px;
+    cursor:pointer;
+    display:inline-block;
+    margin-top:12px;
+    line-height:1;
+}
+
+#drop a:hover{
+    background-color:#0986a3;
+}
+
+#drop input{
+    display:none;
+}
+
+#upload ul{
+    list-style:none;
+    margin:0 -30px;
+    border-top:1px solid #2b2e31;
+    border-bottom:1px solid #3d4043;
+}
+
+#upload ul li{
+
+    background-color:#333639;
+
+    background-image:-webkit-linear-gradient(top, #333639, #303335);
+    background-image:-moz-linear-gradient(top, #333639, #303335);
+    background-image:linear-gradient(top, #333639, #303335);
+
+    border-top:1px solid #3d4043;
+    border-bottom:1px solid #2b2e31;
+    padding:15px;
+    height: 52px;
+
+    position: relative;
+}
+
+#upload ul li input{
+    display: none;
+}
+
+#upload ul li p{
+    width: 540px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #EEE;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 100px;
+}
+
+#upload ul li i{
+    font-weight: normal;
+    font-style:normal;
+    color:#7f7f7f;
+    display:block;
+}
+
+#upload ul li canvas{
+    top: 15px;
+    left: 32px;
+    position: absolute;
+}
+
+#upload ul li span{
+    width: 15px;
+    height: 12px;
+    background: url('../img/icons.png') no-repeat;
+    position: absolute;
+    top: 34px;
+    right: 33px;
+    cursor:pointer;
+}
+
+#upload ul li.working span{
+    height: 16px;
+    background-position: 0 -12px;
+}
+
+#upload ul li.error p{
+    color:red;
+}
+
+#tzine-download{
+    opacity:0.9;
+    background-color:#257691;
+    font-size:11px;
+    text-align:center;
+    text-transform:uppercase;
+    width:150px;
+    height:28px;
+    line-height:28px;
+    text-decoration:none !important;
+
+    display: inline-block;
+    border-radius: 2px;
+    color: #fff !Important;
+    font-weight: bold;
+    box-shadow: 0 -1px 2px #1e5e74 inset;
+
+    border-top:1px solid #26849c;
+
+    text-shadow:1px 1px 1px #1e6176;
+    margin-top:6px;
+}
+
+#tzine-download:hover{
+    opacity:1;
+}
+
+#tzine-actions{
+    position:absolute;
+    top:0;
+    width:500px;
+    right:50%;
+    margin-right:-420px;
+    text-align:right;
+}
+
+#tzine-actions iframe{
+    display: inline-block;
+    height: 21px;
+    width: 95px;
+    position: relative;
+    float: left;
+    margin-top: 11px;
+}
+
+.new-format{
+    color:#0986a3 !important;
+}
+
+</style>
+    {% if app.session.hasFlash('error-on-addcolor') %}
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% set error_result = app.session.flash('error-on-addcolor')|split(',') %}
+            <ul>
+                {% for i in error_result %}
+                    {% if i != '' %}<li>{{ i }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+   <div class="container-fluid">
+       <span class="new-format">Create or Edit pattern image, color image and Product item images according to the given format and drop here. It will create new color(if not exist) and also add product item in one go.</span>
+       <br /><br />
+       <span style="text-decoration: underline; font-weight:bold;"  class="new-format"> Color Pattern and Color Image format example</span>
+    <blockquote>
+        <ul>
+            <li><span class="new-format">Format = ColorImageType_Colorname  (Example:ColorImageType_Red)</span></li>
+            <li><span class="new-format">Format = ColorImageType_Colorname  (Example:ColorImageType_Red)</span></li>
+            <li><span class="new-format">Format = ColorImageType_Color-Name  (Example:ColorImageType_Pacific-Ocean)</span></li>
+            <li><span class="new-format">Format = ColorImageType_Colorname_SetDefault  (Example:ColorImageType_Red_SetDefault)</span></li>
+            <li><span class="new-format">Format = ColorImageType_Color-Name_SetDefault  (Example:ColorImageType_Pacific-Ocean_SetDefault)</span></li>
+            <li><span class="new-format">Format = ColorPatternType_Colorname_SetDefault  (Example:ColorPatternType_Red_SetDefault)</span></li>
+            <li><span class="new-format">Format = ColorPatternType_Color-Name_SetDefault  (Example:ColorPatternType_Pacific-Ocean_SetDefault)</span></li>
+        </ul>
+    </blockquote>
+       <span style="text-decoration: underline; font-weight:bold;"  class="new-format">Product item format example</span>
+       <blockquote>
+           <ul>
+                <li><span class="new-format">Format = BodyType_SizeTitle_Colorname  Example:Regular_00_Black)</span></li>
+                <li><span class="new-format">Format = BodyType_Size-Title_Colorname  Example:Regular_S-M_Black)</span></li>
+                <li><span class="new-format">Format = BodyType_Size-Title_Color-Name  Example:Regular_S-M_Pacific-Ocean)</span></li>
+
+           </ul>
+       </blockquote>
+
+<form id="upload" method="post" action="{{ path('admin_product_image_upload_product_detail')}}" enctype="multipart/form-data">
+    <div id="drop">
+        Drop Here<br>
+
+        <a>Browse</a>
+        <input type="file" id='upl' name="upl" multiple />
+        <input type="hidden" name="product_id" value="{{product.id}}" />
+    </div>
+
+    <ul>
+        <!-- The file uploads will be shown here -->
+    </ul>
+
+</form>
+<!-- JavaScript Includes -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/jquery.knob.js') }}"></script>
+        <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/jquery.ui.widget.js') }}"></script>
+        <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/jquery.iframe-transport.js') }}"></script>
+        <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/jquery.fileupload.js') }}"></script>
+        <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/script_productdetail.js') }}"></script>
+</div>
+</div>

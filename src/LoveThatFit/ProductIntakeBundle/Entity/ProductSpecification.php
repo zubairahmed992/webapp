@@ -500,13 +500,14 @@ class ProductSpecification {
     public function fill($parsed){     
         $this->undo_specs_json = $this->specs_json;
         $this->specs_json =  json_encode($parsed);
-        return;
         array_key_exists('style_id_number', $parsed) ? $this->style_id_number = ($parsed['style_id_number']) : '';
         array_key_exists('style_name', $parsed) ? $this->style_name = ($parsed['style_name']) : '';
         array_key_exists('title', $parsed) ? $this->title = ($parsed['title']) : '';
         array_key_exists('description', $parsed) ? $this->description = ($parsed['description']) : '';
         array_key_exists('clothing_type', $parsed) ? $this->clothing_type = ($parsed['clothing_type']) : '';
         array_key_exists('brand', $parsed) ? $this->brand_name = ($parsed['brand']) : '';
+        return;
+        
         #----------------
         $specs = json_decode($this->specs_json,true);
         #----------------

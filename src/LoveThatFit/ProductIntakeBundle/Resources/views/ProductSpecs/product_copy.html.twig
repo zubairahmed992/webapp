@@ -1,0 +1,36 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+
+
+    <div class="container">    
+     
+        
+        <h2 style="float:left;">Product Copy to Next Server  </h2>    
+        </div>
+    
+    
+        <form action="{{ path('pi_ws_product_detail') }}" method="post"
+              enctype="multipart/form-data"  class="form-horizontal" >
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sel_brand"> Product ID: </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="product_id">
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sel_mapping"> URL Like:http://localhost  </label>
+                <div class="col-sm-4">
+                   <input type="text" class="form-control" name="server_url">
+                </div>
+            </div>          
+          
+            <div class="form-group">        
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="submit" class="btn btn-default">Move</button>
+                </div>
+            </div>
+        </form>
+
+{% endblock %}

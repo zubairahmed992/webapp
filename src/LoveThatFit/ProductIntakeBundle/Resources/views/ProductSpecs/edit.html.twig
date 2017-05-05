@@ -20,14 +20,37 @@
     var fabric_content_array_key = [];
     var input_value  = [];  
     $(document).ready(function(){ 
-        
-        $('ul.tabs li').click(function(){            
-		var tab_id = $(this).attr('data-tab');                
-		$('ul.tabs li').removeClass('active');
-		$('.tab-content').removeClass('active');
-		$(this).addClass('active');
-		$("#tab-"+tab_id).addClass('active');                
-                $('#default_tab').val(tab_id);
+        var _isDirty = false;
+        $("input[type='text']").change(function(){
+          _isDirty = true;         
+        });
+        $("select").change(function(){         
+          _isDirty = true;         
+        });
+        $('ul.tabs li').click(function(e){      
+                e.preventDefault();
+                var tab_id = $(this).attr('data-tab');   
+                if(_isDirty){                  
+                    var result = confirm("It looks like you have been editing something! If you leave before saving, your changes will be lost.'");
+                        if (result) {
+                            _isDirty = false;            
+                            $('ul.tabs li').removeClass('active');
+                            $('.tab-content').removeClass('active');
+                            $(this).addClass('active');
+                            $("#tab-"+tab_id).addClass('active');                
+                            $('#default_tab').val(tab_id);
+                        } 
+                    
+                } else{
+                    //var _isDirty = false;
+                    $('ul.tabs li').removeClass('active');
+                    $('.tab-content').removeClass('active');
+                    $(this).addClass('active');
+                    $("#tab-"+tab_id).addClass('active');                
+                    $('#default_tab').val(tab_id);
+                }
+                
+		
         });
         
         if($('#default_tab').val()=='b'){
@@ -160,14 +183,14 @@
                                     $('#dv_measurement_table').append(tableData);   
         
     }#}
-        
-        //-------------- Check Fit Priority Alredy Added
-        $('.add_fit_priority').click(function () {               
+       
+        //-------------- Check Fit Priority Alredy Added            
+      {#  $('.add_fit_priority').click(function () {
             var fit_point_val = $.trim($('.fit_priority_value').val()); 
             $(".fit_priority > .singleField > input[type='number']").each(function() {                 
                   fit_priority_array_key.push($(this).attr('id'));
             });  
-                 
+            
             if($.inArray(fit_point_val, fit_array) != -1  || $.inArray(fit_point_val, fit_priority_array_key)!= -1  )
             {
                 alert("Ops! Already Fit Priority "+ fit_point_val +" Added");    
@@ -175,9 +198,10 @@
             fit_array.push(fit_point_val);
             var fit_priority = [];
             var fit_priority = "fit_priority["+fit_point_val+"]";                   
-             $('.fit_priority').prepend(" <label>"+fit_point_val+":</label> <input type='number' min='1' max='100' name="+fit_priority+" style='width:50px'>%");
-            }
-        });
+             $('.fit_priority').prepend("<div class='singleField'><label>"+fit_point_val+":</label> <input type='number' min='1' max='100' name="+fit_priority+" style='width:50px'>% <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i></div>");
+            }  
+           
+        });#}
         //------------ Count Summ Equal to 100 Validation
         $('.fit_priority').keyup(function() {
             var sum=0;
@@ -200,7 +224,7 @@
             }           
         })  
         //--------------- Check Fabric Content Already Added
-        $('.add_fabric_content').click(function () {                     
+      {#  $('.add_fabric_content').click(function () {                     
             var fabric_content_val = $.trim($('.fabric_content_value').val()); 
             $(".fabric_content > .singleField > input[type='number']").each(function() {                 
                 fabric_content_array_key.push($(this).attr('id'));
@@ -213,9 +237,9 @@
                     fabric_array.push(fabric_content_val);
                     var fabric_content = [];
                     var fabric_content = "fabric_content["+fabric_content_val+"]"; 
-                    $('.fabric_content').prepend(" <label>"+fabric_content_val+":</label> <input type='number' id="+fabric_content_val+" min='1' max='100' name="+fabric_content+" style='width:50px'>%");
+                    $('.fabric_content').prepend("<div class='singleField'> <label>"+fabric_content_val+":</label> <input type='number' id="+fabric_content_val+" min='1' max='100' name="+fabric_content+" style='width:50px'>%  <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i></div>");
             }
-        });
+        });#}
         
         //------------ Count Garment detail Sum Equal to 100 Validation
         $('.fabric_content').keyup(function() {
@@ -238,6 +262,15 @@
                 }); 
             }           
         })  
+        //---------------- Remove removeFitPriorityFebricContent
+        {#$('body').on( "click", '.removeFitPriorityFebricContent', function() {  
+            fit_array = [];
+            fabric_array = [];
+            fit_priority_array_key = [];
+            fabric_content_array_key = [];
+            $(this).parent().remove();
+        });#}
+        
         
  {#       //--------------- Check garment detail Already Added
         $('.add_garment_detail').click(function () {                     
@@ -277,7 +310,7 @@
             }           
         })  
        #}
-//----------------------------------------
+           //----------------------------------------
             function reload_page(){
                 tab_id=$('#default_tab').val();
                 url = window.location.href; 
@@ -291,7 +324,7 @@
                 }
         }
                
-        $.fn.editable.defaults.mode = 'popup'; 
+        $.fn.editable.defaults.mode = 'inline'; 
         var fit_model_value = $('.fit_model_value').val(); 
        (fit_model_value == "") ? "" :$('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
         
@@ -381,6 +414,18 @@
                   $(this).val('')
               }    
             });
+            
+              // --- Stay Page Position same when Reload Page 
+                $(window).scroll(function() {
+                    sessionStorage.scrollTop = $(this).scrollTop();
+                });
+
+                $(document).ready(function() {
+                    if (sessionStorage.scrollTop != "undefined") {
+                      $(window).scrollTop(sessionStorage.scrollTop);
+                    }
+                });
+                
 
     });
 
@@ -400,7 +445,7 @@
 
 <br>
 <br>
-   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
+   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal">
        <div class="container">       
         <div id="tab-a" class="tab-content"> 
         {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
@@ -570,7 +615,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+       {# <div class="form-group">
             <label class="control-label col-sm-2" for="fit_priority">Fit priority : </label>
             <div class="col-sm-4">                  
                     <div class="fit_priority">    
@@ -581,6 +626,7 @@
                                        {{ key }} : 
                                    </label> 
                                        <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fit_priority[{{key}}]" style="width:70px">
+                                      % <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i>
                                 </div>
                             {% endfor %}
                         {% endif %}
@@ -591,13 +637,21 @@
                             </select>
                             <input class="add_fit_priority" type="button" value="Add">
                     </div>                                            
-{#                <input type="text" class="fit_priority_value"  min="1" max="100"  style="width:70px; background-color: #cccccc">#}
-               
             </div>
-          
-        </div> 
+        </div> #}       
+       <div class="form-group">
+            <label class="control-label col-sm-2" for="fit_priority">Fit priority : </label>
+            <div class="col-sm-4"> 
+                <div class="fit_priority">    
+                    {% for key,val in size_attribute %} 
+                        {{ key }} :
+                          <input type="number" min="1" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
+                    {% endfor %}
+                </div> 
+            </div>
+       </div>
 
-        <div class="form-group">            
+        {#<div class="form-group">            
             <label class="control-label col-sm-2" for="fabric_content">Fabric content : </label>
             <div class="col-sm-4">
                     <div class="fabric_content">                        
@@ -608,6 +662,7 @@
                                    {{ key }} : 
                                </label> 
                                    <input type="number" min="1" max="100" value="{{val}}" id="{{key}}"  name="fabric_content[{{key}}]" style="width:70px">                                   
+                                   % <i class='glyphicon glyphicon-remove removeFitPriorityFebricContent'></i>
                             </div>
                         {% endfor %}
                         {% endif %}
@@ -616,7 +671,26 @@
                 <input class="add_fabric_content" type="button" value="Add">
             </div>
             <p class="help-block">Example: cotton, poly</p>
-        </div> 
+        </div> #}        
+        
+         <div class="form-group">
+            <label class="control-label col-sm-2" for="fabric_content">Fabric Content : </label>
+            <div class="col-sm-4"> 
+                <div class="fabric_content">    
+                    {% for key,val in drop_down_values['fabric_content'] %}
+                        {{ key }} :
+                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][val] is defined?parsed_data['fabric_content'][val]:'' }}" name="fabric_content[{{val}}]" style="width:70px">
+                    {% endfor %}
+                </div> 
+            </div>
+               {# <select name="structural_detail" class="structural_detail form-control" >
+                    <option>Select</option>
+                    {% for key,val in drop_down_values['fabric_content'] %}
+                       <option value="{{ val }}"{{ parsed_data.structural_detail == '' and key == 0? '' : (val == parsed_data.structural_detail ? ' selected ' : '')}}  >{{ key }}</option>
+                    {% endfor %}
+                </select>#}
+            
+        </div>
       
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Size title Type: </label>
@@ -625,14 +699,6 @@
             </div>
         </div>
        
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="control_number">Control number : </label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" value="{{ parsed_data.control_number }}"  name="control_number" placeholder="Enter control number">
-            </div>
-        </div> 
-
         <div class="form-group">
             <label class="control-label col-sm-2" for="colors">Colors : </label>
             <div class="col-sm-4">
@@ -696,7 +762,8 @@
              
 {#                  <select  data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size" label="{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size ] }}" value="{{ parsed_data.fit_model_size }}"  readonly="ture" >#}
                 
-               <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
+               
+                <select name="fit_model_size" data-type="select" class="fit_model_size form-control" data-title="Select Fit Model Size">
                 {% if parsed_data.fit_model_size is defined and (parsed_data.fit_model_size != null or parsed_data.fit_model_size !='')%}                        
                     <option value="{{ parsed_data.fit_model_size }}">{{ drop_down_values['fit_model_size'][parsed_data.fit_model_size] }}</option>
                 {% else%}
@@ -767,9 +834,9 @@
                                         <th >min_actual</th>
                                         <th >ideal_low</th>
                                         <th >fit_model</th>
-                                        <th >ideal_high</th>
-                                        <th >max_calc</th>
+                                        <th >ideal_high</th>                                        
                                         <th >max_actual</th>
+                                        <th >max_calc</th>
                                         
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
@@ -821,13 +888,14 @@
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
                                                 </td>
                                                 <td>
-                                                    {{measurement_v.max_calc | number_format(2, '.', '')}}
-                                                    <input class="10" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
+                                                    {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
+                                                    <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="10 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
                                                 </td>
                                                 <td>
-                                                    {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
-                                                    <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="11 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
+                                                    {{measurement_v.max_calc | number_format(2, '.', '')}}
+                                                    <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
+                                                
                                             </tr>
                                         {% else %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
@@ -873,14 +941,14 @@
                                                 <td>
                                                     {{measurement_v.ideal_high | number_format(2, '.', '')}}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
+                                                </td>                                                
+                                                <td>
+                                                    {{measurement_v.max_actual | number_format(2, '.', '')}}
+                                                    <input class="10" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.max_calc | number_format(2, '.', '')}}
-                                                    <input class="10" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
-                                                </td>
-                                                <td>
-                                                    {{measurement_v.max_actual | number_format(2, '.', '')}}
-                                                    <input class="11" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
+                                                    <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
                                             </tr>
                                         {% endif %}

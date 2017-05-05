@@ -1,89 +1,105 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Brands</li>
+    <li class="active">Brands</li>
 {% endblock %}
-
-
-
 {% block body %}
-  
-<div class="p_listing">     
-    <h1>Brands</h1>
-    
- 
-    
-    <div class="btn_wrapper2">
-     
-     <div id="chart_figures" class="brand_chart_figures">
-         <div class="facts">
-                    <div><span>Total Brands:</span>{{rec_count}}</div>                   
-     </div>
-     </div>
-    
-     <a href="{{ path('admin_brand_new') }}" class="btn">Add New</a>
-     
-      </div>
-    
-     <div class="clearfix"></div> 
-     
-    <div class="bs-docs-grid">              
-
-        <div class="row-fluid">
-            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>            
-            <div class="span1 hds">Created At</div>                  
-            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'image' }}" style=" text-decoration: none;">Logo</a></div>
-            <div class="span1 hds">Top Banner</div>
-            <div class="span1 hds">Status</div>
-            <div class="span1 hds">Actions</div>
-            <div class="span1 hds"></div>      
-            
-        </div>  
-
-          {% for b in brands %}
-
-        <div class="row-fluid show-grid">
-            <div class="span1">{{b.Id}}</div>
-            <div class="span1">{{b.Name}}</div>
-            <div class="span1">{{b.createdAt|date('d-m-Y') }}</div>
-            <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>
-            <div class="span1">{%if(b.screenposition==1)%} <i class="icon-ok"></i> {%else%} <i class="icon-remove"></i> {%endif%}</div>
-            <div class="span1">{%if(b.disabled==1)%} Disabled {%else%}  {%endif%}</div>
-            <div class="span1">
-            <div>                    
-                    <a href="{{ path('admin_brand_show', {'id': b.Id}) }}" title="Show {{b.name}}"><i class="icon-eye-open"></i></a>
-                    <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}" title="Edit {{b.name}}"><i class="icon-edit"></i></a>
-                    <a href="#myModal{{b.Id}}" role="button" data-toggle="modal" title="Delete {{b.name}}"><i class="icon-remove"></i></a>
-                </div> 
-            </div>              
-            
+    <div class="p_listing">
+        <h1>Brands</h1>
+        <div class="btn_wrapper2">
+            <div id="chart_figures" class="brand_chart_figures">
+                <div class="facts">
+                    <div><span>Total Brands:</span>{{ rec_count }}</div>
+                </div>
+            </div>
+            <a href="{{ path('admin_brand_new') }}" class="btn">Add New</a>
         </div>
-        <!-- Modal -->
-<div id="myModal{{b.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Brand</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Brand <b>{{b.Name}}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_brand_delete', {'id': b.Id}) }}"  class="btn btn-primary">Delete</a>
-    
-  </div>
-</div>
-{% endfor %}
-
-
-
+        <div class="clearfix"></div>
+        <div class="bs-docs-grid">
+            <div class="row-fluid">
+                <div class="span1 hds"><a href="{{ path('admin_brands')~'/'~ 1~'/'~'id' }}"
+                                          style=" text-decoration: none;">ID</a></div>
+                <div class="span1 hds"><a href="{{ path('admin_brands')~'/'~ 1~'/'~'name' }}"
+                                          style=" text-decoration: none;">Name</a></div>
+                <div class="span1 hds">Created At</div>
+                <div class="span1 hds"><a href="{{ path('admin_brands')~'/'~ 1~'/'~'image' }}"
+                                          style=" text-decoration: none;">Logo</a></div>
+                <div class="span1 hds">Top Banner</div>
+                <div class="span1 hds">Status</div>
+                <div class="span1 hds">Actions</div>
+            </div>
+            {% for b in brands %}
+                <div class="row-fluid show-grid">
+                    <div class="span1">{{ b.Id }}</div>
+                    <div class="span1">{{ b.Name }}</div>
+                    <div class="span1">{{ b.createdAt|date('d-m-Y') }}</div>
+                    <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>
+                    <div class="span1">{% if(b.screenposition==1) %} <i class="icon-ok"></i> {% else %} <i
+                                class="icon-remove"></i> {% endif %}</div>
+                    <div class="span1">{% if(b.disabled==1) %} Disabled {% else %}  {% endif %}</div>
+                    <div class="span1">
+                        <div>
+                            <a href="{{ path('admin_brand_show', {'id': b.Id}) }}" title="Show {{ b.name }}"><i
+                                        class="icon-eye-open"></i></a>
+                            <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}" title="Edit {{ b.name }}"><i
+                                        class="icon-edit"></i></a>
+                            <a onclick="getBrandProducts({{ b.Id }});" role="button" data-toggle="modal"
+                               title="Delete {{ b.name }}"><i class="icon-remove"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div id="myModal{{ b.Id }}" class="modal hide fade" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Delete Brand</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to Delete this Brand <b>{{ b.Name }}</b> and its related Products?</p>
+                    </div>
+                    <div id="products_deleting{{ b.Id }}"></div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        <a href="{{ path('admin_brand_delete', {'id': b.Id}) }}" class="btn btn-primary">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+        with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+        ,'controller_name':'admin_brands','sort':sort} %}
     </div>
-
- {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-,'controller_name':'admin_brands','sort':sort}
-        %}  
-</div>
-
-
+    <script type="application/javascript">
+        function getBrandProducts(brand_id) {
+            $.ajax({
+                        url: window.location.href.substring(0, (window.location.href.length - 1)) + "/" + brand_id + "/products",
+                        method: "GET",
+                        data: {},
+                        dataType: "json",
+                    })
+                    .done(function (data) {
+                        var html = "<h4>Products</h4><ul>";
+                        var no_products = true;
+                        if (data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i]["deleted"] != 1) {
+                                    html += '<li>' + data[i]["name"] + '</li>';
+                                    no_products = false;
+                                }
+                            }
+                        }
+                        if (no_products) {
+                            html += "<li>No Products Found!!</li>";
+                        }
+                        html += "</ul>";
+                        $("#products_deleting" + brand_id).html(html);
+                        $('#myModal' + brand_id).modal();
+                    })
+                    .fail(function (err) {
+                        console.log("error in getBrandProducts");
+                        /*console.log(err);
+                         console.log(err.responseText);*/
+                    });
+        }
+    </script>
 {% endblock %}

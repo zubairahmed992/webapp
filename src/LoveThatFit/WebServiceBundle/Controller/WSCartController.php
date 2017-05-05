@@ -6,6 +6,7 @@ use LoveThatFit\CartBundle\Utils\Stamps;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class WSCartController extends Controller
 {
@@ -586,7 +587,7 @@ class WSCartController extends Controller
         return;
     }
     #----------------------------------------------------Order Detail Services -------------------------#
-    public function orderDetailAction()
+    public function orderDetailAction( Request $request)
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
@@ -594,7 +595,22 @@ class WSCartController extends Controller
             $orders = $this->get('cart.helper.order')->findOrderListByUserID($user->getId());
             $a = 0;
             foreach ($orders as $order) {
-                $orders[$a]['orderItem'] = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
+                foreach($order_items as $index => $item){
+                    $itemObject = $this->container->get('admin.helper.productitem')->find($item['item_id']);
+                    $product_color = $itemObject->getProductColor();
+                    $product_size = $itemObject->getProductSize();
+
+                    $item['color'] = $product_color->getTitle();
+                    $item['size'] = $product_size->getTitle();
+
+                    $item['image'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . "/" .$itemObject->getWebPath();
+                    $order_items[$index] = $item;
+                }
+
+                $orders[$a] = $order;
+                $orders[$a]['orderItem'] = $order_items;
                 $a++;
             }
             $res = $this->get('webservice.helper')->response_array(true, null, true,$orders);
@@ -677,16 +693,18 @@ class WSCartController extends Controller
             }
             /*$addresses['shipping_methods'] = array(
                 array(
-                "method" => "4-Day Shipping",
-                'detail' => "Deliver on or Monday",
+                "method"      => "4-Day Shipping",
+                'detail'      => "Deliver on or Monday",
                 'method_cost' => "Free",
-                "method_id" => '1'
+                "method_id"   => '1',
+                "days"        => '4'
                 ),
                 array(
-                    "method" => "2-Day Shipping",
-                    'detail' => "Deliver on or Fridat",
+                    "method"      => "2-Day Shipping",
+                    'detail'      => "Deliver on or Fridat",
                     'method_cost' => "10.25",
-                    "method_id" => '2'
+                    "method_id"   => '2',
+                    "days"        => '2',
                 )
             );*/
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
