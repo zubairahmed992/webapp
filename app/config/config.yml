@@ -80,3 +80,48 @@ swiftmailer:
     #spool:     { type: memory }
     encryption: tls
     auth_mode: login
+
+love_that_fit_onelogin_saml:
+    # Basic settings
+    idp:
+        entityId: 'http://www.okta.com/exk255c4tb2dRHscM1t7'
+        singleSignOnService:
+            url: 'https://selfiestyler.okta.com/app/selfiestyler_symfonywebapp_1/exk255c4tb2dRHscM1t7/sso/saml'
+            binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+        singleLogoutService:
+            url: 'https://selfiestyler.okta.com/app/selfiestyler_symfonywebapp_1/exk255c4tb2dRHscM1t7/slo/saml'
+            binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+        x509cert: 'MIIDqDCCApCgAwIBAgIGAVqBFDEaMA0GCSqGSIb3DQEBBQUAMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxFTATBgNVBAMMDHNlbGZpZXN0eWxlcjEcMBoGCSqGSIb3DQEJARYNaW5mb0Bva3RhLmNvbTAeFw0xNzAyMjcxOTM2NDhaFw0yNzAyMjcxOTM3NDhaMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxFTATBgNVBAMMDHNlbGZpZXN0eWxlcjEcMBoGCSqGSIb3DQEJARYNaW5mb0Bva3RhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALaLZadnTYiPiuR7xX19n1S4KXEmqW2WSt8AJFHWaoDLNGQC7qmJk1dgspDwZrj+4NNmPPrup7iAvTmW6dqJZZ8vduamNkEpxWT//KSyW9/8ZgRC7BUAaWumKferLpb6QfbsjFXQZRfdqae27MI65XELyK2q7t2rqAxU0kkSxk8bgNInRc2m9zCgs35UKGdXZfKpPprTDZkxcIWClG0kVzUpfIM6c7J9WRA6WXFuCINwbkx7qGzEfKXBHbsJqrQtebBflNZGzg2hmnGMax5wAQXU7+BWjZt2s5Ro5qi4J4iP1F7GdVSQdLn6A9qvuL6PMMbh/gHJA3rhE7YVE5OYIWsCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAW5xDOJ2JrWzdMDhuzPWYOOAxDt7prA3ehzkPICdsJM+9gkuCvWMpwD3L+kL0L0Riif2dKpmzh9NAEwLw6Z45nDNvnfMEyEIBEHKwF0rorzCvUM8v11BObPm8i6GfTRLZHcqLsV3JgzjAXGmT44/ruBZz/mWqpxdzNZ/QutM3pqmNcfhfdf3anx6TlmSKhXhS1kDecgTRs/a3rMDFjlF73E9yq8NY8Q8oAWJn3Q229DkWNDlOEUjfP0g8zfiSxqBBQKU65zvIdBM27vSL2sdOooEVy21kzFSq5X+AgaQiHCqVFF337w1QHbacGVZHHniUWz0neWZ/iAdfQiExgCB34g=='
+    sp:
+        entityId: 'http://localserver.webapp/saml/metadata'
+        assertionConsumerService:
+            url: 'http://localserver.webapp/saml/acs'
+            binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+        singleLogoutService:
+            url: 'http://localserver.webapp/saml/logout'
+            binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+    # Optional settings
+    security:
+        nameIdEncrypted:       false
+        authnRequestsSigned:   false
+        logoutRequestSigned:   false
+        logoutResponseSigned:  false
+        wantMessagesSigned:    false
+        wantAssertionsSigned:  false
+        wantNameIdEncrypted:   false
+        requestedAuthnContext: true
+        signMetadata: false
+        wantXMLValidation: true
+        signatureAlgorithm: 'http://www.w3.org/2000/09/xmldsig#rsa-sha1'
+    contactPerson:
+        technical:
+            givenName: 'Haris khalique'
+            emailAddress: 'haris@selfiestyler.com'
+        support:
+            givenName: 'Support'
+            emailAddress: 'support@selfiestyler.com'
+    organization:
+        en:
+            name: 'Centric Source'
+            displayname: 'SelfieStyler'
+            url: 'SelfieStyler.com'

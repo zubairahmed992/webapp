@@ -1,3 +1,8 @@
+love_that_fit_onelogin_saml:
+    resource: "@LoveThatFitOneloginSamlBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 love_that_fit_product_intake:
     resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing.yml"
     prefix:   /
@@ -38,6 +43,9 @@ love_that_fit_admin:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
+saml_sp:
+    resource: "@LoveThatFitOneloginSamlBundle/Resources/config/routing.yml"
+    prefix:   /
 
 #acme_hello_routes:
 #    resource: "@AcmeHelloBundle/Resources/config/routing.yml"

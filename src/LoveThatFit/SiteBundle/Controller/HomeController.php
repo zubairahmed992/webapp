@@ -6,42 +6,54 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\UserBundle\Entity\User;
-class HomeController extends Controller {
+
+class HomeController extends Controller
+{
 
     //-------------------------------------------------------------------------
 
-    public function indexAction() {
+    public function indexAction()
+    {
         return $this->render('LoveThatFitSiteBundle:Home:index.html.twig');
     }
-public function aboutUsAction() {
+
+    public function aboutUsAction()
+    {
         return $this->render('LoveThatFitSiteBundle:Home:about_us.html.twig');
     }
-    
-    public function faqsAction() {
+
+    public function faqsAction()
+    {
         return $this->render('LoveThatFitSiteBundle:Home:faqs.html.twig');
     }
 
-public function contactUsAction() {
+    public function contactUsAction()
+    {
         return $this->render('LoveThatFitSiteBundle:Home:contact_us.html.twig');
-}   
-public function whatWeDoAction(){
-    return $this->render('LoveThatFitSiteBundle:Home:what_we_do.html.twig');
-} 
-public function commingSoonAction(){
-    return $this->render('LoveThatFitSiteBundle:Home:_commingSoon.html.twig');
-} 
-    
-public function emailRegistrationAction($id) {
-    
-      $em = $this->getDoctrine()->getManager();
+    }
+
+    public function whatWeDoAction()
+    {
+        return $this->render('LoveThatFitSiteBundle:Home:what_we_do.html.twig');
+    }
+
+    public function commingSoonAction()
+    {
+        return $this->render('LoveThatFitSiteBundle:Home:_commingSoon.html.twig');
+    }
+
+    public function emailRegistrationAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()
             ->getRepository('LoveThatFitUserBundle:User')
             ->find($id);
-    
-   return $this->render('LoveThatFitAdminBundle::email/registration.html.twig',array('entity'=>$entity));
+
+        return $this->render('LoveThatFitAdminBundle::email/registration.html.twig', array('entity' => $entity));
+    }
+
+
 }
 
-
-
-}
 ?>

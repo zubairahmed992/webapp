@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new LoveThatFit\CartBundle\LoveThatFitCartBundle(),
             new LoveThatFit\SupportBundle\LoveThatFitSupportBundle(),
             new LoveThatFit\ProductIntakeBundle\LoveThatFitProductIntakeBundle(),
+            new LoveThatFit\OneloginSamlBundle\LoveThatFitOneloginSamlBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

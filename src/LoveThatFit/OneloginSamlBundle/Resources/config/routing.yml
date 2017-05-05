@@ -1,0 +1,15 @@
+saml_metadata:
+    pattern:     /saml/metadata
+    defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:metadata }
+
+saml_acs:
+    pattern:     /saml/acs
+    defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:assertionConsumerService }
+
+saml_login:
+    pattern:     /saml/login
+    defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:login }
+
+saml_logout:
+    pattern:     /saml/logout
+    defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:singleLogoutService }

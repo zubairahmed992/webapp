@@ -10,6 +10,7 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 class VisitorController extends Controller {
 
     public function indexAction() {
+        var_dump($this->get('security.context')->getToken()); die;
         return $this->render('LoveThatFitWebServiceBundle:Visitor:index.html.twig');
     }
 
