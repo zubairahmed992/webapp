@@ -680,8 +680,15 @@ web_service_product_specification:
     pattern:  /product_intake/product_specification
     title: product_specification
     params: 
-      result: {'style_id_number':'220', 'style_name':'Blouse', 'title':'Blouse'}     
+      style_id_number: '220'
+      brand_name: 'Blouse'    
       request_type: post
+      
+web_service_existing_product_specification:
+    pattern:  /product_intake/existing_product_specification
+    title: product_dimension
+    params: 
+      product_id: '606'
 
 ws_shop_the_look:
   pattern: /ws/shop_the_look

@@ -19,6 +19,7 @@
     var garment_detail_array_key = [];
     var fabric_content_array_key = [];
     var input_value  = [];  
+    var min_max_calc = '';
     $(document).ready(function(){ 
         var _isDirty = false;
         $("input[type='text']").change(function(){
@@ -396,11 +397,42 @@
                 return false;                    
             }               
        }
+         //--------------- Check garment detail Already Added
+        $('.remove_fit_point').click(function (event) {                     
+        event.preventDefault();
+        var res =  $(this).attr("id").replace("remove_fit_point_",'') ;        
+        if (confirm('Are you sure you want to completely Remove ' + res + ' fit point?')) {
+                $.post(get_service_relative_url(),{
+                    value: 0,    
+                    name: $(this).attr("id"),                    
+                    pk: {{ product_specs.id }}                    
+                },
+                function(data, status){
+                    reload_page();
+                });
+        } else {
+            // Do nothing!
+        }
+        //alert($(this).attr("id"));
+        });
           // ------- Min Max Values Comparation 
+          
+            $(document).on("focus", ".input-sm", function(){
+               var  min_max_calc_name = $(this).attr('name');
+              // console.log(min_max_calc_name);
+               if('sizes-M-bust-min_actual' == min_max_calc_name){                  
+                    min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
+                    min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
+                   // console.log(min_max_calc_val);
+               }
+               if('sizes-M-bust-max_actual' == min_max_calc_name){                  
+                    min_max_calc = $.trim($(this).closest('td').next().find('input').attr('name').substr(-8,8));
+                    min_max_calc_val = $.trim( $(this).closest('td').next().find('input').val() );
+                   // console.log(min_max_calc_val);
+               }
+            });
             $(document).on("change", ".input-sm", function(){
-              var min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
-               var min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
-               var min_max_calc_actual_val = $.trim( $(this).val() );
+                var min_max_calc_actual_val = $.trim( $(this).val() );
               if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
                   console.log()                  
               } else if(min_max_calc.match('min_calc')) {
@@ -814,6 +846,17 @@
                             {% endfor %}
                         </tr>
                     </table>   
+               </div> 
+               <div id="dv_fit_priority">
+                       <b>Fit Priority</b><br>
+                    <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                    <tr>
+                        {% for key,val in size_attribute %} 
+                            <td><b>{{ key }}</b> : {{parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:''}}% </td>
+                        {% endfor %}
+                    </tr>                                        
+                    </table>
+                       
                <br>
                </div>   
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
@@ -843,7 +886,8 @@
                                     {% if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) %}
                                         {% if (size == fit_model_selected_size) %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
-                                                <th>{{measurement_k}}</th>
+                                                <th>
+                                                    {{measurement_k}}</th>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" > #}
                                                     <input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px" class="0 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" data-title="Enter Garment Dimension for {{measurement_k}} " >
@@ -899,7 +943,9 @@
                                             </tr>
                                         {% else %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
-                                                <th>{{measurement_k}}</th>
+                                                <th>
+                                                <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                                                {{measurement_k}}</th>
                                                 <td>
                                                     {{measurement_v.garment_dimension | number_format(2, '.', '')}}
                                                     <input class="0" type="number" hidden value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px"> 

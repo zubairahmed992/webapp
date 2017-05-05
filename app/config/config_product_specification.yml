@@ -377,6 +377,10 @@ constants:
      rayon: Rayon
      acrylic: Acrylic
      linen: Linen
+     silk: Silk 
+     nylon: Nylon
+     spandex/lycra: Spandex/Lycra
+     wool: Wool
      other: Other     
   garment_detail:
       silk: Silk
