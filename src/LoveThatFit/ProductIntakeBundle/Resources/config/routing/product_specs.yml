@@ -50,3 +50,6 @@ product_copy_intake:
     pattern:  /product_intake/product_copy
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:productCopy } 
     
+product_intake_product_specs_get_clothing_type:
+    pattern:  /product_intake/product_specs/get_clothing_type
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:getClothingType }    

@@ -458,6 +458,32 @@
                     }
                 });
                 
+                
+                $("#sel_clothing_type").change(function() {                   
+                   
+                    var clothing_type = this.value;                 
+                    $.ajax({
+                        type: "POST",                        
+                        url: "../get_clothing_type",
+                        data: {clothing_type:clothing_type},
+                        dataType: "json",
+                        success: function (response) {    
+                          //  console.log(response);
+                            $('.styling_type').empty();
+                            var option = '<option value="">Select Size</option>';
+                            $.each(response, function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.styling_type').append(option);     
+                          // fill_table(response);                      
+                        },
+                        failure: function (errMsg) {
+                          display_response(errMsg);
+                          console.log(errMsg);
+                        }
+                        });
+                    });
+              
 
     });
 
