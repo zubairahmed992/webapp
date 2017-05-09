@@ -557,8 +557,10 @@ private function merge_sub($arr){
 }
 
  
-
-
+#---Get style_type attribute----------------------#
+public function getStyleType($style_type){
+    return $this->conf["constants"]['product_specification']['women']['style_type'][$style_type];
+}
 
 
 }

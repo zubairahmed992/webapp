@@ -297,10 +297,8 @@ class ProductSpecsController extends Controller
     //------------------------------------- /product_intake/Prod_specs/get_clothing_type 
     public function getClothingTypeAction(){  
         $clothing_type = $this->getRequest()->request->all();   
-         $styling_type = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type['clothing_type']);      
-        
-        return new Response(json_encode($styling_type));
-        return new Response(json_encode($decoded));
+        $styling_type = $this->get('admin.helper.product.specification')->getStyleType($clothing_type['clothing_type']); 
+     return new Response(json_encode($styling_type));
     }
        
 }
