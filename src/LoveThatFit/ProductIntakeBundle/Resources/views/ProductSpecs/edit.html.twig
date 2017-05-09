@@ -468,14 +468,34 @@
                         data: {clothing_type:clothing_type},
                         dataType: "json",
                         success: function (response) {    
-                          //  console.log(response);
+                           // console.log(response); 
                             $('.styling_type').empty();
-                            var option = '<option value="">Select Size</option>';
-                            $.each(response, function(val, text) {
+                            var option = '<option value="">Select styling Type</option>';
+                            $.each(response[0], function(val, text) {
                                 option += '<option value="'+ val + '">' + text + '</option>';
                                     });
                             $('.styling_type').append(option);     
-                          // fill_table(response);                      
+                          // hem length
+                          $('.hem_length').empty();
+                            var option = '<option value="">Select Hem Length</option>';
+                            $.each(response[1], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.hem_length').append(option); 
+                            // neckline
+                          $('.neckline').empty(); 
+                            var option = '<option value="">Select Neck Line</option>';
+                            $.each(response[2], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.neckline').append(option); 
+                              // sleeve_styling 
+                          $('.sleeve_styling').empty(); 
+                            var option = '<option value="">Select Sleeve Styling </option>';
+                            $.each(response[3], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.sleeve_styling').append(option); 
                         },
                         failure: function (errMsg) {
                           display_response(errMsg);

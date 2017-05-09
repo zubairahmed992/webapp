@@ -559,7 +559,12 @@ private function merge_sub($arr){
  
 #---Get style_type attribute----------------------#
 public function getStyleType($style_type){
-    return $this->conf["constants"]['product_specification']['women']['style_type'][$style_type];
+    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['style_type'][$style_type];
+    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['hem_length'][$style_type];  
+    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['neck_line'][$style_type];  
+    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['sleeve_styling'][$style_type];     
+    return $clothig_typye;
+     
 }
 
 
