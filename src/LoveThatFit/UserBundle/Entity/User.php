@@ -18,7 +18,14 @@ use Doctrine\ORM\Mapping\ManyToOne;
  */
 class User implements UserInterface, \Serializable {
 
-    // ...
+	// ...
+    /**
+     * @ORM\OneToOne(targetEntity="PodioUsers", mappedBy="user")
+     */
+    protected $podio_users;
+	
+	
+	// ...
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="original_user")
      */
@@ -2755,5 +2762,38 @@ class User implements UserInterface, \Serializable {
     public function getUserLog()
     {
         return $this->user_log;
+    }
+
+    /**
+     * Add podio_users
+     *
+     * @param \LoveThatFit\UserBundle\Entity\PodioUsers $podio_users
+     * @return PodioUsers
+     */
+    public function addPodioUsers(\LoveThatFit\UserBundle\Entity\PodioUsers $podio_users)
+    {
+        $this->podio_users[] = $podio_users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove podio_users
+     *
+     * @param \LoveThatFit\UserBundle\Entity\PodioUsers $podio_users
+     */
+    public function removePodioUsers(\LoveThatFit\UserBundle\Entity\PodioUsers $podio_users)
+    {
+        $this->podio_users->removeElement($podio_users);
+    }
+
+    /**
+     * Get podio_users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPodioUsers()
+    {
+        return $this->podio_users;
     }
 }

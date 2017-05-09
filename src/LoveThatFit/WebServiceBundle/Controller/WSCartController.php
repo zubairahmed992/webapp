@@ -646,16 +646,18 @@ class WSCartController extends Controller
             $addresses = $this->container->get('cart.helper.userAddresses')->getAllUserSavedAddresses( $user );
             $addresses['shipping_methods'] = array(
                 array(
-                "method" => "4-Day Shipping",
-                'detail' => "Deliver on or Monday",
+                "method"      => "4-Day Shipping",
+                'detail'      => "Deliver on or Monday",
                 'method_cost' => "Free",
-                "method_id" => '1'
+                "method_id"   => '1',
+                "days"        => '4'
                 ),
                 array(
-                    "method" => "2-Day Shipping",
-                    'detail' => "Deliver on or Fridat",
+                    "method"      => "2-Day Shipping",
+                    'detail'      => "Deliver on or Fridat",
                     'method_cost' => "10.25",
-                    "method_id" => '2'
+                    "method_id"   => '2',
+                    "days"        => '2',
                 )
             );
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);

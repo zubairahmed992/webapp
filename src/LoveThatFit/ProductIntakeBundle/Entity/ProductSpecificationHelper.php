@@ -198,6 +198,8 @@ class ProductSpecificationHelper {
         } elseif (strpos($decoded['name'], 'fit_model_size') !== false) { #~~~~~~~~>6
             $specs['fit_model_size'] = $decoded['value'];
             $specs = $this->generate_specs_for_fit_model_size($specs);
+        } elseif (strpos($decoded['name'], 'remove_fit_point') !== false) { #~~~~~~~~>7            
+            $specs = $this->remove_fit_point($specs, $decoded);
         } else {
             return array(
                 'message' => 'Nothing to update!',
@@ -326,6 +328,20 @@ class ProductSpecificationHelper {
         $specs = $this->compute_stretch($specs);
         #------------- compute ranges for all sizes
         return $this->compute_all_ranges($specs, $fit_model_obj);        
+    }
+
+    #------------------->6 Fit Model Size >>>>>>>>>>>>>>>>>>>>>>>>>>>
+    private function remove_fit_point($specs, $decoded) {
+        $fp = str_replace("remove_fit_point_", "", $decoded['name']);
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            if (array_key_exists($fp, $specs['sizes'][$size])) {
+                unset($specs['sizes'][$size][$fp]);
+            }
+        }
+        if (array_key_exists($fp, $specs['fit_point_stretch'])) {
+            unset($specs['fit_point_stretch'][$fp]);
+        }
+        return $specs;
     }
 
     ###################################################################
