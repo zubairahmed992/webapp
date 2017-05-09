@@ -656,9 +656,8 @@ function save(){
 function getPathArrayJson(){
     var mp_array=[];
     for(var i = 0; i < full_mask.segments.length; i++) {
-        mp_array.push([full_mask.segments[i].point.x * 1.0421875, full_mask.segments[i].point.y * 2]);
-
-        console.log(full_mask.segments[i].point.x * 1.0421875 + " ::: "+full_mask.segments[i].point.y * 2);
+        //mp_array.push([full_mask.segments[i].point.x * 1.0421875, full_mask.segments[i].point.y * 1.0421875]);
+        mp_array.push([full_mask.segments[i].point.x, full_mask.segments[i].point.y]);
     };
 
     return JSON.stringify(mp_array);
