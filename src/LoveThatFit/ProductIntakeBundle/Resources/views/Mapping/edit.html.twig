@@ -206,7 +206,7 @@ color: #FFF;
                         var result = $.parseJSON(fit_points);
 
                         $.each(result, function (k, fit_point_value) {
-                        tableData += "<tr><td class='span2'><a href='#'>" + fit_point_value + "</a></td>";
+                        tableData += "<tr><td class='span2'><a href='#' class='fit_point_title_link'>" + fit_point_value + "</a></td>";
                             tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  class='formula_box grid_formula_input' id='formula-" + fit_point_value + "' /></td>";
                             $.each(size_specs.sizes[gender][size_type], function (k, v) {  
                                 if (v in obj) {

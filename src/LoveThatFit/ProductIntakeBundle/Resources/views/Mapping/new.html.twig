@@ -393,7 +393,10 @@ color: #FFF;
 
 
                           });
-
+ $('body').on('click', 'a.fit_point_title_link', function() {
+                                        event.preventDefault();
+                                        $('#' + $('#select_cell_div').text()).val( $('#' + $('#select_cell_div').text()).val()+ ' ' + $(this).text());
+                                    });
                          $(window).scroll(function(){
                             $(".ui-dialog").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, "slow" );
                           });
