@@ -559,12 +559,12 @@ private function merge_sub($arr){
  
 #---Get style_type attribute----------------------#
 public function getStyleType($style_type){
-    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['style_type'][$style_type];
-    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['hem_length'][$style_type];  
-    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['neck_line'][$style_type];  
-    $clothig_typye[] = $this->conf["constants"]['product_specification']['women']['sleeve_styling'][$style_type];     
+      
+    $clothig_typye[] = array_key_exists($style_type, $this->conf["constants"]['product_specification']['women']['style_type'])? $this->conf["constants"]['product_specification']['women']['style_type'][$style_type] : "" ;
+    $clothig_typye[] = array_key_exists($style_type, $this->conf["constants"]['product_specification']['women']['hem_length'])? $this->conf["constants"]['product_specification']['women']['hem_length'][$style_type] : "";  
+    $clothig_typye[] = array_key_exists($style_type, $this->conf["constants"]['product_specification']['women']['neck_line'])? $this->conf["constants"]['product_specification']['women']['neck_line'][$style_type] : "";  
+    $clothig_typye[] = array_key_exists($style_type, $this->conf["constants"]['product_specification']['women']['sleeve_styling'])? $this->conf["constants"]['product_specification']['women']['sleeve_styling'][$style_type] : "";     
     return $clothig_typye;
-     
 }
 
 
