@@ -1,7 +1,44 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 
 {% block body %}
-
+<style>
+.grid_headers{
+text-align:center;
+font-size:12px;
+background-color: #737373;
+color: #FFF;
+height: 30px;
+}
+.fit_point_title_link{
+ color:#5B5B5B; 
+ padding-right: 5px;
+ border-bottom: solid 1px #E5E2E2;
+ display: block;
+ height: 24px;
+}
+.grid_input{
+    width: 60px;
+    background-color: #F0F0F0;    
+    border: solid #E5E2E2 1px;
+    color:#979797;
+    text-align: center;    
+}
+.grid_formula_headers{
+text-align:center;
+font-size:12px;
+background-color: #A0A0A0;
+color: #FFF;
+}
+.grid_formula_input{
+    width: 200px;
+    background-color: #EBEBEB;    
+    border: solid #E5E2E2 1px;
+    color:#5B5B5B;
+    text-align: center;
+}
+        
+        
+</style>
 <div class="container">
     <h2>Product Specs Mapping</h2>
 
@@ -159,17 +196,18 @@
                     var size_type = this.value                
                     siz_genrate.empty();
                     var tableData = '';
-                    tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> Size Lable </th><th> formula </th>";
+                    {#----------------------------------------------------------------------> 1 #}
+                    tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> </th><th class='grid_formula_headers'> Formula </th>";
                             $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
-                            tableData += "<th>" + size_label + "</th>";
+                            tableData += "<th class='grid_headers'>" + size_label + "</th>";
                             });
 
                             tableData += "</tr>";
                         var result = $.parseJSON(fit_points);
 
                         $.each(result, function (k, fit_point_value) {
-                        tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
-                            tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
+                        tableData += "<tr><td class='span2'><a href='#'>" + fit_point_value + "</a></td>";
+                            tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  class='formula_box grid_formula_input' id='formula-" + fit_point_value + "' /></td>";
                             $.each(size_specs.sizes[gender][size_type], function (k, v) {  
                                 if (v in obj) {
                                     if ( fit_point_value in obj[v] ) { 
@@ -180,13 +218,14 @@
                                     } else {
                                        var index_value = "";
                                 }
-                            tableData += "<td>  <input type='text' value='"+index_value+"' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
+                            tableData += "<td>  <input type='text' value='"+index_value+"' name= 'sizes-" + v + "-" + fit_point_value + "'  id='sizes-" + v + "-" + fit_point_value + "'  class='grid_input'/> </td>";
                             });
                             tableData += "</tr>";
                         });
 
                         siz_genrate.append(tableData);
-
+                        
+                                    
                         //---------- textbox id on selection ~~~~~~~~~~>
                         $('input, textarea').focus(function() {
                         $('#select_cell_div').text($(this).attr('id'));
@@ -201,14 +240,16 @@
                         size_specs = $.parseJSON($('#size_specs_json').text());                
                         gender=$('#sel_gender').val()=='m'?'man':'woman';
                         size_type=$(".selectSize").val();                    
-                        var tableData = "<tr><td class='span2'>"+ new_fit_point + "  </td>";
+                        var tableData = "<tr><td class='span2'><a href='#' class='fit_point_title_link'>"+ new_fit_point + "</a></td>";
                             nfp =  new_fit_point.split(' ').join('_');
-                            tableData += "<td>  <input type='text' name= 'formula-" + nfp + "'  id='formula-" + nfp + "' style='width: 40px'/></td>";
+                            tableData += "<td>  <input type='text' name= 'formula-" + nfp + "'  class='formula_box' id='formula-" + nfp + "' style='width: 200px'/></td>";
                             $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
                                tableData += "<td>  <input type='text' name='sizes-" + size_label + "-" + nfp + "'  id='sizes-" + size_label + "-" + nfp + "' style='width: 40px'/> </td>";
                             });
                             tableData += "</tr>";                           
                             $('#tbl_mapping > tbody:last').append(tableData);
+                            
+                            
                                 //---------- textbox id on selection ~~~~~~~~~~>
                                     $('input, textarea').focus(function() {
                                     $('#select_cell_div').text($(this).attr('id'));
@@ -312,9 +353,9 @@
 
                                 siz_genrate.empty();
                                 var tableData = '';
-                                tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> Size Lable </th><th> formula </th>";
+                                tableData += "<table id='tbl_mapping' name='tbl_mapping'><tr><th> </th><th class='grid_formula_headers'> Formula </th>";
                                         $.each(size_specs.sizes[gender][size_type], function (k, size_label) {
-                                        tableData += "<th>" + size_label + "</th>";
+                                        tableData += "<th class='grid_headers'>" + size_label + "</th>";
                                         });
 
                                         tableData += "</tr>";
@@ -322,8 +363,8 @@
 
                                     $.each(result, function (key, fit_point_value) {
                                       
-                                    tableData += "<tr><td class='span2'>" + fit_point_value + "</td>";
-                                        tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  id='formula-" + fit_point_value + "' style='width: 40px'/></td>";
+                                    tableData += "<tr><td class='span2'><a href='#' class='fit_point_title_link'>" + fit_point_value + "</a></td>";
+                                        tableData += "<td>  <input type='text' name= 'formula-" + fit_point_value + "'  class='formula_box grid_formula_input' id='formula-" + fit_point_value + "'/></td>";
                                         $.each(size_specs.sizes[gender][size_type], function (k, v) {
                                             if (v in obj) {
                                                 if ( fit_point_value in obj[v] ) { 
@@ -334,12 +375,18 @@
                                             } else {
                                                     var index_value = "";
                                             }
-                                        tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "' value='"+index_value+"'  id='sizes-" + v + "-" + fit_point_value + "' style='width: 40px'/> </td>";
+                                        tableData += "<td>  <input type='text' name= 'sizes-" + v + "-" + fit_point_value + "' value='"+index_value+"'  id='sizes-" + v + "-" + fit_point_value + "' class='grid_input'/> </td>";
                                         });
                                         tableData += "</tr>";
                                     });
 
                                     siz_genrate.append(tableData);
+                                    
+                                    $('body').on('click', 'a.fit_point_title_link', function() {
+                                        event.preventDefault();
+                                        $('#' + $('#select_cell_div').text()).val( $('#' + $('#select_cell_div').text()).val()+ ' ' + $(this).text());
+                                    });
+
                                 }
                                                                
                                 
