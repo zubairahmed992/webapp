@@ -38,7 +38,8 @@ masked_marker:
       s2:
         a: 63
         b: 43        
-  torso:  
+
+  torso_height:  
     axis: y 
     type: pair
     segments: 
@@ -105,6 +106,14 @@ masked_marker:
       s1:
         a: 18
         b: 52  
+
+  belt_waist: 
+    axis: x 
+    type: single
+    segments: 
+      s1:
+        a: 19
+        b: 51        
   waist_to_hip:  
     axis: y
     type: pair 
@@ -115,13 +124,7 @@ masked_marker:
       s2:
         a: 52
         b: 50    
-  hip: 
-    axis: x 
-    type: single 
-    segments: 
-      s1: 
-        a: 20
-        b: 50  
+
   low_hip: 
     axis: x 
     type: single 
@@ -129,6 +132,13 @@ masked_marker:
       s1: 
         a: 21
         b: 49        
+  high_hip: 
+    axis: x 
+    type: single 
+    segments: 
+      s1: 
+        a: 20
+        b: 50
   inseam: 
     axis: y
     type: pair
@@ -372,7 +382,8 @@ pixel_conversion:
     232: 44.50
     234: 45.00
     
-  belt:
+
+  belt_waist:
     152: 25.00
     154: 25.50
     156: 26.00
@@ -476,7 +487,8 @@ pixel_conversion:
     268: 50.50
     270: 51.00
 
-  hip:
+
+  low_hip:
     175: 31.00
     178: 31.50
     180: 32.00
@@ -879,7 +891,8 @@ pixel_conversion:
     410: 27.75
     413: 28.00
     
-  shoulder_height_ground_up:
+
+  shoulder_height:
     694: 45.00
     702: 45.50
     709: 46.00
