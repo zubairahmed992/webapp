@@ -294,7 +294,7 @@ nws_get_all_user_saved_addresses_and_rates:
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddressesWithRates}
 
 nws_address_verficiation:
-  pattern: /nws/address_verficiation
+  pattern: /nws/address_verification
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:addressVerification}
 
 nws_get_shipping_rates:

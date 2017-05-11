@@ -755,7 +755,7 @@ class WSCartController extends Controller
         $stampsDotCom = new Stamps();
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
-        $response = $stampsDotCom->addressVerfication( $decoded );
+        $response = $stampsDotCom->addressVerification( $decoded );
         if($response['verified'])
         {
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $response['data']);

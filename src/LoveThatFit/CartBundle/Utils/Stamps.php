@@ -61,7 +61,7 @@ class Stamps
         return $auth->Authenticator;
     }
 
-    public function addressVerfication( $postData = array())
+    public function addressVerification( $postData = array())
     {
         $address = $postData['address'];
         $fieldsVerified = $this->verifyFields( $address, 'addressVerfication');

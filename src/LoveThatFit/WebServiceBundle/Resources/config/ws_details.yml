@@ -697,7 +697,7 @@ nws_get_all_user_saved_addresses_and_rates:
     tozipcode: 60601
 
 nws_address_verficiation:
-  pattern: /nws/address_verficiation
+  pattern: /nws/address_verification
   title: get_address_verified_by_stamps_com
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
