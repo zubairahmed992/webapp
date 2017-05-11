@@ -120,10 +120,10 @@ masked_marker:
     segments: 
       s1:
         a: 18
-        b: 20
+        b: 21
       s2:
         a: 52
-        b: 50    
+        b: 49    
 
   low_hip: 
     axis: x 
