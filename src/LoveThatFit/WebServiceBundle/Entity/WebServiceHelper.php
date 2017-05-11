@@ -260,6 +260,7 @@ class WebServiceHelper {
         array_key_exists('waist_hip', $request_array) ? $measurement->setWaistHip($request_array['waist_hip']) : '';
         array_key_exists('hip', $request_array) ? $measurement->setHip($request_array['hip']) : '';
         //new fileds
+        array_key_exists('belt_waist', $request_array) ? $measurement->setBeltWaist($request_array['belt_waist']) : '';
         array_key_exists('high_hip', $request_array) ? $measurement->setHighHip($request_array['high_hip']) : '';
         array_key_exists('low_hip', $request_array) ? $measurement->setLowHip($request_array['low_hip']) : '';
         array_key_exists('torso_height', $request_array) ? $measurement->setTorsoHeight($request_array['torso_height']) : '';
