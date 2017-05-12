@@ -28,5 +28,8 @@ services:
           class:  LoveThatFit\WebServiceBundle\DependencyInjection\PushNotificationHelper
           arguments:
             container: "@service_container"
-    
-         
+
+    app.calibration_subscriber:
+            class: LoveThatFit\WebServiceBundle\EventSubscriber\CalibrationSubscriber
+            tags:
+              - { name: kernel.event_subscriber }
