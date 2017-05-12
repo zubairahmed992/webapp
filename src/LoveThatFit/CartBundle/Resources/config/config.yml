@@ -9,3 +9,14 @@ braintree_live:
    merchant_id: dtjkgnd4hzfnwpk7
    public_key:  f8p6mc39tm5m7nv2
    private_key: 292fcf8da61e8a9e8db5e0eff990002a
+
+stamps_com_dev:
+  environment: developement
+  integrarionId: b8b61439-52e6-4d19-a51f-a3422c8a79e9
+  userName: SelfieStyl-001
+  password: postage1
+  fromzipcode: 90405
+  serviceType: US-XM
+  weightOz: 500
+  packagetype: Package
+  deliverydays: 1-3
