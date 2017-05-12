@@ -18,15 +18,29 @@ class CalibrationEvent extends Event
 {
     const NAME = 'calibration.initiated';
 
-    protected $calibration;
+    protected $user_id;
+    protected $email;
+    protected $status;
 
-    public function __construct($calibration)
+    public function __construct($user_id, $email ,$status)
     {
-        $this->calibration = $calibration;
+        $this->user_id = $user_id;
+        $this->email = $email;
+        $this->status = $status;
+
     }
 
-    public function getCalibration()
+
+    public function getUserID()
     {
-        return $this->calibration;
+        return $this->user_id;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

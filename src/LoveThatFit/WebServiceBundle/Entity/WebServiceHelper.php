@@ -5,6 +5,7 @@ use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
+use LoveThatFit\WebServiceBundle\Event\CalibrationEvent;
 
 class WebServiceHelper {
 
@@ -371,39 +372,14 @@ class WebServiceHelper {
                     $user->setStatus(-1);
 
                     //Here we going to add new triggeer
-                    //Posting data to NODE-JS server
-                    //Code start 
-                    $yaml = new Parser();
-                    $conf = $yaml->parse(file_get_contents('../app/config/parameters.yml'));
-                   
-                   $calibrationPortalAPIURL = isset($conf['parameters']['calibration_portal_api_url'])?trim($conf['parameters']['calibration_portal_api_url']):false;
-                   $calibrationPortalSecret = isset($conf['parameters']['calibration_portal_secret'])?trim($conf['parameters']['calibration_portal_secret']):false;
-                   //Verify both values are set in param file
-                   //It should be like this
-                   //calibration_portal_api_url: http://localhost:5000/api/work-flow/add
-                   //calibration_portal_secret: ulE:8#RpTC&lV^[1OT_4j8sKQL}*U4
-                   if($calibrationPortalAPIURL && $calibrationPortalSecret){
-                      //Getting ready request infromation
-                       $data = array('api_key' => $calibrationPortalSecret, 'user_id' => $user->getId(),'email'=>$user->getEmail(),'status'=>'New');                                                       
-                        $data_string = http_build_query($data);                                                                                   
-
-                        $ch = curl_init();
-
-                        curl_setopt($ch, CURLOPT_URL,$calibrationPortalAPIURL);
-                        curl_setopt($ch, CURLOPT_POST, 1);
-                        curl_setopt($ch, CURLOPT_POSTFIELDS,
-                                    $data_string);
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-
-
-                        // receive server response ...
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-                        $server_output = curl_exec ($ch);
-
-                        curl_close ($ch);
-                        }
-                    //Code End
+                    //This code will new entry in node-js database
+                    $user_id = $user->getId();
+                    $email = $user->getEmail();
+                    $status = 'New';
+                    $dispatcher = $this->container->get('event_dispatcher');
+                    $event = new CalibrationEvent( $user_id, $email ,$status);
+                    $dispatcher->dispatch(CalibrationEvent::NAME, $event);
+                    //Code End for calibration node js
 
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
