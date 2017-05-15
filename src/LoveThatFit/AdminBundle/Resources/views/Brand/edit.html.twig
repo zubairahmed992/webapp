@@ -127,7 +127,7 @@
                             }
                             html += "<button type='button' class='btn' id='cont_btn' onclick='enableBrand(getBrnadId());'>Enable</button>";
                             $("#p_details").hide();
-                            $('#p_hd').text('Please Select the Products, You want to Enable for this Brand.');
+                            $('#p_hd').html('<input type="checkbox" name="select_all" title="Select All Products" onclick="invertSelection();" style="margin-left: 10px; margin-right: 5px;"><span>Please Select the Products, You want to Enable for this Brand.</span>');
                             $("#p_container").html(html);
                         } else {
                             html += "<p>No Products Found!!</p>";
@@ -142,6 +142,17 @@
                         /*console.log(err);
                          console.log(err.responseText);*/
                     });
+        }
+
+        function invertSelection() {
+            console.log($("input[name='select_all']").is(':checked'));
+            if($("input[name='select_all']").is(':checked')) {
+                $("input[name='select_all']").attr('title', 'Clear All Selection');
+                $("input[name='products']").trigger('click');
+            } else {
+                $("input[name='select_all']").attr('title', 'Select All Products');
+                $("input[name='products']").trigger('click');
+            }
         }
 
         function enableBrand(brand_id) {

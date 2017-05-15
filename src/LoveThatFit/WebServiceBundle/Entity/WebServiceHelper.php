@@ -5,6 +5,7 @@ use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
+use LoveThatFit\WebServiceBundle\Event\CalibrationEvent;
 
 class WebServiceHelper {
 
@@ -259,6 +260,12 @@ class WebServiceHelper {
         array_key_exists('waist', $request_array) ? $measurement->setWaist($request_array['waist']) : '';
         array_key_exists('waist_hip', $request_array) ? $measurement->setWaistHip($request_array['waist_hip']) : '';
         array_key_exists('hip', $request_array) ? $measurement->setHip($request_array['hip']) : '';
+        //new fileds
+        array_key_exists('belt_waist', $request_array) ? $measurement->setBeltWaist($request_array['belt_waist']) : '';
+        array_key_exists('high_hip', $request_array) ? $measurement->setHighHip($request_array['high_hip']) : '';
+        array_key_exists('low_hip', $request_array) ? $measurement->setLowHip($request_array['low_hip']) : '';
+        array_key_exists('torso_height', $request_array) ? $measurement->setTorsoHeight($request_array['torso_height']) : '';
+        
         array_key_exists('inseam', $request_array) ? $measurement->setInseam($request_array['inseam']) : '';
         array_key_exists('thigh', $request_array) ? $measurement->setThigh($request_array['thigh']) : '';
         array_key_exists('bust_height', $request_array) ? $measurement->setBustHeight($request_array['bust_height']) : '';
@@ -362,8 +369,18 @@ class WebServiceHelper {
                     $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
                     $parsed_array = $this->parse_request_for_archive($ra);
                     $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
-
                     $user->setStatus(-1);
+
+                    //Here we going to add new triggeer
+                    //This code will new entry in node-js database
+                    $user_id = $user->getId();
+                    $email = $user->getEmail();
+                    $status = 'New';
+                    $dispatcher = $this->container->get('event_dispatcher');
+                    $event = new CalibrationEvent( $user_id, $email ,$status);
+                    $dispatcher->dispatch(CalibrationEvent::NAME, $event);
+                    //Code End for calibration node js
+
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
@@ -1046,6 +1063,8 @@ class WebServiceHelper {
             foreach ($entity->getSaveLookItem() as $saveLookItem) {
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
+                $temp['title'] = $saveLookItem->getItems()->getProduct()->getName();
+                $temp['description'] = $saveLookItem->getItems()->getProduct()->getDescription();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();

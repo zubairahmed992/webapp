@@ -50,6 +50,20 @@ class FittingRoomController extends Controller {
             //Get ProductItem Id
             $product_item_id = $productItem->getId();
 
+            //Get Information on the Userfitting room table and added quantity with the given quantity
+            $verified_entry = $this->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user, $product_id, $product_item_id);
+            $get_qty = 0;
+            if($verified_entry[0][1] != "0"){
+                $get_qty = $verified_entry[0]['qty'];
+                $qty = $qty + $get_qty;
+            }
+
+            if($qty < 1){
+                $resp = 'Quantity is below than one, Please provide appropriate quantity value.';
+                $res = $this->get('webservice.helper')->response_array(false, $resp);
+                return new Response($res);
+            }
+
             //Checked that item is already then remove this
             $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id, $product_item_id);
             //Add entry in userfittingroom table
