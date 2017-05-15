@@ -125,7 +125,7 @@
                         "orderable": false,
                         "searchable": false,
                         "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
-                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
+                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '') + " " + archiveButton
                     },
                     {
                         "data": "original_user_id",
@@ -159,6 +159,11 @@
                 }
                 if (dataAction == 'Detail') {
                     var url = '{{ path('support_user_detail_show', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+                if (dataAction == 'Archive') {
+                    var url = '{{ path('support_user_profile_archives', {'user_id': ":id"}) }}';
                     url = url.replace(':id', data.id);
                     window.top.location = url;
                 }
