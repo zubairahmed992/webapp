@@ -458,6 +458,52 @@
                     }
                 });
                 
+                
+                $("#sel_clothing_type").change(function() {                   
+                   
+                    var clothing_type = this.value;                 
+                    $.ajax({
+                        type: "POST",                        
+                        url: "../get_clothing_type",
+                        data: {clothing_type:clothing_type},
+                        dataType: "json",
+                        success: function (response) {    
+                           // console.log(response); 
+                            $('.styling_type').empty();
+                            var option = '<option value="">Select styling Type</option>';
+                            $.each(response[0], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.styling_type').append(option);     
+                          // hem length
+                          $('.hem_length').empty();
+                            var option = '<option value="">Select Hem Length</option>';
+                            $.each(response[1], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.hem_length').append(option); 
+                            // neckline
+                          $('.neckline').empty(); 
+                            var option = '<option value="">Select Neck Line</option>';
+                            $.each(response[2], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.neckline').append(option); 
+                              // sleeve_styling 
+                          $('.sleeve_styling').empty(); 
+                            var option = '<option value="">Select Sleeve Styling </option>';
+                            $.each(response[3], function(val, text) {
+                                option += '<option value="'+ val + '">' + text + '</option>';
+                                    });
+                            $('.sleeve_styling').append(option); 
+                        },
+                        failure: function (errMsg) {
+                          display_response(errMsg);
+                          console.log(errMsg);
+                        }
+                        });
+                    });
+              
 
     });
 
@@ -529,7 +575,7 @@
             <div class="col-sm-4">
                 <input type="text" name="description" class="form-control" value="{{ parsed_data.description }}" >
             </div>
-        </div>
+        </div>         
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="styling_title">Styling type : </label>
@@ -904,7 +950,7 @@
                                                 </td>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
-                                                    <input type="hidden"  value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
+                                                    <input type="hidden"  value="{{measurement_v.grade_rule }}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
                                                     {{measurement_v.grade_rule is defined? measurement_v.grade_rule | number_format(2, '.', ''):0}}
                                                 </td>
                                                 <td>
@@ -962,7 +1008,7 @@
                                                 </td>
                                                 <td>
                                                     {#<input class="3" type="number"  value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
-                                                    <input type="number" value="{{measurement_v.grade_rule | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:80px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
+                                                    <input type="number" value="{{measurement_v.grade_rule }}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:80px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
