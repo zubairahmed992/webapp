@@ -17,10 +17,8 @@ class ServiceRepo
     }
 
     #-------------------------------------------------------------------
-    public function getProductSpecification($decoded)
-    {
-            $style_id_number = $decoded['style_id_number'];   
-            $brand_name =  array_key_exists('brand_name', $decoded)?$decoded['brand_name']:'';                         
+    public function getProductSpecification($brand_name, $style_id_number)
+    {                                  
             $query = $this->em
                 ->createQuery("SELECT ps.specs_json 
                     FROM LoveThatFitProductIntakeBundle:ProductSpecification ps
@@ -35,7 +33,7 @@ class ServiceRepo
     }
     
     #--------------------------------------------------------------
-    public function getProductDetail($id)
+    public function getProductDetail($brand_name, $style_id_number)
     {
         $query = $this->em
             ->createQuery("
@@ -54,8 +52,8 @@ class ServiceRepo
                 JOIN p.product_sizes pz
                 LEFT JOIN pz.product_items pi
                 JOIN pz.product_size_measurements psm            
-                WHERE p.id=:product_id 
-                ")->setParameters(array('product_id' => $id));
+                WHERE p.control_number=:style_id_number
+                AND b.name = :brand_name")->setParameters(array('style_id_number' => $style_id_number, 'brand_name' => $brand_name))->setMaxResults(1);   
      
         
         try {
