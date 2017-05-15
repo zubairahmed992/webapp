@@ -12,7 +12,8 @@ class ProductDetailType extends AbstractType
     private $container;
     private $sizeTitleType;
     private $stretch_type;
-    public function __construct($container,$sizeTitleType)             
+    private $product_status;
+    public function __construct($container,$sizeTitleType,$status=null)             
     {
         $this->container= $container;
         $this->stretch_type=$this->container->getWomenStretchType();
@@ -23,7 +24,7 @@ class ProductDetailType extends AbstractType
         $this->fabric_content=$this->container->getFabricContent(); 
         $this->garment_detail=$this->container->getGarmentDetail(); 
         $this->sizeTitleType=$sizeTitleType;
-        
+        $this->product_status=$status;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -49,7 +50,8 @@ class ProductDetailType extends AbstractType
         $builder->add('fabric_content','choice', array('choices'=>$this->fabric_content,'required' => false,'empty_value' => 'Select Fabric Content',));
         $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Select Garment Detail',));
         $builder->add('description');        
-        $builder->add('gender', 'choice', array('choices'=> array('m'=>'Male','f'=>'Female')));               
+        $builder->add('gender', 'choice', array('choices'=> array('m'=>'Male','f'=>'Female')));   
+        $builder->add('status', 'choice', array('choices'=> array('pending'=>'Pending','review'=>'Needs Review','completed'=>'Complete'),'data'=>$this->product_status));            
         
         $builder ->add('Retailer', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Retailer',

@@ -195,11 +195,24 @@ class ProductController extends Controller {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
 
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+            'form' => $productForm->createView(),
             'product' => $product,
             'page_number' => $page_number,
             'productItems'=>$productItems,
         ));
+    }
+
+#------------------Product Status Update Method---------------------------------------#
+
+    public function productStatusUpdateAction(Request $request) {
+        $target_array = $request->request->all();
+        $productStatus = $this->get('admin.helper.product')->setProductIntakeStatus($target_array['status'],$target_array['id']);
+        return new response(json_encode($productStatus));
     }
 
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
