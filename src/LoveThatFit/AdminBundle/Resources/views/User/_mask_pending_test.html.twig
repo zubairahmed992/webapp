@@ -28,21 +28,13 @@
     <div class="row">
         
         <style>
-             .navigation1{position: fixed !important; color:#fff; top: 60px; left: 25%; z-index: 2000 !important;}
+             .navigation1{position: fixed !important; top: 60px; left: 30%; z-index: 2000 !important; background: #ccc;} 
              .navigation1 a,
              .navigation1 a:visited {
                  display: inline-block !important;
-                 padding:5px 8px;
+                 padding:0 8px;
+                 border-right: 1px solid #666;
                  cursor: pointer;
-                 color:#fff;
-                 background: #000;
-                 text-decoration: none;
-
-             }
-             .navigation1 a:hover {
-                 color:#000;
-                 background: #fff;
-
              }
     </style>
     <div class="navigation1">
@@ -55,18 +47,10 @@
     <a onClick="zoom_in();">Zoom In</a>
     <a onClick="zoom_out();">Zoom Out</a>
     <a onClick="save();">Save</a>
-
-            <a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
-
-        <span id="activate_btn">
-            <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-            <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
-            {% if (archives is defined)%}
-                <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
-            {% else %}
-                <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
-            {% endif %}
-        </span>
+    <a onClick="hair_selection();">Hair Selection</a>
+    <a onClick="clip_hair_selection();">Clip Hair</a>
+    <a onClick="back_to_calibration();">Go Back</a>
+    <a onClick="crop_user();">Crop</a>
 </div>
         
         
@@ -113,8 +97,9 @@
 
                 </span></div>
     {% endfor %}
-
-
+     <div>
+        <!--<a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>-->
+    </div>
     {%else%}
     <div>
         <a STYLE="background: #1a1a1a;
@@ -165,25 +150,11 @@
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
 <input id="mask_x" type="hidden" value="{{marker.maskX}}" />
 <input id="mask_y" type="hidden" value="{{marker.maskY}}" />
-<input id="mask_p_x" type="hidden" value="{{pivot_position.mask_p_x}}" />
-<input id="mask_p_y" type="hidden" value="{{pivot_position.mask_p_y}}" />
 <input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
 <input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
 <input id="marker_update_url" type="hidden" value="{{ path('admin_archive_save_marker')}}" />{#path('user_maker_save')#}
-
-
-<!-- Mask Creation with body parts -->
-
-<input id="dm_body_parts_details_json" type="hidden" value="{{ bra_size_body_shape }}" />
-<input id="user_bust_px" type="hidden" value="392" />
-<input id="user_waist_px" type="hidden" value="319" />
-<input id="user_hip_px" type="hidden" value="424" />
-
-<!-- /Mask Creation with body parts -->
-
-
 
 <input id="btn_send_params" type="hidden" value="send" />
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
@@ -192,16 +163,37 @@
 <input id="shoulder_height" type="hidden" value="" />
 <input id="hip_height" type="hidden" value="" />
 <input id="image_actions" type="hidden" value="{{marker.imageActions}}" />
+
+
+
+
+
 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
+
+
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>
+
+
+
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
+
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('admin_archive_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
+
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
+
+
+
                 </form>
+
+
+
 <div class="span8 maindiv">
+    
+    
+    
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
@@ -267,7 +259,15 @@
     </tr>
 </table>-->
 
-
+<div style="display:none;">
+                    <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+                    <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+                    {% if (archives is defined)%}
+                        <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+                    {% else %}
+                        <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
+                    {% endif %}
+                </div>
 
             </div>
         </div>
@@ -302,7 +302,37 @@
 
 
 <script type="text/paperscript" canvas="canvas-1">
+var raster = new Raster('fff.jpg');
+	raster.position = view.center;
+	raster.visible = true;
 
+/////=========================Extras==================================================================================
+var myPath = new Path();
+	myPath.strokeColor = 'white';
+	myPath.add(new Point(40, 90));
+	myPath.add(new Point(90, 40));
+	myPath.add(new Point(140, 90));
+
+var myCircle = new Path.Circle(new Point(100, 70), 50);
+	myCircle.strokeColor = 'black';
+	myCircle.selected = true;
+    myCircle.removeSegment(0);
+
+var path = new CompoundPath({
+    children: [
+        new Path.Circle({
+            center: new Point(50, 50),
+            radius: 30
+        }),
+        new Path.Circle({
+            center: new Point(50, 50),
+            radius: 10
+        })
+    ],
+    fillColor: 'black',
+    selected: true
+});
+/////=========================Extras===================================================================================
 </script>
 
         <link href="{{ asset('bundles/lovethatfit/site/css/device_view_styles.css') }}" rel="stylesheet" type="text/css" />
@@ -351,6 +381,13 @@
 <script>
 
 $(document).ready(function(){
+
+
+
+
+
+
+
 
 
     $( "#btn_confirm" ).click(function() {
