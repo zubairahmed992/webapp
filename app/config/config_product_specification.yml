@@ -2302,6 +2302,7 @@ constants:
       colors: text
  
  fit_points:
+    height: Height
     neck: Neck
     shoulder_across_front: Shoulder across front
     shoulder_across_back: Shoulder across back
@@ -2324,6 +2325,8 @@ constants:
     outseam: Outseam
     inseam: inseam
     thigh: Thigh
+    high_thigh: High Thigh
+    low_thigh: Low Thigh
     knee: Knee 
     calf: Calf
     ankle: Ankle

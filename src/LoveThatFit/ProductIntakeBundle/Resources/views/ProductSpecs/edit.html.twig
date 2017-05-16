@@ -503,7 +503,36 @@
                         }
                         });
                     });
-              
+              //-------------- Alert Fit Perority Before Form Submit
+              var form1 = document.getElementById('form1');
+                form1.onsubmit = function(e){                    
+                    var fit_priority_sum=0;
+                    $(".fit_priority >  input[type='number']").each(function() {
+                       var value = +this.value || 0;
+                       fit_priority_sum += value;
+                    });
+                    var fabric_sum=0;
+                    $(".fabric_content > input[type='number']").each(function() {
+                       var value = +this.value || 0;
+                       fabric_sum += value;
+                    });
+                    var message = 'Sum of fabric content and Fit Prority is 100%';    
+                    if( fabric_sum < 100 && fit_priority_sum < 100 ){
+                        message = "ops! sum of fabric content and Fit Prority below 100%";
+                    }     
+                     if(fabric_sum < 100 && fit_priority_sum == 100){
+                        message = "ops! sum of fabric content below 100%";
+                    }  
+                     if(fabric_sum == 100 && fit_priority_sum < 100){
+                        message = "ops! sum of Fit Prority below 100%";
+                    }  
+                   
+                    var form = this;
+                    e.preventDefault();
+                    if(confirm(message))
+                        form.submit();
+                }
+
 
     });
 
@@ -523,7 +552,7 @@
 
 <br>
 <br>
-   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal">
+   <form action="{{ path('product_intake_product_specs_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data" id="form1"  class="form-horizontal">
        <div class="container">       
         <div id="tab-a" class="tab-content"> 
         {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
