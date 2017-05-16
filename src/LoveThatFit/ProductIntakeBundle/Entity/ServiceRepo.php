@@ -53,7 +53,7 @@ class ServiceRepo
                 LEFT JOIN pz.product_items pi
                 JOIN pz.product_size_measurements psm            
                 WHERE p.control_number=:style_id_number
-                AND b.name = :brand_name")->setParameters(array('style_id_number' => $style_id_number, 'brand_name' => $brand_name))->setMaxResults(1);   
+                AND b.name = :brand_name")->setParameters(array('style_id_number' => $style_id_number, 'brand_name' => $brand_name));   
      
         
         try {
