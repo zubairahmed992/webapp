@@ -12,12 +12,11 @@ class ServiceController extends Controller {
      
 #------------------------/product_intake/product_specification
       
-    public function getProductSpecificationAction() {
+    public function getProductSpecificationAction($brand_name, $style_id_number) {
         
          try {
-            $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-            $result = $this->get('service.repo')->getProductSpecification($decoded);   
-            $data   = $this->get('service.helper')->getResultFormat($result);
+            $result = $this->get('service.repo')->getProductSpecification($brand_name, $style_id_number);   
+            $data   = $this->get('service.helper')->getResultFormat($result);           
         return new JsonResponse([
             'success' => true,
             'data'    => $data 
@@ -33,18 +32,23 @@ class ServiceController extends Controller {
 
 #--------------->pi/ws/product_demission
     
-    public function getExistingProductSpecificationAction() {
-        try {
-            $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());           
-            $data = $this->get('service.repo')->getProductDetail($decoded['product_id']);   
-             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+    public function getExistingProductSpecificationAction($brand_name, $style_id_number) {    
+        try {               
+            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number);              
+            if($data){ 
+            foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
                      $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
                      $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
                    }
-             }
+            }
+              $message = true;
+            } else{
+                $message = "Record Not Found!";
+                $result = null;
+            }
         return new JsonResponse([
-            'success' => true,
+            'success' => $message,
             'data'    => $result 
              ]);
          } catch (\Exception $exception) {

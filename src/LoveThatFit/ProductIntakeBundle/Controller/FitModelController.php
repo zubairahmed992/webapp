@@ -46,6 +46,7 @@ class FitModelController extends Controller {
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_points['hip']);
         unset($fit_points['hem_length']);
+        unset($fit_points['thigh']);
         $required_fields = array('txt_title');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
@@ -101,6 +102,7 @@ class FitModelController extends Controller {
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_point_values['hip']);        
         unset($fit_point_values['hem_length']);
+        unset($fit_points['thigh']);
         !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         $required_fields = array('txt_title');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
