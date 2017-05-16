@@ -494,7 +494,7 @@ class WSCartController extends Controller
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $orderEntity->getOrderDate()->format('Y-m-d H:i:s'),
+            'purchase_date' => $orderEntity->getUserOrderDate()->format('Y-m-d H:i:s'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
@@ -555,7 +555,7 @@ class WSCartController extends Controller
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $orderEntity->getOrderDate()->format('Y-m-d H:i:s'),
+            'purchase_date' => $orderEntity->getUserOrderDate()->format('Y-m-d H:i:s'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
