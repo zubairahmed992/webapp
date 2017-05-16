@@ -28,12 +28,12 @@
                 data: {status:product_status,id:{{product.Id}}},  
                 success: function(data) {
                     if(data) {
-                        $('#msg_prod_status').html('Product status updated...');
-                        setTimeout(redirect_product_detail, 3000)
+                        $('#msg_prod_status').html('Product Status has been updated.');
+                        setTimeout(redirect_product_detail, 1000)
                         //$('#model_product_status').modal().hide();
                         //window.location.reload();
                     } else {
-                        $('#msg_prod_status').html('Oops! something went wrong. Try Again...')
+                        $('#msg_prod_status').html('Product Status not been updated.')
                     }
                 }
             });
@@ -98,7 +98,13 @@
                     
                     <div class="product_fld">
                         <div class="p_hd">Status</div>
-                        <div>{{product.status }}</div>
+                        <div>
+                            {%if(product.status)%}
+                                {{product.status}}
+                            {%else%}
+                                pending
+                            {%endif%}
+                        </div>
                     </div>
                     
                     <div id="product_info_left">
