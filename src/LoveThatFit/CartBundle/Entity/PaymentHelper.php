@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Yaml\Parser;
 use Braintree_Configuration;
 use Braintree_ClientToken;
@@ -247,12 +248,16 @@ class PaymentHelper
     {
         if( $result->success )
         {
+            $datetimeObj = new \DateTime('now');
             $fnfGroup = null;
             $payment_json = json_encode($result);
             $shipping_amount    = $decoded['shipping_amount'];
             $order_amount       = $decoded['order_amount'];
             $discount_amount    = $decoded['discount_amount'];
             $total_amount       = $decoded['total_amount'];
+            $order_date         = (isset($decoded['order_date']) ? $decoded['order_date'] : $datetimeObj->format('Y-m-d H:i:s'));
+            $rates              = (isset($decoded['rates']) ? $decoded['rates'] : "");
+
 
             $transaction_id = $result->transaction->id;
             $transaction_status = $result->transaction->status;
@@ -270,7 +275,7 @@ class PaymentHelper
             $order_number = $order_id . rand(100, 100000);
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $response = $this->container->get('cart.helper.orderDetail')->saveOrderDetail($user_cart, $entity);
-            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number);
+            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rates);
 
             $data = array(
                 'success' => 0

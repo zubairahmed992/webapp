@@ -118,9 +118,10 @@ class Stamps
                     'ToZIPCode'     => $postData['tozipcode'],
                     'ServiceType'   => $this->serviceType,
                     'DeliverDays'   => $this->deliverDays,
-                    'WeightOz'      => $this->weightOz,
+                    'WeightLb'      => $this->weightOz,
                     'PackageType'   => $this->packageType,
-                    'ShipDate'      => date('Y-m-d')
+                    'ShipDate'      => date('Y-m-d'),
+                    'RectangularShaped' => false
                 ));
 
             $responseRates = $this->soapClient->GetRates($callData);
@@ -128,10 +129,16 @@ class Stamps
 
             if(is_object($rates)){
                 $temp['amount'] = $rates->Amount;
-                $temp['deliverDays'] = $rates->DeliverDays;
+                $temp['deliverDays'] = (isset($rates->DeliverDays)) ? $rates->DeliverDays : "";;
                 $temp['shipDate'] = $rates->ShipDate;
-                $temp['deliveryDate'] = $rates->DeliveryDate;
+                $temp['deliveryDate'] = (isset($rates->DeliveryDate)) ? $rates->DeliveryDate : "";;
                 $temp['serviceType'] = $rates->ServiceType;
+                $temp['FromZIPCode'] = $rates->FromZIPCode;
+                $temp['ToZIPCode']  = $rates->ToZIPCode;
+                $temp['DeliverDays'] = $rates->DeliverDays;
+                $temp['WeightLb']   = $rates->WeightLb;
+                $temp['InsuredValue'] = (isset($rates->InsuredValue) ? $rates->InsuredValue : 0);
+                $temp['RectangularShaped'] = $rates->RectangularShaped;
 
                 array_push( $returnResponse, $temp);
             }else if(is_array($rates)){
@@ -140,8 +147,14 @@ class Stamps
                     $temp['amount'] = $rate->Amount;
                     $temp['deliverDays'] = (isset($rate->DeliverDays)) ? $rate->DeliverDays : "";
                     $temp['shipDate'] = $rate->ShipDate;
-                    $temp['deliveryDate'] = (isset($rate->DeliveryDate)) ? $rate->DeliveryDate : "";;
+                    $temp['deliveryDate'] = (isset($rate->DeliveryDate)) ? $rate->DeliveryDate : "";
                     $temp['serviceType'] = $rate->ServiceType;
+                    $temp['FromZIPCode'] = $rate->FromZIPCode;
+                    $temp['ToZIPCode']  = $rate->ToZIPCode;
+                    $temp['DeliverDays'] = $rate->DeliverDays;
+                    $temp['WeightLb']   = $rate->WeightLb;
+                    $temp['InsuredValue'] = (isset($rate->InsuredValue) ? $rate->InsuredValue : 0);
+                    $temp['RectangularShaped'] = $rate->RectangularShaped;
 
                     array_push( $returnResponse, $temp);
                 }

@@ -18,9 +18,69 @@
 
 
 {% block body %}
+<script>
+    $(document).ready(function(){   
+        $( "#update_product_status" ).click(function() {
+            var product_status = $("#product_status").val();
+            $.ajax({
+                type:'POST',
+                url: $('#product_status_url').text(),
+                data: {status:product_status,id:{{product.Id}}},  
+                success: function(data) {
+                    if(data) {
+                        $('#msg_prod_status').html('Product Status has been updated.');
+                        setTimeout(redirect_product_detail, 1000)
+                        //$('#model_product_status').modal().hide();
+                        //window.location.reload();
+                    } else {
+                        $('#msg_prod_status').html('Product Status not been updated.')
+                    }
+                }
+            });
+        });
+    });
+
+    function redirect_product_detail() {
+        window.location.reload();
+    }
+</script>
+<span id="product_status_url" style="display:none;">{{path('admin_product_status_update')}}</span>
 <div>      
     <h1 style="float:left;">{{product.name }}</h1>
-<div class="btn_wrapper">     
+<div class="btn_wrapper">
+
+<!-- product status button -->
+<a href="#model_product_status" class="btn" data-toggle="modal">Product Status</a>
+  <!-- Modal -->
+  <div class="modal fade" id="model_product_status" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title">Product Status</h3>
+        </div>
+        <div class="modal-body">
+            <div>
+                <span style="float:left">
+                    {{ form_widget(form.status) }}{{ form_errors(form.status) }}
+                </span>
+                <span style="float:left; padding-left: 25px">
+                    <button type="button" id="update_product_status" class="btn btn-default">Update</button>
+                </span>
+                <span style="float:left; padding-left: 25px" id="msg_prod_status">
+                </span>
+            </div>
+            <div>
+
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 <a href="{{ path('admin_products') }}" class="btn">back to list</a>
       </div>
     <div class="clearfix"></div>   
@@ -36,7 +96,16 @@
                 <div class="edt_container">
                     
                     
-                    
+                    <div class="product_fld">
+                        <div class="p_hd">Status</div>
+                        <div>
+                            {%if(product.status)%}
+                                {{product.status}}
+                            {%else%}
+                                pending
+                            {%endif%}
+                        </div>
+                    </div>
                     
                     <div id="product_info_left">
                     <div class="product_fld">

@@ -26,7 +26,10 @@
 					</div>
 					<div class="span8">
 						<div class="span3">Order Date</div>
-						<div class="span3">{{order.OrderDate|date('d-m-Y') }}</div>
+						<div class="span3">
+                            {{ order.UserOrderDate|date('Y') > 1900 ? order.OrderDate|date('Y-m-d H:i:s') : order.OrderDate|date('Y-m-d H:i:s') }}
+							{#{{order.OrderDate|date('Y-m-d H:i:s') }}#}
+						</div>
 					</div>
 					<div class="span8">
 						<div class="span3">Billing Full Name</div>
