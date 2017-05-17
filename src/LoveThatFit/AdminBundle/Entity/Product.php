@@ -127,11 +127,6 @@ class Product {
     protected $gender;
 
     /**
-     * @ORM\Column(name="status", type="string", columnDefinition="enum('pending', 'review', 'completed')")
-     */
-    protected $status;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $styling_type;
@@ -253,6 +248,11 @@ class Product {
      */
     protected $retailer_reference_id;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $status;
+
     //----------------------------------------------------------
     /**
      * Get id
@@ -334,7 +334,7 @@ class Product {
     /**
      * Set status
      *
-     * @param \enum $status
+     * @param string $status
      * @return status
      */
     public function setStatus($status)
@@ -347,7 +347,7 @@ class Product {
     /**
      * Get status
      *
-     * @return \enum 
+     * @return string
      */
     public function getStatus()
     {
@@ -1170,8 +1170,7 @@ class Product {
             'brand' => $this->brand->getName(),
             'brand_url' => $this->brand->getImage(),
             'description' => $this->description,
-            'gender' => $this->gender,
-            'status' => $this->status,
+            'gender' => $this->gender,            
             'clothing_type' => $this->clothing_type->getName(),
             'target' => $this->clothing_type->getTarget(),
             'styling_type' => $this->styling_type,
@@ -1186,6 +1185,7 @@ class Product {
             'fit_type' => $this->fit_type,
             'size_title_type' => $this->size_title_type,   
             'display_image' => $this->displayProductColor->getWebPath(),
+            'status' => $this->status,
         );
     }
         //----------------------------------------------------------
@@ -1529,8 +1529,7 @@ class Product {
         return array(
             'id' => $this->id,
             'name' => $this->name,
-            'gender' => $this->gender,      
-            'status' => $this->status,      
+            'gender' => $this->gender,                
             'control_number' => $this->control_number,
             'brand_id' => $this->brand->getId(),            
             'brand_name' => $this->brand->getName(),            
@@ -1556,7 +1555,8 @@ class Product {
             'clothing_type_id' => $this->clothing_type->getId(),
             'clothing_type' => $this->clothing_type->getName(),
             'target' => $this->clothing_type->getTarget(),
-            'layering' => $this->layering,                        
+            'layering' => $this->layering,  
+            'status' => $this->status,                      
         );
     }
 
