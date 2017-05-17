@@ -26,8 +26,9 @@ class UserController extends Controller {
     public function paginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
-        $output = $this->get('user.helper.user')->search($requestData);
-        
+        $logged_user = $this->getUser();
+        $logged_user_role = $logged_user->getRoleName();
+        $output = $this->get('user.helper.user')->search($requestData, $logged_user_role);
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
 

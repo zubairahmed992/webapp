@@ -125,7 +125,7 @@
                         "orderable": false,
                         "searchable": false,
                         "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
-                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '') + " " + archiveButton
+                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '') + " "
                     },
                     {
                         "data": "original_user_id",
@@ -141,6 +141,11 @@
                         $('td', row).addClass('hide_grid_row');
                     }
 
+                },
+                "rowCallback": function( row, data ) {
+                    if (data["user_role"] == 'admin' || data["user_role"] == 'lead') {
+                        $(row).find('td:eq(7)').append(archiveButton);
+                    }
                 },
             });
             $.fn.dataTable.ext.errMode = 'none';

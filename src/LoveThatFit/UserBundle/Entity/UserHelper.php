@@ -1100,7 +1100,7 @@ class UserHelper
         }
     }
 
-    public function search($data)
+    public function search($data, $logged_user_role = null)
     {
         $draw = isset ($data['draw']) ? intval($data['draw']) : 0;
         //length
@@ -1114,7 +1114,6 @@ class UserHelper
         //search data
         $search = $data['search'];
         $gender = $data['gender'];
-
         if ($data['age'] != "") {
             $endDate = $this->getUserBirthDate($data['age']);
             $new_timestamp = strtotime('-12 months', strtotime($endDate));
@@ -1150,7 +1149,8 @@ class UserHelper
                 'createdAt' => ($fData["createdAt"]->format('m-d-Y h:m:s')),
                 'updated_at' => $result['updated_at'],
                 'status' => $result['status'],
-                'original_user_id' => $fData["original_user_id"]
+                'original_user_id' => $fData["original_user_id"],
+                'user_role' => ($logged_user_role != null) ? strtolower($logged_user_role) : ""
             ];
 
 
