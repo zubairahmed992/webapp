@@ -14,7 +14,7 @@ class MappingController extends Controller
         $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:index.html.twig', array(
                     'specs_mappings' => $product_specs_mappings,
-                    'cs_file'      =>  $this->get('productIntake.product_specification_mapping')->csvDownloads($product_specs_mappings),        
+                    'csv_file'      =>  $this->get('productIntake.product_specification_mapping')->csvDownloads($product_specs_mappings),        
         ));
     }
     
@@ -202,13 +202,41 @@ class MappingController extends Controller
     }
     #----------------------- /product_intake/specs_mapping/delete
     public function deleteAction($id){  
-        $remove_csv_file = $this->get('productIntake.product_specification_mapping')->find($id);
-         if($remove_csv_file->getAbsolutePath()){
+        clearstatcache();      
+        $remove_csv_file = $this->get('productIntake.product_specification_mapping')->find($id);     
+         if( file_exists($remove_csv_file->getAbsolutePath()) ){
             unlink($remove_csv_file->getAbsolutePath());
          }
         $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
+    }
+    
+    
+    
+    public function duplicateAction($id)
+    { 
+        $entity = $this->get('productIntake.product_specification_mapping')->find($id);      
+        $csv_file =   $imagepath =  str_replace('\\', '/', getcwd()). '/uploads/ltf/products/product_csv/';       
+        $mapping = $this->container->get('productIntake.product_specification_mapping')->createNew();
+        $mapping->setBrand($entity->getBrand());
+        $mapping->setSizeTitleType($entity->getSizeTitleType());
+        $mapping->setClothingType($entity->getClothingType());
+        $mapping->setGender($entity->getGender());
+        $mapping->setTitle("Duplicate Mapping of ".$entity->getId());
+        $mapping->setDescription($entity->getDescription());
+        $mapping->setMappingJson($entity->getMappingJson());           
+        $this->container->get('productIntake.product_specification_mapping')->save($mapping);  
+         clearstatcache();
+        if( file_exists($entity->getAbsolutePath()) ) {              
+              $mapping->setMappingFileName('csv_mapping_' . $mapping->getId() . '.csv');
+              copy($entity->getAbsolutePath(),$csv_file.'csv_mapping_' . $mapping->getId() . '.csv');
+        }
+        $this->container->get('productIntake.product_specification_mapping')->save($mapping);       
+
+        $this->get('session')->setFlash('info', 'Duplicate Product specification Mapping created.');        
+        return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
+    
     }
     
     
