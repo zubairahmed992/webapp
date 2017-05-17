@@ -98,7 +98,9 @@ class ProductController extends Controller {
         $entity = $this->get('admin.helper.product')->find($id);
         $entity->setGender(strtolower($entity->getGender()));
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
@@ -195,11 +197,25 @@ class ProductController extends Controller {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
 
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+            'form' => $productForm->createView(),
             'product' => $product,
             'page_number' => $page_number,
             'productItems'=>$productItems,
         ));
+    }
+
+#------------------Product Status Update Method---------------------------------------#
+
+    public function productStatusUpdateAction(Request $request) {
+        $target_array = $request->request->all();
+        $productStatus = $this->get('admin.helper.product')->setProductIntakeStatus($target_array['status'],$target_array['id']);
+        return new response(json_encode($productStatus));
     }
 
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
@@ -215,7 +231,14 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType($sizes));
         $imageUploadForm = $this->createForm(new ProductColorImageType());
         $patternUploadForm = $this->createForm(new ProductColorPatternType());
+
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+            'form' => $productForm->createView(),
             'product' => $product,
             'colorform' => $colorform->createView(),
             'imageUploadForm' => $imageUploadForm->createView(),
@@ -575,7 +598,14 @@ class ProductController extends Controller {
         }
         $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
         $itemrawimageform = $this->createForm(new ProductItemRawImageType(), $this->getProductItem($item_id));
+
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+            'form' => $productForm->createView(),
             'product' => $entity,
             'itemform' => $itemform->createView(),
             'item_id' => $item_id,
