@@ -127,6 +127,11 @@ class Product {
     protected $gender;
 
     /**
+     * @ORM\Column(name="status", type="string", columnDefinition="enum('pending', 'review', 'completed')")
+     */
+    protected $status;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $styling_type;
@@ -324,6 +329,29 @@ class Product {
      */
     public function getGender() {
         return $this->gender;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \enum $status
+     * @return status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \enum 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
@@ -1143,6 +1171,7 @@ class Product {
             'brand_url' => $this->brand->getImage(),
             'description' => $this->description,
             'gender' => $this->gender,
+            'status' => $this->status,
             'clothing_type' => $this->clothing_type->getName(),
             'target' => $this->clothing_type->getTarget(),
             'styling_type' => $this->styling_type,
@@ -1500,7 +1529,8 @@ class Product {
         return array(
             'id' => $this->id,
             'name' => $this->name,
-            'gender' => $this->gender,            
+            'gender' => $this->gender,      
+            'status' => $this->status,      
             'control_number' => $this->control_number,
             'brand_id' => $this->brand->getId(),            
             'brand_name' => $this->brand->getName(),            
