@@ -17,6 +17,6 @@ stamps_com_dev:
   password: postage1
   fromzipcode: 90405
   serviceType: US-XM
-  weightOz: 500
+  weightOz: 20
   packagetype: Package
   deliverydays: 1-3

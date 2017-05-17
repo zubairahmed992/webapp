@@ -119,6 +119,13 @@ class UserAddresses
      */
     private $adress_type;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cleanseHash", type="string", length=255, nullable=true, options={"default":"null"})
+     */
+
+    private $cleanseHash;
 
     /**
      * Get id
@@ -444,4 +451,50 @@ class UserAddresses
 	  return $obj;
 
 	}
+
+    /**
+     * Set adress_type
+     *
+     * @param integer $adressType
+     * @return UserAddresses
+     */
+    public function setAdressType($adressType)
+    {
+        $this->adress_type = $adressType;
+    
+        return $this;
+    }
+
+    /**
+     * Get adress_type
+     *
+     * @return integer 
+     */
+    public function getAdressType()
+    {
+        return $this->adress_type;
+    }
+
+    /**
+     * Set cleanseHash
+     *
+     * @param string $cleanseHash
+     * @return UserAddresses
+     */
+    public function setCleanseHash($cleanseHash)
+    {
+        $this->cleanseHash = $cleanseHash;
+    
+        return $this;
+    }
+
+    /**
+     * Get cleanseHash
+     *
+     * @return string 
+     */
+    public function getCleanseHash()
+    {
+        return $this->cleanseHash;
+    }
 }
