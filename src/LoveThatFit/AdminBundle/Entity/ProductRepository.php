@@ -1454,6 +1454,18 @@ class ProductRepository extends EntityRepository
             return false;
         }
     }
+
+    public function updateProductIntakeStatus($status, $id)
+    {
+        try {
+            $sql = "UPDATE product SET status = '" . $status . "' WHERE id = " . $id;
+            $conn = $this->getEntityManager()->getConnection();
+            $rowsAffected = $conn->executeUpdate($sql);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
 
     /*
