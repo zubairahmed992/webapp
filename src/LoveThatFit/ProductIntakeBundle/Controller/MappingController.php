@@ -213,7 +213,7 @@ class MappingController extends Controller
     }
     
     
-    
+    //------------------------- /product_intake/specs_mapping/duplicate
     public function duplicateAction($id)
     { 
         $entity = $this->get('productIntake.product_specification_mapping')->find($id);      
