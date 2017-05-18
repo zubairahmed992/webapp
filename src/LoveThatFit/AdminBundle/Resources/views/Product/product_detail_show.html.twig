@@ -46,7 +46,10 @@
 <span id="product_status_url" style="display:none;">{{path('admin_product_status_update')}}</span>
 <div>      
     <h1 style="float:left;">{{product.name }}</h1>
-<div class="btn_wrapper">  
+<div class="btn_wrapper">
+
+<!-- manage description button -->
+<a href="{{ path('admin_product_manage_description', {'id': product.Id}) }}" class="btn">Manage Description</a>  
 
 <!-- product status button -->
 <a href="#model_product_status" class="btn" data-toggle="modal">Product Status</a>

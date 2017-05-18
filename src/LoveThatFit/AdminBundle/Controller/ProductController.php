@@ -26,6 +26,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenDressType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeMeasurementType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemPieceType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDescriptionType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\Constraints\Null;
 use Symfony\Component\Yaml\Yaml;
@@ -219,6 +220,35 @@ class ProductController extends Controller {
         $target_array = $request->request->all();
         $productStatus = $this->get('admin.helper.product')->setProductIntakeStatus($target_array['status'],$target_array['id']);
         return new response(json_encode($productStatus));
+    }
+
+#------------------Product Manage Description---------------------------------------#
+
+    public function productManageDescriptionAction(Request $request, $id) {
+        $entity = $this->get('admin.helper.product')->find($id);
+        $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $form = $this->createForm(new ProductDescriptionType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_manage_description.html.twig', array(
+            'form' => $form->createView(),
+            'entity' => $entity,
+            'productSpecification' => $productSpecification,
+        ));
+    }
+
+#------------------Product Manage Description Update Method---------------------------------------#
+
+    public function productDescriptionUpdateAction(Request $request, $id) {
+        $entity = $this->get('admin.helper.product')->find($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $form = $this->createForm(new ProductDescriptionType($this->get('admin.helper.product.specification')), $entity);
+        $form->bind($request);
+        $data = $request->request->all();
+        $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
+        $this->get('session')->setFlash($productArray['message_type'], "Product description updated.");
+        return $this->redirect($this->generateUrl('admin_product_manage_description', array('id' => $entity->getId(), 'product' => $entity)));
     }
 
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#

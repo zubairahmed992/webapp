@@ -253,6 +253,20 @@ class Product {
      */
     protected $status;
 
+    /**
+     * @var string $item_name
+     *
+     * @ORM\Column(name="item_name", type="string", length=255, nullable=true)
+     */
+    private $item_name;
+
+    /**
+     * @var string $item_details
+     *
+     * @ORM\Column(name="item_details", type="text", nullable=true)
+     */
+    private $item_details;
+
     //----------------------------------------------------------
     /**
      * Get id
@@ -1163,6 +1177,8 @@ class Product {
             'size_title_type' => $this->size_title_type,   
             'display_image' => $this->displayProductColor->getWebPath(),
             'status' => $this->status,
+            'item_name' => $this->item_name,
+            'item_details' => $this->item_details,
         );
     }
         //----------------------------------------------------------
@@ -1533,7 +1549,9 @@ class Product {
             'clothing_type' => $this->clothing_type->getName(),
             'target' => $this->clothing_type->getTarget(),
             'layering' => $this->layering,
-            'status' => $this->status,                        
+            'status' => $this->status,
+            'item_name' => $this->item_name,
+            'item_details' => $this->item_details,                        
         );
     }
 
@@ -1653,5 +1671,47 @@ class Product {
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set item_name
+     *
+     * @param string $item_name
+     * @return Product
+     */
+    public function setItemName($item_name) {
+        $this->item_name = $item_name;
+
+        return $this;
+    }
+
+    /**
+     * Get item_name
+     *
+     * @return string 
+     */
+    public function getItemName() {
+        return $this->item_name;
+    }
+
+    /**
+     * Set item_details
+     *
+     * @param string $item_details
+     * @return Product
+     */
+    public function setItemDetails($item_details) {
+        $this->item_details = $item_details;
+
+        return $this;
+    }
+
+    /**
+     * Get item_details
+     *
+     * @return string 
+     */
+    public function getItemDetails() {
+        return $this->item_details;
     }
 }
