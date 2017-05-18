@@ -248,6 +248,11 @@ class Product {
      */
     protected $retailer_reference_id;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $status;
+
     //----------------------------------------------------------
     /**
      * Get id
@@ -1157,6 +1162,7 @@ class Product {
             'fit_type' => $this->fit_type,
             'size_title_type' => $this->size_title_type,   
             'display_image' => $this->displayProductColor->getWebPath(),
+            'status' => $this->status,
         );
     }
         //----------------------------------------------------------
@@ -1526,7 +1532,8 @@ class Product {
             'clothing_type_id' => $this->clothing_type->getId(),
             'clothing_type' => $this->clothing_type->getName(),
             'target' => $this->clothing_type->getTarget(),
-            'layering' => $this->layering,                        
+            'layering' => $this->layering,
+            'status' => $this->status,                        
         );
     }
 
@@ -1624,5 +1631,27 @@ class Product {
     public function getUserItemFavHistory()
     {
         return $this->user_item_fav_history;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
