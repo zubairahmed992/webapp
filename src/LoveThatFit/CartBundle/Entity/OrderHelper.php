@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Yaml\Parser;
 use Braintree_Configuration;
 use Braintree_ClientToken;
@@ -152,7 +153,7 @@ class OrderHelper
 
 
     //-------- update Payment transaction status of order ----------------------------------------////////////
-    public function updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number)
+    public function updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rate)
     {
         $order = $this->findOrderById($order_id);
         $order->setTransactionId($transaction_id);
@@ -160,6 +161,9 @@ class OrderHelper
         $order->setPaymentMethod($payment_method);
         $order->setPaymentJson($payment_json);
         $order->setOrderNumber($order_number);
+        $order->setRateJson($rate);
+
+        $order->setUserOrderDate(new \DateTime($order_date));
         $this->save($order);
     }
 

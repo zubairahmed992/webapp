@@ -12,6 +12,7 @@ class MailHelper {
     protected $mailer;
     protected $templating;
     var $conf;
+    protected $admin_email;
 
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating) {
         $this->mailer = $mailer;
@@ -19,6 +20,7 @@ class MailHelper {
         $this->conf = $yaml->parse(file_get_contents('../app/config/parameters.yml'));
         $this->templating = $templating;
         $this->server = isset($this->conf['parameters']['server'])?$this->conf['parameters']['server']:'';
+        $this->admin_email = isset($this->conf['parameters']['admin_email'])? $this->conf['parameters']['admin_email']: 'haris@selfiestyler.com';
     }
 
     private function sendEmail($from, $to, $body, $user, $subject = '', $reset_link='') {
@@ -129,7 +131,7 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         // $to = $dataArray['email'];
 
-        $to = "milwaukeestore1@selfiestyler.com";
+        $to = $this->admin_email;
 
 
         $body = "LoveThatFitAdminBundle::email/email_order_detail.html.twig";
