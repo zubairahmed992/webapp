@@ -249,9 +249,23 @@ class UserOrder
 	 */
 	private $shipping_amount;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rate_json", type="text" , nullable=true)
+     */
+    private $rate_json;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="user_order_date", type="datetime", nullable=true)
+     */
+
+    private $user_order_date;
 
 
-  /**
+    /**
      * Get id
      *
      * @return integer 
@@ -1045,5 +1059,51 @@ class UserOrder
     public function getUserGroup()
     {
         return $this->user_group;
+    }
+
+    /**
+     * Set rate_json
+     *
+     * @param string $rateJson
+     * @return UserOrder
+     */
+    public function setRateJson($rateJson)
+    {
+        $this->rate_json = $rateJson;
+
+        return $this;
+    }
+
+    /**
+     * Get rate_json
+     *
+     * @return string
+     */
+    public function getRateJson()
+    {
+        return $this->rate_json;
+    }
+
+    /**
+     * Set user_order_date
+     *
+     * @param \DateTime $userOrderDate
+     * @return UserOrder
+     */
+    public function setUserOrderDate($userOrderDate)
+    {
+        $this->user_order_date = $userOrderDate;
+
+        return $this;
+    }
+
+    /**
+     * Get user_order_date
+     *
+     * @return \DateTime
+     */
+    public function getUserOrderDate()
+    {
+        return $this->user_order_date;
     }
 }
