@@ -46,6 +46,7 @@ class FitModelController extends Controller {
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_points['hip']);
         unset($fit_points['hem_length']);
+        unset($fit_points['thigh']);
         $required_fields = array('txt_title');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:create_new.html.twig', array(
                     'fit_points' => $fit_points,
@@ -101,6 +102,7 @@ class FitModelController extends Controller {
         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
         unset($fit_point_values['hip']);        
         unset($fit_point_values['hem_length']);
+        unset($fit_points['thigh']);
         !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         $required_fields = array('txt_title');
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
@@ -145,5 +147,23 @@ class FitModelController extends Controller {
         return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
     }
     
+    //--------------------- /product_intake/fit_model/duplicate
+    public function duplicateAction($id)
+    {        
+        $entity = $this->get('productIntake.fit_model_measurement')->find($id); 
+        $fmm = $this->get('productIntake.fit_model_measurement')->createNew();
+        $fmm->setBrand($entity->getBrand());
+        $fmm->setTitle("Duplicat of ".$entity->getId());
+        $fmm->setDescription($entity->getDescription());
+        $fmm->setSize($entity->getSize());
+        $fmm->setClothingType($entity->getClothingType());
+        $fmm->setGender($entity->getGender());
+        $fmm->setSizeTitleType($entity->getSizeTitleType());        
+        $fmm->setMeasurementJson($entity->getMeasurementJson());
+        $this->get('productIntake.fit_model_measurement')->save($fmm);
+        $this->get('session')->setFlash('info', 'Duplicate Fit Model Measurement created.');  
+        return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
+    
+    }
 
 }
