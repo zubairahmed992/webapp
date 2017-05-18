@@ -1560,4 +1560,10 @@ class ProductHelper
         $product = $this->repo->find($id);
         return $product->getStatus();
     }
+
+    public function getProductStatus($id)
+    {
+        $product = $this->repo->find($id);
+        return $product->getDisabled();
+    }
 }

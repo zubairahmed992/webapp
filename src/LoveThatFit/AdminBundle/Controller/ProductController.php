@@ -100,7 +100,8 @@ class ProductController extends Controller {
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status), $entity);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
@@ -145,7 +146,9 @@ class ProductController extends Controller {
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $form->bind($request);
         $data = $request->request->all();
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
@@ -199,8 +202,9 @@ class ProductController extends Controller {
 
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
             'form' => $productForm->createView(),
@@ -233,8 +237,9 @@ class ProductController extends Controller {
 
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
             'form' => $productForm->createView(),
@@ -600,8 +605,9 @@ class ProductController extends Controller {
 
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
             'form' => $productForm->createView(),
