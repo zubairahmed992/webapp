@@ -721,6 +721,27 @@ class WSCartController extends Controller
         return new Response( $res );
     }
 
+    public function getShippingMethodsAction(){
+        $addresses = array();
+        $stampsDotCom = new Stamps();
+
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $response = $stampsDotCom->getRates( $decoded );
+            $addresses['shipping_methods'] = array();
+            if($response['verified']){
+                $addresses['shipping_methods'] = $response['shipping_method'];
+            }
+
+            $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
     public function getAllUserSavedAddressesWithRatesAction(){
         $stampsDotCom = new Stamps();
 
