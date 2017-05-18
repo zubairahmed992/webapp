@@ -14,7 +14,7 @@ class MappingController extends Controller
         $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:index.html.twig', array(
                     'specs_mappings' => $product_specs_mappings,
-                    'cs_file'      =>  $this->get('productIntake.product_specification_mapping')->csvDownloads($product_specs_mappings),        
+                    'csv_file'      =>  $this->get('productIntake.product_specification_mapping')->csvDownloads($product_specs_mappings),        
         ));
     }
     
@@ -24,10 +24,13 @@ class MappingController extends Controller
         $clothing_types = $this->get('admin.helper.clothing_type')->getArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
-        $fit_points =      array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'abdomen', 'high_hip', 'low_hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        //$fit_points =      array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length','bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'abdomen', 'high_hip', 'low_hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+         $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        unset($fit_points['hip']);
+        //unset($fit_points['hem_length']);
+        unset($fit_points['thigh']);
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:new.html.twig', array(
-                    'fit_points' => $fit_points,
+                    'fit_points' => array_keys($fit_points),
                     'brands' => $brands,
                     'clothing_types' => $clothing_types,
                     'product_specs' => $product_specs,
@@ -123,13 +126,16 @@ class MappingController extends Controller
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();        
-        $fit_points =      array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length',
-            'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'abdomen', 'high_hip', 'low_hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        //$fit_points =      array('neck', 'shoulder_across_front', 'shoulder_across_back', 'shoulder_length', 'arm_length', 'bicep', 'triceps', 'wrist', 'bust', 'chest', 'back_waist', 'waist', 'cf_waist', 'waist_to_hip', 'abdomen', 'high_hip', 'low_hip', 'outseam', 'inseam', 'thigh', 'knee', 'calf', 'ankle', 'hem_length');
+        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();
+        unset($fit_points['hip']);
+        //unset($fit_points['hem_length']);
+        unset($fit_points['thigh']);
         $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);
         $body_types = ($parsed_data['gender'] == 'f'? $size_specs['fit_types']['woman']:$size_specs['fit_types']['man']);
         $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:edit.html.twig', array(
-                    'fit_points' => $fit_points,
+                    'fit_points' => array_keys($fit_points),
                     'brands' => $brands,
                     'clothing_types' => $clothing_types,
                     'product_specs' => $product_specs,
@@ -196,13 +202,41 @@ class MappingController extends Controller
     }
     #----------------------- /product_intake/specs_mapping/delete
     public function deleteAction($id){  
-        $remove_csv_file = $this->get('productIntake.product_specification_mapping')->find($id);
-         if($remove_csv_file->getAbsolutePath()){
+        clearstatcache();      
+        $remove_csv_file = $this->get('productIntake.product_specification_mapping')->find($id);     
+         if( file_exists($remove_csv_file->getAbsolutePath()) ){
             unlink($remove_csv_file->getAbsolutePath());
          }
         $msg_ar = $this->get('productIntake.product_specification_mapping')->delete($id);             
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);   
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
+    }
+    
+    
+    //------------------------- /product_intake/specs_mapping/duplicate
+    public function duplicateAction($id)
+    { 
+        $entity = $this->get('productIntake.product_specification_mapping')->find($id);      
+        $csv_file =   $imagepath =  str_replace('\\', '/', getcwd()). '/uploads/ltf/products/product_csv/';       
+        $mapping = $this->container->get('productIntake.product_specification_mapping')->createNew();
+        $mapping->setBrand($entity->getBrand());
+        $mapping->setSizeTitleType($entity->getSizeTitleType());
+        $mapping->setClothingType($entity->getClothingType());
+        $mapping->setGender($entity->getGender());
+        $mapping->setTitle("Duplicate Mapping of ".$entity->getId());
+        $mapping->setDescription($entity->getDescription());
+        $mapping->setMappingJson($entity->getMappingJson());           
+        $this->container->get('productIntake.product_specification_mapping')->save($mapping);  
+         clearstatcache();
+        if( file_exists($entity->getAbsolutePath()) ) {              
+              $mapping->setMappingFileName('csv_mapping_' . $mapping->getId() . '.csv');
+              copy($entity->getAbsolutePath(),$csv_file.'csv_mapping_' . $mapping->getId() . '.csv');
+        }
+        $this->container->get('productIntake.product_specification_mapping')->save($mapping);       
+
+        $this->get('session')->setFlash('info', 'Duplicate Product specification Mapping created.');        
+        return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
+    
     }
     
     

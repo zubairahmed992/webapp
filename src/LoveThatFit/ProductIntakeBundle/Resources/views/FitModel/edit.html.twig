@@ -124,10 +124,10 @@
                     </div>
                 </div>
                 {% elseif fit_point_k == 'sel_clothing_type' %}
-                <div class="form-group required">
+                <div class="form-group">
                     <label class="control-label col-sm-2" for=""> Clothing Type: </label>
                     <div class="col-sm-4">
-                        <select name="sel_clothing_type" class="clothing_types form-control" required>
+                        <select name="sel_clothing_type" class="clothing_types form-control" >
                             <option value="">Select Clothing Type</option>
                             {% for clothing_k, clothing_v in colthing_types_man_woman %}
                                 <option value="{{ clothing_v }}"{{clothing_v =='' and clothing_k == 0 ? 'selected':clothing_v==fit_point_values['sel_clothing_type']?'selected':'' }}> {{ clothing_v }} </option>

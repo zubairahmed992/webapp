@@ -24,4 +24,8 @@ product_intake_specs_mapping_csv_upload:
 
 product_intake_specs_mapping_delete:
     pattern:  /product_intake/specs_mapping/delete/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:delete }    
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:delete }  
+    
+product_intake_specs_mapping_duplicate:
+    pattern:  /product_intake/specs_mapping/duplicate/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:duplicate }    

@@ -28,4 +28,8 @@ product_intake_fit_model_update:
     
 product_intake_fit_model_delete:
     pattern:  /product_intake/fit_model/delete/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:delete }       
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:delete }   
+    
+product_intake_fit_model_duplicate:
+    pattern:  /product_intake/fit_model/duplicate/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:duplicate }     

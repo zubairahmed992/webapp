@@ -121,9 +121,12 @@ class ProductSpecificationMappingHelper {
   
   #---------------------- CSV File Downlod Links
   public function  csvDownloads($csv_files){
+      $csv_file_path = array();
       foreach ( $csv_files as $k => $v ){
           $csv_file  = $this->find($v->getId()); 
-          $csv_file_path[$v->getId()] = $csv_file->getWebPath();
+           if($v->getMappingFileName() && file_exists($v->getAbsolutePath()) ) {  
+           $csv_file_path[$v->getId()] = $csv_file->getWebPath();
+          }
         }
         return $csv_file_path;
   }
