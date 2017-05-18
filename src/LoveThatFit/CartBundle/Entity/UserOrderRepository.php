@@ -134,6 +134,7 @@ class UserOrderRepository extends EntityRepository
 		    $query 
 		        ->andWhere('o.billing_first_name like :search')
                 ->orWhere('o.billing_last_name like :search')
+                ->orWhere('o.order_number like :search')
                 ->setParameter('search', "%".$search."%");
 		}
 		if (is_array($order)) {
