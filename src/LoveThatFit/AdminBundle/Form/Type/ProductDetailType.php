@@ -12,7 +12,9 @@ class ProductDetailType extends AbstractType
     private $container;
     private $sizeTitleType;
     private $stretch_type;
-    public function __construct($container,$sizeTitleType)             
+    private $product_status;
+    private $disabled;
+    public function __construct($container,$sizeTitleType,$status=null)             
     {
         $this->container= $container;
         $this->stretch_type=$this->container->getWomenStretchType();
@@ -23,7 +25,8 @@ class ProductDetailType extends AbstractType
         $this->fabric_content=$this->container->getFabricContent(); 
         $this->garment_detail=$this->container->getGarmentDetail(); 
         $this->sizeTitleType=$sizeTitleType;
-        
+        $this->product_status=isset($status) ? $status : 'pending';
+        $this->disabled=(isset($status) && $status == 'completed') ? '' : 'disabled';
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -76,7 +79,9 @@ class ProductDetailType extends AbstractType
         $builder->add('size_title_type', 'choice', array('choices'=>$this->sizeTitleType,'expanded' => true,
                     'multiple' => false,'required'  => true,));
         
-        $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,));
+        $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,'disabled' =>$this->disabled));
+
+        $builder->add('status', 'choice', array('choices'=> array('pending'=>'Pending','review'=>'Needs Review','completed'=>'Complete'),'data'=>$this->product_status));
 
 //$builder->add('Brand', 'choice',array('choices'=>$brand_list) );
         //$builder->add('ClothingType', 'choice', array('choices'=> array()), array('mapped' => false));
