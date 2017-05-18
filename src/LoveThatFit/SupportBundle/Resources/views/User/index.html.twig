@@ -58,21 +58,17 @@
     </div>
     <script type="text/javascript">
         jQuery(document).ready(function () {
-
             if ( {{ app.session.get('Permissions')['users']['duplicate'] }} == 1)
             {
                 visible = true;
                 showDuplicateUser = true;
             }
-
             if ( {{ app.session.get('Permissions')['users']['detail'] }} == 1)
             {
                 visible = true;
                 ShowDetailPageButton = true;
             }
-
             var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
-
             var table = $('#example').DataTable({
                 "processing": true,
                 "serverSide": true,
@@ -125,7 +121,7 @@
                         "orderable": false,
                         "searchable": false,
                         "defaultContent": ((typeof showDuplicateUser != "undefined" && showDuplicateUser == true) ? DuplicateUser : '')
-                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '')
+                        + ((typeof ShowDetailPageButton != "undefined" && ShowDetailPageButton == true) ? DetailPageButton : '') + " "
                     },
                     {
                         "data": "original_user_id",
@@ -140,15 +136,17 @@
                     if (jQuery.inArray(data["id"], notShownIDs) != -1) {
                         $('td', row).addClass('hide_grid_row');
                     }
-
+                },
+                "rowCallback": function( row, data ) {
+                    if (data["user_role"] == 'admin' || data["user_role"] == 'lead') {
+                        $(row).find('td:eq(7)').append(archiveButton);
+                    }
                 },
             });
             $.fn.dataTable.ext.errMode = 'none';
-
             $('#gender, #age').change(function () {
                 table.draw();
             });
-
             jQuery('#example tbody').on('click', 'button, a, img', function () {
                 var dataAction = $(this).attr('data-action');
                 var data = table.row($(this).parents('tr')).data();
@@ -159,6 +157,11 @@
                 }
                 if (dataAction == 'Detail') {
                     var url = '{{ path('support_user_detail_show', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+                if (dataAction == 'Archive') {
+                    var url = '{{ path('support_user_profile_archives', {'user_id': ":id"}) }}';
                     url = url.replace(':id', data.id);
                     window.top.location = url;
                 }
