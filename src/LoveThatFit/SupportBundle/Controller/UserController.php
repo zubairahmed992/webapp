@@ -11,24 +11,25 @@ class UserController extends Controller {
 
     public function indexAction()
     {
-    	$totalRecords = $this->get('user.helper.user')->countAllUserRecord();
-    	$femaleUsers  = $this->get('user.helper.user')->countByGender('f');
-    	$maleUsers    = $this->get('user.helper.user')->countByGender('m');
-    	
-		return $this->render('LoveThatFitSupportBundle:User:index.html.twig',
-                array('rec_count' => count($totalRecords),
-                    'femaleUsers' => $femaleUsers,
-                    'maleUsers'   => $maleUsers
-                    )
+        $totalRecords = $this->get('user.helper.user')->countAllUserRecord();
+        $femaleUsers  = $this->get('user.helper.user')->countByGender('f');
+        $maleUsers    = $this->get('user.helper.user')->countByGender('m');
+
+        return $this->render('LoveThatFitSupportBundle:User:index.html.twig',
+            array('rec_count' => count($totalRecords),
+                'femaleUsers' => $femaleUsers,
+                'maleUsers'   => $maleUsers
+            )
         );
     }
 
     public function paginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
-        $output = $this->get('user.helper.user')->search($requestData);
-        
-        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
+        $logged_user = $this->getUser();
+        $logged_user_role = $logged_user->getRoleName();
+        $output = $this->get('user.helper.user')->search($requestData, $logged_user_role);
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
     public function pendingUsersAction()
@@ -36,8 +37,8 @@ class UserController extends Controller {
         $totalRecords = $this->get('user.helper.userarchives')->countAllRecord();
 
         return $this->render('LoveThatFitSupportBundle:PendingUser:index.html.twig',
-                array('rec_count' => $totalRecords)
-            );
+            array('rec_count' => $totalRecords)
+        );
     }
 
     public function pendingUsersPaginateAction(Request $request)
@@ -46,8 +47,8 @@ class UserController extends Controller {
         $requestData['user_id'] = $this->getUser()->getId();
         $requestData['all']     = $this->container->get('session')->get('Permissions')['pendingUsers']['all'];
         $output                 = $this->get('user.helper.userarchives')->search($requestData);
-            
-        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
     //-------------------------Show user detail-------------------------------------------------------
@@ -81,6 +82,7 @@ class UserController extends Controller {
             'brandtried'=>count($this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity)),
         ));
     }
+
     //-------------------------Show user detail-------------------------------------------------------
     public function assignPendingUsersAction()
     {
@@ -102,7 +104,7 @@ class UserController extends Controller {
     {
         $decoded = $this->get('request')->request->all();
         $result = $this->get('support.helper.supporttasklog')->UnAssignPendingUsers($decoded);
-        
-        return new Response(json_encode($result), 200, ['Content-Type' => 'application/json']);   
+
+        return new Response(json_encode($result), 200, ['Content-Type' => 'application/json']);
     }
 }
