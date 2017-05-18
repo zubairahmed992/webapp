@@ -5,6 +5,7 @@ namespace LoveThatFit\CartBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * UserAddresses
  *
@@ -14,16 +15,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserAddresses
 {
 
-	public function __construct()
-	  {
-		$this->user = new ArrayCollection();
-	  }
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="user_addresses")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-	 */
-	protected $user;
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="user_addresses")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
     /**
      * @var integer
      *
@@ -84,12 +85,12 @@ class UserAddresses
 
     /**
      * @var integer
-	 * @ORM\Column(name="postcode", type="integer", length=20)
-	 * @Assert\Range(
-	 * min = "4",
-	 * max = "6",
-	 * minMessage = "Postal Code must contain at least 4 characters",
-	 * maxMessage = "Postal Code cannot be longer than than {{ limit }} characters long",
+     * @ORM\Column(name="postcode", type="integer", length=20)
+     * @Assert\Range(
+     * min = "4",
+     * max = "6",
+     * minMessage = "Postal Code must contain at least 4 characters",
+     * maxMessage = "Postal Code cannot be longer than than {{ limit }} characters long",
      * )
      */
     private $postcode;
@@ -101,17 +102,17 @@ class UserAddresses
      */
     private $country;
 
-	/**
-	 * @var boolean $billing_default
-	 * @ORM\Column(name="billing_default", type="boolean", nullable=true , options={"default":"0"})
-	 */
-	private $billing_default;
+    /**
+     * @var boolean $billing_default
+     * @ORM\Column(name="billing_default", type="boolean", nullable=true , options={"default":"0"})
+     */
+    private $billing_default;
 
-	/**
-	 * @var boolean $shipping_default
-	 * @ORM\Column(name="shipping_default", type="boolean", nullable=true , options={"default":"0"})
-	 */
-	private $shipping_default;
+    /**
+     * @var boolean $shipping_default
+     * @ORM\Column(name="shipping_default", type="boolean", nullable=true , options={"default":"0"})
+     */
+    private $shipping_default;
 
     /**
      * @var smallint $adress_type
@@ -119,11 +120,18 @@ class UserAddresses
      */
     private $adress_type;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cleanseHash", type="string", length=255, nullable=true, options={"default":"null"})
+     */
+
+    private $cleanseHash;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -139,14 +147,14 @@ class UserAddresses
     public function setFirstName($firstName)
     {
         $this->first_name = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get first_name
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -162,14 +170,14 @@ class UserAddresses
     public function setLastName($lastName)
     {
         $this->last_name = $lastName;
-    
+
         return $this;
     }
 
     /**
      * Get last_name
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -185,14 +193,14 @@ class UserAddresses
     public function setAddress1($address1)
     {
         $this->address1 = $address1;
-    
+
         return $this;
     }
 
     /**
      * Get address1
      *
-     * @return string 
+     * @return string
      */
     public function getAddress1()
     {
@@ -208,14 +216,14 @@ class UserAddresses
     public function setAddress2($address2)
     {
         $this->address2 = $address2;
-    
+
         return $this;
     }
 
     /**
      * Get address2
      *
-     * @return string 
+     * @return string
      */
     public function getAddress2()
     {
@@ -231,14 +239,14 @@ class UserAddresses
     public function setPhone($phone)
     {
         $this->phone = $phone;
-    
+
         return $this;
     }
 
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -254,14 +262,14 @@ class UserAddresses
     public function setCity($city)
     {
         $this->city = $city;
-    
+
         return $this;
     }
 
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -277,14 +285,14 @@ class UserAddresses
     public function setState($state)
     {
         $this->state = $state;
-    
+
         return $this;
     }
 
     /**
      * Get state
      *
-     * @return string 
+     * @return string
      */
     public function getState()
     {
@@ -300,14 +308,14 @@ class UserAddresses
     public function setPostcode($postcode)
     {
         $this->postcode = $postcode;
-    
+
         return $this;
     }
 
     /**
      * Get postcode
      *
-     * @return string 
+     * @return string
      */
     public function getPostcode()
     {
@@ -323,62 +331,62 @@ class UserAddresses
     public function setCountry($country)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return string 
+     * @return string
      */
     public function getCountry()
     {
         return $this->country;
     }
 
-	/**
-	 * Set billing_default
-	 *
-	 * @param string $billing_default
-	 * @return UserAddresses
-	 */
-	public function setBillingDefault($billing_default)
-	{
-	  $this->billing_default = $billing_default;
-	}
+    /**
+     * Set billing_default
+     *
+     * @param string $billing_default
+     * @return UserAddresses
+     */
+    public function setBillingDefault($billing_default)
+    {
+        $this->billing_default = $billing_default;
+    }
 
-	/**
-	 * Get billing_default
-	 *
-	 * @return string
-	 */
-	public function getBillingDefault()
-	{
-	  return (bool)$this->billing_default;
-	}
+    /**
+     * Get billing_default
+     *
+     * @return string
+     */
+    public function getBillingDefault()
+    {
+        return (bool)$this->billing_default;
+    }
 
 
-	/**
-	 * Set shipping_default
-	 *
-	 * @param string $shipping_default
-	 * @return UserAddresses
-	 */
-	public function setShippingDefault($shipping_default)
-	{
-	  $this->shipping_default = $shipping_default;
-	}
+    /**
+     * Set shipping_default
+     *
+     * @param string $shipping_default
+     * @return UserAddresses
+     */
+    public function setShippingDefault($shipping_default)
+    {
+        $this->shipping_default = $shipping_default;
+    }
 
-	/**
-	 * Get shipping_default
-	 *
-	 * @return string
-	 */
-	public function getShippingDefault()
-	{
-	  return (bool)$this->shipping_default;
-	}
+    /**
+     * Get shipping_default
+     *
+     * @return string
+     */
+    public function getShippingDefault()
+    {
+        return (bool)$this->shipping_default;
+    }
 
     /**
      * Set adress_type
@@ -398,50 +406,97 @@ class UserAddresses
      */
     public function getAddressType()
     {
-        return (int) $this->adress_type;
+        return (int)$this->adress_type;
     }
 
-  /**
-	 * Set user
-	 *
-	 * @param \LoveThatFit\UserBundle\Entity\User $user
-	 * @return Cart
-	 */
-	public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
-	{
-	  $this->user = $user;
+    /**
+     * Set user
+     *
+     * @param \LoveThatFit\UserBundle\Entity\User $user
+     * @return Cart
+     */
+    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
 
-	  return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get user
-	 *
-	 * @return \LoveThatFit\UserBundle\Entity\User
-	 */
-	public function getUser()
-	{
-	  return $this->user;
-	}
+    /**
+     * Get user
+     *
+     * @return \LoveThatFit\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
-	#---------------------------------------------------
-	public function toArray(){
+    #---------------------------------------------------
+    public function toArray()
+    {
 
-	  $obj = array();
-	  $obj['id'] = $this->getId();
-	  $obj['first_name'] = $this->getFirstName();
-	  $obj['last_name'] = $this->getLastName();
-	  $obj['address1'] = $this->getAddress1();
-	  $obj['address2'] = $this->getAddress2();
-	  $obj['phone'] = $this->getPhone();
-	  $obj['city'] = $this->getCity();
-	  $obj['state'] = $this->getState();
-	  $obj['postcode'] = $this->getPostcode();
-	  $obj['country'] = $this->getCountry();
-	  $obj['user'] = $this->getUser();
-	  $obj['billing_default'] = $this->getBillingDefault();
-	  $obj['shipping_default'] = $this->getShippingDefault();
-	  return $obj;
+        $obj = array();
+        $obj['id'] = $this->getId();
+        $obj['first_name'] = $this->getFirstName();
+        $obj['last_name'] = $this->getLastName();
+        $obj['address1'] = $this->getAddress1();
+        $obj['address2'] = $this->getAddress2();
+        $obj['phone'] = $this->getPhone();
+        $obj['city'] = $this->getCity();
+        $obj['state'] = $this->getState();
+        $obj['postcode'] = $this->getPostcode();
+        $obj['country'] = $this->getCountry();
+        $obj['user'] = $this->getUser();
+        $obj['billing_default'] = $this->getBillingDefault();
+        $obj['shipping_default'] = $this->getShippingDefault();
+        return $obj;
 
-	}
+    }
+
+    /**
+     * Set adress_type
+     *
+     * @param integer $adressType
+     * @return UserAddresses
+     */
+    public function setAdressType($adressType)
+    {
+        $this->adress_type = $adressType;
+
+        return $this;
+    }
+
+    /**
+     * Get adress_type
+     *
+     * @return integer
+     */
+    public function getAdressType()
+    {
+        return $this->adress_type;
+    }
+
+    /**
+     * Set cleanseHash
+     *
+     * @param string $cleanseHash
+     * @return UserAddresses
+     */
+    public function setCleanseHash($cleanseHash)
+    {
+        $this->cleanseHash = $cleanseHash;
+
+        return $this;
+    }
+
+    /**
+     * Get cleanseHash
+     *
+     * @return string
+     */
+    public function getCleanseHash()
+    {
+        return $this->cleanseHash;
+    }
 }
