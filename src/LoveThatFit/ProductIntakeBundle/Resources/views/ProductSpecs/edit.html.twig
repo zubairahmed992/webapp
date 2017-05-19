@@ -11,7 +11,20 @@
     .body_measurements{
         color: #3380FF;
     }                
+    .extended_fit_points{
+        display:none;
+    }
+    .grid_headers{
+        text-align:center;
+        background-color: #C2C1C1;
     
+    }
+    .grid_fit_model_size{
+        background-color: #FFFE9E;
+    }
+    .grid_fit_model_measurement{
+        font-weight: bold;
+    }
 </style>
 <script>
     var fit_array=[];
@@ -329,9 +342,9 @@
         }
                
         $.fn.editable.defaults.mode = 'inline'; 
-        var fit_model_value = $('.fit_model_value').val(); 
+        {# var fit_model_value = $('.fit_model_value').val(); 
        (fit_model_value == "") ? "" :$('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
-        
+        #}
         //----------------------------------------
         
         $('.edit_inline').editable({
@@ -945,7 +958,7 @@
                         <div id="dv_measurement_table">
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
-                                    <tr class="{{ size }} Active">
+                                    <tr class="{{ size }} Active grid_headers">
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_percentage</th>
@@ -962,9 +975,9 @@
                                         
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
-                                    {% if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) %}
+                                    {# if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) #}
                                         {% if (size == fit_model_selected_size) %}
-                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
                                                 <th>
                                                     {{measurement_k}}</th>
                                                 <td>
@@ -1021,7 +1034,7 @@
                                                 
                                             </tr>
                                         {% else %}
-                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}  {{(measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
                                                 <th>
                                                 <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                                                 {{measurement_k}}</th>
@@ -1078,7 +1091,7 @@
                                             </tr>
                                         {% endif %}
 
-                                    {% endif %}
+                                    {# endif #}
                                 {% endfor %}
                             {% endfor %}
                                 </table>
