@@ -335,7 +335,8 @@
         //----------------------------------------
         
         $('.edit_inline').editable({
-            type: 'text',
+            type: 'number',
+            min: '0',
             url: get_service_relative_url(),  
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
