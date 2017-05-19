@@ -7,7 +7,10 @@
 		}
     .tab-content.active{
                     display: block;
-		}                
+		}     
+    .body_measurements{
+        color: #3380FF;
+    }                
     
 </style>
 <script>
@@ -986,31 +989,31 @@
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
                                                     <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.min_calc | number_format(2, '.', '')}}
                                                     <input class="5" type="number" hidden value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px">
                                                 </td>
-                                                <td>                                                    
+                                                <td class="body_measurements">                                                    
                                                     {#<input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:80px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
                                                     <input class="7" type="number" hidden value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.fit_model | number_format(2, '.', '')}}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_high | number_format(2, '.', '')}}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="10 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.max_calc | number_format(2, '.', '')}}
                                                     <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
@@ -1043,31 +1046,31 @@
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
                                                     <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px">                                                    
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.min_calc | number_format(2, '.', '')}}
                                                     <input class="5" type="number" hidden value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.min_actual | number_format(2, '.', '')}}
                                                     <input class="6" type="number" hidden value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
                                                     <input class="7" type="number" hidden value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.fit_model | number_format(2, '.', '')}}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_high | number_format(2, '.', '')}}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
                                                 </td>                                                
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.max_actual | number_format(2, '.', '')}}
                                                     <input class="10" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.max_calc | number_format(2, '.', '')}}
                                                     <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
