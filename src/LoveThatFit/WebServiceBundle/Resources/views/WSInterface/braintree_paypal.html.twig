@@ -1,0 +1,139 @@
+<style>
+    #checkout-form .hosted-field iframe {
+        height: 5%;
+    }
+</style>
+<form id="checkout-form" action="/ws/braintree_processuser_transaction" method="post">
+    <div id="error-message"></div>
+
+    <label for="card-number">Card Number</label>
+    <div class="hosted-field" id="card-number"></div>
+
+    <label for="cvv">CVV</label>
+    <div class="hosted-field" id="cvv"></div>
+
+    <label for="expiration-date">Expiration Date</label>
+    <div class="hosted-field" id="expiration-date"></div>
+
+    <input type="hidden" name="payment_method_nonce">
+    <input type="text" name="auth_token" value="99bcbb2a23f5091ad4a680b7c72147cb">
+    <input type="hidden" name="billing[billing_first_name]" value="Drew">
+    <input type="hidden" name="billing[billing_last_name]" value="Smith">
+    <input type="hidden" name="billing[company]" value="Braintree">
+    <input type="hidden" name="billing[billing_address1]" value="1234 Road Name Drive Apt. 567 Charlotte, NC 28607">
+    <input type="hidden" name="billing[billing_address2]" value="1234 Road Name Drive Apt. 567 Charlotte, NC 28607">
+    <input type="hidden" name="billing[billing_phone]" value="312-555-1234">
+    <input type="hidden" name="billing[billing_city]" value="Chicago">
+    <input type="hidden" name="billing[billing_postcode]" value="60622">
+    <input type="hidden" name="billing[billing_country]" value="xyz">
+    <input type="hidden" name="billing[billing_state]" value="xyz">
+    <input type="hidden" name="billing[shipping_first_name]" value="Jen">
+    <input type="hidden" name="billing[shipping_last_name]" value="Smith">
+    <input type="hidden" name="billing[shipping_address1]" value="1234 Road Name Drive Apt. 567 Charlotte, NC 28607">
+    <input type="hidden" name="billing[shipping_address2]" value="1234 Road Name Drive Apt. 567 Charlotte, NC 28607">
+    <input type="hidden" name="billing[shipping_phone]" value="12345678">
+    <input type="hidden" name="billing[shipping_city]" value="xys">
+    <input type="hidden" name="billing[shipping_postcode]" value="60103">
+    <input type="hidden" name="billing[shipping_country]" value="12345678">
+    <input type="hidden" name="billing[shipping_state]" value="xyz">
+   {# <input type="hidden" name="items[0][item_id]" value="4126">
+    <input type="hidden" name="items[0][quantity]" value="1">
+    <input type="hidden" name="items[0][unit_price]" value="30">
+    <input type="hidden" name="items[1][item_id]" value="4127">
+    <input type="hidden" name="items[1][quantity]" value="1">
+    <input type="hidden" name="items[0][unit_price]" value="30">#}
+    <input type="hidden" name="shipping_amount" value="0">
+    <input type="hidden" name="order_amount" value="20">
+    <input type="hidden" name="discount_amount" value="0">
+    <input type="hidden" name="total_amount" value="20">
+    <input type="submit" value="Pay $10" disabled>
+</form>
+<div id="paypal-button"></div>
+
+<script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
+<!-- Load the client component. -->
+<script src="https://js.braintreegateway.com/web/3.15.0/js/client.min.js"></script>
+<!-- Load the PayPal Checkout component. -->
+<script src="https://js.braintreegateway.com/web/3.15.0/js/paypal-checkout.min.js"></script>
+
+<script>
+    // We generated a client token for you so you can test out this code
+    // immediately. In a production-ready integration, you will need to
+    // generate a client token on your server (see section below).
+    var authorization = 'eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIyMTUzMDNmOWE5NDI5NjIwOGNhZDU3YmM5YWRiMTI5YWE2Zjk2ZjE2N2FmODc0YWI3ODU3MmNhYTM3MmIzZmNmfGNyZWF0ZWRfYXQ9MjAxNy0wNS0xNlQxMToyODozOS4wOTUyOTYzNjIrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTk5OXh0YnFjMnM1NWJ4OWNcdTAwMjZwdWJsaWNfa2V5PWpnMno3N3QzamtwNDNqOGciLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvOTk5eHRicWMyczU1Yng5Yy9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbImN2diJdLCJlbnZpcm9ubWVudCI6InNhbmRib3giLCJjbGllbnRBcGlVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvOTk5eHRicWMyczU1Yng5Yy9jbGllbnRfYXBpIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhdXRoVXJsIjoiaHR0cHM6Ly9hdXRoLnZlbm1vLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhbmFseXRpY3MiOnsidXJsIjoiaHR0cHM6Ly9jbGllbnQtYW5hbHl0aWNzLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20vOTk5eHRicWMyczU1Yng5YyJ9LCJ0aHJlZURTZWN1cmVFbmFibGVkIjpmYWxzZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiYWJjIiwiY2xpZW50SWQiOiJBWkhHei1KdVkzaGxHM0gtRFk2ZTNOVDJpMlNHREk2a0hKenQ3d2lWbmhEU01aYTBPQlFLVnFMYjk4RjdRSmVxejdyb2l5TEJZRnFUbllVciIsInByaXZhY3lVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vcHAiLCJ1c2VyQWdyZWVtZW50VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3RvcyIsImJhc2VVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFzc2V0c1VybCI6Imh0dHBzOi8vY2hlY2tvdXQucGF5cGFsLmNvbSIsImRpcmVjdEJhc2VVcmwiOm51bGwsImFsbG93SHR0cCI6dHJ1ZSwiZW52aXJvbm1lbnROb05ldHdvcmsiOmZhbHNlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFiYyIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJjb2luYmFzZUVuYWJsZWQiOmZhbHNlLCJtZXJjaGFudElkIjoiOTk5eHRicWMyczU1Yng5YyIsInZlbm1vIjoib2ZmIn0';
+    var form = document.querySelector('#checkout-form');
+    var submit = document.querySelector('input[type="submit"]');
+
+    // Create a client.
+    braintree.client.create({
+        authorization: authorization
+    }, function (clientErr, clientInstance) {
+
+        // Stop if there was a problem creating the client.
+        // This could happen if there is a network error or if the authorization
+        // is invalid.
+        if (clientErr) {
+            console.error('Error creating client:', clientErr);
+            return;
+        }
+
+        // Create a PayPal Checkout component.
+        braintree.paypalCheckout.create({
+            client: clientInstance
+        }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+
+            // Stop if there was a problem creating PayPal Checkout.
+            // This could happen if there was a network error or if it's incorrectly
+            // configured.
+            if (paypalCheckoutErr) {
+                console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
+                return;
+            }
+
+            // Set up PayPal with the checkout.js library
+            paypal.Button.render({
+                env: 'sandbox', // or 'sandbox'
+
+                payment: function () {
+                    return paypalCheckoutInstance.createPayment({
+                        flow: 'vault',
+                        billingAgreementDescription: 'Your agreement description',
+                        enableShippingAddress: true,
+                        shippingAddressEditable: false,
+                        shippingAddressOverride: {
+                            recipientName: 'Scruff McGruff',
+                            line1: '1234 Main St.',
+                            line2: 'Unit 1',
+                            city: 'Chicago',
+                            countryCode: 'US',
+                            postalCode: '60652',
+                            state: 'IL',
+                            phone: '123.456.7890'
+                        }
+                    });
+                },
+
+                onAuthorize: function (data, actions) {
+                    return paypalCheckoutInstance.tokenizePayment(data)
+                        .then(function (payload) {
+                            // Submit `payload.nonce` to your server.
+                        });
+                },
+
+                onCancel: function (data) {
+                    console.log('checkout.js payment cancelled', JSON.stringify(data, 0, 2));
+                },
+
+                onError: function (err) {
+                    console.error('checkout.js error', err);
+                }
+            }, '#paypal-button').then(function () {
+                // The PayPal button will be rendered in an html element with the id
+                // `paypal-button`. This function will be called when the PayPal button
+                // is set up and ready to be used.
+            });
+
+        });
+
+    });
+</script>
