@@ -114,7 +114,14 @@ class OrderController extends Controller {
                         
                         $csvSingle['order_number'] = $order["order_number"];
                         $csvSingle['user_name']    = ($order["billing_first_name"]. " ".$order["billing_last_name"]);
-                        $csvSingle['order_date']   = ($order["order_date"]->format('d-m-Y'));
+
+                        if(is_object($order['user_order_date']))
+                            $csvSingle['order_date'] = $order['user_order_date']->format('Y-m-d H:i:s');
+                        else
+                            $csvSingle['order_date'] = $order['order_date']->format('Y-m-d H:i:s');
+
+                        /*$csvSingle['order_date']   = ($order["order_date"]->format('d-m-Y'));*/
+                        
                         $csvSingle['order_amount'] = "$" . number_format((float)$order["order_amount"], 2, '.', '');
                         $csvSingle['credit_card']  = "xxxx-xxxx-xxxx-".json_decode($order['payment_json'])
                             ->transaction->_attributes->creditCard->last4;
