@@ -319,9 +319,16 @@ class ProductController extends Controller {
 
         //   return new response(json_encode(var_dump($colorform)));
 
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
+
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+            'form' => $productForm->createView(),
             'product' => $product,
             'colorform' => $colorform->createView(),
             'color_id' => $color_id,
