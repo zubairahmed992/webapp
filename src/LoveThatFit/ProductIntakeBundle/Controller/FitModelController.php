@@ -62,6 +62,7 @@ class FitModelController extends Controller {
 
     public function saveAction(Request $request) {
         $decoded = $request->request->all();
+        unset($decoded['fit_model']);
         $fmm = $this->get('productIntake.fit_model_measurement')->createNew();
         $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $fmm->setBrand($brand);
@@ -125,6 +126,7 @@ class FitModelController extends Controller {
     #----------------------- /product_intake/fit_model/update
     public function updateAction(Request $request,$id){  
         $decoded = $request->request->all();
+        unset($decoded['fit_model']);
         $entity = $this->get('productIntake.fit_model_measurement')->find($id);
         $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $entity->setBrand($brand);
