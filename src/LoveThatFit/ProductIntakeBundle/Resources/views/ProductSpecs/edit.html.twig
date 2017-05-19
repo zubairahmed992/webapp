@@ -549,8 +549,13 @@
                     if(confirm(message))
                         form.submit();
                 }
-
-
+//-----------------------------------
+$("#show_extended_fp").click(function (event) {                     
+ var cols =     document.getElementsByClassName('extended_fit_points');
+          for(i=0; i<cols.length; i++) {
+            cols[i].style.display = cols[i].style.display == 'none'?'table-row':'none';
+          }
+    });
     });
 
 </script>
@@ -951,6 +956,11 @@
                        
                <br>
                </div>   
+               <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+  extend
+</button>
+
+
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
             <table>                
                 <tr>
