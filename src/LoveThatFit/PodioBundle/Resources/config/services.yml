@@ -1,0 +1,23 @@
+parameters:
+#    love_that_fit_user.example.class: LoveThatFit\UserBundle\Example
+
+services:
+#    love_that_fit_user.example:
+#        class: %love_that_fit_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+  order.helper.podio:
+        class: LoveThatFit\PodioBundle\Entity\PodioOrderHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\PodioBundle\Entity\PodioOrder
+            container: "@service_container"
+
+  podio.helper.podioapi:
+        class: LoveThatFit\PodioBundle\Entity\PodioApiHelper
+        arguments:
+            container: "@service_container"
+#  authentication_handler:
+#        class: LoveThatFit\UserBundle\Handler\AuthenticationHandler
+#        arguments:
+#            router: "@router"

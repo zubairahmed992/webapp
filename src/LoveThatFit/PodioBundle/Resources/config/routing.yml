@@ -1,0 +1,3 @@
+podio_order:
+    pattern:  /podio_order
+    defaults: { _controller: LoveThatFitUserBundle:Podio:index }
