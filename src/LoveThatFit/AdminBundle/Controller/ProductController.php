@@ -319,9 +319,16 @@ class ProductController extends Controller {
 
         //   return new response(json_encode(var_dump($colorform)));
 
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
+
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+            'form' => $productForm->createView(),
             'product' => $product,
             'colorform' => $colorform->createView(),
             'color_id' => $color_id,
@@ -635,6 +642,12 @@ class ProductController extends Controller {
         $itemform = $this->createForm(new ProductItemType(), $entity_item);
         $itemform->bind($request);
 
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        $disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
+
         if ($itemform->isValid()) {
             $this->get('admin.helper.product')->updatedAt($entity);
             $entity_item->upload(); //----- file upload method 
@@ -642,6 +655,7 @@ class ProductController extends Controller {
             $em->flush();
             $this->get('session')->setFlash('success', 'Product item updated  Successfully');
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                'form' => $productForm->createView(),
                 'product' => $entity,
                 'itemform' => $itemform->createView(),
                 'productItems'=>$productItems,
@@ -651,6 +665,7 @@ class ProductController extends Controller {
             $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');
 
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                'form' => $productForm->createView(),
                 'product' => $entity,
                 'itemform' => $itemform->createView(),
                 'item_id' => $item_id,
