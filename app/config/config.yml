@@ -54,6 +54,7 @@ assetic:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
 # Doctrine Configuration
+#
 doctrine:
     dbal:
         driver:   "%database_driver%"
