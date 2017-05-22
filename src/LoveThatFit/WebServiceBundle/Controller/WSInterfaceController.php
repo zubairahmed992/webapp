@@ -32,7 +32,7 @@ class WSInterfaceController extends Controller {
 
     public function brainTreeTestTransactionAction()
     {
-        return $this->render('LoveThatFitWebServiceBundle:WSInterface:braintree_paypal.html.twig', array());
+        return $this->render('LoveThatFitWebServiceBundle:WSInterface:braintree.html.twig', array());
     }
     
 }
