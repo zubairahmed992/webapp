@@ -379,7 +379,7 @@ class WebServiceHelper {
                     $dispatcher = $this->container->get('event_dispatcher');
                     $event = new CalibrationEvent( $user_id, $email ,$status);
                     $dispatcher->dispatch(CalibrationEvent::NAME, $event);
-                    //Code End for calibration node js
+                    //Code End for calibration node js.
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
