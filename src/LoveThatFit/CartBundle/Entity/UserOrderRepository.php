@@ -134,6 +134,7 @@ class UserOrderRepository extends EntityRepository
 		    $query 
 		        ->andWhere('o.billing_first_name like :search')
                 ->orWhere('o.billing_last_name like :search')
+                ->orWhere('o.order_number like :search')
                 ->setParameter('search', "%".$search."%");
 		}
 		if (is_array($order)) {
@@ -170,7 +171,7 @@ class UserOrderRepository extends EntityRepository
 		o.shipping_address1, o.shipping_address2, o.shipping_city, o.shipping_postcode,
 		o.shipping_country, o.shipping_state, o.order_status, o.order_amount,
 		o.transaction_status, o.transaction_id, o.payment_method, o.billing_phone,
-		o.shipping_phone, o.order_number, o.shipping_amount, o.discount_amount, o.total_amount')
+		o.shipping_phone, o.order_number, o.shipping_amount, o.discount_amount, o.total_amount,o.user_order_date')
 		->from('LoveThatFitCartBundle:UserOrder', 'o')
 		->where('o.user =:user_id')->setParameter('user_id', $user_id)
 		->getQuery()

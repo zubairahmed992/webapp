@@ -289,6 +289,10 @@ nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddresses}
 
+nws_get_shipping_methods:
+  pattern: /nws/get_shipping_methods
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getShippingMethods}
+
 nws_get_all_user_saved_addresses_and_rates:
   pattern: /nws/get_all_user_saved_addresses_rates
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:getAllUserSavedAddressesWithRates}

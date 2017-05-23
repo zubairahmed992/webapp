@@ -323,8 +323,8 @@ Search Product
 <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
 <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
 <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
-<div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
-
+<div class="span1 hds" ><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+<!--<div class="span1 hds">Status</div>-->
 <div class="span1 hds">Created At</div>
 <div class="span1 hds"></div>
 <div class="span1 hds">Actions</div>
@@ -341,6 +341,13 @@ Search Product
 <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
 <div class="span1">{{p.Gender}}</div>
 <div class="span1">{{p.Name}}</div>
+<!--<div class="span1">    
+    {%if(p.status)%}
+        {{p.status}}
+    {%else%}
+        pending
+    {%endif%}
+</div>-->
 <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>
 <div class="span1">
     {%if(p.disabled==1)%}
@@ -356,10 +363,17 @@ Search Product
 </a>
 <div class="span1 edits_btn">
 {%if(p.disabled==1)%}
-    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled">
+    <!--{%if(p.status=='completed')%}
+        <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled">
+    <i class="icon-play-circle"></i></a>
+    {%else%}
+        <a href="javascript:void(0);"   title="Disabled">
+    <i class="icon-play-circle"></i></a>
+    {%endif%}-->
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Click to Enable">
     <i class="icon-play-circle"></i></a>
 {%else%}
-    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-ban-circle"></i></a>
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Click to Disable"><i class="icon-ban-circle"></i></a>
 {%endif%}
 <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
 <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>

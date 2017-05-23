@@ -5,6 +5,7 @@ use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
+use LoveThatFit\WebServiceBundle\Event\CalibrationEvent;
 
 class WebServiceHelper {
 
@@ -370,6 +371,15 @@ class WebServiceHelper {
                     $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
 
                     $user->setStatus(-1);
+                     //Here we going to add new triggeer
+                    //This code will new entry in node-js database
+                    $user_id = $user->getId();
+                    $email = $user->getEmail();
+                    $status = 'New';
+                    $dispatcher = $this->container->get('event_dispatcher');
+                    $event = new CalibrationEvent( $user_id, $email ,$status);
+                    $dispatcher->dispatch(CalibrationEvent::NAME, $event);
+                    //Code End for calibration node js.
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }

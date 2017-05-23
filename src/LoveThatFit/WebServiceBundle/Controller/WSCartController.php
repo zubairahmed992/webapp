@@ -494,7 +494,7 @@ class WSCartController extends Controller
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $orderEntity->getOrderDate()->format('Y-m-d H:i:s'),
+            'purchase_date' => $orderEntity->getUserOrderDate()->format('Y-m-d H:i:s'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
@@ -555,7 +555,7 @@ class WSCartController extends Controller
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $orderEntity->getOrderDate()->format('Y-m-d H:i:s'),
+            'purchase_date' => $orderEntity->getUserOrderDate()->format('Y-m-d H:i:s'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
@@ -597,6 +597,12 @@ class WSCartController extends Controller
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
                 $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
+
+                if(is_object($order['user_order_date']))
+                    $order['order_user_date'] = $order['user_order_date']->format('Y-m-d H:i:s');
+                else
+                    $order['order_user_date'] = $order['order_date']->format('Y-m-d H:i:s');
+
                 foreach($order_items as $index => $item){
                     $itemObject = $this->container->get('admin.helper.productitem')->find($item['item_id']);
                     $product_color = $itemObject->getProductColor();
@@ -707,6 +713,27 @@ class WSCartController extends Controller
                     "days"        => '2',
                 )
             );
+            $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
+    public function getShippingMethodsAction(){
+        $addresses = array();
+        $stampsDotCom = new Stamps();
+
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $response = $stampsDotCom->getRates( $decoded );
+            $addresses['shipping_methods'] = array();
+            if($response['verified']){
+                $addresses['shipping_methods'] = $response['shipping_method'];
+            }
+
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');

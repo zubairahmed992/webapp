@@ -100,6 +100,9 @@ class UserAddressesHelper
                 $address_info->setCountry($address["billing_country"]);
                 $address_info->setState($address["billing_state"]);
 
+                if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
+                    $address_info->setCleanseHash($address['cleanseHash']);
+
                 $this->markedPreviousShippingAddressNonDefault($user);
                 $address_info->setShippingDefault('1');
                 $address_info->setBillingDefault('0');
@@ -119,6 +122,8 @@ class UserAddressesHelper
             $address_info->setPostCode($address["billing_postcode"]);
             $address_info->setCountry($address["billing_country"]);
             $address_info->setState($address["billing_state"]);
+            if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
+                $address_info->setCleanseHash($address['cleanseHash']);
             if( $address["billing_default"] == 1)
             {
                 $this->markedPreviousBillingAddressNonDefault($user);
@@ -148,6 +153,8 @@ class UserAddressesHelper
             $address_info->setPostCode($address["shipping_postcode"]);
             $address_info->setCountry($address["shipping_country"]);
             $address_info->setState($address["shipping_state"]);
+            if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
+                $address_info->setCleanseHash($address['cleanseHash']);
 
             if( $address["shipping_default"] == 1)
             {
@@ -179,6 +186,8 @@ class UserAddressesHelper
             $address_info->setPostCode($address["billing_postcode"]);
             $address_info->setCountry($address["billing_country"]);
             $address_info->setState($address["billing_state"]);
+            if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
+                $address_info->setCleanseHash($address['cleanseHash']);
             if( $address["billing_default"] == 1)
             {
                 $this->markedPreviousBillingAddressNonDefault($user);
@@ -209,6 +218,8 @@ class UserAddressesHelper
             $address_info->setPostCode($address["shipping_postcode"]);
             $address_info->setCountry($address["shipping_country"]);
             $address_info->setState($address["shipping_state"]);
+            if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
+                $address_info->setCleanseHash($address['cleanseHash']);
 
             if( $address["shipping_default"] == 1)
             {

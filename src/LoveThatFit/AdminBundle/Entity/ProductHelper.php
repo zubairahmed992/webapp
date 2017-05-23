@@ -1549,4 +1549,21 @@ class ProductHelper
         }
         return true;
     }
+
+    public function setProductIntakeStatus($status, $id)
+    {
+        return $this->repo->updateProductIntakeStatus($status, $id);
+    }
+    
+    public function getProductIntakeStatus($id)
+    {
+        $product = $this->repo->find($id);
+        return $product->getStatus();
+    }
+
+    public function getProductStatus($id)
+    {
+        $product = $this->repo->find($id);
+        return $product->getDisabled();
+    }
 }
