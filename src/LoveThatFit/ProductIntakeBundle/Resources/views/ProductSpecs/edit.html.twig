@@ -549,13 +549,7 @@
                     if(confirm(message))
                         form.submit();
                 }
-//-----------------------------------
-$("#show_extended_fp").click(function (event) {                     
- var cols =     document.getElementsByClassName('extended_fit_points');
-          for(i=0; i<cols.length; i++) {
-            cols[i].style.display = cols[i].style.display == 'none'?'table-row':'none';
-          }
-    });
+
     });
 
 </script>
@@ -956,9 +950,7 @@ $("#show_extended_fp").click(function (event) {
                        
                <br>
                </div>   
-               <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-  extend
-</button>
+               <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary">More</button>
 
 
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
@@ -987,7 +979,7 @@ $("#show_extended_fp").click(function (event) {
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {# if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) #}
                                         {% if (size == fit_model_selected_size) %}
-                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
                                                 <th>
                                                     {{measurement_k}}</th>
                                                 <td>
@@ -1044,7 +1036,8 @@ $("#show_extended_fp").click(function (event) {
                                                 
                                             </tr>
                                         {% else %}
-                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}  {{(measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }} {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
+                                            
                                                 <th>
                                                 <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                                                 {{measurement_k}}</th>
@@ -1117,6 +1110,19 @@ $("#show_extended_fp").click(function (event) {
 </form>                                
   <br>                
   <input type="hidden" class="product_spec_size" value="{{ app.request.get('id') }} ">
-
+  <script>
+      
+      //-----------------------------------
+$(document).ready(function(){       
+$("#show_extended_fp").click(function (event) {                         
+    //alert();
+    $("#show_extended_fp").text()=='More'?$("#show_extended_fp").text('Few'):$("#show_extended_fp").text('More');
+ var cols = document.getElementsByClassName('extended_fit_points');
+          for(i=0; i<cols.length; i++) {
+            cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
+          }
+    });
+    });
+  </script>
   
 {% endblock %}
