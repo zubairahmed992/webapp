@@ -526,7 +526,7 @@ class UserMarkerHelper
     private function getMaskedMarkerSpecsSupport()
     {
         $yaml = new Parser();
-        return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
+        return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker_support.yml'));
     }
 
     public function getPredictedMeasurementSupport($mask_json, $device_type = null)
