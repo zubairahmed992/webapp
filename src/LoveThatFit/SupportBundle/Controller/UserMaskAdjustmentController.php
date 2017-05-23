@@ -30,12 +30,11 @@ class UserMaskAdjustmentController extends Controller {
     public function discardStatusAction($user_id) {
         $archive = $this->get('user.helper.userarchives')->discardStatus($user_id);
         $this->get('session')->setFlash('success', 'Archive has been discarded');
-        return $this->redirect($this->generateUrl('support_pending_user'));
+        return $this->redirect($this->generateUrl('support_p nding_user'));
     }
   //----------------------------------------------------------------------------------------
 
     public function showAction($archive_id, $mode=null) {
-        
         $archive = $this->get('user.helper.userarchives')->find($archive_id);
         $user = $archive->getUser();
 
@@ -52,7 +51,9 @@ class UserMaskAdjustmentController extends Controller {
 
         $device_type = $image_actions_archive['device_type'];
         $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
-        $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
+        //change
+        $default_marker = $this->get('user.marker.helper')->getDefaultMaskSupport($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
+
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $edit_type = "registration";
         if ($mode && $mode == 'refresh') {
@@ -68,6 +69,7 @@ class UserMaskAdjustmentController extends Controller {
             }
         }
         $mode=$archive->getSvgPaths()?$mode:null;
+
         $image_specs = $this->get('user.helper.userimagespec')->createNewWithParams($user, $image_actions_archive);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
         
@@ -96,13 +98,15 @@ class UserMaskAdjustmentController extends Controller {
     public function archiveSaveMarkerAction(Request $request) {
         $params = $request->request->all();
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
-        $this->get('user.helper.userarchives')->saveArchives($archive, $params);        
+        $this->get('user.helper.userarchives')->saveArchivesSupport($archive, $params);
         return new Response('archive updated');
     }
     #------------------------support_archive_to_live:  /support/archive_to_live/{archive_id}----------------------------------------------------
 
     public function archiveToLiveAction($archive_id) {
-        $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrent($archive_id);
+        $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($archive_id);
+
+        die('wwwwww');
         $user=$this->container->get('user.helper.user')->find($archive->getUser()->getId());                  
         
         $decoded  = $this->process_request();
@@ -123,7 +127,7 @@ class UserMaskAdjustmentController extends Controller {
         }
         $response = $archive->writeImageFromCanvas($_POST['imageData']);
         #if not from mask marker adjustment interface then resize
-        $archive->resizeImage($device_type); # image is being resized to 320x568
+        $archive->resizeImageSupport($device_type); # image is being resized to 320x568
         #$this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }

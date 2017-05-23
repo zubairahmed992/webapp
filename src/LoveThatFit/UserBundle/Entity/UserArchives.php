@@ -545,7 +545,8 @@ class UserArchives
     }
     #-------------------------------------------
     
-     public function resizeImage($device_type='') {
+    public function resizeImage($device_type='') 
+    {
 
         $filename = $this->getAbsolutePath('cropped');
         $image_info = @getimagesize($filename);
@@ -594,7 +595,50 @@ class UserArchives
                 imagepng($img_new, $filename);
                 break;
         }
-      
-        
+    }
+
+    public function resizeImageSupport($device_type='') 
+    {
+        $filename = $this->getAbsolutePath('cropped');
+        $image_info = @getimagesize($filename);
+        $image_type = $image_info[2];
+
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($filename);
+                break;
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($filename);
+                break;
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($filename);
+                break;
+        }
+        #------------ Need dimensions
+        if($device_type == 'iphone6'){
+            $width = 375;
+            $height = 667;
+        }else{
+            $width = 320;
+            $height = 568;
+        }
+        $img_new = imagecreatetruecolor($width, $height);
+        imagealphablending($img_new, false);
+        imagesavealpha($img_new,true);
+        $transparent = imagecolorallocatealpha($img_new, 255, 255, 255, 127);
+        imagefilledrectangle($img_new, 0, 0, $width, $height, $transparent);
+        imagecopyresampled($img_new, $source, 0, 0, 0, 0, $width, $height, imagesx($source), imagesy($source));
+
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                imagejpeg($img_new, $filename, 75);
+                break;
+            case IMAGETYPE_GIF:
+                imagegif($img_new, $filename);
+                break;
+            case IMAGETYPE_PNG:
+                imagepng($img_new, $filename);
+                break;
+        }
     }
 }
