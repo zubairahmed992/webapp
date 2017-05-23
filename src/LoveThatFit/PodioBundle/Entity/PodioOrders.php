@@ -26,9 +26,9 @@ class PodioOrders {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="order_number", type="integer", length=20, nullable=true)
      */
-    protected $order_number;
+    private $order_number;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -104,11 +104,11 @@ class PodioOrders {
     /**
      * Set order_number
      *
-     * @param string $order_number
-     * @return order_number
+     * @param integer $orderNumber
+     * @return PodioOrders
      */
-    public function setOrderNumber($order_number) {
-        $this->order_number = $order_number;
+    public function setOrderNumber($orderNumber) {
+        $this->order_number = $orderNumber;
 
         return $this;
     }
@@ -116,7 +116,7 @@ class PodioOrders {
     /**
      * Get order_number
      *
-     * @return string 
+     * @return integer 
      */
     public function getOrderNumber() {
         return $this->order_number;

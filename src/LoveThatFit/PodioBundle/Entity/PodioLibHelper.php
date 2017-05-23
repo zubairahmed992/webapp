@@ -13,7 +13,7 @@ use PodioEmbed;
 use PodioEmbedItemField;
 use PodioSearchResult;
 
-class PodioHelper
+class PodioLibHelper
 {
 
     /**

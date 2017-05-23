@@ -277,10 +277,10 @@ class PaymentHelper
             $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rates);
 
             ## add user podio log data
-            if ($order_id) {
-                //$order_id = $entity->getId();
-                //$order_entity = $this->container->get('cart.helper.order')->find($order_id);
-                $save_order_podio = $this->container->get('podio.helper.orders')->savePodioOrders($order_id,$order_number);
+            if ($entity->getId()) {
+                $order_id = $entity->getId();
+                $order_entity = $this->container->get('cart.helper.order')->find($order_id);
+                $save_order_podio = $this->container->get('order.helper.podio')->savePodioOrders($order_entity,$order_number);
             }
 
             $data = array(

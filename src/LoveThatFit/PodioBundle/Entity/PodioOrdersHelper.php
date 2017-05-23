@@ -63,14 +63,14 @@ class PodioOrdersHelper
 
 //-------------------------------------------------------
 
-    public function savePodioOrders($order_id,$order_number)
+    public function savePodioOrders($order_entity,$order_number)
     {
         $entity = $this->createNew();
         $entity->setStatus(0);
         $entity->setPodioId(0);
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
-        $entity->setUserOrder($order_id);
+        $entity->setUserOrder($order_entity);
         $entity->setOrderNumber($order_number);
 
         $this->em->persist($entity);
@@ -109,22 +109,15 @@ class PodioOrdersHelper
         return $this->repo->findWhereIdIn($ids);
     }
 
-//---------------------------------------------------------
     //-------------------------------------------------------
-    public function findOneByPodioId($podio_id)
+    public function findOrdersByStatus($status)
     {
-        return $this->repo->findOneByName($podio_id);
+        return $this->repo->findOrdersByStatus($status);
     }
 
-    //-------------------------------------------------------
-    public function findUserByStatus($status)
+    public function findPodioOrderByOrderId($order_id)
     {
-        return $this->repo->findUserByStatus($status);
-    }
-
-    public function findPodioUserByUserId($user_id)
-    {
-        return $this->repo->findPodioUserByUserId($user_id);   
+        return $this->repo->findPodioOrderByOrderId($order_id);   
     }
 
 }

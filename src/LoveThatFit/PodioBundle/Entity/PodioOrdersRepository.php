@@ -8,21 +8,29 @@ use Doctrine\ORM\Mapping as ORM;
 class PodioOrdersRepository extends EntityRepository
 {
 
-    public function findByUserId($user_id)
+    public function findByOrderId($order_id)
     {
-        return $this->findOneBy(array('user_id' => $user_id));
+        return $this->findOneBy(array('order_id' => $order_id));
     }
 
-    public function findUserByStatus($status)
+    public function findOrdersByStatus($status)
     {
         $query = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('u.id as member_id,u.email,u.gender,u.zipcode,u.birthDate,u.createdAt as member_created,pu.id,pu.status,pu.podio_id')
-            ->from('LoveThatFitUserBundle:PodioUsers', 'pu')
-            ->innerJoin('pu.user', 'u')
-            ->where('pu.status IN (:status)')
+            ->select('o.id as order_id, o.order_date, o.billing_first_name, o.billing_last_name, 
+                      o.billing_address1, o.billing_address2, o.billing_city, o.billing_postcode, 
+                      o.billing_country, o.billing_state, o.shipping_first_name, o.shipping_last_name,
+                      o.shipping_address1, o.shipping_address2, o.shipping_city, o.shipping_postcode,
+                      o.shipping_country, o.shipping_state, o.order_status, o.order_amount,
+                      o.transaction_status, o.transaction_id, o.payment_method, o.billing_phone,
+                      o.shipping_phone, o.order_number, o.shipping_amount, o.discount_amount, o.total_amount,
+                      o.user_order_date, po.id, po.status, po.podio_id
+                    ')
+            ->from('LoveThatFitPodioBundle:PodioOrders', 'po')
+            ->innerJoin('po.user_podio_order', 'o')
+            ->where('po.status IN (:status)')
             ->setParameter('status', $status)
-            ->groupBy('u.id')
+            ->groupBy('o.id')
             ->getQuery();
         try {
             return $query->getResult();
@@ -31,47 +39,15 @@ class PodioOrdersRepository extends EntityRepository
         }
     }
 
-    public function findUserByStatus2($status,$user_id)
-    {
-        if($user_id) {
-            $query = $this->getEntityManager()
-                ->createQueryBuilder()
-                ->select('u.id as member_id,u.email,u.gender,u.zipcode,u.birthDate,u.createdAt as member_created,pu.id,pu.status,pu.podio_id')
-                ->from('LoveThatFitUserBundle:PodioUsers', 'pu')
-                ->innerJoin('pu.user', 'u')
-                ->where('pu.status IN (:status)')
-                ->andWhere('u.id =:user_id')
-                ->setParameter('status', $status)
-                ->setParameter('user_id', $user_id)
-                ->groupBy('u.id')
-                ->getQuery();
-        } else {
-            $query = $this->getEntityManager()
-                ->createQueryBuilder()
-                ->select('u.id as member_id,u.email,u.gender,u.zipcode,u.birthDate,u.createdAt as member_created,pu.id,pu.status,pu.podio_id')
-                ->from('LoveThatFitUserBundle:PodioUsers', 'pu')
-                ->innerJoin('pu.user', 'u')
-                ->where('pu.status IN (:status)')
-                ->setParameter('status', $status)
-                ->groupBy('u.id')
-                ->getQuery();
-        }
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    public function findPodioUserByUserId($user_id)
+    public function findPodioOrderByOrderId($order_id)
     {
         $query = $this->getEntityManager()->createQueryBuilder();
         return $query->select(
-            'u.id as member_id, pu.podio_id')
-            ->from('LoveThatFitUserBundle:PodioUsers', 'pu')
-            ->innerJoin('pu.user', 'u')
-            ->where('u.id =:user_id')
-            ->setParameter('user_id', $user_id)
+            'o.id as order_id, po.podio_id')
+            ->from('LoveThatFitPodioBundle:PodioOrders', 'po')
+            ->innerJoin('po.user_podio_order', 'o')
+            ->where('o.id =:order_id')
+            ->setParameter('order_id', $order_id)
             ->getQuery()
             ->getResult();
     }
