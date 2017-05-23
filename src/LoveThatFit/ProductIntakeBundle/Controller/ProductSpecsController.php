@@ -6,6 +6,7 @@ use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class ProductSpecsController extends Controller
@@ -301,4 +302,18 @@ class ProductSpecsController extends Controller
      return new Response(json_encode($styling_type));
     }
        
+    //---------------------------- Create Product Specification from Existing Product
+    public function CreateSpecificationAction() {      
+         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:create_product_specification.html.twig');
+       
+    }
+    
+    //-------------------------- Create Product Specification From Existing Product
+    public function createProductSpecificationAction(Request $request) {
+        $product_id =  $request->get('product_id');
+        $data = $this->get('pi.product_specification')->getExistingProductDetails($product_id);
+         $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
+        return $this->indexAction();
+        return new JsonResponse($data);
+    }
 }
