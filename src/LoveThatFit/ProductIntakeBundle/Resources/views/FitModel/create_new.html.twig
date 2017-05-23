@@ -54,6 +54,11 @@
          $('#sel_size').append(option);         
     }
     
+        $(".add_size").click(function () {
+            var fit_model_genrate = $('.fit_modele_genrate');
+            var new_fit_model = $('#new_fit_model').val();            
+            fit_model_genrate.append("<div class='form-group'> <label class='control-label col-sm-2'>"+new_fit_model+": </label>  <div class='col-sm-4'>  <input type='text' id="+new_fit_model+" name="+new_fit_model+">  </div>  </div>")
+        });
         
 });
     </script>   
@@ -155,7 +160,17 @@
                 </div>
             </div>
             <br>            
-        {% endfor %}    
+        {% endfor %} 
+        <div class="fit_modele_genrate">
+        </div>
+            <div class="form-group">  
+                  <label class="control-label col-sm-2" for="title">Enter Fit Point : </label>              
+                <div class="col-sm-4">
+                    <input type="text" id="new_fit_model" name="fit_model"
+                           maxlength="255">
+                    <button type="button" class="add_size">Add Fit point </button>
+                </div>
+            </div>
 
             <div class="form-group">        
                 <div class="col-sm-offset-5 col-sm-10">
