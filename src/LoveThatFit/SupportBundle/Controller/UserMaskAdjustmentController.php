@@ -105,10 +105,7 @@ class UserMaskAdjustmentController extends Controller {
 
     public function archiveToLiveAction($archive_id) {
         $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($archive_id);
-
-        die('wwwwww');
-        $user=$this->container->get('user.helper.user')->find($archive->getUser()->getId());                  
-        
+        $user=$this->container->get('user.helper.user')->find($archive->getUser()->getId());
         $decoded  = $this->process_request();
         $decoded['auth_token']=$user->getAuthToken();
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
