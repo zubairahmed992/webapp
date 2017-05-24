@@ -1,0 +1,31 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+
+
+    <div class="container">    
+     
+        
+        <h2 style="float:left;">Create Product Specification From Existing Product  </h2>    
+        </div>
+    
+    
+        <form action="{{ path('create_product_specification_intake') }}" method="post"
+              enctype="multipart/form-data"  class="form-horizontal" >
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sel_brand"> Product ID: </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="product_id">
+                </div>
+            </div>
+            <br>
+              
+          
+            <div class="form-group">        
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="submit" class="btn btn-default">Create</button>
+                </div>
+            </div>
+        </form>
+
+{% endblock %}
