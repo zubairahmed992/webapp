@@ -803,7 +803,7 @@ class ProductSpecificationHelper {
     //--------------------------- get deaitls of Existing Product
     public function getExistingProductDetails( $id )
     {       
-        $data = $this->container->get('service.repo')->getExistingProductDetails($id); 
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id);     
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
         $data1['style_name']=$data[0][0]['name'];
@@ -824,36 +824,34 @@ class ProductSpecificationHelper {
         $data1['fabric_content']=json_decode($data[0][0]['fabric_content']);
         $data1['size_title_type']=$data[0][0]['size_title_type'];
         $data1['control_number']=$data[0][0]['control_number'];
-   
-
-
-        //            colors : ""
-        //            mapping_description : "Willow & Clay product"
-        //            mapping_title : "Willow and Clay mati"
-        //            body_type : "tall"
-        //            measuring_unit : "inch"
-             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+        $data1['styling_type']=$data[0][0]['styling_type'];
+        $data1['colors']='';
+        $data1['mapping_title']=$data[0]['clothing_type'];
+        $data1['mapping_description']=$data[0]['clothing_type'];       
+        $data1['measuring_unit']='inch';       
+            foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
                     $data1['sizes'][$product_size_value['title']][$value['title']]['fit_model'] = $value['fit_model_measurement'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule_stretch'] = $value['horizontal_stretch'];
+                   //  $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule_stretch'] = $value['vertical_stretch'];                
+                    $data1['sizes'][$product_size_value['title']][$value['title']]['stretch_percentage'] = $value['stretch_type_percentage'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['ideal_high'] = $value['ideal_body_size_high'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['ideal_low'] = $value['ideal_body_size_low'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['max_calc'] = $value['max_calculated'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['min_actual'] = $value['min_body_measurement'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['min_calc'] = $value['min_calculated'];
-                   
-                    
-             
-                            
-                   }
+                    $data1['body_type'] = $product_size_value['body_type'];
+                }
              }
-             
-            $data1['fit_point_stretch'] = array_flip(array_keys(reset($data1['sizes'])));
-            // return $data1;
+            foreach ($data[0][0]['product_colors'] as $key => $product_color_value) {                  
+               $colors['colors'][$product_color_value['title']] = $product_color_value['title'];
+            }
+            $data1['colors'] = implode(',',$colors['colors']);            
+            $data1['fit_point_stretch'] = array_flip(array_keys(reset($data1['sizes'])));          
             $brand =  $this->container->get('admin.helper.brand')->findOneByName($data1['brand']); 
             $class = $this->class;
             $c = new $class();
@@ -864,6 +862,7 @@ class ProductSpecificationHelper {
             $c->setBrandName($data1['brand']);
             $c->setStyleName($data1['style_name']);
             $c->setClothingType($data1['clothing_type']);
+            $c->setStyleIdNumber($data1['clothing_type']);            
             $c->setCreatedAt(new \DateTime('now'));
             $this->save($c);
             return true;

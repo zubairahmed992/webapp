@@ -312,7 +312,7 @@ class ProductSpecsController extends Controller
     public function createProductSpecificationAction(Request $request) {
         $product_id =  $request->get('product_id');
         $data = $this->get('pi.product_specification')->getExistingProductDetails($product_id);
-        $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
+         $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
         return $this->indexAction();
         return new JsonResponse($data);
     }
