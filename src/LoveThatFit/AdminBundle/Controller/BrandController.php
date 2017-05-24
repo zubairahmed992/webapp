@@ -12,10 +12,10 @@ use LoveThatFit\AdminBundle\Form\Type\BrandSpecificationType;
 
 class BrandController extends Controller {
 
-    //----------------All Brands Display List --------------------------------------------------------------------------
+    //----------------All Brands Display List 
     public function indexAction($page_number, $sort = 'id') {
-        $brands_with_pagination = $this->get('admin.helper.brand')->getListWithPagination($page_number, $sort);
-        return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', $brands_with_pagination);
+    $brands_with_pagination = $this->get('admin.helper.brand')->getListWithPagination($page_number, $sort);
+    return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', $brands_with_pagination);
     }
 //-----------------------Display Single brand Detail by Id-----------------------------------------------------------------
 
