@@ -820,14 +820,11 @@ class ProductSpecificationHelper {
         $data1['layering']=$data[0][0]['layering'];
         $data1['structural_detail']=$data[0][0]['structural_detail'];
         $data1['fit_type']=$data[0][0]['fit_type'];          
-        $data1['fit_priority']=$data[0][0]['fit_priority'];
-        $data1['fabric_content']=$data[0][0]['fabric_content'];
+        $data1['fit_priority']=json_decode($data[0][0]['fit_priority']);
+        $data1['fabric_content']=json_decode($data[0][0]['fabric_content']);
         $data1['size_title_type']=$data[0][0]['size_title_type'];
         $data1['control_number']=$data[0][0]['control_number'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
+   
 
 
         //            colors : ""
@@ -848,11 +845,15 @@ class ProductSpecificationHelper {
                     $data1['sizes'][$product_size_value['title']][$value['title']]['max_calc'] = $value['max_calculated'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['min_actual'] = $value['min_body_measurement'];
                     $data1['sizes'][$product_size_value['title']][$value['title']]['min_calc'] = $value['min_calculated'];
+                   
                     
              
                             
                    }
              }
+             
+            $data1['fit_point_stretch'] = array_flip(array_keys(reset($data1['sizes'])));
+            // return $data1;
             $brand =  $this->container->get('admin.helper.brand')->findOneByName($data1['brand']); 
             $class = $this->class;
             $c = new $class();
