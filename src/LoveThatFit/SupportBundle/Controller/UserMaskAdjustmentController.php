@@ -144,7 +144,8 @@ class UserMaskAdjustmentController extends Controller {
   }
     #----------------------------------------------------------------------------    
   
-    public function profileArchivesAction($user_id, $archive_id = null, $mode=null) {
+    public function profileArchivesAction($user_id, $archive_id = null, $mode=null)
+    {
         $archive = null;
         if ($archive_id) {
             $archive = $this->get('user.helper.userarchives')->find($archive_id);
@@ -159,11 +160,12 @@ class UserMaskAdjustmentController extends Controller {
 
         $default_archive_id = null;
        
-  #find all archives associated with user
+        #find all archives associated with user
         foreach ($user->getUserArchives() as $a) {
             if ($a->getStatus() == -1) {#pick the pending one
                 $default_archive_id = $a->getId();
-            } elseif ($a->getStatus() == 1 && !$default_archive_id) {            #pick the active one
+            } elseif ($a->getStatus() == 1 && !$default_archive_id) {
+                #pick the active one
                 $default_archive_id = $a->getId();
             }
         }
@@ -190,7 +192,7 @@ class UserMaskAdjustmentController extends Controller {
         $device_type = $image_actions_archive['device_type'];
         $device_type=$device_type?$device_type:$user->getImageDeviceType();
         $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
-        $default_marker = $this->get('user.marker.helper')->getDefaultMask($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
+        $default_marker = $this->get('user.marker.helper')->getDefaultMaskSupport($user->getGender() == 'm' ? 'man' : 'woman', $measurement->getBodyShape());
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $edit_type = "registration";
         
