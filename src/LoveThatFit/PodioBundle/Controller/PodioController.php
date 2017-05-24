@@ -26,11 +26,14 @@ class PodioController extends Controller {
     	$decoded  = $this->process_request(); 
     	$status = [0,2]; //podio order status 0=pending , 2=failure
     	$podio_orders = $this->get('order.helper.podio')->findOrdersByStatus($status); //get podio orders pending or failure
-    	//echo "<pre>"; print_r($podio_orders);
+    	//echo "<pre>"; print_r($podiopayment_json_orders);
     	if($podio_orders) {
             $total_podio_orders = count($podio_orders);
             foreach ($podio_orders as $orders) {
                 //echo "<pre>"; print_r($users); 
+                $order_details = $this->get('cart.helper.orderDetail')->findByOrderID($orders['order_id']);
+                echo "<pre>"; print_r($order_details); 
+                
                 $id = $orders['id']; //podio order log id
         		$order_podio = array(
                    'order_id' => $orders['order_id'],
@@ -60,15 +63,20 @@ class PodioController extends Controller {
                    'transaction_id' => ($orders['transaction_id']) ? $orders['transaction_id'] : '',
                    'transaction_status' => ($orders['transaction_status']) ? $orders['transaction_status'] : '',
                    'payment_method' => ($orders['payment_method']) ? $orders['payment_method'] : '',
+                   'credit_card' => ($orders['payment_json']) ? "xxxx-xxxx-xxxx-".json_decode($orders['payment_json'])
+                    ->transaction->_attributes->creditCard->last4 : '',
                    'user_order_date' => ($orders['user_order_date']) ? $orders['user_order_date']->format('Y-m-d h:i:s') : '', 
                    'discount_amount' => ($orders['discount_amount']) ? $orders['discount_amount'] : '',
                    'total_amount' => ($orders['total_amount']) ? $orders['total_amount'] : '',
+                   'item_description' => ($order_details[0]['item_description']) ? $order_details[0]['item_description'] : '',
+                   'brand_name' => ($order_details[0]['brand_name']) ? $order_details[0]['brand_name'] : '',
                    'base_path' => ($decoded['base_path']) ? $decoded['base_path'] : ''
                 );
-        		//echo "<pre>"; print_r($order_podio); 
+        		echo "<pre>"; print_r($order_podio); 
 
-        		//$podio_id = $this->container->get('user.helper.podioapi')->saveUserPodio($order_podio);
-                //echo "podio_id:".$podio_id."<br>";
+        		$podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
+            die('test order podio');
+            //echo "podio_id:".$podio_id."<br>";
         		/*if($podio_id) {
                     $data = $this->get('user.helper.podio')->updatePodioUsers($id, $podio_id);
         		}*/

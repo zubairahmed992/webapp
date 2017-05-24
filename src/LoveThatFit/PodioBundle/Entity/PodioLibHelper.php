@@ -53,21 +53,22 @@ class PodioLibHelper
         } else {
             $this->env  = "podio_local_credentials";
         }
-
-        $yaml = new Parser();
-        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/config.yml'));
-        
-        //Podio API Access Variables
-        $this->client_id = $parse[$this->env]["client_id"];
-        $this->client_secret = $parse[$this->env]["client_secret"];
-        $this->app_id = $parse[$this->env]["app_id"];
-        $this->app_token = $parse[$this->env]["app_token"];
         $this->container = $container;
     }
 
     //-------------------------------------------------------
-    public function saveUserPodio($user_podio)
+    public function saveOrderPodio($order_podio)
     {        
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/PodioBundle/Resources/config/config_orders.yml'));        
+        //Podio API Access Variables
+        $this->client_id = $parse[$this->env]["client_id"];
+        $this->client_secret = $parse[$this->env]["client_secret"];
+        $this->app_id = $parse[$this->env]["app_id"];
+        $this->app_token = $parse[$this->env]["app_token"];        
+
+        //echo "<pre>"; print_r($order_podio);
+        
         //Authenticate the Podio API
         Podio::setup($this->client_id, $this->client_secret);
         Podio::authenticate_with_app($this->app_id, $this->app_token);
@@ -75,43 +76,37 @@ class PodioLibHelper
             //Podio::set_debug(true);
             //print "You were already authenticated and no authentication is needed.<br>"; 
 
-            //admin protal url of member profile
-            $url_member_profile = ''.$user_podio['base_path'].'admin/user/'.$user_podio['id'].'/show';
-            //$view_profile = '<a href="'.$url_member_profile.'" target="_blank">View Profile</a>';
-
             // Second approach - Create field collection with different fields
             $fields = new PodioItemFieldCollection(array(
-              new PodioEmailItemField(array("external_id" => "member-email")), 
-              new PodioTextItemField(array("external_id" => "title", "values" => "".$user_podio['id']."")),
-              new PodioTextItemField(array("external_id" => "activation-date", "values" => "".$user_podio['created_at']."")),
-              new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
-              new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
-              new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
-              new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
-              new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
+              new PodioTextItemField(array("external_id" => "order-number", "values" => "".$order_podio['order_number']."")),
+              new PodioTextItemField(array("external_id" => "title", "values" => "".$order_podio['billing_first_name']." ".$order_podio['billing_last_name']."")),              
+              new PodioTextItemField(array("external_id" => "order-date", "values" => "".$order_podio['order_date']."")),
+              new PodioTextItemField(array("external_id" => "order-amount", "values" => "".$order_podio['order_amount']."")),
+              new PodioTextItemField(array("external_id" => "item-amount", "values" => "".$order_podio['order_amount']."")),
+              new PodioTextItemField(array("external_id" => "brand-name", "values" => "".$order_podio['brand_name']."")),
+              new PodioTextItemField(array("external_id" => "item-description", "values" => "".$order_podio['item_description']."")),
+              new PodioTextItemField(array("external_id" => "braintree-status", "values" => "".$order_podio['transaction_status']."")),
+              new PodioTextItemField(array("external_id" => "payment-method", "values" => "".$order_podio['payment_method']."")),
+              new PodioTextItemField(array("external_id" => "charge-to", "values" => "".$order_podio['credit_card']."")),
+              new PodioTextItemField(array("external_id" => "shipping-address", "values" => "".$order_podio['shipping_address1'].""))
             ));
 
             // Create item and attach fields
             $item = new PodioItem(array(
               "app" => new PodioApp(intval($this->app_id)),
               "fields" => $fields
-            ));
-            
-            //Attached member profile url here
-            $embed = PodioEmbed::create(array("url" => $url_member_profile));
-            $item->fields["admin-portal-url"]->values = $embed;
+            ));         
 
-            //Attached memeber email
-            $item->fields["member-email"]->values = array("type" => "other","value" => "".$user_podio['email']."");
-
-            try {
+            /*try {
               // Save item
               $new_item_placeholder = $item->save();
               $item->item_id = $new_item_placeholder->item_id;
               return $item->item_id;
             } catch (PodioError $e) {
               return $e;
-            }            
+            }*/
+
+            die('authenticated.');            
         }    
     }
 
