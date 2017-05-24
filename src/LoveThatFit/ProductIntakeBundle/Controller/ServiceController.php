@@ -66,15 +66,8 @@ class ServiceController extends Controller {
     public function productDetailAction(Request $request) {
          $product_id =  $request->get('product_id');
          $server_url =  $request->get('server_url');    
-            $data = $this->get('service.helper')->getProductDetails($product_id);
-             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
-                 foreach ($product_size_value['product_size_measurements'] as  $value) {  
-                     $data1[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
-                     $data1[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
-                   }
-             }
-          
-            return new JsonResponse([$data1]);
+         $data = $this->get('service.helper')->getProductDetails($product_id);
+        
           
                        // print_r($data[0][0]['product_sizes'] );
 
@@ -123,6 +116,6 @@ class ServiceController extends Controller {
             ]);
          } 
     }
-   
+    
 
 }
