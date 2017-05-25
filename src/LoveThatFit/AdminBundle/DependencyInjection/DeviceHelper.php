@@ -34,6 +34,13 @@ class DeviceHelper {
         }
     }
 
+    ##new method as per im.mask branch
+    private function get_additional_configuration_support() {
+        foreach ($this->conf as $d => $c) {
+            $this->conf[$d]['resize_ratio'] = ($c['pixel_per_inch'] / $c['product_px_per_inch']);            
+        }
+    }
+
 //--------------------------------------------------------------------------------
     public function getConversionRatio($original, $targeted) {
         if ($targeted && array_key_exists($targeted, $this->conf)) {

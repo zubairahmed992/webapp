@@ -7,8 +7,24 @@
 		}
     .tab-content.active{
                     display: block;
-		}                
+		}     
+    .body_measurements{
+        color: #3380FF;
+    }                
+    .extended_fit_points{
+        display:none;
+    }
+    .grid_headers{
+        text-align:center;
+        background-color: #C2C1C1;
     
+    }
+    .grid_fit_model_size{
+        background-color: #FFFE9E;
+    }
+    .grid_fit_model_measurement{
+        font-weight: bold;
+    }
 </style>
 <script>
     var fit_array=[];
@@ -326,13 +342,14 @@
         }
                
         $.fn.editable.defaults.mode = 'inline'; 
-        var fit_model_value = $('.fit_model_value').val(); 
+        {# var fit_model_value = $('.fit_model_value').val(); 
        (fit_model_value == "") ? "" :$('.{{fit_model_selected_size }}').css({ 'background-color' : '#FFFF99'});
-        
+        #}
         //----------------------------------------
         
         $('.edit_inline').editable({
-            type: 'text',
+            type: 'number',
+             step: "any",
             url: get_service_relative_url(),  
             pk: {{ product_specs.id }},
             title: $(this).attr('placeholder'),              
@@ -532,7 +549,6 @@
                     if(confirm(message))
                         form.submit();
                 }
-
 
     });
 
@@ -934,6 +950,9 @@
                        
                <br>
                </div>   
+               <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary">More</button>
+
+
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
             <table>                
                 <tr>
@@ -941,7 +960,7 @@
                         <div id="dv_measurement_table">
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
-                                    <tr class="{{ size }} Active">
+                                    <tr class="{{ size }} Active grid_headers">
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_percentage</th>
@@ -958,9 +977,9 @@
                                         
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
-                                    {% if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) %}
+                                    {# if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) #}
                                         {% if (size == fit_model_selected_size) %}
-                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
                                                 <th>
                                                     {{measurement_k}}</th>
                                                 <td>
@@ -986,38 +1005,39 @@
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
                                                     <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.min_calc | number_format(2, '.', '')}}
                                                     <input class="5" type="number" hidden value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px">
                                                 </td>
-                                                <td>                                                    
+                                                <td class="body_measurements">                                                    
                                                     {#<input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:80px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
                                                     <input class="7" type="number" hidden value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.fit_model | number_format(2, '.', '')}}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_high | number_format(2, '.', '')}}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {#<input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="10 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.max_calc | number_format(2, '.', '')}}
                                                     <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
                                                 
                                             </tr>
                                         {% else %}
-                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }}" id="validation_fit_model" >
+                                            <tr class="{{ size }} {{ size }}_{{ measurement_k }} {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
+                                            
                                                 <th>
                                                 <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                                                 {{measurement_k}}</th>
@@ -1043,38 +1063,38 @@
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}
                                                     <input class="4" type="number" hidden readonly value="{{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule_stretch" style="width:50px">                                                    
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.min_calc | number_format(2, '.', '')}}
                                                     <input class="5" type="number" hidden value="{{measurement_v.min_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_calc" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.min_actual | number_format(2, '.', '')}}
                                                     <input class="6" type="number" hidden value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
                                                     <input class="7" type="number" hidden value="{{measurement_v.ideal_low | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.fit_model | number_format(2, '.', '')}}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.ideal_high | number_format(2, '.', '')}}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
                                                 </td>                                                
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.max_actual | number_format(2, '.', '')}}
                                                     <input class="10" type="number" hidden value="{{measurement_v.max_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
                                                 </td>
-                                                <td>
+                                                <td class="body_measurements">
                                                     {{measurement_v.max_calc | number_format(2, '.', '')}}
                                                     <input class="11" type="number" hidden value="{{measurement_v.max_calc | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-max_calc" style="width:50px">
                                                 </td>
                                             </tr>
                                         {% endif %}
 
-                                    {% endif %}
+                                    {# endif #}
                                 {% endfor %}
                             {% endfor %}
                                 </table>
@@ -1090,6 +1110,19 @@
 </form>                                
   <br>                
   <input type="hidden" class="product_spec_size" value="{{ app.request.get('id') }} ">
-
+  <script>
+      
+      //-----------------------------------
+$(document).ready(function(){       
+$("#show_extended_fp").click(function (event) {                         
+    //alert();
+    $("#show_extended_fp").text()=='More'?$("#show_extended_fp").text('Few'):$("#show_extended_fp").text('More');
+ var cols = document.getElementsByClassName('extended_fit_points');
+          for(i=0; i<cols.length; i++) {
+            cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
+          }
+    });
+    });
+  </script>
   
 {% endblock %}

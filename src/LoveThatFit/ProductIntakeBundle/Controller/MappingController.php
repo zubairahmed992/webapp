@@ -134,6 +134,7 @@ class MappingController extends Controller
         $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);
         $body_types = ($parsed_data['gender'] == 'f'? $size_specs['fit_types']['woman']:$size_specs['fit_types']['man']);
         $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
+         (array_key_exists('formula', $parsed_data))?true :$parsed_data['formula']=array();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:edit.html.twig', array(
                     'fit_points' => array_keys($fit_points),
                     'brands' => $brands,
