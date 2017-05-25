@@ -411,6 +411,7 @@ class UserMarkerHelper
             return $px_measure;
         }
     }
+
     #---------------------------------------------------------------
     private function getPixelToInch($mm_specs, $fit_point, $pixels)
     {
@@ -535,101 +536,14 @@ class UserMarkerHelper
         $mm_array          = json_decode($mask_json);
         $pred_measurements = array();
         foreach ($mm_specs['masked_marker'] as $mms_k => $mms_v) {
-            $m1                 = $this->calculate_distance_support($mms_v, $mm_array);
-            $device_adjusted_px = $this->device_screen_adjustment_support($m1['avg'], $device_type);
-            $predicted          = $this->getPixelToInchSupport($mm_specs, $mms_k, $device_adjusted_px);
+            $m1                 = $this->calculate_distance($mms_v, $mm_array);
+            //since the code return the same values so remvoe the method device_screen_adjustment;
+            $device_adjusted_px = $m1['avg'];
+            $predicted          = $this->getPixelToInch($mm_specs, $mms_k, $device_adjusted_px);
             if ($predicted > 0) {
                 $pred_measurements[$mms_k] = $predicted;
             }
         }
         return $pred_measurements;
     }
-
-    private function calculate_distance_support($mms_v, $mm_array)
-    {
-      if (is_array($mm_array)) {
-          $dst_px1 = 0;
-          $p1      = $mms_v['segments']['s1']['a'];
-          $p2      = $mms_v['segments']['s1']['b'];
-          if (array_key_exists($p1, $mm_array) && array_key_exists($p2, $mm_array)) {
-              $x1 = round($mm_array[$p1][0], 2);
-              $y1 = round($mm_array[$p1][1], 2);
-              $x2 = round($mm_array[$p2][0], 2);
-              $y2 = round($mm_array[$p2][1], 2);
-              #single measurement
-              $dst_px1 = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
-          }
-
-          #pair measurements
-          $dst_px2 = 0;
-
-          if ($mms_v['type'] == 'pair') {
-              $p3 = $mms_v['segments']['s2']['a'];
-              $p4 = $mms_v['segments']['s2']['b'];
-              if (array_key_exists($p3, $mm_array) && array_key_exists($p4, $mm_array)) {
-                  $x3      = round($mm_array[$p3][0], 2);
-                  $y3      = round($mm_array[$p3][1], 2);
-                  $x4      = round($mm_array[$p4][0], 2);
-                  $y4      = round($mm_array[$p4][1], 2);
-                  $dst_px2 = sqrt(pow(($x4 - $x3), 2) + pow(($y4 - $y3), 2));
-              }
-          }
-          #--------------
-          $dst_avg = 0;
-          if ($dst_px2 == 0) {
-              $dst_avg = $dst_px1;
-          } else {
-              $dst_avg = ($dst_px1 + $dst_px2) / 2;
-          }
-
-          #--------------------
-          return array('s1' => $dst_px1, 's2' => $dst_px2, 'avg' => $dst_avg); # 'avg' => $dst_avg * 2
-      } else {
-          return array('s1' => 0, 's2' => 0, 'avg' => 0);
-      }
-    }
-
-    private function device_screen_adjustment_support($px_measure, $device_type = null)
-    {
-        if (strtolower($device_type) == 'iphone6') {
-            //return ($px_measure * 0.89478);
-            return ($px_measure * 0.8278);
-        } else {
-            return $px_measure;
-        }
-    }
-
-    private function getPixelToInchSupport($mm_specs, $fit_point, $pixels)
-    {
-      $prev_px_measure   = 0;
-      $prev_inch_measure = 0;
-      if (array_key_exists($fit_point, $mm_specs['pixel_conversion'])) {
-        foreach ($mm_specs['pixel_conversion'][$fit_point] as $px_measure => $inch_measure) {
-          if ($px_measure == $pixels) {
-            #exact match of pixel
-            return $inch_measure;
-          } elseif ($px_measure > $pixels) {
-            if ($prev_px_measure < $pixels) {
-              #in between values of pixel
-              if ($prev_px_measure == 0) { #compare with previous measurement
-                return ($px_measure - $pixels) < 5 ? $inch_measure : 0;
-              } else {
-                #grate to scale ~~~~~~~~>
-                $px_diff              = $px_measure - $prev_px_measure; # diff in px
-                $inch_diff            = $inch_measure - $prev_inch_measure; # diff in inches
-                $grade_scale          = $inch_diff / $px_diff; # ratio of the diff
-                $current_inch_diff    = $pixels - $prev_px_measure; # diff of the actual body px & prev item px
-                $current_inch_measure = $prev_inch_measure + ($grade_scale * $current_inch_diff);
-                return $current_inch_measure;
-              }
-            }
-          }
-          $prev_px_measure   = $px_measure;
-          $prev_inch_measure = $inch_measure;
-        }
-      } else {
-        return ($pixels / 5) * (-1);
-      }
-    }
-
 }
