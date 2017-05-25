@@ -371,9 +371,9 @@ Search Product
     <i class="icon-play-circle"></i></a>
     {%endif%}-->
     <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Click to Enable">
-    <i class="icon-play-circle"></i></a>
+    <i class="icon-ban-circle"></i></a>
 {%else%}
-    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Click to Disable"><i class="icon-ban-circle"></i></a>
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Click to Disable"><i class="icon-play-circle"></i></a>
 {%endif%}
 <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
 <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
