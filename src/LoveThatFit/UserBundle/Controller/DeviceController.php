@@ -16,11 +16,10 @@ class DeviceController extends Controller {
         $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
        
         return $this->render(
-                        'LoveThatFitUserBundle:Device:login.html.twig', array(
-                        'last_username' => $security_context['last_username'],
-                    'error' => $security_context['error'],
-                    
-                        )
+                'LoveThatFitUserBundle:Device:login.html.twig', array(
+                'last_username' => $security_context['last_username'],
+                'error' => $security_context['error'],
+            )
         );
     }
     
@@ -147,9 +146,11 @@ class DeviceController extends Controller {
 
         return $this->render('LoveThatFitUserBundle:Device:svg_path.html.twig', array(
                     'form' => $form->createView(),
+                    ///comment start
                     'measurement_form' => $measurement_form->createView(),
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    ///comment end
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => $edit_type,
@@ -241,7 +242,7 @@ class DeviceController extends Controller {
    public function fooAction() {
 
 	 $user = $this->get('user.helper.user')->find('1846');
-	$data = array(
+	   $data = array(
 	  "measurement" => '{"actual_user":{"body_type":"Regular","bra_size":"32D","height":72,"weight":123,"auth_token":"98225cbb99770c6478c697d537f63c71","email":"makepiece@ss.com","body_shape":"Rectangle","base_path":"http:\/\/192.168.0.203\/webapp\/web\/"},"masked_marker":{"bust":39.784177887419,"shoulder_across_front":17.473892384084,"waist":41.061956257092,"hip":38.489122100453,"inseam":30.789111873716,"thigh":21.630147481259}}',
 	 "image_actions" => '{"move_up_down":-29,"move_left_right":0,"img_rotate":0}',
 	 "marker_params" => '{"rect_x":32,"rect_y":52.5,"mask_x":158.5919784247323,"mask_y":544.5685208881938,"rect_height":12,"rect_width":15}',
@@ -279,6 +280,8 @@ class DeviceController extends Controller {
     $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
     $device_spec = $user->getDeviceSpecs($device_type);
     $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+    //new code from im branch
+    $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
 
     return $this->render('LoveThatFitUserBundle:Device:multiple_svg_path.html.twig', array(
         'form' => $form->createView(),
@@ -297,6 +300,8 @@ class DeviceController extends Controller {
         'device_type' => $device_type,
         'device_model'=> $device_model,
         'device_screen_height' => $device_screen_height['pixel_height'],
+        //new code from im branch
+        'bra_size_body_shape' => json_encode($bra_size_body_shape),
     ));
   }
   #### End of Men Mask Marker
