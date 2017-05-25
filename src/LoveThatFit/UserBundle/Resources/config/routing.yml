@@ -17,7 +17,7 @@ ajax_brand_size_chart_json:
     defaults: { _controller: LoveThatFitUserBundle:Ajax:brandSizeChartByJSON,_format:json}
 
 
-#--------------------------------- Registration Process ----------------
+#--------------------------------- Registration Process -------------------
 
 registration:
     pattern:  /registration

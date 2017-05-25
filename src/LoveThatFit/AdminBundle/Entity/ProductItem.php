@@ -151,7 +151,13 @@ class ProductItem
      */
 
     private $price = 0;
-
+    #----------------------------------------------------------------------------------------
+    /**
+     * @var string $raw_image
+     *
+     * @ORM\Column(name="weight", type="float", nullable=true)
+     */
+    private $weight;
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -853,5 +859,28 @@ class ProductItem
     public function removeSaveLookItem(\LoveThatFit\AdminBundle\Entity\SaveLookItem $saveLookItem)
     {
         $this->save_look_item->removeElement($saveLookItem);
+    }
+
+    /**
+     * Set weight
+     *
+     * @param float $weight
+     * @return ProductItem
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return float 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }
