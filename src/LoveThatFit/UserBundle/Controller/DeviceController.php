@@ -256,55 +256,154 @@ class DeviceController extends Controller {
 	 die;
    }
   #### Multiple mask marker for StandAlone App
-  public function multipleSvgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
-    $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
-    $device_model = $device_type;
-    $device_type = $this->get('user.marker.helper')->getDeviceTypeForModel($device_type);
-    $device_type =$device_type==null? 'iphone5':$device_type;
-    if(!$user){
-      return new Response ('Authentication error');
-    }
+    public function multipleSvgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
+        $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
+        $device_model = $device_type;
+        $device_type = $this->get('user.marker.helper')->getDeviceTypeForModel($device_type);
+        $device_type =$device_type==null? 'iphone5':$device_type;
+        if(!$user){
+          return new Response ('Authentication error');
+        }
 
-    $measurement = $user->getMeasurement();
-    if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
-      $decoded=$measurement->getJSONMeasurement('actual_user');
-      if(is_array($decoded)){
-        $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
-      }
-    }
-    $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
-    $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
-    $form = $this->createForm(new RegistrationStepFourType(), $user);
-    $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-    $marker = $this->get('user.marker.helper')->getByUser($user);
-    $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
-    $device_spec = $user->getDeviceSpecs($device_type);
-    $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
-    //new code from im branch
-    $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
-
-    return $this->render('LoveThatFitUserBundle:Device:multiple_svg_path.html.twig', array(
-        'form' => $form->createView(),
-        'measurement_form' => $measurement_form->createView(),
-        'measurement_vertical_form' => $measurement_vertical_form->createView(),
-        'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
-        'entity' => $user,
-        'measurement' => $measurement,
-        'edit_type' => $edit_type,
-        'marker' => $marker,
-        'default_marker' => $default_marker,
-        'user_pixcel_height' => $device_spec == null ? 0 : $device_spec->getUserPixcelHeight(),
-        'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
-        'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
-        'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
-        'device_type' => $device_type,
-        'device_model'=> $device_model,
-        'device_screen_height' => $device_screen_height['pixel_height'],
+        $measurement = $user->getMeasurement();
+        if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+          $decoded=$measurement->getJSONMeasurement('actual_user');
+          if(is_array($decoded)){
+            $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+          }
+        }
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+        $device_spec = $user->getDeviceSpecs($device_type);
+        $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
         //new code from im branch
-        'bra_size_body_shape' => json_encode($bra_size_body_shape),
-    ));
-  }
+        $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
+
+        return $this->render('LoveThatFitUserBundle:Device:multiple_svg_path.html.twig', array(
+            'form' => $form->createView(),
+            'measurement_form' => $measurement_form->createView(),
+            'measurement_vertical_form' => $measurement_vertical_form->createView(),
+            'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+            'entity' => $user,
+            'measurement' => $measurement,
+            'edit_type' => $edit_type,
+            'marker' => $marker,
+            'default_marker' => $default_marker,
+            'user_pixcel_height' => $device_spec == null ? 0 : $device_spec->getUserPixcelHeight(),
+            'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
+            'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
+            'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
+            'device_type' => $device_type,
+            'device_model'=> $device_model,
+            'device_screen_height' => $device_screen_height['pixel_height'],
+            //new code from im branch
+            'bra_size_body_shape' => json_encode($bra_size_body_shape),
+        ));
+    }
   #### End of Men Mask Marker
+
+    ##### new methods for big mask marker screen as per instruction
+    public function svgPathSupportAction($auth_token=null, $edit_type=null, $device_type=null)
+    {
+       $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
+       $device_model = $device_type;
+       $device_type = $this->get('user.marker.helper')->getDeviceTypeForModel($device_type);       
+       $device_type =$device_type==null? 'iphone5':$device_type;
+       if(!$user){
+           return new Response ('Authentication error');
+       }
+       
+        $measurement = $user->getMeasurement();         
+        if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+            $decoded=$measurement->getJSONMeasurement('actual_user');
+            if(is_array($decoded)){
+                $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+            }
+        }
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+        $device_spec = $user->getDeviceSpecs($device_type);
+        $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+
+        return $this->render('LoveThatFitUserBundle:Device:svg_path_support.html.twig', array(
+                    'form' => $form->createView(),
+                    ///comment start
+                    'measurement_form' => $measurement_form->createView(),
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    ///comment end
+                    'entity' => $user,
+                    'measurement' => $measurement,
+                    'edit_type' => $edit_type,
+                    'marker' => $marker,
+                    'default_marker' => $default_marker,
+                    'user_pixcel_height' => $device_spec == null ? 0 : $device_spec->getUserPixcelHeight(),
+                    'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
+                    'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
+                    'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
+                    'device_type' => $device_type,
+                    'device_model'=> $device_model,
+                    'device_screen_height' => $device_screen_height['pixel_height'],
+                ));
+    }
+
+    public function multipleSvgPathSupportAction($auth_token=null, $edit_type=null, $device_type=null)
+    {
+        $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
+        $device_model = $device_type;
+        $device_type = $this->get('user.marker.helper')->getDeviceTypeForModel($device_type);
+        $device_type =$device_type==null? 'iphone5':$device_type;
+        if(!$user){
+          return new Response ('Authentication error');
+        }
+
+        $measurement = $user->getMeasurement();
+        if ($user->getUserMarker()->getDefaultUser()){# if demo account, then get measurement from json
+          $decoded=$measurement->getJSONMeasurement('actual_user');
+          if(is_array($decoded)){
+            $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($decoded, $user);
+          }
+        }
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+        $device_spec = $user->getDeviceSpecs($device_type);
+        $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+        //new code from im branch
+        $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
+
+        return $this->render('LoveThatFitUserBundle:Device:multiple_svg_path_support.html.twig', array(
+            'form' => $form->createView(),
+            'measurement_form' => $measurement_form->createView(),
+            'measurement_vertical_form' => $measurement_vertical_form->createView(),
+            'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+            'entity' => $user,
+            'measurement' => $measurement,
+            'edit_type' => $edit_type,
+            'marker' => $marker,
+            'default_marker' => $default_marker,
+            'user_pixcel_height' => $device_spec == null ? 0 : $device_spec->getUserPixcelHeight(),
+            'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
+            'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
+            'per_inch_pixcel' => $device_spec == null ? 0 : $device_spec->getDeviceUserPerInchPixelHeight(),
+            'device_type' => $device_type,
+            'device_model'=> $device_model,
+            'device_screen_height' => $device_screen_height['pixel_height'],
+            //new code from im branch
+            'bra_size_body_shape' => json_encode($bra_size_body_shape),
+        ));
+    }
 }
 
 ?>
