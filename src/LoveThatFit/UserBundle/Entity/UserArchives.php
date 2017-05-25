@@ -616,8 +616,9 @@ class UserArchives
         }
         #------------ Need dimensions
         if($device_type == 'iphone6'){
-            $width = 375;
-            $height = 667;
+            //changes the width & height
+            $width = 720;
+            $height = 1280;
         }else{
             $width = 320;
             $height = 568;
