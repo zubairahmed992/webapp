@@ -1115,10 +1115,10 @@ class UserOrder
     /**
      * Add podio_orders
      *
-     * @param \LoveThatFit\UserBundle\Entity\PodioOrders $podio_orders
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders
      * @return PodioOrders
      */
-    public function addPodioOrders(\LoveThatFit\UserBundle\Entity\PodioOrders $podio_orders)
+    public function addPodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders)
     {
         $this->podio_orders[] = $podio_orders;
     
@@ -1128,9 +1128,9 @@ class UserOrder
     /**
      * Remove podio_orders
      *
-     * @param \LoveThatFit\UserBundle\Entity\PodioOrders $podio_orders
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders
      */
-    public function removePodioOrders(\LoveThatFit\UserBundle\Entity\PodioOrders $podio_orders)
+    public function removePodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders)
     {
         $this->podio_orders->removeElement($podio_orders);
     }

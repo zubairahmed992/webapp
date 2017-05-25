@@ -66,16 +66,13 @@ class PodioLibHelper
         $this->client_secret = $parse[$this->env]["client_secret"];
         $this->app_id = $parse[$this->env]["app_id"];
         $this->app_token = $parse[$this->env]["app_token"];        
-
         //echo "<pre>"; print_r($order_podio);
-        
         //Authenticate the Podio API
         Podio::setup($this->client_id, $this->client_secret);
         Podio::authenticate_with_app($this->app_id, $this->app_token);
         if (Podio::is_authenticated()) {
             //Podio::set_debug(true);
             //print "You were already authenticated and no authentication is needed.<br>"; 
-
             // Second approach - Create field collection with different fields
             $fields = new PodioItemFieldCollection(array(
               new PodioTextItemField(array("external_id" => "order-number", "values" => "".$order_podio['order_number']."")),
@@ -85,50 +82,24 @@ class PodioLibHelper
               new PodioTextItemField(array("external_id" => "item-amount", "values" => "".$order_podio['order_amount']."")),
               new PodioTextItemField(array("external_id" => "brand-name", "values" => "".$order_podio['brand_name']."")),
               new PodioTextItemField(array("external_id" => "item-description", "values" => "".$order_podio['item_description']."")),
-              new PodioTextItemField(array("external_id" => "braintree-status", "values" => "".$order_podio['transaction_status']."")),
-              new PodioTextItemField(array("external_id" => "payment-method", "values" => "".$order_podio['payment_method']."")),
               new PodioTextItemField(array("external_id" => "charge-to", "values" => "".$order_podio['credit_card']."")),
+              new PodioTextItemField(array("external_id" => "payment-method", "values" => "".$order_podio['payment_method']."")),
+              new PodioTextItemField(array("external_id" => "braintree-status", "values" => "".$order_podio['transaction_status']."")),                            
               new PodioTextItemField(array("external_id" => "shipping-address", "values" => "".$order_podio['shipping_address1'].""))
             ));
-
             // Create item and attach fields
             $item = new PodioItem(array(
               "app" => new PodioApp(intval($this->app_id)),
               "fields" => $fields
             ));         
-
-            /*try {
+            try {
               // Save item
               $new_item_placeholder = $item->save();
               $item->item_id = $new_item_placeholder->item_id;
               return $item->item_id;
             } catch (PodioError $e) {
               return $e;
-            }*/
-
-            die('authenticated.');            
+            }         
         }    
-    }
-
-
-    public function updateUserPodio($user_id)
-    {
-      $podioUser = $this->container->get('user.helper.podio')->findPodioUserByUserId($user_id);      
-      $member_id = $podioUser[0]['member_id'];
-      $podio_id = $podioUser[0]['podio_id'];
-      //Authenticate the Podio API
-      Podio::setup($this->client_id, $this->client_secret);
-      Podio::authenticate_with_app($this->app_id, $this->app_token);
-      if (Podio::is_authenticated()) {
-          //if item id exists then update the value of member calibrated
-          if($podio_id) {
-              $update_item = PodioItem::update_values( $podio_id, $attributes = array("member-calibrated" => "Yes") );
-              if($update_item['revision']) {
-                  return 1;
-              } else {
-                  return 0;
-              }
-          }
-      }
     }
 }
