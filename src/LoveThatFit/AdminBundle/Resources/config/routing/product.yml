@@ -17,10 +17,17 @@ admin_product_foo:
     defaults: { _controller: LoveThatFitAdminBundle:Product:foo , id: 0}
 
 #-------------------------------------------------------------
+admin_products_paginate:
+  pattern: /admin/products/paginate
+  defaults: { _controller: LoveThatFitAdminBundle:Product:paginate}
+
+admin_search_product:
+  pattern: /admin/search/products
+  defaults: { _controller: LoveThatFitAdminBundle:Product:searchProducts}
+
 admin_products:
     pattern:  /admin/products/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Product:index , page_number: 1, sort:id}
-
 
 #--------------------------- Product Details --------------    
 admin_product_raw_edit:

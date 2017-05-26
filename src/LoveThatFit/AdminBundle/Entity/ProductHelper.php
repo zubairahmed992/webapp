@@ -251,7 +251,10 @@ class ProductHelper
     }
 
 //-------------------------------------------------------
-
+    public function getTotalProductCount(){
+        $rec_count = count($this->repo->countAllRecord());
+        return $rec_count;
+    }
     public function getListWithPagination($page_number = 0, $sort = 'id')
     {
         $yaml = new Parser();
@@ -296,6 +299,95 @@ class ProductHelper
             'category' => $category,
             'size_specs' => $sizeSpecs,
         );
+    }
+
+    public function searchProductByCriteria( $data ){
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : null;
+
+        $start   = $data['start'];
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0;
+        $order   = $data['order'];
+
+        $search  = array(
+            'category' => (isset($data['category']) && !empty($data['category']) ? "'" . implode("','", $data['category']) . "'" : array()),
+            'target' => (isset($data['target']) && !empty($data['target']) ? "'" . implode("','", $data['target']) . "'" : array()),
+            'genders' => (isset($data['genders']) && !empty($data['genders']) ? "'" . implode("','", $data['genders']) . "'" : array()),
+            'brand' => (isset($data['brand']) ? $data['brand']: 0)
+        );
+
+        $finalData = $this->repo->searchProductByCriteria($search, $start, $length, $order);
+
+        $output = array(
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->searchProductByCriteria($search, $start, false, $order)),
+            'recordsTotal'    => count($this->repo->searchProductByCriteria($search, 0, false, $order)),
+            'data'            => array()
+        );
+
+        /*var_dump($this->repo->searchProductByCriteria($search, $start, $length, $order)); die;*/
+
+
+        foreach ($finalData as $fData) {
+            $output['data'][] = [
+                'id' => $fData["id"],
+                'control_number' => $fData["control_number"],
+                'BName' => $fData["BName"],
+                'ClothingType' => $fData["cloting_type"],
+                'gender' => $fData["gender"],
+                'PName' => $fData['name'],
+                'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
+                'status'    => ($fData['disabled'] == 1) ? "Enable" : "Disable"
+            ];
+        }
+
+        return $output;
+    }
+
+    public function searchAllProduct($data){
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : null;
+        //limit
+        $start   = $data['start'];
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0;
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = (isset($data['search']) ? $data['search']: "");
+
+        $filters = [
+            'query'     => @$search['value'],
+        ];
+
+
+        $finalData = $this->repo->searchAllProduct($filters, $start, $length, $order);
+
+        $output = array(
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->searchAllProduct($filters, 0, false, $order)),
+            'recordsTotal'    => count($this->repo->searchAllProduct(array(), 0, false, $order)),
+            'data'            => array()
+        );
+
+
+        foreach ($finalData as $fData) {
+            $output['data'][] = [
+                'id' => $fData["id"],
+                'control_number' => $fData["control_number"],
+                'BName' => $fData["BName"],
+                'ClothingType' => $fData["cloting_type"],
+                'gender' => $fData["gender"],
+                'PName' => $fData['name'],
+                'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
+                'status'    => ($fData['disabled'] == 1) ? "Enable" : "Disable"
+            ];
+        }
+
+        return $output;
     }
 
 //Private Methods    
