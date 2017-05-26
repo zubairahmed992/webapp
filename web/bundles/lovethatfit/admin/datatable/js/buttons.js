@@ -10,3 +10,7 @@ EditButton       = '<button class="btn btn-cyan btn-xs editButton" data-action="
 jsonButton		 = '<button class="btn btn-cyan btn-xs json_button" data-action="Json" title="Json"><i class="icon-plus-sign"></i></button>';
 archiveButton    = '<button class="btn btn-cyan btn-xs archive_button" data-action="Archive" title="Archive"><i class="icon-tasks"></i></button>',
 DeleteGroupButton     = '<button class="btn btn-cyan btn-xs delete" data-action="Delete" title="Delete" data-toggle="modal" data-target="#deleteGroupModel"><i class="icon-remove"></i></button>';
+PriceEdit     = '<button class="btn btn-cyan btn-xs delete" data-action="PriceEdit" title="Price Edit"><i class="icon-plus-sign"></i></button>';
+EnableDisable     = '<button class="btn btn-cyan btn-xs delete" data-action="EnableDisable" title="Enable/Disable"><i class="icon-play-circle"></i></button>';
+AddImage     = '<button class="btn btn-cyan btn-xs delete" data-action="addImage" title="Add Images back zip pencil skirt"><i class="icon-picture"></i></button>';
+CategoryAss     = '<button class="btn btn-cyan btn-xs delete" data-action="productCat" title="Category Assortment back zip pencil skirt"><i class="icon-th-list"></i></button>';

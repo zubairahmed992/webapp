@@ -41,11 +41,44 @@ class ProductController extends Controller {
     public $error_string;
 //---------------------------------------------------------------------
 
-    public function indexAction($page_number, $sort = 'id') {
+    public function __indexAction($page_number, $sort = 'id') {
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
 
         //return new response(json_encode(($product_with_pagination)));
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
+    }
+
+    public function indexAction()
+    {
+        return $this->render('LoveThatFitAdminBundle:Product:index_with_grid.html.twig',
+                array(
+                    'femaleProduct' =>  $this->get('admin.helper.product')->countProductsByGender('f'),
+                    'maleProduct' => $this->get('admin.helper.product')->countProductsByGender('m'),
+                    'rec_count' => $this->get('admin.helper.product')->getTotalProductCount(),
+                    'brandList' => $this->container->get('admin.helper.brand')->findAll(),
+                    'topProduct' =>  $this->get('admin.helper.product')->countProductsByType('Top'),
+                    'bottomProduct' =>  $this->get('admin.helper.product')->countProductsByType('Bottom'),
+                    'dressProduct' =>  $this->get('admin.helper.product')->countProductsByType('Dress'),
+                    'category' => $this->container->get('admin.helper.clothing_type')->getArray(),
+                    'size_specs' => $this->container->get('admin.helper.size')->getDefaultArray(),
+                )
+            );
+    }
+
+    public function paginateAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output      = $this->get('admin.helper.product')->searchAllProduct($requestData);
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function searchProductsAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output      = $this->get('admin.helper.product')->searchProductByCriteria($requestData);
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
 //---------------------------------------------------------------------
@@ -1253,7 +1286,18 @@ class ProductController extends Controller {
             $entity->setDisabled(0);
         }
         $this->get('admin.helper.product')->update($entity);
-        return new response('{"status":"ok"}');
+        $output['data'] = [
+            'id' => $entity->getId(),
+            'control_number' => $entity->getControlNumber(),
+            'BName' => "", //$fData["BName"],
+            'ClothingType' => "", //$fData["cloting_type"],
+            'gender' => $entity->getGender(),
+            'PName' => $entity->getName(),
+            'created_at' => $entity->getCreatedAt()->format('Y-m-d H:i:s'),
+            'status'    => ($entity->getStatus() == 1) ? "Enable" : "Disable"
+        ];
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
     public function productSizeDisableAction(Request $request)
