@@ -16,6 +16,7 @@
 
     <script>
         var page;
+        var serachData, issearch = 0;
         function SearchForm(page) {
             if (page == null) {
                 page = 1;
@@ -37,13 +38,16 @@
                 target.push($(this).val());
             });
             $('#loading-indicator').show();
+            serachData = {brand: brand, category: category, genders: genders, target: target, page: page, start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]};
             $.ajax({
                 type: 'POST',
                 url: $('#url').text(),
-                data: {brand: brand, category: category, genders: genders, target: target, page: page, start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]},
+                data: serachData,
                 success: function (data) {
+                    issearch = 1;
                     initializeDataTable(data['data']);
                     $('#loading-indicator').hide();
+                    $("#back_to_listing").show();
                 }
             });
             return false;
@@ -144,9 +148,9 @@
         }
 
         function backToListing() {
-            $('#all_data').show();
-            $('#all_data_search').hide();
-            $('#pagination').show();
+            issearch = 0;
+            $("#back_to_listing").hide();
+            loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]})
         }
 
         $(document).ready(function () {
@@ -212,6 +216,9 @@
         <div>
             <button type="button" class="btn" data-toggle="collapse" data-target="#demo">
                 Search
+            </button>
+            <button style="display: none" type="button"  id="back_to_listing" onclick="backToListing()" class="btn">
+                Back To Listing
             </button>
         </div>
         <img src="{{ asset('bundles/lovethatfit/site/images/loading.gif') }}" id="loading-indicator"
@@ -446,15 +453,21 @@
             }
         ];
         var _oColumns = [
-            {mData: "id", sTitle: "ID"},
-            {mData: "control_number", sTitle: "Control Number"},
-            {mData: "BName", sTitle: "Brand"},
-            {mData: "ClothingType", sTitle: "Type"},
-            {mData: "gender", sTitle: "Gender"},
-            {mData: "PName", sTitle: "Name"},
-            {mData: "created_at", sTitle: "Created At"},
-            {mData: "status", sTitle: "Status"},
-            {mData: null, sTitle: "Action", bSortable : false, sDefaultContent: EnableDisable+" "+PriceEdit+ " "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss}
+            {mData: "id", sTitle: "ID", sWidth: "5%"},
+            {mData: "control_number", sTitle: "Control Number", sWidth: "12%"},
+            {mData: "BName", sTitle: "Brand", sWidth: "10%"},
+            {mData: "ClothingType", sTitle: "Type", sWidth: "10%"},
+            {mData: "gender", sTitle: "Gender", sWidth: "5%"},
+            {mData: "PName", sTitle: "Name", sWidth: "15%"},
+            {mData: "created_at", sTitle: "Created At", sWidth: "12%"},
+            {mData: "status", sTitle: "Status", sWidth: "8%"},
+            {mData: null, sTitle: "Action", bSortable : false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                if(oData.status == "Enable"){
+                    $(nTd).find("button.Enable i").removeClass('icon-play-circle');
+                    $(nTd).find("button.Enable i").addClass('icon-ban-circle');
+                }
+
+            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+ " "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss}
         ];
         var dataTable,
             domTable,
@@ -479,6 +492,11 @@
                 "order": [[0, "desc"]],
                 "columns": oColumns,
                 "createdRow": function (row, data, index) {
+                    if(data.status == "Enable"){
+                        $(row).find("button.Enable i").removeClass('icon-play-circle');
+                        $(row).find("button.Enable i").addClass('icon-ban-circle');
+                    }
+
                     if (data["original_user_id"] != null) {
                         $('td', row).addClass('duplicate_user_class');
                     }
@@ -504,9 +522,9 @@
                 "order": [[0, "desc"]],
                 bDestroy : true,
                 bPaginate: true,
-                bProcessing : false,
+                bProcessing : true,
                 aaData : data,
-                aoColumns : _oColumns
+                aoColumns : _oColumns,
             });
 
             bindClickEvent();
@@ -514,8 +532,12 @@
 
         function bindClickEvent(){
             jQuery('#example tbody').on('click', 'button, a, img', function () {
+                var clickedObject = $(this);
                 var dataAction = $(this).attr('data-action');
-                var iPos = dataTable.fnGetPosition( $(this).parent().parent()[0] );
+                var element = $(this).parent().parent()[0];
+                var iPos = dataTable.fnGetPosition( element );
+
+
                 var data = dataTable.fnGetData(iPos);
 
                 if (dataAction == 'EnableDisable') {
@@ -527,8 +549,34 @@
                             id: data.id,
                         },
                         success: function (response) {
-                            data.status = response.status;
-                            dataTable.fnAddData( data, true);
+                            if(issearch == 0){
+                                /*if(data.status == "Disable"){
+                                    var rowStatus = "Enable";
+                                    var html = '<i id="status-icon" class="icon-ban-circle">';
+                                }else{
+                                    var rowStatus = "Disable";
+                                    var html = '<i id="status-icon" class="icon-play-circle">';
+                                }
+
+
+                                var newData = {
+                                    BName : data.BName,
+                                    ClothingType: data.ClothingType,
+                                    PName: data.PName,
+                                    control_number: data.control_number,
+                                    created_at: data.created_at,
+                                    gender: data.gender,
+                                    id: data.id,
+                                    status: rowStatus,
+                                };
+
+                                dataTable.fnUpdate( newData, iPos);
+                                clickedObject.html( html );*/
+                                loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]});
+                            }else if(issearch == 1){
+                                console.log( serachData );
+                                loadAgain(serachData, "{{ path('admin_search_product') }}");
+                            }
                         }
                     });
                 }
@@ -563,14 +611,17 @@
             });
         }
 
-        function loadAgain() {
+        function loadAgain( params, url ) {
+            var ajaxurl = (url === undefined) ? "{{ path('admin_products_paginate') }}" : url;
+            $(".dataTables_processing").show()
             $.ajax({
                 type: 'POST',
-                url: "{{ path('admin_products_paginate') }}",
+                url: ajaxurl,
                 "type": "POST",
-                "data": {start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]},
+                "data": params,
                 success: function (data) {
                     initializeDataTable(data['data']);
+                    $(".dataTables_processing").hide()
                 }
             });
         }
