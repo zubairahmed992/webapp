@@ -19,6 +19,11 @@ class PodioOrders {
     protected $user_podio_order;
 
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\PodioBundle\Entity\PodioOrdersDetail", mappedBy="podio_order_detail")
+     */
+    protected $user_podio_order_detail;
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -29,11 +34,6 @@ class PodioOrders {
      * @ORM\Column(name="order_number", type="integer", length=20, nullable=true)
      */
     private $order_number;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $podio_id;
 
     /**
      * @ORM\Column(type="integer", length=4, nullable=false)
@@ -57,27 +57,6 @@ class PodioOrders {
      */
     public function getId() {
         return $this->id;
-    }
-
-    /**
-     * Set podio_id
-     *
-     * @param string $podio_id
-     * @return podio_id
-     */
-    public function setPodioId($podio_id) {
-        $this->podio_id = $podio_id;
-
-        return $this;
-    }
-
-    /**
-     * Get podio_id
-     *
-     * @return string 
-     */
-    public function getPodioId() {
-        return $this->podio_id;
     }
 
     /**
@@ -181,5 +160,38 @@ class PodioOrders {
      */
     public function getUpdatedAt() {
         return $this->updated_at;
+    }
+
+    /**
+     * Add user_podio_order_detail
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrdersDetail $user_podio_order_detail
+     * @return PodioOrders
+     */
+    public function addUserPodioOrderDetail(\LoveThatFit\PodioBundle\Entity\PodioOrdersDetail $user_podio_order_detail)
+    {
+        $this->user_podio_order_detail[] = $user_podio_order_detail;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_podio_order_detail
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrdersDetail $userOrder
+     */
+    public function removeUserPodioOrderDetail(\LoveThatFit\PodioBundle\Entity\PodioOrdersDetail $user_podio_order_detail)
+    {
+        $this->user_podio_order_detail->removeElement($user_podio_order_detail);
+    }
+
+    /**
+     * Get user_podio_order_detail
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserPodioOrderDetail()
+    {
+        return $this->user_podio_order_detail;
     }
 }
