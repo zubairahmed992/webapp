@@ -79,7 +79,8 @@ class PodioLibHelper
               new PodioTextItemField(array("external_id" => "title", "values" => "".$order_podio['billing_first_name']." ".$order_podio['billing_last_name']."")),              
               new PodioTextItemField(array("external_id" => "order-date", "values" => "".$order_podio['order_date']."")),
               new PodioTextItemField(array("external_id" => "order-amount", "values" => "".$order_podio['order_amount']."")),
-              new PodioTextItemField(array("external_id" => "item-amount", "values" => "".$order_podio['order_amount']."")),
+              new PodioTextItemField(array("external_id" => "item-amount", "values" => "".$order_podio['item_amount']."")),
+              new PodioTextItemField(array("external_id" => "quantity-item", "values" => "".$order_podio['quantity_item']."")),
               new PodioTextItemField(array("external_id" => "brand-name", "values" => "".$order_podio['brand_name']."")),
               new PodioTextItemField(array("external_id" => "item-description", "values" => "".$order_podio['item_description']."")),
               new PodioTextItemField(array("external_id" => "charge-to", "values" => "".$order_podio['credit_card']."")),
@@ -102,4 +103,5 @@ class PodioLibHelper
             }         
         }    
     }
+    
 }

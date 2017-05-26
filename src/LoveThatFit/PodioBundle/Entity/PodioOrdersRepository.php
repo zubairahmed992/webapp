@@ -24,7 +24,7 @@ class PodioOrdersRepository extends EntityRepository
                       o.shipping_country, o.shipping_state, o.order_status, o.order_amount,
                       o.transaction_status, o.transaction_id, o.payment_method, o.payment_json, o.billing_phone,
                       o.shipping_phone, o.order_number, o.shipping_amount, o.discount_amount, o.total_amount,
-                      o.user_order_date, po.id, po.status, po.podio_id
+                      o.user_order_date, po.id, po.status
                     ')
             ->from('LoveThatFitPodioBundle:PodioOrders', 'po')
             ->innerJoin('po.user_podio_order', 'o')
@@ -43,7 +43,7 @@ class PodioOrdersRepository extends EntityRepository
     {
         $query = $this->getEntityManager()->createQueryBuilder();
         return $query->select(
-            'o.id as order_id, po.podio_id')
+            'o.id as order_id')
             ->from('LoveThatFitPodioBundle:PodioOrders', 'po')
             ->innerJoin('po.user_podio_order', 'o')
             ->where('o.id =:order_id')

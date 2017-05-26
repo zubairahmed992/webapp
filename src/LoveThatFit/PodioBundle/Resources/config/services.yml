@@ -5,7 +5,7 @@ services:
 #    love_that_fit_user.example:
 #        class: %love_that_fit_user.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-  order.helper.podio:
+    order.helper.podio:
         class: LoveThatFit\PodioBundle\Entity\PodioOrdersHelper
         arguments:
             dispatcher: "@event_dispatcher"
@@ -13,7 +13,15 @@ services:
             class: LoveThatFit\PodioBundle\Entity\PodioOrders
             container: "@service_container"
 
-  podio.helper.podiolib:
+    orderdetail.helper.podio:
+        class: LoveThatFit\PodioBundle\Entity\PodioOrdersDetailHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\PodioBundle\Entity\PodioOrdersDetail
+            container: "@service_container"
+
+    podio.helper.podiolib:
         class: LoveThatFit\PodioBundle\Entity\PodioLibHelper
         arguments:
             container: "@service_container"

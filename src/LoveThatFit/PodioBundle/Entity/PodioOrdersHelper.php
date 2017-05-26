@@ -67,7 +67,6 @@ class PodioOrdersHelper
     {
         $entity = $this->createNew();
         $entity->setStatus(0);
-        //$entity->setPodioId(0);
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUserOrder($order_entity);
@@ -79,11 +78,10 @@ class PodioOrdersHelper
 
 //-------------------------------------------------------
 
-    public function updatePodioOrders($id, $podio_id)
+    public function updatePodioOrders($id)
     {
         $entity = $this->find($id);
         $entity->setStatus(1);
-        //$entity->setPodioId($podio_id);
         $entity->setUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
