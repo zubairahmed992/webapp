@@ -108,8 +108,9 @@ function editPieceView(product_id,item_id,id){
              <div class="span1 hds"><b>price</b></div>
             <div class="span2 hds"><b>Size</b></div>          
             <div class="span2 hds"><b>Color</b></div>
+            <div class="span2 hds"><b>Weight</b></div>
             <div class="span2 hds"><b>image</b></div>
-            <div class="span3 hds"></div>
+            <div class="span2 hds"></div>
 
         </div>
 
@@ -126,13 +127,14 @@ function editPieceView(product_id,item_id,id){
                     
                     <div class="span1">{{ form_widget(itemform.sku) }}{{ form_errors(itemform.sku) }}</div>
                     <div class="span1">${{ form_widget(itemform.price) }}</div>
-                    <div class="span2">{{pi.productSize.bodyType}}</div>
-                    <div class="span2">{{pi.productSize.title}}</div>                   
-                    <div class="span2">{{pi.productColor.title}}</div>
-                    
-                    <div class="span2">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
+                    <div class="span1">{{pi.productSize.bodyType}}</div>
+                    <div class="span1">{{pi.productSize.title}}</div>
+                    <div class="span1">{{pi.productColor.title}}</div>
+                    <div class="span1">{{form_widget(itemform.weight)}}</div>
+
+                    <div class="span1">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
               {{ form_rest(itemform) }}
-                    <div class="span2"> <input type="submit" value="SAVE" class="btn"/>                      
+                    <div class="span3"> <input type="submit" value="SAVE" class="btn"/>
                         <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}#item" class="btn" name="item">Cancel</a>
                       <a href="#rawimage{{pi.id}}" role="button" data-toggle="modal" class="btn">Upload Raw Image</a>
                       {%if(pi.rawImage )%}
@@ -192,14 +194,17 @@ function editPieceView(product_id,item_id,id){
                      <div class="span1">{{pi.price>0?'$'~pi.price|number_format(2) :pi.price|number_format(2) }} </div>
                     <div class="span2">{{pi.productSize.bodyType}} {{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
-                    <div class="span2" onmouseover="document.getElementById('myimg_'+{{ pi.id }}).style.display='block';"
+                    <div class="span2">{{ (pi.weight != null) ? pi.weight~'oz' : '' }}</div>
+
+                    <div class="span1" onmouseover="document.getElementById('myimg_'+{{ pi.id }}).style.display='block';"
                          onmouseout="document.getElementById('myimg_'+{{ pi.id }}).style.display='none';">
                         {%if(pi.image!='')%}
                           {{pi.image}}
                           {%endif%}
                        <span class="imgstyle" id="myimg_{{ pi.id }}" style="z-index:20;box-shadow:2px 2px 2px 2px #ccc;background:#fff; padding:20px; position: absolute;top:10%;left:55%;"> <img  style="width: 70px; height: 100px;" src="{{ asset(pi.webPath) }}" width="100" height="100"/></span>
                     </div>
-                  <div class="span2">
+
+                  <div class="span1">
                    {%for pp in pi.productItemPieces%}
                     <span>
                         
@@ -222,7 +227,7 @@ function editPieceView(product_id,item_id,id){
                           
                                      {%endfor%}                  
                   </div>
-                    <div class="span2">
+                    <div class="span1">
 
                        <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' name="item"><i class="icon-edit"></i></a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
