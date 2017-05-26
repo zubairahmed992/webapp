@@ -15,6 +15,14 @@ class FitModelController extends Controller {
                     'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
                 ));
     }
+    
+     #------------------------/product_intake/fit_model_specs/index
+
+    public function brandCompareAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:brand_compare.html.twig', array(
+                    'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                ));
+    }
   
 #------------------------
     public function fooAction() {

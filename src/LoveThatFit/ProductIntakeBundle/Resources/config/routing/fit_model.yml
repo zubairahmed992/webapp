@@ -2,6 +2,10 @@ product_intake_fit_model_index:
     pattern:  /product_intake/fit_model/index
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:index }
 
+product_intake_fit_model_brand_compare:
+    pattern:  /product_intake/fit_model/brand_compare
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:brandCompare }
+
 product_intake_fit_model_create_new:
     pattern:  /product_intake/fit_model/create_new
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:createNew }
