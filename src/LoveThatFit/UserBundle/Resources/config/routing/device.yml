@@ -38,3 +38,12 @@ ajax_fitting_room_bg_cropped_image_update:
 device_browser_multiple_svg_path:
     pattern:   /device_browser/multiple_svg_path/{auth_token}/{edit_type}/{device_type}
     defaults: { _controller: LoveThatFitUserBundle:Device:multipleSvgPath, auth_token: null, edit_type: null, device_type: null}
+
+##new routes for big screen mask marker screen support
+device_browser_svg_path_support:
+    pattern:   /device_browser/svg_path_support/{auth_token}/{edit_type}/{device_type}
+    defaults: { _controller: LoveThatFitUserBundle:Device:svgPathSupport, auth_token: null, edit_type: null, device_type: null}
+
+device_browser_multiple_svg_path_support:
+    pattern:   /device_browser/multiple_svg_path_support/{auth_token}/{edit_type}/{device_type}
+    defaults: { _controller: LoveThatFitUserBundle:Device:multipleSvgPathSupport, auth_token: null, edit_type: null, device_type: null}
