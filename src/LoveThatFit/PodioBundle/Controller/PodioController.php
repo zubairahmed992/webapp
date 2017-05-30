@@ -32,6 +32,14 @@ class PodioController extends Controller {
             $count_order_detail = 0;
             $total_order_details = count($order_details);
             foreach ($order_details as $order_detail) {
+              $style_id = '';
+              if( isset($order_detail['control_number']) ) {
+                if( isset($order_detail['brand_name']) ) {
+                  $style_id = $order_detail['brand_name'].' - '.$order_detail['control_number'];
+                } else {
+                  $style_id = $order_detail['control_number'];
+                }
+              } 
               //podio orders data
               $order_podio = array(
                    'order_id' => $orders['order_id'],
@@ -69,8 +77,10 @@ class PodioController extends Controller {
                    'item_description' => ($order_detail['item_description']) ? $order_detail['item_description'] : '',
                    'brand_name' => ($order_detail['brand_name']) ? $order_detail['brand_name'] : '',
                    'item_amount' => ($order_detail['amount']) ? $order_detail['amount'] : '',
+                   'control_number' => ($order_detail['control_number']) ? $order_detail['control_number'] : '',
+                   'style_id' => $style_id,
                    'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : ''
-                );
+                ); 
               //save podio order data
               $podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
               if($podio_id) {

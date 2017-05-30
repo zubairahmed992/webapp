@@ -83,6 +83,7 @@ class PodioLibHelper
               new PodioTextItemField(array("external_id" => "quantity-item", "values" => "".$order_podio['quantity_item']."")),
               new PodioTextItemField(array("external_id" => "brand-name", "values" => "".$order_podio['brand_name']."")),
               new PodioTextItemField(array("external_id" => "item-description", "values" => "".$order_podio['item_description']."")),
+              new PodioTextItemField(array("external_id" => "style-id", "values" => "".$order_podio['style_id']."")),
               new PodioTextItemField(array("external_id" => "charge-to", "values" => "".$order_podio['credit_card']."")),
               new PodioTextItemField(array("external_id" => "payment-method", "values" => "".$order_podio['payment_method']."")),
               new PodioTextItemField(array("external_id" => "braintree-status", "values" => "".$order_podio['transaction_status']."")),                            
