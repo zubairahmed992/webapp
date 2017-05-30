@@ -39,7 +39,7 @@
     <div>
         <h1 style="float:left;">Manage Descriptions </h1>
         <div class="btn_wrapper">
-            <a href="{{ path('admin_product_detail_show', {'id': entity.id}) }}" class="btn">back to list</a>
+            <a href="{{ path('admin_product_detail_show', {'id': entity.id}) }}" class="btn">back</a>
         </div>
         <div class="clearfix"></div>
         <form onsubmit="return validate();" action="{{ path('admin_product_description_update', { 'id': entity.id }) }}"
