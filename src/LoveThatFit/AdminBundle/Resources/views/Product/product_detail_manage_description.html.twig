@@ -1,0 +1,122 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li><a href="{{ path('admin_products') }}">Products</a> <span class="divider">/</span>{{ entity.name }}<span
+                class="divider">/</span></li>
+    <li class="active">Edit</li>
+
+{% endblock %}
+{% block h1 %}Product{% endblock %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/lovethatfit/admin/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" language="javascript">
+        jQuery(document).ready(function () {
+            setTimeout(function() {
+                tinymce.init({
+                    selector: 'textarea',
+                    height: 100,
+                    width: 600,
+                    menubar: true,
+                    plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table contextmenu paste code'
+                    ],
+                    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                    content_css: [
+                        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                        '//www.tinymce.com/css/codepen.min.css']
+                });
+            }, 10);
+        });
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+
+
+    <div>
+        <h1 style="float:left;">Manage Descriptions </h1>
+        <div class="btn_wrapper">
+            <a href="{{ path('admin_product_detail_show', {'id': entity.id}) }}" class="btn">back to list</a>
+        </div>
+        <div class="clearfix"></div>
+        <form onsubmit="return validate();" action="{{ path('admin_product_description_update', { 'id': entity.id }) }}"
+              method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+
+            <div id="detail_wrapper">
+                <div id="p_hd">Manage Descriptions</div>
+
+                <div class="clearfix"></div>
+
+                <span id="error_box" style=" display: none;">*Number Only</span>
+
+                <div id="product_content">
+                    <div id="pro_detail">
+                        <div class="edt_container">
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Item Name</div>
+                                <div class="span3">
+                                    {{ form_widget(form.item_name) }}{{ form_errors(form.item_name) }}
+                                </div>
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Country of Origin</div>
+                                <div class="span3">
+                                    {{ form_widget(form.country_origin) }}{{ form_errors(form.country_origin) }}
+                                </div>
+                            </div>
+
+
+                            <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Description</div><br>
+                                <div style="margin-left: 110px;">{{ form_widget(form.description) }}{{ form_errors(form.description) }}</div>
+                            </div>
+
+                            <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Item Details</div>
+                                <div style="margin-left: 110px;">{{ form_widget(form.item_details, { 'attr': {'class': 'tinymce tinymce-ext'} }) }}{{ form_errors(form.item_details) }}</div>
+                            </div>
+
+                            <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Care Label</div>
+                                <div style="margin-left: 110px;">{{ form_widget(form.care_label, { 'attr': {'class': 'tinymce tinymce-ext'} }) }}{{ form_errors(form.care_label) }}</div>
+                            </div>
+
+
+                            <div class="row-fluid show-grid">
+                                {{ form_rest(form) }}
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">&nbsp;</div>
+
+                                <div class="span3">
+
+                                    <div style="margin:0px 0px 0px 0px;"><input type="submit" value="Update"
+                                                                                class="btn  btn-primary"/>
+                                        <a href="{{ path('admin_products') }}" class="btn  btn-primary">Cancel </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div><!-- End pro_detail -->
+            </div><!-- End product_content -->
+            <!-- End detail_wrapper -->
+        </form>
+    </div>
+    <!-- Modal -->
+
+{% endblock %}

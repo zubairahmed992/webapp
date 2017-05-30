@@ -14,3 +14,4 @@ PriceEdit     = '<button class="btn btn-cyan btn-xs delete" data-action="PriceEd
 EnableDisable     = '<button class="btn btn-cyan btn-xs Enable" data-action="EnableDisable" title="Enable/Disable"><i id="status-icon" class="icon-play-circle"></i></button>';
 AddImage     = '<button class="btn btn-cyan btn-xs delete" data-action="addImage" title="Add Images back zip pencil skirt"><i class="icon-picture"></i></button>';
 CategoryAss     = '<button class="btn btn-cyan btn-xs delete" data-action="productCat" title="Category Assortment back zip pencil skirt"><i class="icon-th-list"></i></button>';
+PDetail ='<button class="btn btn-cyan btn-xs" data-action="PDetail" title="View"><i class="icon-eye-open"></i></button>';
