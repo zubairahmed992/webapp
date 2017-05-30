@@ -17,10 +17,17 @@ admin_product_foo:
     defaults: { _controller: LoveThatFitAdminBundle:Product:foo , id: 0}
 
 #-------------------------------------------------------------
+admin_products_paginate:
+  pattern: /admin/products/paginate
+  defaults: { _controller: LoveThatFitAdminBundle:Product:paginate}
+
+admin_search_product:
+  pattern: /admin/search/products
+  defaults: { _controller: LoveThatFitAdminBundle:Product:searchProducts}
+
 admin_products:
     pattern:  /admin/products/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Product:index , page_number: 1, sort:id}
-
 
 #--------------------------- Product Details --------------    
 admin_product_raw_edit:
@@ -240,6 +247,14 @@ admin_product_detail_size_disable:
 admin_product_export:
     pattern:  /admin/product/export
     defaults: { _controller: LoveThatFitAdminBundle:Product:export }
+
+admin_product_manage_description:
+   pattern:  /admin/productdetail/{id}/manage_description
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productManageDescription }
+
+admin_product_description_update:
+   pattern:  /admin/productdetail/{id}/description_update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDescriptionUpdate }
 
 
       
