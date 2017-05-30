@@ -248,5 +248,13 @@ admin_product_export:
     pattern:  /admin/product/export
     defaults: { _controller: LoveThatFitAdminBundle:Product:export }
 
+admin_product_manage_description:
+   pattern:  /admin/productdetail/{id}/manage_description
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productManageDescription }
+
+admin_product_description_update:
+   pattern:  /admin/productdetail/{id}/description_update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDescriptionUpdate }
+
 
       

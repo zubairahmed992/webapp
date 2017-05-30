@@ -443,7 +443,7 @@
                 "data": null,
                 "orderable": false,
                 "searchable": false,
-                "defaultContent": EnableDisable+" "+PriceEdit+ " "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss,
+                "defaultContent": EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss,
                 "width": "25%"
             },
             {
@@ -467,7 +467,7 @@
                     $(nTd).find("button.Enable i").addClass('icon-ban-circle');
                 }
 
-            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+ " "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss}
+            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss}
         ];
         var dataTable,
             domTable,
@@ -583,6 +583,13 @@
 
                 if (dataAction == 'Edit') {
                     var url = '{{ path('admin_product_detail_edit', {'id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'PDetail') {
+                    var url = '{{ path('admin_product_detail_show', {'id' : ":id"}) }}';
                     url = url.replace(':id', data.id);
 
                     window.top.location = url;

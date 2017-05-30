@@ -35,6 +35,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use LoveThatFit\AdminBundle\ImageHelper;
 use ZipArchive;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDescriptionType;
 
 class ProductController extends Controller {
 
@@ -1466,4 +1467,32 @@ class ProductController extends Controller {
         $this->get('admin.helper.utility')->exportToCSV($products_and_items, 'product_item_color_sizes_statuses');
         return new Response('');
     }
+
+    #------------------Product Manage Description---------------------------------------#
+    public function productManageDescriptionAction(Request $request, $id)
+    {
+        $entity = $this->get('admin.helper.product')->find($id);
+        $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
+        $form = $this->createForm(new ProductDescriptionType($this->get('admin.helper.product.specification'), $this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_manage_description.html.twig', array(
+            'form' => $form->createView(),
+            'entity' => $entity,
+            'productSpecification' => $productSpecification,
+        ));
+    }
+
+    #------------------Product Description Update Method---------------------------------------#
+
+    public function productDescriptionUpdateAction(Request $request, $id)
+    {
+        $entity = $this->get('admin.helper.product')->find($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $data = $request->request->all();
+        $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
+        $this->get('session')->setFlash('success', 'Product description updated.');
+        return $this->redirect($this->generateUrl('admin_product_manage_description', array('id' => $id)));
+    }
+
 }
