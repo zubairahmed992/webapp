@@ -929,6 +929,22 @@ class ProductHelper
     public function productDetailArray($data, $entity)
     {
         // $data=$request->request->all();
+        if (isset($data['product_description']['item_name'])) {
+            $entity->setItemName($data['product_description']['item_name']);
+        }
+        if (isset($data['product_description']['description'])) {
+            $entity->setDescription($data['product_description']['description']);
+        }
+        if (isset($data['product_description']['item_details'])) {
+            $entity->setItemDetails($data['product_description']['item_details']);
+        }
+        if (isset($data['product_description']['country_origin'])) {
+            $entity->setCountryOrigin($data['product_description']['country_origin']);
+        }
+        if (isset($data['product_description']['care_label'])) {
+            $entity->setCareLabel($data['product_description']['care_label']);
+        }
+
         if (isset($data['product']['styling_type'])) {
             $entity->setStylingType($data['product']['styling_type']);
         }
