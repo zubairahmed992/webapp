@@ -339,7 +339,8 @@ class ProductHelper
                 'gender' => $fData["gender"],
                 'PName' => $fData['name'],
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
-                'status'    => ($fData['disabled'] == 1) ? "Enable" : "Disable"
+                'status'    => ($fData['disabled'] == 1) ? "Enable" : "Disable",
+                'pstatus'   => $fData['status']
             ];
         }
 
