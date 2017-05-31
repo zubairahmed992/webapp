@@ -1,0 +1,23 @@
+podio_local_credentials:
+  client_id: member-info
+  client_secret: BMoetJnm4yU5PlYxfSmJrU4rZpQ7j3dTMcaUPjmjsGhtfTLFwyQnmcCGvUghWNFO
+  app_id: 17819011
+  app_token: 59a6cbc3d08248509b1e648ae793bed1
+
+podio_qa_credentials:
+  client_id: member-info-e12av0
+  client_secret: bl16vYqOgBQp48PRw7GPkbloLg7e60BPaoDqSAgMcseEedfQ8MfALx0Zd1HP9z93
+  app_id: 17819011
+  app_token: 59a6cbc3d08248509b1e648ae793bed1
+
+podio_dev_credentials:
+  client_id: member-info-uva3ra
+  client_secret: doPOWNh2lA9dkap9lgQBBCyT7PGggw9TAMde70GgwBtDlge13oJ0Zd6Pllpn0GOw
+  app_id: 17819011
+  app_token: 59a6cbc3d08248509b1e648ae793bed1
+
+podio_prod_credentials:
+  client_id: member-info-bznqg6
+  client_secret: ZqAMZ1dcFJ9wvS4fSu8ayZm2yqmyqI1VnRBlQO4kxpC1e1VthEBgy4000QkkGk65
+  app_id: 18368021
+  app_token: 4ed67b4628f64cd9b7315cec8200c293  

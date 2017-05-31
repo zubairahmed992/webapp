@@ -13,6 +13,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class UserOrder
 {
 
+    // ...
+    /**
+     * @ORM\OneToOne(targetEntity="LoveThatFit\PodioBundle\Entity\PodioOrders", mappedBy="user_podio_order")
+     */
+    protected $podio_orders;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrderDetail", mappedBy="user_order")
@@ -1105,5 +1110,38 @@ class UserOrder
     public function getUserOrderDate()
     {
         return $this->user_order_date;
+    }
+
+    /**
+     * Add podio_orders
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders
+     * @return PodioOrders
+     */
+    public function addPodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders)
+    {
+        $this->podio_orders[] = $podio_orders;
+    
+        return $this;
+    }
+
+    /**
+     * Remove podio_orders
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders
+     */
+    public function removePodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders)
+    {
+        $this->podio_orders->removeElement($podio_orders);
+    }
+
+    /**
+     * Get podio_orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPodioOrders()
+    {
+        return $this->podio_orders;
     }
 }
