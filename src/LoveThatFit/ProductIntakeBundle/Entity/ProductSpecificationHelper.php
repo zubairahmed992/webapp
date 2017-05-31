@@ -200,7 +200,9 @@ class ProductSpecificationHelper {
             $specs = $this->generate_specs_for_fit_model_size($specs);
         } elseif (strpos($decoded['name'], 'remove_fit_point') !== false) { #~~~~~~~~>7            
             $specs = $this->remove_fit_point($specs, $decoded);
-        } else {
+        } elseif (strpos($decoded['name'], 'add_new_fit_point') !== false) { #~~~~~~~~>8            
+            $specs = $this->add_new_fit_point($specs, $decoded);            
+        }  else {
             return array(
                 'message' => 'Nothing to update!',
                 'message_type' => 'error',
@@ -375,6 +377,36 @@ class ProductSpecificationHelper {
             unset($specs['fit_point_stretch'][$fp]);
         }
         return $specs;
+    }
+
+    #------------------->8 add new Fit Point >>>>>>>>>>>>>>>>>>>>>>>>>>>
+    private function add_new_fit_point($specs, $decoded) {
+        foreach ($specs['sizes'] as $size=>$fp) {
+            if (array_key_exists($decoded['value'], $specs['sizes'][$size])) {
+                return null;
+            }else{
+                $specs['sizes'][$size][$decoded['value']]= $this->get_empty_fit_point();
+            }
+        }
+        return $specs;
+    }
+
+    private function get_empty_fit_point() {
+        return array('garment_dimension' => 0,
+            'stretch_percentage' => 0,
+            'garment_stretch' => 0,
+            'grade_rule' => 0,
+            'grade_rule_stretch' => 0,
+            'min_calc' => 0,
+            'max_calc' => 0,
+            'min_actual' => 0,
+            'max_actual' => 0,
+            'ideal_low' => 0,
+            'ideal_high' => 0,
+            'fit_model' => 0,
+            'grade_rule' => 0,
+            'original_value' => 0,
+        );
     }
 
     ###################################################################
