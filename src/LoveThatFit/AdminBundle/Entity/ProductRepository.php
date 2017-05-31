@@ -83,7 +83,8 @@ class ProductRepository extends EntityRepository
                 b.name as BName,
                 ct.name as cloting_type,
                 p.created_at,
-                p.disabled
+                p.disabled,
+                p.status
             ')
             ->from('LoveThatFitAdminBundle:Product', 'p')
             ->join('p.brand', 'b')
