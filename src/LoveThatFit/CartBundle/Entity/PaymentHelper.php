@@ -276,11 +276,11 @@ class PaymentHelper
             $response = $this->container->get('cart.helper.orderDetail')->saveOrderDetail($user_cart, $entity);
             $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rates);
 
-            ## add user podio log data
-            if ($entity->getId()) {
-                $order_id = $entity->getId();
-                $order_entity = $this->container->get('cart.helper.order')->find($order_id);
-                $save_order_podio = $this->container->get('order.helper.podio')->savePodioOrders($order_entity,$order_number);
+            try {
+                //create podio orders entity
+                $this->createPodioOrder($entity->getId(),$order_number);
+            } catch(\Exception $e) {
+                // log $e->getMessage()
             }
 
             $data = array(
@@ -308,6 +308,14 @@ class PaymentHelper
             $data["transaction_status"] = $transaction_status;
             $data["response_code"] = $result->message;
             return $data;
+        }
+    }
+
+    private function createPodioOrder($order_id,$order_number){
+        ## add user podio log data
+        if ($order_id) {
+            $order_entity = $this->container->get('cart.helper.order')->find($order_id);
+            $save_order_podio = $this->container->get('order.helper.podio')->savePodioOrders($order_entity,$order_number);
         }
     }
 
