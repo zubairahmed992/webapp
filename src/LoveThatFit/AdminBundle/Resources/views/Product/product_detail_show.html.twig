@@ -54,36 +54,36 @@
         <div class="btn_wrapper">
 
             <!-- product status button -->
-            <!--<a href="#model_product_status" class="btn" data-toggle="modal">Product Status</a>-->
+            <a href="#model_product_status" class="btn" data-toggle="modal">Product Status</a>
             <!-- Modal -->
-            <!--<div class="modal fade" id="model_product_status" role="dialog">
-    <div class="modal-dialog">
-    
-     
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Product Status</h3>
-        </div>
-        <div class="modal-body">
-            <div>
+            <div class="modal fade" id="model_product_status" role="dialog">
+                <div class="modal-dialog">
+
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">Product Status</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div>
                 <span style="float:left">
-                    {# {{ form_widget(form.status) }}{{ form_errors(form.status) }} #}
+                     {{ form_widget(form.status) }}{{ form_errors(form.status) }}
                 </span>
-                <span style="float:left; padding-left: 25px">
+                                <span style="float:left; padding-left: 25px">
                     <button type="button" id="update_product_status" class="btn btn-default">Update</button>
                 </span>
-                <span style="float:left; padding-left: 25px" id="msg_prod_status">
+                                <span style="float:left; padding-left: 25px" id="msg_prod_status">
                 </span>
-            </div>
-            <div>
+                            </div>
+                            <div>
 
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>-->
             <a href="{{ path('admin_product_manage_description', {'id': product.Id}) }}" class="btn">Manage
                 Description</a>
             <a href="{{ path('admin_products') }}" class="btn">back to list</a>
