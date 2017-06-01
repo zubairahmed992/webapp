@@ -79,6 +79,20 @@ class ClothingType
     private $disabled;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="average_weight", type="float")
+     */
+    private $average_weight;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="heaviest_weight", type="float")
+     */
+    private $heaviest_weight;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -319,5 +333,51 @@ class ClothingType
     {
       $ih=new ImageHelper('clothing_type', $this);
       $ih->deleteImages($this->image);
+    }
+
+    /**
+     * Set average_weight
+     *
+     * @param float $averageWeight
+     * @return ClothingType
+     */
+    public function setAverageWeight($averageWeight)
+    {
+        $this->average_weight = $averageWeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get average_weight
+     *
+     * @return float 
+     */
+    public function getAverageWeight()
+    {
+        return $this->average_weight;
+    }
+
+    /**
+     * Set heaviest_weight
+     *
+     * @param float $heaviestWeight
+     * @return ClothingType
+     */
+    public function setHeaviestWeight($heaviestWeight)
+    {
+        $this->heaviest_weight = $heaviestWeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get heaviest_weight
+     *
+     * @return float 
+     */
+    public function getHeaviestWeight()
+    {
+        return $this->heaviest_weight;
     }
 }
