@@ -513,6 +513,9 @@ class UserArchivesHelper {
         if (array_key_exists('default_marker_svg', $data)) {
             $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
         }
+        if (array_key_exists('version', $data)) {
+            $user_archives->setVersion($data['version']);
+        }
         return $this->save($user_archives);
     }
 
