@@ -766,7 +766,7 @@ class ProductSpecificationHelper {
                 $ps = new ProductSize();
                 $ps->setTitle($size_title);
                 $ps->setProduct($product);
-                $ps->setBodyType($data['body_type']);
+                $ps->setBodyType(ucfirst($data['body_type']));
                 $ps->setIndexValue($i);
                 $em->persist($ps);
                 $em->flush();
