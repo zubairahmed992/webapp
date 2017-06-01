@@ -835,7 +835,8 @@ class ProductSpecificationHelper {
     //--------------------------- get deaitls of Existing Product
     public function getExistingProductDetails( $id )
     {       
-        $data = $this->container->get('service.repo')->getExistingProductDetails($id);     
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id);   
+        $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
         $data1['style_name']=$data[0][0]['name'];
@@ -899,6 +900,30 @@ class ProductSpecificationHelper {
             $this->save($c);
             return true;
         
+    }
+      //--------------------------- get Product Size Measurments
+    public function getProductSizeMeasurments($sizemeasurements, $id )
+    {       
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id);  
+        $data1= '';
+        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) { 
+            foreach ($product_size_value['product_size_measurements'] as  $value) { 
+             $data1['sizes'][$product_size_value['title']][$value['title']]['id'] = $value['id'];
+                $psm = $this->container->get('admin.helper.productsizemeasurement')->find($value['id']);  
+                array_key_exists('garment_dimension', $sizemeasurements['sizes'][$product_size_value['title']][$value['title']]) ? $psm->setGarmentMeasurementFlat($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['garment_dimension']) : null;
+                array_key_exists('garment_stretch', $sizemeasurements['sizes'][$product_size_value['title']][$value['title']]) ? $psm->setGarmentMeasurementStretchFit($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['garment_stretch']) : null;
+                $psm->setMaxBodyMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['max_actual']);
+                $psm->setIdealBodySizeHigh($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['ideal_high']);
+                $psm->setIdealBodySizeLow($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['ideal_low']);
+                $psm->setMinBodyMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['min_actual']);
+                $psm->setFitModelMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['fit_model']);
+                $psm->setMaxCalculated($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['max_calc']);
+                $psm->setMinCalculated($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['min_calc']);
+                $psm->setGradeRule($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['grade_rule']);
+                $this->container->get('admin.helper.productsizemeasurement')->update($psm);
+            }
+        }
+        return $data1;
     }
 }
 

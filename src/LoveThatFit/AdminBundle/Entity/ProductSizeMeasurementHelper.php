@@ -36,8 +36,22 @@ class ProductSizeMeasurementHelper {
         $this->repo = $em->getRepository($class);        
     
     }
-
-  
+    
+    public function find($id) {
+        return $this->repo->find($id);
+    }
+    
+    
+    public function update($entity)
+    {
+        $this->em->persist($entity);
+        $this->em->flush();
+        return array('message' => 'Size Measurement ' . $entity->getTitle() . ' succesfully updated!',
+            'field' => 'all',
+            'message_type' => 'success',
+            'success' => true,
+        );
+    }
  
  
 }

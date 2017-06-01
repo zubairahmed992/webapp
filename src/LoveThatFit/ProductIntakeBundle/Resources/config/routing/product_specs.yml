@@ -52,14 +52,16 @@ product_copy_intake:
     
 product_intake_product_specs_get_clothing_type:
     pattern:  /product_intake/product_specs/get_clothing_type
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:getClothingType }  
-    
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:getClothingType }     
 
-create_product_specification__index_intake:
+create_product_specification_index_intake:
     pattern: /product_intake/create_product_specification_index
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:CreateSpecification} 
     
 create_product_specification_intake:
     pattern: /product_intake/create_product_specification
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createProductSpecification}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createProductSpecification}   
     
+exisiting_product_update_from_specification_intake:
+    pattern: /existing_product_update_specification_intake
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:ExisitingProductUpdateSpecification}  

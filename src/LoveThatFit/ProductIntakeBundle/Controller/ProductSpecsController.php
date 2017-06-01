@@ -316,4 +316,53 @@ class ProductSpecsController extends Controller
         return $this->indexAction();
         return new JsonResponse($data);
     }
+    
+    //------------------ Update Product Specification
+    public function UpdateProductSpecificationAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:update_product_specification.html.twig');
+    }
+    
+    // --------------------- ExisitingProductUpdateSpecification
+    public function ExisitingProductUpdateSpecificationAction(Request $request) {
+        $product_id =  $request->get('product_id');
+        $specification_id =  $request->get('specification_id');
+        $ps = $this->get('pi.product_specification')->find($specification_id);  
+        $parsed_data = json_decode($ps->getSpecsJson(),true);       
+        $product = $this->get('admin.helper.product')->find($product_id);        
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $brand = $this->container->get('admin.helper.brand')->findOneByName( $parsed_data['brand'] );
+        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByName( $parsed_data['clothing_type'] );
+        $product->setBrand($brand);
+        $product->setClothingType($clothing_type);
+        $product->setName(array_key_exists('style_name', $parsed_data) ? $parsed_data['style_name'] : '');
+        $product->setControlNumber(array_key_exists('style_id_number', $parsed_data) ? $parsed_data['style_id_number'] : '');
+        $product->setDescription(array_key_exists('description', $parsed_data) ? $parsed_data['description'] : '');
+        $product->setStretchType(array_key_exists('stretch_type', $parsed_data) ? $parsed_data['stretch_type'] : '');
+        $product->setHorizontalStretch($parsed_data['horizontal_stretch']);
+        $product->setVerticalStretch($parsed_data['vertical_stretch']);
+        $product->setCreatedAt(new \DateTime('now'));
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setGender($parsed_data['gender']);
+        $product->setStylingType($parsed_data['styling_type']);
+        $product->setNeckline(array_key_exists('neck_line', $parsed_data) ? $parsed_data['neck_line'] : $parsed_data['neckline']);
+        $product->setSleeveStyling($parsed_data['sleeve_styling']);
+        $product->setRise($parsed_data['rise']);
+        $product->setHemLength($parsed_data['hem_length']);
+        $product->setFabricWeight($parsed_data['fabric_weight']);
+        $product->setStructuralDetail($parsed_data['structural_detail']);
+        $product->setFitType($parsed_data['fit_type']);
+        $product->setLayering(array_key_exists('layring', $parsed_data) ? $parsed_data['layring'] : $parsed_data['layering']);
+        $product->setFitPriority(array_key_exists('fit_priority', $parsed_data) ? json_encode($parsed_data['fit_priority']) : 'NULL' );
+        $product->setFabricContent(json_encode(array_key_exists('fabric_content', $parsed_data) ? $parsed_data['fabric_content'] : ''));
+        $product->setDisabled(false);
+        $product->setDeleted(false);
+        $product->setSizeTitleType($parsed_data['size_title_type']);       
+        $productArray = $this->get('admin.helper.product')->update($product);
+        $this->get('pi.product_specification')->getProductSizeMeasurments($parsed_data, $product_id);
+        $this->get('session')->setFlash('success', $productArray);
+        return  $this->showAction($specification_id);
+        return new Response(json_encode($productArray));
+    }
 }
