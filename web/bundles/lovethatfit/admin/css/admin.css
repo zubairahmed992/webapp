@@ -334,3 +334,8 @@ select#FNFUser_users.custom_select{height: 100px;}
 .dropdown:hover ul li a {
     color: #999;
 }
+
+/* Custom CSS - Brand Popup - Maani*/
+.modal {
+    position: relative;
+}
