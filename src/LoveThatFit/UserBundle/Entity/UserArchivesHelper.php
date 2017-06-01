@@ -454,7 +454,8 @@ class UserArchivesHelper {
                 'createdAt'         => ($fData["created_at"] == "") ? "00:00:00" : date_diff(
                     new \DateTime(), $fData["created_at"]
                 )->format('%a days, %H:%i:%s'),
-                'support_user_name' => $fData["support_user_name"]
+                'support_user_name' => $fData["support_user_name"],
+                'version'           => $fData["version"]
             ];
         }
         return $output;

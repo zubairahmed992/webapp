@@ -23,9 +23,6 @@ class UserMarker
      * */   
    
     private $user;
-    
-     
-    
     /**
      * @var integer
      *
@@ -136,6 +133,12 @@ class UserMarker
      * @ORM\Column(name="default_user", type="boolean")
      */
     private $default_user;
+
+    /**
+     * @var integer $version
+     * @ORM\Column(name="version", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $version;
     
     /**
      * Get id
@@ -398,6 +401,30 @@ class UserMarker
     public function getImageActions()
     {
         return $this->image_actions;
+    }
+
+    #----------------------------------------
+    /**
+     * Set version
+     *
+     * @param integer $version
+     * @return UserMarker
+     */
+    public function setVersion($version)
+    {
+      $this->version = $version;
+
+      return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return integer
+     */
+    public function getVersion()
+    {
+      return $this->version;
     }
 
     

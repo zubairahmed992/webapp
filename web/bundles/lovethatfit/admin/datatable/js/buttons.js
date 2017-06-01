@@ -15,3 +15,4 @@ EnableDisable     = '<button class="btn btn-cyan btn-xs Enable" data-action="Ena
 AddImage     = '<button class="btn btn-cyan btn-xs delete" data-action="addImage" title="Add Images back zip pencil skirt"><i class="icon-picture"></i></button>';
 CategoryAss     = '<button class="btn btn-cyan btn-xs delete" data-action="productCat" title="Category Assortment back zip pencil skirt"><i class="icon-th-list"></i></button>';
 PDetail ='<button class="btn btn-cyan btn-xs" data-action="PDetail" title="View"><i class="icon-eye-open"></i></button>';
+BigMask ='<button class="btn btn-cyan btn-xs" data-action="BigMask" title="Big Mask"><i class="icon-cog"></i></button>';
