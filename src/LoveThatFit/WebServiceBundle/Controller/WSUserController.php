@@ -6,10 +6,8 @@ use Symfony\Component\Yaml\Parser;
 
 class WSUserController extends Controller {
 
-     
-    
     private function process_request(){
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
         return $decoded;        
     }
