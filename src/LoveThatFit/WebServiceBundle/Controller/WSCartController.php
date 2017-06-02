@@ -729,20 +729,20 @@ class WSCartController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
-            if(empty($user_cart)){
-                $res = $this->get('webservice.helper')->response_array(false, 'User cart is empty.');
-                return new Response( $res );
-            }
-
-            $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
-
-            $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
             $addresses['shipping_methods'] = array();
-            if($response['verified']){
-                $addresses['shipping_methods'] = $response['shipping_method'];
-            }
+            if(!empty($user_cart)){
+                $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
 
-            $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
+                $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
+                $addresses['shipping_methods'] = array();
+                if($response['verified']){
+                    $addresses['shipping_methods'] = $response['shipping_method'];
+                }
+
+                $res = $this->get('webservice.helper')->response_array(true, 'shipping method found', true, $addresses);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'shopping cart is empty/no shipping method found', true, $addresses);
+            }
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -759,17 +759,15 @@ class WSCartController extends Controller
         if ($user) {
             $addresses = $this->container->get('cart.helper.userAddresses')->getAllUserSavedAddresses( $user );
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
-            if(empty($user_cart)){
-                $res = $this->get('webservice.helper')->response_array(false, 'User cart is empty.');
-                return new Response( $res );
-            }
-
-            $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
-            $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
 
             $addresses['shipping_methods'] = array();
-            if($response['verified']){
-                $addresses['shipping_methods'] = $response['shipping_method'];
+
+            if(!empty($user_cart)){
+                $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
+                $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
+                if($response['verified']){
+                    $addresses['shipping_methods'] = $response['shipping_method'];
+                }
             }
 
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
