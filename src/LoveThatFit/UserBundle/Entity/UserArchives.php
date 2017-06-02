@@ -107,10 +107,17 @@ class UserArchives
      */
     private $image;        
     
-/**
+    /**
      * @Assert\File()
      */
     public $file;
+
+    /**
+     * @var integer $version
+     * @ORM\Column(name="version", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $version;
+
     #----------------------------------------
     
     /**
@@ -335,8 +342,31 @@ class UserArchives
 	{
 	  return $this->status;
 	}
+    #----------------------------------------
+    /**
+     * Set version
+     *
+     * @param integer $version
+     * @return UserArchives
+     */
+    public function setVersion($version)
+    {
+      $this->version = $version;
 
-#----------------------------------------
+      return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return integer
+     */
+    public function getVersion()
+    {
+      return $this->version;
+    }
+
+    #----------------------------------------
         
           /**
      * Set image

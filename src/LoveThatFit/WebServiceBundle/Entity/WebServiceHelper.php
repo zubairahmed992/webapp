@@ -358,7 +358,6 @@ class WebServiceHelper
             #______________________________________> Fitting Room image
 
             if ($ra['upload_type'] == 'fitting_room') {
-
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
 
@@ -390,6 +389,7 @@ class WebServiceHelper
 
                 #______________________________________> upload_pending
             } elseif ($ra['upload_type'] == 'fitting_room_pending') {
+
                 $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
                 $user_archive->setImage(uniqid() . '.' . $ext);
 
@@ -397,6 +397,13 @@ class WebServiceHelper
                     $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
                     $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
                     $parsed_array = $this->parse_request_for_archive($ra);
+
+                    if (isset($ra['version']) && $ra['version'] == 1) {
+                        $this->container->get('user.helper.userarchives')->saveArchivesSupport($user_archive, $parsed_array);
+                    } else {
+                        $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
+                    }
+
                     $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
 
                     $user->setStatus(-1);
@@ -434,7 +441,6 @@ class WebServiceHelper
             } else {#~~~~~~~~~~~~~> anyother image type
                 return $this->response_array(false, 'invalid upload type');
             }
-
             $this->container->get('user.helper.user')->saveUser($user);
             $userinfo = array();
             #$userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
@@ -461,7 +467,8 @@ class WebServiceHelper
             'device_type' => $ra['device_type'],
             'device_model' => $ra['device_model'],
             'height_per_inch' => $ra['height_per_inch'],
-            'image_actions' => json_encode(array( #json encoded image specs
+            'version' => $ra['version'],
+            'image_actions' =>  json_encode(array( #json encoded image specs
                 'device_model' => $ra['device_model'],
                 'camera_angle' => $ra['camera_angle'],
                 'camera_x' => $ra['camera_x'],
