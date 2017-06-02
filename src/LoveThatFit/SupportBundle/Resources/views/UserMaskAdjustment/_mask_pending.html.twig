@@ -1,6 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base_makeover_pending.html.twig' %}
-
-
+{% extends 'LoveThatFitSupportBundle::base_pending.html.twig' %}
 
 {% block body %}
 <div id="page_wrap">
@@ -215,16 +213,10 @@
 </div>
 </div>
     {%if (edit_type=='edit' or ( mode is defined and mode) )%}
-    <div class="row">
+        <div class="row">
        <!-- <h5>Measurement Comparision</h5>-->
         <div class="span3 newh">
-
-
-
-            <div class="nav_btns" style="background:none!important; padding:0px!important;">
-
-
-            </div>
+            <div class="nav_btns" style="background:none!important; padding:0px!important;"></div>
         </div>
         </div>
     {%endif%}
