@@ -34,11 +34,11 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id, $tab){                
-        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
+    public function editAction($id, $tab){   
         $ps = $this->get('pi.product_specification')->find($id);  
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
         $parsed_data['horizontal_stretch']=  intval($parsed_data['horizontal_stretch']);
         $parsed_data['vertical_stretch']=intval($parsed_data['vertical_stretch']);
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
