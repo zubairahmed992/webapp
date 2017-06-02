@@ -432,7 +432,7 @@
                 "width": "12%",
             },
             {
-                "data": "status",
+                "data": "pstatus",
                 "searchable": false,
                 "orderable": true,
                 "width": "8%",
@@ -460,7 +460,7 @@
             {mData: "gender", sTitle: "Gender", sWidth: "5%"},
             {mData: "PName", sTitle: "Name", sWidth: "15%"},
             {mData: "created_at", sTitle: "Created At", sWidth: "12%"},
-            {mData: "status", sTitle: "Status", sWidth: "8%"},
+            {mData: "pstatus", sTitle: "Status", sWidth: "8%"},
             {mData: null, sTitle: "Action", bSortable : false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 if(oData.status == "Enable"){
                     $(nTd).find("button.Enable i").removeClass('icon-play-circle');
@@ -474,7 +474,7 @@
             htmlTable = '<table id="example" class="display" cellspacing="0" width="100%"><thead></thead><tbody></tbody></table>';
 
 
-        jQuery(document).ready(function () {
+            jQuery(document).ready(function () {
             var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
             dataTable = $('#example').dataTable({
                 "processing": true,
@@ -574,7 +574,6 @@
                                 clickedObject.html( html );*/
                                 loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]});
                             }else if(issearch == 1){
-                                console.log( serachData );
                                 loadAgain(serachData, "{{ path('admin_search_product') }}");
                             }
                         }

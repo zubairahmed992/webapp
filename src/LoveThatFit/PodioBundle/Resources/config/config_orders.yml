@@ -1,0 +1,23 @@
+podio_local_credentials:
+  client_id: order-history
+  client_secret: ADPRVudgIpTlVVx1pk0kckIt2AqZSYEIHdEoWdkGIDipxrzGRb1qYPHjPMgy4d0Y
+  app_id: 18595333
+  app_token: d20f7c05553547dab552d30887a16112
+
+podio_qa_credentials:
+  client_id: order-history-dr97ri
+  client_secret: KxgMWZW1SAoyvIqvt6N0CJ8aZmQf3G0Jr8HZX15VywWIr6cw9YIo2SkRA2kDUKDH
+  app_id: 18595333
+  app_token: d20f7c05553547dab552d30887a16112
+
+podio_dev_credentials:
+  client_id: order-history-4sz5ui
+  client_secret: v2Q5DXhNRYRc54RHCGEGyhRpa8PyOJOjZ6vpPLCScsmz5lxZaQbKDzH6dBADgcDm
+  app_id: 18595333
+  app_token: d20f7c05553547dab552d30887a16112
+
+podio_prod_credentials:
+  client_id: order-history-z8xco4
+  client_secret: 0m9onebtcPYHgGSJzLF7KHaEut1t5BqQ4A8qCEOXrsZnTRkUDwijjoD95x9wDH6G
+  app_id: 18572379
+  app_token: 32e09ae736a44db99d6c7c7ee2ba99b1  

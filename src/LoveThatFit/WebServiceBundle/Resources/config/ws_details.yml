@@ -169,7 +169,7 @@ ws_size_charts:
 ws_user_image_uploader:
    pattern:  /ws/user_image_uploader
    title: user_image_uploader
-   params:
+   params:     
      email: iphone@gmail.com
      device_type: iphone5
      device_model: iphone5
@@ -177,6 +177,7 @@ ws_user_image_uploader:
      upload_type: fitting_room
      camera_angle: 10
      camera_x: 10
+     version: 1
    request_type: post
    file_upload: true
    description: This is image upload service for user. Images can be of types fitting_room, avatar or social_media which will be determined by the parameters (image_type) passed. Parameters device_type & height_per_inch are for fitting_room image only.
