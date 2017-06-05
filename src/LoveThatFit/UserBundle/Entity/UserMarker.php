@@ -23,9 +23,6 @@ class UserMarker
      * */   
    
     private $user;
-    
-     
-    
     /**
      * @var integer
      *
@@ -400,7 +397,6 @@ class UserMarker
         return $this->image_actions;
     }
 
-    
     /**
      * Set user
      *

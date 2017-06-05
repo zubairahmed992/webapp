@@ -141,6 +141,9 @@
                     if (data["user_role"] == 'admin' || data["user_role"] == 'lead') {
                         $(row).find('td:eq(7)').append(archiveButton);
                     }
+                    if (data["version"] == 1) {
+                        $(row).find('td:eq(7)').append(" "+ BigMask);   
+                    }
                 },
             });
             $.fn.dataTable.ext.errMode = 'none';

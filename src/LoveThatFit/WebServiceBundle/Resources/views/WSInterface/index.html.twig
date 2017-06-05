@@ -295,6 +295,7 @@ function hit_image_upload_service(){
         data.append("upload_type",value_ar['upload_type']);
         data.append("camera_angle",value_ar['camera_angle']);
         data.append("camera_x",value_ar['camera_x']);
+        data.append("version",value_ar['version']);
 
         $.ajax({
                  type: "POST",

@@ -1,6 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base_makeover_pending.html.twig' %}
-
-
+{% extends 'LoveThatFitSupportBundle::base_pending.html.twig' %}
 
 {% block body %}
 <div id="page_wrap">
@@ -56,15 +54,15 @@
     <a onClick="zoom_out();">Zoom Out</a>
     <a onClick="save();">Save</a>
 
-            <a href="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
+            <a href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
 
         <span id="activate_btn">
             <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-            <input type="hidden" value="{{ path('admin_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+            <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
             {% if (archives is defined)%}
-                <input type="hidden" value="{{ path('admin_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+                <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
             {% else %}
-                <input type="hidden" value="{{ path('admin_pending_user') }}" id="redirect_url">
+                <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
             {% endif %}
         </span>
 </div>
@@ -103,7 +101,7 @@
    <h5>Archives:</h5>
     {% for a in archives %}
             <div><span>
-                    <a href="{{ path('admin_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
+                    <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
                     {% if (a.status==-1)%}
                         <img src="{{ asset(a.getWebPath('original'))}}" style="width: 35px; height:40px"/>
                     {%else%}
@@ -123,7 +121,7 @@
     color: #ffffff;
     margin-top:50px;
     text-transform: uppercase;
-    display: inline-block;" href="{{ path('admin_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
+    display: inline-block;" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
     <!--<div><span>foo:</span>{{archive.getWebPath('original')}}</div>-->
@@ -171,7 +169,7 @@
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
 <input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
-<input id="marker_update_url" type="hidden" value="{{ path('admin_archive_save_marker')}}" />{#path('user_maker_save')#}
+<input id="marker_update_url" type="hidden" value="{{ path('support_archive_save_marker')}}" />{#path('user_maker_save')#}
 
 
 <!-- Mask Creation with body parts -->
@@ -196,7 +194,7 @@
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="hidden" id="hdn_image_update_url" value="{{ path('admin_archive_image_update')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('support_archive_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
@@ -215,61 +213,10 @@
 </div>
 </div>
     {%if (edit_type=='edit' or ( mode is defined and mode) )%}
-    <div class="row">
+        <div class="row">
        <!-- <h5>Measurement Comparision</h5>-->
         <div class="span3 newh">
-
-
-
-            <div class="nav_btns" style="background:none!important; padding:0px!important;">
-<!--
-<table cellpadding="0" cellspacing="0" border="1" width="100%">
-    <tr>
-        <td></td>
-        <td>User Info</td>
-        <td>Mask Info</td>
-    </tr>
-
-    <tr>
-        <td>Shoulder</td>
-        <td>{{ entity.measurement.shoulderAcrossBack }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Bust</td>
-        <td>{{ entity.measurement.bust }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Waist</td>
-        <td>{{ entity.measurement.waist }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Hip</td>
-        <td>{{ entity.measurement.hip }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Inseem</td>
-        <td>{{ entity.measurement.inseam }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Thigh</td>
-        <td>{{ entity.measurement.thigh }}</td>
-        <td></td>
-    </tr>
-</table>-->
-
-
-
-            </div>
+            <div class="nav_btns" style="background:none!important; padding:0px!important;"></div>
         </div>
         </div>
     {%endif%}

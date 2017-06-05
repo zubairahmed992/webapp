@@ -70,6 +70,72 @@ class ProductRepository extends EntityRepository
         }
     }
 
+    public function searchAllProduct($data, $page = 0, $max = NULL, $order, $getResult = true){
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
+
+        $query
+            ->select('
+                p.id,
+                p.name,
+                p.control_number,
+                p.gender,
+                b.name as BName,
+                ct.name as cloting_type,
+                p.created_at,
+                p.disabled,
+                p.status
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->andWhere('p.deleted=0');
+
+        if ($search) {
+            $query
+                ->andWhere('p.id like :search or 
+                            p.name like :search or 
+                            p.control_number like :search or 
+                            p.gender like :search or 
+                            ct.name like :search or 
+                            b.name like :search')
+                ->setParameter('search', "%".$search."%");
+        }
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "p.id";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "p.control_number";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "b.name";
+            } elseif ($orderByColumn == 4) {
+                $orderByColumn = "p.gender";
+            } elseif ($orderByColumn == 5) {
+                $orderByColumn = "p.name";
+            }elseif ($orderByColumn == 6) {
+                $orderByColumn = "p.created_at";
+            }elseif ($orderByColumn == 7) {
+                $orderByColumn = "p.disabled";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+        /*echo $query->getSQL(); die;
+            return $query->getResult(); */
+        if ($max) {
+            $preparedQuery = $query->getQuery()
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery();
+        }
+
+        /*echo $preparedQuery->getSQL(); die;*/
+        return $getResult? $preparedQuery->getResult():$preparedQuery;
+    }
+
     //-------------------------------------------------------------------------------------
     public function listProductsByGender($gender, $page_number = 0, $limit = 0, $sort = 'id')
     {
@@ -1149,6 +1215,98 @@ class ProductRepository extends EntityRepository
     }
     #-----------------------------------------------------------------------------#
     #---------Searching Quries-------------------------------#
+
+    public function searchProductByCriteria( $data, $page = 0, $max = NULL, $order, $getResult = true )
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('
+                p.id,
+                p.name,
+                p.control_number,
+                p.gender,
+                b.name as BName,
+                ct.name as cloting_type,
+                p.created_at,
+                p.disabled,
+                p.status
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0');
+
+        if($data['brand'] > 0){
+            $query
+                ->andWhere("b.id = :brandId");
+        }
+
+        if(!empty($data['category'])){
+            $query
+                ->expr()->in('ct.id',$data['category'] );
+        }
+
+        if(!empty($data['target'])){
+            $query
+                ->expr()->in('ct.target',$data['target'] );
+        }
+
+        if(!empty($data['genders'])){
+            $query
+                ->expr()->in('p.gender',$data['genders'] );
+        }
+
+        /*$query
+            ->setParameters(array(
+                'brandId' => $data['brand'],
+                'category' => $data['category'],
+                'target' => $data['target'],
+                'genders' => $data['genders']
+            ));*/
+
+        if($data['brand'] > 0){
+            $query
+                ->setParameter('brandId', $data['brand']);
+        }
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "p.id";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "p.control_number";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "b.name";
+            } elseif ($orderByColumn == 4) {
+                $orderByColumn = "p.gender";
+            } elseif ($orderByColumn == 5) {
+                $orderByColumn = "p.name";
+            }elseif ($orderByColumn == 6) {
+                $orderByColumn = "p.created_at";
+            }elseif ($orderByColumn == 7) {
+                $orderByColumn = "p.disabled";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+        /*echo $query->getSQL(); die;
+            return $query->getResult(); */
+        if ($max) {
+            $preparedQuery = $query->getQuery()
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery();
+        }
+
+        /*var_dump($preparedQuery->getArrayResult());
+        echo $preparedQuery->getSQL();   die;*/
+
+
+        return $getResult? $preparedQuery->getResult():$preparedQuery;
+    }
     public function searchProduct($brand_id, $male, $female, $target, $category_id, $start, $per_page)
     {
         $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";

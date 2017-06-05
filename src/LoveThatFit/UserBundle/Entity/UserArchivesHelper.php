@@ -454,7 +454,8 @@ class UserArchivesHelper {
                 'createdAt'         => ($fData["created_at"] == "") ? "00:00:00" : date_diff(
                     new \DateTime(), $fData["created_at"]
                 )->format('%a days, %H:%i:%s'),
-                'support_user_name' => $fData["support_user_name"]
+                'support_user_name' => $fData["support_user_name"],
+                'version'           => $fData["version"]
             ];
         }
         return $output;
@@ -511,6 +512,9 @@ class UserArchivesHelper {
         }
         if (array_key_exists('default_marker_svg', $data)) {
             $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
+        }
+        if (array_key_exists('version', $data)) {
+            $user_archives->setVersion($data['version']);
         }
         return $this->save($user_archives);
     }

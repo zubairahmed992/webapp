@@ -90,11 +90,6 @@ class UserArchivesRepository extends EntityRepository
         $getResult = true
     ) 
     {
-        /*
-            ->addSelect('(select t.support_user_name from LoveThatFitSupportBundle:SupportTaskLog t
-                where t.archive = ua.id and t.log_type = :cali) AS support_user_name'
-            )
-        */
 	    $query  = $this->getEntityManager()->createQueryBuilder();
         $search = isset($data['query']) && $data['query']?$data['query']:null;
         $log_type = "calibration";
@@ -103,7 +98,8 @@ class UserArchivesRepository extends EntityRepository
                 ua.id,
                 u.email,
                 ua.created_at,
-                t.support_user_name'
+                t.support_user_name,
+                ua.version'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->leftJoin(

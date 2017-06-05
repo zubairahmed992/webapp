@@ -1143,15 +1143,16 @@ class UserHelper
         foreach ($finalData as $fData) {
             $result = $this->getUpdatedUserArchiveTime( $fData["id"] );
             $output['data'][] = [
-                'id' => $fData["id"],
-                'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
-                'email' => $fData["email"],
-                'gender' => ($fData["gender"] == "f") ? "Female" : "Male",
-                'createdAt' => ($fData["createdAt"]->format('m-d-Y h:m:s')),
-                'updated_at' => $result['updated_at'],
-                'status' => $result['status'],
+                'id'               => $fData["id"],
+                'full_name'        => ($fData["firstName"] . ' ' . $fData["lastName"]),
+                'email'            => $fData["email"],
+                'gender'           => ($fData["gender"] == "f") ? "Female" : "Male",
+                'createdAt'        => ($fData["createdAt"]->format('m-d-Y h:m:s')),
+                'updated_at'       => $result['updated_at'],
+                'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
-                'user_role' => ($logged_user_role != null) ? strtolower($logged_user_role) : ""
+                'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
+                'version'          => $fData['version']
             ];
 
 
