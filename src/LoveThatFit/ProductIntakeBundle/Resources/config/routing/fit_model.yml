@@ -13,7 +13,11 @@ product_intake_fit_model_create_new:
 product_intake_fit_model_save:    
     pattern:  /product_intake/fit_model/save
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:save } 
-    
+
+product_intake_fit_model_csv_extract:
+    pattern:  /product_intake/specs_mapping/csv_extract
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:csvExtract }    
+
 product_intake_fit_model_show:
     pattern:  /product_intake/fit_model/{id}/show
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:show }

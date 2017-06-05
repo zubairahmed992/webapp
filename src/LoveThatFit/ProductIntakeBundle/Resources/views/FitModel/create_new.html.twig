@@ -11,13 +11,42 @@
     $(document).ready(function () {
     size_specs=jQuery.parseJSON( $('#size_specs_json').text());
     product_specs = jQuery.parseJSON( $('#product_specs_json').text());
-    
+     //#################################################
+        $('#csv_file').on('change', function(){     
+            var val = $(this).val();
+             if(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='csv'){
+                 $("#uploading_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');                
+
+                var formData = new FormData();
+                formData.append('csv_file', $('input[type=file]')[0].files[0]); 
+                $.ajax({
+                    url: '../specs_mapping/csv_extract',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) { 
+                      
+                        
+                      $("#csv_file_json").text(response);
+                      $("#uploading_image").html('');                
+                      data = JSON.parse(response);
+                      $.each(data,function(index, value){                        
+                        $("#"+index).val(value);
+                    });
+                    }
+                });
+
+            }else{
+                 alert("Invalid file");
+                }          
+        });    
     //---------------------------------------
     
      $( "#sel_gender" ).change(function() {
         fil_size();
 });
-   
+   //---------------------------------------
    $( "#sel_size_type" ).change(function() {
         fil_size();
 });
@@ -71,6 +100,16 @@
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
         <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
         <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
+            
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
+                    <div class="col-sm-4">                    
+                        <input type="file" name="csv_file" id="csv_file">
+                    </div>
+                </div>
+            <br>
+            <div style='display:none' id="csv_file_json"></div>
+            <br>
             <div class="form-group required">
                 <label class="control-label col-sm-2" for=""> Brand </label>
                 <div class="col-sm-4">
@@ -157,6 +196,8 @@
                 <label class="control-label col-sm-2" for="{{k}}">{{v}}  </label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" {{  (k in required_fields)? 'required' : '' }}  id="{{k}}" name="{{k}}" placeholder="Enter {{v}}" value="">                        
+                    <span id="{{k}}_fm" name="{{k}}_fm"></span>
+                    
                 </div>
             </div>
             <br>            
