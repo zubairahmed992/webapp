@@ -99,14 +99,15 @@
         </div>
         <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
         <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
-        <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
-            
+        
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
                     <div class="col-sm-4">                    
                         <input type="file" name="csv_file" id="csv_file">
                     </div>
                 </div>
+        <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
+            
             <br>
             <div style='display:none' id="csv_file_json"></div>
             <br>

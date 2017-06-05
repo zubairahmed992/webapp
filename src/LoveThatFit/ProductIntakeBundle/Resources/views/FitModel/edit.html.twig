@@ -7,10 +7,31 @@
             color:red;
      
           }
+        .fm_spn{
+
+            }
+            .fm_add{
+                
+            }
+        .fm_remove{}     
+          
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        
+        
+        $( ".fm_add" ).click(function(event) {                            
+            event.preventDefault();        
+            alert(this.id);
+        });
+        $( ".fm_remove" ).click(function(event) {                            
+            event.preventDefault();        
+            
+            $('#fm_spn_bicep').hide();
+        });
+        
+        
          //---------------------------------------
           
             $( ".sel_gender" ).change(function() {                            
@@ -75,6 +96,15 @@
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
             <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
         </div>   
+        
+        
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
+                    <div class="col-sm-4">                    
+                        <input type="file" name="csv_file" id="csv_file">
+                    </div>
+                </div>
+        <br>
     <form action="{{ path('product_intake_fit_model_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
        <div class="container">      
             {% for fit_point_k, fit_point_v in fit_point_values %}
@@ -145,7 +175,8 @@
                     <div class="form-group {{  (fit_point_k in required_fields)? 'required' : '' }} ">
                         <label class="control-label col-sm-2" for=""> {{fit_point_k}} </label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }}>
+                            <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }} >
+                            <span id="#fma_{{fit_point_k}}" class='fm_spn'> <a href='#' id="#fmv_{{fit_point_k}}" class='fm_add'>toto</a> &nbsp;|&nbsp;<a href='#' id="#fmr_{{fit_point_k}}" class='glyphicon glyphicon-remove fm_remove'></a> </span>
                         </div>
                     </div>   
 
