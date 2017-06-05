@@ -269,12 +269,14 @@ class PaymentHelper
 
             $entity = $this->container->get('cart.helper.order')->saveBillingShipping($decoded, $user, $shipping_amount, $fnfGroup);
             $order_id = $entity->getId();
-            $this->container->get('cart.helper.userAddresses')->saveAddress($decoded, $user, 1, 1);
+
+            if(!isset($decoded['billing_id']) && !isset($decoded['shipping_id']))
+                $this->container->get('cart.helper.userAddresses')->saveAddress($decoded, $user, 1, 1);
 
             $order_number = $order_id . rand(100, 100000);
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $response = $this->container->get('cart.helper.orderDetail')->saveOrderDetail($user_cart, $entity);
-            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rates);
+            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, json_encode($rates));
 
             try {
                 //create podio orders entity

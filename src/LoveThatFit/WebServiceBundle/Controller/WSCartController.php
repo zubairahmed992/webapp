@@ -366,6 +366,10 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $decoded = $this->addItemsToPostArray($user, $decoded);
+        if(isset($decoded['billing_id']))
+            $decoded['rates']['billing_id'] = $decoded['billing_id'];
+        if(isset($decoded['shipping_id']))
+            $decoded['rates']['shipping_id'] = $decoded['shipping_id'];
 
         // var_dump( $decoded ); die;
 
