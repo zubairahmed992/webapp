@@ -862,21 +862,25 @@ class ProductSpecificationHelper {
         $data1['mapping_title']=$data[0]['clothing_type'];
         $data1['mapping_description']=$data[0]['clothing_type'];       
         $data1['measuring_unit']='inch';       
-            foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+        $new_fp = array('hip' => 'low_hip', 'thigh' => 'low_thigh', 'central_front_waist' => 'cf_waist');
+        
+        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['fit_model'] = $value['fit_model_measurement'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule_stretch'] = $value['horizontal_stretch'];
-                   //  $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule_stretch'] = $value['vertical_stretch'];                
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['stretch_percentage'] = $value['stretch_type_percentage'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['ideal_high'] = $value['ideal_body_size_high'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['ideal_low'] = $value['ideal_body_size_low'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['max_calc'] = $value['max_calculated'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['min_actual'] = $value['min_body_measurement'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['min_calc'] = $value['min_calculated'];
+                     $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];
+
+                    $data1['sizes'][$product_size_value['title']][$fp]['fit_model'] = $value['fit_model_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_dimension'] = $value['garment_measurement_flat'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['grade_rule'] = $value['grade_rule'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['horizontal_stretch'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['vertical_stretch'];                
+                    $data1['sizes'][$product_size_value['title']][$fp]['stretch_percentage'] = $value['stretch_type_percentage'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_high'] = $value['ideal_body_size_high'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_low'] = $value['ideal_body_size_low'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_actual'] = $value['max_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_calc'] = $value['max_calculated'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_actual'] = $value['min_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_calc'] = $value['min_calculated'];
                     $data1['body_type'] = $product_size_value['body_type'];
                 }
              }
