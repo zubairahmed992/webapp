@@ -179,19 +179,15 @@ padding-right: 0px!important;
 }
 
 .clk_img{
-    display: inline;
-    position:absolute;
-    top:0px;
-    left: 205px;
     display: none;
     font-size: 3em;
 }
 
 .rej_img a{
     display: inline;
-    position:absolute;
-    top:0px;
-    right: 30px;
+   
+   
+  
     border:1px solid #666;
     color: #fff;
     padding:5px 15px 5px 15px;
@@ -204,15 +200,13 @@ padding-right: 0px!important;
 
 .approve_img a{
     display: inline;
-    position:absolute;
-    top:35px;
-    right: 28px;
     border:1px solid #666;
     color: #fff;
     padding:5px 10px 5px 10px;
     background: #6a6a6a;
 }
-
+ul.imagemenu{ display:inline; margin: auto;}
+ul.imagemenu li{ display:inline-block; margin-right: 10px;}
 .approve_img a:hover{
     text-decoration:none;
 }
@@ -235,7 +229,7 @@ padding-right: 0px!important;
     width: 30%;
     box-shadow: 0px 0px 30px 2px #000;
     position: absolute;
-    z-index: 201;
+    z-index: 2000;
     left: 35%;
     top: 30%;
     text-align: center;

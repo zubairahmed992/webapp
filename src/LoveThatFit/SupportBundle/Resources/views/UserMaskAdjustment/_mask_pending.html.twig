@@ -42,6 +42,7 @@
                  background: #fff;
 
              }
+            
     </style>
     <div class="navigation1">
     <a onClick="move_left();">Move Left</a>
@@ -52,13 +53,13 @@
     <a onClick="rotate_right();">Rotate Right</a>
     <a onClick="zoom_in();">Zoom In</a>
     <a onClick="zoom_out();">Zoom Out</a>
-    <a onClick="save();">Save</a>
+    <a id="end"  onClick="save();">Save</a>
 
             <a href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
 
         <span id="activate_btn">
             <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-            <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+           <!-- <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">!-->
             {% if (archives is defined)%}
                 <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
             {% else %}
@@ -96,9 +97,11 @@
     <!--<div><span>Device Type:</span>{{user_image_spec.deviceType}}</div>
     <div><span>Device Model:</span>{{device_model}}</div>
     <div><span>Mode:</span>{{edit_type}}</div>-->
+   
     {% if (archives is defined)%}
         <hr class="black">
    <h5>Archives:</h5>
+  
     {% for a in archives %}
             <div><span>
                     <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
@@ -121,7 +124,7 @@
     color: #ffffff;
     margin-top:50px;
     text-transform: uppercase;
-    display: inline-block;" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
+    display: none" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
     <!--<div><span>foo:</span>{{archive.getWebPath('original')}}</div>-->
@@ -143,9 +146,9 @@
 
 
 <input id="dv_model" type="hidden" value="{{ device_model }}" />
-
+<input id="support_user_name" type="hidden" value="{{ app.user.username }}" />
         <input id="entity_email" type="hidden" value="{{entity.email}}" />
-
+  <input id="admin_update_status" type="hidden" value="{{ path('support_update_status', {'user_id': entity.id}) }}" />
 <input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
 <input id="dv_bottom_bar" type="hidden" value="{{ bottom_bar }}" />
@@ -199,15 +202,34 @@
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
                 </form>
-<div class="span8 maindiv">
-<div class="span8">
+<div class="maindiv">
+<div>
 
 {% if (device_type == "iphone5")%}
-<div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas>
+ <div class="rej_img">
+        <a href="#">Reject Image</a>
+    </div>
+    <div class="approve_img">
+        <a href="#">Approve Image</a>
+    </div>
+    <i class="fa fa-clock-o clk_img" aria-hidden="true"></i>
+</div>
 {% endif %}
 {% if (device_type == "iphone6")%}
+     <div style="position:relative; top:50px; text-align:center;">
+        <!--clock !-->
+        <ul class="imagemenu">
+            <li><div class="rej_img"><a href="#">Reject Image</a></div></li>
+            <li><div class="approve_img"><a href="#">Approve Image</a></div></li>
+            <li><i class="fa fa-clock-o clk_img" aria-hidden="true"></i></li>
+        </ul> 
+        <!--/clock !-->
+    </div>
+        
 <div class="txt_center canv_hldr_2">
-    <canvas id="canv_mask_makeover" width="960" height="1280" style="margin-top: 50px; width:960px; height: 1280px; position: relative;"></canvas>
+    <canvas id="canv_mask_makeover" width="960" height="1280" style="margin:80px auto; width:960px; height: 1280px; position: relative;"></canvas>
+   
 </div>
 {% endif %}
 </div>
@@ -217,6 +239,15 @@
        <!-- <h5>Measurement Comparision</h5>-->
         <div class="span3 newh">
             <div class="nav_btns" style="background:none!important; padding:0px!important;"></div>
+             <div>
+                  
+                    <input type="hidden" value="" data-url="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+                    {% if (archives is defined)%}
+                        <input type="hidden" value="" data-url="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+                    {% else %}
+                        <input type="hidden" value="" data-url="{{ path('support_pending_users') }}" id="redirect_url">
+                    {% endif %}
+                </div>
         </div>
         </div>
     {%endif%}
@@ -224,7 +255,14 @@
     </div>
 
 
-
+<div>
+        <input type="hidden" id="oldtime" value="" data-value=""  />
+        <!--<button id="start">Start</button>-->
+        <input type="hidden" id="newtime" value="" data-value=""  />
+        <input type="hidden" class="diff" value="" data-value=""  />
+        <!--<button id="end">End</button>-->
+    </div>
+        
 
 
 <input class="hide_me" id="re_load" style="position: absolute; bottom:10px; padding: 10px; left:10px; z-index: 13100; text-align: center; font-size: 16px;" type="button" value="Reload Page" onClick="window.location.reload();">
@@ -298,11 +336,7 @@
 <script>
 
 $(document).ready(function(){
-
-
     $( "#btn_confirm" ).click(function() {
-
-
    var strconfirm = confirm("Are you sure mask is saved?");
    if (strconfirm == true)
             {
@@ -328,5 +362,111 @@ function put_archive_to_live() {
       return false;
     }
 });
+function endtimer(){
+        console.log("Chal gaya!");
+        $("#newtime").val(timer());
+        $(this).attr('disabled','disabled');
+        $time = diff();
+        var $archiveId = $("#hdn_archive_id").val();
+        var $suppEmail = $("#entity_email").val();
+        var $suppName = $("#support_user_name").val();
+
+        $.ajax({
+            url: '../../../ws/support_task_log/add',
+            type: 'POST',
+            data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
+            success: function (response) {
+                alert("All Done! - Reloading...");
+
+                                    var curr_url = window.location + '';
+
+                                    curr_url_array = curr_url.split('/');
+                                    if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
+                                            curr_url = curr_url.split('/refresh')[0];
+                                            window.location.assign(curr_url)
+                                    }else{
+                                        window.location.reload();
+                            }
+            },
+            error: function () {
+                alert("Please press end button");
+            }
+        });
+
+    }
+    function timer(){
+        var timeStamp = Math.floor(Date.now());
+        return timeStamp;
+    }
+    function diff(){
+        var newVal = $("#newtime").val();
+        var oldVal = $("#oldtime").val();
+        var result = Math.ceil((newVal - oldVal) / 1000);
+        $(".diff").html(result);
+        return result;
+    }
+    
+    
+    $(document).ready(function(){
+    $(".clk_img").click(function(){
+        $("#oldtime").val(timer());
+        $(this).css({'color':'red'});
+        //$(this).hide();
+    });
+    $("#end").click(function(){
+        endtimer();
+        $('.rej_img').show();
+        $('.approve_img').show();
+         $('.clk_img').hide();
+    });
+
+
+ //comment funciton copy from backup file   
+      $("#comment_btn").click(function(){
+        var $mem_email = $("#entity_email").val();
+        var $member_comments = $("#rej_comments").val();
+            var $revert_status = $('#admin_update_status').val();
+        $.ajax({
+            //url: '../../../ws/image_approval',
+            url:"{{ path('ws_image_approval') }}",
+            type: 'POST',
+            //$mem_email
+            data: {member_email:$mem_email ,comment:$member_comments, caliboration_status:'reject'},
+            success: function (response) {
+                alert("Your comment has been sent successfully");
+                $('#rej_comments').val('');
+                $('#dimpop').hide();
+                $('#rej_popup').hide();
+                 window.location= $revert_status;
+            },
+            error: function () {
+                alert("Please press end button");
+            }
+        });
+    });
+$( "#btn_confirm" ).click(function() {
+   var strconfirm = confirm("Are you sure mask is saved?");
+   if (strconfirm == true)
+            {
+                put_archive_to_live();
+            }
+ //alert('hi');
+
+});
+  
+//function copy from backup file	
+function put_archive_to_live() {
+    var archive_to_live_url = $("#archive_to_live_url").attr("data-url");
+    var redirect_url = $("#redirect_url").attr("data-url");
+        $.ajax({
+             url: archive_to_live_url
+             ,success: function(response) {
+                window.location=redirect_url;
+             }
+          })
+
+      return false;
+    }
+});	
     </script>
 {% endblock %}
