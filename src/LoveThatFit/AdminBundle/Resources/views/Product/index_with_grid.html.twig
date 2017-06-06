@@ -349,6 +349,7 @@
                             <th>Name</th>
                             <th>Created At</th>
                             <th>Status</th>
+                            <th>Enable/Disable</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -438,6 +439,12 @@
                 "width": "8%",
             },
             {
+                "data": "status",
+                "searchable": false,
+                "orderable": true,
+                "width": "8%",
+            },
+            {
                 "title": "Actions",
                 "targets": -1,
                 "data": null,
@@ -461,6 +468,7 @@
             {mData: "PName", sTitle: "Name", sWidth: "15%"},
             {mData: "created_at", sTitle: "Created At", sWidth: "12%"},
             {mData: "pstatus", sTitle: "Status", sWidth: "8%"},
+            {mData: "status", sTitle: "Enable/Disable", sWidth: "8%"},
             {mData: null, sTitle: "Action", bSortable : false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 if(oData.status == "Enable"){
                     $(nTd).find("button.Enable i").removeClass('icon-play-circle');

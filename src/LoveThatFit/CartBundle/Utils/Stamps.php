@@ -101,7 +101,7 @@ class Stamps
         }
     }
 
-    public function getRates( $postData = array())
+    public function getRates( $postData = array(), $weightInOz = 0)
     {
         $returnResponse = array();
         $fieldsVerified = $this->verifyFields( $postData, 'getRates');
@@ -116,9 +116,9 @@ class Stamps
                 'Rate' => array(
                     'FromZIPCode'   => $this->fromZipCode,
                     'ToZIPCode'     => $postData['tozipcode'],
-                    'ServiceType'   => $this->serviceType,
+                    /*'ServiceType'   => $this->serviceType,*/
                     'DeliverDays'   => $this->deliverDays,
-                    'WeightLb'      => $this->weightOz,
+                    'WeightOz'      => $weightInOz,
                     'PackageType'   => $this->packageType,
                     'ShipDate'      => date('Y-m-d'),
                     'RectangularShaped' => false
@@ -136,7 +136,7 @@ class Stamps
                 $temp['FromZIPCode'] = $rates->FromZIPCode;
                 $temp['ToZIPCode']  = $rates->ToZIPCode;
                 $temp['DeliverDays'] = $rates->DeliverDays;
-                $temp['WeightLb']   = $rates->WeightLb;
+                $temp['WeightOz']   = $rates->WeightOz;
                 $temp['InsuredValue'] = (isset($rates->InsuredValue) ? $rates->InsuredValue : 0);
                 $temp['RectangularShaped'] = $rates->RectangularShaped;
 
@@ -152,7 +152,7 @@ class Stamps
                     $temp['FromZIPCode'] = $rate->FromZIPCode;
                     $temp['ToZIPCode']  = $rate->ToZIPCode;
                     $temp['DeliverDays'] = $rate->DeliverDays;
-                    $temp['WeightLb']   = $rate->WeightLb;
+                    $temp['WeightOz']   = $rate->WeightOz;
                     $temp['InsuredValue'] = (isset($rate->InsuredValue) ? $rate->InsuredValue : 0);
                     $temp['RectangularShaped'] = $rate->RectangularShaped;
 
