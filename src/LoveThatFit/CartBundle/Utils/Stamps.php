@@ -8,6 +8,7 @@
 
 namespace LoveThatFit\CartBundle\Utils;
 
+use LoveThatFit\CartBundle\Entity\UserAddresses;
 use Symfony\Component\Yaml\Parser;
 
 
@@ -45,7 +46,7 @@ class Stamps
         $this->deliverDays      = $parse[$envKey]["deliverydays"];
         $this->packageType      = $parse[$envKey]["packagetype"];
 
-        $this->soapClient = new \SoapClient($this->wsdl);
+        $this->soapClient = new \SoapClient($this->wsdl, array('trace' => 1));
     }
 
     private function authenticateUser()
@@ -74,7 +75,7 @@ class Stamps
                     "Password"          => $this->password
                 ),
                 'Address' => array(
-                    'FullName'  => $address['fullname'],
+                    'FullName'  => (isset($address['fullname'])) ? $address['fullname'] : '',
                     'FirstName' => $address['firstname'],
                     'LastName'  => $address['lastname'],
                     'Address1'  => $address['address1'],
@@ -99,6 +100,73 @@ class Stamps
         }else{
             return $fieldsVerified;
         }
+    }
+
+    public function createPostages( UserAddresses $billingAddress, UserAddresses $shippingAddress, $rate_json)
+    {
+        $returnResponse = array();
+        $authenticator = $this->authenticateUser();
+
+        $shipping_data = json_decode($shippingAddress->getAddressData());
+
+        $callData = array(
+            "Credentials"       => array(
+                "IntegrationID"     => $this->integrarionId,
+                "Username"          => $this->userName,
+                "Password"          => $this->password
+            ),
+            'IntegratorTxID' => '9405511899560548648627', // md5(uniqid($this->integrarionId.$shippingAddress->getId().rand(), true)),
+            'Rate' => array(
+                'FromZIPCode'   => $rate_json->FromZIPCode,
+                'ToZIPCode'     => $rate_json->ToZIPCode,
+                'Amount'   => $rate_json->amount,
+                'ServiceType'   => $rate_json->serviceType,
+                'DeliverDays'      => $rate_json->DeliverDays,
+                'WeightOz'   => $rate_json->WeightOz,
+                'WeightLb'      => 0,
+                'PackageType' => 'Package',
+                'ShipDate' => $rate_json->shipDate,
+                'DeliveryDate' => $rate_json->deliveryDate,
+                'RectangularShaped' => $rate_json->RectangularShaped
+            ),
+            'From' => array(
+                'FullName' => 'SelfieStyler, Inc',
+                'Address1' => '250 E Wisconsin AVE Suite 1800',
+                'Address2' => '',
+                'City' => 'Milwaukee',
+                'State' => 'WI',
+                'ZIPCode' => '53202',
+            ),'To' => array(
+                'FullName' => '',// $shippingAddress->getFirstName()." ". $shippingAddress->getLastName(),
+                'NamePrefix' =>'',
+                'FirstName' => $shipping_data->FirstName,
+                'MiddleName' => '',
+                'LastName' => $shipping_data->LastName,
+                'NameSuffix' => '',
+                'Title' => '',
+                'Department' => '',
+                'Company' => '',
+                'Address1' => $shipping_data->Address1,
+                'Address2' => $shipping_data->Address2,
+                'Address3' => '',
+                'City' => $shipping_data->City,
+                'State' => $shipping_data->State,
+                'ZIPCode' => $shipping_data->ZIPCode,
+                'ZIPCodeAddOn' => $shipping_data->ZIPCodeAddOn,
+                'DPB' => $shipping_data->DPB,
+                'CheckDigit' => $shipping_data->CheckDigit,
+                'Province' => '',
+                'PostalCode' => '',
+                'Country' => '',
+                'Urbanization' => '',
+                'PhoneNumber' => $shippingAddress->getPhone(),
+                'Extension' => '',
+                'CleanseHash' => $shipping_data->CleanseHash
+            ),
+        );
+        // var_dump($callData);
+        $response = $this->soapClient->CreateIndicium($callData);
+        return $response;
     }
 
     public function getRates( $postData = array(), $weightInOz = 0)
@@ -169,7 +237,6 @@ class Stamps
         }
     }
 
-
     private function verifyFields( $postArray = array(), $method = null){
         switch ($method){
             case "addressVerfication":
@@ -222,6 +289,9 @@ class Stamps
                     'msg' => "",
                     'verified' => true
                 );
+                break;
+
+            case "createIndicium":
                 break;
         }
     }

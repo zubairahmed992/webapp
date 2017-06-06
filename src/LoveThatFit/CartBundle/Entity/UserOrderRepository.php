@@ -127,7 +127,9 @@ class UserOrderRepository extends EntityRepository
 				o.billing_last_name,
 				o.order_date,
 				o.order_amount,
-				o.payment_json'
+				o.payment_json,
+                o.transaction_status,
+                o.order_status'
 		    )
 		    ->from('LoveThatFitCartBundle:UserOrder', 'o');
 		if ($search) {

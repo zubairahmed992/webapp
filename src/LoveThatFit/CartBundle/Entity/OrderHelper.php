@@ -331,7 +331,9 @@ class OrderHelper
                 'order_date'   => ($fData["order_date"]->format('d-m-Y')),
                 'order_amount' => "$" . number_format((float)$fData["order_amount"], 2, '.', ''),
                 'credit_card'  => "xxxx-xxxx-xxxx-".json_decode($fData['payment_json'])
-                    ->transaction->_attributes->creditCard->last4
+                    ->transaction->_attributes->creditCard->last4,
+                'transaction_status' => $fData['transaction_status'],
+                'shipping_status' => $fData['order_status']
             ];
         }
 
@@ -346,6 +348,18 @@ class OrderHelper
     public function findOrderList()
     {
         return $this->repo->findOrderList();
+    }
+
+    public function updateTransactionStatus( UserOrder $entity, $transactionStatus)
+    {
+        $entity->setTransactionStatus( $transactionStatus );
+        $this->save($entity);
+    }
+
+    public function updateWithShippingData( UserOrder $entity, $shipping_response)
+    {
+        $entity->setShipmentJson($shipping_response);
+        $this->save($entity);
     }
 
 }

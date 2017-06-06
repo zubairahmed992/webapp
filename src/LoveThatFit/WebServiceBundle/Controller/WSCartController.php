@@ -601,6 +601,7 @@ class WSCartController extends Controller
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
                 $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
+                $order['tracking_number'] = '';
 
                 if(is_object($order['user_order_date']))
                     $order['order_user_date'] = $order['user_order_date']->format('Y-m-d H:i:s');

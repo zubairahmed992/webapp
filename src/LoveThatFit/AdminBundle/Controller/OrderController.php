@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\AdminBundle\Controller;
 
+use LoveThatFit\CartBundle\Utils\Stamps;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -145,5 +146,38 @@ class OrderController extends Controller {
             $this->get('session')->setFlash('warning', 'No Record Found!');
             return $this->render('LoveThatFitAdminBundle:Order:index.html.twig');
         }
+    }
+
+    public function updateBraintreeTransactionUpdateAction( $id )
+    {
+        $entity = $this->get('cart.helper.order')->find($id);
+        $transactionId = ( $entity->getTransactionId() != null ? $entity->getTransactionId() : null);
+        $transactionStatus = ( $entity->getTransactionStatus() != null ? $entity->getTransactionStatus() : null);
+
+        $transaction_status = $this->get('cart.helper.payment')->getTransactionStatus($transactionId, $transactionStatus);
+        $this->get('cart.helper.order')->updateTransactionStatus( $entity ,$transaction_status['transaction_status']);
+
+        return new Response(json_encode($transaction_status), 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function updateShippingStatusAction( $id ){
+        $stamps = new Stamps();
+        $entity = $this->get('cart.helper.order')->find($id);
+        $rate_json = ( $entity->getRateJson() != null ? json_decode($entity->getRateJson()) : null);
+        $transactionStatus = ( $entity->getTransactionStatus() != null ? $entity->getTransactionStatus() : null);
+
+        if ($transactionStatus != 'settled'){
+            return new Response(json_encode("failed"), 300, ['Content-Type' => 'application/json']);
+        }
+
+
+
+        $billingAddress = $this->container->get('cart.helper.userAddresses')->findAddressById($rate_json->billing_id);
+        $shippingAddress = $this->container->get('cart.helper.userAddresses')->findByCriteria(array('id' => $rate_json->shipping_id));
+
+        $stamps_response = $stamps->createPostages($billingAddress, $shippingAddress, $rate_json);
+        $this->get('cart.helper.order')->updateWithShippingData( $entity ,json_encode($stamps_response));
+
+        return new Response(json_encode($stamps_response), 200, ['Content-Type' => 'application/json']);
     }
 }

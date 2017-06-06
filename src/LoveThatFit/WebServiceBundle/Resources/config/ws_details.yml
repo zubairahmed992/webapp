@@ -679,6 +679,7 @@ nws_save_user_billing_address:
     auth_token: 121c421783cd4d71d871ec16a1296091
     billing: {"billing_first_name":"geof","billing_last_name":"anton","billing_address1":"12959 CORAL TREE PL","billing_address2":"12959 CORAL TREE PL","billing_phone":"123334","billing_city":"los angels","billing_postcode":"90066","billing_country":"xyz","billing_state":"CA", "shipping_same": "0", "billing_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
     billing_id: 0
+    data: {"FullName": "","FirstName": "GEOF","LastName": "ANTON","Address1": "12959 CORAL TREE PL","Address2": "12959 CORAL TREE PL","City": "LOS ANGELES","State": "CA","ZIPCode": "90066","ZIPCodeAddOn": "7020","DPB": "59","CheckDigit": "6","Urbanization": "","CleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063","OverrideHash": "Tdwp4JlTc02DhscYxbI7l7o08apkZWFkYmVlZg==20171011C063"}
 
 nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
@@ -687,6 +688,7 @@ nws_save_user_shipping_address:
     auth_token: 121c421783cd4d71d871ec16a1296091
     shipping: {"shipping_first_name":"geof","shipping_last_name":"anton","shipping_address1":"12959 CORAL TREE PL","shipping_address2":"12959 CORAL TREE PL","shipping_phone":"123334","shipping_city":"los angels","shipping_postcode":"90066","shipping_country":"xyz","shipping_state":"CA", "shipping_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
     shipping_id: 0
+    data: {"FullName": "","FirstName": "GEOF","LastName": "ANTON","Address1": "12959 CORAL TREE PL","Address2": "12959 CORAL TREE PL","City": "LOS ANGELES","State": "CA","ZIPCode": "90066","ZIPCodeAddOn": "7020","DPB": "59","CheckDigit": "6","Urbanization": "","CleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063","OverrideHash": "Tdwp4JlTc02DhscYxbI7l7o08apkZWFkYmVlZg==20171011C063"}
 
 nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses

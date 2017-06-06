@@ -387,5 +387,31 @@ class PaymentHelper
             );
         }
     }
+
+    public function getTransactionStatus( $transactionId = null, $transactionStatus)
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse[$this->env]["environment"]);
+        Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
+        Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+
+        try{
+            $transaction = Braintree_Transaction::find($transactionId);
+            $status = $transaction->status;
+
+            return array(
+                'status' => 200,
+                'transaction_status' => $status
+            );
+
+        }catch (Braintree_Exception_NotFound $exception){
+            return array(
+                'status' => 300,
+                'transaction_status' => $transactionStatus
+            );
+        }
+    }
 #------------------------------------- End of Braintree Transaction ------------#
 }
