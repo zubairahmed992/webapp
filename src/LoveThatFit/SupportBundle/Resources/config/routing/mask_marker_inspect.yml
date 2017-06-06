@@ -1,0 +1,49 @@
+support_mask_marker_inspect_index:
+    pattern:  /support/mask_marker_inspect/index
+    defaults: { _controller: LoveThatFitSupportBundle:MaskMarkerInspect:index}
+
+support_users_masks_all_data:
+    pattern:  /support/mask_marker_inspect/all_data
+    defaults: { _controller: LoveThatFitSupportBundle:MaskMarkerInspect:allUserData}
+
+support_mask_marker_inspect_user:
+    pattern:  /support/mask_marker_inspect/user
+    defaults: { _controller: LoveThatFitSupportBundle:MaskMarkerInspect:user}
+
+support_mask_marker_inspect_user_json:
+    pattern:  /support/mask_marker_inspect/user/{id}/{mode}
+    defaults: { _controller: LoveThatFitSupportBundle:MaskMarkerInspect:userJson, mode:null}
+
+support_mask_marker_inspect_path_axis:
+    pattern:  /support/mask_marker_inspect/path_axis/{id}
+    defaults: { _controller: LoveThatFitSupportBundle:MaskMarkerInspect:pathAxisArray}
+
+admin_mask_marker_inspect_sim:
+    pattern:  /admin/mask_marker_inspect/sim/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:sim, id:6}
+
+#----------------------------------------------------------------------------- 
+
+admin_users_masks_data_download:
+    pattern:  /admin/mask_marker_inspect/data_download
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:userDataDownload}    
+
+admin_users_masks_data_filter:
+    pattern:  /admin/mask_marker_inspect/data_filter
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:filterUserData}
+
+admin_users_masks_data_filter_download:
+    pattern:  /admin/mask_marker_inspect/data_filter_download/{options}
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:filterUserDataDownload, options:null}    
+
+#----------------------------------------------------------------------------- 
+
+admin_user_mask_compare_index:
+    pattern:  /admin/mask_compare/index
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskCompareIndex}
+
+admin_user_mask_compare_filter:
+    pattern:  /admin/mask_compare/filter
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskCompareFilter}
+
+    
