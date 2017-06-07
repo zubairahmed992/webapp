@@ -59,7 +59,7 @@
 
         <span id="activate_btn">
             <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-           <!-- <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">!-->
+           <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
             {% if (archives is defined)%}
                 <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
             {% else %}
@@ -217,7 +217,7 @@
 </div>
 {% endif %}
 {% if (device_type == "iphone6")%}
-     <div style="position:relative; top:50px; text-align:center;">
+     <div style="position:relative; top:50px; text-align:center; min-height:42px;">
         <!--clock !-->
         <ul class="imagemenu">
             <li><div class="rej_img"><a href="#">Reject Image</a></div></li>
@@ -239,15 +239,7 @@
        <!-- <h5>Measurement Comparision</h5>-->
         <div class="span3 newh">
             <div class="nav_btns" style="background:none!important; padding:0px!important;"></div>
-             <div>
-                  
-                    <input type="hidden" value="" data-url="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
-                    {% if (archives is defined)%}
-                        <input type="hidden" value="" data-url="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
-                    {% else %}
-                        <input type="hidden" value="" data-url="{{ path('support_pending_users') }}" id="redirect_url">
-                    {% endif %}
-                </div>
+       
         </div>
         </div>
     {%endif%}
@@ -351,7 +343,6 @@ $(document).ready(function(){
 function put_archive_to_live() {
     var archive_to_live_url = $("#archive_to_live_url").val();
     var redirect_url = $("#redirect_url").val();
-
         $.ajax({
              url: archive_to_live_url
              ,success: function(response) {
@@ -389,9 +380,13 @@ function endtimer(){
                             }
             },
             error: function () {
-                alert("Please press end button");
+                alert("Please press save button");
             }
         });
+        
+        $('.rej_img').show();
+        $('.approve_img').show();
+        $('.clk_img').hide();
 
     }
     function timer(){
@@ -413,13 +408,7 @@ function endtimer(){
         $(this).css({'color':'red'});
         //$(this).hide();
     });
-    $("#end").click(function(){
-        endtimer();
-        $('.rej_img').show();
-        $('.approve_img').show();
-         $('.clk_img').hide();
-    });
-
+  
 
  //comment funciton copy from backup file   
       $("#comment_btn").click(function(){
@@ -444,29 +433,7 @@ function endtimer(){
             }
         });
     });
-$( "#btn_confirm" ).click(function() {
-   var strconfirm = confirm("Are you sure mask is saved?");
-   if (strconfirm == true)
-            {
-                put_archive_to_live();
-            }
- //alert('hi');
 
-});
-  
-//function copy from backup file	
-function put_archive_to_live() {
-    var archive_to_live_url = $("#archive_to_live_url").attr("data-url");
-    var redirect_url = $("#redirect_url").attr("data-url");
-        $.ajax({
-             url: archive_to_live_url
-             ,success: function(response) {
-                window.location=redirect_url;
-             }
-          })
-
-      return false;
-    }
 });	
     </script>
 {% endblock %}

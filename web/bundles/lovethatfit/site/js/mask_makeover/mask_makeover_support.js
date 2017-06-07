@@ -915,9 +915,8 @@ function to_image(){
         if(obj_url.status === "check"){ 
             
              canv_settings_after_save();
-             
-            alert("All Done! - Not Reloading...");
-            
+              endtimer();
+          
             
 //            var curr_url = window.location + '';
 ////            curr_url_array = curr_url.split('/');
