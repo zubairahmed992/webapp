@@ -115,7 +115,7 @@ class Stamps
                 "Username"          => $this->userName,
                 "Password"          => $this->password
             ),
-            'IntegratorTxID' => '9405511899560548648627', // md5(uniqid($this->integrarionId.$shippingAddress->getId().rand(), true)),
+            'IntegratorTxID' => md5(uniqid($this->integrarionId.$shippingAddress->getId().rand(), true)),
             'Rate' => array(
                 'FromZIPCode'   => $rate_json->FromZIPCode,
                 'ToZIPCode'     => $rate_json->ToZIPCode,
@@ -139,34 +139,64 @@ class Stamps
             ),'To' => array(
                 'FullName' => '',// $shippingAddress->getFirstName()." ". $shippingAddress->getLastName(),
                 'NamePrefix' =>'',
-                'FirstName' => $shipping_data->FirstName,
+                'FirstName' => (isset($shipping_data->FirstName) ? $shipping_data->FirstName : ""),
                 'MiddleName' => '',
-                'LastName' => $shipping_data->LastName,
+                'LastName' => (isset($shipping_data->LastName) ? $shipping_data->LastName :""),
                 'NameSuffix' => '',
                 'Title' => '',
                 'Department' => '',
                 'Company' => '',
-                'Address1' => $shipping_data->Address1,
-                'Address2' => $shipping_data->Address2,
+                'Address1' => (isset($shipping_data->Address1) ? $shipping_data->Address1 : ""),
+                'Address2' => (isset($shipping_data->Address2) ? $shipping_data->Address2: ""),
                 'Address3' => '',
-                'City' => $shipping_data->City,
-                'State' => $shipping_data->State,
-                'ZIPCode' => $shipping_data->ZIPCode,
-                'ZIPCodeAddOn' => $shipping_data->ZIPCodeAddOn,
-                'DPB' => $shipping_data->DPB,
-                'CheckDigit' => $shipping_data->CheckDigit,
+                'City' => (isset($shipping_data->City) ? $shipping_data->City : ""),
+                'State' => (isset($shipping_data->State) ? $shipping_data->State : ""),
+                'ZIPCode' => (isset($shipping_data->ZIPCode) ? $shipping_data->ZIPCode : ""),
+                'ZIPCodeAddOn' => (isset($shipping_data->ZIPCodeAddOn) ? $shipping_data->ZIPCodeAddOn : ""),
+                'DPB' => (isset($shipping_data->DPB) ? $shipping_data->DPB : ""),
+                'CheckDigit' => (isset($shipping_data->CheckDigit) ? $shipping_data->CheckDigit : ""),
                 'Province' => '',
                 'PostalCode' => '',
                 'Country' => '',
                 'Urbanization' => '',
                 'PhoneNumber' => $shippingAddress->getPhone(),
                 'Extension' => '',
-                'CleanseHash' => $shipping_data->CleanseHash
+                'CleanseHash' => (isset($shipping_data->CleanseHash) ? $shipping_data->CleanseHash : "")
             ),
         );
-        // var_dump($callData);
-        $response = $this->soapClient->CreateIndicium($callData);
-        return $response;
+
+        try{
+            $response = $this->soapClient->CreateIndicium($callData);
+            return $response;
+        }catch (\Exception $e){
+            return "";
+        }
+    }
+
+    public function getShippingStatusByTrackingNumber( $stampTxId = null)
+    {
+        if(!is_null($stampTxId))
+        {
+            $callData = array(
+                "Credentials"       => array(
+                    "IntegrationID"     => $this->integrarionId,
+                    "Username"          => $this->userName,
+                    "Password"          => $this->password
+                ),
+                'StampsTxID' => $stampTxId
+            );
+            try{
+                $response = $this->soapClient->TrackShipment($callData);
+                $tracking_event = $response->TrackingEvents->TrackingEvent->Event;
+
+                return $tracking_event;
+
+            }catch (\Exception $e){
+                return "Pending";
+            }
+        }else{
+            return "pending";
+        }
     }
 
     public function getRates( $postData = array(), $weightInOz = 0)
