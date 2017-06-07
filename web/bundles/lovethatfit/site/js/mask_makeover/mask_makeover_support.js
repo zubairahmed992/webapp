@@ -20,10 +20,20 @@ $(document).ready(function() {
    lyr_area_hldr = new Layer();
    lyr_area_hldr.activate();
    
+
+   
    init();
    load_user_masks();
    full_mask.insertAbove(set_circle_in());
    full_mask.insertAbove(set_circle_out());   
+  
+   h_indi =  new Path({
+        segments:[[0, 0], [960, 0]],
+        strokeColor:'red',
+        strokeWidth:1,
+        opacity:0.6
+    });
+    h_indi.visible = false;
   
    lyr_misc = new Layer();
    lyr_misc.activate();
@@ -51,7 +61,6 @@ var maskConfig = {
             required_mask_ratio = 1;
             image_actions_count = JSON.parse($('#image_actions').attr('value'));
             
-            console.log(image_actions_count);   
             return $('#img_path_paper').attr('value');
         }else{
             image_actions_count = {
@@ -143,8 +152,10 @@ function overall_mask(){
         def_mask_height = full_scr_mask.bounds.height;
         adjusted_mask_height_px = (adjusted_mask_height_px * 100) / 450;
         full_scr_mask.scale(init_scale_ratio(),adjusted_mask_height_px/100);
+        
     function init_scale_ratio(){
             var def_scale = full_scr_mask.segments[17].point.x - full_scr_mask.segments[53].point.x;
+           
             var init_req_scale = parseFloat(liquid_mask.dm_body_parts_details_json.bust_px) * 0.5213;
 
             var set_init_scale_ratio = init_req_scale / def_scale;
@@ -255,11 +266,11 @@ function overall_mask(){
     }
 
     function set_camera_mask(){
-        camera_scr_mask = new Path(full_scr_mask.pathData);
-        camera_scr_mask.pivot = new Point(camera_scr_mask.bounds.bottomCenter);
+        //camera_scr_mask = new Path(full_scr_mask.pathData);
+        //camera_scr_mask.pivot = new Point(camera_scr_mask.bounds.bottomCenter);
         
         // Setting size
-        camera_scr_mask = camera_scr_mask.scale(1.919);
+        //camera_scr_mask = camera_scr_mask.scale(1.919);
         
         //camera_scr_mask.selected = true;
 
@@ -267,8 +278,8 @@ function overall_mask(){
 //        camera_scr_mask.position = new Point(187.5,500.25 - 25.125);
 //        camera_scr_mask.visible = false;
 
-        full_scr_mask.selected = false;
-        full_scr_mask.visible = false;
+            full_scr_mask.selected = false;
+            full_scr_mask.visible = false;
 
 //        $("#svg_path_data").attr("value", camera_scr_mask.pathData);
 //        $("#svg_path_data_full").attr("value", full_scr_mask.pathData);
@@ -281,6 +292,7 @@ function overall_mask(){
         view.update();
 
     }
+    camera_scr_mask = full_scr_mask.scale(1.919);
     return camera_scr_mask.pathData;
  
  }
@@ -301,6 +313,7 @@ function canvas_area_hldr(){
         fillColor: '#eeeeee',
         opacity: 0.1
     };
+    
     canvas_area_hldr.pivot = new Point(480,640);
     canvas_area_hldr.position = new Point(480,640);
 }
@@ -374,8 +387,10 @@ var active_items = {
     drag: false,
     cir_in: false,
     cir_out: false,
-    h_line_available: "no"
+    h_line_available: "no",
+    hideline:false
 }
+
 var recent_items = {
     mask: []
 }
@@ -436,10 +451,11 @@ function load_user_masks(){
        
     //Setting Position    
         //full_mask.scale(required_mask_ratio);
-
         full_mask.pivot = new Point(full_mask.bounds.bottomCenter.x,full_mask.bounds.bottomCenter.y);
         full_mask.position = new Point(maskConfig.dv_scr_w/2 + 4,maskConfig.dv_scr_h - maskConfig.globle_pivot);
-
+      
+        
+        
         $("#mask_x").attr("value", full_mask.pivot);
         $("#mask_y").attr("value", full_mask.position);
 
@@ -527,6 +543,8 @@ function set_out_update(){
     //alert($('#image_actions').attr('value'));
     view.update();
 }
+
+
 function move_left(){
     if(current_status.zoom){
         user_image.position.x -= 0.5;
@@ -592,9 +610,7 @@ function zoom_in(){
         current_status.zoom_level *= 2;
         lyr_area_hldr.scale(2);
         lyr_stage_coor.scale(2);
-        
         current_status.zoom = true;
-        
         view.update();
         
         console.log("lyr_area_hldr: "+lyr_area_hldr.position);
@@ -609,9 +625,9 @@ function zoom_out(){
         lyr_area_hldr.scale(0.5);
         lyr_stage_coor.scale(0.5);
         
+       
         lyr_x = 480 - parseFloat(lyr_area_hldr.position.x);
         lyr_y = 640 - parseFloat(lyr_area_hldr.position.y);
-        
         stage_x = 480 - parseFloat(lyr_stage_coor.position.x);
         stage_y = 640 - parseFloat(lyr_stage_coor.position.y);
         
@@ -696,15 +712,14 @@ function onMouseDown(event) {
     
     if(hitResult.type == "segment"){
         active_items.drag = true;
-      
-            //horlinepath(event);
-       
         if(hitResult.segment.point != active_items.segment.point){
             active_items.segment.selected = false;
         }
         for(i=0; i<full_mask.segments.length; i++){
             if(full_mask.segments[i].point == hitResult.segment.point){
                 active_items.segment = full_mask.segments[i];
+                h_indi.visible = true;
+                h_indi.position.y = full_mask.segments[i].point.y;
                 //active_items.segment.selected = true;
                 circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
                 circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
@@ -728,41 +743,16 @@ function onMouseDown(event) {
             }
         }
 }
- function horlinepath(evt){
-     if(Key.isDown('shift')){
-     if(active_items.h_line_available == "no"){
-    horline = new Path({
-        segments:[[0, 0], [960, 0]],
-        strokeColor:'red',
-        strokeWidth:1,
-        opacity:0.3,
-        });
-        horline.position.y = evt.point.y;
-        horline.visible=true;
-        active_items.h_line_available = "yes";
-       return horline;
-    }
-    else{
-        horline.position.y = evt.point.y;
-        horline.visible=true;
-       return horline;
-   }  
-     } 
- }     
-function onMouseDrag(event) {
-//    horline.position.y = event.point.y;
-//    horline.visible=true;
 
-    
- 
+   
+function onMouseDrag(event) {
     if(active_items.drag){
         active_items.segment.point = event.point;
+        h_indi.position.y = active_items.segment.point.y;
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
         circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
         
-            //horlinepath(event);
-        
-      
+               // horlinepath(event);
     }
     if(active_items.cir_in){
         active_items.cir_out = false;
@@ -776,17 +766,17 @@ function onMouseDrag(event) {
         active_items.segment.handleOut.x = circle_out.position.x - active_items.segment.point.x;
         active_items.segment.handleOut.y = circle_out.position.y - active_items.segment.point.y;
     }
-    
-    if(current_status.control_indi){
+      if(current_status.control_indi){  
         if(lyr_area_hldr.position.x + event.delta.x >= 0 && lyr_area_hldr.position.x + event.delta.x <= 960){
-            lyr_area_hldr.position.x += event.delta.x;
-            lyr_stage_coor.position.x += event.delta.x;
-            change_x_pos_diff += event.delta.x;
-        }
+                lyr_area_hldr.position.x += event.delta.x;
+                lyr_stage_coor.position.x += event.delta.x;
+                change_x_pos_diff += event.delta.x;
+            }   
         if(lyr_area_hldr.position.y + event.delta.y >= 0 && lyr_area_hldr.position.y + event.delta.y <= 1280){
-            lyr_area_hldr.position.y += event.delta.y;
-            lyr_stage_coor.position.y += event.delta.y;
-            change_y_pos_diff += event.delta.y;
+                lyr_area_hldr.position.y += event.delta.y;
+                lyr_stage_coor.position.y += event.delta.y;
+                change_y_pos_diff += event.delta.y;
+           
         }
         
         console.log("lyr_area_hldr: " + lyr_area_hldr.position);
@@ -798,14 +788,14 @@ function onMouseUp(event) {
     active_items.drag = false;
     active_items.cir_in = false;
     active_items.cir_out = false;
-    //horline.visible=false;
+    h_indi.visible = false;
+    
 }
 function upload(){
     $('#image_actions').attr('value',JSON.stringify(image_actions_count));    
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);    
     $('#img_path_paper').attr('value', full_mask.pathData);    
-    
     
     var sholder_left =  full_mask.segments[7].point.y;
     var sholder_right = full_mask.segments[63].point.y;
@@ -862,8 +852,8 @@ function upload(){
 
 //alert(JSON.stringify(value_ar));
 
-
 }
+
 ////////////////// Shift image
 function canv_settings_before_save(){
    // sub_can_area.visible=false;
@@ -883,7 +873,6 @@ function canv_settings_after_save(){
     $("#page_wrap").fadeOut(160);
 }
 function to_image(){
-   
     canvas_raster = new Raster();
     var canvas = document.getElementById("canv_mask_makeover");
     canvas_raster.setImage(canvas);
@@ -913,19 +902,17 @@ function to_image(){
         var obj_url = jQuery.parseJSON( can_img_data );
         // console.log("i am checked bhai");
         if(obj_url.status === "check"){ 
-            
              canv_settings_after_save();
-              endtimer();
-          
-            
-//            var curr_url = window.location + '';
-////            curr_url_array = curr_url.split('/');
-//            if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
-//                curr_url = curr_url.split('/refresh')[0];
-//                window.location.assign(curr_url)
-//            }else{
-//                window.location.reload();
-//            }
+            //alert("All Done! - Not Reloading...");
+			endtimer();
+            var curr_url = window.location + '';
+           curr_url_array = curr_url.split('/');
+            if(curr_url_array[curr_url_array.length - 1] === 'refresh'){
+                curr_url = curr_url.split('/refresh')[0];
+                window.location.assign(curr_url);
+            }else{
+                window.location.reload();
+            }
         }
     });
   
