@@ -1,0 +1,140 @@
+<div>
+    <b>Users:</b> {{users_count}}&nbsp;|&nbsp;<b>Men:</b> {{male_count}}&nbsp;|&nbsp; <b>Women:</b>{{female_count}}
+</div>
+<br>
+<table  class="table table-bordered table-hover">
+       <tr>
+           <th>id</th>   
+           <th>Gender</th>
+           <th>email</th>           
+           <th>zip</th>
+           <th>Date of birth</th>
+           <th>weight</th>
+           <th>height</th>
+           <th>waist</th>
+           <th>belt</th>
+           <th>hip</th>
+           <th>bust</th>
+           <th>chest</th>
+           <th>arm</th>
+           <th>inseam</th>
+           <th>shoulder Height</th>
+           <th>outseam</th>
+           <th>sleeve</th>
+           <th>neck</th>
+           <th>thigh</th>
+           <th>CF-Waist</th>
+           <th>shoulder Front</th>
+           <th>shoulder Back</th>
+           <th>bicep</th>
+           <th>tricep</th>
+           <th>wrist</th>
+           <th>back Waist</th>
+           <th>waist Hip</th>
+           <th>knee</th>
+           <th>calf</th>
+           <th>ankle</th>
+           <th>bust-px</th>
+           <th>bust-inches</th>
+           <th>chest-px</th>
+           <th>chest-inches</th>
+           <th>shoulder_across_front-px</th>
+           <th>shoulder_across_front-inches</th>
+           <th>waist-px</th>
+           <th>waist-inches</th>
+           <th>hip-px</th>
+           <th>hip-inches</th>
+           <th>inseam-px</th>
+           <th>inseam-inches</th>
+           <th>thigh-px</th>
+           <th>thigh-inches</th>
+           <th>shoulder_height-px</th>
+           <th>shoulder_height-inches</th>
+           <th>bicep-px</th>
+           <th>bicep-inches</th>
+           <th>wrist-px</th>
+           <th>wrist-inches</th>
+           <th>knee-px	</th>
+           <th>knee-inches</th>
+           <th>calf-px	</th>
+           <th>calf-inches</th>
+           <th>ankle-px</th>
+           <th>ankle-inches</th>
+           <th>elbow-px</th>
+           <th>elbow-inches</th>
+           <th>torso-px</th>
+           <th>torso-inches</th>
+           <th>neck-px	</th>
+           <th>neck-inches</th>
+           
+
+       </tr>
+       {% for user in users %} 
+       <tr>
+             <td>{{user.id}}</td>
+           <td>{{user.gender}}</td>
+           <td>{{user.email}}</td>
+           <td>{{user.zipcode}}</td>
+           <td>{{user.birth_date|date("m/d/Y", false)}}</td>           
+
+<td>{{user.weight}}</td>
+<td>{{user.height}}</td>
+<td>{{user.waist}}</td>
+<td>{{user.belt}}</td>
+<td>{{user.hip}}</td>
+<td>{{user.bust}}</td>
+<td>{{user.chest}}</td>
+<td>{{user.arm}}</td>
+<td>{{user.inseam}}</td>
+<td>{{user.shoulder_height|number_format(2, '.', '')}}</td>
+<td>{{user.outseam}}</td>
+<td>{{user.sleeve}}</td>
+<td>{{user.neck}}</td>
+<td>{{user.thigh}}</td>
+<td>{{user.center_front_waist}}</td>
+<td>{{user.shoulder_across_front}}</td>
+<td>{{user.shoulder_across_back}}</td>
+<td>{{user.bicep}}</td>
+<td>{{user.tricep}}</td>
+<td>{{user.wrist}}</td>
+<td>{{user.back_waist}}</td>
+<td>{{user.waist_hip}}</td>
+<td>{{user.knee}}</td>
+<td>{{user.calf}}</td>
+<td>{{user.ankle}}</td>
+<td>{{user.bust_px}}</td>
+<td>{{user.bust_inch}}</td>
+<td>{{user.chest_px}}</td>
+<td>{{user.chest_inch}}</td>
+<td>{{user.shoulder_across_front_px}}</td>
+<td>{{user.shoulder_across_front_inch}}</td>	
+<td>{{user.waist_px}}</td>	
+<td>{{user.waist_inch}}</td>	
+<td>{{user.hip_px}}</td>	
+<td>{{user.hip_inch}}</td>	
+<td>{{user.inseam_px}}</td>	
+<td>{{user.inseam_inch}}</td>	
+<td>{{user.thigh_px}}</td>	
+<td>{{user.thigh_inch}}</td>	
+<td>{{user.shoulder_height_px}}</td>	
+<td>{{user.shoulder_height_inch}}</td>	
+<td>{{user.bicep_px}}</td>	
+<td>{{user.bicep_inch}}</td>	
+<td>{{user.wrist_px}}</td>	
+<td>{{user.wrist_inch}}</td>	
+<td>{{user.knee_px}}</td>	
+<td>{{user.knee_inch}}</td>	
+<td>{{user.calf_px}}</td>	
+<td>{{user.calf_inch}}</td>	
+<td>{{user.ankle_px}}</td>	
+<td>{{user.ankle_inch}}</td>	
+<td>{{user.elbow_px}}</td>	
+<td>{{user.elbow_inch}}</td>	
+<td>{{user.torso_px}}</td>	
+<td>{{user.torso_inch}}</td>	
+<td>{{user.neck_px}}</td>	
+<td>{{user.neck_inch}}</td>	
+
+       </tr>
+       {% endfor %}
+   </table>

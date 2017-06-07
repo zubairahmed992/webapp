@@ -215,6 +215,9 @@ services:
 
      admin.helper.device:
         class: LoveThatFit\AdminBundle\DependencyInjection\DeviceHelper
+
+     admin.helper.device_support:
+        class: LoveThatFit\AdminBundle\DependencyInjection\DeviceSupportHelper
             
      admin.helper.productimagegenrate:
          class: LoveThatFit\AdminBundle\Entity\ProductImageGenrateHelper
