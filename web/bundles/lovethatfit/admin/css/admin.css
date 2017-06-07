@@ -339,3 +339,13 @@ select#FNFUser_users.custom_select{height: 100px;}
 .modal {
     position: relative;
 }
+i.icon-trans {
+    background-position: -164px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-shpping {
+    background-position: -119px -167px;
+    width: 19px;
+    height: 16px;
+}
