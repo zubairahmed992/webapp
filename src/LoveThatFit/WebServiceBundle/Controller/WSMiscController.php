@@ -206,6 +206,9 @@ class WSMiscController extends Controller {
 
                 if(isset($product_information[$product_key]['product_id'])){
                     $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+
+                    $product = $this->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
+                    $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
                     $product_images = $this->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
                     if (!empty($product_images)) {
                         $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
