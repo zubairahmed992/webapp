@@ -600,8 +600,15 @@ class WSCartController extends Controller
             $a = 0;
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $order['tracking_number']   = '';
+
+                $shipping_information = ($order['shipment_json'] != null ? json_decode($order['shipment_json']) : "");
+                if($order['shipment_json'] != null)
+                {
+                    $order['tracking_number'] = $shipping_information->TrackingNumber;
+                }
+
                 $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
-                $order['tracking_number'] = '';
 
                 if(is_object($order['user_order_date']))
                     $order['order_user_date'] = $order['user_order_date']->format('Y-m-d H:i:s');
@@ -620,6 +627,7 @@ class WSCartController extends Controller
                     $order_items[$index] = $item;
                 }
 
+                $order['shipment_json']     = '';
                 $orders[$a] = $order;
                 $orders[$a]['orderItem'] = $order_items;
                 $a++;
