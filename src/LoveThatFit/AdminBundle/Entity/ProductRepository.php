@@ -1512,8 +1512,8 @@ class ProductRepository extends EntityRepository
                  p.disabled as status,
                  p.gender,
                  b.name as brand_name,
-                 ct.name AS cloth_type,
-                 pc.title as style,
+                 ct.name AS clothing_type,
+                 pc.title as color,
                  pretail.title as retailer,
                  s.title size,
                  pit.id as item_id,
@@ -1528,7 +1528,8 @@ class ProductRepository extends EntityRepository
                  p.fit_type,
                  p.control_number,
                  p.horizontal_stretch,
-                 p.vertical_stretch 
+                 p.vertical_stretch, 
+				 p.styling_type 
                 FROM `product` p
                 join `product_item` pit on pit.product_id=p.id
                 join `brand` b on b.id=p.brand_id
