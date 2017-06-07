@@ -11,13 +11,13 @@ class DeviceSupportHelper {
     
     public function __construct() {
         $conf_yml = new Parser();
-        $conf = $conf_yml->parse(file_get_contents('../app/config/config_device.yml'));
+        $conf = $conf_yml->parse(file_get_contents('../app/config/config_device_support.yml'));
         $this->conf = $conf["device_config"];
     }
 
 //--------------------------------------------------------------------------------
     public function getDeviceConfig($node=null) {
-        $this->get_additional_configuration();
+        $this->get_additional_configuration_support();
         if($node){
             if(array_key_exists($node, $this->conf)){
                 return $this->conf[$node];
