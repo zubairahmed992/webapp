@@ -269,6 +269,13 @@ class UserOrder
 
     private $user_order_date;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipment_json", type="text" , nullable=true)
+     */
+    private $shipment_json;
+
 
     /**
      * Get id
@@ -1143,5 +1150,41 @@ class UserOrder
     public function getPodioOrders()
     {
         return $this->podio_orders;
+    }
+
+    /**
+     * Set shipment_json
+     *
+     * @param string $shipmentJson
+     * @return UserOrder
+     */
+    public function setShipmentJson($shipmentJson)
+    {
+        $this->shipment_json = $shipmentJson;
+    
+        return $this;
+    }
+
+    /**
+     * Get shipment_json
+     *
+     * @return string 
+     */
+    public function getShipmentJson()
+    {
+        return $this->shipment_json;
+    }
+
+    /**
+     * Set podio_orders
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podioOrders
+     * @return UserOrder
+     */
+    public function setPodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podioOrders = null)
+    {
+        $this->podio_orders = $podioOrders;
+    
+        return $this;
     }
 }
