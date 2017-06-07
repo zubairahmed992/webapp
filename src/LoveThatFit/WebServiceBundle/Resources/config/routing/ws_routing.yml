@@ -309,3 +309,6 @@ ws_shop_the_look:
     pattern:  /ws/shop_the_look
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLook }
 
+ws_brand_retailer_big:
+    pattern:  /ws/brand_retailer_big
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailerBig }
