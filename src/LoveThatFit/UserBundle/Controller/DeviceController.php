@@ -255,7 +255,7 @@ class DeviceController extends Controller {
 	 echo "record updated";
 	 die;
    }
-  #### Multiple mask marker for StandAlone App
+    #### Multiple mask marker for StandAlone App
     public function multipleSvgPathAction($auth_token=null, $edit_type=null, $device_type=null) {
         $user = $this->get('user.helper.user')->findByAuthToken($auth_token);
         $device_model = $device_type;
@@ -304,7 +304,7 @@ class DeviceController extends Controller {
             'bra_size_body_shape' => json_encode($bra_size_body_shape),
         ));
     }
-  #### End of Men Mask Marker
+    #### End of Men Mask Marker
 
     ##### new methods for big mask marker screen as per instruction
     public function svgPathSupportAction($auth_token=null, $edit_type=null, $device_type=null)

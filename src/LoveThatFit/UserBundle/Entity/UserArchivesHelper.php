@@ -555,5 +555,11 @@ class UserArchivesHelper {
         $archive->copyImagesToUser();
         return $archive;
   }
+
+
+  public function getVersion($user_id)
+  {
+    return $this->repo->getVersion($user_id);
+  }
     
 }
