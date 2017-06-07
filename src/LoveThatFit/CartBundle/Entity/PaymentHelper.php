@@ -269,12 +269,14 @@ class PaymentHelper
 
             $entity = $this->container->get('cart.helper.order')->saveBillingShipping($decoded, $user, $shipping_amount, $fnfGroup);
             $order_id = $entity->getId();
-            $this->container->get('cart.helper.userAddresses')->saveAddress($decoded, $user, 1, 1);
+
+            if(!isset($decoded['billing_id']) && !isset($decoded['shipping_id']))
+                $this->container->get('cart.helper.userAddresses')->saveAddress($decoded, $user, 1, 1);
 
             $order_number = $order_id . rand(100, 100000);
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $response = $this->container->get('cart.helper.orderDetail')->saveOrderDetail($user_cart, $entity);
-            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rates);
+            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, json_encode($rates));
 
             try {
                 //create podio orders entity
@@ -382,6 +384,32 @@ class PaymentHelper
             return array(
                 'success' => -1,
                 'response_code' => $exception->getMessage()
+            );
+        }
+    }
+
+    public function getTransactionStatus( $transactionId = null, $transactionStatus)
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse[$this->env]["environment"]);
+        Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
+        Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+
+        try{
+            $transaction = Braintree_Transaction::find($transactionId);
+            $status = $transaction->status;
+
+            return array(
+                'status' => 200,
+                'transaction_status' => $status
+            );
+
+        }catch (Braintree_Exception_NotFound $exception){
+            return array(
+                'status' => 300,
+                'transaction_status' => $transactionStatus
             );
         }
     }

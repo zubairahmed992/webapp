@@ -13,6 +13,7 @@ class MailHelper {
     protected $templating;
     var $conf;
     protected $admin_email;
+    protected $enviorement;
 
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating) {
         $this->mailer = $mailer;
@@ -20,7 +21,8 @@ class MailHelper {
         $this->conf = $yaml->parse(file_get_contents('../app/config/parameters.yml'));
         $this->templating = $templating;
         $this->server = isset($this->conf['parameters']['server'])?$this->conf['parameters']['server']:'';
-        $this->admin_email = isset($this->conf['parameters']['admin_email'])? $this->conf['parameters']['admin_email']: 'haris@selfiestyler.com';
+        $this->enviorement = isset($this->conf['parameters']['enviorment'])?$this->conf['parameters']['enviorment'] : 'prod';
+        $this->admin_email = ($this->enviorement != 'dev' && isset($this->conf['parameters']['admin_email'])) ? $this->conf['parameters']['admin_email']: 'haris@selfiestyler.com';
     }
 
     private function sendEmail($from, $to, $body, $user, $subject = '', $reset_link='') {
