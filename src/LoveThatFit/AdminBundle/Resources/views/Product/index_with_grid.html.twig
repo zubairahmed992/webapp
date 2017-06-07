@@ -549,70 +549,61 @@
                 var data = dataTable.fnGetData(iPos);
 
                 if (dataAction == 'EnableDisable') {
-
-                    if(data.pstatus == 'Complete') {
-                        change_product_disabled();
-                    } else {
-                        bootbox.confirm({
-                            title: "<h3>Enable/Disable Product</h3>",
-                            message: "Product status is "+data.pstatus+"! Are you sure you want to Enable/Disable this Product?",
-                            buttons: {
-                                confirm: {
-                                    label: 'Yes',
-                                    className: 'btn btn-primary'
-                                },
-                                cancel: {
-                                    label: 'No',
-                                    className: 'btn'
-                                }
+                    bootbox.confirm({
+                        title: "<h3>Enable/Disable Product</h3>",
+                        message: "Product status is "+data.pstatus+"! Are you sure you want to Enable/Disable this Product?",
+                        buttons: {
+                            confirm: {
+                                label: 'Yes',
+                                className: 'btn btn-primary'
                             },
-                            callback: function (result) {
-                                if(result) {
-                                    change_product_disabled();
-                                }
+                            cancel: {
+                                label: 'No',
+                                className: 'btn'
                             }
-                        }); 
-                    }   
-
-                    function change_product_disabled() {
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ path('admin_product_status_change') }}",
-                            data: {
-                                status: data.status.toLowerCase(),
-                                id: data.id,
-                            },
-                            success: function (response) {
-                                if(issearch == 0){
-                                    /*if(data.status == "Disable"){
-                                        var rowStatus = "Enable";
-                                        var html = '<i id="status-icon" class="icon-ban-circle">';
-                                    }else{
-                                        var rowStatus = "Disable";
-                                        var html = '<i id="status-icon" class="icon-play-circle">';
-                                    }
-
-
-                                    var newData = {
-                                        BName : data.BName,
-                                        ClothingType: data.ClothingType,
-                                        PName: data.PName,
-                                        control_number: data.control_number,
-                                        created_at: data.created_at,
-                                        gender: data.gender,
+                        },
+                        callback: function (result) {
+                            if(result) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{{ path('admin_product_status_change') }}",
+                                    data: {
+                                        status: data.status.toLowerCase(),
                                         id: data.id,
-                                        status: rowStatus,
-                                    };
+                                    },
+                                    success: function (response) {
+                                        if(issearch == 0){
+                                            /*if(data.status == "Disable"){
+                                                var rowStatus = "Enable";
+                                                var html = '<i id="status-icon" class="icon-ban-circle">';
+                                            }else{
+                                                var rowStatus = "Disable";
+                                                var html = '<i id="status-icon" class="icon-play-circle">';
+                                            }
 
-                                    dataTable.fnUpdate( newData, iPos);
-                                    clickedObject.html( html );*/
-                                    loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]});
-                                }else if(issearch == 1){
-                                    loadAgain(serachData, "{{ path('admin_search_product') }}");
-                                }
+
+                                            var newData = {
+                                                BName : data.BName,
+                                                ClothingType: data.ClothingType,
+                                                PName: data.PName,
+                                                control_number: data.control_number,
+                                                created_at: data.created_at,
+                                                gender: data.gender,
+                                                id: data.id,
+                                                status: rowStatus,
+                                            };
+
+                                            dataTable.fnUpdate( newData, iPos);
+                                            clickedObject.html( html );*/
+                                            loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]});
+                                        }else if(issearch == 1){
+                                            loadAgain(serachData, "{{ path('admin_search_product') }}");
+                                        }
+                                    }
+                                });
                             }
-                        });
-                    }                
+                        }
+                    });                    
                 }
 
                 if (dataAction == 'Edit') {
