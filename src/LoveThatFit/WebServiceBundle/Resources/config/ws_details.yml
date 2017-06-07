@@ -737,3 +737,7 @@ ws_shop_the_look:
   title: shop_the_look
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
+
+ws_brand_retailer_big:
+   pattern:  /ws/brand_retailer_big
+   title: brand_retailer_big
