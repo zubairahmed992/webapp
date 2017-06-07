@@ -340,7 +340,7 @@ class ProductHelper
                 'PName' => $fData['name'],
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
                 'status'    => ($fData['disabled'] == 1) ? "Enable" : "Disable",
-                'pstatus'   => $fData['status']
+                'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending" 
             ];
         }
 
@@ -385,7 +385,7 @@ class ProductHelper
                 'PName' => $fData['name'],
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
                 'status'    => ($fData['disabled'] == 1) ? "Enable" : "Disable",
-                'pstatus'   => $fData['status']
+                'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending"
             ];
         }
 
