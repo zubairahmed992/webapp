@@ -9,6 +9,16 @@ admin_order_paginate:
 admin_order_show:
     pattern:  /admin/order/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:Order:show }
+
+admin_update_transaction_status:
+    pattern: /admin/order/{id}/update_transaction_status
+    defaults: { _controller: LoveThatFitAdminBundle:Order:updateBraintreeTransactionUpdate}
+
+admin_update_shipping_status:
+    pattern: /admin/order/{id}/update_shipping_status
+    defaults: { _controller: LoveThatFitAdminBundle:Order:updateShippingStatus}
+
+
 admin_order_update:
     pattern:  /admin/order/{id}/update
     defaults: { _controller: LoveThatFitAdminBundle:Order:update }

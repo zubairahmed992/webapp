@@ -1,0 +1,67 @@
+{% extends 'LoveThatFitSupportBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active">Masked Marker Inspection</li>
+{% endblock %}
+
+{% block body %}
+<h3>Masked Marker Inspection</h3>
+<form action="{{ path('support_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }} class="form-inline">
+     <div class="form-group">
+        <label for="form_user">User</label>
+        {{ form_widget(form.User) }}{{ form_errors(form.User) }} OR
+         <input type="text"  placeholder="Search Users" id="keyword_mask_marker">
+         <input type="hidden" id="user_id">
+        <input type='button' class="btn btn-default" name='btn_hit' id='btn_hit' value="hit">          
+        &nbsp;&nbsp;    
+        <input type='checkbox' name='chk_json' id='chk_json' value="json"> JSON
+    &nbsp;&nbsp;    <input type='checkbox' name='chk_path_axis' id='chk_path_axis' value="chk_path_axis"> Axis
+    </div>
+</form> 
+{# <div><a href="{{ path('support_users_masks_all_data')}}">All Users</a></div> #}
+
+<div id ='summary_ajax'></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+       
+$(document).ready(function(){
+    
+$( "select[id='user_User']" ).change(function() {
+    $("#user_id").val(this.value);
+    $('#keyword_mask_marker').val($('option:selected', $(this)).text());
+    hit_service();
+    });
+
+$( "#btn_hit" ).click(function() {
+  hit_service();
+});
+
+});        
+//----------------------
+function hit_service() {
+    var chk_json = document.getElementById('chk_json');
+    var chk_path_axis = document.getElementById('chk_path_axis');
+    var mode = chk_json.checked?chk_json.value:null;
+    var user_id = $("#user_id").val();
+
+    var user_url = "../mask_marker_inspect/user/" + user_id+"/"+mode;
+
+    if(chk_json.checked){
+        window.open(user_url);
+    }else if(chk_path_axis.checked){
+        window.open("../mask_marker_inspect/path_axis/" + user_id);
+    }else{
+        $.ajax({
+             url: "{{ path('support_mask_marker_inspect_user') }}",
+             data: {id: user_id, mode: mode},
+             type: "POST",
+             success: function(response) {
+                $('#summary_ajax').html(response);
+             }
+          })
+    }
+      return false; 
+    }
+
+    </script>
+{% endblock %}
