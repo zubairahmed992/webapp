@@ -8,7 +8,8 @@
      
           }
         .fm_spn{
-
+            color:#0D47A1;
+            font: bold;
             }
             .fm_add{
                 
@@ -43,17 +44,13 @@
                       $.each(data,function(key, value){                   
                         keyExisit = key in fit_points;
                         if(keyExisit){
-                            if(value == fit_points[key])
-                            {
-                                //console.log(value)
+                            if(parseFloat(value) == parseFloat(fit_points[key])){  
+                                
                             } else if( fit_points[key] == ''){ 
                             } else {
-                               //console.log(value) 
-                               $("#"+key).text(value);
+                               $("#fm_spn_"+key).text(value);
                             }
                         }
-                       
-                       // $("#"+ket).val(value);
                     });
                     }
                 });
@@ -66,14 +63,16 @@
         
         $( ".fm_spn" ).click(function(event) {                            
             event.preventDefault();
-            var textboxname = this.id;
-            //alert(textboxname)
-            $('input[name="'+textboxname+'"]').val($(this).text());
-           // alert($(this).text());
+            var textboxname = this.id.replace("fm_spn_", "");            
+            old_val=$('input[name="'+textboxname+'"]').val();
+            $('input[name="'+textboxname+'"]').val($(this).text());           
+            $(this).text(old_val);
+            var rgb_color=$(this).css("color");
+            $(this).css("color", rgb_color == 'rgb(13, 71, 161)'?'rgb(223, 8, 8)':'rgb(13, 71, 161)')
+            //$(this).css("color",'#232323');             
         });
         $( ".fm_remove" ).click(function(event) {                            
-            event.preventDefault();        
-            
+            event.preventDefault();                    
             $('#fm_spn_bicep').hide();
         });
         
@@ -229,8 +228,9 @@
                         <label class="control-label col-sm-2" for=""> {{fit_point_k}} </label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }} >
-                            <span id="{{fit_point_k}}" class='fm_spn'></span>
-                        </div>
+                            
+                        </div>                        
+                        <span id="fm_spn_{{fit_point_k}}" class='fm_spn'></span>
                     </div>   
 
                 {% endif %}   
