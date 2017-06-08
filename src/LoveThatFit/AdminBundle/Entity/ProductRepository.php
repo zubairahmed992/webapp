@@ -98,7 +98,8 @@ class ProductRepository extends EntityRepository
                             p.control_number like :search or 
                             p.gender like :search or 
                             ct.name like :search or 
-                            b.name like :search')
+                            b.name like :search or 
+                            p.status like :search')
                 ->setParameter('search', "%".$search."%");
         }
 
@@ -118,6 +119,8 @@ class ProductRepository extends EntityRepository
             }elseif ($orderByColumn == 6) {
                 $orderByColumn = "p.created_at";
             }elseif ($orderByColumn == 7) {
+                $orderByColumn = "p.status";
+            }elseif ($orderByColumn == 8) {
                 $orderByColumn = "p.disabled";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
