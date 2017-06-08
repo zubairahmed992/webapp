@@ -158,7 +158,12 @@ class UserArchivesRepository extends EntityRepository
             ->setParameter('user_id', $user_id)
             ->OrderBy("ua.id", "desc")
             ->setMaxResults(1);
-        
-        return $query->getQuery()->getSingleResult();
+
+        try {
+          return $query->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
+        // return $query->getQuery()->getSingleResult();
     }
 }
