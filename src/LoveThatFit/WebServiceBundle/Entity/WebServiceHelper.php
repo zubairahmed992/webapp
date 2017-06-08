@@ -28,13 +28,7 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
-        if (isset($version['version']) && $version['version'] == 0) {
-
-            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
-            
-            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
-            
-        } else if (isset($version['version']) && $version['version'] == 1) {
+        if (isset($version['version']) && $version['version'] == 1) {
 
             $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($request_array['device_model']);
 
@@ -328,15 +322,7 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
-        if (isset($version['version']) && $version['version'] == 0) {
-
-            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user_device_model);
-            
-            $device_config['image_device_model'] = $user->extractImageDeviceModel();
-
-            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
-
-        } else if (isset($version['version']) && $version['version'] == 1) {
+        if (isset($version['version']) && $version['version'] == 1) {
 
             $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($user_device_model);
             
@@ -351,6 +337,7 @@ class WebServiceHelper
             $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
         }
         ##modify by umer for new app/config/config_device_support.yml file end code
+        
         if (is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)) {
             $measurement->calculatePlacementPositions($device_config['conversion_ratio']);
         }
