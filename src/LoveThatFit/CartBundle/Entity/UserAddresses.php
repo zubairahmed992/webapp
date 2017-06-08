@@ -129,6 +129,13 @@ class UserAddresses
     private $cleanseHash;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="address_data", type="text" , nullable=true)
+     */
+    private $address_data;
+
+    /**
      * Get id
      *
      * @return integer
@@ -498,5 +505,28 @@ class UserAddresses
     public function getCleanseHash()
     {
         return $this->cleanseHash;
+    }
+
+    /**
+     * Set address_data
+     *
+     * @param string $addressData
+     * @return UserAddresses
+     */
+    public function setAddressData($addressData)
+    {
+        $this->address_data = $addressData;
+    
+        return $this;
+    }
+
+    /**
+     * Get address_data
+     *
+     * @return string 
+     */
+    public function getAddressData()
+    {
+        return $this->address_data;
     }
 }

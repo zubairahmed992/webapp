@@ -16,3 +16,5 @@ AddImage     = '<button class="btn btn-cyan btn-xs delete" data-action="addImage
 CategoryAss     = '<button class="btn btn-cyan btn-xs delete" data-action="productCat" title="Category Assortment back zip pencil skirt"><i class="icon-th-list"></i></button>';
 PDetail ='<button class="btn btn-cyan btn-xs" data-action="PDetail" title="View"><i class="icon-eye-open"></i></button>';
 BigMask ='<button class="btn btn-cyan btn-xs" data-action="BigMask" title="Big Mask"><i class="icon-cog"></i></button>';
+trans_status     = '<button class="btn btn-cyan btn-xs delete" data-action="update_trans" title="Update transaction status"><i class="icon-trans"></i></button>';
+shipping_status     = '<button class="btn btn-cyan btn-xs delete" data-action="update_shipp" title="Update shipping status"><i class="icon-shpping"></i></button>';

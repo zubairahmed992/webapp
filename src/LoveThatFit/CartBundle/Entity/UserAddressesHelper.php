@@ -108,6 +108,8 @@ class UserAddressesHelper
                 $address_info->setBillingDefault('0');
                 $address_info->setAddressType('2');
 
+                if(isset($decoded['data']))
+                    $address_info->setAddressData(json_encode($decoded['data']));
                 $this->save($address_info);
             }
 
@@ -133,6 +135,9 @@ class UserAddressesHelper
             }
             $address_info->setShippingDefault('0');
             $address_info->setAddressType('1');
+
+            if(isset($decoded['data']))
+                $address_info->setAddressData(json_encode($decoded['data']));
             return $this->save($address_info);
         }
 
@@ -165,6 +170,10 @@ class UserAddressesHelper
             }
             $address_info->setBillingDefault('0');
             $address_info->setAddressType('2');
+
+            if(isset($decoded['data']))
+                $address_info->setAddressData(json_encode($decoded['data']));
+
             return $this->save($address_info);
         }
 
@@ -198,6 +207,9 @@ class UserAddressesHelper
             $address_info->setShippingDefault('0');
             $address_info->setAddressType('1');
 
+            if(isset($decoded['data']))
+                $address_info->setAddressData(json_encode($decoded['data']));
+
             return $this->save($address_info);
         }
         return false;
@@ -229,6 +241,10 @@ class UserAddressesHelper
                 $address_info->setShippingDefault('0');
             }
             $address_info->setBillingDefault('0');
+
+            if(isset($decoded['data']))
+                $address_info->setAddressData(json_encode($decoded['data']));
+
             return $this->save($address_info);
         }
         return false;
@@ -331,6 +347,11 @@ class UserAddressesHelper
     public function findAddressById($id)
     {
         return $this->repo->find($id);
+    }
+
+    public function findByCriteria( array $criteria)
+    {
+        return $this->repo->findOneBy( $criteria );
     }
 
 #------------------------------Find All address by user id --------------------------------#

@@ -366,6 +366,10 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $decoded = $this->addItemsToPostArray($user, $decoded);
+        if(isset($decoded['billing_id']))
+            $decoded['rates']['billing_id'] = $decoded['billing_id'];
+        if(isset($decoded['shipping_id']))
+            $decoded['rates']['shipping_id'] = $decoded['shipping_id'];
 
         // var_dump( $decoded ); die;
 
@@ -596,6 +600,14 @@ class WSCartController extends Controller
             $a = 0;
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $order['tracking_number']   = '';
+
+                $shipping_information = ($order['shipment_json'] != null ? json_decode($order['shipment_json']) : "");
+                if($order['shipment_json'] != null)
+                {
+                    $order['tracking_number'] = $shipping_information->TrackingNumber;
+                }
+
                 $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
 
                 if(is_object($order['user_order_date']))
@@ -615,6 +627,7 @@ class WSCartController extends Controller
                     $order_items[$index] = $item;
                 }
 
+                $order['shipment_json']     = '';
                 $orders[$a] = $order;
                 $orders[$a]['orderItem'] = $order_items;
                 $a++;

@@ -147,4 +147,17 @@ class UserArchivesRepository extends EntityRepository
         }
         return $getResult?$preparedQuery->getResult():$preparedQuery; 
     }
+
+    public function getVersion($user_id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT a.version FROM LoveThatFitUserBundle:UserArchives a 
+                WHERE a.user=:user_id")
+            ->setParameter('user_id',$user_id);
+        try {
+          return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        }   
+    }
 }

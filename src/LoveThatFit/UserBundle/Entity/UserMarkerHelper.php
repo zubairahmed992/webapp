@@ -329,11 +329,11 @@ class UserMarkerHelper
             $m1                        = $this->calculate_distance($mms_v, $mm_array);
             $device_adjusted_px        = $this->device_screen_adjustment($m1['avg'], $user->getImageDeviceType());
             $comp[$mms_k]              = array('axis' => $mms_v['axis'],
-                'type'                                    => $mms_v['type'],
-                'segments'                                => $mms_v['segments'],
-                'body'                                    => $user_fitpoint_measurement,
-                'pixels'                                  => $m1,
-                'predicted'                               => $this->getPixelToInch($mm_specs, $mms_k, $device_adjusted_px),
+            'type'                     => $mms_v['type'],
+            'segments'                 => $mms_v['segments'],
+            'body'                     => $user_fitpoint_measurement,
+            'pixels'                   => $m1,
+            'predicted'                => $this->getPixelToInch($mm_specs, $mms_k, $device_adjusted_px),
             );
         }
         return $comp;
@@ -545,5 +545,30 @@ class UserMarkerHelper
             }
         }
         return $pred_measurements;
+    }
+
+    public function getComparisionArraySupport($user)
+    {
+        $mm_specs = $this->getMaskedMarkerSpecsSupport();
+        $mm       = $this->getByUser($user);
+        $mm_array = json_decode($mm->getMarkerJson());
+
+        $ubm  = $user->getMeasurement()->getArray();
+        $comp = array();
+        #$m1=0;
+        foreach ($mm_specs['masked_marker'] as $mms_k => $mms_v) {
+            $user_fitpoint_measurement = array_key_exists($mms_k, $ubm) ? $ubm[$mms_k] : '';
+            $m1                        = $this->calculate_distance($mms_v, $mm_array);
+            $device_adjusted_px        = $this->device_screen_adjustment($m1['avg'], $user->getImageDeviceType());
+            $comp[$mms_k]              = array('axis' => $mms_v['axis'],
+            'type'                     => $mms_v['type'],
+            'segments'                 => $mms_v['segments'],
+            'body'                     => $user_fitpoint_measurement,
+            'pixels'                   => $m1,
+            'predicted'                => $this->getPixelToInch($mm_specs, $mms_k, $device_adjusted_px),
+            );
+        }
+        return $comp;
+
     }
 }

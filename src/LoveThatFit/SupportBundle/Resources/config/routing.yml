@@ -125,3 +125,8 @@ evaluation_popup_products:
     resource: "@LoveThatFitSupportBundle/Resources/config/routing/evaluation_popup_products.yml"
     prefix:   /
 ## caliboration process routes end ##
+
+#-------------- Masked Marker ------------------------
+support_mask_marker_inspect_routes:
+    resource: "@LoveThatFitSupportBundle/Resources/config/routing/mask_marker_inspect.yml"
+    prefix:   /
