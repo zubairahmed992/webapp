@@ -77,6 +77,13 @@ class FNFGroup
 
     private $endAt;
 
+    /**
+     * @var smallint
+     *
+     * @ORM\Column( name="group_type", type="smallint")
+     */
+
+    private $group_type = 1;
 
     /**
      * Get id
@@ -297,5 +304,28 @@ class FNFGroup
     public function getUserOrder()
     {
         return $this->user_order;
+    }
+
+    /**
+     * Set group_type
+     *
+     * @param integer $groupType
+     * @return FNFGroup
+     */
+    public function setGroupType($groupType)
+    {
+        $this->group_type = $groupType;
+    
+        return $this;
+    }
+
+    /**
+     * Get group_type
+     *
+     * @return integer 
+     */
+    public function getGroupType()
+    {
+        return $this->group_type;
     }
 }
