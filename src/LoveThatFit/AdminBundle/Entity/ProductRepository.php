@@ -1617,7 +1617,7 @@ class ProductRepository extends EntityRepository
     public function updateProductIntakeStatus($status, $id)
     {
         try {
-            $sql = "UPDATE product SET status = '" . $status . "' WHERE id = " . $id;
+            $sql = "UPDATE product SET status = '" . $status . "', updated_at = '" . date('Y-m-d h:i:s') . "' WHERE id = " . $id;
             $conn = $this->getEntityManager()->getConnection();
             $rowsAffected = $conn->executeUpdate($sql);
             return true;

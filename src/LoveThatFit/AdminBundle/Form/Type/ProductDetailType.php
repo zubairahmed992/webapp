@@ -89,7 +89,7 @@ class ProductDetailType extends AbstractType
             $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,'value' =>$this->disabled));
         }*/
         $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false));
-        $builder->add('status', 'choice', array('choices'=> array('pending'=>'Pending','review'=>'Needs Review','completed'=>'Complete'),'data'=>$this->product_status));
+        $builder->add('status', 'choice', array('choices'=> array('pending'=>'Pending','review'=>'Needs Review','Complete'=>'Complete'),'data'=>$this->product_status));
 
 //$builder->add('Brand', 'choice',array('choices'=>$brand_list) );
         //$builder->add('ClothingType', 'choice', array('choices'=> array()), array('mapped' => false));
