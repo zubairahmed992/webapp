@@ -12,10 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class FNFGroupRepository extends EntityRepository
 {
-    public function countAllFNFGroupRecord()
+    public function countAllFNFGroupRecord($group_type = 1)
     {
         $total_record = $this->getEntityManager()
-            ->createQuery('SELECT fnfg FROM LoveThatFitAdminBundle:FNFGroup fnfg where fnfg.isArchive = 0');
+            ->createQuery('SELECT fnfg FROM LoveThatFitAdminBundle:FNFGroup fnfg where fnfg.isArchive = 0 and fnfg.group_type = :grp_typ')
+            ->setParameter("grp_typ", $group_type);
         try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -37,6 +38,7 @@ class FNFGroupRepository extends EntityRepository
                 fnfg.endAt,
                 u.id,
                 u.email,
+                fnfg.group_type,
                 IDENTITY(u.original_user) as original_user_id'
             )
             ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')

@@ -1128,7 +1128,12 @@ class WebServiceHelper
         }
 
         $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
-        $p['description'] = $product->getDescription();
+        $p['description_html'] = $product->getDescription();
+        $product_description = $product->getDescription();
+        $product_description_without_html = preg_replace('#<[^>]+>#', ' ', $product_description);
+        $p['description'] = rtrim(ltrim($product_description_without_html));
+        $p['item_details'] = $product->getItemDetails();
+        $p['care_label'] = $product->getCareLabel();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
 

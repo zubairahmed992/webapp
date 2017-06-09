@@ -62,12 +62,20 @@ class FNFGroupHelper
     {
         if(!empty( $groupData )){
             $groupEntity = $this->createNew();
-            $groupEntity->setDiscount($groupData['discount']);
-            $groupEntity->setGroupTitle($groupData['groupTitle']);
-            $groupEntity->setMinAmount($groupData['min_amount']);
-            $groupEntity->setStartAt( new \DateTime($groupData['start_at']));
-            $groupEntity->setEndAt( new \DateTime($groupData['end_at']));
+            if($groupData['group_type'] == 2){
+                $groupEntity->setDiscount($groupData['discount']);
+                $groupEntity->setGroupTitle($groupData['groupTitle']);
+                $groupEntity->setMinAmount($groupData['min_amount']);
+                $groupEntity->setGroupType($groupData['group_type']);
+            }else{
 
+                $groupEntity->setDiscount($groupData['discount']);
+                $groupEntity->setGroupTitle($groupData['groupTitle']);
+                $groupEntity->setMinAmount($groupData['min_amount']);
+                $groupEntity->setGroupType($groupData['group_type']);
+                $groupEntity->setStartAt( new \DateTime($groupData['start_at']));
+                $groupEntity->setEndAt( new \DateTime($groupData['end_at']));
+            }
             $this->save( $groupEntity );
             return $groupEntity;
         }
@@ -78,9 +86,9 @@ class FNFGroupHelper
         return $this->repo->findOneBy( array( 'id' => $id ));
     }
 
-    public function countAllFNFGroupRecord()
+    public function countAllFNFGroupRecord( $group_type = 1)
     {
-        return $this->repo->countAllFNFGroupRecord();
+        return $this->repo->countAllFNFGroupRecord( $group_type );
     }
 
     public function searchFNFGroup( $data )
@@ -134,6 +142,7 @@ class FNFGroupHelper
             $returnArray['end_at']              = $row['endAt'];
             $temp['id']                         = $row['id'];
             $temp['email']                      = $row['email'];
+            $returnArray['group_type']          = $row['group_type'];
             $returnArray['users'][]             = $temp;
         }
 
