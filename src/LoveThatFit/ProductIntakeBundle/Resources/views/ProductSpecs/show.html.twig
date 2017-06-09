@@ -101,7 +101,7 @@
                                     </tr>
                                 {%endif %}
                                 {% for measurement_k, measurement_v in fit_point %}
-                                    {% if (measurement_v.garment_dimension>0) %}
+{#                                    {% if (measurement_v.garment_dimension>0) %}#}
                                          {% if (size == fit_model_selected_size) %}
                                              M
                                              <tr class='fit_modle'>
@@ -139,7 +139,7 @@
                                             </tr>
                                 
                                     {% endif %}
-                                    {% endif %}
+{#                                    {% endif %}#}
                                 {% endfor %}
                             {% endfor %}
                                 </table>
