@@ -249,7 +249,7 @@ class Product {
     protected $retailer_reference_id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, options={"default":"Pending"})
      */
     protected $status;
 
