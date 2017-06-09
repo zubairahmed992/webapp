@@ -150,14 +150,20 @@ class UserArchivesRepository extends EntityRepository
 
     public function getVersion($user_id)
     {
-        $query = $this->getEntityManager()
-            ->createQuery("SELECT a.version FROM LoveThatFitUserBundle:UserArchives a 
-                WHERE a.user=:user_id")
-            ->setParameter('user_id',$user_id);
+
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('ua.version')
+            ->from('LoveThatFitUserBundle:UserArchives', 'ua')
+            ->Where('ua.user =:user_id')
+            ->setParameter('user_id', $user_id)
+            ->OrderBy("ua.id", "desc")
+            ->setMaxResults(1);
+
         try {
-          return $query->getSingleResult();
+          return $query->getQuery()->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
           return "null";
-        }   
+        } 
+        // return $query->getQuery()->getSingleResult();
     }
 }

@@ -1452,7 +1452,7 @@ class ProductController extends Controller {
                 $count++;
             }
         } else {
-            $products_and_items = array('product_id' => '', 'product_name' => '', 'gender' => '', 'brand_name' => '', 'cloth_type' => '', 'style' => '', 'retailer' => '', 'size' => '', 'item_id' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '');
+            $products_and_items = array('product_id' => '', 'product_name' => '', 'gender' => '', 'brand_name' => '', 'clothing_type' => '', 'color' => '', 'retailer' => '', 'size' => '', 'item_id' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '', 'styling_type' => '');
             /*$this->get('session')->setFlash('warning', 'No Record Found!');
             $totalRecords = $this->get('admin.helper.product')->countAllRecord();
             $femaleProducts  = $this->get('admin.helper.product')->countProductsByGender('f');

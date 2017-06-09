@@ -28,19 +28,16 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
-        if (!empty($version) && $version['version'] == 0) {
-
-            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
-            
-            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
-            
-
-        } else if (!empty($version) && $version['version'] == 1) {
+        if (isset($version['version']) && $version['version'] == 1) {
 
             $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($request_array['device_model']);
 
             $device_config['conversion_ratio'] = $this->container->get('admin.helper.device_support')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
             
+        } else {
+            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
+            
+            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
         }
         ##modify by umer for new app/config/config_device_support.yml file end code
 
@@ -325,23 +322,22 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
-        if (!empty($version) && $version['version'] == 0) {
-
-            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user_device_model);
-            
-            $device_config['image_device_model'] = $user->extractImageDeviceModel();
-
-            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
-
-        } else if (!empty($version) && $version['version'] == 1) {
+        if (isset($version['version']) && $version['version'] == 1) {
 
             $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($user_device_model);
             
             $device_config['image_device_model'] = $user->extractImageDeviceModel();
 
             $device_config['conversion_ratio'] = $this->container->get('admin.helper.device_support')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
+        } else {
+            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user_device_model);
+            
+            $device_config['image_device_model'] = $user->extractImageDeviceModel();
+
+            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
         }
         ##modify by umer for new app/config/config_device_support.yml file end code
+        
         if (is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)) {
             $measurement->calculatePlacementPositions($device_config['conversion_ratio']);
         }
@@ -1132,7 +1128,12 @@ class WebServiceHelper
         }
 
         $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
-        $p['description'] = $product->getDescription();
+        $p['description_html'] = $product->getDescription();
+        $product_description = $product->getDescription();
+        $product_description_without_html = preg_replace('#<[^>]+>#', ' ', $product_description);
+        $p['description'] = rtrim(ltrim($product_description_without_html));
+        $p['item_details'] = $product->getItemDetails();
+        $p['care_label'] = $product->getCareLabel();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
 

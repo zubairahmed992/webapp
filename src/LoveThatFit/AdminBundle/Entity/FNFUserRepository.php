@@ -13,43 +13,53 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class FNFUserRepository extends EntityRepository
 {
-    public function getApplicableUserForDiscount( $user_id )
+    public function getApplicableUserForDiscount($user_id)
     {
-        $query = $this->getEntityManager()
-            ->createQuery("select fnf from LoveThatFitAdminBundle:FNFUser fnf
-                            join fnf.groups fg
-                            JOIN fnf.users u
-                            LEFT JOIN u.user_orders o
-                            WHERE
-                            u.id = :id AND 
-                            fnf.is_available = 1
-                            and o.discount_amount = 0 AND 
-                            :current_date BETWEEN fg.startAt and fg.endAt
-                            and fg.isArchive = 0
-                            ")
-            ->setParameters(array('id' => $user_id, 'current_date' => new \DateTime("now")));
 
+        $sql = "SELECT f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token, f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
+                    FROM fnf_user f0_ INNER JOIN fnfusers_groups f2_ ON f0_.id = f2_.fnfuser_id 
+                    INNER JOIN fnf_group f1_ ON f1_.id = f2_.fnfgroup_id 
+                    INNER JOIN ltf_users l3_ ON f0_.user_id = l3_.id 
+                    LEFT JOIN user_orders u4_ ON l3_.id = u4_.user_id
+                    WHERE l3_.id = :id and f1_.is_archive = 0 and (
+                    case when f1_.group_type = 1
+                    then ( f0_.is_available = 1 AND (u4_.discount_amount = 0 or u4_.discount_amount IS NULL) AND :current_date BETWEEN f1_.start_at AND f1_.end_at)
+                    else 1
+                    end
+                    ) order by f1_.group_type desc limit 0,1";
         try {
-            /*echo $query->getSQL(); die;
-            return $query->getResult();*/
-            return $query->getSingleResult();
+            $date = new \DateTime("now");
+            $conn = $this->getEntityManager()->getConnection();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue('id', $user_id);
+            $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
+
+            $stmt->execute();
+            return $stmt->fetchAll()[0];
+
         } catch (\Doctrine\ORM\NoResultException $e) {
 
-            $query = $this->getEntityManager()
-                ->createQuery("select fnf from LoveThatFitAdminBundle:FNFUser fnf
-                            join fnf.groups fg
-                            JOIN fnf.users u
-                            LEFT JOIN u.user_orders o
-                            WHERE
-                            u.id = :id AND 
-                            fnf.is_available = 1 AND 
-                            :current_date BETWEEN fg.startAt and fg.endAt
-                            and fg.isArchive = 0
-                            ")
-                ->setParameters(array('id' => $user_id, 'current_date' => new \DateTime("now")));
-            try{
-                return $query->getSingleResult();
-            }catch (\Doctrine\ORM\NoResultException $e){
+            $sql = "SELECT f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token , f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
+                    FROM fnf_user f0_ INNER JOIN fnfusers_groups f2_ ON f0_.id = f2_.fnfuser_id 
+                    INNER JOIN fnf_group f1_ ON f1_.id = f2_.fnfgroup_id 
+                    INNER JOIN ltf_users l3_ ON f0_.user_id = l3_.id 
+                    LEFT JOIN user_orders u4_ ON l3_.id = u4_.user_id
+                    WHERE l3_.id = :id and f1_.is_archive = 0 and (
+                    case when f1_.group_type = 1
+                    then ( f0_.is_available = 1 AND :current_date BETWEEN f1_.start_at AND f1_.end_at)
+                    else 1
+                    end
+                    ) order by f1_.group_type desc limit 0,1";
+            try {
+                $date = new \DateTime("now");
+                $conn = $this->getEntityManager()->getConnection();
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue('id', $user_id);
+                $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
+
+                $stmt->execute();
+                return $stmt->fetchAll()[0];
+            } catch (\Doctrine\ORM\NoResultException $e) {
                 return null;
             }
 
@@ -57,7 +67,8 @@ class FNFUserRepository extends EntityRepository
 
     }
 
-    public function countAllFNFUserRecord() {
+    public function countAllFNFUserRecord()
+    {
         $total_record = $this->getEntityManager()
             ->createQuery('SELECT fnf, u FROM LoveThatFitAdminBundle:FNFUser fnf
                             JOIN fnf.users u 
@@ -70,9 +81,9 @@ class FNFUserRepository extends EntityRepository
         }
     }
 
-    public function checkUserInGroup( $groupId, $user_id)
+    public function checkUserInGroup($groupId, $user_id)
     {
-        $query     = $this->getEntityManager()->createQueryBuilder();
+        $query = $this->getEntityManager()->createQueryBuilder();
         $query
             ->select('
                 fnf.id as fnfid,
@@ -101,8 +112,8 @@ class FNFUserRepository extends EntityRepository
 
     public function searchFNFUser($data, $page = 0, $max = NULL, $order, $getResult = true)
     {
-        $query     = $this->getEntityManager()->createQueryBuilder();
-        $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query'] ? $data['query'] : null;
 
         $query
             ->select('
@@ -117,6 +128,7 @@ class FNFUserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
+                fnfg.group_type,
                 IDENTITY(u.original_user) as original_user_id'
             )
             ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
@@ -130,12 +142,12 @@ class FNFUserRepository extends EntityRepository
                 ->orWhere('u.email like :search')
                 ->orWhere('fnfg.discount like :search')
                 ->orWhere('fnf.is_available like :search')*/
-                ->setParameter('search', "%".$search."%");
+                ->setParameter('search', "%" . $search . "%");
         }
 
 
         if (is_array($order)) {
-            $orderByColumn    = $order[0]['column'];
+            $orderByColumn = $order[0]['column'];
             $orderByDirection = $order[0]['dir'];
             if ($orderByColumn == 0) {
                 $orderByColumn = "u.id";
@@ -161,6 +173,6 @@ class FNFUserRepository extends EntityRepository
         }
 
         // echo $preparedQuery->getSQL(); die;
-        return $getResult?$preparedQuery->getResult():$preparedQuery;
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
 }
