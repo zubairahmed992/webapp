@@ -38,7 +38,7 @@ class FNFGroup
     /**
      * @var float
      *
-     * @ORM\Column(name="min_amount", type="float")
+     * @ORM\Column(name="min_amount", type="float" ,nullable=true)
      */
     private $min_amount;
 
@@ -64,7 +64,7 @@ class FNFGroup
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="start_at", type="datetimetz")
+     * @ORM\Column(name="start_at", type="datetimetz" , nullable=true)
      */
 
     private $startAt;
@@ -72,7 +72,7 @@ class FNFGroup
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="end_at", type="datetimetz")
+     * @ORM\Column(name="end_at", type="datetimetz", nullable=true)
      */
 
     private $endAt;
