@@ -9,6 +9,7 @@ use LoveThatFit\AdminBundle\Form\Type\AlgoritumTestlType;
 use LoveThatFit\AdminBundle\Form\Type\AlgoritumProductTestlType;
 use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm3;
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 
 class AlgorithmController extends Controller {
     
