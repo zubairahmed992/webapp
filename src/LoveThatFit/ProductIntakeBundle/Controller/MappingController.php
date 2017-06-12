@@ -113,15 +113,16 @@ class MappingController extends Controller
         //----- Get File data 
         $str=array();
         $i=0;
-        if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
-            while(($row = fgetcsv($handle)) !== FALSE) {
-            for ($j=0;$j<count($row);$j++){
-                $str[$i][$j] = $row[$j];                
+        if( file_exists($pm->getAbsolutePath()) ){   
+            if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
+                while(($row = fgetcsv($handle)) !== FALSE) {
+                for ($j=0;$j<count($row);$j++){
+                    $str[$i][$j] = $row[$j];                
+                    }
+                $i++;
                 }
-            $i++;
-            }
-        }       
-         
+            }       
+        }
         $parsed_data   = json_decode($pm->getMappingJson(),true);        
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
