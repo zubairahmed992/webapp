@@ -2353,13 +2353,10 @@ class User implements UserInterface, \Serializable {
         
         if ($key) {
             #$device_specs=$this->getDeviceSpecs($device_type);
-            
             $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 0;
             
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $this->measurement->calculatePlacementPositions($device_conversion_ratio); #--> multi device
-            
-
             #---------------- top placement -------------------------------------
             $top_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
             $top_exclusion_px = $top_exclusion_ratio *  $device_config['actual_top_prod_empty_area']; 
