@@ -276,3 +276,10 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ShopLookProduct
             container: "@service_container"
+
+     admin.helper.slideshow:
+         class: LoveThatFit\AdminBundle\Entity\SlideShowHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\SlideShow

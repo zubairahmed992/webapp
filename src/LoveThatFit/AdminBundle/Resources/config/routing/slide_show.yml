@@ -1,0 +1,40 @@
+admin_slides:
+    pattern:  /admin/slides/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:index ,page_number: 1, sort:id }
+
+admin_slide_show_show:
+    pattern:  /admin/slide_show/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:show }
+    
+admin_slide_show_new:
+    pattern:  /admin/slide_show/new
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:new }
+
+admin_slide_show_create:
+    pattern:  /admin/slide_show/create
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:create }
+    requirements: 
+      _method: post 
+    
+admin_slide_show_edit:
+    pattern:  /admin/slide_show/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:edit }
+    requirements:
+        _method:  GET
+        
+admin_slide_show_update:
+    pattern:  /admin/slide_show/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:update }
+
+        
+admin_slide_show_delete:
+    pattern:  /admin/slide_show/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:delete }
+    
+admin_slide_show_standards:
+    pattern:  /admin/slide_show/standards
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:standards }
+
+admin_slide_show_paginate:
+    pattern:  /admin/slide_show/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:SlideShow:paginate}

@@ -162,3 +162,8 @@ admin_tracking:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/tracking.yml"
     prefix:   /
 
+#-------------- Slide Show ------------------------
+admin_slideshow_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/slide_show.yml"
+    prefix:   /
+
