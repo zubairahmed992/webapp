@@ -741,3 +741,20 @@ ws_shop_the_look:
 ws_brand_retailer_big:
    pattern:  /ws/brand_retailer_big
    title: brand_retailer_big
+
+
+#______________________
+nws_selfieshare_create:
+   pattern:  /nws/selfieshare/create
+   title: nws_selfieshare_create
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     message_type: sms
+     device_type: iphone6
+     friend_name: mycroft
+     friend_email: mc@ss.com
+     friend_phone: 89349724397428
+     message: 'look at me! look at me!!'
+   request_type: post
+   file_upload: true
+   description:
