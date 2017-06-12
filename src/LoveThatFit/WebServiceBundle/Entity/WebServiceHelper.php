@@ -1,41 +1,68 @@
 <?php
 
 namespace LoveThatFit\WebServiceBundle\Entity;
+
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 use LoveThatFit\WebServiceBundle\Event\CalibrationEvent;
 
-class WebServiceHelper {
+class WebServiceHelper
+{
 
     private $container;
 
-    public function __construct(Container $container) {
+    public function __construct(Container $container)
+    {
         $this->container = $container;
     }
+
 #----------------------------------------------------
 
-    private function user_array($user, $request_array = null) {
+    private function user_array($user, $request_array = null)
+    {
         $request_array['device_type'] = is_array($request_array) && array_key_exists('device_type', $request_array) ? $request_array['device_type'] : $user->getImageDeviceType();
         $request_array['device_model'] = is_array($request_array) && array_key_exists('device_model', $request_array) ? $request_array['device_model'] : $request_array['device_type'];
         $request_array['base_path'] = is_array($request_array) && array_key_exists('base_path', $request_array) ? $request_array['base_path'] : null;
-        $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
+
+        ##modify by umer for new app/config/config_device_support.yml file start code
+        $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
+        if (isset($version['version']) && $version['version'] == 1) {
+
+            $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($request_array['device_model']);
+
+            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device_support')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
+            
+        } else {
+            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($request_array['device_model']);
+            
+            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
+        }
+        ##modify by umer for new app/config/config_device_support.yml file end code
+
         #$device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($user->extractImageDeviceModel(),$request_array['device_model']);
-        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($user->extractImageDeviceModel(), $request_array['device_model']);
         $device_config['image_device_model'] = $user->extractImageDeviceModel();
-        return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
+
+        if (isset($version['version']) && $version['version'] == 1) {
+            return $user->toDataArraySupport(true, $request_array['device_model'], $request_array['base_path'], $device_config);
+        } else {
+
+            return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
+        }
     }
+
     #------------------------ User -----------------------
-    public  function logoutService( User $user, $request_array ){
-        if(isset($request_array['session_id']) && isset($request_array['appname'])){
-            $logObject = $this->container->get('userlog.helper.userlog')->findUserBySessionId( $user, $request_array );
-            if(is_object($logObject)){
+    public function logoutService(User $user, $request_array)
+    {
+        if (isset($request_array['session_id']) && isset($request_array['appname'])) {
+            $logObject = $this->container->get('userlog.helper.userlog')->findUserBySessionId($user, $request_array);
+            if (is_object($logObject)) {
                 return array(
                     'success' => true,
                     "msg" => "user has been successfully logout"
                 );
-            }else{
+            } else {
                 return array(
                     'success' => false,
                     "msg" => "some thing went wrong"
@@ -45,27 +72,29 @@ class WebServiceHelper {
 
         return array();
     }
-    public function loginService($request_array) {
+
+    public function loginService($request_array)
+    {
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
-                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime( $user, $request_array );
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
-                    $response_array['user'] =  $this->user_array($user,$request_array);
+                    $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
                     $response_array['retailer'] = $retailer_brands['retailer'];
                     $response_array['brand'] = $retailer_brands['brand'];
-                    $response_array['brand_top'] =  $this->container->get('admin.helper.brand')->getBrandListWithBannerForService(1);
-                    $response_array['brand_bottom'] =  $this->container->get('admin.helper.brand')->getBrandListWithBannerForService(0);
+                    $response_array['brand_top'] = $this->container->get('admin.helper.brand')->getBrandListWithBannerForService(1);
+                    $response_array['brand_bottom'] = $this->container->get('admin.helper.brand')->getBrandListWithBannerForService(0);
                 }
 
-                if(array_key_exists('device_token', $request_array) ){
-                    $this->container->get('user.helper.user')->updateDeviceToken($user,$request_array);
+                if (array_key_exists('device_token', $request_array)) {
+                    $this->container->get('user.helper.user')->updateDeviceToken($user, $request_array);
                 }
                 return $this->response_array(true, 'member found', true, $response_array);
             } else {
@@ -78,7 +107,8 @@ class WebServiceHelper {
 
     #------------------------ User -----------------------
 
-    public function userDetail($request_array) {
+    public function userDetail($request_array)
+    {
         $user = $this->findUserByAuthToken($request_array['auth_token']);
         $data = array();
         if ($user) {
@@ -93,7 +123,8 @@ class WebServiceHelper {
     }
 
     #------------------------ User -----------------------
-    public function registrationWithDefaultValues($request_array) {
+    public function registrationWithDefaultValues($request_array)
+    {
 
         if (!array_key_exists('email', $request_array)) {
             return $this->response_array(false, 'Email Not provided.');
@@ -115,8 +146,8 @@ class WebServiceHelper {
                 #---- 2) send registration email ....
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
             }
-			
-			## add user podio log data
+
+            ## add user podio log data
             if ($user->getId()) {
                 $user_id = $user->getId();
                 $user_entity = $this->container->get('user.helper.user')->find($user_id);
@@ -132,22 +163,26 @@ class WebServiceHelper {
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
         }
     }
+
     #------------------------ User -----------------------
 
-    public function userAdminList() {
+    public function userAdminList()
+    {
         $users = $this->container->get('webservice.repo')->userAdminList();
         return $this->response_array(true, 'measurement updated', true, array('user' => $users));
     }
+
     #------------------------ measurementUpdate -----------------------
 
-    public function measurementUpdate($ra) {
+    public function measurementUpdate($ra)
+    {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $user->getMeasurement();
-        $base_path=$ra['base_path'];
+        $base_path = $ra['base_path'];
         if ($user->getUserMarker() && $user->getUserMarker()->getDefaultUser()) {
-            if(array_key_exists('base_path', $ra)) unset($ra['base_path']);
-            if(array_key_exists('email', $ra)) unset($ra['email']);
-            if(array_key_exists('auth_token', $ra)) unset($ra['auth_token']);
+            if (array_key_exists('base_path', $ra)) unset($ra['base_path']);
+            if (array_key_exists('email', $ra)) unset($ra['email']);
+            if (array_key_exists('auth_token', $ra)) unset($ra['auth_token']);
             #$ar['actual_user'] = $ra;
             #$measurement->setMeasurementJson(json_encode($ar));
         } else {
@@ -159,13 +194,15 @@ class WebServiceHelper {
         #return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray(true, null, $base_path)));
         return $this->response_array(true, 'measurement updated', true, array('user' => $this->user_array($user, $ra)));
     }
+
     #-------------------------------------------------------
-    public function updateProfile($ra) {
+    public function updateProfile($ra)
+    {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         if ($user) {
             $user = $this->setUserWithParams($user, $ra);
             $this->container->get('user.helper.user')->saveUser($user);
-            return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true,$ra['base_path'])));
+            return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true, $ra['base_path'])));
         } else {
             return $this->response_array(false, 'Member not found');
         }
@@ -173,65 +210,71 @@ class WebServiceHelper {
 
     #-------------------------------------------------------
 
-    private function createUserWithParams($request_array) {
+    private function createUserWithParams($request_array)
+    {
 
-        $user=$this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
+        $user = $this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
         $user->setPassword($request_array['password']);
         $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
         $user->generateAuthenticationToken();
         $this->container->get('user.helper.user')->saveUser($user);
         return $user;
     }
+
     #-------------------------------------------------------
 
-    private function setUserWithParams($user, $request_array) {
-        array_key_exists('email', $request_array)?$user->setEmail($request_array['email']) : null;
-        array_key_exists('gender', $request_array) ? $user->setGender($request_array['gender']) :  null;
-        array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) :  null;
-        array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
-        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;
-        array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) :  null;
-        array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) :  null;
-        if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)){
-            $user->addDeviceToken($request_array['device_type'], $request_array['device_token']) ;
+    private function setUserWithParams($user, $request_array)
+    {
+        array_key_exists('email', $request_array) ? $user->setEmail($request_array['email']) : null;
+        array_key_exists('gender', $request_array) ? $user->setGender($request_array['gender']) : null;
+        array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) : null;
+        array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) : null;
+        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) : null;
+        array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) : null;
+        array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) : null;
+        if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)) {
+            $user->addDeviceToken($request_array['device_type'], $request_array['device_token']);
         }
 
         #this dob line will be removed with the new build
         $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
-        array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) :  null;
+        array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) : null;
 
-        array_key_exists('phone_number', $request_array) ? $user->setPhoneNumber($request_array['phone_number']) :  null;
+        array_key_exists('phone_number', $request_array) ? $user->setPhoneNumber($request_array['phone_number']) : null;
 
         return $user;
     }
 
     #-------------------------------------------------------
-    private function setBraRelatedMeasurements($measurement){
-        $bra_specs=$this->container->get('admin.helper.size')->getWomanBraSpecs($measurement->getBraSize());
-        if($bra_specs){
+    private function setBraRelatedMeasurements($measurement)
+    {
+        $bra_specs = $this->container->get('admin.helper.size')->getWomanBraSpecs($measurement->getBraSize());
+        if ($bra_specs) {
             $measurement->setBust($bra_specs['average']);
             $measurement->setShoulderAcrossBack($bra_specs['shoulder_across_back']);
             $measurement->setShoulderAcrossFront($bra_specs['shoulder_across_front']);
         }
     }
+
     #-------------------------------------------------------
-    public function setUserMeasurementWithParams($request_array, $user) {
+    public function setUserMeasurementWithParams($request_array, $user)
+    {
         $measurement = $user->getMeasurement();
 
         if (!$measurement) {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
 
-        if (!is_array($request_array)){
+        if (!is_array($request_array)) {
             return $measurement;
         }
 
         array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';
         if (array_key_exists('bra_size', $request_array)) {
 
-            $str=str_replace(' ', '', $request_array['bra_size']);
+            $str = str_replace(' ', '', $request_array['bra_size']);
             preg_match_all('/^(\d+)(\w+)$/', $str, $bra_cup);
-            $b_size=trim($bra_cup[1][0]." ".$bra_cup[2][0]);
+            $b_size = trim($bra_cup[1][0] . " " . $bra_cup[2][0]);
             $measurement->setBraSize($b_size);
 
             #if bust measurement is manually provided, it will still prefers the value
@@ -265,7 +308,7 @@ class WebServiceHelper {
         array_key_exists('high_hip', $request_array) ? $measurement->setHighHip($request_array['high_hip']) : '';
         array_key_exists('low_hip', $request_array) ? $measurement->setLowHip($request_array['low_hip']) : '';
         array_key_exists('torso_height', $request_array) ? $measurement->setTorsoHeight($request_array['torso_height']) : '';
-        
+
         array_key_exists('inseam', $request_array) ? $measurement->setInseam($request_array['inseam']) : '';
         array_key_exists('thigh', $request_array) ? $measurement->setThigh($request_array['thigh']) : '';
         array_key_exists('bust_height', $request_array) ? $measurement->setBustHeight($request_array['bust_height']) : '';
@@ -278,16 +321,31 @@ class WebServiceHelper {
         array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
         array_key_exists('shoulder_length', $request_array) ? $measurement->setShoulderLength($request_array['shoulder_length']) : '';
         array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
-        $user_device_model = isset($request_array['device_model'])?$request_array['device_model']:$user->getImageDeviceType();
+        $user_device_model = isset($request_array['device_model']) ? $request_array['device_model'] : $user->getImageDeviceType();
         #calculating top & bottom position in inches
         #$device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user->getImageDeviceModel());
-        $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user_device_model);
-        $device_config['image_device_model'] = $user->extractImageDeviceModel();
         #$device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getConversionRatio($device_config['image_device_model'],$user_device_model);
-        $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'],$user_device_model);
 
-        if(is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)){
-            $measurement->calculatePlacementPositions($device_config['conversion_ratio'] );
+        ##modify by umer for new app/config/config_device_support.yml file start code
+        $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
+        if (isset($version['version']) && $version['version'] == 1) {
+
+            $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($user_device_model);
+            
+            $device_config['image_device_model'] = $user->extractImageDeviceModel();
+
+            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device_support')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
+        } else {
+            $device_config = $this->container->get('admin.helper.device')->getDeviceConfig($user_device_model);
+            
+            $device_config['image_device_model'] = $user->extractImageDeviceModel();
+
+            $device_config['conversion_ratio'] = $this->container->get('admin.helper.device')->getScreenConversionRatio($device_config['image_device_model'], $user_device_model);
+        }
+        ##modify by umer for new app/config/config_device_support.yml file end code
+        
+        if (is_array($device_config) && array_key_exists('pixel_per_inch', $device_config)) {
+            $measurement->calculatePlacementPositions($device_config['conversion_ratio']);
         }
 
         #$ar = json_decode($measurement->getMeasurementJson());
@@ -298,28 +356,34 @@ class WebServiceHelper {
     }
 
     #--------------------------------User Detail Array -----------------------------#
-    private function getBasePath($request) {
+    private function getBasePath($request)
+    {
         return $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
     }
+
     #----------------------------------------------------------------------------------------
-    public function response_array($success, $message = null, $json = true, $data = null) {
+    public function response_array($success, $message = null, $json = true, $data = null)
+    {
         $ar = array(
             'data' => $data,
-            'count'=>$data?count($data):0,
+            'count' => $data ? count($data) : 0,
             'message' => $message,
             'success' => $success,
         );
         return $json ? json_encode($ar) : $ar;
     }
+
     #----------------------------------------------------------------------------------------
-    public function emailExists($email) {
+    public function emailExists($email)
+    {
         $user = $this->container->get('user.helper.user')->findByEmail($email);
         return $user ? true : false;
     }
 
     #----------------------------------------------------------------------------------------
 
-    public function uploadUserImage($user, $ra, $files) {
+    public function uploadUserImage($user, $ra, $files)
+    {
         if ($user) {
             #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
@@ -329,11 +393,10 @@ class WebServiceHelper {
             #______________________________________> Fitting Room image
 
             if ($ra['upload_type'] == 'fitting_room') {
-
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
 
-                if(array_key_exists('device_model', $ra)){
+                if (array_key_exists('device_model', $ra)) {
                     $user->setImageDeviceModel($ra['device_model']);
                 }
 
@@ -361,23 +424,31 @@ class WebServiceHelper {
 
                 #______________________________________> upload_pending
             } elseif ($ra['upload_type'] == 'fitting_room_pending') {
+
                 $user_archive = $this->container->get('user.helper.userarchives')->createNew($user);
-                $user_archive->setImage(uniqid().'.'.$ext);
+                $user_archive->setImage(uniqid() . '.' . $ext);
 
                 if (move_uploaded_file($files["image"]["tmp_name"], $user_archive->getAbsolutePath('original'))) {
                     $actual_measurement = $user->getMeasurement()->getJSONMeasurement('actual_user');
                     $ra['measurement'] = is_array($actual_measurement) ? json_encode($actual_measurement) : null;
                     $parsed_array = $this->parse_request_for_archive($ra);
+
+                    if (isset($ra['version']) && $ra['version'] == 1) {
+                        $this->container->get('user.helper.userarchives')->saveArchivesSupport($user_archive, $parsed_array);
+                    } else {
+                        $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
+                    }
+
                     $this->container->get('user.helper.userarchives')->saveArchives($user_archive, $parsed_array);
 
                     $user->setStatus(-1);
-                     //Here we going to add new triggeer
+                    //Here we going to add new triggeer
                     //This code will new entry in node-js database
                     $user_id = $user->getId();
                     $email = $user->getEmail();
                     $status = 'New';
                     $dispatcher = $this->container->get('event_dispatcher');
-                    $event = new CalibrationEvent( $user_id, $email ,$status);
+                    $event = new CalibrationEvent($user_id, $email, $status);
                     $dispatcher->dispatch(CalibrationEvent::NAME, $event);
                     //Code End for calibration node js.
                 } else {
@@ -405,7 +476,6 @@ class WebServiceHelper {
             } else {#~~~~~~~~~~~~~> anyother image type
                 return $this->response_array(false, 'invalid upload type');
             }
-
             $this->container->get('user.helper.user')->saveUser($user);
             $userinfo = array();
             #$userinfo['user'] = $user->toDataArray(true, $ra['device_type'], $ra['base_path']);
@@ -416,18 +486,23 @@ class WebServiceHelper {
             return $this->response_array(false, 'member not found');
         }
     }
-    private function save_user_image(){
+
+    private function save_user_image()
+    {
 
     }
+
     #----------------------------------------------------------------------------------------
 
-    private function parse_request_for_archive($ra) {
+    private function parse_request_for_archive($ra)
+    {
         #$device_type = $this->container->get('user.marker.helper')->getDeviceTypeForModel($ra['device_type']);
         $arr = array(
             'measurement' => $ra['measurement'],
             'device_type' => $ra['device_type'],
             'device_model' => $ra['device_model'],
             'height_per_inch' => $ra['height_per_inch'],
+            'version' => $ra['version'],
             'image_actions' =>  json_encode(array( #json encoded image specs
                 'device_model' => $ra['device_model'],
                 'camera_angle' => $ra['camera_angle'],
@@ -438,9 +513,11 @@ class WebServiceHelper {
         );
         return $arr;
     }
+
     #----------------------------------------------------------------------------------------
 
-    public function uploadUserfile($user, $ra, $files) {
+    public function uploadUserfile($user, $ra, $files)
+    {
         if ($user) {
             #----get file name & create dir
             $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
@@ -450,19 +527,19 @@ class WebServiceHelper {
             }
             if ($ext == 'txt') {
                 $path = $user->getUploadRootDir();
-                if (file_exists($path."/".$file)) {
+                if (file_exists($path . "/" . $file)) {
                     // Open the file to get existing content
-                    $current = file_get_contents($path."/".$file);
+                    $current = file_get_contents($path . "/" . $file);
                     // store file content as a string in $str
-                    $current.="\n\n-------------------------------------------------------------".date("Y-m-d")."-----".$ra["device_type"]."------------------------------\n\n";
-                    $current.= "\n".file_get_contents($files["file"]["tmp_name"]);
-                    file_put_contents($path."/".$file, $current);
+                    $current .= "\n\n-------------------------------------------------------------" . date("Y-m-d") . "-----" . $ra["device_type"] . "------------------------------\n\n";
+                    $current .= "\n" . file_get_contents($files["file"]["tmp_name"]);
+                    file_put_contents($path . "/" . $file, $current);
                     //method will call here which will update the db log table
                     $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
                     return $this->response_array(false, 'File uploaded Successfully');
                 } else {
-                    $current= file_get_contents($files["file"]["tmp_name"]);
-                    file_put_contents($path."/".$file,$current);
+                    $current = file_get_contents($files["file"]["tmp_name"]);
+                    file_put_contents($path . "/" . $file, $current);
                     //method will call here which will update the db log table
                     $this->container->get('user.helper.userappaccesslog')->saveLogs($user);
                     return $this->response_array(false, 'File uploaded Successfully');
@@ -475,21 +552,23 @@ class WebServiceHelper {
         }
 
     }
+
     #-------------------------------------------------------------
-    public function changePassword($ra) {
+    public function changePassword($ra)
+    {
         $user = $this->findUserByAuthToken($ra['auth_token']);
 
         if ($user) {
-            if(array_key_exists('password', $ra)){
-                if($this->container->get('user.helper.user')->matchPassword($user, $ra['password'])){
-                    if(array_key_exists('new_password', $ra)){
+            if (array_key_exists('password', $ra)) {
+                if ($this->container->get('user.helper.user')->matchPassword($user, $ra['password'])) {
+                    if (array_key_exists('new_password', $ra)) {
                         $user->setPassword($ra['new_password']);
-                        $user=$this->container->get('user.helper.user')->getPasswordEncoded($user);
+                        $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
                         $this->container->get('user.helper.user')->saveUser($user);
                         return $this->response_array(true, 'Password saved');
                     }
                     return $this->response_array(false, 'new password not provided');
-                }else{
+                } else {
                     return $this->response_array(false, 'password did not match');
                 }
                 return $this->response_array(false, 'old password not provided');
@@ -498,8 +577,10 @@ class WebServiceHelper {
             return $this->response_array(false, 'Member not found');
         }
     }
+
 #-------------------------------------------------------------
-    public function forgotPasswordUpdate($ra) {
+    public function forgotPasswordUpdate($ra)
+    {
         $user = $this->findUserByAuthToken($ra['auth_token']);
 
         if ($user) {
@@ -517,8 +598,9 @@ class WebServiceHelper {
     }
 
 #--------------------------------------------------------------------    
-    public function matchAlternateToken($ra){
-        if (!array_key_exists('auth_token', $ra)){
+    public function matchAlternateToken($ra)
+    {
+        if (!array_key_exists('auth_token', $ra)) {
             return $this->response_array(false, 'Authentication token parameter not provided');
         }
         $user = $this->findUserByAuthToken($ra['auth_token']);
@@ -529,9 +611,11 @@ class WebServiceHelper {
         };
         return $user;
     }
+
 #--------------------------------------------------------------------
 
-    public function processRequest($request) {
+    public function processRequest($request)
+    {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
@@ -544,7 +628,8 @@ class WebServiceHelper {
 
     #-------------------------------------------------------------
 
-    public function findUserByAuthToken($token) {
+    public function findUserByAuthToken($token)
+    {
         return $this->container->get('user.helper.user')->findByAuthToken($token);
     }
 
@@ -552,20 +637,22 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
 
-    public function productSync($gender, $date = null, $user = null) {
-        if($user != null){
+    public function productSync($gender, $date = null, $user = null)
+    {
+        if ($user != null) {
             $user_id = $user->getId();
             $products = $this->container->get('webservice.repo')->productSyncWithFavouriteItem($gender, $date, $user_id);
             // Favourite will be converted in to true and false
-            foreach($products as $key => $value){
-                if($products[$key]['favourite'] == 0){
+            foreach ($products as $key => $value) {
+                if ($products[$key]['favourite'] == 0) {
                     $products[$key]['favourite'] = FALSE;
-                }else{
+                } else {
                     $products[$key]['favourite'] = TRUE;
-                }            }
+                }
+            }
 
 
-        }else{
+        } else {
             $products = $this->container->get('webservice.repo')->productSync($gender, $date);
         }
 
@@ -574,15 +661,18 @@ class WebServiceHelper {
 
     #------------------------------------------------------------------------------
 
-    public function productList($user, $list_type = null) {
+    public function productList($user, $list_type = null)
+    {
         $products = $this->container->get('webservice.repo')->productList($user, $list_type);
         return $this->response_array(true, "products list", true, $products);
     }
+
 #------------------------------------------------------------------------------
 
-    public function productDetail($id, $user) {
+    public function productDetail($id, $user)
+    {
         $product = $this->container->get('admin.helper.product')->find($id, true);
-        if(count($product)== 0){
+        if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
@@ -606,7 +696,7 @@ class WebServiceHelper {
         $p['sizes'] = $fb['feedback'];
 
         $recommended_product_item = null;
-        $favouriteItemIds=$user->getFavouriteItemIdArray();
+        $favouriteItemIds = $user->getFavouriteItemIdArray();
 
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
@@ -619,7 +709,7 @@ class WebServiceHelper {
 
                 $ps_id = $pi->getProductSize()->getId();
                 # get the highest price of all the items/color for a particular size
-                $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+                $s_desc = $pi->getProductSize()->getBodyType() . ' ' . $pi->getProductSize()->getTitle();
                 if (array_key_exists('price', $p['sizes'][$s_desc])) {
                     $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
                 } else {
@@ -628,10 +718,10 @@ class WebServiceHelper {
 
                 $width = 0;
                 $height = 0;
-                if($pi->getImage() != null){
-                    $webpath = str_ireplace('web','iphone5',$pi->getWebPath());
+                if ($pi->getImage() != null) {
+                    $webpath = str_ireplace('web', 'iphone5', $pi->getWebPath());
                     $info = getimagesize($webpath);
-                    list($width, $height) = $info ;
+                    list($width, $height) = $info;
                 }
 
                 $p['items'][$pi->getId()] = array(
@@ -642,9 +732,9 @@ class WebServiceHelper {
                     'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                     'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
                     'width' => (float)$width,
-                    'height'    => (float)$height,
+                    'height' => (float)$height,
                     'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
-                    'price' => $pi->getPrice()?$pi->getPrice():0,
+                    'price' => $pi->getPrice() ? $pi->getPrice() : 0,
                     'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 );
 
@@ -661,31 +751,33 @@ class WebServiceHelper {
     }
 
 
-
     #------------------------------------------------------------------------------
 
-    public function userLikedProductIds($user) {
+    public function userLikedProductIds($user)
+    {
         $product_ids = $this->container->get('webservice.repo')->userLikedProductIds($user);
         return $this->response_array(true, "favourite product ids", true, $product_ids);
     }
-    #------------------------------------------------------------------------------
-    public function likeUnlikeItem($user, $ra) {
 
-        $page = ($ra['page']!="") ? $ra['page'] : null;
+    #------------------------------------------------------------------------------
+    public function likeUnlikeItem($user, $ra)
+    {
+
+        $page = ($ra['page'] != "") ? $ra['page'] : null;
         if ($ra['like'] == 'true') {
             if (count($user->getProductItems()) < 50) {# check limit
                 $default_item = null;
                 if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
-                    if(!is_array($ra['item_id'])){
+                    if (!is_array($ra['item_id'])) {
                         $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
                         $this->container->get('user.helper.user')->makeLike($user, $default_item, 1, $page);
-                    }else{
-                        foreach($ra['item_id'] as $items){
+                    } else {
+                        foreach ($ra['item_id'] as $items) {
                             $default_item = $this->container->get('admin.helper.productitem')->find($items);
                             $this->container->get('user.helper.user')->makeLike($user, $default_item, 1, $page);
                         }
                     }
-                }else{
+                } else {
                     $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
                     $default_item = $p->getDefaultItem($user);
                     $this->container->get('user.helper.user')->makeLike($user, $default_item, 1, $page);
@@ -694,7 +786,7 @@ class WebServiceHelper {
             } else {
                 return $this->response_array(false, "Favourite items reached max limit");
             }
-        }else{
+        } else {
 
             ##-------- product_id
             if (array_key_exists('product_id', $ra) && $ra['product_id'] != null) {
@@ -703,16 +795,16 @@ class WebServiceHelper {
                     if ($pi->getProduct()->getId() == $p->getId()) {
 
                         $itemID = $pi->getID();
-                        if(
+                        if (
                             (is_array($ra['item_id']) && in_array($itemID, $ra['item_id']))
                             || (isset($ra['item_id']) && is_numeric(intval($ra['item_id'])) && $ra['item_id'] == $itemID)
-                        ){
+                        ) {
                             #remove specific items of the same product
                             $pi->removeUser($user);
                             $user->removeProductItem($pi);
                             $this->container->get('admin.helper.productitem')->save($pi);
                             $this->container->get('user.helper.user')->saveUser($user);
-                            $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
+                            $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0, $page);
                         }
 
                     }
@@ -722,25 +814,24 @@ class WebServiceHelper {
             if (array_key_exists('item_id', $ra) && $ra['item_id'] != null) {
                 ##----------items_id array
                 foreach ($user->getProductItems() as $pi) {
-                    if ($pi->getId() == $ra['item_id'] ){
+                    if ($pi->getId() == $ra['item_id']) {
                         $pi = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
                         $user->removeProductItem($pi);
                         $pi->removeUser($user);
                         $this->container->get('user.helper.user')->saveUser($user);
                         $this->container->get('admin.helper.productitem')->save($pi);
                         $p = $pi->getProduct();
-                        $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
-                    }
-                    elseif (is_array($ra['item_id'] ) && (count($ra['item_id']) > 0)){
-                        foreach($ra['item_id'] as $pi_aray){
-                            if ($pi->getId() ==$pi_aray ){
+                        $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0, $page);
+                    } elseif (is_array($ra['item_id']) && (count($ra['item_id']) > 0)) {
+                        foreach ($ra['item_id'] as $pi_aray) {
+                            if ($pi->getId() == $pi_aray) {
                                 $pi = $this->container->get('admin.helper.productitem')->find($pi_aray);
                                 $user->removeProductItem($pi);
                                 $pi->removeUser($user);
                                 $this->container->get('user.helper.user')->saveUser($user);
                                 $this->container->get('admin.helper.productitem')->save($pi);
                                 $p = $pi->getProduct();
-                                $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0,$page);
+                                $this->container->get('site.helper.userfavitemhistory')->createUserItemFavHistory($user, $p, $pi, 0, $page);
                             }
 
                         }
@@ -757,15 +848,16 @@ class WebServiceHelper {
     }
 
     #------------------------------------------------------------------------------
-    public function __likeUnlikeItem($user, $ra) {
+    public function __likeUnlikeItem($user, $ra)
+    {
         if ($ra['like'] == 'true') {
             if (count($user->getProductItems()) < 50) {# check limit
                 $default_item = null;
                 if (array_key_exists('item_id', $ra) && $ra['item_id'] != null && !is_array($ra['item_id'])) {
                     $default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
                 }
-                if(array_key_exists('item_id', $ra) && $ra['item_id'] != null && is_array($ra['item_id'])){
-                    foreach($ra['item_id'] as $items){
+                if (array_key_exists('item_id', $ra) && $ra['item_id'] != null && is_array($ra['item_id'])) {
+                    foreach ($ra['item_id'] as $items) {
                         $default_item = $this->container->get('admin.helper.productitem')->find($items["item_id"]);
                         $this->container->get('user.helper.user')->makeFavourite($user, $default_item);
                     }
@@ -782,7 +874,9 @@ class WebServiceHelper {
             }
         }
     }
-    public function _likeUnlikeItem($user, $ra) {
+
+    public function _likeUnlikeItem($user, $ra)
+    {
         #$default_item = $this->container->get('admin.helper.productitem')->find($ra['item_id']);
         #$this->container->get('user.helper.user')->makeFavourite($user, $default_item);
 
@@ -818,8 +912,10 @@ class WebServiceHelper {
             return $this->response_array(true, "product removed");
         }
     }
+
     #-------------------
-    public function loveItem($user, $ra) {
+    public function loveItem($user, $ra)
+    {
         $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
         if ($p) {
             if ($ra['like'] == 'true') {
@@ -841,8 +937,8 @@ class WebServiceHelper {
                 #at the backend the item is liked, not the whole product, in device the product is made like
                 //
                 ###############################################################
-                foreach($user->getProductItems() as $pi){
-                    if ($pi->getProduct()->getId()==$p->getId()){ #remove all items of the same product
+                foreach ($user->getProductItems() as $pi) {
+                    if ($pi->getProduct()->getId() == $p->getId()) { #remove all items of the same product
                         $pi->removeUser($user);                    # hack for like an item instead of a product 
                         $user->removeProductItem($pi);              # needs to discuss & fix
                         $this->container->get('admin.helper.productitem')->save($pi);
@@ -859,7 +955,8 @@ class WebServiceHelper {
 
     #----------------------------------------------------------------------------------------
 
-    public function sizeChartsService($request_array) {
+    public function sizeChartsService($request_array)
+    {
         $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArrayByGender($request_array['gender']);
         if (count($sc) > 0) {
             return $this->response_array(true, 'Size charts', true, array('size_charts' => $sc));
@@ -871,60 +968,63 @@ class WebServiceHelper {
     #feedback service
     #------------------------ User -----------------------
 
-    public function feedbackService($user,$content) {
-        $this->container->get('mail_helper')->sendFeedbackEmail($user,$content);
+    public function feedbackService($user, $content)
+    {
+        $this->container->get('mail_helper')->sendFeedbackEmail($user, $content);
     }
 
     #end feedback service
-    public function getProductListByCategoryBanner($gender,array $id, $user_id, $page_no = 1) {
-		$yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
-        $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
-        $limit = $records_per_page * $page_no;
-        $offset = $limit - $records_per_page;
-        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
-        $page_count = (int) (count($productlist) / $records_per_page);
-        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1: $page_count;
-        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
-            return $this->response_array(false, 'Invalid Page No');
-        }
-        $productlist = array_slice($productlist, $offset, $records_per_page);
-        foreach($productlist as $key=>$product){
-            if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
-                $productlist[$key]['fitting_room_status'] = true;
-                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
-            }else {
-                $productlist[$key]['fitting_room_status'] = false;
-                $productlist[$key]['qty'] = 0;
-            }
-        }
-        return array('product_list'=>$productlist, 'page_count' => $page_count);
-    }
-
-    //$gender,array $id
-    public function getProductListByCategory($gender,array $id, $user_id, $page_no = 1) {
+    public function getProductListByCategoryBanner($gender, array $id, $user_id, $page_no = 1)
+    {
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
         $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
         $limit = $records_per_page * $page_no;
         $offset = $limit - $records_per_page;
         $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
-        $page_count = (int) (count($productlist) / $records_per_page);
-        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1: $page_count;
+        $page_count = (int)(count($productlist) / $records_per_page);
+        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1 : $page_count;
         if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
             return $this->response_array(false, 'Invalid Page No');
         }
         $productlist = array_slice($productlist, $offset, $records_per_page);
-        foreach($productlist as $key=>$product){
-            if(($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
+        foreach ($productlist as $key => $product) {
+            if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
                 $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
-            }else {
+            } else {
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
         }
-        return $this->response_array(true, 'Product List', true, array('product_list'=>$productlist, 'page_count' => $page_count));
+        return array('product_list' => $productlist, 'page_count' => $page_count);
+    }
+
+    //$gender,array $id
+    public function getProductListByCategory($gender, array $id, $user_id, $page_no = 1)
+    {
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
+        $limit = $records_per_page * $page_no;
+        $offset = $limit - $records_per_page;
+        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
+        $page_count = (int)(count($productlist) / $records_per_page);
+        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1 : $page_count;
+        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
+            return $this->response_array(false, 'Invalid Page No');
+        }
+        $productlist = array_slice($productlist, $offset, $records_per_page);
+        foreach ($productlist as $key => $product) {
+            if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
+                $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
+            } else {
+                $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
+            }
+        }
+        return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
 
     }
 
@@ -936,16 +1036,17 @@ class WebServiceHelper {
 //**********************************************
 
     //Method is using Version 3
-    public function productDetailWithImages($id, $user) {
+    public function productDetailWithImages($id, $user)
+    {
         $product = $this->container->get('admin.helper.product')->find($id);
-        if(count($product)== 0){
+        if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
             //$pc->getTitle()
-            if(count($pc->getProductItems()) > 0) {
+            if (count($pc->getProductItems()) > 0) {
                 $p['colors'][] = array(
                     'color_id' => $pc->getId(),
                     'product_id' => $product->getId(),
@@ -962,12 +1063,12 @@ class WebServiceHelper {
         $default_item = $algo->getRecommendedFromStrippedFeedBack($fb);
         $p['sizes'] = $fb['feedback'];
         $recommended_product_item = null;
-        $favouriteItemIds=$user->getFavouriteItemIdArray();
+        $favouriteItemIds = $user->getFavouriteItemIdArray();
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
             $ps_id = $pi->getProductSize()->getId();
             # get the highest price of all the items/color for a particular size
-            $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+            $s_desc = $pi->getProductSize()->getBodyType() . ' ' . $pi->getProductSize()->getTitle();
 
             if (array_key_exists('price', $p['sizes'][$s_desc])) {
                 $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
@@ -978,20 +1079,20 @@ class WebServiceHelper {
             //Added new Array Sizes clone where we will add sizes_clone without Keys, We are doing this because
             //Dont want to change the Algorithem functionalities
             $p['sizes_clone'] = array_values($p['sizes']);
-            $fitting_room_status_result =  $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
+            $fitting_room_status_result = $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
             $fitting_room_status = false;
             $qty = 0;
-            if($fitting_room_status_result[0][1] != "0"){
+            if ($fitting_room_status_result[0][1] != "0") {
                 $fitting_room_status = true;
                 $qty = $fitting_room_status_result[0]['qty'];
             }
 
             $width = 0;
             $height = 0;
-            if($pi->getImage() != null){
-                $webpath = str_ireplace('web','iphone5',$pi->getWebPath());
+            if ($pi->getImage() != null) {
+                $webpath = str_ireplace('web', 'iphone5', $pi->getWebPath());
                 $info = getimagesize($webpath);
-                list($width, $height) = $info ;
+                list($width, $height) = $info;
             }
 
             $p['items'][] = array(
@@ -1002,9 +1103,9 @@ class WebServiceHelper {
                 'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                 'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
                 'width' => (float)$width,
-                'height'    => (float)$height,
+                'height' => (float)$height,
                 'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
-                'price' => $pi->getPrice()?$pi->getPrice():0,
+                'price' => $pi->getPrice() ? $pi->getPrice() : 0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 'fitting_room_status' => $fitting_room_status,
                 'qty' => $qty,
@@ -1032,8 +1133,13 @@ class WebServiceHelper {
             );
         }
 
-        $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
-        $p['description'] = $product->getDescription();
+        $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
+        $p['description_html'] = $product->getDescription();
+        $product_description = $product->getDescription();
+        $product_description_without_html = preg_replace('#<[^>]+>#', ' ', $product_description);
+        $p['description'] = rtrim(ltrim($product_description_without_html));
+        $p['item_details'] = $product->getItemDetails();
+        $p['care_label'] = $product->getCareLabel();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
 
@@ -1043,7 +1149,7 @@ class WebServiceHelper {
         return $this->response_array(true, "Product Detail ", true, $p);
     }
 
-    public function parseUserSaveLooksData( $user_id = 0, $base_path )
+    public function parseUserSaveLooksData($user_id = 0, $base_path)
     {
         // echo $baseURL = $this->container->getParameter('base_url'); die;
         $responseArray = array();
@@ -1053,7 +1159,7 @@ class WebServiceHelper {
             $items = array();
             $saveLookArray = array();
             $totalPrice = 0;
-            $url = $base_path.$entity->getUploadDir();
+            $url = $base_path . $entity->getUploadDir();
             $saveLookArray['image'] = $url . "/" . $entity->getUserLookImage();
             $saveLookArray['user_id'] = $entity->getUsers()->getId();
             $saveLookArray['look_id'] = $entity->getId();
@@ -1073,23 +1179,24 @@ class WebServiceHelper {
             }
             $saveLookArray['items'] = $items;
             $saveLookArray['totalPrice'] = "$" . number_format($totalPrice) . " USD";
-            array_push( $responseArray, $saveLookArray);
+            array_push($responseArray, $saveLookArray);
         }
 
         return $this->response_array(true, "Product Items ", true, $responseArray);
     }
 
     //Method is using Version 3 - Calling FitAlgo class has been removed.
-    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user) {
+    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user)
+    {
         $product = $this->container->get('admin.helper.product')->find($id);
-        if(count($product)== 0){
+        if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
         $p = array();
         $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
             //$pc->getTitle()
-            if(count($pc->getProductItems()) > 0) {
+            if (count($pc->getProductItems()) > 0) {
                 $p['colors'][] = array(
                     'color_id' => $pc->getId(),
                     'product_id' => $product->getId(),
@@ -1102,30 +1209,30 @@ class WebServiceHelper {
         }
 
         $recommended_product_item = null;
-        $favouriteItemIds=$user->getFavouriteItemIdArray();
+        $favouriteItemIds = $user->getFavouriteItemIdArray();
         foreach ($product->getProductItems() as $pi) {
             $pc_id = $pi->getProductColor()->getId();
             $ps_id = $pi->getProductSize()->getId();
             $ps_title = $pi->getProductSize()->getTitle();
             # get the highest price of all the items/color for a particular size
-            $s_desc =$pi->getProductSize()->getBodyType().' '.$pi->getProductSize()->getTitle();
+            $s_desc = $pi->getProductSize()->getBodyType() . ' ' . $pi->getProductSize()->getTitle();
 
             $product_qty = 0;
-            if(in_array($pi->getId(), $product_item)){
+            if (in_array($pi->getId(), $product_item)) {
                 $original_quantity = $this->container->get('site.helper.userfittingroomitem')->findByUserItemByProductWithItemId($user->getId(), $product->getId(), $pi->getId());
-                if(count($original_quantity) > 0){
+                if (count($original_quantity) > 0) {
                     $product_qty = (int)$original_quantity[0]['qty'];
-                }else{
+                } else {
                     $product_qty = (int)$product_qty;
                 }
             }
 
             $width = 0;
             $height = 0;
-            if($pi->getImage() != null){
-                $webpath = str_ireplace('web','iphone5',$pi->getWebPath());
+            if ($pi->getImage() != null) {
+                $webpath = str_ireplace('web', 'iphone5', $pi->getWebPath());
                 $info = getimagesize($webpath);
-                list($width, $height) = $info ;
+                list($width, $height) = $info;
             }
 
             $p['items'][] = array(
@@ -1137,9 +1244,9 @@ class WebServiceHelper {
                 'sku' => $pi->getSku() == null ? 'no' : $pi->getSku(),
                 'image' => $pi->getImage() == null ? 'no-data' : $pi->getImage(),
                 'width' => (float)$width,
-                'height'    => (float)$height,
+                'height' => (float)$height,
                 //'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
-                'price' => $pi->getPrice()?$pi->getPrice():0,
+                'price' => $pi->getPrice() ? $pi->getPrice() : 0,
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
@@ -1159,16 +1266,36 @@ class WebServiceHelper {
             );
         }
 
-        $p['model_height'] = "Height of model: ".$product->getProductModelHeight();
+        $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
         return $p;
     }
 
-    public function productImageById($product_id) {
+    public function productImageById($product_id)
+    {
         $products = $this->container->get('webservice.repo')->productImageById($product_id);
         return $products;
+    }
+
+    public function getProductItemWeight( array $userCart){
+        $total = 0.00;
+        $box_weight = 12.5;
+        foreach($userCart['item_id'] as $item_id){
+            $itemObject = $this->container->get('admin.helper.productitem')->find($item_id);
+            if($itemObject->getWeight() > 0){
+                $itemWeight = $itemObject->getWeight();
+                $total = $total + $itemWeight;
+            }else if($itemObject->getWeight() == null){
+                $clothing_type = $itemObject->getProduct()->getClothingType();
+                $heaviest_weight = $clothing_type->getHeaviestWeight();
+
+                $total = $total + $heaviest_weight;
+            }
+        }
+
+        return $total + $box_weight;
     }
 
 }

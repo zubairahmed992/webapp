@@ -169,7 +169,7 @@ ws_size_charts:
 ws_user_image_uploader:
    pattern:  /ws/user_image_uploader
    title: user_image_uploader
-   params:
+   params:     
      email: iphone@gmail.com
      device_type: iphone5
      device_model: iphone5
@@ -177,6 +177,7 @@ ws_user_image_uploader:
      upload_type: fitting_room
      camera_angle: 10
      camera_x: 10
+     version: 1
    request_type: post
    file_upload: true
    description: This is image upload service for user. Images can be of types fitting_room, avatar or social_media which will be determined by the parameters (image_type) passed. Parameters device_type & height_per_inch are for fitting_room image only.
@@ -515,6 +516,8 @@ nws_braintree_processuser_transaction:
       total_amount: 200
       order_date: 2017-05-28 10:05:10
       payment_method_nonce: nonceFromTheClient
+      billing_id: 115
+      shipping_id: 116
       billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz","shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"12345","shipping_city":"zyx","shipping_postcode":"23424","shipping_country":"xyz","shipping_state":"xyz"}
       rates: { "amount": "111.4", "deliverDays": "1-2", "shipDate": "2017-05-16", "deliveryDate": "2017-05-17", "serviceType": "US-XM", "FromZIPCode": "90405", "ToZIPCode": "60601", "DeliverDays": "1-2", "WeightLb": 20, "InsuredValue": 0, "RectangularShaped": false }
 
@@ -674,16 +677,18 @@ nws_save_user_billing_address:
   title: save_user_billing_address
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
-    billing: {"billing_first_name":"xyz","billing_last_name":"xyz","billing_address1":"xyz","billing_address2":"xyz","billing_phone":"123334","billing_city":"xyz","billing_postcode":"abc-1234","billing_country":"xyz","billing_state":"xyz", "shipping_same": "0", "billing_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
+    billing: {"billing_first_name":"geof","billing_last_name":"anton","billing_address1":"12959 CORAL TREE PL","billing_address2":"12959 CORAL TREE PL","billing_phone":"123334","billing_city":"los angels","billing_postcode":"90066","billing_country":"xyz","billing_state":"CA", "shipping_same": "0", "billing_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
     billing_id: 0
+    data: {"FullName": "","FirstName": "GEOF","LastName": "ANTON","Address1": "12959 CORAL TREE PL","Address2": "12959 CORAL TREE PL","City": "LOS ANGELES","State": "CA","ZIPCode": "90066","ZIPCodeAddOn": "7020","DPB": "59","CheckDigit": "6","Urbanization": "","CleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063","OverrideHash": "Tdwp4JlTc02DhscYxbI7l7o08apkZWFkYmVlZg==20171011C063"}
 
 nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   title: save_user_shipping_address
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
-    shipping: {"shipping_first_name":"xyz","shipping_last_name":"xyz","shipping_address1":"xyz","shipping_address2":"xyz","shipping_phone":"123334","shipping_city":"xyz","shipping_postcode":"abc-1234","shipping_country":"xyz","shipping_state":"xyz", "shipping_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
+    shipping: {"shipping_first_name":"geof","shipping_last_name":"anton","shipping_address1":"12959 CORAL TREE PL","shipping_address2":"12959 CORAL TREE PL","shipping_phone":"123334","shipping_city":"los angels","shipping_postcode":"90066","shipping_country":"xyz","shipping_state":"CA", "shipping_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
     shipping_id: 0
+    data: {"FullName": "","FirstName": "GEOF","LastName": "ANTON","Address1": "12959 CORAL TREE PL","Address2": "12959 CORAL TREE PL","City": "LOS ANGELES","State": "CA","ZIPCode": "90066","ZIPCodeAddOn": "7020","DPB": "59","CheckDigit": "6","Urbanization": "","CleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063","OverrideHash": "Tdwp4JlTc02DhscYxbI7l7o08apkZWFkYmVlZg==20171011C063"}
 
 nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses
@@ -732,3 +737,7 @@ ws_shop_the_look:
   title: shop_the_look
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
+
+ws_brand_retailer_big:
+   pattern:  /ws/brand_retailer_big
+   title: brand_retailer_big

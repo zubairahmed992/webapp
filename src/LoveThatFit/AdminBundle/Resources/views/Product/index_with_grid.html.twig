@@ -1,0 +1,661 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active">Products</li>
+{% endblock %}
+
+{% block header_right_links %}
+    <a href="{{ path('admin_fit_algorithm2_index') }}">Algorithm 2.0</a> |  <a
+        href="{{ path('admin_product_data_import_index') }}">import & update</a>
+
+    <br>
+    <a style="visibility: hidden" href="{{ path('admin_product_stats') }}">Product Stats</a>
+
+{% endblock %}
+
+{% block body %}
+
+    <script>
+        var page;
+        var serachData, issearch = 0;
+        function SearchForm(page) {
+            if (page == null) {
+                page = 1;
+            }
+
+            var brand = $('#brand').val();
+            var category = []
+            $("#category_select:checked").each(function () {
+                category.push($(this).val());
+            });
+
+            var genders = []
+            $("#genders:checked").each(function () {
+                genders.push($(this).val());
+            });
+
+            var target = []
+            $("#target:checked").each(function () {
+                target.push($(this).val());
+            });
+            $('#loading-indicator').show();
+            serachData = {brand: brand, category: category, genders: genders, target: target, page: page, start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]};
+            $.ajax({
+                type: 'POST',
+                url: $('#url').text(),
+                data: serachData,
+                success: function (data) {
+                    issearch = 1;
+                    initializeDataTable(data['data']);
+                    $('#loading-indicator').hide();
+                    $("#back_to_listing").show();
+                }
+            });
+            return false;
+        }
+
+        function getTargetBaseCat() {
+            var category = []
+        }
+
+        function getTargetCategory() {
+            var category = []
+            var woman_msg = null;
+            var man_msg = null;
+            count1 = false;
+            count2 = false;
+            $("#category:not(:checked)").each(function () {
+                category.push($(this).val());
+            });
+
+
+            var target = []
+            $("#target:checked").each(function () {
+                target.push($(this).val());
+            });
+
+            if (target !== null) {
+                $.ajax({
+                    type: 'POST',
+                    url: $('#url_target').text(),
+                    data: {target: target},
+                    dataType: 'json',
+                    success: function (ar) {
+                        $('#catwoman').text('');
+                        $('#catman').text('');
+                        //$('#category_empty').text('');
+                        if (ar != 'null') {
+                            var playlist = [];
+                            playlist.push.apply(playlist, ar);
+                            $('#all_category').hide();
+                            $('#category_empty').addClass('frm_ele');
+
+                            for (i = 0; i < playlist.length; i++) {
+                                if (playlist[i]['gender'] == 'f') {
+                                    $('<input />', {
+                                        type: 'checkbox',
+                                        'class': 'check_box_category',
+                                        id: 'category_select',
+                                        value: playlist[i]['id']
+                                    }).appendTo('#catwoman');
+                                    $('<span />', {
+                                        'for': 'playlist',
+                                        'class': 'adv_radio',
+                                        text: playlist[i]['name']
+                                    }).appendTo('#catwoman');
+                                }
+                            }
+                            $('#catwoman').prepend('<div class="adv_srch_hd">Woman</div>')
+                            for (i = 0; i < playlist.length; i++) {
+                                if (playlist[i]['gender'] == 'm') {
+                                    $('<input />', {
+                                        type: 'checkbox',
+                                        'class': 'check_box_category',
+                                        id: 'category_select',
+                                        value: playlist[i]['id']
+                                    }).appendTo('#catman');
+                                    $('<span />', {
+                                        'for': 'playlist',
+                                        'class': 'adv_radio',
+                                        text: playlist[i]['name']
+                                    }).appendTo('#catman');
+                                }
+                            }
+
+                            $('#catman').prepend('<div class="adv_srch_hd">Man</div>')
+
+                            //if(inArray(playlist[i]['id'],category)=="yes"){
+                            //}else{
+                            //$("#category").attr("disabled", true);
+                            //}
+                        } else {
+                            $('#category_empty').text('');
+                            $('#category_empty').removeClass('frm_ele');
+                            $('#all_category').show();
+                        }
+                    }
+                });
+                return false;
+            }
+        }
+
+        function inArray(needle, haystack) {
+            var length = haystack.length;
+            for (var i = 0; i < length; i++) {
+                if (haystack[i] == needle) {
+                    return "yes";
+                }
+            }
+        }
+
+        function backToListing() {
+            issearch = 0;
+            $("#back_to_listing").hide();
+            loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]})
+        }
+
+        $(document).ready(function () {
+            var genders = $('#genders').val();
+            if (genders == 'M') {
+                $('#genders').prop('checked', true);
+            }
+
+            //SearchForm(1);  // For first time page load default results
+            $('.pagination li.active').on('click', function () {
+                var page = $(this).attr('p');
+                SearchForm(page);
+            });
+        });
+
+
+    </script>
+    <style>
+        #loading-indicator {
+            position: absolute;
+            left: 500px;
+            top: 200px;
+        }
+    </style>
+
+
+
+    <span id="admin_product_zip" style="display:none;">{{ path('admin_product_detail_zipdownlaod') }}</span>
+    <div class="p_listing">
+        <h1>Products</h1>
+
+
+        <div class="btn_wrapper2">
+
+            <div id="chart_figures" class="product_chart_figures">
+                <div class="facts">
+                    <div><span>Total Products:</span>{{ rec_count }}</div>
+                    <div><span>Female Product:</span>{{ femaleProduct }}</div>
+                    <div><span>Male Products:</span>{{ maleProduct }}</div>
+                </div>
+
+
+            </div>
+            <a style="display:none" href="{{ path('admin_product_data_multiple_brand_csv') }}" class="btn">Import
+                Multiple Brand CSV</a>
+            <a style="display:none" href="{{ path('admin_product_data_csv_brand_specification') }}" class="btn">Add
+                Brand CSV Format</a>
+            <a href="{{ path('admin_product_data_product_image_genrate') }}">Generate Images</a>
+            | <a href="{{ path('admin_fit_algorithm2_index') }}">Algorithm 2.0</a>
+            <a style="display:none" href="{{ path('admin_product_data_import_index') }}">import & update</a>
+
+
+            <div class="btn-group" role="group" aria-label="..." style="float:right;">
+                <a href="{{ path('product_intake_product_specs_index') }}" class="btn btn-default">Specs</a>
+                <a href="{{ path('admin_product_export') }}" class="btn btn-default">Export Products and Items to
+                    CSV</a>
+                <a href="{{ path('admin_product_data_csv_index') }}" class="btn btn-default">Import CSV</a>
+                <a href="{{ path('admin_product_detail_new') }}" class="btn btn-default">Add New</a>
+            </div>
+        </div>
+
+
+        <div>
+            <button type="button" class="btn" data-toggle="collapse" data-target="#demo">
+                Search
+            </button>
+            <button style="display: none" type="button"  id="back_to_listing" onclick="backToListing()" class="btn">
+                Back To Listing
+            </button>
+        </div>
+        <img src="{{ asset('bundles/lovethatfit/site/images/loading.gif') }}" id="loading-indicator"
+             style="display:none;"/>
+        <div id="demo" class="collapse">
+            <div id="adv_srch_wrap"><!--Main wrap -->
+                <span id="url" style="display:none;">{{ path('admin_search_product') }}</span>
+                <span id="url_target"
+                      style="display:none;">{{ path('admin_product_search_category_with_target') }}</span>
+                <div class="frm_wrap">
+                    <div class="adv_srch_hd">Brands</div>
+                    <div class="frm_ele">
+                        <select name="brand" id="brand">
+                            {% for b in brandList %}
+                                <option value="{{ b.id }}">{{ b.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="frm_wrap">
+                    <div class="adv_srch_hd">Gender</div>
+
+                    {# <div class="frm_ele">
+                    {% for g in genders %}
+                    <span class="adv_radio">
+                    <input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" ></span>
+                    <span class="adv_gdr">{{g|capitalize}}</span>
+                    {%endfor%}
+                    </div>#}
+
+
+                    <div class="frm_ele">
+                        {% for gender in size_specs['genders']['titles'] %}
+                            <span class="adv_radio"><input type="checkbox" name="genders" id="genders"
+                                                           value="{{ gender|capitalize }}"></span>
+                            <span class="adv_gdr">{{ gender|capitalize }}</span>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+
+                <div class="frm_wrap">
+                    <div class="adv_srch_hd">Clothing Type Target</div>
+                    {# <div class="frm_ele">
+                    {% for t in target %}
+                    <span class="adv_radio">
+                    <input type="checkbox" name="target" id="target" value="{{t|capitalize }}" onclick="getTargetCategory()">
+                    </span>
+                    <span class="adv_gdr">{{t|capitalize }}
+                    </span>
+                    {%endfor%}
+                    </div>#}
+
+
+                    <div class="frm_ele">
+                        {% for target in size_specs['targets']['woman'] %}
+                            <span class="adv_radio">
+<input type="checkbox" name="target" id="target" value="{{ target }}" onclick="getTargetCategory()">
+</span>
+                            <span class="adv_gdr">{{ target|capitalize }}</span>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div class="frm_wrap">
+                    <div class="adv_srch_hd">Categories</div>
+                    <span id="all_category" style="display:none;">
+
+{% for  key,c in category['woman'] %}
+    <span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category" id="category" value="{{ key }}"></span>
+    <span class="adv_gdr" id="category_empty_label">{{ c }}</span>
+{% endfor %}
+
+                        {% for  key,c in category['man'] %}
+                            <span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category" id="category" value="{{ key }}"></span>
+                            <span class="adv_gdr" id="category_empty_label">{{ c }}</span>
+                        {% endfor %}
+</span>
+
+                    <div class="frm_ele" id="category_empty">
+                        <div id="catwoman">
+                            <div class="adv_srch_hd">Woman</div>
+                            {% for key,c in category['woman'] %}
+                                <span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category_select" id="category_select" value="{{ key }}">
+</span>
+                                <span class="adv_gdr" id="category_empty_label">{{ c|capitalize }}</span>
+                            {% endfor %}
+                        </div>
+                        <div id="catman">
+                            <div class="adv_srch_hd">Man</div>
+                            {% for key,c in category['man'] %}
+                                <span class="adv_radio" id="category_empty_span">
+<input type="checkbox" name="category_select" id="category_select" value="{{ key }}">
+</span>
+                                <span class="adv_gdr" id="category_empty_label">{{ c|capitalize }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="button" class="btn" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
+                    Search Product
+                </button>
+            </div> <!--End Main wrap -->
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div id="productClass">
+
+            {#<div class="container">
+                <div class="row">#}
+                    <table id="example" class="display" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Control Number</th>
+                            <th>Brand</th>
+                            <th>Type</th>
+                            <th>Gender</th>
+                            <th>Name</th>
+                            <th>Created At</th>
+                            <th>Status</th>
+                            <th>Enable/Disable</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                {#</div>
+            </div>#}
+        </div>
+
+        <div class="bs-docs-grid" id="all_data_search">
+            <div class="pagination"></div>
+        </div>
+
+    </div>
+    <div id="deleteMyModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h3 id="myModalLabel">Delete Product</h3>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to Delete this Product?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href=""  class="btn btn-primary delete_url">Delete</a>
+        </div>
+    </div>
+    <script>
+        $(".status_pro").click(function () {
+            var val = $(this).attr("data-id");
+            var res = val.split("_");
+            $.ajax({
+                type: "POST",
+                url: "{{ path('admin_product_status_change') }}",
+                data: {
+                    status: res[1],
+                    id: res[0],
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        var oColumns = [
+            {
+                "data": "id",
+                "searchable": false,
+                "width": "5%",
+            },
+            {
+                "data": "control_number",
+                "width": "12%",
+            },
+            {
+                "data": "BName",
+                "width": "10%",
+            },
+            {
+                "data": "ClothingType",
+                "width": "10%",
+            },
+            {
+                "data": "gender",
+                "orderable": true,
+                "searchable": false,
+                "width": "5%",
+            },
+            {
+                "data": "PName",
+                "searchable": true,
+                "width": "15%",
+            },
+            {
+                "data": "created_at",
+                "searchable": false,
+                "orderable": true,
+                "width": "12%",
+            },
+            {
+                "data": "pstatus",
+                "searchable": true,
+                "orderable": true,
+                "width": "8%",
+            },
+            {
+                "data": "status",
+                "searchable": false,
+                "orderable": true,
+                "width": "8%",
+            },
+            {
+                "title": "Actions",
+                "targets": -1,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent": EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss,
+                "width": "25%"
+            },
+            {
+                "data": "original_user_id",
+                "searchable": false,
+                "visible": false
+            }
+        ];
+        var _oColumns = [
+            {mData: "id", sTitle: "ID", sWidth: "5%"},
+            {mData: "control_number", sTitle: "Control Number", sWidth: "12%"},
+            {mData: "BName", sTitle: "Brand", sWidth: "10%"},
+            {mData: "ClothingType", sTitle: "Type", sWidth: "10%"},
+            {mData: "gender", sTitle: "Gender", sWidth: "5%"},
+            {mData: "PName", sTitle: "Name", sWidth: "15%"},
+            {mData: "created_at", sTitle: "Created At", sWidth: "12%"},
+            {mData: "pstatus", sTitle: "Status", sWidth: "8%", bSearchable : true},
+            {mData: "status", sTitle: "Enable/Disable", sWidth: "8%"},
+            {mData: null, sTitle: "Action", bSortable : false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                if(oData.status == "Enable"){
+                    $(nTd).find("button.Enable i").removeClass('icon-play-circle');
+                    $(nTd).find("button.Enable i").addClass('icon-ban-circle');
+                }
+
+            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss}
+        ];
+        var dataTable,
+            domTable,
+            htmlTable = '<table id="example" class="display" cellspacing="0" width="100%"><thead></thead><tbody></tbody></table>';
+
+
+            jQuery(document).ready(function () {
+            var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+            dataTable = $('#example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "destroy": true,
+                "ajax": {
+                    "url": "{{ path('admin_products_paginate') }}",
+                    "type": "POST",
+                    "data": {},
+                },
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "pagingType": "full_numbers",
+                "order": [[0, "desc"]],
+                "columns": oColumns,
+                "createdRow": function (row, data, index) {
+                    if(data.status == "Enable"){
+                        $(row).find("button.Enable i").removeClass('icon-play-circle');
+                        $(row).find("button.Enable i").addClass('icon-ban-circle');
+                    }
+
+                    if (data["original_user_id"] != null) {
+                        $('td', row).addClass('duplicate_user_class');
+                    }
+                    if (jQuery.inArray(data["id"], notShownIDs) != -1) {
+                        $('td', row).addClass('hide_grid_row');
+                    }
+                },
+            });
+
+            $.fn.dataTable.ext.errMode = 'none';
+            bindClickEvent();
+        });
+
+        function initializeDataTable( data ){
+            if ($.fn.dataTable.fnIsDataTable(dataTable)) {
+                dataTable.fnDestroy(true);
+                $('#productClass').append(htmlTable);
+            }
+
+            dataTable = $("#example").dataTable({
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "order": [[0, "desc"]],
+                bDestroy : true,
+                bPaginate: true,
+                bProcessing : true,
+                aaData : data,
+                aoColumns : _oColumns,
+            });
+
+            bindClickEvent();
+        }
+
+        function bindClickEvent(){
+            jQuery('#example tbody').on('click', 'button, a, img', function () {
+                var clickedObject = $(this);
+                var dataAction = $(this).attr('data-action');
+                var element = $(this).parent().parent()[0];
+                var iPos = dataTable.fnGetPosition( element );
+
+
+                var data = dataTable.fnGetData(iPos);
+
+                if (dataAction == 'EnableDisable') {
+                    bootbox.confirm({
+                        title: "<h3>Enable/Disable Product</h3>",
+                        message: "Product status is "+data.pstatus+"! Are you sure you want to Enable/Disable this Product?",
+                        buttons: {
+                            confirm: {
+                                label: 'Yes',
+                                className: 'btn btn-primary'
+                            },
+                            cancel: {
+                                label: 'No',
+                                className: 'btn'
+                            }
+                        },
+                        callback: function (result) {
+                            if(result) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{{ path('admin_product_status_change') }}",
+                                    data: {
+                                        status: data.status.toLowerCase(),
+                                        id: data.id,
+                                    },
+                                    success: function (response) {
+                                        if(issearch == 0){
+                                            /*if(data.status == "Disable"){
+                                                var rowStatus = "Enable";
+                                                var html = '<i id="status-icon" class="icon-ban-circle">';
+                                            }else{
+                                                var rowStatus = "Disable";
+                                                var html = '<i id="status-icon" class="icon-play-circle">';
+                                            }
+
+
+                                            var newData = {
+                                                BName : data.BName,
+                                                ClothingType: data.ClothingType,
+                                                PName: data.PName,
+                                                control_number: data.control_number,
+                                                created_at: data.created_at,
+                                                gender: data.gender,
+                                                id: data.id,
+                                                status: rowStatus,
+                                            };
+
+                                            dataTable.fnUpdate( newData, iPos);
+                                            clickedObject.html( html );*/
+                                            loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]});
+                                        }else if(issearch == 1){
+                                            loadAgain(serachData, "{{ path('admin_search_product') }}");
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });                    
+                }
+
+                if (dataAction == 'Edit') {
+                    var url = '{{ path('admin_product_detail_edit', {'id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'PDetail') {
+                    var url = '{{ path('admin_product_detail_show', {'id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'addImage') {
+                    var url = '{{ path('admin_productimage_upload', {'product_id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'productCat') {
+                    var url = '{{ path('admin_product_categories', {'id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'Delete') {
+                    var url = '{{ path('admin_product_detail_delete', {'id': ":id"}) }}';
+                    url     = url.replace(':id', data.id);
+
+                    $(".delete_url").attr("href", url);
+                }
+            });
+        }
+
+        function loadAgain( params, url ) {
+            var ajaxurl = (url === undefined) ? "{{ path('admin_products_paginate') }}" : url;
+            $(".dataTables_processing").show()
+            $.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                "type": "POST",
+                "data": params,
+                success: function (data) {
+                    initializeDataTable(data['data']);
+                    $(".dataTables_processing").hide()
+                }
+            });
+        }
+    </script>
+{% endblock %}

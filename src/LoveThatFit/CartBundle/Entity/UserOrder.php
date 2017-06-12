@@ -13,6 +13,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class UserOrder
 {
 
+    // ...
+    /**
+     * @ORM\OneToOne(targetEntity="LoveThatFit\PodioBundle\Entity\PodioOrders", mappedBy="user_podio_order")
+     */
+    protected $podio_orders;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrderDetail", mappedBy="user_order")
@@ -263,6 +268,13 @@ class UserOrder
      */
 
     private $user_order_date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipment_json", type="text" , nullable=true)
+     */
+    private $shipment_json;
 
 
     /**
@@ -1105,5 +1117,74 @@ class UserOrder
     public function getUserOrderDate()
     {
         return $this->user_order_date;
+    }
+
+    /**
+     * Add podio_orders
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders
+     * @return PodioOrders
+     */
+    public function addPodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders)
+    {
+        $this->podio_orders[] = $podio_orders;
+    
+        return $this;
+    }
+
+    /**
+     * Remove podio_orders
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders
+     */
+    public function removePodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podio_orders)
+    {
+        $this->podio_orders->removeElement($podio_orders);
+    }
+
+    /**
+     * Get podio_orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPodioOrders()
+    {
+        return $this->podio_orders;
+    }
+
+    /**
+     * Set shipment_json
+     *
+     * @param string $shipmentJson
+     * @return UserOrder
+     */
+    public function setShipmentJson($shipmentJson)
+    {
+        $this->shipment_json = $shipmentJson;
+    
+        return $this;
+    }
+
+    /**
+     * Get shipment_json
+     *
+     * @return string 
+     */
+    public function getShipmentJson()
+    {
+        return $this->shipment_json;
+    }
+
+    /**
+     * Set podio_orders
+     *
+     * @param \LoveThatFit\PodioBundle\Entity\PodioOrders $podioOrders
+     * @return UserOrder
+     */
+    public function setPodioOrders(\LoveThatFit\PodioBundle\Entity\PodioOrders $podioOrders = null)
+    {
+        $this->podio_orders = $podioOrders;
+    
+        return $this;
     }
 }

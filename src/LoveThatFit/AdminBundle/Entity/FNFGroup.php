@@ -38,7 +38,7 @@ class FNFGroup
     /**
      * @var float
      *
-     * @ORM\Column(name="min_amount", type="float")
+     * @ORM\Column(name="min_amount", type="float" ,nullable=true)
      */
     private $min_amount;
 
@@ -64,7 +64,7 @@ class FNFGroup
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="start_at", type="datetimetz")
+     * @ORM\Column(name="start_at", type="datetimetz" , nullable=true)
      */
 
     private $startAt;
@@ -72,11 +72,18 @@ class FNFGroup
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="end_at", type="datetimetz")
+     * @ORM\Column(name="end_at", type="datetimetz", nullable=true)
      */
 
     private $endAt;
 
+    /**
+     * @var smallint
+     *
+     * @ORM\Column( name="group_type", type="smallint")
+     */
+
+    private $group_type = 1;
 
     /**
      * Get id
@@ -297,5 +304,28 @@ class FNFGroup
     public function getUserOrder()
     {
         return $this->user_order;
+    }
+
+    /**
+     * Set group_type
+     *
+     * @param integer $groupType
+     * @return FNFGroup
+     */
+    public function setGroupType($groupType)
+    {
+        $this->group_type = $groupType;
+    
+        return $this;
+    }
+
+    /**
+     * Get group_type
+     *
+     * @return integer 
+     */
+    public function getGroupType()
+    {
+        return $this->group_type;
     }
 }

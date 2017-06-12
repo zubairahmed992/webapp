@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\AdminBundle\Controller;
 
+use LoveThatFit\CartBundle\Utils\Stamps;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,8 @@ class OrderController extends Controller {
 
     public function showAction($id)
     {
+        $tracking_number = $postages_link = "";
+
         $entity = $this->get('cart.helper.order')->find($id);
         $order_limit = $this->get('cart.helper.order')->getRecordsCountWithCurrentOrderLimit($id);
 
@@ -37,8 +40,19 @@ class OrderController extends Controller {
             $this->get('session')->setFlash('warning', 'Order not found!');
         }
 	    $user_order=$this->container->get('cart.helper.order')->find($id);
+
+        $shipping_information = ($entity->getShipmentJson() != null ? json_decode($entity->getShipmentJson()) : "");
+
+        if($entity->getShipmentJson() != null)
+        {
+            $postages_link = $shipping_information->URL;
+            $tracking_number = $shipping_information->TrackingNumber;
+        }
+
         return $this->render('LoveThatFitAdminBundle:Order:show.html.twig', array(
                 'order' => $entity,
+                'trackingNumber' => $tracking_number,
+                'link'      => $postages_link,
                 'order_id' => $id,
                 'page_number' => $page_number,
                 'user_order' => $user_order
@@ -144,6 +158,49 @@ class OrderController extends Controller {
         } else {
             $this->get('session')->setFlash('warning', 'No Record Found!');
             return $this->render('LoveThatFitAdminBundle:Order:index.html.twig');
+        }
+    }
+
+    public function updateBraintreeTransactionUpdateAction( $id )
+    {
+        $entity = $this->get('cart.helper.order')->find($id);
+        $transactionId = ( $entity->getTransactionId() != null ? $entity->getTransactionId() : null);
+        $transactionStatus = ( $entity->getTransactionStatus() != null ? $entity->getTransactionStatus() : null);
+
+        $transaction_status = $this->get('cart.helper.payment')->getTransactionStatus($transactionId, $transactionStatus);
+        $this->get('cart.helper.order')->updateTransactionStatus( $entity ,$transaction_status['transaction_status']);
+
+        return new Response(json_encode($transaction_status), 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function updateShippingStatusAction( $id ){
+        $stamps = new Stamps();
+        $entity = $this->get('cart.helper.order')->find($id);
+        $rate_json = ( $entity->getRateJson() != null ? json_decode($entity->getRateJson()) : null);
+        $transactionStatus = ( $entity->getTransactionStatus() != null ? $entity->getTransactionStatus() : null);
+
+        if ($transactionStatus != 'settled'){
+            return new Response(json_encode("failed"), 300, ['Content-Type' => 'application/json']);
+        }
+
+        try{
+            $billingAddress = $this->container->get('cart.helper.userAddresses')->findAddressById($rate_json->billing_id);
+            $shippingAddress = $this->container->get('cart.helper.userAddresses')->findByCriteria(array('id' => $rate_json->shipping_id));
+
+            $stamps_response = $stamps->createPostages($billingAddress, $shippingAddress, $rate_json);
+            if($shippingAddress == "")
+                return new Response(json_encode(array('shipping_status' => "pending")), 200, ['Content-Type' => 'application/json']);
+
+
+            $this->get('cart.helper.order')->updateWithShippingData( $entity ,json_encode($stamps_response));
+            $stampsTxID = $stamps_response->StampsTxID;
+
+            $ship_status = $stamps->getShippingStatusByTrackingNumber( $stampsTxID );
+
+            return new Response(json_encode(array('shipping_status' => $ship_status)), 200, ['Content-Type' => 'application/json']);
+        }catch (\ErrorException $exception)
+        {
+            return new Response(json_encode(array('shipping_status' => "pending")), 200, ['Content-Type' => 'application/json']);
         }
     }
 }

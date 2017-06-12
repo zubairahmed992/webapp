@@ -7,6 +7,11 @@
 {% block body %}
     <div class="p_listing">
         <div class="clearfix"></div>
+        {% block header_right_links %}
+            <div class="adjustment_links" style="margin-top: 20px; float:right;">
+                <a href="{{ path('support_mask_marker_inspect_index') }}">Masked Inspection</a>
+            </div>
+        {% endblock %}
         <h1 style="float:left;">Users</h1>
         <div class="clearfix"></div>
         <div class="btn_wrapper2">
@@ -140,6 +145,9 @@
                 "rowCallback": function( row, data ) {
                     if (data["user_role"] == 'admin' || data["user_role"] == 'lead') {
                         $(row).find('td:eq(7)').append(archiveButton);
+                    }
+                    if (data["version"] == 1) {
+                        $(row).find('td:eq(7)').append(" "+ BigMask);   
                     }
                 },
             });

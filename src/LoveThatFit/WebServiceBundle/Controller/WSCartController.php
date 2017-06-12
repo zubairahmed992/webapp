@@ -366,6 +366,10 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $decoded = $this->addItemsToPostArray($user, $decoded);
+        if(isset($decoded['billing_id']))
+            $decoded['rates']['billing_id'] = $decoded['billing_id'];
+        if(isset($decoded['shipping_id']))
+            $decoded['rates']['shipping_id'] = $decoded['shipping_id'];
 
         // var_dump( $decoded ); die;
 
@@ -596,6 +600,14 @@ class WSCartController extends Controller
             $a = 0;
             foreach ($orders as $order) {
                 $order_items = $this->get('cart.helper.orderDetail')->findByOrderID($order['id']);
+                $order['tracking_number']   = '';
+
+                $shipping_information = ($order['shipment_json'] != null ? json_decode($order['shipment_json']) : "");
+                if($order['shipment_json'] != null)
+                {
+                    $order['tracking_number'] = $shipping_information->TrackingNumber;
+                }
+
                 $order['shipping_amount'] = ($order['shipping_amount'] != null) ? $order['shipping_amount'] : 0;
 
                 if(is_object($order['user_order_date']))
@@ -615,6 +627,7 @@ class WSCartController extends Controller
                     $order_items[$index] = $item;
                 }
 
+                $order['shipment_json']     = '';
                 $orders[$a] = $order;
                 $orders[$a]['orderItem'] = $order_items;
                 $a++;
@@ -728,19 +741,28 @@ class WSCartController extends Controller
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            $response = $stampsDotCom->getRates( $decoded );
+            $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $addresses['shipping_methods'] = array();
-            if($response['verified']){
-                $addresses['shipping_methods'] = $response['shipping_method'];
-            }
+            if(!empty($user_cart)){
+                $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
 
-            $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
+                $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
+                $addresses['shipping_methods'] = array();
+                if($response['verified']){
+                    $addresses['shipping_methods'] = $response['shipping_method'];
+                }
+
+                $res = $this->get('webservice.helper')->response_array(true, 'shipping method found', true, $addresses);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'shopping cart is empty/no shipping method found', true, $addresses);
+            }
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
 
         return new Response( $res );
     }
+
 
     public function getAllUserSavedAddressesWithRatesAction(){
         $stampsDotCom = new Stamps();
@@ -749,27 +771,18 @@ class WSCartController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $addresses = $this->container->get('cart.helper.userAddresses')->getAllUserSavedAddresses( $user );
-            $response = $stampsDotCom->getRates( $decoded );
+            $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
+
             $addresses['shipping_methods'] = array();
-            if($response['verified']){
-                $addresses['shipping_methods'] = $response['shipping_method'];
+
+            if(!empty($user_cart)){
+                $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
+                $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
+                if($response['verified']){
+                    $addresses['shipping_methods'] = $response['shipping_method'];
+                }
             }
-            /*$addresses['shipping_methods'] = array(
-                array(
-                "method"      => "4-Day Shipping",
-                'detail'      => "Deliver on or Monday",
-                'method_cost' => "Free",
-                "method_id"   => '1',
-                "days"        => '4'
-                ),
-                array(
-                    "method"      => "2-Day Shipping",
-                    'detail'      => "Deliver on or Fridat",
-                    'method_cost' => "10.25",
-                    "method_id"   => '2',
-                    "days"        => '2',
-                )
-            );*/
+
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $addresses);
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');

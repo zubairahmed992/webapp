@@ -38,6 +38,9 @@ love_that_fit_admin:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
+love_that_fit_podio:
+    resource: "@LoveThatFitPodioBundle/Resources/config/routing.yml"
+    prefix:   /
 
 #acme_hello_routes:
 #    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
