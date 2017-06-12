@@ -741,6 +741,7 @@ class ProductSpecificationHelper {
         $product->setFabricWeight($data['fabric_weight']);
         $product->setStructuralDetail($data['structural_detail']);
         $product->setFitType($data['fit_type']);
+        $product->setStatus('pending');
         $product->setLayering(array_key_exists('layring', $data) ? $data['layring'] : $data['layering']);
         $product->setFitPriority(array_key_exists('fit_priority', $data) ? json_encode($data['fit_priority']) : 'NULL' );
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data) ? $data['fabric_content'] : ''));
