@@ -758,3 +758,10 @@ nws_selfieshare_create:
    request_type: post
    file_upload: true
    description:
+
+#______________________
+ws_marketing_tiles:
+   pattern:  /ws/marketing_tiles
+   title: ws_marketing_tiles
+   params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
