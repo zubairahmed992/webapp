@@ -316,3 +316,9 @@ ws_brand_retailer_big:
 nws_selfieshare_create:
     pattern:  /nws/selfieshare/create
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateNew}
+
+ws_marketing_tiles:
+    pattern:  /ws/marketing_tiles
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:marketingTiles}
+
+    
