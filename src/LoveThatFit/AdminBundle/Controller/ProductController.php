@@ -1282,9 +1282,9 @@ class ProductController extends Controller {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         if ($status == "disable") {
-            $entity->setDisabled(1);
+            $entity->setDisabled(0); //0 enable it
         } else {
-            $entity->setDisabled(0);
+            $entity->setDisabled(1); //1 disable it
         }
         $this->get('admin.helper.product')->update($entity);
         $output['data'] = [
