@@ -362,7 +362,8 @@ class ProductSpecsController extends Controller
         $productArray = $this->get('admin.helper.product')->update($product);
         $this->get('pi.product_specification')->getProductSizeMeasurments($parsed_data, $product_id);
         $this->get('session')->setFlash('success', $productArray);
-        return  $this->showAction($specification_id);
+        #return  $this->showAction($specification_id);
+         return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specification_id)));     
         return new Response(json_encode($productArray));
     }
 }

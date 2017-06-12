@@ -52,6 +52,30 @@ class ProductSizeMeasurementHelper {
             'success' => true,
         );
     }
- 
+   
+    public function delete($id)
+    {
+        $entity = $this->repo->find($id);
+        
+
+        if ($entity) {
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            
+            return array('product' => $entity,
+                'message' => 'The measurements has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array(
+                'message' => 'measurement not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+    }
  
 }
