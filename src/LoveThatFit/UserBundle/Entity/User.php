@@ -2350,6 +2350,7 @@ class User implements UserInterface, \Serializable {
     }
 
     public function toDataArraySupport($key = true, $device_type = null, $base_path = null, $device_config = null) {
+        
         if ($key) {
             #$device_specs=$this->getDeviceSpecs($device_type);
             
