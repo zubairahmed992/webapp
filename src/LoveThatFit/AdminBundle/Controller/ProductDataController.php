@@ -565,7 +565,7 @@ class ProductDataController extends Controller {
         }  else{
             
             $em = $this->getDoctrine()->getManager();
-            $product = $pcsv->fillProduct($data);
+            $product = $pcsv->fillProductAdd($data);
             $product->setBrand($brand);
             $product->setClothingType($clothingType);
             $product->setRetailer($retailer);
