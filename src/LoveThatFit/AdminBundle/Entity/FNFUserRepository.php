@@ -35,7 +35,9 @@ class FNFUserRepository extends EntityRepository
             $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
 
             $stmt->execute();
-            return $stmt->fetchAll()[0];
+            $returnArray = $stmt->fetchAll();
+            if(!empty($returnArray))
+                return $stmt->fetchAll()[0];
 
         } catch (\Doctrine\ORM\NoResultException $e) {
 
@@ -58,7 +60,9 @@ class FNFUserRepository extends EntityRepository
                 $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
 
                 $stmt->execute();
-                return $stmt->fetchAll()[0];
+                $returnArray = $stmt->fetchAll();
+                if(!empty($returnArray))
+                    return $stmt->fetchAll()[0];
             } catch (\Doctrine\ORM\NoResultException $e) {
                 return null;
             }
