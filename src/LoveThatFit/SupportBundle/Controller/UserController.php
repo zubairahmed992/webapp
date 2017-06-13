@@ -28,7 +28,7 @@ class UserController extends Controller {
         $requestData = $this->get('request')->request->all();
         $logged_user = $this->getUser();
         $logged_user_role = $logged_user->getRoleName();
-        $output = $this->get('user.helper.user')->search($requestData, $logged_user_role);
+        $output = $this->get('user.helper.user')->searchSupport($requestData, $logged_user_role);
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
@@ -46,7 +46,7 @@ class UserController extends Controller {
         $requestData            = $this->get('request')->request->all();
         $requestData['user_id'] = $this->getUser()->getId();
         $requestData['all']     = $this->container->get('session')->get('Permissions')['pendingUsers']['all'];
-        $output                 = $this->get('user.helper.userarchives')->search($requestData);
+        $output                 = $this->get('user.helper.userarchives')->searchSupport($requestData);
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }

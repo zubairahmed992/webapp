@@ -535,4 +535,75 @@ class UserRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
             return $preparedQuery->getResult();
     }
+
+    public function searchSupport($data, $page = 0, $max = null, $order, $getResult = true)
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
+        $gender    = isset($data['gender']) && $data['gender'] ? $data['gender'] : null;
+        $startDate = isset($data['startDate']) && $data['startDate'] ? $data['startDate'] : null;
+        $endDate   = isset($data['endDate']) && $data['endDate'] ? $data['endDate'] : null;
+
+        $query
+            ->select('
+                u.id,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.gender,
+                u.createdAt,
+                IDENTITY(u.original_user) as original_user_id,
+                ua.version'
+            )
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin(
+                "LoveThatFitUserBundle:UserArchives",
+                "ua",
+                "WITH",
+                "ua.user = u.id"
+            )
+            ->andWhere('ua.version=:version')
+            ->setParameter('version', '1');
+        if ($search) {
+            $query
+                ->andWhere('u.firstName like :search')
+                ->orWhere('u.lastName like :search')
+                ->orWhere('u.email like :search')
+                ->setParameter('search', "%" . $search . "%");
+        }
+        if ($gender != "") {
+            $query
+                ->andWhere('u.gender=:gender')
+                ->setParameter('gender', $gender);
+        }
+        if ($startDate != "" && $endDate != "") {
+            $query
+                ->andWhere('u.birthDate BETWEEN :startDate AND :endDate')
+                ->setParameter('startDate', $startDate)
+                ->setParameter('endDate', $endDate);
+        }
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "u.id";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "u.firstName";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "u.email";
+            } elseif ($orderByColumn == 5) {
+                $orderByColumn = "u.createdAt";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+        if ($max) {
+            $preparedQuery = $query->getQuery()
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery();
+        }
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
+    }
 }
