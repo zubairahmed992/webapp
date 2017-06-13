@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="slide_show")
- * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\SlideShowRepository")
+ * @ORM\Table(name="marketing_tiles")
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\MarketingTilesRepository")
  */
 
-class SlideShow
+class MarketingTiles
 {
 
     /**
@@ -36,7 +36,7 @@ class SlideShow
 
     /**
      * @Assert\File(maxSize="6000000")
-     * @Assert\NotBlank(groups={"add"}, message = "must upload slide show image!")
+     * @Assert\NotBlank(groups={"add"}, message = "must upload marketing tiles image!")
      */
     public $file;
 
@@ -74,7 +74,7 @@ class SlideShow
     protected $button_title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", length=11, options={"default":0})
      */
     protected $button_action;
 
@@ -92,7 +92,7 @@ class SlideShow
      * Set title
      *
      * @param string $title
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setTitle($title)
     {
@@ -115,7 +115,7 @@ class SlideShow
      * Set created_at
      *
      * @param \DateTime $createdAt
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setCreatedAt($createdAt)
     {
@@ -138,7 +138,7 @@ class SlideShow
      * Set updated_at
      *
      * @param \DateTime $updatedAt
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -161,7 +161,7 @@ class SlideShow
      * Set disabled
      *
      * @param boolean $disabled
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setDisabled($disabled)
     {
@@ -219,7 +219,7 @@ class SlideShow
      * Set description
      *
      * @param string $description
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setDescription($description)
     {
@@ -252,7 +252,7 @@ class SlideShow
      * Set sorting
      *
      * @param integer $sorting
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setSorting($sorting)
     {
@@ -265,7 +265,7 @@ class SlideShow
      * Set button_title
      *
      * @param string $button_title
-     * @return SlideShow
+     * @return MarketingTiles
      */
     public function setButtonTitle($button_title)
     {
@@ -287,8 +287,8 @@ class SlideShow
     /**
      * Set button_action
      *
-     * @param string $button_action
-     * @return SlideShow
+     * @param integer $button_action
+     * @return MarketingTiles
      */
     public function setButtonAction($button_action)
     {
@@ -300,7 +300,7 @@ class SlideShow
     /**
      * Get button_action
      *
-     * @return string
+     * @return integer
      */
     public function getButtonAction()
     {
@@ -317,7 +317,7 @@ class SlideShow
             return;
         }
 
-        $ih=new ImageHelper('slide_show', $this);
+        $ih=new ImageHelper('marketing_tiles', $this);
         $ih->upload();
     }
     //---------------------------------------------------
@@ -346,11 +346,11 @@ class SlideShow
     //---------------------------------------------------
     protected function getUploadDir($type='iphone')
     {# the path will be changed to 'uploads/ltf/brands/web'
-        return 'uploads/ltf/slide_show/'.$type;
+        return 'uploads/ltf/marketing_tiles/'.$type;
     }
     //---------------------------------------------------
     public function getImagePaths() {
-        $ih = new ImageHelper('slide_show', $this);
+        $ih = new ImageHelper('marketing_tiles', $this);
         return $ih->getImagePaths();
     }
 
@@ -359,7 +359,7 @@ class SlideShow
      */
     public function deleteImages()
     {
-        $ih=new ImageHelper('slide_show', $this);
+        $ih=new ImageHelper('marketing_tiles', $this);
         $ih->deleteImages($this->image);
     }
 }

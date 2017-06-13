@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\SlideShowEvent;
+use LoveThatFit\AdminBundle\Event\MarketingTilesEvent;
 
-class SlideShowHelper {
+class MarketingTilesHelper {
 
     protected $dispatcher;
 
@@ -38,8 +38,8 @@ class SlideShowHelper {
 
     public function createNew() {
         $class = $this->class;
-        $slide_show = new $class();
-        return $slide_show;
+        $marketing_tiles = new $class();
+        return $marketing_tiles;
     }
 
     public function save($entity) {
@@ -48,7 +48,7 @@ class SlideShowHelper {
         $entity->upload();
         $this->em->persist($entity);
         $this->em->flush();
-        return array('message' => 'Slide Show succesfully created.',
+        return array('message' => 'Marketing Tiles succesfully created.',
             'field' => 'all',
             'message_type' => 'success',
             'success' => true,
@@ -59,12 +59,17 @@ class SlideShowHelper {
         return $this->repo->find($id);
     }
 
+    public function findWithMarketingTilesId($id) {
+        $result = $this->repo->findWithMarketingTilesId($id);
+        return $result;
+    }
+
     public function update($entity) {
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->upload();
         $this->em->persist($entity);
         $this->em->flush();
-        return array('message' => 'Slide Show ' . $entity->getTitle() . ' succesfully updated!',
+        return array('message' => 'Marketing Tiles ' . $entity->getTitle() . ' succesfully updated!',
             'field' => 'all',
             'message_type' => 'success',
             'success' => true,
@@ -78,14 +83,14 @@ class SlideShowHelper {
             $entity->deleteImages();
             $this->em->remove($entity);
             $this->em->flush();
-            return array('slide_show' => $entity,
-                'message' => 'The slide show has been Deleted!',
+            return array('marketing_tiles' => $entity,
+                'message' => 'The Marketing Tiles has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
         } else {
-            return array('slide_show' => $entity,
-                'message' => 'slide show not found!',
+            return array('marketing_tiles' => $entity,
+                'message' => 'Marketing Tiles not found!',
                 'message_type' => 'warning',
                 'success' => false,
             );
@@ -97,7 +102,7 @@ class SlideShowHelper {
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $limit = $pagination_constants["constants"]["pagination"]["limit"];
 
-        $entity = $this->repo->listAllSlideShow($page_number, $limit, $sort);
+        $entity = $this->repo->listAllMarketingTiles($page_number, $limit, $sort);
         $rec_count = count($this->repo->countAllRecord());
         $cur_page = $page_number;
 
@@ -106,7 +111,7 @@ class SlideShowHelper {
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
         }
-        return array('slide_show' => $entity,
+        return array('marketing_tiles' => $entity,
             'rec_count' => $rec_count,
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
@@ -133,6 +138,11 @@ class SlideShowHelper {
         return $this->repo->findAllRecord();      
     }
 
+    #-----------------------------------------------
+   public function findMarketingTiles(){
+        return $this->repo->findMarketingTiles();      
+    }
+
    #-----------------------------------------------------------------#
     public function findById($id){
         return $this->repo->findById($id);      
@@ -144,7 +154,7 @@ class SlideShowHelper {
 //----------------------------------------------------------
     private function validateForCreate($title) {
         if (count($this->findOneByTitle($title)) > 0) {
-            return array('message' => 'slide show Title already exists!',
+            return array('message' => 'Marketing Tiles Title already exists!',
                 'field' => 'title',
                 'message_type' => 'warning',
                 'success' => false,
@@ -157,7 +167,7 @@ class SlideShowHelper {
     private function validateForUpdate($entity) {
         $clothing_type = $this->findOneByTitle($entity->getTitle());
         if ($clothing_type && $clothing_type->getId() != $entity->getId()) {
-            return array('message' => 'slide show Title already exists!',
+            return array('message' => 'Marketing Tiles Title already exists!',
                 'field' => 'title',
                 'message_type' => 'warning',
                 'success' => false,
@@ -171,8 +181,8 @@ class SlideShowHelper {
     }
 
 #-------------------------getRecordsCountWithCurrentBrandLimit------------------#
-    public function getRecordsCountWithCurrentBannerLimit($banner){
-         return $this->repo->getRecordsCountWithCurrentBannerLimit($banner);
+    public function getRecordsCountWithCurrentBannerLimit($marketing_tiles){
+         return $this->repo->getRecordsCountWithCurrentBannerLimit($marketing_tiles);
     }
 #-------------------------------------------------------------------------------#
     public function getArray(){
@@ -223,9 +233,9 @@ class SlideShowHelper {
         return $caption_end;
     }
     
-    #-----------------find All SlideShow---------------------------------#
-    public function findAllSlideShow(){
-        return $this->repo->findAllSlideShow();
+    #-----------------find All MarketingTiles---------------------------------#
+    public function findAllMarketingTiles(){
+        return $this->repo->findAllMarketingTiles();
     }
 
     #-----------------Update Child in parent_id field---------------------------------#
@@ -297,10 +307,11 @@ class SlideShowHelper {
             }
             $output['data'][] = [
                 'id'         => $fData["id"],
-                'name' => $fData["name"],
+                'title' => $fData["title"],
+                'button_title' => $fData["button_title"],
+                'button_action' => $fData["button_action"],
                 'created_at' => ($fData["created_at"]->format('d-m-Y')),
                 'image' => $image_path,
-                'cat_name' => $fData["cat_name"],
                 'disabled'   => ($fData["disabled"] == 1) ? "Disabled" : "Enable"
             ];
 

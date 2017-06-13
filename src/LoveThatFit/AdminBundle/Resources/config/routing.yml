@@ -163,7 +163,7 @@ admin_tracking:
     prefix:   /
 
 #-------------- Slide Show ------------------------
-admin_slideshow_routes:
-    resource: "@LoveThatFitAdminBundle/Resources/config/routing/slide_show.yml"
+admin_marketingtiles_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/marketing_tiles.yml"
     prefix:   /
 

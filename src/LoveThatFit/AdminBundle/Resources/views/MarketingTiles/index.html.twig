@@ -1,21 +1,21 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-  <li class="active">Slide Show </li>
+  <li class="active">Marketing Tiles </li>
 {% endblock %}
 
 {% block body %}
 <div class="p_listing">
-  <h1>Slide Show </h1>
+  <h1>Marketing Tiles </h1>
   <div class="clearfix"></div>
     {% block header_right_links %}
     <div class="adjustment_links" style="margin-top: 20px; float:right;">
-      <a href="{{ path('admin_slide_show_new') }}" class="btn">Add New</a>
+      <a href="{{ path('admin_marketing_tiles_new') }}" class="btn">Add New</a>
     </div>
     {% endblock %}
     <div class="clearfix"></div>
     <div class="clearfix"></div>
     <div class="bs-docs-grid">
-      <table id="example_banner" class="display" cellspacing="0" width="100%">
+      <table id="example_marketing_tiles" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>ID</th>
@@ -35,10 +35,10 @@
 <div id="deleteMyModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Banner</h3>
+    <h3 id="myModalLabel">Delete Marketing Tiles</h3>
   </div>
   <div class="modal-body">
-      <p>Are you sure you want to Delete this Banner?</p>
+      <p>Are you sure you want to Delete this Marketing Tiles?</p>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
@@ -49,11 +49,11 @@
 <script type="text/javascript">
   jQuery(document).ready(function() {
 
-    var table = $('#example_banner').DataTable({
+    var table = $('#example_marketing_tiles').DataTable({
        "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "{{ path('admin_slide_show_paginate') }}",
+            "url": "{{ path('admin_marketing_tiles_paginate') }}",
             "type": "POST"
         },
         "sAjaxDataProp": "data",
@@ -94,21 +94,21 @@
         ]
     });
 
-    jQuery('#example_banner tbody').on( 'click', 'button, a, img', function () {
+    jQuery('#example_marketing_tiles tbody').on( 'click', 'button, a, img', function () {
         var dataAction = $(this).attr('data-action');
         var data = table.row( $(this).parents('tr') ).data();
         if (dataAction == 'Edit') {
-            var url = '{{ path('admin_slide_show_edit', {'id': ":id"}) }}';
+            var url = '{{ path('admin_marketing_tiles_edit', {'id': ":id"}) }}';
             url     = url.replace(':id', data.id);
             window.top.location = url;
         }
         if (dataAction == 'Detail') {
-          var url = '{{ path('admin_slide_show_show', {'id': ":id"}) }}';
+          var url = '{{ path('admin_marketing_tiles_show', {'id': ":id"}) }}';
           url     = url.replace(':id', data.id);
           window.top.location = url;
         }
         if (dataAction == 'Delete') {
-          var url = '{{ path('admin_slide_show_delete', {'id': ":id"}) }}';
+          var url = '{{ path('admin_marketing_tiles_delete', {'id': ":id"}) }}';
           url     = url.replace(':id', data.id);
 
           $(".delete_url").attr("href", url);

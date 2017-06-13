@@ -216,6 +216,19 @@ image_category:
       width: 220
       dir:  'uploads/ltf/users'
 
+  marketing_tiles:
+    original:
+      prefix:
+      dir:  'uploads/ltf/marketing_tiles'
+
+    web:
+      prefix:
+      dir:  'uploads/ltf/marketing_tiles/web'
+
+    iphone:
+      prefix:
+      dir:  'uploads/ltf/marketing_tiles/iphone'
+
 
 image_map:
   brand:

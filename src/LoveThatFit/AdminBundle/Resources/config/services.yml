@@ -277,9 +277,9 @@ services:
             class: LoveThatFit\AdminBundle\Entity\ShopLookProduct
             container: "@service_container"
 
-     admin.helper.slideshow:
-         class: LoveThatFit\AdminBundle\Entity\SlideShowHelper
+     admin.helper.marketingtiles:
+         class: LoveThatFit\AdminBundle\Entity\MarketingTilesHelper
          arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
-            class: LoveThatFit\AdminBundle\Entity\SlideShow
+            class: LoveThatFit\AdminBundle\Entity\MarketingTiles

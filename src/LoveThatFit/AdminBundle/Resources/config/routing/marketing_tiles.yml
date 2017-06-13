@@ -1,0 +1,40 @@
+admin_marketingtiles:
+    pattern:  /admin/marketingtiles/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:index ,page_number: 1, sort:id }
+
+admin_marketing_tiles_show:
+    pattern:  /admin/marketing_tiles/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:show }
+    
+admin_marketing_tiles_new:
+    pattern:  /admin/marketing_tiles/new
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:new }
+
+admin_marketing_tiles_create:
+    pattern:  /admin/marketing_tiles/create
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:create }
+    requirements: 
+      _method: post 
+    
+admin_marketing_tiles_edit:
+    pattern:  /admin/marketing_tiles/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:edit }
+    requirements:
+        _method:  GET
+        
+admin_marketing_tiles_update:
+    pattern:  /admin/marketing_tiles/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:update }
+
+        
+admin_marketing_tiles_delete:
+    pattern:  /admin/marketing_tiles/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:delete }
+    
+admin_marketing_tiles_standards:
+    pattern:  /admin/marketing_tiles/standards
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:standards }
+
+admin_marketing_tiles_paginate:
+    pattern:  /admin/marketing_tiles/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:MarketingTiles:paginate}

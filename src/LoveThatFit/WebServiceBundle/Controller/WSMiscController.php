@@ -234,6 +234,13 @@ class WSMiscController extends Controller {
         $decoded_path = $this->process_request();
         $decoded = $request->request->all();
 
+        $marketing_tiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
+        
+
+        foreach ($marketing_tiles as $marketingtiles_key => $marketingtiles_value) {
+            echo "<pre>"; print_r($marketingtiles_value); 
+        }
+        die();
         $marketing = array(
                 array('title' => 'ABC', 'description' => 'here is description' , 'image' => $decoded_path["base_path"].'/uploads/ltf/slide_show/abc.jpg', 'button_title' => '', 'button_action' => '' ),
                 array('title' => 'XYZ', 'description' => 'some description here' , 'image' => $decoded_path["base_path"].'/uploads/ltf/slide_show/xyz.jpg', 'button_title' => '', 'button_action' => '' ),

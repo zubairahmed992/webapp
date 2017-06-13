@@ -1,13 +1,13 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-<li><a href="{{ path('admin_slides') }}" >Slide Show</a> <span class="divider">/</span></li>
+<li><a href="{{ path('admin_marketingtiles') }}" >Marketing Tiles</a> <span class="divider">/</span></li>
 <li class="active">New</li>
 {% endblock %}
 
-{% block h1 %}Slide Show{% endblock %}
+{% block h1 %}Marketing Tiles{% endblock %}
 
-{% block title %}Slide Show{% endblock %}
+{% block title %}Marketing Tiles{% endblock %}
 
 {% block body %}
 
@@ -37,16 +37,16 @@ function validates(){
 }
 </script>
 <div>      
-    <h1 style="float:left;">New Slide Show </h1>
+    <h1 style="float:left;">New Marketing Tiles </h1>
     <div class="btn_wrapper">     
-        <a href="{{ path('admin_slides') }}" class="btn">back</a>
+        <a href="{{ path('admin_marketingtiles') }}" class="btn">back</a>
     </div>
     <div class="clearfix"></div>   
-    <form action="{{ path('admin_slide_show_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('admin_marketing_tiles_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
 
             <div id="detail_wrapper">      
-                <div id="p_hd">Slide Show Detail</div>
+                <div id="p_hd">Marketing Tiles Detail</div>
 
                 <div id="product_content">
                     <div id="pro_detail">
