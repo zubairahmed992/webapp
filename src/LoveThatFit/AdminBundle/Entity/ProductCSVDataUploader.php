@@ -500,7 +500,54 @@ class ProductCSVDataUploader {
         };
     }
     #-----------------------------------------------
-     
+    #-------------------------------------------------
+    #-------------------------------------------------
+
+ public function readFitModelSize() {
+        $this->row = 0;
+        $this->previous_row = '';
+        ini_set('auto_detect_line_endings',TRUE);
+        $fms=null;
+        $fmsa=array();
+        if (($handle = fopen($this->path, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle)) !== FALSE) {
+                if ($this->row == 0) {
+                    $fms = $this->get_fit_model_size_index($data);                    
+                    $fmsa['size'] = $fms['size'];
+                    $fmsa['brand'] = $data[10];
+                } elseif ($this->row == 1) {
+                    $fmsa['gender'] = $data[1];
+                } elseif ($this->row == 6) {
+                    $fmsa['inseam'] = $data[$fms['index'] + 7];
+                } elseif ($this->row >= 3 && $this->row <= 20 ) {                    
+                    $fp_title = strtolower(str_replace(" ","_",$data[$fms['index']]));
+                    $fmsa[$fp_title] = $data[$fms['index'] + 7];
+                } elseif ($this->row >= 21) {
+                    break;
+                }
+                $this->previous_row = $data;
+                $this->row++;
+            }
+            ini_set('auto_detect_line_endings',FALSE);
+            fclose($handle);            
+            return $fmsa;
+        }
+        return;
+    }
+#----------------------------------------------------
+    private function get_fit_model_size_index($data) {
+        $i = 27;
+        while (isset($data[$i]) > 0) {
+            $s = explode(" ", $data[$i]);
+            if(array_key_exists(1,$s)) {                                
+                if(strpos($data[$i+1], 'Fit Model')){                    
+                    return array('index' => $i, 'size' => $s[1]);
+                }
+            }
+            $i = $i + 13;
+        }
+        return null;
+    }
 }
 
 ?>

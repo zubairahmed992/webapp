@@ -228,5 +228,19 @@ class WSMiscController extends Controller {
         );
         return new Response(json_encode($conf));
     }
+
+    public function marketingTilesAction(Request $request)
+    {
+        $decoded_path = $this->process_request();
+        $decoded = $request->request->all();
+
+        $marketing = array(
+                array('title' => 'ABC', 'description' => 'here is description' , 'image' => $decoded_path["base_path"].'/uploads/ltf/slide_show/abc.jpg', 'button_title' => '', 'button_action' => '' ),
+                array('title' => 'XYZ', 'description' => 'some description here' , 'image' => $decoded_path["base_path"].'/uploads/ltf/slide_show/xyz.jpg', 'button_title' => '', 'button_action' => '' ),
+            );
+
+        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $marketing);                    
+        return new Response($res);
+    }
 }
 

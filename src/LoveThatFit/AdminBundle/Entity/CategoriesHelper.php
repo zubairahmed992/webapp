@@ -50,7 +50,9 @@ class CategoriesHelper {
             $entity->setParentId(null);
         }
 
-        $msg_array = $this->validateForCreate($entity);
+        $msg_array = null;
+        // Removed Checked for duplicate validation
+        //$msg_array = $this->validateForCreate($entity);
         if ($msg_array == null and $name != null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
@@ -77,7 +79,9 @@ class CategoriesHelper {
             $entity->setParentId(null);
         }
 
-        $msg_array = $this->validateForUpdate($entity);
+        $msg_array = null;
+        // Removed Checked for duplicate validation
+        //$msg_array = $this->validateForUpdate($entity);
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->upload();
