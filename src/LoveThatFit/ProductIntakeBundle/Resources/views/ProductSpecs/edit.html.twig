@@ -950,6 +950,13 @@
                        
                <br>
                </div>   
+                <br>                
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="new_fit_point">Add new Fit Point : </label>
+                    <div class="col-sm-4">
+                        <input value="" type="text" class="form-control edit_inline" readonly="ture" name="add_new_fit_point" id="add_new_fit_point" data-type="text"  data-title="Enter New Fit Point" placeholder="Enter New Fit Point">
+                    </div>
+                </div>
                <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary">More</button>
 
 
@@ -1107,7 +1114,8 @@
             </div>           
             
     </div>
-</form>                                
+</form>   
+            
   <br>                
   <input type="hidden" class="product_spec_size" value="{{ app.request.get('id') }} ">
   <script>
