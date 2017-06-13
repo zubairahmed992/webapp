@@ -256,5 +256,10 @@ admin_product_description_update:
    pattern:  /admin/productdetail/{id}/description_update
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDescriptionUpdate }
 
+admin_product_categories_ajax:
+    pattern:  /admin/ajaxloadcategories/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:ajaxloadcategories }   
+   
+
 
       
