@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ProductSpecsController extends Controller
 {
@@ -365,5 +365,11 @@ class ProductSpecsController extends Controller
         #return  $this->showAction($specification_id);
          return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specification_id)));     
         return new Response(json_encode($productArray));
+    }
+    #---------------------------------------------------
+    public function createSessionAction(Request $request) {
+        $session = $request->getSession();
+        $session->set('opt_specs_'.$request->get('id'), $request->get('value'));        
+        return new Response(json_encode($session->get('opt_specs_'.$request->get('id'), $request->get('value'))));
     }
 }

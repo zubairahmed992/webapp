@@ -1,3 +1,7 @@
+product_intake_product_specs_create_session:
+    pattern:  /product_intake/product_specs/create_session
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createSession }
+
 product_intake_product_specs_index:
     pattern:  /product_intake/product_specs/index
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:index }
