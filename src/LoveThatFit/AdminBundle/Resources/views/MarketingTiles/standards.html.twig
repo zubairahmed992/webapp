@@ -1,0 +1,66 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Standards </li>
+{% endblock %}
+
+
+
+{% block body %}
+  
+<div class="p_listing">     
+    <h1>Standards</h1>
+ 
+    <div class="clearfix"></div> 
+    <h5>Body Shapes</h5>
+    <table class="table table-condensed table-bordered">
+       {% for gen,shapes in specs['body_shapes']  %}
+        <tr>
+            <th style="background-color: #FFCA95">{{gen}}</th>
+            {% for s,v in shapes %}
+            <td>{{s}}</td>
+            {% endfor%}
+        </tr>
+        {% endfor%}
+    </table>    
+{#-------------------------------------------------------------------------#}
+    <div class="clearfix"></div>     
+    
+   <h5>Fit Types</h5>
+    <table class="table table-condensed table-bordered">
+       {% for gen,types in specs['fit_types']  %}
+        <tr>
+            <th style="background-color: #FFCA95">{{gen}}</th>
+            {% for s,v in types %}
+            <td>{{s}}</td>
+            {% endfor%}
+        </tr>
+        {% endfor%}
+    </table>    
+{#-------------------------------------------------------------------------#}
+    <div class="clearfix"></div>     
+      <h5>Sizes</h5>
+    <table class="table table-condensed table-bordered">
+       {% for gen,types in specs['sizes']  %}
+            <tr style="background-color: #FFCA95">
+            <th>{{gen}}</th>            
+        </tr>
+        {% for size_type,size_titles in types %}
+        <tr>
+            <th>&nbsp;-{{size_type}}</th>             
+            {% for st,v in size_titles %}
+                <td>{{st}}</td>
+            {% endfor%}
+        </tr>
+        {% endfor%}
+        {% endfor%}
+    </table>    
+
+ </div> 
+
+    </div>
+   
+ 
+</div>
+
+
+{% endblock %}

@@ -69,6 +69,22 @@ class ProductRepository extends EntityRepository
             return "null";
         }
     }
+	
+	  #--------------Find Categories By ID---------------------------------#
+    public function getSelectedCategories($id = null) {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                        SELECT c.id FROM LoveThatFitAdminBundle:Product p
+                         JOIN p.categories c
+                        WHERE
+                        p.id = :id"
+                        )->setParameters(array('id' => $id)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
     public function searchAllProduct($data, $page = 0, $max = NULL, $order, $getResult = true){
         $query     = $this->getEntityManager()->createQueryBuilder();
@@ -84,6 +100,11 @@ class ProductRepository extends EntityRepository
                 ct.name as cloting_type,
                 p.created_at,
                 p.disabled,
+				p.description,
+				p.item_name,				
+				p.country_origin,
+				p.item_details,								
+				p.care_label,				
                 p.status
             ')
             ->from('LoveThatFitAdminBundle:Product', 'p')
@@ -1628,6 +1649,33 @@ class ProductRepository extends EntityRepository
             return false;
         }
     }
+	
+	
+	 public function checked_for_categories($id){
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT categories_id have_category FROM category_products cp WHERE cp.product_id = ".$id);
+	    return $query->getResult();
+	 }
+	
+	
+	 public function checked_for_price($id){
+		
+        $query     = $this->getEntityManager()->createQueryBuilder();       
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) no_price FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id." AND pi.price = 0");
+
+        return $query->getResult();
+	 }
+	 
+	  public function checked_for_weight($id){
+        $query     = $this->getEntityManager()->createQueryBuilder();
+		   $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) no_weight FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id." and (pi.weight is NULL or pi.weight = '')");
+
+         return $query->getResult();
+	 }
+	
 }
 
     /*
