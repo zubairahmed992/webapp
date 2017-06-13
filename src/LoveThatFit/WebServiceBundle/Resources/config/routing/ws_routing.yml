@@ -320,5 +320,3 @@ nws_selfieshare_create:
 ws_marketing_tiles:
     pattern:  /ws/marketing_tiles
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:marketingTiles}
-
-    
