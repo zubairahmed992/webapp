@@ -211,7 +211,7 @@ class PaymentHelper
                 'streetAddress' => $billing['shipping_address1'],
                 'postalCode' => $billing['shipping_postcode']
             ],'options' => [
-                'submitForSettlement' => true,
+                'submitForSettlement' => True,
             ]
         );
 
