@@ -349,3 +349,45 @@ i.icon-shpping {
     width: 19px;
     height: 16px;
 }
+
+i.icon-desc {
+    background-position: -262px -25px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-no-desc {
+	border:1px solid #F00;
+}
+i.icon-desc-have-desc {
+	border:none;
+}
+i.icon-desc-have-desc-yellow {
+		border:1px solid #FF0;
+}
+i.icon-desc-have-desc-green {
+		border:1px solid #090;
+}
+
+i.price-edit-no-price {
+	border:1px solid #F00;
+}
+
+i.price-edit-have-price {
+	border:none;
+}
+
+i.price-edit-green {
+	border:1px solid #090;
+}
+i.price-edit-yellow {
+	border:1px solid #FF0;
+}
+
+i.cat-no-value {
+	border:1px solid #F00;
+}
+
+i.cat-have-value {
+	border:none;
+}
+
