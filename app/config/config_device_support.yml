@@ -82,7 +82,7 @@ device_config:
     neck_exlusion_px: 0
     screen_available_height_px: 0
     resize_ratio_jt: 1  
-     
+    
   iphoneSE:
     svg_mask_x: 66
     svg_mask_y: 66

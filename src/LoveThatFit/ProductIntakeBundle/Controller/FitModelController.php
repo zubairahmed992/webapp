@@ -5,6 +5,7 @@ namespace LoveThatFit\ProductIntakeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 
 class FitModelController extends Controller {
     
@@ -12,6 +13,14 @@ class FitModelController extends Controller {
 
     public function indexAction() {
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:index.html.twig', array(
+                    'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                ));
+    }
+    
+     #------------------------/product_intake/fit_model_specs/index
+
+    public function brandCompareAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:brand_compare.html.twig', array(
                     'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
                 ));
     }
@@ -33,7 +42,16 @@ class FitModelController extends Controller {
                     'fit_points' => $fit_points,
                 ));
     }
-    
+    #--------------------------------- /product_intake/fit_model/csv_extract
+     public function csvExtractAction(Request $request) {
+        $str = array();
+        $file = $request->files->get('csv_file');
+        
+        $pcsv = new ProductCSVDataUploader($file);
+        $data = $pcsv->readFitModelSize();
+        return new Response(json_encode($data));
+        
+    }
     #------------------------/product_intake/fit_model_specs/create_new
 
     public function createNewAction() {
