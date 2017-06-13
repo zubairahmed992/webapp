@@ -450,7 +450,7 @@
                 "data": null,
                 "orderable": false,
                 "searchable": false,
-                "defaultContent": EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss,
+                "defaultContent": EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss+" "+ProductDescription,
                 "width": "25%"
             },
             {
@@ -475,7 +475,7 @@
                     $(nTd).find("button.Enable i").addClass('icon-ban-circle');
                 }
 
-            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss}
+            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss+" "+ProductDescription}
         ];
         var dataTable,
             domTable,
@@ -500,10 +500,83 @@
                 "order": [[0, "desc"]],
                 "columns": oColumns,
                 "createdRow": function (row, data, index) {
+					
+					if(data.description != null && data.item_name != null && data.country_origin != null && data.item_details != null && data.care_label != null){
+						
+                         $(row).find("button.description i").addClass('icon-desc-have-desc-green');
+					}
+					else if(data.description != null || data.item_name != null || data.country_origin != null || data.item_details != null || data.care_label != null){
+						
+                         $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
+						 
+					}
+					else if(data.description == null && data.item_name == null && data.country_origin == null && data.item_details == null && data.care_label == null){
+						
+                         $(row).find("button.description i").addClass('icon-desc-no-desc');
+					}
+					else
+					{
+						$(row).find("button.Enable i").removeClass('icon-desc-have-desc');
+						
+					}
+					
+					if(parseInt(data.price_status) >  0){
+						
+						  $(row).find("button.priceedit i").addClass('price-edit-no-price');
+						
+					}
+					else
+					{
+						 $(row).find("button.priceedit i").addClass('price-edit-have-price');
+					}
+					
+					if(parseInt(data.price_status) ==  0 &&  parseInt(data.weight_status) ==  0){
+						
+						  $(row).find("button.priceedit i").addClass('price-edit-green');
+						
+					}
+					else if((parseInt(data.price_status) >  0 && parseInt(data.weight_status) ==  0) || (parseInt(data.price_status) ==  0 && parseInt(data.weight_status) >  0)){
+						
+						  $(row).find("button.category i").addClass('price-edit-yellow');
+						
+					}
+					else{
+						 $(row).find("button.category i").addClass('price-edit-have-price');						
+						
+					}
+					
+					
+					
+					var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: {},
+                        success: function (response) {
+							
+							if(response==0){
+								 $(row).find("button.category i").addClass('cat-no-value');
+								
+							}else{
+							     $(row).find("button.category i").addClass('cat-have-value');	
+							
+							}
+							
+
+						
+							
+                        }
+                    }); 
+					
+					
+					
                     if(data.status == "Enable"){
                         $(row).find("button.Enable i").removeClass('icon-play-circle');
                         $(row).find("button.Enable i").addClass('icon-ban-circle');
                     }
+					
+					
 
                     if (data["original_user_id"] != null) {
                         $('td', row).addClass('duplicate_user_class');
@@ -639,6 +712,13 @@
                     url     = url.replace(':id', data.id);
 
                     $(".delete_url").attr("href", url);
+                }
+				
+				if (dataAction == 'product_description') {
+                    var url = '{{ path('admin_product_manage_description', {'id': ":id"}) }}';
+                    url     = url.replace(':id', data.id);
+
+                     window.top.location = url;
                 }
             });
         }

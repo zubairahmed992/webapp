@@ -1494,5 +1494,17 @@ class ProductController extends Controller {
         $this->get('session')->setFlash('success', 'Product description updated.');
         return $this->redirect($this->generateUrl('admin_product_manage_description', array('id' => $id)));
     }
+	
+	
+	public function ajaxloadcategoriesAction($id) {
+       $getselectedcategories = $this->get('admin.helper.product')->getSelectedProductCategories($id);
+	   $success = 0;
+	   if(count($getselectedcategories) > 0)
+	   {
+		  $success = "1";
+	   }
+	   
+		 return new Response($success );
+    }
 
 }
