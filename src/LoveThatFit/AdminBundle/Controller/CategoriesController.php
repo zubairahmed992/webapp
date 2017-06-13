@@ -63,7 +63,7 @@ class CategoriesController extends Controller {
             if($selected_category_id != 0)
             $entity->setGender($selected_category_gender['gender']);
 
-            $message_array = $this->get('admin.helper.Categories')->save($entity);
+            $message_array = $this->get('admin.helper.Categories')->save($entity, $selected_category_id);
 
             /* Get Id for fetch top level id*/
             $catid = $entity->getId();
@@ -120,7 +120,7 @@ class CategoriesController extends Controller {
     public function updateAction(Request $request, $id) {
 
         $entity = $this->get('admin.helper.Categories')->find($id);
-        $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew($id);
+        $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew();
         $getallcategories = $this->get('admin.helper.Categories')->findAllCategories();
         if(!$entity)
         {
@@ -134,15 +134,15 @@ class CategoriesController extends Controller {
             $selected_category_gender = $this->get('admin.helper.Categories')->findById($id);
             $entity->setGender($selected_category_gender['gender']);
 
-            $message_array = $this->get('admin.helper.Categories')->update($entity);
-
-            /* Get Id for fetch top level id*/
-            $catid = $entity->getId();
-
             /* Add Parent Category Id into Child Category */
             $default_category_id = $request->request->get('selected_id');
             $selected_category_id = $request->request->get('category_id');
             $category_option = $request->request->get('category_option');
+
+            $message_array = $this->get('admin.helper.Categories')->update($entity, $selected_category_id);
+
+            /* Get Id for fetch top level id*/
+            $catid = $entity->getId();
 
             if (($selected_category_id != 0) && $selected_category_id != $id) {
                     $this->get('admin.helper.Categories')->updateParent($id, $selected_category_id);
@@ -161,6 +161,7 @@ class CategoriesController extends Controller {
         }
         $deleteForm = $this->createForm(new DeleteType(), $entity);        
         }
+
         return $this->render('LoveThatFitAdminBundle:Categories:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
