@@ -1119,13 +1119,25 @@
   <br>                
   <input type="hidden" class="product_spec_size" value="{{ app.request.get('id') }} ">
   <script>
-      
+  
       //-----------------------------------
-$(document).ready(function(){       
-$("#show_extended_fp").click(function (event) {                         
-    //alert();
+$(document).ready(function(){     
+  var someVarName = '';
+  someVarName = sessionStorage.getItem("someVarName");
+  if(someVarName == "Few")
+   {
     $("#show_extended_fp").text()=='More'?$("#show_extended_fp").text('Few'):$("#show_extended_fp").text('More');
- var cols = document.getElementsByClassName('extended_fit_points');
+        var cols = document.getElementsByClassName('extended_fit_points');
+        for(i=0; i<cols.length; i++) {
+           cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
+        }
+    }
+$("#show_extended_fp").click(function (event) {     
+   // alert($("#show_extended_fp").text())
+    $("#show_extended_fp").text()=='More'?$("#show_extended_fp").text('Few'):$("#show_extended_fp").text('More');
+    someVarName = $("#show_extended_fp").text();
+    sessionStorage.setItem("someVarName", someVarName);   
+    var cols = document.getElementsByClassName('extended_fit_points');
           for(i=0; i<cols.length; i++) {
             cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
           }
