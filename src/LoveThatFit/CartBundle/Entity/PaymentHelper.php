@@ -211,7 +211,7 @@ class PaymentHelper
                 'streetAddress' => $billing['shipping_address1'],
                 'postalCode' => $billing['shipping_postcode']
             ],'options' => [
-                'submitForSettlement' => True,
+                'submitForSettlement' => true,
             ]
         );
 
@@ -234,6 +234,7 @@ class PaymentHelper
             );
 
             $saleObject['options'] = array(
+                'submitForSettlement' => true,
                 'storeInVault' => true
             );
             $result = Braintree_Transaction::sale(
