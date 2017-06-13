@@ -234,19 +234,16 @@ class WSMiscController extends Controller {
         $decoded_path = $this->process_request();
         $decoded = $request->request->all();
 
-        $marketing_tiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
+        $results_marketingtiles=array();
         
-
-        foreach ($marketing_tiles as $marketingtiles_key => $marketingtiles_value) {
-            echo "<pre>"; print_r($marketingtiles_value); 
+        $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
+        
+        foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
+            $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];
+            $results_marketingtiles[$key_marketingtiles]['created_at'] = ($value_marketingtiles['created_at']) ? $value_marketingtiles['created_at']->format('Y-m-d h:i:s') : '';
         }
-        die();
-        $marketing = array(
-                array('title' => 'ABC', 'description' => 'here is description' , 'image' => $decoded_path["base_path"].'/uploads/ltf/slide_show/abc.jpg', 'button_title' => '', 'button_action' => '' ),
-                array('title' => 'XYZ', 'description' => 'some description here' , 'image' => $decoded_path["base_path"].'/uploads/ltf/slide_show/xyz.jpg', 'button_title' => '', 'button_action' => '' ),
-            );
 
-        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $marketing);                    
+        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);                    
         return new Response($res);
     }
 }

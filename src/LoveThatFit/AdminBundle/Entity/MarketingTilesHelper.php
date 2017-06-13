@@ -140,7 +140,18 @@ class MarketingTilesHelper {
 
     #-----------------------------------------------
    public function findMarketingTiles(){
-        return $this->repo->findMarketingTiles();      
+        return $this->repo->findMarketingTiles();
+        /*$results = $this->repo->findMarketingTiles();  
+        $marketing_tiles_array=array();
+        foreach($results as $key=>$value){
+            $marketing_tiles_array[]['id']=$value['id'];
+            $marketing_tiles_array[]['title']=$value->getTitle();
+            $marketing_tiles_array[]['image']=$value->getImage();
+            $marketing_tiles_array[]['description']=$value->getDescription();
+            $marketing_tiles_array[]['button_title']=$value->getButtonTitle();
+            $marketing_tiles_array[]['button_action']=$value->getButtonAction();
+        }    
+        return $marketing_tiles_array;*/
     }
 
    #-----------------------------------------------------------------#

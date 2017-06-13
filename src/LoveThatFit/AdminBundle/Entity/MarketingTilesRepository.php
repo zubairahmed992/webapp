@@ -113,14 +113,17 @@ param:limit, page_number,limit,sort
         }
     }
 
-    public function findMarketingTiles()
+    public function findMarketingTiles($disabled=0)
     {
         $query = $this->getEntityManager()
-                ->createQuery("SELECT c
-                FROM LoveThatFitAdminBundle:MarketingTiles c
-                WHERE c.disabled=0
-                order by c.sorting");
-      try {
+            ->createQueryBuilder()
+            ->select('mt.id,mt.title,mt.description,mt.image,mt.button_title,mt.button_action,mt.created_at')
+            ->from('LoveThatFitAdminBundle:MarketingTiles', 'mt')
+            ->where('mt.disabled = :disabled')
+            ->setParameter('disabled', $disabled)
+            ->orderBy('mt.sorting', 'ASC')
+            ->getQuery();
+        try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
