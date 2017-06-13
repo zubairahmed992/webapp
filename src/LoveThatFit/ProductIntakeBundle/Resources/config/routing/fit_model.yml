@@ -2,6 +2,10 @@ product_intake_fit_model_index:
     pattern:  /product_intake/fit_model/index
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:index }
 
+product_intake_fit_model_brand_compare:
+    pattern:  /product_intake/fit_model/brand_compare
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:brandCompare }
+
 product_intake_fit_model_create_new:
     pattern:  /product_intake/fit_model/create_new
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:createNew }
@@ -9,7 +13,11 @@ product_intake_fit_model_create_new:
 product_intake_fit_model_save:    
     pattern:  /product_intake/fit_model/save
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:save } 
-    
+
+product_intake_fit_model_csv_extract:
+    pattern:  /product_intake/specs_mapping/csv_extract
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:csvExtract }    
+
 product_intake_fit_model_show:
     pattern:  /product_intake/fit_model/{id}/show
     defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:show }

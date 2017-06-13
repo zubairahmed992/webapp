@@ -312,3 +312,11 @@ ws_shop_the_look:
 ws_brand_retailer_big:
     pattern:  /ws/brand_retailer_big
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailerBig }
+
+nws_selfieshare_create:
+    pattern:  /nws/selfieshare/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateNew}
+
+ws_marketing_tiles:
+    pattern:  /ws/marketing_tiles
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:marketingTiles}

@@ -1282,9 +1282,9 @@ class ProductController extends Controller {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         if ($status == "disable") {
-            $entity->setDisabled(1);
+            $entity->setDisabled(0); //0 enable it
         } else {
-            $entity->setDisabled(0);
+            $entity->setDisabled(1); //1 disable it
         }
         $this->get('admin.helper.product')->update($entity);
         $output['data'] = [
@@ -1493,6 +1493,18 @@ class ProductController extends Controller {
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash('success', 'Product description updated.');
         return $this->redirect($this->generateUrl('admin_product_manage_description', array('id' => $id)));
+    }
+	
+	
+	public function ajaxloadcategoriesAction($id) {
+       $getselectedcategories = $this->get('admin.helper.product')->getSelectedProductCategories($id);
+	   $success = 0;
+	   if(count($getselectedcategories) > 0)
+	   {
+		  $success = "1";
+	   }
+	   
+		 return new Response($success );
     }
 
 }

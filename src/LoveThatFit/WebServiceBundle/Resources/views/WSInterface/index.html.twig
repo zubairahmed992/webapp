@@ -171,8 +171,11 @@ $( "#btn_hit_service" ).click(function() {
                 }else if($('#sel_service').val() == '/nws/save_user_look'){
                     hit_savelook_service();
                 }
-                else if($('#sel_service').val() == '/ws/selfieshare/create'){
+                else if($('#sel_service').val() == '/ws/selfieshare/create') {
                     hit_selfieshare_service();
+                }
+                else if($('#sel_service').val() == '/nws/selfieshare/create'){
+                        hit_selfieshare_service();
                 }else{
                     hit_image_upload_service();
                 }
