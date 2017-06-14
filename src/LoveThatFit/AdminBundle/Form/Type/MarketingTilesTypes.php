@@ -12,7 +12,7 @@ class MarketingTilesTypes extends AbstractType {
     public function __construct($mode,$entity,$button_action,$sorting) {
         $this->mode = $mode;
         $this->button_action = ($button_action) ? $button_action : 0;
-        $this->sorting = ($sorting) ? $sorting : 0;
+        $this->sorting = ($sorting) ? $sorting : 1;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {

@@ -97,42 +97,6 @@ class MarketingTilesHelper {
         }
     }
 
-    public function getListWithPagination($page_number, $sort) {
-        $yaml = new Parser();
-        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
-        $limit = $pagination_constants["constants"]["pagination"]["limit"];
-
-        $entity = $this->repo->listAllMarketingTiles($page_number, $limit, $sort);
-        $rec_count = count($this->repo->countAllRecord());
-        $cur_page = $page_number;
-
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-        return array('marketing_tiles' => $entity,
-            'rec_count' => $rec_count,
-            'no_of_pagination' => $no_of_paginations,
-            'limit' => $cur_page,
-            'per_page_limit' => $limit,
-            'criteriaTop' => $this->countStatistics('Top'),
-            'criteriaBottom' => $this->countStatistics('Bottom'),
-            'criteriaDress' => $this->countStatistics('Dress'),
-             'sort'=>$sort,
-        );
-    }
-    
-
-//-------------------------------------------------------
-    private function initialCap($str){        
-        return str_replace('\' ', '\'', ucwords(str_replace('\'', '\' ', strtolower($str))));
-    }
-//-------------------------------------------------------    
-    public function findOneByTitle($title) {
-        return $this->repo->findOneByTitle($title);
-    }
-
     #-----------------------------------------------
    public function findAll(){
         return $this->repo->findAllRecord();      
@@ -141,17 +105,6 @@ class MarketingTilesHelper {
     #-----------------------------------------------
    public function findMarketingTiles(){
         return $this->repo->findMarketingTiles();
-        /*$results = $this->repo->findMarketingTiles();  
-        $marketing_tiles_array=array();
-        foreach($results as $key=>$value){
-            $marketing_tiles_array[]['id']=$value['id'];
-            $marketing_tiles_array[]['title']=$value->getTitle();
-            $marketing_tiles_array[]['image']=$value->getImage();
-            $marketing_tiles_array[]['description']=$value->getDescription();
-            $marketing_tiles_array[]['button_title']=$value->getButtonTitle();
-            $marketing_tiles_array[]['button_action']=$value->getButtonAction();
-        }    
-        return $marketing_tiles_array;*/
     }
 
    #-----------------------------------------------------------------#
@@ -160,40 +113,9 @@ class MarketingTilesHelper {
         
     }
 
-    //-------------------------------------------------------
-    //Private Methods    
-//----------------------------------------------------------
-    private function validateForCreate($title) {
-        if (count($this->findOneByTitle($title)) > 0) {
-            return array('message' => 'Marketing Tiles Title already exists!',
-                'field' => 'title',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
-
-//----------------------------------------------------------
-    private function validateForUpdate($entity) {
-        $clothing_type = $this->findOneByTitle($entity->getTitle());
-        if ($clothing_type && $clothing_type->getId() != $entity->getId()) {
-            return array('message' => 'Marketing Tiles Title already exists!',
-                'field' => 'title',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
-
-    private function countStatistics($target) {
-        return $rec_count = count($this->repo->findStatisticsBy($target));
-    }
-
 #-------------------------getRecordsCountWithCurrentBrandLimit------------------#
-    public function getRecordsCountWithCurrentBannerLimit($marketing_tiles){
-         return $this->repo->getRecordsCountWithCurrentBannerLimit($marketing_tiles);
+    public function getRecordsCountWithCurrentMarketingTilesLimit($marketing_tiles){
+         return $this->repo->getRecordsCountWithCurrentMarketingTilesLimit($marketing_tiles);
     }
 #-------------------------------------------------------------------------------#
     public function getArray(){

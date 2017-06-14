@@ -128,25 +128,7 @@ param:limit, page_number,limit,sort
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-    }
-
-    #-----------------------------------------------------------------------------
-
-    public function findStatisticsBy($catid)
-    {
-     $query = $this->getEntityManager()
-        ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:MarketingTiles ct
-        WHERE        
-        ct.cat_id=:catid"
-                        )
-             ->setParameter('catid',$catid);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-    
+    }    
     
   #-------------Find All Banner for Web Service -----#
     public function findAllBanners($displayscreen='') {
@@ -259,7 +241,7 @@ param:limit, page_number,limit,sort
   }
   
 #------------------------------------------------------------------------------#  
-  public function getRecordsCountWithCurrentBannerLimit($marketing_tiles){
+  public function getRecordsCountWithCurrentMarketingTilesLimit($marketing_tiles){
      $query = $this->getEntityManager()
                     ->createQuery("SELECT count(c.id) as id  FROM LoveThatFitAdminBundle:MarketingTiles c WHERE c.id <=:marketing_tiles")
                    ->setParameters(array('marketing_tiles' => $marketing_tiles));

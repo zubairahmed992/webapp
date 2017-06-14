@@ -23,7 +23,7 @@ class MarketingTilesController extends Controller {
     public function showAction($id) {
         $marketing_tiles = $this->get('admin.helper.marketingtiles')->findWithMarketingTilesId($id);
         //echo "<pre>"; print_r($marketing_tiles); die();
-        $marketing_tiles_limit = $this->get('admin.helper.marketingtiles')->getRecordsCountWithCurrentBannerLimit($id);
+        $marketing_tiles_limit = $this->get('admin.helper.marketingtiles')->getRecordsCountWithCurrentMarketingTilesLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($marketing_tiles_limit[0]['id']));
         $page_number = ($page_number == 0) ? 1 : $page_number;
         if (!$marketing_tiles) {
@@ -165,26 +165,6 @@ class MarketingTilesController extends Controller {
             $this->get('session')->setFlash('warning', 'This Marketing Tiles cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
-    }
-
-    //------------------------------------------------------------------------------------------
-    public function standardsAction(){
-       $standards = $this->get('admin.helper.size')->getDefaultArray();       
-       return $this->render('LoveThatFitAdminBundle:Banner:standards.html.twig', array(
-                    'specs' => $standards,
-                    ));
-       
-       return new \Symfony\Component\HttpFoundation\Response (json_encode($standards));
-    }
-
-    public function fetchCategoryTree($result, $parent = 0, $spacing = '', $user_tree_array = '') {
-        if ($result->num_rows >  0) {
-            while ($row = $result->fetch_assoc()) {
-                $user_tree_array[] = array("id" => $row['id'], "name" => $spacing . $row['name']);
-                $user_tree_array = fetchCategoryTree($row['id'], $spacing . '&nbsp;&nbsp;', $user_tree_array);
-            }
-        }
-        return $user_tree_array;
     }
 
     public function paginateAction(Request $request)
