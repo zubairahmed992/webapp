@@ -434,7 +434,7 @@
             },
             {
                 "data": "pstatus",
-                "searchable": false,
+                "searchable": true,
                 "orderable": true,
                 "width": "8%",
             },
@@ -467,7 +467,7 @@
             {mData: "gender", sTitle: "Gender", sWidth: "5%"},
             {mData: "PName", sTitle: "Name", sWidth: "15%"},
             {mData: "created_at", sTitle: "Created At", sWidth: "12%"},
-            {mData: "pstatus", sTitle: "Status", sWidth: "8%"},
+            {mData: "pstatus", sTitle: "Status", sWidth: "8%", bSearchable : true},
             {mData: "status", sTitle: "Enable/Disable", sWidth: "8%"},
             {mData: null, sTitle: "Action", bSortable : false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 if(oData.status == "Enable"){

@@ -119,7 +119,8 @@ class ProductRepository extends EntityRepository
                             p.control_number like :search or 
                             p.gender like :search or 
                             ct.name like :search or 
-                            b.name like :search')
+                            b.name like :search or 
+                            p.status like :search')
                 ->setParameter('search', "%".$search."%");
         }
 
@@ -139,6 +140,8 @@ class ProductRepository extends EntityRepository
             }elseif ($orderByColumn == 6) {
                 $orderByColumn = "p.created_at";
             }elseif ($orderByColumn == 7) {
+                $orderByColumn = "p.status";
+            }elseif ($orderByColumn == 8) {
                 $orderByColumn = "p.disabled";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
@@ -1638,7 +1641,7 @@ class ProductRepository extends EntityRepository
     public function updateProductIntakeStatus($status, $id)
     {
         try {
-            $sql = "UPDATE product SET status = '" . $status . "' WHERE id = " . $id;
+            $sql = "UPDATE product SET status = '" . $status . "', updated_at = '" . date('Y-m-d h:i:s') . "' WHERE id = " . $id;
             $conn = $this->getEntityManager()->getConnection();
             $rowsAffected = $conn->executeUpdate($sql);
             return true;

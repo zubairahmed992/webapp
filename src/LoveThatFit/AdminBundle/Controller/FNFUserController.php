@@ -63,7 +63,7 @@ class FNFUserController extends Controller
 
     public function addAction(Request $request)
     {
-
+        //var_dump($request); die;
         $fnfUserEntity  = $this->get('fnfuser.helper.fnfuser')->createNew();
         $fnfGroupEntity = $this->get('fnfgroup.helper.fnfgroup')->createNew();
 
@@ -106,6 +106,7 @@ class FNFUserController extends Controller
 
         $groupData = $postData['groups'][0];
         $userData  = $postData['users'];
+        $group_typ = $groupData['group_type'];
 
         /*$entity = $this->get('fnfuser.helper.fnfuser')->createNew();
         $form = $this->createForm(new FNFUserForm('add',$entity, $discountArray), $entity);
@@ -117,7 +118,7 @@ class FNFUserController extends Controller
             if ($selectedGroup == 0) {
                 /**Code By babar*/
                 //Check if any group exists. Then make is it archive
-                $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
+                $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord($group_typ);
                 //Iterate each group
                 foreach ($groupToArchive as $groupInfo) {
                     //make group archived
@@ -161,6 +162,8 @@ class FNFUserController extends Controller
             ->add('submitFile', 'file', array('label' => 'Upload CSV file'))
             ->getForm();
 
+        $newStartFormat = $newEndFormat = "";
+
         // Check if we are posting stuff
         if ($request->getMethod('post') == 'POST') {
             try {
@@ -173,6 +176,7 @@ class FNFUserController extends Controller
                     $file         = $fnfCsvform->get('submitFile');
                     $fileInfo     = $file->getData();
                     $fileNameInfo = explode('.', $fileInfo->getClientOriginalName());
+
                     if (!is_array($fileNameInfo) || !isset($fileNameInfo[1]) || !in_array('csv', $fileNameInfo)) {
                         $this->get('session')->setFlash('warning', 'Invalid File');
                         return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
@@ -187,6 +191,7 @@ class FNFUserController extends Controller
                         $groupMinAmount      = false;
                         $groupStartDate      = false;
                         $groupEndDate        = false;
+                        $group_type          = false;
                         //Group information
                         $groupInfoNew = array();
 
@@ -200,6 +205,7 @@ class FNFUserController extends Controller
                                 $groupMinAmount      = ($groupMinAmount === false) ? $row[5] : $groupMinAmount;
                                 $groupStartDate      = ($groupStartDate === false) ? $row[6] : $groupStartDate;
                                 $groupEndDate        = ($groupEndDate === false) ? $row[7] : $groupEndDate;
+                                $group_type          = ($group_type === false) ? $row[8] : $group_type;
 
                                 //get user info
                                 $userInfo[$row[0]]['first_name'] = $row[1];
@@ -215,13 +221,16 @@ class FNFUserController extends Controller
                     }
 
                     //Craete New group
-                    if ($groupTitle && is_numeric($groupDiscountAmount) && is_numeric($groupMinAmount) && $groupDiscountAmount > 0 && $groupMinAmount > 0 && $groupStartDate && $groupEndDate) {
+                    if ($groupTitle && is_numeric($groupDiscountAmount) && is_numeric($groupMinAmount) && $groupDiscountAmount > 0
+                            && ( ( $group_type == 1 && $groupMinAmount > 0 && $groupStartDate && $groupEndDate) || ($group_type == 2))) {
 
-                        $expStartDate   = explode('/', trim($groupStartDate));
-                        $newStartFormat = $expStartDate[1] . '/' . $expStartDate[0] . '/' . $expStartDate[2];
+                        if($group_type == 1){
+                            $expStartDate   = explode('/', trim($groupStartDate));
+                            $newStartFormat = $expStartDate[1] . '/' . $expStartDate[0] . '/' . $expStartDate[2];
 
-                        $expEndDate   = explode('/', trim($groupEndDate));
-                        $newEndFormat = $expEndDate[1] . '/' . $expEndDate[0] . '/' . $expEndDate[2];
+                            $expEndDate   = explode('/', trim($groupEndDate));
+                            $newEndFormat = $expEndDate[1] . '/' . $expEndDate[0] . '/' . $expEndDate[2];
+                        }
 
                         //Arrange in array
                         $groupInfoNew['groupTitle'] = $groupTitle;
@@ -229,9 +238,10 @@ class FNFUserController extends Controller
                         $groupInfoNew['min_amount'] = $groupMinAmount;
                         $groupInfoNew['start_at']   = trim($newStartFormat);
                         $groupInfoNew['end_at']     = trim($newEndFormat);
+                        $groupInfoNew['group_type'] = $group_type;
 
                         //Check if any group exists. Then make is it archive
-                        $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
+                        $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord($group_type);
                         //Iterate each group
                         foreach ($groupToArchive as $groupInfo) {
                             //make group archived
@@ -263,7 +273,8 @@ class FNFUserController extends Controller
 
                             }
                         }
-                    } else {
+                    }
+                    else {
                         $this->get('session')->setFlash('warning', 'Invalid File');
                         return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
                     }
@@ -335,7 +346,7 @@ class FNFUserController extends Controller
         return $this->redirect($this->generateUrl('fnf_users'));
     }
 
-    public function getApplicableFNFUserAction()
+    public function ___getApplicableFNFUserAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $user    = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
@@ -350,7 +361,8 @@ class FNFUserController extends Controller
                     {
                         $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
                             'discount_amount' => $group->getDiscount(),
-                            'min_amount'      => $group->getMinAmount()
+                            'min_amount'      => $group->getMinAmount(),
+                            'group_type'      => $group->getGroupType(),
                         ));
                     }
                 }
@@ -363,5 +375,53 @@ class FNFUserController extends Controller
         }
 
         return new Response($res);
+    }
+
+    public function getApplicableFNFUserAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user    = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
+
+            if(is_array($fnfUser)){
+                if( $fnfUser['group_type'] == 1 ){
+                    $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
+                        'discount_amount' => $fnfUser['discount'],
+                        'min_amount'      => $fnfUser['minAmount'],
+                        'group_type'      => $fnfUser['group_type'],
+                    ));
+                }else if( $fnfUser['group_type'] == 2 )
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
+                        'discount_amount' => $this->getUserDiscountAmount($fnfUser['discount'], $fnfUser['token']),
+                        'min_amount'      => 0,
+                        'group_type'      => $fnfUser['group_type'],
+                    ));
+                }
+
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'user in not applicable for discount.');
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response($res);
+    }
+
+    public function getUserDiscountAmount( $discount, $token)
+    {
+        $amount = 0;
+        $user = $this->get('webservice.helper')->findUserByAuthToken($token);
+        $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
+        foreach($user_cart as $cart){
+            $amount = $cart['price'] + $amount;
+        }
+
+        $dicount_amount = ($discount / 100) * $amount;
+
+        return $dicount_amount;
     }
 }

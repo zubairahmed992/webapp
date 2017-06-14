@@ -276,3 +276,10 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ShopLookProduct
             container: "@service_container"
+
+     admin.helper.marketingtiles:
+         class: LoveThatFit\AdminBundle\Entity\MarketingTilesHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\MarketingTiles

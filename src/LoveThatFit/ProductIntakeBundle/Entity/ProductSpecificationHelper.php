@@ -200,7 +200,9 @@ class ProductSpecificationHelper {
             $specs = $this->generate_specs_for_fit_model_size($specs);
         } elseif (strpos($decoded['name'], 'remove_fit_point') !== false) { #~~~~~~~~>7            
             $specs = $this->remove_fit_point($specs, $decoded);
-        } else {
+        } elseif (strpos($decoded['name'], 'add_new_fit_point') !== false) { #~~~~~~~~>8            
+            $specs = $this->add_new_fit_point($specs, $decoded);            
+        }  else {
             return array(
                 'message' => 'Nothing to update!',
                 'message_type' => 'error',
@@ -375,6 +377,36 @@ class ProductSpecificationHelper {
             unset($specs['fit_point_stretch'][$fp]);
         }
         return $specs;
+    }
+
+    #------------------->8 add new Fit Point >>>>>>>>>>>>>>>>>>>>>>>>>>>
+    private function add_new_fit_point($specs, $decoded) {
+        foreach ($specs['sizes'] as $size=>$fp) {
+            if (array_key_exists($decoded['value'], $specs['sizes'][$size])) {
+                return null;
+            }else{
+                $specs['sizes'][$size][$decoded['value']]= $this->get_empty_fit_point();
+            }
+        }
+        return $specs;
+    }
+
+    private function get_empty_fit_point() {
+        return array('garment_dimension' => 0,
+            'stretch_percentage' => 0,
+            'garment_stretch' => 0,
+            'grade_rule' => 0,
+            'grade_rule_stretch' => 0,
+            'min_calc' => 0,
+            'max_calc' => 0,
+            'min_actual' => 0,
+            'max_actual' => 0,
+            'ideal_low' => 0,
+            'ideal_high' => 0,
+            'fit_model' => 0,
+            'grade_rule' => 0,
+            'original_value' => 0,
+        );
     }
 
     ###################################################################
@@ -709,6 +741,7 @@ class ProductSpecificationHelper {
         $product->setFabricWeight($data['fabric_weight']);
         $product->setStructuralDetail($data['structural_detail']);
         $product->setFitType($data['fit_type']);
+        $product->setStatus('pending');
         $product->setLayering(array_key_exists('layring', $data) ? $data['layring'] : $data['layering']);
         $product->setFitPriority(array_key_exists('fit_priority', $data) ? json_encode($data['fit_priority']) : 'NULL' );
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data) ? $data['fabric_content'] : ''));
@@ -734,7 +767,7 @@ class ProductSpecificationHelper {
                 $ps = new ProductSize();
                 $ps->setTitle($size_title);
                 $ps->setProduct($product);
-                $ps->setBodyType($data['body_type']);
+                $ps->setBodyType(ucfirst($data['body_type']));
                 $ps->setIndexValue($i);
                 $em->persist($ps);
                 $em->flush();
@@ -803,7 +836,8 @@ class ProductSpecificationHelper {
     //--------------------------- get deaitls of Existing Product
     public function getExistingProductDetails( $id )
     {       
-        $data = $this->container->get('service.repo')->getExistingProductDetails($id); 
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id);   
+        $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
         $data1['style_name']=$data[0][0]['name'];
@@ -820,39 +854,42 @@ class ProductSpecificationHelper {
         $data1['layering']=$data[0][0]['layering'];
         $data1['structural_detail']=$data[0][0]['structural_detail'];
         $data1['fit_type']=$data[0][0]['fit_type'];          
-        $data1['fit_priority']=$data[0][0]['fit_priority'];
-        $data1['fabric_content']=$data[0][0]['fabric_content'];
+        $data1['fit_priority']=json_decode($data[0][0]['fit_priority']);
+        $data1['fabric_content']=json_decode($data[0][0]['fabric_content']);
         $data1['size_title_type']=$data[0][0]['size_title_type'];
         $data1['control_number']=$data[0][0]['control_number'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-        $data1['fit_type']=$data[0][0]['fit_type'];
-
-
-        //            colors : ""
-        //            mapping_description : "Willow & Clay product"
-        //            mapping_title : "Willow and Clay mati"
-        //            body_type : "tall"
-        //            measuring_unit : "inch"
-             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+        $data1['styling_type']=$data[0][0]['styling_type'];
+        $data1['colors']='';
+        $data1['mapping_title']=$data[0]['clothing_type'];
+        $data1['mapping_description']=$data[0]['clothing_type'];       
+        $data1['measuring_unit']='inch';       
+        $new_fp = array('hip' => 'low_hip', 'thigh' => 'high_thigh', 'central_front_waist' => 'cf_waist');
+        
+        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['fit_model'] = $value['fit_model_measurement'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['grade_rule_stretch'] = $value['horizontal_stretch'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['ideal_high'] = $value['ideal_body_size_high'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['ideal_low'] = $value['ideal_body_size_low'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['max_calc'] = $value['max_calculated'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['min_actual'] = $value['min_body_measurement'];
-                    $data1['sizes'][$product_size_value['title']][$value['title']]['min_calc'] = $value['min_calculated'];
-                    
-             
-                            
-                   }
+                     $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];
+
+                    $data1['sizes'][$product_size_value['title']][$fp]['fit_model'] = $value['fit_model_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_dimension'] = $value['garment_measurement_flat'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['grade_rule'] = $value['grade_rule'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['horizontal_stretch'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['vertical_stretch'];                
+                    $data1['sizes'][$product_size_value['title']][$fp]['stretch_percentage'] = $value['stretch_type_percentage'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_high'] = $value['ideal_body_size_high'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_low'] = $value['ideal_body_size_low'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_actual'] = $value['max_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_calc'] = $value['max_calculated'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_actual'] = $value['min_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_calc'] = $value['min_calculated'];
+                    $data1['body_type'] = $product_size_value['body_type'];
+                }
              }
+            foreach ($data[0][0]['product_colors'] as $key => $product_color_value) {                  
+               $colors['colors'][$product_color_value['title']] = $product_color_value['title'];
+            }
+            $data1['colors'] = implode(',',$colors['colors']);            
+            $data1['fit_point_stretch'] = array_flip(array_keys(reset($data1['sizes'])));          
             $brand =  $this->container->get('admin.helper.brand')->findOneByName($data1['brand']); 
             $class = $this->class;
             $c = new $class();
@@ -863,10 +900,104 @@ class ProductSpecificationHelper {
             $c->setBrandName($data1['brand']);
             $c->setStyleName($data1['style_name']);
             $c->setClothingType($data1['clothing_type']);
+            $c->setStyleIdNumber($data1['clothing_type']);            
             $c->setCreatedAt(new \DateTime('now'));
             $this->save($c);
             return true;
         
+    }
+      //--------------------------- get Product Size Measurments
+    public function getProductSizeMeasurments($sizemeasurements, $id )
+    {       
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id);  
+         //------------- Product Size Measurement Get Titles   
+        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) { 
+            foreach ($product_size_value['product_size_measurements'] as  $value) {             
+                $size_measurements_title[$product_size_value['title']][$value['title']] = $value['id'];
+                $new_fp_size_measurements[$product_size_value['title']] = $product_size_value['id']; 
+            }           
+        }       
+        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) { 
+            foreach ($product_size_value['product_size_measurements'] as  $fp_title=>$value) {             
+                if(!array_key_exists($value['title'],$sizemeasurements['sizes'][$product_size_value['title']])){
+                    $this->container->get('admin.helper.productsizemeasurement')->delete($value['id']);
+                }
+            }           
+        }       
+        
+        foreach ($sizemeasurements['sizes'] as $key => $product_size_mesurements) {            
+            foreach ($product_size_mesurements as $key_val => $value) { 
+                  if( array_key_exists($key_val,$size_measurements_title[$key]) ){
+                    $psm = $this->container->get('admin.helper.productsizemeasurement')->find($size_measurements_title[$key][$key_val]);
+                    $psm->setGarmentMeasurementFlat($value['garment_dimension']);
+                    $psm->setGarmentMeasurementStretchFit($value['garment_stretch']);
+                    $psm->setMaxBodyMeasurement($value['max_actual']);
+                    $psm->setIdealBodySizeHigh($value['ideal_high']);
+                    $psm->setIdealBodySizeLow($value['ideal_low']);
+                    $psm->setMinBodyMeasurement($value['min_actual']);
+                    $psm->setFitModelMeasurement($value['fit_model']);
+                    $psm->setMaxCalculated($value['max_calc']);
+                    $psm->setMinCalculated($value['min_calc']);
+                    $psm->setGradeRule($value['grade_rule']);
+                    $this->container->get('admin.helper.productsizemeasurement')->update($psm);
+                } else {                  
+                    $size_id = $this->container->get('admin.helper.productsizes')->find($new_fp_size_measurements[$key]);
+                    $psm = new ProductSizeMeasurement;                                         
+                    $psm->setProductSize($size_id);
+                    $psm->setTitle($key_val);
+                    $psm->setGarmentMeasurementFlat($value['garment_dimension']);
+                    $psm->setGarmentMeasurementStretchFit($value['garment_stretch']);
+                    $psm->setMaxBodyMeasurement($value['max_actual']);
+                    $psm->setIdealBodySizeHigh($value['ideal_high']);
+                    $psm->setIdealBodySizeLow($value['ideal_low']);
+                    $psm->setMinBodyMeasurement($value['min_actual']);
+                    $psm->setFitModelMeasurement($value['fit_model']);
+                    $psm->setMaxCalculated($value['max_calc']);
+                    $psm->setMinCalculated($value['min_calc']);
+                    $psm->setGradeRule($value['grade_rule']);
+                    $this->container->get('admin.helper.productsizemeasurement')->update($psm);
+                }
+            }
+        }
+            
+            
+        
+        $data1= '';
+//        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) { 
+//            foreach ($product_size_value['product_size_measurements'] as  $value) { 
+//                               
+//              //  $data1['sizes'][$product_size_value['title']][$value['title']]['id'] = $value['id'];
+//                if( array_key_exists($value['title'],array_flip(array_keys(reset($sizemeasurements['sizes'])))) ){
+//              //   array_key_exists($value['title'],array_flip(array_keys(reset($sizemeasurements['sizes'])))) ? $psm = $this->container->get('admin.helper.productsizemeasurement')->find($value['id']) : $psm = new ProductSizeMeasurement;  
+//                    $psm = $this->container->get('admin.helper.productsizemeasurement')->find($value['id']);
+//                    array_key_exists('garment_dimension', $sizemeasurements['sizes'][$product_size_value['title']][$value['title']]) ? $psm->setGarmentMeasurementFlat($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['garment_dimension']) : null;
+//                    array_key_exists('garment_stretch', $sizemeasurements['sizes'][$product_size_value['title']][$value['title']]) ? $psm->setGarmentMeasurementStretchFit($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['garment_stretch']) : null;
+//                    $psm->setMaxBodyMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['max_actual']);
+//                    $psm->setIdealBodySizeHigh($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['ideal_high']);
+//                    $psm->setIdealBodySizeLow($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['ideal_low']);
+//                    $psm->setMinBodyMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['min_actual']);
+//                    $psm->setFitModelMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['fit_model']);
+//                    $psm->setMaxCalculated($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['max_calc']);
+//                    $psm->setMinCalculated($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['min_calc']);
+//                    $psm->setGradeRule($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['grade_rule']);
+//                    $this->container->get('admin.helper.productsizemeasurement')->update($psm);
+//                } else{
+//                    $psm = new ProductSizeMeasurement;                                         
+//                    array_key_exists('garment_dimension', $sizemeasurements['sizes'][$product_size_value['title']][$value['title']]) ? $psm->setGarmentMeasurementFlat($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['garment_dimension']) : null;
+//                    array_key_exists('garment_stretch', $sizemeasurements['sizes'][$product_size_value['title']][$value['title']]) ? $psm->setGarmentMeasurementStretchFit($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['garment_stretch']) : null;
+//                    $psm->setMaxBodyMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['max_actual']);
+//                    $psm->setIdealBodySizeHigh($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['ideal_high']);
+//                    $psm->setIdealBodySizeLow($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['ideal_low']);
+//                    $psm->setMinBodyMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['min_actual']);
+//                    $psm->setFitModelMeasurement($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['fit_model']);
+//                    $psm->setMaxCalculated($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['max_calc']);
+//                    $psm->setMinCalculated($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['min_calc']);
+//                    $psm->setGradeRule($sizemeasurements['sizes'][$product_size_value['title']][$value['title']]['grade_rule']);
+//                    $this->container->get('admin.helper.productsizemeasurement')->save($psm);
+//                }
+//            }
+        
+        return $data1;
     }
 }
 

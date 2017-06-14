@@ -234,6 +234,7 @@ class PaymentHelper
             );
 
             $saleObject['options'] = array(
+                'submitForSettlement' => true,
                 'storeInVault' => true
             );
             $result = Braintree_Transaction::sale(
