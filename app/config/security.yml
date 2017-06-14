@@ -117,6 +117,7 @@ security:
                     waqas: { password: a6b3ea59399a4275ce31fa37f125b6cfece3b9b6, roles: 'ROLE_ADMIN' }
                     kathleen: { password: 722600f5b186e08f3934ce1e0d59644163d3bf69, roles: 'ROLE_ADMIN' }
                     monika: { password: 75ee7b8e2f588a233c0819ba2c3b3fcc1191cdd1, roles: 'ROLE_ADMIN' }
+                    nina: { password: a277279c85ff66c6758eb0286a53e3cef91e1226, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
