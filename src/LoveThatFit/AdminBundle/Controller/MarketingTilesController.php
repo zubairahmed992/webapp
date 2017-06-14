@@ -38,7 +38,11 @@ class MarketingTilesController extends Controller {
     //------------------------------Create New Banner------------------------------------------------------------
     public function newAction() {
         $entity = $this->get('admin.helper.marketingtiles')->createNew();
-        $form = $this->createForm(new MarketingTilesTypes('add',$entity), $entity);
+        $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber();
+        $entity->setSorting($max_sorting_number[0]['max_sort'] + 1) ;
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
+        $form = $this->createForm(new MarketingTilesTypes('add',$entity,$button_action,$sorting), $entity);
         return $this->render('LoveThatFitAdminBundle:MarketingTiles:new.html.twig', array(
                     'form' => $form->createView()
         ));
@@ -47,15 +51,16 @@ class MarketingTilesController extends Controller {
     //-------------------------------Save Banner in database-----------------------------------------------------------
     public function createAction(Request $request) {
         $entity = $this->get('admin.helper.marketingtiles')->createNew();
-
-        $form = $this->createForm(new MarketingTilesTypes('add',$entity), $entity);
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
+        $form = $this->createForm(new MarketingTilesTypes('add',$entity,$button_action,$sorting), $entity);
         $form->bind($request);
 
             /*Conditions for handling Banner sorting*/
             $form_sorting_value = $entity->getSorting();
 
             /*If User added random sort number which is greater than max sort number then max sort will be set*/
-            $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber($form_sorting_value);
+            $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber();
             
             if( isset($max_sorting_number[0]['max_sort']) && $form_sorting_value > $max_sorting_number[0]['max_sort']) {
                 $entity->setSorting($max_sorting_number[0]['max_sort'] + 1) ;
@@ -81,10 +86,12 @@ class MarketingTilesController extends Controller {
 //----------------------------------------Edit Banner--------------------------------------------------
     public function editAction($id) {
         $entity = $this->get('admin.helper.marketingtiles')->find($id);
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
         if(!$entity){       
             $this->get('session')->setFlash('warning', 'The Marketing Tiles can not be Created!');
         }else{
-            $form = $this->createForm(new MarketingTilesTypes('edit',$entity), $entity);
+            $form = $this->createForm(new MarketingTilesTypes('edit',$entity,$button_action,$sorting), $entity);
             $deleteForm = $this->createForm(new DeleteType(), $entity);
         }
         return $this->render('LoveThatFitAdminBundle:MarketingTiles:edit.html.twig', array(
@@ -98,11 +105,12 @@ class MarketingTilesController extends Controller {
     public function updateAction(Request $request, $id) {
 
         $entity = $this->get('admin.helper.marketingtiles')->find($id);
-
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
         if(!$entity){
             $this->get('session')->setFlash('warning', 'The Marketing Tiles not found!');
         }else{
-            $form = $this->createForm(new MarketingTilesTypes('edit',$entity), $entity);
+            $form = $this->createForm(new MarketingTilesTypes('edit',$entity,$button_action,$sorting), $entity);
             $form->bind($request);
 
             if ($form->isValid()) {
@@ -114,7 +122,7 @@ class MarketingTilesController extends Controller {
 
                 if($db_banner_sorting !== $form_sorting_value){
                     /*If User added random sort number which is greater than max sort number then max sort will be set*/
-                    $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber($form_sorting_value); 
+                    $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber(); 
                     if($form_sorting_value > $max_sorting_number[0]['max_sort']) {
                         $entity->setSorting($max_sorting_number[0]['max_sort']);
                         $form_sorting_value = $entity->getSorting();

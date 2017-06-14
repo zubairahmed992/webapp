@@ -389,8 +389,8 @@ class MarketingTilesHelper {
     }
 
     #-----------------Get Maximum sorting Number---------------------------------#
-    public function maxSortingNumber($sorting_number){
-        $result = $this->repo->maxSortingNumber($sorting_number);
+    public function maxSortingNumber(){
+        $result = $this->repo->maxSortingNumber();
         return $result;
     }
 }

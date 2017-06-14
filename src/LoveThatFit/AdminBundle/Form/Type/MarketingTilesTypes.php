@@ -7,9 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class MarketingTilesTypes extends AbstractType {
     private $entity;
-
-    public function __construct($mode,$entity) {
+    private $button_action;
+    private $sorting;
+    public function __construct($mode,$entity,$button_action,$sorting) {
         $this->mode = $mode;
+        $this->button_action = ($button_action) ? $button_action : 0;
+        $this->sorting = ($sorting) ? $sorting : 0;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -17,8 +20,8 @@ class MarketingTilesTypes extends AbstractType {
         $builder->add('description', 'textarea',array('required'=>false));
         $builder->add('file',null,array('required'=>true));
         $builder->add('button_title', 'text',array('required'=>false));
-        $builder->add('button_action', 'text',array('required'=>false,'data' => '0'));
-        $builder->add('sorting', 'integer', array('required' => false, 'attr' => array('min' => 1)));
+        $builder->add('button_action', 'text',array('required'=>false,'data' => $this->button_action));
+        $builder->add('sorting', 'integer', array('required' => false, 'data' => $this->sorting, 'attr' => array('min' => 1)));
         $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));
     }
 

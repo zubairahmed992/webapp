@@ -420,7 +420,7 @@ param:limit, page_number,limit,sort
 
 
     #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
-    public function maxSortingNumber($sorting_number){
+    public function maxSortingNumber(){
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('MAX(mt.sorting) as max_sort')
             ->from('LoveThatFitAdminBundle:MarketingTiles', 'mt');
