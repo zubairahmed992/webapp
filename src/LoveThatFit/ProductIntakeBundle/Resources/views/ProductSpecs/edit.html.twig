@@ -919,25 +919,31 @@
     </div>
 #}
 {#---------------------------------------------------------------------------------------------#}
+   
                <div id="dv_fit_point_stretch">
                   {# <a id="lnk_fit_point_stretch" href="#">Add Fit point stretch preference</a><br>#}
                        <b>Add Fit point stretch preference</b><br>
                     <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                            <thead>
                         <tr>
                             {% for fp, fpv in fit_point_stretch %}                
                                 <th>{{fp}}</th>                                    
                             {% endfor %}
-                        </tr>                
+                        </tr>      
+                            </thead>
+                                <tbody>
                         <tr>
                             {% for fp, fpv in fit_point_stretch %}                
-                                <td>
+                                <td class="col-md-2">
                                     {#<input type="number" class="form-control input-sm" placeholder="%" name="fit_point_stretch-{{ fp }}" value="{{fpv}}" style="width:80px">#}                                    
-                                        <input type="number" class="form-control  edit_inline input-sm" readonly="ture" placeholder="%" name="fit_point_stretch-{{ fp }}" id="fit_point_stretch-{{ fp }}" value="{{fpv}}" data-title="Enter stretch for {{fp}}">
+                                        <input type="number" class="edit_inline input-sm" readonly="ture" placeholder="%" name="fit_point_stretch-{{ fp }}" id="fit_point_stretch-{{ fp }}" value="{{fpv}}" data-title="Enter stretch for {{fp}}">
                                 </td>                                    
                             {% endfor %}
                         </tr>
+                            </tbody>
                     </table>   
                </div> 
+ 
                <div id="dv_fit_priority">
                        <b>Fit Priority</b><br>
                     <table class="table table-bordered " id='tbl_fit_point_stretch'>
