@@ -383,12 +383,6 @@ class MarketingTilesHelper {
     }
 
     #-----------------Get all Banner which Parent id is null---------------------------------#
-    public function getBannerlist($parent = 0, $spacing = '', $category_tree_array = ''){
-        $result = $this->repo->findAllBannerDropdown($parent);
-        return $result;
-    }
-
-    #-----------------Get all Banner which Parent id is null---------------------------------#
     public function editBannerSorting($sorting_number, $action,$db_banner_sorting = 0){
         $result = $this->repo->editBannerSorting($sorting_number, $action, $db_banner_sorting);
         return $result;

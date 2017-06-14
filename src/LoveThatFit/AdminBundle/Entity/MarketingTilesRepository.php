@@ -389,23 +389,6 @@ param:limit, page_number,limit,sort
 
     }
 
-
-    #--------------Find Categories By ID---------------------------------#
-    public function findAllBannerDropdown($parent_id = 0) {
-
-        $query = $this->getEntityManager()
-            ->createQuery("SELECT c.id as id, c.title as name, c.parent_id as parent_id, c.banner_type as banner_type
-            FROM LoveThatFitAdminBundle:MarketingTiles c
-            WHERE c.disabled=0 and c.parent_id is null ORDER BY c.id asc ");
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-
     #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
     public function editBannerSorting($sorting_number, $action, $current_value = 0){
 
@@ -416,7 +399,7 @@ param:limit, page_number,limit,sort
         }elseif($action == 'delete'){
             $sql = "UPDATE $marketingtilesTableName SET sorting = sorting - 1 where sorting >= :sorting_number ";
         }elseif($action == 'update'){
-
+            
             if($current_value > $sorting_number){
                 //if current move to less position then +1
                 $sql = "UPDATE $marketingtilesTableName SET sorting = sorting + 1 where sorting >= :sorting_number AND sorting <= :current_value ";
@@ -438,13 +421,14 @@ param:limit, page_number,limit,sort
 
     #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
     public function maxSortingNumber($sorting_number){
-        $marketingtilesTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:MarketingTiles')->getTableName();
-        $sql = "SELECT MAX(sorting) as max_sort FROM $marketingtilesTableName";
-        $query = $this->getEntityManager()->getConnection()
-            ->prepare($sql);
-        //$query->execute($params);
-        $result_query = $query->fetchAll();
-        return $result_query;
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('MAX(mt.sorting) as max_sort')
+            ->from('LoveThatFitAdminBundle:MarketingTiles', 'mt');
+        try {
+            return $query->getQuery()->setMaxResults(1)->getResult();//$query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
 
     }
 
