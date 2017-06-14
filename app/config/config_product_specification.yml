@@ -1994,6 +1994,51 @@ constants:
       cuffed_sleeve: cuffed_sleeve
       rolled_sleeve: rolled_sleeve
       peplum: peplum
+    hidden_specs:
+      blouse:
+        - rise
+      blouses:
+        - rise
+      tunic:
+        - rise
+      tee_knit:
+        - rise
+      tank_knit:
+        - rise
+      jacket:
+        - rise
+      jackets:
+        - rise
+      sweater:
+        - rise
+      sweaters:
+        - rise
+      dress:
+        - rise
+      dresses:
+        - rise
+      coat:
+        - rise
+      coats:
+        - rise
+      trouser:
+        - sleeve_styling
+        - neckline
+      trousers:
+        - sleeve_styling
+        - neckline
+      jean:
+        - sleeve_styling
+        - neckline
+      jeans:
+        - sleeve_styling
+        - neckline
+      skirt:
+        - sleeve_styling
+        - neckline
+      skirts:
+        - sleeve_styling
+        - neckline
       
   man: 
     clothing_type:
@@ -2173,7 +2218,7 @@ constants:
         bateau_neck: bateau_neck
         mock_turtle: mock_turtle
         classic_tank: classic_tank
-      casual_jacket:  
+      casual_jacket:
         single_breasted_lapels: single_breasted_lapels
         double_breasted_lapels: double_breasted_lapels
         zip: Zip
@@ -2273,6 +2318,41 @@ constants:
       cuffed_sleeve: cuffed_sleeve
       peplum: Peplum
       belted: Belted
+    hidden_specs:
+      shirt:
+        - rise
+      tank_knit:
+        - rise
+      casual_jacket:
+        - rise
+      sweater:
+        - rise
+      sweaters:
+        - rise
+      sport_jacket:
+        - rise
+      dress_jacket:
+        - rise
+      coat:
+        - rise
+      coats:
+        - rise
+      trouser:
+        - sleeve_styling
+        - neckline
+        - rise
+      trousers:
+        - sleeve_styling
+        - neckline
+        - rise
+      jean:
+        - sleeve_styling
+        - neckline
+        - rise
+      jeans:
+        - sleeve_styling
+        - neckline
+        - rise
    
   attributes: [clothing_type, brand, style_name,style_id_number, gender, description, styling_type, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content,  size_title_type,  control_number, colors]
   attribute_specs:
@@ -2360,7 +2440,36 @@ constants:
   Coat : dress
   Shirt : dress
 
- 
+ hidden_specs:
+  women:
+    rise:
+     - blouse
+     - tunic
+     - tee_knit
+     - tank_knit
+     - jacket
+     - sweater
+     - dress
+     - coat
+    sleeve_styling|neckline|rise:
+     - trouser
+     - jean
+     - skirt
+  man:
+    rise:
+     - shirt
+     - tank_knit
+     - casual_jacket
+     - sweater
+     - sport_jacket
+     - dress_jacket
+     - coat
+    sleeve_styling|neckline:
+     - trouser
+     - jean
+
+
+
       
 
 

@@ -446,6 +446,10 @@ class ProductHelper
     }
 
 
+    public function findAll()
+    {
+        return $this->repo->findAll();
+    }
 #---------------------------------------------------
     public function findProductByTitle($name)
     {
@@ -1045,6 +1049,21 @@ class ProductHelper
         $clothing_type = $this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
         $clothing = $this->container->get('admin.helper.clothingtype')->findByTargetGender($clothing_type['target'], $gender);
         return $clothing;
+    }
+
+    #----------------------Product Cloting type  ------------------------#
+    public function productClothingTypeNew($target_array)
+    {
+        $clothing_type_id = $target_array['clothing_type'];
+        $gender = $target_array['gender'];
+        $clothing_type = $this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
+        $clothing = $this->container->get('admin.helper.clothingtype')->findByTargetAndGender($clothing_type['target'], $gender);
+        return $clothing;
+    }
+    #----------------------Product Cloting type  ------------------------#
+    public function productClothingTypes()
+    {
+        return $this->container->get('admin.helper.clothingtype')->findAll();
     }
 
 #---------------Delete Product------------------------------------------------#

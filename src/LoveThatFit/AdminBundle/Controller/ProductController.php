@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDetailTypeNew;
 use LoveThatFit\AdminBundle\Form\Type\ProductRawType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
@@ -129,29 +130,101 @@ class ProductController extends Controller {
     #--------------------Method for Edit Product Detail----------------------------#
 
     public function productDetailEditAction($id) {
+        
         $entity = $this->get('admin.helper.product')->find($id);
+        $gender = (strtolower($entity->getGender()) == 'f') ? 'woman' : 'man';
         $entity->setGender(strtolower($entity->getGender()));
+        $target_array = ['clothing_type' => $entity->getClothingType(), 'gender' => $entity->getGender()];
+        /*$clothingType = $this->get('admin.helper.product')->productClothingTypes();*/
+        $clothingType = $this->get('admin.helper.product')->productClothingTypeNew($target_array);
+        $clothingTypes = [];
+        foreach ($clothingType as $ct) {
+            $clothingTypes[$ct['id']] = $ct['name'];
+        }
+        $clothingType = [];
+        $clothingType['choices'] = $clothingTypes;
+
+        /*$clothingTypes = [];
+        $count = 0;
+        foreach ($clothingType as $ct) {
+            $clothingTypes[$count]['id'] = $ct->getID();
+            $clothingTypes[$count]['gender'] = $ct->getGender();
+            $clothingTypes[$count]['target'] = $ct->getTarget();
+            $clothingTypes[$count]['name'] = $ct->getName();
+            $count++;
+        }*/
+
+        $clothingTypeAttributes = $this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
+        $isProductSpecs = false;
+        $fit_priority = json_decode($entity->getFitPriority(),true);
+        if (empty($fit_priority)) {
+            $fit_priority = $clothingTypeAttributes['fitting_priority'];
+            $isProductSpecs = true;
+        }
+        $fit_priority = $this->convertToProductClothingTypeAttributeFormat($fit_priority, $isProductSpecs);
+
+        $isProductSpecs = false;
+        $fabric_content = json_decode($entity->getFabricContent());
+        if (empty($fabric_content)) {
+            $fabric_content = $clothingTypeAttributes['fabric_content'];
+            $isProductSpecs = true;
+        }
+        $fabric_content = $this->convertToProductClothingTypeAttributeFormat($fabric_content, $isProductSpecs);
+
+        $isProductSpecs = false;
+        $garment_detail = json_decode($entity->getGarmentDetail());
+        if (empty($garment_detail)) {
+            $garment_detail = $clothingTypeAttributes['garment_detail'];
+            $isProductSpecs = true;
+        }
+        $garment_detail = $this->convertToProductClothingTypeAttributeFormat($garment_detail, $isProductSpecs);
+
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
+
+        $productArr = $entity->toArray();
+        $clothingType['selected'] = $productArr['clothing_type_id'];
+
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
+        $form = $this->createForm(new ProductDetailTypeNew($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()[$gender],$status,$disabled,$clothingType,$productArr), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
+        /*print_r($entity->getClothingType()); exit;*/
+        /*print_r($entity->toArray()); exit;*/
 
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
+        unset($productArr['fit_priority']);
+        unset($productArr['fabric_content']);
+        unset($productArr['garment_detail']);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit_new.html.twig', array(
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
             'entity' => $entity,
+            'product' => $productArr,
             'productSpecification' => $productSpecification,
-            'fit_priority' => $entity->getFitPriority(),
-            'fabric_content' => $entity->getFabricContent(),
-            'garment_detail' => $entity->getGarmentDetail(),
+            'clothing_types' => $clothingTypes,
+            'fit_priority' => $fit_priority,
+            'fabric_content' => $fabric_content,
+            'garment_detail' => $garment_detail,
             'brandObj'=>$brandObj,
         ));
     }
 
+    private function convertToProductClothingTypeAttributeFormat($input, $isProductSpecs = false)
+    {
+        $output = [];
+        if ($isProductSpecs) {
+            foreach ($input as $key => $val) {
+                $output[] = ['label' => $val, 'name' => $val, 'value' => ''];
+            }
+        } else {
+            foreach ($input as $key => $val) {
+                $output[] = ['label' => $key, 'name' => $key, 'value' => $val];
+            }
+        }
+        return $output;
+    }
     #--------------------Method for Edit Product Raw as needed----------------------------#
 
     public function productRawEditAction($id) {
