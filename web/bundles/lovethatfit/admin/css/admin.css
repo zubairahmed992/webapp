@@ -356,20 +356,28 @@ i.icon-desc {
     height: 16px;
 }
 i.icon-desc-no-desc {
-	border:1px solid #F00;
+	background-position: -238px -167px;
+    width: 19px;
+    height: 16px;
 }
 i.icon-desc-have-desc {
 	border:none;
 }
 i.icon-desc-have-desc-yellow {
-		border:1px solid #FF0;
+	background-position: -288px -167px;
+    width: 19px;
+    height: 16px;
 }
 i.icon-desc-have-desc-green {
-		border:1px solid #090;
+	background-position: -261px -167px;
+    width: 19px;
+    height: 16px;
 }
 
 i.price-edit-no-price {
-	border:1px solid #F00;
+	background-position: -310px -167px;
+    width: 19px;
+    height: 16px;
 }
 
 i.price-edit-have-price {
@@ -377,17 +385,25 @@ i.price-edit-have-price {
 }
 
 i.price-edit-green {
-	border:1px solid #090;
+	background-position: -334px -167px;
+    width: 19px;
+    height: 16px;
 }
 i.price-edit-yellow {
-	border:1px solid #FF0;
+	background-position: -358px -167px;
+    width: 19px;
+    height: 16px;
 }
 
 i.cat-no-value {
-	border:1px solid #F00;
+	background-position: -408px -167px;
+    width: 19px;
+    height: 16px;
 }
 
 i.cat-have-value {
-	border:none;
+	background-position: -382px -167px;
+    width: 19px;
+    height: 16px;
 }
 
