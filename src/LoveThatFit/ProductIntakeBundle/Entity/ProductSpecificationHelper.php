@@ -169,7 +169,19 @@ class ProductSpecificationHelper {
         }
         return $fp;
     }
-
+#-----------------------------------------------
+    public function getFitModelMeasurements($id) {
+        $ps = $this->repo->find($id);
+        if(!$ps) {return false;}
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $fm_specs = array();
+        foreach ($parsed_data['sizes'] as $size => $fp) {
+            foreach ($fp as $fpk => $fpv) {
+                $fm_specs['sizes'][$size][$fpk] = $fpv['fit_model'];
+            }
+        }
+        return $fm_specs;
+    }
     ######################################################################################
     ##################################### Fit Model Dynamic Calculations #################
     #####################################################################################

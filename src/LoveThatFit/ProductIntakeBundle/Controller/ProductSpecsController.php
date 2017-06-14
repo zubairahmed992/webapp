@@ -72,26 +72,56 @@ class ProductSpecsController extends Controller
                     'tab' => $tab,
                 ));
     }
-      
+
+#-----------------------------------> product_intake_product_specs_fetch_json:  /product_intake/product_specs/fetch_json/{id}
+    public function fetchJsonAction($id, $attrib = null) {
+        
+        if($attrib=='fit_model'){
+            $ps = $this->get('pi.product_specification')->getFitModelMeasurements($id);
+             return new response(json_encode($ps));            
+        }else{
+            $ps = $this->get('pi.product_specification')->find($id);
+            if ($ps) {                            
+                return new response($ps->getSpecsJson());
+            } else {
+                return new response('false');
+            }    
+            
+        }
+        
+        return new response(json_encode($ps));
+        
+        
+    }
+
     #----------------------- /product_intake/product_specs/show
-    public function showAction($id){                
+    public function showAction($id, $json = null) {
+
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $ps = $this->get('pi.product_specification')->find($id);         
-        $parsed_data = json_decode($ps->getSpecsJson(),true);
-         if(isset($parsed_data['fit_model_size'])){ 
-            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
-            $fit_model_selected = $fit_model_selected_size->getSize(); 
-         } else {
-             $fit_model_selected =null;
-         }        
-         
+        $ps = $this->get('pi.product_specification')->find($id);
+        if ($json) {
+            if($ps){
+            return new response($ps->getSpecsJson());
+            }else{
+                return new response('false');
+            }
+        }
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        if (isset($parsed_data['fit_model_size'])) {
+            $fit_model_selected_size = $parsed_data['fit_model_size'] == null ? null : $this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize();
+        } else {
+            $fit_model_selected = null;
+        }
+
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
-                    'parsed_data' => json_decode($ps->getSpecsJson(),true),
+                    'parsed_data' => json_decode($ps->getSpecsJson(), true),
                     'product_specification_id' => $ps->getId(),
                     'product_specs_json' => json_encode($gen_specs),
                     'fit_model_selected_size' => $fit_model_selected,
-                ));
+        ));
     }
+
     #----------------------- /product_intake/product_specs/delete
     public function deleteAction($id){         
         $remove_csv_file = $this->get('pi.product_specification')->find($id);
