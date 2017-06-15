@@ -403,7 +403,8 @@ class UserRepository extends EntityRepository
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->where('ua.user = :user_id')
             ->setParameter('user_id', $user_id)
-            ->orderBy('ua.updated_at', 'desc');
+            ->orderBy('ua.updated_at', 'desc')
+            ->orderBy('ua.id', 'desc');
 
         $preparedQuery = $query->getQuery();
         return $preparedQuery->getResult();
