@@ -47,7 +47,6 @@ class WebServiceHelper
         if (isset($version['version']) && $version['version'] == 1) {
             return $user->toDataArraySupport(true, $request_array['device_model'], $request_array['base_path'], $device_config);
         } else {
-
             return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
         }
     }
