@@ -425,7 +425,9 @@ class UserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
-                IDENTITY(u.original_user) as original_user_id'
+                IDENTITY(u.original_user) as original_user_id,
+                (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
             )
             ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
@@ -536,7 +538,6 @@ class UserRepository extends EntityRepository
         $gender    = isset($data['gender']) && $data['gender'] ? $data['gender'] : null;
         $startDate = isset($data['startDate']) && $data['startDate'] ? $data['startDate'] : null;
         $endDate   = isset($data['endDate']) && $data['endDate'] ? $data['endDate'] : null;
-
         $query
             ->select('
                 u.id,
@@ -545,7 +546,9 @@ class UserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
-                IDENTITY(u.original_user) as original_user_id'
+                IDENTITY(u.original_user) as original_user_id,
+                (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
             )
             ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
