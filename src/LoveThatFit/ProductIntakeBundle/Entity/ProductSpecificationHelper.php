@@ -175,6 +175,7 @@ class ProductSpecificationHelper {
         if(!$ps) {return false;}
         $parsed_data = json_decode($ps->getSpecsJson(), true);
         $fm_specs = array();
+        $fm_specs=$parsed_data;
         foreach ($parsed_data['sizes'] as $size => $fp) {
             foreach ($fp as $fpk => $fpv) {
                 $fm_specs['sizes'][$size][$fpk] = $fpv['fit_model'];
