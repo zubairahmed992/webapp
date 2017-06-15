@@ -135,15 +135,7 @@ class WebServiceHelper
         if (count($user) > 0) {
             return $this->response_array(false, 'Email already exists.');
         } else {
-            $user = $this->createUserWithParams($request_array);
-
-            try {
-                //create podio users entity
-                $this->createPodioUser($user->getId());
-            } catch(\Exception $e) {
-                // log $e->getMessage()
-            }
-            
+            $user = $this->createUserWithParams($request_array);            
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
 
@@ -153,6 +145,13 @@ class WebServiceHelper
             if (!array_key_exists("event_name", $request_array)) {
                 #---- 2) send registration email ....
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
+            }
+
+            try {
+                //create podio users entity
+                $this->createPodioUser($user->getId());
+            } catch(\Exception $e) {
+                // log $e->getMessage()
             }
 
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
