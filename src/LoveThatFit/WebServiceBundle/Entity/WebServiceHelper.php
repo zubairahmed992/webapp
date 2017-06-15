@@ -47,6 +47,7 @@ class WebServiceHelper
         if (isset($version['version']) && $version['version'] == 1) {
             return $user->toDataArraySupport(true, $request_array['device_model'], $request_array['base_path'], $device_config);
         } else {
+
             return $user->toDataArray(true, $request_array['device_model'], $request_array['base_path'], $device_config);
         }
     }
@@ -134,7 +135,7 @@ class WebServiceHelper
         if (count($user) > 0) {
             return $this->response_array(false, 'Email already exists.');
         } else {
-            $user = $this->createUserWithParams($request_array);
+            $user = $this->createUserWithParams($request_array);            
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
 
@@ -146,11 +147,11 @@ class WebServiceHelper
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
             }
 
-            ## add user podio log data
-            if ($user->getId()) {
-                $user_id = $user->getId();
-                $user_entity = $this->container->get('user.helper.user')->find($user_id);
-                $save_user_podio = $this->container->get('user.helper.podio')->savePodioUsers($user_entity);
+            try {
+                //create podio users entity
+                $this->createPodioUser($user->getId());
+            } catch(\Exception $e) {
+                // log $e->getMessage()
             }
 
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
@@ -160,6 +161,14 @@ class WebServiceHelper
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
+        }
+    }
+
+    private function createPodioUser($user_id){
+        ## add user podio log data
+        if ($user_id) {
+            $user_entity = $this->container->get('user.helper.user')->find($user_id);
+            $save_user_podio = $this->container->get('user.helper.podio')->savePodioUsers($user_entity);
         }
     }
 
