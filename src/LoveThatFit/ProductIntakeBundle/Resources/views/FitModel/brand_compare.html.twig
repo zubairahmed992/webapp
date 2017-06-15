@@ -1,5 +1,34 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
+<div class="container">
+        <h4>Fit Model Measurements extract</h4>
+        <form class="form-horizontal"  >
+        <div class="form-group required">
+                <label class="control-label col-sm-2" for=""> Brand </label>
+                <div class="col-sm-4">
 
+                    <select name="sel_brand" id="sel_brand" class="sel_brand form-control" required="required">
+                        <option value="">Select Brand</option>
+                        {% for k, v in brands %}
+                        <option value="{{ v.name }}"> {{ v.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="form-group required">
+                <label class="control-label col-sm-2" for=""> Gender: </label>
+                <div class="col-sm-4">
+                    
+                    <select name="sel_gender" id="sel_gender" class="sel_gender form-control" required="required">
+                        <option value="">Select Gender</option>               
+                        <option value="m"> man</option>
+                        <option value="f"> woman</option>               
+                    </select>
+                </div>
+            </div>
+            <br>
+        </form>
+</div>
             
 {% endblock %}
