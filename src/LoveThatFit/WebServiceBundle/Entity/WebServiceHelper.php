@@ -136,6 +136,14 @@ class WebServiceHelper
             return $this->response_array(false, 'Email already exists.');
         } else {
             $user = $this->createUserWithParams($request_array);
+
+            try {
+                //create podio users entity
+                $this->createPodioUser($user->getId());
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+            }
+            
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
 
@@ -147,13 +155,6 @@ class WebServiceHelper
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
             }
 
-            ## add user podio log data
-            if ($user->getId()) {
-                $user_id = $user->getId();
-                $user_entity = $this->container->get('user.helper.user')->find($user_id);
-                $save_user_podio = $this->container->get('user.helper.podio')->savePodioUsers($user_entity);
-            }
-
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array);
 
@@ -161,6 +162,14 @@ class WebServiceHelper
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
+        }
+    }
+
+    private function createPodioUser($user_id){
+        ## add user podio log data
+        if ($user_id) {
+            $user_entity = $this->container->get('user.helper.user')->find($user_id);
+            $save_user_podio = $this->container->get('user.helper.podio')->savePodioUsers($user_entity);
         }
     }
 
