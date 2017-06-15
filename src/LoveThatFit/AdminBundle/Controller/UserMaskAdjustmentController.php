@@ -115,7 +115,7 @@ class UserMaskAdjustmentController extends Controller {
             // log $e->getMessage()
         }
 		
-        //$push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);
         return new Response('archive to live'.$archive_id);
     }
 
