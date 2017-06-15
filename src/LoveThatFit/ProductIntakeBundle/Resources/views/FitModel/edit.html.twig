@@ -154,12 +154,12 @@ $("#btn_specs_search").click(function (event) {
         });        
     });
     
-    
-    
-    
-$("#btn_toggle_product_search").click(function (event) {        
-    event.preventDefault();
-        $( ".spn_product_search" ).toggle();
+    $("#btn_toggle_product_search").click(function (event) {        
+        event.preventDefault();
+        $( ".spn_product_search" ).toggle();       
+         $(this).text(function(i, text){
+          return text === 'Hide Search'?'Show Search':'Hide Search';
+      })        
     });
     
    function fill_size_list(){
@@ -173,7 +173,6 @@ $("#btn_toggle_product_search").click(function (event) {
    }
 
  $('#sel_product_size').on('change', function (event) {
-     
      var fit_points = JSON.parse($('#fit_points').text());
      data=jQuery.parseJSON($("#product_specs_json").text());                
         $.each(data['sizes'][this.value], function (key, value) {
@@ -198,9 +197,9 @@ $("#btn_toggle_product_search").click(function (event) {
     
 <div class="row spn_product_search">
   <div class="col-md-8"></div>
-  <div class="col-md-1 form-group">Product Id</div>
-  <div class="col-md-1 form-group"><input type="text" class="form-control" id="txt_search_id" placeholder="Specification id"></div>
-  <div class="col-md-1 form-group"><button type="Button" id="btn_specs_search" class="btn btn-default">Extract</button></div>
+  <div class="col-md-1 form-group">Specification Id</div>
+  <div class="col-md-1 form-group"><input type="text" class="form-control" id="txt_search_id" placeholder="Id"></div>
+  <div class="col-md-1 form-group"><button type="Button" id="btn_specs_search" class="btn btn-default">Show Search</button></div>
 </div>
 <div class="row spn_product_search">
   <div class="col-md-8"></div>
@@ -214,11 +213,11 @@ $("#btn_toggle_product_search").click(function (event) {
   <div class="col-md-2 form-group"><input type="file" name="csv_file" id="csv_file"></div>
 </div>       
     
-    <br>        
+    
 
     <h2>Fit Model Measurements</h2>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="#" id="btn_toggle_product_search" class="btn btn-default">Extract</a>           
+        <a href="#" id="btn_toggle_product_search" class="btn btn-default">Show Search</a>           
         <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
     </div>   
 
