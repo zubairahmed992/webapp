@@ -425,16 +425,9 @@ class UserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
-                IDENTITY(u.original_user) as original_user_id,
-                ua.version'
+                IDENTITY(u.original_user) as original_user_id'
             )
-            ->from('LoveThatFitUserBundle:User', 'u')
-            ->leftJoin(
-                "LoveThatFitUserBundle:UserArchives",
-                "ua",
-                "WITH",
-                "ua.user = u.id"
-            );
+            ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
@@ -552,18 +545,9 @@ class UserRepository extends EntityRepository
                 u.email,
                 u.gender,
                 u.createdAt,
-                IDENTITY(u.original_user) as original_user_id,
-                ua.version'
+                IDENTITY(u.original_user) as original_user_id'
             )
-            ->from('LoveThatFitUserBundle:User', 'u')
-            ->leftJoin(
-                "LoveThatFitUserBundle:UserArchives",
-                "ua",
-                "WITH",
-                "ua.user = u.id"
-            )
-            ->andWhere('ua.version=:version')
-            ->setParameter('version', '1');
+            ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
