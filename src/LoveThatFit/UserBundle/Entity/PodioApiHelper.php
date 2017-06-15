@@ -46,10 +46,14 @@ class PodioApiHelper
         $env                = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['podio_enviorment'];
         if($env == 'prod') {
             $this->env = "podio_prod_credentials";
+        } else if($env == 'v3stack') {
+            $this->env = "podio_v3stack_credentials";
         } else if($env == 'qa') {
             $this->env = "podio_qa_credentials";
         } else if($env == 'dev') {
             $this->env = "podio_dev_credentials";
+        } else if($env == 'v3qa') {
+            $this->env = "podio_v3qa_credentials";
         } else {
             $this->env  = "podio_local_credentials";
         }

@@ -16,7 +16,7 @@ class FNFUserRepository extends EntityRepository
     public function getApplicableUserForDiscount($user_id)
     {
 
-        $sql = "SELECT f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token, f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
+        $sql = "SELECT f1_.id as group_id, f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token, f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
                     FROM fnf_user f0_ INNER JOIN fnfusers_groups f2_ ON f0_.id = f2_.fnfuser_id 
                     INNER JOIN fnf_group f1_ ON f1_.id = f2_.fnfgroup_id 
                     INNER JOIN ltf_users l3_ ON f0_.user_id = l3_.id 
@@ -35,11 +35,13 @@ class FNFUserRepository extends EntityRepository
             $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
 
             $stmt->execute();
-            return $stmt->fetchAll()[0];
+            $returnArray = $stmt->fetchAll();
+            if(!empty($returnArray))
+                return $returnArray[0];
 
         } catch (\Doctrine\ORM\NoResultException $e) {
 
-            $sql = "SELECT f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token , f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
+            $sql = "SELECT f1_.id as group_id, f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token , f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
                     FROM fnf_user f0_ INNER JOIN fnfusers_groups f2_ ON f0_.id = f2_.fnfuser_id 
                     INNER JOIN fnf_group f1_ ON f1_.id = f2_.fnfgroup_id 
                     INNER JOIN ltf_users l3_ ON f0_.user_id = l3_.id 
@@ -58,7 +60,9 @@ class FNFUserRepository extends EntityRepository
                 $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
 
                 $stmt->execute();
-                return $stmt->fetchAll()[0];
+                $returnArray = $stmt->fetchAll();
+                if(!empty($returnArray))
+                    return $returnArray[0];
             } catch (\Doctrine\ORM\NoResultException $e) {
                 return null;
             }

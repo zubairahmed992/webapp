@@ -375,9 +375,9 @@ class WSCartController extends Controller
 
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
-            if(is_object($fnfUser))
+            if(is_array($fnfUser) && !empty($fnfUser))
             {
-                $fnfGroupId = $fnfUser->getGroups()[0]->getId();
+                $fnfGroupId = $fnfUser['group_id'];
                 $decoded['groupId'] = $fnfGroupId;
             }
 
@@ -414,9 +414,9 @@ class WSCartController extends Controller
 
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
-            if(is_object($fnfUser))
+            if(is_array($fnfUser) && !empty($fnfUser))
             {
-                $fnfGroupId = $fnfUser->getGroups()[0]->getId();
+                $fnfGroupId = $fnfUser['group_id'];
                 $decoded['groupId'] = $fnfGroupId;
             }
 

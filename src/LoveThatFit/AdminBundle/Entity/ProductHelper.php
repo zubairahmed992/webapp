@@ -348,6 +348,7 @@ class ProductHelper
     }
 
     public function searchAllProduct($data){
+		
         $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
         //length
         $length  = $data['length'];
@@ -376,6 +377,11 @@ class ProductHelper
 
 
         foreach ($finalData as $fData) {
+			
+			 //$catData = $this->repo->checked_for_categories($fData["id"]);
+			 $priceData = $this->repo->checked_for_price($fData["id"]);			 
+			 $weightData = $this->repo->checked_for_weight($fData["id"]);			 			 
+			
             $output['data'][] = [
                 'id' => $fData["id"],
                 'control_number' => $fData["control_number"],
@@ -383,11 +389,21 @@ class ProductHelper
                 'ClothingType' => $fData["cloting_type"],
                 'gender' => $fData["gender"],
                 'PName' => $fData['name'],
+				'description' => $fData['description'],
+				'item_name' => $fData['item_name'],
+				'country_origin' => $fData['country_origin'],
+				'item_details' => $fData['item_details'],
+				'care_label' => $fData['care_label'],																
+//'category_status' => $catData[0]['have_category'],
+				'price_status' => $priceData[0]['no_price'],
+				'weight_status' => $weightData[0]['no_weight'],				
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
                 'status'    => ($fData['disabled'] == 1) ? "Disable" : "Enable",
                 'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending"
             ];
         }
+		
+		
 
         return $output;
     }
@@ -505,6 +521,12 @@ class ProductHelper
     #---------------------------------------------------
     //               Methods Product listing on index page
     #---------------------------------------------------
+	
+	 #-----------------Get Selected Categories pull from category_product---------------------------------#
+    public function getSelectedProductCategories($id){
+        return $this->repo->getSelectedCategories($id);
+    }
+	
     public function idNameList()
     {
         $products = $this->repo->findAllProduct(0, 0, 'name');

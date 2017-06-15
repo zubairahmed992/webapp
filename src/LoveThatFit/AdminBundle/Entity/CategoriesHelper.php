@@ -42,7 +42,7 @@ class CategoriesHelper {
         return $categories;
     }
 
-    public function save($entity) {
+    public function save($entity, $selected_category_id) {
 
         $name = $entity->getName();
         $gender = $entity->getGender();
@@ -50,7 +50,7 @@ class CategoriesHelper {
             $entity->setParentId(null);
         }
 
-        $msg_array = $this->validateForCreate($entity);
+        $msg_array = $this->validateForCreate($entity, $selected_category_id);
         if ($msg_array == null and $name != null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
@@ -71,13 +71,13 @@ class CategoriesHelper {
         return $this->repo->find($id);
     }
 
-    public function update($entity) {
+    public function update($entity, $selected_category_id) {
 
         if($entity->getParentId() == '0'){
             $entity->setParentId(null);
         }
 
-        $msg_array = $this->validateForUpdate($entity);
+        $msg_array = $this->validateForUpdate($entity, $selected_category_id);
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->upload();
@@ -178,10 +178,18 @@ class CategoriesHelper {
     //-------------------------------------------------------
     //Private Methods    
     //----------------------------------------------------------
-    private function validateForCreate($entity) {
+    private function validateForCreate($entity, $selected_category) {
+
+        if($selected_category == '0'){
+            $cat_id = null;
+        }else{
+            $cat_id = $selected_category;
+        }
+
         $gender = $entity->getGender();
         $gender_hash = array('m' => 'Male', 'f' => 'Female');
-        $clothing_type = $this->findOneByGenderName($entity->getGender(), $entity->getName());
+        //$clothing_type = $this->findOneByGenderName($entity->getGender(), $entity->getName());
+        $clothing_type = $this->findOneByGenderNameCategory($entity->getGender(), $entity->getName(), $cat_id);
         if ($clothing_type && $clothing_type->getId() != $entity->getId()) {
             return array('message' => 'Category Name already exists for '.$gender_hash[$gender].'!',
                 'field' => 'name',
@@ -193,10 +201,18 @@ class CategoriesHelper {
     }
 
     //----------------------------------------------------------
-    private function validateForUpdate($entity) {
+    private function validateForUpdate($entity, $selected_category) {
+
+        if($selected_category == '0'){
+            $cat_id = null;
+        }else{
+            $cat_id = $selected_category;
+        }
+
         $gender = $entity->getGender();
         $gender_hash = array('m' => 'Male', 'f' => 'Female');
-        $clothing_type = $this->findOneByGenderName($entity->getGender(), $entity->getName());
+        //$clothing_type = $this->findOneByGenderName($entity->getGender(), $entity->getName());
+        $clothing_type = $this->findOneByGenderNameCategory($entity->getGender(), $entity->getName(), $cat_id);
         if ($clothing_type && $clothing_type->getId() != $entity->getId()) {
             return array('message' => 'Category Name already exists for '.$gender_hash[$gender].'!',
                 'field' => 'name',
@@ -420,6 +436,11 @@ class CategoriesHelper {
         $this->em->flush();
 
         return true;
+    }
+
+    //-------------------------------------------------------
+    public function findOneByGenderNameCategory($gender, $name, $cat_id) {
+        return $this->repo->findOneByGenderNameCategory($gender, $name, $cat_id);
     }
 
 }

@@ -228,5 +228,25 @@ class WSMiscController extends Controller {
         );
         return new Response(json_encode($conf));
     }
+
+    public function marketingTilesAction(Request $request)
+    {
+        $decoded_path = $this->process_request();
+        $decoded = $request->request->all();
+
+        $results_marketingtiles=array();
+        
+        $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
+        
+        if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
+            foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
+                $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];
+                $results_marketingtiles[$key_marketingtiles]['created_at'] = ($value_marketingtiles['created_at']) ? $value_marketingtiles['created_at']->format('Y-m-d h:i:s') : '';
+            }
+        }
+
+        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);                    
+        return new Response($res);
+    }
 }
 

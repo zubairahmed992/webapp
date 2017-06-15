@@ -554,12 +554,77 @@ class UserArchivesHelper {
         #image copy------------>
         $archive->copyImagesToUser();
         return $archive;
-  }
+    }
 
-
-  public function getVersion($user_id)
-  {
+    public function getVersion($user_id)
+    {
     return $this->repo->getVersion($user_id);
-  }
+    }
     
+    public function searchSupport($data)
+    {
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : 0; 
+        //limit
+        $start   = $data['start']; 
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0; 
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = $data['search'];
+        $filters = [
+            'query' => @$search['value']
+        ];
+        $user_id = $data['user_id'];
+        $all     = $data['all'];
+
+        $finalData = $this->repo->searchSupport(
+            $filters,
+            $start,
+            $length,
+            $order,
+            $user_id,
+            $all
+        );
+        
+        $output = array( 
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->searchSupport(
+                    $filters,
+                    0,
+                    false,
+                    $order,
+                    $user_id,
+                    $all
+                )
+            ), 
+            'recordsTotal'    => count($this->repo->searchSupport(
+                    array(),
+                    0,
+                    false,
+                    $order,
+                    $user_id,
+                    $all
+                )
+            ),
+            'data'            => array()
+        );
+        
+        foreach ($finalData as $fData) {
+            $output['data'][] = [ 
+                'id'                => $fData["id"],
+                'email'             => $fData["email"],
+                'status'            => "Pending",
+                'createdAt'         => ($fData["created_at"] == "") ? "00:00:00" : date_diff(
+                    new \DateTime(), $fData["created_at"]
+                )->format('%a days, %H:%i:%s'),
+                'support_user_name' => $fData["support_user_name"],
+                'version'           => $fData["version"]
+            ];
+        }
+        return $output;
+    }
+
 }

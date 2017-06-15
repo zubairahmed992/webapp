@@ -349,3 +349,61 @@ i.icon-shpping {
     width: 19px;
     height: 16px;
 }
+
+i.icon-desc {
+    background-position: -262px -25px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-no-desc {
+	background-position: -238px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-have-desc {
+	border:none;
+}
+i.icon-desc-have-desc-yellow {
+	background-position: -288px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-have-desc-green {
+	background-position: -261px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.price-edit-no-price {
+	background-position: -310px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.price-edit-have-price {
+	border:none;
+}
+
+i.price-edit-green {
+	background-position: -334px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.price-edit-yellow {
+	background-position: -358px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.cat-no-value {
+	background-position: -408px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.cat-have-value {
+	background-position: -382px -167px;
+    width: 19px;
+    height: 16px;
+}
+
