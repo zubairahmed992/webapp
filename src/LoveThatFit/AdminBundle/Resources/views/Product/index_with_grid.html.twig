@@ -501,47 +501,44 @@
                 "columns": oColumns,
                 "createdRow": function (row, data, index) {
 					
-					if(data.description != null && data.item_name != null && data.country_origin != null && data.item_details != null && data.care_label != null){
+					if(data.description== null || data.description==''){data.description='';}
+					if(data.item_name== null || data.item_name==''){data.item_name='';}
+					if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
+					if(data.item_details== null || data.item_details==''){data.item_details='';}
+					if(data.care_label== null || data.care_label==''){data.care_label='';}																				
+					
+				
+					
+					if(data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != ''){
 						
                          $(row).find("button.description i").addClass('icon-desc-have-desc-green');
 					}
-					else if(data.description != null || data.item_name != null || data.country_origin != null || data.item_details != null || data.care_label != null){
+					else if(data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != ''){
 						
                          $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
 						 
-					}
-					else if(data.description == null && data.item_name == null && data.country_origin == null && data.item_details == null && data.care_label == null){
+					}else if(data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == ''){
 						
                          $(row).find("button.description i").addClass('icon-desc-no-desc');
-					}
-					else
-					{
-						$(row).find("button.Enable i").removeClass('icon-desc-have-desc');
-						
+						 
 					}
 					
-					if(parseInt(data.price_status) >  0){
-						
-						  $(row).find("button.priceedit i").addClass('price-edit-no-price');
-						
-					}
-					else
-					{
-						 $(row).find("button.priceedit i").addClass('price-edit-have-price');
-					}
+					
+				
 					
 					if(parseInt(data.price_status) ==  0 &&  parseInt(data.weight_status) ==  0){
 						
 						  $(row).find("button.priceedit i").addClass('price-edit-green');
 						
+					}else if(parseInt(data.price_status) >  0 &&  parseInt(data.weight_status) >  0){
+						
+						
+						 $(row).find("button.priceedit i").addClass('price-edit-no-price');
+						
 					}
 					else if((parseInt(data.price_status) >  0 && parseInt(data.weight_status) ==  0) || (parseInt(data.price_status) ==  0 && parseInt(data.weight_status) >  0)){
 						
-						  $(row).find("button.category i").addClass('price-edit-yellow');
-						
-					}
-					else{
-						 $(row).find("button.category i").addClass('price-edit-have-price');						
+						  $(row).find("button.priceedit i").addClass('price-edit-yellow');
 						
 					}
 					

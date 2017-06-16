@@ -1130,9 +1130,6 @@ class UserHelper
 
         $finalData = $this->repo->search($filters, $start, $length, $order);
 
-        /*var_dump($finalData);
-        die;*/
-
         $output = array(
             "draw" => $draw,
             'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)),
@@ -1257,9 +1254,6 @@ class UserHelper
 
         $finalData = $this->repo->searchSupport($filters, $start, $length, $order);
 
-        /*var_dump($finalData);
-        die;*/
-
         $output = array(
             "draw" => $draw,
             'recordsFiltered' => count($this->repo->searchSupport($filters, 0, false, $order)),
@@ -1279,7 +1273,7 @@ class UserHelper
                 'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
                 'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
-                'version'          => $fData['version']
+                'version'        => $fData['version']
             ];
 
 

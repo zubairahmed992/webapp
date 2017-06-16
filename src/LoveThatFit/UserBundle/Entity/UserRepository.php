@@ -403,7 +403,8 @@ class UserRepository extends EntityRepository
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->where('ua.user = :user_id')
             ->setParameter('user_id', $user_id)
-            ->orderBy('ua.updated_at', 'desc');
+            ->orderBy('ua.updated_at', 'desc')
+            ->orderBy('ua.id', 'desc');
 
         $preparedQuery = $query->getQuery();
         return $preparedQuery->getResult();
@@ -426,15 +427,10 @@ class UserRepository extends EntityRepository
                 u.gender,
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
-                ua.version'
+                (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
             )
-            ->from('LoveThatFitUserBundle:User', 'u')
-            ->leftJoin(
-                "LoveThatFitUserBundle:UserArchives",
-                "ua",
-                "WITH",
-                "ua.user = u.id"
-            );
+            ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
@@ -543,7 +539,6 @@ class UserRepository extends EntityRepository
         $gender    = isset($data['gender']) && $data['gender'] ? $data['gender'] : null;
         $startDate = isset($data['startDate']) && $data['startDate'] ? $data['startDate'] : null;
         $endDate   = isset($data['endDate']) && $data['endDate'] ? $data['endDate'] : null;
-
         $query
             ->select('
                 u.id,
@@ -553,17 +548,10 @@ class UserRepository extends EntityRepository
                 u.gender,
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
-                ua.version'
+                (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
             )
-            ->from('LoveThatFitUserBundle:User', 'u')
-            ->leftJoin(
-                "LoveThatFitUserBundle:UserArchives",
-                "ua",
-                "WITH",
-                "ua.user = u.id"
-            )
-            ->andWhere('ua.version=:version')
-            ->setParameter('version', '1');
+            ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')

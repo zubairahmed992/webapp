@@ -362,6 +362,46 @@ class ProductCSVDataUploader {
         #---------
         return $product;
     }
+
+    public function fillProductAdd($data, $product=null){
+        #$retailer=$this->get('admin.helper.retailer')->findOneByName($this->product['retailer_name']);        
+        #$clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($this->product['clothing_type']));
+        #$brand=$this->get('admin.helper.brand')->findOneByName($this->product['retailer_name']);
+        #$data=$this->product;
+        
+        if(!$product){
+            $product=new Product();    
+        }
+        #$product->setBrand($brand);
+        #$product->setClothingType($clothingType);
+        #$product->setRetailer($retailer);
+        $product->setName($data['garment_name']);
+        $product->setStretchType($data['stretch_type']);
+        $product->setHorizontalStretch($data['horizontal_stretch']);
+        $product->setVerticalStretch($data['vertical_stretch']);        
+        $product->setCreatedAt(new \DateTime('now'));
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setGender($data['gender']);
+        $product->setStylingType($data['styling_type']);
+        $product->setControlNumber($data['style']);
+        $product->setNeckline($data['neck_line']);
+        $product->setSleeveStyling($data['sleeve_styling']);
+        $product->setRise($data['rise']);
+        $product->setHemLength($data['hem_length']);
+        $product->setFabricWeight($data['fabric_weight']);
+        $product->setStructuralDetail($data['structural_detail']);
+        $product->setFitType($data['fit_type']);
+        $product->setLayering($data['layring']);
+        $product->setFitPriority(json_encode($data['fit_priority']));
+        $product->setFabricContent(json_encode($data['fabric_content']));
+        $product->setDisabled(false);        
+        $product->setDeleted(false);
+        $product->setSizeTitleType($data['size_title_type']);
+        $product->setStatus("Pending");
+        
+        #---------
+        return $product;
+    }
     public function fillProductColor($data){
         $pc=new ProductColor;
         $pc->setTitle($data);
