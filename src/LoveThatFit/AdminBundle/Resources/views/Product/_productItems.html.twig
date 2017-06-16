@@ -124,7 +124,7 @@
                 <div class="span1">${{ form_widget(itemform.price) }}</div>
                 <div class="span1">{{ pi.productSize.bodyType }} {{ pi.productSize.title }}</div>
                 <div class="span2">{{ pi.productColor.title }}</div>
-                <div class="span2">{{ form_widget(itemform.weight) }}</div>
+                <div class="span2">{{ form_widget(itemform.weight, { 'attr': {'style': 'width:100px', 'min' :"0"} }) }}</div>
 
                 <div class="span2">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
                 {{ form_rest(itemform) }}
