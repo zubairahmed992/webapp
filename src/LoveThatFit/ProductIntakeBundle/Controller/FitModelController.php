@@ -22,6 +22,7 @@ class FitModelController extends Controller {
     public function brandCompareAction() {
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:brand_compare.html.twig', array(
                     'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                    'brands' => $this->get('admin.helper.brand')->findAll(),
                 ));
     }
   

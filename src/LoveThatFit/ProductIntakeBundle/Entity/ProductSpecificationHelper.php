@@ -169,7 +169,20 @@ class ProductSpecificationHelper {
         }
         return $fp;
     }
-
+#-----------------------------------------------
+    public function getFitModelMeasurements($id) {
+        $ps = $this->repo->find($id);
+        if(!$ps) {return false;}
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $fm_specs = array();
+        $fm_specs=$parsed_data;
+        foreach ($parsed_data['sizes'] as $size => $fp) {
+            foreach ($fp as $fpk => $fpv) {
+                $fm_specs['sizes'][$size][$fpk] = $fpv['fit_model'];
+            }
+        }
+        return $fm_specs;
+    }
     ######################################################################################
     ##################################### Fit Model Dynamic Calculations #################
     #####################################################################################
@@ -868,14 +881,14 @@ class ProductSpecificationHelper {
         foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
                      $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];
-
+                    $stretch_percentage = ($value['garment_measurement_stretch_fit'] == 0)? 0 :(($value['garment_measurement_stretch_fit'] - $value['garment_measurement_flat'])/$value['garment_measurement_flat'])*100;
                     $data1['sizes'][$product_size_value['title']][$fp]['fit_model'] = $value['fit_model_measurement'];
                     $data1['sizes'][$product_size_value['title']][$fp]['garment_dimension'] = $value['garment_measurement_flat'];
                     $data1['sizes'][$product_size_value['title']][$fp]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
                     $data1['sizes'][$product_size_value['title']][$fp]['grade_rule'] = $value['grade_rule'];
                     #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['horizontal_stretch'];
                     #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['vertical_stretch'];                
-                    $data1['sizes'][$product_size_value['title']][$fp]['stretch_percentage'] = $value['stretch_type_percentage'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['stretch_percentage'] = $stretch_percentage;//$value['stretch_type_percentage'];
                     $data1['sizes'][$product_size_value['title']][$fp]['ideal_high'] = $value['ideal_body_size_high'];
                     $data1['sizes'][$product_size_value['title']][$fp]['ideal_low'] = $value['ideal_body_size_low'];
                     $data1['sizes'][$product_size_value['title']][$fp]['max_actual'] = $value['max_body_measurement'];
@@ -883,13 +896,14 @@ class ProductSpecificationHelper {
                     $data1['sizes'][$product_size_value['title']][$fp]['min_actual'] = $value['min_body_measurement'];
                     $data1['sizes'][$product_size_value['title']][$fp]['min_calc'] = $value['min_calculated'];
                     $data1['body_type'] = $product_size_value['body_type'];
+                    $data1['fit_point_stretch'][$fp] = $stretch_percentage;
                 }
              }
             foreach ($data[0][0]['product_colors'] as $key => $product_color_value) {                  
                $colors['colors'][$product_color_value['title']] = $product_color_value['title'];
             }
             $data1['colors'] = implode(',',$colors['colors']);            
-            $data1['fit_point_stretch'] = array_flip(array_keys(reset($data1['sizes'])));          
+          //  $data1['fit_point_stretch'] = array_flip(array_keys(reset($data1['sizes'])));          
             $brand =  $this->container->get('admin.helper.brand')->findOneByName($data1['brand']); 
             $class = $this->class;
             $c = new $class();
