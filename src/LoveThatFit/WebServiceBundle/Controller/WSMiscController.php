@@ -78,6 +78,7 @@ class WSMiscController extends Controller {
                     'lab'=>array('build_type'=>'lab','url'=>'lab.selfiestyler.com'),
                     'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
+                    'V3QA Server'=>array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
                     'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com')
