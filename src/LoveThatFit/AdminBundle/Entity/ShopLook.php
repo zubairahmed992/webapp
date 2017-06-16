@@ -54,6 +54,15 @@ class ShopLook
      */
     private $disabled;
 
+    /**
+     * for version v2 = 2, v3=3
+     *
+     * @var boolean $app_version
+     *
+     * @ORM\Column(name="app_version", type="boolean")
+     */
+    private $app_version = 2;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -302,5 +311,28 @@ class ShopLook
     public function getShopLookProduct()
     {
         return $this->shop_look_product;
+    }
+
+    /**
+     * Set app_version
+     *
+     * @param boolean $appVersion
+     * @return ShopLook
+     */
+    public function setAppVersion($appVersion)
+    {
+        $this->app_version = $appVersion;
+    
+        return $this;
+    }
+
+    /**
+     * Get app_version
+     *
+     * @return boolean 
+     */
+    public function getAppVersion()
+    {
+        return $this->app_version;
     }
 }
