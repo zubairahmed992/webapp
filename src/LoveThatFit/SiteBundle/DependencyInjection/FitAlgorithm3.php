@@ -48,6 +48,7 @@ class FitAlgorithm3 {
     function getFeedBack() {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
+            $cm['layering']=$this->product->getLayering();
             return $cm;
         }
     }
@@ -187,6 +188,24 @@ class FitAlgorithm3 {
             return $s;
         }
     }
+    
+    private function get_fitting_type($fp){
+        $layer = intval(substr($this->product->getLayering(), 0, 1));
+        $max_gd_ratio=$fp['max_body_measurement']/$fp['garment_measurement_flat'];
+        $str='';
+            if($layer==4){
+                if($max_gd_ratio>0.85){return 'Close: Max 100-85% of GD';
+                }elseif($max_gd_ratio>0.75){return 'Relax: Max 85-75% of GD';
+                }elseif($max_gd_ratio<=0.75){return 'Loose: Max < 75% GD';
+                }
+            }else{
+                if($max_gd_ratio>0.92){return 'Close: Max < 85% of GD';
+                }elseif($max_gd_ratio>0.85){return 'Relax: Max 92-85 % of GD';
+                }elseif($max_gd_ratio<=0.85){return 'Loose: Max w/n 92% of GD';
+                }                
+            }
+        return $str;
+    }
     #-----------------------------------------------------
     function getFeedBackForSizeTitle($size) {
 
@@ -310,6 +329,7 @@ class FitAlgorithm3 {
                                 $fb[$size_identifier]['fit_index'] = $fb[$size_identifier]['fit_index']+$fb[$size_identifier]['fit_points'][$pfp_key]['body_fx'];                        
                             }
                             
+                            $fb[$size_identifier]['fit_points'][$pfp_key]['fitting'] =  $this->get_fitting_type($fb[$size_identifier]['fit_points'][$pfp_key]);
                         }else{
                             $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
                         }

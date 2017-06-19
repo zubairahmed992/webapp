@@ -765,3 +765,12 @@ ws_marketing_tiles:
    title: ws_marketing_tiles
    params:
     auth_token: 121c421783cd4d71d871ec16a1296091
+    
+pi_ws_product_image_upload:
+    pattern: /product_intake/product_image_upload
+    title: product_image_upload
+    file_upload: true
+    params:         
+      image_name: "AG-Jeans_LSS1288_SBA_R_25" 
+      name_format: "Brand_StyleID#_Color_Size-Range_Size"  
+      request_type: post       
