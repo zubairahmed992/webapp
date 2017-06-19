@@ -27,6 +27,7 @@ class MaskMarkerInspectController extends Controller {
         $mm_specs=$this->getMaskedMarkerSpecs();
         $ub_specs=$user->getMeasurement()->getArray();
         $user_mm_comparison = $this->get('user.marker.helper')->getComparisionArraySupport($user);
+
         if ($mode && $mode=='json'){
             return new Response(json_encode($user_mm_comparison));
         }
