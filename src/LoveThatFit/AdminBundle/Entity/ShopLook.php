@@ -74,6 +74,14 @@ class ShopLook
      */
     protected $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\Banner" , mappedBy="banner_shoplook")
+     */
+
+    protected $shoplook_banner;
+
+
+
     public $file;
 
     /**
@@ -334,5 +342,38 @@ class ShopLook
     public function getAppVersion()
     {
         return $this->app_version;
+    }
+
+    /**
+     * Add shoplook_banner
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Banner $shoplookBanner
+     * @return ShopLook
+     */
+    public function addShoplookBanner(\LoveThatFit\AdminBundle\Entity\Banner $shoplookBanner)
+    {
+        $this->shoplook_banner[] = $shoplookBanner;
+    
+        return $this;
+    }
+
+    /**
+     * Remove shoplook_banner
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Banner $shoplookBanner
+     */
+    public function removeShoplookBanner(\LoveThatFit\AdminBundle\Entity\Banner $shoplookBanner)
+    {
+        $this->shoplook_banner->removeElement($shoplookBanner);
+    }
+
+    /**
+     * Get shoplook_banner
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShoplookBanner()
+    {
+        return $this->shoplook_banner;
     }
 }

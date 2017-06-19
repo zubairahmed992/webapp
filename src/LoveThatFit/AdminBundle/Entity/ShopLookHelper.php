@@ -204,4 +204,8 @@ class ShopLookHelper
             );
         }
     }
+
+    public function findByParams( $params = array()){
+        return $this->repo->findBy($params);
+    }
 }
