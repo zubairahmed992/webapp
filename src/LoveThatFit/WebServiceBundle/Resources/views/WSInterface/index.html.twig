@@ -176,7 +176,9 @@ $( "#btn_hit_service" ).click(function() {
                 }
                 else if($('#sel_service').val() == '/nws/selfieshare/create'){
                         hit_selfieshare_service();
-                }else{
+                } else if ( $('#sel_service').val() == '/product_intake/product_image_upload' ){
+                    hit_product_image_upload_service();
+                } else{
                     hit_image_upload_service();
                 }
             }else{
@@ -317,6 +319,32 @@ function hit_image_upload_service(){
 }
 
 //-------------------------------------
+
+function hit_product_image_upload_service(){
+
+    //var value_ar = JSON.parse($("#txt_request_params").val());
+    input_file = document.getElementById('image_to_upload');
+    data= new FormData();
+    data.append("file", input_file.files[0]);   
+    $.ajax({
+        type: "POST",
+        url: ".." + $("#service_url").text(),
+        data: data,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        success: function(data){
+            display_response(data);
+        },
+        failure: function(errMsg) {
+            display_response(errMsg);
+        }
+    });
+}
+
+
+
+
 
 //-----------------------------------------------------------
 function hit_file_upload_service(){

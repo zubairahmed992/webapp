@@ -6,10 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use LoveThatFit\AdminBundle\Controller\ProductController;
+use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
+use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductItem;
+use LoveThatFit\AdminBundle\Entity\ProductItemPiece;
 
 
 class ServiceController extends Controller {    
-     
+         public $error_string;
 #------------------------/product_intake/product_specification
       
     public function getProductSpecificationAction($brand_name, $style_id_number) {
@@ -117,5 +123,104 @@ class ServiceController extends Controller {
          } 
     }
     
+    //---------------------- productImageUpload
+    public function ImageUploadproductSizeItemAction(Request $request) {
+        $image_name_break = explode('_',  $_FILES['file']['name']);
+        $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-',' ',$image_name_break[0]), $image_name_break[1]); 
+        //return new Response(json_encode($data));
+        $imageFile = $request->files->get('file');
+        $rsult = $this->imageUploadProductItemSize($_FILES, $data[0]['id'],$imageFile);
+         try { 
+        return new JsonResponse([
+            'success' => true,
+            'data'    =>  $rsult
+             ]);
+         } catch (\Exception $exception) {
+        return new JsonResponse([
+                'success' => false,
+                'code'    => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+         } 
+        return "okay Boss";
+    }
+    
+    
+      #---------------------------------------Image Uplaod Function -------------------------------
+    public function imageUploadProductItemSize($FILES , $product_id, $image_file)    {  
+        $allowed = array('png', 'jpg');        
+        $request = $this->getRequest();
+        if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
+            $extension = pathinfo($FILES['file']['name'], PATHINFO_EXTENSION);
+            $file_name = $FILES['file']['name'];
+            #--------------------------------------------------------------
+            $parsed_details = $this->breakFileNameProductImageUplaod($file_name, $product_id);
 
+            if ($parsed_details['success'] == 'false') {
+                return 'invalid file naming format';#------------------------------------------>
+            } else {                
+                $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);                
+                $color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+                $find_size_by_title_productid = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
+                #return $parsed_details['product_id'].' + ' . $color_id_result->getId().' + ' . $find_size_by_title_productid->getId();                
+                $product_id_result = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $color_id_result->getId(), $find_size_by_title_productid->getId());
+
+                if (count($color_id_result) == 0) {
+                    return 'color not found';#------------------------------------------>
+                }
+                if(count($find_size_by_title_productid) == 0){
+                    return 'Size not found';#------------------------------------------>
+                }                
+                if (count($product_id_result) == 0) {
+                    //**/
+                    /* Create Product Item for this product */
+                    $p_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+                    $p_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
+                    $this->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);
+                }
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);                
+                #return $product_item->getImage();
+                $product_item->file = $image_file;
+                $product_item->upload();
+                $this->get('admin.helper.productitem')->save($product_item);
+                $this->get('session')->setFlash('success', 'Remaining Product Items and Colors have been added/updated');
+                return new response('{"status":"Remaining Product Items and Colors have been added"}');
+                
+            }
+        }
+        $this->get('session')->setFlash('error-on-addcolor', $this->error_string);
+        return new response('{"status":"error"}');
+
+    }   //------------- End Image Uplaod Function
+    
+
+    
+     #------------------------------------------------------------------------
+    public function breakFileNameProductImageUplaod($request_array, $product_id) {
+
+        #Format: Regular_XL_Darl-Gray_Front-Open.png
+        #Format: AG-Jeans_LSS1288_SBA_R_25.png
+        #"Origami_001010_Regular_14_black.png
+        # 2 Body Type
+        # 3 Size Tilte
+        # 4 Color Title and file Extention
+        #last bit, view is optional
+        #Citizens-of-Humanity_001n-001_brown_Regular_26
+        $request_array = strtolower($request_array);
+        $_exploded = explode("_", $request_array);        
+        $a = array('product_id' => $product_id);        
+        $a['set_default'] = 'Yes';      
+        if (count($_exploded) == 5) {
+        $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+        $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
+        $_file_name = explode(".", $_exploded[4]);        
+        $a['size_title'] = str_replace("-", "_", $_file_name[0]);
+        $a['message'] = 'Done';
+        $a['success'] = 'true';
+        return $a;
+         } else {
+               return array('message' => 'Invalid Format!', 'success' => 'false');
+        }
+                
+    } //----------------- End function Brack File Name
 }

@@ -763,6 +763,53 @@ class Measurement {
             return $this->waist = 0;
         }
     }
+#--------------------------------------------------------------------
+#--------------------------------------------------------------------
+    /**
+     * @var float $abdomen
+     *
+     * @ORM\Column(name="abdomen", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "70",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches ",
+     *      groups={"registration_step_two","profile_measurement"}
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $abdomen = 0;
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    /**
+     * Set abdomen
+     *
+     * @param float $abdomen
+     * @return Measurement
+     */
+    public function setAbdomen($abdomen) {
+        if ($abdomen != null) {
+            $this->abdomen = $abdomen;
+            return $this;
+        } else {
+            return $this->abdomen = 0;
+        }
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Get abdomen
+     *
+     * @return float 
+     */
+    public function getAbdomen() {
+        if ($this->abdomen != null) {
+            return $this->abdomen;
+        } else {
+            return $this->abdomen = 0;
+        }
+    }
 
 #--------------------------------------------------------------------
     /**
@@ -1091,6 +1138,101 @@ class Measurement {
     }
     
     #--------------------------------------------------------------------
+    #--------------------------------------------------------------------
+      /**
+     * @var float $high_thigh
+     *
+     * @ORM\Column(name="high_thigh", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "70",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches ",
+     *      groups={"registration_step_two","profile_measurement"}
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $high_thigh = 0;
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    /**
+     * Set high_thigh
+     *
+     * @param float $high_thigh
+     * @return Measurement
+     */
+    public function setHighThigh($high_thigh) {
+        if ($high_thigh != null) {
+            $this->high_thigh = $high_thigh;
+            return $this;
+        } else {
+            return $this->high_thigh = 0;
+        }
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Get high_thigh
+     *
+     * @return float 
+     */
+    public function getHighThigh() {
+        if ($this->high_thigh != null) {
+            return $this->high_thigh;
+        } else {
+            return $this->high_thigh = 0;
+        }
+    }
+
+    #--------------------------------------------------------------------
+    /**
+     * @var float $low_thigh
+     *
+     * @ORM\Column(name="low_thigh", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "70",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches ",
+     *      groups={"registration_step_two","profile_measurement"}
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $low_thigh = 0;
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    /**
+     * Set low_thigh
+     *
+     * @param float $low_thigh
+     * @return Measurement
+     */
+    public function setLowThigh($low_thigh) {
+        if ($low_thigh != null) {
+            $this->low_thigh = $low_thigh;
+            return $this;
+        } else {
+            return $this->low_thigh = 0;
+        }
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Get low_thigh
+     *
+     * @return float 
+     */
+    public function getLowThigh() {
+        if ($this->low_thigh != null) {
+            return $this->low_thigh;
+        } else {
+            return $this->low_thigh = 0;
+        }
+    }
+    #--------------------------------------------------------------------
+    
     /**
      * @var float $knee
      *
@@ -1621,7 +1763,10 @@ class Measurement {
             'outseam' => $this->outseam,
             'sleeve' => $this->sleeve,
             'neck' => $this->neck,
+            'abdomen' => $this->abdomen,
             'thigh' => $this->thigh,
+            'high_thigh' => $this->high_thigh,
+            'low_thigh' => $this->low_thigh,
             'center_front_waist' => $this->center_front_waist,
             'shoulder_across_front' => $this->shoulder_across_front,
             'shoulder_across_back' => $this->shoulder_across_back,
@@ -2300,6 +2445,9 @@ class Measurement {
             'outseam' => 0,
             'sleeve' => 0,
             'thigh' => 0,
+            'low_thigh' => 0,
+            'high_thigh' => 0,
+            'abdomen' => 0,
             'shoulder_width' => 0,
             'bust_height' => 0,
             'waist_heightt' => 0,
@@ -2345,6 +2493,9 @@ class Measurement {
         $this->outseam = array_key_exists('outseam', $ar) ? $ar['outseam'] : $this->outseam;
         $this->sleeve = array_key_exists('sleeve', $ar) ? $ar['sleeve'] : $this->sleeve;
         $this->thigh = array_key_exists('thigh', $ar) ? $ar['thigh'] : $this->thigh;
+        $this->high_thigh = array_key_exists('high_thigh', $ar) ? $ar['high_thigh'] : $this->high_thigh;
+        $this->low_thigh = array_key_exists('low_thigh', $ar) ? $ar['low_thigh'] : $this->low_thigh;
+        $this->abdomen = array_key_exists('abdomen', $ar) ? $ar['abdomen'] : $this->abdomen;
         $this->shoulder_width = array_key_exists('shoulder_width', $ar) ? $ar['shoulder_width'] : $this->shoulder_width;
         $this->bust_height = array_key_exists('bust_height', $ar) ? $ar['bust_height'] : $this->bust_height;
         $this->waist_heightt = array_key_exists('waist_height', $ar) ? $ar['waist_height'] : $this->waist_height;
