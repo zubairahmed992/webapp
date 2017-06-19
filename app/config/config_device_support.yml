@@ -112,7 +112,7 @@ device_config:
     screen_available_height_px: 0
     total_screen_height_px: 667
     resize_ratio_jt: 1.131335
-    
+
   iphone6splus:
     svg_mask_x: 66
     svg_mask_y: 66
