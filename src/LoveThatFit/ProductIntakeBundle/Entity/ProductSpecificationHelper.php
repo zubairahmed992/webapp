@@ -484,8 +484,10 @@ class ProductSpecificationHelper {
         $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $gr_value);
         $fp['ideal_high'] = $fp['fit_model'] + (0.5 * $gr_value);
         $fp['max_calc'] = $fp['fit_model'] + (2.5 * $gr_value);
-        $fp['max_actual'] = $fp['max_calc'];
-        $fp['min_actual'] = $fp['min_calc'];
+        #$fp['max_actual'] = $fp['max_calc'];
+        #$fp['min_actual'] = $fp['min_calc']; # disabled for old products import
+        $fp['max_actual'] = floatval($fp['max_actual'])>0?$fp['max_actual']:$fp['max_calc'];
+        $fp['min_actual'] = floatval($fp['min_calc'])>0?$fp['min_calc']:$fp['min_calc'];
         return $fp;
     }
 
@@ -605,7 +607,8 @@ class ProductSpecificationHelper {
         foreach ($size_keys as $sk) {
             if ($fm_pass == true) {
                 foreach ($specs['sizes'][$sk] as $fp => $fpm) {
-                    $specs['sizes'][$sk][$fp]['grade_rule'] = $specs['sizes'][$sk][$fp]['garment_dimension'] - $specs['sizes'][$prev][$fp]['garment_dimension'];
+                    if(array_key_exists($fp, $specs['sizes'][$sk]) && array_key_exists($fp, $specs['sizes'][$prev]))
+                        $specs['sizes'][$sk][$fp]['grade_rule'] = $specs['sizes'][$sk][$fp]['garment_dimension'] - $specs['sizes'][$prev][$fp]['garment_dimension'];
                 }
             } else {
                 if ($sk == $tracker['fit_model']) {
@@ -698,7 +701,7 @@ class ProductSpecificationHelper {
         #---------------------------------> calculate ranges
         foreach ($specs['sizes'] as $size => $fit_points) {
             foreach ($fit_points as $fpk => $fpv) {
-                if ($size != $fit_model_obj->getSize()) {#---> exclude measurement for fit model size
+                if ($size != $fit_model_obj->getSize() && array_key_exists($fpk, $fit_model_ratio)) {#---> exclude measurement for fit model size
                     $specs['sizes'][$size][$fpk] = $this->compute_ranges_for_fit_point($specs['sizes'][$size][$fpk], $fit_model_ratio[$fpk]);
                 }
             }
@@ -713,8 +716,10 @@ class ProductSpecificationHelper {
         $fp_specs['ideal_high'] = $fp_specs['fit_model'] * $ratio['ideal_high'];
         $fp_specs['min_calc'] = $fp_specs['fit_model'] - (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
         $fp_specs['max_calc'] = $fp_specs['fit_model'] + (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
-        $fp_specs['min_actual'] = $fp_specs['min_calc'];#$fp_specs['min_actual'] > 0 ? $fp_specs['min_actual'] : $fp_specs['min_calc'];
-        $fp_specs['max_actual'] = $fp_specs['max_calc'];#$fp_specs['max_actual'] > 0 ? $fp_specs['max_actual'] : $fp_specs['max_calc'];
+        #$fp_specs['min_actual'] = $fp_specs['min_calc'];#$fp_specs['min_actual'] > 0 ? $fp_specs['min_actual'] : $fp_specs['min_calc'];
+        #$fp_specs['max_actual'] = $fp_specs['max_calc'];#$fp_specs['max_actual'] > 0 ? $fp_specs['max_actual'] : $fp_specs['max_calc'];
+        $fp_specs['min_actual'] = floatval($fp_specs['min_actual']) > 0 ? $fp_specs['min_actual'] : $fp_specs['min_calc'];
+        $fp_specs['max_actual'] = floatval($fp_specs['max_actual']) > 0 ? $fp_specs['max_actual'] : $fp_specs['max_calc'];        
         return $fp_specs;
     }
 
@@ -846,9 +851,20 @@ class ProductSpecificationHelper {
         return $csv_file_path;
     }
 
+    private function replace_with_new_fitpoint($fp_array, $nfp) {        
+        foreach ($fp_array as $fp => $v) {
+            if (array_key_exists($fp, $nfp)){
+                $fp_array[$nfp[$fp]]=$v;
+                unset($fp_array[$fp]);
+            }
+        }
+        return $fp_array;
+    }
+    
     //--------------------------- get deaitls of Existing Product
     public function getExistingProductDetails( $id )
     {       
+        $new_fp = array('hip' => 'low_hip', 'thigh' => 'high_thigh', 'central_front_waist' => 'cf_waist');
         $data = $this->container->get('service.repo')->getExistingProductDetails($id);   
         $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
@@ -867,7 +883,7 @@ class ProductSpecificationHelper {
         $data1['layering']=$data[0][0]['layering'];
         $data1['structural_detail']=$data[0][0]['structural_detail'];
         $data1['fit_type']=$data[0][0]['fit_type'];          
-        $data1['fit_priority']=json_decode($data[0][0]['fit_priority']);
+        $data1['fit_priority']=json_decode($data[0][0]['fit_priority'], true);
         $data1['fabric_content']=json_decode($data[0][0]['fabric_content']);
         $data1['size_title_type']=$data[0][0]['size_title_type'];
         $data1['control_number']=$data[0][0]['control_number'];
@@ -876,11 +892,11 @@ class ProductSpecificationHelper {
         $data1['mapping_title']=$data[0]['clothing_type'];
         $data1['mapping_description']=$data[0]['clothing_type'];       
         $data1['measuring_unit']='inch';       
-        $new_fp = array('hip' => 'low_hip', 'thigh' => 'high_thigh', 'central_front_waist' => 'cf_waist');
+        $data1['fit_priority'] = $this->replace_with_new_fitpoint($data1['fit_priority'], $new_fp); #replacing old fit point with new
         
         foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
-                     $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];
+                     $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];#replacing old fit point with new
                     $stretch_percentage = ($value['garment_measurement_stretch_fit'] == 0)? 0 :(($value['garment_measurement_stretch_fit'] - $value['garment_measurement_flat'])/$value['garment_measurement_flat'])*100;
                     $data1['sizes'][$product_size_value['title']][$fp]['fit_model'] = $value['fit_model_measurement'];
                     $data1['sizes'][$product_size_value['title']][$fp]['garment_dimension'] = $value['garment_measurement_flat'];
