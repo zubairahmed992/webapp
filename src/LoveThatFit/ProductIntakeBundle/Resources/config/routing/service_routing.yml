@@ -22,6 +22,6 @@ pi_ws_existing_product_specification:
 
 pi_ws_product_image_upload:
     pattern: /product_intake/product_image_upload
-    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productImageUpload}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:ImageUploadproductSizeItem}
     requirements:
         _method:  post  

@@ -124,12 +124,12 @@ class ServiceController extends Controller {
     }
     
     //---------------------- productImageUpload
-    public function productImageUploadAction(Request $request) {
+    public function ImageUploadproductSizeItemAction(Request $request) {
         $image_name_break = explode('_',  $_FILES['file']['name']);
         $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-',' ',$image_name_break[0]), $image_name_break[1]); 
         //return new Response(json_encode($data));
         $imageFile = $request->files->get('file');
-        $rsult = $this->imageUploadProduct($_FILES, $data[0]['id'],$imageFile);
+        $rsult = $this->imageUploadProductItemSize($_FILES, $data[0]['id'],$imageFile);
          try { 
         return new JsonResponse([
             'success' => true,
@@ -147,7 +147,7 @@ class ServiceController extends Controller {
     
     
       #---------------------------------------Image Uplaod Function -------------------------------
-    public function imageUploadProduct($FILES , $product_id, $image_file)    {  
+    public function imageUploadProductItemSize($FILES , $product_id, $image_file)    {  
         $allowed = array('png', 'jpg');        
         $request = $this->getRequest();
         if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
@@ -170,8 +170,7 @@ class ServiceController extends Controller {
                 }
                 if(count($find_size_by_title_productid) == 0){
                     return 'Size not found';#------------------------------------------>
-                }
-                
+                }                
                 if (count($product_id_result) == 0) {
                     //**/
                     /* Create Product Item for this product */
@@ -179,7 +178,6 @@ class ServiceController extends Controller {
                     $p_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
                     $this->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);
                 }
-
                 $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);                
                 #return $product_item->getImage();
                 $product_item->file = $image_file;
@@ -222,9 +220,7 @@ class ServiceController extends Controller {
         return $a;
          } else {
                return array('message' => 'Invalid Format!', 'success' => 'false');
-          }
-                  
-      
-    
+        }
+                
     } //----------------- End function Brack File Name
 }
