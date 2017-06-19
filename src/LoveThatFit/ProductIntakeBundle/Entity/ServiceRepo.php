@@ -96,5 +96,23 @@ class ServiceRepo
         }
 
     }
+    //-------- getProductDetailOnly pass Brand name and Control Number
+    public function getProductDetailOnly($brand_name, $style_id_number) {
+        $query = $this->em
+           ->createQuery("
+               SELECT partial p.{id, name ,gender, styling_type, description, disabled, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, control_number, product_model_height }
+               FROM LoveThatFitAdminBundle:Product p  
+               JOIN p.brand b   
+               WHERE p.control_number=:style_id_number
+               AND b.name = :brand_name")->setParameters(array('style_id_number' => $style_id_number, 'brand_name' => $brand_name));   
+        
+        try {
+            return $query->getArrayResult();
 
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
 }

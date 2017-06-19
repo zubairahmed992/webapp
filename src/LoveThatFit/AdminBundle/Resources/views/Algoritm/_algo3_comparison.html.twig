@@ -11,6 +11,10 @@
   <b>Recommendation</b> 
     {{data.recommendation.description}}
   </p>
+  <b>Layer</b> 
+    {{data.layering}}
+  </p>
+  
 </blockquote>
     
     
@@ -30,7 +34,9 @@
                         <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
                     
                     </b> | <i>fit_index: {{size_specs.fit_index}}</i> 
-                   
+                    
+    
+  
 
                         </td>            
                     </tr>
@@ -42,18 +48,19 @@
                                         <th>Fit Priority</th>
                                         <th>Body</th>
                                         <th>FX</th>                                                                             
-                                        <th>Grade Rule	</th>
-                                        <th>Garment Dimension</th>	
-                                        <th>Garment Stretch </th>
+                                        <th>GR	</th>
+                                        <th>GD</th>	
+                                        <th>G Stretch </th>
                                         <th>MIN Calc</th>
                                         <th>MIN Actual</th>                                        
                                         <th>Low</th>             
-                                        <th>Fit Model</th>
+                                        <th>FM</th>
                                         <th>High</th>
                                         <th>Max Actual</th>
                                         <th>MAX Calc</th>
                                         <th>message</th>
                                         <th>variance</th>
+                                        <th>fitting</th>
                                     </tr>
                                 
                             {% for fp, fp_specs in size_specs.fit_points %} 
@@ -102,6 +109,7 @@
                                         </span>
                                         </td>
                                         <td>{{fp_specs.variance}}</td>
+                                        <td>{{fp_specs.fitting}}</td>
                                     </tr>
 
                             {% endfor %}
@@ -126,7 +134,7 @@
                                             </span>   
                                                 </td>                                                                                
                                         <td>{{size_specs.variance}}</td>                
-                                        
+                                        <td></td>
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
                                     <tr  style="background-color: #F2F2F2">
