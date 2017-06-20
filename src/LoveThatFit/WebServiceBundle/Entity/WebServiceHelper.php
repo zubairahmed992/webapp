@@ -1154,9 +1154,9 @@ class WebServiceHelper
             $p['item_details'] = $product_items_details;
         }else{
             if($product_items_details == ''){
-                $p['item_details'] = "<ul>rn<li>".$product_country_origin."</li>rn</ul>";
+                $p['item_details'] = "<ul><li>".$product_country_origin."</li></ul>";
             }else{
-                $p['item_details'] = str_ireplace('</ul>','rn<li>'.$product_country_origin.'</li>rn</ul>', $product_items_details);
+                $p['item_details'] = str_ireplace('</ul>','<li>'.$product_country_origin.'</li></ul>', $product_items_details);
             }
         }
         $p['care_label'] = $product->getCareLabel();
