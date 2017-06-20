@@ -444,10 +444,17 @@ class ProductSpecificationHelper {
 
             #---------------> Calculate ratios
             $fit_model_ratio[$fit_point]['fit_model'] = ($measure['garment_stretch'] > 0 ) ? ($fit_model_fit_points[$fit_point] / $measure['garment_stretch']) : 0;
-            $fit_model_ratio[$fit_point]['min_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'] / $fit_model_fit_points[$fit_point]);
-            $fit_model_ratio[$fit_point]['ideal_low'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_low'] / $fit_model_fit_points[$fit_point]);
-            $fit_model_ratio[$fit_point]['ideal_high'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_high'] / $fit_model_fit_points[$fit_point]);
-            $fit_model_ratio[$fit_point]['max_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['max_calc'] / $fit_model_fit_points[$fit_point]);
+        if (!array_key_exists($fit_point, $fit_model_fit_points) || $fit_model_fit_points[$fit_point] == 0) {
+                $fit_model_ratio[$fit_point]['min_calc'] = 0;
+                $fit_model_ratio[$fit_point]['ideal_low'] = 0;
+                $fit_model_ratio[$fit_point]['ideal_high'] = 0;
+                $fit_model_ratio[$fit_point]['max_calc'] = 0;            
+            }else{
+                $fit_model_ratio[$fit_point]['min_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'] / $fit_model_fit_points[$fit_point]);
+                $fit_model_ratio[$fit_point]['ideal_low'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_low'] / $fit_model_fit_points[$fit_point]);
+                $fit_model_ratio[$fit_point]['ideal_high'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_high'] / $fit_model_fit_points[$fit_point]);
+                $fit_model_ratio[$fit_point]['max_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['max_calc'] / $fit_model_fit_points[$fit_point]);
+            }
         }
         return $fit_model_ratio;
     }
