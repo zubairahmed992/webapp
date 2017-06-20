@@ -234,27 +234,19 @@ class WSMiscController extends Controller {
     {
         $decoded_path = $this->process_request();
         $decoded = $request->request->all();
+        
+        $results_marketingtiles=array();
 
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        $user_detail = $this->get('webservice.helper')->userDetail($decoded);
-        $user_detail = json_decode($user_detail);
-
-        if(isset($user_detail->data->user->email) && $user_detail->data->user->email=='abc2@test.com') {
-            $res = $this->get('webservice.helper')->response_array(false, 'Service is unavailable.');
-        } else {        
-            $results_marketingtiles=array();
-
-            $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
-            
-            if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
-                foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
-                    $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];
-                    $results_marketingtiles[$key_marketingtiles]['created_at'] = ($value_marketingtiles['created_at']) ? $value_marketingtiles['created_at']->format('Y-m-d h:i:s') : '';
-                }
+        $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
+        
+        if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
+            foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
+                $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];
+                $results_marketingtiles[$key_marketingtiles]['created_at'] = ($value_marketingtiles['created_at']) ? $value_marketingtiles['created_at']->format('Y-m-d h:i:s') : '';
             }
-
-            $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);
         }
+
+        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);
                             
         return new Response($res);
     }
