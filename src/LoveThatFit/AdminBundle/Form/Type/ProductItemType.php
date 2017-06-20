@@ -15,7 +15,7 @@ class ProductItemType extends AbstractType
        
         $builder->add('sku');
         $builder->add('price');
-        $builder->add('weight');
+        $builder->add('weight', 'integer', array('max_length'=>15));
         $builder->add('file');
         
                 

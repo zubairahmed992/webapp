@@ -52,6 +52,7 @@ class ShopLookHelper
     public function save($entity,$file,$decoded) {
         $entity->setShopModelImage($this->upload($file['name'], $file['tmp_name']));
         $entity->setName($decoded['name']);
+        $entity->setAppVersion($decoded['app_version']);
         $entity->setSorting($decoded['sorting']);
         $disabled = 0;
         if(isset($decoded['disabled'])){
@@ -73,6 +74,7 @@ class ShopLookHelper
         }
         $entity->setName($decoded['name']);
         $entity->setSorting($decoded['sorting']);
+        $entity->setAppVersion($decoded['app_version']);
         $disabled = 0;
         if(isset($decoded['disabled'])){
             $disabled = 1;
@@ -80,6 +82,9 @@ class ShopLookHelper
         $entity->setDisabled($disabled);
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
+
+        // var_dump($decoded['app_version']); die;
+
         $this->em->persist($entity);
         $this->em->flush();
         return $entity;
@@ -198,5 +203,9 @@ class ShopLookHelper
                 'success' => false,
             );
         }
+    }
+
+    public function findByParams( $params = array()){
+        return $this->repo->findBy($params);
     }
 }
