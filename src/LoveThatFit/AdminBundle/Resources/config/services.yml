@@ -235,6 +235,7 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Banner
+            container: "@service_container"
         
      admin.helper.productimage:
          class: LoveThatFit\AdminBundle\Entity\ProductImageHelper
