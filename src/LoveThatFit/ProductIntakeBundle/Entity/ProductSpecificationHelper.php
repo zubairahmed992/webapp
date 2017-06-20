@@ -869,6 +869,7 @@ class ProductSpecificationHelper {
         $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
+        $data1['style_id_number']=$data[0][0]['control_number'];
         $data1['style_name']=$data[0][0]['name'];
         $data1['gender']=$data[0][0]['gender'];
         $data1['description']=$data[0][0]['description'];
