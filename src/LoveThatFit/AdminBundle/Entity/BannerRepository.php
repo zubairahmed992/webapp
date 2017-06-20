@@ -137,7 +137,7 @@ class BannerRepository extends EntityRepository
 
         if ($displayscreen != '') {
             $query = $this->getEntityManager()
-                ->createQuery("SELECT c.id as id, c.parent_id as parent_id, c.name as title,
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, c.parent_id as parent_id, c.name as title,
                 c.image as banner_image ,c.image_position as image_position,
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
@@ -145,13 +145,14 @@ class BannerRepository extends EntityRepository
                 c.price_max as price_max , 'banner' AS type
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
+                left JOIN c.banner_shoplook s
                 WHERE c.disabled=0 AND c.display_screen = :display_screen
                 GROUP BY c.id
                 order by c.sorting")
                 ->setParameters(array('display_screen' => $displayscreen));
         } else {
             $query = $this->getEntityManager()
-                ->createQuery("SELECT c.id as id, c.parent_id as parent_id, c.name as title,
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, c.parent_id as parent_id, c.name as title,
                 c.image as banner_image ,c.image_position as image_position,
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
@@ -159,6 +160,7 @@ class BannerRepository extends EntityRepository
                 c.price_max as price_max , 'banner' AS type
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
+                left JOIN c.banner_shoplook s
                 WHERE c.disabled=0
                 GROUP BY c.id
                 order by c.sorting");
