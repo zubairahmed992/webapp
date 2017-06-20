@@ -234,9 +234,9 @@ class WSMiscController extends Controller {
     {
         $decoded_path = $this->process_request();
         $decoded = $request->request->all();
-
-        $results_marketingtiles=array();
         
+        $results_marketingtiles=array();
+
         $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
         
         if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
@@ -246,7 +246,8 @@ class WSMiscController extends Controller {
             }
         }
 
-        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);                    
+        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);
+                            
         return new Response($res);
     }
 }
