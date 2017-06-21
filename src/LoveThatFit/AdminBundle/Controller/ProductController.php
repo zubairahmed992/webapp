@@ -1509,15 +1509,21 @@ class ProductController extends Controller {
 
     public function exportProductCategoriesAction()
     {
-        $products_and_items = $this->getDoctrine()
+        $products_with_categories = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->listProductsAndCategories();
-        if (!empty($products_and_items)) {
-
+        if (!empty($products_with_categories)) {
+            $count = 0;
+            foreach ($products_with_categories as $row) {
+                $products_with_categories[$count]['status']     = ($row["status"] == 1 ? "Disabled" : "Enabled");
+                $products_with_categories[$count]['gender']     = ($row["gender"] == "f" ? "Female" : "Male");
+                $products_with_categories[$count]['created_at'] = (date_format(date_create($row["created_at"]), "d/m/Y H:i"));
+                $count++;
+            }
         } else {
-            $products_and_items = array('product_id' => '', 'product_name' => '', 'categories_name' => '');
+            $products_with_categories = array('product_id' => '', 'product_name' => '', 'status' => '', 'gender' => '', 'brand_name' => '', 'clothing_type' => '', 'color' => '', 'retailer' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '', 'styling_type' => '', 'categories_name' => '');
         }
-        $this->get('admin.helper.utility')->exportToCSV($products_and_items, 'product_with_categories');
+        $this->get('admin.helper.utility')->exportToCSV($products_with_categories, 'product_with_categories');
         return new Response('');
     }
 
