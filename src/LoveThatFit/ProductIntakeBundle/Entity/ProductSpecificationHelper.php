@@ -494,10 +494,10 @@ class ProductSpecificationHelper {
         $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $gr_value);
         $fp['ideal_high'] = $fp['fit_model'] + (0.5 * $gr_value);
         $fp['max_calc'] = $fp['fit_model'] + (2.5 * $gr_value);
-        $fp['max_actual'] = $fp['max_calc'];
-        $fp['min_actual'] = $fp['min_calc']; # disabled for old products import
-        #$fp['max_actual'] = floatval($fp['max_actual'])>0?$fp['max_actual']:$fp['max_calc'];
-        #$fp['min_actual'] = floatval($fp['min_calc'])>0?$fp['min_calc']:$fp['min_calc'];
+        #$fp['max_actual'] = $fp['max_calc'];
+        #$fp['min_actual'] = $fp['min_calc']; # disabled for old products import
+        $fp['max_actual'] = floatval($fp['max_actual'])>0?$fp['max_actual']:$fp['max_calc'];
+        $fp['min_actual'] = floatval($fp['min_calc'])>0?$fp['min_calc']:$fp['min_calc'];
         return $fp;
     }
 
@@ -726,11 +726,10 @@ class ProductSpecificationHelper {
         $fp_specs['ideal_high'] = $fp_specs['fit_model'] * $ratio['ideal_high'];
         $fp_specs['min_calc'] = $fp_specs['fit_model'] - (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
         $fp_specs['max_calc'] = $fp_specs['fit_model'] + (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
-        $fp_specs['min_actual'] = $fp_specs['min_calc'];
-        $fp_specs['max_actual'] = $fp_specs['max_calc'];
-        
-        #$fp_specs['min_actual'] = floatval($fp_specs['min_actual']) > 0 ? $fp_specs['min_actual'] : $fp_specs['min_calc'];
-        #$fp_specs['max_actual'] = floatval($fp_specs['max_actual']) > 0 ? $fp_specs['max_actual'] : $fp_specs['max_calc'];        
+        #$fp_specs['min_actual'] = $fp_specs['min_calc'];
+        #$fp_specs['max_actual'] = $fp_specs['max_calc'];        
+        $fp_specs['min_actual'] = floatval($fp_specs['min_actual']) > 0 ? $fp_specs['min_actual'] : $fp_specs['min_calc'];
+        $fp_specs['max_actual'] = floatval($fp_specs['max_actual']) > 0 ? $fp_specs['max_actual'] : $fp_specs['max_calc'];        
         return $fp_specs;
     }
 
