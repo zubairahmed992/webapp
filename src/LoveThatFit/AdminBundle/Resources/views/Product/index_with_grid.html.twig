@@ -55,7 +55,7 @@
                 length: -1,
                 draw: 1,
                 order: [{column: 0, dir: "desc"}],
-                p_statuses : p_statuses,
+                p_statuses: p_statuses,
                 created_date: created_date
             };
             $.ajax({
@@ -224,6 +224,8 @@
 
             <div class="btn-group" role="group" aria-label="..." style="float:right;">
                 <a href="{{ path('product_intake_product_specs_index') }}" class="btn btn-default">Specs</a>
+                <a href="{{ path('admin_product_categories_export') }}" class="btn btn-default">Export Products With
+                    Categories</a>
                 <a href="{{ path('admin_product_export') }}" class="btn btn-default">Export Products and Items to
                     CSV</a>
                 <a href="{{ path('admin_product_data_csv_index') }}" class="btn btn-default">Import CSV</a>
@@ -368,7 +370,8 @@
                         <div id="p_date">
                             <div class="adv_srch_hd">Created Date</div>
                             <div class="frm_ele">
-                                <input type="text" id="created_at" name="created_at" required="required" class="datepicker">
+                                <input type="text" id="created_at" name="created_at" required="required"
+                                       class="datepicker">
                             </div>
                         </div>
                     </div>
