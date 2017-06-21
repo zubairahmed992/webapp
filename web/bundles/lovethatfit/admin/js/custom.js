@@ -92,6 +92,13 @@ return;
 }
 return false;
 });
+
+
+
+$('.alert').delay(3000).fadeOut( "slow", function() {
+
+});
+
 });
 
 function formatSecondsAsTime(secs, format) {

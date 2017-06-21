@@ -205,6 +205,7 @@
 
             <div class="btn-group" role="group" aria-label="..." style="float:right;">
                 <a href="{{ path('product_intake_product_specs_index') }}" class="btn btn-default">Specs</a>
+                <a href="{{ path('admin_product_categories_export') }}" class="btn btn-default">Export Products With Categories</a>
                 <a href="{{ path('admin_product_export') }}" class="btn btn-default">Export Products and Items to
                     CSV</a>
                 <a href="{{ path('admin_product_data_csv_index') }}" class="btn btn-default">Import CSV</a>
@@ -524,19 +525,20 @@
 					}
 					
 					
-				
-					
-					if(parseInt(data.price_status) ==  0 &&  parseInt(data.weight_status) ==  0){
+				 //&&  parseInt(data.weight_status) ==  0
+					if(parseInt(data.total_items) == 0){
+						
+						  $(row).find("button.priceedit i").addClass('price-edit-no-price');
+						
+					}else if(parseInt(data.price_status) ==  0){
 						
 						  $(row).find("button.priceedit i").addClass('price-edit-green');
 						
-					}else if(parseInt(data.price_status) >  0 &&  parseInt(data.weight_status) >  0){
-						
+					}else if(parseInt(data.price_status) >  0 && parseInt(data.price_status) == parseInt(data.total_items)){
 						
 						 $(row).find("button.priceedit i").addClass('price-edit-no-price');
 						
-					}
-					else if((parseInt(data.price_status) >  0 && parseInt(data.weight_status) ==  0) || (parseInt(data.price_status) ==  0 && parseInt(data.weight_status) >  0)){
+					}else if(parseInt(data.price_status) >  0 && parseInt(data.price_status) != parseInt(data.total_items)){
 						
 						  $(row).find("button.priceedit i").addClass('price-edit-yellow');
 						
