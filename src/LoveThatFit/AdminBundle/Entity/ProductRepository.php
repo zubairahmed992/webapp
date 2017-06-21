@@ -1687,7 +1687,15 @@ class ProductRepository extends EntityRepository
         $stmt->execute();
         return $stmt->fetchAll();
     }
-	
+
+	  public function checked_total_items_listing($id){
+        $query     = $this->getEntityManager()->createQueryBuilder();
+		   $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) total_items FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id);
+
+         return $query->getResult();
+	 }
+
 }
 
     /*
