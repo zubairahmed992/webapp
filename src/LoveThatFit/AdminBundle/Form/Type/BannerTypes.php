@@ -20,7 +20,7 @@ class BannerTypes extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('banner_type', 'choice', array(
             'data'	=> $this->banner_type,
-            'choices'=> array('1'=>'Fullsize Banner','2'=>'Image with Title','3'=>'Text, Description with Price'),
+            'choices'=> array('1'=>'Fullsize Banner','2'=>'Image with Title','3'=>'Text, Description with Price', 4 => "Shop the look"),
             'multiple' => false,
             'expanded' => false
         ));

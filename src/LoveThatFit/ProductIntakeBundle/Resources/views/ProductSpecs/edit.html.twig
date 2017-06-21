@@ -802,7 +802,7 @@
                 <div class="fabric_content">    
                     {% for key,val in drop_down_values['fabric_content'] %}
                         {{ key }} :
-                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][val] is defined?parsed_data['fabric_content'][val]:'' }}" name="fabric_content[{{val}}]" style="width:70px">
+                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{val}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -991,10 +991,10 @@
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {# if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) #}
-                                        {% if (size == fit_model_selected_size) %}
+                                        {% if(fit_model_selected_size | trans is same as (size | trans)) %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
                                                 <th>
-                                                    {{measurement_k}}</th>
+                                                    {{measurement_k}} </th>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" > #}
                                                     <input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px" class="0 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" data-title="Enter Garment Dimension for {{measurement_k}} " >

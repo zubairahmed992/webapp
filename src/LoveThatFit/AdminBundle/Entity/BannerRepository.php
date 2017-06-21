@@ -12,22 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class BannerRepository extends EntityRepository
 {
-	
-/*-----------------------------------------------------------------
-Written:Raghib
-Description: Find all product with limit and sort 
-param:limit, page_number,limit,sort	 
-------------------------------------------------------------------*/
-	 public function findAllBanner($page_number = 0, $limit = 0 ,$sort='id'  ) {
-				   
-             if ($page_number <= 0 || $limit <= 0) {
+
+    /*-----------------------------------------------------------------
+    Written:Raghib
+    Description: Find all product with limit and sort
+    param:limit, page_number,limit,sort
+    ------------------------------------------------------------------*/
+    public function findAllBanner($page_number = 0, $limit = 0, $sort = 'id')
+    {
+
+        if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC');
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC')
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC')
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
         try {
             return $query->getResult();
@@ -35,54 +36,53 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
-   
-  /*-----End Of Function-----------------*/
-	
-	 /*-----------------------------------------------------------------
-      Written:Raghib
-	  Description:Count all Records
-	  param:limit:
-	 ------------------------------------------------------------------*/ 
-     public function countAllRecord()
-	 {
-	  $total_record= $this->getEntityManager()
-	   ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c');
-	  try 
-	    {
-		 return $total_record->getResult();
-		}
-		catch (\Doctrine\ORM\NoResultException $e) 
-		 {
-		   return null;
-		 }						
-	  }   
-	 
-	public function findBannerBy($name,$catid) {
+
+    /*-----End Of Function-----------------*/
+
+    /*-----------------------------------------------------------------
+     Written:Raghib
+     Description:Count all Records
+     param:limit:
+    ------------------------------------------------------------------*/
+    public function countAllRecord()
+    {
         $total_record = $this->getEntityManager()
-        ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:Banner ct
-        WHERE
-        ct.name = :name
-        AND ct.cat_id=:catid"
-                        )->setParameters(array('name' => $name, 'catid' => $catid));
+            ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c');
         try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-    
-    public function listAllBanner($page_number = 0, $limit = 0, $sort = 'id') {
+
+    public function findBannerBy($name, $catid)
+    {
+        $total_record = $this->getEntityManager()
+            ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:Banner ct
+        WHERE
+        ct.name = :name
+        AND ct.cat_id=:catid"
+            )->setParameters(array('name' => $name, 'catid' => $catid));
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    public function listAllBanner($page_number = 0, $limit = 0, $sort = 'id')
+    {
 
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC');
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC')
-                    ->setFirstResult($limit * ($page_number - 1))
-                    ->setMaxResults($limit);
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c ORDER BY c.' . $sort . ' ASC')
+                ->setFirstResult($limit * ($page_number - 1))
+                ->setMaxResults($limit);
         }
         try {
             return $query->getResult();
@@ -101,41 +101,43 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
-        
+
     public function findAllRecord()
     {
-      $query = $this->getEntityManager()
-                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c order by c.id,c.sorting, c.name');
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT c FROM LoveThatFitAdminBundle:Banner c order by c.id,c.sorting, c.name');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
+
     #-----------------------------------------------------------------------------
 
     public function findStatisticsBy($catid)
     {
-     $query = $this->getEntityManager()
-        ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:Banner ct
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:Banner ct
         WHERE        
         ct.cat_id=:catid"
-                        )
-             ->setParameter('catid',$catid);
+            )
+            ->setParameter('catid', $catid);
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-    
-  #-------------Find All Banner for Web Service -----#
-    public function findAllBanners($displayscreen='') {
 
-        if($displayscreen!=''){
+
+    #-------------Find All Banner for Web Service -----#
+    public function findAllBanners($displayscreen = '')
+    {
+
+        if ($displayscreen != '') {
             $query = $this->getEntityManager()
-                ->createQuery("SELECT c.id as id, c.parent_id as parent_id, c.name as title,
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, c.parent_id as parent_id, c.name as title,
                 c.image as banner_image ,c.image_position as image_position,
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
@@ -143,13 +145,14 @@ param:limit, page_number,limit,sort
                 c.price_max as price_max , 'banner' AS type
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
+                left JOIN c.banner_shoplook s
                 WHERE c.disabled=0 AND c.display_screen = :display_screen
                 GROUP BY c.id
                 order by c.sorting")
                 ->setParameters(array('display_screen' => $displayscreen));
-        }else{
+        } else {
             $query = $this->getEntityManager()
-                ->createQuery("SELECT c.id as id, c.parent_id as parent_id, c.name as title,
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, c.parent_id as parent_id, c.name as title,
                 c.image as banner_image ,c.image_position as image_position,
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
@@ -157,6 +160,7 @@ param:limit, page_number,limit,sort
                 c.price_max as price_max , 'banner' AS type
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
+                left JOIN c.banner_shoplook s
                 WHERE c.disabled=0
                 GROUP BY c.id
                 order by c.sorting");
@@ -169,13 +173,14 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
-    
-    
-    public function findOneByName($name) {
+
+
+    public function findOneByName($name)
+    {
         $record = $this->getEntityManager()
-                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Banner c
+            ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Banner c
                                 WHERE c.name = :name")
-                        ->setParameters(array('name' => $name));
+            ->setParameters(array('name' => $name));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -183,108 +188,114 @@ param:limit, page_number,limit,sort
         }
     }
 
-    public function findBannerByName($name) {
+    public function findBannerByName($name)
+    {
         $record = $this->getEntityManager()
-                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Banner c
+            ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Banner c
                                 WHERE c.name = :name")
-                        ->setParameters(array('name' =>$name));
+            ->setParameters(array('name' => $name));
         try {
             return $record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-     public function findOneByCatIdName($cat_id, $name) {
+
+    public function findOneByCatIdName($cat_id, $name)
+    {
         $record = $this->getEntityManager()
-                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Banner c
+            ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Banner c
                                 WHERE c.name = :name AND c.cat_id = :catid")
-                        ->setParameters(array('name' =>$name, 'catid' => $cat_id));
+            ->setParameters(array('name' => $name, 'catid' => $cat_id));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
+
     public function findBannerByProduct($product)
-  {
-      $query = $this->getEntityManager()
-                        ->createQuery("
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT b FROM LoveThatFitAdminBundle:Banner b
      WHERE
      b.id=:id     
-    "  )->setParameters(array('id' => $product)) ;
+    ")->setParameters(array('id' => $product));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-  }
-  
-  
-  
-  
-  public function findBannerByCatId($cat_id)
-  {
-      $query = $this->getEntityManager()
-                        ->createQuery("
+    }
+
+
+    public function findBannerByCatId($cat_id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT b FROM LoveThatFitAdminBundle:Banner b
      WHERE
      b.cat_id=:catid
-    "  )->setParameters(array('catid' => $cat_id)) ;
+    ")->setParameters(array('catid' => $cat_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-  }
-  
+    }
+
 #------------------------------------------------------------------------------#  
-  public function getRecordsCountWithCurrentBannerLimit($banner){
-     $query = $this->getEntityManager()
-                    ->createQuery("SELECT count(c.id) as id  FROM LoveThatFitAdminBundle:Banner c WHERE c.id <=:banner")
-                   ->setParameters(array('banner' => $banner));
-                     try {
-                     return $query->getResult();
-                } catch (\Doctrine\ORM\NoResultException $e) {
-                return null;
-                }
-  }  
- #--------------Find Banner By Gender---------------------------------#
-  public function findByCatId($cat_id){
-       $query = $this->getEntityManager()
-                        ->createQuery("
+    public function getRecordsCountWithCurrentBannerLimit($banner)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) as id  FROM LoveThatFitAdminBundle:Banner c WHERE c.id <=:banner")
+            ->setParameters(array('banner' => $banner));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    #--------------Find Banner By Gender---------------------------------#
+    public function findByCatId($cat_id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT ct.id as id,ct.name as name FROM LoveThatFitAdminBundle:Banner ct
      WHERE
      ct.cat_id=:catid
-    "  )->setParameters(array('catid' => $cat_id)) ;
+    ")->setParameters(array('catid' => $cat_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-      
-  }
+
+    }
+
 #--------------Find Banner By ID---------------------------------#
-  public function findById($id){
-       $query = $this->getEntityManager()
-                        ->createQuery("
+    public function findById($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
      SELECT ct.name as name,ct.cat_id as target FROM LoveThatFitAdminBundle:Banner ct
      WHERE
      ct.id=:id     
-    "  )->setParameters(array('id' => $id)) ;
+    ")->setParameters(array('id' => $id));
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-      
-  }
+
+    }
 
 
 #--------------Find Banner with Category Name By ID--  -------------------------------#
-    public function findWithCategoryName($id){
+    public function findWithCategoryName($id)
+    {
 
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('
@@ -301,11 +312,12 @@ param:limit, page_number,limit,sort
                     e.price_min,
                     e.price_max,
                     e.disabled,
-                    e.created_at'
-                )
+                    e.created_at,
+                    s.id as shoplook_id'
+        )
             ->from('LoveThatFitAdminBundle:Banner', 'e')
-            ->Join('LoveThatFitAdminBundle:Categories','f')
-            ->where('e.cat_id = f.id')
+            ->leftJoin('e.banner_shoplook', 's')
+            ->Join('LoveThatFitAdminBundle:Categories', 'f')
             ->andWhere('e.id = :id')
             ->setParameter('id', $id);
 
@@ -329,7 +341,7 @@ param:limit, page_number,limit,sort
     )
     {
         $query = $this->getEntityManager()->createQueryBuilder();
-        $search = isset($data['query']) && $data['query']?$data['query']:null;
+        $search = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $query
             ->select('
             e.id,
@@ -342,15 +354,15 @@ param:limit, page_number,limit,sort
             e.created_at'
             )
             ->from('LoveThatFitAdminBundle:Banner', 'e')
-            ->leftJoin('LoveThatFitAdminBundle:Categories','f')
+            ->leftJoin('LoveThatFitAdminBundle:Categories', 'f')
             ->where('f.id = e.cat_id');
         if ($search) {
             $query
                 ->andWhere('e.name like :search')
-                ->setParameter('search', "%".$search."%");
+                ->setParameter('search', "%" . $search . "%");
         }
         if (is_array($order)) {
-            $orderByColumn    = $order[0]['column'];
+            $orderByColumn = $order[0]['column'];
             $orderByDirection = $order[0]['dir'];
             $query->OrderBy("e.id", $orderByDirection);
         }
@@ -362,17 +374,18 @@ param:limit, page_number,limit,sort
         } else {
             $preparedQuery = $query->getQuery();
         }
-        return $getResult?$preparedQuery->getResult():$preparedQuery;
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
 
 #--------------Add Parent Id in Child category ---------------------------------#
-    public function addParentIdInChild($id, $parent){
+    public function addParentIdInChild($id, $parent)
+    {
 
         $record = $this->getEntityManager()
             ->createQuery("UPDATE LoveThatFitAdminBundle:Banner c
                             Set c.parent_id = :parent_id
                                 WHERE c.id = :id")
-            ->setParameters(array('parent_id' => $parent,'id' => $id));
+            ->setParameters(array('parent_id' => $parent, 'id' => $id));
         try {
             return $record->execute();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -383,7 +396,8 @@ param:limit, page_number,limit,sort
 
 
     #--------------Find Categories By ID---------------------------------#
-    public function findAllBannerDropdown($parent_id = 0) {
+    public function findAllBannerDropdown($parent_id = 0)
+    {
 
         $query = $this->getEntityManager()
             ->createQuery("SELECT c.id as id, c.name as name, c.parent_id as parent_id, c.banner_type as banner_type
@@ -399,26 +413,27 @@ param:limit, page_number,limit,sort
 
 
     #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
-    public function editBannerSorting($sorting_number, $action, $parent_id, $display_screen, $current_value = 0){
-
+    public function editBannerSorting($sorting_number, $action, $parent_id, $display_screen, $current_value = 0)
+    {
+        $sql = "";
         $bannerTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Banner')->getTableName();
-        if($parent_id == null){
+        if ($parent_id == null) {
             $parent_id_condition = " AND parent_id IS NULL ";
-        }else{
+        } else {
             $parent_id_condition = " AND parent_id = $parent_id";
         }
 
-        if($action == 'add'){
+        if ($action == 'add') {
             $sql = "UPDATE $bannerTableName SET sorting = sorting + 1 where sorting >= :sorting_number $parent_id_condition AND display_screen = :display_screen ";
-        }elseif($action == 'delete'){
+        } elseif ($action == 'delete') {
             $sql = "UPDATE $bannerTableName SET sorting = sorting - 1 where sorting >= :sorting_number $parent_id_condition AND display_screen = :display_screen ";
-        }elseif($action == 'update'){
+        } elseif ($action == 'update') {
 
-            if($current_value > $sorting_number){
+            if ($current_value > $sorting_number) {
                 //if current move to less position then +1
                 $sql = "UPDATE $bannerTableName SET sorting = sorting + 1 where sorting >= :sorting_number AND sorting <= :current_value $parent_id_condition AND display_screen = :display_screen ";
 
-            }elseif($current_value < $sorting_number){
+            } elseif ($current_value < $sorting_number) {
                 $sql = "UPDATE $bannerTableName SET sorting = sorting - 1 where sorting >= :current_value AND sorting <= :sorting_number $parent_id_condition AND display_screen = :display_screen ";
             }
             $params['current_value'] = $current_value;
@@ -426,21 +441,25 @@ param:limit, page_number,limit,sort
         //set parameters
         $params['sorting_number'] = $sorting_number;
         $params['display_screen'] = $display_screen;
-        $query = $this->getEntityManager()->getConnection()
-            ->prepare($sql);
-        $result = $query->execute($params);
 
-        return true;
+        if($sql != "") {
+            $query = $this->getEntityManager()->getConnection()
+                ->prepare($sql);
+            $result = $query->execute($params);
+
+            return true;
+        }
     }
 
 
     #--------------Increamental and Decreamental on Banner Sorrting---------------------------------#
-    public function maxSortingNumber($sorting_number, $parent_id, $display_screen){
+    public function maxSortingNumber($sorting_number, $parent_id, $display_screen)
+    {
 
         $bannerTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Banner')->getTableName();
-        if($parent_id == null){
+        if ($parent_id == null) {
             $parent_id_condition = " AND parent_id IS NULL ";
-        }else{
+        } else {
             $parent_id_condition = " AND parent_id = $parent_id";
         }
 
@@ -455,7 +474,6 @@ param:limit, page_number,limit,sort
         return $result_query;
 
     }
-
 
 
 }

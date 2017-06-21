@@ -444,10 +444,17 @@ class ProductSpecificationHelper {
 
             #---------------> Calculate ratios
             $fit_model_ratio[$fit_point]['fit_model'] = ($measure['garment_stretch'] > 0 ) ? ($fit_model_fit_points[$fit_point] / $measure['garment_stretch']) : 0;
-            $fit_model_ratio[$fit_point]['min_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'] / $fit_model_fit_points[$fit_point]);
-            $fit_model_ratio[$fit_point]['ideal_low'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_low'] / $fit_model_fit_points[$fit_point]);
-            $fit_model_ratio[$fit_point]['ideal_high'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_high'] / $fit_model_fit_points[$fit_point]);
-            $fit_model_ratio[$fit_point]['max_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['max_calc'] / $fit_model_fit_points[$fit_point]);
+        if (!array_key_exists($fit_point, $fit_model_fit_points) || $fit_model_fit_points[$fit_point] == 0) {
+                $fit_model_ratio[$fit_point]['min_calc'] = 0;
+                $fit_model_ratio[$fit_point]['ideal_low'] = 0;
+                $fit_model_ratio[$fit_point]['ideal_high'] = 0;
+                $fit_model_ratio[$fit_point]['max_calc'] = 0;            
+            }else{
+                $fit_model_ratio[$fit_point]['min_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['min_calc'] / $fit_model_fit_points[$fit_point]);
+                $fit_model_ratio[$fit_point]['ideal_low'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_low'] / $fit_model_fit_points[$fit_point]);
+                $fit_model_ratio[$fit_point]['ideal_high'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['ideal_high'] / $fit_model_fit_points[$fit_point]);
+                $fit_model_ratio[$fit_point]['max_calc'] = ($fit_model_ratio['fit_model_measurement'][$fit_point]['max_calc'] / $fit_model_fit_points[$fit_point]);
+            }
         }
         return $fit_model_ratio;
     }
@@ -869,6 +876,7 @@ class ProductSpecificationHelper {
         $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
+        $data1['style_id_number']=$data[0][0]['control_number'];
         $data1['style_name']=$data[0][0]['name'];
         $data1['gender']=$data[0][0]['gender'];
         $data1['description']=$data[0][0]['description'];

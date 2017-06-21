@@ -1146,10 +1146,23 @@ class WebServiceHelper
         $product_description = $product->getDescription();
         $product_description_without_html = preg_replace('#<[^>]+>#', ' ', $product_description);
         $p['description'] = rtrim(ltrim($product_description_without_html));
-        $p['item_details'] = $product->getItemDetails();
+
+        $product_items_details = $product->getItemDetails();
+        $product_country_origin = $product->getCountryOrigin();
+        //Added Country origin under the Product item detail
+        if($product_country_origin == ''){
+            $p['item_details'] = $product_items_details;
+        }else{
+            if($product_items_details == ''){
+                $p['item_details'] = "<ul><li>".$product_country_origin."</li></ul>";
+            }else{
+                $p['item_details'] = str_ireplace('</ul>','<li>'.$product_country_origin.'</li></ul>', $product_items_details);
+            }
+        }
         $p['care_label'] = $product->getCareLabel();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
+        $p['item_name'] = $product->getItemName();
 
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
