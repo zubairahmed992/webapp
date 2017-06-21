@@ -258,7 +258,11 @@ admin_product_description_update:
 
 admin_product_categories_ajax:
     pattern:  /admin/ajaxloadcategories/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:Product:ajaxloadcategories }   
+    defaults: { _controller: LoveThatFitAdminBundle:Product:ajaxloadcategories }
+
+admin_product_categories_export:
+    pattern:  /admin/product_catgories/export
+    defaults: { _controller: LoveThatFitAdminBundle:Product:exportProductCategories }
    
 
 

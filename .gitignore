@@ -6,6 +6,7 @@ app/cache/*
 app/logs/*
 build/
 vendor
+nbproject
 composer.phar
 web/uploads
 web/uploads/ltf
