@@ -17,8 +17,6 @@ class BannerTypes extends AbstractType {
         $this->parent_id = $entity->getParentId();
     }
 
-    public test(){}
-
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('banner_type', 'choice', array(
             'data'	=> $this->banner_type,
