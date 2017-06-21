@@ -349,6 +349,7 @@ class ProductHelper
 
     public function searchAllProduct($data){
 		
+		
         $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
         //length
         $length  = $data['length'];
@@ -378,9 +379,11 @@ class ProductHelper
 
         foreach ($finalData as $fData) {
 			
-			 //$catData = $this->repo->checked_for_categories($fData["id"]);
+			
+			 
 			 $priceData = $this->repo->checked_for_price($fData["id"]);			 
-			 $weightData = $this->repo->checked_for_weight($fData["id"]);			 			 
+			 $weightData = $this->repo->checked_for_weight($fData["id"]);	
+			 $totalItems = $this->repo->checked_total_items_listing($fData["id"]);		 			 
 			
             $output['data'][] = [
                 'id' => $fData["id"],
@@ -394,7 +397,7 @@ class ProductHelper
 				'country_origin' => $fData['country_origin'],
 				'item_details' => $fData['item_details'],
 				'care_label' => $fData['care_label'],																
-//'category_status' => $catData[0]['have_category'],
+				'total_items' => $totalItems[0]['total_items'],
 				'price_status' => $priceData[0]['no_price'],
 				'weight_status' => $weightData[0]['no_weight'],				
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
