@@ -76,21 +76,21 @@
 
                             <div class="row-fluid show-grid">
                                 <div class="span3">Description</div><br>
-                                <div style="margin-left: 110px;">{{ form_widget(form.description) }}{{ form_errors(form.description) }}</div>
+                                <div style="margin-left: 194px;">{{ form_widget(form.description) }}{{ form_errors(form.description) }}</div>
                             </div>
 
                             <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
 
                             <div class="row-fluid show-grid">
-                                <div class="span3">Item Details</div>
-                                <div style="margin-left: 110px;">{{ form_widget(form.item_details, { 'attr': {'class': 'tinymce tinymce-ext'} }) }}{{ form_errors(form.item_details) }}</div>
+                                <div class="span3"  style="margin-top: -15px;">Item Details</div>
+                                <div style="margin-left: 194px;">{{ form_widget(form.item_details, { 'attr': {'class': 'tinymce tinymce-ext'} }) }}{{ form_errors(form.item_details) }}</div>
                             </div>
 
                             <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
 
                             <div class="row-fluid show-grid">
-                                <div class="span3">Care Label</div>
-                                <div style="margin-left: 110px;">{{ form_widget(form.care_label, { 'attr': {'class': 'tinymce tinymce-ext'} }) }}{{ form_errors(form.care_label) }}</div>
+                                <div class="span3"  style="margin-top: -15px;">Care Label</div>
+                                <div style="margin-left: 194px;">{{ form_widget(form.care_label, { 'attr': {'class': 'tinymce tinymce-ext'} }) }}{{ form_errors(form.care_label) }}</div>
                             </div>
 
 
@@ -100,9 +100,9 @@
                             <div class="row-fluid show-grid">
                                 <div class="span3">&nbsp;</div>
 
-                                <div class="span3">
+                                <div class="span3" style="min-height: 70px;">
 
-                                    <div style="margin:0px 0px 0px 0px;"><input type="submit" value="Update"
+                                    <div style="margin:9px 0px 0px 0px;"><input type="submit" value="Update"
                                                                                 class="btn  btn-primary"/>
                                         <a href="{{ path('admin_products') }}" class="btn  btn-primary">Cancel </a>
                                     </div>
