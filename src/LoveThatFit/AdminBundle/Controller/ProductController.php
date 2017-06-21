@@ -1507,4 +1507,18 @@ class ProductController extends Controller {
 		 return new Response($success );
     }
 
+    public function exportProductCategoriesAction()
+    {
+        $products_and_items = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:Product')
+            ->listProductsAndCategories();
+        if (!empty($products_and_items)) {
+
+        } else {
+            $products_and_items = array('product_id' => '', 'product_name' => '', 'categories_name' => '');
+        }
+        $this->get('admin.helper.utility')->exportToCSV($products_and_items, 'product_with_categories');
+        return new Response('');
+    }
+
 }

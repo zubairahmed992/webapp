@@ -1675,6 +1675,18 @@ class ProductRepository extends EntityRepository
 
          return $query->getResult();
 	 }
+
+    public function listProductsAndCategories()
+    {
+        $sql = 'SELECT p.id as product_id , p.name as product_name, GROUP_CONCAT(ct.name) as categories_name FROM product p
+                Join category_products cp ON cp.product_id = p.id
+                Join categories ct on ct.id = cp.categories_id
+                GROUP BY p.id';
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 	
 }
 
