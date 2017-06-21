@@ -536,18 +536,27 @@
                     var message = 'Sum of fabric content and Fit Prority is 100%';    
                     if( fabric_sum < 100 && fit_priority_sum < 100 ){
                         message = "ops! sum of fabric content and Fit Prority below 100%";
-                    }     
-                     if(fabric_sum < 100 && fit_priority_sum == 100){
-                        message = "ops! sum of fabric content below 100%";
-                    }  
-                     if(fabric_sum == 100 && fit_priority_sum < 100){
-                        message = "ops! sum of Fit Prority below 100%";
-                    }  
-                   
-                    var form = this;
+                        var form = this;
                     e.preventDefault();
                     if(confirm(message))
                         form.submit();
+                    }     
+                     if(fabric_sum < 100 && fit_priority_sum == 100){
+                        message = "ops! sum of fabric content below 100%";
+                        var form = this;
+                    e.preventDefault();
+                    if(confirm(message))
+                        form.submit();
+                    }  
+                     if(fabric_sum == 100 && fit_priority_sum < 100){
+                        message = "ops! sum of Fit Prority below 100%";
+                        var form = this;
+                    e.preventDefault();
+                    if(confirm(message))
+                        form.submit();
+                    }  
+                   
+                    
                 }
 
     });
@@ -680,11 +689,11 @@
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="stretch_type">Stretch type : </label>
-            <div class="col-sm-4">
+            <div class="col-sm-4">                
                 <select name="stretch_type" class="stretch_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['stretch_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.stretch_type|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.stretch_type|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.stretch_type|lower|trim|replace({' ':'_','/ ':'_'}) == '' and key == 0? '' : (val == parsed_data.stretch_type|lower|trim|replace({' ':'_','/ ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
@@ -768,7 +777,7 @@
                 <div class="fit_priority">    
                     {% for key,val in size_attribute %} 
                         {{ key }} :
-                          <input type="number" min="1" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
+                          <input type="number" min="0" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -802,7 +811,7 @@
                 <div class="fabric_content">    
                     {% for key,val in drop_down_values['fabric_content'] %}
                         {{ key }} :
-                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{val}}]" style="width:70px">
+                        <input type="number" min="0" max="100"  id="{{key}}"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{key}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
