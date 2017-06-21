@@ -315,8 +315,12 @@ class ProductHelper
             'category' => (isset($data['category']) && !empty($data['category']) ? "'" . implode("','", $data['category']) . "'" : array()),
             'target' => (isset($data['target']) && !empty($data['target']) ? "'" . implode("','", $data['target']) . "'" : array()),
             'genders' => (isset($data['genders']) && !empty($data['genders']) ? "'" . implode("','", $data['genders']) . "'" : array()),
-            'brand' => (isset($data['brand']) ? $data['brand']: 0)
+            'p_statuses' => (isset($data['p_statuses']) && !empty($data['p_statuses']) ? "'" . implode("','", $data['p_statuses']) . "'" : array()),
+            'brand' => (isset($data['brand']) ? $data['brand']: 0),
+            'created_date' => (isset($data['created_date']) ? $data['created_date']: "")
         );
+
+        // var_dump($search);
 
         $finalData = $this->repo->searchProductByCriteria($search, $start, $length, $order);
 

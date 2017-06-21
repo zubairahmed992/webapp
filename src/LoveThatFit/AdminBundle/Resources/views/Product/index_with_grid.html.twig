@@ -23,6 +23,13 @@
             }
 
             var brand = $('#brand').val();
+            var created_date = $("#created_at").val();
+
+            var p_statuses = [];
+            $("#product_status:checked").each(function () {
+                p_statuses.push($(this).val());
+            });
+
             var category = []
             $("#category_select:checked").each(function () {
                 category.push($(this).val());
@@ -38,7 +45,19 @@
                 target.push($(this).val());
             });
             $('#loading-indicator').show();
-            serachData = {brand: brand, category: category, genders: genders, target: target, page: page, start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]};
+            serachData = {
+                brand: brand,
+                category: category,
+                genders: genders,
+                target: target,
+                page: page,
+                start: 0,
+                length: -1,
+                draw: 1,
+                order: [{column: 0, dir: "desc"}],
+                p_statuses : p_statuses,
+                created_date: created_date
+            };
             $.ajax({
                 type: 'POST',
                 url: $('#url').text(),
@@ -150,7 +169,7 @@
         function backToListing() {
             issearch = 0;
             $("#back_to_listing").hide();
-            loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]})
+            loadAgain({start: 0, length: -1, draw: 1, order: [{column: 0, dir: "desc"}]})
         }
 
         $(document).ready(function () {
@@ -217,7 +236,7 @@
             <button type="button" class="btn" data-toggle="collapse" data-target="#demo">
                 Search
             </button>
-            <button style="display: none" type="button"  id="back_to_listing" onclick="backToListing()" class="btn">
+            <button style="display: none" type="button" id="back_to_listing" onclick="backToListing()" class="btn">
                 Back To Listing
             </button>
         </div>
@@ -324,6 +343,36 @@
                         </div>
                     </div>
 
+                    <div class="frm_ele" id="product_status_empty">
+                        <div id="status">
+                            <div class="adv_srch_hd">Product Status</div>
+                            <span class="adv_radio" id="product_status_span">
+<input type="checkbox" name="product_status" id="product_status" value="pending">
+
+</span>
+                            <span class="adv_gdr" id="category_empty_label">{{ "pending"|capitalize }}</span>
+                            <span class="adv_radio" id="product_status_span">
+<input type="checkbox" name="product_status" id="product_status" value="review">
+
+</span>
+                            <span class="adv_gdr" id="category_empty_label">{{ "review"|capitalize }}</span>
+                            <span class="adv_radio" id="product_status_span">
+<input type="checkbox" name="product_status" id="product_status" value="complete">
+
+</span>
+                            <span class="adv_gdr" id="category_empty_label">{{ "complete"|capitalize }}</span>
+                        </div>
+                    </div>
+
+                    <div class="frm_ele" id="product_date_empty">
+                        <div id="p_date">
+                            <div class="adv_srch_hd">Created Date</div>
+                            <div class="frm_ele">
+                                <input type="text" id="created_at" name="created_at" required="required" class="datepicker">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <button type="button" class="btn" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
@@ -338,26 +387,26 @@
 
             {#<div class="container">
                 <div class="row">#}
-                    <table id="example" class="display" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Control Number</th>
-                            <th>Brand</th>
-                            <th>Type</th>
-                            <th>Gender</th>
-                            <th>Name</th>
-                            <th>Created At</th>
-                            <th>Status</th>
-                            <th>Enable/Disable</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+            <table id="example" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Control Number</th>
+                    <th>Brand</th>
+                    <th>Type</th>
+                    <th>Gender</th>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>Enable/Disable</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
-                {#</div>
-            </div>#}
+            {#</div>
+        </div>#}
         </div>
 
         <div class="bs-docs-grid" id="all_data_search">
@@ -365,7 +414,8 @@
         </div>
 
     </div>
-    <div id="deleteMyModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="deleteMyModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
             <h3 id="myModalLabel">Delete Product</h3>
@@ -375,7 +425,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <a href=""  class="btn btn-primary delete_url">Delete</a>
+            <a href="" class="btn btn-primary delete_url">Delete</a>
         </div>
     </div>
     <script>
@@ -450,7 +500,7 @@
                 "data": null,
                 "orderable": false,
                 "searchable": false,
-                "defaultContent": EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss+" "+ProductDescription,
+                "defaultContent": EnableDisable + " " + PriceEdit + " " + PDetail + " " + EditButton + " " + DeleteButton + " " + AddImage + " " + CategoryAss + " " + ProductDescription,
                 "width": "25%"
             },
             {
@@ -467,22 +517,35 @@
             {mData: "gender", sTitle: "Gender", sWidth: "5%"},
             {mData: "PName", sTitle: "Name", sWidth: "15%"},
             {mData: "created_at", sTitle: "Created At", sWidth: "12%"},
-            {mData: "pstatus", sTitle: "Status", sWidth: "8%", bSearchable : true},
+            {mData: "pstatus", sTitle: "Status", sWidth: "8%", bSearchable: true},
             {mData: "status", sTitle: "Enable/Disable", sWidth: "8%"},
-            {mData: null, sTitle: "Action", bSortable : false, "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                if(oData.status == "Enable"){
-                    $(nTd).find("button.Enable i").removeClass('icon-play-circle');
-                    $(nTd).find("button.Enable i").addClass('icon-ban-circle');
-                }
+            {
+                mData: null,
+                sTitle: "Action",
+                bSortable: false,
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    if (oData.status == "Enable") {
+                        $(nTd).find("button.Enable i").removeClass('icon-play-circle');
+                        $(nTd).find("button.Enable i").addClass('icon-ban-circle');
+                    }
 
-            }, sWidth: "25%", sDefaultContent: EnableDisable+" "+PriceEdit+" "+PDetail+" "+EditButton+" "+DeleteButton+" "+AddImage+" "+CategoryAss+" "+ProductDescription}
+                },
+                sWidth: "25%",
+                sDefaultContent: EnableDisable + " " + PriceEdit + " " + PDetail + " " + EditButton + " " + DeleteButton + " " + AddImage + " " + CategoryAss + " " + ProductDescription
+            }
         ];
         var dataTable,
             domTable,
             htmlTable = '<table id="example" class="display" cellspacing="0" width="100%"><thead></thead><tbody></tbody></table>';
 
 
-            jQuery(document).ready(function () {
+        jQuery(document).ready(function () {
+            jQuery('.datepicker').datepicker({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 15, // Creates a dropdown of 15 years to control year
+                dateFormat: 'yy-mm-dd'
+            });
+
             var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
             dataTable = $('#example').dataTable({
                 "processing": true,
@@ -500,80 +563,82 @@
                 "order": [[0, "desc"]],
                 "columns": oColumns,
                 "createdRow": function (row, data, index) {
-					
-					if(data.description== null || data.description==''){data.description='';}
-					if(data.item_name== null || data.item_name==''){data.item_name='';}
-					if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
-					if(data.item_details== null || data.item_details==''){data.item_details='';}
-					if(data.care_label== null || data.care_label==''){data.care_label='';}																				
-					
-				
-					
-					if(data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != ''){
-						
-                         $(row).find("button.description i").addClass('icon-desc-have-desc-green');
-					}
-					else if(data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != ''){
-						
-                         $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
-						 
-					}else if(data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == ''){
-						
-                         $(row).find("button.description i").addClass('icon-desc-no-desc');
-						 
-					}
-					
-					
-				
-					
-					if(parseInt(data.price_status) ==  0 &&  parseInt(data.weight_status) ==  0){
-						
-						  $(row).find("button.priceedit i").addClass('price-edit-green');
-						
-					}else if(parseInt(data.price_status) >  0 &&  parseInt(data.weight_status) >  0){
-						
-						
-						 $(row).find("button.priceedit i").addClass('price-edit-no-price');
-						
-					}
-					else if((parseInt(data.price_status) >  0 && parseInt(data.weight_status) ==  0) || (parseInt(data.price_status) ==  0 && parseInt(data.weight_status) >  0)){
-						
-						  $(row).find("button.priceedit i").addClass('price-edit-yellow');
-						
-					}
-					
-					
-					
-					var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
+
+                    if (data.description == null || data.description == '') {
+                        data.description = '';
+                    }
+                    if (data.item_name == null || data.item_name == '') {
+                        data.item_name = '';
+                    }
+                    if (data.country_origin == null || data.country_origin == '') {
+                        data.country_origin = '';
+                    }
+                    if (data.item_details == null || data.item_details == '') {
+                        data.item_details = '';
+                    }
+                    if (data.care_label == null || data.care_label == '') {
+                        data.care_label = '';
+                    }
+
+
+                    if (data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != '') {
+
+                        $(row).find("button.description i").addClass('icon-desc-have-desc-green');
+                    }
+                    else if (data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != '') {
+
+                        $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
+
+                    } else if (data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == '') {
+
+                        $(row).find("button.description i").addClass('icon-desc-no-desc');
+
+                    }
+
+
+                    if (parseInt(data.price_status) == 0 && parseInt(data.weight_status) == 0) {
+
+                        $(row).find("button.priceedit i").addClass('price-edit-green');
+
+                    } else if (parseInt(data.price_status) > 0 && parseInt(data.weight_status) > 0) {
+
+
+                        $(row).find("button.priceedit i").addClass('price-edit-no-price');
+
+                    }
+                    else if ((parseInt(data.price_status) > 0 && parseInt(data.weight_status) == 0) || (parseInt(data.price_status) == 0 && parseInt(data.weight_status) > 0)) {
+
+                        $(row).find("button.priceedit i").addClass('price-edit-yellow');
+
+                    }
+
+
+                    var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
                     url = url.replace(':id', data.id);
                     $.ajax({
                         type: "GET",
                         url: url,
                         data: {},
                         success: function (response) {
-							
-							if(response==0){
-								 $(row).find("button.category i").addClass('cat-no-value');
-								
-							}else{
-							     $(row).find("button.category i").addClass('cat-have-value');	
-							
-							}
-							
 
-						
-							
+                            if (response == 0) {
+                                $(row).find("button.category i").addClass('cat-no-value');
+
+                            } else {
+                                $(row).find("button.category i").addClass('cat-have-value');
+
+                            }
+
+
                         }
-                    }); 
-					
-					
-					
-                    if(data.status == "Enable"){
+                    });
+
+
+                    if (data.status == "Enable") {
                         $(row).find("button.Enable i").removeClass('icon-play-circle');
                         $(row).find("button.Enable i").addClass('icon-ban-circle');
                     }
-					
-					
+
 
                     if (data["original_user_id"] != null) {
                         $('td', row).addClass('duplicate_user_class');
@@ -588,7 +653,7 @@
             bindClickEvent();
         });
 
-        function initializeDataTable( data ){
+        function initializeDataTable(data) {
             if ($.fn.dataTable.fnIsDataTable(dataTable)) {
                 dataTable.fnDestroy(true);
                 $('#productClass').append(htmlTable);
@@ -598,22 +663,22 @@
                 "pageLength": 10,
                 "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
                 "order": [[0, "desc"]],
-                bDestroy : true,
+                bDestroy: true,
                 bPaginate: true,
-                bProcessing : true,
-                aaData : data,
-                aoColumns : _oColumns,
+                bProcessing: true,
+                aaData: data,
+                aoColumns: _oColumns,
             });
 
             bindClickEvent();
         }
 
-        function bindClickEvent(){
+        function bindClickEvent() {
             jQuery('#example tbody').on('click', 'button, a, img', function () {
                 var clickedObject = $(this);
                 var dataAction = $(this).attr('data-action');
                 var element = $(this).parent().parent()[0];
-                var iPos = dataTable.fnGetPosition( element );
+                var iPos = dataTable.fnGetPosition(element);
 
 
                 var data = dataTable.fnGetData(iPos);
@@ -621,7 +686,7 @@
                 if (dataAction == 'EnableDisable') {
                     bootbox.confirm({
                         title: "<h3>Enable/Disable Product</h3>",
-                        message: "Product status is "+data.pstatus+"! Are you sure you want to Enable/Disable this Product?",
+                        message: "Product status is " + data.pstatus + "! Are you sure you want to Enable/Disable this Product?",
                         buttons: {
                             confirm: {
                                 label: 'Yes',
@@ -633,7 +698,7 @@
                             }
                         },
                         callback: function (result) {
-                            if(result) {
+                            if (result) {
                                 $.ajax({
                                     type: "POST",
                                     url: "{{ path('admin_product_status_change') }}",
@@ -642,38 +707,43 @@
                                         id: data.id,
                                     },
                                     success: function (response) {
-                                        if(issearch == 0){
+                                        if (issearch == 0) {
                                             /*if(data.status == "Disable"){
-                                                var rowStatus = "Enable";
-                                                var html = '<i id="status-icon" class="icon-ban-circle">';
-                                            }else{
-                                                var rowStatus = "Disable";
-                                                var html = '<i id="status-icon" class="icon-play-circle">';
-                                            }
+                                             var rowStatus = "Enable";
+                                             var html = '<i id="status-icon" class="icon-ban-circle">';
+                                             }else{
+                                             var rowStatus = "Disable";
+                                             var html = '<i id="status-icon" class="icon-play-circle">';
+                                             }
 
 
-                                            var newData = {
-                                                BName : data.BName,
-                                                ClothingType: data.ClothingType,
-                                                PName: data.PName,
-                                                control_number: data.control_number,
-                                                created_at: data.created_at,
-                                                gender: data.gender,
-                                                id: data.id,
-                                                status: rowStatus,
-                                            };
+                                             var newData = {
+                                             BName : data.BName,
+                                             ClothingType: data.ClothingType,
+                                             PName: data.PName,
+                                             control_number: data.control_number,
+                                             created_at: data.created_at,
+                                             gender: data.gender,
+                                             id: data.id,
+                                             status: rowStatus,
+                                             };
 
-                                            dataTable.fnUpdate( newData, iPos);
-                                            clickedObject.html( html );*/
-                                            loadAgain({start:0, length:-1, draw:1, order:[{column: 0, dir: "desc"}]});
-                                        }else if(issearch == 1){
+                                             dataTable.fnUpdate( newData, iPos);
+                                             clickedObject.html( html );*/
+                                            loadAgain({
+                                                start: 0,
+                                                length: -1,
+                                                draw: 1,
+                                                order: [{column: 0, dir: "desc"}]
+                                            });
+                                        } else if (issearch == 1) {
                                             loadAgain(serachData, "{{ path('admin_search_product') }}");
                                         }
                                     }
                                 });
                             }
                         }
-                    });                    
+                    });
                 }
 
                 if (dataAction == 'Edit') {
@@ -706,21 +776,21 @@
 
                 if (dataAction == 'Delete') {
                     var url = '{{ path('admin_product_detail_delete', {'id': ":id"}) }}';
-                    url     = url.replace(':id', data.id);
+                    url = url.replace(':id', data.id);
 
                     $(".delete_url").attr("href", url);
                 }
-				
-				if (dataAction == 'product_description') {
-                    var url = '{{ path('admin_product_manage_description', {'id': ":id"}) }}';
-                    url     = url.replace(':id', data.id);
 
-                     window.top.location = url;
+                if (dataAction == 'product_description') {
+                    var url = '{{ path('admin_product_manage_description', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+
+                    window.top.location = url;
                 }
             });
         }
 
-        function loadAgain( params, url ) {
+        function loadAgain(params, url) {
             var ajaxurl = (url === undefined) ? "{{ path('admin_products_paginate') }}" : url;
             $(".dataTables_processing").show()
             $.ajax({
