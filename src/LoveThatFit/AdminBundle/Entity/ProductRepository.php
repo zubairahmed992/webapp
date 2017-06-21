@@ -1678,9 +1678,34 @@ class ProductRepository extends EntityRepository
 
     public function listProductsAndCategories()
     {
-        $sql = 'SELECT p.id as product_id , p.name as product_name, GROUP_CONCAT(ct.name) as categories_name FROM product p
-                Join category_products cp ON cp.product_id = p.id
-                Join categories ct on ct.id = cp.categories_id
+        $sql = 'SELECT p.id as product_id ,
+                 p.name as product_name,
+                 p.disabled as status,
+                 p.gender,
+                 b.name as brand_name,
+                 ct.name AS clothing_type,
+                 pc.title as color,
+                 pretail.title as retailer,
+                 p.created_at,
+                 p.control_number,
+                 p.hem_length,
+                 p.neckline,
+                 p.sleeve_styling,
+                 p.rise,
+                 p.fabric_weight,
+                 p.size_title_type,
+                 p.fit_type,
+                 p.horizontal_stretch,
+                 p.vertical_stretch,
+                 p.styling_type,
+                GROUP_CONCAT(c.name) as categories_name FROM product p
+
+                JOIN brand b on b.id = p.brand_id
+                JOIN clothing_type ct on ct.id=p.clothing_type_id
+                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
+                JOIN product_color pc ON p.id = pc.product_id
+                JOIN category_products cp ON cp.product_id = p.id
+                JOIN categories c on c.id = cp.categories_id
                 GROUP BY p.id';
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
