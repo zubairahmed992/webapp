@@ -174,7 +174,7 @@
 
         $(document).ready(function () {
             var genders = $('#genders').val();
-            if (genders == 'M') {
+            if (genders == 'm') {
                 $('#genders').prop('checked', true);
             }
 
@@ -275,7 +275,7 @@
                     <div class="frm_ele">
                         {% for gender in size_specs['genders']['titles'] %}
                             <span class="adv_radio"><input type="checkbox" name="genders" id="genders"
-                                                           value="{{ gender|capitalize }}"></span>
+                                                           value="{{ gender }}"></span>
                             <span class="adv_gdr">{{ gender|capitalize }}</span>
                         {% endfor %}
                     </div>
