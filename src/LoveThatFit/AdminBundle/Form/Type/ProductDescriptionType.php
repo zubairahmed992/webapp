@@ -26,7 +26,7 @@ class ProductDescriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('item_name');
-        $builder->add('country_origin');
+        /*$builder->add('country_origin');*/
         $builder->add('description');
         $builder->add('item_details');
         $builder->add('care_label');
