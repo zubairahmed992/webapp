@@ -1698,7 +1698,7 @@ class ProductRepository extends EntityRepository
                  p.horizontal_stretch,
                  p.vertical_stretch,
                  p.styling_type,
-                GROUP_CONCAT(c.name) as categories_name FROM product p
+                GROUP_CONCAT(DISTINCT c.name) as categories_name FROM product p
 
                 JOIN brand b on b.id = p.brand_id
                 JOIN clothing_type ct on ct.id=p.clothing_type_id
