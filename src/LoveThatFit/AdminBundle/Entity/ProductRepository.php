@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use JMS\SecurityExtraBundle\Security\Util\String;
 
 /**
  * ProductRepository
@@ -1274,22 +1275,35 @@ class ProductRepository extends EntityRepository
         }
 
         if(!empty($data['category'])){
+            /*$query
+                ->expr()->in('ct.id',$data['category'] );*/
             $query
-                ->expr()->in('ct.id',$data['category'] );
+                ->andWhere('ct.id in (:category)')
+                ->setParameter('category', $data['category'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         if(!empty($data['target'])){
+            /*$query
+                ->expr()->in('ct.target',$data['target'] );*/
             $query
-                ->expr()->in('ct.target',$data['target'] );
+                ->andWhere("ct.target in (:target)")
+                ->setParameter('target', $data['target'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         if(!empty($data['genders'])){
+            /*$query
+                ->add("where", $query->expr()->in('p.gender', ":genders"));*/
             $query
-                ->expr()->in('p.gender',$data['genders'] );
+                ->andWhere("p.gender in (:genders)")
+                ->setParameter('genders', $data['genders'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
         if(!empty($data['p_statuses'])){
+            /*$query
+                ->expr()->in('p.status',$data['p_statuses'] );*/
+
             $query
-                ->expr()->in('p.status',$data['p_statuses'] );
+                ->andWhere("p.status in (:p_statuses)")
+                ->setParameter('p_statuses', $data['p_statuses'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         /*$query
@@ -1343,11 +1357,16 @@ class ProductRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
 
-        /*var_dump($preparedQuery->getParameters());
-        echo $preparedQuery->getSQL();   die;*/
+        /*var_dump($data);
+        echo "<pre>";
+        print_r($preparedQuery->getParameters());
+        echo "</pre>";
+        echo $preparedQuery->getSQL();
+        var_dump($preparedQuery->getResult());
+        die;*/
 
 
-        return $getResult? $preparedQuery->getResult():$preparedQuery;
+        return $getResult ? $preparedQuery->getResult():$preparedQuery;
     }
     public function searchProduct($brand_id, $male, $female, $target, $category_id, $start, $per_page)
     {
