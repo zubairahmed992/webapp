@@ -497,9 +497,14 @@ class ProductSpecification {
         return $directory_path;
     }
     #------------------------------------------------------------
-    public function fill($parsed){     
+    public function fill($parsed, $main=false){     
         $this->undo_specs_json = $this->specs_json;
-        $this->specs_json =  json_encode($parsed);
+        if ($main){
+            $json=json_decode($this->specs_json, true);
+            $parsed['sizes']=$json['sizes'];            
+        }
+            $this->specs_json =  json_encode($parsed);
+        
         array_key_exists('style_id_number', $parsed) ? $this->style_id_number = ($parsed['style_id_number']) : '';
         array_key_exists('style_name', $parsed) ? $this->style_name = ($parsed['style_name']) : '';
         array_key_exists('title', $parsed) ? $this->title = ($parsed['title']) : '';
