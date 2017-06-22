@@ -372,7 +372,7 @@ function endtimer(){
             type: 'POST',
             data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
             success: function (response) {
-                alert("All Done! - Reloading...");
+               // alert("All Done! - Reloading...");
 
                                     var curr_url = window.location + '';
 
@@ -385,7 +385,7 @@ function endtimer(){
                             }
             },
             error: function () {
-                alert("Please press save button");
+               // alert("Please press save button");
             }
         });
         
