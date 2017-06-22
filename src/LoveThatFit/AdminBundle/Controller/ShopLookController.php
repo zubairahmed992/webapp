@@ -8,33 +8,38 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Parser;
 
 
-class ShopLookController extends Controller {
+class ShopLookController extends Controller
+{
 
     private $product_image_path;
 
-    public function __construct(){
+    public function __construct()
+    {
         $yaml = new Parser();
-        $productImageModelPath =  $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        $productImageModelPath = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
         $this->product_image_path = $productImageModelPath['image_category']['shop_look']['original']['dir'];
-        $directory_path =  __DIR__ . '/../../../../web/uploads/ltf/shop_look/';
+        $directory_path = __DIR__ . '/../../../../web/uploads/ltf/shop_look/';
         if (!is_dir($directory_path)) {
             try {
                 @mkdir($directory_path, 0700);
-            }catch (\Exception $e)
-            { $e->getMessage();}
+            } catch (\Exception $e) {
+                $e->getMessage();
+            }
         }
     }
 
 //-----------------------------Shop Look-------------------------------------------------------------
 
-    public function indexAction($page_number, $sort = 'id') {
+    public function indexAction($page_number, $sort = 'id')
+    {
         $image_path = $this->product_image_path;
         $shoplook = $this->get('admin.helper.shoplook')->findAll();
         return $this->render('LoveThatFitAdminBundle:ShopLook:index.html.twig', array('shoplook' => $shoplook));
     }
 
     //------------------------------Create New Banner------------------------------------------------------------
-    public function newAction() {
+    public function newAction()
+    {
         $getAllProductList = $this->get('admin.helper.product')->idNameListEnabledProduct();
         $image_path = $this->product_image_path;
         $entity = $this->get('admin.helper.shoplook')->createNew();
@@ -43,7 +48,8 @@ class ShopLookController extends Controller {
         ));
     }
 
-    public function createAction(Request $request) {
+    public function createAction(Request $request)
+    {
         $getAllProductList = $this->get('admin.helper.product')->idNameListEnabledProduct();
         $image_path = $this->product_image_path;
         $decoded = $request->request->all();
@@ -52,13 +58,13 @@ class ShopLookController extends Controller {
 
         /*If User added random sort number which is greater than max sort number then max sort will be set*/
         $max_sorting_number = $this->get('admin.helper.shoplook')->maxSortingNumber();
-        if($decoded['sorting'] > $max_sorting_number[0]['max_sort']) {
+        if ($decoded['sorting'] > $max_sorting_number[0]['max_sort']) {
             $decoded['sorting'] = $max_sorting_number[0]['max_sort'] + 1;
         }
         $this->get('admin.helper.shoplook')->editBannerSorting($decoded['sorting'], 'add');
-        $insertParent = $this->get('admin.helper.shoplook')->save($entity, $file,$decoded);
+        $insertParent = $this->get('admin.helper.shoplook')->save($entity, $file, $decoded);
 
-        if($insertParent != ''){
+        if ($insertParent != '') {
             /*Inserted Record Information*/
             $shoplook_entity = $insertParent;
             $this->get('admin.helper.shoplookproduct')->save($entity, $shoplook_entity, $decoded);
@@ -73,12 +79,13 @@ class ShopLookController extends Controller {
 
 
     //------------------------------Create New Banner------------------------------------------------------------
-    public function editAction($id) {
+    public function editAction($id)
+    {
         $entity = $this->get('admin.helper.shoplook')->find($id);
         $entity_product = $entity->getShopLookProduct();
 
         $product_ids = array();
-        foreach($entity_product as $value){
+        foreach ($entity_product as $value) {
             $product_ids[] = $value->getProductId();
         }
         $getAllProductList = $this->get('admin.helper.product')->idNameListEnabledProduct();
@@ -96,7 +103,8 @@ class ShopLookController extends Controller {
     //------------------------------update ------------------------------
 
 
-    public function updateAction(Request $request) {
+    public function updateAction(Request $request)
+    {
 
         $getAllProductList = $this->get('admin.helper.product')->idNameListEnabledProduct();
         $image_path = $this->product_image_path;
@@ -105,13 +113,13 @@ class ShopLookController extends Controller {
         $file = $_FILES["shop_model_image"];
         $entity = $this->get('admin.helper.shoplook')->find($decoded['shoplookid']);
 
-        $form_sorting_value = (int) $decoded['sorting'];
-        $db_banner_sorting = (int) $entity->getSorting();
+        $form_sorting_value = (int)$decoded['sorting'];
+        $db_banner_sorting = (int)$entity->getSorting();
 
-        if(($db_banner_sorting !== $form_sorting_value)){
+        if (($db_banner_sorting !== $form_sorting_value)) {
             /*If User added random sort number which is greater than max sort number then max sort will be set*/
             $max_sorting_number = $this->get('admin.helper.shoplook')->maxSortingNumber();
-            if($form_sorting_value > $max_sorting_number[0]['max_sort']) {
+            if ($form_sorting_value > $max_sorting_number[0]['max_sort']) {
                 $entity->setSorting($max_sorting_number[0]['max_sort']);
                 $form_sorting_value = $entity->getSorting();
             }
@@ -121,13 +129,12 @@ class ShopLookController extends Controller {
         }
 
 
-
-        $insertParent = $this->get('admin.helper.shoplook')->update($entity, $file,$decoded);
+        $insertParent = $this->get('admin.helper.shoplook')->update($entity, $file, $decoded);
 
         /* Remove Product by id*/
         $this->get('admin.helper.shoplookproduct')->removeId($decoded['shoplookid']);
 
-        if($insertParent != ''){
+        if ($insertParent != '') {
             /*Inserted Record Information*/
             $shoplook_entity = $insertParent;
             $this->get('admin.helper.shoplookproduct')->save($entity, $shoplook_entity, $decoded);
@@ -136,7 +143,7 @@ class ShopLookController extends Controller {
 
         $entity_product = $entity->getShopLookProduct();
         $product_ids = array();
-        foreach($entity_product as $value){
+        foreach ($entity_product as $value) {
             $product_ids[] = $value->getProductId();
         }
 
@@ -150,7 +157,8 @@ class ShopLookController extends Controller {
 
     //----------------------------------------Delete Banner--------------------------------------------------
 
-    public function deleteAction($id) {
+    public function deleteAction($id)
+    {
         $entity = $this->get('admin.helper.shoplook')->find($id);
 
         /*Conditions for handling Banner sorting*/

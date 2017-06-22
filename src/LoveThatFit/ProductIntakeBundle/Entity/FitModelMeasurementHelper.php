@@ -106,7 +106,7 @@ class FitModelMeasurementHelper {
          if(!$brand){
             $title[$fm->getTitle()]=$fm->getId();
          }
-         elseif($brand==$fm->getBrand()->getName()){
+         elseif($fm->getBrand() && $brand==$fm->getBrand()->getName()){
              $title[$fm->getTitle()]=$fm->getId();
          }
      }

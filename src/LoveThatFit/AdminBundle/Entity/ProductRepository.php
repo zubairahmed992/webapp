@@ -1242,6 +1242,7 @@ class ProductRepository extends EntityRepository
 
     public function searchProductByCriteria( $data, $page = 0, $max = NULL, $order, $getResult = true )
     {
+        // var_dump($data); die;
         $query     = $this->getEntityManager()->createQueryBuilder();
 
         $query
@@ -1267,6 +1268,11 @@ class ProductRepository extends EntityRepository
                 ->andWhere("b.id = :brandId");
         }
 
+        if($data['created_date'] != ""){
+            $query
+                ->andWhere("p.created_at between :created_date and :created_end_Date");
+        }
+
         if(!empty($data['category'])){
             $query
                 ->expr()->in('ct.id',$data['category'] );
@@ -1281,6 +1287,10 @@ class ProductRepository extends EntityRepository
             $query
                 ->expr()->in('p.gender',$data['genders'] );
         }
+        if(!empty($data['p_statuses'])){
+            $query
+                ->expr()->in('p.status',$data['p_statuses'] );
+        }
 
         /*$query
             ->setParameters(array(
@@ -1293,6 +1303,14 @@ class ProductRepository extends EntityRepository
         if($data['brand'] > 0){
             $query
                 ->setParameter('brandId', $data['brand']);
+        }
+
+        if($data['created_date'] != ""){
+            $startDate = $data['created_date']." 00:00:00";
+            $endDate = $data['created_date']." 23:59:59";
+            $query
+                ->setParameter('created_date', $startDate)
+                ->setParameter('created_end_Date', $endDate);
         }
 
         if (is_array($order)) {
@@ -1325,7 +1343,7 @@ class ProductRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
 
-        /*var_dump($preparedQuery->getArrayResult());
+        /*var_dump($preparedQuery->getParameters());
         echo $preparedQuery->getSQL();   die;*/
 
 
@@ -1675,7 +1693,52 @@ class ProductRepository extends EntityRepository
 
          return $query->getResult();
 	 }
-	
+
+    public function listProductsAndCategories()
+    {
+        $sql = 'SELECT p.id as product_id ,
+                 p.name as product_name,
+                 p.disabled as status,
+                 p.gender,
+                 b.name as brand_name,
+                 ct.name AS clothing_type,
+                 pc.title as color,
+                 pretail.title as retailer,
+                 p.created_at,
+                 p.control_number,
+                 p.hem_length,
+                 p.neckline,
+                 p.sleeve_styling,
+                 p.rise,
+                 p.fabric_weight,
+                 p.size_title_type,
+                 p.fit_type,
+                 p.horizontal_stretch,
+                 p.vertical_stretch,
+                 p.styling_type,
+                GROUP_CONCAT(c.name) as categories_name FROM product p
+
+                JOIN brand b on b.id = p.brand_id
+                JOIN clothing_type ct on ct.id=p.clothing_type_id
+                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
+                JOIN product_color pc ON p.id = pc.product_id
+                JOIN category_products cp ON cp.product_id = p.id
+                JOIN categories c on c.id = cp.categories_id
+                GROUP BY p.id';
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+	  public function checked_total_items_listing($id){
+        $query     = $this->getEntityManager()->createQueryBuilder();
+		   $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) total_items FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id);
+
+         return $query->getResult();
+	 }
+
 }
 
     /*

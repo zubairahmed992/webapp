@@ -125,6 +125,13 @@ class Banner
     private $disabled;
 
     /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\ShopLook", inversedBy="shoplook_banner")
+     * @ORM\JoinColumn(name="shoplook_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+
+    protected $banner_shoplook;
+
+    /**
      * Get id
      *
      * @return integer
@@ -519,5 +526,92 @@ class Banner
     {
         $ih=new ImageHelper('banner', $this);
         $ih->deleteImages($this->image);
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->shoplook_banner = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add children
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Banner $children
+     * @return Banner
+     */
+    public function addChildren(\LoveThatFit\AdminBundle\Entity\Banner $children)
+    {
+        $this->children[] = $children;
+    
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Banner $children
+     */
+    public function removeChildren(\LoveThatFit\AdminBundle\Entity\Banner $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Banner $parent
+     * @return Banner
+     */
+    public function setParent(\LoveThatFit\AdminBundle\Entity\Banner $parent = null)
+    {
+        $this->parent = $parent;
+    
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Banner 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set banner_shoplook
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ShopLook $bannerShoplook
+     * @return Banner
+     */
+    public function setBannerShoplook(\LoveThatFit\AdminBundle\Entity\ShopLook $bannerShoplook = null)
+    {
+        $this->banner_shoplook = $bannerShoplook;
+    
+        return $this;
+    }
+
+    /**
+     * Get banner_shoplook
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\ShopLook 
+     */
+    public function getBannerShoplook()
+    {
+        return $this->banner_shoplook;
     }
 }
