@@ -225,6 +225,7 @@
             $("select[name='sel_group']").on('change', function () {
                 var selectedVar = $(this).find(":selected").val();
                 if (selectedVar == 0) {
+                    $("#FNFUser_groups_0_group_type").removeAttr("disabled");
                     $("select[name='FNFUser[users][]'] option").each(function (index, item) {
                         $(this).removeAttr("selected")
                     });
@@ -277,16 +278,16 @@
                     $("input[name='FNFUser[groups][0][discount]']").val(data.discount);
 
                     if(data.group_type == 2){
-                        $("#FNFUser_groups_0_group_type").attr('readonly','readonly');
-                        $("#FNFUser_groups_0_group_type option[value='" + data.group_type + "']").attr('selected', "selected");
+                        $("#FNFUser_groups_0_group_type").attr('disabled','disabled');
+                        $("#FNFUser_groups_0_group_type").val(data.group_type).change();
 
                         $("#FNFUser_groups_0_min_amount, #min_amount").hide();
                         $("#FNFUser_groups_0_start_at, #start_at").hide();
                         $("#FNFUser_groups_0_end_at, #end_at").hide();
 
                     }else if(data.group_type == 1){
-                        $("#FNFUser_groups_0_group_type").attr('readonly','readonly')
-                        $("#FNFUser_groups_0_group_type option[value='" + data.group_type + "']").attr('selected', "selected");
+                        $("#FNFUser_groups_0_group_type").attr('disabled','disabled')
+                        $("#FNFUser_groups_0_group_type").val(data.group_type).change();
 
                         $("input[name='FNFUser[groups][0][min_amount]']").val(data.min_amount);
                         $("input[name='FNFUser[groups][0][start_at]']").val(data.start_at.date);
