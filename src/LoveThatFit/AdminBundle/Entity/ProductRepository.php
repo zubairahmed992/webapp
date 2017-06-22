@@ -1242,6 +1242,7 @@ class ProductRepository extends EntityRepository
 
     public function searchProductByCriteria( $data, $page = 0, $max = NULL, $order, $getResult = true )
     {
+        // var_dump($data); die;
         $query     = $this->getEntityManager()->createQueryBuilder();
 
         $query
@@ -1267,6 +1268,11 @@ class ProductRepository extends EntityRepository
                 ->andWhere("b.id = :brandId");
         }
 
+        if($data['created_date'] != ""){
+            $query
+                ->andWhere("p.created_at between :created_date and :created_end_Date");
+        }
+
         if(!empty($data['category'])){
             $query
                 ->expr()->in('ct.id',$data['category'] );
@@ -1281,6 +1287,10 @@ class ProductRepository extends EntityRepository
             $query
                 ->expr()->in('p.gender',$data['genders'] );
         }
+        if(!empty($data['p_statuses'])){
+            $query
+                ->expr()->in('p.status',$data['p_statuses'] );
+        }
 
         /*$query
             ->setParameters(array(
@@ -1293,6 +1303,14 @@ class ProductRepository extends EntityRepository
         if($data['brand'] > 0){
             $query
                 ->setParameter('brandId', $data['brand']);
+        }
+
+        if($data['created_date'] != ""){
+            $startDate = $data['created_date']." 00:00:00";
+            $endDate = $data['created_date']." 23:59:59";
+            $query
+                ->setParameter('created_date', $startDate)
+                ->setParameter('created_end_Date', $endDate);
         }
 
         if (is_array($order)) {
@@ -1325,7 +1343,7 @@ class ProductRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
 
-        /*var_dump($preparedQuery->getArrayResult());
+        /*var_dump($preparedQuery->getParameters());
         echo $preparedQuery->getSQL();   die;*/
 
 
