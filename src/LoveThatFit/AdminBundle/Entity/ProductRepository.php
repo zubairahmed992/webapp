@@ -1722,8 +1722,8 @@ class ProductRepository extends EntityRepository
                 JOIN clothing_type ct on ct.id=p.clothing_type_id
                 JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
                 JOIN product_color pc ON p.id = pc.product_id
-                JOIN category_products cp ON cp.product_id = p.id
-                JOIN categories c on c.id = cp.categories_id
+                LEFT JOIN category_products cp ON cp.product_id = p.id
+                LEFT JOIN categories c on c.id = cp.categories_id
                 GROUP BY p.id';
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
