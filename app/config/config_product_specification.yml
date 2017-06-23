@@ -78,7 +78,7 @@ constants:
     waist_to_hip  : Waist to Hip  
     hip: Hip
     abdomen: Abdomen
-  tank_knit: 
+  tank_knit:
     neck: Neck
     shoulder_across_front: Shoulder across front
     shoulder_across_back: Shoulder across back
@@ -223,7 +223,7 @@ constants:
     low_hip: Low Hip
     high_thigh: High Thigh
     low_thigh: Low Thigh
-    
+
   jeans:
     waist: Waist
     cf_waist: CF Waist
@@ -253,7 +253,7 @@ constants:
     abdomen: Abdomen
     high_hip: High Hip
     low_hip: Low Hip
-        
+
   skirts:
     waist: Waist
     cf_waist: CF Waist
@@ -370,8 +370,8 @@ constants:
      waist_to_hip  : Waist to Hip  
      hip: Hip   
      abdomen: Abdomen
-    
- product_specification: 
+
+ product_specification:
   fit_priority:
       man:
         top: 
@@ -440,9 +440,9 @@ constants:
      nylon: Nylon
      lycra/spandex: Lycra/Spandex
      wool: Wool
-     tencel: Tencel 
+     tencel: Tencel
      viscose: Viscose
-     other: Other     
+     other: Other
   garment_detail:
       silk: Silk
       nylon: Nylon
@@ -529,6 +529,7 @@ constants:
         parka: parka
         down: down
         ski: ski
+        full/poet: full/poet
       blouses:
         tailored: Tailored
         princess_fit: princess_fit
@@ -570,6 +571,7 @@ constants:
         parka: parka
         down: down
         ski: ski
+        full/poet: full/poet
       tunic:
         loose: Loose
         fitted: Fitted
@@ -684,6 +686,7 @@ constants:
         parka: parka
         down: down
         ski: ski
+        draped: draped
       jacket: 
         blazer: Blazer
         loosy: Loosy
@@ -762,6 +765,9 @@ constants:
         parka: parka
         down: down
         ski: ski
+        blazer_single_breasted: blazer_single_breasted
+        swing/a-line: swing/a-line
+        loose/boxy: loose/boxy
       sweater:
         pull_over: pull_over
         cardigan: Cardigan
@@ -1142,6 +1148,10 @@ constants:
         parka: parka
         down: down
         ski: ski
+        shell: shell
+        princess_fit: princess_fit
+        tailored: tailored
+        full/poet: full/poet
       dresses:
         fitted_princess_to_waist: fitted_princess_to_waist
         fitted_princess_through_hips: fitted_princess_through_hips
@@ -1186,6 +1196,10 @@ constants:
         parka: parka
         down: down
         ski: ski
+        shell: shell
+        princess_fit: princess_fit
+        tailored: tailored
+        full/poet: full/poet
       coat:
         blazer_single_breasted: blazer_single_breasted
         blazer_double_breasted: blazer_double_breasted
@@ -1225,6 +1239,8 @@ constants:
         parka: parka
         down: down
         ski: ski
+        swing/a-line: swing/a-line
+        loose/boxy: loose/boxy
       coats:
         blazer_single_breasted: blazer_single_breasted
         blazer_double_breasted: blazer_double_breasted
@@ -1264,6 +1280,8 @@ constants:
         parka: parka
         down: down
         ski: ski
+        swing/a-line: swing/a-line
+        loose/boxy: loose/boxy
     hem_length:
       blouse:
         cropped: Cropped
@@ -1291,6 +1309,7 @@ constants:
         top_of_hip: top_of_hip
         bottom_of_hip: bottom_of_hip
         mid_of_thigh: mid_of_thigh
+        mid_thigh: mid_thigh
         thong: thong
         high_leg: high_leg
         mid_hip: mid_hip
@@ -1933,6 +1952,7 @@ constants:
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
          halter: halter
+         sleeveless_vest: sleeveless vest
       jackets:
          strapless: strapless
          spaghetti_straps: spaghetti_straps
@@ -1943,6 +1963,7 @@ constants:
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
          halter: halter
+         sleeveless_vest: sleeveless vest
       sweater:
          sleeveless: sleeveless
          cap_sleeved: cap_sleeved
@@ -1950,6 +1971,7 @@ constants:
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
          halter: halter
+         sleeveless_vest: sleeveless vest
       sweaters:
          sleeveless: sleeveless
          cap_sleeved: cap_sleeved
@@ -1957,6 +1979,7 @@ constants:
          3/4_length_sleeve: 3/4_length_sleeve
          long_sleeved: long_sleeved
          halter: halter
+         sleeveless_vest: sleeveless vest
       dress:
          strapless: Strapless
          spaghetti_straps: spaghetti_straps
@@ -1967,6 +1990,7 @@ constants:
          short_sleeved: short_sleeved
          long_sleeved: long_sleeved
          halter: halter
+         3/4_length_sleeve: 3/4 length sleeve
       dresses:
          strapless: Strapless
          spaghetti_straps: spaghetti_straps
@@ -1974,9 +1998,9 @@ constants:
          sleeveless: Sleeveless
          cap_sleeved: cap_sleeved
          short_sleeved: short_sleeved
-         short_sleeved: short_sleeved
          long_sleeved: long_sleeved
          halter: halter
+         3/4_length_sleeve: 3/4 length sleeve
       coat:
          short_sleeved: short_sleeved
          3/4_length_sleeve: 3/4_length_sleeve
@@ -1993,31 +2017,37 @@ constants:
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
+        natural_waist: natural waist
       trousers:
         high_rise: high_rise
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
+        natural_waist: natural waist
       jean:
         high_rise: high_rise
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
+        high_waisted: high_waisted
       jeans:
         high_rise: high_rise
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
+        high_waisted: high_waisted
       skirt:
         high_rise: high_rise
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
+        natural_waist: natural_waist
       skirts:
         high_rise: high_rise
         mid_rise: mid_rise
         low_rise: low_rise
         ultra_low_rise: ultra_low_rise
+        natural_waist: natural_waist
       dress:
       dresses:
 
