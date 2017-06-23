@@ -19,3 +19,5 @@ BigMask ='<button class="btn btn-cyan btn-xs" data-action="BigMask" title="Big M
 trans_status     = '<button class="btn btn-cyan btn-xs delete" data-action="update_trans" title="Update transaction status"><i class="icon-trans"></i></button>';
 shipping_status     = '<button class="btn btn-cyan btn-xs delete" data-action="update_shipp" title="Update shipping status"><i class="icon-shpping"></i></button>';
 ProductDescription   = '<button class="btn btn-cyan btn-xs description" data-action="product_description" title="Product Description"><i class="icon-desc"></i></button>';
+ProductWeight     = '<button class="btn btn-cyan btn-xs productweight" data-action="ProductWeight" title="Product Weight"><i class="icon-pweight"></i></button>';
+ProductStatus   = '<button class="btn btn-cyan btn-xs productstatus" data-action="product_status" title="Product Status"><i class="icon-pstatus"></i></button>';

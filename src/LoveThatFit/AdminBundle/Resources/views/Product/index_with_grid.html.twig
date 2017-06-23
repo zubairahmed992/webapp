@@ -504,7 +504,7 @@
                 "data": null,
                 "orderable": false,
                 "searchable": false,
-                "defaultContent": EnableDisable + " " + PriceEdit + " " + PDetail + " " + EditButton + " " + DeleteButton + " " + AddImage + " " + CategoryAss + " " + ProductDescription,
+                "defaultContent": EnableDisable + " " + PriceEdit + " " + PDetail + " " + EditButton + " " + DeleteButton + " " + AddImage + " " + CategoryAss + " " + ProductDescription+" "+ProductWeight+" "+ProductStatus,
                 "width": "25%"
             },
             {
@@ -535,7 +535,7 @@
 
                 },
                 sWidth: "25%",
-                sDefaultContent: EnableDisable + " " + PriceEdit + " " + PDetail + " " + EditButton + " " + DeleteButton + " " + AddImage + " " + CategoryAss + " " + ProductDescription
+                sDefaultContent: EnableDisable + " " + PriceEdit + " " + PDetail + " " + EditButton + " " + DeleteButton + " " + AddImage + " " + CategoryAss + " " + ProductDescription+" "+ProductWeight+" "+ProductStatus
             }
         ];
         var dataTable,
@@ -568,54 +568,70 @@
                 "columns": oColumns,
                 "createdRow": function (row, data, index) {
 
-                    if (data.description == null || data.description == '') {
-                        data.description = '';
-                    }
-                    if (data.item_name == null || data.item_name == '') {
-                        data.item_name = '';
-                    }
-                    if (data.country_origin == null || data.country_origin == '') {
-                        data.country_origin = '';
-                    }
-                    if (data.item_details == null || data.item_details == '') {
-                        data.item_details = '';
-                    }
-                    if (data.care_label == null || data.care_label == '') {
-                        data.care_label = '';
-                    }
+                    if(data.description== null || data.description==''){data.description='';}
+                    if(data.item_name== null || data.item_name==''){data.item_name='';}
+                    if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
+                    if(data.item_details== null || data.item_details==''){data.item_details='';}
+                    if(data.care_label== null || data.care_label==''){data.care_label='';}
 
-
-                    if (data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != '') {
+                    if(data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != ''){
 
                         $(row).find("button.description i").addClass('icon-desc-have-desc-green');
                     }
-                    else if (data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != '') {
+                    else if(data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != ''){
 
                         $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
 
-                    } else if (data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == '') {
+                    }else if(data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == ''){
 
                         $(row).find("button.description i").addClass('icon-desc-no-desc');
 
                     }
 
-
-                    if (parseInt(data.price_status) == 0 && parseInt(data.weight_status) == 0) {
-
-                        $(row).find("button.priceedit i").addClass('price-edit-green');
-
-                    } else if (parseInt(data.price_status) > 0 && parseInt(data.weight_status) > 0) {
-
+                    //&&  parseInt(data.weight_status) ==  0
+                    if(parseInt(data.total_items) == 0){
 
                         $(row).find("button.priceedit i").addClass('price-edit-no-price');
 
-                    }
-                    else if ((parseInt(data.price_status) > 0 && parseInt(data.weight_status) == 0) || (parseInt(data.price_status) == 0 && parseInt(data.weight_status) > 0)) {
+                    }else if(parseInt(data.price_status) ==  0){
+
+                        $(row).find("button.priceedit i").addClass('price-edit-green');
+
+                    }else if(parseInt(data.price_status) >  0 && parseInt(data.price_status) == parseInt(data.total_items)){
+
+                        $(row).find("button.priceedit i").addClass('price-edit-no-price');
+
+                    }else if(parseInt(data.price_status) >  0 && parseInt(data.price_status) != parseInt(data.total_items)){
 
                         $(row).find("button.priceedit i").addClass('price-edit-yellow');
 
                     }
 
+                    if(parseInt(data.total_items) == 0){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-no-weight');
+
+                    }else if(parseInt(data.weight_status) ==  0){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-green');
+
+                    }else if(parseInt(data.weight_status) >  0 && parseInt(data.weight_status) == parseInt(data.total_items)){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-no-weight');
+
+                    }else if(parseInt(data.weight_status) >  0 && parseInt(data.weight_status) != parseInt(data.total_items)){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-yellow');
+
+                    }
+
+                    if(data.pstatus=='Complete') {
+                        $(row).find("button.productstatus i").addClass('icon-pstatus-have-pstatus-green');
+                    } else if(data.pstatus=='Review') {
+                        $(row).find("button.productstatus i").addClass('icon-pstatus-have-pstatus-yellow');
+                    } else if(data.pstatus=='Pending') {
+                        $(row).find("button.productstatus i").addClass('icon-pstatus-no-pstatus');
+                    }
 
                     var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
                     url = url.replace(':id', data.id);
@@ -791,6 +807,21 @@
 
                     window.top.location = url;
                 }
+
+                if (dataAction == 'product_status') {
+                    var pid = data.id;
+                    var ajaxurl = "{{ path('admin_product_status_popup') }}";
+                    $.ajax({
+                        type: 'POST',
+                        url: ajaxurl,
+                        "type": "POST",
+                        "data": {id:pid},
+                        success: function (res) {
+                            $('#ajax_div_product_status').html(res);
+                            $('#model_product_status').modal().show();
+                        }
+                    });
+                }
             });
         }
 
@@ -809,4 +840,19 @@
             });
         }
     </script>
+
+    <div id="model_product_status" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" style="width:347px;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h3 id="myModalLabel">Product Status</h3>
+        </div>
+        <div class="modal-body">
+            <p><span id="ajax_div_product_status" style="float:left"></span>
+            <span style="float:left; padding-left: 25px; margin-top:-5px;">
+                <button type="button" id="update_product_status" class="btn btn-primary">Update</button>
+            </span>
+                <span style="float:left; padding-left: 5px;" id="msg_prod_status"></span></p>
+        </div>
+    </div>
 {% endblock %}
