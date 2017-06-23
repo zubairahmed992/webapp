@@ -57,6 +57,9 @@ admin_product_detail_update:
 admin_product_status_update:
    pattern:  /admin/productstatusupdate
    defaults: { _controller: LoveThatFitAdminBundle:Product:productStatusUpdate }
+admin_product_status_popup:
+   pattern:  /admin/productstatuspopup
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productStatusPopup }
    
 admin_product_detail_delete:
    pattern:  /admin/productdetail/{id}/delete
