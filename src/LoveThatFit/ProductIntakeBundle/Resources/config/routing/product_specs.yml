@@ -1,3 +1,7 @@
+product_intake_product_specs_create_session:
+    pattern:  /product_intake/product_specs/create_session
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:createSession }
+
 product_intake_product_specs_index:
     pattern:  /product_intake/product_specs/index
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:index }
@@ -16,7 +20,10 @@ product_intake_product_specs_edit:
 
 product_intake_product_specs_show:
     pattern:  /product_intake/product_specs/show/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:show }    
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:show}    
+product_intake_product_specs_fetch_json:
+    pattern:  /product_intake/product_specs/fetch_json/{id}/{attrib}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:fetchJson, attrib: null}        
 
 product_intake_product_specs_delete:
     pattern:  /product_intake/product_specs/delete/{id}

@@ -656,6 +656,13 @@ nws_get_all_fitting_room:
    params:
      auth_token: 56565656566
 
+nws_add_update_fitting_room_items:
+   pattern:  /nws/add_update_fitting_room_items
+   title: add_update_to_fitting_room_items
+   params:
+     auth_token: 56565656566
+     items: [{"product_item_id":4082,"product_id":506,"qty":1},{"product_item_id":4083,"product_id":506,"qty":1}]
+
 ws_braintree_payment_and_create_order:
   pattern: /ws/braintree_payment_and_create_order
   title:  add_item_and_make_payment
@@ -764,4 +771,19 @@ ws_marketing_tiles:
    pattern:  /ws/marketing_tiles
    title: ws_marketing_tiles
    params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    
+pi_ws_product_image_upload:
+    pattern: /product_intake/product_image_upload
+    title: product_image_upload
+    file_upload: true
+    params:         
+      image_name: "AG-Jeans_LSS1288_SBA_R_25" 
+      name_format: "Brand_StyleID#_Color_Size-Range_Size"  
+      request_type: post
+
+nws_shop_the_look:
+  pattern: /nws/shop_the_look
+  title: nws_shop_the_look
+  params:
     auth_token: 121c421783cd4d71d871ec16a1296091

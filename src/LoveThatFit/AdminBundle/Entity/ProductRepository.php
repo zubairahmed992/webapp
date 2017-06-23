@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use JMS\SecurityExtraBundle\Security\Util\String;
 
 /**
  * ProductRepository
@@ -1242,6 +1243,7 @@ class ProductRepository extends EntityRepository
 
     public function searchProductByCriteria( $data, $page = 0, $max = NULL, $order, $getResult = true )
     {
+        // var_dump($data); die;
         $query     = $this->getEntityManager()->createQueryBuilder();
 
         $query
@@ -1267,19 +1269,41 @@ class ProductRepository extends EntityRepository
                 ->andWhere("b.id = :brandId");
         }
 
-        if(!empty($data['category'])){
+        if($data['created_date'] != ""){
             $query
-                ->expr()->in('ct.id',$data['category'] );
+                ->andWhere("p.created_at between :created_date and :created_end_Date");
+        }
+
+        if(!empty($data['category'])){
+            /*$query
+                ->expr()->in('ct.id',$data['category'] );*/
+            $query
+                ->andWhere('ct.id in (:category)')
+                ->setParameter('category', $data['category'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         if(!empty($data['target'])){
+            /*$query
+                ->expr()->in('ct.target',$data['target'] );*/
             $query
-                ->expr()->in('ct.target',$data['target'] );
+                ->andWhere("ct.target in (:target)")
+                ->setParameter('target', $data['target'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         if(!empty($data['genders'])){
+            /*$query
+                ->add("where", $query->expr()->in('p.gender', ":genders"));*/
             $query
-                ->expr()->in('p.gender',$data['genders'] );
+                ->andWhere("p.gender in (:genders)")
+                ->setParameter('genders', $data['genders'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+        }
+        if(!empty($data['p_statuses'])){
+            /*$query
+                ->expr()->in('p.status',$data['p_statuses'] );*/
+
+            $query
+                ->andWhere("p.status in (:p_statuses)")
+                ->setParameter('p_statuses', $data['p_statuses'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         /*$query
@@ -1293,6 +1317,14 @@ class ProductRepository extends EntityRepository
         if($data['brand'] > 0){
             $query
                 ->setParameter('brandId', $data['brand']);
+        }
+
+        if($data['created_date'] != ""){
+            $startDate = $data['created_date']." 00:00:00";
+            $endDate = $data['created_date']." 23:59:59";
+            $query
+                ->setParameter('created_date', $startDate)
+                ->setParameter('created_end_Date', $endDate);
         }
 
         if (is_array($order)) {
@@ -1325,11 +1357,16 @@ class ProductRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
 
-        /*var_dump($preparedQuery->getArrayResult());
-        echo $preparedQuery->getSQL();   die;*/
+        /*var_dump($data);
+        echo "<pre>";
+        print_r($preparedQuery->getParameters());
+        echo "</pre>";
+        echo $preparedQuery->getSQL();
+        var_dump($preparedQuery->getResult());
+        die;*/
 
 
-        return $getResult? $preparedQuery->getResult():$preparedQuery;
+        return $getResult ? $preparedQuery->getResult():$preparedQuery;
     }
     public function searchProduct($brand_id, $male, $female, $target, $category_id, $start, $per_page)
     {
@@ -1675,7 +1712,52 @@ class ProductRepository extends EntityRepository
 
          return $query->getResult();
 	 }
-	
+
+    public function listProductsAndCategories()
+    {
+        $sql = 'SELECT p.id as product_id ,
+                 p.name as product_name,
+                 p.disabled as status,
+                 p.gender,
+                 b.name as brand_name,
+                 ct.name AS clothing_type,
+                 pc.title as color,
+                 pretail.title as retailer,
+                 p.created_at,
+                 p.control_number,
+                 p.hem_length,
+                 p.neckline,
+                 p.sleeve_styling,
+                 p.rise,
+                 p.fabric_weight,
+                 p.size_title_type,
+                 p.fit_type,
+                 p.horizontal_stretch,
+                 p.vertical_stretch,
+                 p.styling_type,
+                GROUP_CONCAT(DISTINCT c.name order by c.id) as categories_name FROM product p
+
+                JOIN brand b on b.id = p.brand_id
+                JOIN clothing_type ct on ct.id=p.clothing_type_id
+                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
+                JOIN product_color pc ON p.id = pc.product_id
+                LEFT JOIN category_products cp ON cp.product_id = p.id
+                LEFT JOIN categories c on c.id = cp.categories_id
+                GROUP BY p.id';
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+	  public function checked_total_items_listing($id){
+        $query     = $this->getEntityManager()->createQueryBuilder();
+		   $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) total_items FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id);
+
+         return $query->getResult();
+	 }
+
 }
 
     /*

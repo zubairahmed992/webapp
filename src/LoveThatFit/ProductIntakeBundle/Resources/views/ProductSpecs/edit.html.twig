@@ -536,18 +536,27 @@
                     var message = 'Sum of fabric content and Fit Prority is 100%';    
                     if( fabric_sum < 100 && fit_priority_sum < 100 ){
                         message = "ops! sum of fabric content and Fit Prority below 100%";
-                    }     
-                     if(fabric_sum < 100 && fit_priority_sum == 100){
-                        message = "ops! sum of fabric content below 100%";
-                    }  
-                     if(fabric_sum == 100 && fit_priority_sum < 100){
-                        message = "ops! sum of Fit Prority below 100%";
-                    }  
-                   
-                    var form = this;
+                        var form = this;
                     e.preventDefault();
                     if(confirm(message))
                         form.submit();
+                    }     
+                     if(fabric_sum < 100 && fit_priority_sum == 100){
+                        message = "ops! sum of fabric content below 100%";
+                        var form = this;
+                    e.preventDefault();
+                    if(confirm(message))
+                        form.submit();
+                    }  
+                     if(fabric_sum == 100 && fit_priority_sum < 100){
+                        message = "ops! sum of Fit Prority below 100%";
+                        var form = this;
+                    e.preventDefault();
+                    if(confirm(message))
+                        form.submit();
+                    }  
+                   
+                    
                 }
 
     });
@@ -580,7 +589,7 @@
                 <select name="clothing_type" id="sel_clothing_type"  class="form-control">
                     <option>Select</option>
                     {% for key,val in clothing_types %}
-                       <option value="{{ key }}"{{ parsed_data.clothing_type == '' and key == 0? '' : (key == parsed_data.clothing_type ? ' selected ' : '')}}  >{{ val }}</option>
+                       <option value="{{ key }}"{{ parsed_data.clothing_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (key == parsed_data.clothing_type|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>     
             </div>
@@ -624,11 +633,11 @@
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="styling_title">Styling type : </label>
-            <div class="col-sm-4">                
+            <div class="col-sm-4"> 
                 <select name="styling_type" class="styling_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['styling_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.styling_type == '' and key == 0? '' : (val == parsed_data.styling_type ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.styling_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.styling_type|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>                
             </div>
@@ -636,11 +645,11 @@
       
         <div class="form-group">
             <label class="control-label col-sm-2" for="hem_length">Hem length : </label>
-            <div class="col-sm-4">
+            <div class="col-sm-4">                
                 <select name="hem_length" class="hem_length form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['hem_length'] %}
-                       <option value="{{ val }}"{{ parsed_data.hem_length == '' and key == 0? '' : (val == parsed_data.hem_length ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.neckline|trim|replace({' ':'_'}) == '' and key == 0 ? '' : (val == parsed_data.hem_length|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>             
             </div>
@@ -651,7 +660,7 @@
                 <select name="neckline" class="neckline form-control" >
                     <option  >Select</option>
                     {% for key,val in drop_down_values['neckline'] %}
-                       <option value="{{ val }}"{{ parsed_data.neckline == '' and key == 0? '' : (val == parsed_data.neckline ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.neckline|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.neckline|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>   
             </div>
@@ -662,7 +671,7 @@
                 <select name="sleeve_styling" class="sleeve_styling form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['sleeve_styling'] %}
-                       <option value="{{ val }}"{{ parsed_data.sleeve_styling == '' and key == 0? '' : (val == parsed_data.sleeve_styling ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.sleeve_styling|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.sleeve_styling|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
@@ -673,18 +682,18 @@
                 <select name="rise" class="rise form-control" >
                     <option  >Select</option>
                     {% for key,val in drop_down_values['rise'] %}
-                       <option value="{{ val }}"{{ parsed_data.rise == '' and key == 0? '' : (val == parsed_data.rise ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.rise|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.rise|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="stretch_type">Stretch type : </label>
-            <div class="col-sm-4">
+            <div class="col-sm-4">                
                 <select name="stretch_type" class="stretch_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['stretch_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.stretch_type == '' and key == 0? '' : (val == parsed_data.stretch_type ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.stretch_type|lower|trim|replace({' ':'_','/ ':'_'}) == '' and key == 0? '' : (val == parsed_data.stretch_type|lower|trim|replace({' ':'_','/ ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
@@ -692,11 +701,11 @@
        
          <div class="form-group">
             <label class="control-label col-sm-2" for="fabric_weight">Fabric weight : </label>
-            <div class="col-sm-4">
+            <div class="col-sm-4">               
                  <select name="fabric_weight" class="stretch_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fabric_weight'] %}
-                       <option value="{{ val }}"{{ parsed_data.fabric_weight == '' and key == 0? '' : (val == parsed_data.fabric_weight ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.fabric_weight|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.fabric_weight|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
@@ -704,11 +713,11 @@
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="layering">layering : </label>
-            <div class="col-sm-4">
+            <div class="col-sm-4">                
                 <select name="layering" class="stretch_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['layering'] %}
-                       <option value="{{ val }}"{{ parsed_data.layering == '' and key == 0? '' : (val == parsed_data.layering ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.layering == '' and val == 0? '' : (val == parsed_data.layering ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -720,7 +729,7 @@
                 <select name="structural_detail" class="structural_detail form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['structural_detail'] %}
-                       <option value="{{ val }}"{{ parsed_data.structural_detail == '' and key == 0? '' : (val == parsed_data.structural_detail ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.structural_detail|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.structural_detail|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -732,7 +741,7 @@
                   <select name="fit_type" class="fit_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fit_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and key == 0? '' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and val == 0? '' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -768,7 +777,7 @@
                 <div class="fit_priority">    
                     {% for key,val in size_attribute %} 
                         {{ key }} :
-                          <input type="number" min="1" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
+                          <input type="number" min="0" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -802,7 +811,7 @@
                 <div class="fabric_content">    
                     {% for key,val in drop_down_values['fabric_content'] %}
                         {{ key }} :
-                        <input type="number" min="1" max="100"  id="{{val}}"  value="{{ parsed_data['fabric_content'][val] is defined?parsed_data['fabric_content'][val]:'' }}" name="fabric_content[{{val}}]" style="width:70px">
+                        <input type="number" min="0" max="100"  id="{{key}}"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{key}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -919,25 +928,31 @@
     </div>
 #}
 {#---------------------------------------------------------------------------------------------#}
+   
                <div id="dv_fit_point_stretch">
                   {# <a id="lnk_fit_point_stretch" href="#">Add Fit point stretch preference</a><br>#}
                        <b>Add Fit point stretch preference</b><br>
                     <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                            <thead>
                         <tr>
                             {% for fp, fpv in fit_point_stretch %}                
                                 <th>{{fp}}</th>                                    
                             {% endfor %}
-                        </tr>                
+                        </tr>      
+                            </thead>
+                                <tbody>
                         <tr>
                             {% for fp, fpv in fit_point_stretch %}                
-                                <td>
+                                <td class="col-md-2">
                                     {#<input type="number" class="form-control input-sm" placeholder="%" name="fit_point_stretch-{{ fp }}" value="{{fpv}}" style="width:80px">#}                                    
-                                        <input type="number" class="form-control  edit_inline input-sm" readonly="ture" placeholder="%" name="fit_point_stretch-{{ fp }}" id="fit_point_stretch-{{ fp }}" value="{{fpv}}" data-title="Enter stretch for {{fp}}">
+                                        <input type="number" class="edit_inline input-sm" readonly="ture" placeholder="%" name="fit_point_stretch-{{ fp }}" id="fit_point_stretch-{{ fp }}" value="{{fpv}}" data-title="Enter stretch for {{fp}}">
                                 </td>                                    
                             {% endfor %}
                         </tr>
+                            </tbody>
                     </table>   
                </div> 
+ 
                <div id="dv_fit_priority">
                        <b>Fit Priority</b><br>
                     <table class="table table-bordered " id='tbl_fit_point_stretch'>
@@ -985,10 +1000,10 @@
                                     </tr>
                                 {% for measurement_k, measurement_v in fit_point %}
                                     {# if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) #}
-                                        {% if (size == fit_model_selected_size) %}
+                                        {% if(fit_model_selected_size | trans is same as (size | trans)) %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
                                                 <th>
-                                                    {{measurement_k}}</th>
+                                                    {{measurement_k}} </th>
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" > #}
                                                     <input type="number" value="{{measurement_v.garment_dimension | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px" class="0 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" data-title="Enter Garment Dimension for {{measurement_k}} " >
@@ -1119,13 +1134,25 @@
   <br>                
   <input type="hidden" class="product_spec_size" value="{{ app.request.get('id') }} ">
   <script>
-      
+  
       //-----------------------------------
-$(document).ready(function(){       
-$("#show_extended_fp").click(function (event) {                         
-    //alert();
+$(document).ready(function(){     
+  var someVarName = '';
+  someVarName = sessionStorage.getItem("someVarName");
+  if(someVarName == "Few")
+   {
     $("#show_extended_fp").text()=='More'?$("#show_extended_fp").text('Few'):$("#show_extended_fp").text('More');
- var cols = document.getElementsByClassName('extended_fit_points');
+        var cols = document.getElementsByClassName('extended_fit_points');
+        for(i=0; i<cols.length; i++) {
+           cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
+        }
+    }
+$("#show_extended_fp").click(function (event) {     
+   // alert($("#show_extended_fp").text())
+    $("#show_extended_fp").text()=='More'?$("#show_extended_fp").text('Few'):$("#show_extended_fp").text('More');
+    someVarName = $("#show_extended_fp").text();
+    sessionStorage.setItem("someVarName", someVarName);   
+    var cols = document.getElementsByClassName('extended_fit_points');
           for(i=0; i<cols.length; i++) {
             cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
           }

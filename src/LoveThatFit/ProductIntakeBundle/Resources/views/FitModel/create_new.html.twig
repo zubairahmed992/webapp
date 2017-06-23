@@ -5,10 +5,14 @@
             content:"*";
             color:red;
           }
+          .spn_product_search{
+            display: none;
+        }
+          
     </style>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function () {         
     size_specs=jQuery.parseJSON( $('#size_specs_json').text());
     product_specs = jQuery.parseJSON( $('#product_specs_json').text());
      //#################################################
@@ -88,28 +92,93 @@
             var new_fit_model = $('#new_fit_model').val();            
             fit_model_genrate.append("<div class='form-group'> <label class='control-label col-sm-2'>"+new_fit_model+": </label>  <div class='col-sm-4'>  <input type='text' id="+new_fit_model+" name="+new_fit_model+">  </div>  </div>")
         });
+        //-------------------------------------------------------------------
         
+         $("#btn_toggle_product_search").click(function (event) {        
+        event.preventDefault();
+        $( ".spn_product_search" ).toggle();       
+         $(this).text(function(i, text){
+          return text === 'Hide Search'?'Show Search':'Hide Search';
+      })        
+    });
+        //-------------------------------------------------------------------
+        $("#btn_specs_search").click(function (event) {        
+    event.preventDefault();
+        id = $("#txt_search_id").val();    
+        var fetch_url = "../product_specs/fetch_json/" + id+"/fit_model";
+        $.ajax({
+            url: fetch_url
+            , success: function (response) {
+                $("#product_specs_json").text(response);
+                obj=jQuery.parseJSON($("#product_specs_json").text());      
+                fill_size_list();
+                $('#sel_brand').val(obj.brand);
+                $('#sel_gender').val(obj.gender);
+                $('#sel_size_type').val(obj.size_title_type);
+                $('#sel_clothing_type').val(obj.clothing_type);
+                fil_size();
+                
+            }
+        });        
+    });
+        //-------------------------------------------------------------------
+        
+        function fill_size_list(){
+        obj=jQuery.parseJSON($("#product_specs_json").text());      
+        $("#spn_product_name").text(obj.style_name);      
+        document.getElementById("sel_product_size").options.length = 0;
+        $("#sel_product_size").append(new Option('size',''));
+        
+        $.each( obj.sizes, function( key, value ) {
+           $("#sel_product_size").append(new Option(key, key));
+        });
+   }
+        //-------------------------------------------------------------------
+        $('#sel_product_size').on('change', function (event) {            
+            data=jQuery.parseJSON($("#product_specs_json").text());           
+            $('#sel_size').val(this.value);
+            $.each(data['sizes'][this.value],function(index, value){                        
+                              $("#"+index).val(value);
+                          });     
+        });
 });
     </script>   
-
-    <div class="container">
+<span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
+<span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
+<div style='display:none' id="csv_file_json"></div>
+        
+<div class="container">
+        
+<div class="row spn_product_search">
+  <div class="col-md-7"></div>
+  <div class="col-md-3 form-group">Specification Id</div>
+  <div class="col-md-1 form-group"><input type="text" class="form-control" id="txt_search_id" placeholder="Id"></div>
+  <div class="col-md-1 form-group"><button type="Button" id="btn_specs_search" class="btn btn-default">Extract</button></div>
+</div>
+<div class="row spn_product_search">
+  <div class="col-md-7"></div>
+  <div class="col-md-3 form-group"><span id="spn_product_name"> Select</span></div>
+  <div class="col-md-1 form-group"><select id="sel_product_size" class="form-control" required></select></div>
+</div>    
+    
+ <div class="row" style="display:none">
+  <div class="col-md-1"></div>
+  <div class="col-md-2 form-group">Select File</div>
+  <div class="col-md-2 form-group"><input type="file" name="csv_file" id="csv_file"></div>
+</div>       
+        
+        
         <h2>Fit Model Measurements</h2>
         <div class="btn-group" role="group" aria-label="..." style="float:right;">
+            <a href="#" id="btn_toggle_product_search" class="btn btn-default">Show Search</a>           
             <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
         </div>
-        <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
-        <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>
         
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="csv_file">CSV file : </label>
-                    <div class="col-sm-4">                    
-                        <input type="file" name="csv_file" id="csv_file">
-                    </div>
-                </div>
+              
         <form action="{{ path('product_intake_fit_model_save')}}" method="post" class="form-horizontal"  >
             
             <br>
-            <div style='display:none' id="csv_file_json"></div>
+            
             <br>
             <div class="form-group required">
                 <label class="control-label col-sm-2" for=""> Brand </label>

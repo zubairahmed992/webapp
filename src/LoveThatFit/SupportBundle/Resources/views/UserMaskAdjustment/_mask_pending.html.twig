@@ -42,13 +42,15 @@
                  background: #fff;
 
              }
-            
+            .txt_center{ margin-bottom: 100px;}
+           
     </style>
     <div class="navigation1">
-    <a onClick="move_left();">Move Left</a>
-    <a onClick="move_right();">Move Right</a>
-    <a onClick="move_up();">Move Up</a>
-    <a onClick="move_down();">Move Down</a>
+    <a id="showHide">Index Show/Hide</a>
+    <a onClick="move_left();">Left</a>
+    <a onClick="move_right();">Right</a>
+    <a onClick="move_up();">Up</a>
+    <a onClick="move_down();">Down</a>
     <a onClick="rotate_left();">Rotate Left</a>
     <a onClick="rotate_right();">Rotate Right</a>
     <a onClick="zoom_in();">Zoom In</a>
@@ -202,8 +204,8 @@
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
                 </form>
-<div class="maindiv">
-<div>
+<div class="span8 maindiv" style="position:relative; top:80px;">
+<div class="span8">
 
 {% if (device_type == "iphone5")%}
 <div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas>
@@ -217,18 +219,17 @@
 </div>
 {% endif %}
 {% if (device_type == "iphone6")%}
-     <div style="position:relative; top:50px; text-align:center; min-height:42px;">
+     <div style="position:relative; text-align:center; min-height:42px;float:right;">
         <!--clock !-->
         <ul class="imagemenu">
             <li><div class="rej_img"><a href="#">Reject Image</a></div></li>
             <li><div class="approve_img"><a href="#">Approve Image</a></div></li>
-            <li><i class="fa fa-clock-o clk_img" aria-hidden="true"></i></li>
         </ul> 
-        <!--/clock !-->
-    </div>
         
+    </div>
+        <div style="text-align: right;padding-right: 25%;"><i class="fa fa-clock-o clk_img" aria-hidden="true"></i></div>
 <div class="txt_center canv_hldr_2">
-    <canvas id="canv_mask_makeover" width="960" height="1280" style="margin:80px auto; width:960px; height: 1280px; position: relative;"></canvas>
+    <canvas id="canv_mask_makeover" width="960" height="1280" style="margin-top: 8px; width:960px; height: 1280px; position: relative;"></canvas>
    
 </div>
 {% endif %}
@@ -328,6 +329,10 @@
 <script>
 
 $(document).ready(function(){
+    $("#showHide").click(function() { 
+        return (this.tog = !this.tog) ? show_index_numbers() :  remove_index_numbers();
+    });
+   
     $( "#btn_confirm" ).click(function() {
    var strconfirm = confirm("Are you sure mask is saved?");
    if (strconfirm == true)
@@ -367,7 +372,7 @@ function endtimer(){
             type: 'POST',
             data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
             success: function (response) {
-                alert("All Done! - Reloading...");
+               // alert("All Done! - Reloading...");
 
                                     var curr_url = window.location + '';
 
@@ -380,7 +385,7 @@ function endtimer(){
                             }
             },
             error: function () {
-                alert("Please press save button");
+               // alert("Please press save button");
             }
         });
         

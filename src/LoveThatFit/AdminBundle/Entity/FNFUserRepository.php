@@ -37,7 +37,34 @@ class FNFUserRepository extends EntityRepository
             $stmt->execute();
             $returnArray = $stmt->fetchAll();
             if(!empty($returnArray))
+            {
                 return $returnArray[0];
+            }
+            else if(empty($returnArray))
+            {
+                $sql = "SELECT f1_.id as group_id, f1_.min_amount as minAmount, f1_.discount as discount, l3_.auth_token as token, f0_.id AS id, f0_.is_available AS is_available1, f0_.is_archive AS is_archive2, f0_.user_id AS user_id3, f1_.group_type AS group_type
+                    FROM fnf_user f0_ INNER JOIN fnfusers_groups f2_ ON f0_.id = f2_.fnfuser_id 
+                    INNER JOIN fnf_group f1_ ON f1_.id = f2_.fnfgroup_id 
+                    INNER JOIN ltf_users l3_ ON f0_.user_id = l3_.id 
+                    LEFT JOIN user_orders u4_ ON l3_.id = u4_.user_id
+                    WHERE l3_.id = :id and f1_.is_archive = 0 and (
+                    case when f1_.group_type = 1
+                    then ( f0_.is_available = 1 AND :current_date BETWEEN f1_.start_at AND f1_.end_at)
+                    else 1
+                    end
+                    ) order by f1_.group_type desc limit 0,1";
+
+                $date = new \DateTime("now");
+                $conn = $this->getEntityManager()->getConnection();
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue('id', $user_id);
+                $stmt->bindValue('current_date', $date->format('Y-m-d H:i:s'));
+
+                $stmt->execute();
+                $returnArray = $stmt->fetchAll();
+                if(!empty($returnArray))
+                    return $returnArray[0];
+            }
 
         } catch (\Doctrine\ORM\NoResultException $e) {
 

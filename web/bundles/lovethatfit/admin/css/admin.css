@@ -356,7 +356,7 @@ i.icon-desc {
     height: 16px;
 }
 i.icon-desc-no-desc {
-	background-position: -238px -167px;
+	background-position: -241px -167px;
     width: 19px;
     height: 16px;
 }
@@ -375,7 +375,7 @@ i.icon-desc-have-desc-green {
 }
 
 i.price-edit-no-price {
-	background-position: -310px -167px;
+	background-position: -312px -167px;
     width: 19px;
     height: 16px;
 }
@@ -403,6 +403,51 @@ i.cat-no-value {
 
 i.cat-have-value {
 	background-position: -382px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.weight-edit-no-weight {
+    background-position: 0px -188px;
+    width: 19px;
+    height: 16px;
+}
+
+i.weight-edit-have-weight {
+    border:none;
+}
+
+i.weight-edit-green {
+    background-position: -24px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.weight-edit-yellow {
+    background-position: -47px -188px;
+    width: 19px;
+    height: 16px;
+}
+
+i.icon-pstatus {
+    background-position: -262px -25px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-no-pstatus {
+    background-position: -69px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-have-pstatus {
+    border:none;
+}
+i.icon-pstatus-have-pstatus-yellow {
+    background-position: -100px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-have-pstatus-green {
+    background-position: -85px -188px;
     width: 19px;
     height: 16px;
 }

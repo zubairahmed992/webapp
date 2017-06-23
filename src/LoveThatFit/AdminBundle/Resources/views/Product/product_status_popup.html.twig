@@ -1,0 +1,38 @@
+    <script>
+        $(document).ready(function () {
+            $("#update_product_status").click(function () {
+                var product_status = $("#p_status").val();
+                $.ajax({
+                    type: 'POST',
+                    url: $('#product_status_url').text(),
+                    data: {status: product_status, id:{{ id }}},
+                    success: function (data) {
+                        if (data) {
+                            $('#msg_prod_status').html('Product Status has been updated.');
+                            setTimeout(redirect_product_detail, 1000)
+                            //$('#model_product_status').modal().hide();
+                            //window.location.reload();
+                        } else {
+                            $('#msg_prod_status').html('Product Status not been updated.')
+                        }
+                    }
+                });
+            });
+        });
+        function redirect_product_detail() {
+            window.location.reload();
+        }
+    </script>
+
+        <span style="float:left">
+             <select id="p_status" name="p_status">
+             <option value="pending" {% if status == 'pending' %} selected="selected" {% endif %}>Pending</option>
+             <option value="review" {% if status == 'review' %} selected="selected" {% endif %}>Needs Review</option>
+             <option value="complete" {% if status == 'complete' %} selected="selected" {% endif %}>Complete</option>
+            </select>
+        </span>
+                       
+    <span id="product_status_url" style="display:none;">{{ path('admin_product_status_update') }}</span>
+
+
+

@@ -23,6 +23,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
   blouses:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -39,6 +40,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
   tunic:
     tee_knit:
     neck: Neck
@@ -57,6 +59,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
   tee_knit:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -74,6 +77,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
   tank_knit: 
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -87,6 +91,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip: Waist to Hip
     hip: Hip
+    abdomen: Abdomen
   jacket:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -104,6 +109,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   jackets:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -121,6 +129,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   sweater:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -138,6 +149,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   sweaters:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -155,6 +169,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   trouser:
     waist: Waist
     cf_waist: CF Waist
@@ -167,6 +184,11 @@ constants:
     knee: Knee 
     calf: Calf
     ankle: Ankle
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
+    high_thigh: High Thigh
+    low_thigh: Low Thigh
   trousers:
     waist: Waist
     cf_waist: CF Waist
@@ -179,6 +201,11 @@ constants:
     knee: Knee 
     calf: Calf
     ankle: Ankle
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
+    high_thigh: High Thigh
+    low_thigh: Low Thigh
   jean:
     waist: Waist
     cf_waist: CF Waist
@@ -191,6 +218,12 @@ constants:
     knee: Knee 
     calf: Calf
     ankle: Ankle
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
+    high_thigh: High Thigh
+    low_thigh: Low Thigh
+    
   jeans:
     waist: Waist
     cf_waist: CF Waist
@@ -203,6 +236,11 @@ constants:
     knee: Knee 
     calf: Calf
     ankle: Ankle
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
+    high_thigh: High Thigh
+    low_thigh: Low Thigh
   skirt:
     waist: Waist
     cf_waist: CF Waist
@@ -212,6 +250,10 @@ constants:
     outseam: Outseam
     inseam: inseam
     hem_length: hem_length
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
+        
   skirts:
     waist: Waist
     cf_waist: CF Waist
@@ -221,6 +263,9 @@ constants:
     outseam: Outseam
     inseam: inseam
     hem_length: hem_length
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   dress:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -239,6 +284,9 @@ constants:
     hip: Hip
     inseam: inseam
     hem_length: hem_length
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   dresses:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -257,6 +305,9 @@ constants:
     hip: Hip
     inseam: inseam
     hem_length: hem_length
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   coat:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -276,6 +327,9 @@ constants:
     hip: Hip
     inseam: inseam
     hem_length: hem_length
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   coats:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -295,6 +349,9 @@ constants:
     hip: Hip
     inseam: inseam
     hem_length: hem_length
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   shirt:
      neck: Neck
      shoulder_across_front: Shoulder across front
@@ -312,6 +369,8 @@ constants:
      back_waist: Back Waist
      waist_to_hip  : Waist to Hip  
      hip: Hip   
+     abdomen: Abdomen
+    
  product_specification: 
   fit_priority:
       man:
@@ -374,13 +433,15 @@ constants:
   fabric_content:
      cotton: Cotton
      poly: Poly
-     rayon: Rayon
+     rayon/modal: Rayon/Modal
      acrylic: Acrylic
      linen: Linen
      silk: Silk 
      nylon: Nylon
-     spandex/lycra: Spandex/Lycra
+     lycra/spandex: Lycra/Spandex
      wool: Wool
+     tencel: Tencel 
+     viscose: Viscose
      other: Other     
   garment_detail:
       silk: Silk

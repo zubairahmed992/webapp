@@ -679,13 +679,13 @@ function getPathArrayJson(){
     return JSON.stringify(mp_array);
 }
 function onKeyDown(event) {
-    if(event.key === "n"){
-        remove_index_numbers();
-        show_index_numbers();
-        if(event.modifiers.shift){
-            remove_index_numbers();
-        }
-    }
+     //if(Key.isDown('control') || Key.isDown('i')){
+      //  show_index_numbers();
+       
+    //}
+    // if(event.modifiers.shift){
+     //       remove_index_numbers();
+      //   }
 }
 function onKeyUp(){
 }
@@ -903,7 +903,7 @@ function to_image(){
         // console.log("i am checked bhai");
         if(obj_url.status === "check"){ 
              canv_settings_after_save();
-            //alert("All Done! - Not Reloading...");
+            alert("All Done! - Not Reloading...");
 			endtimer();
             var curr_url = window.location + '';
            curr_url_array = curr_url.split('/');

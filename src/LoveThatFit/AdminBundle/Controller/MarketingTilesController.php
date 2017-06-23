@@ -23,7 +23,7 @@ class MarketingTilesController extends Controller {
     public function showAction($id) {
         $marketing_tiles = $this->get('admin.helper.marketingtiles')->findWithMarketingTilesId($id);
         //echo "<pre>"; print_r($marketing_tiles); die();
-        $marketing_tiles_limit = $this->get('admin.helper.marketingtiles')->getRecordsCountWithCurrentBannerLimit($id);
+        $marketing_tiles_limit = $this->get('admin.helper.marketingtiles')->getRecordsCountWithCurrentMarketingTilesLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($marketing_tiles_limit[0]['id']));
         $page_number = ($page_number == 0) ? 1 : $page_number;
         if (!$marketing_tiles) {
@@ -38,7 +38,11 @@ class MarketingTilesController extends Controller {
     //------------------------------Create New Banner------------------------------------------------------------
     public function newAction() {
         $entity = $this->get('admin.helper.marketingtiles')->createNew();
-        $form = $this->createForm(new MarketingTilesTypes('add',$entity), $entity);
+        $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber();
+        $entity->setSorting($max_sorting_number[0]['max_sort'] + 1) ;
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
+        $form = $this->createForm(new MarketingTilesTypes('add',$entity,$button_action,$sorting), $entity);
         return $this->render('LoveThatFitAdminBundle:MarketingTiles:new.html.twig', array(
                     'form' => $form->createView()
         ));
@@ -47,15 +51,16 @@ class MarketingTilesController extends Controller {
     //-------------------------------Save Banner in database-----------------------------------------------------------
     public function createAction(Request $request) {
         $entity = $this->get('admin.helper.marketingtiles')->createNew();
-
-        $form = $this->createForm(new MarketingTilesTypes('add',$entity), $entity);
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
+        $form = $this->createForm(new MarketingTilesTypes('add',$entity,$button_action,$sorting), $entity);
         $form->bind($request);
 
             /*Conditions for handling Banner sorting*/
             $form_sorting_value = $entity->getSorting();
 
             /*If User added random sort number which is greater than max sort number then max sort will be set*/
-            $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber($form_sorting_value);
+            $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber();
             
             if( isset($max_sorting_number[0]['max_sort']) && $form_sorting_value > $max_sorting_number[0]['max_sort']) {
                 $entity->setSorting($max_sorting_number[0]['max_sort'] + 1) ;
@@ -80,97 +85,67 @@ class MarketingTilesController extends Controller {
 
 //----------------------------------------Edit Banner--------------------------------------------------
     public function editAction($id) {
-
-        $entity = $this->get('admin.helper.Banner')->find($id);
-        $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew();
-        $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
-        $getallcategories = $this->get('admin.helper.Categories')->findAllCategories();
-
+        $entity = $this->get('admin.helper.marketingtiles')->find($id);
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
         if(!$entity){       
-            $this->get('session')->setFlash('warning', 'The Banner can not be Created!');
+            $this->get('session')->setFlash('warning', 'The Marketing Tiles can not be Created!');
         }else{
-            $form = $this->createForm(new MarketingTilesTypes('edit',$entity), $entity);
+            $form = $this->createForm(new MarketingTilesTypes('edit',$entity,$button_action,$sorting), $entity);
             $deleteForm = $this->createForm(new DeleteType(), $entity);
         }
-        return $this->render('LoveThatFitAdminBundle:Banner:edit.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:MarketingTiles:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'entity' => $entity,
-                    'getallcategories' => $getallcategories,
-                    'getcategoriestreeview' => $getcategoriestreeview,
-                    'getbannerlist' => $getbannerlist,
+                    'entity' => $entity
                     ));
     }
 
 //------------------------------------Update Banner------------------------------------------------------
     public function updateAction(Request $request, $id) {
 
-        $entity = $this->get('admin.helper.Banner')->find($id);
-        $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew($id);
-        $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
-        $getallcategories = $this->get('admin.helper.Categories')->findAllCategories();
-
+        $entity = $this->get('admin.helper.marketingtiles')->find($id);
+        $sorting = $entity->getSorting();
+        $button_action = $entity->getButtonAction();
         if(!$entity){
-            $this->get('session')->setFlash('warning', 'The Banner not found!');
+            $this->get('session')->setFlash('warning', 'The Marketing Tiles not found!');
         }else{
-            $form = $this->createForm(new MarketingTilesTypes('edit',$entity), $entity);
+            $form = $this->createForm(new MarketingTilesTypes('edit',$entity,$button_action,$sorting), $entity);
             $form->bind($request);
 
             if ($form->isValid()) {
 
-                $selected_banner_id = $request->request->get('banner_list_id');
-
-                /*Conditions for handling Banner sorting, if sorting value will be change then
+                /*Conditions for handling Marketing Tiles sorting, if sorting value will be change then
                 it will update sorting*/
                 $db_banner_sorting =  (int) $request->request->get('sorting_db_value');
-                $db_banner_displayscreen =  $request->request->get('displayscreen_db_value');
-                $db_banner_parent =  (int) $request->request->get('parent_db_value');
-                if($db_banner_parent == 0){
-                    $db_banner_parent = '';
-                }
+                $form_sorting_value = $entity->getSorting();               
 
-                $form_sorting_value = $entity->getSorting();
-                $selectedbannercondition = $entity->getParentId();
-                $form_displayscreen_value = $entity->getDisplayScreen();
-
-                if(($db_banner_sorting !== $form_sorting_value) || ($db_banner_displayscreen !== $form_displayscreen_value)  || ($db_banner_parent != $selectedbannercondition) ){
-
+                if($db_banner_sorting !== $form_sorting_value){
                     /*If User added random sort number which is greater than max sort number then max sort will be set*/
-                    $max_sorting_number = $this->get('admin.helper.Banner')->maxSortingNumber($form_sorting_value, $selectedbannercondition, $form_displayscreen_value);
+                    $max_sorting_number = $this->get('admin.helper.marketingtiles')->maxSortingNumber(); 
                     if($form_sorting_value > $max_sorting_number[0]['max_sort']) {
                         $entity->setSorting($max_sorting_number[0]['max_sort']);
                         $form_sorting_value = $entity->getSorting();
                     }
-
-                    $this->get('admin.helper.Banner')->editBannerSorting($form_sorting_value, 'update', $selectedbannercondition, $form_displayscreen_value,$db_banner_sorting);
+                    $this->get('admin.helper.marketingtiles')->editBannerSorting($form_sorting_value, 'update',$db_banner_sorting);
                     /*Conditions for handling Banner sorting*/
                 }
 
-
-                if($selected_banner_id == '0' || $selected_banner_id == $entity->getId()) {
-                    $entity->setParentId(null);
-                }else{
-                    $entity->setParentId($selected_banner_id);
-                }
-
-                $message_array = $this->get('admin.helper.Banner')->update($entity);
+                $message_array = $this->get('admin.helper.marketingtiles')->update($entity);
 
                 $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
                 if ($message_array['success'] == true) {
-                    return $this->redirect($this->generateUrl('admin_banners'));
+                    return $this->redirect($this->generateUrl('admin_marketingtiles'));
                 }
             } else {
-                $this->get('session')->setFlash('warning', 'Unable to update Banner!');
+                $this->get('session')->setFlash('warning', 'Unable to update Marketing Tiles!');
             }
             $deleteForm = $this->createForm(new DeleteType(), $entity);
         }
-        return $this->render('LoveThatFitAdminBundle:Banner:edit.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:MarketingTiles:edit.html.twig', array(
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
-            'entity' => $entity,
-            'getallcategories' => $getallcategories,
-            'getcategoriestreeview' => $getcategoriestreeview,
-            'getbannerlist' => $getbannerlist,
+            'entity' => $entity
         ));
     }
 
@@ -190,26 +165,6 @@ class MarketingTilesController extends Controller {
             $this->get('session')->setFlash('warning', 'This Marketing Tiles cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
-    }
-
-    //------------------------------------------------------------------------------------------
-    public function standardsAction(){
-       $standards = $this->get('admin.helper.size')->getDefaultArray();       
-       return $this->render('LoveThatFitAdminBundle:Banner:standards.html.twig', array(
-                    'specs' => $standards,
-                    ));
-       
-       return new \Symfony\Component\HttpFoundation\Response (json_encode($standards));
-    }
-
-    public function fetchCategoryTree($result, $parent = 0, $spacing = '', $user_tree_array = '') {
-        if ($result->num_rows >  0) {
-            while ($row = $result->fetch_assoc()) {
-                $user_tree_array[] = array("id" => $row['id'], "name" => $spacing . $row['name']);
-                $user_tree_array = fetchCategoryTree($row['id'], $spacing . '&nbsp;&nbsp;', $user_tree_array);
-            }
-        }
-        return $user_tree_array;
     }
 
     public function paginateAction(Request $request)
