@@ -345,8 +345,14 @@ class FitModelMeasurement {
     {
         $this->retailers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sizechart = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->brand = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+   
+    //------------------- return Json Decode to Array
+    public function reurnJsonToArray() {
+        return json_decode($this->measurement_json,true);
+        
+    }
  
     
 }
