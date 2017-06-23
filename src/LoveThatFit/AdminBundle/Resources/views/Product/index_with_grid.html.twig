@@ -253,6 +253,7 @@
                     <div class="adv_srch_hd">Brands</div>
                     <div class="frm_ele">
                         <select name="brand" id="brand">
+                            <option value="0">All Brands</option>
                             {% for b in brandList %}
                                 <option value="{{ b.id }}">{{ b.name }}</option>
                             {% endfor %}
