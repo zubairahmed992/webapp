@@ -172,10 +172,18 @@
             loadAgain({start: 0, length: -1, draw: 1, order: [{column: 0, dir: "desc"}]})
         }
 
+        function resetValues()
+        {
+            $("input[type='checkbox']").prop('checked', false);
+            $('#genders[value="f"]').prop('checked', true);
+            $("Select[name='brand']").val(0).change();
+            $("input[name='created_at']").val("");
+        }
+
         $(document).ready(function () {
-            var genders = $('#genders').val();
-            if (genders == 'm') {
-                $('#genders').prop('checked', true);
+            var genders = $('#genders[value="f"]').val();
+            if (genders == 'f') {
+                $('#genders[value="f"]').prop('checked', true);
             }
 
             //SearchForm(1);  // For first time page load default results
@@ -382,6 +390,10 @@
                 <button type="button" class="btn" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
                     Search Product
                 </button>
+                <button type="button" class="btn" onclick="resetValues()">
+                    Reset
+                </button>
+
             </div> <!--End Main wrap -->
         </div>
 
