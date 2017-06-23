@@ -54,10 +54,10 @@ masked_marker:
         type: pair
         segments: 
           s1:
-            a: 6
+            a: 7
             b: 18
           s2:
-            a: 64
+            a: 63
             b: 52
   sleeve:  
     axis: y 
