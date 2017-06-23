@@ -407,3 +407,48 @@ i.cat-have-value {
     height: 16px;
 }
 
+i.weight-edit-no-weight {
+    background-position: 0px -188px;
+    width: 19px;
+    height: 16px;
+}
+
+i.weight-edit-have-weight {
+    border:none;
+}
+
+i.weight-edit-green {
+    background-position: -24px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.weight-edit-yellow {
+    background-position: -47px -188px;
+    width: 19px;
+    height: 16px;
+}
+
+i.icon-pstatus {
+    background-position: -262px -25px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-no-pstatus {
+    background-position: -69px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-have-pstatus {
+    border:none;
+}
+i.icon-pstatus-have-pstatus-yellow {
+    background-position: -100px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-have-pstatus-green {
+    background-position: -85px -188px;
+    width: 19px;
+    height: 16px;
+}
+

@@ -275,6 +275,30 @@ class ProductController extends Controller
         return new response(json_encode($productStatus));
     }
 
+#--------------------Method for Product Status Popup----------------------------#
+
+    public function productStatusPopupAction(Request $request) {
+        $target_array = $request->request->all();
+        $id = $target_array['id'];
+        /*$product = $this->getProduct($id);
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }*/
+
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        //$disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        //$productSpecificationHelper = $this->get('admin.helper.product.specification');
+        //$productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
+
+        return $this->render('LoveThatFitAdminBundle:Product:product_status_popup.html.twig', array(
+            //'form' => $productForm->createView(),
+            //'product' => $product,
+            'id' => $id,
+            'status' => $status,
+        ));
+    }
+
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
 
     public function productDetailColorAddNewAction($id)
