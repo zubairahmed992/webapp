@@ -656,6 +656,13 @@ nws_get_all_fitting_room:
    params:
      auth_token: 56565656566
 
+nws_add_update_fitting_room_items:
+   pattern:  /nws/add_update_fitting_room_items
+   title: add_update_to_fitting_room_items
+   params:
+     auth_token: 56565656566
+     items: [{"product_item_id":4082,"product_id":506,"qty":1},{"product_item_id":4083,"product_id":506,"qty":1}]
+
 ws_braintree_payment_and_create_order:
   pattern: /ws/braintree_payment_and_create_order
   title:  add_item_and_make_payment
