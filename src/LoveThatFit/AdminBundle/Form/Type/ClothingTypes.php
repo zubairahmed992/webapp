@@ -15,8 +15,14 @@ class ClothingTypes extends AbstractType {
     }
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('name', 'text');
-        $builder->add('average_weight', null, array('max_length'=>15));
-        $builder->add('heaviest_weight', null, array('max_length'=>15));
+        $builder->add('average_weight', null, array(
+            'max_length'=>15,
+            'precision' => 12,
+        ));
+        $builder->add('heaviest_weight', null, array(
+            'max_length'=>15,
+            'precision' => 12,
+        ));
         $builder->add('target', 'choice', array(
             'data'	=> $this->target,
             'choices'=> array('top'=>'top','bottom'=>'bottom', 'dress'=>'dress'),
