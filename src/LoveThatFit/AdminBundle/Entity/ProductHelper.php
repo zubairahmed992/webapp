@@ -252,8 +252,11 @@ class ProductHelper
 
 //-------------------------------------------------------
     public function getTotalProductCount(){
-        $rec_count = count($this->repo->countAllRecord());
-        return $rec_count;
+        $rec_count = $this->repo->getTotalCount();
+        if(!empty($rec_count))
+            return $rec_count[0]['total_count'];
+        else
+            return 0;
     }
     public function getListWithPagination($page_number = 0, $sort = 'id')
     {
