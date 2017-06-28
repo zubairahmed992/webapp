@@ -90,7 +90,11 @@ class WSUserController extends Controller {
 
     public function registrationAction() {
         $decoded  = $this->process_request();
-        $json_data = $this->get('webservice.helper')->registrationWithDefaultValues($decoded);        
+        if (isset($decoded['imc']) && $decoded['imc'] == "true") {
+            $json_data = $this->get('webservice.helper')->registrationWithDefaultValuesSupport($decoded);
+        } else {
+            $json_data = $this->get('webservice.helper')->registrationWithDefaultValues($decoded);
+        }
         return new Response($json_data);      
     }  
 #~~~~~~~~~~~~~~~~~~~ ws_user_measurement_update   /ws/user_measurement_update
