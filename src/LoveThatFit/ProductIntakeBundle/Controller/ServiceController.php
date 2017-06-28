@@ -129,11 +129,11 @@ class ServiceController extends Controller {
         $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-',' ',$image_name_break[0]), $image_name_break[1]); 
         //return new Response(json_encode($data));
         $imageFile = $request->files->get('file');
-        $rsult = $this->imageUploadProductItemSize($_FILES, $data[0]['id'],$imageFile);
+        $rsult = $this->imageUploadProductItemSize($_FILES, $data[0]['id'],$imageFile);        
          try { 
         return new JsonResponse([
-            'success' => true,
-            'data'    =>  $rsult
+            'url'=>$rsult,
+            'success' => true,            
              ]);
          } catch (\Exception $exception) {
         return new JsonResponse([
@@ -178,12 +178,14 @@ class ServiceController extends Controller {
                     $p_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
                     $this->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);
                 }
-                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);                
-                #return $product_item->getImage();
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);                                
                 $product_item->file = $image_file;
                 $product_item->upload();
                 $this->get('admin.helper.productitem')->save($product_item);
-                $this->get('session')->setFlash('success', 'Remaining Product Items and Colors have been added/updated');
+                $this->get('session')->setFlash('success', 'Remaining Product Items and Colors have been added/updated');                
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+                #$baseurl = $this->container->get('assets.packages')->getUrl($product_item->getImage());
+                return $baseurl .'/'. $product_item->getWebPath();
                 return new response('{"status":"Remaining Product Items and Colors have been added"}');
                 
             }
