@@ -87,6 +87,59 @@ class ProductRepository extends EntityRepository
         }
     }
 
+    public function findPrductByGender($gender)
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('
+                p.id,
+                p.name,
+                p.control_number,
+                p.gender,
+                b.name as BName,
+                ct.name as cloting_type,
+                p.created_at,
+                p.disabled,
+				p.description,
+				p.item_name,				
+				p.country_origin,
+				p.item_details,								
+				p.care_label,				
+                p.status
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.gender=:gender')
+            ->andWhere('p.deleted=0')
+            ->setParameter('gender', $gender);
+        try {
+            return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function getTotalCount()
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('
+                count(p) as total_count
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0');
+        try {
+            return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function searchAllProduct($data, $page = 0, $max = NULL, $order, $getResult = true){
         $query     = $this->getEntityManager()->createQueryBuilder();
         $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
@@ -111,6 +164,7 @@ class ProductRepository extends EntityRepository
             ->from('LoveThatFitAdminBundle:Product', 'p')
             ->join('p.brand', 'b')
             ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
             ->andWhere('p.deleted=0');
 
         if ($search) {
@@ -540,22 +594,6 @@ class ProductRepository extends EntityRepository
         }
     }
 
-//-------------------------------------------------------------------------------------
-    public function findPrductByGender($gender)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p
-        WHERE
-        p.gender=:gender AND p.deleted=0"
-            )
-            ->setParameter('gender', $gender);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-//-------------------------------------------------------------------------------------
     public function findPrductByType($target)
     {
         $query = $this->getEntityManager()
