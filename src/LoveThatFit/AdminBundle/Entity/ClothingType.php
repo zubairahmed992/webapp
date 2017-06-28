@@ -81,14 +81,14 @@ class ClothingType
     /**
      * @var float
      *
-     * @ORM\Column(name="average_weight", type="float", scale=12)
+     * @ORM\Column(name="average_weight", type="decimal", scale=3, precision=12)
      */
     private $average_weight;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="heaviest_weight", type="float", scale=12)
+     * @ORM\Column(name="heaviest_weight", type="decimal", scale=3, precision=12)
      */
     private $heaviest_weight;
 

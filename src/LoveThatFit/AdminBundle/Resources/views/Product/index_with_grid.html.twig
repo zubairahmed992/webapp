@@ -690,7 +690,7 @@
                 dataTable.fnDestroy(true);
                 $('#productClass').append(htmlTable);
             }
-
+             var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
             dataTable = $("#example").dataTable({
                 "pageLength": 10,
                 "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
@@ -700,6 +700,109 @@
                 bProcessing: true,
                 aaData: data,
                 aoColumns: _oColumns,
+                 "createdRow": function (row, data, index) {
+                   //alert("asdf"+data.id);
+
+                    if(data.description== null || data.description==''){data.description='';}
+                    if(data.item_name== null || data.item_name==''){data.item_name='';}
+                   // if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
+                    if(data.item_details== null || data.item_details==''){data.item_details='';}
+                    if(data.care_label== null || data.care_label==''){data.care_label='';}
+
+                    if(data.description != '' && data.item_name != '' && data.item_details != '' && data.care_label != ''){
+
+                        $(row).find("button.description i").addClass('icon-desc-have-desc-green');
+                    }
+                    else if(data.description != '' || data.item_name != '' || data.item_details != '' || data.care_label != ''){
+
+                        $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
+
+                    }else if(data.description == '' && data.item_name == '' && data.item_details == '' && data.care_label == ''){
+
+                        $(row).find("button.description i").addClass('icon-desc-no-desc');
+
+                    }
+
+                     if(parseInt(data.total_items) == 0){
+
+                        $(row).find("button.priceedit i").addClass('price-edit-no-price');
+
+                    }else if(parseInt(data.price_status) ==  0){
+
+                        $(row).find("button.priceedit i").addClass('price-edit-green');
+
+                    }else if(parseInt(data.price_status) >  0 && parseInt(data.price_status) == parseInt(data.total_items)){
+
+                        $(row).find("button.priceedit i").addClass('price-edit-no-price');
+
+                    }else if(parseInt(data.price_status) >  0 && parseInt(data.price_status) != parseInt(data.total_items)){
+
+                        $(row).find("button.priceedit i").addClass('price-edit-yellow');
+
+                    }
+
+                    if(parseInt(data.total_items) == 0){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-no-weight');
+
+                    }else if(parseInt(data.weight_status) ==  0){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-green');
+
+                    }else if(parseInt(data.weight_status) >  0 && parseInt(data.weight_status) == parseInt(data.total_items)){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-no-weight');
+
+                    }else if(parseInt(data.weight_status) >  0 && parseInt(data.weight_status) != parseInt(data.total_items)){
+
+                        $(row).find("button.productweight i").addClass('weight-edit-yellow');
+
+                    }
+
+                    if(data.pstatus=='Complete') {
+                        $(row).find("button.productstatus i").addClass('icon-pstatus-have-pstatus-green');
+                    } else if(data.pstatus=='Review') {
+                        $(row).find("button.productstatus i").addClass('icon-pstatus-have-pstatus-yellow');
+                    } else if(data.pstatus=='Pending') {
+                        $(row).find("button.productstatus i").addClass('icon-pstatus-no-pstatus');
+                    }
+
+                    var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: {},
+                        success: function (response) {
+
+                            if (response == 0) {
+                                $(row).find("button.category i").addClass('cat-no-value');
+
+                            } else {
+                                $(row).find("button.category i").addClass('cat-have-value');
+
+                            }
+
+
+                        }
+                    });
+
+
+                    if (data.status == "Enable") {
+                        $(row).find("button.Enable i").removeClass('icon-play-circle');
+                        $(row).find("button.Enable i").addClass('icon-ban-circle');
+                    }
+
+
+                    if (data["original_user_id"] != null) {
+                        $('td', row).addClass('duplicate_user_class');
+                    }
+                    if (jQuery.inArray(data["id"], notShownIDs) != -1) {
+                        $('td', row).addClass('hide_grid_row');
+                    }
+
+
+                 }       
             });
 
             bindClickEvent();

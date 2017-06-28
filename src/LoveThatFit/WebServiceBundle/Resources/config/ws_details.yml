@@ -118,6 +118,7 @@ ws_user_registration_default_values:
       birth_date:  
       device_type: iphone6
       create_default_user: true
+      imc: true
     request_type: post
     description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
     backend_process: 

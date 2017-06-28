@@ -17,11 +17,11 @@ class ClothingTypes extends AbstractType {
         $builder->add('name', 'text');
         $builder->add('average_weight', null, array(
             'max_length'=>15,
-            'precision' => 12,
+            'precision' => 3,
         ));
         $builder->add('heaviest_weight', null, array(
             'max_length'=>15,
-            'precision' => 12,
+            'precision' => 3,
         ));
         $builder->add('target', 'choice', array(
             'data'	=> $this->target,
