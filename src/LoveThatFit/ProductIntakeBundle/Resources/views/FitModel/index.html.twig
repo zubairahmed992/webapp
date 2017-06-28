@@ -6,7 +6,8 @@
     <h1>Fit Model Measurement</h1>
 
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>           
+        <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>     
+        <a href="{{ path('product_intake_fit_model_compare') }}" class="btn btn-default">Compare</a>           
     </div>
     <div class="clearfix"></div> 
 
@@ -17,6 +18,7 @@
             <th>Brand</th>
             <th></th>
         </tr>
+        
         {% for fmm in fit_model_measurements %}
         <tr>
             <td>{{fmm.Id}}</td>            

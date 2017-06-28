@@ -3,6 +3,7 @@
 namespace LoveThatFit\AdminBundle\Entity;
 use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -39,6 +40,10 @@ class Brand {
      **/
     private $retailers;
   
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement", mappedBy="brand")
+     **/
+    private $fit_model_measurements;
     
     /**
      * @ORM\Id
@@ -282,8 +287,9 @@ public function deleteImages()
      */
     public function __construct()
     {
-        $this->retailers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->sizechart = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->retailers = new ArrayCollection();
+        $this->sizechart = ArrayCollection();
+        $this->fit_model_measurements = new ArrayCollection();
     }
     
     
@@ -404,7 +410,42 @@ public function deleteImages()
     {
         return $this->retailers;
     }
+#----------------------------------------------------------------------
+    
+     /**
+     * Add fit_model_measurements
+     *
+     * @param LoveThatFit\ProductIntakeBundle\FitModelMeasurements fit_model_measurements
+     * @return Brand
+     */
+    public function addFitModelMeasurements(\LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement $fit_model_measurements)
+    {
+        $this->fit_model_measurements[] = $fit_model_measurements;
+    
+        return $this;
+    }
 
+    /**
+     * Remove fit_model_measurements
+     *
+     * @param \LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement fit_model_measurements
+     */
+    public function removeFitModelMeasurements(\LoveThatFit\ProductIntakeBundle\Entity\FitModelMeasurement $fit_model_measurements)
+    {
+        $this->fit_model_measurements->removeElement($fit_model_measurements);
+    }
+
+    /**
+     * Get fit_model_measurements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFitModelMeasurements()
+    {
+        return $this->fit_model_measurements;
+    }
+    
+    
     /**
      * Add products
      *
