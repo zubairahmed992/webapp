@@ -164,6 +164,47 @@ class WebServiceHelper
         }
     }
 
+    #------------------------ User -----------------------
+    public function registrationWithDefaultValuesSupport($request_array)
+    {
+        if (!array_key_exists('email', $request_array)) {
+            return $this->response_array(false, 'Email Not provided.');
+        }
+
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+        if (count($user) > 0) {
+            return $this->response_array(false, 'Email already exists.');
+        } else {
+            $user = $this->createUserWithParams($request_array);            
+            #--- 3) default user values added
+            $measurement = $this->container->get('user.helper.user')->copyDefaultUserDataSupport($user, $request_array);
+
+            $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+            ##email not send if the event is available against user
+            if (!array_key_exists("event_name", $request_array)) {
+                #---- 2) send registration email ....
+                $this->container->get('mail_helper')->sendRegistrationEmail($user);
+            }
+
+            try {
+                //create podio users entity
+                $this->createPodioUser($user->getId());
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+            }
+
+            #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
+            $detail_array = $this->user_array($user, $request_array);
+
+            unset($detail_array['per_inch_pixel_height']);
+            unset($detail_array['deviceType']);
+            unset($detail_array['auth_token_web_service']);
+            return $this->response_array(true, 'User created', true, array('user' => $detail_array));
+        }
+    }
+
     private function createPodioUser($user_id){
         ## add user podio log data
         if ($user_id) {
@@ -222,9 +263,15 @@ class WebServiceHelper
     {
 
         $user = $this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
+        if ($request_array['imc'] == "true") {
+            $user->setVersion(1);
+        } else {
+            $user->setVersion(0);
+        }
         $user->setPassword($request_array['password']);
         $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
         $user->generateAuthenticationToken();
+
         $this->container->get('user.helper.user')->saveUser($user);
         return $user;
     }
@@ -240,6 +287,7 @@ class WebServiceHelper
         array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) : null;
         array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) : null;
         array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) : null;
+        
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)) {
             $user->addDeviceToken($request_array['device_type'], $request_array['device_token']);
         }
