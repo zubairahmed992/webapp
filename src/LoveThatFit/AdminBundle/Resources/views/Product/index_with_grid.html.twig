@@ -582,19 +582,19 @@
 
                     if(data.description== null || data.description==''){data.description='';}
                     if(data.item_name== null || data.item_name==''){data.item_name='';}
-                    if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
+                   // if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
                     if(data.item_details== null || data.item_details==''){data.item_details='';}
                     if(data.care_label== null || data.care_label==''){data.care_label='';}
 
-                    if(data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != ''){
+                    if(data.description != '' && data.item_name != '' && data.item_details != '' && data.care_label != ''){
 
                         $(row).find("button.description i").addClass('icon-desc-have-desc-green');
                     }
-                    else if(data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != ''){
+                    else if(data.description != '' || data.item_name != '' || data.item_details != '' || data.care_label != ''){
 
                         $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
 
-                    }else if(data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == ''){
+                    }else if(data.description == '' && data.item_name == '' && data.item_details == '' && data.care_label == ''){
 
                         $(row).find("button.description i").addClass('icon-desc-no-desc');
 
@@ -717,7 +717,7 @@
 
                 if (dataAction == 'EnableDisable') {
                     bootbox.confirm({
-                        title: "<h3>Enable/Disable Product</h3>",
+                        title: "Enable/Disable Product",
                         message: "Product status is " + data.pstatus + "! Are you sure you want to Enable/Disable this Product?",
                         buttons: {
                             confirm: {
