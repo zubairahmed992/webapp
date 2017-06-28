@@ -1182,6 +1182,7 @@ class UserHelper
                 'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
                 'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
+                'version_archive'  => $fData['version_archive'],
                 'version'          => $fData['version']
             ];
 
@@ -1306,7 +1307,8 @@ class UserHelper
                 'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
                 'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
-                'version'        => $fData['version']
+                'version_archive'  => $fData['version_archive'],
+                'version'          => $fData['version']
             ];
 
 
