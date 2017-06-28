@@ -428,7 +428,8 @@ class UserRepository extends EntityRepository
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
                 (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
-                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version_archive,
+                u.version'
             )
             ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
@@ -549,7 +550,8 @@ class UserRepository extends EntityRepository
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
                 (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
-                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version_archive,
+                u.version'
             )
             ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
