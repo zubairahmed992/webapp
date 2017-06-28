@@ -273,6 +273,13 @@ class ClothingTypeHelper {
     }
     #-----------------Find By Clothing Type By ID and  Gender---------------------------------# 
     public function findByTargetGender($target,$gender){
-        return $this->repo->findByTargetGender($target,$gender);      
+        /*return $this->repo->findBy(
+            array('target' => $target, 'gender' => $gender)
+        );*/
+        return $this->repo->findByTargetGender($target,$gender);
+    }
+    #-----------------Find By Clothing Type By ID and  Gender---------------------------------#
+    public function findByTargetAndGender($target,$gender){
+        return $this->repo->findByTargetAndGender($target,$gender);
     }
 }

@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDetailTypeNew;
 use LoveThatFit\AdminBundle\Form\Type\ProductRawType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
@@ -37,15 +38,12 @@ use ZipArchive;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
 use LoveThatFit\AdminBundle\Form\Type\ProductDescriptionType;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
 
     public $error_string;
-
 //---------------------------------------------------------------------
 
-    public function __indexAction($page_number, $sort = 'id')
-    {
+    public function __indexAction($page_number, $sort = 'id') {
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
 
         //return new response(json_encode(($product_with_pagination)));
@@ -72,7 +70,7 @@ class ProductController extends Controller
     public function paginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
-        $output = $this->get('admin.helper.product')->searchAllProduct($requestData);
+        $output      = $this->get('admin.helper.product')->searchAllProduct($requestData);
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
@@ -80,22 +78,20 @@ class ProductController extends Controller
     public function searchProductsAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
-        $output = $this->get('admin.helper.product')->searchProductByCriteria($requestData);
+        $output      = $this->get('admin.helper.product')->searchProductByCriteria($requestData);
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
 //---------------------------------------------------------------------
-    private function getDeleteForm($id)
-    {
+    private function getDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm();
     }
 
 //--------------------------------------------------------------------- 
-    private function getBrand($id)
-    {
+    private function getBrand($id) {
         $em = $this->getDoctrine()->getManager();
         $brand = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
         if (!$brand) {
@@ -108,25 +104,23 @@ class ProductController extends Controller
      * ************************* PRODUCT DETAIL ********************************
      * *********************************************************************** */
 
-    public function productDetailNewAction()
-    {
+    public function productDetailNewAction() {
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper, $this->get('admin.helper.size')->getAllSizeTitleType()));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType()));
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
             'form' => $productForm->createView(),
             'productSpecification' => $this->get('admin.helper.product.specification')->getProductSpecification(),
-            'brandObj' => $brandObj,
+            'brandObj'=>$brandObj,
         ));
     }
 
 #-----------------------------Product Detail ----------------------------------#
 
-    public function productDetailCreateAction(Request $request)
-    {
+    public function productDetailCreateAction(Request $request) {
         $data = $request->request->all();
         $entity = new Product();
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'), $this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
         $form->bindRequest($request);
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
@@ -134,36 +128,106 @@ class ProductController extends Controller
     }
 
     #--------------------Method for Edit Product Detail----------------------------#
-
+    
     public function productDetailEditAction($id)
     {
         $entity = $this->get('admin.helper.product')->find($id);
+        $gender = (strtolower($entity->getGender()) == 'f') ? 'woman' : 'man';
         $entity->setGender(strtolower($entity->getGender()));
+        $target_array = ['clothing_type' => $entity->getClothingType(), 'gender' => $entity->getGender()];
+        /*$clothingType = $this->get('admin.helper.product')->productClothingTypes();*/
+        $clothingType = $this->get('admin.helper.product')->productClothingTypeNew($target_array);
+        $clothingTypes = [];
+        foreach ($clothingType as $ct) {
+            $clothingTypes[$ct['id']] = $ct['name'];
+        }
+        $clothingType = [];
+        $clothingType['choices'] = $clothingTypes;
+
+        /*$clothingTypes = [];
+        $count = 0;
+        foreach ($clothingType as $ct) {
+            $clothingTypes[$count]['id'] = $ct->getID();
+            $clothingTypes[$count]['gender'] = $ct->getGender();
+            $clothingTypes[$count]['target'] = $ct->getTarget();
+            $clothingTypes[$count]['name'] = $ct->getName();
+            $count++;
+        }*/
+
+        $clothingTypeAttributes = $this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
+        $isProductSpecs = false;
+        $fit_priority = json_decode($entity->getFitPriority(),true);
+        if (empty($fit_priority)) {
+            $fit_priority = $clothingTypeAttributes['fitting_priority'];
+            $isProductSpecs = true;
+        }
+        $fit_priority = $this->convertToProductClothingTypeAttributeFormat($fit_priority, $isProductSpecs);
+
+        $isProductSpecs = false;
+        $fabric_content = json_decode($entity->getFabricContent());
+        if (empty($fabric_content)) {
+            $fabric_content = $clothingTypeAttributes['fabric_content'];
+            $isProductSpecs = true;
+        }
+        $fabric_content = $this->convertToProductClothingTypeAttributeFormat($fabric_content, $isProductSpecs);
+
+        $isProductSpecs = false;
+        $garment_detail = json_decode($entity->getGarmentDetail());
+        if (empty($garment_detail)) {
+            $garment_detail = $clothingTypeAttributes['garment_detail'];
+            $isProductSpecs = true;
+        }
+        $garment_detail = $this->convertToProductClothingTypeAttributeFormat($garment_detail, $isProductSpecs);
+
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
+
+        $productArr = $entity->toArray();
+        $clothingType['selected'] = $productArr['clothing_type_id'];
+
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'), $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled), $entity);
+        $form = $this->createForm(new ProductDetailTypeNew($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()[$gender],$status,$disabled,$clothingType,$productArr), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
+        /*print_r($entity->getClothingType()); exit;*/
+        /*print_r($entity->toArray()); exit;*/
 
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
+        unset($productArr['fit_priority']);
+        unset($productArr['fabric_content']);
+        unset($productArr['garment_detail']);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit_new.html.twig', array(
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
             'entity' => $entity,
+            'product' => $productArr,
             'productSpecification' => $productSpecification,
-            'fit_priority' => $entity->getFitPriority(),
-            'fabric_content' => $entity->getFabricContent(),
-            'garment_detail' => $entity->getGarmentDetail(),
-            'brandObj' => $brandObj,
+            'clothing_types' => $clothingTypes,
+            'fit_priority' => $fit_priority,
+            'fabric_content' => $fabric_content,
+            'garment_detail' => $garment_detail,
+            'brandObj'=>$brandObj,
         ));
     }
 
+    private function convertToProductClothingTypeAttributeFormat($input, $isProductSpecs = false)
+    {
+        $output = [];
+        if ($isProductSpecs) {
+            foreach ($input as $key => $val) {
+                $output[] = ['label' => $val, 'name' => $val, 'value' => ''];
+            }
+        } else {
+            foreach ($input as $key => $val) {
+                $output[] = ['label' => $key, 'name' => $key, 'value' => $val];
+            }
+        }
+        return $output;
+    }
     #--------------------Method for Edit Product Raw as needed----------------------------#
 
-    public function productRawEditAction($id)
-    {
+    public function productRawEditAction($id) {
         $entity = $this->get('admin.helper.product')->find($id);
         $form = $this->createForm(new ProductRawType(), $entity);
         return $this->render('LoveThatFitAdminBundle:Product:_product_raw_edit.html.twig', array(
@@ -171,9 +235,7 @@ class ProductController extends Controller
             'entity' => $entity,
         ));
     }
-
-    public function productRawUpdateAction(Request $request, $id)
-    {
+    public function productRawUpdateAction(Request $request, $id) {
         $entity = $this->get('admin.helper.product')->find($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
@@ -186,15 +248,14 @@ class ProductController extends Controller
 
 #------------------Product Update Method---------------------------------------#
 
-    public function productDetailUpdateAction(Request $request, $id)
-    {
+    public function productDetailUpdateAction(Request $request, $id) {
         $entity = $this->get('admin.helper.product')->find($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'), $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled), $entity);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $form->bind($request);
         $data = $request->request->all();
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
@@ -204,8 +265,7 @@ class ProductController extends Controller
 
 #---------------Clothing type base on Gender-----------------------------------#
 
-    public function productGenderBaseClothingTypeAction(Request $request)
-    {
+    public function productGenderBaseClothingTypeAction(Request $request) {
         $target_array = $request->request->all();
         $gender = $target_array['gender'];
         return new response(json_encode($this->get('admin.helper.clothingtype')->findByGender($gender)));
@@ -213,26 +273,21 @@ class ProductController extends Controller
 
 #------------Clothing type attribute base on clothing type --------------------#
 
-    public function productClothingTypeAttributeAction(Request $request)
-    {
+    public function productClothingTypeAttributeAction(Request $request) {
         $target_array = $request->request->all();
         $clothingTypeAttributes = $this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
         return new response(json_encode($clothingTypeAttributes));
     }
-
 #------------Clothing type  base on clothing type --------------------#
 
-    public function productClothingTypeAction(Request $request)
-    {
+    public function productClothingTypeAction(Request $request) {
         $target_array = $request->request->all();
         $clothingType = $this->get('admin.helper.product')->productClothingType($target_array);
         return new response(json_encode($clothingType));
     }
-
 #-------------------------------Product Delete --------------------------------#
 
-    public function productDetailDeleteAction($id)
-    {
+    public function productDetailDeleteAction($id) {
         $productArray = $this->get('admin.helper.product')->productDelete($id);
         $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
         return $this->redirect($this->generateUrl('admin_products'));
@@ -240,10 +295,9 @@ class ProductController extends Controller
 
 #----------------------Proudct Detail------------------------------------------#
 
-    public function productDetailShowAction($id)
-    {
+    public function productDetailShowAction($id) {
         $product = $this->getProduct($id);
-        $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $product_limit = $this->get('admin.helper.product')->getRecordsCountWithCurrentProductLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($product_limit[0]['id']));
         if ($page_number == 0) {
@@ -257,21 +311,20 @@ class ProductController extends Controller
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper, $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
             'form' => $productForm->createView(),
             'product' => $product,
             'page_number' => $page_number,
-            'productItems' => $productItems,
+            'productItems'=>$productItems,
         ));
     }
 
 #------------------Product Status Update Method---------------------------------------#
-    public function productStatusUpdateAction(Request $request)
-    {
+    public function productStatusUpdateAction(Request $request) {
         $target_array = $request->request->all();
-        $productStatus = $this->get('admin.helper.product')->setProductIntakeStatus($target_array['status'], $target_array['id']);
+        $productStatus = $this->get('admin.helper.product')->setProductIntakeStatus($target_array['status'],$target_array['id']);
         return new response(json_encode($productStatus));
     }
 
@@ -301,14 +354,13 @@ class ProductController extends Controller
 
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
 
-    public function productDetailColorAddNewAction($id)
-    {
+    public function productDetailColorAddNewAction($id) {
 
         $product = $this->get('admin.helper.product')->find($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        $sizes = $this->get('admin.helper.product')->getSizeArray($product);
+        $sizes=$this->get('admin.helper.product')->getSizeArray($product);
         $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $colorform = $this->createForm(new ProductColorType($sizes));
         $imageUploadForm = $this->createForm(new ProductColorImageType());
@@ -318,7 +370,7 @@ class ProductController extends Controller
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper, $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
             'form' => $productForm->createView(),
@@ -326,15 +378,14 @@ class ProductController extends Controller
             'colorform' => $colorform->createView(),
             'imageUploadForm' => $imageUploadForm->createView(),
             'patternUploadForm' => $patternUploadForm->createView(),
-            'productItems' => $productItems,
-            'allSizes' => $sizes,
+            'productItems'=>$productItems,
+            'allSizes'=>$sizes,
         ));
     }
 
 #--------------------PRODUCT COLOR CREATE--------------------------------------#
 
-    public function productDetailColorCreateAction(Request $request, $id)
-    {
+    public function productDetailColorCreateAction(Request $request, $id) {
 
         $product = $this->get('admin.helper.product')->find($id);
         $productColor = new ProductColor($product);
@@ -346,7 +397,7 @@ class ProductController extends Controller
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->get('admin.helper.product')->updateDisplayColor($product, $productColor); //--add  product  default color 
-            } else {
+            }else{
                 $this->get('admin.helper.product')->updatedAt($product);
             }
             $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData()); //--creating sizes & item records
@@ -359,21 +410,20 @@ class ProductController extends Controller
 
 #----------------------------Product Color Edit--------------------------------#
 
-    public function productDetailColorEditAction($id, $color_id, $temp_img_path = null)
-    {
+    public function productDetailColorEditAction($id, $color_id, $temp_img_path = null) {
         $product = $this->get('admin.helper.product')->find($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
 
-        $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $productColor = $this->getProductColor($color_id);
         $sizeTitle = $this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
         //return new response(json_encode($sizeTitle));
-        $sizes = $this->get('admin.helper.product')->getBrandSpecifications($product);
+        $sizes=$this->get('admin.helper.product')->getBrandSpecifications($product);
         //$sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
         // return new response(json_encode($sizes));
-        $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
+        $colorform = $this->createForm(new ProductColorType($sizes),$productColor);
 
         if (isset($sizeTitle['Petite'])) {
             $colorform->get('petite')->setData($sizeTitle['Petite']);
@@ -404,7 +454,7 @@ class ProductController extends Controller
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper, $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
@@ -415,14 +465,13 @@ class ProductController extends Controller
             'color_id' => $color_id,
             'imageUploadForm' => $imageUploadForm->createView(),
             'patternUploadForm' => $patternUploadForm->createView(),
-            'productItems' => $productItems,
+            'productItems'=>$productItems,
         ));
     }
 
 #-------------------------Product color Update---------------------------------#
 
-    public function productDetailColorUpdateAction(Request $request, $id, $color_id)
-    {
+    public function productDetailColorUpdateAction(Request $request, $id, $color_id) {
         $product = $this->getProduct($id);
         if (!$product)
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
@@ -445,7 +494,7 @@ class ProductController extends Controller
         } else {
 
             $this->get('session')->setFlash('warning', 'Unable to update Product Color Detail!');
-            $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
+            $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
             $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
             $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -454,7 +503,7 @@ class ProductController extends Controller
                 'color_id' => $color_id,
                 'imageUploadForm' => $imageUploadForm->createView(),
                 'patternUploadForm' => $patternUploadForm->createView(),
-                'productItems' => $productItems,
+                'productItems'=>$productItems,
             ));
 
         }
@@ -462,8 +511,7 @@ class ProductController extends Controller
 
 #---------------------Product Color Temporary ---------------------------------#
 
-    public function productColorTemporaryImageUploadAction(Request $request, $id)
-    {
+    public function productColorTemporaryImageUploadAction(Request $request, $id) {
         $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
@@ -484,8 +532,7 @@ class ProductController extends Controller
 
 #--------------------------Product Color Delete--------------------------------#
 
-    public function productDetailColorDeleteAction($id, $color_id)
-    {
+    public function productDetailColorDeleteAction($id, $color_id) {
         try {
             $em = $this->getDoctrine()->getManager();
             $productColor = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
@@ -537,6 +584,7 @@ class ProductController extends Controller
         $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
 
 
+
         $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);
         $form = $this->createForm(new ProductSizeMeasurementType('edit'));
         return $this->render('LoveThatFitAdminBundle:Product:product_size_detail_show.html.twig', array(
@@ -553,8 +601,7 @@ class ProductController extends Controller
 
 #-------------------Product Detail Size Update---------------------------------#
 
-    public function productDetailSizeUpdateAction(Request $request, $id, $size_id)
-    {
+    public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Please Insert valid value');
@@ -597,8 +644,7 @@ class ProductController extends Controller
 
 #-----------------Product Detail Delete ---------------------------------------#
 
-    public function productDetailSizeDeleteAction(Request $request, $id, $size_id)
-    {
+    public function productDetailSizeDeleteAction(Request $request, $id, $size_id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductSize');
         $product = $repository->find($size_id);
@@ -609,26 +655,26 @@ class ProductController extends Controller
     }
 
 //-----------------------------Product Item two piece add new-----------------------------
-    public function productDetailItemPieceAddNewAction($id, $item_id)
+    public function productDetailItemPieceAddNewAction($id,$item_id)
     {
-        $item = $this->getProductItem($item_id);
-        $piece = new ProductItemPiece();
+        $item=$this->getProductItem($item_id);
+        $piece=new ProductItemPiece();
         $piece->setProductItem($item);
-        $pieceitemform = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()), $piece);
+        $pieceitemform = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()),$piece);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_new.html.twig', array(
             'form' => $pieceitemform->createView(),
             'item_id' => $item_id,
-            'entity' => $this->getProduct($id),
-            'product_item_piece' => $piece,
+            'entity'=>$this->getProduct($id),
+            'product_item_piece'=>$piece,
         ));
 
     }
 
-    public function productDetailItemPieceCreateAction(Request $request, $id, $item_id)
+    public function productDetailItemPieceCreateAction(Request $request,$id,$item_id)
     {
-        $item = $this->getProductItem($item_id);
-        $piece = new ProductItemPiece();
-        $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()), $piece);
+        $item=$this->getProductItem($item_id);
+        $piece=new ProductItemPiece();
+        $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()),$piece);
         $form->bind($request);
         $em = $this->getDoctrine()->getManager();
         $piece->setProductitem($item);
@@ -639,7 +685,7 @@ class ProductController extends Controller
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
 
-    public function productDetailItemPieceDeleteAction($id, $piece_id)
+    public function productDetailItemPieceDeleteAction($id,$piece_id)
     {
         try {
             $message_array = $this->get('admin.helper.product.item.piece')->delete($piece_id);
@@ -654,24 +700,24 @@ class ProductController extends Controller
 
     }
 
-    public function productDetailItemPieceEditAction($id, $item_id, $piece_id)
+    public function productDetailItemPieceEditAction($id,$item_id,$piece_id)
     {
-        $item = $this->getProductItem($item_id);
-        $entity = $this->get('admin.helper.product.item.piece')->find($piece_id);
+        $item=$this->getProductItem($item_id);
+        $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
         $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()), $entity);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_edit.html.twig', array(
             'form' => $form->createView(),
             'item_id' => $item_id,
-            'entity' => $this->getProduct($id),
-            'piece_id' => $piece_id,
-            'piece' => $entity,
+            'entity'=>$this->getProduct($id),
+            'piece_id'=>$piece_id,
+            'piece'=>$entity,
         ));
     }
 
-    public function productDetailItemPieceUpdateAction(Request $request, $id, $item_id, $piece_id)
+    public function productDetailItemPieceUpdateAction(Request $request,$id,$item_id,$piece_id)
     {
-        $item = $this->getProductItem($item_id);
-        $entity = $this->get('admin.helper.product.item.piece')->find($piece_id);
+        $item=$this->getProductItem($item_id);
+        $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
         $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()), $entity);
         $form->bind($request);
         $em = $this->getDoctrine()->getManager();
@@ -685,11 +731,10 @@ class ProductController extends Controller
 
 #----------------------Product Item Edit ---------------------------------------#
 
-    public function productDetailItemEditAction($id, $item_id)
-    {
+    public function productDetailItemEditAction($id, $item_id) {
 
         $entity = $this->getProduct($id);
-        $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -700,7 +745,7 @@ class ProductController extends Controller
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper, $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
             'form' => $productForm->createView(),
@@ -708,16 +753,15 @@ class ProductController extends Controller
             'itemform' => $itemform->createView(),
             'item_id' => $item_id,
             'itemrawimageform' => $itemrawimageform->createView(),
-            'productItems' => $productItems,
+            'productItems'=>$productItems,
         ));
     }
 
 #-----------------------Product Detail Item Update-----------------------------#
 
-    public function productDetailItemUpdateAction(Request $request, $id, $item_id)
-    {
+    public function productDetailItemUpdateAction(Request $request, $id, $item_id) {
         $entity = $this->getProduct($id);
-        $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -733,7 +777,7 @@ class ProductController extends Controller
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper, $this->get('admin.helper.size')->getAllSizeTitleType(), $status, $disabled));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
 
         if ($itemform->isValid()) {
             $this->get('admin.helper.product')->updatedAt($entity);
@@ -745,7 +789,7 @@ class ProductController extends Controller
                 'form' => $productForm->createView(),
                 'product' => $entity,
                 'itemform' => $itemform->createView(),
-                'productItems' => $productItems,
+                'productItems'=>$productItems,
             ));
         } else {
 
@@ -756,23 +800,20 @@ class ProductController extends Controller
                 'product' => $entity,
                 'itemform' => $itemform->createView(),
                 'item_id' => $item_id,
-                'productItems' => $productItems,
+                'productItems'=>$productItems,
             ));
         }
     }
-
 #---------------------------------------------------------------------------
-    public function itemPriceUpdateAction()
-    {
-        $request_array = $this->getRequest()->request->all();
-        $this->get('admin.helper.product')->updatePrice($request_array['product_id'], $request_array['price']);
-        return new response($request_array['product_id'] . '  <> ' . $request_array['price']);
+    public function itemPriceUpdateAction() {
+        $request_array =$this->getRequest()->request->all();
+        $this->get('admin.helper.product')->updatePrice($request_array['product_id'],$request_array['price']);
+        return new response($request_array['product_id'].'  <> '.$request_array['price']);
     }
 
 #--------------------Product Detail Item Delete---------------------------------#
 
-    public function productDetailItemDeleteAction(Request $request, $id, $item_id)
-    {
+    public function productDetailItemDeleteAction(Request $request, $id, $item_id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
         $product = $repository->find($item_id);
@@ -784,8 +825,7 @@ class ProductController extends Controller
 
 #----------------------Method for raw image edit -----------------------------#
 
-    public function productDetailItemRawImageEditAction(Request $request, $id, $item_id)
-    {
+    public function productDetailItemRawImageEditAction(Request $request, $id, $item_id) {
         $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
@@ -808,15 +848,13 @@ class ProductController extends Controller
 
 #-------------Product Raw Item Downloading ------------------------------------#
 
-    public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id)
-    {
+    public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id) {
         return new response($this->get('admin.helper.productitem')->rawImageDownload($item_id));
     }
 
 #--------------Raw image Deleteing --------------------------------------------#
 
-    public function productDetailItemRawImageDeleteAction(Request $request, $id, $item_id)
-    {
+    public function productDetailItemRawImageDeleteAction(Request $request, $id, $item_id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
         $product = $repository->find($item_id);
@@ -832,40 +870,35 @@ class ProductController extends Controller
     }
 
     //------------------------- Private methods ------------------------- 
-    public function getProduct($id)
-    {
+    public function getProduct($id) {
         return $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->find($id);
     }
 
 //------------------------------------------------------------------------
-    public function getProductSize($id)
-    {
+    public function getProductSize($id) {
         return $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductSize')
             ->find($id);
     }
 
 //------------------------------------------------------------------------
-    public function getProductItem($id)
-    {
+    public function getProductItem($id) {
         return $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductItem')
             ->find($id);
     }
 
     //------------------------------------------------------------------------
-    public function getProductColor($id)
-    {
+    public function getProductColor($id) {
         return $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductColor')
             ->find($id);
     }
 
     //------------------------------------------------------------------
-    public function createDisplayDefaultColor($product, $productColor)
-    {
+    public function createDisplayDefaultColor($product, $productColor) {
 
         $em = $this->getDoctrine()->getManager();
         $product->setDisplayProductColor($productColor);
@@ -875,8 +908,7 @@ class ProductController extends Controller
 
 #--------------------------------Products Stats--------------------------------#
 
-    public function productStatsAction()
-    {
+    public function productStatsAction() {
         $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
         $rec_count = count($productObj->countAllRecord());
 
@@ -894,13 +926,11 @@ class ProductController extends Controller
 
 #---------------START OF CREATE SIZE ITEM -------------------------------------#
 
-    private function createSizeItemForBodyTypes($product, $p_color, $all_sizes)
-    {
-        return $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
+    private function createSizeItemForBodyTypes($product, $p_color, $all_sizes) {
+        return  $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
     }
 
-    private function getProductByBrand()
-    {
+    private function getProductByBrand() {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
             ->findPrductByBrand();
@@ -910,8 +940,7 @@ class ProductController extends Controller
     //---------------------------------------------------------------------
 
 
-    private function getDefaultColorById($product_color)
-    {
+    private function getDefaultColorById($product_color) {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
             ->findDefaultProductByColorId($product_color);
@@ -919,8 +948,7 @@ class ProductController extends Controller
     }
 
 //------------------------------------------------------------------------------------
-    private function productSaveYaml()
-    {
+    private function productSaveYaml() {
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
             ->findAll();
 
@@ -956,22 +984,19 @@ class ProductController extends Controller
 
     #----------------------------------------------------------------------------# 
 
-    public function findBrand($id)
-    {
+    public function findBrand($id) {
         return $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
     }
 
     #---------------------------------------------------------------------------# 
 
-    public function findClothingType($id)
-    {
+    public function findClothingType($id) {
         return $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
     }
 
 #---------------------Product Download-----------------------------------------#
 
-    public function productDetailDownloadAction($id)
-    {
+    public function productDetailDownloadAction($id) {
         $product = $this->get('admin.helper.product')->zipDownload($id);
         if ($product['status'] == '1') {
 
@@ -982,8 +1007,7 @@ class ProductController extends Controller
 
 #--------------------Multiple Iamge Download as Zip----------------------------#
 
-    public function productDetailZipDownloadAction(Request $request)
-    {
+    public function productDetailZipDownloadAction(Request $request) {
         $data = $request->request->all();
         return new Response($this->get('admin.helper.product')->zipMultipleDownload($data));
     }
@@ -991,8 +1015,7 @@ class ProductController extends Controller
     #-----------------------------------------------------------------------------#
 #-------------------Searching Resulting----------------------------------------#
 
-    public function productSeachResultAction(Request $request)
-    {
+    public function productSeachResultAction(Request $request) {
         $data = $request->request->all();
         $productResult = $this->get('admin.helper.product')->searchProduct($data);
         return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig', $productResult);
@@ -1000,8 +1023,7 @@ class ProductController extends Controller
 
 #------------------------------------------------------------------------------#
 
-    public function productSeachCategoryAction(Request $request)
-    {
+    public function productSeachCategoryAction(Request $request) {
 
         $target_array = $request->request->all();
 
@@ -1015,8 +1037,7 @@ class ProductController extends Controller
 
     #-----------------------------------------------------------------------
 
-    public function createProductSizeMeasurementAction($id, $size_id)
-    {
+    public function createProductSizeMeasurementAction($id, $size_id) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -1037,8 +1058,7 @@ class ProductController extends Controller
 
 #-----------------------------------------------------------------------
 
-    public function sizeMeasurementNewAction($id, $size_id, $title)
-    {
+    public function sizeMeasurementNewAction($id, $size_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -1064,8 +1084,7 @@ class ProductController extends Controller
 
 #-----------------------------------------------------------------------
 
-    public function productSizeMeasurementCreateAction($id, $size_id, $title)
-    {
+    public function productSizeMeasurementCreateAction($id, $size_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -1089,11 +1108,9 @@ class ProductController extends Controller
             )
         );
     }
-
 #-----------------------------------------------------------------------
 
-    public function productSizeMeasurementupdateAction(Request $request, $id, $size_id, $title)
-    {
+    public function productSizeMeasurementupdateAction(Request $request, $id, $size_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -1134,11 +1151,9 @@ class ProductController extends Controller
 
          */
     }
-
 #-----------------------------------------------------------------------
 
-    public function productSizeMeasurementEditAction($id, $size_id, $measurement_id, $title)
-    {
+    public function productSizeMeasurementEditAction($id, $size_id, $measurement_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -1161,11 +1176,10 @@ class ProductController extends Controller
             'productname' => $product->getName(),
         ));
     }
-
 #-----------------------------------------------------------------------
 
-    public function productSizeMeasurementEditUpdateAction(Request $request, $id, $size_id, $measurement_id, $title)
-    {
+    public function productSizeMeasurementEditUpdateAction(Request $request, $id, $size_id, $measurement_id, $title) {
+
 
 
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
@@ -1194,15 +1208,12 @@ class ProductController extends Controller
     }
 
 #-----------------------------------------------------------------------
-    public function fooAction($id = 0)
-    {
+    public function fooAction($id = 0) {
         #return new response(json_encode($this->get('admin.helper.product')->productDetailSizeArray($id)));      
         return new response(json_encode($this->get('admin.helper.camera_mask_specs')->getMaskSpecs()));
     }
-
 #-----------------------------------------------------------------------
-    public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title)
-    {
+    public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
@@ -1225,16 +1236,14 @@ class ProductController extends Controller
 
 #---------------Get Brand Based on the Retailer---------------------#
 
-    public function findBrandBaseOnRetailerAction(Request $request)
-    {
+    public function findBrandBaseOnRetailerAction(Request $request) {
         $target_array = $request->request->all();
         return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
 #-----------------------------------------------------------------------------
 
     #---------------Multiple Image Uploading --------------------------#
-    public function multplieImageUploadAction(Request $request)
-    {
+    public function multplieImageUploadAction(Request $request) {
         $error_str = '';
         foreach ($_FILES["file"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
@@ -1242,7 +1251,7 @@ class ProductController extends Controller
                 $parsed_details = $this->get('admin.helper.product')->breakFileName($file_name, $_POST['product_id']);
                 if ($parsed_details['success'] == 'false') {
                     #return new Response($parsed_details['message']);
-                    $error_str = $error_str . $file_name . ' : ' . $parsed_details['message'] . ', ';
+                    $error_str = $error_str . $file_name .' : ' . $parsed_details['message'] . ', ';
                 } else {
                     $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
                     $imageFile = $request->files->get('file');
@@ -1265,62 +1274,56 @@ class ProductController extends Controller
                 }
             }
         }
-        if (strlen($error_str) == 0) {
+        if (strlen($error_str)==0){
             return new Response('Successfully Processed');
-        } else {
-            return new Response('Successfully Processed, except for:' . $error_str);
+        }else{
+            return new Response('Successfully Processed, except for:'.$error_str);
         }
     }
-
 #-------------------------------------------------------------------------------
 
-    public function _multplieImageUploadAction(Request $request)
-    {
+    public function _multplieImageUploadAction(Request $request){
         // return new response(json_encode($this->get('admin.helper.product')->findItemMultipleImpagesUploading(true,true)));
         $em = $this->getDoctrine()->getManager();
-        foreach ($_FILES["file"]["error"] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $random_num = rand(00, 99);  // random number
+        foreach ($_FILES["file"]["error"] as $key => $error){
+            if ($error == UPLOAD_ERR_OK){
+                $random_num=rand(00,99);  // random number
                 $name = $_FILES["file"]["name"][$key]; // avoid same file name collision
 
-                $itemId = $this->get('admin.helper.product')->findItemMultipleImpagesUploading($name, $_POST['product_id']);
+                $itemId=$this->get('admin.helper.product')->findItemMultipleImpagesUploading($name,$_POST['product_id']);
                 //return new response(json_encode($itemId));
-                if (!empty($itemId)) {
+                if(!empty($itemId)){
                     $productItem = $this->get('admin.helper.productitem')->find($itemId);
 
-                    $imageFile = $request->files->get('file');
-                    $productItem->file = $imageFile[$key];//$_FILES["file"]["tmp_name"][0];
+                    $imageFile=$request->files->get('file');
+                    $productItem->file=$imageFile[$key];//$_FILES["file"]["tmp_name"][0];
                     $productItem->upload();
                 }
             }
 
         }
-        if (!empty($productItem)) {
+        if(!empty($productItem)){
             $em->persist($productItem);
             $em->flush();
         }
         return new response(json_encode("Done"));
     }
-
 #----------------------------------------------------------------------
 
-    public function imageUploadIndexAction($product_id = 0)
-    {
+    public function imageUploadIndexAction($product_id=0) {
         $product = $this->get('admin.helper.product')->find($product_id);
         return $this->render('LoveThatFitAdminBundle:Product:_image_uploader.html.twig', array(
             'product' => $product,
         ));
     }
-
     #----------------------------------------------------------------------
-    public function imageUploadAction()
-    {
+    public function imageUploadAction() {
         $allowed = array('png', 'jpg');
-        $product_id = $_POST['product_id'];
-        $request = $this->getRequest();
-        if (isset($_FILES['upl']) && $_FILES['upl']['error'] == 0) {
+        $product_id=$_POST['product_id'];
+        $request=$this->getRequest();
+        if(isset($_FILES['upl']) && $_FILES['upl']['error'] == 0){
             $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
-            $file_name = $_FILES['upl']['name'];
+            $file_name=$_FILES['upl']['name'];
 
             #--------------------------------------------------------------
 
@@ -1328,10 +1331,10 @@ class ProductController extends Controller
 
             if ($parsed_details['success'] == 'false') {
                 #return new Response($parsed_details['message']);
-                $error_str = $error_str . $file_name . ' : ' . $parsed_details['message'] . ', ';
+                $error_str = $error_str . $file_name .' : ' . $parsed_details['message'] . ', ';
             } else {
                 $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
-                $imageFile = $request->files->get('upl');
+                $imageFile =  $request->files->get('upl');
                 #return new response(json_encode($parsed_details));
                 if (array_key_exists('view_title', $parsed_details)) {
                     #find matching color view object
@@ -1389,7 +1392,7 @@ class ProductController extends Controller
             'gender' => $entity->getGender(),
             'PName' => $entity->getName(),
             'created_at' => $entity->getCreatedAt()->format('Y-m-d H:i:s'),
-            'status' => ($entity->getStatus() == 1) ? "Enable" : "Disable"
+            'status'    => ($entity->getStatus() == 1) ? "Enable" : "Disable"
         ];
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
@@ -1433,7 +1436,7 @@ class ProductController extends Controller
 
             if ($parsed_details['success'] == 'false') {
                 //return new Response($file_name.$parsed_details['message']);
-                $this->error_string .= $this->get('session')->getFlash('error-on-addcolor') . $file_name . ' : ' . $parsed_details['message'] . ' , ';
+                $this->error_string .= $this->get('session')->getFlash('error-on-addcolor') . $file_name . ' : ' . $parsed_details['message']. ' , ';
             } else {
 
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
@@ -1452,17 +1455,17 @@ class ProductController extends Controller
                 $added_color_id_result = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
 
                 //Make Default Color
-                if ($parsed_details['set_default'] == "yes") {
+                if($parsed_details['set_default'] == "yes"){
                     $this->get('admin.helper.product')->updateDisplayColor($product, $added_color_id_result);
                 }
 
                 /*Add color pattern and color image*/
-                if (array_key_exists('image_type', $parsed_details)) {
+                if(array_key_exists('image_type',$parsed_details)){
                     $imageFile = $request->files->get('upl');
                     $updated_image_message = '';
 
                     /*Color Pattern Type */
-                    if ($parsed_details['image_type'] == 'colorpatterntype') {
+                    if($parsed_details['image_type'] == 'colorpatterntype'){
                         $added_color_id_result->file = $imageFile;
                         $pattern_type = $added_color_id_result->uploadTemporaryImage();
                         $added_color_id_result->tempPattern = $pattern_type['image_name'];
@@ -1471,7 +1474,7 @@ class ProductController extends Controller
                         $updated_image_message = 'Pattern Image Updated';
                     }
                     /*Color Image Type */
-                    if ($parsed_details['image_type'] == 'colorimagetype') {
+                    if($parsed_details['image_type'] == 'colorimagetype'){
                         $added_color_id_result->file = $imageFile;
                         $image_type = $added_color_id_result->uploadTemporaryImage();
                         $added_color_id_result->tempImage = $image_type['image_name'];
@@ -1480,14 +1483,14 @@ class ProductController extends Controller
                         $updated_image_message = 'Image Updated';
                     }
                     $this->get('session')->setFlash('success', $updated_image_message);
-                    return new response('{"status":' . $updated_image_message . '}');
+                    return new response('{"status":'.$updated_image_message.'}');
 
                 }
                 /*Add color pattern and color image*/
                 $find_size_by_title_productid = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
 
                 /* If size not available then show error */
-                if (count($find_size_by_title_productid) == 0) {
+                if(count($find_size_by_title_productid) == 0){
                     $this->error_string .= $this->get('session')->getFlash('error-on-addcolor') . $file_name . ' : Size not available ,';
                     $this->get('session')->setFlash('error-on-addcolor', $this->error_string);
                     return new response('{"status":"error"}');
@@ -1540,8 +1543,8 @@ class ProductController extends Controller
         if (!empty($products_and_items)) {
             $count = 0;
             foreach ($products_and_items as $row) {
-                $products_and_items[$count]['status'] = ($row["status"] == 1 ? "Disabled" : "Enabled");
-                $products_and_items[$count]['gender'] = ($row["gender"] == "f" ? "Female" : "Male");
+                $products_and_items[$count]['status']     = ($row["status"] == 1 ? "Disabled" : "Enabled");
+                $products_and_items[$count]['gender']     = ($row["gender"] == "f" ? "Female" : "Male");
                 $products_and_items[$count]['created_at'] = (date_format(date_create($row["created_at"]), "d/m/Y H:i"));
                 $count++;
             }
@@ -1588,17 +1591,17 @@ class ProductController extends Controller
         $this->get('session')->setFlash('success', 'Product description updated.');
         return $this->redirect($this->generateUrl('admin_product_manage_description', array('id' => $id)));
     }
-
-
-    public function ajaxloadcategoriesAction($id)
-    {
-        $getselectedcategories = $this->get('admin.helper.product')->getSelectedProductCategories($id);
-        $success = 0;
-        if (count($getselectedcategories) > 0) {
-            $success = "1";
-        }
-
-        return new Response($success);
+	
+	
+	public function ajaxloadcategoriesAction($id) {
+       $getselectedcategories = $this->get('admin.helper.product')->getSelectedProductCategories($id);
+	   $success = 0;
+	   if(count($getselectedcategories) > 0)
+	   {
+		  $success = "1";
+	   }
+	   
+		 return new Response($success );
     }
 
     public function exportProductCategoriesAction()
