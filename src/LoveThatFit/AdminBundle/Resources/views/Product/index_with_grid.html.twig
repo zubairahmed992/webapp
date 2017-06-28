@@ -172,10 +172,18 @@
             loadAgain({start: 0, length: -1, draw: 1, order: [{column: 0, dir: "desc"}]})
         }
 
+        function resetValues()
+        {
+            $("input[type='checkbox']").prop('checked', false);
+            $('#genders[value="f"]').prop('checked', true);
+            $("Select[name='brand']").val(0).change();
+            $("input[name='created_at']").val("");
+        }
+
         $(document).ready(function () {
-            var genders = $('#genders').val();
-            if (genders == 'm') {
-                $('#genders').prop('checked', true);
+            var genders = $('#genders[value="f"]').val();
+            if (genders == 'f') {
+                $('#genders[value="f"]').prop('checked', true);
             }
 
             //SearchForm(1);  // For first time page load default results
@@ -253,6 +261,7 @@
                     <div class="adv_srch_hd">Brands</div>
                     <div class="frm_ele">
                         <select name="brand" id="brand">
+                            <option value="0">All Brands</option>
                             {% for b in brandList %}
                                 <option value="{{ b.id }}">{{ b.name }}</option>
                             {% endfor %}
@@ -381,6 +390,10 @@
                 <button type="button" class="btn" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
                     Search Product
                 </button>
+                <button type="button" class="btn" onclick="resetValues()">
+                    Reset
+                </button>
+
             </div> <!--End Main wrap -->
         </div>
 
@@ -569,19 +582,19 @@
 
                     if(data.description== null || data.description==''){data.description='';}
                     if(data.item_name== null || data.item_name==''){data.item_name='';}
-                    if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
+                   // if(data.country_origin== null || data.country_origin==''){data.country_origin='';}
                     if(data.item_details== null || data.item_details==''){data.item_details='';}
                     if(data.care_label== null || data.care_label==''){data.care_label='';}
 
-                    if(data.description != '' && data.item_name != '' && data.country_origin != '' && data.item_details != '' && data.care_label != ''){
+                    if(data.description != '' && data.item_name != '' && data.item_details != '' && data.care_label != ''){
 
                         $(row).find("button.description i").addClass('icon-desc-have-desc-green');
                     }
-                    else if(data.description != '' || data.item_name != '' || data.country_origin != '' || data.item_details != '' || data.care_label != ''){
+                    else if(data.description != '' || data.item_name != '' || data.item_details != '' || data.care_label != ''){
 
                         $(row).find("button.description i").addClass('icon-desc-have-desc-yellow');
 
-                    }else if(data.description == '' && data.item_name == '' && data.country_origin == '' && data.item_details == '' && data.care_label == ''){
+                    }else if(data.description == '' && data.item_name == '' && data.item_details == '' && data.care_label == ''){
 
                         $(row).find("button.description i").addClass('icon-desc-no-desc');
 
