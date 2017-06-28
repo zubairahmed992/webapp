@@ -186,5 +186,36 @@ class FitModelController extends Controller {
         return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
     
     }
+    //------------ compare Fit Model Veiw load
+    public function compareFitModelViewAction(Request $request) {
+        
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:compare.html.twig', array(
+                'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                'fit_model_measurements_fp' => 0,
+                'brand_id'  => 0,
+                'fit_points_array' => 0,
+        ));       
+    }
+    
+    //------------ compare Fit Model With Brand load
+    public function compareFitModelWithBrandAction(Request $request) {
+        $brand_id = $request->get('brand');  
+        if(!empty($brand_id) ){ 
+        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();        
+        unset($fit_points['hip']);
+        unset($fit_points['hem_length']);
+        unset($fit_points['thigh']);   
+        $fit_model_measurements = $this->get('productIntake.fit_model_measurement')->findAll();
+        $brand = $this->get('admin.helper.brand')->find($brand_id);
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:compare.html.twig', array(
+                    'fit_model_measurements' => $fit_model_measurements,
+                    'fit_model_measurements_fp' => $brand->getFitModelMeasurements(),
+                    'brand_id'  => $brand_id,
+                    'fit_points_array' => $fit_points,
+                ));
+        }       
+        $this->get('session')->setFlash('info','Please Select Brand.');  
+        return $this->redirect($this->generateUrl('product_intake_fit_model_compare'));
+    }
 
 }
