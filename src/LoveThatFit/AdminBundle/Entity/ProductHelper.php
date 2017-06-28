@@ -311,11 +311,20 @@ class ProductHelper
         $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0;
         $order   = $data['order'];
 
-        $search  = array(
+        /*$search  = array(
             'category' => (isset($data['category']) && !empty($data['category']) ? "'" . implode("','", $data['category']) . "'" : array()),
             'target' => (isset($data['target']) && !empty($data['target']) ? "'" . implode("','", $data['target']) . "'" : array()),
             'genders' => (isset($data['genders']) && !empty($data['genders']) ? "'" . implode("','", $data['genders']) . "'" : array()),
             'p_statuses' => (isset($data['p_statuses']) && !empty($data['p_statuses']) ? "'" . implode("','", $data['p_statuses']) . "'" : array()),
+            'brand' => (isset($data['brand']) ? $data['brand']: 0),
+            'created_date' => (isset($data['created_date']) ? $data['created_date']: "")
+        );*/
+
+        $search  = array(
+            'category' => (isset($data['category']) && !empty($data['category']) ? $data['category'] : array()),
+            'target' => (isset($data['target']) && !empty($data['target']) ? $data['target'] : array()),
+            'genders' => (isset($data['genders']) && !empty($data['genders']) ? $data['genders'] : array()),
+            'p_statuses' => (isset($data['p_statuses']) && !empty($data['p_statuses']) ? $data['p_statuses'] : array()),
             'brand' => (isset($data['brand']) ? $data['brand']: 0),
             'created_date' => (isset($data['created_date']) ? $data['created_date']: "")
         );

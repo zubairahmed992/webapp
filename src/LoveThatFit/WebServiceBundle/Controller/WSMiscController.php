@@ -81,7 +81,8 @@ class WSMiscController extends Controller {
                     'V3QA Server'=>array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
                     'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
-                    'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com')
+                    'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
+                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
                 ),
                 'count'=>3,
                 'message' => 'configuration for build deployment',
@@ -226,6 +227,49 @@ class WSMiscController extends Controller {
             'count'=> count($shopLook),
             'message' => 'shop the look list',
             'success' => 'true',
+        );
+        return new Response(json_encode($conf));
+    }
+
+    public function shopTheLookV3Action(Request $request)
+    {
+        $decoded = $request->request->all();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $shopLook = $this->get('admin.helper.shoplook')->findAll();
+        $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/shop_look/';
+
+        foreach($shopLook as $key => $value){
+            $shopLook[$key]['id'] = (int)$shopLook[$key]['id'];
+            $shopLook[$key]['sorting'] = (int)$shopLook[$key]['sorting'];
+            $shopLook[$key]['shop_model_image'] = $path.$shopLook[$key]['shop_model_image'];
+            $shoplook_id = $shopLook[$key]['id'];
+            $product_information = $this->get('admin.helper.shoplookproduct')->getShopLookProductsById($shoplook_id);
+
+            foreach($product_information as $product_key => $product_value){
+                $product_information[$product_key]['id'] = (int)$product_information[$product_key]['id'];
+                $product_information[$product_key]['shop_look_id'] = (int)$product_information[$product_key]['shop_look_id'];
+                $product_information[$product_key]['sorting'] = (int)$product_information[$product_key]['sorting'];
+
+                if(isset($product_information[$product_key]['product_id'])){
+                    $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+
+                    $product = $this->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
+                    $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
+                    $product_images = $this->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
+                    if (!empty($product_images)) {
+                        $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
+                    }
+                }
+            }
+            //$product_images = $this->get('webservice.helper')->productImageById($shop_look_products_information[$key]['product_id']);
+            $shopLook[$key]['products_id'] = $product_information;
+        }
+
+        $conf= array(
+            'data' => $shopLook,
+            'count'=> count($shopLook),
+            'message' => 'shop the look list',
+            'success' => true,
         );
         return new Response(json_encode($conf));
     }
