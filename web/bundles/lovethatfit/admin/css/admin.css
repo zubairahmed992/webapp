@@ -336,8 +336,36 @@ select#FNFUser_users.custom_select{height: 100px;}
 }
 
 /* Custom CSS - Brand Popup - Maani*/
+#model_product_status {
+    left: 55%;
+}
+
+.modal-header > h4 {
+    font-size: 17px;
+}
+.modal-header > h3 {
+    font-size: 17px;
+}
+#disableModal{
+    position: relative !important;
+
+}
+.btn_wrapper {
+    margin-top: 0px;
+}
+#enablebrand {
+    float: left;
+    margin-right: 5px;
+    padding-bottom: 5px;
+}
+#disablebrand {
+    float: left;
+    margin-right: 5px;
+    padding-bottom: 5px;
+}
+
 .modal {
-    position: relative;
+    position: fixed;
 }
 i.icon-trans {
     background-position: -164px -167px;
