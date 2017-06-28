@@ -943,7 +943,7 @@ class ProductSpecificationHelper {
             $c->setBrandName($data1['brand']);
             $c->setStyleName($data1['style_name']);
             $c->setClothingType($data1['clothing_type']);
-            $c->setStyleIdNumber($data1['clothing_type']);            
+            $c->setStyleIdNumber($data1['style_id_number']);            
             $c->setCreatedAt(new \DateTime('now'));
             $this->save($c);
             return true;
