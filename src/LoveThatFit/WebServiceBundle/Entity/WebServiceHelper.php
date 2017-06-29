@@ -1165,6 +1165,7 @@ class WebServiceHelper
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 'fitting_room_status' => $fitting_room_status,
                 'qty' => $qty,
+                'color_image' => $pi->getProductColor()->getImage(),
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -1320,6 +1321,7 @@ class WebServiceHelper
                 //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
                 'qty' => $product_qty,
+                'color_image' => $pi->getProductColor()->getImage(),
             );
         }
 
