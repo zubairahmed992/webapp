@@ -1378,7 +1378,7 @@ class ProductController extends Controller {
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        if ($status == "disable") {
+        if ($status == "disabled") {
             $entity->setDisabled(0); //0 enable it
         } else {
             $entity->setDisabled(1); //1 disable it
@@ -1392,7 +1392,7 @@ class ProductController extends Controller {
             'gender' => $entity->getGender(),
             'PName' => $entity->getName(),
             'created_at' => $entity->getCreatedAt()->format('Y-m-d H:i:s'),
-            'status'    => ($entity->getStatus() == 1) ? "Enable" : "Disable"
+            'status'    => ($entity->getStatus() == 1) ? "Enabled" : "Disabled"
         ];
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);

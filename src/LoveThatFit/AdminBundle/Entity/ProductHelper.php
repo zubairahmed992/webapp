@@ -368,7 +368,7 @@ class ProductHelper
                 'price_status' => $priceData[0]['no_price'],
                 'weight_status' => $weightData[0]['no_weight'],         
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
-                'status'    => ($fData['disabled'] == 1) ? "Disable" : "Enable",
+                'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
                 'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending" 
             ];
         }
@@ -430,7 +430,7 @@ class ProductHelper
 				'price_status' => $priceData[0]['no_price'],
 				'weight_status' => $weightData[0]['no_weight'],				
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
-                'status'    => ($fData['disabled'] == 1) ? "Disable" : "Enable",
+                'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
                 'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending"
             ];
         }
