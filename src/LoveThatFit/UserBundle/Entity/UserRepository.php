@@ -553,7 +553,9 @@ class UserRepository extends EntityRepository
                     where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version_archive,
                 u.version'
             )
-            ->from('LoveThatFitUserBundle:User', 'u');
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->andWhere('u.version=:version')
+            ->setParameter('version', 1);
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
