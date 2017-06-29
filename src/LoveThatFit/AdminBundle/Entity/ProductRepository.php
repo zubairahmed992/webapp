@@ -1296,6 +1296,11 @@ class ProductRepository extends EntityRepository
                 ct.name as cloting_type,
                 p.created_at,
                 p.disabled,
+                p.description,
+                p.item_name,                
+                p.country_origin,
+                p.item_details,                             
+                p.care_label,   
                 p.status
             ')
             ->from('LoveThatFitAdminBundle:Product', 'p')

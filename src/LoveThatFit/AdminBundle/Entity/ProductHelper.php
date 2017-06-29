@@ -347,6 +347,12 @@ class ProductHelper
 
 
         foreach ($finalData as $fData) {
+         $priceData = $this->repo->checked_for_price($fData["id"]);          
+         $weightData = $this->repo->checked_for_weight($fData["id"]);   
+         $totalItems = $this->repo->checked_total_items_listing($fData["id"]);  
+
+
+
             $output['data'][] = [
                 'id' => $fData["id"],
                 'control_number' => $fData["control_number"],
@@ -354,6 +360,13 @@ class ProductHelper
                 'ClothingType' => $fData["cloting_type"],
                 'gender' => $fData["gender"],
                 'PName' => $fData['name'],
+                'description' => $fData['description'],
+                'country_origin' => $fData['country_origin'],
+                'item_details' => $fData['item_details'],
+                'care_label' => $fData['care_label'],                                                               
+                'total_items' => $totalItems[0]['total_items'],
+                'price_status' => $priceData[0]['no_price'],
+                'weight_status' => $weightData[0]['no_weight'],         
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
                 'status'    => ($fData['disabled'] == 1) ? "Disable" : "Enable",
                 'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending" 

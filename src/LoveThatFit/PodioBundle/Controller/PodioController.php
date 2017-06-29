@@ -40,6 +40,29 @@ class PodioController extends Controller {
                   $style_id = $order_detail['control_number'];
                 }
               } 
+              //city state and zip code in address
+              $full_address_shipping = '';
+              if( isset($orders['shipping_address1']) ) {
+                $full_address_shipping .= $orders['shipping_address1'];
+              }
+              if( isset($orders['shipping_city']) ) {
+                if( isset($orders['shipping_address1']) ) {
+                  $full_address_shipping .= ' ';
+                }
+                $full_address_shipping .= $orders['shipping_city'];
+              }
+              if( isset($orders['shipping_state']) ) {
+                if( isset($orders['shipping_city']) ) {
+                  $full_address_shipping .= ', ';
+                }
+                $full_address_shipping .= $orders['shipping_state'];
+              }
+              if( isset($orders['shipping_postcode']) ) {
+                if( isset($orders['shipping_state']) ) {
+                  $full_address_shipping .= ' ';
+                }
+                $full_address_shipping .= $orders['shipping_postcode'];
+              }                           
               //podio orders data
               $order_podio = array(
                    'order_id' => $orders['order_id'],
@@ -79,7 +102,8 @@ class PodioController extends Controller {
                    'item_amount' => ($order_detail['amount']) ? $order_detail['amount'] : '',
                    'control_number' => ($order_detail['control_number']) ? $order_detail['control_number'] : '',
                    'style_id' => $style_id,
-                   'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : ''
+                   'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : '',
+                   'full_address_shipping' => ($full_address_shipping) ? $full_address_shipping : ''
                 ); 
               //save podio order data
               $podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);

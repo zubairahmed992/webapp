@@ -218,6 +218,12 @@ class User implements UserInterface, \Serializable {
 	 * */
 	private $user_app_access_log;
 
+    /**
+     * @var integer $version
+     * @ORM\Column(name="version", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $version;
+
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -2028,7 +2034,31 @@ class User implements UserInterface, \Serializable {
 	}
 
 
-  /**
+    #----------------------------------------
+    /**
+     * Set version
+     *
+     * @param integer $version
+     * @return UserArchives
+     */
+    public function setVersion($version)
+    {
+      $this->version = $version;
+
+      return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return integer
+     */
+    public function getVersion()
+    {
+      return $this->version;
+    }
+
+    /**
      * Set timeSpent
      *
      * @param \string $timeSpent

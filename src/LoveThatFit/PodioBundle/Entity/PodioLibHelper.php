@@ -91,7 +91,7 @@ class PodioLibHelper
               new PodioTextItemField(array("external_id" => "charge-to", "values" => "".$order_podio['credit_card']."")),
               new PodioTextItemField(array("external_id" => "payment-method", "values" => "".$order_podio['payment_method']."")),
               new PodioTextItemField(array("external_id" => "braintree-status", "values" => "".$order_podio['transaction_status']."")),                            
-              new PodioTextItemField(array("external_id" => "shipping-address", "values" => "".$order_podio['shipping_address1'].""))
+              new PodioTextItemField(array("external_id" => "shipping-address", "values" => "".$order_podio['full_address_shipping'].""))
             ));
             // Create item and attach fields
             $item = new PodioItem(array(
