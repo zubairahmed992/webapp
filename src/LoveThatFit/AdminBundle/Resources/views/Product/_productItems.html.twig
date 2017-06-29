@@ -27,10 +27,11 @@
         return true;
     }
     function validate() {
-        var extensions = new Array("jpg", "jpeg", "gif", "png", "bmp", "png");
 
-        var image_file = document.getElementById('product_file').value;
-        var image_length = document.getElementById('product_file').length;
+        var extensions     = new Array("jpg", "jpeg", "gif", "png", "bmp", "png");
+        var image_file     = document.getElementById('product_file').value;
+        var image_length   = document.getElementById('product_file').length;
+        var product_weight = $( "#product_weight" ).val();
 
         var pos = image_file.lastIndexOf('.') + 1;
         var ext = image_file.substring(pos, image_length);
@@ -43,7 +44,15 @@
             }
             document.getElementById('error').style.display = "block";
             return false;
-
+        }
+        if (product_weight < 0) {
+            $("#hvy").remove();
+            $( "#product_weight" ).css('border-color','red');
+            $("#product_weight").after("<div id='hvy' style='color:red;margin-left: 15%;'>Negative values are not allowed</div>");
+            return false;
+        } else {
+            $("#hvy").remove();
+            $( "#product_weight" ).css('border-color','#cccccc');
         }
         return true;
     }
@@ -113,7 +122,7 @@
 
         {% if item_id is defined and item_id and item_id == pi.id %}
         <p id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
-
+        <!--edit form start-->
         <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}"
               method="post" {{ form_enctype(itemform) }} onsubmit="return validate();">
             {{ form_errors(itemform) }}
@@ -124,7 +133,10 @@
                 <div class="span1">${{ form_widget(itemform.price) }}</div>
                 <div class="span1">{{ pi.productSize.bodyType }} {{ pi.productSize.title }}</div>
                 <div class="span2">{{ pi.productColor.title }}</div>
-                <div class="span2">{{ form_widget(itemform.weight, { 'attr': {'style': 'width:100px', 'min' :"0"} }) }}</div>
+                <div class="span2">{{ form_widget(itemform.weight, { 'attr': {'style': 'width:100px', 'min' :"0"} }) }}
+                    <br>
+                    <small style="font-size: 10px;font-weight: bold;top: 40px;">Number and float values are allowed</small>
+                </div>
 
                 <div class="span2">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
                 {{ form_rest(itemform) }}
@@ -228,7 +240,7 @@
         <div class="span2">
 
             <a href='{{ path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id}) }}#item'
-               name="item"><i class="icon-edit"></i></a>
+               name="item"><i class="icon-edit"></i></a><!--edit icon-->
             <a href="#myModal2{{ pi.id }}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
             <button data-toggle="modal"
                     href="{{ path("admin_product_detail_item_two_piece_new",{"id":product.id, "item_id":pi.id}) }}"
