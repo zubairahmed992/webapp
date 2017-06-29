@@ -540,7 +540,7 @@
                 sTitle: "Action",
                 bSortable: false,
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    if (oData.status == "Enable") {
+                    if (oData.status == "Enabled") {
                         $(nTd).find("button.Enable i").removeClass('icon-play-circle');
                         $(nTd).find("button.Enable i").addClass('icon-ban-circle');
                     }
@@ -666,7 +666,7 @@
                     });
 
 
-                    if (data.status == "Enable") {
+                    if (data.status == "Enabled") {
                         $(row).find("button.Enable i").removeClass('icon-play-circle');
                         $(row).find("button.Enable i").addClass('icon-ban-circle');
                     }
@@ -788,7 +788,7 @@
                     });
 
 
-                    if (data.status == "Enable") {
+                    if (data.status == "Enabled") {
                         $(row).find("button.Enable i").removeClass('icon-play-circle');
                         $(row).find("button.Enable i").addClass('icon-ban-circle');
                     }
