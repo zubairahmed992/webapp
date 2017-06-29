@@ -222,11 +222,13 @@ class UserController extends Controller
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
         $this->get('session')->setFlash('success', 'Updated Successfuly');
         $userForm = $this->createForm(new UserProfileSettingsType(), $entity);
+        $password_form   = $this->password_update_form($entity);
         return $this->render('LoveThatFitAdminBundle:User:edit.html.twig', array(
             'form'        => $measurementForm->createView(),
             'userform'    => $userForm->createView(),
             'measurement' => $measurement,
             'entity'      => $entity,
+            'password_form' => $password_form->createView(),
         ));
     }
 
