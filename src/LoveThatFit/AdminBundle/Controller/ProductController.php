@@ -1575,6 +1575,7 @@ class ProductController extends Controller {
             'form' => $form->createView(),
             'entity' => $entity,
             'productSpecification' => $productSpecification,
+            'redirect_to' => $this->getRequest()->headers->get('referer')
         ));
     }
 
