@@ -347,6 +347,7 @@ class ProductHelper
 
 
         foreach ($finalData as $fData) {
+
          $priceData = $this->repo->checked_for_price($fData["id"]);          
          $weightData = $this->repo->checked_for_weight($fData["id"]);   
          $totalItems = $this->repo->checked_total_items_listing($fData["id"]);  
@@ -361,6 +362,7 @@ class ProductHelper
                 'gender' => $fData["gender"],
                 'PName' => $fData['name'],
                 'description' => $fData['description'],
+                'item_name' => $fData['item_name'],
                 'country_origin' => $fData['country_origin'],
                 'item_details' => $fData['item_details'],
                 'care_label' => $fData['care_label'],                                                               
