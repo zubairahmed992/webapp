@@ -48,7 +48,7 @@
         if (product_weight < 0) {
             $("#hvy").remove();
             $( "#product_weight" ).css('border-color','red');
-            $("#product_weight").after("<div id='hvy' style='color:red;margin-left: 15%;'>Negative values are not allowed</div>");
+            $("#product_weight").after("<div id='hvy' style='color:red;'>Negative values are not allowed</div>");
             return false;
         } else {
             $("#hvy").remove();
