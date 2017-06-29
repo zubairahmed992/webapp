@@ -1508,6 +1508,15 @@ class User implements UserInterface, \Serializable {
                 }
         copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
     }
+
+    public function copyDefaultImageSupport($device_type=null) {
+        $this->image='iphone6_f_support_cropped.png';
+        
+        if (!is_dir($this->getUploadRootDir())) {
+                    mkdir($this->getUploadRootDir(), 0700);
+                }
+        copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
+    }
     //----------------------------------------------------
     private function copyTempToOriginalImage() {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
