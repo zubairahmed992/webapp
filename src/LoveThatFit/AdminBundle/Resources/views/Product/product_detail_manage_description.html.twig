@@ -39,7 +39,7 @@
     <div>
         <h1 style="float:left;font-size: 21px;height: 47px;line-height: 47px;text-transform: uppercase;">{{ entity.name }} </h1>
         <div class="btn_wrapper">
-            <a href="{{ path('admin_product_detail_show', {'id': entity.id}) }}" class="btn">back</a>
+            <a href="{{ redirect_to }}" class="btn">back</a>
         </div>
         <div class="clearfix"></div>
         <form onsubmit="return validate();" action="{{ path('admin_product_description_update', { 'id': entity.id }) }}"
