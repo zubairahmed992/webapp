@@ -113,6 +113,7 @@ class ProductRepository extends EntityRepository
             ->join('p.product_colors', 'pc')
             ->andWhere('p.gender=:gender')
             ->andWhere('p.deleted=0')
+            ->groupBy('pc.id')
             ->setParameter('gender', $gender);
         try {
             return $query->getQuery()->getResult();
@@ -165,7 +166,8 @@ class ProductRepository extends EntityRepository
             ->join('p.brand', 'b')
             ->join('p.clothing_type', 'ct')
             ->join('p.product_colors', 'pc')
-            ->andWhere('p.deleted=0');
+            ->andWhere('p.deleted=0')
+            ->groupBy('pc.id');
 
         if ($search) {
             $query
@@ -1351,7 +1353,9 @@ class ProductRepository extends EntityRepository
                 'target' => $data['target'],
                 'genders' => $data['genders']
             ));*/
-
+        $query
+            ->groupBy('pc.id');
+        
         if($data['brand'] > 0){
             $query
                 ->setParameter('brandId', $data['brand']);
