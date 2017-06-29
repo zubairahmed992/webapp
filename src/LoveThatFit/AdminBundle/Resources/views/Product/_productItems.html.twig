@@ -202,7 +202,7 @@
         <div class="span1">{{ pi.price>0?'$'~pi.price|number_format(2) :pi.price|number_format(2) }} </div>
         <div class="span1">{{ pi.productSize.bodyType }} {{ pi.productSize.title }}</div>
         <div class="span2">{{ pi.productColor.title }}</div>
-        <div class="span2">{{ (pi.weight != null) ? pi.weight~'oz' : '' }}</div>
+        <div class="span2">{{ (pi.weight != null) ? pi.weight|number_format(2)~'oz' : '' }}</div>
 
         <div class="span2" onmouseover="document.getElementById('myimg_'+{{ pi.id }}).style.display='block';"
              onmouseout="document.getElementById('myimg_'+{{ pi.id }}).style.display='none';">
