@@ -1195,7 +1195,8 @@ class WebServiceHelper
 
         $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
         $p['description_html'] = $product->getDescription();
-        $p['description_html'] = '<span style="font-family:lato;font-size:16px;">'.$p['description_html'].'</span>';
+        $p['description_html'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['description_html']);
+        $p['description_html'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['description_html'].'</span>';
         $product_description = $product->getDescription();
         $product_description_without_html = preg_replace('#<[^>]+>#', ' ', $product_description);
         $p['description'] = rtrim(ltrim($product_description_without_html));
@@ -1212,7 +1213,13 @@ class WebServiceHelper
                 $p['item_details'] = str_ireplace('</ul>','<li>'.$product_country_origin.'</li></ul>', $product_items_details);
             }
         }
+
+        $p['item_details'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['item_details']);
+        $p['item_details'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['item_details'].'</span>';
+
         $p['care_label'] = $product->getCareLabel();
+        $p['care_label'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['care_label']);
+        $p['care_label'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['care_label'].'</span>';
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
