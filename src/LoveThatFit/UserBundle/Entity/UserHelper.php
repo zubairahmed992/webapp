@@ -850,7 +850,6 @@ class UserHelper
         $userDevice->setDeviceUserPerInchPixelHeight($dud[$udt][$user->getGender()]['image']['px_inch_ratio']);
         $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
         #---------------------------
-        $user->copyDefaultImage($udt);
         if ($udt == "iphone6") {
             $user->copyDefaultImageSupport($udt);
         } else {
