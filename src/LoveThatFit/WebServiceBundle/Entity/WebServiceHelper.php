@@ -1210,6 +1210,10 @@ class WebServiceHelper
                 $p['item_details'] = str_ireplace('</ul>','<li>'.$product_country_origin.'</li></ul>', $product_items_details);
             }
         }
+
+        $p['item_details'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['item_details']);
+        $p['item_details'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['item_details'].'</span>';
+
         $p['care_label'] = $product->getCareLabel();
         $p['care_label'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['care_label']);
         $p['care_label'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['care_label'].'</span>';
