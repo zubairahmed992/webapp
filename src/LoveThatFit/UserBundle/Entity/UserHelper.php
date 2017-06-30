@@ -827,11 +827,7 @@ class UserHelper
         $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users_support.yml'));
         $udt = strtolower($ra['device_type']);
         $user->setImageDeviceType($udt);
-        if ($udt == "iphone6") {
-            $user->setImage('iphone6_f_support_cropped.png');
-        } else {
-            $user->setImage('cropped.png');   
-        }
+        $user->setImage('cropped.png');
         if ($user->getMeasurement()) {
             $measurement = $user->getMeasurement();
         } else {
@@ -850,12 +846,8 @@ class UserHelper
         $userDevice->setDeviceUserPerInchPixelHeight($dud[$udt][$user->getGender()]['image']['px_inch_ratio']);
         $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
         #---------------------------
-        if ($udt == "iphone6") {
-            $user->copyDefaultImageSupport($udt);
-        } else {
-            $user->copyDefaultImage($udt);
-        }
-
+        $user->copyDefaultImageSupport($udt);
+        
         copy($user->getAbsolutePath(), $user->getOriginalImageAbsolutePath());#making a copy of original
         return $measurement;
 
