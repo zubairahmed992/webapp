@@ -1510,8 +1510,8 @@ class User implements UserInterface, \Serializable {
     }
 
     public function copyDefaultImageSupport($device_type=null) {
-        //umer 1 
-        $this->image='iphone6_f_support_cropped.png';
+        //umer 1
+        $this->image='cropped.png';
         if (!is_dir($this->getUploadRootDir())) {
             mkdir($this->getUploadRootDir(), 0700);
         }
@@ -1568,6 +1568,7 @@ class User implements UserInterface, \Serializable {
     public function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
+
 //----------------------------------------------------------
     public function getDummyUserImageRootPath($udt=null) {
         if($udt)
