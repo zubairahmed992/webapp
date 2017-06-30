@@ -626,10 +626,10 @@
             <div class="col-sm-4">                
                 <input type="text" name="product_id" id="product_id" value="{{ parsed_data.product_id is defined?parsed_data.product_id:null }}"  class="form-control">                                
             </div>
-            {%if (parsed_data.product_id is not defined and searched_product_id>0)%}
+            
             <span id="spn_product_id" hidden>{{searched_product_id}} </span>
-                <a id='copy_product_id' href="#">copy Id</a>
-            {%endif%}
+            <a id='copy_product_id' href="#">copy Id</a>
+            
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Gender: </label>
