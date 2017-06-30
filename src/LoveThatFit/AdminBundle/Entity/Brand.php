@@ -288,7 +288,7 @@ public function deleteImages()
     public function __construct()
     {
         $this->retailers = new ArrayCollection();
-        $this->sizechart = ArrayCollection();
+        $this->sizechart = new ArrayCollection();
         $this->fit_model_measurements = new ArrayCollection();
     }
     

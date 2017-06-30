@@ -313,12 +313,15 @@ class WebServiceHelper
         array_key_exists('hip', $request_array) ? $measurement->setHip($request_array['hip']) : '';
         //new fileds
         array_key_exists('belt_waist', $request_array) ? $measurement->setBeltWaist($request_array['belt_waist']) : '';
+        array_key_exists('abdomen', $request_array) ? $measurement->setAbdomen($request_array['abdomen']) : '';
         array_key_exists('high_hip', $request_array) ? $measurement->setHighHip($request_array['high_hip']) : '';
         array_key_exists('low_hip', $request_array) ? $measurement->setLowHip($request_array['low_hip']) : '';
         array_key_exists('torso_height', $request_array) ? $measurement->setTorsoHeight($request_array['torso_height']) : '';
 
         array_key_exists('inseam', $request_array) ? $measurement->setInseam($request_array['inseam']) : '';
         array_key_exists('thigh', $request_array) ? $measurement->setThigh($request_array['thigh']) : '';
+        array_key_exists('high_thigh', $request_array) ? $measurement->setHighThigh($request_array['high_thigh']) : '';
+        array_key_exists('low_thigh', $request_array) ? $measurement->setLowThigh($request_array['low_thigh']) : '';
         array_key_exists('bust_height', $request_array) ? $measurement->setBustHeight($request_array['bust_height']) : '';
         array_key_exists('waist_height', $request_array) ? $measurement->setWaistHeight($request_array['waist_height']) : '';
         array_key_exists('knee', $request_array) ? $measurement->setKnee($request_array['knee']) : '';
