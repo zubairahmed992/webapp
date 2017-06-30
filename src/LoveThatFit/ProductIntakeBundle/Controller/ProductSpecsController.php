@@ -38,6 +38,7 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);  
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
         $parsed_data['horizontal_stretch']=  intval($parsed_data['horizontal_stretch']);
         $parsed_data['vertical_stretch']=intval($parsed_data['vertical_stretch']);
@@ -59,6 +60,12 @@ class ProductSpecsController extends Controller
             }
             break;
         }      
+        $product_id =0;
+        if(array_key_exists('style_id_number', $parsed_data) && array_key_exists('brand', $parsed_data) ){
+            $product_array = $this->get('service.repo')->getProductDetailOnly($parsed_data['brand'], $parsed_data['style_id_number']); 
+            $product_id = is_array($product_array) && array_key_exists(0, $product_array) ? $product_array[0]['id'] : 0;
+        }
+        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'product_specs'=>$ps,
                     'parsed_data' => $parsed_data,
@@ -70,6 +77,7 @@ class ProductSpecsController extends Controller
                     'clothing_types' => $clothing_types,
                     'size_attribute' => $size_attribute,
                     'tab' => $tab,
+                    'searched_product_id'=>$product_id,
                 ));
     }
 

@@ -241,6 +241,10 @@
             }           
         })  
         //--------------- Check Fabric Content Already Added
+        
+        $('#copy_product_id').click(function () {           
+            $('#product_id').val($('#spn_product_id').text());
+        });
       {#  $('.add_fabric_content').click(function () {                     
             var fabric_content_val = $.trim($('.fabric_content_value').val()); 
             $(".fabric_content > .singleField > input[type='number']").each(function() {                 
@@ -617,19 +621,27 @@
                 <input type="text" class="form-control" value="{{ parsed_data.style_id_number is defined? parsed_data.style_id_number: ''}}"  name="style_id_number" placeholder="Enter Style Id Number Name">
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-sm-2" for=""> Product Id: </label>
+            <div class="col-sm-4">                
+                <input type="text" name="product_id" id="product_id" value="{{ parsed_data.product_id is defined?parsed_data.product_id:null }}"  class="form-control">                                
+            </div>
+            {%if (parsed_data.product_id is not defined and searched_product_id>0)%}
+            <span id="spn_product_id" hidden>{{searched_product_id}} </span>
+                <a id='copy_product_id' href="#">copy Id</a>
+            {%endif%}
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Gender: </label>
             <div class="col-sm-4">
-                <input type="text" name="gender" id="gender" readonly value="{{ parsed_data.gender }}"  class="form-control">    
-                <input type="hidden" name="product_id" id="product_id" readonly value="{{ parsed_data.product_id is defined?parsed_data.product_id:null }}"  class="form-control">                
+                <input type="text" name="gender" id="gender" readonly value="{{ parsed_data.gender }}"  class="form-control">                    
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="description"> Description : </label>
             <div class="col-sm-4">
-                <input type="text" name="description" class="form-control" value="{{ parsed_data.description }}" >
+                <input type="text" name="description" class="form-control" value="{{ parsed_data.description }}" >                
             </div>
         </div>         
 
