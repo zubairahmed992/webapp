@@ -167,7 +167,7 @@ class ProductRepository extends EntityRepository
             ->join('p.clothing_type', 'ct')
             ->join('p.product_colors', 'pc')
             ->andWhere('p.deleted=0')
-            ->groupBy('pc.id');
+            ->groupBy('p.id');
 
         if ($search) {
             $query
@@ -1359,7 +1359,7 @@ class ProductRepository extends EntityRepository
                 'genders' => $data['genders']
             ));*/
         $query
-            ->groupBy('pc.id');
+            ->groupBy('p.id');
         
         if($data['brand'] > 0){
             $query

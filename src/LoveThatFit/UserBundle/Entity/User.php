@@ -1508,6 +1508,15 @@ class User implements UserInterface, \Serializable {
                 }
         copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
     }
+
+    public function copyDefaultImageSupport($device_type=null) {
+        //umer 1 
+        $this->image='iphone6_f_support_cropped.png';
+        if (!is_dir($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir(), 0700);
+        }
+        copy($this->getDummyUserImageRootPathSupport($device_type), $this->getAbsolutePath());        
+    }
     //----------------------------------------------------
     private function copyTempToOriginalImage() {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
@@ -1565,6 +1574,13 @@ class User implements UserInterface, \Serializable {
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_cropped.png';        
         else
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
+    }
+
+    public function getDummyUserImageRootPathSupport($udt=null) {
+        if($udt)
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_support_cropped.png';        
+        else
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_support_cropped.png';        
     }
 //----------------------------------------------------------
     public function getUploadDir() {
