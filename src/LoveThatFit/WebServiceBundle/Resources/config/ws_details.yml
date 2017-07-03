@@ -796,3 +796,10 @@ nws_shop_the_look:
   title: nws_shop_the_look
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
+
+new_register_device_token:
+  pattern: /nws/register_device_token
+  title: Regsiter user device token
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    device_token: 11223344556677889900112233445566778899000
