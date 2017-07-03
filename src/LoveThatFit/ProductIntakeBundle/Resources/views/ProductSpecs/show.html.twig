@@ -7,9 +7,9 @@
     </script>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
         <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
-        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" class="btn btn-default">Create Product</a> 
+        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" data-toggle="confirmation" data-singleton="true" data-placement="left" class="btn btn-default">Create Product</a> 
         {% if parsed_data.product_id is defined  %}
-        <a href="{{ path('exisiting_product_update_from_specification_intake', {'specification_id': app.request.get('id'),'product_id':parsed_data.product_id }) }}" class="btn btn-default">Update Product</a>
+        <a href="{{ path('exisiting_product_update_from_specification_intake', {'specification_id': app.request.get('id'),'product_id':parsed_data.product_id }) }}" data-toggle="confirmation" data-singleton="true" data-placement="left" class="btn btn-default">Update Product</a>
         {% endif %}
     </div>
     <div class="col-sm-6" role="group" aria-label="..." style="float:right;">        

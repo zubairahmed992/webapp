@@ -1,6 +1,6 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 {% block body %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
 <div class="p_listing">     
     <h1>Product Specification </h1>    
     <div class="btn-group" role="group" aria-label="..." style="float:right;">        
@@ -29,7 +29,7 @@
             <td>
                 <a href="{{ path('product_intake_product_specs_show', {'id': sp.Id}) }}" title="Show {{sp.Title}}">show</a> &nbsp;|&nbsp;
                 <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id}) }}" title="Edit {{sp.Title}}">edit</a> &nbsp;|&nbsp;
-                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" title="Show {{sp.Title}}">del</a> 
+                <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" data-toggle="confirmation" data-singleton="true" title="Delete {{sp.Title}}">del</a> 
                
                 {% if cs_file[sp.Id] != '' %}
                 &nbsp;|&nbsp;
