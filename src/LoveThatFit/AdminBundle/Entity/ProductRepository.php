@@ -1637,7 +1637,8 @@ class ProductRepository extends EntityRepository
                  p.control_number,
                  p.horizontal_stretch,
                  p.vertical_stretch, 
-				 p.styling_type 
+				 p.styling_type,
+				 pit.price as MSRP
                 FROM `product` p
                 join `product_item` pit on pit.product_id=p.id
                 join `brand` b on b.id=p.brand_id
