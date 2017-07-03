@@ -122,6 +122,7 @@ class ProductSpecificationHelper {
         $entity->fill($parsed, true);
         return $this->update($entity);
     }
+    
 
     #----------------------------------------------
     #---------------------------
@@ -198,6 +199,8 @@ class ProductSpecificationHelper {
         if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch') {
             $specs[$decoded['name']] = $decoded['value'];
             $specs = $this->generate_specs_for_stretch($specs, $decoded['name']); #~~~~~~~~>1
+        } elseif ($decoded['name'] == 'max_horizontal_stretch' || $decoded['name'] == 'max_vertical_stretch') {    #~~~~~~~~>2
+            $specs[$decoded['name']] = $decoded['value'];                
         } elseif (strpos($decoded['name'], 'fit_point_stretch') !== false) {    #~~~~~~~~>2
             $fit_point_stretch_array = explode('-', $decoded['name']);
             $specs['fit_point_stretch'][$fit_point_stretch_array[1]] = $decoded['value'];
@@ -215,11 +218,13 @@ class ProductSpecificationHelper {
             $specs = $this->remove_fit_point($specs, $decoded);
         } elseif (strpos($decoded['name'], 'add_new_fit_point') !== false) { #~~~~~~~~>8            
             $specs = $this->add_new_fit_point($specs, $decoded);            
+        } elseif (strpos($decoded['name'], 'remove_size') !== false) { #~~~~~~~~>7            
+            $specs = $this->remove_size($specs, $decoded);            
         }  else {
             return array(
                 'message' => 'Nothing to update!',
                 'message_type' => 'error',
-                'success' => true,
+                'success' => false,
             );
         }        
         $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
@@ -391,6 +396,16 @@ class ProductSpecificationHelper {
         }
         return $specs;
     }
+    #------------------->#------------------->
+     private function remove_size($specs, $decoded) {
+        $s = str_replace("remove_size_", "", $decoded['name']);         
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            if ($size==$s) {
+                unset($specs['sizes'][$s]);
+            }
+        }
+        return $specs;
+    }
 
     #------------------->8 add new Fit Point >>>>>>>>>>>>>>>>>>>>>>>>>>>
     private function add_new_fit_point($specs, $decoded) {
@@ -424,7 +439,7 @@ class ProductSpecificationHelper {
             'original_value' => 0,
         );
     }
-
+    
     ###################################################################
 
 

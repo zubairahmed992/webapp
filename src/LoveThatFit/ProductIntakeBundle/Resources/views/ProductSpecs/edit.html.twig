@@ -436,6 +436,25 @@
         }
         //alert($(this).attr("id"));
         });
+          //--------------- Check garment detail Already Added
+        $('.remove_size').click(function (event) {                     
+        event.preventDefault();
+        var res =  $(this).attr("id").replace("remove_size_",'') ;        
+        if (confirm('Are you sure you want to completely Remove Size ' + res + ' ?')) {
+                $.post(get_service_relative_url(),{
+                    value: 0,    
+                    name: $(this).attr("id"),                    
+                    pk: {{ product_specs.id }}                    
+                },
+                function(data, status){
+                    //reload_page();
+                    alert(data);
+                });
+        } else {
+            // Do nothing!
+        }
+        //alert($(this).attr("id"));
+        });
           // ------- Min Max Values Comparation 
           
             $(document).on("focus", ".input-sm", function(){
@@ -894,14 +913,26 @@
                 <input value="{{parsed_data.horizontal_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="max_horizontal_stretch">Max Horizontal stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.max_horizontal_stretch is defined?parsed_data.max_horizontal_stretch:0}}" type="text" class="form-control edit_inline" readonly="ture" name="max_horizontal_stretch" id="max_horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
             <div class="col-sm-4">
-                <input value="{{parsed_data.vertical_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
+                <input value="{{parsed_data.vertical_stretch is defined?parsed_data.vertical_stretch:0}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter max_vertical stretch">
             </div>
         </div>       
-      
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="max_vertical_stretch">Max Vertical stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.max_vertical_stretch is defined? parsed_data.max_vertical_stretch:0}}" type="text" class="form-control edit_inline" readonly="ture" name="max_vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter max_vertical stretch">
+            </div>
+        </div>       
+
+            
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Fit model: </label>
             <div class="col-sm-4">
@@ -966,19 +997,42 @@
                             </tbody>
                     </table>   
                </div> 
+                <div id="dv_fit_point_stretch_show" style="display: none">
+                         <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                            <thead>
+                        <tr>
+                            {% for fp, fpv in fit_point_stretch %}                
+                                {%if((fpv |number_format(2, '.', ','))>0)%}
+                                    <th>{{fp|replace('_',' ') |capitalize}}</th>                                    
+                                {% endif%}
+                            {% endfor %}
+                        </tr>      
+                            </thead>
+                                <tbody>
+                        <tr>
+                            {% for fp, fpv in fit_point_stretch %}         
+                                    {%if((fpv |number_format(2, '.', ','))>0)%}
+                                        <td>{{fpv|number_format(2, '.', ',')}}</td>                                    
+                                    {% endif%}
+                            {% endfor %}
+                        </tr>
+                            </tbody>
+                    </table>   
+               </div>                         
  
-               <div id="dv_fit_priority">
-                       <b>Fit Priority</b><br>
-                    <table class="table table-bordered " id='tbl_fit_point_stretch'>
-                    <tr>
-                        {% for key,val in size_attribute %} 
-                            <td><b>{{ key }}</b> : {{parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:''}}% </td>
-                        {% endfor %}
-                    </tr>                                        
-                    </table>
-                       
-               <br>
-               </div>   
+                            <div id="dv_fit_priority">
+                                <b>Fit Priority</b><br>
+                                <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                                    <tr>
+                                        {% for key,val in size_attribute %} 
+                                            {%if(parsed_data['fit_priority'][key] is defined and (parsed_data['fit_priority'][key] |number_format(2, '.', ','))>0)%}
+                                                <td><b>{{ key }}</b> : {{parsed_data['fit_priority'][key]}}% </td>
+                                            {% endif%}
+                                        {% endfor %}
+                                    </tr>                                        
+                                </table>                       
+                                <br>
+                            </div>   
                 <br>                
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="new_fit_point">Add new Fit Point : </label>
@@ -997,7 +1051,11 @@
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
                                     <tr class="{{ size }} Active grid_headers">
-                                        <th >{{size}}</th>
+                                        <th >
+                                            {% if(fit_model_selected_size | trans is not same as (size | trans)) %}
+                                            <a href="#" class="remove_size" id="remove_size_{{ size }}" name="remove_size_{{ size }}" title="Remove {{ size }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                                            {% endif %}
+                                            {{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_percentage</th>
                                         <th >garment_stretch</th>                                        
