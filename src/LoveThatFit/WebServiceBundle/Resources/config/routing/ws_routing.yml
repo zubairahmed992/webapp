@@ -285,6 +285,10 @@ nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
 
+nws_delete_user_address:
+  pattern: /nws/delete_user_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:deleteUserShippingOrBillingAddress}
+
 nws_save_user_billing_address:
   pattern: /nws/save_user_billing_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserBillingAddress}

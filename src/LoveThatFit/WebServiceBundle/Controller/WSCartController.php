@@ -698,6 +698,33 @@ class WSCartController extends Controller
         return new Response( $res );
     }
 
+    public function deleteUserShippingOrBillingAddressAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $shipping_id = (isset($decoded['shipping_id'])) ? $decoded['shipping_id'] : 0;
+            $billing_id = (isset($decoded['billing_id'])) ? $decoded['billing_id'] : 0;
+            if($shipping_id > 0 || $billing_id > 0){
+                if($shipping_id > 0){
+                    $addressRemove = $this->container->get('cart.helper.userAddresses')->deleteUserShippingAddress($shipping_id, $user);
+                    $res = $this->get('webservice.helper')->response_array(true, 'user address successfully deleted');
+                }else if($billing_id > 0){
+                    $addressRemove = $this->container->get('cart.helper.userAddresses')->deleteUserBillingAddress($billing_id, $user);
+                    $res = $this->get('webservice.helper')->response_array(true, 'user address successfully deleted');
+                }
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Billing or shipping id must be greater then zero(0).');
+            }
+
+        }else{
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response( $res );
+
+    }
+
     public function getAllUserSavedAddressesAction(){
         $stampsDotCom = new Stamps();
 
