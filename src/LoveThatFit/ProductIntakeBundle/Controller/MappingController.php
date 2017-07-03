@@ -111,7 +111,7 @@ class MappingController extends Controller
     {
         $pm = $this->get('productIntake.product_specification_mapping')->find($id); 
         //----- Get File data 
-        $str=array();
+        $str=array("File not Exist on Server");
         $i=0;
         if( file_exists($pm->getAbsolutePath()) ){   
             if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
@@ -136,6 +136,7 @@ class MappingController extends Controller
         $body_types = ($parsed_data['gender'] == 'f'? $size_specs['fit_types']['woman']:$size_specs['fit_types']['man']);
         $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
          (array_key_exists('formula', $parsed_data))?true :$parsed_data['formula']=array();
+        $parsed_data['mapping_title']= $pm->getTitle();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:edit.html.twig', array(
                     'fit_points' => array_keys($fit_points),
                     'brands' => $brands,
@@ -192,10 +193,10 @@ class MappingController extends Controller
         $entity->setTitle($decoded['mapping_title']);
         $entity->setDescription($decoded['mapping_description']);
         $entity->setMappingJson(json_encode($apecs_arr));       
-        $this->container->get('productIntake.product_specification_mapping')->update($entity);
+        $this->get('productIntake.product_specification_mapping')->update($entity);
         $entity->setMappingFileName('csv_mapping_' . $entity->getId() . '.csv');
         if (move_uploaded_file($_FILES["csv_file"]["tmp_name"], $entity->getAbsolutePath())) {
-            $this->container->get('productIntake.product_specification_mapping')->update($entity);          
+            $this->get('productIntake.product_specification_mapping')->update($entity);          
         } 
 
         $this->get('session')->setFlash('info', 'Updated Product specification Mapping created.');        
