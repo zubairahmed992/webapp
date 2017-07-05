@@ -10,7 +10,7 @@
         }
           
     </style>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
 <script type="text/javascript">
     $(document).ready(function () {         
     size_specs=jQuery.parseJSON( $('#size_specs_json').text());
@@ -90,7 +90,7 @@
         $(".add_size").click(function () {
             var fit_model_genrate = $('.fit_modele_genrate');
             var new_fit_model = $('#new_fit_model').val();            
-            fit_model_genrate.append("<div class='form-group'> <label class='control-label col-sm-2'>"+new_fit_model+": </label>  <div class='col-sm-4'>  <input type='text' id="+new_fit_model+" name="+new_fit_model+">  </div>  </div>")
+            fit_model_genrate.append("<div class='form-group remove_fit_point'> <a href='#' class='remove_fp_dynamic' data-toggle='confirmation' data-singleton='true' > Remove </a> <label class='control-label col-sm-2'>"+new_fit_model+": </label>  <div class='col-sm-4'>  <input type='text' id="+new_fit_model+" name="+new_fit_model+">  </div>  </div>")
         });
         //-------------------------------------------------------------------
         
@@ -140,6 +140,16 @@
             $.each(data['sizes'][this.value],function(index, value){                        
                               $("#"+index).val(value);
                           });     
+        });
+        
+        //------- Created Dynamic Elemnt to Apply Confirmation Alert
+        $(document).bind('click','.remove_fp_dynamic', function () {    
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+            }); 
+        });
+        $(document).on('click','.remove_fp_dynamic', function () {    
+          $(this).closest('.remove_fit_point').remove();
         });
 });
     </script>   
