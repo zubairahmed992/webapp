@@ -123,8 +123,10 @@ class FitModelController extends Controller {
         unset($fit_point_values['hip']);        
         unset($fit_point_values['hem_length']);
         unset($fit_points['thigh']);
+        $fit_points['txt_title'] = '';
         !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         $required_fields = array('txt_title');
+    
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,

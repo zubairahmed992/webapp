@@ -20,7 +20,7 @@
         }
 
     </style>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{#    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
     <script type="text/javascript">
         $(document).ready(function () {
             //------------------------- CSV File Read
@@ -135,7 +135,7 @@
             $(".add_size").click(function () {
                 var fit_model_genrate = $('.fit_modele_genrate');
                 var new_fit_model = $('#new_fit_model').val();
-                fit_model_genrate.append("<div class='form-group'> <label class='control-label col-sm-2'>" + new_fit_model + ": </label>  <div class='col-sm-4'>  <input type='text' id=" + new_fit_model + " name=" + new_fit_model + ">  </div>  </div>")
+                fit_model_genrate.append("<div class='form-group remove_fit_point'> <a href='#' class='remove_fp_dynamic' data-toggle='confirmation' data-singleton='true' > Remove </a> <label class='control-label col-sm-2'>" + new_fit_model + ": </label>  <div class='col-sm-4'>  <input type='text' id=" + new_fit_model + " name=" + new_fit_model + ">  </div>  </div>")
             });
             //-------------------------------------------------
 //-------------------------------------------------
@@ -186,6 +186,21 @@ $("#btn_specs_search").click(function (event) {
             }
         });
  });
+ //--------------------- Remove New Fit Points
+ $('.remove_fp').on('click', function (event) {     
+    $(this).closest('.remove_fit_point').remove();
+ });
+ //------- Created Dynamic Elemnt to Apply Confirmation Alert
+  $(document).bind('click','.remove_fp_dynamic', function () {    
+    $('[data-toggle=confirmation]').confirmation({
+           rootSelector: '[data-toggle=confirmation]',
+    }); 
+ });
+ $(document).on('click','.remove_fp_dynamic', function () {    
+    $(this).closest('.remove_fit_point').remove();
+ });
+ 
+ 
 });
         
     </script>
@@ -287,13 +302,21 @@ $("#btn_specs_search").click(function (event) {
                             </select>
                         </div>
                     </div> 
-
-                {% else %}
+                             
+                {% elseif not(fit_point_k in  fit_points | keys) %}
+                        <div class="form-group remove_fit_point"> 
+                            <a href="#" class="remove_fp" data-toggle="confirmation" data-singleton="true" > Remove </a>
+                            <label class="control-label col-sm-2" for=""> {{fit_point_k}}</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }} > 
+                            </div>                        
+                            <span id="fm_spn_{{fit_point_k}}" class='fm_spn'></span>
+                        </div>  
+                {% else %}   
                     <div class="form-group {{  (fit_point_k in required_fields)? 'required' : '' }} ">
                         <label class="control-label col-sm-2" for=""> {{fit_point_k}} </label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }} >
-
                         </div>                        
                         <span id="fm_spn_{{fit_point_k}}" class='fm_spn'></span>
                     </div>   
