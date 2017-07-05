@@ -354,7 +354,7 @@ class WSUserController extends Controller
                 if($registerToken > 0)
                     $res = $this->get('webservice.helper')->response_array(false, 'Device token exists.');
                 else
-                    $res = $this->get('webservice.helper')->response_array(false, 'Successfully registed user device.');
+                    $res = $this->get('webservice.helper')->response_array(true, 'Successfully registed user device.');
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, 'User device token is empty.');
             }
