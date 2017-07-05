@@ -698,6 +698,14 @@ nws_save_user_shipping_address:
     shipping_id: 0
     data: {"FullName": "","FirstName": "GEOF","LastName": "ANTON","Address1": "12959 CORAL TREE PL","Address2": "12959 CORAL TREE PL","City": "LOS ANGELES","State": "CA","ZIPCode": "90066","ZIPCodeAddOn": "7020","DPB": "59","CheckDigit": "6","Urbanization": "","CleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063","OverrideHash": "Tdwp4JlTc02DhscYxbI7l7o08apkZWFkYmVlZg==20171011C063"}
 
+nws_delete_user_address:
+  pattern: /nws/delete_user_address
+  title: delete user billing or shipping address
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    shipping_id: 0
+    billing_id: 0
+
 nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses
   title: get_all_user_saved_addresses
@@ -788,3 +796,10 @@ nws_shop_the_look:
   title: nws_shop_the_look
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
+
+new_register_device_token:
+  pattern: /nws/register_device_token
+  title: Regsiter user device token
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    device_token: 11223344556677889900112233445566778899000

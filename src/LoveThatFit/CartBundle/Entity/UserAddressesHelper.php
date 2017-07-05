@@ -215,6 +215,18 @@ class UserAddressesHelper
         return false;
     }
 
+    public function deleteUserShippingAddress( $shipping_id, User $user){
+        $address_info = $this->find($shipping_id);
+        $this->em->remove($address_info);
+        $this->em->flush();
+    }
+
+    public function deleteUserBillingAddress( $billing_id, User $user){
+        $address_info = $this->find($billing_id);
+        $this->em->remove($address_info);
+        $this->em->flush();
+    }
+
     public function updateUserShippingAddress($decoded, $user){
         $shipping_id = $decoded['shipping_id'];
         if($shipping_id > 0){

@@ -254,7 +254,8 @@ class ProductHelper
     public function getTotalProductCount(){
         $rec_count = $this->repo->getTotalCount();
         if(!empty($rec_count))
-            return $rec_count[0]['total_count'];
+            //return $rec_count[0]['total_count'];
+            return count($this->repo->getTotalCount());
         else
             return 0;
     }
