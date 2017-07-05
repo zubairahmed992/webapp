@@ -358,7 +358,6 @@ class WSUserController extends Controller
             }else{
                 $res = $this->get('webservice.helper')->response_array(false, 'User device token is empty.');
             }
-
         }else{
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
