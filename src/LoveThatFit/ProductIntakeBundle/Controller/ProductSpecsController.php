@@ -371,7 +371,7 @@ class ProductSpecsController extends Controller
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $brand = $this->container->get('admin.helper.brand')->findOneByName( $parsed_data['brand'] );
-        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByName( $parsed_data['clothing_type'] );
+        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByGenderName($parsed_data['gender'], $parsed_data['clothing_type'] );
         $product->setBrand($brand);
         $product->setClothingType($clothing_type);
         $product->setName(array_key_exists('style_name', $parsed_data) ? $parsed_data['style_name'] : '');
