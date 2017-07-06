@@ -698,7 +698,7 @@
                 $('#productClass').append(htmlTable);
             }
              var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
-             $("#loading-indicator").show();
+             
             dataTable = $("#example").dataTable({
                 "pageLength": 10,
                 "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
@@ -820,7 +820,6 @@
                  }       
             });
 
-$("#loading-indicator").hide();
 
             bindClickEvent();
         }
