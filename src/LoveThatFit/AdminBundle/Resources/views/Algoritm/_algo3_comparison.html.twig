@@ -50,6 +50,9 @@
                                         <th>FX</th>                                                                             
                                         <th>GR	</th>
                                         <th>GD</th>	
+                                        <th>92%GD</th>	
+                                        <th>85%GD</th>	
+                                        <th>75%GD</th>	
                                         <th>G Stretch </th>
                                         <th>MIN Calc</th>
                                         <th>MIN Actual</th>                                        
@@ -60,7 +63,8 @@
                                         <th>MAX Calc</th>
                                         <th>message</th>
                                         <th>variance</th>
-                                        <th>fitting</th>
+                                        <th>Product fit</th>
+                                        <th>ext-message</th>
                                     </tr>
                                 
                             {% for fp, fp_specs in size_specs.fit_points %} 
@@ -91,6 +95,9 @@
                                         
                                         <td>{{fp_specs.grade_rule}}</td>
                                         <td>{{fp_specs.garment_measurement_flat}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat * 0.92}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat * 0.85}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat * 0.75}}</td>
                                         <td>{{fp_specs.garment_measurement_stretch_fit}}</td>
                                         
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
@@ -110,6 +117,7 @@
                                         </td>
                                         <td>{{fp_specs.variance}}</td>
                                         <td>{{fp_specs.fitting}}</td>
+                                        <td>{{fp_specs.ext_message}}</td>
                                     </tr>
 
                             {% endfor %}
@@ -117,6 +125,9 @@
                                         <td></td>                                        
                                         <td></td>                                        
                                         <td>{{size_specs.fit_index}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>	
                                         <td></td>
@@ -135,10 +146,12 @@
                                                 </td>                                                                                
                                         <td>{{size_specs.variance}}</td>                
                                         <td></td>
+                                        <td></td>
+                                        
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
                                     <tr  style="background-color: #F2F2F2">
-                                        <td colspan="15">
+                                        <td colspan="20">
                                             <span  style="font-size:12px;">
                                             <b>Hem Advice :</b> {{size_specs.hem_advice.message}}
                                             </span>
