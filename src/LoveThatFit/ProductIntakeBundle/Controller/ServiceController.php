@@ -174,9 +174,11 @@ class ServiceController extends Controller {
             $baseurl .'/'. $product_item->getWebPath();                
             $uploaded=false;                                
             if(file_exists($product_item->getAbsolutePath())) {
-                $uploaded=true;
-            }                
-            $res=$this->responseArray('File Exists', $uploaded, $baseurl .'/'. $product_item->getWebPath());
+                $res=$this->responseArray('File Exists', true, $baseurl .'/'. $product_item->getWebPath());
+            }else{
+                $res=$this->responseArray('File Not Found!');
+            }
+            
             return new Response(json_encode($res));            
             
         } catch (\Exception $exception) {
