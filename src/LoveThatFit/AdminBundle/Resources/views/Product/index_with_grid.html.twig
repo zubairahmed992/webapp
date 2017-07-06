@@ -637,6 +637,13 @@
 
                     }
 
+                    if(data.cat_count > 0) {
+                            $(row).find("button.category i").addClass('cat-have-value');
+
+                     }else{
+                         $(row).find("button.category i").addClass('cat-no-value');
+                     }   
+
                     if(data.pstatus=='Complete') {
                         $(row).find("button.productstatus i").addClass('icon-pstatus-have-pstatus-green');
                     } else if(data.pstatus=='Review') {
@@ -645,7 +652,7 @@
                         $(row).find("button.productstatus i").addClass('icon-pstatus-no-pstatus');
                     }
 
-                    var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
+                   /* var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
                     url = url.replace(':id', data.id);
                     $.ajax({
                         type: "GET",
@@ -663,7 +670,7 @@
 
 
                         }
-                    });
+                    });*/
 
 
                     if (data.status == "Enabled") {
@@ -691,6 +698,7 @@
                 $('#productClass').append(htmlTable);
             }
              var notShownIDs = [2725, 2735, 2731, 2680, 2703, 2444, 2729];
+             
             dataTable = $("#example").dataTable({
                 "pageLength": 10,
                 "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
@@ -759,6 +767,13 @@
 
                     }
 
+                    if(data.cat_count > 0) {
+                            $(row).find("button.category i").addClass('cat-have-value');
+
+                     }else{
+                         $(row).find("button.category i").addClass('cat-no-value');
+                     }   
+
                     if(data.pstatus=='Complete') {
                         $(row).find("button.productstatus i").addClass('icon-pstatus-have-pstatus-green');
                     } else if(data.pstatus=='Review') {
@@ -766,7 +781,7 @@
                     } else if(data.pstatus=='Pending') {
                         $(row).find("button.productstatus i").addClass('icon-pstatus-no-pstatus');
                     }
-
+/*
                     var url = '{{ path('admin_product_categories_ajax', {'id' : ":id"}) }}';
                     url = url.replace(':id', data.id);
                     $.ajax({
@@ -785,7 +800,7 @@
 
 
                         }
-                    });
+                    }); */
 
 
                     if (data.status == "Enabled") {
@@ -804,6 +819,7 @@
 
                  }       
             });
+
 
             bindClickEvent();
         }
