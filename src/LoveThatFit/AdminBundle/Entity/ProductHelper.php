@@ -350,7 +350,16 @@ class ProductHelper
         foreach ($finalData as $fData) {
 
          $priceData = $this->repo->checked_for_price($fData["id"]);          
-         $weightData = $this->repo->checked_for_weight($fData["id"]);   
+         $weightData = $this->repo->checked_for_weight($fData["id"]);  
+         $getselectedcategories = $this->repo->getSelectedCategories($fData["id"]);
+
+
+           $cat_count = 0;
+           if(count($getselectedcategories) > 0)
+           {
+              $cat_count = "1";
+           } 
+
          $totalItems = $this->repo->checked_total_items_listing($fData["id"]);  
 
 
@@ -367,6 +376,7 @@ class ProductHelper
                 'country_origin' => $fData['country_origin'],
                 'item_details' => $fData['item_details'],
                 'care_label' => $fData['care_label'],                                                               
+                'cat_count' => $cat_count,
                 'total_items' => $totalItems[0]['total_items'],
                 'price_status' => $priceData[0]['no_price'],
                 'weight_status' => $weightData[0]['no_weight'],         
@@ -414,7 +424,16 @@ class ProductHelper
 			
 			 
 			 $priceData = $this->repo->checked_for_price($fData["id"]);			 
-			 $weightData = $this->repo->checked_for_weight($fData["id"]);	
+			 $weightData = $this->repo->checked_for_weight($fData["id"]);
+             $getselectedcategories = $this->repo->getSelectedCategories($fData["id"]);
+
+
+               $cat_count = 0;
+               if(count($getselectedcategories) > 0)
+               {
+                  $cat_count = "1";
+               } 
+
 			 $totalItems = $this->repo->checked_total_items_listing($fData["id"]);		 			 
 			
             $output['data'][] = [
@@ -430,7 +449,8 @@ class ProductHelper
 				'item_details' => $fData['item_details'],
 				'care_label' => $fData['care_label'],																
 				'total_items' => $totalItems[0]['total_items'],
-				'price_status' => $priceData[0]['no_price'],
+                'total_items' => $totalItems[0]['total_items'],
+				'cat_count' => $cat_count,
 				'weight_status' => $weightData[0]['no_weight'],				
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
                 'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
