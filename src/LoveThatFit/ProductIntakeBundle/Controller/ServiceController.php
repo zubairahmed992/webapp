@@ -137,6 +137,58 @@ class ServiceController extends Controller {
             ]);
         }
     }
+     //---------------------- productImageUploadcheck
+    public function itemImageExistsAction($file_name) {
+        try {            
+            
+            $parsed_details = $this->breakFileNameProductImageUplaod($file_name);            
+            $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-', ' ', $parsed_details['brand']), $parsed_details['style_id_number']);                            
+            
+            if (count($data)==0) {
+                $res=$this->responseArray('Product not found');#------------------------------------------>
+                return new Response(json_encode($res));            
+            }
+            $parsed_details['product_id'] = $data[0]['id'];            
+
+            $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+            if (count($product_color) == 0) {
+                $res=$this->responseArray('color not found'); #------------------------------------------>
+                return new Response(json_encode($res));            
+            }
+
+            $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
+            if (count($product_size) == 0) {
+                $res=$this->responseArray('Size not found'); #------------------------------------------>
+                return new Response(json_encode($res));            
+            }
+
+            $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
+            if (count($product_item_id) == 0) {
+                $res=$this->responseArray('Product Item not found'); #------------------------------------------>
+                return new Response(json_encode($res));            
+            }
+            
+            $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);                                
+            $request= $this->get('request');
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+            $baseurl .'/'. $product_item->getWebPath();                
+            $uploaded=false;                                
+            if(file_exists($product_item->getAbsolutePath())) {
+                $res=$this->responseArray('File Exists', true, $baseurl .'/'. $product_item->getWebPath());
+            }else{
+                $res=$this->responseArray('File Not Found!');
+            }
+            
+            return new Response(json_encode($res));            
+            
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
 
     #---------------------------------------Image Uplaod Function -------------------------------
       public function imageUploadProductItemSize($FILES , $image_file)    {  
@@ -203,6 +255,8 @@ class ServiceController extends Controller {
         
         $_exploded = explode("_", strtolower($request_array));
         if (count($_exploded) == 5) {
+            $a['brand'] = str_replace("-", " ", $_exploded[0]);
+            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
             $a['color_title'] = str_replace("-", " ", $_exploded[2]);
             $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
             $_file_name = explode(".", $_exploded[4]);

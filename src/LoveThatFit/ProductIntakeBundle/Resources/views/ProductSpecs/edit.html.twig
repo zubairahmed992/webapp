@@ -670,7 +670,7 @@
                 <select name="styling_type" class="styling_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['styling_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.styling_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.styling_type|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.styling_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.styling_type|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>                
             </div>
