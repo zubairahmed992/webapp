@@ -42,23 +42,29 @@ class PodioController extends Controller {
               } 
               //city state and zip code in address
               $full_address_shipping = '';
-              if( isset($orders['shipping_address1']) ) {
+              if( isset($orders['shipping_address1']) && $orders['shipping_address1']!='' ) {
                 $full_address_shipping .= $orders['shipping_address1'];
               }
-              if( isset($orders['shipping_city']) ) {
-                if( isset($orders['shipping_address1']) ) {
+              if( isset($orders['shipping_address2']) && $orders['shipping_address2']!='' ) {
+                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
+                  $full_address_shipping .= ', ';
+                }
+                $full_address_shipping .= $orders['shipping_address2'];
+              }
+              if( isset($orders['shipping_city']) && $orders['shipping_city']!='' ) {
+                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
                   $full_address_shipping .= ' ';
                 }
                 $full_address_shipping .= $orders['shipping_city'];
               }
-              if( isset($orders['shipping_state']) ) {
-                if( isset($orders['shipping_city']) ) {
+              if( isset($orders['shipping_state']) && $orders['shipping_state']!='' ) {
+                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
                   $full_address_shipping .= ', ';
                 }
                 $full_address_shipping .= $orders['shipping_state'];
               }
-              if( isset($orders['shipping_postcode']) ) {
-                if( isset($orders['shipping_state']) ) {
+              if( isset($orders['shipping_postcode']) && $orders['shipping_postcode']!='' ) {
+                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
                   $full_address_shipping .= ' ';
                 }
                 $full_address_shipping .= $orders['shipping_postcode'];

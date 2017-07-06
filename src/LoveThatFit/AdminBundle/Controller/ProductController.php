@@ -187,7 +187,8 @@ class ProductController extends Controller {
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
-        $form = $this->createForm(new ProductDetailTypeNew($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()[$gender],$status,$disabled,$clothingType,$productArr), $entity);
+        //$form = $this->createForm(new ProductDetailTypeNew($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()[$gender],$status,$disabled,$clothingType,$productArr), $entity);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());

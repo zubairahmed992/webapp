@@ -92,20 +92,7 @@ class ProductRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('
-                p.id,
-                p.name,
-                p.control_number,
-                p.gender,
-                b.name as BName,
-                ct.name as cloting_type,
-                p.created_at,
-                p.disabled,
-				p.description,
-				p.item_name,				
-				p.country_origin,
-				p.item_details,								
-				p.care_label,				
-                p.status
+                p.id
             ')
             ->from('LoveThatFitAdminBundle:Product', 'p')
             ->join('p.brand', 'b')
@@ -113,7 +100,7 @@ class ProductRepository extends EntityRepository
             ->join('p.product_colors', 'pc')
             ->andWhere('p.gender=:gender')
             ->andWhere('p.deleted=0')
-            ->groupBy('pc.id')
+            ->groupBy('p.id')
             ->setParameter('gender', $gender);
         try {
             return $query->getQuery()->getResult();
@@ -124,7 +111,7 @@ class ProductRepository extends EntityRepository
 
     public function getTotalCount()
     {
-        $query = $this->getEntityManager()
+        /*$query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('
                 count(p) as total_count
@@ -138,7 +125,20 @@ class ProductRepository extends EntityRepository
             return $query->getQuery()->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }
+        }*/
+        $query     = $this->getEntityManager()->createQueryBuilder();
+        $query
+            ->select('
+                p.id
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0')
+            ->groupBy('p.id');
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
     }
 
     public function searchAllProduct($data, $page = 0, $max = NULL, $order, $getResult = true){
@@ -1637,7 +1637,8 @@ class ProductRepository extends EntityRepository
                  p.control_number,
                  p.horizontal_stretch,
                  p.vertical_stretch, 
-				 p.styling_type 
+				 p.styling_type,
+				 pit.price as MSRP
                 FROM `product` p
                 join `product_item` pit on pit.product_id=p.id
                 join `brand` b on b.id=p.brand_id

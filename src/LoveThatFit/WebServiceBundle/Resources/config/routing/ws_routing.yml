@@ -285,6 +285,10 @@ nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
 
+nws_delete_user_address:
+  pattern: /nws/delete_user_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:deleteUserShippingOrBillingAddress}
+
 nws_save_user_billing_address:
   pattern: /nws/save_user_billing_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserBillingAddress}
@@ -329,3 +333,7 @@ nws_selfieshare_create:
 ws_marketing_tiles:
     pattern:  /ws/marketing_tiles
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:marketingTiles}
+
+new_register_device_token:
+    pattern: /nws/register_device_token
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:regsiterUserDeviceToken}
