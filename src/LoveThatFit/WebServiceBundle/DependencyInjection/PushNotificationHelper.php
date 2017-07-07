@@ -207,8 +207,6 @@ class PushNotificationHelper
         }*/
 
         $cert = $this->getCertificateFile();
-        echo $this->env;
-        echo $cert;
 
         //echo $cert;
         //die;
@@ -304,7 +302,7 @@ class PushNotificationHelper
         if($env == "v3qa" || $env == "qa" ){
             return $directory. "/SelfieStyler3-QA.pem";
         }else if($env == "dev"){
-            return $directory. "/SSPush.pem";
+            return $directory. "/SelfieStyler3-QA.pem";
         }else if( $env == "prod" ){
             return $directory. "/pushcert.pem";
         }else{
