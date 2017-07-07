@@ -176,7 +176,7 @@ class Stamps
         try{
             $response = $this->soapClient->CreateIndicium($callData);
             return $response;
-        }catch (\Exception $e){
+        }catch (\SoapFault $e){
             return "";
         }
     }
@@ -199,7 +199,7 @@ class Stamps
 
                 return $tracking_event;
 
-            }catch (\Exception $e){
+            }catch (\SoapFault $e){
                 return "Pending";
             }
         }else{

@@ -1390,19 +1390,27 @@ class WebServiceHelper
 
     public function registerUserDeviceToken( $deviceToken, User $user){
         $usertokens = json_decode($user->getDeviceTokens());
-        $userTokenArray = array();
-        $deviceTokenFound = 0;
-        foreach ($usertokens as $tokens){
-            foreach ($tokens as $token){
-                if($deviceToken == $token){
-                    return 1;
+
+        if($usertokens != null){
+            $userTokenArray = array();
+            $deviceTokenFound = 0;
+            foreach ($usertokens as $tokens){
+                foreach ($tokens as $token){
+                    if($deviceToken == $token){
+                        return 1;
+                    }
                 }
             }
+
+            $userTokenArray = $usertokens->iphone;
+            array_push($userTokenArray, $deviceToken);
+            $userTokenToSave['iphone'] = $userTokenArray;
+        }else{
+            $userTokenToSave['iphone'] = array(
+                $deviceToken
+            );
         }
 
-        $userTokenArray = $usertokens->iphone;
-        array_push($userTokenArray, $deviceToken);
-        $userTokenToSave['iphone'] = $userTokenArray;
 
         $user->setDeviceTokens(
             json_encode($userTokenToSave)
