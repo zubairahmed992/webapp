@@ -160,7 +160,7 @@ class FitAlgorithm3 {
                     $eighty_five_GD = 0.85 * $fp['garment_measurement_flat'];
                     if ($fp['body_measurement'] <= $eighty_five_GD) {
                         $str = '(BM <= 85%GD) OK Fit';
-                    } elseif ($fp['body_measurement'] > $seventy_five_GD) {
+                    } elseif ($fp['body_measurement'] > $eighty_five_GD) {
                         $str = '(BM b/w 85-75%GD) Too Small';
                     }
                 }
