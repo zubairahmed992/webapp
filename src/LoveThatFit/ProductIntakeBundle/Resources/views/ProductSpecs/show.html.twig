@@ -43,6 +43,8 @@
                                         {% for key,val in parsed_data[specs_k] %}
                                             {{ key }}:<b>{{ val }}%</b>&nbsp;&nbsp;|&nbsp;&nbsp;                                                    
                                         {% endfor %}
+                                        {% elseif specs_k == 'fit_model_size'  %}
+                                            {{ fit_model_selected_size }}
                                      {% else %}
                                         {% if specs_k != 'fit_point_stretch' %}
                                                 <span>{{ specs_v }}</span>
