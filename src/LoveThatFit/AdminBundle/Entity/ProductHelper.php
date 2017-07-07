@@ -1705,4 +1705,26 @@ class ProductHelper
         $product = $this->repo->find($id);
         return $product->getDisabled();
     }
+    public function allProductItemImage() {        
+        $products = $this->repo->findListAllProduct();
+        $i = array();
+        $exists = false;
+        $brand='';
+        $ti=0;
+        $mii=0;
+        foreach ($products as $p) {
+            $pis = $p->getProductItems();
+            $brand=$p->getBrand()->getName();
+            foreach ($pis as $pi) {
+                $ti=$ti+1;
+                $exists = file_exists($pi->getAbsolutePath()) ? true : false;
+                if (!file_exists($pi->getAbsolutePath())) {
+                    $mii=$mii+1;
+                    array_push($i, array('product_id' => $p->getId(), 'item_id' => $pi->getId(), 'brand' => $brand, 'product' => $p->getName(), 'style_id_number' => $p->getControlNumber(), 'size' => $pi->getProductSize()->getTitle(), 'color' => $pi->getProductColor()->getTitle(), 'image' => $pi->getImage(), 'web_path' => $pi->getWebPath()));
+                }
+            }
+        }
+        return array('items'=>$i, 'total_items'=>$ti, 'missing_images'=>$mii);
+    }
+
 }

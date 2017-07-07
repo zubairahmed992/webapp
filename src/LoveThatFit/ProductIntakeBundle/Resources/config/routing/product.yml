@@ -2,3 +2,8 @@ product_intake_product_image_upload_index:
     pattern:  /product_intake/product/image_upload_index
     defaults: { _controller: LoveThatFitProductIntakeBundle:Product:imageUploadIndex}
 
+product_intake_product_image_exists_check:
+    pattern:  /product_intake/product/image_exists_check
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Product:imageExistsCheck}
+
+
