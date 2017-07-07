@@ -84,53 +84,92 @@ class FitAlgorithm3 {
         return $ext_alerts;
     }
     
-    public function veero($fp){
-        $str='';
-        
+    public function veero($fp) {
+        $str = '';
+
         $layer = intval(substr($this->product->getLayering(), 0, 1));
-        $status= $this->configure_additional_status($fp);
-        if ($status<=2 && $status>=-2){
-            $str='Perfect Fit';
-        }elseif ($status>2 && $status<=4){
-            $str='Loose';
-        }elseif ($status==5){
-            $str='Extra Loose';
-        }else{
-            $max_gd_ratio=$fp['max_body_measurement']/$fp['garment_measurement_flat'];
-            $body_gd_ratio=$fp['body_measurement']/$fp['garment_measurement_flat'];
-           # return $max_gd_ratio;
-            if($layer==4){
-                 if($max_gd_ratio>0.85){#Close fitting
-                        if($status==-3 || $status==-4){ #------> high-max
-                            $str='Close Fitting';
-                        }elseif($status==-8){ #------> max-gd (new status)
-                            $str='Too Small';
-                        }
-                    }elseif($max_gd_ratio>0.75){#Relax fitting
-                        if($status==-3 || $status==-4){#------> high-max
-                            $str='OK Fit';
-                        }else{ # above max status=-5 or -8
-                            #$ext_alerts[$size][$fp]['max-gd_ratio_relax'] = array('max-92gd'=>'Poor Fit','92gd-abv'=>'Too Small');
-                            if ($body_gd_ratio<=0.92){
-                                $str='Poor Fit';
-                            }else{ #$body_gd_ratio>0.92
-                                $str='Too Small';
-                            }
-                        }
-                    }elseif($max_gd_ratio<=0.75){#Loose fitting
-                        #$ext_alerts[$size][$fp]['max-gd_ratio_loose'] = array('high-75gd'=>'OK Fit', '75gd-abv'=>'Too Small');
-                        if($status==-3){#high-max where max=0.75gd
-                            $str='OK Fit';
-                        }elseif($status==-4 || $status==-5 || $status==-8){#------> max-above
-                            $str='Too Small';
-                         }
+        $status = $this->configure_additional_status($fp);
+        if ($status <= 2 && $status >= -2) {
+            $str = 'Perfect Fit';
+        } elseif ($status > 2 && $status <= 4) {
+            $str = 'Loose';
+        } elseif ($status == 5) {
+            $str = 'Extra Loose';
+        } else {
+            $max_gd_ratio = $fp['max_body_measurement'] / $fp['garment_measurement_flat'];
+            $body_gd_ratio = $fp['body_measurement'] / $fp['garment_measurement_flat'];
+            # return $max_gd_ratio;
+            if ($layer == 4) {
+                if ($max_gd_ratio > 0.85) {#Close fitting
+                    if ($status == -3 || $status == -4) { #------> high-max
+                        $str = '(b/w high-max) Close Fitting';
+                    } elseif ($status == -8) { #------> max-gd (new status)
+                        $str = '(b/w max-GD) Too Small';
                     }
-            }else{
+                } elseif ($max_gd_ratio >= 0.75) {#Relax fitting
+                    if ($status == -3 || $status == -4) {#------> high-max
+                        $str = 'OK Fit';
+                    } else { # above max status=-5 or -8
+                        #$ext_alerts[$size][$fp]['max-gd_ratio_relax'] = array('max-92gd'=>'Poor Fit','92gd-abv'=>'Too Small');
+                        $ninety_two_GD = 0.92 * $fp['garment_measurement_flat'];
+                        if ($fp['body_measurement'] <= $ninety_two_GD) {
+                            $str = '(BM <= 92%GD) Poor Fit';
+                        } elseif ($fp['body_measurement'] > $ninety_two_GD) {
+                            $str = '(BM > 92%GD) Too Small';
+                        }
+
+//                            if ($body_gd_ratio<=0.92){ #??? calculate 92% of GD then find if in betwen max & 92% of GD
+//                                $str='Poor Fit';
+//                            }else{ #$body_gd_ratio>0.92
+//                                $str='Too Small';
+//                            }
+                    }
+                } elseif ($max_gd_ratio < 0.75) {#Loose fitting
+                    $seventy_five_GD = 0.75 * $fp['garment_measurement_flat'];
+                    if ($fp['body_measurement'] <= $seventy_five_GD) {
+                        $str = '(BM <= 75%GD) OK Fit';
+                    } elseif ($fp['body_measurement'] > $seventy_five_GD) {
+                        $str = '(BM > 75%GD) Too Small';
+                    }
+//                        #$ext_alerts[$size][$fp]['max-gd_ratio_loose'] = array('high-75gd'=>'OK Fit', '75gd-abv'=>'Too Small');
+//                        if($status==-3){#high-max where max=0.75gd
+//                            $str='OK Fit';
+//                        }elseif($status==-4 || $status==-5 || $status==-8){#------> max-above
+//                            $str='Too Small';
+//                         }
+                }
+            } else {#----------> Layer 1,2 & 3 #############################################>>><<<
+                if ($max_gd_ratio > 0.92) {#Close fitting
+                    if ($status == -3 || $status == -4) { #------> high-max
+                        $str = '(b/w high-max) Close Fitting';
+                    } elseif ($status == -8) { #------> max-gd (new status)
+                        $str = '(b/w max-GD) Too Small';
+                    }
+                } elseif ($max_gd_ratio >= 0.85) {#Relax fitting
+                    if ($status == -3 || $status == -4) {#------> high-max
+                        $str = 'OK Fit';
+                    } else { # above max status=-5 or -8
+                        $ninety_two_GD = 0.92 * $fp['garment_measurement_flat'];
+                        if ($fp['body_measurement'] <= $ninety_two_GD) {
+                            $str = '(BM <= 92%GD) Poor Fit';
+                        } elseif ($fp['body_measurement'] > $ninety_two_GD) {
+                            $str = '(BM > 92%GD) Too Small';
+                        }
+                    }
+                } elseif ($max_gd_ratio < 0.85) {#Loose fitting
+                    $eighty_five_GD = 0.85 * $fp['garment_measurement_flat'];
+                    if ($fp['body_measurement'] <= $eighty_five_GD) {
+                        $str = '(BM <= 85%GD) OK Fit';
+                    } elseif ($fp['body_measurement'] > $eighty_five_GD) {
+                        $str = '(BM b/w 85-75%GD) Too Small';
+                    }
+                }
                 
             }
         }
         return $str;
     }
+
     private function altered_fitting_alerts($layer, $pos, $max_gd, $body_gd){
         $str='';
         if ($pos=='low-high'){
@@ -330,6 +369,7 @@ class FitAlgorithm3 {
                             }
                             
                             $fb[$size_identifier]['fit_points'][$pfp_key]['fitting'] =  $this->get_fitting_type($fb[$size_identifier]['fit_points'][$pfp_key]);
+                            $fb[$size_identifier]['fit_points'][$pfp_key]['ext_message'] =  $this->veero($fb[$size_identifier]['fit_points'][$pfp_key]);
                         }else{
                             $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
                         }

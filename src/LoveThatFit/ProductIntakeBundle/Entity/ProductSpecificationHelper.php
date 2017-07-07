@@ -15,6 +15,7 @@ use LoveThatFit\AdminBundle\Entity\ProductColor;
 class ProductSpecificationHelper {
 
     protected $conf;
+    protected $size_config;
     protected $dispatcher;
 
     /**
@@ -41,6 +42,8 @@ class ProductSpecificationHelper {
         $this->repo = $em->getRepository($class);
         $conf_yml = new Parser();
         $this->conf = $conf_yml->parse(file_get_contents('../src/LoveThatFit/ProductIntakeBundle/Resources/config/specs_config.yml'));
+        $this->size_config = $conf_yml->parse(file_get_contents('../app/config/sizes_ltf.yml'));     
+
     }
 
     #---------------------------------   
@@ -892,7 +895,11 @@ class ProductSpecificationHelper {
     public function getExistingProductDetails( $id )
     {       
         $new_fp = array('hip' => 'low_hip', 'thigh' => 'high_thigh', 'central_front_waist' => 'cf_waist');
-        $data = $this->container->get('service.repo')->getExistingProductDetails($id);   
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id); 
+//        $product_sizes_sorted = $this->product_size_sorting($data[0][0]['gender'],$data[0][0]['size_title_type'], $data[0][0]['product_sizes']);
+//        echo "<pre>";
+//        print_R($product_sizes_sorted);
+//        die;
         $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
@@ -921,8 +928,9 @@ class ProductSpecificationHelper {
         $data1['mapping_description']=$data[0]['clothing_type'];       
         $data1['measuring_unit']='inch';       
         $data1['fit_priority'] = $this->replace_with_new_fitpoint($data1['fit_priority'], $new_fp); #replacing old fit point with new
-        
-        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+        //------------- Return Product Sizes Sorted Form
+        $product_sizes_sorted = $this->product_size_sorting($data[0][0]['gender'],$data[0][0]['size_title_type'], $data[0][0]['product_sizes']);
+        foreach ($product_sizes_sorted as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
                      $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];#replacing old fit point with new
                     $stretch_percentage = ($value['garment_measurement_stretch_fit'] == 0)? 0 :(($value['garment_measurement_stretch_fit'] - $value['garment_measurement_flat'])/$value['garment_measurement_flat'])*100;
@@ -1056,6 +1064,24 @@ class ProductSpecificationHelper {
 //            }
         
         return $data1;
+    }
+    
+   //----------------- Product Sizes Sorting any formating using Config file sizes_ltf.yml based on index  
+    public function product_size_sorting($gender, $size_title, $product_size_array) {
+         $size_config = $this->size_config;
+         $gender_title = ($gender == 'f' ? 'woman':'men');
+         //return $gender_title;
+         $size_index_array =  $size_config['constants']['size_titles'][$gender_title][$size_title];
+         $product_size_title_array = array_flip(array_column($product_size_array, 'title'));
+        // return  $product_size_array;
+         $product_size_title_sorted = array_intersect_key($size_index_array, $product_size_title_array );
+      // return array_intersect_key($size_index_array, $product_size_title_array );         
+        //----------- Filter the Array baseb on array key 
+        foreach($product_size_title_sorted as $key => $size_title ){
+          $size_title_key =  array_search($size_title['title'], array_column($product_size_array, 'title'));
+          $product_sorted_size_tilte[] = $product_size_array[$size_title_key]; 
+        }
+        return $product_sorted_size_tilte;
     }
 }
 
