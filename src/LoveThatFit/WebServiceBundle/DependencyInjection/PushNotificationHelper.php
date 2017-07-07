@@ -10,13 +10,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 class PushNotificationHelper
 {
 
-    private $env;
+    protected $env;
     private $fileNamesArray;
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $yaml = new Parser();
-        $env                = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['push_envior'];
     }
 
     //-------------------------------------------------------
@@ -209,6 +207,8 @@ class PushNotificationHelper
         }*/
 
         $cert = $this->getCertificateFile();
+        echo $this->env;
+        echo $cert;
 
         //echo $cert;
         //die;
@@ -297,12 +297,15 @@ class PushNotificationHelper
     }
 
     protected function getCertificateFile(){
+        $yaml = new Parser();
+        $env  = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['push_envior'];
+
         $directory = dirname(__FILE__);
-        if($this->env = "v3qa" || $this->env == "qa" ){
+        if($env == "v3qa" || $env == "qa" ){
             return $directory. "/SelfieStyler3-QA.pem";
-        }else if($this->env == "dev"){
+        }else if($env == "dev"){
             return $directory. "/SSPush.pem";
-        }else if( $this->env == "prod" ){
+        }else if( $env == "prod" ){
             return $directory. "/pushcert.pem";
         }else{
             return $directory. "/SelfieStyler3.pem";
