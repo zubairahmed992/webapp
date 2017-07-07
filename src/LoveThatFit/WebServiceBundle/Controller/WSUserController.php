@@ -348,7 +348,7 @@ class WSUserController extends Controller
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {
-            $userDeviceToken = (isset($decoded['auth_token'])) ? $decoded['auth_token'] : "";
+            $userDeviceToken = (isset($decoded['device_token'])) ? $decoded['device_token'] : "";
             if(!empty($userDeviceToken)){
                 $registerToken = $this->get('webservice.helper')->registerUserDeviceToken( $userDeviceToken, $user);
                 if($registerToken > 0)
