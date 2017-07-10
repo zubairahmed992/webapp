@@ -1417,4 +1417,11 @@ class WebServiceHelper
         return 0;
     }
 
+    public function getShippintType(){
+        $yaml = new Parser();
+        $shippmentType  = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'))['stamps_com_dev']['shippment'];
+
+        return $shippmentType;
+    }
+
 }
