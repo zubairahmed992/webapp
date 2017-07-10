@@ -35,7 +35,12 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $tab){   
-        $ps = $this->get('pi.product_specification')->find($id);  
+        $ps = $this->get('pi.product_specification')->find($id); 
+        if( $ps->getSpecsJson()== 'null' ) {
+            $ps->setSpecsJson($ps->getUndoSpecsJson());
+            $msg_ar = $this->get('pi.product_specification')->update($ps);        
+            $this->get('session')->setFlash('fitPoint', "Please Add Unique Fit Point Title");              
+        }         
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         
