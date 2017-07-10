@@ -230,9 +230,17 @@ class ProductSpecificationHelper {
                 'success' => false,
             );
         }        
-        $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
-        $specs_obj->setSpecsJson(json_encode($specs));
-        return $this->update($specs_obj);
+        if ($specs){
+            $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
+            $specs_obj->setSpecsJson(json_encode($specs));
+            return $this->update($specs_obj);
+        }else{
+            return array(
+                'message' => 'Nothing to update!',
+                'message_type' => 'error',
+                'success' => false,
+            );
+        }
     }
 
     #------------------->1 Overall Stretch >>>>>>>>>>>>>>>>>>>>>>>>>>>
