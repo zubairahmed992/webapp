@@ -20,3 +20,4 @@ stamps_com_dev:
   weightOz: 20
   packagetype: Package
   deliverydays: 1-3
+  shippment: 0 # 0-free and 1-paid

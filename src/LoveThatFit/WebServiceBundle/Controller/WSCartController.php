@@ -7,6 +7,7 @@ use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Parser;
 
 class WSCartController extends Controller
 {
@@ -771,9 +772,30 @@ class WSCartController extends Controller
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $addresses['shipping_methods'] = array();
             if(!empty($user_cart)){
-                $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
+                $shippmentType  = $this->get('webservice.helper')->getShippintType();
+                if($shippmentType == 1){
+                    $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
+                    $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
+                }elseif ($shippmentType == 0){
+                    $response = array(
+                        'verified' => true,
+                        'shipping_method' => array(
+                            array(
+                                'amount' => 0,
+                                'deliverDays' => 4,
+                                'shipDate'    => date('Y-m-d'),
+                                'deliveryDate' => date('Y-m-d', strtotime("+4 days")),
+                                'serviceType' => "",
+                                'FromZIPCode' => "",
+                                'ToZIPCode' => "",
+                                'WeightOz' => 0,
+                                'InsuredValue' => 0,
+                                'RectangularShaped' => false
+                            ),
+                        )
+                    );
+                }
 
-                $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
                 $addresses['shipping_methods'] = array();
                 if($response['verified']){
                     $addresses['shipping_methods'] = $response['shipping_method'];
@@ -819,10 +841,20 @@ class WSCartController extends Controller
     }
 
     public function addressVerificationAction(){
-        $stampsDotCom = new Stamps();
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $stampsDotCom   = new Stamps();
 
-        $response = $stampsDotCom->addressVerification( $decoded );
+        $decoded        = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $shippmentType  = $this->get('webservice.helper')->getShippintType();
+
+        if($shippmentType == 1){
+            $response = $stampsDotCom->addressVerification( $decoded );
+        }elseif ($shippmentType == 0){
+            $response = array(
+                'verified'  => true,
+                'data'      => array()
+            );
+        }
+
         if($response['verified'])
         {
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $response['data']);
