@@ -336,6 +336,38 @@ select#FNFUser_users.custom_select{height: 100px;}
 }
 
 /* Custom CSS - Brand Popup - Maani*/
+
+.frm_ele {
+    padding: 10px 0px;
+    overflow: initial;
+    width: 100%;
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    clear: both;
+}
+.adv_gdr {
+    display: block;
+    float: left;
+    margin: 2px 8px 6px 8px;
+}
+.adv_radio {
+    margin: 4px 5px 1px 5px;
+    display: block;
+}
+
+.ui-widget-header .ui-icon {
+    background-image: url("../images/glyphicons-halflings.png") !important;
+}
+.ui-icon-circle-triangle-e {
+    background-position: -239px -143px !important;
+}
+.ui-icon-circle-triangle-w {
+    background-position: -263px -143px !important;
+}
+
+
+
 #model_product_status {
     left: 55%;
 }
