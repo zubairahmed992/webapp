@@ -361,14 +361,17 @@
                 //$(this).val(value);                
             },
             success: function(response, newValue) {                  
-            //     $(this).val(response);                     
-                //fill_table(response);
-                //var url = window.location.href; 
-                reload_page();
-                //location.reload();
-                //console.log(response);
-                //alert(response);
-            }    
+               data = $.parseJSON(response);                     
+                //fill_table(response);                
+                reload_page();  
+                if(data.message_type == 'error'){
+                    alert("Please Add Unique Fit Point Title!")
+                }              
+            } ,
+            error: function () {
+                alert("Error in Ajax");
+            }
+
         });
             //-------- Drop Down X- Editable    
            $('.fit_model_size').editable({      
