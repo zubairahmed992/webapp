@@ -2,7 +2,7 @@
 
 namespace LoveThatFit\SiteBundle\DependencyInjection;
 use LoveThatFit\AdminBundle\Entity\SizeHelper;
-class FitAlgorithm3 {
+class FitAlgorithm2Old {
 
     private $user;
     private $product;
@@ -21,16 +21,7 @@ class FitAlgorithm3 {
         'beyond_max' => array('status'=>-5, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>null,  'message'=>'Too Small', 'status_text'=>'beyond_max'),        
         'user_measurement_missing' => array('status'=>-6, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'User measurement not provided', 'status_text'=>'user_measurement_missing'),        
         'product_measurement_missing' => array('status'=>-7, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'Product measurement missing', 'status_text'=>'product_measurement_missing'),        
-        'between_max_75_gd' => array('status'=>-74, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'Between Max & 75% of Garment Dimension', 'status_text'=>'between_max_75_gd'),        
-        'at_75_gd' => array('status'=>-75, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'At 75% of Garment Dimension', 'status_text'=>'at_75_gd'),        
-        'between_75_85_gd' => array('status'=>-84, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'Between 75% & 85% of Garment Dimension', 'status_text'=>'between_75_85_gd'),        
-        'at_85_gd' => array('status'=>-85, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'At 85% of Garment Dimension', 'status_text'=>'at_85_gd'),        
-        'between_85_92_gd' => array('status'=>-91, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'Between 85% & 92% of Garment Dimension', 'status_text'=>'between_85_92_gd'),        
-        'at_92_gd' => array('status'=>-92, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'At 92% of Garment Dimension', 'status_text'=>'at_92_gd'),        
-        'between_92_gd' => array('status'=>-99, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'Between 92% & Garment Dimension', 'status_text'=>'between_92_to_gd'),        
-        'at_gd' => array('status'=>-100, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'At Garment Dimension', 'status_text'=>'at_gd'),        
-        
-        );
+    );
 #-----------------------------------------------------
 
     function __construct($user = null, $product = null) {
@@ -57,139 +48,9 @@ class FitAlgorithm3 {
     function getFeedBack() {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
-            $cm['layering']=$this->product->getLayering();
             return $cm;
         }
     }
-
-#-----------------------------------------------------
-    private $fitting_allerts = array(
-        'extra_loose' => array('message' => '', 'fit' => true, 'fit_index' => 0), 
-        'loose' => array('message' => '', 'fit' => true, 'fit_index' => 0), 
-        'perfect' => array('message' => '', 'fit' => true, 'fit_index' => 0), 
-        'close_fitting' => array('message' => '', 'fit' => true, 'fit_index' => 0), 
-        'ok_fit' => array('message' => '', 'fit' => true, 'fit_index' => 0), 
-        'poor_fit' => array('message' => '', 'fit' => true, 'fit_index' => 0), 
-        'too_small' => array('message' => '', 'fit' => true, 'fit_index' => 0));
-    
-
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>>>>>>>>
-
-    private function veero($fp) {
-        $str = '';
-        $status=null;
-        $layer = intval(substr($this->product->getLayering(), 0, 1));
-        $status = $this->configure_additional_status($fp);
-        if ($status <= 2 && $status >= -2) {
-            $str = 'Perfect Fit';
-        } elseif ($status > 2 && $status <= 4) {
-            $str = 'Loose';
-        } elseif ($status == 5) {
-            $str = 'Extra Loose';
-        } else {
-            $max_gd_ratio = $fp['max_body_measurement'] / $fp['garment_measurement_flat'];
-            $body_gd_ratio = $fp['body_measurement'] / $fp['garment_measurement_flat'];
-            # return $max_gd_ratio;
-            if ($layer == 4) {
-                if ($max_gd_ratio > 0.85) {#Close fitting
-                    if ($status == -3 || $status == -4) { #------> high-max
-                        $str = '(b/w high-max) Close Fitting';
-                    } elseif ($status == -8) { #------> max-gd (new status)
-                        $str = '(b/w max-GD) Too Small';
-                    }
-                } elseif ($max_gd_ratio >= 0.75) {#Relax fitting
-                    if ($status == -3 || $status == -4) {#------> high-max
-                        $str = 'OK Fit';
-                    } else { # above max status=-5 or -8
-                        #$ext_alerts[$size][$fp]['max-gd_ratio_relax'] = array('max-92gd'=>'Poor Fit','92gd-abv'=>'Too Small');
-                        $ninety_two_GD = 0.92 * $fp['garment_measurement_flat'];
-                        if ($fp['body_measurement'] <= $ninety_two_GD) {
-                            $str = '(BM <= 92%GD) Poor Fit';
-                        } elseif ($fp['body_measurement'] > $ninety_two_GD) {
-                            $str = '(BM > 92%GD) Too Small';
-                        }
-
-//                            if ($body_gd_ratio<=0.92){ #??? calculate 92% of GD then find if in betwen max & 92% of GD
-//                                $str='Poor Fit';
-//                            }else{ #$body_gd_ratio>0.92
-//                                $str='Too Small';
-//                            }
-                    }
-                } elseif ($max_gd_ratio < 0.75) {#Loose fitting
-                    $seventy_five_GD = 0.75 * $fp['garment_measurement_flat'];
-                    if ($fp['body_measurement'] <= $seventy_five_GD) {
-                        $str = '(BM <= 75%GD) OK Fit';
-                    } elseif ($fp['body_measurement'] > $seventy_five_GD) {
-                        $str = '(BM > 75%GD) Too Small';
-                    }
-//                        #$ext_alerts[$size][$fp]['max-gd_ratio_loose'] = array('high-75gd'=>'OK Fit', '75gd-abv'=>'Too Small');
-//                        if($status==-3){#high-max where max=0.75gd
-//                            $str='OK Fit';
-//                        }elseif($status==-4 || $status==-5 || $status==-8){#------> max-above
-//                            $str='Too Small';
-//                         }
-                }
-            } else {#----------> Layer 1,2 & 3 #############################################>>><<<
-                if ($max_gd_ratio > 0.92) {#Close fitting
-                    if ($status == -3 || $status == -4) { #------> high-max
-                        $str = '(b/w high-max) Close Fitting';
-                    } elseif ($status == -8) { #------> max-gd (new status)
-                        $str = '(b/w max-GD) Too Small';
-                    }
-                } elseif ($max_gd_ratio >= 0.85) {#Relax fitting
-                    if ($status == -3 || $status == -4) {#------> high-max
-                        $str = 'OK Fit';
-                    } else { # above max status=-5 or -8
-                        $ninety_two_GD = 0.92 * $fp['garment_measurement_flat'];
-                        if ($fp['body_measurement'] <= $ninety_two_GD) {
-                            $str = '(BM <= 92%GD) Poor Fit';
-                        } elseif ($fp['body_measurement'] > $ninety_two_GD) {
-                            $str = '(BM > 92%GD) Too Small';
-                        }
-                    }
-                } elseif ($max_gd_ratio < 0.85) {#Loose fitting
-                    $eighty_five_GD = 0.85 * $fp['garment_measurement_flat'];
-                    if ($fp['body_measurement'] <= $eighty_five_GD) {
-                        $str = '(BM <= 85%GD) OK Fit';
-                    } elseif ($fp['body_measurement'] > $eighty_five_GD) {
-                        $str = '(BM beyond 85%GD) Too Small';
-                    }
-                }
-                
-            }
-        }
-        return $str;
-    }    
-#-----------------------------------------------------
-    private function configure_additional_status($fp){
-        $s =  intval($fp['status']);
-        #if greater than max but less than or equal to garment dimension
-        if($s==-5 && $fp['body_measurement']<=$fp['garment_measurement_flat']){
-            return -8; #max-gd
-        }else{
-            return $s;
-        }
-    }
-#-----------------------------------------------------
-    private function get_fitting_type($fp){
-        $layer = intval(substr($this->product->getLayering(), 0, 1));
-        $max_gd_ratio=$fp['max_body_measurement']/$fp['garment_measurement_flat'];
-        $str='';
-            if($layer==4){
-                if($max_gd_ratio>0.85){return 'Close: Max 100-85% of GD';
-                }elseif($max_gd_ratio>0.75){return 'Relax: Max 85-75% of GD';
-                }elseif($max_gd_ratio<=0.75){return 'Loose: Max < 75% GD';
-                }
-            }else{
-                if($max_gd_ratio>0.92){return 'Close: Max < 85% of GD';
-                }elseif($max_gd_ratio>0.85){return 'Relax: Max 92-85 % of GD';
-                }elseif($max_gd_ratio<=0.85){return 'Loose: Max w/n 92% of GD';
-                }                
-            }
-        return $str;
-    }
-    
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%>>>>>>>>    
     #-----------------------------------------------------
     function getFeedBackForSizeTitle($size) {
 
@@ -304,7 +165,7 @@ class FitAlgorithm3 {
                             $fb[$size_identifier]['low_fx'] =$fb[$size_identifier]['low_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['low_fx'];
                             $fb[$size_identifier]['avg_fx'] =$fb[$size_identifier]['avg_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['avg_fx'];
                             $fb[$size_identifier]['variance']=$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
-                            #----------------------------------------->>
+                            
                             if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
                                 $fb[$size_identifier]['status'] =$this->status['beyond_max'];
                                 $fb[$size_identifier]['fit_index'] = 0;
@@ -312,10 +173,7 @@ class FitAlgorithm3 {
                             }elseif($fb[$size_identifier]['status'] != $this->status['beyond_max']){
                                 $fb[$size_identifier]['fit_index'] = $fb[$size_identifier]['fit_index']+$fb[$size_identifier]['fit_points'][$pfp_key]['body_fx'];                        
                             }
-                            #----------------------------------------->>
-                            $fb[$size_identifier]['fit_points'][$pfp_key]['fitting'] =  $this->get_fitting_type($fb[$size_identifier]['fit_points'][$pfp_key]);
-                            $fb[$size_identifier]['fit_points'][$pfp_key]['old_message'] =  $fb[$size_identifier]['fit_points'][$pfp_key]['message'];
-                            $fb[$size_identifier]['fit_points'][$pfp_key]['message'] =  $this->veero($fb[$size_identifier]['fit_points'][$pfp_key]);
+                            
                         }else{
                             $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
                         }
@@ -634,57 +492,6 @@ private function calculate_fitindex($fp_specs){
     
         #----------------------------------------------------------       
     private function get_fitting_alert_message($id) {
-        
-        switch ($id) {
-            case $this->status['fit_point_dose_not_match'] :
-                return 'Fitting point dose not exists';
-                break;
-            case $this->status['body_measurement_not_available'] :
-                return 'Member measurement not provided';
-                break;
-            case $this->status['product_measurement_not_available'] :
-                return 'Product measurement missing';
-                break;
-            case $this->status['beyond_max'] :
-                return 'Too Small';
-                break;
-            case $this->status['at_max'] :
-                return 'tight fitting';
-                break;
-            case $this->status['between_max_high'] :
-                return 'close fitting';
-                break;
-            case $this->status['at_high'] :
-                return 'close fitting';
-                break;
-            case $this->status['between_high_mid'] :
-                return 'Perfect Fit';
-                break;
-            case $this->status['at_mid'] :
-                return 'Perfect Fit';
-                break;
-            case $this->status['between_mid_low'] :
-                return 'Perfect Fit';
-                break;
-            case $this->status['at_low'] :
-                return 'Loose';
-                break;
-            case $this->status['between_low_min'] :
-                return 'Loose';
-                break;
-            case $this->status['at_min'] :
-                return 'Loose';
-                break;
-            case $this->status['below_min'] :
-                return 'Extra Loose';
-                break;
-            case $this->status['anywhere_below_max'] :
-                return 'Tight at some points & loose at others';
-                break;
-        }        
-    }
-    #-------------------------------------------
-    private function fitting_alert_messages($id) {
         
         switch ($id) {
             case $this->status['fit_point_dose_not_match'] :
