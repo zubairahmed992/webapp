@@ -2427,6 +2427,7 @@ class User implements UserInterface, \Serializable {
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
                 'auth_token' => $this->getAuthToken(),
+                'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format('Y-m-d') : null,
                 'birth_date' => $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
                 'weight' => $this->measurement ? $this->measurement->getWeight() : 0,
                 'height' => $this->measurement ? $this->measurement->getHeight() : 0,
