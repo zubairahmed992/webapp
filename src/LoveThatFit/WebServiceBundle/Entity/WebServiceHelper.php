@@ -86,7 +86,7 @@ class WebServiceHelper
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
                     $response_array['user']['defaultProduct'] = array(
                         "top" => 567,
-                        "button" => 619
+                        "bottom" => 619
                     );
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
@@ -121,7 +121,7 @@ class WebServiceHelper
             $data['user'] = $this->user_array($user, $request_array);
             $data['user']['defaultProduct'] = array(
                 "top" => 567,
-                "button" => 619
+                "bottom" => 619
             );
 
             return $this->response_array(true, 'member found', true, $data);
@@ -1418,6 +1418,13 @@ class WebServiceHelper
 
         $this->container->get('user.helper.user')->saveUser($user);
         return 0;
+    }
+
+    public function getShippintType(){
+        $yaml = new Parser();
+        $shippmentType  = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'))['stamps_com_dev']['shippment'];
+
+        return $shippmentType;
     }
 
 }
