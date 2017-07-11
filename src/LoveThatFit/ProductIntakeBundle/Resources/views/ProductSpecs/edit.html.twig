@@ -361,14 +361,17 @@
                 //$(this).val(value);                
             },
             success: function(response, newValue) {                  
-            //     $(this).val(response);                     
-                //fill_table(response);
-                //var url = window.location.href; 
-                reload_page();
-                //location.reload();
-                //console.log(response);
-                //alert(response);
-            }    
+               data = $.parseJSON(response);                     
+                //fill_table(response);                
+                reload_page();  
+                if(data.message_type == 'error'){
+                    alert("Please Add Unique Fit Point Title!")
+                }              
+            } ,
+            error: function () {
+                alert("Error in Ajax");
+            }
+
         });
             //-------- Drop Down X- Editable    
            $('.fit_model_size').editable({      
@@ -1035,11 +1038,7 @@
                             </div>   
                 <br>                
                 
-                <div class="form-group">
-                     {% if app.session.hasFlash('fitPoint')%}
-                        <div class="alert alert-info">{{ app.session.flash('fitPoint') }}</div>   
-                    {% endif %}
-                   
+                <div class="form-group">                  
                     <label class="control-label col-sm-2" for="new_fit_point">Add new Fit Point : </label>
                     <div class="col-sm-4">
                         <input value="" type="text" class="form-control edit_inline" readonly="ture" name="add_new_fit_point" id="add_new_fit_point" data-type="text"  data-title="Enter New Fit Point" placeholder="Enter New Fit Point">

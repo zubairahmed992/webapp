@@ -195,7 +195,8 @@ class ServiceController extends Controller {
         $request = $this->getRequest();
         if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {            
             $file_name = $FILES['file']['name'];            
-            $parsed_details = $this->breakFileNameProductImageUplaod($file_name);            
+            $parsed_details = $this->breakFileNameProductImageUplaod($file_name);   
+            
             #--------------------------------------------------------------
             if ($parsed_details['success'] == 'false') {                
                 return $this->responseArray('invalid file naming format');
@@ -251,13 +252,15 @@ class ServiceController extends Controller {
         # 4 Color Title and file Extention
         #last bit, view is optional
         #Citizens-of-Humanity_001n-001_brown_Regular_26
+        #Karen Kane_L09190W_Black_P_22.png 
         
-        $_exploded = explode("_", strtolower($request_array));
+        $_exploded = explode("_", strtolower($request_array));        
         if (count($_exploded) == 5) {
             $a['brand'] = str_replace("-", " ", $_exploded[0]);
             $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
             $a['color_title'] = str_replace("-", " ", $_exploded[2]);
-            $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
+            $a['body_type'] = strtolower($_exploded[3]) == 'p' ? 'plus' : 'regular';
+            #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
             $_file_name = explode(".", $_exploded[4]);
             $a['size_title'] = str_replace("-", "_", $_file_name[0]);
             $a['success'] = 'true';
