@@ -394,7 +394,7 @@ class WSCartController extends Controller
 
                 $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
             } else if ($result['success'] < 0) {
-                $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
+                $res = $this->get('webservice.helper')->response_array(false, $result['response_code'], true, $result);
             }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
@@ -782,7 +782,7 @@ class WSCartController extends Controller
                         'shipping_method' => array(
                             array(
                                 'amount' => 0,
-                                'deliverDays' => 4,
+                                'deliverDays' => "4",
                                 'shipDate'    => date('Y-m-d'),
                                 'deliveryDate' => date('Y-m-d', strtotime("+4 days")),
                                 'serviceType' => "",
