@@ -937,7 +937,7 @@ class UserHelper
         return true;
     }
 
-    public function duplicateUser($duplicate_user, $data)
+    public function duplicateUser(User $duplicate_user, $data, $version = 0)
     {
         /*
         $active_status = $this->container->get('user.helper.userarchives')->getActiveArchiveCount($duplicate_user);
@@ -1003,6 +1003,8 @@ class UserHelper
             $user->setImageDeviceModel($data['ImageDeviceModel']);
             $user->setDeviceTokens($data['device_tokens']);
             $user->setOriginalUser($duplicate_user);
+            $user->setVersion( $version );
+
             $this->saveUser($user);
             $id = $user->getId();
             $this->duplicateUserMeasurement($user, $duplicate_user);
