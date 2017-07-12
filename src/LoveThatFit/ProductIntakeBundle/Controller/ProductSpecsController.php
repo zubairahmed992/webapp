@@ -196,21 +196,25 @@ class ProductSpecsController extends Controller
                         foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
                             $coordins = $this->extracts_coordinates($fit_model_measurement);
                             $fmm_value = $this->fraction_to_number(floatval($csv_array[$coordins['r']][$coordins['c']]));
+                               if($fmm_value != 0){
                             $original_value = $fmm_value;
                             #~~~~~~>convert to measuring unit
                             if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
                                 $fmm_value = $fmm_value * 0.393700787;
                             }
                             $unit_converted_value = $fmm_value;
+                         
                             #~~~~~~>calculate formula
                             if (array_key_exists('formula', $map)) {
                                 $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
                             }
+                            
                             #----------------------* parsed data array calculate fit modle values for fit model size
                             $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
                                 'original_value' => $original_value,
                                 'unit_converted_value' => $unit_converted_value,
                             );
+                        }
                         }
                     }
                 } else {#----------------------* if not related to measurements add as a field
