@@ -104,7 +104,8 @@ class UserAddressesHelper
                     $address_info->setCleanseHash($address['cleanseHash']);
 
                 $this->markedPreviousShippingAddressNonDefault($user);
-                $address_info->setShippingDefault('1');
+
+                $address_info->setShippingDefault('0');
                 $address_info->setBillingDefault('0');
                 $address_info->setAddressType('2');
 
@@ -131,7 +132,11 @@ class UserAddressesHelper
                 $this->markedPreviousBillingAddressNonDefault($user);
                 $address_info->setBillingDefault('1');
             }else {
-                $address_info->setBillingDefault('0');
+                $isDefault = 0;
+                if(!$this->getUserAddress( $user )){
+                    $isDefault = 1;
+                }
+                $address_info->setBillingDefault($isDefault);
             }
             $address_info->setShippingDefault('0');
             $address_info->setAddressType('1');
@@ -166,7 +171,11 @@ class UserAddressesHelper
                 $this->markedPreviousShippingAddressNonDefault($user);
                 $address_info->setShippingDefault('1');
             }else {
-                $address_info->setShippingDefault('0');
+                $isDefault = 0;
+                if(!$this->getUserAddress( $user, 2)){
+                    $isDefault = 1;
+                }
+                $address_info->setShippingDefault($isDefault);
             }
             $address_info->setBillingDefault('0');
             $address_info->setAddressType('2');
@@ -294,6 +303,19 @@ class UserAddressesHelper
         }
 
         return;
+    }
+
+    public function getUserAddress(User $user, $type = 1){
+        $userAddressObject = $this->repo->findOneBy(array(
+            'user' => $user->getId(),
+            'adress_type' => $type
+        ));
+
+        if(is_object($userAddressObject)){
+            return true;
+        }
+
+        return false;
     }
 
     public function getAllUserSavedAddresses(User $user)
