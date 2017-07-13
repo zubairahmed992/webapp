@@ -1772,4 +1772,49 @@ class ProductHelper
         $product = $this->repo->find($id);
         return $product->getDisabled();
     }
+
+    public function markProductDefault(Product $product)
+    {
+        $product->setDefaultClothing( 1 );
+        $this->em->persist($product);
+        $this->em->flush();
+    }
+
+    public function markOtherProductDefaultToZero(ClothingType $clothing_type)
+    {
+        $target = $clothing_type->getTarget();
+        $entity = $this->repo->findBy(array(
+            'default_clothing' => 1
+        ));
+
+        if(is_array($entity) && !empty($entity)){
+            foreach($entity as $product){
+                $clothingTypeEntity = $product->getClothingType();
+                if($clothingTypeEntity->getTarget() == $target){
+                    $product->setDefaultClothing( 0 );
+                    $this->em->persist($product);
+                    $this->em->flush();
+                }
+            }
+        }
+
+        return;
+    }
+
+    public function findDefaultProduct(){
+        $ids = array();
+        $entity = $this->repo->findBy(array(
+            'default_clothing' => 1
+        ));
+
+        if(is_array($entity) && !empty($entity)){
+            foreach($entity as $product){
+                $clothingTypeEntity = $product->getClothingType();
+                $ids[$clothingTypeEntity->getTarget()] = $product->getId();
+            }
+            return $ids;
+        }
+
+        return $ids;
+    }
 }
