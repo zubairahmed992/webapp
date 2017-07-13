@@ -86,9 +86,11 @@ class PushNotificationHelper
         if ($deviceToken) {
 
             foreach ($deviceToken as $token) {
-                $msg = chr(0) . pack("n", 32) . pack('H*', str_replace(' ', '', $token)) . pack("n", strlen($payload)) . $payload;
+                if ($token != '') {
+                    $msg = chr(0) . pack("n", 32) . pack('H*', str_replace(' ', '', $token)) . pack("n", strlen($payload)) . $payload;
 
-                fwrite($fp, $msg);
+                    fwrite($fp, $msg);
+                }
             }
             fclose($fp);
             return "sending message :" . $payload;
@@ -228,9 +230,10 @@ class PushNotificationHelper
         if ($deviceToken) {
 
             foreach ($deviceToken as $token) {
-                $msg = chr(0) . pack("n", 32) . pack('H*', str_replace(' ', '', $token)) . pack("n", strlen($payload)) . $payload;
-
-                fwrite($fp, $msg);
+                if($token != '') {
+                    $msg = chr(0) . pack("n", 32) . pack('H*', str_replace(' ', '', $token)) . pack("n", strlen($payload)) . $payload;
+                    fwrite($fp, $msg);
+                }
             }
             fclose($fp);
             return "sending message :" . $payload;
