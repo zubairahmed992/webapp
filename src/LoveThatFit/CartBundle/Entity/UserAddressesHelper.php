@@ -103,9 +103,14 @@ class UserAddressesHelper
                 if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
                     $address_info->setCleanseHash($address['cleanseHash']);
 
-                $this->markedPreviousShippingAddressNonDefault($user);
+                //$this->markedPreviousShippingAddressNonDefault($user);
 
-                $address_info->setShippingDefault('0');
+                $isDefault = 0;
+                if(!$this->getUserAddress( $user )){
+                    $isDefault = 1;
+                }
+
+                $address_info->setShippingDefault($isDefault);
                 $address_info->setBillingDefault('0');
                 $address_info->setAddressType('2');
 
