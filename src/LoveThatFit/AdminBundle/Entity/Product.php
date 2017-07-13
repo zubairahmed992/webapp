@@ -227,6 +227,13 @@ class Product {
      */
     private $disabled;
 
+    /**
+     * @var string $default_clothing
+     *
+     * @ORM\Column(name="default_clothing", type="boolean", nullable=true)
+     */
+    private $default_clothing = 0;
+
 
     /**
      * @var string $deleted
@@ -1771,5 +1778,28 @@ class Product {
     public function getCareLabel()
     {
         return $this->care_label;
+    }
+
+    /**
+     * Set default_clothing
+     *
+     * @param boolean $defaultClothing
+     * @return Product
+     */
+    public function setDefaultClothing($defaultClothing)
+    {
+        $this->default_clothing = $defaultClothing;
+    
+        return $this;
+    }
+
+    /**
+     * Get default_clothing
+     *
+     * @return boolean 
+     */
+    public function getDefaultClothing()
+    {
+        return $this->default_clothing;
     }
 }

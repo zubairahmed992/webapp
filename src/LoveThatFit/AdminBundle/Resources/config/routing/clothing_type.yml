@@ -42,4 +42,24 @@ admin_clothing_type_notifications:
 
 admin_clothing_type_add_cron:
     pattern:  /admin/clothing_type/add_cron
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:addCronNotifications }    
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:addCronNotifications }
+
+default_clothing_paginate:
+    pattern: /admin/default/clothing/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:DefaultClothing:paginate}
+
+admin_default_clothing_new:
+    pattern:  /admin/default/clothing/new
+    defaults: { _controller: LoveThatFitAdminBundle:DefaultClothing:new }
+
+default_clothings:
+    pattern:  /admin/default/clothing/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:DefaultClothing:index , page_number: 1, sort:id }
+
+get_product_by_clothingtype_id:
+    pattern: /admin/get/product/by/clothingtype
+    defaults: { _controller: LoveThatFitAdminBundle:DefaultClothing:getProductByClothingType}
+
+admin_mark_product_default:
+    pattern: /admin/mark/product/defaultcloting
+    defaults: { _controller: LoveThatFitAdminBundle:DefaultClothing:markDefaultClothingProduct}
