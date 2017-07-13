@@ -393,7 +393,7 @@ class WSRepo
             ->andWhere('c.id IN (:id)')
             ->andWhere("p.displayProductColor!=''")
             ->andWhere('p.disabled=0')
-            ->andWhere('p.default_clothing != 1')
+            ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
             ->setParameters(array('gender' => $gender, 'id' => $id, 'user' => $user_id))
             ->getQuery();
