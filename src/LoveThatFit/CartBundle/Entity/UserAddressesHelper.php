@@ -328,10 +328,16 @@ class UserAddressesHelper
         $shippingAddresses = array();
         $billingAddresses = array();
         if(is_object( $user )){
-            $userAddresses = $this->repo->findBy(array(
-                'user' => $user->getId(),
-                'adress_type' => array(1,2)
-            ));
+            $userAddresses = $this->repo->findBy(
+                array(
+                    'user' => $user->getId(),
+                    'adress_type' => array(1,2)
+                ),
+                array(
+                    'billing_default' => 'DESC',
+                    'shipping_default' => 'DESC'
+                )
+            );
 
             // var_dump($userAddresses); die;
 
