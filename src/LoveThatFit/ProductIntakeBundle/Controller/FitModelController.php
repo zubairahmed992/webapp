@@ -12,6 +12,12 @@ class FitModelController extends Controller {
      #------------------------/product_intake/fit_model_specs/index
 
     public function indexAction() {
+
+        $session = $this->get('session')->get('_security_main_admin');
+        if (empty($session)) {
+           return $this->redirect($this->generateUrl('admin_dashboard'));
+        }
+        
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:index.html.twig', array(
                     'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
                 ));
