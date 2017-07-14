@@ -149,7 +149,7 @@ class UserFittingRoomItemRepository extends EntityRepository {
                       LEFT JOIN $categoriesTableName cn ON c.top_id = cn.id
                       where ufri.user_id = :user_id
                       GROUP BY ufri.product_id
-                      ORDER BY cn.name";
+                      ORDER BY cn.name, ufri.id";
 
         $params['user_id'] = $user_id;
         $query = $this->getEntityManager()->getConnection()->prepare($sql);
