@@ -245,7 +245,7 @@ function hit_savelook_service()
 
        $.ajax({
             type: "POST",
-            url: ".." + $("#service_url").text(),
+            url: $("#service_url").text(),
             data: data,
             processData: false,
             contentType: false,
@@ -267,7 +267,7 @@ function hit_service(){
         restartTimer();//~~~~~~~~~~~~~~>
         $.ajax({
                type: "POST",
-               url: ".." + $("#service_url").text(),
+               url: $("#service_url").text(),
                data: value_ar,
                dataType: "json",
                success: function(data){
@@ -304,7 +304,7 @@ function hit_image_upload_service(){
 
         $.ajax({
                  type: "POST",
-                 url: ".." + $("#service_url").text(),
+                 url: $("#service_url").text(),
                  data: data,
                  processData: false,
                  contentType: false,
@@ -328,7 +328,7 @@ function hit_product_image_upload_service(){
     data.append("file", input_file.files[0]);   
     $.ajax({
         type: "POST",
-        url: ".." + $("#service_url").text(),
+        url: $("#service_url").text(),
         data: data,
         processData: false,
         contentType: false,
@@ -360,7 +360,7 @@ function hit_file_upload_service(){
 
     $.ajax({
         type: "POST",
-        url: ".." + $("#service_url").text(),
+        url: $("#service_url").text(),
         data: data,
         processData: false,
         contentType: false,
@@ -390,7 +390,7 @@ function hit_selfieshare_service(){
 
     $.ajax({
         type: "POST",
-        url: ".." + $("#service_url").text(),
+        url: $("#service_url").text(),
         data: data,
         processData: false,
         contentType: false,
@@ -465,7 +465,7 @@ function hit_user_service(){
         service_url='/ws_interface/user/'+email;
         $.ajax({
                type: "GET",
-               url: ".." + service_url,
+               url: service_url,
                success: function(data){
                    user_JSON=data;
                    replace_all_user_data(data);
