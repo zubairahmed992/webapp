@@ -309,7 +309,7 @@ class PushNotificationHelper
         }else if( $env == "prod" ){
             return $directory. "/pushcert.pem";
         }else{
-            return $directory. "/SelfieStyler3.pem";
+            return $directory. "/pushcert.pem";
         }
     }
 
