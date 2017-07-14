@@ -263,6 +263,7 @@ class WishlistHelper
             $wishlist_array[$counter]['color'] = $ci->getProductItem()->getProductColor()->getTitle();
             $wishlist_array[$counter]['size'] = $ci->getProductItem()->getProductSize()->getTitle();
             $wishlist_array[$counter]['name'] = $ci->getProductItem()->getProduct()->getName();
+            $wishlist_array[$counter]['item_name'] = $ci->getProductItem()->getProduct()->getItemName();
             $wishlist_array[$counter]['description'] = $ci->getProductItem()->getProduct()->getDescription();
             $wishlist_array[$counter]['price'] = $ci->getProductItem()->getPrice();
             $wishlist_array[$counter]['qty'] = $ci->getQty();

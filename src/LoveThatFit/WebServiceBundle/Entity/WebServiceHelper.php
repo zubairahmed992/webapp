@@ -1252,6 +1252,7 @@ class WebServiceHelper
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['title'] = $saveLookItem->getItems()->getProduct()->getName();
+                $temp['item_name'] = $saveLookItem->getItems()->getProduct()->getItemName();
                 $temp['description'] = $saveLookItem->getItems()->getProduct()->getDescription();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
@@ -1354,6 +1355,7 @@ class WebServiceHelper
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
+        $p['item_name'] = $product->getItemName();
         return $p;
     }
 
