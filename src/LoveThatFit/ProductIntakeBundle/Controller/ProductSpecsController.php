@@ -13,12 +13,6 @@ class ProductSpecsController extends Controller
 {
     #----------------------- /product_intake/product_specs/index
     public function indexAction(){
-
-        $session = $this->get('session')->get('_security_main_admin');
-        if (empty($session)) {
-           return $this->redirect($this->generateUrl('admin_dashboard'));
-        }
-
         $ps = $this->get('pi.product_specification')->findAll(); 
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:index.html.twig', array(
             'specs' => $ps,  
@@ -328,12 +322,6 @@ class ProductSpecsController extends Controller
     }
    //--------------------   Product Copy to Next Server 
     public function productCopyAction() {
-
-        $session = $this->get('session')->get('_security_main_admin');
-        if (empty($session)) {
-           return $this->redirect($this->generateUrl('admin_dashboard'));
-        }
-
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_copy.html.twig');
         
     }
@@ -345,13 +333,7 @@ class ProductSpecsController extends Controller
     }
        
     //---------------------------- Create Product Specification from Existing Product
-    public function CreateSpecificationAction() {   
-        
-        $session = $this->get('session')->get('_security_main_admin');
-        if (empty($session)) {
-           return $this->redirect($this->generateUrl('admin_dashboard'));
-        }
-
+    public function CreateSpecificationAction() {      
          return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:create_product_specification.html.twig');
        
     }

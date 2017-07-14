@@ -11,12 +11,6 @@ class MappingController extends Controller
 {
     #----------------------- /product_intake/specs_mapping/index
     public function indexAction(){
-
-        $session = $this->get('session')->get('_security_main_admin');
-        if (empty($session)) {
-           return $this->redirect($this->generateUrl('admin_dashboard'));
-        }
-        
         $product_specs_mappings = $this->get('productIntake.product_specification_mapping')->findAll();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:index.html.twig', array(
                     'specs_mappings' => $product_specs_mappings,

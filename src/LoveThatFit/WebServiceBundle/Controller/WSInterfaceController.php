@@ -10,12 +10,6 @@ class WSInterfaceController extends Controller {
 
     
     public function indexAction() {
-
-        $session = $this->get('session')->get('_security_main_admin');
-        if (empty($session)) {
-           return $this->redirect($this->generateUrl('admin_dashboard'));
-        }
-        
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/ws_details.yml'));
 
