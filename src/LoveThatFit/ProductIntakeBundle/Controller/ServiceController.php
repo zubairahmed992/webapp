@@ -254,7 +254,7 @@ class ServiceController extends Controller {
         #Citizens-of-Humanity_001n-001_brown_Regular_26
         #Karen Kane_L09190W_Black_P_22.png 
         
-        $_exploded = explode("_", strtolower($request_array));        
+        $_exploded = explode("_", strtolower($request_array));                
         if (count($_exploded) == 5) {
             $a['brand'] = str_replace("-", " ", $_exploded[0]);
             $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
@@ -263,6 +263,16 @@ class ServiceController extends Controller {
             #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
             $_file_name = explode(".", $_exploded[4]);
             $a['size_title'] = str_replace("-", "_", $_file_name[0]);
+            $a['success'] = 'true';
+            return $a;
+        }elseif (count($_exploded) == 6) {
+            $a['brand'] = str_replace("-", " ", $_exploded[0]);
+            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            $a['body_type'] = strtolower($_exploded[3]) == 'p' ? 'plus' : 'regular';
+            #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
+            $_file_name = explode(".", $_exploded[5]);              
+            $a['size_title'] = strtoupper($_exploded[4] . "_" . str_replace("-", "_", $_file_name[0]));
             $a['success'] = 'true';
             return $a;
         } else {
