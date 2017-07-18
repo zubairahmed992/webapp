@@ -408,7 +408,7 @@ class FitAlgorithm3 {
             'garment_measurement_flat' => $fp_specs['garment_measurement_flat'],
             'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],
         );
-        $message_array=$this->calculate_fitindex($fp_measurements);
+        $message_array = $this->calculate_fitindex($fp_measurements);
         $fp_measurements['fits'] = $message_array['fits'];
         $fp_measurements['status'] = $message_array['status'];
         $fp_measurements['message'] = $message_array['message'];                
@@ -425,7 +425,7 @@ class FitAlgorithm3 {
         $fp_fx = 0;
         $fp_scale = array();
         $fits = false;
-        $arr=array();
+        $arr = array();
         if ($fp_specs['body_measurement'] == $fp_specs['fit_model']) { #Mid            
             #$arr = $this->fi_array($fp_specs, $this->scale['at_mid']);            
             $fp_scale = $this->scale['at_mid'];
@@ -447,7 +447,7 @@ class FitAlgorithm3 {
                 $fp_scale = $this->scale['between_mid_high'];
                 $fits = true;
                 #--------------------------->
-            } elseif ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) {#high-max
+            } else {#high-above
                 #--------------------------->
                 $layer = intval(substr($this->product->getLayering(), 0, 1));
                 $max_gd_ratio = $fp_specs['max_body_measurement'] / $fp_specs['garment_measurement_flat'];
@@ -561,13 +561,13 @@ class FitAlgorithm3 {
     private function grade_to_scale($fp_specs) {        
             $findex   =0;            
         if($fp_specs['body_measurement']>$fp_specs['fit_model']){
-            if (($fp_specs['max_body_measurement']-$fp_specs['fit_model'])==0){
+            if (($fp_specs['max_body_measurement']-$fp_specs['fit_model'])<=0){
                 $findex=0;
             }else{
                 $findex=$fp_specs['avg_fx']-((($fp_specs['body_measurement']-$fp_specs['fit_model'])/($fp_specs['max_body_measurement']-$fp_specs['fit_model']))*($fp_specs['avg_fx']-$fp_specs['max_fx']));
             }
          }elseif ($fp_specs['body_measurement']<$fp_specs['fit_model']) {
-             if (($fp_specs['fit_model']-$fp_specs['min_body_measurement'])==0){
+             if (($fp_specs['fit_model']-$fp_specs['min_body_measurement'])<=0){
                 $findex=0;
             }else{
                 $findex   =$fp_specs['avg_fx']-((($fp_specs['fit_model']-$fp_specs['body_measurement'])/($fp_specs['fit_model']-$fp_specs['min_body_measurement']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
