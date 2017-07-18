@@ -277,6 +277,8 @@ class CartHelper
             $cart_array[$counter]['name'] = $ci->getProductItem()->getProduct()->getName();
             $cart_array[$counter]['item_name'] = $ci->getProductItem()->getProduct()->getItemName();
             $cart_array[$counter]['description'] = $ci->getProductItem()->getProduct()->getDescription();
+            $cart_array[$counter]['disabled'] = $ci->getProductItem()->getProduct()->getDisabled();
+            $cart_array[$counter]['deleted'] = $ci->getProductItem()->getProduct()->getDeleted();
             $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
             $cart_array[$counter]['qty'] = $ci->getQty();
             $cart_array[$counter]['item_id'] = $ci->getProductItem()->getId();
