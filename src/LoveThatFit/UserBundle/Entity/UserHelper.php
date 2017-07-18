@@ -1318,5 +1318,9 @@ class UserHelper
         return $output;
     }
 
+    public function getVersion($user_id)
+    {
+        return $this->repo->getVersion($user_id);
+    }
 
 }
