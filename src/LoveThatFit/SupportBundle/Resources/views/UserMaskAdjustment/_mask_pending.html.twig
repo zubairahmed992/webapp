@@ -366,20 +366,23 @@ function endtimer(){
         var $archiveId = $("#hdn_archive_id").val();
         var $suppEmail = $("#entity_email").val();
         var $suppName = $("#support_user_name").val();
+        var absoluteurl = window.location.origin;
 
         $.ajax({
-            url: '../../../ws/support_task_log/add',
+            url: absoluteurl+'/ws/support_task_log/add',
             type: 'POST',
             data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
             success: function (response) {
                // alert("All Done! - Reloading...");
 
                                     var curr_url = window.location + '';
+                                    //questionText = questionText.replace(/[0-9]/g, '');
 
-                                    curr_url_array = curr_url.split('/');
-                                    if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
-                                            curr_url = curr_url.split('/refresh')[0];
-                                            window.location.assign(curr_url)
+                                    curr_url_array = curr_url.split('/');                                    
+                                    if(curr_url_array[curr_url_array.length - 1] == 'refresh#' || curr_url_array[curr_url_array.length - 1] == 'refresh'){                                        
+                                            curr_url = curr_url.split('/refresh#')[0];
+                                            var reload_url = curr_url.slice(0, curr_url.lastIndexOf('/'));
+                                            window.location.assign(reload_url);
                                     }else{
                                         window.location.reload();
                             }

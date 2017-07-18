@@ -247,7 +247,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: ".." + $("#service_url").text(),
+                    url: $("#service_url").text(),
                     data: data,
                     processData: false,
                     contentType: false,
@@ -262,7 +262,6 @@
             }
         }
         function hit_service() {
-            console.log("haris khalique");
             var value_ar = "";
             if ($("#txt_request_params").val()) {
                 value_ar = JSON.parse($("#txt_request_params").val());
@@ -270,7 +269,7 @@
             restartTimer();//~~~~~~~~~~~~~~>
             $.ajax({
                 type: "POST",
-                url: ".." + $("#service_url").text(),
+                url: $("#service_url").text(),
                 data: value_ar,
                 dataType: "json",
                 success: function (data) {
@@ -307,7 +306,7 @@
 
             $.ajax({
                 type: "POST",
-                url: ".." + $("#service_url").text(),
+                url: $("#service_url").text(),
                 data: data,
                 processData: false,
                 contentType: false,
@@ -331,7 +330,7 @@
             data.append("file", input_file.files[0]);
             $.ajax({
                 type: "POST",
-                url: ".." + $("#service_url").text(),
+                url: $("#service_url").text(),
                 data: data,
                 processData: false,
                 contentType: false,
@@ -360,7 +359,7 @@
 
             $.ajax({
                 type: "POST",
-                url: ".." + $("#service_url").text(),
+                url: $("#service_url").text(),
                 data: data,
                 processData: false,
                 contentType: false,
@@ -390,7 +389,7 @@
 
             $.ajax({
                 type: "POST",
-                url: ".." + $("#service_url").text(),
+                url: $("#service_url").text(),
                 data: data,
                 processData: false,
                 contentType: false,
@@ -464,7 +463,7 @@
             service_url = '/ws_interface/user/' + email;
             $.ajax({
                 type: "GET",
-                url: ".." + service_url,
+                url: service_url,
                 success: function (data) {
                     user_JSON = data;
                     replace_all_user_data(data);
