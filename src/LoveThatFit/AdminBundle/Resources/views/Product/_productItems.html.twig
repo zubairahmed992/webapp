@@ -207,7 +207,7 @@
         <div class="span2" onmouseover="document.getElementById('myimg_'+{{ pi.id }}).style.display='block';"
              onmouseout="document.getElementById('myimg_'+{{ pi.id }}).style.display='none';">
             {% if(pi.image!='') %}
-                {{ pi.image }}
+                <a href="{{ asset(pi.webPath) }}" target="_blank"> {{ pi.image }} </a>
             {% endif %}
             <span class="imgstyle" id="myimg_{{ pi.id }}"
                   style="z-index:20;box-shadow:2px 2px 2px 2px #ccc;background:#fff; padding:20px; position: absolute;top:10%;left:55%;"> <img
