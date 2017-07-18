@@ -28,6 +28,10 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
+        if (!isset($version['version']) && $version['version'] == "") {
+            $version = $this->container->get('user.helper.user')->getVersion($user->getId());
+        }
+
         if (isset($version['version']) && $version['version'] == 1) {
 
             $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($request_array['device_model']);
