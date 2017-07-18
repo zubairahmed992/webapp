@@ -32,7 +32,7 @@ class User implements UserInterface, \Serializable {
     private $duplicate_users;
 
     /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="ltf_users", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="users", orphanRemoval=true)
      */
 
     protected $save_look;
