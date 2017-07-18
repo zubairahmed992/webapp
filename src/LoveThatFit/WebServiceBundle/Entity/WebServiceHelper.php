@@ -84,10 +84,8 @@ class WebServiceHelper
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
-                    $response_array['user']['defaultProduct'] = array(
-                        "top" => 567,
-                        "bottom" => 619
-                    );
+                    $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
+                    $response_array['user']['defaultProduct'] = $defaultProducts;
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -119,10 +117,9 @@ class WebServiceHelper
             #$device_type =  array_key_exists('device_type', $request_array)?$request_array['device_type']:null;
             #$data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']); 
             $data['user'] = $this->user_array($user, $request_array);
-            $data['user']['defaultProduct'] = array(
-                "top" => 567,
-                "bottom" => 619
-            );
+
+            $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
+            $data['user']['defaultProduct'] = $defaultProducts;
 
             return $this->response_array(true, 'member found', true, $data);
         } else {
@@ -1255,6 +1252,7 @@ class WebServiceHelper
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['title'] = $saveLookItem->getItems()->getProduct()->getName();
+                $temp['item_name'] = $saveLookItem->getItems()->getProduct()->getItemName();
                 $temp['description'] = $saveLookItem->getItems()->getProduct()->getDescription();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
@@ -1357,6 +1355,7 @@ class WebServiceHelper
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
+        $p['item_name'] = $product->getItemName();
         return $p;
     }
 

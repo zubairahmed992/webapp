@@ -275,6 +275,7 @@ class CartHelper
             $cart_array[$counter]['color'] = $ci->getProductItem()->getProductColor()->getTitle();
             $cart_array[$counter]['size'] = $ci->getProductItem()->getProductSize()->getTitle();
             $cart_array[$counter]['name'] = $ci->getProductItem()->getProduct()->getName();
+            $cart_array[$counter]['item_name'] = $ci->getProductItem()->getProduct()->getItemName();
             $cart_array[$counter]['description'] = $ci->getProductItem()->getProduct()->getDescription();
             $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
             $cart_array[$counter]['qty'] = $ci->getQty();
