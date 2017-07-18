@@ -431,15 +431,17 @@ class FitAlgorithm3 {
             $fp_scale = $this->scale['at_mid'];
             $fp_fx = $fp_specs['avg_fx'];
             $fits = true;
-        } elseif ($fp_specs['fit_model'] > $fp_specs['body_measurement']) {#below mid            
-            $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
+        } elseif ($fp_specs['fit_model'] > $fp_specs['body_measurement']) {#below mid                        
             $fits = true;
-            if ($fp_specs['body_measurement'] > $fp_specs['ideal_body_size_low']) {#low-mid                
+            if ($fp_specs['body_measurement'] > $fp_specs['ideal_body_size_low']) {#low-mid      
+                $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                 $fp_scale = $this->scale['between_low_mid'];                
             } elseif ($fp_specs['body_measurement'] > $fp_specs['min_body_measurement']) {#min-low
+                $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                 $fp_scale = $this->scale['between_min_low'];                
             }else{
-                $fp_scale = $this->scale['below_min'];
+                $fp_scale = $this->scale['below_min'];                
+                $fp_fx = 0;
             }
         } elseif ($fp_specs['fit_model'] < $fp_specs['body_measurement']) {#above mid            
             if ($fp_specs['body_measurement'] < $fp_specs['ideal_body_size_high']) {#mid-high
