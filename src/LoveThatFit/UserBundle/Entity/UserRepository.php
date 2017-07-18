@@ -598,4 +598,19 @@ class UserRepository extends EntityRepository
         }
         return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
+
+    public function getVersion($user_id)
+    {
+
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.version')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->Where('u.id =:user_id')
+            ->setParameter('user_id', $user_id);
+        try {
+          return $query->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
+    }
 }
