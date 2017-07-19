@@ -63,6 +63,8 @@ class FitAlgorithm3 {
             $cm = $this->array_mix();
             $cm['layering']=$this->product->getLayering();
             return $cm;
+        }else{
+            return 'Product is missing fit priority';
         }
     }
 
@@ -1234,8 +1236,9 @@ class FitAlgorithm3 {
         } elseif (isset($fb['feedback']) && $fb['feedback']) {            
             $default_size = null;
             foreach ($fb['feedback'] as $size) {
-                if ($default_size == null || $default_size['id'] < $size['id'])
+                if ($default_size == null || $default_size['id'] < $size['id']){
                     $default_size = $size;
+                }
             }
             return $default_size;
         }

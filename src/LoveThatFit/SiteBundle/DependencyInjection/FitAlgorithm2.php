@@ -63,6 +63,8 @@ class FitAlgorithm2 {
             $cm = $this->array_mix();
             $cm['layering']=$this->product->getLayering();
             return $cm;
+        }else{
+            return 'Product is missing fit priority';
         }
     }
 
