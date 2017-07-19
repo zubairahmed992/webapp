@@ -72,6 +72,7 @@
 
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
 
+<input type="hidden" id="img_bottom_lines_camera_screen" value="uploads/ltf/dummy_user/bottom_lines_camera_screen.png" />
 
 
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
