@@ -79,24 +79,32 @@ class Stamps
                     'FirstName' => $address['firstname'],
                     'LastName'  => $address['lastname'],
                     'Address1'  => $address['address1'],
-                    'Address2'  => $address['address2'],
+                    'Address2'  => (isset($address['address2'])) ? $address['address2'] : "",
                     'City'      => $address['city'],
                     'State'     => $address['state'],
                     'ZIPCode'   => $address['zipcode']
                 ));
-
-            $addressStatus = $this->soapClient->CleanseAddress( $callData );
-            if($addressStatus->AddressMatch){
-                return array(
-                    'verified' => true,
-                    'data' => $addressStatus->Address
-                );
-            }else{
+            try{
+                $addressStatus = $this->soapClient->CleanseAddress( $callData );
+                if($addressStatus->AddressMatch){
+                    return array(
+                        'verified' => true,
+                        'data' => $addressStatus->Address
+                    );
+                }else{
+                    return array(
+                        'verified'  => false,
+                        'msg'       => 'address not found'
+                    );
+                }
+            }catch (\SoapFault $exception)
+            {
                 return array(
                     'verified'  => false,
-                    'msg'       => 'address not found'
+                    'msg'       => $exception->getMessage()
                 );
             }
+
         }else{
             return $fieldsVerified;
         }
@@ -168,7 +176,7 @@ class Stamps
         try{
             $response = $this->soapClient->CreateIndicium($callData);
             return $response;
-        }catch (\Exception $e){
+        }catch (\SoapFault $e){
             return "";
         }
     }
@@ -191,7 +199,7 @@ class Stamps
 
                 return $tracking_event;
 
-            }catch (\Exception $e){
+            }catch (\SoapFault $e){
                 return "Pending";
             }
         }else{

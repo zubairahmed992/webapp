@@ -821,6 +821,38 @@ class UserHelper
 
     }
 
+    public function copyDefaultUserDataSupport($user, $ra)
+    {
+        $conf_yml = new Parser();
+        $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users_support.yml'));
+        $udt = strtolower($ra['device_type']);
+        $user->setImageDeviceType($udt);
+        $user->setImage('cropped.png');
+        if ($user->getMeasurement()) {
+            $measurement = $user->getMeasurement();
+        } else {
+            $measurement = $this->container->get('user.helper.measurement')->createNew($user);
+        }
+
+        $measurement->setByArray($dud[$udt][$user->getGender()]['measurements']);
+        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+        $this->container->get('user.helper.user')->saveUser($user);
+        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$udt][$user->getGender()]['mask']);
+
+        #---------------------------
+        $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
+        array_key_exists('device_id', $ra) ? $userDevice->setDeviceName($ra['device_id']) : '';
+        $userDevice->setDeviceType($dud[$udt][$user->getGender()]['image']['device_type']);
+        $userDevice->setDeviceUserPerInchPixelHeight($dud[$udt][$user->getGender()]['image']['px_inch_ratio']);
+        $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
+        #---------------------------
+        $user->copyDefaultImageSupport($udt);
+        
+        copy($user->getAbsolutePath(), $user->getOriginalImageAbsolutePath());#making a copy of original
+        return $measurement;
+
+    }
+
 #------------------------------------------------------
     public function getUserDetailArrayByEmail($email)
     {
@@ -905,7 +937,7 @@ class UserHelper
         return true;
     }
 
-    public function duplicateUser($duplicate_user, $data)
+    public function duplicateUser(User $duplicate_user, $data, $version = 0)
     {
         /*
         $active_status = $this->container->get('user.helper.userarchives')->getActiveArchiveCount($duplicate_user);
@@ -971,6 +1003,8 @@ class UserHelper
             $user->setImageDeviceModel($data['ImageDeviceModel']);
             $user->setDeviceTokens($data['device_tokens']);
             $user->setOriginalUser($duplicate_user);
+            $user->setVersion( $version );
+
             $this->saveUser($user);
             $id = $user->getId();
             $this->duplicateUserMeasurement($user, $duplicate_user);
@@ -1149,6 +1183,7 @@ class UserHelper
                 'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
                 'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
+                'version_archive'  => $fData['version_archive'],
                 'version'          => $fData['version']
             ];
 
@@ -1273,7 +1308,8 @@ class UserHelper
                 'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
                 'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
-                'version'        => $fData['version']
+                'version_archive'  => $fData['version_archive'],
+                'version'          => $fData['version']
             ];
 
 
@@ -1282,5 +1318,9 @@ class UserHelper
         return $output;
     }
 
+    public function getVersion($user_id)
+    {
+        return $this->repo->getVersion($user_id);
+    }
 
 }

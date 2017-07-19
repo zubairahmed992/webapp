@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use JMS\SecurityExtraBundle\Security\Util\String;
 
 /**
  * ProductRepository
@@ -43,6 +44,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function listAllProduct($page_number = 0, $limit = 0, $sort = 'id')
     {
@@ -69,16 +71,17 @@ class ProductRepository extends EntityRepository
             return "null";
         }
     }
-	
-	  #--------------Find Categories By ID---------------------------------#
-    public function getSelectedCategories($id = null) {
+
+    #--------------Find Categories By ID---------------------------------#
+    public function getSelectedCategories($id = null)
+    {
         $query = $this->getEntityManager()
             ->createQuery("
                         SELECT c.id FROM LoveThatFitAdminBundle:Product p
                          JOIN p.categories c
                         WHERE
                         p.id = :id"
-                        )->setParameters(array('id' => $id)) ;
+            )->setParameters(array('id' => $id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -86,9 +89,64 @@ class ProductRepository extends EntityRepository
         }
     }
 
-    public function searchAllProduct($data, $page = 0, $max = NULL, $order, $getResult = true){
-        $query     = $this->getEntityManager()->createQueryBuilder();
-        $search    = isset($data['query']) && $data['query'] ? $data['query'] : null;
+    public function findPrductByGender($gender)
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('
+                p.id
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.gender=:gender')
+            ->andWhere('p.deleted=0')
+            ->groupBy('p.id')
+            ->setParameter('gender', $gender);
+        try {
+            return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function getTotalCount()
+    {
+        /*$query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('
+                count(p) as total_count
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0');
+        try {
+            return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }*/
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query
+            ->select('
+                p.id
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0')
+            ->groupBy('p.id');
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
+    }
+
+    public function searchAllProduct($data, $page = 0, $max = NULL, $order, $getResult = true)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query'] ? $data['query'] : null;
 
         $query
             ->select('
@@ -110,7 +168,9 @@ class ProductRepository extends EntityRepository
             ->from('LoveThatFitAdminBundle:Product', 'p')
             ->join('p.brand', 'b')
             ->join('p.clothing_type', 'ct')
-            ->andWhere('p.deleted=0');
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0')
+            ->groupBy('p.id');
 
         if ($search) {
             $query
@@ -121,11 +181,11 @@ class ProductRepository extends EntityRepository
                             ct.name like :search or 
                             b.name like :search or 
                             p.status like :search')
-                ->setParameter('search', "%".$search."%");
+                ->setParameter('search', "%" . $search . "%");
         }
 
         if (is_array($order)) {
-            $orderByColumn    = $order[0]['column'];
+            $orderByColumn = $order[0]['column'];
             $orderByDirection = $order[0]['dir'];
             if ($orderByColumn == 0) {
                 $orderByColumn = "p.id";
@@ -137,11 +197,11 @@ class ProductRepository extends EntityRepository
                 $orderByColumn = "p.gender";
             } elseif ($orderByColumn == 5) {
                 $orderByColumn = "p.name";
-            }elseif ($orderByColumn == 6) {
+            } elseif ($orderByColumn == 6) {
                 $orderByColumn = "p.created_at";
-            }elseif ($orderByColumn == 7) {
+            } elseif ($orderByColumn == 7) {
                 $orderByColumn = "p.status";
-            }elseif ($orderByColumn == 8) {
+            } elseif ($orderByColumn == 8) {
                 $orderByColumn = "p.disabled";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
@@ -157,7 +217,7 @@ class ProductRepository extends EntityRepository
         }
 
         /*echo $preparedQuery->getSQL(); die;*/
-        return $getResult? $preparedQuery->getResult():$preparedQuery;
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
 
     //-------------------------------------------------------------------------------------
@@ -184,7 +244,8 @@ class ProductRepository extends EntityRepository
                         ORDER BY p.clothing_type ASC')
                     ->setParameter('gender', $gender)
                     ->setMaxResults($limit);
-                echo $query->getSQL();die;
+                echo $query->getSQL();
+                die;
             } else {
                 $query = $this->getEntityManager()
                     ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p Join
@@ -205,6 +266,7 @@ class ProductRepository extends EntityRepository
             return "null";
         }
     }
+
     //-------------------------------------------------------------------------------------
     public function listProductsByIds($ids)
     {
@@ -216,6 +278,7 @@ class ProductRepository extends EntityRepository
             return "null";
         }
     }
+
     //-------------------------------------------------------------------------------------
     public function listProductsByGenderAndIds($gender, $ids)
     {
@@ -231,6 +294,7 @@ class ProductRepository extends EntityRepository
             return "null";
         }
     }
+
     /* --------------------------------------------------------- */
 
     public function findByGender($gender, $page_number = 0, $limit = 0)
@@ -295,6 +359,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
     #_-----------------------------------------------------------------
     public function findByGenderRandom($gender, $limit)
     {
@@ -396,6 +461,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-----------------------------------------------------------------
 
     public function findByTitleBrandName($product_title, $brand_name)
@@ -415,6 +481,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-----------------------------------------------------------------
     public function productList()
     {
@@ -457,6 +524,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function productListByClothingType($clothing_type_id, $gender)
     {
@@ -478,6 +546,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender)
     {
@@ -531,30 +600,13 @@ class ProductRepository extends EntityRepository
       WHERE
       u.id = :id AND p.deleted=0"
             )->setParameters(array('id' => $user_id));
-        try
-        {
+        try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
 
-//-------------------------------------------------------------------------------------
-    public function findPrductByGender($gender)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p
-        WHERE
-        p.gender=:gender AND p.deleted=0"
-            )
-            ->setParameter('gender', $gender);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-//-------------------------------------------------------------------------------------
     public function findPrductByType($target)
     {
         $query = $this->getEntityManager()
@@ -569,6 +621,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function findPrductByBrand()
     {
@@ -583,6 +636,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function findListAllProduct()
     {
@@ -594,6 +648,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function findProductByItemId($product_item_id)
     {
@@ -702,7 +757,8 @@ class ProductRepository extends EntityRepository
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
                 ->getResult();
-        }}
+        }
+    }
 
     public function findProductByBrandWebService($id, $gender)
     {
@@ -740,6 +796,7 @@ class ProductRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
 #---------------------------------------------------------------------------------------------------------#
     public function findLattestProductWebService($gender)
     {
@@ -761,6 +818,7 @@ class ProductRepository extends EntityRepository
             ->getResult();
 
     }
+
     #--------------------------------------------------------------------------------------------------------------#
     public function findhottestProductWebService($gender)
     {
@@ -782,6 +840,7 @@ class ProductRepository extends EntityRepository
             ->getResult();
 
     }
+
 #-----------------------------------Product Detail---------------------------------------#
     public function productDetail($product_id)
     {
@@ -834,6 +893,7 @@ class ProductRepository extends EntityRepository
 
         }
     }
+
 #-------------------User Favourite List Web Service-----------------------------#
     public function favouriteByUser($user_id)
     {
@@ -877,6 +937,7 @@ class ProductRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
 #---------------------------------End of Web Service----------------------------------#
     public function findProductByTitle($name)
     {
@@ -955,6 +1016,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
     //-------------------------------------------------------------------------------------
     public function findMostFavoriteByGender($gender, $page_number = 0, $limit = 0)
     {
@@ -1018,7 +1080,7 @@ class ProductRepository extends EntityRepository
             AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
              ORDER BY uih.updated_at DESC"
-                    //ORDER BY uih.count DESC"
+                //ORDER BY uih.count DESC"
                 )->setParameters(array('user_id' => $user_id));
         } else {
             $query = $this->getEntityManager()
@@ -1041,6 +1103,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
     //-------------------------------------------------------------------------------------
 
     public function findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number = 0, $limit = 20)
@@ -1071,6 +1134,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function findOneByName($name)
     {
@@ -1085,6 +1149,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function findByGenderBrandName($gender, $brand, $page_number = 0, $limit = 0)
     {
@@ -1175,6 +1240,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 //-------------------------------------------------------------------------------------
     public function findDefaultProductByColorId($product_color)
     {
@@ -1224,6 +1290,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 #------------------------------------------------------------------------------#
     public function getRecordsCountWithCurrentProductLimit($product_id)
     {
@@ -1240,10 +1307,10 @@ class ProductRepository extends EntityRepository
     #-----------------------------------------------------------------------------#
     #---------Searching Quries-------------------------------#
 
-    public function searchProductByCriteria( $data, $page = 0, $max = NULL, $order, $getResult = true )
+    public function searchProductByCriteria($data, $page = 0, $max = NULL, $order, $getResult = true)
     {
         // var_dump($data); die;
-        $query     = $this->getEntityManager()->createQueryBuilder();
+        $query = $this->getEntityManager()->createQueryBuilder();
 
         $query
             ->select('
@@ -1255,6 +1322,11 @@ class ProductRepository extends EntityRepository
                 ct.name as cloting_type,
                 p.created_at,
                 p.disabled,
+                p.description,
+                p.item_name,                
+                p.country_origin,
+                p.item_details,                             
+                p.care_label,   
                 p.status
             ')
             ->from('LoveThatFitAdminBundle:Product', 'p')
@@ -1263,33 +1335,46 @@ class ProductRepository extends EntityRepository
             ->join('p.product_colors', 'pc')
             ->andWhere('p.deleted=0');
 
-        if($data['brand'] > 0){
+        if ($data['brand'] > 0) {
             $query
                 ->andWhere("b.id = :brandId");
         }
 
-        if($data['created_date'] != ""){
+        if ($data['created_date'] != "") {
             $query
                 ->andWhere("p.created_at between :created_date and :created_end_Date");
         }
 
-        if(!empty($data['category'])){
+        if (!empty($data['category'])) {
+            /*$query
+                ->expr()->in('ct.id',$data['category'] );*/
             $query
-                ->expr()->in('ct.id',$data['category'] );
+                ->andWhere('ct.id in (:category)')
+                ->setParameter('category', $data['category'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
-        if(!empty($data['target'])){
+        if (!empty($data['target'])) {
+            /*$query
+                ->expr()->in('ct.target',$data['target'] );*/
             $query
-                ->expr()->in('ct.target',$data['target'] );
+                ->andWhere("ct.target in (:target)")
+                ->setParameter('target', $data['target'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
-        if(!empty($data['genders'])){
+        if (!empty($data['genders'])) {
+            /*$query
+                ->add("where", $query->expr()->in('p.gender', ":genders"));*/
             $query
-                ->expr()->in('p.gender',$data['genders'] );
+                ->andWhere("p.gender in (:genders)")
+                ->setParameter('genders', $data['genders'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
-        if(!empty($data['p_statuses'])){
+        if (!empty($data['p_statuses'])) {
+            /*$query
+                ->expr()->in('p.status',$data['p_statuses'] );*/
+
             $query
-                ->expr()->in('p.status',$data['p_statuses'] );
+                ->andWhere("p.status in (:p_statuses)")
+                ->setParameter('p_statuses', $data['p_statuses'], \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
         }
 
         /*$query
@@ -1299,22 +1384,24 @@ class ProductRepository extends EntityRepository
                 'target' => $data['target'],
                 'genders' => $data['genders']
             ));*/
+        $query
+            ->groupBy('p.id');
 
-        if($data['brand'] > 0){
+        if ($data['brand'] > 0) {
             $query
                 ->setParameter('brandId', $data['brand']);
         }
 
-        if($data['created_date'] != ""){
-            $startDate = $data['created_date']." 00:00:00";
-            $endDate = $data['created_date']." 23:59:59";
+        if ($data['created_date'] != "") {
+            $startDate = $data['created_date'] . " 00:00:00";
+            $endDate = $data['created_date'] . " 23:59:59";
             $query
                 ->setParameter('created_date', $startDate)
                 ->setParameter('created_end_Date', $endDate);
         }
 
         if (is_array($order)) {
-            $orderByColumn    = $order[0]['column'];
+            $orderByColumn = $order[0]['column'];
             $orderByDirection = $order[0]['dir'];
             if ($orderByColumn == 0) {
                 $orderByColumn = "p.id";
@@ -1326,9 +1413,9 @@ class ProductRepository extends EntityRepository
                 $orderByColumn = "p.gender";
             } elseif ($orderByColumn == 5) {
                 $orderByColumn = "p.name";
-            }elseif ($orderByColumn == 6) {
+            } elseif ($orderByColumn == 6) {
                 $orderByColumn = "p.created_at";
-            }elseif ($orderByColumn == 7) {
+            } elseif ($orderByColumn == 7) {
                 $orderByColumn = "p.disabled";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
@@ -1343,12 +1430,18 @@ class ProductRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
 
-        /*var_dump($preparedQuery->getParameters());
-        echo $preparedQuery->getSQL();   die;*/
+        /*var_dump($data);
+        echo "<pre>";
+        print_r($preparedQuery->getParameters());
+        echo "</pre>";
+        echo $preparedQuery->getSQL();
+        var_dump($preparedQuery->getResult());
+        die;*/
 
 
-        return $getResult? $preparedQuery->getResult():$preparedQuery;
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
+
     public function searchProduct($brand_id, $male, $female, $target, $category_id, $start, $per_page)
     {
         $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";
@@ -1372,7 +1465,7 @@ class ProductRepository extends EntityRepository
         if ($category_id) {
             $str = $str . " AND ct.id IN (" . implode(", ", $category_id) . ") ";
         }
-        $str   = $str . " group by p.id";
+        $str = $str . " group by p.id";
         $query = $this->getEntityManager()
             ->createQuery($str)
             ->setFirstResult($start)
@@ -1451,6 +1544,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
 #------------------------Find Item for Multiple Images Uploading--------------#
     public function findItemMultipleImpagesUploading($request_array)
     {
@@ -1486,7 +1580,7 @@ class ProductRepository extends EntityRepository
                 ->innerJoin('pi.product', 'p')
                 ->innerJoin('pi.product_color', 'pc')
                 ->innerJoin('pi.product_size', 'ps')
-            #->leftJoin('pi.product_item_pieces','pip')
+                #->leftJoin('pi.product_item_pieces','pip')
                 ->where('p.id = :product_id')
                 ->andwhere('pc.title = :color_title')
                 ->andwhere('ps.body_type = :body_type')
@@ -1499,13 +1593,14 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
     #---------------------------------------------------------------------
     public function productDetailSizeArray($product_id)
     {
         try {
             return $this->getEntityManager()
                 ->createQueryBuilder()
-            #->select("p,ct,ps,psm")
+                #->select("p,ct,ps,psm")
                 ->select("p.id, p.gender, p.styling_type, p.hem_length, p.fit_priority, p.size_title_type,
                             ct.name clothing_type, ps.id as product_size_id, ps.title, ps.body_type,
                             CONCAT( CONCAT(ps.body_type, ' '),  ps.title) as description,
@@ -1545,6 +1640,7 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
+
     //end of autocomplete method
     public function listProductsAndItems()
     {
@@ -1571,7 +1667,8 @@ class ProductRepository extends EntityRepository
                  p.control_number,
                  p.horizontal_stretch,
                  p.vertical_stretch, 
-				 p.styling_type 
+				 p.styling_type,
+				 pit.price as MSRP
                 FROM `product` p
                 join `product_item` pit on pit.product_id=p.id
                 join `brand` b on b.id=p.brand_id
@@ -1584,22 +1681,24 @@ class ProductRepository extends EntityRepository
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
     //end of autocomplete method
 
     public function getAllProductsIds()
     {
         $query = $this->getEntityManager()->createQueryBuilder();
-        $search = isset($data['query']) && $data['query']?$data['query']:null;
-        return $query 
-                ->select('p.id')
-                ->from('LoveThatFitAdminBundle:Product', 'p')
-                ->Where('p.disabled=0')
-                ->andWhere('p.deleted=0')
-                ->getQuery()
-                ->getResult();
+        $search = isset($data['query']) && $data['query'] ? $data['query'] : null;
+        return $query
+            ->select('p.id')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->Where('p.disabled=0')
+            ->andWhere('p.deleted=0')
+            ->getQuery()
+            ->getResult();
     }
 
-    public function findAllEnableProduct($page_number = 0, $limit = 0, $sort = 'id') {
+    public function findAllEnableProduct($page_number = 0, $limit = 0, $sort = 'id')
+    {
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
@@ -1616,7 +1715,8 @@ class ProductRepository extends EntityRepository
             return null;
         }
     }
-  //end of autocomplete method
+
+    //end of autocomplete method
 
     public function updateProductsStatusByBrand($disabled, $brand_id)
     {
@@ -1667,32 +1767,35 @@ class ProductRepository extends EntityRepository
             return false;
         }
     }
-	
-	
-	 public function checked_for_categories($id){
-        $query     = $this->getEntityManager()->createQueryBuilder();
+
+
+    public function checked_for_categories($id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
         $query = $this->getEntityManager()
-            ->createQuery("SELECT categories_id have_category FROM category_products cp WHERE cp.product_id = ".$id);
-	    return $query->getResult();
-	 }
-	
-	
-	 public function checked_for_price($id){
-		
-        $query     = $this->getEntityManager()->createQueryBuilder();       
+            ->createQuery("SELECT categories_id have_category FROM category_products cp WHERE cp.product_id = " . $id);
+        return $query->getResult();
+    }
+
+
+    public function checked_for_price($id)
+    {
+
+        $query = $this->getEntityManager()->createQueryBuilder();
         $query = $this->getEntityManager()
-            ->createQuery("SELECT COUNT(pi.id) no_price FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id." AND pi.price = 0");
+            ->createQuery("SELECT COUNT(pi.id) no_price FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = " . $id . " AND pi.price = 0");
 
         return $query->getResult();
-	 }
-	 
-	  public function checked_for_weight($id){
-        $query     = $this->getEntityManager()->createQueryBuilder();
-		   $query = $this->getEntityManager()
-            ->createQuery("SELECT COUNT(pi.id) no_weight FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id." and (pi.weight is NULL or pi.weight = '')");
+    }
 
-         return $query->getResult();
-	 }
+    public function checked_for_weight($id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) no_weight FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = " . $id . " and (pi.weight is NULL or pi.weight = '')");
+
+        return $query->getResult();
+    }
 
     public function listProductsAndCategories()
     {
@@ -1716,14 +1819,15 @@ class ProductRepository extends EntityRepository
                  p.horizontal_stretch,
                  p.vertical_stretch,
                  p.styling_type,
-                GROUP_CONCAT(c.name) as categories_name FROM product p
+                GROUP_CONCAT(DISTINCT c.name order by c.id) as categories_name,
+                 p.description as description FROM product p
 
                 JOIN brand b on b.id = p.brand_id
                 JOIN clothing_type ct on ct.id=p.clothing_type_id
                 JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
                 JOIN product_color pc ON p.id = pc.product_id
-                JOIN category_products cp ON cp.product_id = p.id
-                JOIN categories c on c.id = cp.categories_id
+                LEFT JOIN category_products cp ON cp.product_id = p.id
+                LEFT JOIN categories c on c.id = cp.categories_id
                 GROUP BY p.id';
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
@@ -1731,59 +1835,60 @@ class ProductRepository extends EntityRepository
         return $stmt->fetchAll();
     }
 
-	  public function checked_total_items_listing($id){
-        $query     = $this->getEntityManager()->createQueryBuilder();
-		   $query = $this->getEntityManager()
-            ->createQuery("SELECT COUNT(pi.id) total_items FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = ".$id);
+    public function checked_total_items_listing($id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(pi.id) total_items FROM LoveThatFitAdminBundle:ProductItem pi WHERE pi.product = " . $id);
 
-         return $query->getResult();
-	 }
+        return $query->getResult();
+    }
 
 }
 
-    /*
-    public function getAllProductsIds(
-        $data,
-        $page = 0,
-        $max = NULL,
-        $order,
-        $getResult = true
-    ) 
-    {
-        $query = $this->getEntityManager()->createQueryBuilder();
-        $search = isset($data['query']) && $data['query']?$data['query']:null;
-        $query 
-            ->select('p.id')
-            ->from('LoveThatFitAdminBundle:Product', 'p')
-            ->Where('p.disabled=0');
+/*
+public function getAllProductsIds(
+    $data,
+    $page = 0,
+    $max = NULL,
+    $order,
+    $getResult = true
+)
+{
+    $query = $this->getEntityManager()->createQueryBuilder();
+    $search = isset($data['query']) && $data['query']?$data['query']:null;
+    $query
+        ->select('p.id')
+        ->from('LoveThatFitAdminBundle:Product', 'p')
+        ->Where('p.disabled=0');
 
-        if ($search) {
-            $query 
-                ->andWhere('p.control_number like :search')
-                ->orWhere('p.name like :search')
-                ->setParameter('search', "%".$search."%");
-        }
-        if (is_array($order)) {
-            $orderByColumn    = $order[0]['column'];
-            $orderByDirection = $order[0]['dir'];
-            // if ($orderByColumn == 0) {
-            //    $orderByColumn = "p.control_number";
-            // } elseif ($orderByColumn == 3) {
-            //     $orderByColumn = "p.name";
-            // } else {
-            //     $orderByColumn = "p.id";
-            // }
-            $query->orderBy("p.id", "desc");
-        }
-        
-        if ($max) {
-            $preparedQuery = $query->getQuery() 
-                ->setMaxResults($max)
-                ->setFirstResult(($page) * $max);
-        } else {
-            $preparedQuery = $query->getQuery(); 
-        }
-        return $getResult?$preparedQuery->getResult():$preparedQuery; 
+    if ($search) {
+        $query
+            ->andWhere('p.control_number like :search')
+            ->orWhere('p.name like :search')
+            ->setParameter('search', "%".$search."%");
     }
-    */
+    if (is_array($order)) {
+        $orderByColumn    = $order[0]['column'];
+        $orderByDirection = $order[0]['dir'];
+        // if ($orderByColumn == 0) {
+        //    $orderByColumn = "p.control_number";
+        // } elseif ($orderByColumn == 3) {
+        //     $orderByColumn = "p.name";
+        // } else {
+        //     $orderByColumn = "p.id";
+        // }
+        $query->orderBy("p.id", "desc");
+    }
+
+    if ($max) {
+        $preparedQuery = $query->getQuery()
+            ->setMaxResults($max)
+            ->setFirstResult(($page) * $max);
+    } else {
+        $preparedQuery = $query->getQuery();
+    }
+    return $getResult?$preparedQuery->getResult():$preparedQuery;
+}
+*/
 //}

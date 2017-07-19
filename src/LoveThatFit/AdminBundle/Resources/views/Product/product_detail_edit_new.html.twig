@@ -1,0 +1,474 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li><a href="{{ path('admin_products') }}">Products</a> <span class="divider">/</span>{{ entity.name }}<span
+                class="divider">/</span></li>
+    <li class="active">Edit</li>
+{% endblock %}
+{% block h1 %}Product{% endblock %}
+{% block title %}Product{% endblock %}
+
+{% block body %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        {% raw %}{% endraw %}
+        {% autoescape false %}
+        var prodSpecs = JSON.parse('{{ productSpecification|json_encode() }}');
+        console.log(prodSpecs);
+        //var product = '{{ product|json_encode() }}'.replace(/\\/g, "");
+        var product = JSON.parse('{{ product|json_encode() }}');
+        console.log(product);
+        /*var clothing_types = JSON.parse('{{ clothing_types|json_encode() }}');
+         console.log(clothing_types);*/
+        /*var clothing_type_specs = ['style_type', 'hem_length', 'neck_line', 'sleeve_styling', 'rise'];
+        var clothing_type_specs_html_ids = ['styling_type', 'hem_length', 'neck_line', 'sleeve_styling', 'rise'];*/
+
+        Object.size = function (obj) {
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
+
+        function format_spec(input) {
+            input = input.replace(new RegExp("-", "g"), ' ');
+            /*input = input.replace(new RegExp("/", "g"), ' ');*/
+            input = input.split(' ');
+            var formatted = '';
+            for (var key in input) {
+                if (input[key] != '-' && input[key] != '') {
+                    if (formatted == '') {
+                        formatted += input[key];
+                    } else {
+                        formatted += '_' + input[key];
+                    }
+                }
+            }
+            return strtolower(formatted);
+        }
+
+        function changeSpecifications(product, prodSpecs, sex, clothing_type) {
+            $('#product_rise').empty();
+            var html = '<option value="">Select Style Type</option>';
+            var style_types = prodSpecs[sex]['style_type'][strtolower(clothing_type)];
+            for (var prop in style_types) {
+                var product_style_types = format_spec(product['styling_type']);
+                var st = capitaliseFirstLetter(style_types[prop].replace(new RegExp("_", "g"), ' '));
+                /*if (strtolower(st) == product['styling_type'] || strtolower(style_types[prop]) == product['styling_type']) {*/
+                if (strtolower(style_types[prop]) == product_style_types) {
+                    html += '<option value="' + style_types[prop] + '" selected>' + st + '</option>'
+                } else {
+                    html += '<option value="' + style_types[prop] + '">' + st + '</option>'
+                }
+            }
+            $('#product_styling_type').html(html);
+
+            html = '<option value="">Select Hem Length</option>';
+            var hem_length = prodSpecs[sex]['hem_length'][strtolower(clothing_type)];
+            for (var prop in hem_length) {
+                var product_hem_length = format_spec(product['hem_length']);
+                var hl = capitaliseFirstLetter(hem_length[prop].replace(new RegExp("_", "g"), ' '));
+                /*if (strtolower(hl) == product['hem_length'] || hem_length[prop] == product['hem_length']) {*/
+                if (strtolower(hem_length[prop]) == product_hem_length) {
+                    html += '<option value="' + hem_length[prop] + '" selected>' + hl + '</option>'
+                } else {
+                    html += '<option value="' + hem_length[prop] + '">' + hl + '</option>'
+                }
+            }
+            $('#product_hem_length').html(html);
+
+            html = '<option value="">Select Neckline</option>';
+            var neck_line = prodSpecs[sex]['neck_line'][strtolower(clothing_type)];
+            for (var prop in neck_line) {
+                var product_neckline = format_spec(product['neckline']);
+                var nl = capitaliseFirstLetter(neck_line[prop].replace(new RegExp("_", "g"), ' '));
+                /*if (strtolower(nl) == product['neckline'] || strtolower(neck_line[prop]) == product['neckline']) {*/
+                if (strtolower(neck_line[prop]) == product_neckline) {
+                    html += '<option value="' + neck_line[prop] + '" selected>' + nl + '</option>'
+                } else {
+                    html += '<option value="' + neck_line[prop] + '">' + nl + '</option>'
+                }
+            }
+            $('#product_neckline').html(html);
+
+            html = '<option value="">Select Sleeve Styling</option>';
+            var sleeve_styling = prodSpecs[sex]['sleeve_styling'][strtolower(clothing_type)];
+            for (var prop in sleeve_styling) {
+                var product_sleeve_styling = format_spec(product['sleeve_styling']);
+                var ss = capitaliseFirstLetter(sleeve_styling[prop].replace(new RegExp("_", "g"), ' '));
+                /*if (strtolower(sleeve_styling[prop]) == product['sleeve_styling'] || strtolower(sleeve_styling[prop]) == product['sleeve_styling']) {*/
+                if (strtolower(sleeve_styling[prop]) == product_sleeve_styling) {
+                    html += '<option value="' + sleeve_styling[prop] + '" selected>' + ss + '</option>'
+                } else {
+                    html += '<option value="' + sleeve_styling[prop] + '">' + ss + '</option>'
+                }
+            }
+            $('#product_sleeve_styling').html(html);
+
+            html = '<option value="">Select Rise</option>';
+            var rise = prodSpecs[sex]['rise'][strtolower(clothing_type)];
+            for (var prop in rise) {
+                var product_rise = format_spec(product['rise']);
+                var ss = capitaliseFirstLetter(rise[prop].replace(new RegExp("_", "g"), ' '));
+                /*if (strtolower(ss) == product['rise'] || strtolower(rise[prop]) == product['rise']) {*/
+                if (strtolower(rise[prop]) == product_rise) {
+                    html += '<option value="' + rise[prop] + '" selected>' + ss + '</option>'
+                } else {
+                    html += '<option value="' + rise[prop] + '">' + ss + '</option>'
+                }
+            }
+            $('#product_rise').html(html);
+
+            /* Making All Specs Dynamic */
+            /*for (var key in clothing_type_specs) {
+                html = '<option value="">Select Rise</option>';
+                var rise = prodSpecs[sex]['rise'][strtolower(clothing_type)];
+                for (var prop in rise) {
+                    var ss = capitaliseFirstLetter(rise[prop].replace(new RegExp("_", "g"), ' '));
+                    if (strtolower(ss) == product['rise'] || strtolower(rise[prop]) == product['rise']) {
+                        html += '<option value="' + rise[prop] + '" selected>' + ss + '</option>'
+                    } else {
+                        html += '<option value="' + rise[prop] + '">' + ss + '</option>'
+                    }
+                }
+                $('#product_rise').html(html);
+            }*/
+            /* Making All Specs Dynamic */
+
+            var hidden = prodSpecs[sex]['hidden_specs'][clothing_type];
+            for (var prop in hidden) {
+                /*$('#product_' + hidden[prop]).hide();*/
+                $('#' + hidden[prop]).hide();
+            }
+        }
+
+        /*function changeClothingType(clothing_types, gender) {
+         var html = '<option value="">Select Clothing Type</option>';
+         for (var prop in clothing_types) {
+         if(gender == clothing_types[prop]['gender']) {
+         if (product['clothing_type_id'] == clothing_types[prop].id) {
+         html += '<option selected value="' + clothing_types[prop].id + '">' + clothing_types[prop].name + '</option>';
+         } else {
+         html += '<option value="' + clothing_types[prop].id + '">' + clothing_types[prop].name + '</option>';
+         }
+         }
+         $("#product_ClothingType").html(html);
+         }
+         }*/
+        {% endautoescape %}
+        $(document).ready(function () {
+            var gender = $("#product_gender").val();
+            /*var gender = product.gender;*/
+            var sex = (gender == 'f') ? 'women' : 'man';
+
+            /*changeClothingType(clothing_types, gender);
+             $("#product_gender").change(function () {
+             var gender = $("#product_gender").val();
+             changeClothingType(clothing_types, gender);
+             });*/
+
+            changeSpecifications(product, prodSpecs, sex, product.clothing_type);
+            $("#product_ClothingType").change(function () {
+                var clothing_type = $('#product_ClothingType :selected').text();
+                $("#optional_elements").show();
+                if (strtolower(clothing_type) == strtolower('Jean') || strtolower(clothing_type) == strtolower('Skirts') || strtolower(clothing_type) == strtolower('tee_knit')) {
+                    $('#sleeve_styling').hide();
+                }
+                changeSpecifications(product, prodSpecs, sex, clothing_type);
+            });
+        });
+
+        function capitaliseFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function strtolower(str) {
+            return (str + '').toLowerCase();
+        }
+
+        // Validation
+        function validate() {
+            var product_horizontal_stretch = $('#product_horizontal_stretch').val();
+            var product_vertical_stretch = $('#product_vertical_stretch').val();
+            var flage = false;
+
+            //Fitting Priority values
+            var fit_priority_values = 0;
+            $("#fit_priority :text").each(function () {
+                if (!isNaN(this.value) && this.value.length != 0) {
+                    fit_priority_values += parseFloat(this.value);
+                }
+                // fit_priority_values= +$(this).val();
+            });
+            if (fit_priority_values > 100) {
+                window.scrollTo(10, 10);
+                $('#error_box').html('Fitting Priority values must be less than 100.');
+                $('#error_box').show();
+                return false;
+            }
+
+            //Fabric Content--------
+
+            var fabric_content_values = 0;
+            $("#fabric_content :text").each(function () {
+                if (!isNaN(this.value) && this.value.length != 0) {
+                    fabric_content_values += parseFloat(this.value);
+                }
+                // fit_priority_values= +$(this).val();
+            });
+            if (fabric_content_values > 100) {
+                window.scrollTo(10, 10);
+                $('#error_box').html('Fabric Content values must be less than 100.');
+                $('#error_box').show();
+                return false;
+            }
+
+            // Garment Detail
+            var garment_detail_values = 0;
+            $("#garment_detail :text").each(function () {
+                if (!isNaN(this.value) && this.value.length != 0) {
+                    garment_detail_values += parseFloat(this.value);
+                }
+                // fit_priority_values= +$(this).val();
+            });
+            if (garment_detail_values > 100) {
+                window.scrollTo(10, 10);
+                $('#error_box').html('Garment Detail  values must be less than 100.');
+                $('#error_box').show();
+                return false;
+            }
+
+            ////
+            if (product_horizontal_stretch != "") {
+                if (!product_horizontal_stretch.match(/^\d+/)) {
+                    window.scrollTo(10, 10);
+                    $('#error_box').show();
+                    return false;
+                } else {
+                    $('#error_box').hide();
+                }
+            }
+            if (product_vertical_stretch != "") {
+                if (!product_vertical_stretch.match(/^\d+/)) {
+                    window.scrollTo(10, 10);
+                    $('#error_box').show();
+                    return false;
+                } else {
+                    $('#error_show').hide();
+                }
+            }
+
+            var items = document.getElementsByClassName('required');
+            for (var i = 0; i < items.length; i++) {
+                values = items[i].value;
+                if (values != "") {
+                    if (!values.match(/^\d+/)) {
+                        window.scrollTo(10, 10);
+                        $('#error_box').show();
+                        return false;
+                    }
+                }
+            }
+            //return false;
+        }
+
+    </script>
+
+    {#{{ dump(product) }}#}
+    <div>
+        <h1 style="float:left;">Edit Product </h1>
+        <div class="btn_wrapper">
+            <a href="{{ path('admin_products') }}" class="btn">back to list</a>
+        </div>
+        <div class="clearfix"></div>
+        <form onsubmit="return validate();"
+              action="{{ path('admin_product_detail_update', { 'id': entity.id }) }}"
+              method="post" {{ form_enctype(form) }}>
+
+            {{ form_errors(form) }}
+            <div id="detail_wrapper">
+                <div id="p_hd">Product Detail</div>
+                <div class="clearfix"></div>
+                <span id="error_box" style=" display: none;">*Number Only</span>
+                <div id="product_content">
+                    <div id="pro_detail">
+                        <div class="edt_container">
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Control Number</div>
+                                <div class="span3">
+                                    {{ form_widget(form.control_number) }}{{ form_errors(form.control_number) }}
+                                </div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Model Height</div>
+                                <div class="span3">
+                                    {{ form_widget(form.product_model_height) }}{{ form_errors(form.product_model_height) }}
+                                </div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Retailer</div>
+                                <div class="span3">{{ form_widget(form.Retailer) }}</div>
+                            </div>
+                            <div class="row-fluid show-grid" id="brand_1">
+                                <div class="span3">Brand</div>
+                                <div class="span3">{{ form_widget(form.Brand) }}{{ form_errors(form.Brand) }}</div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Gender</div>
+                                <div class="span3">{{ product.gender == 'f' ? 'Female' : 'Male' }}</div>
+                                <input type="hidden" id="product_gender" name="product[gender]"
+                                       value="{{ product.gender }}">
+                                {#<div class="span3">{{ form_widget(form.gender) }}{{ form_errors(form.gender) }}</div>#}
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Name</div>
+                                <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Clothing Type</div>
+                                <div class="span3">
+                                    {{ form_widget(form.ClothingType) }}{{ form_errors(form.ClothingType) }}
+                                </div>
+                            </div>
+                            <div id="optional_elements">
+                                <div class="row-fluid show-grid" id="styling_type">
+                                    <div class="span3">Styling Type</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.styling_type) }}{{ form_errors(form.styling_type) }}
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid" id="hem_length">
+                                    <div class="span3">Hem length</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.hem_length) }}{{ form_errors(form.hem_length) }}
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid" id="neckline">
+                                    <div class="span3">Neckline</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.neckline) }}{{ form_errors(form.neckline) }}
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid" id="sleeve_styling">
+                                    <div class="span3">Sleeve Styling</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.sleeve_styling) }}{{ form_errors(form.sleeve_styling) }}
+                                    </div>
+                                </div>
+                                <div class="row-fluid show-grid" id="rise">
+                                    <div class="span3">Rise</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.rise) }}{{ form_errors(form.rise) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Stretch Type</div>
+                                <div class="span3">
+                                    {{ form_widget(form.stretch_type) }}{{ form_errors(form.stretch_type) }}
+                                </div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Horizontal Stretch</div>
+                                <div class="span3">{{ form_widget(form.horizontal_stretch) }}{{ form_errors(form.horizontal_stretch) }}
+                                    <span id="error_horizontal_stretch" style="display:none;">
+                                        <font color="red">*Number Only.</font>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Vertical Stretch</div>
+                                <div class="span3">{{ form_widget(form.vertical_stretch) }}{{ form_errors(form.vertical_stretch) }}
+                                    <span id="error_vertical_stretch" style="display:none;">
+                                        <font color="red">*Number Only.</font>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Fabric Weight</div>
+                                <div class="span3">{{ form_widget(form.fabric_weight) }}{{ form_errors(form.fabric_weight) }}</div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Structural Detail</div>
+                                <div class="span3">{{ form_widget(form.structural_detail) }}{{ form_errors(form.structural_detail) }}</div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Fit Type</div>
+                                <div class="span3">{{ form_widget(form.fit_type) }}{{ form_errors(form.fit_type) }}</div>
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Layering</div>
+                                <div class="span3">{{ form_widget(form.layering) }}{{ form_errors(form.layering) }}</div>
+                            </div>
+                            <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
+                            <div class="row-fluid show-grid" id="fit_priority">
+                                {#<div class="span3">Fit Priority</div>#}
+                                <label>Fit Pirority:</label>
+                                {% for key,value in fit_priority %}
+                                    <label>{{ value.label }}</label>
+                                    <input class="required" type="text" name="fit_pirority[{{ value.name }}]"
+                                           value="{{ value.value }}">
+                                {% endfor %}
+                                {#<div class="span3">{{ form_widget(form.fit_priority) }}{{ form_errors(form.fit_priority) }}</div>#}
+                            </div>
+                            <div class="row-fluid show-grid" id="fabric_content">
+                                {#<div class="span3">Fabric Content</div>#}
+                                <label>Fabric Content:</label>
+                                {% for key,value in fabric_content %}
+                                    <label>{{ value.label }}</label>
+                                    <input class="required" type="text" name="fabric_content[{{ value.name }}]"
+                                           value="{{ value.value }}">
+                                {% endfor %}
+                                {#<div class="span3">{{ form_widget(form.fabric_content) }}{{ form_errors(form.fabric_content) }}</div>#}
+                            </div>
+                            <div class="row-fluid show-grid" id="garment_detail">
+                                {#<div class="span3">Garment Detail</div>#}
+                                <label>Garment Detail:</label>
+                                {% for key,value in garment_detail %}
+                                    <label>{{ value.label }}</label>
+                                    <input class="required" type="text" name="garment_detail[{{ value.name }}]"
+                                           value="{{ value.value }}">
+                                {% endfor %}
+                                {#<div class="span3">{{ form_widget(form.garment_detail) }}{{ form_errors(form.garment_detail) }}</div>#}
+                            </div>
+                            <div style="clear:both; padding-bottom: 10px;">&nbsp;</div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Size Title Type</div>
+                                <div class="span6">{{ form_widget(form.size_title_type) }}{{ form_errors(form.size_title_type) }}</div>
+                            </div>
+                            {#<div class="row-fluid show-grid">
+                                <div class="span3">Description</div>
+                                <div>{{ form_widget(form.description) }}{{ form_errors(form.description) }}</div>
+                            </div>#}
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Disabled</div>
+                                <div class="span3">{{ entity.disabled ? 'Yes' : 'No' }}</div>
+                                {#<div class="span3">{{ form_widget(form.disabled) }}{{ form_errors(form.disabled) }}</div>#}
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Status</div>
+                                <div class="span6">{{ form_widget(form.status) }}{{ form_errors(form.status) }}</div>
+                            </div>
+                            {#<div class="row-fluid show-grid">
+                                {{ form_rest(form) }}
+                            </div>#}
+                            <div class="row-fluid show-grid">
+                                <div class="span3">&nbsp;</div>
+                                <div class="span3">
+                                    <div style="margin:0px 0px 0px 0px;">
+                                        <input type="submit" value="Update" class="btn  btn-primary"/>
+                                        <a href="{{ path('admin_products') }}" class="btn  btn-primary">Cancel </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End pro_detail -->
+            </div>
+            <!-- End product_content -->
+        </form>
+        <!-- Modal -->
+    </div>
+    <!-- End detail_wrapper -->
+{% endblock %}

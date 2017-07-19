@@ -28,6 +28,10 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
+        if (!isset($version['version']) && $version['version'] == "") {
+            $version = $this->container->get('user.helper.user')->getVersion($user->getId());
+        }
+
         if (isset($version['version']) && $version['version'] == 1) {
 
             $device_config = $this->container->get('admin.helper.device_support')->getDeviceConfig($request_array['device_model']);
@@ -84,6 +88,8 @@ class WebServiceHelper
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                    $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
+                    $response_array['user']['defaultProduct'] = $defaultProducts;
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -116,6 +122,9 @@ class WebServiceHelper
             #$data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']); 
             $data['user'] = $this->user_array($user, $request_array);
 
+            $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
+            $data['user']['defaultProduct'] = $defaultProducts;
+
             return $this->response_array(true, 'member found', true, $data);
         } else {
             return $this->response_array(false, 'Member not found');
@@ -138,6 +147,47 @@ class WebServiceHelper
             $user = $this->createUserWithParams($request_array);            
             #--- 3) default user values added
             $measurement = $this->container->get('user.helper.user')->copyDefaultUserData($user, $request_array);
+
+            $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+            ##email not send if the event is available against user
+            if (!array_key_exists("event_name", $request_array)) {
+                #---- 2) send registration email ....
+                $this->container->get('mail_helper')->sendRegistrationEmail($user);
+            }
+
+            try {
+                //create podio users entity
+                $this->createPodioUser($user->getId());
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+            }
+
+            #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
+            $detail_array = $this->user_array($user, $request_array);
+
+            unset($detail_array['per_inch_pixel_height']);
+            unset($detail_array['deviceType']);
+            unset($detail_array['auth_token_web_service']);
+            return $this->response_array(true, 'User created', true, array('user' => $detail_array));
+        }
+    }
+
+    #------------------------ User -----------------------
+    public function registrationWithDefaultValuesSupport($request_array)
+    {
+        if (!array_key_exists('email', $request_array)) {
+            return $this->response_array(false, 'Email Not provided.');
+        }
+
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+        if (count($user) > 0) {
+            return $this->response_array(false, 'Email already exists.');
+        } else {
+            $user = $this->createUserWithParams($request_array);            
+            #--- 3) default user values added
+            $measurement = $this->container->get('user.helper.user')->copyDefaultUserDataSupport($user, $request_array);
 
             $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
 
@@ -222,9 +272,15 @@ class WebServiceHelper
     {
 
         $user = $this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
+        if ($request_array['imc'] == "true") {
+            $user->setVersion(1);
+        } else {
+            $user->setVersion(0);
+        }
         $user->setPassword($request_array['password']);
         $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
         $user->generateAuthenticationToken();
+
         $this->container->get('user.helper.user')->saveUser($user);
         return $user;
     }
@@ -240,6 +296,7 @@ class WebServiceHelper
         array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) : null;
         array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) : null;
         array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) : null;
+        
         if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)) {
             $user->addDeviceToken($request_array['device_type'], $request_array['device_token']);
         }
@@ -1120,6 +1177,7 @@ class WebServiceHelper
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 'fitting_room_status' => $fitting_room_status,
                 'qty' => $qty,
+                'color_image' => $pi->getProductColor()->getImage(),
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -1146,6 +1204,8 @@ class WebServiceHelper
 
         $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
         $p['description_html'] = $product->getDescription();
+        $p['description_html'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['description_html']);
+        $p['description_html'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['description_html'].'</span>';
         $product_description = $product->getDescription();
         $product_description_without_html = preg_replace('#<[^>]+>#', ' ', $product_description);
         $p['description'] = rtrim(ltrim($product_description_without_html));
@@ -1162,7 +1222,13 @@ class WebServiceHelper
                 $p['item_details'] = str_ireplace('</ul>','<li>'.$product_country_origin.'</li></ul>', $product_items_details);
             }
         }
+
+        $p['item_details'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['item_details']);
+        $p['item_details'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['item_details'].'</span>';
+
         $p['care_label'] = $product->getCareLabel();
+        $p['care_label'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['care_label']);
+        $p['care_label'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['care_label'].'</span>';
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
@@ -1193,6 +1259,7 @@ class WebServiceHelper
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['title'] = $saveLookItem->getItems()->getProduct()->getName();
+                $temp['item_name'] = $saveLookItem->getItems()->getProduct()->getItemName();
                 $temp['description'] = $saveLookItem->getItems()->getProduct()->getDescription();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
@@ -1275,6 +1342,7 @@ class WebServiceHelper
                 //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
                 'qty' => $product_qty,
+                'color_image' => $pi->getProductColor()->getImage(),
             );
         }
 
@@ -1294,6 +1362,7 @@ class WebServiceHelper
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
         $p['target'] = $product->getclothingType()->getTarget();
+        $p['item_name'] = $product->getItemName();
         return $p;
     }
 
@@ -1320,6 +1389,45 @@ class WebServiceHelper
         }
 
         return $total + $box_weight;
+    }
+
+    public function registerUserDeviceToken( $deviceToken, User $user){
+        $usertokens = json_decode($user->getDeviceTokens());
+
+        if($usertokens != null){
+            $userTokenArray = array();
+            $deviceTokenFound = 0;
+            foreach ($usertokens as $tokens){
+                foreach ($tokens as $token){
+                    if($deviceToken == $token){
+                        return 1;
+                    }
+                }
+            }
+
+            $userTokenArray = $usertokens->iphone;
+            array_push($userTokenArray, $deviceToken);
+            $userTokenToSave['iphone'] = $userTokenArray;
+        }else{
+            $userTokenToSave['iphone'] = array(
+                $deviceToken
+            );
+        }
+
+
+        $user->setDeviceTokens(
+            json_encode($userTokenToSave)
+        );
+
+        $this->container->get('user.helper.user')->saveUser($user);
+        return 0;
+    }
+
+    public function getShippintType(){
+        $yaml = new Parser();
+        $shippmentType  = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'))['stamps_com_dev']['shippment'];
+
+        return $shippmentType;
     }
 
 }

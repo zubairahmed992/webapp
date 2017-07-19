@@ -118,6 +118,7 @@ ws_user_registration_default_values:
       birth_date:  
       device_type: iphone6
       create_default_user: true
+      imc: true
     request_type: post
     description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
     backend_process: 
@@ -656,6 +657,13 @@ nws_get_all_fitting_room:
    params:
      auth_token: 56565656566
 
+nws_add_update_fitting_room_items:
+   pattern:  /nws/add_update_fitting_room_items
+   title: add_update_to_fitting_room_items
+   params:
+     auth_token: 56565656566
+     items: [{"product_item_id":4082,"product_id":506,"qty":1},{"product_item_id":4083,"product_id":506,"qty":1}]
+
 ws_braintree_payment_and_create_order:
   pattern: /ws/braintree_payment_and_create_order
   title:  add_item_and_make_payment
@@ -689,6 +697,14 @@ nws_save_user_shipping_address:
     shipping: {"shipping_first_name":"geof","shipping_last_name":"anton","shipping_address1":"12959 CORAL TREE PL","shipping_address2":"12959 CORAL TREE PL","shipping_phone":"123334","shipping_city":"los angels","shipping_postcode":"90066","shipping_country":"xyz","shipping_state":"CA", "shipping_default": "1", "cleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063"}
     shipping_id: 0
     data: {"FullName": "","FirstName": "GEOF","LastName": "ANTON","Address1": "12959 CORAL TREE PL","Address2": "12959 CORAL TREE PL","City": "LOS ANGELES","State": "CA","ZIPCode": "90066","ZIPCodeAddOn": "7020","DPB": "59","CheckDigit": "6","Urbanization": "","CleanseHash": "Fi4M2MnZT90Ee2Ix1QPygguxPJFkZWFkYmVlZg==20171011C063","OverrideHash": "Tdwp4JlTc02DhscYxbI7l7o08apkZWFkYmVlZg==20171011C063"}
+
+nws_delete_user_address:
+  pattern: /nws/delete_user_address
+  title: delete user billing or shipping address
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    shipping_id: 0
+    billing_id: 0
 
 nws_get_all_user_saved_addresses:
   pattern: /nws/get_all_user_saved_addresses
@@ -773,4 +789,17 @@ pi_ws_product_image_upload:
     params:         
       image_name: "AG-Jeans_LSS1288_SBA_R_25" 
       name_format: "Brand_StyleID#_Color_Size-Range_Size"  
-      request_type: post       
+      request_type: post
+
+nws_shop_the_look:
+  pattern: /nws/shop_the_look
+  title: nws_shop_the_look
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+
+new_register_device_token:
+  pattern: /nws/register_device_token
+  title: Regsiter user device token
+  params:
+    auth_token: 121c421783cd4d71d871ec16a1296091
+    device_token: 11223344556677889900112233445566778899000

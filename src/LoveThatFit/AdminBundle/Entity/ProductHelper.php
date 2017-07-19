@@ -252,8 +252,12 @@ class ProductHelper
 
 //-------------------------------------------------------
     public function getTotalProductCount(){
-        $rec_count = count($this->repo->countAllRecord());
-        return $rec_count;
+        $rec_count = $this->repo->getTotalCount();
+        if(!empty($rec_count))
+            //return $rec_count[0]['total_count'];
+            return count($this->repo->getTotalCount());
+        else
+            return 0;
     }
     public function getListWithPagination($page_number = 0, $sort = 'id')
     {
@@ -311,11 +315,20 @@ class ProductHelper
         $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0;
         $order   = $data['order'];
 
-        $search  = array(
+        /*$search  = array(
             'category' => (isset($data['category']) && !empty($data['category']) ? "'" . implode("','", $data['category']) . "'" : array()),
             'target' => (isset($data['target']) && !empty($data['target']) ? "'" . implode("','", $data['target']) . "'" : array()),
             'genders' => (isset($data['genders']) && !empty($data['genders']) ? "'" . implode("','", $data['genders']) . "'" : array()),
             'p_statuses' => (isset($data['p_statuses']) && !empty($data['p_statuses']) ? "'" . implode("','", $data['p_statuses']) . "'" : array()),
+            'brand' => (isset($data['brand']) ? $data['brand']: 0),
+            'created_date' => (isset($data['created_date']) ? $data['created_date']: "")
+        );*/
+
+        $search  = array(
+            'category' => (isset($data['category']) && !empty($data['category']) ? $data['category'] : array()),
+            'target' => (isset($data['target']) && !empty($data['target']) ? $data['target'] : array()),
+            'genders' => (isset($data['genders']) && !empty($data['genders']) ? $data['genders'] : array()),
+            'p_statuses' => (isset($data['p_statuses']) && !empty($data['p_statuses']) ? $data['p_statuses'] : array()),
             'brand' => (isset($data['brand']) ? $data['brand']: 0),
             'created_date' => (isset($data['created_date']) ? $data['created_date']: "")
         );
@@ -335,6 +348,22 @@ class ProductHelper
 
 
         foreach ($finalData as $fData) {
+
+         $priceData = $this->repo->checked_for_price($fData["id"]);          
+         $weightData = $this->repo->checked_for_weight($fData["id"]);  
+         $getselectedcategories = $this->repo->getSelectedCategories($fData["id"]);
+
+
+           $cat_count = 0;
+           if(count($getselectedcategories) > 0)
+           {
+              $cat_count = "1";
+           } 
+
+         $totalItems = $this->repo->checked_total_items_listing($fData["id"]);  
+
+
+
             $output['data'][] = [
                 'id' => $fData["id"],
                 'control_number' => $fData["control_number"],
@@ -342,8 +371,17 @@ class ProductHelper
                 'ClothingType' => $fData["cloting_type"],
                 'gender' => $fData["gender"],
                 'PName' => $fData['name'],
+                'description' => $fData['description'],
+                'item_name' => $fData['item_name'],
+                'country_origin' => $fData['country_origin'],
+                'item_details' => $fData['item_details'],
+                'care_label' => $fData['care_label'],                                                               
+                'cat_count' => $cat_count,
+                'total_items' => $totalItems[0]['total_items'],
+                'price_status' => $priceData[0]['no_price'],
+                'weight_status' => $weightData[0]['no_weight'],         
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
-                'status'    => ($fData['disabled'] == 1) ? "Disable" : "Enable",
+                'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
                 'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending" 
             ];
         }
@@ -386,7 +424,16 @@ class ProductHelper
 			
 			 
 			 $priceData = $this->repo->checked_for_price($fData["id"]);			 
-			 $weightData = $this->repo->checked_for_weight($fData["id"]);	
+			 $weightData = $this->repo->checked_for_weight($fData["id"]);
+             $getselectedcategories = $this->repo->getSelectedCategories($fData["id"]);
+
+
+               $cat_count = 0;
+               if(count($getselectedcategories) > 0)
+               {
+                  $cat_count = "1";
+               } 
+
 			 $totalItems = $this->repo->checked_total_items_listing($fData["id"]);		 			 
 			
             $output['data'][] = [
@@ -402,10 +449,11 @@ class ProductHelper
 				'item_details' => $fData['item_details'],
 				'care_label' => $fData['care_label'],																
 				'total_items' => $totalItems[0]['total_items'],
-				'price_status' => $priceData[0]['no_price'],
+                'total_items' => $totalItems[0]['total_items'],
+				'cat_count' => $cat_count,
 				'weight_status' => $weightData[0]['no_weight'],				
                 'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
-                'status'    => ($fData['disabled'] == 1) ? "Disable" : "Enable",
+                'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
                 'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending"
             ];
         }
@@ -453,6 +501,10 @@ class ProductHelper
     }
 
 
+    public function findAll()
+    {
+        return $this->repo->findAll();
+    }
 #---------------------------------------------------
     public function findProductByTitle($name)
     {
@@ -1052,6 +1104,21 @@ class ProductHelper
         $clothing_type = $this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
         $clothing = $this->container->get('admin.helper.clothingtype')->findByTargetGender($clothing_type['target'], $gender);
         return $clothing;
+    }
+
+    #----------------------Product Cloting type  ------------------------#
+    public function productClothingTypeNew($target_array)
+    {
+        $clothing_type_id = $target_array['clothing_type'];
+        $gender = $target_array['gender'];
+        $clothing_type = $this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
+        $clothing = $this->container->get('admin.helper.clothingtype')->findByTargetAndGender($clothing_type['target'], $gender);
+        return $clothing;
+    }
+    #----------------------Product Cloting type  ------------------------#
+    public function productClothingTypes()
+    {
+        return $this->container->get('admin.helper.clothingtype')->findAll();
     }
 
 #---------------Delete Product------------------------------------------------#
@@ -1727,4 +1794,49 @@ class ProductHelper
         return array('items'=>$i, 'total_items'=>$ti, 'missing_images'=>$mii);
     }
 
+
+    public function markProductDefault(Product $product)
+    {
+        $product->setDefaultClothing( 1 );
+        $this->em->persist($product);
+        $this->em->flush();
+    }
+
+    public function markOtherProductDefaultToZero(ClothingType $clothing_type)
+    {
+        $target = $clothing_type->getTarget();
+        $entity = $this->repo->findBy(array(
+            'default_clothing' => 1
+        ));
+
+        if(is_array($entity) && !empty($entity)){
+            foreach($entity as $product){
+                $clothingTypeEntity = $product->getClothingType();
+                if($clothingTypeEntity->getTarget() == $target){
+                    $product->setDefaultClothing( 0 );
+                    $this->em->persist($product);
+                    $this->em->flush();
+                }
+            }
+        }
+
+        return;
+    }
+
+    public function findDefaultProduct(){
+        $ids = array();
+        $entity = $this->repo->findBy(array(
+            'default_clothing' => 1
+        ));
+
+        if(is_array($entity) && !empty($entity)){
+            foreach($entity as $product){
+                $clothingTypeEntity = $product->getClothingType();
+                $ids[$clothingTypeEntity->getTarget()] = $product->getId();
+            }
+            return $ids;
+        }
+
+        return $ids;
+    }
 }

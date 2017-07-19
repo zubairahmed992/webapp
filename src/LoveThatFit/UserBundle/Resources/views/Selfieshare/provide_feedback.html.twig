@@ -4,265 +4,263 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        
-        <title>SelfieStyler</title>
-        <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
-        
-        
-        <script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-$(document).ready(function() {
+    <title>SelfieStyler</title>
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
 //  $("#ss_like").css({'opacity':'0.2'});
 //  $("#ss_dislike").css({'opacity':'0.2'});
- $("#ss_like").click(function(){
-      $("#ss_like").css({'opacity':'1'});
-      $("#ss_dislike").css({'opacity':'0.2'});
-     $("#ss_like").toggleClass("like_enable");
-     $("#ss_dislike").removeClass("like_enable");
-     //$("#ss_like_status").attr("value", $(".like_enable span").html());
-     $("#ss_like_status").attr("value", '1');
-     //hit_update_service();
- });
-  $("#ss_dislike").click(function(){    
-     
-     $("#ss_dislike").css({'opacity':'1'});       
-      $("#ss_like").css({'opacity':'0.2'});
-     $("#ss_dislike").toggleClass("like_enable");
-     $("#ss_like").removeClass("like_enable");
-    // $("#ss_like_status").attr("value", $(".like_enable span").html());
-     $("#ss_like_status").attr("value", '0');
-     //hit_update_service();
- });
- $(":radio").change(function(){
-     rating: $("#ss_rating").attr("value",this.value);
-     //hit_update_service();
- });
- 
- $("#send_button").click(function(){
-     $("#ss_comments").attr("value",$("#ss_textarea").val());
-     var commentbox = $("#ss_textarea").val();
-     if(commentbox!=''){
-     hit_update_service();
-     //alert("Thanks for your comments.");
-     }else{
-         alert('Kindly put comments');
-     }
- });
-    
-   $('#clientsOpen').click(function () {
-	   
-   
-if ($('#clientsDashboard').is(':visible')){
+            $("#ss_like").click(function () {
+                $("#ss_like").css({'opacity': '1'});
+                $("#ss_dislike").css({'opacity': '0.2'});
+                $("#ss_like").toggleClass("like_enable");
+                $("#ss_dislike").removeClass("like_enable");
+                //$("#ss_like_status").attr("value", $(".like_enable span").html());
+                $("#ss_like_status").attr("value", '1');
+                //hit_update_service();
+            });
+            $("#ss_dislike").click(function () {
 
-$('#clientsOpen').css({'background':'#333','color':'#fff'});
-$('#clientsDropDown').css({'border-bottom':'20px solid #333'});
-$('.logosm3').css({'display':'inline-block','height':'10%', 'position':'absolute','top':'370px','left':'10px','z-index':'200'});
+                $("#ss_dislike").css({'opacity': '1'});
+                $("#ss_like").css({'opacity': '0.2'});
+                $("#ss_dislike").toggleClass("like_enable");
+                $("#ss_like").removeClass("like_enable");
+                // $("#ss_like_status").attr("value", $(".like_enable span").html());
+                $("#ss_like_status").attr("value", '0');
+                //hit_update_service();
+            });
+            $(":radio").change(function () {
+                rating: $("#ss_rating").attr("value", this.value);
+                //hit_update_service();
+            });
+
+            $("#send_button").click(function () {
+                $("#ss_comments").attr("value", $("#ss_textarea").val());
+                var commentbox = $("#ss_textarea").val();
+                if (commentbox != '') {
+                    hit_update_service();
+                    //alert("Thanks for your comments.");
+                } else {
+                    alert('Kindly put comments');
+                }
+            });
+
+            $('#clientsOpen').click(function () {
 
 
-$('#upicon').css({'display':'inline-block'});
-$('#downicon').css({'display':'none'});
+                if ($('#clientsDashboard').is(':visible')) {
 
-}
-else{
-    
-$('#clientsOpen').addClass("clientsOpen_new");
+                    $('#clientsOpen').css({'background': '#333', 'color': '#fff'});
+                    $('#clientsDropDown').css({'border-bottom': '20px solid #333'});
+                    $('.logosm3').css({
+                        'display': 'inline-block',
+                        'height': '10%',
+                        'position': 'absolute',
+                        'top': '370px',
+                        'left': '10px',
+                        'z-index': '200'
+                    });
 
 
+                    $('#upicon').css({'display': 'inline-block'});
+                    $('#downicon').css({'display': 'none'});
 
-$('#clientsDropDown').css({'border-bottom':'0px'});	
-$('.logosm3').css({'display':'none'});
-$('#downicon').css({'display':'inline-block'});
-$('#upicon').css({'display':'none'});
-}
-		
+                }
+                else {
 
-		
-    $('#clientsDropDown #clientsDashboard').slideToggle({
-      direction: "up"
-    }, 300);
-    $(this).toggleClass('clientsClose');
-    
-  }); // end click
-  
-});
+                    $('#clientsOpen').addClass("clientsOpen_new");
 
-$(':radio').change(
-  function(){
-    alert("asdf");
-     
-  } 
-  
-);
-function hit_update_service(){
-    var value_ar = {
-                        ref: $("#auth_ref").attr("value"),
-                        comments:$("#ss_comments").attr("value"),
-                        favourite: $("#ss_like_status").attr("value"),
-                        rating: $("#ss_rating").attr("value"),
-                        name: $("#name").attr("value"),
-                        email: $("#email").attr("value"),
-                        phone: $("#phone").attr("value")
-                    };
-                    
 
-{#path("selfieshare_feedback_update")#}
-        
-$.ajax({
-        type: "POST",
-        url: "../submit_feedback",
-        data: value_ar,  
-       success: function(data){
-           //Textalert(data);
-           $('#loginScreen').hide();
-           $('.successscreen').show();
-           document.getElementById("myNav").style.width = "100%";
+                    $('#clientsDropDown').css({'border-bottom': '0px'});
+                    $('.logosm3').css({'display': 'none'});
+                    $('#downicon').css({'display': 'inline-block'});
+                    $('#upicon').css({'display': 'none'});
+                }
 
-           $("#stage").text("Thank you for contacting us. We will get back to you shortly.");
-    },
-        failure: function(errMsg) {
-            alert(errMsg);
+
+                $('#clientsDropDown #clientsDashboard').slideToggle({
+                    direction: "up"
+                }, 300);
+                $(this).toggleClass('clientsClose');
+
+            }); // end click
+
+        });
+
+        $(':radio').change(
+            function () {
+                alert("asdf");
+
+            }
+        );
+        function hit_update_service() {
+            var value_ar = {
+                ref: $("#auth_ref").attr("value"),
+                comments: $("#ss_comments").attr("value"),
+                favourite: $("#ss_like_status").attr("value"),
+                rating: $("#ss_rating").attr("value"),
+                name: $("#name").attr("value"),
+                email: $("#email").attr("value"),
+                phone: $("#phone").attr("value")
+            };
+
+
+            {#path("selfieshare_feedback_update")#}
+
+            $.ajax({
+                type: "POST",
+                url: "../submit_feedback",
+                data: value_ar,
+                success: function (data) {
+                    //Textalert(data);
+                    $('#loginScreen').hide();
+                    document.getElementById("myNav").style.width = "100%";
+                    $("#stage").text("Thank you for sharing your feedback!");
+                    $('.successscreen').show();
+                    $('#myNav').show();
+                },
+                failure: function (errMsg) {
+                    alert(errMsg);
+                }
+            });
         }
-  });
-}
 
 
-function createCookie(name, value, days) {
-    var date, expires;
-    if (days){
-        date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        expires = "; expires="+date.toUTCString();
-    } else { expires = "";}
-    document.cookie = name+"="+value+expires+"; path=/";
-}
-
-function getCookie(name) {
-    var cookie = document.cookie;
-    var prefix = name + "=";
-    var begin = cookie.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = cookie.indexOf(prefix);
-        if (begin != 0) return null;
-    } else {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-            end = cookie.length;
+        function createCookie(name, value, days) {
+            var date, expires;
+            if (days) {
+                date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            } else {
+                expires = "";
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
         }
-    }
-    return decodeURI(document.cookie.substring(begin + prefix.length, end));
 
-}
+        function getCookie(name) {
+            var cookie = document.cookie;
+            var prefix = name + "=";
+            var begin = cookie.indexOf("; " + prefix);
+            if (begin == -1) {
+                begin = cookie.indexOf(prefix);
+                if (begin != 0) return null;
+            } else {
+                begin += 2;
+                var end = document.cookie.indexOf(";", begin);
+                if (end == -1) {
+                    end = cookie.length;
+                }
+            }
+            return decodeURI(document.cookie.substring(begin + prefix.length, end));
+
+        }
 
 
+        $(document).ready(function () {
 
+            var myCookie = '';
+            var $noDays = 7;
+            var $cookieName = "shareFeedback";
 
-
-$(document).ready(function() {
-
-    var myCookie='';
-    var $noDays = 7;
-    var $cookieName = "shareFeedback";
-
-    $myCookie = getCookie($cookieName);
-    console.log($myCookie);
-    if($myCookie == null) {
-        $('#myNav').show();
-    } else {
-        $('#myNav').hide();
-    }
-
-$("#savebutton").click(function(){
-
-    var name_pop = $('#name').val();
-    var email_pop = $('#email').val();
-    var nodays =  7;
-
-    if((name_pop=='')||(email_pop=='')){
-    alert('Please Enter Required Fields');
-    }
-
-    else{
-
-            var $cookieValue = 	'user='+$("#name").val()+',email=' + $("#email").val();
             $myCookie = getCookie($cookieName);
-            if($cookieName !='' || $cookieValue !=''){
-                createCookie($cookieName, $cookieValue, $noDays);
-            }else{
-                alert("empty data");
+            console.log($myCookie);
+            if ($myCookie == null) {
+                $('#myNav').show();
+            } else {
+                $('#myNav').hide();
             }
 
-           document.getElementById("myNav").style.width = "0%";
-    }
+            $("#savebutton").click(function () {
+
+                var name_pop = $('#name').val();
+                var email_pop = $('#email').val();
+                var nodays = 7;
+
+                if ((name_pop == '') || (email_pop == '')) {
+                    alert('Please Enter Required Fields');
+                }
+
+                else {
+
+                    var $cookieValue = 'user=' + $("#name").val() + ',email=' + $("#email").val();
+                    $myCookie = getCookie($cookieName);
+                    if ($cookieName != '' || $cookieValue != '') {
+                        createCookie($cookieName, $cookieValue, $noDays);
+                    } else {
+                        alert("empty data");
+                    }
+
+                    document.getElementById("myNav").style.width = "0%";
+                }
 
 
+            });
 
-});
-
-    //$(".closeit").click(function(){
-      //  document.getElementById("myNav").style.width = "0%";
-   // });
-});
-
-
-
-
+            $(".closeit").click(function(){
+                $(this).parents().find("#myNav").css("width", "0%");
+                //$(this).parents().find("#myNav").removeClass("overlay");
+                $(this).parents().find("#myNav").hide();
+                $('#ss_textarea').val('');
+            });
+        });
 
 
-        </script>
+    </script>
 
 
+    <style>
+        #loading-indicator {
+            position: absolute;
+            left: 500px;
+            top: 200px;
+        }
+
+        .closeit {
+            background: #000;
+            padding: 6px;
+            color: #fff;
+            border-radius: 100px;
+            width: 20px;
+            height: 21px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    </style>
 
 
-        <style>
-            #loading-indicator {
-                position: absolute;
-                left: 500px;
-                top: 200px;
-            }
+</head>
+<body style="background:#efefef;">
 
-            .closeit{
-                background: #000;
-                padding: 6px;
-                color: #fff;
-                border-radius: 100px;
-                width: 20px;
-                height: 21px;
-                position: absolute;
-                top: 5px;
-                right: 5px;
-            }
-        </style>
+<img src="{{ asset('bundles/lovethatfit/site/images/loading.gif') }}" id="loading-indicator" style="display:none;"/>
+
+<input id="auth_ref" type="hidden" value="{{ selfieshare.ref }}"/>
+<input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}"/>
+<input id="ss_like_status" type="hidden" value="{{ selfieshare.favourite }}"/>
+<input id="ss_rating" type="hidden" value="{{ selfieshare.rating }}"/>
+<input id="ss_comments" type="hidden" value="{{ selfieshare.comments }}"/>
 
 
-    </head>
-    <body style="background:#efefef;">
+<div id="myNav" class="overlay" style="z-index: 200;">
 
-     <img src="{{asset('bundles/lovethatfit/site/images/loading.gif')}}" id="loading-indicator"  style="display:none;" />
-
-    <input id="auth_ref" type="hidden"  value="{{selfieshare.ref}}" />
-    <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}" />
-    <input id="ss_like_status" type="hidden" value="{{selfieshare.favourite}}" />
-    <input id="ss_rating" type="hidden" value="{{selfieshare.rating}}" />
-    <input id="ss_comments" type="hidden" value="{{selfieshare.comments}}" />
-
-
-
-    <div id="myNav" class="overlay" style="z-index: 200;">
-
-       <div class="successscreen">
+    <div class="successscreen">
         <div id="stage"></div>
-           <div><a href="#" class="closeit">X</a></div>
-       </div>
+        <div><a href="#" class="closeit" title="Tap to Close">X</a></div>
+    </div>
 
-        <div id="popups">
+    <div id="popups">
         <div id="loginScreen">
-            <div id="popup_logo"><img src="{{asset('bundles/lovethatfit/site/images/logo_popup.png')}}"></img>
+            <div id="popup_logo"><img src="{{ asset('bundles/lovethatfit/site/images/logo_popup.png') }}"></img>
 
             </div>
             <div id="popup_tagline">Snap - Style - Share - Shop</div>
@@ -283,66 +281,71 @@ $("#savebutton").click(function(){
                 </form>
             </div>
         </div>
-        </div>
     </div>
+</div>
 <div class="container comments_sec" style="border:none;">
- <div style="position:relative;">
+    <div style="position:relative;">
 
-  <div class="share_img_hldr">    
-    <img src="{{ asset(selfieshare.webPath) }}"/>    
-    
- </div>  
-   
-    </div>   
-  
-  
-  <div class="clr"></div>
- 
-  
-  
-  
-  <div class="logosm3"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div>
-  <div id="clientsDropDown">
-    <p id="clientsOpen">Feedback
-    <span id="downicon">▼</span>
-     <span id="upicon">▲</span>
-    </p>
+        <div class="share_img_hldr">
+            <img src="{{ asset(selfieshare.webPath) }}"/>
 
-  <div id="clientsDashboard">  
-  
-      <div id="commentwrap" class="ss_comm_area">
-  
-  <div class="like_rating_wrapper">
-  
-  <div class="like_wrapper">
-      {% if(selfieshare.favourite is null) %}
-      {% set ss_like='' %}
-      {% set ss_dislike='' %}
-      {% set ss_like_opacity='opacity: 0.2;' %}
-      {% set ss_dislike_opacity='opacity: 0.2;' %}
-      {% elseif(selfieshare.favourite==1) %}
-      {% set ss_like='like_enable' %}
-      {% set ss_like_opacity='opacity: 1;' %}
-      {% set ss_dislike='' %}
-      {% set ss_dislike_opacity='opacity: 0.2;' %}
+        </div>
 
-      {% elseif(selfieshare.favourite==0) %}
-      {% set ss_dislike='like_enable' %}
-      {% set ss_like='' %}
-      {% set ss_like_opacity='opacity: 0.2;' %}
-      {% set ss_dislike_opacity='opacity:1;' %}
-      {% endif %}
-      <span class="lable_like_rate">Like: </span>
-        <a id="ss_like" class="{{ ss_like }}" href="javascript:void(0);" style="{{ ss_like_opacity }}"><span>true</span><img src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25" height="25" /></a>
-        <a id="ss_dislike" class="{{ ss_dislike }}" href="javascript:void(0);" style="{{ ss_dislike_opacity }}"><span>false</span><img src="{{ asset('bundles/lovethatfit/site/images/dislike_icon_active.png') }}" width="25" height="25" /></a>
-        
-  </div>
-  
-  <div class="rating_wrapper">
-  
-    <span class="lable_like_rate">Rating:</span>
-          
-         <span class="star-rating">
+    </div>
+
+
+    <div class="clr"></div>
+
+
+    <div class="logosm3"><a href="http://www.selfiestyler.com" target="_blank"><img
+                    src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}"/></a></div>
+    <div id="clientsDropDown">
+        <p id="clientsOpen">Feedback
+            <span id="downicon">▼</span>
+            <span id="upicon">▲</span>
+        </p>
+
+        <div id="clientsDashboard">
+
+            <div id="commentwrap" class="ss_comm_area">
+
+                <div class="like_rating_wrapper">
+
+                    <div class="like_wrapper">
+                        {% if(selfieshare.favourite is null) %}
+                            {% set ss_like='' %}
+                            {% set ss_dislike='' %}
+                            {% set ss_like_opacity='opacity: 0.2;' %}
+                            {% set ss_dislike_opacity='opacity: 0.2;' %}
+                        {% elseif(selfieshare.favourite==1) %}
+                            {% set ss_like='like_enable' %}
+                            {% set ss_like_opacity='opacity: 1;' %}
+                            {% set ss_dislike='' %}
+                            {% set ss_dislike_opacity='opacity: 0.2;' %}
+
+                        {% elseif(selfieshare.favourite==0) %}
+                            {% set ss_dislike='like_enable' %}
+                            {% set ss_like='' %}
+                            {% set ss_like_opacity='opacity: 0.2;' %}
+                            {% set ss_dislike_opacity='opacity:1;' %}
+                        {% endif %}
+                        <span class="lable_like_rate">Like: </span>
+                        <a id="ss_like" class="{{ ss_like }}" href="javascript:void(0);"
+                           style="{{ ss_like_opacity }}"><span>true</span><img
+                                    src="{{ asset('bundles/lovethatfit/site/images/show_like_icon.png') }}" width="25"
+                                    height="25"/></a>
+                        <a id="ss_dislike" class="{{ ss_dislike }}" href="javascript:void(0);"
+                           style="{{ ss_dislike_opacity }}"><span>false</span><img
+                                    src="{{ asset('bundles/lovethatfit/site/images/dislike_icon_active.png') }}"
+                                    width="25" height="25"/></a>
+
+                    </div>
+
+                    <div class="rating_wrapper">
+
+                        <span class="lable_like_rate">Rating:</span>
+
+                        <span class="star-rating">
              
   <input id="star_1" type="radio" name="rating" value="1"><i></i>
   <input type="radio" name="rating" value="2"><i></i>
@@ -350,33 +353,34 @@ $("#savebutton").click(function(){
   <input type="radio" name="rating" value="4"><i></i>
   <input type="radio" name="rating" value="5"><i></i>
 </span>
-  
-  </div>
-  
-  
-  </div>
-        <div class="logosm2"><a href="http://www.selfiestyler.com" target="_blank"><img src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}" /></a></div>
+
+                    </div>
 
 
+                </div>
+                <div class="logosm2"><a href="http://www.selfiestyler.com" target="_blank"><img
+                                src="{{ asset('bundles/lovethatfit/site/images/logo_show.png') }}"/></a></div>
 
-  <div class="textarea_wrap"><textarea name="textarea" id="ss_textarea" cols="45" rows="5" ></textarea></div>
-  <div class="clr"></div>
-  <div class="submitcomments"><input type="submit" name="button" id="send_button" value="SEND" /></div>  
-  
-  </div>  
-  
-   
-  </div>
-  <!-- /clientsDashboard -->
-</div>  
+
+                <div class="textarea_wrap"><textarea name="textarea" id="ss_textarea" cols="45" rows="5"></textarea>
+                </div>
+                <div class="clr"></div>
+                <div class="submitcomments"><input type="submit" name="button" id="send_button" value="SEND"/></div>
+
+            </div>
+
+
+        </div>
+        <!-- /clientsDashboard -->
+    </div>
 </div>
 
-    <script>
-        $(document).ready(function(){
+<script>
+    $(document).ready(function () {
 
-            document.getElementById("myNav").style.width = "100%";
+        document.getElementById("myNav").style.width = "100%";
 
-        });
-    </script>
-         </body>
+    });
+</script>
+</body>
 </html>

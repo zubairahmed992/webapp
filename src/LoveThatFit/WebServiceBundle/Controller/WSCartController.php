@@ -7,6 +7,7 @@ use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Parser;
 
 class WSCartController extends Controller
 {
@@ -393,7 +394,7 @@ class WSCartController extends Controller
 
                 $res = $this->get('webservice.helper')->response_array(true, 'successfully complete transaction', true, $result);
             } else if ($result['success'] < 0) {
-                $res = $this->get('webservice.helper')->response_array(false, 'some thing went wrong', true, $result);
+                $res = $this->get('webservice.helper')->response_array(false, $result['response_code'], true, $result);
             }
         } else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
@@ -698,6 +699,33 @@ class WSCartController extends Controller
         return new Response( $res );
     }
 
+    public function deleteUserShippingOrBillingAddressAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $shipping_id = (isset($decoded['shipping_id'])) ? $decoded['shipping_id'] : 0;
+            $billing_id = (isset($decoded['billing_id'])) ? $decoded['billing_id'] : 0;
+            if($shipping_id > 0 || $billing_id > 0){
+                if($shipping_id > 0){
+                    $addressRemove = $this->container->get('cart.helper.userAddresses')->deleteUserShippingAddress($shipping_id, $user);
+                    $res = $this->get('webservice.helper')->response_array(true, 'user address successfully deleted');
+                }else if($billing_id > 0){
+                    $addressRemove = $this->container->get('cart.helper.userAddresses')->deleteUserBillingAddress($billing_id, $user);
+                    $res = $this->get('webservice.helper')->response_array(true, 'user address successfully deleted');
+                }
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Billing or shipping id must be greater then zero(0).');
+            }
+
+        }else{
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response( $res );
+
+    }
+
     public function getAllUserSavedAddressesAction(){
         $stampsDotCom = new Stamps();
 
@@ -744,9 +772,30 @@ class WSCartController extends Controller
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $addresses['shipping_methods'] = array();
             if(!empty($user_cart)){
-                $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
+                $shippmentType  = $this->get('webservice.helper')->getShippintType();
+                if($shippmentType == 1){
+                    $productItemWeoghtOz = $this->get('webservice.helper')->getProductItemWeight( $user_cart );
+                    $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
+                }elseif ($shippmentType == 0){
+                    $response = array(
+                        'verified' => true,
+                        'shipping_method' => array(
+                            array(
+                                'amount' => 0,
+                                'deliverDays' => "4",
+                                'shipDate'    => date('Y-m-d'),
+                                'deliveryDate' => date('Y-m-d', strtotime("+4 days")),
+                                'serviceType' => "",
+                                'FromZIPCode' => "",
+                                'ToZIPCode' => "",
+                                'WeightOz' => 0,
+                                'InsuredValue' => 0,
+                                'RectangularShaped' => false
+                            ),
+                        )
+                    );
+                }
 
-                $response = $stampsDotCom->getRates( $decoded, $productItemWeoghtOz );
                 $addresses['shipping_methods'] = array();
                 if($response['verified']){
                     $addresses['shipping_methods'] = $response['shipping_method'];
@@ -792,10 +841,20 @@ class WSCartController extends Controller
     }
 
     public function addressVerificationAction(){
-        $stampsDotCom = new Stamps();
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $stampsDotCom   = new Stamps();
 
-        $response = $stampsDotCom->addressVerification( $decoded );
+        $decoded        = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $shippmentType  = $this->get('webservice.helper')->getShippintType();
+
+        if($shippmentType == 1){
+            $response = $stampsDotCom->addressVerification( $decoded );
+        }elseif ($shippmentType == 0){
+            $response = array(
+                'verified'  => true,
+                'data'      => array()
+            );
+        }
+
         if($response['verified'])
         {
             $res = $this->get('webservice.helper')->response_array(true, 'user addresses found', true, $response['data']);

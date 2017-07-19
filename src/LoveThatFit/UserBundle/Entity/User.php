@@ -32,7 +32,7 @@ class User implements UserInterface, \Serializable {
     private $duplicate_users;
 
     /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="ltf_users", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="users", orphanRemoval=true)
      */
 
     protected $save_look;
@@ -217,6 +217,12 @@ class User implements UserInterface, \Serializable {
 	 * @ORM\OneToOne(targetEntity="UserAppAccessLog", mappedBy="user")
 	 * */
 	private $user_app_access_log;
+
+    /**
+     * @var integer $version
+     * @ORM\Column(name="version", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $version;
 
 
 //---------------------------------------  implement the UserInterface
@@ -1502,6 +1508,15 @@ class User implements UserInterface, \Serializable {
                 }
         copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
     }
+
+    public function copyDefaultImageSupport($device_type=null) {
+        //umer 1
+        $this->image='cropped.png';
+        if (!is_dir($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir(), 0700);
+        }
+        copy($this->getDummyUserImageRootPathSupport($device_type), $this->getAbsolutePath());        
+    }
     //----------------------------------------------------
     private function copyTempToOriginalImage() {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
@@ -1553,12 +1568,20 @@ class User implements UserInterface, \Serializable {
     public function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
+
 //----------------------------------------------------------
     public function getDummyUserImageRootPath($udt=null) {
         if($udt)
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_cropped.png';        
         else
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
+    }
+
+    public function getDummyUserImageRootPathSupport($udt=null) {
+        if($udt)
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_support_cropped.png';        
+        else
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_support_cropped.png';        
     }
 //----------------------------------------------------------
     public function getUploadDir() {
@@ -2028,7 +2051,31 @@ class User implements UserInterface, \Serializable {
 	}
 
 
-  /**
+    #----------------------------------------
+    /**
+     * Set version
+     *
+     * @param integer $version
+     * @return UserArchives
+     */
+    public function setVersion($version)
+    {
+      $this->version = $version;
+
+      return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return integer
+     */
+    public function getVersion()
+    {
+      return $this->version;
+    }
+
+    /**
      * Set timeSpent
      *
      * @param \string $timeSpent
@@ -2247,6 +2294,7 @@ class User implements UserInterface, \Serializable {
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
                 'auth_token' => $this->getAuthToken(),
+                'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format('Y-m-d') : null,
                 'birth_date' => $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
                 'weight' => $this->measurement ? $this->measurement->getWeight() : 0,
                 'height' => $this->measurement ? $this->measurement->getHeight() : 0,
@@ -2379,6 +2427,7 @@ class User implements UserInterface, \Serializable {
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
                 'auth_token' => $this->getAuthToken(),
+                'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format('Y-m-d') : null,
                 'birth_date' => $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
                 'weight' => $this->measurement ? $this->measurement->getWeight() : 0,
                 'height' => $this->measurement ? $this->measurement->getHeight() : 0,

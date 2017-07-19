@@ -1,3 +1,4 @@
+window.devicePixelRatio = 1;
 paper.install(window);
 var dom_event_interaction_s1;
 $(document).ready(function() {

@@ -428,7 +428,8 @@ class UserRepository extends EntityRepository
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
                 (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
-                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version_archive,
+                u.version'
             )
             ->from('LoveThatFitUserBundle:User', 'u');
         if ($search) {
@@ -549,9 +550,12 @@ class UserRepository extends EntityRepository
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
                 (SELECT ua.version FROM LoveThatFitUserBundle:UserArchives ua
-                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version'
+                    where ua.id=(SELECT max(uaa.id) FROM LoveThatFitUserBundle:UserArchives uaa where uaa.user = u.id) AS version_archive,
+                u.version'
             )
-            ->from('LoveThatFitUserBundle:User', 'u');
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->andWhere('u.version=:version')
+            ->setParameter('version', 1);
         if ($search) {
             $query
                 ->andWhere('u.firstName like :search')
@@ -593,5 +597,20 @@ class UserRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
         return $getResult ? $preparedQuery->getResult() : $preparedQuery;
+    }
+
+    public function getVersion($user_id)
+    {
+
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.version')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->Where('u.id =:user_id')
+            ->setParameter('user_id', $user_id);
+        try {
+          return $query->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
     }
 }
