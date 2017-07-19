@@ -189,19 +189,19 @@ class Product {
 
 
         /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=999, nullable=true)
      */
     protected $fit_priority;
     
     
         /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=999, nullable=true)
      */
     protected $fabric_content;
     
     
         /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=999, nullable=true)
      */
     protected $garment_detail;
     
