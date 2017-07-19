@@ -801,7 +801,7 @@ class ProductSpecificationHelper {
         $product->setLayering(array_key_exists('layring', $data) ? $data['layring'] : $data['layering']);
         $product->setFitPriority(array_key_exists('fit_priority', $data) ? json_encode($data['fit_priority']) : 'NULL' );
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data) ? $data['fabric_content'] : ''));
-        $product->setDisabled(false);
+        $product->setDisabled(true);
         $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         #------------------------
