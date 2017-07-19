@@ -63,8 +63,7 @@
                                         <th>MAX Calc</th>
                                         <th>message</th>
                                         <th>variance</th>
-                                        <th>Max/GD</th>
-                                        <th>body/GD alert</th>
+                                        <th>Max/GD</th>                                        
                                     </tr>
                                 
                             {% for fp, fp_specs in size_specs.fit_points %} 
@@ -116,8 +115,7 @@
                                         </span>
                                         </td>
                                         <td>{{fp_specs.variance}}</td>
-                                        <td>{{fp_specs.fitting_type}}</td>
-                                        <td>{{fp_specs.old_message is defined?fp_specs.old_message:''}}</td>
+                                        <td>{{fp_specs.fitting_type}}</td>                                        
                                     </tr>
 
                             {% endfor %}
@@ -146,7 +144,7 @@
                                                 </td>                                                                                
                                         <td>{{size_specs.variance}}</td>                
                                         <td></td>
-                                        <td></td>
+                                        
                                         
                                     </tr>
                             {% if size_specs.hem_advice is defined %}

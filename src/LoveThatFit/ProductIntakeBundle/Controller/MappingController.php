@@ -29,6 +29,7 @@ class MappingController extends Controller
         unset($fit_points['hip']);
         //unset($fit_points['hem_length']);
         unset($fit_points['thigh']);
+        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:new.html.twig', array(
                     'fit_points' => array_keys($fit_points),
                     'brands' => $brands,
@@ -37,6 +38,7 @@ class MappingController extends Controller
                     'size_specs' => $size_specs,
                     'product_specs_json' => json_encode($product_specs),
                     'size_specs_json' => json_encode($size_specs),
+                    'drop_down_values' =>$drop_down_values,
                 ));
     }
     
@@ -61,6 +63,10 @@ class MappingController extends Controller
      public function createAction(Request $request) {
         $decoded = $request->request->all();
         $apecs_arr = array();
+        $apecs_arr['style_id_number'] = $decoded['style_id_number'];
+        $apecs_arr['max_garment_stretch'] = $decoded['max_garment_stretch'];
+        $apecs_arr['fabric_content'] = $decoded['fabric_content'];
+        unset($decoded['style_id_number'], $decoded['max_garment_stretch'], $decoded['fabric_content']);
         foreach ($decoded as $k => $v) {
             if (!in_array($k, array('select_size', 'fit_point'))) {
                 if (strlen($v) > 0) {
@@ -137,6 +143,7 @@ class MappingController extends Controller
         $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
          (array_key_exists('formula', $parsed_data))?true :$parsed_data['formula']=array();
         $parsed_data['mapping_title']= $pm->getTitle();
+        $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:edit.html.twig', array(
                     'fit_points' => array_keys($fit_points),
                     'brands' => $brands,
@@ -148,7 +155,8 @@ class MappingController extends Controller
                     'parsed_data' => $parsed_data,
                     'body_types'  => $body_types,
                     'size_title' => $size_title,
-                    'csv_file_data'  => json_encode($str),      
+                    'csv_file_data'  => json_encode($str),   
+                    'drop_down_values' =>$drop_down_values,
                 ));
     }
     #----------------------- /product_intake/specs_mapping/update
@@ -156,8 +164,12 @@ class MappingController extends Controller
     public function updateAction(Request $request, $id)
     {  
         $entity = $this->get('productIntake.product_specification_mapping')->find($id);
-         $decoded = $request->request->all();
+        $decoded = $request->request->all();
         $apecs_arr = array();
+        $apecs_arr['style_id_number'] = $decoded['style_id_number'];
+        $apecs_arr['max_garment_stretch'] = $decoded['max_garment_stretch'];
+        $apecs_arr['fabric_content'] = $decoded['fabric_content'];
+        unset($decoded['style_id_number'], $decoded['max_garment_stretch'], $decoded['fabric_content']);
         foreach ($decoded as $k => $v) {
             if (!in_array($k, array('select_size', 'fit_point'))) {
                 if (strlen($v) > 0) {
@@ -185,7 +197,6 @@ class MappingController extends Controller
                 }
             }
         }
-        
         $entity->setBrand($decoded['brand']);
         $entity->setSizeTitleType($decoded['size_title_type']);
         $entity->setClothingType($decoded['clothing_type']);

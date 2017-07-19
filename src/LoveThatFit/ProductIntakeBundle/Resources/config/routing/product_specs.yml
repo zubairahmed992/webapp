@@ -71,4 +71,8 @@ create_product_specification_intake:
     
 exisiting_product_update_from_specification_intake:
     pattern: /existing_product_update_specification_intake
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:ExisitingProductUpdateSpecification}  
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:ExisitingProductUpdateSpecification} 
+    
+product_intake_product_specs_run_checks:
+    pattern:  /product_intake/product_specs/run_checks/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:runChecks}       

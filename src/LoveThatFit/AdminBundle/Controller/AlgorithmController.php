@@ -10,6 +10,7 @@ use LoveThatFit\AdminBundle\Form\Type\AlgoritumProductTestlType;
 use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm3;
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2Old;
 
 class AlgorithmController extends Controller {
     
@@ -64,7 +65,7 @@ class AlgorithmController extends Controller {
     public function fitAlgorithmCompareAction($user_id, $product_id, $json = 0) {
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);
-        $fe = new FitAlgorithm2($user, $product);
+        $fe = new FitAlgorithm2Old($user, $product);
 
         if ($json == 0) {
             return $this->render('LoveThatFitAdminBundle:Algoritm:_algo2_comparison.html.twig', array(

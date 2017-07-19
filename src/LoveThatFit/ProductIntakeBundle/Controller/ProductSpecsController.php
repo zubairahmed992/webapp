@@ -187,34 +187,38 @@ class ProductSpecsController extends Controller
         $parsed_data = $this->get('admin.helper.product.specification')->getStructure();
         $parsed_data['gender'] = $product_specs_mapping->getGender();
         $parsed_data['size_title_type'] = $product_specs_mapping->getSizeTitleType();
-
+        foreach ($map['fabric_content'] as $fabric_content_k => $fabric_content_v) {  
+            $f_c = $this->extracts_coordinates($fabric_content_v);
+            $parsed_data['fabric_content'][$fabric_content_k] = count($f_c) > 1 ? $csv_array[$f_c['r']][$f_c['c']] : $fabric_content_v;
+        }   
+        unset($map['fabric_content']);
         #----------------- fill array with csv data
-        foreach ($map as $specs_k => $specs_v) {
+        foreach ($map as $specs_k => $specs_v) {           
             if ($specs_k != 'formula') {
                 if (is_array($specs_v) || is_object($specs_v)) {
                     foreach ($specs_v as $size_key => $fit_points) {
                         foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
                             $coordins = $this->extracts_coordinates($fit_model_measurement);
                             $fmm_value = $this->fraction_to_number(floatval($csv_array[$coordins['r']][$coordins['c']]));
-                               if($fmm_value != 0){
-                            $original_value = $fmm_value;
-                            #~~~~~~>convert to measuring unit
-                            if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
-                                $fmm_value = $fmm_value * 0.393700787;
-                            }
-                            $unit_converted_value = $fmm_value;
-                         
-                            #~~~~~~>calculate formula
-                            if (array_key_exists('formula', $map)) {
-                                $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
-                            }
-                            
-                            #----------------------* parsed data array calculate fit modle values for fit model size
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
-                                'original_value' => $original_value,
-                                'unit_converted_value' => $unit_converted_value,
-                            );
-                        }
+                                if($fmm_value != 0){
+                                    $original_value = $fmm_value;
+                                    #~~~~~~>convert to measuring unit
+                                    if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
+                                        $fmm_value = $fmm_value * 0.393700787;
+                                    }
+                                    $unit_converted_value = $fmm_value;
+
+                                    #~~~~~~>calculate formula
+                                    if (array_key_exists('formula', $map)) {
+                                        $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
+                                    }
+
+                                    #----------------------* parsed data array calculate fit modle values for fit model size
+                                    $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
+                                        'original_value' => $original_value,
+                                        'unit_converted_value' => $unit_converted_value,
+                                    );
+                                }
                         }
                     }
                 } else {#----------------------* if not related to measurements add as a field
@@ -354,7 +358,7 @@ class ProductSpecsController extends Controller
     public function createProductSpecificationAction(Request $request) {
         $product_id =  $request->get('product_id');
         $data = $this->get('pi.product_specification')->getExistingProductDetails($product_id);
-         $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
+        $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
         return $this->indexAction();
         return new JsonResponse($data);
     }
@@ -414,4 +418,44 @@ class ProductSpecsController extends Controller
         $session->set('opt_specs_'.$request->get('id'), $request->get('value'));        
         return new Response(json_encode($session->get('opt_specs_'.$request->get('id'), $request->get('value'))));
     }
+    
+    //------------------ run checks 
+    public function runChecksAction($id) { 
+         $ps = $this->get('pi.product_specification')->find($id);  
+        $parsed_data = json_decode($ps->getSpecsJson(),true);    
+        //$size =   $this->get('pi.product_specification')->getProductSizeMeasurments($parsed_data['product_id], $id);
+         $data = $this->container->get('service.repo')->getExistingProductDetails($parsed_data['product_id']); 
+         
+          foreach ($product_sizes_sorted as $key => $product_size_value) {                  
+                 foreach ($product_size_value['product_size_measurements'] as  $value) {  
+                     $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];#replacing old fit point with new
+                    $stretch_percentage = ($value['garment_measurement_stretch_fit'] == 0)? 0 :(($value['garment_measurement_stretch_fit'] - $value['garment_measurement_flat'])/$value['garment_measurement_flat'])*100;
+                    $data1['sizes'][$product_size_value['title']][$fp]['fit_model'] = $value['fit_model_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_dimension'] = $value['garment_measurement_flat'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['grade_rule'] = $value['grade_rule'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['horizontal_stretch'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['vertical_stretch'];                
+                    $data1['sizes'][$product_size_value['title']][$fp]['stretch_percentage'] = $stretch_percentage;//$value['stretch_type_percentage'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_high'] = $value['ideal_body_size_high'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_low'] = $value['ideal_body_size_low'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_actual'] = $value['max_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_calc'] = $value['max_calculated'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_actual'] = $value['min_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_calc'] = $value['min_calculated'];
+                    $data1['body_type'] = $product_size_value['body_type'];
+                    $data1['fit_point_stretch'][$fp] = $stretch_percentage;
+                }
+             }
+         
+         
+        echo "<pre>";
+        print_r($data[0][0]['product_sizes']);
+         print_r($parsed_data['sizes']);
+        echo $id;
+        die;
+        
+    }
+    
+    
 }

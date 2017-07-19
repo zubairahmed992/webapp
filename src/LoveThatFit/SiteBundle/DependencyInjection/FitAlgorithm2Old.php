@@ -45,11 +45,14 @@ class FitAlgorithm2Old {
 
 #-----------------------------------------------------
 
-    function getFeedBack() {
+    function getFeedBack() {        
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
             return $cm;
+        }else{
+            return 'Product is missing fit priority';
         }
+        
     }
     #-----------------------------------------------------
     function getFeedBackForSizeTitle($size) {

@@ -108,7 +108,7 @@ color: #FFF;
                         <input type="file" name="csv_file" id="csv_file">
                     </div>
                 </div>
-                <span id="select_cell_div" hidden="true"></span>                                  
+                <span id="select_cell_div" hidden="true" ></span>                                  
                 <div id="pq-dialog-cont">
                     <div id="pq-grid-in-popup-dialog" title="Product sprecification file data" >
                         <div id="grid_in_popup_grid"></div>
@@ -140,14 +140,44 @@ color: #FFF;
                 </div>
                 <br>
                    <div class="form-group">
-                    <label class="control-label col-sm-2" for="select_size">Measuring Unit: </label> 
-                    <div class="col-sm-4">
-                        <select name="measuring_unit" id="measuring_unit"  class="form-control">
-                            <option value="inch" {{'inch' == parsed_data.measuring_unit? 'selected'}} > inch </option>                                            
-                            <option value="centimeter" {{'centimeter' == parsed_data.measuring_unit? 'selected'}} > centimeter </option>                                            
-                        </select>
+                        <label class="control-label col-sm-2" for="select_size">Measuring Unit: </label> 
+                        <div class="col-sm-4">
+                            <select name="measuring_unit" id="measuring_unit"  class="form-control">
+                                <option value="inch" {{'inch' == parsed_data.measuring_unit? 'selected'}} > inch </option>                                            
+                                <option value="centimeter" {{'centimeter' == parsed_data.measuring_unit? 'selected'}} > centimeter </option>                                            
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="name_title">Style ID Number : </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" value="{{ parsed_data.style_id_number is defined? parsed_data.style_id_number: ''}}" id="style_id_number" name="style_id_number" placeholder="Enter Style Id Number Name">
+                        </div>
+                    </div>
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="name_title">Max Garment Stretch : </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" value="{{ parsed_data.style_id_number is defined? parsed_data.style_id_number: ''}}"  name="max_garment_stretch" id="max_garment_stretch" placeholder="Enter Style Id Number Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="fabric_content">Fabric Content : </label>
+                        <div class="col-sm-4"> 
+                            <div class="fabric_content">    
+                                {% for key,val in drop_down_values['fabric_content'] %}
+                                    {{ key }} :
+                                    <input type="text" id="{{key|lower|trim|replace({'/':'_'})}}" id="fabric_content"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{key}}]" style="width:70px">
+                                {% endfor %}
+                            </div> 
+                        </div>
+                           {# <select name="structural_detail" class="structural_detail form-control" >
+                                <option>Select</option>
+                                {% for key,val in drop_down_values['fabric_content'] %}
+                                   <option value="{{ val }}"{{ parsed_data.structural_detail == '' and key == 0? '' : (val == parsed_data.structural_detail ? ' selected ' : '')}}  >{{ key }}</option>
+                                {% endfor %}
+                            </select>#}
+
+                    </div>
                 <br>
                 <input type="hidden" value="{{ fit_points|json_encode() }}" name="fit_point" class="fit_point">
                 <div class="size_genrate"></div>
@@ -168,6 +198,7 @@ color: #FFF;
                         <button type="button" class="add_size">Add Fit point Label</button>
                     </div>
                 </div>
+               
                 
                 <input type="hidden" class="get_size" value="{{ parsed_data.sizes|json_encode() }}" >
                 <input type="hidden" class="get_formula" value="{{ parsed_data.formula|json_encode() }}" >
