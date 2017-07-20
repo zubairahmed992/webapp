@@ -906,7 +906,7 @@ class ProductSpecificationHelper {
         $data = $this->container->get('service.repo')->getExistingProductDetails($id); 
 //        $product_sizes_sorted = $this->product_size_sorting($data[0][0]['gender'],$data[0][0]['size_title_type'], $data[0][0]['product_sizes']);
 //        echo "<pre>";
-//        print_R($product_sizes_sorted);
+//        print_R($data[0][0]['product_sizes']);
 //        die;
         $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
@@ -1001,7 +1001,8 @@ class ProductSpecificationHelper {
         
         foreach ($sizemeasurements['sizes'] as $key => $product_size_mesurements) {            
             foreach ($product_size_mesurements as $key_val => $value) { 
-                  if( array_key_exists($key_val,$size_measurements_title[$key]) ){
+                $size_measurements_title_key[] = (isset($size_measurements_title[$key])) ? $size_measurements_title[$key] : null;
+                  if( array_key_exists( $key_val,$size_measurements_title_key ) ){
                     $psm = $this->container->get('admin.helper.productsizemeasurement')->find($size_measurements_title[$key][$key_val]);
                     $psm->setGarmentMeasurementFlat($value['garment_dimension']);
                     $psm->setGarmentMeasurementStretchFit($value['garment_stretch']);
@@ -1014,8 +1015,8 @@ class ProductSpecificationHelper {
                     $psm->setMinCalculated($value['min_calc']);
                     $psm->setGradeRule($value['grade_rule']);
                     $this->container->get('admin.helper.productsizemeasurement')->update($psm);
-                } else {                  
-                    $size_id = $this->container->get('admin.helper.productsizes')->find($new_fp_size_measurements[$key]);
+                } else {      
+                    $size_id = $this->container->get('admin.helper.productsizes')->findSizeByProductTitle($key,$id);
                     $psm = new ProductSizeMeasurement;                                         
                     $psm->setProductSize($size_id);
                     $psm->setTitle($key_val);
