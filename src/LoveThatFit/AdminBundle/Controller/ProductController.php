@@ -259,6 +259,8 @@ class ProductController extends Controller {
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $form->bind($request);
         $data = $request->request->all();
+        $data['product']['disabled'] = $data['disabled'];
+        unset($data['disabled']);
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId(), 'product' => $entity, 'fit_priority' => $entity->getFitPriority())));

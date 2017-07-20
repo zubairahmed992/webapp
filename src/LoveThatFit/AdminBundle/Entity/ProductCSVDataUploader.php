@@ -355,7 +355,7 @@ class ProductCSVDataUploader {
         $product->setLayering($data['layring']);
         $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode($data['fabric_content']));
-        $product->setDisabled(false);        
+        //$product->setDisabled(false);        
         $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         
@@ -394,7 +394,7 @@ class ProductCSVDataUploader {
         $product->setLayering($data['layring']);
         $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode($data['fabric_content']));
-        $product->setDisabled(false);        
+        $product->setDisabled(true);        
         $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         $product->setStatus("Pending");
