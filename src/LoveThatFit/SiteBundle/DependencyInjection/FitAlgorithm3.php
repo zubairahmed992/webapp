@@ -474,7 +474,7 @@ class FitAlgorithm3 {
                             $fp_scale['message'] = 'OK Fit';
                             $fp_fx = $this->grade_to_scale($fp_specs);
                         } else { # above max status=-5 or -8
-                            $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_flat'];  #--> 92%GD
+                            $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_stretch_fit'];  #--> 92%GD
                             $fp_fx = 0;#$this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                             $fp_scale = $this->scale['beyond_max'];
                             if ($fp_specs['body_measurement'] <= $ninety_two_GD) {                                
@@ -492,7 +492,7 @@ class FitAlgorithm3 {
                         } else { #------>beyond                            
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;                            
-                            $seventy_five_GD = 0.75 * $fp_specs['garment_measurement_flat'];  #--> 75%GD                            
+                            $seventy_five_GD = 0.75 * $fp_specs['garment_measurement_stretch_fit'];  #--> 75%GD                            
                             if ($fp_specs['body_measurement'] <= $seventy_five_GD) {
                                 $fp_scale['message'] = 'OK Fit';
                             } else {
@@ -521,7 +521,7 @@ class FitAlgorithm3 {
                         } else { # above max status=-5 or -8                            
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;
-                            $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_flat'];  #--> 92%GD
+                            $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_stretch_fit'];  #--> 92%GD
                             if ($fp_specs['body_measurement'] <= $ninety_two_GD) {                                
                                 $fp_scale['message'] = 'Poor Fit';                                
                             } else {                                
@@ -537,7 +537,7 @@ class FitAlgorithm3 {
                         } else {                            
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;
-                            $eighty_five_GD = 0.85 * $fp_specs['garment_measurement_flat']; #--> 85%GD
+                            $eighty_five_GD = 0.85 * $fp_specs['garment_measurement_stretch_fit']; #--> 85%GD
                             if ($fp_specs['body_measurement'] <= $eighty_five_GD) {                            
                                 $fp_scale['message'] = 'OK Fit';
                             } else {                            
