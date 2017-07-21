@@ -40,8 +40,8 @@ class ProductSpecsController extends Controller
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
-        $parsed_data['horizontal_stretch']=  intval($parsed_data['horizontal_stretch']);
-        $parsed_data['vertical_stretch']=intval($parsed_data['vertical_stretch']);
+        $parsed_data['horizontal_stretch']=  $parsed_data['horizontal_stretch'];
+        $parsed_data['vertical_stretch']=$parsed_data['vertical_stretch'];
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $drop_down_values['fit_model_size'] = array_flip($fms);      
@@ -221,6 +221,14 @@ class ProductSpecsController extends Controller
                                 }
                         }
                     }
+                } else if($specs_k == 'max_horizontal_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;                                
+                    $parsed_data['horizontal_stretch'] =  ($parsed_data[$specs_k]/3);
+                } else if( $specs_k == 'max_vertical_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;                  
+                    $parsed_data['vertical_stretch'] = ($parsed_data[$specs_k]/3);
                 } else {#----------------------* if not related to measurements add as a field
                     $cdns = $this->extracts_coordinates($specs_v);
                     $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
