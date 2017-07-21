@@ -454,7 +454,7 @@ class FitAlgorithm3 {
             } else {#high-above
                 #--------------------------->
                 $layer = intval(substr($this->product->getLayering(), 0, 1));
-                $max_gd_ratio = $fp_specs['max_body_measurement'] / $fp_specs['garment_measurement_flat'];
+                $max_gd_ratio = $fp_specs['max_body_measurement'] / $fp_specs['garment_measurement_stretch_fit'];
                 $fits = true;
                 if ($layer == 4) {
                     if ($max_gd_ratio > 0.85) {#Close fitting ------------------------>                                    
