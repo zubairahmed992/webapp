@@ -309,7 +309,8 @@ class FitAlgorithm3 {
                             $fb[$size_identifier]['avg_fx'] =$fb[$size_identifier]['avg_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['avg_fx'];
                             $fb[$size_identifier]['variance']=$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
                             #----------------------------------------->>applying on the size
-                            if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
+                            #if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
+                            if ($fb[$size_identifier]['fit_points'][$pfp_key]['fits']==false){                                
                                 $fb[$size_identifier]['status'] =$this->status['beyond_max'];
                                 $fb[$size_identifier]['fit_index'] = 0;
                                 $fb[$size_identifier]['fits']=false;
