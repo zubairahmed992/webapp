@@ -118,7 +118,7 @@ iphone6:
       chest:  34.25
       arm:  0
       inseam: 30.46
-      shoulder_height: 218
+      shoulder_height: 210.0007812
       outseam:  0
       sleeve: 21.19
       neck: 13.12  
@@ -126,7 +126,7 @@ iphone6:
       center_front_waist: 13.21
       shoulder_across_front: 13.71
       shoulder_across_back: 14.37
-      bicep: 8.88
+      bicep: 8.885
       tricep: 13
       wrist: 6.25
       back_waist: 18.2
@@ -137,7 +137,7 @@ iphone6:
       shoulder_width: 0
       bust_height: 0
       waist_height: 0
-      hip_height: 185.775351671875
+      hip_height: 371.5507033
       bust_width: 0
       waist_width: 0
       hip_width: 0
