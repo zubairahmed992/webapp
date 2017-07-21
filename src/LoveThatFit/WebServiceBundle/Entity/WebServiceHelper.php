@@ -28,7 +28,7 @@ class WebServiceHelper
 
         ##modify by umer for new app/config/config_device_support.yml file start code
         $version = $this->container->get('user.helper.userarchives')->getVersion($user->getId());
-        if (!isset($version['version']) && $version['version'] == "") {
+        if (!isset($version['version']) || $version['version'] == "") {
             $version = $this->container->get('user.helper.user')->getVersion($user->getId());
         }
 
@@ -119,7 +119,7 @@ class WebServiceHelper
         $data = array();
         if ($user) {
             #$device_type =  array_key_exists('device_type', $request_array)?$request_array['device_type']:null;
-            #$data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']); 
+            #$data['user'] = $user->toDataArray(true, $device_type, $request_array['base_path']);
             $data['user'] = $this->user_array($user, $request_array);
 
             $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
