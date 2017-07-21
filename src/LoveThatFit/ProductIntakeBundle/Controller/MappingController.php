@@ -64,9 +64,11 @@ class MappingController extends Controller
         $decoded = $request->request->all();
         $apecs_arr = array();
         $apecs_arr['style_id_number'] = $decoded['style_id_number'];
-        $apecs_arr['max_garment_stretch'] = $decoded['max_garment_stretch'];
+        $apecs_arr['max_horizontal_stretch'] = $decoded['max_horizontal_stretch'];
+        $apecs_arr['max_vertical_stretch'] = $decoded['max_vertical_stretch'];
         $apecs_arr['fabric_content'] = $decoded['fabric_content'];
-        unset($decoded['style_id_number'], $decoded['max_garment_stretch'], $decoded['fabric_content']);
+        unset($decoded['style_id_number'], $decoded['max_horizontal_stretch'], $decoded['fabric_content'], $decoded['max_vertical_stretch']);
+  
         foreach ($decoded as $k => $v) {
             if (!in_array($k, array('select_size', 'fit_point'))) {
                 if (strlen($v) > 0) {
@@ -168,9 +170,9 @@ class MappingController extends Controller
         $apecs_arr = array();
         $apecs_arr['style_id_number'] = $decoded['style_id_number'];
         $apecs_arr['max_horizontal_stretch'] = $decoded['max_horizontal_stretch'];
-        $apecs_arr['vertical_stretch'] = $decoded['vertical_stretch'];
+        $apecs_arr['max_vertical_stretch'] = $decoded['max_vertical_stretch'];
         $apecs_arr['fabric_content'] = $decoded['fabric_content'];
-        unset($decoded['style_id_number'], $decoded['max_horizontal_stretch'], $decoded['fabric_content'], $decoded['vertical_stretch']);
+        unset($decoded['style_id_number'], $decoded['max_horizontal_stretch'], $decoded['fabric_content'], $decoded['max_vertical_stretch']);
         foreach ($decoded as $k => $v) {
             if (!in_array($k, array('select_size', 'fit_point'))) {
                 if (strlen($v) > 0) {
