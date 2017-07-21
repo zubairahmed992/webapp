@@ -93,14 +93,14 @@ class VisitorHelper {
             'data'            => array()
         );
 
+        
 
 
         foreach ($finalData as $fData) {
            
             $output['data'][] = [ 
-                'id'        => $fData["id"],
-                'email'        => $fData["email"],
-                'ip_address' => $fData["ip_address"],                
+                'name'        => $fData["name"],
+                'email'        => $fData["email"],                    
                 'created_at'   => ($fData["created_at"]->format('d-m-Y')),
             ];
         }

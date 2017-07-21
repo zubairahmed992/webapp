@@ -23,36 +23,38 @@ class VisitorRepository extends EntityRepository {
         $search = isset($data['query']) && $data['query']?$data['query'] : null;
         $query 
             ->select('
-                f.id, f.email,
-                f.ip_address, f.created_at'
+                 f.name,f.email, f.created_at'
             )
-            ->from('LoveThatFitSiteBundle:visitor', 'f');
+            ->from('LoveThatFitSiteBundle:visitor', 'f')
+            ->where('f.email is not null')
+            ->andWhere('f.email != :identifier')
+      		->setParameter('identifier', '');
+            
+            
             
         if ($search) {
             $query 
-                ->andWhere('f.id like :search')
+                ->andWhere('f.name like :search')
                 ->orWhere('f.email like :search')
-                ->orWhere('f.ip_address like :search')
-                ->orWhere('f.created_at like :search')
+                ->orWhere('f.created_at like :search')               
                 ->setParameter('search', "%".$search."%");
         }
       
-        //$query->groupBy('f.product');
+       	
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];
             $orderByDirection = $order[0]['dir'];
             if ($orderByColumn == 0) {
-                $orderByColumn = "f.id";
+                $orderByColumn = "f.name";
             } elseif ($orderByColumn == 1) {
                 $orderByColumn = "f.email";
             } elseif ($orderByColumn == 2) {
-                $orderByColumn = "f.ip_address";
-            } elseif ($orderByColumn == 3) {
                 $orderByColumn = "f.created_at";
             }
 
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
+        $query->groupBy('f.email');
         if ($max) {
             $preparedQuery = $query->getQuery() 
                 ->setMaxResults($max)
@@ -70,11 +72,14 @@ class VisitorRepository extends EntityRepository {
         return  $this->getEntityManager()
             ->createQueryBuilder()
             ->select('
-                f.id, f.email,
-                f.ip_address, f.created_at'
+                f.email,f.name,f.created_at'
             )
-            ->from('LoveThatFitSiteBundle:visitor', 'f')          
+            ->from('LoveThatFitSiteBundle:visitor', 'f')  
+             ->where('f.email is not null')
+            ->andWhere('f.email != :identifier')
+      		->setParameter('identifier', '') 
             ->OrderBy("f.created_at", "desc")
+            ->groupBy('f.email')
             ->getQuery()
             ->getResult();
     }
