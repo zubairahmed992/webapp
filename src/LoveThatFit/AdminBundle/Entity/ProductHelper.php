@@ -1043,6 +1043,9 @@ class ProductHelper
         if (isset($data['product']['rise'])) {
             $entity->setRise($data['product']['rise']);
         }
+        if (isset($data['product']['disabled'])) {
+            $entity->setDisabled($data['product']['disabled']);
+        }
         if (isset($data['fit_pirority'])) {
             $entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));
         }
