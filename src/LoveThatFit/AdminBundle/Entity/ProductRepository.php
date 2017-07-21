@@ -1818,6 +1818,7 @@ class ProductRepository extends EntityRepository
                  p.fit_type,
                  p.horizontal_stretch,
                  p.vertical_stretch,
+                 p.item_name,
                  p.styling_type,
                  p.item_details,
                  p.care_label,
