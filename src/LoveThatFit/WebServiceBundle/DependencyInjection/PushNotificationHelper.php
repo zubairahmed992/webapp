@@ -64,17 +64,18 @@ class PushNotificationHelper
             $cert = dirname(__FILE__) . '/SSPush.pem';
         }*/
 
-        $cert = $this->getCertificateFile();
+        $certpem = $this->getCertificateFile();
+        $appleServer = $this->getPushNotificationPath();
 
         //echo $cert;
         //die;
-        if ($server == 'production') {
+        /*if ($server == 'production') {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
         } else {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
-        }
+        }*/
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
         // assume the private key passphase was removed.
@@ -127,17 +128,18 @@ class PushNotificationHelper
             $cert = dirname(__FILE__) . '/SSPush.pem';
         }*/
 
-        $cert = $this->getCertificateFile();
+        $certpem = $this->getCertificateFile();
+        $appleServer = $this->getPushNotificationPath();
 
         //echo $cert;
         //die;
-        if ($server == 'production') {
+        /*if ($server == 'production') {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
         } else {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
-        }
+        }*/
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
         // assume the private key passphase was removed.
@@ -208,17 +210,18 @@ class PushNotificationHelper
             $cert = dirname(__FILE__) . '/SSPush.pem';
         }*/
 
-        $cert = $this->getCertificateFile();
+        $certpem = $this->getCertificateFile();
+        $appleServer = $this->getPushNotificationPath();
 
         //echo $cert;
         //die;
-        if ($server == 'production') {
+        /*if ($server == 'production') {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
         } else {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
-        }
+        }*/
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
         // assume the private key passphase was removed.
@@ -268,15 +271,16 @@ class PushNotificationHelper
             $cert = dirname(__FILE__) . '/SSPush.pem';
         }*/
 
-        $cert = $this->getCertificateFile();
+        $certpem = $this->getCertificateFile();
+        $appleServer = $this->getPushNotificationPath();
 
-        if ($server == 'production') {
+        /*if ($server == 'production') {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
         } else {
             $appleServer = 'ssl://gateway.sandbox.push.apple.com:2195';
             $certpem = $cert;
-        }
+        }*/
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', $certpem);
         // assume the private key passphase was removed.
@@ -310,6 +314,21 @@ class PushNotificationHelper
             return $directory. "/pushcert.pem";
         }else{
             return $directory. "/pushcert.pem";
+        }
+    }
+
+    protected function getPushNotificationPath(){
+        $yaml = new Parser();
+        $env  = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['push_envior'];
+
+        if($env == "v3qa" || $env == "qa" ){
+            return "ssl://gateway.push.apple.com:2195";
+        }else if($env == "dev"){
+            return "ssl://gateway.sandbox.push.apple.com:2195";
+        }else if( $env == "prod" ){
+            return "ssl://gateway.push.apple.com:2195";
+        }else{
+            return "ssl://gateway.push.apple.com:2195";
         }
     }
 
