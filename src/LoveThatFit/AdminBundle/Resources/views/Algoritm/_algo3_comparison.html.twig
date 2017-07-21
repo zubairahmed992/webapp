@@ -63,7 +63,7 @@
                                         <th>MAX Calc</th>
                                         <th>message</th>
                                         <th>variance</th>
-                                        <th>Max/GD</th>                                        
+                                                                              
                                     </tr>
                                 
                             {% for fp, fp_specs in size_specs.fit_points %} 
@@ -108,14 +108,11 @@
                                         <td>{{fp_specs.max_body_measurement}}</td>                                
                                         <td>{{fp_specs.calc_max_body_measurement}}</td>
                                         <td> <span  style="font-size:11px;">{{fp_specs.status_text}}
-                                        ({{fp_specs.status}})
-                                        
-                                        
-                                        {{fp_specs.fitting_alert}}
+                                        : {{fp_specs.fitting_alert}}
                                         </span>
                                         </td>
                                         <td>{{fp_specs.variance}}</td>
-                                        <td>{{fp_specs.fitting_type}}</td>                                        
+                                        
                                     </tr>
 
                             {% endfor %}
@@ -138,12 +135,11 @@
                                         <td></td>       
                                         <td></td>
                                         <td> <span  style="font-size:11px;">
-                                            {{size_specs.message}}
-                                            ({{size_specs.status}})
+                                                {{size_specs.message}}
                                             </span>   
-                                                </td>                                                                                
+                                        </td>                                                                                
                                         <td>{{size_specs.variance}}</td>                
-                                        <td></td>
+                                        
                                         
                                         
                                     </tr>

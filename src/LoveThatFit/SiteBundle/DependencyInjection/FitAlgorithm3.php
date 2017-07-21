@@ -457,82 +457,93 @@ class FitAlgorithm3 {
                 $max_gd_ratio = $fp_specs['max_body_measurement'] / $fp_specs['garment_measurement_flat'];
                 $fits = true;
                 if ($layer == 4) {
-                    if ($max_gd_ratio > 0.85) {#Close fitting ------------------------>            
-                        $fp_fx = $this->grade_to_scale($fp_specs);
+                    if ($max_gd_ratio > 0.85) {#Close fitting ------------------------>                                    
                         if ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) { #------> high-max 
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'Close Fitting';
+                            $fp_fx = $this->grade_to_scale($fp_specs);
                         } else {
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_scale['message'] = 'Too Small';
                             $fits = false; #---?Not Fits
+                            $fp_fx = 0;
                         }
                     } elseif ($max_gd_ratio >= 0.75) {#Relax fitting ------------------------>
                         if ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) {#------> high-max
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
+                            $fp_fx = $this->grade_to_scale($fp_specs);
                         } else { # above max status=-5 or -8
-                            $fp_specs['max_body_measurement'] = 0.92 * $fp_specs['garment_measurement_flat'];  #--> max=92%GD
-                            $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
-                            if ($fp_specs['body_measurement'] <= $fp_specs['max_body_measurement']) {
-                                $fp_scale = $this->scale['between_high_max'];
+                            $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_flat'];  #--> 92%GD
+                            $fp_fx = 0;#$this->grade_to_scale($fp_specs); #%%%%> calculate fit index
+                            $fp_scale = $this->scale['beyond_max'];
+                            if ($fp_specs['body_measurement'] <= $ninety_two_GD) {                                
                                 $fp_scale['message'] = 'Poor Fit';
-                            } else {
-                                $fp_scale = $this->scale['beyond_max'];
+                            } else {                                
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
                             }
                         }
                     } elseif ($max_gd_ratio < 0.75) {#Loose fitting ------------------------>
-                        $fp_specs['max_body_measurement'] = 0.75 * $fp_specs['garment_measurement_flat'];  #--> max=75%GD
-                        $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
-                        if ($fp_specs['body_measurement'] <= $fp_specs['max_body_measurement']) {
+                        if ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) {#------> high-max
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
-                        } else { #------>beyond
+                            $fp_fx = $this->grade_to_scale($fp_specs);
+                        } else { #------>beyond                            
                             $fp_scale = $this->scale['beyond_max'];
-                            $fp_scale['message'] = 'Too Small';
-                            $fits = false; #---?Not Fits
+                            $fp_fx = 0;                            
+                            $seventy_five_GD = 0.75 * $fp_specs['garment_measurement_flat'];  #--> 75%GD                            
+                            if ($fp_specs['body_measurement'] <= $seventy_five_GD) {
+                                $fp_scale['message'] = 'OK Fit';
+                            } else {
+                                $fp_scale['message'] = 'Too Small';
+                                $fits = false; #---?Not Fits
+                            }
                         }
                     }
                 } else {#----------> Layer 1,2 & 3 #############################################>>><<<
-                    if ($max_gd_ratio > 0.92) {#Close fitting
-                        $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
+                    if ($max_gd_ratio > 0.92) {#Close fitting                        
                         if ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) { #------> high-max
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'Close Fitting';
-                        } else {
+                            $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
+                        } else {#---?Beyond max-Not Fits
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_scale['message'] = 'Too Small';
                             $fits = false; #---?Not Fits
+                            $fp_fx = 0;
                         }
                     } elseif ($max_gd_ratio >= 0.85) {#Relax fitting
                         if ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) { #------> high-max
                             $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
-                        } else { # above max status=-5 or -8
-                            $fp_specs['max_body_measurement'] = 0.92 * $fp_specs['garment_measurement_flat'];  #--> max=92%GD
-                            $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
-                            if ($fp_specs['body_measurement'] <= $fp_specs['max_body_measurement']) {
-                                $fp_scale = $this->scale['between_high_max'];
-                                $fp_scale['message'] = 'Poor Fit';
-                            } else {
-                                $fp_scale = $this->scale['beyond_max'];
+                        } else { # above max status=-5 or -8                            
+                            $fp_scale = $this->scale['beyond_max'];
+                            $fp_fx = 0;
+                            $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_flat'];  #--> 92%GD
+                            if ($fp_specs['body_measurement'] <= $ninety_two_GD) {                                
+                                $fp_scale['message'] = 'Poor Fit';                                
+                            } else {                                
                                 $fp_scale['message'] = 'Too Small';
-                                $fits = false; #---?Not Fits
+                                $fits = false; #---?Not Fits                                
                             }
                         }
                     } elseif ($max_gd_ratio < 0.85) {#Loose fitting
-                        $fp_specs['max_body_measurement'] = 0.85 * $fp_specs['garment_measurement_flat']; #--> max=85%GD
-                        $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
-                        if ($fp_specs['body_measurement'] <= $fp_specs['max_body_measurement']) {
+                         if ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) { #------> high-max
+                            $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
-                        } else {
+                        } else {                            
                             $fp_scale = $this->scale['beyond_max'];
-                            $fp_scale['message'] = 'Too Small';
-                            $fits = false; #---?Not Fits
+                            $fp_fx = 0;
+                            $eighty_five_GD = 0.85 * $fp_specs['garment_measurement_flat']; #--> 85%GD
+                            if ($fp_specs['body_measurement'] <= $eighty_five_GD) {                            
+                                $fp_scale['message'] = 'OK Fit';
+                            } else {                            
+                                $fp_scale['message'] = 'Too Small';
+                                $fits = false; #---?Not Fits
+                            }
                         }
                     }
                 }
