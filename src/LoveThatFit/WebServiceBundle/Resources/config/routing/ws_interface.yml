@@ -1,5 +1,5 @@
 ws_interface_index:
-    pattern:  /ws_interface/index
+    pattern:  /admin/ws_interface/index
     defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:index}
 
 ws_interface_user:

@@ -1,94 +1,138 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Orders Management</li>
+    <li class="active">Orders Management</li>
 {% endblock %}
 
 {% block body %}
-<div class="p_listing">
-    <div class="clearfix"></div>
-      <h1 style="float:left;">Orders Management</h1>
-      <div class="clearfix"></div>
-      {% block header_right_links %}
-        <div class="adjustment_links" style="margin-top: 20px; float:right;">
-          <a href="{{ path('admin_order_export') }}" class="btn export_btn">Export Orders</a>
-        </div>
-    {% endblock %}
+    <div class="p_listing">
+        <div class="clearfix"></div>
+        <h1 style="float:left;">Orders Management</h1>
+        <div class="clearfix"></div>
+        {% block header_right_links %}
+            <div class="adjustment_links" style="margin-top: 20px; float:right;">
+                <a href="{{ path('admin_order_export') }}" class="btn export_btn">Export Orders</a>
+            </div>
+        {% endblock %}
     </div>
     <div class="clearfix"></div>
     <div class="bs-docs-grid">
-      <table id="example" class="display" cellspacing="0" width="100%">
-          <thead>
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
             <tr>
-              <th>Order No</th>
-              <th>Customer Name</th>
-              <th>Order Date</th>
-              <th>Order Amount</th>
-              <th>Credit Card No</th>
-              <th>Actions</th>
+                <th>Order No</th>
+                <th>Customer Name</th>
+                <th>Order Date</th>
+                <th>Order Amount</th>
+                <th>Credit Card No</th>
+                <th>Transaction Status</th>
+                {#<th>Shipping Status</th>#}
+                <th>Actions</th>
             </tr>
-          </thead>
-          <tbody>
-          </tbody>
-      </table>  
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
-  </div> 
-</div>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-    var table = $('#example').DataTable({
-       "processing": true, 
-        "serverSide": true, 
-        "ajax": {
-            "url": "{{ path('admin_order_paginate') }}",
-            "type": "POST"
-        },
-        "sAjaxDataProp": "data", 
-        "pageLength": 10,
-        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
-        "order": [[ 0, "desc" ]],
-        "columns": [
-        {
-          "data" : "order_number",
-        },
-        {
-          "data" : "user_name",
-        },
-        {
-          "data" : "order_date",
-          "searchable": false,
-          "class": "text-right"
-        },
-        {
-          "data" : "order_amount",
-          "class": "text-right"
-        },
-        {
-          "data" : "credit_card",
-          "orderable" : false,
-          "searchable": false,
-          "class": "text-right"
-        },
-        {
-          "title"         : "Action",
-          "targets"       : -1,
-          "data"          : null,
-          "orderable"     : false,
-          "searchable"    : false,
-          "defaultContent": DetailPageButton,
-        },
-      ],
-    });
-    $.fn.dataTable.ext.errMode = 'none';
-    
-    jQuery('#example tbody').on( 'click', 'button, a, img', function () {
-      var dataAction = $(this).attr('data-action');
-      var data = table.row( $(this).parents('tr') ).data();
-      if (dataAction == 'Detail') {
-          var url = '{{ path('admin_order_show', {'id': ":id"}) }}';
-          url     = url.replace(':id', data.id);
-          window.top.location = url;
-      }
-    });
-  });
-</script>
+    </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var table = $('#example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ path('admin_order_paginate') }}",
+                    "type": "POST"
+                },
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "order": [[0, "desc"]],
+                "columns": [
+                    {
+                        "data": "order_number",
+                    },
+                    {
+                        "data": "user_name",
+                    },
+                    {
+                        "data": "order_date",
+                        "searchable": false,
+                        "class": "text-right"
+                    },
+                    {
+                        "data": "order_amount",
+                        "class": "text-right"
+                    },
+                    {
+                        "data": "credit_card",
+                        "orderable": false,
+                        "searchable": false,
+                        "class": "text-right"
+                    },
+                    {
+                        "data": "transaction_status",
+                    },
+                    /*{
+                        "data": "shipping_status",
+                    },*/
+                    {
+                        "title": "Action",
+                        "targets": -1,
+                        "data": null,
+                        "orderable": false,
+                        "searchable": false,
+                        "defaultContent": DetailPageButton + " " + trans_status/* + " " + shipping_status*/,
+                    },
+                ],
+            });
+            $.fn.dataTable.ext.errMode = 'none';
+
+            jQuery('#example tbody').on('click', 'button, a, img', function () {
+                var dataAction = $(this).attr('data-action');
+                var element = $(this).parent().parent()[0];
+                var iPos = table.fnGetPosition( element );
+
+
+                var data = table.fnGetData(iPos);
+
+
+                if (dataAction == 'Detail') {
+                    var url = '{{ path('admin_order_show', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+
+                if (dataAction == 'update_trans') {
+
+                    var url = '{{ path('admin_update_transaction_status', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: {},
+                        success: function (response) {
+                            data.transaction_status = response.transaction_status;
+                            table.fnUpdate( data, iPos);
+                        }
+                    });
+                }
+
+                if (dataAction == 'update_shipp') {
+
+                    var url = '{{ path('admin_update_shipping_status', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: {},
+                        success: function (response) {
+                            data.shipping_status = response.shipping_status;
+                            table.fnUpdate( data, iPos);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 {% endblock %}

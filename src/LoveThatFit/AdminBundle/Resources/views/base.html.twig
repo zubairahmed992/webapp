@@ -45,6 +45,7 @@
             <ul class="nav" style="margin: -15px 10px 0 0;">
               <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
               <li><a href="{{ path('admin_clothing_types') }}">Clothing Types</a></li>
+              <li><a href="{{ path('default_clothings') }}">Default Clothings</a></li>
 			  <li><a href="{{ path('admin_categories') }}">Categories</a></li>
               <li><a href="{{ path('admin_banners') }}">Banner</a></li>
               <li><a href="{{ path('admin_brands') }}">Brands</a></li>
@@ -68,8 +69,10 @@
                   <ul class="dropdown-content">
                       <li><a href="{{ path('admin_favorite') }}">Favorite Products Log</a></li>
                       <li><a href="{{ path('users_activity_home') }}">Users Activity Log</a></li>
+                      <li><a href="{{ path('admin_visitors') }}">Visitors Log</a></li>
                   </ul>
               </li>
+              <li><a href="{{ path('admin_marketingtiles') }}">Marketing Tiles</a></li>
               <li><a href="{{ path('admin_logout') }}">Logout</a></li>
             </ul>
              <!-- Top Navigation End -->
@@ -118,6 +121,7 @@
       <p>&copy; Company 2012</p>
     </footer>
 
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootbox.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-transition.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-alert.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-modal.js') }}"></script>
@@ -256,7 +260,7 @@
                 source:function (request, response) {
                     $.ajax({
                         type: "POST",
-                        url:"../admin/autocomplete_user/autocomplete_user_search_result",
+                        url:"/admin/autocomplete_user/autocomplete_user_search_result",
                         data: request,
                         success: response,
                         dataType: 'json'

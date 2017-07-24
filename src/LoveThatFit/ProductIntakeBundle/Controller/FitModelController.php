@@ -5,6 +5,7 @@ namespace LoveThatFit\ProductIntakeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 
 class FitModelController extends Controller {
     
@@ -13,6 +14,15 @@ class FitModelController extends Controller {
     public function indexAction() {
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:index.html.twig', array(
                     'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                ));
+    }
+    
+     #------------------------/product_intake/fit_model_specs/index
+
+    public function brandCompareAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:brand_compare.html.twig', array(
+                    'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                    'brands' => $this->get('admin.helper.brand')->findAll(),
                 ));
     }
   
@@ -33,7 +43,16 @@ class FitModelController extends Controller {
                     'fit_points' => $fit_points,
                 ));
     }
-    
+    #--------------------------------- /product_intake/fit_model/csv_extract
+     public function csvExtractAction(Request $request) {
+        $str = array();
+        $file = $request->files->get('csv_file');
+        
+        $pcsv = new ProductCSVDataUploader($file);
+        $data = $pcsv->readFitModelSize();
+        return new Response(json_encode($data));
+        
+    }
     #------------------------/product_intake/fit_model_specs/create_new
 
     public function createNewAction() {
@@ -62,6 +81,7 @@ class FitModelController extends Controller {
 
     public function saveAction(Request $request) {
         $decoded = $request->request->all();
+        unset($decoded['fit_model']);
         $fmm = $this->get('productIntake.fit_model_measurement')->createNew();
         $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $fmm->setBrand($brand);
@@ -125,6 +145,7 @@ class FitModelController extends Controller {
     #----------------------- /product_intake/fit_model/update
     public function updateAction(Request $request,$id){  
         $decoded = $request->request->all();
+        unset($decoded['fit_model']);
         $entity = $this->get('productIntake.fit_model_measurement')->find($id);
         $brand = $this->get('admin.helper.brand')->findOneByName($decoded['sel_brand']);
         $entity->setBrand($brand);

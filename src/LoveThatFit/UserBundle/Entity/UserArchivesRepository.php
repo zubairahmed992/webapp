@@ -90,11 +90,6 @@ class UserArchivesRepository extends EntityRepository
         $getResult = true
     ) 
     {
-        /*
-            ->addSelect('(select t.support_user_name from LoveThatFitSupportBundle:SupportTaskLog t
-                where t.archive = ua.id and t.log_type = :cali) AS support_user_name'
-            )
-        */
 	    $query  = $this->getEntityManager()->createQueryBuilder();
         $search = isset($data['query']) && $data['query']?$data['query']:null;
         $log_type = "calibration";
@@ -103,7 +98,8 @@ class UserArchivesRepository extends EntityRepository
                 ua.id,
                 u.email,
                 ua.created_at,
-                t.support_user_name'
+                t.support_user_name,
+                ua.version'
             )
             ->from('LoveThatFitUserBundle:UserArchives', 'ua')
             ->leftJoin(
@@ -135,6 +131,95 @@ class UserArchivesRepository extends EntityRepository
                 ->setParameter('search', "%".$search."%");
         }
         $query->setParameter('pending', '-1');
+
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            $query->OrderBy("ua.id", $orderByDirection);
+        }
+
+        if ($max) {
+            $preparedQuery = $query->getQuery() 
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery(); 
+        }
+        return $getResult?$preparedQuery->getResult():$preparedQuery; 
+    }
+
+    public function getVersion($user_id)
+    {
+
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('ua.version')
+            ->from('LoveThatFitUserBundle:UserArchives', 'ua')
+            ->Where('ua.user =:user_id')
+            ->setParameter('user_id', $user_id)
+            ->OrderBy("ua.id", "desc")
+            ->setMaxResults(1);
+
+        try {
+          return $query->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
+        // return $query->getQuery()->getSingleResult();
+    }
+
+    public function searchSupport(
+        $data,
+        $page = 0,
+        $max = NULL,
+        $order,
+        $user_id,
+        $all,
+        $getResult = true
+    ) 
+    {
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
+        $log_type = "calibration";
+        $query 
+            ->select('
+                ua.id,
+                u.email,
+                ua.created_at,
+                t.support_user_name,
+                ua.version'
+            )
+            ->from('LoveThatFitUserBundle:UserArchives', 'ua')
+            ->leftJoin(
+                    "LoveThatFitUserBundle:User",
+                    "u",
+                    "WITH",
+                    "u.id = ua.user"
+            )
+            ->leftJoin(
+                    "LoveThatFitSupportBundle:SupportTaskLog",
+                    "t",
+                    "WITH",
+                    $query->expr()->andX(
+                        $query->expr()->eq('t.archive', 'ua.id'),
+                        $query->expr()->eq('t.log_type',':log_type')
+                    )
+            )
+            ->setParameter("log_type", "calibration")
+            ->andWhere('ua.status = :pending')
+            ->andWhere('ua.version = :version');
+        if ($all == 0) {
+            $query 
+                ->andWhere('t.support_admin_user =:user_id')
+                ->setParameter('user_id', $user_id);
+        }
+        if ($search) {
+            $query 
+                ->andWhere('u.email like :search')
+                ->orWhere('t.support_user_name like :search')
+                ->setParameter('search', "%".$search."%");
+        }
+        $query->setParameter('pending', '-1')
+            ->setParameter("version", "1");
 
         if (is_array($order)) {
             $orderByColumn    = $order[0]['column'];

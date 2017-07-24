@@ -5,73 +5,225 @@
             content:bold;
             content:"*";
             color:red;
-     
-          }
+
+        }
+        .fm_spn{
+            color:#0D47A1;
+            font: bold;
+        }
+        .fm_add{
+
+        }
+        .fm_remove{}     
+        .spn_product_search{
+            display: none;
+        }
+
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-         //---------------------------------------
-          
-            $( ".sel_gender" ).change(function() {                            
-                set_size_type(this.value);  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //------------------------- CSV File Read
+            $('#csv_file').on('change', function () {
+                var val = $(this).val();
+                var fit_points = JSON.parse($('#fit_points').text());
+                //  console.log(fit_points['low_hip']);           
+                if (val.substring(val.lastIndexOf('.') + 1).toLowerCase() == 'csv') {
+                    $("#uploading_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+
+                    var formData = new FormData();
+                    formData.append('csv_file', $('input[type=file]')[0].files[0]);
+                    $.ajax({
+                        url: '../../specs_mapping/csv_extract',
+                        data: formData,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            // console.log(response)
+                            $("#csv_file_json").text(response);
+                            $("#uploading_image").html('');
+                            data = JSON.parse(response);
+                            $.each(data, function (key, value) {
+                                keyExisit = key in fit_points;
+                                if (keyExisit) {
+                                    if (parseFloat(value) == parseFloat(fit_points[key])) {
+
+                                    } else if (fit_points[key] == '') {
+                                    } else {
+                                        $("#fm_spn_" + key).text(value);
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                } else {
+                    alert("Invalid file");
+                }
+            });
+            //--------- End CSV File Read
+
+            $(".fm_spn").click(function (event) {
+                event.preventDefault();
+                var textboxname = this.id.replace("fm_spn_", "");
+                old_val = $('input[name="' + textboxname + '"]').val();
+                $('input[name="' + textboxname + '"]').val($(this).text());
+                $(this).text(old_val);
+                var rgb_color = $(this).css("color");
+                $(this).css("color", rgb_color == 'rgb(13, 71, 161)' ? 'rgb(223, 8, 8)' : 'rgb(13, 71, 161)')
+                //$(this).css("color",'#232323');             
+            });
+            //-------------------------------------------------
+            $(".fm_remove").click(function (event) {
+                event.preventDefault();
+                $('#fm_spn_bicep').hide();
+            });
+
+
+            //---------------------------------------
+
+            $(".sel_gender").change(function () {
+                set_size_type(this.value);
                 fill_clothing_list(this.value);
                 fill_size();
-        });
-      
-         //---------------------------------------
-        function fill_clothing_list(gender){        
-            $('.clothing_types').empty();
-            product_specs = jQuery.parseJSON( $('#clothing_types').text());
-            console.log(product_specs);
-             gender=$('input[type="radio"]:checked').val()=='m'?'man':'woman';          
+            });
+
+            //---------------------------------------
+            function fill_clothing_list(gender) {
+                $('.clothing_types').empty();
+                product_specs = jQuery.parseJSON($('#clothing_types').text());
+                console.log(product_specs);
+                gender = $('input[type="radio"]:checked').val() == 'm' ? 'man' : 'woman';
                 $('.clothing_types').empty();
                 var option = '<option value="">Select clothing</option>';
-                $.each(product_specs[gender], function(val, text) {
-                    option += '<option value="'+ val + '">' + text + '</option>';
-                        });
-                 $('.clothing_types').append(option);                     
-        }
-        
-        //---------------------------------------
-        
-            function set_size_type(gender){
-                size_specs=jQuery.parseJSON( $('#size_specs_json').text());               
-                gender=$('input[type="radio"]:checked').val()=='m'?'man':'woman';        
-                $('#sel_size_type').empty();
-                var option = '<option value="">Select Size</option>';
-                $.each(size_specs.size_title_type[gender], function(val, text) {
-                    option += '<option value="'+ val + '">' + text + '</option>';
-                        });
-                 $('#sel_size_type').append(option);         
-            }
-        //---------------------------------------
-           $("#sel_size_type" ).change(function() {
-               fill_size();
-           });
-         //---------------------------------------
-            function fill_size(){     
-                size_specse=jQuery.parseJSON( $('#size_specs_json').text());        
-                gender=$('input[type="radio"]:checked').val()=='m'?'man':'woman'; 
-                $('#sel_size').empty();        
-                var option = '<option value="">Select Size</option>';
-                $.each(size_specse.sizes[gender][$('#sel_size_type').val()], function(val, text) {
-                   // alert(val)
-                    option += '<option value="'+ val + '">' + text + '</option>';
-                        });
-                 $('#sel_size').append(option);         
+                $.each(product_specs[gender], function (val, text) {
+                    option += '<option value="' + val + '">' + text + '</option>';
+                });
+                $('.clothing_types').append(option);
             }
 
-    });            
+            //---------------------------------------
+
+            function set_size_type(gender) {
+                size_specs = jQuery.parseJSON($('#size_specs_json').text());
+                gender = $('input[type="radio"]:checked').val() == 'm' ? 'man' : 'woman';
+                $('#sel_size_type').empty();
+                var option = '<option value="">Select Size</option>';
+                $.each(size_specs.size_title_type[gender], function (val, text) {
+                    option += '<option value="' + val + '">' + text + '</option>';
+                });
+                $('#sel_size_type').append(option);
+            }
+            //---------------------------------------
+            $("#sel_size_type").change(function () {
+                fill_size();
+            });
+            //---------------------------------------
+            function fill_size() {
+                size_specse = jQuery.parseJSON($('#size_specs_json').text());
+                gender = $('input[type="radio"]:checked').val() == 'm' ? 'man' : 'woman';
+                $('#sel_size').empty();
+                var option = '<option value="">Select Size</option>';
+                $.each(size_specse.sizes[gender][$('#sel_size_type').val()], function (val, text) {
+                    // alert(val)
+                    option += '<option value="' + val + '">' + text + '</option>';
+                });
+                $('#sel_size').append(option);
+            }
+            //-------------------------------------------------
+            $(".add_size").click(function () {
+                var fit_model_genrate = $('.fit_modele_genrate');
+                var new_fit_model = $('#new_fit_model').val();
+                fit_model_genrate.append("<div class='form-group'> <label class='control-label col-sm-2'>" + new_fit_model + ": </label>  <div class='col-sm-4'>  <input type='text' id=" + new_fit_model + " name=" + new_fit_model + ">  </div>  </div>")
+            });
+            //-------------------------------------------------
+//-------------------------------------------------
+//-------------------------------------------------
+
+$("#btn_specs_search").click(function (event) {        
+    event.preventDefault();
+        id = $("#txt_search_id").val();    
+        var fetch_url = "../../product_specs/fetch_json/" + id+"/fit_model";
+        $.ajax({
+            url: fetch_url
+            , success: function (response) {
+                $("#product_specs_json").text(response);
+                fill_size_list();
+            }
+        });        
+    });
+    
+    $("#btn_toggle_product_search").click(function (event) {        
+        event.preventDefault();
+        $( ".spn_product_search" ).toggle();       
+         $(this).text(function(i, text){
+          return text === 'Hide Search'?'Show Search':'Hide Search';
+      })        
+    });
+    
+   function fill_size_list(){
+      obj=jQuery.parseJSON($("#product_specs_json").text());      
+      $("#spn_product_name").text(obj.style_name);      
+      document.getElementById("sel_product_size").options.length = 0;
+      $("#sel_product_size").append(new Option('size',''));
+      $.each( obj.sizes, function( key, value ) {
+         $("#sel_product_size").append(new Option(key, key));
+      });
+   }
+
+ $('#sel_product_size').on('change', function (event) {
+     var fit_points = JSON.parse($('#fit_points').text());
+     data=jQuery.parseJSON($("#product_specs_json").text());                
+        $.each(data['sizes'][this.value], function (key, value) {
+            keyExisit = key in fit_points;
+            if (keyExisit) {                
+                if (parseFloat(value) == parseFloat(fit_points[key])) {
+                } else if (fit_points[key] == '') {
+                } else {
+                    $("#fm_spn_" + key).text(parseFloat(value));
+                }
+            }
+        });
+ });
+});
+        
     </script>
-        <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
-        <span id="clothing_types" hidden="false">{{clothing_types}}</span>
+    <span id='product_specs_json' hidden="true"></span>
+    <span id='size_specs_json' hidden="true">{{size_specs_json}}</span>
+    <span id="clothing_types" hidden="false">{{clothing_types}}</span>
+    <span id="fit_points" hidden="false">{{ fit_point_values|json_encode }}</span>
+    <div style='display:none' id="csv_file_json"></div>
+    
+<div class="row spn_product_search">
+  <div class="col-md-8"></div>
+  <div class="col-md-1 form-group">Specification Id</div>
+  <div class="col-md-1 form-group"><input type="text" class="form-control" id="txt_search_id" placeholder="Id"></div>
+  <div class="col-md-1 form-group"><button type="Button" id="btn_specs_search" class="btn btn-default">Show Search</button></div>
+</div>
+<div class="row spn_product_search">
+  <div class="col-md-8"></div>
+  <div class="col-md-1 form-group"><span id="spn_product_name"> Select</span></div>
+  <div class="col-md-1 form-group"><select id="sel_product_size" class="form-control" required></select></div>
+</div>    
+    
+ <div class="row" style="display:none">
+  <div class="col-md-1"></div>
+  <div class="col-md-2 form-group">Select File</div>
+  <div class="col-md-2 form-group"><input type="file" name="csv_file" id="csv_file"></div>
+</div>       
+    
+    
+
     <h2>Fit Model Measurements</h2>
-        <div class="btn-group" role="group" aria-label="..." style="float:right;">
-            <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
-        </div>   
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+        <a href="#" id="btn_toggle_product_search" class="btn btn-default">Show Search</a>           
+        <a href="{{ path('product_intake_fit_model_index') }}" class="btn btn-default">List</a>           
+    </div>   
+
+    <br>
     <form action="{{ path('product_intake_fit_model_update',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data"  class="form-horizontal" >
-       <div class="container">      
+        <div class="container">      
             {% for fit_point_k, fit_point_v in fit_point_values %}
                 {% if fit_point_k == 'sel_brand' %}
                     <div class="form-group required">
@@ -86,72 +238,83 @@
                         </div>
                     </div>                
                 {% elseif fit_point_k == 'sel_gender' %}                     
-                <div class="form-group required">
-                     <label class="control-label col-sm-2" for=""> Gender: </label>
-                     <div class="col-sm-4">
-                         {% if fit_point_v == 'f' %}                             
-                             <input type="radio" class="sel_gender" name="sel_gender" value="m" > Male<br>
-                             <input type="radio" class="sel_gender" checked name="sel_gender" value="f"> Female<br>
-                         {% else %}
-                           <input type="radio" class="sel_gender"  name="sel_gender" value="m" checked > Male<br>
-                           <input type="radio" class="sel_gender"  name="sel_gender" value="f"> Female<br>
-                         {% endif %}
-                     </div>
-                 </div>
+                    <div class="form-group required">
+                        <label class="control-label col-sm-2" for=""> Gender: </label>
+                        <div class="col-sm-4">
+                            {% if fit_point_v == 'f' %}                             
+                                <input type="radio" class="sel_gender" name="sel_gender" value="m" > Male<br>
+                                <input type="radio" class="sel_gender" checked name="sel_gender" value="f"> Female<br>
+                            {% else %}
+                                <input type="radio" class="sel_gender"  name="sel_gender" value="m" checked > Male<br>
+                                <input type="radio" class="sel_gender"  name="sel_gender" value="f"> Female<br>
+                            {% endif %}
+                        </div>
+                    </div>
                 {% elseif fit_point_k == 'sel_size_type' %}
-                 <div class="form-group required">
-                     <label class="control-label col-sm-2" for=""> Size Title Type: </label>
-                     <div class="col-sm-4">
-                         <select name="sel_size_type" id="sel_size_type" class="sel_brand form-control" required>
-                             <option value="">Size Title Type</option>
-                             {% for size_k, size_v in all_size_title_man_woman %}
-                                 <option value="{{ size_k }}"{{size_v =='' and size_k == 0 ? 'selected':size_v==fit_point_values['sel_size_type']?'selected':'' }}> {{ size_v }} </option>
-                             {% endfor %}
-                         </select>
-                     </div>
-                 </div> 
-               {% elseif fit_point_k == 'sel_size' %}
-                <div class="form-group required">
-                    <label class="control-label col-sm-2" for=""> Size: </label>
-                    <div class="col-sm-4">
-                        <select name="sel_size" id="sel_size" class="sel_size form-control" required>
-                             <option value="">Select Size </option>
-                            {% for size_k, size_v in size %}
-{#                              <option value="{{fit_point_k }}">{{fit_point_v}}</option>  #}
-                               <option value="{{ size_k }}"{{ size_k == '' and size_k == 0? '' : (size_k == fit_point_v ? ' selected ' : '')}}  >{{ size_k }}</option>
-                            {% endfor %}
-                        </select>
+                    <div class="form-group required">
+                        <label class="control-label col-sm-2" for=""> Size Title Type: </label>
+                        <div class="col-sm-4">
+                            <select name="sel_size_type" id="sel_size_type" class="sel_brand form-control" required>
+                                <option value="">Size Title Type</option>
+                                {% for size_k, size_v in all_size_title_man_woman %}
+                                    <option value="{{ size_k }}"{{size_v =='' and size_k == 0 ? 'selected':size_v==fit_point_values['sel_size_type']?'selected':'' }}> {{ size_v }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div> 
+                {% elseif fit_point_k == 'sel_size' %}
+                    <div class="form-group required">
+                        <label class="control-label col-sm-2" for=""> Size: </label>
+                        <div class="col-sm-4">
+                            <select name="sel_size" id="sel_size" class="sel_size form-control" required>
+                                <option value="">Select Size </option>
+                                {% for size_k, size_v in size %}
+                                    {#                              <option value="{{fit_point_k }}">{{fit_point_v}}</option>  #}
+                                    <option value="{{ size_k }}"{{ size_k == '' and size_k == 0? '' : (size_k == fit_point_v ? ' selected ' : '')}}  >{{ size_k }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                </div>
                 {% elseif fit_point_k == 'sel_clothing_type' %}
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for=""> Clothing Type: </label>
-                    <div class="col-sm-4">
-                        <select name="sel_clothing_type" class="clothing_types form-control" >
-                            <option value="">Select Clothing Type</option>
-                            {% for clothing_k, clothing_v in colthing_types_man_woman %}
-                                <option value="{{ clothing_v }}"{{clothing_v =='' and clothing_k == 0 ? 'selected':clothing_v==fit_point_values['sel_clothing_type']?'selected':'' }}> {{ clothing_v }} </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div> 
-                
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for=""> Clothing Type: </label>
+                        <div class="col-sm-4">
+                            <select name="sel_clothing_type" class="clothing_types form-control" >
+                                <option value="">Select Clothing Type</option>
+                                {% for clothing_k, clothing_v in colthing_types_man_woman %}
+                                    <option value="{{ clothing_v }}"{{clothing_v =='' and clothing_k == 0 ? 'selected':clothing_v==fit_point_values['sel_clothing_type']?'selected':'' }}> {{ clothing_v }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div> 
+
                 {% else %}
                     <div class="form-group {{  (fit_point_k in required_fields)? 'required' : '' }} ">
                         <label class="control-label col-sm-2" for=""> {{fit_point_k}} </label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }}>
-                        </div>
+                            <input type="text" class="form-control"  min="1" max="100" value="{{fit_point_v}}" name="{{fit_point_k}}" {{  (fit_point_k in required_fields)? 'required' : '' }} >
+
+                        </div>                        
+                        <span id="fm_spn_{{fit_point_k}}" class='fm_spn'></span>
                     </div>   
 
                 {% endif %}   
             {% endfor %} 
-               <div class="form-group">
+            <div class="fit_modele_genrate">  </div>
+            <div class="form-group">  
+                <label class="control-label col-sm-2" for="title">Enter Fit Point : </label>              
+                <div class="col-sm-4">
+                    <input type="text" id="new_fit_model" name="fit_model"
+                           maxlength="255">
+                    <button type="button" class="add_size">Add Fit point </button>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save">                              
-               </div>
-    </div>
-</form>                                
+            </div>
+        </div>
+    </form>                                
 
 
-  
+
 {% endblock %}

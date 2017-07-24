@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDetailTypeNew;
 use LoveThatFit\AdminBundle\Form\Type\ProductRawType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
@@ -35,17 +36,51 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use LoveThatFit\AdminBundle\ImageHelper;
 use ZipArchive;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDescriptionType;
 
 class ProductController extends Controller {
 
     public $error_string;
 //---------------------------------------------------------------------
 
-    public function indexAction($page_number, $sort = 'id') {
+    public function __indexAction($page_number, $sort = 'id') {
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
 
         //return new response(json_encode(($product_with_pagination)));
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
+    }
+
+    public function indexAction()
+    {
+        return $this->render('LoveThatFitAdminBundle:Product:index_with_grid.html.twig',
+            array(
+                'femaleProduct' => $this->get('admin.helper.product')->countProductsByGender('f'),
+                'maleProduct' => $this->get('admin.helper.product')->countProductsByGender('m'),
+                'rec_count' => $this->get('admin.helper.product')->getTotalProductCount(),
+                'brandList' => $this->container->get('admin.helper.brand')->findAll(),
+                'topProduct' => $this->get('admin.helper.product')->countProductsByType('Top'),
+                'bottomProduct' => $this->get('admin.helper.product')->countProductsByType('Bottom'),
+                'dressProduct' => $this->get('admin.helper.product')->countProductsByType('Dress'),
+                'category' => $this->container->get('admin.helper.clothing_type')->getArray(),
+                'size_specs' => $this->container->get('admin.helper.size')->getDefaultArray(),
+            )
+        );
+    }
+
+    public function paginateAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output      = $this->get('admin.helper.product')->searchAllProduct($requestData);
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function searchProductsAction(Request $request)
+    {
+        $requestData = $this->get('request')->request->all();
+        $output      = $this->get('admin.helper.product')->searchProductByCriteria($requestData);
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
 //---------------------------------------------------------------------
@@ -93,31 +128,104 @@ class ProductController extends Controller {
     }
 
     #--------------------Method for Edit Product Detail----------------------------#
-
-    public function productDetailEditAction($id) {
+    
+    public function productDetailEditAction($id)
+    {
         $entity = $this->get('admin.helper.product')->find($id);
+        $gender = (strtolower($entity->getGender()) == 'f') ? 'woman' : 'man';
         $entity->setGender(strtolower($entity->getGender()));
+        $target_array = ['clothing_type' => $entity->getClothingType(), 'gender' => $entity->getGender()];
+        /*$clothingType = $this->get('admin.helper.product')->productClothingTypes();*/
+        $clothingType = $this->get('admin.helper.product')->productClothingTypeNew($target_array);
+        $clothingTypes = [];
+        foreach ($clothingType as $ct) {
+            $clothingTypes[$ct['id']] = $ct['name'];
+        }
+        $clothingType = [];
+        $clothingType['choices'] = $clothingTypes;
+
+        /*$clothingTypes = [];
+        $count = 0;
+        foreach ($clothingType as $ct) {
+            $clothingTypes[$count]['id'] = $ct->getID();
+            $clothingTypes[$count]['gender'] = $ct->getGender();
+            $clothingTypes[$count]['target'] = $ct->getTarget();
+            $clothingTypes[$count]['name'] = $ct->getName();
+            $count++;
+        }*/
+
+        $clothingTypeAttributes = $this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
+        $isProductSpecs = false;
+        $fit_priority = json_decode($entity->getFitPriority(),true);
+        if (empty($fit_priority)) {
+            $fit_priority = $clothingTypeAttributes['fitting_priority'];
+            $isProductSpecs = true;
+        }
+        $fit_priority = $this->convertToProductClothingTypeAttributeFormat($fit_priority, $isProductSpecs);
+
+        $isProductSpecs = false;
+        $fabric_content = json_decode($entity->getFabricContent());
+        if (empty($fabric_content)) {
+            $fabric_content = $clothingTypeAttributes['fabric_content'];
+            $isProductSpecs = true;
+        }
+        $fabric_content = $this->convertToProductClothingTypeAttributeFormat($fabric_content, $isProductSpecs);
+
+        $isProductSpecs = false;
+        $garment_detail = json_decode($entity->getGarmentDetail());
+        if (empty($garment_detail)) {
+            $garment_detail = $clothingTypeAttributes['garment_detail'];
+            $isProductSpecs = true;
+        }
+        $garment_detail = $this->convertToProductClothingTypeAttributeFormat($garment_detail, $isProductSpecs);
+
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
+
+        $productArr = $entity->toArray();
+        $clothingType['selected'] = $productArr['clothing_type_id'];
+
         #---------------- PRODUCT STATUS UPDATE -----------------#
         $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
         $disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        //$form = $this->createForm(new ProductDetailTypeNew($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()[$gender],$status,$disabled,$clothingType,$productArr), $entity);
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
+        /*print_r($entity->getClothingType()); exit;*/
+        /*print_r($entity->toArray()); exit;*/
 
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
+        unset($productArr['fit_priority']);
+        unset($productArr['fabric_content']);
+        unset($productArr['garment_detail']);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit_new.html.twig', array(
             'form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
             'entity' => $entity,
+            'product' => $productArr,
             'productSpecification' => $productSpecification,
-            'fit_priority' => $entity->getFitPriority(),
-            'fabric_content' => $entity->getFabricContent(),
-            'garment_detail' => $entity->getGarmentDetail(),
+            'clothing_types' => $clothingTypes,
+            'fit_priority' => $fit_priority,
+            'fabric_content' => $fabric_content,
+            'garment_detail' => $garment_detail,
             'brandObj'=>$brandObj,
         ));
     }
 
+    private function convertToProductClothingTypeAttributeFormat($input, $isProductSpecs = false)
+    {
+        $output = [];
+        if ($isProductSpecs) {
+            foreach ($input as $key => $val) {
+                $output[] = ['label' => $val, 'name' => $val, 'value' => ''];
+            }
+        } else {
+            foreach ($input as $key => $val) {
+                $output[] = ['label' => $key, 'name' => $key, 'value' => $val];
+            }
+        }
+        return $output;
+    }
     #--------------------Method for Edit Product Raw as needed----------------------------#
 
     public function productRawEditAction($id) {
@@ -151,6 +259,8 @@ class ProductController extends Controller {
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $form->bind($request);
         $data = $request->request->all();
+        $data['product']['disabled'] = $data['disabled'];
+        unset($data['disabled']);
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId(), 'product' => $entity, 'fit_priority' => $entity->getFitPriority())));
@@ -219,6 +329,30 @@ class ProductController extends Controller {
         $target_array = $request->request->all();
         $productStatus = $this->get('admin.helper.product')->setProductIntakeStatus($target_array['status'],$target_array['id']);
         return new response(json_encode($productStatus));
+    }
+
+#--------------------Method for Product Status Popup----------------------------#
+
+    public function productStatusPopupAction(Request $request) {
+        $target_array = $request->request->all();
+        $id = $target_array['id'];
+        /*$product = $this->getProduct($id);
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }*/
+
+        #---------------- PRODUCT STATUS UPDATE -----------------#
+        $status = $this->get('admin.helper.product')->getProductIntakeStatus($id);
+        //$disabled = $this->get('admin.helper.product')->getProductStatus($id);
+        //$productSpecificationHelper = $this->get('admin.helper.product.specification');
+        //$productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled));
+
+        return $this->render('LoveThatFitAdminBundle:Product:product_status_popup.html.twig', array(
+            //'form' => $productForm->createView(),
+            //'product' => $product,
+            'id' => $id,
+            'status' => $status,
+        ));
     }
 
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
@@ -1247,13 +1381,24 @@ class ProductController extends Controller {
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        if ($status == "disable") {
-            $entity->setDisabled(1);
+        if ($status == "disabled") {
+            $entity->setDisabled(0); //0 enable it
         } else {
-            $entity->setDisabled(0);
+            $entity->setDisabled(1); //1 disable it
         }
         $this->get('admin.helper.product')->update($entity);
-        return new response('{"status":"ok"}');
+        $output['data'] = [
+            'id' => $entity->getId(),
+            'control_number' => $entity->getControlNumber(),
+            'BName' => "", //$fData["BName"],
+            'ClothingType' => "", //$fData["cloting_type"],
+            'gender' => $entity->getGender(),
+            'PName' => $entity->getName(),
+            'created_at' => $entity->getCreatedAt()->format('Y-m-d H:i:s'),
+            'status'    => ($entity->getStatus() == 1) ? "Enabled" : "Disabled"
+        ];
+
+        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
     }
 
     public function productSizeDisableAction(Request $request)
@@ -1407,7 +1552,7 @@ class ProductController extends Controller {
                 $count++;
             }
         } else {
-            $products_and_items = array('product_id' => '', 'product_name' => '', 'gender' => '', 'brand_name' => '', 'cloth_type' => '', 'style' => '', 'retailer' => '', 'size' => '', 'item_id' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '');
+            $products_and_items = array('product_id' => '', 'product_name' => '', 'gender' => '', 'brand_name' => '', 'clothing_type' => '', 'color' => '', 'retailer' => '', 'size' => '', 'item_id' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '', 'styling_type' => '');
             /*$this->get('session')->setFlash('warning', 'No Record Found!');
             $totalRecords = $this->get('admin.helper.product')->countAllRecord();
             $femaleProducts  = $this->get('admin.helper.product')->countProductsByGender('f');
@@ -1422,4 +1567,65 @@ class ProductController extends Controller {
         $this->get('admin.helper.utility')->exportToCSV($products_and_items, 'product_item_color_sizes_statuses');
         return new Response('');
     }
+
+    #------------------Product Manage Description---------------------------------------#
+    public function productManageDescriptionAction(Request $request, $id)
+    {
+        $entity = $this->get('admin.helper.product')->find($id);
+        $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
+        $form = $this->createForm(new ProductDescriptionType($this->get('admin.helper.product.specification'), $this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_manage_description.html.twig', array(
+            'form' => $form->createView(),
+            'entity' => $entity,
+            'productSpecification' => $productSpecification,
+            'redirect_to' => $this->getRequest()->headers->get('referer')
+        ));
+    }
+
+    #------------------Product Description Update Method---------------------------------------#
+
+    public function productDescriptionUpdateAction(Request $request, $id)
+    {
+        $entity = $this->get('admin.helper.product')->find($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $data = $request->request->all();
+        $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
+        $this->get('session')->setFlash('success', 'Product description updated.');
+        return $this->redirect($this->generateUrl('admin_product_manage_description', array('id' => $id)));
+    }
+	
+	
+	public function ajaxloadcategoriesAction($id) {
+       $getselectedcategories = $this->get('admin.helper.product')->getSelectedProductCategories($id);
+	   $success = 0;
+	   if(count($getselectedcategories) > 0)
+	   {
+		  $success = "1";
+	   }
+	   
+		 return new Response($success );
+    }
+
+    public function exportProductCategoriesAction()
+    {
+        $products_with_categories = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:Product')
+            ->listProductsAndCategories();
+        if (!empty($products_with_categories)) {
+            $count = 0;
+            foreach ($products_with_categories as $row) {
+                $products_with_categories[$count]['status']     = ($row["status"] == 1 ? "Disabled" : "Enabled");
+                $products_with_categories[$count]['gender']     = ($row["gender"] == "f" ? "Female" : "Male");
+                $products_with_categories[$count]['created_at'] = (date_format(date_create($row["created_at"]), "d/m/Y H:i"));
+                $count++;
+            }
+        } else {
+            $products_with_categories = array('product_id' => '', 'product_name' => '', 'status' => '', 'gender' => '', 'brand_name' => '', 'clothing_type' => '', 'color' => '', 'retailer' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '', 'styling_type' => '', 'categories_name' => '');
+        }
+        $this->get('admin.helper.utility')->exportToCSV($products_with_categories, 'product_with_categories');
+        return new Response('');
+    }
+
 }

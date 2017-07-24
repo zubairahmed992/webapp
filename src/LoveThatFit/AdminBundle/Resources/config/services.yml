@@ -215,6 +215,9 @@ services:
 
      admin.helper.device:
         class: LoveThatFit\AdminBundle\DependencyInjection\DeviceHelper
+
+     admin.helper.device_support:
+        class: LoveThatFit\AdminBundle\DependencyInjection\DeviceSupportHelper
             
      admin.helper.productimagegenrate:
          class: LoveThatFit\AdminBundle\Entity\ProductImageGenrateHelper
@@ -232,6 +235,7 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Banner
+            container: "@service_container"
         
      admin.helper.productimage:
          class: LoveThatFit\AdminBundle\Entity\ProductImageHelper
@@ -273,3 +277,10 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ShopLookProduct
             container: "@service_container"
+
+     admin.helper.marketingtiles:
+         class: LoveThatFit\AdminBundle\Entity\MarketingTilesHelper
+         arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\MarketingTiles

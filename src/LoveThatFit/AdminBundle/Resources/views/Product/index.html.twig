@@ -187,6 +187,7 @@ top: 200px;
 
 <div class="btn-group" role="group" aria-label="..." style="float:right;">
 <a href="{{ path('product_intake_product_specs_index') }}" class="btn btn-default">Specs</a>
+<a href="{{ path('admin_product_categories_export') }}" class="btn btn-default">Export Products With Categories</a>
 <a href="{{ path('admin_product_export') }}" class="btn btn-default">Export Products and Items to CSV</a>
 <a href="{{ path('admin_product_data_csv_index') }}" class="btn btn-default">Import CSV</a>
 <a href="{{ path('admin_product_detail_new') }}" class="btn btn-default">Add New</a>
@@ -370,10 +371,11 @@ Search Product
         <a href="javascript:void(0);"   title="Disabled">
     <i class="icon-play-circle"></i></a>
     {%endif%}-->
-    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Disabled">
-    <i class="icon-play-circle"></i></a>
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_enable" title="Click to Enable">
+    <i class="icon-ban-circle"></i></a>
 {%else%}
-    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Enable"><i class="icon-ban-circle"></i></a>
+    <a style="cursor:pointer;" class="status_pro" data-id="{{p.Id}}_disable" title="Click to Disable">
+        <i class="icon-play-circle"></i></a>
 {%endif%}
 <a href="javascript:;" title="price edit"><i class="icon-plus-sign"></i></a>
 <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>

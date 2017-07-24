@@ -29,7 +29,10 @@ class FNFGroupForm extends AbstractType
             'required'=>true))
         ->add('min_amount', 'text' , array(
             'required'=>true))
-        ->add('groupTitle', 'text' , array('required'=>true));
+        ->add('groupTitle', 'text' , array('required'=>true))
+        ->add('group_type', 'choice', array(
+            'choices'=> array('1' => "Fixed Amount", '2' => "Flat Rate")
+        ));
     }
 
     /*public function getDefaultOptions(array $options) {

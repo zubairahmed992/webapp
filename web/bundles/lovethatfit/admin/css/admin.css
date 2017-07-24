@@ -334,3 +334,181 @@ select#FNFUser_users.custom_select{height: 100px;}
 .dropdown:hover ul li a {
     color: #999;
 }
+
+/* Custom CSS - Brand Popup - Maani*/
+
+.frm_ele {
+    padding: 10px 0px;
+    overflow: initial;
+    width: 100%;
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    clear: both;
+}
+.adv_gdr {
+    display: block;
+    float: left;
+    margin: 2px 8px 6px 8px;
+}
+.adv_radio {
+    margin: 4px 5px 1px 5px;
+    display: block;
+}
+
+.ui-widget-header .ui-icon {
+    background-image: url("../images/glyphicons-halflings.png") !important;
+}
+.ui-icon-circle-triangle-e {
+    background-position: -239px -143px !important;
+}
+.ui-icon-circle-triangle-w {
+    background-position: -263px -143px !important;
+}
+
+
+
+#model_product_status {
+    left: 55%;
+}
+
+.modal-header > h4 {
+    font-size: 17px;
+}
+.modal-header > h3 {
+    font-size: 17px;
+}
+#disableModal{
+    position: relative !important;
+
+}
+.btn_wrapper {
+    margin-top: 0px;
+}
+#enablebrand {
+    float: left;
+    margin-right: 5px;
+    padding-bottom: 5px;
+}
+#disablebrand {
+    float: left;
+    margin-right: 5px;
+    padding-bottom: 5px;
+}
+
+.modal {
+    position: fixed;
+}
+i.icon-trans {
+    background-position: -164px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-shpping {
+    background-position: -119px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.icon-desc {
+    background-position: -262px -25px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-no-desc {
+	background-position: -241px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-have-desc {
+	border:none;
+}
+i.icon-desc-have-desc-yellow {
+	background-position: -288px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-desc-have-desc-green {
+	background-position: -261px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.price-edit-no-price {
+	background-position: -312px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.price-edit-have-price {
+	border:none;
+}
+
+i.price-edit-green {
+	background-position: -334px -167px;
+    width: 19px;
+    height: 16px;
+}
+i.price-edit-yellow {
+	background-position: -358px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.cat-no-value {
+	background-position: -408px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.cat-have-value {
+	background-position: -382px -167px;
+    width: 19px;
+    height: 16px;
+}
+
+i.weight-edit-no-weight {
+    background-position: 0px -188px;
+    width: 19px;
+    height: 16px;
+}
+
+i.weight-edit-have-weight {
+    border:none;
+}
+
+i.weight-edit-green {
+    background-position: -24px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.weight-edit-yellow {
+    background-position: -47px -188px;
+    width: 19px;
+    height: 16px;
+}
+
+i.icon-pstatus {
+    background-position: -262px -25px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-no-pstatus {
+    background-position: -69px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-have-pstatus {
+    border:none;
+}
+i.icon-pstatus-have-pstatus-yellow {
+    background-position: -100px -188px;
+    width: 19px;
+    height: 16px;
+}
+i.icon-pstatus-have-pstatus-green {
+    background-position: -85px -188px;
+    width: 19px;
+    height: 16px;
+}
+

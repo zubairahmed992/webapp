@@ -1,20 +1,15 @@
 {% extends 'LoveThatFitSupportBundle::base_pending.html.twig' %}
 
-
-
 {% block body %}
 <div id="page_wrap">
     <div id="loading_bar"><img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" /></div>
 </div>
 
 <div class="container_pending">
-
-
-
-    <div id="dimpop"></div>
+<div id="dimpop"></div>
     <div id="rej_popup">
         <div class="rej_cross_btn">x</div>
-        <span>Are you sure you want to reject this image?</span>
+<span>Are you sure you want to reject this image?</span>
         <form method="post" action="">
 
 
@@ -28,8 +23,55 @@
     </div>
 
 
+    <div class="row">
+        
+        <style>
+             .navigation1{position: fixed !important; color:#fff; top: 60px; left: 25%; z-index: 2000 !important;}
+             .navigation1 a,
+             .navigation1 a:visited {
+                 display: inline-block !important;
+                 padding:5px 8px;
+                 cursor: pointer;
+                 color:#fff;
+                 background: #000;
+                 text-decoration: none;
 
-<div class="row">
+             }
+             .navigation1 a:hover {
+                 color:#000;
+                 background: #fff;
+
+             }
+            .txt_center{ margin-bottom: 100px;}
+           
+    </style>
+    <div class="navigation1">
+    <a id="showHide">Index Show/Hide</a>
+    <a onClick="move_left();">Left</a>
+    <a onClick="move_right();">Right</a>
+    <a onClick="move_up();">Up</a>
+    <a onClick="move_down();">Down</a>
+    <a onClick="rotate_left();">Rotate Left</a>
+    <a onClick="rotate_right();">Rotate Right</a>
+    <a onClick="zoom_in();">Zoom In</a>
+    <a onClick="zoom_out();">Zoom Out</a>
+    <a id="end"  onClick="save();">Save</a>
+
+            <a href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
+
+        <span id="activate_btn">
+            <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+           <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+            {% if (archives is defined)%}
+                <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+            {% else %}
+                <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
+            {% endif %}
+        </span>
+</div>
+        
+        
+        
 {% if (user_image_spec)%}
         <div class="span3 firstnav bs-docs-sidebar" style="background: #f1f1f2; box-shadow: -3px 1px 15px #000;">
             <div style="padding-top:20px;">
@@ -57,9 +99,11 @@
     <!--<div><span>Device Type:</span>{{user_image_spec.deviceType}}</div>
     <div><span>Device Model:</span>{{device_model}}</div>
     <div><span>Mode:</span>{{edit_type}}</div>-->
+   
     {% if (archives is defined)%}
         <hr class="black">
    <h5>Archives:</h5>
+  
     {% for a in archives %}
             <div><span>
                     <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
@@ -72,9 +116,8 @@
 
                 </span></div>
     {% endfor %}
-     <div>
-        <a href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
-    </div>
+
+
     {%else%}
     <div>
         <a STYLE="background: #1a1a1a;
@@ -83,7 +126,7 @@
     color: #ffffff;
     margin-top:50px;
     text-transform: uppercase;
-    display: inline-block;" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
+    display: none" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
     <!--<div><span>foo:</span>{{archive.getWebPath('original')}}</div>-->
@@ -104,10 +147,10 @@
 </div>
 
 
-    <input id="admin_update_status" type="hidden" value="{{ path('support_update_status', {'user_id': entity.id}) }}" />
-    <input id="dv_model" type="hidden" value="{{ device_model }}" />
-    <input id="entity_email" type="hidden" value="{{entity.email}}" />
+<input id="dv_model" type="hidden" value="{{ device_model }}" />
 <input id="support_user_name" type="hidden" value="{{ app.user.username }}" />
+        <input id="entity_email" type="hidden" value="{{entity.email}}" />
+  <input id="admin_update_status" type="hidden" value="{{ path('support_update_status', {'user_id': entity.id}) }}" />
 <input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
 <input id="dv_bottom_bar" type="hidden" value="{{ bottom_bar }}" />
@@ -125,11 +168,25 @@
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
 <input id="mask_x" type="hidden" value="{{marker.maskX}}" />
 <input id="mask_y" type="hidden" value="{{marker.maskY}}" />
+<input id="mask_p_x" type="hidden" value="{{pivot_position.mask_p_x}}" />
+<input id="mask_p_y" type="hidden" value="{{pivot_position.mask_p_y}}" />
 <input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
 <input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
 <input id="marker_update_url" type="hidden" value="{{ path('support_archive_save_marker')}}" />{#path('user_maker_save')#}
+
+
+<!-- Mask Creation with body parts -->
+
+<input id="dm_body_parts_details_json" type="hidden" value="{{ bra_size_body_shape }}" />
+<input id="user_bust_px" type="hidden" value="392" />
+<input id="user_waist_px" type="hidden" value="319" />
+<input id="user_hip_px" type="hidden" value="424" />
+
+<!-- /Mask Creation with body parts -->
+
+
 
 <input id="btn_send_params" type="hidden" value="send" />
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
@@ -138,40 +195,21 @@
 <input id="shoulder_height" type="hidden" value="" />
 <input id="hip_height" type="hidden" value="" />
 <input id="image_actions" type="hidden" value="{{marker.imageActions}}" />
-
-
-
-
-
 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
-
-
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>
-
-
-
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
-
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('support_archive_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
-
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
-
-
-
                 </form>
-
-
-
-<div class="span8 maindiv">
-
+<div class="span8 maindiv" style="position:relative; top:80px;">
 <div class="span8">
 
 {% if (device_type == "iphone5")%}
-<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas>
-    <div class="rej_img">
+<div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas>
+ <div class="rej_img">
         <a href="#">Reject Image</a>
     </div>
     <div class="approve_img">
@@ -181,92 +219,28 @@
 </div>
 {% endif %}
 {% if (device_type == "iphone6")%}
-<div class="txt_center"><canvas id="canv_mask" width="375" height="667" style="width: 375px; height: 667px; position: relative;"></canvas>
-   <div class="rej_img">
-    <a href="#">Reject Image</a>
-</div>
-    <div class="approve_img">
-        <a href="#">Approve Image</a>
+     <div style="position:relative; text-align:center; min-height:42px;float:right;">
+        <!--clock !-->
+        <ul class="imagemenu">
+            <li><div class="rej_img"><a href="#">Reject Image</a></div></li>
+            <li><div class="approve_img"><a href="#">Approve Image</a></div></li>
+        </ul> 
+        
     </div>
-    <i class="fa fa-clock-o clk_img" aria-hidden="true"></i>
+        <div style="text-align: right;padding-right: 25%;"><i class="fa fa-clock-o clk_img" aria-hidden="true"></i></div>
+<div class="txt_center canv_hldr_2">
+    <canvas id="canv_mask_makeover" width="960" height="1280" style="margin-top: 8px; width:960px; height: 1280px; position: relative;"></canvas>
+   
 </div>
 {% endif %}
-
-
-
-
 </div>
-
-
-
-
 </div>
-
-
     {%if (edit_type=='edit' or ( mode is defined and mode) )%}
-    <div class="row">
+        <div class="row">
        <!-- <h5>Measurement Comparision</h5>-->
         <div class="span3 newh">
-
-
-
-            <div class="nav_btns" style="background:none!important; padding:0px!important;">
-<!--
-<table cellpadding="0" cellspacing="0" border="1" width="100%">
-    <tr>
-        <td></td>
-        <td>User Info</td>
-        <td>Mask Info</td>
-    </tr>
-
-    <tr>
-        <td>Shoulder</td>
-        <td>{{ entity.measurement.shoulderAcrossBack }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Bust</td>
-        <td>{{ entity.measurement.bust }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Waist</td>
-        <td>{{ entity.measurement.waist }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Hip</td>
-        <td>{{ entity.measurement.hip }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Inseem</td>
-        <td>{{ entity.measurement.inseam }}</td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td>Thigh</td>
-        <td>{{ entity.measurement.thigh }}</td>
-        <td></td>
-    </tr>
-</table>-->
-
-                <div>
-                    <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-                    <input type="hidden" value="" data-url="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
-                    {% if (archives is defined)%}
-                        <input type="hidden" value="" data-url="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
-                    {% else %}
-                        <input type="hidden" value="" data-url="{{ path('support_pending_users') }}" id="redirect_url">
-                    {% endif %}
-                </div>
-
-            </div>
+            <div class="nav_btns" style="background:none!important; padding:0px!important;"></div>
+       
         </div>
         </div>
     {%endif%}
@@ -274,14 +248,14 @@
     </div>
 
 
-
-    <div>
+<div>
         <input type="hidden" id="oldtime" value="" data-value=""  />
         <!--<button id="start">Start</button>-->
         <input type="hidden" id="newtime" value="" data-value=""  />
         <input type="hidden" class="diff" value="" data-value=""  />
         <!--<button id="end">End</button>-->
     </div>
+        
 
 
 <input class="hide_me" id="re_load" style="position: absolute; bottom:10px; padding: 10px; left:10px; z-index: 13100; text-align: center; font-size: 16px;" type="button" value="Reload Page" onClick="window.location.reload();">
@@ -306,37 +280,7 @@
 
 
 <script type="text/paperscript" canvas="canvas-1">
-var raster = new Raster('fff.jpg');
-	raster.position = view.center;
-	raster.visible = true;
 
-/////=========================Extras==================================================================================
-var myPath = new Path();
-	myPath.strokeColor = 'white';
-	myPath.add(new Point(40, 90));
-	myPath.add(new Point(90, 40));
-	myPath.add(new Point(140, 90));
-
-var myCircle = new Path.Circle(new Point(100, 70), 50);
-	myCircle.strokeColor = 'black';
-	myCircle.selected = true;
-    myCircle.removeSegment(0);
-
-var path = new CompoundPath({
-    children: [
-        new Path.Circle({
-            center: new Point(50, 50),
-            radius: 30
-        }),
-        new Path.Circle({
-            center: new Point(50, 50),
-            radius: 10
-        })
-    ],
-    fillColor: 'black',
-    selected: true
-});
-/////=========================Extras===================================================================================
 </script>
 
         <link href="{{ asset('bundles/lovethatfit/site/css/device_view_styles.css') }}" rel="stylesheet" type="text/css" />
@@ -345,44 +289,75 @@ var path = new CompoundPath({
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/paper.js') }}"></script>
 
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/admin/js/admin_mask_marker.js?grrhy6edd662ssdwsw5erssg') }}" canvas="canv_mask"></script>
-
-    <script>
-        function me_triggered(){
-            //window.location.href = window.location.href + "#camera";
-            alert(window.location.href);
-        }
-
-
-        //alert($docu);
-        var $height = $(window).height();
-
-        $(".newh").css({"position":"absolute","right":"10px","top":"530px"});
-        $(".container_pending .firstnav").css({"height":$height+"px"});
-        var $heightt = $(window).height();
-        var $heightt = $heightt;
-        $(".maindiv").css({"height":$heightt+"px"});
-
-        $('.approve_img').click(function(){
-            $('.clk_img').show();
-            $('.rej_img').hide();
-            $('.approve_img').hide();
-        });
-
-        $('.rej_cross_btn').click(function(){
-            $('#dimpop').hide();
-            $('#rej_popup').hide();
-        });
-
-        $('.rej_img').click(function(){
-            $('#dimpop').show();
-            $('#rej_popup').show();
-
-        });
-
-    </script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/mask_makeover/mask_makeover_support.js?time='~ date().timestamp) }}"></script>
 
 <script>
+    function me_triggered(){
+        //window.location.href = window.location.href + "#camera";
+        alert(window.location.href);
+    }
+
+
+   //alert($docu);
+   var $height = $(window).height();
+
+    $(".newh").css({"position":"absolute","right":"10px","top":"530px"});
+   $(".container_pending .firstnav").css({"height":$height+"px"});
+   var $heightt = $(window).height();
+   var $heightt = $heightt;
+   $(".maindiv").css({"height":$heightt+"px"});
+
+    $('.approve_img').click(function(){
+      $('.clk_img').show();
+      $('.rej_img').hide();
+        $('.approve_img').hide();
+    });
+
+    $('.rej_cross_btn').click(function(){
+        $('#dimpop').hide();
+        $('#rej_popup').hide();
+    });
+
+    $('.rej_img').click(function(){
+        $('#dimpop').show();
+        $('#rej_popup').show();
+
+    });
+
+</script>
+
+<script>
+
+$(document).ready(function(){
+    $("#showHide").click(function() { 
+        return (this.tog = !this.tog) ? show_index_numbers() :  remove_index_numbers();
+    });
+   
+    $( "#btn_confirm" ).click(function() {
+   var strconfirm = confirm("Are you sure mask is saved?");
+   if (strconfirm == true)
+            {
+                put_archive_to_live();
+            }
+ //alert('hi');
+
+});
+
+
+//----------------------
+function put_archive_to_live() {
+    var archive_to_live_url = $("#archive_to_live_url").val();
+    var redirect_url = $("#redirect_url").val();
+        $.ajax({
+             url: archive_to_live_url
+             ,success: function(response) {
+                window.location=redirect_url;
+             }
+          })
+
+      return false;
+    }
+});
 function endtimer(){
         console.log("Chal gaya!");
         $("#newtime").val(timer());
@@ -391,28 +366,35 @@ function endtimer(){
         var $archiveId = $("#hdn_archive_id").val();
         var $suppEmail = $("#entity_email").val();
         var $suppName = $("#support_user_name").val();
+        var absoluteurl = window.location.origin;
 
         $.ajax({
-            url: '../../../ws/support_task_log/add',
+            url: absoluteurl+'/ws/support_task_log/add',
             type: 'POST',
             data: {member_email:$suppEmail ,support_user_name:$suppName, duration:$time, log_type:"calibration", archive:$archiveId},
             success: function (response) {
-                alert("All Done! - Reloading...");
+               // alert("All Done! - Reloading...");
 
                                     var curr_url = window.location + '';
+                                    //questionText = questionText.replace(/[0-9]/g, '');
 
-                                    curr_url_array = curr_url.split('/');
-                                    if(curr_url_array[curr_url_array.length - 1] == 'refresh'){
-                                            curr_url = curr_url.split('/refresh')[0];
-                                            window.location.assign(curr_url)
+                                    curr_url_array = curr_url.split('/');                                    
+                                    if(curr_url_array[curr_url_array.length - 1] == 'refresh#' || curr_url_array[curr_url_array.length - 1] == 'refresh'){                                        
+                                            curr_url = curr_url.split('/refresh#')[0];
+                                            var reload_url = curr_url.slice(0, curr_url.lastIndexOf('/'));
+                                            window.location.assign(reload_url);
                                     }else{
                                         window.location.reload();
                             }
             },
             error: function () {
-                alert("Please press end button");
+               // alert("Please press save button");
             }
         });
+        
+        $('.rej_img').show();
+        $('.approve_img').show();
+        $('.clk_img').hide();
 
     }
     function timer(){
@@ -426,32 +408,24 @@ function endtimer(){
         $(".diff").html(result);
         return result;
     }
-$(document).ready(function(){
-
-
     
-
+    
+    $(document).ready(function(){
     $(".clk_img").click(function(){
         $("#oldtime").val(timer());
         $(this).css({'color':'red'});
         //$(this).hide();
     });
+  
 
-    
-    $("#end").click(function(){
-        endtimer();
-    });
-
-
-
-
-
-    $("#comment_btn").click(function(){
+ //comment funciton copy from backup file   
+      $("#comment_btn").click(function(){
         var $mem_email = $("#entity_email").val();
         var $member_comments = $("#rej_comments").val();
             var $revert_status = $('#admin_update_status').val();
         $.ajax({
-            url: '../../../ws/image_approval',
+            //url: '../../../ws/image_approval',
+            url:"{{ path('ws_image_approval') }}",
             type: 'POST',
             //$mem_email
             data: {member_email:$mem_email ,comment:$member_comments, caliboration_status:'reject'},
@@ -467,29 +441,7 @@ $(document).ready(function(){
             }
         });
     });
-$( "#btn_confirm" ).click(function() {
-   var strconfirm = confirm("Are you sure mask is saved?");
-   if (strconfirm == true)
-            {
-                put_archive_to_live();
-            }
- //alert('hi');
 
-});
-
-
-function put_archive_to_live() {
-    var archive_to_live_url = $("#archive_to_live_url").attr("data-url");
-    var redirect_url = $("#redirect_url").attr("data-url");
-        $.ajax({
-             url: archive_to_live_url
-             ,success: function(response) {
-                window.location=redirect_url;
-             }
-          })
-
-      return false;
-    }
-});
+});	
     </script>
 {% endblock %}

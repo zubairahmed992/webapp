@@ -30,7 +30,7 @@ class DuplicateUserController extends Controller {
     public function updateUserAction(Request $request) {
 	  $data = $request->request->all();
 	  $user = $this->get('user.helper.user')->find($data["user_id"]);
-	  $response = $this->get('user.helper.user')->duplicateUser($user,$data);
+	  $response = $this->get('user.helper.user')->duplicateUser($user,$data , 1);
 	  if($response == 'Email already exist'){
 		$this->get('session')->setFlash('warning', 'User already exists with this email address');
 		return $this->redirect($this->generateUrl('support_duplicate_user_index', array("id" => $data["user_id"])));

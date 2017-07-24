@@ -113,15 +113,16 @@ class MappingController extends Controller
         //----- Get File data 
         $str=array();
         $i=0;
-        if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
-            while(($row = fgetcsv($handle)) !== FALSE) {
-            for ($j=0;$j<count($row);$j++){
-                $str[$i][$j] = $row[$j];                
+        if( file_exists($pm->getAbsolutePath()) ){   
+            if (($handle = fopen($pm->getAbsolutePath(), "r")) !== FALSE) {
+                while(($row = fgetcsv($handle)) !== FALSE) {
+                for ($j=0;$j<count($row);$j++){
+                    $str[$i][$j] = $row[$j];                
+                    }
+                $i++;
                 }
-            $i++;
-            }
-        }       
-         
+            }       
+        }
         $parsed_data   = json_decode($pm->getMappingJson(),true);        
         $brands = $this->get('admin.helper.brand')->getBrnadArray();
         $size_specs = $this->get('admin.helper.size')->getDefaultArray();
@@ -134,6 +135,7 @@ class MappingController extends Controller
         $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);
         $body_types = ($parsed_data['gender'] == 'f'? $size_specs['fit_types']['woman']:$size_specs['fit_types']['man']);
         $size_title = ($parsed_data['gender'] == 'f'? $size_specs['size_title_type']['woman']:$size_specs['size_title_type']['man']);
+         (array_key_exists('formula', $parsed_data))?true :$parsed_data['formula']=array();
         return $this->render('LoveThatFitProductIntakeBundle:Mapping:edit.html.twig', array(
                     'fit_points' => array_keys($fit_points),
                     'brands' => $brands,

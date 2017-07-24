@@ -101,7 +101,7 @@ security:
                     patrick: { password: 1d1fb3ae4c849241d1d5a8a0672004c334da0e85, roles: 'ROLE_ADMIN' }
                     christian: { password: 314f3373e90ec752995986e562dab5647ff6a74a, roles: 'ROLE_ADMIN' }
                     fahad: { password: c1b1326a47c5e8fc1c4a41f3385adca70b1bc3b8, roles: 'ROLE_ADMIN' }
-                    ibrahim: { password: 16407c440f14ab55ec2368a4aaf6c00de6bb66da, roles: 'ROLE_ADMIN' }
+                    ibrahim: { password: a2f1d19040dd088303741c2520183cbaee6a6c27, roles: 'ROLE_ADMIN' }
                     kamran: { password: b4981d6f19b062e73dc0db10074ccbccd0e67b4c, roles: 'ROLE_ADMIN' }
                     shahbaz: { password: 3384253da06f7d13c86240778efbbeb96d62416f, roles: 'ROLE_ADMIN' }
                     shahjahan: { password: b5d6f5d11108a7b569b1ffe4d8c45ecffcefd777, roles: 'ROLE_ADMIN' }
@@ -117,6 +117,9 @@ security:
                     waqas: { password: a6b3ea59399a4275ce31fa37f125b6cfece3b9b6, roles: 'ROLE_ADMIN' }
                     kathleen: { password: 722600f5b186e08f3934ce1e0d59644163d3bf69, roles: 'ROLE_ADMIN' }
                     monika: { password: 75ee7b8e2f588a233c0819ba2c3b3fcc1191cdd1, roles: 'ROLE_ADMIN' }
+                    nina: { password: a277279c85ff66c6758eb0286a53e3cef91e1226, roles: 'ROLE_ADMIN' }
+                    jessika: { password: 2be5e289f79698e25d784bf82398086572ddd40d, roles: 'ROLE_ADMIN' }
+                    maggie: { password: 5158d4cfafa9e6c3a24fd3435d794cdba0977a84, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         

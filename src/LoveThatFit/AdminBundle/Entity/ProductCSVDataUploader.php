@@ -355,9 +355,49 @@ class ProductCSVDataUploader {
         $product->setLayering($data['layring']);
         $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode($data['fabric_content']));
-        $product->setDisabled(false);        
+        //$product->setDisabled(false);        
         $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
+        
+        #---------
+        return $product;
+    }
+
+    public function fillProductAdd($data, $product=null){
+        #$retailer=$this->get('admin.helper.retailer')->findOneByName($this->product['retailer_name']);        
+        #$clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($this->product['clothing_type']));
+        #$brand=$this->get('admin.helper.brand')->findOneByName($this->product['retailer_name']);
+        #$data=$this->product;
+        
+        if(!$product){
+            $product=new Product();    
+        }
+        #$product->setBrand($brand);
+        #$product->setClothingType($clothingType);
+        #$product->setRetailer($retailer);
+        $product->setName($data['garment_name']);
+        $product->setStretchType($data['stretch_type']);
+        $product->setHorizontalStretch($data['horizontal_stretch']);
+        $product->setVerticalStretch($data['vertical_stretch']);        
+        $product->setCreatedAt(new \DateTime('now'));
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setGender($data['gender']);
+        $product->setStylingType($data['styling_type']);
+        $product->setControlNumber($data['style']);
+        $product->setNeckline($data['neck_line']);
+        $product->setSleeveStyling($data['sleeve_styling']);
+        $product->setRise($data['rise']);
+        $product->setHemLength($data['hem_length']);
+        $product->setFabricWeight($data['fabric_weight']);
+        $product->setStructuralDetail($data['structural_detail']);
+        $product->setFitType($data['fit_type']);
+        $product->setLayering($data['layring']);
+        $product->setFitPriority(json_encode($data['fit_priority']));
+        $product->setFabricContent(json_encode($data['fabric_content']));
+        $product->setDisabled(true);        
+        $product->setDeleted(false);
+        $product->setSizeTitleType($data['size_title_type']);
+        $product->setStatus("Pending");
         
         #---------
         return $product;
@@ -500,7 +540,54 @@ class ProductCSVDataUploader {
         };
     }
     #-----------------------------------------------
-     
+    #-------------------------------------------------
+    #-------------------------------------------------
+
+ public function readFitModelSize() {
+        $this->row = 0;
+        $this->previous_row = '';
+        ini_set('auto_detect_line_endings',TRUE);
+        $fms=null;
+        $fmsa=array();
+        if (($handle = fopen($this->path, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle)) !== FALSE) {
+                if ($this->row == 0) {
+                    $fms = $this->get_fit_model_size_index($data);                    
+                    $fmsa['size'] = $fms['size'];
+                    $fmsa['brand'] = $data[10];
+                } elseif ($this->row == 1) {
+                    $fmsa['gender'] = $data[1];
+                } elseif ($this->row == 6) {
+                    $fmsa['inseam'] = $data[$fms['index'] + 7];
+                } elseif ($this->row >= 3 && $this->row <= 20 ) {                    
+                    $fp_title = strtolower(str_replace(" ","_",$data[$fms['index']]));
+                    $fmsa[$fp_title] = $data[$fms['index'] + 7];
+                } elseif ($this->row >= 21) {
+                    break;
+                }
+                $this->previous_row = $data;
+                $this->row++;
+            }
+            ini_set('auto_detect_line_endings',FALSE);
+            fclose($handle);            
+            return $fmsa;
+        }
+        return;
+    }
+#----------------------------------------------------
+    private function get_fit_model_size_index($data) {
+        $i = 27;
+        while (isset($data[$i]) > 0) {
+            $s = explode(" ", $data[$i]);
+            if(array_key_exists(1,$s)) {                                
+                if(strpos($data[$i+1], 'Fit Model')){                    
+                    return array('index' => $i, 'size' => $s[1]);
+                }
+            }
+            $i = $i + 13;
+        }
+        return null;
+    }
 }
 
 ?>

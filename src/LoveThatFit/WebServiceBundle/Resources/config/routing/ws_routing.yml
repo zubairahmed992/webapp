@@ -252,6 +252,10 @@ nws_get_all_fitting_room:
     pattern:  /nws/get_all_fitting_room
     defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:getAllFittingRoom}
 
+nws_add_update_fitting_room_items:
+    pattern:  /nws/add_update_fitting_room_items
+    defaults: { _controller: LoveThatFitWebServiceBundle:FittingRoom:addUpdateToFittingRoomItems}
+
 ws_braintree_payment_and_create_order:
    pattern: /ws/braintree_payment_and_create_order
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreePaymentWithAddItemToCart}
@@ -281,6 +285,10 @@ nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
 
+nws_delete_user_address:
+  pattern: /nws/delete_user_address
+  defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:deleteUserShippingOrBillingAddress}
+
 nws_save_user_billing_address:
   pattern: /nws/save_user_billing_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserBillingAddress}
@@ -309,3 +317,23 @@ ws_shop_the_look:
     pattern:  /ws/shop_the_look
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLook }
 
+
+nws_shop_the_look:
+    pattern:  /nws/shop_the_look
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLookV3 }
+
+ws_brand_retailer_big:
+    pattern:  /ws/brand_retailer_big
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailerBig }
+
+nws_selfieshare_create:
+    pattern:  /nws/selfieshare/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateNew}
+
+ws_marketing_tiles:
+    pattern:  /ws/marketing_tiles
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:marketingTiles}
+
+new_register_device_token:
+    pattern: /nws/register_device_token
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:regsiterUserDeviceToken}

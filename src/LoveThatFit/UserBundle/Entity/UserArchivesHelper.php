@@ -454,7 +454,8 @@ class UserArchivesHelper {
                 'createdAt'         => ($fData["created_at"] == "") ? "00:00:00" : date_diff(
                     new \DateTime(), $fData["created_at"]
                 )->format('%a days, %H:%i:%s'),
-                'support_user_name' => $fData["support_user_name"]
+                'support_user_name' => $fData["support_user_name"],
+                'version'           => $fData["version"]
             ];
         }
         return $output;
@@ -464,5 +465,166 @@ class UserArchivesHelper {
     {
         return count($this->repo->countAllRecord());
     }
+
+    ##### support users method #################
+    public function saveArchivesSupport($user_archives, $data)
+    {
+        if (array_key_exists('measurement', $data)) {
+            if (strlen($user_archives->getMeasurementJson()) > 0) {
+                $arc = json_decode($data['measurement']);
+                $meas = json_decode($user_archives->getMeasurementJson());
+                if (is_array($meas)&& is_array($arc)){
+                    $user_archives->setMeasurementJson(json_encode(array_merge_recursive($meas, $arc)));
+                }                
+            } else {
+                $user_archives->setMeasurementJson($data['measurement']);
+            }
+        } else {
+            $user_archives->setMeasurementJson($this->extractMeasurements($data, $user_archives->getMeasurementJson()));
+        }
+        if (array_key_exists('image_actions', $data)) {
+            if (strlen($user_archives->getImageActions()) > 0) {
+                $param = json_decode($data['image_actions'],true);
+                $arch = json_decode($user_archives->getImageActions(),true);
+                if (is_array($param)&& is_array($arch)){
+                    $user_archives->setImageActions(json_encode(array_merge($arch, $param)));
+                }
+            } else {
+                $user_archives->setImageActions($data['image_actions']);
+            }
+        }
+        if (array_key_exists('marker_params', $data)) {
+            $user_archives->setMarkerParams($data['marker_params']);
+        } else {
+            $user_archives->setMarkerParams($this->extractMarkerParams($data));
+        }
+        if (array_key_exists('svg_path', $data)) {
+            $user_archives->setSvgPaths($data['svg_path']);
+        }
+        if (array_key_exists('marker_json', $data)) {
+            $user_archives->setMarkerJson($data['marker_json']);
+            #--------------------------
+            $image_actions_archive_array =json_decode($user_archives->getImageActions(),true);
+            $predicted_measurement = $this->container->get('user.marker.helper')->getPredictedMeasurementSupport($data['marker_json'], $image_actions_archive_array['device_type']);
+            $measurement_archive_array  = json_decode($user_archives->getMeasurementJson(),true);            
+            $measurement_archive_array['mask']=$predicted_measurement;
+            $user_archives->setMeasurementJson(json_encode($measurement_archive_array));
+        }
+        if (array_key_exists('default_marker_svg', $data)) {
+            $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
+        }
+        if (array_key_exists('version', $data)) {
+            $user_archives->setVersion($data['version']);
+        }
+        return $this->save($user_archives);
+    }
+
+    public function makeArchiveToCurrentSupport($archive_id)
+    {
+        $archive = $this->repo->find($archive_id);
+        $user=$archive->getUser();
+        #measurement------------>
+        $measurement_archive = json_decode($archive->getMeasurementJson(), 1);     
+        $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);
+        
+        if(array_key_exists('mask', $measurement_archive)){
+            $measurement = $this->container->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive['mask'], $user);
+        }
+        
+        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
     
+        #mask marker------------>
+        $marker = $user->getUserMarker();
+        $this->container->get('user.marker.helper')->setArray($archive->getMarkerArray(),$marker);
+        $this->container->get('user.marker.helper')->save($marker);
+    
+        #image specs------------>
+        $image_actions_archive = json_decode($archive->getImageActions(), 1);
+        $this->container->get('user.helper.userimagespec')->updateWithParam($image_actions_archive,$user);                
+   
+        #user status------------>          
+        $user->setStatus(0);
+        array_key_exists('device_type', $image_actions_archive)? $user->setImageDeviceType($image_actions_archive['device_type']):'';
+        array_key_exists('device_model', $image_actions_archive)? $user->setImageDeviceModel($image_actions_archive['device_model']):'';
+        $this->container->get('user.helper.user')->saveUser($user);                
+        #archive statuses------------>        
+        $this->pendingToCurrent($user);
+        $archive->setStatus(1);
+        $this->save($archive);
+        #image copy------------>
+        $archive->copyImagesToUser();
+        return $archive;
+    }
+
+    public function getVersion($user_id)
+    {
+    return $this->repo->getVersion($user_id);
+    }
+    
+    public function searchSupport($data)
+    {
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : 0; 
+        //limit
+        $start   = $data['start']; 
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0; 
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = $data['search'];
+        $filters = [
+            'query' => @$search['value']
+        ];
+        $user_id = $data['user_id'];
+        $all     = $data['all'];
+
+        $finalData = $this->repo->searchSupport(
+            $filters,
+            $start,
+            $length,
+            $order,
+            $user_id,
+            $all
+        );
+        
+        $output = array( 
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->searchSupport(
+                    $filters,
+                    0,
+                    false,
+                    $order,
+                    $user_id,
+                    $all
+                )
+            ), 
+            'recordsTotal'    => count($this->repo->searchSupport(
+                    array(),
+                    0,
+                    false,
+                    $order,
+                    $user_id,
+                    $all
+                )
+            ),
+            'data'            => array()
+        );
+        
+        foreach ($finalData as $fData) {
+            $output['data'][] = [ 
+                'id'                => $fData["id"],
+                'email'             => $fData["email"],
+                'status'            => "Pending",
+                'createdAt'         => ($fData["created_at"] == "") ? "00:00:00" : date_diff(
+                    new \DateTime(), $fData["created_at"]
+                )->format('%a days, %H:%i:%s'),
+                'support_user_name' => $fData["support_user_name"],
+                'version'           => $fData["version"]
+            ];
+        }
+        return $output;
+    }
+
 }

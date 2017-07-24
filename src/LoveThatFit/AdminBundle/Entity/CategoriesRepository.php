@@ -425,4 +425,25 @@ param:limit, page_number,limit,sort
         }
         return true;
     }
+
+    public function findOneByGenderNameCategory($gender, $name, $cat_id) {
+
+        if($cat_id == null){
+            $record = $this->getEntityManager()
+                ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Categories c
+                                WHERE c.name = :name AND c.gender = :gender AND c.parent IS NULL ")
+                ->setParameters(array('name' =>$name, 'gender' => $gender));
+        }else{
+            $record = $this->getEntityManager()
+                ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Categories c
+                                WHERE c.name = :name AND c.gender = :gender AND c.parent = :cat_id")
+                ->setParameters(array('name' =>$name, 'gender' => $gender, 'cat_id' => $cat_id));
+        }
+
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

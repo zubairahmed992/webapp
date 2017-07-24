@@ -16,7 +16,6 @@ class UserMaskAdjustmentController extends Controller {
 	//----------------All Pending User Display List --------------------------------------------------------------------------
   public function listAction($page_number, $sort = 'id') {
 	$orders_with_pagination = $this->get('user.helper.userarchives')->getListWithPagination($page_number, $sort);
-	// print_r($orders_with_pagination);die;
 	return $this->render('LoveThatFitAdminBundle:PendingUser:index.html.twig', $orders_with_pagination);
   }
 
@@ -109,11 +108,20 @@ class UserMaskAdjustmentController extends Controller {
         $decoded['auth_token']=$user->getAuthToken();
         $json_data = $this->get('webservice.helper')->userDetail($decoded);
 		
-		##send update to podio that the user is activated
-        $data = $this->container->get('user.helper.podioapi')->updateUserPodio($archive->getUser()->getId());
+		try {
+            //update podio user member calibrated to yes
+            $this->updatePodioUserMemberCalibrated($archive->getUser()->getId());
+        } catch(\Exception $e) {
+            // log $e->getMessage()
+        }
 		
         $push_response = $this->get('pushnotification.helper')->sendPushNotification($user, $json_data);
         return new Response('archive to live'.$archive_id);
+    }
+
+    private function updatePodioUserMemberCalibrated($user_id){
+        ##send update to podio that the user is activated
+        $data = $this->container->get('user.helper.podioapi')->updateUserPodio($user_id);
     }
     #--------------------------------------------------------------------------
     

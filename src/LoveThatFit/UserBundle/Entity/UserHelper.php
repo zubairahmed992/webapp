@@ -821,6 +821,38 @@ class UserHelper
 
     }
 
+    public function copyDefaultUserDataSupport($user, $ra)
+    {
+        $conf_yml = new Parser();
+        $dud = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users_support.yml'));
+        $udt = strtolower($ra['device_type']);
+        $user->setImageDeviceType($udt);
+        $user->setImage('cropped.png');
+        if ($user->getMeasurement()) {
+            $measurement = $user->getMeasurement();
+        } else {
+            $measurement = $this->container->get('user.helper.measurement')->createNew($user);
+        }
+
+        $measurement->setByArray($dud[$udt][$user->getGender()]['measurements']);
+        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+        $this->container->get('user.helper.user')->saveUser($user);
+        $this->container->get('user.marker.helper')->fillMarker($user, $dud[$udt][$user->getGender()]['mask']);
+
+        #---------------------------
+        $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
+        array_key_exists('device_id', $ra) ? $userDevice->setDeviceName($ra['device_id']) : '';
+        $userDevice->setDeviceType($dud[$udt][$user->getGender()]['image']['device_type']);
+        $userDevice->setDeviceUserPerInchPixelHeight($dud[$udt][$user->getGender()]['image']['px_inch_ratio']);
+        $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
+        #---------------------------
+        $user->copyDefaultImageSupport($udt);
+        
+        copy($user->getAbsolutePath(), $user->getOriginalImageAbsolutePath());#making a copy of original
+        return $measurement;
+
+    }
+
 #------------------------------------------------------
     public function getUserDetailArrayByEmail($email)
     {
@@ -905,7 +937,7 @@ class UserHelper
         return true;
     }
 
-    public function duplicateUser($duplicate_user, $data)
+    public function duplicateUser(User $duplicate_user, $data, $version = 0)
     {
         /*
         $active_status = $this->container->get('user.helper.userarchives')->getActiveArchiveCount($duplicate_user);
@@ -971,6 +1003,8 @@ class UserHelper
             $user->setImageDeviceModel($data['ImageDeviceModel']);
             $user->setDeviceTokens($data['device_tokens']);
             $user->setOriginalUser($duplicate_user);
+            $user->setVersion( $version );
+
             $this->saveUser($user);
             $id = $user->getId();
             $this->duplicateUserMeasurement($user, $duplicate_user);
@@ -1130,9 +1164,6 @@ class UserHelper
 
         $finalData = $this->repo->search($filters, $start, $length, $order);
 
-        /*var_dump($finalData);
-        die;*/
-
         $output = array(
             "draw" => $draw,
             'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)),
@@ -1143,15 +1174,17 @@ class UserHelper
         foreach ($finalData as $fData) {
             $result = $this->getUpdatedUserArchiveTime( $fData["id"] );
             $output['data'][] = [
-                'id' => $fData["id"],
-                'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
-                'email' => $fData["email"],
-                'gender' => ($fData["gender"] == "f") ? "Female" : "Male",
-                'createdAt' => ($fData["createdAt"]->format('m-d-Y h:m:s')),
-                'updated_at' => $result['updated_at'],
-                'status' => $result['status'],
+                'id'               => $fData["id"],
+                'full_name'        => ($fData["firstName"] . ' ' . $fData["lastName"]),
+                'email'            => $fData["email"],
+                'gender'           => ($fData["gender"] == "f") ? "Female" : "Male",
+                'createdAt'        => ($fData["createdAt"]->format('m-d-Y h:m:s')),
+                'updated_at'       => $result['updated_at'],
+                'status'           => $result['status'],
                 'original_user_id' => $fData["original_user_id"],
-                'user_role' => ($logged_user_role != null) ? strtolower($logged_user_role) : ""
+                'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
+                'version_archive'  => $fData['version_archive'],
+                'version'          => $fData['version']
             ];
 
 
@@ -1226,5 +1259,68 @@ class UserHelper
         return $this->repo->findOneById($user_id);
     }
 
+    public function searchSupport($data, $logged_user_role = null)
+    {
+        $draw = isset ($data['draw']) ? intval($data['draw']) : 0;
+        //length
+        $length = $data['length'];
+        $length = $length && ($length != -1) ? $length : 0;
+        //limit
+        $start = $data['start'];
+        $start = $length ? ($start && ($start != -1) ? $start : 0) / $length : 0;
+        //order by
+        $order = $data['order'];
+        //search data
+        $search = $data['search'];
+        $gender = $data['gender'];
+
+        if ($data['age'] != "") {
+            $endDate = $this->getUserBirthDate($data['age']);
+            $new_timestamp = strtotime('-12 months', strtotime($endDate));
+            $startDate = date("Y-m-d", $new_timestamp);
+        }
+        $filters = [
+            'query' => @$search['value'],
+            'gender' => @$gender,
+            'startDate' => @$startDate,
+            'endDate' => @$endDate,
+
+        ];
+
+        $finalData = $this->repo->searchSupport($filters, $start, $length, $order);
+
+        $output = array(
+            "draw" => $draw,
+            'recordsFiltered' => count($this->repo->searchSupport($filters, 0, false, $order)),
+            'recordsTotal' => count($this->repo->searchSupport(array(), 0, false, $order)),
+            'data' => array()
+        );
+
+        foreach ($finalData as $fData) {
+            $result = $this->getUpdatedUserArchiveTime( $fData["id"] );
+            $output['data'][] = [
+                'id'               => $fData["id"],
+                'full_name'        => ($fData["firstName"] . ' ' . $fData["lastName"]),
+                'email'            => $fData["email"],
+                'gender'           => ($fData["gender"] == "f") ? "Female" : "Male",
+                'createdAt'        => ($fData["createdAt"]->format('m-d-Y h:m:s')),
+                'updated_at'       => $result['updated_at'],
+                'status'           => $result['status'],
+                'original_user_id' => $fData["original_user_id"],
+                'user_role'        => ($logged_user_role != null) ? strtolower($logged_user_role) : "",
+                'version_archive'  => $fData['version_archive'],
+                'version'          => $fData['version']
+            ];
+
+
+        }
+
+        return $output;
+    }
+
+    public function getVersion($user_id)
+    {
+        return $this->repo->getVersion($user_id);
+    }
 
 }

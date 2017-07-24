@@ -8,6 +8,7 @@
 
 namespace LoveThatFit\CartBundle\Utils;
 
+use LoveThatFit\CartBundle\Entity\UserAddresses;
 use Symfony\Component\Yaml\Parser;
 
 
@@ -45,7 +46,7 @@ class Stamps
         $this->deliverDays      = $parse[$envKey]["deliverydays"];
         $this->packageType      = $parse[$envKey]["packagetype"];
 
-        $this->soapClient = new \SoapClient($this->wsdl);
+        $this->soapClient = new \SoapClient($this->wsdl, array('trace' => 1));
     }
 
     private function authenticateUser()
@@ -74,34 +75,139 @@ class Stamps
                     "Password"          => $this->password
                 ),
                 'Address' => array(
-                    'FullName'  => $address['fullname'],
+                    'FullName'  => (isset($address['fullname'])) ? $address['fullname'] : '',
                     'FirstName' => $address['firstname'],
                     'LastName'  => $address['lastname'],
                     'Address1'  => $address['address1'],
-                    'Address2'  => $address['address2'],
+                    'Address2'  => (isset($address['address2'])) ? $address['address2'] : "",
                     'City'      => $address['city'],
                     'State'     => $address['state'],
                     'ZIPCode'   => $address['zipcode']
                 ));
-
-            $addressStatus = $this->soapClient->CleanseAddress( $callData );
-            if($addressStatus->AddressMatch){
-                return array(
-                    'verified' => true,
-                    'data' => $addressStatus->Address
-                );
-            }else{
+            try{
+                $addressStatus = $this->soapClient->CleanseAddress( $callData );
+                if($addressStatus->AddressMatch){
+                    return array(
+                        'verified' => true,
+                        'data' => $addressStatus->Address
+                    );
+                }else{
+                    return array(
+                        'verified'  => false,
+                        'msg'       => 'address not found'
+                    );
+                }
+            }catch (\SoapFault $exception)
+            {
                 return array(
                     'verified'  => false,
-                    'msg'       => 'address not found'
+                    'msg'       => $exception->getMessage()
                 );
             }
+
         }else{
             return $fieldsVerified;
         }
     }
 
-    public function getRates( $postData = array())
+    public function createPostages( UserAddresses $billingAddress, UserAddresses $shippingAddress, $rate_json)
+    {
+        $returnResponse = array();
+        $authenticator = $this->authenticateUser();
+
+        $shipping_data = json_decode($shippingAddress->getAddressData());
+
+        $callData = array(
+            "Credentials"       => array(
+                "IntegrationID"     => $this->integrarionId,
+                "Username"          => $this->userName,
+                "Password"          => $this->password
+            ),
+            'IntegratorTxID' => md5(uniqid($this->integrarionId.$shippingAddress->getId().rand(), true)),
+            'Rate' => array(
+                'FromZIPCode'   => $rate_json->FromZIPCode,
+                'ToZIPCode'     => $rate_json->ToZIPCode,
+                'Amount'   => $rate_json->amount,
+                'ServiceType'   => $rate_json->serviceType,
+                'DeliverDays'      => $rate_json->DeliverDays,
+                'WeightOz'   => $rate_json->WeightOz,
+                'WeightLb'      => 0,
+                'PackageType' => 'Package',
+                'ShipDate' => $rate_json->shipDate,
+                'DeliveryDate' => $rate_json->deliveryDate,
+                'RectangularShaped' => $rate_json->RectangularShaped
+            ),
+            'From' => array(
+                'FullName' => 'SelfieStyler, Inc',
+                'Address1' => '250 E Wisconsin AVE Suite 1800',
+                'Address2' => '',
+                'City' => 'Milwaukee',
+                'State' => 'WI',
+                'ZIPCode' => '53202',
+            ),'To' => array(
+                'FullName' => '',// $shippingAddress->getFirstName()." ". $shippingAddress->getLastName(),
+                'NamePrefix' =>'',
+                'FirstName' => (isset($shipping_data->FirstName) ? $shipping_data->FirstName : ""),
+                'MiddleName' => '',
+                'LastName' => (isset($shipping_data->LastName) ? $shipping_data->LastName :""),
+                'NameSuffix' => '',
+                'Title' => '',
+                'Department' => '',
+                'Company' => '',
+                'Address1' => (isset($shipping_data->Address1) ? $shipping_data->Address1 : ""),
+                'Address2' => (isset($shipping_data->Address2) ? $shipping_data->Address2: ""),
+                'Address3' => '',
+                'City' => (isset($shipping_data->City) ? $shipping_data->City : ""),
+                'State' => (isset($shipping_data->State) ? $shipping_data->State : ""),
+                'ZIPCode' => (isset($shipping_data->ZIPCode) ? $shipping_data->ZIPCode : ""),
+                'ZIPCodeAddOn' => (isset($shipping_data->ZIPCodeAddOn) ? $shipping_data->ZIPCodeAddOn : ""),
+                'DPB' => (isset($shipping_data->DPB) ? $shipping_data->DPB : ""),
+                'CheckDigit' => (isset($shipping_data->CheckDigit) ? $shipping_data->CheckDigit : ""),
+                'Province' => '',
+                'PostalCode' => '',
+                'Country' => '',
+                'Urbanization' => '',
+                'PhoneNumber' => $shippingAddress->getPhone(),
+                'Extension' => '',
+                'CleanseHash' => (isset($shipping_data->CleanseHash) ? $shipping_data->CleanseHash : "")
+            ),
+        );
+
+        try{
+            $response = $this->soapClient->CreateIndicium($callData);
+            return $response;
+        }catch (\SoapFault $e){
+            return "";
+        }
+    }
+
+    public function getShippingStatusByTrackingNumber( $stampTxId = null)
+    {
+        if(!is_null($stampTxId))
+        {
+            $callData = array(
+                "Credentials"       => array(
+                    "IntegrationID"     => $this->integrarionId,
+                    "Username"          => $this->userName,
+                    "Password"          => $this->password
+                ),
+                'StampsTxID' => $stampTxId
+            );
+            try{
+                $response = $this->soapClient->TrackShipment($callData);
+                $tracking_event = $response->TrackingEvents->TrackingEvent->Event;
+
+                return $tracking_event;
+
+            }catch (\SoapFault $e){
+                return "Pending";
+            }
+        }else{
+            return "pending";
+        }
+    }
+
+    public function getRates( $postData = array(), $weightInOz = 0)
     {
         $returnResponse = array();
         $fieldsVerified = $this->verifyFields( $postData, 'getRates');
@@ -116,9 +222,9 @@ class Stamps
                 'Rate' => array(
                     'FromZIPCode'   => $this->fromZipCode,
                     'ToZIPCode'     => $postData['tozipcode'],
-                    'ServiceType'   => $this->serviceType,
+                    /*'ServiceType'   => $this->serviceType,*/
                     'DeliverDays'   => $this->deliverDays,
-                    'WeightLb'      => $this->weightOz,
+                    'WeightOz'      => $weightInOz,
                     'PackageType'   => $this->packageType,
                     'ShipDate'      => date('Y-m-d'),
                     'RectangularShaped' => false
@@ -136,7 +242,7 @@ class Stamps
                 $temp['FromZIPCode'] = $rates->FromZIPCode;
                 $temp['ToZIPCode']  = $rates->ToZIPCode;
                 $temp['DeliverDays'] = $rates->DeliverDays;
-                $temp['WeightLb']   = $rates->WeightLb;
+                $temp['WeightOz']   = $rates->WeightOz;
                 $temp['InsuredValue'] = (isset($rates->InsuredValue) ? $rates->InsuredValue : 0);
                 $temp['RectangularShaped'] = $rates->RectangularShaped;
 
@@ -152,7 +258,7 @@ class Stamps
                     $temp['FromZIPCode'] = $rate->FromZIPCode;
                     $temp['ToZIPCode']  = $rate->ToZIPCode;
                     $temp['DeliverDays'] = $rate->DeliverDays;
-                    $temp['WeightLb']   = $rate->WeightLb;
+                    $temp['WeightOz']   = $rate->WeightOz;
                     $temp['InsuredValue'] = (isset($rate->InsuredValue) ? $rate->InsuredValue : 0);
                     $temp['RectangularShaped'] = $rate->RectangularShaped;
 
@@ -168,7 +274,6 @@ class Stamps
             return $fieldsVerified;
         }
     }
-
 
     private function verifyFields( $postArray = array(), $method = null){
         switch ($method){
@@ -222,6 +327,9 @@ class Stamps
                     'msg' => "",
                     'verified' => true
                 );
+                break;
+
+            case "createIndicium":
                 break;
         }
     }

@@ -32,7 +32,7 @@ class User implements UserInterface, \Serializable {
     private $duplicate_users;
 
     /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="ltf_users", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SaveLook", mappedBy="users", orphanRemoval=true)
      */
 
     protected $save_look;
@@ -217,6 +217,12 @@ class User implements UserInterface, \Serializable {
 	 * @ORM\OneToOne(targetEntity="UserAppAccessLog", mappedBy="user")
 	 * */
 	private $user_app_access_log;
+
+    /**
+     * @var integer $version
+     * @ORM\Column(name="version", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $version;
 
 
 //---------------------------------------  implement the UserInterface
@@ -1502,6 +1508,15 @@ class User implements UserInterface, \Serializable {
                 }
         copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
     }
+
+    public function copyDefaultImageSupport($device_type=null) {
+        //umer 1
+        $this->image='cropped.png';
+        if (!is_dir($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir(), 0700);
+        }
+        copy($this->getDummyUserImageRootPathSupport($device_type), $this->getAbsolutePath());        
+    }
     //----------------------------------------------------
     private function copyTempToOriginalImage() {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
@@ -1553,12 +1568,20 @@ class User implements UserInterface, \Serializable {
     public function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
+
 //----------------------------------------------------------
     public function getDummyUserImageRootPath($udt=null) {
         if($udt)
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_cropped.png';        
         else
             return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
+    }
+
+    public function getDummyUserImageRootPathSupport($udt=null) {
+        if($udt)
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_support_cropped.png';        
+        else
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_support_cropped.png';        
     }
 //----------------------------------------------------------
     public function getUploadDir() {
@@ -2028,7 +2051,31 @@ class User implements UserInterface, \Serializable {
 	}
 
 
-  /**
+    #----------------------------------------
+    /**
+     * Set version
+     *
+     * @param integer $version
+     * @return UserArchives
+     */
+    public function setVersion($version)
+    {
+      $this->version = $version;
+
+      return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return integer
+     */
+    public function getVersion()
+    {
+      return $this->version;
+    }
+
+    /**
      * Set timeSpent
      *
      * @param \string $timeSpent
@@ -2247,6 +2294,7 @@ class User implements UserInterface, \Serializable {
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
                 'auth_token' => $this->getAuthToken(),
+                'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format('Y-m-d') : null,
                 'birth_date' => $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
                 'weight' => $this->measurement ? $this->measurement->getWeight() : 0,
                 'height' => $this->measurement ? $this->measurement->getHeight() : 0,
@@ -2255,6 +2303,139 @@ class User implements UserInterface, \Serializable {
                 'top_placement' => $this->measurement ? $this->measurement->top_placement : 0,
                 'bottom_placement' => $this->measurement ? $this->measurement->bottom_placement : 0,
                 'device_conversion_ratio' => $device_conversion_ratio,
+                'hip' => $this->measurement ? $this->measurement->getHip() : 0,
+                'bust' => $this->measurement ? $this->measurement->getBust() : 0,
+                'chest' => $this->measurement ? $this->measurement->getChest() : 0,
+                'arm' => $this->measurement ? $this->measurement->getArm() : 0,
+                'inseam' => $this->measurement ? $this->measurement->getInseam() : 0,
+                'shoulder_height' => $this->measurement ? $this->measurement->getShoulderHeight() : 0,
+                'shoulder_length' => $this->measurement ? $this->measurement->getShoulderLength() : 0,
+                'outseam' => $this->measurement ? $this->measurement->getOutseam() : 0,
+                'sleeve' => $this->measurement ? $this->measurement->getSleeve() : 0,
+                'neck' => $this->measurement ? $this->measurement->getNeck() : 0,
+                'thigh' => $this->measurement ? $this->measurement->getThigh() : 0,
+                'center_front_waist' => $this->measurement ? $this->measurement->getCenterFrontWaist() : 0,
+                'shoulder_across_front' => $this->measurement ? $this->measurement->getShoulderAcrossFront() : 0,
+                'shoulder_across_back' => $this->measurement ? $this->measurement->getShoulderAcrossBack() : 0,
+                'bicep' => $this->measurement ? $this->measurement->getBicep() : 0,
+                'tricep' => $this->measurement ? $this->measurement->getTricep() : 0,
+                'wrist' => $this->measurement ? $this->measurement->getWrist() : 0,
+                'back_waist' => $this->measurement ? $this->measurement->getBackWaist() : 0,
+                'waist_hip' => $this->measurement ? $this->measurement->getWaistHip() : 0,
+                'knee' => $this->measurement ? $this->measurement->getKnee() : 0,
+                'calf' => $this->measurement ? $this->measurement->getCalf() : 0,
+                'ankle' => $this->measurement ? $this->measurement->getAnkle() : 0,
+                'image' => $this->image,
+                'avatar' => $this->avatar,
+                'path' => $base_path . $this->getDirWebPath(),
+                'body_type' => $this->measurement ? $this->measurement->getBodyTypes() : '',
+                'body_shape' => $this->measurement ? $this->measurement->getBodyShape() : '',
+                'bra_size' => $this->measurement ? $this->measurement->getBraSize() : '',
+                'bust_height' => $this->measurement ? $this->measurement->getBustHeight() : 0,
+                'waist_height' => $this->measurement ? $this->measurement->getWaistHeight() : 0,
+                'hip_height' => $this->measurement ? $this->measurement->getHipHeight() : 0,
+                'iphone_foot_height' => $this->measurement ? $this->measurement->getIphoneFootHeight() : 0,
+                'iphone_head_height' => $this->measurement ? $this->measurement->getIphoneHeadHeight() : 0,
+                'top_brand_id' => $this->measurement && $this->measurement->getTopBrand() ? $this->measurement->getTopBrand()->getId() : 0,
+                'top_brand' => $this->measurement && $this->measurement->getTopBrand() ? $this->measurement->getTopBrand()->getName() : '',
+                'top_fitting_size_chart_id' => $this->measurement && $this->measurement->getTopFittingSizeChart() ? $this->measurement->getTopFittingSizeChart()->getId() : 0,
+                'top_fitting_size' => $this->measurement && $this->measurement->getTopFittingSizeChart() ? $this->measurement->getTopFittingSizeChart()->getTitle() : '',
+                'bottom_brand_id' => $this->measurement && $this->measurement->getBottomBrand() ? $this->measurement->getBottomBrand()->getId() : 0,
+                'bottom_brand' => $this->measurement && $this->measurement->getBottomBrand() ? $this->measurement->getBottomBrand()->getName() : '',
+                'bottom_fitting_size_chart_id' => $this->measurement && $this->measurement->getBottomFittingSizeChart() ? $this->measurement->getBottomFittingSizeChart()->getId() : 0,
+                'bottom_fitting_size' => $this->measurement && $this->measurement->getBottomFittingSizeChart() ? $this->measurement->getBottomFittingSizeChart()->getTitle() : '',
+                'dress_brand_id' => $this->measurement && $this->measurement->getDressBrand() ? $this->measurement->getDressBrand()->getId() : 0,
+                'dress_brand' => $this->measurement && $this->measurement->getDressBrand() ? $this->measurement->getDressBrand()->getName() : '',
+                'dress_fitting_size_chart_id' => $this->measurement && $this->measurement->getDressFittingSizeChart() ? $this->measurement->getDressFittingSizeChart()->getId() : 0,
+                'dress_fitting_size' => $this->measurement && $this->measurement->getDressFittingSizeChart() ? $this->measurement->getDressFittingSizeChart()->getTitle() : '',
+                'image_device_type' => $this->image_device_type,
+                'device_type' => $device_type,
+                #'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
+                'height_per_inch' => is_array($device_config) && array_key_exists('pixel_per_inch', $device_config) ? $device_config['pixel_per_inch'] : 0,
+                'device_type' => $device_type,
+                'default_user' => $this->user_marker ? $this->user_marker->getDefaultUser() : false,
+                'status' => $this->status ? $this->status : 0,
+                'measurement_json' => $measurement_json,
+            );
+        } else {
+            return array(
+                $this->getId(),
+                $this->getEmail(),
+                $this->getFullName(),
+                $this->getZipcode(),
+                $this->getPhoneNumber(),
+                $this->getGender(),
+                $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
+                $this->measurement ? $this->measurement->getWeight() : 0,
+                $this->measurement ? $this->measurement->getHeight() : 0,
+                $this->measurement ? $this->measurement->getWaist() : 0,
+                $this->measurement ? $this->measurement->getBelt() : 0,
+                $this->measurement ? $this->measurement->top_placement : 0,
+                $this->measurement ? $this->measurement->bottom_placement : 0,
+                $this->measurement ? $this->measurement->getHip() : 0,
+                $this->measurement ? $this->measurement->getBust() : 0,
+                $this->measurement ? $this->measurement->getChest() : 0,
+                $this->measurement ? $this->measurement->getArm() : 0,
+                $this->measurement ? $this->measurement->getInseam() : 0,
+                $this->measurement ? $this->measurement->getShoulderHeight() : 0,
+                $this->measurement ? $this->measurement->getOutseam() : 0,
+                $this->measurement ? $this->measurement->getSleeve() : 0,
+                $this->measurement ? $this->measurement->getNeck() : 0,
+                $this->measurement ? $this->measurement->getThigh() : 0,
+                $this->measurement ? $this->measurement->getCenterFrontWaist() : 0,
+                $this->measurement ? $this->measurement->getShoulderAcrossFront() : 0,
+                $this->measurement ? $this->measurement->getShoulderAcrossBack() : 0,
+                $this->measurement ? $this->measurement->getBicep() : 0,
+                $this->measurement ? $this->measurement->getTricep() : 0,
+                $this->measurement ? $this->measurement->getWrist() : 0,
+                $this->measurement ? $this->measurement->getBackWaist() : 0,
+                $this->measurement ? $this->measurement->getWaistHip() : 0,
+                $this->measurement ? $this->measurement->getKnee() : 0,
+                $this->measurement ? $this->measurement->getCalf() : 0,
+                $this->measurement ? $this->measurement->getAnkle() : 0,
+            );
+        }
+    }
+
+    public function toDataArraySupport($key = true, $device_type = null, $base_path = null, $device_config = null) {
+        
+        if ($key) {
+            #$device_specs=$this->getDeviceSpecs($device_type);
+            $device_conversion_ratio = is_array($device_config) && array_key_exists('conversion_ratio', $device_config) ? $device_config['conversion_ratio'] : 0;
+            
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            $this->measurement->calculatePlacementPositions($device_conversion_ratio); #--> multi device
+            #---------------- top placement -------------------------------------
+            $top_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
+            $top_exclusion_px = $top_exclusion_ratio *  $device_config['actual_top_prod_empty_area']; 
+            $this->measurement->top_placement = $this->measurement->top_placement - $top_exclusion_px;
+            #---------------- bottom placement -------------------------------------
+            $bottom_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
+            $bottom_exclusion_px = $bottom_exclusion_ratio * $device_config['actual_bottom_prod_empty_area']; 
+            $this->measurement->bottom_placement = $this->measurement->bottom_placement - $bottom_exclusion_px;
+            
+            #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
+            return array(
+                'id' => $this->getId(),
+                'user_id' => $this->getId(),
+                'email' => $this->getEmail(),
+                'name' => $this->getFullName(),
+                'first_name' => $this->getFirstName(),
+                'last_name' => $this->getLastName(),
+                'zipcode' => $this->getZipcode(),
+                'phone_number' => $this->getPhoneNumber(),
+                'gender' => $this->getGender(),
+                'auth_token' => $this->getAuthToken(),
+                'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->format('Y-m-d') : null,
+                'birth_date' => $this->getBirthDate() ? $this->getBirthDate()->format('Y-m-d') : null,
+                'weight' => $this->measurement ? $this->measurement->getWeight() : 0,
+                'height' => $this->measurement ? $this->measurement->getHeight() : 0,
+                'waist' => $this->measurement ? $this->measurement->getWaist() : 0,
+                'belt' => $this->measurement ? $this->measurement->getBelt() : 0,
+                'top_placement' => $this->measurement ? $this->measurement->top_placement : 0, #-------------------------->
+                'bottom_placement' => $this->measurement ? $this->measurement->bottom_placement : 0, #-------------------------->
+                'device_conversion_ratio' => $device_conversion_ratio,#-------------------------->
                 'hip' => $this->measurement ? $this->measurement->getHip() : 0,
                 'bust' => $this->measurement ? $this->measurement->getBust() : 0,
                 'chest' => $this->measurement ? $this->measurement->getChest() : 0,

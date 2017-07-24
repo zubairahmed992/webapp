@@ -75,11 +75,15 @@ class WSMiscController extends Controller {
                     'stack'=>array('build_type'=>'stack','url'=>'stack.selfiestyler.com'),
                     'awsdev'=>array('build_type'=>'awsdev','url'=>'awsdev.selfiestyler.com'),
                     'devim'=>array('build_type'=>'devim','url'=>'dev.im.selfiestyler.com'),
+                    'lab'=>array('build_type'=>'lab','url'=>'lab.selfiestyler.com'),
                     'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
+                    'Ibrahim'=>array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
+                    'V3QA Server'=>array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
                     'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
-                    'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com')
+                    'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
+                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
                 ),
                 'count'=>3,
                 'message' => 'configuration for build deployment',
@@ -206,6 +210,9 @@ class WSMiscController extends Controller {
 
                 if(isset($product_information[$product_key]['product_id'])){
                     $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+
+                    $product = $this->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
+                    $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
                     $product_images = $this->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
                     if (!empty($product_images)) {
                         $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
@@ -223,6 +230,70 @@ class WSMiscController extends Controller {
             'success' => 'true',
         );
         return new Response(json_encode($conf));
+    }
+
+    public function shopTheLookV3Action(Request $request)
+    {
+        $decoded = $request->request->all();
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $shopLook = $this->get('admin.helper.shoplook')->findAll();
+        $path = "http://" . $_SERVER['HTTP_HOST'].'/uploads/ltf/shop_look/';
+
+        foreach($shopLook as $key => $value){
+            $shopLook[$key]['id'] = (int)$shopLook[$key]['id'];
+            $shopLook[$key]['sorting'] = (int)$shopLook[$key]['sorting'];
+            $shopLook[$key]['shop_model_image'] = $path.$shopLook[$key]['shop_model_image'];
+            $shoplook_id = $shopLook[$key]['id'];
+            $product_information = $this->get('admin.helper.shoplookproduct')->getShopLookProductsById($shoplook_id);
+
+            foreach($product_information as $product_key => $product_value){
+                $product_information[$product_key]['id'] = (int)$product_information[$product_key]['id'];
+                $product_information[$product_key]['shop_look_id'] = (int)$product_information[$product_key]['shop_look_id'];
+                $product_information[$product_key]['sorting'] = (int)$product_information[$product_key]['sorting'];
+
+                if(isset($product_information[$product_key]['product_id'])){
+                    $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+
+                    $product = $this->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
+                    $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
+                    $product_images = $this->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
+                    if (!empty($product_images)) {
+                        $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
+                    }
+                }
+            }
+            //$product_images = $this->get('webservice.helper')->productImageById($shop_look_products_information[$key]['product_id']);
+            $shopLook[$key]['products_id'] = $product_information;
+        }
+
+        $conf= array(
+            'data' => $shopLook,
+            'count'=> count($shopLook),
+            'message' => 'shop the look list',
+            'success' => true,
+        );
+        return new Response(json_encode($conf));
+    }
+
+    public function marketingTilesAction(Request $request)
+    {
+        $decoded_path = $this->process_request();
+        $decoded = $request->request->all();
+        
+        $results_marketingtiles=array();
+
+        $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
+        
+        if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
+            foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
+                $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];
+                $results_marketingtiles[$key_marketingtiles]['created_at'] = ($value_marketingtiles['created_at']) ? $value_marketingtiles['created_at']->format('Y-m-d h:i:s') : '';
+            }
+        }
+
+        $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);
+                            
+        return new Response($res);
     }
 }
 

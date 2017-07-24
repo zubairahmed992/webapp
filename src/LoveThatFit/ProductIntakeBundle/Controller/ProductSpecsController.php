@@ -6,7 +6,8 @@ use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ProductSpecsController extends Controller
 {
@@ -33,11 +34,11 @@ class ProductSpecsController extends Controller
     }
     
      #----------------------- /product_intake/product_specs/edit
-    public function editAction($id, $tab){                
-        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray();   
+    public function editAction($id, $tab){   
         $ps = $this->get('pi.product_specification')->find($id);  
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
         $parsed_data['horizontal_stretch']=  intval($parsed_data['horizontal_stretch']);
         $parsed_data['vertical_stretch']=intval($parsed_data['vertical_stretch']);
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
@@ -71,26 +72,56 @@ class ProductSpecsController extends Controller
                     'tab' => $tab,
                 ));
     }
-      
+
+#-----------------------------------> product_intake_product_specs_fetch_json:  /product_intake/product_specs/fetch_json/{id}
+    public function fetchJsonAction($id, $attrib = null) {
+        
+        if($attrib=='fit_model'){
+            $ps = $this->get('pi.product_specification')->getFitModelMeasurements($id);
+             return new response(json_encode($ps));            
+        }else{
+            $ps = $this->get('pi.product_specification')->find($id);
+            if ($ps) {                            
+                return new response($ps->getSpecsJson());
+            } else {
+                return new response('false');
+            }    
+            
+        }
+        
+        return new response(json_encode($ps));
+        
+        
+    }
+
     #----------------------- /product_intake/product_specs/show
-    public function showAction($id){                
+    public function showAction($id, $json = null) {
+
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $ps = $this->get('pi.product_specification')->find($id);         
-        $parsed_data = json_decode($ps->getSpecsJson(),true);
-         if(isset($parsed_data['fit_model_size'])){ 
-            $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
-            $fit_model_selected = $fit_model_selected_size->getSize(); 
-         } else {
-             $fit_model_selected =null;
-         }        
-         
+        $ps = $this->get('pi.product_specification')->find($id);
+        if ($json) {
+            if($ps){
+            return new response($ps->getSpecsJson());
+            }else{
+                return new response('false');
+            }
+        }
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        if (isset($parsed_data['fit_model_size'])) {
+            $fit_model_selected_size = $parsed_data['fit_model_size'] == null ? null : $this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size->getSize();
+        } else {
+            $fit_model_selected = null;
+        }
+
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:show.html.twig', array(
-                    'parsed_data' => json_decode($ps->getSpecsJson(),true),
+                    'parsed_data' => json_decode($ps->getSpecsJson(), true),
                     'product_specification_id' => $ps->getId(),
                     'product_specs_json' => json_encode($gen_specs),
                     'fit_model_selected_size' => $fit_model_selected,
-                ));
+        ));
     }
+
     #----------------------- /product_intake/product_specs/delete
     public function deleteAction($id){         
         $remove_csv_file = $this->get('pi.product_specification')->find($id);
@@ -301,4 +332,74 @@ class ProductSpecsController extends Controller
      return new Response(json_encode($styling_type));
     }
        
+    //---------------------------- Create Product Specification from Existing Product
+    public function CreateSpecificationAction() {      
+         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:create_product_specification.html.twig');
+       
+    }
+    
+    //-------------------------- Create Product Specification From Existing Product
+    public function createProductSpecificationAction(Request $request) {
+        $product_id =  $request->get('product_id');
+        $data = $this->get('pi.product_specification')->getExistingProductDetails($product_id);
+         $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
+        return $this->indexAction();
+        return new JsonResponse($data);
+    }
+    
+    //------------------ Update Product Specification
+    public function UpdateProductSpecificationAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:update_product_specification.html.twig');
+    }
+    
+    // --------------------- ExisitingProductUpdateSpecification
+    public function ExisitingProductUpdateSpecificationAction(Request $request) {
+        $product_id =  $request->get('product_id');
+        $specification_id =  $request->get('specification_id');
+        $ps = $this->get('pi.product_specification')->find($specification_id);  
+        $parsed_data = json_decode($ps->getSpecsJson(),true);       
+        $product = $this->get('admin.helper.product')->find($product_id);        
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $brand = $this->container->get('admin.helper.brand')->findOneByName( $parsed_data['brand'] );
+        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByName( $parsed_data['clothing_type'] );
+        $product->setBrand($brand);
+        $product->setClothingType($clothing_type);
+        $product->setName(array_key_exists('style_name', $parsed_data) ? $parsed_data['style_name'] : '');
+        $product->setControlNumber(array_key_exists('style_id_number', $parsed_data) ? $parsed_data['style_id_number'] : '');
+        $product->setDescription(array_key_exists('description', $parsed_data) ? $parsed_data['description'] : '');
+        $product->setStretchType(array_key_exists('stretch_type', $parsed_data) ? $parsed_data['stretch_type'] : '');
+        $product->setHorizontalStretch($parsed_data['horizontal_stretch']);
+        $product->setVerticalStretch($parsed_data['vertical_stretch']);
+        $product->setCreatedAt(new \DateTime('now'));
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setGender($parsed_data['gender']);
+        $product->setStylingType($parsed_data['styling_type']);
+        $product->setNeckline(array_key_exists('neck_line', $parsed_data) ? $parsed_data['neck_line'] : $parsed_data['neckline']);
+        $product->setSleeveStyling($parsed_data['sleeve_styling']);
+        $product->setRise($parsed_data['rise']);
+        $product->setHemLength($parsed_data['hem_length']);
+        $product->setFabricWeight($parsed_data['fabric_weight']);
+        $product->setStructuralDetail($parsed_data['structural_detail']);
+        $product->setFitType($parsed_data['fit_type']);
+        $product->setLayering(array_key_exists('layring', $parsed_data) ? $parsed_data['layring'] : $parsed_data['layering']);
+        $product->setFitPriority(array_key_exists('fit_priority', $parsed_data) ? json_encode($parsed_data['fit_priority']) : 'NULL' );
+        $product->setFabricContent(json_encode(array_key_exists('fabric_content', $parsed_data) ? $parsed_data['fabric_content'] : ''));
+        $product->setDisabled(false);
+        $product->setDeleted(false);
+        $product->setSizeTitleType($parsed_data['size_title_type']);       
+        $productArray = $this->get('admin.helper.product')->update($product);
+        $this->get('pi.product_specification')->getProductSizeMeasurments($parsed_data, $product_id);
+        $this->get('session')->setFlash('success', $productArray);
+        #return  $this->showAction($specification_id);
+         return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specification_id)));     
+        return new Response(json_encode($productArray));
+    }
+    #---------------------------------------------------
+    public function createSessionAction(Request $request) {
+        $session = $request->getSession();
+        $session->set('opt_specs_'.$request->get('id'), $request->get('value'));        
+        return new Response(json_encode($session->get('opt_specs_'.$request->get('id'), $request->get('value'))));
+    }
 }

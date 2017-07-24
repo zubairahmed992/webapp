@@ -189,19 +189,19 @@ class Product {
 
 
         /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=999, nullable=true)
      */
     protected $fit_priority;
     
     
         /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=999, nullable=true)
      */
     protected $fabric_content;
     
     
         /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=999, nullable=true)
      */
     protected $garment_detail;
     
@@ -227,6 +227,13 @@ class Product {
      */
     private $disabled;
 
+    /**
+     * @var string $default_clothing
+     *
+     * @ORM\Column(name="default_clothing", type="boolean", nullable=true)
+     */
+    private $default_clothing = 0;
+
 
     /**
      * @var string $deleted
@@ -249,9 +256,35 @@ class Product {
     protected $retailer_reference_id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, options={"default":"Pending"})
      */
     protected $status;
+
+    /**
+     * @var string $item_name
+     * @ORM\Column(name="item_name", type="string", length=255, nullable=true)
+     */
+    private $item_name;
+
+    /**
+     * @var string $country_origin
+     * @ORM\Column(name="country_origin", type="string", length=255, nullable=true)
+     */
+    private $country_origin;
+
+    /**
+     * @var string $item_details
+     *
+     * @ORM\Column(name="item_details", type="text", nullable=true)
+     */
+    private $item_details;
+
+    /**
+     * @var string $care_label
+     *
+     * @ORM\Column(name="care_label", type="text", nullable=true)
+     */
+    private $care_label;
 
     //----------------------------------------------------------
     /**
@@ -1653,5 +1686,120 @@ class Product {
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set item_name
+     *
+     * @param string $itemName
+     * @return Product
+     */
+    public function setItemName($itemName)
+    {
+        $this->item_name = $itemName;
+    
+        return $this;
+    }
+
+    /**
+     * Get item_name
+     *
+     * @return string 
+     */
+    public function getItemName()
+    {
+        return $this->item_name;
+    }
+
+    /**
+     * Set item_details
+     *
+     * @param string $itemDetails
+     * @return Product
+     */
+    public function setItemDetails($itemDetails)
+    {
+        $this->item_details = $itemDetails;
+    
+        return $this;
+    }
+
+    /**
+     * Get item_details
+     *
+     * @return string 
+     */
+    public function getItemDetails()
+    {
+        return $this->item_details;
+    }
+
+    /**
+     * Set country_origin
+     *
+     * @param string $countryOrigin
+     * @return Product
+     */
+    public function setCountryOrigin($countryOrigin)
+    {
+        $this->country_origin = $countryOrigin;
+    
+        return $this;
+    }
+
+    /**
+     * Get country_origin
+     *
+     * @return string 
+     */
+    public function getCountryOrigin()
+    {
+        return $this->country_origin;
+    }
+
+    /**
+     * Set care_label
+     *
+     * @param string $careLabel
+     * @return Product
+     */
+    public function setCareLabel($careLabel)
+    {
+        $this->care_label = $careLabel;
+    
+        return $this;
+    }
+
+    /**
+     * Get care_label
+     *
+     * @return string 
+     */
+    public function getCareLabel()
+    {
+        return $this->care_label;
+    }
+
+    /**
+     * Set default_clothing
+     *
+     * @param boolean $defaultClothing
+     * @return Product
+     */
+    public function setDefaultClothing($defaultClothing)
+    {
+        $this->default_clothing = $defaultClothing;
+    
+        return $this;
+    }
+
+    /**
+     * Get default_clothing
+     *
+     * @return boolean 
+     */
+    public function getDefaultClothing()
+    {
+        return $this->default_clothing;
     }
 }

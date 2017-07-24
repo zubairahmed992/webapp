@@ -187,7 +187,7 @@
                         "data": null,
                         "orderable": false,
                         "searchable": false,
-                        "defaultContent": DetailPageButton + " " + EditButton + " " + GoSecureButton + " " + jsonButton + " " + DuplicateUser + " " + archiveButton,
+                        "defaultContent": DetailPageButton + " " + EditButton + " " + GoSecureButton + " " + jsonButton + " " + DuplicateUser + "<br><br><span style='margin-left:10px;'></span>" + archiveButton,
                         "width": "40%"
                     },
                     {
@@ -203,6 +203,9 @@
                     if (jQuery.inArray(data["id"], notShownIDs) != -1) {
                         $('td', row).addClass('hide_grid_row');
                     }
+                    // if (data["version"] == 1) {
+                    //     $(row).find('td:eq(7)').append(" "+ BigMask);   
+                    // }
                 },
             });
 
