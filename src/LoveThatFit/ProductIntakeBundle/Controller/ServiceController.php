@@ -41,12 +41,15 @@ class ServiceController extends Controller {
         try {               
             $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number);              
             if($data){ 
+            $result['product_colors'] = '';
             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
                      $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
                      $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
                    }
             }
+            //------------- Add Product Colors
+            $result['product_colors']  = implode(',', array_column($data[0][0]['product_colors'], 'title')); 
               $message = true;
             } else{
                 $message = "Record Not Found!";
