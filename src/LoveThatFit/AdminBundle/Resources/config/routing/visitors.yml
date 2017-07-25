@@ -1,0 +1,15 @@
+admin_visitors:
+    pattern:  /admin/visitors
+    defaults: { _controller: LoveThatFitAdminBundle:Visitors:visitors}
+
+admin_visitors_paginate:
+    pattern:  /admin/visitors/paginate
+    defaults: { _controller: LoveThatFitAdminBundle:Visitors:visitorsPaginate}
+
+admin_visitors_show:
+    pattern:  /admin/visitors/{product_id}/{user_id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Visitors:showVisitor }
+
+admin_visitors_export:
+    pattern:  /admin/visitors/export
+    defaults: { _controller: LoveThatFitAdminBundle:Visitors:visitorsExport }

@@ -1,0 +1,71 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Visitors Log</li>
+{% endblock %}
+
+{% block body %}
+<div class="p_listing">
+    <div class="clearfix"></div>
+      <h1 style="float:left;">Visitors Log</h1>
+      <div class="clearfix"></div>
+      {% block header_right_links %}
+        <div class="adjustment_links" style="margin-top: 20px; float:right;">
+          <a href="{{ path('admin_visitors_export') }}" class="btn export_btn">
+            Export Visitors Log
+          </a>
+        </div>
+    {% endblock %}
+    </div>
+    <div class="clearfix"></div>
+    <div class="bs-docs-grid">
+      <table id="example" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>            
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+      </table>  
+    </div>
+  </div> 
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    var table = $('#example').DataTable({
+       "processing": true, 
+        "serverSide": true, 
+        "ajax": {
+            "url": "{{ path('admin_visitors_paginate') }}",
+            "type": "POST"
+        },
+        "sAjaxDataProp": "data", 
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+        "order": [[ 0, "desc" ]],
+        "columns": [
+        {
+          "data" : "name",
+          
+        },
+        {
+          "data" : "email",
+          
+        },
+        {
+          "data" : "created_at",
+          "searchable": false,
+          "class": "text-right"
+        },
+      ],
+    });
+    $.fn.dataTable.ext.errMode = 'none';
+  });
+
+  var root = document.location.hostname;
+  //console.log(root + "/web/uploads/ltf/products/fitting_room/web/");
+  
+</script>
+{% endblock %}

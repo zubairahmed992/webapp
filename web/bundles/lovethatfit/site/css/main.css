@@ -7014,8 +7014,8 @@ and (orientation : portrait) {
             min-width:320px;
             background:#fff;
             padding:0px!important;
-            min-height: 465px !important;
-            position:fixed;
+ /*           min-height: 465px !important;
+            position:fixed; */
     }
 
 	.container_show_feedback,
@@ -7028,7 +7028,7 @@ and (orientation : portrait) {
 	}
 
 	span.lable_like_rate {
-        display: none !important;
+        display: block !important;
     }
     .rating_wrapper{
         margin-top:0;
