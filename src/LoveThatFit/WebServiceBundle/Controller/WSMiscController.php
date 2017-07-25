@@ -70,15 +70,15 @@ class WSMiscController extends Controller {
         }else if($decoded["app_name"] == 'v3'){
             $conf= array(
                 'data' => array(
-                    'dev'=>array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
-                    'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
-                    'Ibrahim'=>array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
-                    'V3QA Server'=>array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
-                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
+                    array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
+                    array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
+                    array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
+                    array('build_type'=>'localserver','url'=>'192.168.0.5'),
+                    array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                 ),
                 'count'=>5,
                 'message' => 'configuration for build deployment',
-                'success' => 'true',
+                'success' => true,
             );
         }else{
             $conf= array(
