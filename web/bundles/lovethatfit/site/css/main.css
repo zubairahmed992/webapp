@@ -7028,7 +7028,7 @@ and (orientation : portrait) {
 	}
 
 	span.lable_like_rate {
-        display: none !important;
+        display: block !important;
     }
     .rating_wrapper{
         margin-top:0;

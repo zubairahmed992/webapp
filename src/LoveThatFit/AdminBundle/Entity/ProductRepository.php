@@ -1818,7 +1818,10 @@ class ProductRepository extends EntityRepository
                  p.fit_type,
                  p.horizontal_stretch,
                  p.vertical_stretch,
+                 p.item_name,
                  p.styling_type,
+                 p.item_details,
+                 p.care_label,
                 GROUP_CONCAT(DISTINCT c.name order by c.id) as categories_name,
                  p.description as description FROM product p
 
