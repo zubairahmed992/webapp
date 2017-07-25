@@ -7014,8 +7014,8 @@ and (orientation : portrait) {
             min-width:320px;
             background:#fff;
             padding:0px!important;
-            min-height: 465px !important;
-            position:fixed;
+ /*           min-height: 465px !important;
+            position:fixed; */
     }
 
 	.container_show_feedback,
