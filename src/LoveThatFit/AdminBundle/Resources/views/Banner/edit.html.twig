@@ -98,6 +98,7 @@
                     $("#banner-pro_img-div").css("visibility", "visible");
                     $("#banner_file").parent().css("visibility", "visible");
                     $("#banner_file").attr('required', true);
+                    $("#product_div").hide();
                 } else if (selected_banner_type_var == 5) {
                     $("#shop_look").css("visibility", "visible");
                     $("#banner_level_div").css("visibility", "hidden");
@@ -106,7 +107,9 @@
                     /*$("#category_id").attr('required', false);*/
                     $("#banner-pro_img-div").css("visibility", "hidden");
                     $("#banner_file").parent().css("visibility", "hidden");
+                    $("#product_div").hide();
                 } else if (selected_banner_type_var == 6) {
+                    $("#shop_look").css("visibility", "hidden");
                     $("#banner_level_div").css("visibility", "hidden");
                     $("#category_level_div").css("visibility", "hidden");
                     $("#banner-pro_img-div").css("visibility", "visible");
