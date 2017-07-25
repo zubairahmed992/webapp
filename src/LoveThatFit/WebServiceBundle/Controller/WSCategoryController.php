@@ -29,14 +29,16 @@ class WSCategoryController extends Controller {
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
-
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $user_id = $user->getId();
+        
         if (array_key_exists('gender', $decoded)) {
             $categoryList = $this->get('admin.helper.Categories')->getCategoryListForService($base_path, $decoded['gender']);
         } else {
             $categoryList = $this->get('admin.helper.Categories')->getCategoryListForService($base_path);
         }
 
-        $bannerList = $this->get('admin.helper.Banner')->getBannerListForService($base_path, 'shop');
+        $bannerList = $this->get('admin.helper.Banner')->getBannerListForService($base_path, 'shop', $user_id);
 
         $bannerconf= array(
             'data' => $bannerList,
