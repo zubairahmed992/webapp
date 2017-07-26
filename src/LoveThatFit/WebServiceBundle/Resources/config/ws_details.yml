@@ -532,10 +532,10 @@ nws_brand_banner:
     pattern:  /nws/brand_banner
     title: brand_banner
     params:
-       gender: f
-       date: 1388577600
+       brand_id: 1
+       auth_token: 56565656566
     request_type: post
-    description: return Category list against authentication token
+    description: return Product against Brand id
 
 nws_banner_category:
     pattern:  /nws/banner_category
