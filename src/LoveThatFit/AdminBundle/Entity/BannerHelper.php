@@ -396,7 +396,7 @@ class BannerHelper
     }
 
     #-----------------Get all Child Category parent_id field---------------------------------#
-    public function getBannerListForService($base_path, $displayscreen = '', $user_id)
+    public function getBannerListForService($base_path, $displayscreen = '', $user_id = null)
     {
         $brands_list = [];
         $result_new = $this->repo->findAllAvailableRecords();
