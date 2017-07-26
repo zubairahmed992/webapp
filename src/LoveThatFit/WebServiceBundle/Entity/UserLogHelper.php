@@ -113,7 +113,7 @@ class UserLogHelper
 
         if(is_object($userLogObject)){
             $logoutDate = strtotime($userLogObject->getLogoutAt()->format('Y-m-d H:i:s'));
-            if(!$logoutDate){
+            if($logoutDate < 0){
                 return true;
             }
         }
