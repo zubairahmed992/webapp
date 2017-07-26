@@ -337,3 +337,7 @@ ws_marketing_tiles:
 new_register_device_token:
     pattern: /nws/register_device_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:regsiterUserDeviceToken}
+
+render_user_image:
+    pattern: /render/image/{ref}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: ]null}
