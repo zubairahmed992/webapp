@@ -1,7 +1,3 @@
-nws_brand_banner:
-    pattern:  /nws/brand_banner
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerBrandProducts}
-
 ws_change_user_status:
     pattern:  /ws/change_user_status/{token}/{status}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:changeUserStatus }
