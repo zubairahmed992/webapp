@@ -500,27 +500,28 @@ class WSRepo
     }
 
     #--------------Get Product list By Category and Gender -----------------------------------------------------
-    public function productListBrand($id)
+    public function productListBrand($id, $user_id)
     {
         $query = $this->em
             ->createQueryBuilder()
             ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
             ->from('LoveThatFitAdminBundle:Product', 'p')
             ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
             ->innerJoin('p.displayProductColor', 'pc')
             ->innerJoin('p.clothing_type', 'ct')
             ->innerJoin('p.brand', 'b')
             ->innerJoin('p.product_items', 'pi')
-            ->andWhere('p.id = :id')
-            ->andWhere("p.displayProductColor!=''")
+            ->andWhere('b.id = :id')
+            ->andWhere("p.displayProductColor != ''")
             ->andWhere('p.disabled=0')
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
-            ->setParameters(array('id' => $id))
+            ->groupBy('p.id')
+            ->setParameters(array('id' => $id, 'user' => $user_id))
             ->getQuery();
-        echo $query; exit;
 
         try {
-            return $query->getResult();
+            return $query->getArrayResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }

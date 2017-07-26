@@ -69,11 +69,11 @@ class WSCategoryController extends Controller {
 
     public function getBannerBrandProductsAction()
     {
-        echo 'here'; exit;
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        print_r($decoded); exit;
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $user_id = $user->getId();
         $brand_id = $decoded['brand_id'];
-        $res = $this->get('webservice.helper')->getBannerBrandProduct($brand_id);
+        $res = $this->get('webservice.helper')->getBannerBrandProduct($brand_id, $user_id);
         return new Response($res);
     }
     
