@@ -84,6 +84,12 @@ class Product {
      */
     private $user_item_fav_history;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\Banner" , mappedBy="banner_product")
+     */
+
+    protected $product_banner;
+
     /////////////////////////////////////////////////////////////////////////////////  
 
     public function __construct() {
