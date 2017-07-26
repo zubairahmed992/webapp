@@ -64,6 +64,18 @@ class WSCategoryController extends Controller {
 
         return new Response(json_encode($data));
     }
+
+
+
+    public function getBannerBrandProducts()
+    {
+        echo 'here'; exit;
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        print_r($decoded); exit;
+        $brand_id = $decoded['brand_id'];
+        $res = $this->get('webservice.helper')->getBannerBrandProduct($brand_id);
+        return new Response($res);
+    }
     
 }
 

@@ -33,7 +33,8 @@
                 alert("Handler for .error() called.")
             });
 
-            if (parseInt(selected_banner_type_var) != 4 && parseInt(selected_banner_type_var) != 5 && parseInt(selected_banner_type_var) != 6 /*&& parseInt(selected_banner_type_var) != 7*/) {
+            if (parseInt(selected_banner_type_var) != 4 && parseInt(selected_banner_type_var) != 5
+                    && parseInt(selected_banner_type_var) != 6 && parseInt(selected_banner_type_var) != 7) {
                 if ($('#category_id').val() == '0') {
                     $('#category_id').addClass('categoryerror');
                     event.preventDefault();
@@ -146,7 +147,13 @@
                     $("#banner_file").parent().css("visibility", "visible");
                     $("#banner_file").attr('required', true);
                     $("#product_div").show();
-                } /*else if (selected_banner_type_var == 7) {
+                } else if (selected_banner_type_var == 7) {
+                    $("#banner_level_div").css("visibility", "hidden");
+                    $("#category_level_div").css("visibility", "hidden");
+                    $("#banner-pro_img-div").css("visibility", "visible");
+                    $("#banner_file").parent().css("visibility", "visible");
+                    $("#product_div").hide();
+                }/*else if (selected_banner_type_var == 7) {
                     document.getElementById("banner_image_position").required = true;
                     $('#banner-name-div').show();
                     $('#banner-imagepoistion-div').show();

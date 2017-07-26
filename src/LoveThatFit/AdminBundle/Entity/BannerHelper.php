@@ -398,7 +398,7 @@ class BannerHelper
     #-----------------Get all Child Category parent_id field---------------------------------#
     public function getBannerListForService($base_path, $displayscreen = '', $user_id)
     {
-
+        $brands_list = [];
         $result_new = $this->repo->findAllAvailableRecords();
 
         $path = '';
@@ -420,7 +420,7 @@ class BannerHelper
                 $results[$key]['banner_image'] = $base_path . 'uploads/ltf/shop_look/' . $shop_look_information->getShopModelImage();;
             }
 
-            if ($results[$key]['banner_type'] == 7 && !empty($results[$key]['product_id'])) {
+            if ($results[$key]['banner_type'] == 6 && !empty($results[$key]['product_id'])) {
                 $product = $this->container->get('admin.helper.product')->getProductDetail($results[$key]['product_id']);
                 if(!empty($product)) {
                     $index = 0;
@@ -433,6 +433,13 @@ class BannerHelper
                     }
                     $results[$key]['product'] = $product[0];
                 }
+            }
+
+            if ($results[$key]['banner_type'] == 7) {
+                if (empty($brands_list)) {
+                    $brands_list = $this->container->get('admin.helper.brand')->getBrandsArray();
+                }
+                $results[$key]['brand_list'] = $brands_list;
             }
 
             if ($results[$key]['banner_type'] != 5) {

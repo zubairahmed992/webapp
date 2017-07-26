@@ -1,3 +1,13 @@
+nws_brand_banner:
+    pattern:  /nws/brand_banner
+    title: brand_banner
+    params:
+       gender: f
+       date: 1388577600
+       auth_token: 56565656566
+    request_type: post
+    description: return Category list against authentication token
+
 ws_send_push_notification_clothing_type:
     pattern:  /ws/send_push_notification_clothing_type
     title: send_push_notification_clothing_type
@@ -537,7 +547,7 @@ nws_banner_category:
        auth_token: 56565656566
     request_type: post
     description: return Category list against authentication token
-    
+
 nws_product_list:
     pattern:  /nws/product_list
     title: product_list
