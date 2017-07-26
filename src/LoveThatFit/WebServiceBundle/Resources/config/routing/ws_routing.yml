@@ -337,3 +337,7 @@ ws_marketing_tiles:
 new_register_device_token:
     pattern: /nws/register_device_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:regsiterUserDeviceToken}
+
+nws_get_user_mask_marker_details:
+    pattern: /nws/get_user_mask_marker_details
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:userMaskMarkerdetail}

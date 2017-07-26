@@ -364,5 +364,15 @@ class WSUserController extends Controller
 
         return new Response( $res );
     }
+
+
+    #~~~~~~~~~~~~~~~~~~~ ws_user_mask_marker_detail   /ws/ws_user_mask_marker_detail
+
+    public function userMaskMarkerdetailAction()
+    {
+        $decoded = $this->process_request();
+        $json_data = $this->get('webservice.helper')->userDetail($decoded);
+        return new Response($json_data);
+    }
 }
 
