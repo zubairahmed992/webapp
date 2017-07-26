@@ -1820,4 +1820,8 @@ class ProductHelper
 
         return $ids;
     }
+
+    public function getProductDetail($id) {
+        return $this->repo->productDetailForBanner($id);
+    }
 }

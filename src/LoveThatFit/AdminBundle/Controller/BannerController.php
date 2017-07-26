@@ -45,6 +45,7 @@ class BannerController extends Controller
         $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew();
         $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
         $shopLook = $this->get('admin.helper.shoplook')->findByParams(array('app_version' => '3'));
+        $product_list = $this->get('admin.helper.product')->idNameListEnabledProduct();
 
         $form = $this->createForm(new BannerTypes('add', $entity), $entity);
 
@@ -52,7 +53,8 @@ class BannerController extends Controller
             'form' => $form->createView(),
             'getcategoriestreeview' => $getcategoriestreeview,
             'getbannerlist' => $getbannerlist,
-            'shop_look' => $shopLook
+            'shop_look' => $shopLook,
+            'product_list' => $product_list
         ));
     }
 
@@ -69,6 +71,7 @@ class BannerController extends Controller
         if ($entity->getBannerType() != null) {
             $selected_banner_id = $request->request->get('banner_list_id');
             $shoplook           = $request->request->get('shop_look');
+            $product_id           = $request->request->get('product_id');
 
             /*Conditions for handling Banner sorting*/
             $selectedbannercondition = null;
@@ -94,6 +97,11 @@ class BannerController extends Controller
             if($shoplook > 0){
                 $shoplook_entity = $this->get('admin.helper.shoplook')->find($shoplook);
                 $entity->setBannerShoplook($shoplook_entity);
+            }
+
+            if($product_id > 0){
+                $product_entity = $this->get('admin.helper.product')->find($product_id);
+                $entity->setBannerProduct($product_entity);
             }
 
             $message_array = $this->get('admin.helper.Banner')->save($entity);
@@ -124,14 +132,20 @@ class BannerController extends Controller
     public function editAction($id)
     {
         $shopLookId = 0;
+        $productId = 0;
         $entity = $this->get('admin.helper.Banner')->find($id);
         $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew();
         $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
         $getallcategories = $this->get('admin.helper.Categories')->findAllCategories();
         $shopLook = $this->get('admin.helper.shoplook')->findByParams(array('app_version' => '3'));
+        $product_list = $this->get('admin.helper.product')->idNameListEnabledProduct();
 
         if($entity->getBannerShoplook() != null){
             $shopLookId = $entity->getBannerShoplook()->getId();
+        }
+
+        if($entity->getBannerProduct() != null){
+            $productId = $entity->getBannerProduct()->getId();
         }
 
         if (!$entity) {
@@ -148,7 +162,9 @@ class BannerController extends Controller
             'getcategoriestreeview' => $getcategoriestreeview,
             'getbannerlist' => $getbannerlist,
             'shop_look' => $shopLook,
-            'shoplookId' => $shopLookId
+            'shoplookId' => $shopLookId,
+            'product_list' => $product_list,
+            'productId' => $productId
         ));
     }
 
@@ -171,6 +187,7 @@ class BannerController extends Controller
 
                 $selected_banner_id = $request->request->get('banner_list_id');
                 $shoplook           = $request->request->get('shop_look');
+                $product_id         = $request->request->get('product_id');
 
                 /*Conditions for handling Banner sorting, if sorting value will be change then
                 it will update sorting*/
@@ -212,6 +229,11 @@ class BannerController extends Controller
                 if($shoplook > 0){
                     $shoplook_entity = $this->get('admin.helper.shoplook')->find($shoplook);
                     $entity->setBannerShoplook($shoplook_entity);
+                }
+
+                if ($product_id > 0) {
+                    $product_entity = $this->get('admin.helper.product')->find($product_id);
+                    $entity->setBannerProduct($product_entity);
                 }
 
                 $message_array = $this->get('admin.helper.Banner')->update($entity);
