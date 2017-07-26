@@ -67,7 +67,7 @@ class WSCategoryController extends Controller {
 
 
 
-    public function getBannerBrandProducts()
+    public function getBannerBrandProductsAction()
     {
         echo 'here'; exit;
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
