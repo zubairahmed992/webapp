@@ -528,15 +528,25 @@ ws_get_braintree_client_token:
     params:
       auth_token: 121c421783cd4d71d871ec16a1296091
 #//////////////////// APP 3.0///////////////////////////////////    
+nws_brand_banner:
+    pattern:  /nws/brand_banner
+    title: brand_banner
+    params:
+       brand_id: 1
+       auth_token: 56565656566
+    request_type: post
+    description: return Product against Brand id
+
 nws_banner_category:
     pattern:  /nws/banner_category
     title: banner_category
     params:
        gender: f
        date: 1388577600
+       auth_token: 56565656566
     request_type: post
     description: return Category list against authentication token
-    
+
 nws_product_list:
     pattern:  /nws/product_list
     title: product_list

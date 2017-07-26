@@ -1427,4 +1427,37 @@ class WebServiceHelper
         return $shippmentType;
     }
 
+    public function getProductListByBrand($gender, array $id, $user_id, $page_no = 1)
+    {
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
+        $limit = $records_per_page * $page_no;
+        $offset = $limit - $records_per_page;
+        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
+        $page_count = (int)(count($productlist) / $records_per_page);
+        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1 : $page_count;
+        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
+            return $this->response_array(false, 'Invalid Page No');
+        }
+        $productlist = array_slice($productlist, $offset, $records_per_page);
+        foreach ($productlist as $key => $product) {
+            if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
+                $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
+            } else {
+                $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
+            }
+        }
+        return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
+
+    }
+
+    #--------------Get Product list By Category and Gender -----------------------------------------------------
+    public function getBannerBrandProduct($brand_id, $user_id)
+    {
+        return $this->response_array(true, 'Product List By Brand', true, array('brand_product_list' => $this->container->get('webservice.repo')->productListBrand($brand_id, $user_id)));
+    }
+
 }
