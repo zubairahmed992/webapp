@@ -78,7 +78,7 @@ class UserLogHelper
         $userLogObject = $this->repo->findOneBy(
                 array("users" => $user->getId(),
                      "sessionId" => $request['session_id'],
-                    "appName" => strtolower($request['appname'])
+                     "appName" => strtolower($request['appname'])
                 ));
 
         if(is_object($userLogObject)){
@@ -86,6 +86,36 @@ class UserLogHelper
 
             $this->save($userLogObject);
             return $userLogObject;
+        }
+
+        return false;
+    }
+
+    public function userBySessionId(array $request)
+    {
+        $userLogObject = $this->repo->findOneBy(
+            array(
+                "sessionId" => $request['session_id']
+            ));
+
+        if(is_object($userLogObject)){
+            return $userLogObject->getUsers();
+        }
+
+        return 0;
+    }
+    public function checkForUserSession(array $request)
+    {
+        $userLogObject = $this->repo->findOneBy(
+            array(
+                "sessionId" => $request['session_id']
+            ));
+
+        if(is_object($userLogObject)){
+            $logoutDate = strtotime($userLogObject->getLogoutAt()->format('Y-m-d H:i:s'));
+            if($logoutDate < 0){
+                return true;
+            }
         }
 
         return false;
