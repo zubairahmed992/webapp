@@ -51,7 +51,7 @@ class ServiceRepo
                 LEFT JOIN p.retailer r                
                 JOIN p.product_sizes pz
                 LEFT JOIN pz.product_items pi
-                JOIN pz.product_size_measurements psm            
+                LEFT JOIN pz.product_size_measurements psm            
                 WHERE 
                 p.deleted != 1 
                 AND p.control_number=:style_id_number
