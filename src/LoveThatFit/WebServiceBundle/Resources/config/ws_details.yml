@@ -820,6 +820,6 @@ nws_get_user_mask_marker_details:
     title: get_user_mask_marker_details
     params:
           auth_token: 00000000000000000000000000000
-          device_type: iphone5
+          email: ovais.rafique@centricsource.com
     request_type: post
     description: return user mask markder details against user token 

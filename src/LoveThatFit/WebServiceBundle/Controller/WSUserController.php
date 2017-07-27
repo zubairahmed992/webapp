@@ -371,7 +371,7 @@ class WSUserController extends Controller
     public function userMaskMarkerdetailAction()
     {
         $decoded = $this->process_request();
-        $json_data = $this->get('webservice.helper')->userDetail($decoded);
+        $json_data = $this->get('webservice.helper')->userDetailMaskMarker($decoded);
         return new Response($json_data);
     }
 }
