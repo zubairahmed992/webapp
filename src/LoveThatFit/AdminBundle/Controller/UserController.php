@@ -25,14 +25,15 @@ class UserController extends Controller
 
     public function indexAction()
     {
-        $totalRecords = $this->get('user.helper.user')->countAllUserRecord();
-        $femaleUsers  = $this->get('user.helper.user')->countByGender('f');
-        $maleUsers    = $this->get('user.helper.user')->countByGender('m');
+        $totalRecords = $this->get('user.helper.user')->countAllUser();
+        $femaleUsers  = $this->get('user.helper.user')->countUsersByGender('f');
+        $maleUsers    = $this->get('user.helper.user')->countUsersByGender('m');
 
         return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
-            array('rec_count' => count($totalRecords),
-                'femaleUsers'     => $femaleUsers,
-                'maleUsers'       => $maleUsers,
+            array(
+                'rec_count'   => $totalRecords,
+                'femaleUsers' => $femaleUsers,
+                'maleUsers'   => $maleUsers,
             )
         );
     }
