@@ -685,7 +685,7 @@
                 <select name="hem_length" class="hem_length form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['hem_length'] %}
-                       <option value="{{ val }}"{{ parsed_data.neckline|trim|replace({' ':'_'}) == '' and key == 0 ? '' : (val == parsed_data.hem_length|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.hem_length|trim|replace({' ':'_'}) == '' and key == 0 ? '' : (val == parsed_data.hem_length|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>             
             </div>
@@ -707,7 +707,7 @@
                 <select name="sleeve_styling" class="sleeve_styling form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['sleeve_styling'] %}
-                       <option value="{{ val }}"{{ parsed_data.sleeve_styling|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.sleeve_styling|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val|lower  }}"{{ parsed_data.sleeve_styling|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.sleeve_styling|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
@@ -753,7 +753,7 @@
                 <select name="layering" class="stretch_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['layering'] %}
-                       <option value="{{ val }}"{{ parsed_data.layering == '' and val == 0? '' : (val == parsed_data.layering ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ key }}"{{ parsed_data.layering == '' and key == 0? '' : (key == parsed_data.layering ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -765,7 +765,7 @@
                 <select name="structural_detail" class="structural_detail form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['structural_detail'] %}
-                       <option value="{{ val }}"{{ parsed_data.structural_detail|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.structural_detail|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ key }}"{{ parsed_data.structural_detail|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (key == parsed_data.structural_detail|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -777,7 +777,7 @@
                   <select name="fit_type" class="fit_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fit_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and val == 0? '' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ key }}"{{ parsed_data.fit_type == '' and key == 0? '' : (key == parsed_data.fit_type ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>
