@@ -200,10 +200,14 @@ class ProductSpecificationHelper {
             $specs['fit_point_stretch'] = $specs_obj->getFitPointStretchArray();
         }#-----------------------------
         if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch') {
-            $specs[$decoded['name']] = $decoded['value'];
+            $specs[$decoded['name']] = $decoded['value'];           
             $specs = $this->generate_specs_for_stretch($specs, $decoded['name']); #~~~~~~~~>1
-        } elseif ($decoded['name'] == 'max_horizontal_stretch' || $decoded['name'] == 'max_vertical_stretch') {    #~~~~~~~~>2
-            $specs[$decoded['name']] = $decoded['value'];                
+        } elseif ($decoded['name'] == 'max_horizontal_stretch') {    #~~~~~~~~>2
+            $specs[$decoded['name']] = $decoded['value'];    
+            $specs['horizontal_stretch'] = $decoded['value']/3;
+        } elseif( $decoded['name'] == 'max_vertical_stretch') {
+            $specs[$decoded['name']] = $decoded['value'];    
+            $specs['vertical_stretch'] = $decoded['value']/3;
         } elseif (strpos($decoded['name'], 'fit_point_stretch') !== false) {    #~~~~~~~~>2
             $fit_point_stretch_array = explode('-', $decoded['name']);
             $specs['fit_point_stretch'][$fit_point_stretch_array[1]] = $decoded['value'];
