@@ -21,3 +21,4 @@ shipping_status     = '<button class="btn btn-cyan btn-xs delete" data-action="u
 ProductDescription   = '<button class="btn btn-cyan btn-xs description" data-action="product_description" title="Product Description"><i class="icon-desc"></i></button>';
 ProductWeight     = '<button class="btn btn-cyan btn-xs productweight" data-action="ProductWeight" title="Product Weight"><i class="icon-pweight"></i></button>';
 ProductStatus   = '<button class="btn btn-cyan btn-xs productstatus" data-action="product_status" title="Product Status"><i class="icon-pstatus"></i></button>';
+EditEmail   = '<button class="btn btn-cyan btn-xs editEmail" data-action="edit_email" title="Edit Email"><i class="icon-envelope"></i></button>';

@@ -366,6 +366,17 @@ class WSUserController extends Controller
         return new Response( $res );
     }
 
+
+
+    #~~~~~~~~~~~~~~~~~~~ ws_user_mask_marker_detail   /ws/ws_user_mask_marker_detail
+
+    public function userMaskMarkerdetailAction()
+    {
+        $decoded = $this->process_request();
+        $json_data = $this->get('webservice.helper')->userDetailMaskMarker($decoded);
+        return new Response($json_data);
+    }    
+
     public function renderImageBySessionIdAction($ref = null)
     {
         $isLogin = $this->get('userlog.helper.userlog')->checkForUserSession(array(
@@ -385,6 +396,7 @@ class WSUserController extends Controller
         }else{
             throw new NotFoundHttpException('Sorry not existing!');
         }
+
     }
 }
 

@@ -46,6 +46,8 @@ class BannerController extends Controller
         $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
         $shopLook = $this->get('admin.helper.shoplook')->findByParams(array('app_version' => '3'));
         $product_list = $this->get('admin.helper.product')->idNameListEnabledProduct();
+        $brand_list = $this->get('admin.helper.brand')->getBrandNameId();
+        $colors = $this->get('admin.helper.productcolor')->getDistinctColors();
 
         $form = $this->createForm(new BannerTypes('add', $entity), $entity);
 
@@ -54,7 +56,9 @@ class BannerController extends Controller
             'getcategoriestreeview' => $getcategoriestreeview,
             'getbannerlist' => $getbannerlist,
             'shop_look' => $shopLook,
-            'product_list' => $product_list
+            'product_list' => $product_list,
+            'brand_list' => $brand_list,
+            'colors' => $colors,
         ));
     }
 
@@ -71,7 +75,26 @@ class BannerController extends Controller
         if ($entity->getBannerType() != null) {
             $selected_banner_id = $request->request->get('banner_list_id');
             $shoplook           = $request->request->get('shop_look');
-            $product_id           = $request->request->get('product_id');
+            $product_id         = $request->request->get('product_id');
+
+            $banner_filter = '';
+            if ($request->request->get('category_id') != null) {
+                $banner_filter['category'] = $request->request->get('category_id');
+            }
+            if (!empty($request->request->get('brand_id'))) {
+                $banner_filter['brand'] = $request->request->get('brand_id');
+            }
+            if (!empty($entity->getPriceMin())) {
+                $banner_filter['min_price'] = $entity->getPriceMin();
+            }
+            if (!empty($entity->getPriceMax())) {
+                $banner_filter['max_price'] = $entity->getPriceMax();
+            }
+            if (!empty($request->request->get('color_id'))) {
+                $banner_filter['color'] = $request->request->get('color_id');
+            }
+
+            $banner_filter = json_encode($banner_filter);
 
             /*Conditions for handling Banner sorting*/
             $selectedbannercondition = null;
@@ -104,6 +127,11 @@ class BannerController extends Controller
                 $entity->setBannerProduct($product_entity);
             }
 
+            if (!empty($banner_filter)) {
+                $banner_filter = json_encode($banner_filter);
+            }
+            $entity->setBannerFilter($banner_filter);
+
             $message_array = $this->get('admin.helper.Banner')->save($entity);
             if ($selected_banner_id == '0') {
                 $entity->setParentId(null);
@@ -133,12 +161,30 @@ class BannerController extends Controller
     {
         $shopLookId = 0;
         $productId = 0;
+        $selectedbrand = 0;
+        $selectedcolor = '';
+        $selectedcategory = '';
         $entity = $this->get('admin.helper.Banner')->find($id);
         $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew();
         $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
         $getallcategories = $this->get('admin.helper.Categories')->findAllCategories();
         $shopLook = $this->get('admin.helper.shoplook')->findByParams(array('app_version' => '3'));
         $product_list = $this->get('admin.helper.product')->idNameListEnabledProduct();
+        $brand_list = $this->get('admin.helper.brand')->getBrandNameId();
+        $colors = $this->get('admin.helper.productcolor')->getDistinctColors();
+
+         $filter = json_decode(json_decode($entity->getBannerFilter(), true), true);
+         if(isset($filter['category'])) {
+             $selectedcategory = $filter['category'];
+         }
+
+        if(isset($filter['brand'])) {
+            $selectedbrand = $filter['brand'];
+        }
+
+        if(isset($filter['color'])) {
+            $selectedcolor = $filter['color'];
+        }
 
         if($entity->getBannerShoplook() != null){
             $shopLookId = $entity->getBannerShoplook()->getId();
@@ -164,7 +210,12 @@ class BannerController extends Controller
             'shop_look' => $shopLook,
             'shoplookId' => $shopLookId,
             'product_list' => $product_list,
-            'productId' => $productId
+            'productId' => $productId,
+            'brand_list' => $brand_list,
+            'colors' => $colors,
+            'selectedbrand' => $selectedbrand,
+            'selectedcolor' => $selectedcolor,
+            'selectedcategory' => $selectedcategory,
         ));
     }
 
