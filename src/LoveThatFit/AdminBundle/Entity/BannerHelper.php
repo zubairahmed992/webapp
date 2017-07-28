@@ -442,6 +442,13 @@ class BannerHelper
                 $results[$key]['brand_list'] = $brands_list;
             }
 
+            if ($results[$key]['banner_type'] == 8) {
+                if (!empty($results[$key]['banner_filter'])) {
+                    $filter =  json_decode($results[$key]['banner_filter'], true);
+                    $results[$key]['filtered_product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
+                }
+            }
+
             if ($results[$key]['banner_type'] != 5) {
                 if (isset($results[$key]['banner_image'])) {
                     if ($results[$key]['banner_image'] != null) {
@@ -449,6 +456,7 @@ class BannerHelper
                     }
                 }
             }
+            unset($results[$key]['banner_filter']);
         }
 
         $fArray = [];

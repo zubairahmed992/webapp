@@ -5,6 +5,7 @@ namespace LoveThatFit\WebServiceBundle\Entity;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr;
 
 class WSRepo
 {
@@ -519,6 +520,89 @@ class WSRepo
             ->groupBy('p.id')
             ->setParameters(array('id' => $id, 'user' => $user_id))
             ->getQuery();
+
+        try {
+            return $query->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    #--------------Get Product List By Banner Filter -----------------------------------------------------
+    public function productListBannerFilter($filter, $user_id)
+    {
+        /*$qb = $this->em
+            ->createQueryBuilder();
+        $query = $qb->add('select', new Expr\Select(array('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')))
+            ->add('from', new Expr\From('LoveThatFitAdminBundle:Product', 'p'))
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi')
+            ->add('where', $qb->expr()->andX(
+                $qb->expr()->eq('p.disabled', '0'),
+                $qb->expr()->orX(
+                    $qb->expr()->eq('p.default_clothing', '0'),
+                    $qb->expr()->isNull('p.default_clothing')
+                ),
+                $qb->expr()->in('b.id', $filter['brand']),
+                $qb->expr()->in('c.id', $filter['category'])
+            ))
+            ->add('groupBy', new Expr\GroupBy(['p.id']))
+            ->setParameters(array('user' => $user_id))
+            ->getQuery();
+        //print_r($query->getArrayResult()); exit;
+        try {
+            return $query->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }*/
+
+        // first, creating the query builder
+        $query = $this->em
+            ->createQueryBuilder()
+            ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi');
+
+        // add the default condition
+        $conditions = array(
+            $query->expr()->eq('p.disabled', '0'),
+            $query->expr()->orX(
+                $query->expr()->eq('p.default_clothing', '0'),
+                $query->expr()->isNull('p.default_clothing')
+            ),
+            $query->expr()->in('c.id', $filter['category'])
+        );
+
+        if (isset($filter['brand'])) {
+            $conditions[] = $query->expr()->in('b.id', $filter['brand']);
+        }
+
+        if (isset($filter['color'])) {
+            $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
+        }
+
+        if (!empty($filter['min_price'])) {
+            $conditions[] = $query->expr()->between('pi.price', $filter['min_price'], $filter['max_price']);
+        }
+
+
+        // converting the conditions to an AND clause
+        $conditions = call_user_func_array(array($query->expr(), 'andX'), $conditions);
+
+        // adding the WHERE clause
+        $query->where($conditions);
+
+        // getting the query
+        $query = $query->setParameters(array('user' => $user_id))->groupBy('p.id')->getQuery();
 
         try {
             return $query->getArrayResult();

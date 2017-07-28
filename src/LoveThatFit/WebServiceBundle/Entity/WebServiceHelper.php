@@ -1460,4 +1460,14 @@ class WebServiceHelper
         return $this->response_array(true, 'Product List By Brand', true, array('brand_product_list' => $this->container->get('webservice.repo')->productListBrand($brand_id, $user_id)));
     }
 
+    public function getFilterProductList($filter, $user_id)
+    {
+        return $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id);
+    }
+
+    public function getProductListBannerFilter($filter, $user_id)
+    {
+        return $this->response_array(true, 'Product List By Specific Filter', true, array('filtered_product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
+    }
+
 }

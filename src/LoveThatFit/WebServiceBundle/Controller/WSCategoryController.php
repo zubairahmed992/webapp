@@ -76,6 +76,17 @@ class WSCategoryController extends Controller {
         $res = $this->get('webservice.helper')->getBannerBrandProduct($brand_id, $user_id);
         return new Response($res);
     }
+
+    public function getBannerFilterProductsAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $user_id = $user->getId();
+        $banner_id = $decoded['banner_id'];
+        $filter =  json_decode($this->get('admin.helper.banner')->find($banner_id)->getBannerFilter(), true);
+        $res = $this->get('webservice.helper')->getProductListBannerFilter(json_decode($filter, true), $user_id);
+        return new Response($res);
+    }
     
 }
 
