@@ -139,6 +139,12 @@ class Banner
     private $banner_product;
 
     /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $banner_filter;
+
+    /**
      * Get id
      *
      * @return integer
@@ -643,5 +649,28 @@ class Banner
     public function getBannerProduct()
     {
         return $this->banner_product;
+    }
+
+    /**
+     * Set banner_filter
+     *
+     * @param string $banner_filter
+     * @return Banner
+     */
+    public function setBannerFilter($banner_filter)
+    {
+        $this->banner_filter = $banner_filter;
+
+        return $this;
+    }
+
+    /**
+     * Get banner_filter
+     *
+     * @return string
+     */
+    public function getBannerFilter()
+    {
+        return $this->banner_filter;
     }
 }

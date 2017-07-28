@@ -1331,4 +1331,15 @@ class UserHelper
         return $this->repo->countUsersByGender($gender);
     }
 
+    public function updateUserEmail(User $user, $email){
+        if(is_object($user)){
+            $user->setEmail($email);
+            $this->saveUser($user);
+
+            return true;
+        }
+
+        else false;
+    }
+
 }

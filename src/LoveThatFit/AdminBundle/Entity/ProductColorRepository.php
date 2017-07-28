@@ -101,4 +101,14 @@ class ProductColorRepository extends EntityRepository {
         }
     }
 
+    public function findUniqueColor() {
+        $record = $this->getEntityManager()
+            ->createQuery("SELECT pc.title FROM LoveThatFitAdminBundle:ProductColor pc ORDER BY pc.title ASC");
+        try {
+            return $record->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }

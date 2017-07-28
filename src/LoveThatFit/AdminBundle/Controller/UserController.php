@@ -182,6 +182,31 @@ class UserController extends Controller
         ));
     }
 
+    public function editEmailAction($id){
+        $entity          = $this->get('user.helper.user')->find($id);
+        return $this->render('LoveThatFitAdminBundle:User:edit_email.html.twig', array(
+            'entity'        => $entity,
+        ));
+    }
+
+    public function updateEmailAction(Request $request){
+        $data       = $request->request->all();
+        $user       = $this->get('user.helper.user')->find($data['id']);
+
+        $updated    = $this->get('user.helper.user')->updateUserEmail( $user, $data['user_email'] );
+        if($updated){
+            $this->get('session')->setFlash('success', 'Email Updated Successfully');
+        }else{
+            $this->get('session')->setFlash('error', 'Some thing went wrong try again later!');
+        }
+
+
+        return $this->redirect($this->generateUrl('admin_edit_user_email', array('id' => $data['id'])));
+
+    }
+
+
+
     #----------------------------------------------------
     private function password_update_form($user)
     {

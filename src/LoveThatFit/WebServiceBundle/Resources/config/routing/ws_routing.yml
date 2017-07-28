@@ -177,10 +177,14 @@ nws_brand_banner:
     pattern:  /nws/brand_banner
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerBrandProducts}
 
+nws_filter_banner:
+    pattern:  /nws/filter_banner
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerFilterProducts}
+
 nws_banner_category:
     pattern:  /nws/banner_category
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerCategoryList}
-    
+
 nws_product_list:
     pattern:  /nws/product_list
     defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsList}  
@@ -342,6 +346,10 @@ new_register_device_token:
     pattern: /nws/register_device_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:regsiterUserDeviceToken}
 
+mcp_get_user_mask_marker_details:
+    pattern: /mcp/get_user_mask_marker_details
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:userMaskMarkerdetail}
+
 render_user_image:
     pattern: /render/image/{ref}
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: ]null}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: null}
