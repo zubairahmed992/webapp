@@ -20,6 +20,11 @@
 
     <script>
 
+        {% autoescape false %}
+         var selectedcategory = ['{{ selectedcategory|join("','") }}'];
+         var selectedbrand = ['{{ selectedbrand|join("','") }}'];
+         var selectedcolor = ['{{ selectedcolor|join("','") }}'];
+        {% endautoescape %}
         var selected_banner_type_var = 0;
         function submitform() {
 
@@ -89,6 +94,9 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
+            /*$('.chosen-select').chosen('destroy').val(selectedcategory).chosen();
+            $('.chosen-select1').chosen('destroy').val(selectedbrand).chosen();
+            $('.chosen-select2').chosen('destroy').val(selectedcolor).chosen();*/
 
             /* Hide All divs*/
             loadfieldsbycategorytise($('#banner_banner_type').val());
@@ -409,6 +417,13 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+                                <script>
+                                    $("#category_id > option").each(function () {
+                                        if (selectedcategory.indexOf(String(this.value))) {
+                                            this.selected = true;
+                                        }
+                                    });
+                                </script>
                             </div>
 
                             <div class="row-fluid show-grid" id="brand_div"
@@ -421,6 +436,13 @@
                                             <option value="{{ brand.id }}" {% if brand.id in selectedbrand %} selected="selected" {% endif %}>{{ brand.name }}</option>
                                         {% endfor %}
                                     </select>
+                                    <script>
+                                        $("#brand_id > option").each(function () {
+                                            if (selectedbrand.indexOf(String(this.value))) {
+                                                this.selected = true;
+                                            }
+                                        });
+                                    </script>
                                     {{ form_errors(form.catid) }}
                                 </div>
                             </div>
@@ -435,6 +457,13 @@
                                             <option value="{{ color.title }}" {% if color.title in selectedcolor %} selected="selected" {% endif %}>{{ color.title }}</option>
                                         {% endfor %}
                                     </select>
+                                    <script>
+                                        $("#color_id > option").each(function () {
+                                            if (selectedbrand.indexOf(String(this.value))) {
+                                                this.selected = true;
+                                            }
+                                        });
+                                    </script>
                                     {{ form_errors(form.catid) }}
                                 </div>
                             </div>

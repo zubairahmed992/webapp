@@ -166,6 +166,7 @@ class BannerController extends Controller
         $productId = 0;
         $selectedbrand = 0;
         $selectedcolor = '';
+        $selectedcategory = '';
         $entity = $this->get('admin.helper.Banner')->find($id);
         $getcategoriestreeview = $this->get('admin.helper.Categories')->getCategoriesTreeViewNew();
         $getbannerlist = $this->get('admin.helper.banner')->getBannerlist();
@@ -176,11 +177,16 @@ class BannerController extends Controller
         $colors = $this->get('admin.helper.productcolor')->getDistinctColors();
 
          $filter = json_decode(json_decode($entity->getBannerFilter(), true), true);
-         if(isset($filter['color'])) {
-             $selectedcolor = $filter['color'];
+         if(isset($filter['category'])) {
+             $selectedcategory = $filter['category'];
          }
+
         if(isset($filter['brand'])) {
-            $selectedcolor = $filter['brand'];
+            $selectedbrand = $filter['brand'];
+        }
+
+        if(isset($filter['color'])) {
+            $selectedcolor = $filter['color'];
         }
 
         if($entity->getBannerShoplook() != null){
@@ -211,7 +217,8 @@ class BannerController extends Controller
             'brand_list' => $brand_list,
             'colors' => $colors,
             'selectedbrand' => $selectedbrand,
-            'selectedcolor' => $selectedcolor
+            'selectedcolor' => $selectedcolor,
+            'selectedcategory' => $selectedcategory,
         ));
     }
 
