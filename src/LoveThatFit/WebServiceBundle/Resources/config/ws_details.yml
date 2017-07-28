@@ -824,8 +824,8 @@ new_register_device_token:
     device_token: 11223344556677889900112233445566778899000
 
 #______________________
-nws_get_user_mask_marker_details:
-    pattern:  /nws/get_user_mask_marker_details
+mcp_get_user_mask_marker_details:
+    pattern:  /mcp/get_user_mask_marker_details
     title: get_user_mask_marker_details
     params:
           auth_token: 00000000000000000000000000000
