@@ -4,6 +4,7 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WSUserController extends Controller
 {
@@ -363,6 +364,27 @@ class WSUserController extends Controller
         }
 
         return new Response( $res );
+    }
+
+    public function renderImageBySessionIdAction($ref = null)
+    {
+        $isLogin = $this->get('userlog.helper.userlog')->checkForUserSession(array(
+            'session_id' => $ref,
+        ));
+
+        if($isLogin){
+            $user = $this->get('userlog.helper.userlog')->userBySessionId(array(
+                'session_id' => $ref,
+            ));
+
+            $file = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
+            $type = 'image/png';
+            header('Content-Type:'.$type);
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+        }else{
+            throw new NotFoundHttpException('Sorry not existing!');
+        }
     }
 }
 
