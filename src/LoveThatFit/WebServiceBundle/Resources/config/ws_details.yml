@@ -822,3 +822,13 @@ new_register_device_token:
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
     device_token: 11223344556677889900112233445566778899000
+
+#______________________
+nws_get_user_mask_marker_details:
+    pattern:  /nws/get_user_mask_marker_details
+    title: get_user_mask_marker_details
+    params:
+          auth_token: 00000000000000000000000000000
+          email: ovais.rafique@centricsource.com
+    request_type: post
+    description: return user mask markder details against user token 

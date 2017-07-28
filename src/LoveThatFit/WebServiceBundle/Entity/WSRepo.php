@@ -528,6 +528,7 @@ class WSRepo
         }
     }
 
+
     #--------------Get Product List By Banner Filter -----------------------------------------------------
     public function productListBannerFilter($filter, $user_id)
     {
@@ -609,5 +610,35 @@ class WSRepo
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
+
+    public function userDetailMaskMarker($token,$email)
+    {
+        return $this->em
+            ->createQueryBuilder()
+            ->select('u.id,
+                      u.email,
+                      u.authToken,
+                      ua.id as archive_id',
+                      'ua.image_actions',
+                      'ua.measurement_json',
+                      'ua.marker_params',
+                      'ua.svg_paths',
+                      'ua.marker_json',
+                      'ua.default_marker_svg',
+                      'ua.created_at',                                                                                     
+                      'ua.updated_at',                                                                                     
+                      'ua.status',                                                                                     
+                      'ua.image',  
+                      'ua.version'                                                                                                                                                                                                   
+
+                      )
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->innerJoin('u.user_archives', 'ua')           
+            ->where('u.authToken=:token')
+            ->andWhere('u.email=:email')
+            ->setParameters(array('token' => $token,'email' => $email))
+            ->getQuery()
+            ->getResult();
     }
 }
