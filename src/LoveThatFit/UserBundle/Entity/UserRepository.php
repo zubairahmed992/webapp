@@ -613,4 +613,26 @@ class UserRepository extends EntityRepository
           return "null";
         } 
     }
+
+    #--------------------------------------------------------------
+
+    public function countAllUser()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(u)')->from('LoveThatFitUserBundle:User', 'u');
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function countUsersByGender($gender)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(u)')->from('LoveThatFitUserBundle:User', 'u')
+            ->andWhere('u.gender=:gender')
+            ->setParameter('gender', $gender);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
 }

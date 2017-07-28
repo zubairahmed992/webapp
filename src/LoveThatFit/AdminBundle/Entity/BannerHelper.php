@@ -396,9 +396,9 @@ class BannerHelper
     }
 
     #-----------------Get all Child Category parent_id field---------------------------------#
-    public function getBannerListForService($base_path, $displayscreen = '')
+    public function getBannerListForService($base_path, $displayscreen = '', $user_id = null)
     {
-
+        $brands_list = [];
         $result_new = $this->repo->findAllAvailableRecords();
 
         $path = '';
@@ -410,16 +410,43 @@ class BannerHelper
         }
         $directorypath = dirname($path) . '/';
         $results = $this->repo->findAllBanners($displayscreen);
-
-
         foreach ($results as $key => $value) {
-
             if ($results[$key]['banner_type'] == 1) {
                 $results[$key]['title'] = null;
             }
-            if (isset($results[$key]['banner_image'])) {
-                if ($results[$key]['banner_image'] != null) {
-                    $results[$key]['banner_image'] = $base_path . $directorypath . $results[$key]['banner_image'];
+
+            if ($results[$key]['banner_type'] == 5) {
+                $shop_look_information = $this->container->get('admin.helper.shoplook')->find($results[$key]['shoplook_id']);
+                $results[$key]['banner_image'] = $base_path . 'uploads/ltf/shop_look/' . $shop_look_information->getShopModelImage();;
+            }
+
+            if ($results[$key]['banner_type'] == 6 && !empty($results[$key]['product_id'])) {
+                $product = $this->container->get('admin.helper.product')->getProductDetail($results[$key]['product_id']);
+                if(!empty($product)) {
+                    $index = 0;
+                    if (($product[$index]['uf_user'] != null) && ($product[$index]['uf_user'] == $user_id)) {
+                        $product[$index]['fitting_room_status'] = true;
+                        $product[$index]['qty'] = $product[$index]['uf_qty'];
+                    } else {
+                        $product[$index]['fitting_room_status'] = false;
+                        $product[$index]['qty'] = 0;
+                    }
+                    $results[$key]['product'] = $product[0];
+                }
+            }
+
+            if ($results[$key]['banner_type'] == 7) {
+                if (empty($brands_list)) {
+                    $brands_list = $this->container->get('admin.helper.brand')->getBrandsArray();
+                }
+                $results[$key]['brand_list'] = $brands_list;
+            }
+
+            if ($results[$key]['banner_type'] != 5) {
+                if (isset($results[$key]['banner_image'])) {
+                    if ($results[$key]['banner_image'] != null) {
+                        $results[$key]['banner_image'] = $base_path . $directorypath . $results[$key]['banner_image'];
+                    }
                 }
             }
         }

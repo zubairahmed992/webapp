@@ -172,7 +172,11 @@ ws_feedback_category_list:
     pattern:  /ws/feedback_category_list
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:feedbackCategoryList}
 
-#// APP 3.0------------------------------------------------------- 
+#// APP 3.0-------------------------------------------------------
+nws_brand_banner:
+    pattern:  /nws/brand_banner
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerBrandProducts}
+
 nws_banner_category:
     pattern:  /nws/banner_category
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerCategoryList}
@@ -337,3 +341,7 @@ ws_marketing_tiles:
 new_register_device_token:
     pattern: /nws/register_device_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:regsiterUserDeviceToken}
+
+render_user_image:
+    pattern: /render/image/{ref}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: ]null}
