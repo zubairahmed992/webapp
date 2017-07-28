@@ -25,7 +25,15 @@ admin_users_search:
 admin_user_detail_edit:
     pattern:  /admin/user/{id}/edit
     defaults: { _controller: LoveThatFitAdminBundle:User:edit}
-    
+
+admin_edit_user_email:
+    pattern:  /admin/user/email/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:User:editEmail}
+
+admin_update_user_email:
+    pattern:  /admin/user/email/update
+    defaults: { _controller: LoveThatFitAdminBundle:User:updateEmail}
+
 admin_user_detail_update:
     pattern:  /admin/user/{id}/update
     defaults: { _controller: LoveThatFitAdminBundle:User:update}
