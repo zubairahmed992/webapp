@@ -537,6 +537,15 @@ nws_brand_banner:
     request_type: post
     description: return Product against Brand id
 
+nws_filter_banner:
+    pattern:  /nws/filter_banner
+    title: filter_banner
+    params:
+       banner_id: 21
+       auth_token: 56565656566
+    request_type: post
+    description: return Product against specified Filter
+
 nws_banner_category:
     pattern:  /nws/banner_category
     title: banner_category
@@ -813,3 +822,13 @@ new_register_device_token:
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
     device_token: 11223344556677889900112233445566778899000
+
+#______________________
+mcp_get_user_mask_marker_details:
+    pattern:  /mcp/get_user_mask_marker_details
+    title: get_user_mask_marker_details
+    params:
+          auth_token: 00000000000000000000000000000
+          email: ovais.rafique@centricsource.com
+    request_type: post
+    description: return user mask markder details against user token 
