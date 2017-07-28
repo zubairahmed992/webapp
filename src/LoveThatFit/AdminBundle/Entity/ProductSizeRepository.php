@@ -59,6 +59,21 @@ class ProductSizeRepository extends EntityRepository {
             return null;
         }
     }
+    
+     
+    public function findSizeByProductTitleBodyType($title, $body_type, $productid) {
+        $record = $this->getEntityManager()
+                ->createQuery("SELECT p FROM LoveThatFitAdminBundle:ProductSize p                                   
+                                WHERE p.title = :title
+                                AND p.product=:product
+                                AND p.body_type=:body_type ")
+                ->setParameters(array('title' => ucwords($title), 'body_type'=> $body_type, 'product' => $productid));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
     public function getSizeMeasurementArray($id) {
         $query = $this->getEntityManager()

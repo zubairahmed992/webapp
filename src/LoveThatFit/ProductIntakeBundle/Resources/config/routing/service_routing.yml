@@ -32,3 +32,9 @@ pi_ws_item_image_exists:
     requirements:
         _method:  get
         
+        
+pi_ws_product_image_upload_new_format:
+    pattern: /product_intake/product_image_upload_new_format
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:ImageUploadproductNewFormatSizeItem}
+    requirements:
+        _method:  post          
