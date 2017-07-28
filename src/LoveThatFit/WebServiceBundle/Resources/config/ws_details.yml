@@ -537,6 +537,15 @@ nws_brand_banner:
     request_type: post
     description: return Product against Brand id
 
+nws_filter_banner:
+    pattern:  /nws/filter_banner
+    title: filter_banner
+    params:
+       banner_id: 21
+       auth_token: 56565656566
+    request_type: post
+    description: return Product against specified Filter
+
 nws_banner_category:
     pattern:  /nws/banner_category
     title: banner_category

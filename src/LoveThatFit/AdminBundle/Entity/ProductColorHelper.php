@@ -73,5 +73,9 @@ class ProductColorHelper {
     {
         return $this->repo->findColorByProduct($id);
     }
-    
+
+    public function getDistinctColors()
+    {
+        return $this->repo->findUniqueColor();
+    }
 }

@@ -177,10 +177,14 @@ nws_brand_banner:
     pattern:  /nws/brand_banner
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerBrandProducts}
 
+nws_filter_banner:
+    pattern:  /nws/filter_banner
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerFilterProducts}
+
 nws_banner_category:
     pattern:  /nws/banner_category
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBannerCategoryList}
-    
+
 nws_product_list:
     pattern:  /nws/product_list
     defaults: { _controller: LoveThatFitWebServiceBundle:ProductList:getCategoryProductsList}  

@@ -142,7 +142,7 @@ class BannerRepository extends EntityRepository
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
                 c.sorting as sorting ,c.price_min as price_min,
-                c.price_max as price_max , 'banner' AS type
+                c.price_max as price_max , 'banner' AS type, c.banner_filter as banner_filter
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
                 left JOIN c.banner_shoplook s
