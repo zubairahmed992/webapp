@@ -423,8 +423,7 @@ class BannerHelper
 
             if ($results[$key]['banner_type'] == 5) {
                 $shop_look_information = $this->container->get('admin.helper.shoplook')->find($results[$key]['shoplook_id']);
-                //echo($shop_look_information->getTitle()); exit;
-                //$results[$key]['title'] = $shop_look_information->getTitle();
+                $results[$key]['title'] = $shop_look_information->getName();
                 $results[$key]['banner_image'] = $base_path . 'uploads/ltf/shop_look/' . $shop_look_information->getShopModelImage();
             }
 
@@ -453,7 +452,7 @@ class BannerHelper
             if ($results[$key]['banner_type'] == 8) {
                 if (!empty($results[$key]['banner_filter'])) {
                     $filter =  json_decode($results[$key]['banner_filter'], true);
-                    $results[$key]['filtered_product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
+                    $results[$key]['product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
                 }
             }
 
