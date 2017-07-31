@@ -178,6 +178,11 @@ class ClothingTypeHelper
         return $this->repo->findAllRecord();
     }
 
+    public function findAllList()
+    {
+        return $this->repo->findAllList();
+    }
+
 #--------------------------------------------------------------------------
     /*  public function findAllDistinct(){
           return $this->repo->findAllRecord();

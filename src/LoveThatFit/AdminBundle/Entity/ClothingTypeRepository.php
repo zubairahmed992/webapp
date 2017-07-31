@@ -102,10 +102,21 @@ class ClothingTypeRepository extends EntityRepository
         }
     }
 
+    public function findAllList()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c order by c.id,c.gender, c.target, c.name');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findAllRecord()
     {
         $query = $this->getEntityManager()
-            ->createQuery('SELECT c.id, c.name, c.gender FROM LoveThatFitAdminBundle:ClothingType c order by c.id,c.gender, c.target, c.name');
+            ->createQuery('SELECT c.id, c.name, c.gender, c. FROM LoveThatFitAdminBundle:ClothingType c order by c.id,c.gender, c.target, c.name');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
