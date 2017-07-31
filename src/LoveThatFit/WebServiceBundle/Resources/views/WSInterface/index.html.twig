@@ -352,7 +352,8 @@
             data.append("file", input_file.files[0]);
             $.ajax({
                 type: "POST",
-                url: 'http://localhost/webapp/web/app_dev.php'+$("#service_url").text(),
+                //url: 'http://localhost/webapp/web/app_dev.php'+$("#service_url").text(),
+                url: $("#service_url").text(),
                 data: data,
                 processData: false,
                 contentType: false,
