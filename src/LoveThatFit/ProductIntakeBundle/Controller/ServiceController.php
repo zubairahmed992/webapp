@@ -320,7 +320,7 @@ class ServiceController extends Controller {
             
             #--------------------------------------------------------------
             if ($parsed_details['success'] == 'false') {                
-                return $this->responseArray('invalid file naming format');
+                return $this->responseArray($parsed_details['message']);
             } else {                
                 $image_name_break = explode('_', $_FILES['file']['name']);
                 $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-', ' ', $image_name_break[0]), $image_name_break[1]);                            
@@ -331,14 +331,13 @@ class ServiceController extends Controller {
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);                
                 $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                 $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitleBodyType(strtolower($parsed_details['size_title']),($parsed_details['body_type']), $parsed_details['product_id']);                
-                
-                
+                                
                 if (count($product_color) == 0) {
-                    return $this->responseArray('color not found');#------------------------------------------>
+                    return $this->responseArray($parsed_details['color_title'] . ' color not found');#------------------------------------------>
                 }
-                if(count($product_size) == 0){
-                    return $this->responseArray('Size not found');#------------------------------------------>
-                }                
+                if(count($product_size) == 0){                     
+                    return $this->responseArray($parsed_details['body_type'] + ' ' + $parsed_details['size_title'] + ' size not found');#------------------------------------------>
+                }                                
                 $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
                 if (count($product_item_id) == 0) {
                     $this->get('admin.helper.productitem')->addItem($product, $product_color, $product_size);
@@ -374,6 +373,11 @@ class ServiceController extends Controller {
         # 5 Size Title       
         $body_range_array = array('wc' => 'Contemporary', "wr" => "Regular", "wp" => "Petite", "wpl" => "Plus", "jr" => "Regular", "jp" => "Plus", "mr" => "Regular", "mbt" => "B&T", "ms" => "Slim"); 
         $_exploded = explode("_", strtolower($request_array));                
+        
+        if(!array_key_exists($_exploded[3], $body_range_array)){
+            return array('message' => 'Invalid Body Range ' . strtoupper($_exploded[3]) . ', (valid ranges: WC, WR, WP, WPL, JR, JP, MR, MR, MBT, MS)', 'success' => 'false');
+        }
+        
         if (count($_exploded) == 6) {
             $a['brand'] = str_replace("-", " ", $_exploded[0]);
             $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
@@ -386,7 +390,7 @@ class ServiceController extends Controller {
             $a['success'] = 'true';
             return $a;
         } else {
-            return array('message' => 'Invalid Format!', 'success' => 'false');
+            return array('message' => 'Invalid Naming Format!', 'success' => 'false');
         }
     }
 
