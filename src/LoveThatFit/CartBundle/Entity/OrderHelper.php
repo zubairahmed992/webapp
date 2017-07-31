@@ -362,4 +362,9 @@ class OrderHelper
         $this->save($entity);
     }
 
+    public function findUserByOrderId($order_id)
+    {
+        return $this->repo->findUserByOrderId($order_id);
+    }
+
 }
