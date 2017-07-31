@@ -126,6 +126,7 @@ class WebServiceHelper
 
             $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
             $data['user']['defaultProduct'] = $defaultProducts;
+            $data['user']['image_path'] = "/render/image/";
 
             return $this->response_array(true, 'member found', true, $data);
         } else {
