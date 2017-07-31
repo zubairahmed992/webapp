@@ -126,6 +126,7 @@ class WebServiceHelper
 
             $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
             $data['user']['defaultProduct'] = $defaultProducts;
+            $data['user']['image_path'] = "/render/image/";
 
             return $this->response_array(true, 'member found', true, $data);
         } else {
@@ -1470,8 +1471,9 @@ class WebServiceHelper
 
     public function getProductListBannerFilter($filter, $user_id)
     {
-        return $this->response_array(true, 'Product List By Specific Filter', true, array('filtered_product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
+        return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
     }
+    
     public function userDetailMaskMarker($request_array)
     {   
         
