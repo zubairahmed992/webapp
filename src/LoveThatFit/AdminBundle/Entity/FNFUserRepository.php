@@ -98,18 +98,29 @@ class FNFUserRepository extends EntityRepository
 
     }
 
+    // public function countAllFNFUserRecord()
+    // {
+    //     $total_record = $this->getEntityManager()
+    //         ->createQuery('SELECT fnf, u FROM LoveThatFitAdminBundle:FNFUser fnf
+    //                         JOIN fnf.users u 
+    //                         join fnf.groups fg
+    //                         WHERE fg.isArchive = 0');
+    //     try {
+    //         return $total_record->getResult();
+    //     } catch (\Doctrine\ORM\NoResultException $e) {
+    //         return null;
+    //     }
+    // }
+
     public function countAllFNFUserRecord()
     {
-        $total_record = $this->getEntityManager()
-            ->createQuery('SELECT fnf, u FROM LoveThatFitAdminBundle:FNFUser fnf
-                            JOIN fnf.users u 
-                            join fnf.groups fg
-                            WHERE fg.isArchive = 0');
-        try {
-            return $total_record->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(fnf)')->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
+            ->join('fnf.groups', 'fnfg')
+            ->andWhere('fnfg.isArchive = 0');
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
     }
 
     public function checkUserInGroup($groupId, $user_id)

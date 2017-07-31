@@ -23,7 +23,7 @@ class FNFGroupController extends Controller
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:index_group.html.twig',
             array(
-                'rec_group_count' => count($totalGroupRecords)
+                'rec_group_count' => $totalGroupRecords
             ));
     }
 }

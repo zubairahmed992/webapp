@@ -24,8 +24,8 @@ class FNFUserController extends Controller
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:index_new.html.twig',
             array(
-                'rec_count'       => count($totalUserRecords),
-                'rec_group_count' => count($totalGroupRecords),
+                'rec_count'       => $totalUserRecords,
+                'rec_group_count' => $totalGroupRecords,
             ));
     }
 
