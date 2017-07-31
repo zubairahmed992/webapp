@@ -477,7 +477,7 @@ class BannerHelper
                         $shop_Look = [];
                         $shopLook = $this->container->get('admin.helper.shoplook')->find($result['shoplook_id']);
                         $path = "http://" . $_SERVER['HTTP_HOST'] . '/uploads/ltf/shop_look/';
-                        $shop_Look['shoplook_id'] = (int)$shopLook->getId();
+                        $shop_Look['id'] = (int)$shopLook->getId();
                         $shop_Look['sorting'] = (int)$shopLook->getSorting();
                         $shop_Look['shop_model_image'] = $path . $shopLook->getShopModelImage();
                         $shop_Look['name'] = $shopLook->getName();
