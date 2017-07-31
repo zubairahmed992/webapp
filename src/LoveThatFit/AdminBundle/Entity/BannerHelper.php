@@ -538,7 +538,6 @@ class BannerHelper
                     } else {
                         $result['shop_look'] = $shop_Look;
                         unset($result['shoplook_id']);
-                        unset($result['title']);
                     }
                 }
 
