@@ -84,19 +84,16 @@ class BannerController extends Controller
             if (!empty($request->request->get('brand_id'))) {
                 $banner_filter['brand'] = $request->request->get('brand_id');
             }
-            if (!empty($request->request->get('price_min'))) {
-                $banner_filter['min_price'] = $request->request->get('price_min');
+            if (!empty($entity->getPriceMin())) {
+                $banner_filter['min_price'] = $entity->getPriceMin();
             }
-            if (!empty($request->request->get('price_max'))) {
-                $banner_filter['max_price'] = $request->request->get('price_max');
+            if (!empty($entity->getPriceMax())) {
+                $banner_filter['max_price'] = $entity->getPriceMax();
             }
             if (!empty($request->request->get('color_id'))) {
                 $banner_filter['color'] = $request->request->get('color_id');
             }
 
-            $banner_filter['min_price'] = $request->request->get('price_min');
-            $banner_filter['max_price'] = $request->request->get('price_max');
-            $banner_filter['color'] = $request->request->get('color_id');
             $banner_filter = json_encode($banner_filter);
 
             /*Conditions for handling Banner sorting*/

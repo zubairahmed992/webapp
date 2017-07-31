@@ -409,7 +409,13 @@ class BannerHelper
             }
         }
         $directorypath = dirname($path) . '/';
-        $results = $this->repo->findAllBanners($displayscreen);
+
+        if($user_id != null){
+            $results = $this->repo->findAllBanners($displayscreen);
+        }else{
+            $results = $this->repo->findAllBannersBannerTypeFour($displayscreen);
+        }
+
         foreach ($results as $key => $value) {
             if ($results[$key]['banner_type'] == 1) {
                 $results[$key]['title'] = null;
@@ -417,7 +423,8 @@ class BannerHelper
 
             if ($results[$key]['banner_type'] == 5) {
                 $shop_look_information = $this->container->get('admin.helper.shoplook')->find($results[$key]['shoplook_id']);
-                $results[$key]['banner_image'] = $base_path . 'uploads/ltf/shop_look/' . $shop_look_information->getShopModelImage();;
+                $results[$key]['title'] = $shop_look_information->getName();
+                $results[$key]['banner_image'] = $base_path . 'uploads/ltf/shop_look/' . $shop_look_information->getShopModelImage();
             }
 
             if ($results[$key]['banner_type'] == 6 && !empty($results[$key]['product_id'])) {
@@ -445,7 +452,7 @@ class BannerHelper
             if ($results[$key]['banner_type'] == 8) {
                 if (!empty($results[$key]['banner_filter'])) {
                     $filter =  json_decode($results[$key]['banner_filter'], true);
-                    $results[$key]['filtered_product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
+                    $results[$key]['product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
                 }
             }
 

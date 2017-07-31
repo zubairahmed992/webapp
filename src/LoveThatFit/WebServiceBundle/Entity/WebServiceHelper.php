@@ -1471,8 +1471,9 @@ class WebServiceHelper
 
     public function getProductListBannerFilter($filter, $user_id)
     {
-        return $this->response_array(true, 'Product List By Specific Filter', true, array('filtered_product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
+        return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
     }
+    
     public function userDetailMaskMarker($request_array)
     {   
         
