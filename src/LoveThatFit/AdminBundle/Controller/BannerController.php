@@ -79,16 +79,24 @@ class BannerController extends Controller
 
             $banner_filter = '';
             if ($request->request->get('category_id') != null) {
-                $banner_filter['category'] = $request->request->get('category_id');
+                $banner_filter['category'] = $request->request->get('category_id_multi');
             }
             if (!empty($request->request->get('brand_id'))) {
                 $banner_filter['brand'] = $request->request->get('brand_id');
             }
             if (!empty($entity->getPriceMin())) {
                 $banner_filter['min_price'] = $entity->getPriceMin();
+                if (empty($entity->getPriceMax())) {
+                    $banner_filter['max_price'] = $entity->getPriceMin();
+                }
+                $entity->setPriceMin(null);
             }
             if (!empty($entity->getPriceMax())) {
                 $banner_filter['max_price'] = $entity->getPriceMax();
+                if (empty($entity->getPriceMin())) {
+                    $banner_filter['min_price'] = $entity->getPriceMax();
+                }
+                $entity->setPriceMax(null);
             }
             if (!empty($request->request->get('color_id'))) {
                 $banner_filter['color'] = $request->request->get('color_id');
@@ -186,6 +194,13 @@ class BannerController extends Controller
             $selectedcolor = $filter['color'];
         }
 
+        $min_price = '';
+        $max_price = '';
+        if(isset($filter['min_price'])) {
+            $min_price = $filter['min_price'];
+            $max_price = $filter['max_price'];
+        }
+
         if($entity->getBannerShoplook() != null){
             $shopLookId = $entity->getBannerShoplook()->getId();
         }
@@ -216,6 +231,8 @@ class BannerController extends Controller
             'selectedbrand' => $selectedbrand,
             'selectedcolor' => $selectedcolor,
             'selectedcategory' => $selectedcategory,
+            'min_price' => $min_price,
+            'max_price' => $max_price,
         ));
     }
 
@@ -239,6 +256,33 @@ class BannerController extends Controller
                 $selected_banner_id = $request->request->get('banner_list_id');
                 $shoplook           = $request->request->get('shop_look');
                 $product_id         = $request->request->get('product_id');
+
+                $banner_filter = '';
+                if ($request->request->get('category_id') != null) {
+                    $banner_filter['category'] = $request->request->get('category_id_multi');
+                }
+                if (!empty($request->request->get('brand_id'))) {
+                    $banner_filter['brand'] = $request->request->get('brand_id');
+                }
+                if (!empty($entity->getPriceMin())) {
+                    $banner_filter['min_price'] = $entity->getPriceMin();
+                    if (empty($entity->getPriceMax())) {
+                        $banner_filter['max_price'] = $entity->getPriceMin();
+                    }
+                    $entity->setPriceMin(null);
+                }
+                if (!empty($entity->getPriceMax())) {
+                    $banner_filter['max_price'] = $entity->getPriceMax();
+                    if (empty($entity->getPriceMin())) {
+                        $banner_filter['min_price'] = $entity->getPriceMax();
+                    }
+                    $entity->setPriceMax(null);
+                }
+                if (!empty($request->request->get('color_id'))) {
+                    $banner_filter['color'] = $request->request->get('color_id');
+                }
+
+                $banner_filter = json_encode($banner_filter);
 
                 /*Conditions for handling Banner sorting, if sorting value will be change then
                 it will update sorting*/
@@ -286,6 +330,11 @@ class BannerController extends Controller
                     $product_entity = $this->get('admin.helper.product')->find($product_id);
                     $entity->setBannerProduct($product_entity);
                 }
+
+                if (!empty($banner_filter)) {
+                    $banner_filter = json_encode($banner_filter);
+                }
+                $entity->setBannerFilter($banner_filter);
 
                 $message_array = $this->get('admin.helper.Banner')->update($entity);
 
