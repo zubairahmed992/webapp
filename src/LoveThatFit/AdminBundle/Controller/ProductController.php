@@ -56,8 +56,8 @@ class ProductController extends Controller {
             array(
                 'femaleProduct' => $this->get('admin.helper.product')->countProductsByGender('f'),
                 'maleProduct' => $this->get('admin.helper.product')->countProductsByGender('m'),
-                'rec_count' => $this->get('admin.helper.product')->getTotalProductCount(),
-                'brandList' => $this->container->get('admin.helper.brand')->findAll(),
+                'rec_count' => $this->get('admin.helper.product')->countProducts(),
+                'brandList' => $this->container->get('admin.helper.brand')->getBrandsNameList(),
                 'topProduct' => $this->get('admin.helper.product')->countProductsByType('Top'),
                 'bottomProduct' => $this->get('admin.helper.product')->countProductsByType('Bottom'),
                 'dressProduct' => $this->get('admin.helper.product')->countProductsByType('Dress'),

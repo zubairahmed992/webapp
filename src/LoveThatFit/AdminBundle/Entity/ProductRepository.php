@@ -1875,51 +1875,39 @@ class ProductRepository extends EntityRepository
         }
     }
 
+    public function countProductsByGender($gender)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(p)')->from('LoveThatFitAdminBundle:Product', 'p')
+            ->where('p.deleted=0')
+            ->andWhere('p.gender=:gender')
+            ->setParameter('gender', $gender);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function countProducts()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(p)')->from('LoveThatFitAdminBundle:Product', 'p')
+            ->where('p.deleted=0');
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function countProductsByType($target)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(p)')->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->where('ct.target=:target')
+            ->andWhere('p.deleted=0')
+            ->setParameter('target', $target);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
 }
-
-/*
-public function getAllProductsIds(
-    $data,
-    $page = 0,
-    $max = NULL,
-    $order,
-    $getResult = true
-)
-{
-    $query = $this->getEntityManager()->createQueryBuilder();
-    $search = isset($data['query']) && $data['query']?$data['query']:null;
-    $query
-        ->select('p.id')
-        ->from('LoveThatFitAdminBundle:Product', 'p')
-        ->Where('p.disabled=0');
-
-    if ($search) {
-        $query
-            ->andWhere('p.control_number like :search')
-            ->orWhere('p.name like :search')
-            ->setParameter('search', "%".$search."%");
-    }
-    if (is_array($order)) {
-        $orderByColumn    = $order[0]['column'];
-        $orderByDirection = $order[0]['dir'];
-        // if ($orderByColumn == 0) {
-        //    $orderByColumn = "p.control_number";
-        // } elseif ($orderByColumn == 3) {
-        //     $orderByColumn = "p.name";
-        // } else {
-        //     $orderByColumn = "p.id";
-        // }
-        $query->orderBy("p.id", "desc");
-    }
-
-    if ($max) {
-        $preparedQuery = $query->getQuery()
-            ->setMaxResults($max)
-            ->setFirstResult(($page) * $max);
-    } else {
-        $preparedQuery = $query->getQuery();
-    }
-    return $getResult?$preparedQuery->getResult():$preparedQuery;
-}
-*/
-//}
