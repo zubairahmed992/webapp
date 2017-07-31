@@ -201,7 +201,8 @@ class UserArchivesHelper {
 	  $limit = $pagination_constants["constants"]["pagination"]["limit"];
 
 	  $entity = $this->repo->listAllPendingUsers($page_number, $limit, $sort);
-	  $rec_count = count($this->repo->countAllRecord());
+	  //$rec_count = count($this->repo->countAllRecord());
+      $rec_count = $this->repo->countAllUsersArchvies();
 	  $cur_page = $page_number;
 
 	  if ($page_number == 0 || $limit == 0) {
@@ -463,7 +464,7 @@ class UserArchivesHelper {
 
     public function countAllRecord()
     {
-        return count($this->repo->countAllRecord());
+        return $this->repo->countAllUsersArchvies();
     }
 
     ##### support users method #################

@@ -236,4 +236,15 @@ class UserArchivesRepository extends EntityRepository
         }
         return $getResult?$preparedQuery->getResult():$preparedQuery; 
     }
+
+    public function countAllUsersArchvies()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(u)')->from('LoveThatFitUserBundle:UserArchives', 'u')
+            ->andWhere('u.status =:status')
+            ->setParameter('status', "-1");
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
 }
