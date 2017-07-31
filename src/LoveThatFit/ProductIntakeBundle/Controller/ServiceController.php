@@ -293,8 +293,8 @@ class ServiceController extends Controller {
     }
     
     
-    //---------------------- product_image_upload_new_format 
-    public function ImageUploadproductNewFormatSizeItemAction(Request $request) {    
+    //---------------------- pi_ws_product_fitting_room_image_upload
+    public function productFittingRoomImageUploadAction(Request $request) {    
         // $array_format = explode("_", strtolower('Champion_7791_black_WR_20_XXL.jpg')); 
          //return new JsonResponse([count($array_format)]);
         try {            
@@ -331,7 +331,7 @@ class ServiceController extends Controller {
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);                
                 $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                 $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitleBodyType(strtolower($parsed_details['size_title']),($parsed_details['body_type']), $parsed_details['product_id']);                
-                $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
+                
                 
                 if (count($product_color) == 0) {
                     return $this->responseArray('color not found');#------------------------------------------>
@@ -339,6 +339,7 @@ class ServiceController extends Controller {
                 if(count($product_size) == 0){
                     return $this->responseArray('Size not found');#------------------------------------------>
                 }                
+                $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
                 if (count($product_item_id) == 0) {
                     $this->get('admin.helper.productitem')->addItem($product, $product_color, $product_size);
                 }

@@ -26,6 +26,12 @@ pi_ws_product_image_upload:
     requirements:
         _method:  post  
         
+pi_ws_product_fitting_room_image_upload:
+    pattern: /pi/ws/product_fitting_room_image_upload
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productFittingRoomImageUpload}
+    requirements:
+        _method:  post            
+        
 pi_ws_item_image_exists:
     pattern: /pi/ws/item_image_exists/{file_name}
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:itemImageExists}
@@ -33,8 +39,4 @@ pi_ws_item_image_exists:
         _method:  get
         
         
-pi_ws_product_image_upload_new_format:
-    pattern: /product_intake/product_image_upload_new_format
-    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:ImageUploadproductNewFormatSizeItem}
-    requirements:
-        _method:  post          
+      

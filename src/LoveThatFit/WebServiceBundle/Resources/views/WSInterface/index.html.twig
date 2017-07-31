@@ -181,7 +181,7 @@
                         hit_selfieshare_service();
                     } else if ($('#sel_service').val() == '/product_intake/product_image_upload') {
                         hit_product_image_upload_service();
-                    } else if ($('#sel_service').val() == '/product_intake/product_image_upload_new_format') {
+                    } else if ($('#sel_service').val() == '/pi/ws/product_fitting_room_image_upload') {
                         hit_product_image_upload_new_format_service();
                     } else {
                         hit_image_upload_service();
@@ -352,7 +352,7 @@
             data.append("file", input_file.files[0]);
             $.ajax({
                 type: "POST",
-                url: $("#service_url").text(),
+                url: 'http://localhost/webapp/web/app_dev.php'+$("#service_url").text(),
                 data: data,
                 processData: false,
                 contentType: false,

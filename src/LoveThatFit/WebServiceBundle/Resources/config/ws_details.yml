@@ -804,12 +804,10 @@ new_register_device_token:
     auth_token: 121c421783cd4d71d871ec16a1296091
     device_token: 11223344556677889900112233445566778899000
     
-pi_ws_product_image_upload_new_format:
-    pattern: /product_intake/product_image_upload_new_format
-    title: product_image_upload_new_format
+pi_ws_product_fitting_room_image_upload:
+    pattern: /pi/ws/product_fitting_room_image_upload
+    title: pi_ws_product_fitting_room_image_upload
     file_upload: true
     params:         
-      image_name: "AG-Jeans_LSS1288_SBA_R_25" 
-      name_format: "Brand_StyleID_ColorShot_SizeRange_VerticalMeasurement_SizeShot"  
       request_type: post
     
