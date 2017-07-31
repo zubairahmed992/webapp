@@ -97,6 +97,7 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
+            $('.chosen-select').prop('disabled', true).trigger("liszt:updated");
             /* Hide All divs*/
             hideUnuseddiv();
 
@@ -193,6 +194,7 @@
                     $("#banner-pro_img-div").css("visibility", "visible");
                     $("#banner_file").parent().css("visibility", "visible");
                     $("#banner_file").attr('required', true);
+                    $('#category_id_multi').prop('disabled', false).trigger("liszt:updated");
                 } else {
                     $("#shop_look").css("visibility", "hidden");
                     $("#banner_level_div").css("visibility", "visible");
@@ -227,6 +229,7 @@
             $("#category_level_div_chosen").css("visibility", "hidden");
             $("#brand_div").hide();
             $("#color_div").hide();
+            $('#category_id_multi').prop('disabled', true).trigger("liszt:updated");
         }
 
         //Check minimum and maximum value
