@@ -12,16 +12,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class FNFGroupRepository extends EntityRepository
 {
+    // public function countAllFNFGroupRecord($group_type = 1)
+    // {
+    //     $total_record = $this->getEntityManager()
+    //         ->createQuery('SELECT fnfg FROM LoveThatFitAdminBundle:FNFGroup fnfg where fnfg.isArchive = 0 and fnfg.group_type = :grp_typ')
+    //         ->setParameter("grp_typ", $group_type);
+    //     try {
+    //         return $total_record->getResult();
+    //     } catch (\Doctrine\ORM\NoResultException $e) {
+    //         return null;
+    //     }
+    // }
+
     public function countAllFNFGroupRecord($group_type = 1)
     {
-        $total_record = $this->getEntityManager()
-            ->createQuery('SELECT fnfg FROM LoveThatFitAdminBundle:FNFGroup fnfg where fnfg.isArchive = 0 and fnfg.group_type = :grp_typ')
-            ->setParameter("grp_typ", $group_type);
-        try {
-            return $total_record->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(fnfg)')->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')
+            ->andWhere('fnfg.isArchive = 0')
+            ->andWhere('fnfg.group_type = :group_type')
+            ->setParameter("group_type", $group_type);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
     }
 
     public function getGroupDataById( $groupId )

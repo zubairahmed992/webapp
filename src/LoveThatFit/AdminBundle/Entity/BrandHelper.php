@@ -423,4 +423,8 @@ public function getBrandRetailerList($date_fromat = null) {
         
         return $this->repo->getBrandsArray();
     }
+
+    public function getBrandsNameList() {
+      return $this->repo->getBrandsNameList();      
+    }
 }

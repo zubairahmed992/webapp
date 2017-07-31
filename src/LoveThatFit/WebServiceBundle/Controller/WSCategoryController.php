@@ -89,8 +89,30 @@ class WSCategoryController extends Controller {
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $user_id = $user->getId();
         $banner_id = $decoded['banner_id'];
-        $filter =  json_decode($this->get('admin.helper.banner')->find($banner_id)->getBannerFilter(), true);
-        $res = $this->get('webservice.helper')->getProductListBannerFilter(json_decode($filter, true), $user_id);
+        $entity = $this->get('admin.helper.banner')->find($banner_id);
+        if ($entity) {
+            if ($entity->getBannerType() == 8) {
+                $filter = json_decode($entity->getBannerFilter(), true);
+                $res = $this->get('webservice.helper')->getProductListBannerFilter(json_decode($filter, true), $user_id);
+            } else {
+                $ar = array(
+                    'data' => null,
+                    'count' => 0,
+                    'message' => "invalid banner id",
+                    'success' => false,
+                );
+                $res = json_encode($ar);
+            }
+        } else {
+            $ar = array(
+                'data' => null,
+                'count' => 0,
+                'message' => "invalid banner id",
+                'success' => false,
+            );
+            $res = json_encode($ar);
+        }
+
         return new Response($res);
     }
     

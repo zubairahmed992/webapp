@@ -178,6 +178,11 @@ class ClothingTypeHelper
         return $this->repo->findAllRecord();
     }
 
+    public function findAllList()
+    {
+        return $this->repo->findAllList();
+    }
+
 #--------------------------------------------------------------------------
     /*  public function findAllDistinct(){
           return $this->repo->findAllRecord();
@@ -243,11 +248,11 @@ class ClothingTypeHelper
         $cat_list = $this->repo->findAllRecord();
         $cat_array = array();
         foreach ($cat_list as $key => $value) {
-            if ($value->getGender() == 'f') {
-                $cat_array['woman'][$value->getId()] = $value->getName();
+            if ($value["gender"] == 'f') {
+                $cat_array['woman'][$value["id"]] = $value["name"];
                 //   $cat_array['woman']['target'][$value->getId()]=$value->getTarget();
             } else {
-                $cat_array['man'][$value->getId()] = $value->getName();
+                $cat_array['man'][$value["id"]] = $value["name"];
                 //  $cat_array['man']['target'][$value->getId()]=$value->getTarget();
             }
         }
