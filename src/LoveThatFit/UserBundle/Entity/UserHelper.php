@@ -1186,8 +1186,6 @@ class UserHelper
                 'version_archive'  => $fData['version_archive'],
                 'version'          => $fData['version']
             ];
-
-
         }
 
         return $output;
@@ -1321,6 +1319,27 @@ class UserHelper
     public function getVersion($user_id)
     {
         return $this->repo->getVersion($user_id);
+    }
+
+    public function countAllUser()
+    {
+        return $this->repo->countAllUser();
+    }
+
+    public function countUsersByGender($gender)
+    {
+        return $this->repo->countUsersByGender($gender);
+    }
+
+    public function updateUserEmail(User $user, $email){
+        if(is_object($user)){
+            $user->setEmail($email);
+            $this->saveUser($user);
+
+            return true;
+        }
+
+        else false;
     }
 
 }

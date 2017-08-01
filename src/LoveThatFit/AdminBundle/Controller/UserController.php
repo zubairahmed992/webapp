@@ -25,14 +25,15 @@ class UserController extends Controller
 
     public function indexAction()
     {
-        $totalRecords = $this->get('user.helper.user')->countAllUserRecord();
-        $femaleUsers  = $this->get('user.helper.user')->countByGender('f');
-        $maleUsers    = $this->get('user.helper.user')->countByGender('m');
+        $totalRecords = $this->get('user.helper.user')->countAllUser();
+        $femaleUsers  = $this->get('user.helper.user')->countUsersByGender('f');
+        $maleUsers    = $this->get('user.helper.user')->countUsersByGender('m');
 
         return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
-            array('rec_count' => count($totalRecords),
-                'femaleUsers'     => $femaleUsers,
-                'maleUsers'       => $maleUsers,
+            array(
+                'rec_count'   => $totalRecords,
+                'femaleUsers' => $femaleUsers,
+                'maleUsers'   => $maleUsers,
             )
         );
     }
@@ -180,6 +181,31 @@ class UserController extends Controller
             'password_form' => $password_form->createView(),
         ));
     }
+
+    public function editEmailAction($id){
+        $entity          = $this->get('user.helper.user')->find($id);
+        return $this->render('LoveThatFitAdminBundle:User:edit_email.html.twig', array(
+            'entity'        => $entity,
+        ));
+    }
+
+    public function updateEmailAction(Request $request){
+        $data       = $request->request->all();
+        $user       = $this->get('user.helper.user')->find($data['id']);
+
+        $updated    = $this->get('user.helper.user')->updateUserEmail( $user, $data['user_email'] );
+        if($updated){
+            $this->get('session')->setFlash('success', 'Email Updated Successfully');
+        }else{
+            $this->get('session')->setFlash('error', 'Some thing went wrong try again later!');
+        }
+
+
+        return $this->redirect($this->generateUrl('admin_edit_user_email', array('id' => $data['id'])));
+
+    }
+
+
 
     #----------------------------------------------------
     private function password_update_form($user)

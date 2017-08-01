@@ -396,9 +396,9 @@ class BannerHelper
     }
 
     #-----------------Get all Child Category parent_id field---------------------------------#
-    public function getBannerListForService($base_path, $displayscreen = '')
+    public function getBannerListForService($base_path, $displayscreen = '', $user_id = null)
     {
-
+        $brands_list = [];
         $result_new = $this->repo->findAllAvailableRecords();
 
         $path = '';
@@ -409,19 +409,61 @@ class BannerHelper
             }
         }
         $directorypath = dirname($path) . '/';
-        $results = $this->repo->findAllBanners($displayscreen);
 
+        if($user_id != null){
+            $results = $this->repo->findAllBanners($displayscreen);
+        }else{
+            $results = $this->repo->findAllBannersBannerTypeFour($displayscreen);
+        }
 
         foreach ($results as $key => $value) {
-
             if ($results[$key]['banner_type'] == 1) {
                 $results[$key]['title'] = null;
             }
-            if (isset($results[$key]['banner_image'])) {
-                if ($results[$key]['banner_image'] != null) {
-                    $results[$key]['banner_image'] = $base_path . $directorypath . $results[$key]['banner_image'];
+
+            if ($results[$key]['banner_type'] == 5) {
+                $shop_look_information = $this->container->get('admin.helper.shoplook')->find($results[$key]['shoplook_id']);
+                $results[$key]['title'] = $shop_look_information->getName();
+                $results[$key]['banner_image'] = $base_path . 'uploads/ltf/shop_look/' . $shop_look_information->getShopModelImage();
+            }
+
+            if ($results[$key]['banner_type'] == 6 && !empty($results[$key]['product_id'])) {
+                $product = $this->container->get('admin.helper.product')->getProductDetail($results[$key]['product_id']);
+                if(!empty($product)) {
+                    $index = 0;
+                    if (($product[$index]['uf_user'] != null) && ($product[$index]['uf_user'] == $user_id)) {
+                        $product[$index]['fitting_room_status'] = true;
+                        $product[$index]['qty'] = $product[$index]['uf_qty'];
+                    } else {
+                        $product[$index]['fitting_room_status'] = false;
+                        $product[$index]['qty'] = 0;
+                    }
+                    $results[$key]['product'] = $product[0];
                 }
             }
+
+            if ($results[$key]['banner_type'] == 7) {
+                if (empty($brands_list)) {
+                    $brands_list = $this->container->get('admin.helper.brand')->getBrandsArray();
+                }
+                $results[$key]['brand_list'] = $brands_list;
+            }
+
+            if ($results[$key]['banner_type'] == 8) {
+                if (!empty($results[$key]['banner_filter'])) {
+                    $filter =  json_decode($results[$key]['banner_filter'], true);
+                    $results[$key]['product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
+                }
+            }
+
+            if ($results[$key]['banner_type'] != 5) {
+                if (isset($results[$key]['banner_image'])) {
+                    if ($results[$key]['banner_image'] != null) {
+                        $results[$key]['banner_image'] = $base_path . $directorypath . $results[$key]['banner_image'];
+                    }
+                }
+            }
+            unset($results[$key]['banner_filter']);
         }
 
         $fArray = [];
@@ -430,6 +472,39 @@ class BannerHelper
 
             if ($result['parent_id'] == null) {
                 $a++;
+                if ($result['banner_type'] == 5) {
+                    if (!empty($result['shoplook_id']) && $result['shoplook_id'] > 0) {
+                        $shop_Look = [];
+                        $shopLook = $this->container->get('admin.helper.shoplook')->find($result['shoplook_id']);
+                        $path = "http://" . $_SERVER['HTTP_HOST'] . '/uploads/ltf/shop_look/';
+                        $shop_Look['id'] = (int)$shopLook->getId();
+                        $shop_Look['sorting'] = (int)$shopLook->getSorting();
+                        $shop_Look['shop_model_image'] = $path . $shopLook->getShopModelImage();
+                        $shop_Look['name'] = $shopLook->getName();
+                        $shoplook_id = $shopLook->getId();
+                        $product_information = $this->container->get('admin.helper.shoplookproduct')->getShopLookProductsById($shoplook_id);
+
+                        foreach ($product_information as $product_key => $product_value) {
+                            $product_information[$product_key]['id'] = (int)$product_information[$product_key]['id'];
+                            $product_information[$product_key]['shop_look_id'] = (int)$product_information[$product_key]['shop_look_id'];
+                            $product_information[$product_key]['sorting'] = (int)$product_information[$product_key]['sorting'];
+
+                            if (isset($product_information[$product_key]['product_id'])) {
+                                $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+
+                                $product = $this->container->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
+                                $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
+                                $product_images = $this->container->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
+                                if (!empty($product_images)) {
+                                    $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
+                                }
+                            }
+                        }
+                        //$product_images = $this->get('webservice.helper')->productImageById($shop_look_products_information[$key]['product_id']);
+                        $shop_Look['products_id'] = $product_information;
+                    }
+                }
+
                 $fArray[$a]['banner_type'] = $result['banner_type'];
                 $fArray[$a]['display_screen'] = $result['display_screen'];
                 $fArray[$a]['sorting'] = $result['sorting'];
@@ -437,28 +512,33 @@ class BannerHelper
 
                 unset($result['parent_id']);
                 if (isset($result['shoplook_id']) && $result['shoplook_id'] > 0) {
-                    $id = $result['shoplook_id'];
+                    if($result['banner_type'] != 5) {
+                        $id = $result['shoplook_id'];
 
-                    $product_information = $this->container->get('admin.helper.shoplookproduct')->getShopLookProductsById($id);
+                        $product_information = $this->container->get('admin.helper.shoplookproduct')->getShopLookProductsById($id);
 
-                    foreach($product_information as $product_key => $product_value){
-                        $product_information[$product_key]['id'] = (int)$product_information[$product_key]['id'];
-                        $product_information[$product_key]['shop_look_id'] = (int)$product_information[$product_key]['shop_look_id'];
-                        $product_information[$product_key]['sorting'] = (int)$product_information[$product_key]['sorting'];
+                        foreach($product_information as $product_key => $product_value){
+                            $product_information[$product_key]['id'] = (int)$product_information[$product_key]['id'];
+                            $product_information[$product_key]['shop_look_id'] = (int)$product_information[$product_key]['shop_look_id'];
+                            $product_information[$product_key]['sorting'] = (int)$product_information[$product_key]['sorting'];
 
-                        if(isset($product_information[$product_key]['product_id'])){
-                            $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
+                            if(isset($product_information[$product_key]['product_id'])){
+                                $product_information[$product_key]['product_id'] = (int)$product_information[$product_key]['product_id'];
 
-                            $product = $this->container->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
-                            $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
-                            $product_images = $this->container->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
-                            if (!empty($product_images)) {
-                                $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
+                                $product = $this->container->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
+                                $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
+                                $product_images = $this->container->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
+                                if (!empty($product_images)) {
+                                    $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
+                                }
                             }
                         }
+                        //$product_images = $this->get('webservice.helper')->productImageById($shop_look_products_information[$key]['product_id']);
+                        $result['products_id'] = $product_information;
+                    } else {
+                        $result['shop_look'] = $shop_Look;
+                        unset($result['shoplook_id']);
                     }
-                    //$product_images = $this->get('webservice.helper')->productImageById($shop_look_products_information[$key]['product_id']);
-                    $result['products_id'] = $product_information;
                 }
 
                 $fArray[$a]['object'][] = $result;

@@ -69,6 +69,7 @@
                   <ul class="dropdown-content">
                       <li><a href="{{ path('admin_favorite') }}">Favorite Products Log</a></li>
                       <li><a href="{{ path('users_activity_home') }}">Users Activity Log</a></li>
+                      <li><a href="{{ path('admin_visitors') }}">Visitors Log</a></li>
                   </ul>
               </li>
               <li><a href="{{ path('admin_marketingtiles') }}">Marketing Tiles</a></li>
@@ -259,7 +260,7 @@
                 source:function (request, response) {
                     $.ajax({
                         type: "POST",
-                        url:"../admin/autocomplete_user/autocomplete_user_search_result",
+                        url:"/admin/autocomplete_user/autocomplete_user_search_result",
                         data: request,
                         success: response,
                         dataType: 'json'

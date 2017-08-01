@@ -1818,7 +1818,10 @@ class ProductRepository extends EntityRepository
                  p.fit_type,
                  p.horizontal_stretch,
                  p.vertical_stretch,
+                 p.item_name,
                  p.styling_type,
+                 p.item_details,
+                 p.care_label,
                 GROUP_CONCAT(DISTINCT c.name order by c.id) as categories_name,
                  p.description as description FROM product p
 
@@ -1844,51 +1847,67 @@ class ProductRepository extends EntityRepository
         return $query->getResult();
     }
 
+    #--------------------------------------------------------------
+    public function productDetailForBanner($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi')
+            ->andWhere('p.id = :id')
+            ->andWhere("p.displayProductColor!=''")
+            ->andWhere('p.disabled=0')
+            ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
+            ->groupBy('p.id')
+            ->setParameters(array('id' => $id))
+            ->getQuery();
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function countProductsByGender($gender)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(p)')->from('LoveThatFitAdminBundle:Product', 'p')
+            ->where('p.deleted=0')
+            ->andWhere('p.gender=:gender')
+            ->setParameter('gender', $gender);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function countProducts()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(p)')->from('LoveThatFitAdminBundle:Product', 'p')
+            ->where('p.deleted=0');
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function countProductsByType($target)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(p)')->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->where('ct.target=:target')
+            ->andWhere('p.deleted=0')
+            ->setParameter('target', $target);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
 }
-
-/*
-public function getAllProductsIds(
-    $data,
-    $page = 0,
-    $max = NULL,
-    $order,
-    $getResult = true
-)
-{
-    $query = $this->getEntityManager()->createQueryBuilder();
-    $search = isset($data['query']) && $data['query']?$data['query']:null;
-    $query
-        ->select('p.id')
-        ->from('LoveThatFitAdminBundle:Product', 'p')
-        ->Where('p.disabled=0');
-
-    if ($search) {
-        $query
-            ->andWhere('p.control_number like :search')
-            ->orWhere('p.name like :search')
-            ->setParameter('search', "%".$search."%");
-    }
-    if (is_array($order)) {
-        $orderByColumn    = $order[0]['column'];
-        $orderByDirection = $order[0]['dir'];
-        // if ($orderByColumn == 0) {
-        //    $orderByColumn = "p.control_number";
-        // } elseif ($orderByColumn == 3) {
-        //     $orderByColumn = "p.name";
-        // } else {
-        //     $orderByColumn = "p.id";
-        // }
-        $query->orderBy("p.id", "desc");
-    }
-
-    if ($max) {
-        $preparedQuery = $query->getQuery()
-            ->setMaxResults($max)
-            ->setFirstResult(($page) * $max);
-    } else {
-        $preparedQuery = $query->getQuery();
-    }
-    return $getResult?$preparedQuery->getResult():$preparedQuery;
-}
-*/
-//}

@@ -11,16 +11,8 @@ class UserController extends Controller {
 
     public function indexAction()
     {
-        $totalRecords = $this->get('user.helper.user')->countAllUserRecord();
-        $femaleUsers  = $this->get('user.helper.user')->countByGender('f');
-        $maleUsers    = $this->get('user.helper.user')->countByGender('m');
 
-        return $this->render('LoveThatFitSupportBundle:User:index.html.twig',
-            array('rec_count' => count($totalRecords),
-                'femaleUsers' => $femaleUsers,
-                'maleUsers'   => $maleUsers
-            )
-        );
+        return $this->render('LoveThatFitSupportBundle:User:index.html.twig');
     }
 
     public function paginateAction(Request $request)

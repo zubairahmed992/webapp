@@ -14,7 +14,7 @@ class ClothingTypeController extends Controller {
 
     public function indexAction($page_number, $sort = 'id') {
 
-        $clothing_types = $this->get('admin.helper.clothingtype')->findAll();
+        $clothing_types = $this->get('admin.helper.clothingtype')->findAllList();
         return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
     }
 

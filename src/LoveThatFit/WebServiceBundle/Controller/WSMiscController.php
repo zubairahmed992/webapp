@@ -67,6 +67,19 @@ class WSMiscController extends Controller {
                 'message' => 'configuration for build deployment',
                 'success' => 'true',
             );
+        }else if($decoded["app_name"] == 'v3'){
+            $conf= array(
+                'data' => array(
+                    array('build_type'=>'dev','url'=>'dev.selfiestyler.com'),
+                    array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
+                    array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
+                    array('build_type'=>'localserver','url'=>'192.168.0.5'),
+                    array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
+                ),
+                'count'=>5,
+                'message' => 'configuration for build deployment',
+                'success' => true,
+            );
         }else{
             $conf= array(
                 'data' => array(
@@ -77,6 +90,7 @@ class WSMiscController extends Controller {
                     'devim'=>array('build_type'=>'devim','url'=>'dev.im.selfiestyler.com'),
                     'lab'=>array('build_type'=>'lab','url'=>'lab.selfiestyler.com'),
                     'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
+                    'Ibrahim'=>array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
                     'V3QA Server'=>array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
                     'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
@@ -84,7 +98,7 @@ class WSMiscController extends Controller {
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
                     'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
                 ),
-                'count'=>3,
+                'count'=>14,
                 'message' => 'configuration for build deployment',
                 'success' => 'true',
             );

@@ -56,8 +56,8 @@ class ProductController extends Controller {
             array(
                 'femaleProduct' => $this->get('admin.helper.product')->countProductsByGender('f'),
                 'maleProduct' => $this->get('admin.helper.product')->countProductsByGender('m'),
-                'rec_count' => $this->get('admin.helper.product')->getTotalProductCount(),
-                'brandList' => $this->container->get('admin.helper.brand')->findAll(),
+                'rec_count' => $this->get('admin.helper.product')->countProducts(),
+                'brandList' => $this->container->get('admin.helper.brand')->getBrandsNameList(),
                 'topProduct' => $this->get('admin.helper.product')->countProductsByType('Top'),
                 'bottomProduct' => $this->get('admin.helper.product')->countProductsByType('Bottom'),
                 'dressProduct' => $this->get('admin.helper.product')->countProductsByType('Dress'),
@@ -259,6 +259,8 @@ class ProductController extends Controller {
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType(),$status,$disabled), $entity);
         $form->bind($request);
         $data = $request->request->all();
+        $data['product']['disabled'] = $data['disabled'];
+        unset($data['disabled']);
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId(), 'product' => $entity, 'fit_priority' => $entity->getFitPriority())));

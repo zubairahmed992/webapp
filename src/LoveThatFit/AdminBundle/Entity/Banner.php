@@ -131,6 +131,19 @@ class Banner
 
     protected $banner_shoplook;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Product", inversedBy="product_banner")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $banner_product;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $banner_filter;
+
     /**
      * Get id
      *
@@ -608,10 +621,56 @@ class Banner
     /**
      * Get banner_shoplook
      *
-     * @return \LoveThatFit\AdminBundle\Entity\ShopLook 
+     * @return \LoveThatFit\AdminBundle\Entity\ShopLook
      */
     public function getBannerShoplook()
     {
         return $this->banner_shoplook;
+    }
+
+    /**
+     * Set banner_product
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $bannerProduct
+     * @return Banner
+     */
+    public function setBannerProduct(\LoveThatFit\AdminBundle\Entity\Product $bannerProduct = null)
+    {
+        $this->banner_product = $bannerProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get banner_product
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Product
+     */
+    public function getBannerProduct()
+    {
+        return $this->banner_product;
+    }
+
+    /**
+     * Set banner_filter
+     *
+     * @param string $banner_filter
+     * @return Banner
+     */
+    public function setBannerFilter($banner_filter)
+    {
+        $this->banner_filter = $banner_filter;
+
+        return $this;
+    }
+
+    /**
+     * Get banner_filter
+     *
+     * @return string
+     */
+    public function getBannerFilter()
+    {
+        return $this->banner_filter;
     }
 }

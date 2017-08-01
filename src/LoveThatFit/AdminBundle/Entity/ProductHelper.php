@@ -389,9 +389,8 @@ class ProductHelper
         return $output;
     }
 
-    public function searchAllProduct($data){
-		
-		
+    public function searchAllProduct($data)
+    {
         $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
         //length
         $length  = $data['length'];
@@ -408,9 +407,7 @@ class ProductHelper
             'query'     => @$search['value'],
         ];
 
-
         $finalData = $this->repo->searchAllProduct($filters, $start, $length, $order);
-
         $output = array(
             "draw"            => $draw,
             'recordsFiltered' => count($this->repo->searchAllProduct($filters, 0, false, $order)),
@@ -418,48 +415,37 @@ class ProductHelper
             'data'            => array()
         );
 
-
         foreach ($finalData as $fData) {
-			
-			
-			 
-			 $priceData = $this->repo->checked_for_price($fData["id"]);			 
-			 $weightData = $this->repo->checked_for_weight($fData["id"]);
-             $getselectedcategories = $this->repo->getSelectedCategories($fData["id"]);
-
-
-               $cat_count = 0;
-               if(count($getselectedcategories) > 0)
-               {
-                  $cat_count = "1";
-               } 
-
-			 $totalItems = $this->repo->checked_total_items_listing($fData["id"]);		 			 
-			
+            $priceData = $this->repo->checked_for_price($fData["id"]);
+            $weightData = $this->repo->checked_for_weight($fData["id"]);
+            $getselectedcategories = $this->repo->getSelectedCategories($fData["id"]);
+            $cat_count = 0;
+            if(count($getselectedcategories) > 0)
+            {
+                $cat_count = "1";
+            } 
+            $totalItems = $this->repo->checked_total_items_listing($fData["id"]);		 			 
             $output['data'][] = [
-                'id' => $fData["id"],
-                'control_number' => $fData["control_number"],
-                'BName' => $fData["BName"],
-                'ClothingType' => $fData["cloting_type"],
-                'gender' => $fData["gender"],
-                'PName' => $fData['name'],
-				'description' => $fData['description'],
-				'item_name' => $fData['item_name'],
-				'country_origin' => $fData['country_origin'],
-				'item_details' => $fData['item_details'],
-				'care_label' => $fData['care_label'],																
-				'total_items' => $totalItems[0]['total_items'],
-                'total_items' => $totalItems[0]['total_items'],
-				'cat_count' => $cat_count,
-				'weight_status' => $weightData[0]['no_weight'],				
-                'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
-                'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
-                'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending"
+            'id' => $fData["id"],
+            'control_number' => $fData["control_number"],
+            'BName' => $fData["BName"],
+            'ClothingType' => $fData["cloting_type"],
+            'gender' => $fData["gender"],
+            'PName' => $fData['name'],
+            'description' => $fData['description'],
+            'item_name' => $fData['item_name'],
+            'country_origin' => $fData['country_origin'],
+            'item_details' => $fData['item_details'],
+            'care_label' => $fData['care_label'],
+            'total_items' => $totalItems[0]['total_items'],
+            'total_items' => $totalItems[0]['total_items'],
+            'cat_count' => $cat_count,
+            'weight_status' => $weightData[0]['no_weight'],				
+            'created_at' => $fData['created_at']->format('Y-m-d H:i:s'),
+            'status'    => ($fData['disabled'] == 1) ? "Disabled" : "Enabled",
+            'pstatus'   => ($fData['status']) ? ucfirst($fData['status']) : "Pending"
             ];
         }
-		
-		
-
         return $output;
     }
 
@@ -514,7 +500,7 @@ class ProductHelper
 #---------------------------------------------------    
     public function countProductsByGender($gender)
     {
-        return count($this->repo->findPrductByGender($gender));
+        return $this->repo->countProductsByGender($gender);
     }
 
 
@@ -523,7 +509,7 @@ class ProductHelper
     public function countProductsByType($target)
     {
 
-        return count($this->repo->findPrductByType($target));
+        return $this->repo->countProductsByType($target);
     }
 
 #-------------------------------------------------------------------------------
@@ -1042,6 +1028,9 @@ class ProductHelper
         }
         if (isset($data['product']['rise'])) {
             $entity->setRise($data['product']['rise']);
+        }
+        if (isset($data['product']['disabled'])) {
+            $entity->setDisabled($data['product']['disabled']);
         }
         if (isset($data['fit_pirority'])) {
             $entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));
@@ -1838,5 +1827,14 @@ class ProductHelper
         }
 
         return $ids;
+    }
+
+    public function getProductDetail($id) {
+        return $this->repo->productDetailForBanner($id);
+    }
+
+    public function countProducts()
+    {
+        return $this->repo->countProducts();
     }
 }

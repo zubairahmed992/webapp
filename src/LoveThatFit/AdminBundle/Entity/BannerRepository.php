@@ -137,22 +137,23 @@ class BannerRepository extends EntityRepository
 
         if ($displayscreen != '') {
             $query = $this->getEntityManager()
-                ->createQuery("SELECT c.id as id, s.id as shoplook_id, c.parent_id as parent_id, c.name as title,
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, p.id as product_id, c.parent_id as parent_id, c.name as title,
                 c.image as banner_image ,c.image_position as image_position,
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
                 c.sorting as sorting ,c.price_min as price_min,
-                c.price_max as price_max , 'banner' AS type
+                c.price_max as price_max , 'banner' AS type, c.banner_filter as banner_filter
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
                 left JOIN c.banner_shoplook s
+                left JOIN c.banner_product p
                 WHERE c.disabled=0 AND c.display_screen = :display_screen
                 GROUP BY c.id
                 order by c.sorting")
                 ->setParameters(array('display_screen' => $displayscreen));
         } else {
             $query = $this->getEntityManager()
-                ->createQuery("SELECT c.id as id, s.id as shoplook_id, c.parent_id as parent_id, c.name as title,
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, p.id as product_id, c.parent_id as parent_id, c.name as title,
                 c.image as banner_image ,c.image_position as image_position,
                 c.banner_type as banner_type ,c.display_screen as display_screen,
                 c.cat_id as targeted_cat_id ,c.description as description,
@@ -161,6 +162,7 @@ class BannerRepository extends EntityRepository
                 FROM LoveThatFitAdminBundle:Banner c
                 LEFT JOIN c.children d
                 left JOIN c.banner_shoplook s
+                left JOIN c.banner_product p
                 WHERE c.disabled=0
                 GROUP BY c.id
                 order by c.sorting");
@@ -475,5 +477,48 @@ class BannerRepository extends EntityRepository
 
     }
 
+#-------------Find All Banner for Web Service -----#
+    public function findAllBannersBannerTypeFour($displayscreen = '')
+    {
 
+        if ($displayscreen != '') {
+            $query = $this->getEntityManager()
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, p.id as product_id, c.parent_id as parent_id, c.name as title,
+                c.image as banner_image ,c.image_position as image_position,
+                c.banner_type as banner_type ,c.display_screen as display_screen,
+                c.cat_id as targeted_cat_id ,c.description as description,
+                c.sorting as sorting ,c.price_min as price_min,
+                c.price_max as price_max , 'banner' AS type, c.banner_filter as banner_filter
+                FROM LoveThatFitAdminBundle:Banner c
+                LEFT JOIN c.children d
+                left JOIN c.banner_shoplook s
+                left JOIN c.banner_product p
+                WHERE c.disabled=0 AND c.display_screen = :display_screen AND c.banner_type IN ('1','2','3','4')
+                GROUP BY c.id
+                order by c.sorting")
+                ->setParameters(array('display_screen' => $displayscreen));
+        } else {
+            $query = $this->getEntityManager()
+                ->createQuery("SELECT c.id as id, s.id as shoplook_id, p.id as product_id, c.parent_id as parent_id, c.name as title,
+                c.image as banner_image ,c.image_position as image_position,
+                c.banner_type as banner_type ,c.display_screen as display_screen,
+                c.cat_id as targeted_cat_id ,c.description as description,
+                c.sorting as sorting ,c.price_min as price_min,
+                c.price_max as price_max , 'banner' AS type
+                FROM LoveThatFitAdminBundle:Banner c
+                LEFT JOIN c.children d
+                left JOIN c.banner_shoplook s
+                left JOIN c.banner_product p
+                WHERE c.disabled=0 AND c.banner_type IN ('1','2','3','4')
+                GROUP BY c.id
+                order by c.sorting");
+        }
+
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

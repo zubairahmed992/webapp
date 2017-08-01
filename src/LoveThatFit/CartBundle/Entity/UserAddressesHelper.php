@@ -198,6 +198,39 @@ class UserAddressesHelper
         $billing_id = $decoded['billing_id'];
         if($billing_id > 0){
             $address = $decoded["billing"];
+
+            if($address['shipping_same'] == 1){
+                $address_info = $this->createNew();
+                $address_info->setUser($user);
+                $address_info->setFirstName($address["billing_first_name"]);
+                $address_info->setLastName($address["billing_last_name"]);
+                $address_info->setAddress1($address["billing_address1"]);
+                $address_info->setAddress2($address["billing_address2"]);
+                $address_info->setPhone($address["billing_phone"]);
+                $address_info->setCity($address["billing_city"]);
+                $address_info->setPostCode($address["billing_postcode"]);
+                $address_info->setCountry($address["billing_country"]);
+                $address_info->setState($address["billing_state"]);
+
+                if(isset($address['cleanseHash']) && !empty($address['cleanseHash']))
+                    $address_info->setCleanseHash($address['cleanseHash']);
+
+                //$this->markedPreviousShippingAddressNonDefault($user);
+
+                $isDefault = 0;
+                if(!$this->getUserAddress( $user )){
+                    $isDefault = 1;
+                }
+
+                $address_info->setShippingDefault($isDefault);
+                $address_info->setBillingDefault('0');
+                $address_info->setAddressType('2');
+
+                if(isset($decoded['data']))
+                    $address_info->setAddressData(json_encode($decoded['data']));
+                $this->save($address_info);
+            }
+
             $address_info = $this->find($billing_id);
 
             $address_info->setFirstName($address["billing_first_name"]);

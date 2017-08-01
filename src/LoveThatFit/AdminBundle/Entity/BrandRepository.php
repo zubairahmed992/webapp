@@ -397,4 +397,29 @@ class BrandRepository extends EntityRepository {
         }
     }
 
+    #-----------------------------------------------------------------------------#
+    public function getBrandsArray()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('SELECT b.id as brand_id, b.name as name,\'brand\' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
+                WHERE b.disabled = 0 ORDER BY name asc');
+        try {
+            return $query->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+
+    public function getBrandsNameList()
+    {
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('b.id, b.name')
+            ->from('LoveThatFitAdminBundle:Brand', 'b');
+        try {
+            return $query->getQuery()->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        } 
+    }
+
 }

@@ -528,15 +528,34 @@ ws_get_braintree_client_token:
     params:
       auth_token: 121c421783cd4d71d871ec16a1296091
 #//////////////////// APP 3.0///////////////////////////////////    
+nws_brand_banner:
+    pattern:  /nws/brand_banner
+    title: brand_banner
+    params:
+       brand_id: 1
+       auth_token: 56565656566
+    request_type: post
+    description: return Product against Brand id
+
+nws_filter_banner:
+    pattern:  /nws/filter_banner
+    title: filter_banner
+    params:
+       banner_id: 21
+       auth_token: 56565656566
+    request_type: post
+    description: return Product against specified Filter
+
 nws_banner_category:
     pattern:  /nws/banner_category
     title: banner_category
     params:
        gender: f
        date: 1388577600
+       auth_token: 56565656566
     request_type: post
     description: return Category list against authentication token
-    
+
 nws_product_list:
     pattern:  /nws/product_list
     title: product_list
@@ -803,6 +822,7 @@ new_register_device_token:
   params:
     auth_token: 121c421783cd4d71d871ec16a1296091
     device_token: 11223344556677889900112233445566778899000
+
     
 pi_ws_product_fitting_room_image_upload:
     pattern: /pi/ws/product_fitting_room_image_upload
@@ -811,3 +831,15 @@ pi_ws_product_fitting_room_image_upload:
     params:         
       request_type: post
     
+
+
+#______________________
+mcp_get_user_mask_marker_details:
+    pattern:  /mcp/get_user_mask_marker_details
+    title: get_user_mask_marker_details
+    params:
+          auth_token: 00000000000000000000000000000
+          email: ovais.rafique@centricsource.com
+    request_type: post
+    description: return user mask markder details against user token 
+
