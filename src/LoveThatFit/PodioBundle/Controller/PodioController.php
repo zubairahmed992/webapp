@@ -24,6 +24,9 @@ class PodioController extends Controller {
       //if order list exists
       $total_podio_orders = count($podio_orders);
       foreach ($podio_orders as $orders) {
+          //get user info
+          $user_info = $this->get('cart.helper.order')->findUserByOrderId($orders['order_id']);  
+          $user_email = $user_info[0]['email'];
           //get order detail list
           $order_details = $this->get('cart.helper.orderDetail')->findByOrderID($orders['order_id']);                
           $id = $orders['id']; 
@@ -109,7 +112,8 @@ class PodioController extends Controller {
                    'control_number' => ($order_detail['control_number']) ? $order_detail['control_number'] : '',
                    'style_id' => $style_id,
                    'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : '',
-                   'full_address_shipping' => ($full_address_shipping) ? $full_address_shipping : ''
+                   'full_address_shipping' => ($full_address_shipping) ? $full_address_shipping : '',
+                   'user_email' => ($user_email) ? $user_email : ''
                 ); 
               //save podio order data
               $podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
