@@ -446,8 +446,8 @@ class BannerHelper
                 if (empty($brands_list)) {
                     $brands_list = $this->container->get('admin.helper.brand')->getBrandsArray();
                     $brand_path = "http://" . $_SERVER['HTTP_HOST'] . '/uploads/ltf/brands/iphone/';
-                    foreach($brands_list as $key => $brand) {
-                        $brands_list[$key]['image'] = $brand_path . $brand['image'];
+                    foreach($brands_list as $brand_key => $brand) {
+                        $brands_list[$brand_key]['image'] = $brand_path . $brand['image'];
                     }
                 }
                 $results[$key]['brand_list'] = $brands_list;
