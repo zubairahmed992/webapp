@@ -291,5 +291,107 @@ class ServiceController extends Controller {
             'message' => $message,
         );
     }
+    
+    
+    //---------------------- pi_ws_product_fitting_room_image_upload
+    public function productFittingRoomImageUploadAction(Request $request) {    
+        // $array_format = explode("_", strtolower('Champion_7791_black_WR_20_XXL.jpg')); 
+         //return new JsonResponse([count($array_format)]);
+        try {            
+            $imageFile = $request->files->get('file');                        
+            $response = $this->imageUploadProductItemSizeNewFormat($_FILES, $imageFile);
+            return new JsonResponse($response);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
+    
+     #---------------------------------------Image Uplaod New Format Function -------------------------------
+      public function imageUploadProductItemSizeNewFormat($FILES , $image_file)    {  
+        #$allowed = array('png', 'jpg');        
+        $request = $this->getRequest();
+        if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {            
+            $file_name = $FILES['file']['name'];            
+            $parsed_details = $this->breakFileNameProductImageUplaodNewFormat($file_name);   
+            
+            #--------------------------------------------------------------
+            if ($parsed_details['success'] == 'false') {                
+                return $this->responseArray($parsed_details['message']);
+            } else {                
+                $image_name_break = explode('_', $_FILES['file']['name']);
+                $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-', ' ', $image_name_break[0]), $image_name_break[1]);                            
+                if (count($data)==0) {
+                    return $this->responseArray('Product not found');#------------------------------------------>
+                }
+                $parsed_details['product_id'] = $data[0]['id'];
+                $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);                
+                $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+                $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitleBodyType(strtolower($parsed_details['size_title']),($parsed_details['body_type']), $parsed_details['product_id']);                
+                                
+                if (count($product_color) == 0) {
+                    return $this->responseArray($parsed_details['color_title'] . ' color not found');#------------------------------------------>
+                }
+                if(count($product_size) == 0){                     
+                    return $this->responseArray($parsed_details['body_type'] + ' ' + $parsed_details['size_title'] + ' size not found');#------------------------------------------>
+                }                                
+                $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
+                if (count($product_item_id) == 0) {
+                    $this->get('admin.helper.productitem')->addItem($product, $product_color, $product_size);
+                }
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);                                
+                $product_item->file = $image_file;
+                $product_item->upload();
+                $this->get('admin.helper.productitem')->save($product_item);                
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+                $baseurl .'/'. $product_item->getWebPath();                
+                $uploaded=false;                
+                
+                if(file_exists($product_item->getAbsolutePath())) {
+                    $uploaded=true;
+                }
+                
+                return $this->responseArray('File uploaded', $uploaded, $baseurl .'/'. $product_item->getWebPath());
+            }
+        }        
+        return $this->responseArray('File is missing');
+
+    }   //------------- End Image Uplaod Function
+    
+    
+    #-------------------------------product_image_upload_new_format -----------------------------------------
+     private function breakFileNameProductImageUplaodNewFormat($request_array) {       
+        #Format New : Brand_StyleID_ColorShot_SizeRange_VerticalMeasurement_SizeShot.png
+        # 0 brand
+        # 1 Style_id
+        # 2 Color title
+        # 3 Size Range / Biody Type
+        # 4 Vertical Measurement
+        # 5 Size Title       
+        $body_range_array = array('wc' => 'Contemporary', "wr" => "Regular", "wp" => "Petite", "wpl" => "Plus", "jr" => "Regular", "jp" => "Plus", "mr" => "Regular", "mbt" => "B&T", "ms" => "Slim"); 
+        $_exploded = explode("_", strtolower($request_array));                
+        
+        if(!array_key_exists($_exploded[3], $body_range_array)){
+            return array('message' => 'Invalid Body Range ' . strtoupper($_exploded[3]) . ', (valid ranges: WC, WR, WP, WPL, JR, JP, MR, MR, MBT, MS)', 'success' => 'false');
+        }
+        
+        if (count($_exploded) == 6) {
+            $a['brand'] = str_replace("-", " ", $_exploded[0]);
+            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            $a['body_type'] = strtolower($body_range_array[$_exploded[3]]);
+            $a['vertical_measurement'] = $_exploded[4];
+            #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
+            $_file_name = explode(".", $_exploded[5]);              
+            $a['size_title'] = strtoupper($_file_name[0]);
+            $a['success'] = 'true';
+            return $a;
+        } else {
+            return array('message' => 'Invalid Naming Format!', 'success' => 'false');
+        }
+    }
 
 }

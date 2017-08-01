@@ -11,6 +11,10 @@
   <b>Recommendation</b> 
     {{data.recommendation.description}}
   </p>
+  <p>
+  <b>Optimum Fit</b> 
+    {{data.optimum_fit.description}}
+  </p>
   <b>Layer</b> 
     {{data.layering}}
   </p>
@@ -62,7 +66,7 @@
                                         <th>Max Actual</th>
                                         <th>MAX Calc</th>
                                         <th>message</th>
-                                        <th>variance</th>
+                                        <th>variance<span style="float: right;">(∑)</span></th>
                                                                               
                                     </tr>
                                 
@@ -138,7 +142,7 @@
                                                 {{size_specs.message}}
                                             </span>   
                                         </td>                                                                                
-                                        <td>{{size_specs.variance}}</td>                
+                                        <td>{{size_specs.variance}} <span style="float: right;font-size: 10px;">({{size_specs.variance_sum}})</span></td>                
                                         
                                         
                                         
