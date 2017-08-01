@@ -101,6 +101,7 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
+            $('.chosen-select').prop('disabled', true).trigger("liszt:updated");
             /*$('.chosen-select').chosen('destroy').val(selectedcategory).chosen();
             $('.chosen-select1').chosen('destroy').val(selectedbrand).chosen();
             $('.chosen-select2').chosen('destroy').val(selectedcolor).chosen();*/
@@ -135,6 +136,7 @@
 
             $("#banner_banner_type").on("change", function(index){
                 selected_banner_type_var = $(this).find(":selected").val();
+                $('.chosen-select').prop('disabled', true).trigger("liszt:updated");
                 if (selected_banner_type_var == 4) {
                     $("#shop_look").css("visibility", "visible");
                     $("#banner_level_div").css("visibility", "hidden");
@@ -187,7 +189,7 @@
                     $('#banner-pricemax-div').show();
                     $('#banner_price_max').val(max_price);
 
-
+                    $('.chosen-select').prop('disabled', false).trigger("liszt:updated");
                 } else {
                     $("#shop_look").css("visibility", "hidden");
                     $("#banner_level_div").css("visibility", "visible");
@@ -273,6 +275,7 @@
                     $('#banner_price_min').val(min_price);
                     $('#banner-pricemax-div').show();
                     $('#banner_price_max').val(max_price);
+                    $('.chosen-select').prop('disabled', false).trigger("liszt:updated");
                     break;
             }
         }

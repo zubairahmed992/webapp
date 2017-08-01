@@ -445,6 +445,10 @@ class BannerHelper
             if ($results[$key]['banner_type'] == 7) {
                 if (empty($brands_list)) {
                     $brands_list = $this->container->get('admin.helper.brand')->getBrandsArray();
+                    $brand_path = "http://" . $_SERVER['HTTP_HOST'] . '/uploads/ltf/brands/iphone/';
+                    foreach($brands_list as $brand_key => $brand) {
+                        $brands_list[$brand_key]['image'] = $brand_path . $brand['image'];
+                    }
                 }
                 $results[$key]['brand_list'] = $brands_list;
             }
@@ -477,7 +481,7 @@ class BannerHelper
                         $shop_Look = [];
                         $shopLook = $this->container->get('admin.helper.shoplook')->find($result['shoplook_id']);
                         $path = "http://" . $_SERVER['HTTP_HOST'] . '/uploads/ltf/shop_look/';
-                        $shop_Look['shoplook_id'] = (int)$shopLook->getId();
+                        $shop_Look['id'] = (int)$shopLook->getId();
                         $shop_Look['sorting'] = (int)$shopLook->getSorting();
                         $shop_Look['shop_model_image'] = $path . $shopLook->getShopModelImage();
                         $shop_Look['name'] = $shopLook->getName();
@@ -538,7 +542,6 @@ class BannerHelper
                     } else {
                         $result['shop_look'] = $shop_Look;
                         unset($result['shoplook_id']);
-                        unset($result['title']);
                     }
                 }
 

@@ -193,4 +193,15 @@ class UserOrderRepository extends EntityRepository
           	->getQuery()
           	->getResult();
 	}
+
+	public function findUserByOrderId($order_id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+      	return $query->select('u.email')
+      	  	->from('LoveThatFitCartBundle:UserOrder', 'o')
+      	  	->leftJoin("LoveThatFitUserBundle:User", "u", "WITH", "o.user = u.id")
+      	  	->where('o.id =:order_id')->setParameter('order_id', $order_id)
+          	->getQuery()
+          	->getResult();
+    }
 }
