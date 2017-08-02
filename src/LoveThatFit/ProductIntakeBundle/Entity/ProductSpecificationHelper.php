@@ -204,10 +204,10 @@ class ProductSpecificationHelper {
             $specs = $this->generate_specs_for_stretch($specs, $decoded['name']); #~~~~~~~~>1
         } elseif ($decoded['name'] == 'max_horizontal_stretch') {    #~~~~~~~~>2
             $specs[$decoded['name']] = $decoded['value'];    
-            $specs['horizontal_stretch'] = $decoded['value']/3;
+            $specs['horizontal_stretch'] = $specs['horizontal_stretch'] == 0 ? $decoded['value'] / 3 : $specs['horizontal_stretch'];
         } elseif( $decoded['name'] == 'max_vertical_stretch') {
             $specs[$decoded['name']] = $decoded['value'];    
-            $specs['vertical_stretch'] = $decoded['value']/3;
+            $specs['vertical_stretch'] = $specs['vertical_stretch'] == 0 ? $decoded['value'] / 3 : $specs['vertical_stretch'];
         } elseif (strpos($decoded['name'], 'fit_point_stretch') !== false) {    #~~~~~~~~>2
             $fit_point_stretch_array = explode('-', $decoded['name']);
             $specs['fit_point_stretch'][$fit_point_stretch_array[1]] = $decoded['value'];
