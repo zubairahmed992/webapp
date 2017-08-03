@@ -337,7 +337,10 @@ select#FNFUser_users.custom_select{height: 100px;}
 
 /* Custom CSS - Brand Popup - Mani*/
 .row-fluid .span3:not(.hds){
-	overflow: visible important;
+	overflow: visible !important;
+}
+.span3 {
+    overflow: visible !important;
 }
 .frm_ele {
     padding: 10px 0px;
