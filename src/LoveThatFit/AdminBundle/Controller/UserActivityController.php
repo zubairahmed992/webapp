@@ -15,9 +15,9 @@ class UserActivityController extends Controller
 {
     public function indexAction()
     {
-        $user_list = $this->get('user.helper.user')->getListWithPagination(0, 'email');
+        $user_list = $this->get('user.helper.user')->getActivityLog();
         return $this->render('LoveThatFitAdminBundle:UserActivity:index.html.twig', array(
-            'users' => $user_list['users'],
+            'users' => $user_list,
         ));
     }
 
