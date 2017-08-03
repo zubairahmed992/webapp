@@ -422,4 +422,15 @@ class BrandRepository extends EntityRepository {
         } 
     }
 
+    public function getBrandListEnable()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT b.id as id ,b.name as name FROM LoveThatFitAdminBundle:Brand b Where b.disabled = 0 ORDER BY name asc");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }
