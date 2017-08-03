@@ -18,6 +18,7 @@ class DefaultController extends Controller {
         $agegopus="Age in years";
 
         $ProductByBrand = $this->getProductByBrand();
+
         return $this->render('LoveThatFitAdminBundle:Default:index.html.twig', array(
                     'totalclotingtypes' => $this->countAllClothingType(),
                     'criteriaTop' => $this->countStatistics('Top'),
@@ -31,7 +32,7 @@ class DefaultController extends Controller {
                     'bottomProduct' => $this->countProductsByType('Bottom'),
                     'dressProduct' => $this->countProductsByType('Dress'),
                     'brandproduct' => $ProductByBrand,
-                    'users' => $this->getUsersData(),   
+                    'users' => $this->getUsersData(),
                     'noofmonths'=>$months,
                     'totalusers'=>$totalusers,
                     'ageinyears'=>$agegopus,
@@ -48,22 +49,24 @@ class DefaultController extends Controller {
     private function countAllClothingType() {
         $em = $this->getDoctrine()->getManager();
         $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
+        ##coment by umer due to not extra code
+        /*
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ClothingType')
                 ->findAllRecord();
-        $totalRecord = count($ClothingTypeObj->findAllRecord());
-        return $totalRecord;
+        */
+        return $ClothingTypeObj->countClothingType();
     }
 
     //--------------------------------------------------------------------------
     private function countStatistics($target) {
         $em = $this->getDoctrine()->getManager();
         $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                ->findStatisticsBy($target);
-        $rec_count = count($ClothingTypeObj->findStatisticsBy($target));
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitAdminBundle:ClothingType')
+        //         ->findStatisticsBy($target);
+        return $ClothingTypeObj->countClothingTypeByTarget($target);
     }
 
     //--------------------------------------------------------------------------
@@ -72,11 +75,12 @@ class DefaultController extends Controller {
     private function countAllBrands() {
         $em = $this->getDoctrine()->getManager();
         $BrandTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Brand')
-                ->countAllRecord();
-        $rec_count = count($BrandTypeObj->countAllRecord());
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitAdminBundle:Brand')
+        //         ->countAllRecord();
+
+        return $BrandTypeObj->countBrands();
     }
 
     //--------------------------------------------------------------------------
@@ -85,33 +89,33 @@ class DefaultController extends Controller {
     private function countAllListProduct() {
         $em = $this->getDoctrine()->getManager();
         $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->countAllRecord();
-        $rec_count = count($ProductTypeObj->countAllRecord());
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitAdminBundle:Product')
+        //         ->countAllRecord();
+        return $ProductTypeObj->countProducts();
     }
 
     //--------------------------------------------------------------------------
     private function countProductsByGender($gender) {
         $em = $this->getDoctrine()->getManager();
         $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findPrductByGender($gender);
-        $rec_count = count($ProductTypeObj->findPrductByGender($gender));
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitAdminBundle:Product')
+        //         ->findPrductByGender($gender);
+        return $ProductTypeObj->countProductsByGender($gender);
     }
 
 //--------------------------------------------------------------------------
     private function countProductsByType($target) {
         $em = $this->getDoctrine()->getManager();
         $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findPrductByType($target);
-        $rec_count = count($ProductTypeObj->findPrductByType($target));
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitAdminBundle:Product')
+        //         ->findPrductByType($target);
+        return $ProductTypeObj->countProductsByType($target);
     }
 
     //--------------------------------------------------------------------------
@@ -126,22 +130,22 @@ class DefaultController extends Controller {
     private function getUserByGender($gender) {
         $em = $this->getDoctrine()->getManager();
         $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                ->findUserByGender($gender);
-        $rec_count = count($UserTypeObj->findUserByGender($gender));
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitUserBundle:User')
+        //         ->findUserByGender($gender);
+        return $UserTypeObj->countUsersByGender($gender);
     }
 
     //--------------------------------------------------------------------------
     private function getAllUserList() {
         $em = $this->getDoctrine()->getManager();
         $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                ->findAll();
-        $rec_count = count($UserTypeObj->findAll());
-        return $rec_count;
+        ##coment by umer due to not extra code
+        // $entity = $this->getDoctrine()
+        //         ->getRepository('LoveThatFitUserBundle:User')
+        //         ->findAll();
+        return $UserTypeObj->countAllUser();
     }
 
     //--------------------------------------------------------------------------
@@ -159,7 +163,6 @@ class DefaultController extends Controller {
         $users['total_woman'] = $this->getUserByGender('f');
         $users['total_man'] = $this->getUserByGender('m');
         $users['age_group_count'] = $this->getUsersAgeGroupCount();
-
         return $users;
     }
 
