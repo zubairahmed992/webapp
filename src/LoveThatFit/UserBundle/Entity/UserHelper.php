@@ -1342,4 +1342,9 @@ class UserHelper
         else false;
     }
 
+    public function getActivityLog()
+    {
+        return $this->repo->getActivityLog();
+    }
+
 }
