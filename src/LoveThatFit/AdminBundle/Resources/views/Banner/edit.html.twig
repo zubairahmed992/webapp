@@ -382,12 +382,7 @@
                                     <select data-placeholder="Choose Category(s)..." id="category_id_multi" name="category_id_multi[]"
                                             required="required" class="chosen-select" multiple>
                                         {% for category in getcategoriestreeview %}
-                                            <option value="{{ category.id }}" {% if category.id == entity.id and category.parent_id != 0 %} selected="selected" data_parent={{ category.parent_id }}{% endif %}>{{ category.name }}</option>
-                                            {% if loop.last %}
-                                            <script>
-                                                setSelection();
-                                            </script>
-                                            {% endif %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
