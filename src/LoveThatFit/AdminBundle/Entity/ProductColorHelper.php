@@ -76,6 +76,15 @@ class ProductColorHelper {
 
     public function getDistinctColors()
     {
-        return $this->repo->findUniqueColor();
+        $colors = $this->repo->findUniqueColor();
+        $colors_indexed = [];
+        foreach($colors as $key => $val) {
+            $colors_indexed[] = $val['title'];
+        }
+        $colors = array_unique(array_values($colors_indexed));
+        foreach($colors as $key => $val) {
+            $colors[$key] = array('title' => $val);
+        }
+        return array_unique($this->repo->findUniqueColor());
     }
 }
