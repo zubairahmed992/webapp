@@ -34,9 +34,13 @@
         {% endautoescape %}
         var selected_banner_type_var = 0;
         function submitform() {
-
             if (parseInt(selected_banner_type_var) == 8) {
-                if (isNaN($("#banner_price_min").val())) {
+                if ($(".chosen-select").chosen().val() == null) {
+
+                    $('#category_id_multi_chosen').addClass('categoryerror');
+                    event.preventDefault();
+                }
+                /*if (isNaN($("#banner_price_min").val())) {
                     $('#banner_price_min').addClass('required-val');
                     event.preventDefault();
                     return false;
@@ -45,7 +49,8 @@
                     $('#banner_price_max').addClass('required-val');
                     event.preventDefault();
                     return false;
-                }
+                }*/
+
             }
 
             $("#banner_sorting").error(function () {
@@ -55,13 +60,13 @@
             if (parseInt(selected_banner_type_var) != 4 && parseInt(selected_banner_type_var) != 5
                     && parseInt(selected_banner_type_var) != 6 && parseInt(selected_banner_type_var) != 7
                     && parseInt(selected_banner_type_var) != 8) {
+
                 if ($('#category_id').val() == '0') {
                     $('#category_id').addClass('categoryerror');
                     event.preventDefault();
                 } else {
                     $('#banner_catid').val($('#category_id').val());
                     $('#category_id').removeClass('categoryerror');
-
                 }
             }
 
@@ -380,7 +385,7 @@
                                 <div class="span3" style="padding-top:0px !important;">Select Targeted Category</div>
                                 <div class="span3" style="padding-top:0px !important;">
                                     <select data-placeholder="Choose Category(s)..." id="category_id_multi" name="category_id_multi[]"
-                                            required="required" class="chosen-select" multiple>
+                                             class="chosen-select" multiple>
                                         {% for category in getcategoriestreeview %}
                                             <option value="{{ category.id }}">{{ category.name }}</option>
                                         {% endfor %}
@@ -428,7 +433,7 @@
                                     </select>
                                     <script>
                                         $("#color_id > option").each(function () {
-                                            if (selectedbrand.indexOf(String(this.value)) != -1) {
+                                            if (selectedcolor.indexOf(String(this.value)) != -1) {
                                                 this.selected = true;
                                             }
                                         });

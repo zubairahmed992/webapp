@@ -336,6 +336,13 @@ select#FNFUser_users.custom_select{height: 100px;}
 }
 
 /* Custom CSS - Brand Popup - Mani*/
+.categoryerror {
+    border-color: #e9322d;
+    -webkit-box-shadow: 0 0 6px #e9322d;
+    -moz-box-shadow: 0 0 6px #e9322d;
+    box-shadow: 0 0 6px #e9322d;
+}
+
 .chosen-container-multi .chosen-choices{
 	    height: 60px !important;
 		min-height: 60px !important;
