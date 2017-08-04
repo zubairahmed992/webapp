@@ -45,6 +45,39 @@ class AlgorithmController extends Controller {
             return new Response($fe->getStrippedFeedBackJSON());
         }
     }    
+    #--------------- /admin/pda1/pd_compare ---------------------------------------
+    public function pdCompareAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        if (!array_key_exists('product_id', $decoded)) {
+            return new Response('Product id missing');
+        }
+        if (!array_key_exists('user_id', $decoded)) {
+            return new Response('User id missing');
+        }
+        $product = $this->get('admin.helper.product')->find($decoded['product_id']);
+        if (!$product) {
+            return new Response('Product not found!');
+        }
+        $user = $this->get('user.helper.user')->find($decoded['user_id']);
+        if (!$user) {
+            return new Response('User not found!');
+        }
+        $pda = new PDA1($user, $product);
+        $pda->setPref($decoded['fit_preference']);
+        $json = !array_key_exists('json', $decoded) ? 0 : $decoded['json'];
+        if ($json == 1) {
+            return new Response(json_encode($pda->getFeedback()));
+        } elseif ($json == 2) {
+            return new Response($pda->getStrippedFeedBackJSON());
+        } else {
+            return $this->render('LoveThatFitAdminBundle:Algoritm:_pda1_comparison.html.twig', array(
+                        'product' => $product, 'user' => $user, 'data' => $pda->getFeedback(),
+            ));
+        }
+    }
+
+    #------------------------------------------------------------------------------------------
+    
 ################################################################
 #   Fit Algorithm 3    
 ################################################################

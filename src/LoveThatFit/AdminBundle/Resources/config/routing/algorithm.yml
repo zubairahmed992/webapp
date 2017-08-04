@@ -5,6 +5,11 @@ admin_pda1_index:
 admin_pda1_comparision:
     pattern:  /admin/pda1/compare/{user_id}/{product_id}/{json}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:pda1Compare, user_id: 0, product_id: 0, json: 0}        
+
+admin_pda1_pd_comparison:
+    pattern:  /admin/pda1/pd_compare
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:pdCompare}        
+
 #----------------------------------------------------------------
 
 admin_fit_algorithm3_index:

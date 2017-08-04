@@ -82,10 +82,32 @@
             //-----------------------------------------------------------------------------
             $('a.go_pda').click(function (event) {
                 event.preventDefault();
-                var user_id = $("#user_id").val();
-                var product_id = $("#product_id").val();                
-                var json = jQuery.parseJSON('{"fit_preference":{"bust":"very_tight", "waist":"tight", "hip":"very_tight"}}');                                
-                alert( json.fit_preference.bust);
+                //var json_str = '{"fit_preference":{"bust":"very_tight", "waist":"tight", "hip":"very_tight"}}';                                
+                var ar={
+                    product_id: $("#product_id").val(),
+                    user_id: $("#user_id").val(),
+                    fit_preference:{
+                                bust:"very_tight", 
+                                waist:"tight", 
+                                hip:"very_tight"
+                                }
+                            };
+                var compare_url = "../pda1/pd_compare";
+                    $.ajax({
+                                  type: "POST",
+                                  url: compare_url,
+                                  data: JSON.stringify(ar),  
+                                  contentType: "application/json; charset=utf-8",
+                                  traditional: true,
+                                  success: function(response){
+                                      //alert(response);
+                                      $('#summary_ajax').html(response);
+                                   },
+                                  failure: function(response) {
+                                      alert(response);                    
+                                      //$('#summary_ajax').html(response);                    
+                                  }
+                            });                      
                 return false; //for good measure
             });
 

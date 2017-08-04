@@ -7,6 +7,7 @@ class PDA1 {
     private $user;
     private $product;
     private $size_helper;
+    private $pref;
     private $scale=array(
         'below_min' => array('status'=>5, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>'at_min',  'message'=>'Extra Loose', 'status_text'=>'below_min'),
         'at_min' => array('status'=>4, 'start'=>0, 'end'=>0,'low_point'=>'at_min', 'high_point'=>'at_min',  'message'=>'Extra Loose', 'status_text'=>'at_min'),
@@ -49,6 +50,9 @@ class PDA1 {
     
     function setProduct($product) {
         $this->product = $product;
+    }
+    function setPref($pref) {
+        $this->pref = $pref;
     }
 #-----------------------------------------------------
 
@@ -300,7 +304,8 @@ class PDA1 {
         #$max_min=$this->calculate_maxmin($fp_specs);
         $body = $this->get_relevant_body_measurement($fp_specs, $body_specs);
         $fp=($fp_specs['fit_priority']/10);
-                
+        $fp_specs = $this->calibrate_for_preference($fp_specs);               
+        
         $fp_measurements = array('fit_point' => $fp_specs['fit_point'],
             'label' => $this->getFitPointLabel($fp_specs['fit_point']),
             'calc_min_body_measurement' => $fp_specs['min_calculated'],
@@ -331,6 +336,27 @@ class PDA1 {
         $fp_measurements['body_fx'] = $message_array['body_fx'];   
         $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);        
         return $fp_measurements;
+    }
+    private function calibrate_for_preference($fp){
+       if(is_object($this->pref)){
+           if(array_key_exists($fp['title'],$this->pref)){
+               switch ($this->pref[$fp['title']]) {
+                   case 'very_loose':
+                       $fp['fit_model'] = ($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
+                        break;
+                   case 'loose':
+                       $fp['fit_model'] = $fp['min_body_measurement'];
+                       break;
+                   case 'tight':
+                       $fp['fit_model'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;
+                        break;
+                   case 'very_tight':
+                       $fp['fit_model'] = $fp['max_body_measurement'];
+                       break;                   
+               }
+           }
+       }
+        return $fp;
     }
 #---------------------------------------------------
     private function calculate_fitindex($fp_specs) {
