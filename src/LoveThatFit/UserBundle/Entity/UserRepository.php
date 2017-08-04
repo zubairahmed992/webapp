@@ -635,4 +635,16 @@ class UserRepository extends EntityRepository
 
         return $count;
     }
+
+    public function getActivityLog()
+    {
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.id, u.email')
+            ->from('LoveThatFitUserBundle:User', 'u');
+        try {
+          return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
+    }
 }
