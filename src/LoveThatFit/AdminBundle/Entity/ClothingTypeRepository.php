@@ -443,4 +443,24 @@ class ClothingTypeRepository extends EntityRepository
             return null;
         }
     }
+
+    public function countClothingType()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(c)')->from('LoveThatFitAdminBundle:ClothingType', 'c');
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
+    public function countClothingTypeByTarget($target)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(c)')->from('LoveThatFitAdminBundle:ClothingType', 'c')
+            ->andWhere('c.target=:target')
+            ->setParameter('target', $target);
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
 }
