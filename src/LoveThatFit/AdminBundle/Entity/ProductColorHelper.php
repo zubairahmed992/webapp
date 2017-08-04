@@ -78,13 +78,13 @@ class ProductColorHelper {
     {
         $colors = $this->repo->findUniqueColor();
         $colors_indexed = [];
-        foreach($colors as $key => $val) {
-            $colors_indexed[] = $val['title'];
+        foreach ($colors as $key => $val) {
+            $colors_indexed[] = strtolower(trim($val['title']));
         }
         $colors = array_unique(array_values($colors_indexed));
-        foreach($colors as $key => $val) {
+        foreach ($colors as $key => $val) {
             $colors[$key] = array('title' => $val);
         }
-        return array_unique($this->repo->findUniqueColor());
+        return $colors;
     }
 }
