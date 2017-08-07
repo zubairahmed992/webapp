@@ -1,3 +1,7 @@
+pi_product_fit_points:
+    pattern:  /pi/product/{product_id}/fit_points
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Product:productFitPoints}
+
 product_intake_product_image_upload_index:
     pattern:  /product_intake/product/image_upload_index
     defaults: { _controller: LoveThatFitProductIntakeBundle:Product:imageUploadIndex}

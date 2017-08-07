@@ -12,37 +12,50 @@
     </div>
     
     <div class="clearfix"></div>   
-     <table class="table table-bordered table-striped table-hover table-condensed">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Brand Name</th>
-            <th>Clothing Type</th>
-            <th>Action</th>
-        </tr>
-        {% for sm in specs_mappings %}
-        <tr>
-            <td>{{sm.Id}}</td>
-            <td>{{sm.Title}}</td>
-            <td>{{sm.Brand}}</td>            
-            <td>{{sm.ClothingType}}</td>            
-            <td>
-                <a href="{{ path('product_intake_specs_mapping_delete', {'id': sm.Id}) }}" data-toggle="confirmation" data-singleton="true" title="Delete {{sm.Title}}">del</a> &nbsp;|&nbsp;
-                 <a href="{{ path('product_intake_specs_mapping_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>            
-                 {% if csv_file[sm.Id] is defined %}
-                 &nbsp;|&nbsp;
-                     <a href="{{ csv_file[sm.Id] }}" target="_blank" download title="Download">Download</a>                  
-                {% endif %}
-                 &nbsp;|&nbsp;
-                 <a href="{{ path('product_intake_specs_mapping_duplicate', {'id': sm.Id }) }}" data-toggle="confirmation" data-singleton="true" title="Duplicate - {{sm.Title}}">Duplicate</a>   
+     <table class="table table-bordered table-striped table-hover table-condensed" id="mapping_table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Brand Name</th>
+                <th>Clothing Type</th>
+                <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for sm in specs_mappings %}
+                <tr>
+                    <td>{{sm.Id}}</td>
+                    <td>{{sm.Title}}</td>
+                    <td>{{sm.Brand}}</td>            
+                    <td>{{sm.ClothingType}}</td>            
+                    <td>
+                        <a href="{{ path('product_intake_specs_mapping_delete', {'id': sm.Id}) }}" data-toggle="confirmation" data-singleton="true" title="Delete {{sm.Title}}">del</a> &nbsp;|&nbsp;
+                         <a href="{{ path('product_intake_specs_mapping_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>            
+                         {% if csv_file[sm.Id] is defined %}
+                         &nbsp;|&nbsp;
+                             <a href="{{ csv_file[sm.Id] }}" target="_blank" download title="Download">Download</a>                  
+                        {% endif %}
+                         &nbsp;|&nbsp;
+                         <a href="{{ path('product_intake_specs_mapping_duplicate', {'id': sm.Id }) }}" data-toggle="confirmation" data-singleton="true" title="Duplicate - {{sm.Title}}">Duplicate</a>   
 
-            </td>
-        </tr>
-         {% endfor %}
+                    </td>
+                </tr>
+             {% endfor %}
+         </tbody> 
     </table> 
- 
-    
-    
-    
 </div>
+<div class="bs-docs-grid" id="all_data_search">
+<div class="pagination"></div>  
+</div>
+ <script type="text/javascript">
+        jQuery(document).ready(function () {             
+           $('#mapping_table').DataTable( {
+             "columnDefs": [ {
+                "targets": 4,
+                "orderable": false
+                } ]
+        });
+        });
+ </script>
 {% endblock %}

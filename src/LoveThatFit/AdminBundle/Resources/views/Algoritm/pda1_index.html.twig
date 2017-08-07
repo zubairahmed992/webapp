@@ -1,0 +1,194 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active"> Algorithm 2</li>
+    {% endblock %}
+    {% block body %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("select[id='algorithm_User']").change(function () {
+                $("#user_id").val(this.value);
+                $('#keyword').val($('option:selected', $(this)).text());
+            });
+            //------------------------------------------------------
+            $("select[id='algorithm_Product']").change(function () {
+                $("#product_id").val(this.value);
+                $('#product_keyword').val($('option:selected', $(this)).text());
+                var compare_url = "../../pi/product/" + this.value + "/fit_points" ;
+                $.ajax({
+                    url: compare_url
+                    , success: function (response) {                              
+                        $("#preference_json").val(response);                        
+                    }
+                })
+            });
+            //------------------------------------------------------
+            $('a.product_edit_link').click(function (event) {
+                event.preventDefault();
+                if ($("#product_id").val()) {
+                    var url = '../productdetail/' + $("#product_id").val() + '';
+                    window.open(url);
+                }
+                return false; //for good measure
+            });
+            //-----------------------------------------------------------   
+            $('a.user_edit_link').click(function (event) {
+                event.preventDefault();
+                if ($("#user_id").val()) {
+                    var url = '../user/' + $("#user_id").val() + '/edit';
+                    window.open(url);
+                }
+                return false; //for good measure
+            });
+            //-----------------------------------------------------------
+            $('a.compare').click(function (event) {
+                event.preventDefault();
+                var user_id = $("#user_id").val();
+                var product_id = $("#product_id").val();
+                var compare_url = "../fit_algorithm3/compare/" + user_id + "/" + product_id;
+                $.ajax({
+                    url: compare_url
+                    , success: function (response) {
+                        $('#summary_ajax').html(response);
+                    }
+                })
+                return false; //for good measure
+            });
+            //-----------------------------------------------------------------------------
+            $('a.json').click(function (event) {
+                event.preventDefault();
+                var user_id = $("#user_id").val();
+                var product_id = $("#product_id").val();
+                var compare_url = "../fit_algorithm3/compare/" + user_id + "/" + product_id + "/1";
+                $.ajax({
+                    url: compare_url
+                    , success: function (response) {
+                        window.open(compare_url);
+                    }
+                })
+                return false; //for good measure
+            });
+            //-----------------------------------------------------------------------------
+            $('a.strip_json').click(function (event) {
+                event.preventDefault();
+                var user_id = $("#user_id").val();
+                var product_id = $("#product_id").val();
+                var compare_url = "../fit_algorithm3/compare/" + user_id + "/" + product_id + "/2";
+                $.ajax({
+                    url: compare_url
+                    , success: function (response) {
+
+                        window.open(compare_url);
+                    }
+                })
+                return false; //for good measure
+            });
+            
+            //-----------------------------------------------------------------------------
+            $('a.go_pda').click(function (event) {
+                event.preventDefault();                
+                ajax_post(0);                     
+                return false; 
+            });
+            //-----------------------------------------
+            $('a.pda_json').click(function (event) {
+                event.preventDefault();                
+                ajax_post(1);                     
+                return false; 
+            });
+            //-----------------------------------------
+            $('a.pda_strip_json').click(function (event) {
+                event.preventDefault();                
+                ajax_post(2);                     
+                return false; 
+            });
+            //-----------------------------------------
+    function ajax_post(return_type){        
+        pref_json: $("#preference_json").val();          
+        var ar={
+                    product_id: $("#product_id").val(),
+                    user_id: $("#user_id").val(),
+                    return_type: return_type,
+                    fit_preference:jQuery.parseJSON($("#preference_json").val())
+                            };
+                var compare_url = "../pda1/pd_compare";
+                    $.ajax({
+                                  type: "POST",
+                                  url: compare_url,
+                                  data: JSON.stringify(ar),  
+                                  contentType: "application/json; charset=utf-8",
+                                  traditional: true,
+                                  success: function(response){
+                                      //alert(response);
+                                      if(return_type===1 || return_type===2){
+                                        something = window.open("data:text/json," + encodeURIComponent(response),"_blank");
+                                        something.focus();
+                                      }else{
+                                      $('#summary_ajax').html(response);
+                                    }
+                                   },
+                                  failure: function(response) {
+                                      alert(response);                    
+                                      //$('#summary_ajax').html(response);                    
+                                  }
+                            });                      
+}
+
+        });
+
+
+    </script>
+
+    <span id='product_id' style="display: block"></span>
+    <span id='size_id' style="display: none"></span>
+    <span id='user_id' style="display: block"></span>
+
+    <div class="p_listing"> 
+        <h3>PDA1</h3>
+        <div  class="row">
+        <div  class="col-md-4" style='float: left'>
+            <a id="user_edit_link" class="user_edit_link" href="#">User</a>
+            <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+                {{ form_errors(userForm) }}
+                {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
+                Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
+                {{ form_rest(userForm) }}
+            </form>                 
+        </div>
+        <div  class="col-md-4" style='float: left'>
+            <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
+            <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
+                {{ form_errors(productForm) }}
+                &nbsp;{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}
+                Or <input type="text" placeholder="Search Product" id="product_keyword"><input type="hidden" id="product_id">
+                {{ form_rest(productForm) }}
+            </form>      
+        </div>
+            <div  class="col-md-4">
+        <a id='compare' class='compare' href="#">Compare</a> | 
+        <a id='json' class='json' href="#">JSON</a> | 
+        <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
+        </div>
+            </div>
+        <div  class="row">            
+            <div  class="col-md-2"></div><div  class="col-md-4" style='background-color: #FFFE9E;'> 
+                <p>(default, very_loose, loose, tight, very_tight):</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b> Add Preference </b> 
+            <input class="form-control col-md-10" type="text" id="preference_json" name="preference_json" value=''>
+            <a id='go_pda' class='go_pda' href="#">Compare</a> &nbsp;|&nbsp;
+            <a id='pda_json' class='pda_json' href="#">JSON</a> &nbsp;|&nbsp;
+            <a id='pda_strip_json' class='pda_strip_json' href="#">Stripped JSON</a>
+            </div>
+            
+        </div>
+        <div id="summary_ajax" style="float: none">
+        </div>
+        <div id="pda_grid" style="float: none">                
+        </div>
+        <input type="hidden"  id="user_id">
+        <input type="hidden" id="product_id">
+
+    </div> 
+
+{% endblock %}

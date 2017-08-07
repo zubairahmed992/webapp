@@ -37,15 +37,19 @@ class ServiceController extends Controller {
 
 #--------------->pi/ws/product_demission
     
-    public function getExistingProductSpecificationAction($brand_name, $style_id_number) {    
+    public function getExistingProductSpecificationAction($brand_name, $style_id_number) {  
+       
         try {               
-            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number);              
+            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //      
             if($data){ 
             $result['product_colors'] = '';
             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
-                     $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
-                     $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+                    $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
+                    $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+                    $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
+                    $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
+                    $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
                    }
             }
             //------------- Add Product Colors
