@@ -47,7 +47,7 @@ class AlgorithmController extends Controller {
     }    
     #--------------- /admin/pda1/pd_compare ---------------------------------------
     public function pdCompareAction() {
-        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
         if (!array_key_exists('product_id', $decoded)) {
             return new Response('Product id missing');
         }
@@ -64,7 +64,8 @@ class AlgorithmController extends Controller {
         }
         $pda = new PDA1($user, $product);
         $pda->setPref($decoded['fit_preference']);
-        $json = !array_key_exists('json', $decoded) ? 0 : $decoded['json'];
+        $json = !array_key_exists('return_type', $decoded) ? 0 : $decoded['return_type'];
+        
         if ($json == 1) {
             return new Response(json_encode($pda->getFeedback()));
         } elseif ($json == 2) {

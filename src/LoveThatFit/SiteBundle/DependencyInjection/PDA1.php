@@ -324,7 +324,7 @@ class PDA1 {
             'low_fx' => $this->scale['between_low_mid']['start'] * $fp,
             'avg_fx' => $fp,
             'garment_measurement_flat' => $fp_specs['garment_measurement_flat'],
-            'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],
+            'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],            
         );
         $message_array = $this->calculate_fitindex($fp_measurements);
         $fp_measurements['fits'] = $message_array['fits'];
@@ -338,24 +338,29 @@ class PDA1 {
         return $fp_measurements;
     }
     private function calibrate_for_preference($fp){
-       if(is_object($this->pref)){
+       if(is_array($this->pref)){
            if(array_key_exists($fp['title'],$this->pref)){
                switch ($this->pref[$fp['title']]) {
                    case 'very_loose':
-                       $fp['fit_model'] = ($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
+                       $fp['fit_model'] =  $fp['min_body_measurement'];                       
+                       #$fp['ideal_body_size_low'] = $fp['min_body_measurement'];                       
                         break;
                    case 'loose':
-                       $fp['fit_model'] = $fp['min_body_measurement'];
+                       $fp['fit_model'] =($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
+                       
                        break;
                    case 'tight':
-                       $fp['fit_model'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;
+                       $fp['fit_model'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
+                       #$fp['ideal_body_size_high'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
                         break;
                    case 'very_tight':
-                       $fp['fit_model'] = $fp['max_body_measurement'];
+                       $fp['fit_model'] = $fp['max_body_measurement'];                       
+                       #$fp['ideal_body_size_high'] = $fp['max_body_measurement'];
                        break;                   
                }
-           }
+           }           
        }
+       
         return $fp;
     }
 #---------------------------------------------------

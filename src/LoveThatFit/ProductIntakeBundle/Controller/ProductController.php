@@ -26,6 +26,15 @@ class ProductController extends Controller
             ));
         
     }
-    
-     
+    #----------------------- /pi/product/{id}/fit_points
+    public function productFitPointsAction($product_id) {
+        $product = $this->get('admin.helper.product')->find($product_id);
+        $fps = array();
+        $s = $product->getProductSizes()->first();
+        foreach ($s->getProductSizeMeasurements() as $m) {
+            $fps[$m->getTitle()] = 'default';
+        }
+        return new Response(json_encode($fps));
+    }
+
 }

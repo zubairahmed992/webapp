@@ -15,6 +15,13 @@
             $("select[id='algorithm_Product']").change(function () {
                 $("#product_id").val(this.value);
                 $('#product_keyword').val($('option:selected', $(this)).text());
+                var compare_url = "../../pi/product/" + this.value + "/fit_points" ;
+                $.ajax({
+                    url: compare_url
+                    , success: function (response) {                              
+                        $("#preference_json").val(response);                        
+                    }
+                })
             });
             //------------------------------------------------------
             $('a.product_edit_link').click(function (event) {
@@ -57,7 +64,6 @@
                 $.ajax({
                     url: compare_url
                     , success: function (response) {
-
                         window.open(compare_url);
                     }
                 })
@@ -81,16 +87,30 @@
             
             //-----------------------------------------------------------------------------
             $('a.go_pda').click(function (event) {
-                event.preventDefault();
-                //var json_str = '{"fit_preference":{"bust":"very_tight", "waist":"tight", "hip":"very_tight"}}';                                
-                var ar={
+                event.preventDefault();                
+                ajax_post(0);                     
+                return false; 
+            });
+            //-----------------------------------------
+            $('a.pda_json').click(function (event) {
+                event.preventDefault();                
+                ajax_post(1);                     
+                return false; 
+            });
+            //-----------------------------------------
+            $('a.pda_strip_json').click(function (event) {
+                event.preventDefault();                
+                ajax_post(2);                     
+                return false; 
+            });
+            //-----------------------------------------
+    function ajax_post(return_type){        
+        pref_json: $("#preference_json").val();          
+        var ar={
                     product_id: $("#product_id").val(),
                     user_id: $("#user_id").val(),
-                    fit_preference:{
-                                bust:"very_tight", 
-                                waist:"tight", 
-                                hip:"very_tight"
-                                }
+                    return_type: return_type,
+                    fit_preference:jQuery.parseJSON($("#preference_json").val())
                             };
                 var compare_url = "../pda1/pd_compare";
                     $.ajax({
@@ -101,17 +121,22 @@
                                   traditional: true,
                                   success: function(response){
                                       //alert(response);
+                                      if(return_type===1 || return_type===2){
+                                        something = window.open("data:text/json," + encodeURIComponent(response),"_blank");
+                                        something.focus();
+                                      }else{
                                       $('#summary_ajax').html(response);
+                                    }
                                    },
                                   failure: function(response) {
                                       alert(response);                    
                                       //$('#summary_ajax').html(response);                    
                                   }
                             });                      
-                return false; //for good measure
-            });
+}
 
         });
+
 
     </script>
 
@@ -146,11 +171,16 @@
         <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
         </div>
             </div>
-        <div  class="row">
-            <div class="col-md-10">
-            <input class="form-control col-md-8" type="text" id="preference_json" name="preference_json" value="{'fit_preference':{'bust':'very_tight', 'waist':'tight', 'hip':'very_tight'}}">
-            <a id='go_pda' class='go_pda' href="#">PDA</a>
+        <div  class="row">            
+            <div  class="col-md-2"></div><div  class="col-md-4" style='background-color: #FFFE9E;'> 
+                <p>(default, very_loose, loose, tight, very_tight):</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b> Add Preference </b> 
+            <input class="form-control col-md-10" type="text" id="preference_json" name="preference_json" value=''>
+            <a id='go_pda' class='go_pda' href="#">Compare</a> &nbsp;|&nbsp;
+            <a id='pda_json' class='pda_json' href="#">JSON</a> &nbsp;|&nbsp;
+            <a id='pda_strip_json' class='pda_strip_json' href="#">Stripped JSON</a>
             </div>
+            
         </div>
         <div id="summary_ajax" style="float: none">
         </div>
