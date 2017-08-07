@@ -353,3 +353,11 @@ mcp_get_user_mask_marker_details:
 render_user_image:
     pattern: /render/image/{ref}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: null}
+
+nws_get_brand_style:
+    pattern:  /nws/get_brand_style
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBrandStyleList}
+
+nws_search_brand_style:
+    pattern:  /nws/search_brand_style
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:searchBrandStyle }
