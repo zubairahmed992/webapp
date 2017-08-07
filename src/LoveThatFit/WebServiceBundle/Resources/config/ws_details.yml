@@ -847,5 +847,5 @@ nws_search_brand_style:
    title: search_brand_style
    params:
      auth_token: 56565656566
-     text: 505
+     text: "505"
      page_no: 1
