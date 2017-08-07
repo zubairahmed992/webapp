@@ -433,4 +433,14 @@ class BrandRepository extends EntityRepository {
         }
     }
 
+    public function countBrands()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('COUNT(b)')->from('LoveThatFitAdminBundle:Brand', 'b')
+            ->andWhere('b.deleted = 0');
+        $count = $query->getQuery()->getSingleScalarResult();
+
+        return $count;
+    }
+
 }
