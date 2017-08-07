@@ -641,4 +641,58 @@ class WSRepo
             ->getQuery()
             ->getResult();
     }
+
+    public function getProductListByBrand($search_text, $user_id)
+    {
+        $query = $this->em
+            ->createQueryBuilder()
+            ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi')
+            ->where('b.name=:search_text')
+            ->andWhere("p.displayProductColor!=''")
+            ->andWhere('p.disabled=0')
+            ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
+            ->groupBy('p.id')
+            ->setParameters(array('search_text' => $search_text, 'user' => $user_id))
+            ->getQuery();
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function getProductListByStyleText($search_text, $user_id)
+    {
+        $query = $this->em
+            ->createQueryBuilder()
+            ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi')
+            ->where("p.item_name LIKE :search_text")
+            ->andWhere("p.displayProductColor!=''")
+            ->andWhere('p.disabled=0')
+            ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
+            ->groupBy('p.id')
+            ->setParameters(array('search_text' => $search_text.'%', 'user' => $user_id))
+            ->getQuery();
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

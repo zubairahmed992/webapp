@@ -149,6 +149,32 @@ class WSProductController extends Controller {
         return new Response($res);
 
     }
+
+    #----------------------------------------------------
+    public function searchBrandStyleAction() {
+
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $search_text = $decoded['text'];
+            if ($search_text) {
+                $user_id = $user->getId();
+                $page_no = (isset($decoded['page_no'])) ? $decoded['page_no'] : 1 ;
+                $productlist = $this->get('webservice.helper')->getProductListByBrand($search_text, $user_id, $page_no);
+
+                return new Response($productlist);
+
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, 'Search text not found');
+            }
+
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+
+    }
     
 }
 
