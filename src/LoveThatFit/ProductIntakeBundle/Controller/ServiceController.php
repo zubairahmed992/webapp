@@ -43,7 +43,7 @@ class ServiceController extends Controller {
             $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //  
             if($data){ 
             $result['product_colors'] = '';
-            $clothingType = $data[0][0]['clothing_type']['target'];
+            $clothingType = $data[0][0]['clothing_type']['name'];
              $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType); 
             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {                   
