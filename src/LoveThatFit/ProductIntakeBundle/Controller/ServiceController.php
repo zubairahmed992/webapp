@@ -40,17 +40,21 @@ class ServiceController extends Controller {
     public function getExistingProductSpecificationAction($brand_name, $style_id_number) {  
        
         try {               
-            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //      
+            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //  
             if($data){ 
             $result['product_colors'] = '';
+            $clothingType = $data[0][0]['clothing_type']['target'];
+             $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType); 
             foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
-                 foreach ($product_size_value['product_size_measurements'] as  $value) {  
-                    $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
-                    $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
-                    $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
-                    $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
-                    $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
-                   }
+                 foreach ($product_size_value['product_size_measurements'] as  $value) {                   
+                    if(array_key_exists($value['title'], $clothingTypeAttributes)) {
+                        $result[$product_size_value['title']][$value['title']]['grade_rule'] = $value['grade_rule'];
+                        $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+                        $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
+                        $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
+                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
+                    }
+                 }
             }
             //------------- Add Product Colors
             $result['product_colors']  = implode(',', array_column($data[0][0]['product_colors'], 'title')); 
