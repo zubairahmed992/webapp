@@ -343,19 +343,19 @@ class PDA1 {
                switch ($this->pref[$fp['title']]) {
                    case 'very_loose':
                        $fp['fit_model'] =  $fp['min_body_measurement'];                       
-                       #$fp['ideal_body_size_low'] = $fp['min_body_measurement'];                       
+                       $fp['ideal_body_size_low'] = $fp['min_body_measurement'];                       
                         break;
                    case 'loose':
                        $fp['fit_model'] =($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
-                       
+                       $fp['ideal_body_size_low'] =($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
                        break;
                    case 'tight':
                        $fp['fit_model'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
-                       #$fp['ideal_body_size_high'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
+                       $fp['ideal_body_size_high'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
                         break;
                    case 'very_tight':
                        $fp['fit_model'] = $fp['max_body_measurement'];                       
-                       #$fp['ideal_body_size_high'] = $fp['max_body_measurement'];
+                       $fp['ideal_body_size_high'] = $fp['max_body_measurement'];
                        break;                   
                }
            }           
