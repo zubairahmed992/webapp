@@ -326,5 +326,10 @@ class UserFittingRoomItemHelper {
     public function findByUserItemByProductWithItemId($user_id, $product_id, $product_item_id) {
         return $this->repo->findCountProductItemByUseridWithProductItem($user_id, $product_id, $product_item_id);
     }
+
+    #------------------------------------------------------
+    public function updateUserFittingRoomItemWithProductId($user, $product_id, $product_item_id, $update_product_item_id) {
+        return $this->repo->updateUserFittingRoomItemWithProductId($user->getId(), $product_id, $product_item_id, $update_product_item_id);
+    }
 }
 
