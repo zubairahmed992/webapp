@@ -658,7 +658,7 @@ class WSCartController extends Controller
 
             if($billingObject)
             {
-                $res = $this->get('webservice.helper')->response_array(true, 'user address successfully saved', true, array(
+                $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
                     "billing_address_id" => $billingObject->getId()
                 ));
             }else{
@@ -686,7 +686,7 @@ class WSCartController extends Controller
 
             if($shippingObject)
             {
-                $res = $this->get('webservice.helper')->response_array(true, 'user address successfully saved', true, array(
+                $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
                     "shipping_address_id" => $shippingObject->getId()
                 ));
             }else{
