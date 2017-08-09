@@ -83,6 +83,17 @@ class PodioApiHelper
             $url_member_profile = ''.$user_podio['base_path'].'admin/user/'.$user_podio['id'].'/show';
             //$view_profile = '<a href="'.$url_member_profile.'" target="_blank">View Profile</a>';
 
+            //search member email exists in podio
+            $search_query = PodioSearchResult::app( $this->app_id, array('query' => ''.$user_podio['email'].'','ref_type' => 'item','search_fields' => 'title') );
+            $search_results = array();
+            foreach ($search_query as $key => $value) {
+              if($value->title==$user_podio['email']) {
+                $search_results['id'] = $value->id;
+                $search_results['title'] = $value->title;
+                break;
+              }
+            }
+
             // Second approach - Create field collection with different fields
             $fields = new PodioItemFieldCollection(array(
               new PodioEmailItemField(array("external_id" => "member-email")), 
