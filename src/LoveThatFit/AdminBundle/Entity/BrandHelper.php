@@ -220,32 +220,32 @@ class BrandHelper {
 }
 
 
-public function getRetailerBrandById($id)
-{
-    return $this->repo->getRetailerBrandById($id);
-}
-    
- public function getBrnadList()
- {
-     return $this->repo->getBrnadList();
- }
-    
- public function getBrnadArray()
- {
-     return $this->repo->getBrnadArray();     
- }
-  
- public function getBrandArray()
- {
-     $brands = array();
-     $brand_array= $this->repo->getBrnadArray();  
-     foreach($brand_array as $key=>$brand)
+    public function getRetailerBrandById($id)
+    {
+        return $this->repo->getRetailerBrandById($id);
+    }
+
+     public function getBrnadList()
      {
-         $brands[$brand['id']] = $brand['name'];
-        //$brands[$brand->getId()] = $brand->getName();
+         return $this->repo->getBrnadList();
      }
-     return $brands;
- }
+
+     public function getBrnadArray()
+     {
+         return $this->repo->getBrnadArray();
+     }
+
+     public function getBrandArray()
+     {
+         $brands = array();
+         $brand_array= $this->repo->getBrnadArray();
+         foreach($brand_array as $key=>$brand)
+         {
+             $brands[$brand['id']] = $brand['name'];
+            //$brands[$brand->getId()] = $brand->getName();
+         }
+         return $brands;
+     }
  
     
 
@@ -427,4 +427,10 @@ public function getBrandRetailerList($date_fromat = null) {
     public function getBrandsNameList() {
       return $this->repo->getBrandsNameList();      
     }
+
+    public function getBrandListEnable() {
+      return $this->repo->getBrandListEnable();
+    }
+
+
 }

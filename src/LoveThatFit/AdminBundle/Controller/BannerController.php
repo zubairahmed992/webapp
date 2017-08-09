@@ -80,11 +80,13 @@ class BannerController extends Controller
             $banner_filter = '';
             if ($entity->getBannerType() == 8) {
 
-                if ($request->request->get('category_id_multi') != null) {
-                    $banner_filter['category'] = $request->request->get('category_id_multi');
+                if (!empty($request->request->get('category_id_multi'))) {
+                    /*$banner_filter['category'] = $request->request->get('category_id_multi');*/
+                    $banner_filter['category'] = array_values(array_filter($request->request->get('category_id_multi'), function($var){return !empty($var);} ));
                 }
                 if (!empty($request->request->get('brand_id'))) {
-                    $banner_filter['brand'] = $request->request->get('brand_id');
+                    /*$banner_filter['brand'] = $request->request->get('brand_id');*/
+                    $banner_filter['brand'] = array_values(array_filter($request->request->get('brand_id'), function($var){return !empty($var);} ));
                 }
                 if (!empty($entity->getPriceMin())) {
                     $banner_filter['min_price'] = $entity->getPriceMin();
@@ -101,7 +103,7 @@ class BannerController extends Controller
                 $entity->setPriceMin(null);
                 $entity->setPriceMax(null);
                 if (!empty($request->request->get('color_id'))) {
-                    $banner_filter['color'] = $request->request->get('color_id');
+                    $banner_filter['color'] = array_values(array_filter($request->request->get('color_id'), function($var){return !empty($var);} ));
                 }
 
                 $banner_filter = json_encode($banner_filter);
@@ -264,10 +266,12 @@ class BannerController extends Controller
                 if ($entity->getBannerType() == 8) {
 
                     if (!empty($request->request->get('category_id_multi'))) {
-                        $banner_filter['category'] = $request->request->get('category_id_multi');
+                        /*$banner_filter['category'] = $request->request->get('category_id_multi');*/
+                        $banner_filter['category'] = array_values(array_filter($request->request->get('category_id_multi'), function($var){return !empty($var);} ));
                     }
                     if (!empty($request->request->get('brand_id'))) {
-                        $banner_filter['brand'] = $request->request->get('brand_id');
+                        /*$banner_filter['brand'] = $request->request->get('brand_id');*/
+                        $banner_filter['brand'] = array_values(array_filter($request->request->get('brand_id'), function($var){return !empty($var);} ));
                     }
                     if (!empty($entity->getPriceMin())) {
                         $banner_filter['min_price'] = $entity->getPriceMin();
@@ -284,7 +288,7 @@ class BannerController extends Controller
                     $entity->setPriceMin(null);
                     $entity->setPriceMax(null);
                     if (!empty($request->request->get('color_id'))) {
-                        $banner_filter['color'] = $request->request->get('color_id');
+                        $banner_filter['color'] = array_values(array_filter($request->request->get('color_id'), function($var){return !empty($var);} ));
                     }
 
                     $banner_filter = json_encode($banner_filter);

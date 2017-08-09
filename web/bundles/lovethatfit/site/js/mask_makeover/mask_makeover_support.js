@@ -282,14 +282,7 @@ function overall_mask(){
             full_scr_mask.selected = false;
             full_scr_mask.visible = false;
 
-//        $("#svg_path_data").attr("value", camera_scr_mask.pathData);
-//        $("#svg_path_data_full").attr("value", full_scr_mask.pathData);
 
-//        $("#side_svg_path_data").attr("value", camera_scr_mask.pathData);
-//        $("#side_svg_path_data_full").attr("value", full_scr_mask.pathData);
-//
-//        $("#back_svg_path_data").attr("value", camera_scr_mask.pathData);
-//        $("#back_svg_path_data_full").attr("value", full_scr_mask.pathData);
         view.update();
 
     }

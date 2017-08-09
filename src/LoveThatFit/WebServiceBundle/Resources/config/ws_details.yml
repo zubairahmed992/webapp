@@ -831,4 +831,21 @@ mcp_get_user_mask_marker_details:
           auth_token: 00000000000000000000000000000
           email: ovais.rafique@centricsource.com
     request_type: post
-    description: return user mask markder details against user token 
+    description: return user mask markder details against user token
+
+nws_get_brand_style:
+    pattern:  /nws/get_brand_style
+    title: banner_style
+    params:
+          auth_token: 56565656566
+    request_type: post
+    description: return Brand and Styles
+
+
+nws_search_brand_style:
+   pattern:  /nws/search_brand_style
+   title: search_brand_style
+   params:
+     auth_token: 56565656566
+     text: "505"
+     page_no: 1

@@ -34,9 +34,13 @@
         {% endautoescape %}
         var selected_banner_type_var = 0;
         function submitform() {
-
             if (parseInt(selected_banner_type_var) == 8) {
-                if (isNaN($("#banner_price_min").val())) {
+                if ($(".chosen-select").chosen().val() == null) {
+
+                    $('#category_id_multi_chosen').addClass('categoryerror');
+                    event.preventDefault();
+                }
+                /*if (isNaN($("#banner_price_min").val())) {
                     $('#banner_price_min').addClass('required-val');
                     event.preventDefault();
                     return false;
@@ -45,7 +49,8 @@
                     $('#banner_price_max').addClass('required-val');
                     event.preventDefault();
                     return false;
-                }
+                }*/
+
             }
 
             $("#banner_sorting").error(function () {
@@ -55,13 +60,13 @@
             if (parseInt(selected_banner_type_var) != 4 && parseInt(selected_banner_type_var) != 5
                     && parseInt(selected_banner_type_var) != 6 && parseInt(selected_banner_type_var) != 7
                     && parseInt(selected_banner_type_var) != 8) {
+
                 if ($('#category_id').val() == '0') {
                     $('#category_id').addClass('categoryerror');
                     event.preventDefault();
                 } else {
                     $('#banner_catid').val($('#category_id').val());
                     $('#category_id').removeClass('categoryerror');
-
                 }
             }
 
@@ -380,14 +385,9 @@
                                 <div class="span3" style="padding-top:0px !important;">Select Targeted Category</div>
                                 <div class="span3" style="padding-top:0px !important;">
                                     <select data-placeholder="Choose Category(s)..." id="category_id_multi" name="category_id_multi[]"
-                                            required="required" class="chosen-select" multiple>
+                                             class="chosen-select" multiple>
                                         {% for category in getcategoriestreeview %}
-                                            <option value="{{ category.id }}" {% if category.id == entity.id and category.parent_id != 0 %} selected="selected" data_parent={{ category.parent_id }}{% endif %}>{{ category.name }}</option>
-                                            {% if loop.last %}
-                                            <script>
-                                                setSelection();
-                                            </script>
-                                            {% endif %}
+                                            <option value="{{ category.id }}">{{ category.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -407,7 +407,7 @@
                                     <select data-placeholder="Choose Brand(s)..."  id="brand_id" name="brand_id[]"
                                             class="chosen-select" multiple>
                                         {% for brand in brand_list %}
-                                            <option value="{{ brand.id }}" {% if brand.id in selectedbrand %} selected="selected" {% endif %}>{{ brand.name }}</option>
+                                            <option value="{{ brand.id }}">{{ brand.name }}</option>
                                         {% endfor %}
                                     </select>
                                     <script>
@@ -428,12 +428,12 @@
                                     <select data-placeholder="Choose Color(s)..."  id="color_id" name="color_id[]"
                                             class="chosen-select2" multiple>
                                         {% for color in colors %}
-                                            <option value="{{ color.title }}" {% if color.title in selectedcolor %} selected="selected" {% endif %}>{{ color.title }}</option>
+                                            <option value="{{ color.title }}">{{ color.title }}</option>
                                         {% endfor %}
                                     </select>
                                     <script>
                                         $("#color_id > option").each(function () {
-                                            if (selectedbrand.indexOf(String(this.value)) != -1) {
+                                            if (selectedcolor.indexOf(String(this.value)) != -1) {
                                                 this.selected = true;
                                             }
                                         });

@@ -11,15 +11,6 @@
 
 {% block body %}
 
-    <style type="text/css">
-        .categoryerror {
-            border-color: #e9322d;
-            -webkit-box-shadow: 0 0 6px #f8b9b7;
-            -moz-box-shadow: 0 0 6px #f8b9b7;
-            box-shadow: 0 0 6px #f8b9b7;
-        }
-    </style>
-
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link href="{{ asset('bundles/chosen/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/chosen/chosen.css') }}" rel="stylesheet" type="text/css" />
@@ -35,7 +26,12 @@
         function submitform() {
 
             if (parseInt(selected_banner_type_var) == 8) {
-                if (isNaN($("#banner_price_min").val())) {
+                if ($(".chosen-select").chosen().val() == null) {
+                    alert('here');
+                    $('#category_id_multi_chosen').addClass('categoryerror');
+                    event.preventDefault();
+                }
+                /*if (isNaN($("#banner_price_min").val())) {
                     $('#banner_price_min').addClass('categoryerror');
                     event.preventDefault();
                     return false;
@@ -44,7 +40,7 @@
                     $('#banner_price_max').addClass('categoryerror');
                     event.preventDefault();
                     return false;
-                }
+                }*/
             }
 
             if (parseInt(selected_banner_type_var) != 4 && parseInt(selected_banner_type_var) != 5
@@ -381,7 +377,7 @@
                                 <div class="span3" style="padding-top:0px !important;">Select Targeted Category</div>
                                 <div class="span3" style="padding-top:0px !important;">
                                     <select data-placeholder="Choose Category(s)..." id="category_id_multi" name="category_id_multi[]"
-                                            required="required" class="chosen-select" multiple>
+                                             class="chosen-select" multiple>
                                         {% for category in getcategoriestreeview %}
                                             <option value="{{ category.id }}">{{ category.name }}</option>
                                             {% if loop.last %}
