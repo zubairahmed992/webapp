@@ -1837,4 +1837,8 @@ class ProductHelper
     {
         return $this->repo->countProducts();
     }
+
+    public function getStyleListEnable() {
+        return $this->repo->getStyleListEnable();
+    }
 }

@@ -170,12 +170,10 @@ padding-right: 0px!important;
 }
 
 .login_person{
-    margin-top: 60px;
-    margin-left: -70px;
-    font-weight: bold;
-    display: inline-block;
-    float:left;
-    font-style: italic;
+   clear:both;
+   font-weight: bold;
+   display: block;
+   font-style: italic;
 }
 
 .clk_img{
@@ -272,4 +270,32 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
     font-size: 1.1em;
     cursor: pointer;
 }
+   .navigation1{position: fixed !important; color:#fff; top: 60px; left: 25%; z-index: 2000 !important;}
+    .navigation1 a,
+    .navigation1 a:visited {
+        display: inline-block !important;
+        padding:5px 8px;
+        cursor: pointer;
+        color:#fff;
+        background: #000;
+        text-decoration: none;
 
+    }
+    .navigation1 a:hover {
+        color:#000;
+        background: #fff;
+ }
+   .txt_center{ margin-bottom: 100px;}
+   .sidebar_inline{
+              background: #f1f1f2; box-shadow: -3px 1px 15px #000;  
+            } 
+    .mask-marker-canvas{margin-top: 8px; width:960px; height: 1280px; position: relative;}
+    .rest-mask{background: #1a1a1a;
+    padding: 8px 0px; width: 90%;
+    text-align: center;
+    color: #ffffff;
+    margin-top:50px;
+    text-transform: uppercase;
+    display: none}
+            
+    .img-thumb{width: 35px; height:40px}
