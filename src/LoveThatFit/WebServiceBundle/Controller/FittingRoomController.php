@@ -57,7 +57,7 @@ class FittingRoomController extends Controller {
             $get_qty = 0;
             if($verified_entry[0][1] != "0"){
                 $get_qty = $verified_entry[0]['qty'];
-                $qty = $qty + $get_qty;
+                $qty = $qty;
             }
 
             if($qty < 1){
@@ -228,7 +228,8 @@ class FittingRoomController extends Controller {
                     $get_qty = 0;
                     if($verified_entry[0][1] != "0"){
                         $get_qty = $verified_entry[0]['qty'];
-                        $qty = $qty + $get_qty;
+                        //$qty = $qty + $get_qty;
+                        $qty = $qty;
                     }
 
                     if($qty < 1){
