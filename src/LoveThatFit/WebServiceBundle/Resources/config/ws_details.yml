@@ -661,6 +661,7 @@ nws_add_update_fitting_room:
      product_item_id: 4082
      product_id: 506
      qty: 1
+     update_product_item_id: 4083
 
 nws_delete_fitting_room_item:
    pattern:  /nws/delete_fitting_room_item
