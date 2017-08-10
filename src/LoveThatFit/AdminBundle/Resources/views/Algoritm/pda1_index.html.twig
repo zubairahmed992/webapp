@@ -8,16 +8,17 @@
         $(document).ready(function () {
             function fill_preference_controls(product_id){
              var compare_url = "../../pi/product/" + product_id + "/fit_points";
+             $("#pref_ctrl").empty();
                 $.ajax({
                     url: compare_url
                     , success: function (response) {
                         $("#preference_json").val(response);
-                        {#var str='';
+                        var str='';
                         var obj = jQuery.parseJSON(response);                        
                         var pref = ["default", "very_loose", "loose", "tight", "very_tight"];
                                             $.each(obj, function (key, value) {
                                                 var newDiv = document.createElement('div');
-                                                var s = $("<select id='pref_" + key + "' name='pref_" + key + "' />");
+                                                var s = $("<select id='pref_" + key + "' class='pref_ctrl' name='pref_" + key + "' />");
                                                 var label = $("<label>").text(key);
                                                 for (var val in pref) {
                                                     $("<option />", {value: val, text: pref[val]}).appendTo(s);
@@ -25,7 +26,7 @@
                                                 label.appendTo("#pref_ctrl");
                                                 s.appendTo("#pref_ctrl");
                                             });
-                        #}
+                        
                         
                     }
                 });   
@@ -105,7 +106,13 @@
 
             //-----------------------------------------------------------------------------
             $('a.go_pda').click(function (event) {
-                event.preventDefault();
+                event.preventDefault();                
+                extracted={};
+                var p = ['default', 'very_loose', 'loose', 'tight', 'very_tight'];
+                $('.pref_ctrl').each(function(i, obj) {
+                    extracted[obj.name.substring('pref_'.length)]=p[obj.value];                    
+                });                
+                $("#preference_json").val(JSON.stringify(extracted));
                 ajax_post(0);
                 return false;
             });
@@ -140,7 +147,7 @@
                     success: function (response) {
                         //alert(response);
                         if (return_type === 1 || return_type === 2) {
-                            something = window.open("data:text/json," + encodeURIComponent(response), "_blank");
+                            something = window.open("data:text/json," + response, "_blank");
                             something.focus();
                         } else {
                             $('#summary_ajax').html(response);
@@ -194,14 +201,19 @@
 <div class="clearfix"></div>
     <div class="row-fluid">                    
         <div  class="col-md-4"> 
-            <p>(default, very_loose, loose, tight, very_tight):</p>
+            
             <b> Add Preference </b> 
-            <input class="form-control col-md-10" type="text" id="preference_json" name="preference_json" value=''>
+            <input class="form-control col-md-10" type="hidden" id="preference_json" name="preference_json" value=''>
             <a id='go_pda' class='go_pda' href="#">Compare</a> &nbsp;|&nbsp;
             <a id='pda_json' class='pda_json' href="#">JSON</a> &nbsp;|&nbsp;
             <a id='pda_strip_json' class='pda_strip_json' href="#">Stripped JSON</a>
         </div>
+        <div class="clearfix"></div>
+<div id="preference_div" class="row-fluid">                    
+        <div  id="pref_ctrl"> 
+        </div>
 
+    </div>
     </div>
 <div class="clearfix"></div>
     
@@ -209,11 +221,7 @@
             </div>
     
 <div class="clearfix"></div>
-    <div id="preference_div" class="row-fluid">                    
-        <div  id="pref_ctrl"> 
-        </div>
-
-    </div>
+    
     <div id="pda_grid" style="float: none">                
     </div>                
 
