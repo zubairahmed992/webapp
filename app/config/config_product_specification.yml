@@ -119,7 +119,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-    abdomen: Abdomen   
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   jackets:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -137,7 +139,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-    abdomen: Abdomen   
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   sweater:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -155,7 +159,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-    abdomen: Abdomen  
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   sweaters:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -173,7 +179,9 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-    abdomen: Abdomen    
+    abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   trouser:
     waist: Waist
     cf_waist: CF Waist
@@ -372,6 +380,8 @@ constants:
      waist_to_hip  : Waist to Hip  
      hip: Hip   
      abdomen: Abdomen
+     high_hip: High Hip
+     low_hip: Low Hip
 
  product_specification:
   fit_priority:
