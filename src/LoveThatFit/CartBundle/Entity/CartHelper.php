@@ -249,10 +249,16 @@ class CartHelper
     {
         $product_item = $this->container->get('admin.helper.productitem')->find($product_item_id);
         $result = $this->findCartByUserId($user, $product_item);
+
+        if(empty($qty)){
+            $qty = 1;
+        }
+
         if (isset($result['qty']) > 0) {
             $id = $result["id"];
             $cart = $this->findCartById($id);
-            $setQty = $result["qty"] + $qty;
+            //$setQty = $result["qty"] + $qty;
+            $setQty = $qty;
             $cart->setQty($setQty);
             return $this->save($cart);
         } else {
