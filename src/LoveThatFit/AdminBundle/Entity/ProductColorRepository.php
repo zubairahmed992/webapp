@@ -111,4 +111,14 @@ class ProductColorRepository extends EntityRepository {
         }
     }
 
+    public function findProductColorIDsByTitle($title) {
+        $record = $this->getEntityManager()
+            ->createQuery("SELECT pc.id FROM LoveThatFitAdminBundle:ProductColor pc WHERE pc.title IN :title ORDER BY pc.title ASC")
+            ->setParameter('title', $title);;
+        try {
+            return $record->getArrayResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

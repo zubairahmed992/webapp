@@ -588,7 +588,11 @@ class WSRepo
         }
 
         if (!empty($filter['color'])) {
-            $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
+            $record_color = $this->em
+                ->createQuery("SELECT pc.id FROM LoveThatFitAdminBundle:ProductColor pc WHERE pc.title IN :title ORDER BY pc.title ASC")
+                ->setParameter('title', $filter['color']);;
+            // $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
+            $conditions[] = $query->expr()->in('p.displayProductColor', $record_color->getArrayResult());
         }
 
         if (!empty($filter['min_price'])) {

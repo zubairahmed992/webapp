@@ -87,4 +87,9 @@ class ProductColorHelper {
         }
         return $colors;
     }
+
+    public function getProductColorIDsByTitle($title)
+    {
+        return $this->repo->findProductColorIDsByTitle($title);
+    }
 }
