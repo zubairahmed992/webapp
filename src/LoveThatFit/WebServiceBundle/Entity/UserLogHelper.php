@@ -62,6 +62,7 @@ class UserLogHelper
             $userLog->setAppName( $appName );
             $userLog->setLoginAt(new \DateTime('now'));
             $userLog->setLogoutAt(new \DateTime("0000-00-00 00:00:00"));
+            $userLog->setIsLogout(0);
             $userLog->setUsers( $user );
             $userLog->setSessionId( $sessionId );
 
@@ -83,6 +84,7 @@ class UserLogHelper
 
         if(is_object($userLogObject)){
             $userLogObject->setLogoutAt(new \DateTime('now'));
+            $userLogObject->setIsLogout(1);
 
             $this->save($userLogObject);
             return $userLogObject;
@@ -113,7 +115,8 @@ class UserLogHelper
 
         if(is_object($userLogObject)){
             $logoutDate = strtotime($userLogObject->getLogoutAt()->format('Y-m-d H:i:s'));
-            if($logoutDate < 0){
+            $isUserLogout = $userLogObject->getIsLogout();
+            if($isUserLogout == 0){
                 return true;
             }
         }

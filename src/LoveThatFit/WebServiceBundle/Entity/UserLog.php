@@ -50,6 +50,14 @@ class UserLog
     private $logoutAt;
 
     /**
+     * @var string $isLogout
+     *
+     * @ORM\Column(name="isLogout", type="boolean", nullable=true)
+     */
+    
+    private $isLogout = 0;
+
+    /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="user_log")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -180,5 +188,28 @@ class UserLog
     public function getSessionId()
     {
         return $this->sessionId;
+    }
+
+    /**
+     * Set isLogout
+     *
+     * @param boolean $isLogout
+     * @return UserLog
+     */
+    public function setIsLogout($isLogout)
+    {
+        $this->isLogout = $isLogout;
+    
+        return $this;
+    }
+
+    /**
+     * Get isLogout
+     *
+     * @return boolean 
+     */
+    public function getIsLogout()
+    {
+        return $this->isLogout;
     }
 }
