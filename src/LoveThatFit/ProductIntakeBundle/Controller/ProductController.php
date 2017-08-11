@@ -30,10 +30,16 @@ class ProductController extends Controller
     public function productFitPointsAction($product_id) {
         $product = $this->get('admin.helper.product')->find($product_id);
         if(!$product) { return new Response('Product not found');}
+        $p = json_decode($product->getFitPriority(), true);
+        #return new Response($p['']);
         $fps = array();
         $s = $product->getProductSizes()->first();
-        foreach ($s->getProductSizeMeasurements() as $m) {
-            $fps[$m->getTitle()] = "default";
+        foreach ($s->getProductSizeMeasurements() as $m) {            
+            $fps[$m->getTitle()] = array_key_exists($m->getTitle(), $p) ? $p[$m->getTitle()] : 0;
+            //            if (array_key_exists($m->getTitle(), $p) && $p[$m->getTitle()] > 0) {
+            //                $fps[$m->getTitle()] = $p[$m->getTitle()];
+            //                #$fps[$m->getTitle()] = "default";
+            //            }
         }
         return new Response(json_encode($fps));
     }
