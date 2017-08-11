@@ -601,7 +601,7 @@ class WSRepo
             $conditions[] = $query->expr()->in('b.id', $filter['brand']);
         }
 
-        if (!empty($colors)) {
+        if (!empty($colors_filter)) {
             $conditions[] = $query->expr()->in('p.displayProductColor', $colors_filter);
             // $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
         }
