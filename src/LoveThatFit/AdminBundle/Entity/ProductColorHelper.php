@@ -90,6 +90,11 @@ class ProductColorHelper {
 
     public function getProductColorIDsByTitle($title)
     {
-        return $this->repo->findProductColorIDsByTitle($title);
+        $colors = $this->repo->findProductColorIDsByTitle($title);
+        $colors_filter = [];
+        foreach($colors as $key => $val) {
+            $colors_filter[] = $val['id'];
+        }
+        return $colors_filter;
     }
 }

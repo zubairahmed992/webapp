@@ -102,6 +102,7 @@ class ProductColorRepository extends EntityRepository {
     }
 
     public function findUniqueColor() {
+
         $record = $this->getEntityManager()
             ->createQuery("SELECT pc.title FROM LoveThatFitAdminBundle:ProductColor pc ORDER BY pc.title ASC");
         try {
@@ -113,7 +114,7 @@ class ProductColorRepository extends EntityRepository {
 
     public function findProductColorIDsByTitle($title) {
         $record = $this->getEntityManager()
-            ->createQuery("SELECT pc.id FROM LoveThatFitAdminBundle:ProductColor pc WHERE pc.title IN :title ORDER BY pc.title ASC")
+            ->createQuery("SELECT pc.id FROM LoveThatFitAdminBundle:ProductColor pc WHERE pc.title IN (:title)")
             ->setParameter('title', $title);;
         try {
             return $record->getArrayResult();
