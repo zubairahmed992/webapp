@@ -34,5 +34,10 @@ class WSInterfaceController extends Controller {
     {
         return $this->render('LoveThatFitWebServiceBundle:WSInterface:braintree.html.twig', array());
     }
+
+    public function brainTreeSaveCardAction()
+    {
+        return $this->render('LoveThatFitWebServiceBundle:WSInterface:braintreesavecard.html.twig', array());
+    }
     
 }

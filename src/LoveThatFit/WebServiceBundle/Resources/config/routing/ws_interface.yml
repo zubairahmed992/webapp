@@ -9,3 +9,7 @@ ws_interface_user:
 braintree_test_transaction:
     pattern: /ws/braintree_test_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:brainTreeTestTransaction}
+
+braintree_save_card:
+      pattern: /ws/braintree_save_card
+      defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:brainTreeSaveCard}
