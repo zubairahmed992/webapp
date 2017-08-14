@@ -1560,8 +1560,16 @@ class WebServiceHelper
                 $productlist[$key]['qty'] = 0;
             }
         }
-        return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
 
+
+        $data = array('product_list' => $productlist, 'page_count' => $page_count);
+        $ar = array(
+            'data' => $data,
+            'count' => $data['product_list'] ? count($data['product_list']) : 0,
+            'message' => 'Product List',
+            'success' => true,
+        );
+        return json_encode($ar);
     }
 
 }
