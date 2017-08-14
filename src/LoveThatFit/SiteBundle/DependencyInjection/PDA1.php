@@ -337,6 +337,7 @@ class PDA1 {
         $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);        
         return $fp_measurements;
     }
+    #--------------------------------------------------------
     private function calibrate_for_preference($fp){
        if(is_array($this->pref)){
            if(array_key_exists($fp['title'],$this->pref)){
@@ -344,19 +345,29 @@ class PDA1 {
                    case 'very_loose':
                        $fp['fit_model'] =  $fp['min_body_measurement'];                       
                        $fp['ideal_body_size_low'] = $fp['min_body_measurement'];                       
+                       #-----------------------------------
+                       $fp['ideal_body_size_high'] = $fp['ideal_body_size_high'] + ($fp['grade_rule'] / 2);
                         break;
                    case 'loose':
                        $fp['fit_model'] =($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
-                       $fp['ideal_body_size_low'] =($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
-                       break;
+                       $fp['ideal_body_size_low'] = ($fp['min_body_measurement'] + $fp['ideal_body_size_low']) / 2;
+                       #-----------------------------------
+                       $fp['ideal_body_size_low'] = $fp['ideal_body_size_low'] + ($fp['grade_rule'] / 2);
+                       $fp['ideal_body_size_high'] = $fp['ideal_body_size_high'] + ($fp['grade_rule'] / 2);
+                        break;
                    case 'tight':
                        $fp['fit_model'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
-                       $fp['ideal_body_size_high'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;                       
+                       $fp['ideal_body_size_high'] = ($fp['max_body_measurement'] + $fp['ideal_body_size_high']) / 2;
+                       #-----------------------------------
+                       $fp['ideal_body_size_high'] = $fp['ideal_body_size_high'] + ($fp['grade_rule'] / 2);
+                       $fp['ideal_body_size_low'] = $fp['ideal_body_size_low'] + ($fp['grade_rule'] / 2);
                         break;
                    case 'very_tight':
                        $fp['fit_model'] = $fp['max_body_measurement'];                       
                        $fp['ideal_body_size_high'] = $fp['max_body_measurement'];
-                       break;                   
+                       #-----------------------------------
+                       $fp['ideal_body_size_low'] = $fp['ideal_body_size_low'] + ($fp['grade_rule'] / 2);
+                        break;                   
                }
            }           
        }
