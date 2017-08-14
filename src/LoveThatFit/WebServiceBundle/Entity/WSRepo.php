@@ -575,6 +575,8 @@ class WSRepo
                 $colors_filter[] = $val['id'];
             }
         }
+
+        $params = [];
         // first, creating the query builder
         $query = $this->em
             ->createQueryBuilder()
@@ -602,8 +604,8 @@ class WSRepo
         }
 
         if (!empty($colors_filter)) {
-            $conditions[] = $query->expr()->in('p.displayProductColor', $colors_filter);
-            // $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
+            $query->innerJoin('pi.product_color', 'pf', 'WITH', 'pf.id IN (:colors_filter)');
+            $params = array('colors_filter' => $colors_filter);
         }
 
         if (!empty($filter['min_price'])) {
@@ -617,8 +619,9 @@ class WSRepo
         // adding the WHERE clause
         $query->where($conditions);
 
+        $params['user'] = $user_id;
         // getting the query
-        $query = $query->setParameters(array('user' => $user_id))->groupBy('p.id')->getQuery();
+        $query = $query->setParameters($params)->groupBy('p.id')->getQuery();
 
         try {
             return $query->getArrayResult();
