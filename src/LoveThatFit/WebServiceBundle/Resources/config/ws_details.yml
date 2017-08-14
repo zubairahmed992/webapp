@@ -493,6 +493,13 @@ ws_get_applicablefnf_user:
     params:
       auth_token: 121c421783cd4d71d871ec16a1296091
 
+nws_get_applicablefnf_user:
+    pattern: /nws/get_applicablefnf_user
+    title: get_applicablefnf_user
+    params:
+      auth_token: 121c421783cd4d71d871ec16a1296091
+
+
 ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     title: process_payment_and_add_item
@@ -661,6 +668,7 @@ nws_add_update_fitting_room:
      product_item_id: 4082
      product_id: 506
      qty: 1
+     update_product_item_id: 4083
 
 nws_delete_fitting_room_item:
    pattern:  /nws/delete_fitting_room_item
@@ -857,5 +865,5 @@ nws_search_brand_style:
    title: search_brand_style
    params:
      auth_token: 56565656566
-     text: "505"
+     text: "search text"
      page_no: 1

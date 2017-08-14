@@ -561,6 +561,22 @@ class WSRepo
             return null;
         }*/
 
+        if (!empty($filter['color'])) {
+            $query = $this->em
+                ->createQueryBuilder()
+                ->select('pc.id')
+                ->from('LoveThatFitAdminBundle:ProductColor', 'pc')
+                ->andWhere('pc.title IN (:title)')
+                ->setParameters(array('title' => $filter['color']))
+                ->getQuery();
+            $colors = $query->getArrayResult();
+            $colors_filter = [];
+            foreach($colors as $key => $val) {
+                $colors_filter[] = $val['id'];
+            }
+        }
+
+        $params = [];
         // first, creating the query builder
         $query = $this->em
             ->createQueryBuilder()
@@ -587,8 +603,9 @@ class WSRepo
             $conditions[] = $query->expr()->in('b.id', $filter['brand']);
         }
 
-        if (!empty($filter['color'])) {
-            $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
+        if (!empty($colors_filter)) {
+            $query->innerJoin('pi.product_color', 'pf', 'WITH', 'pf.id IN (:colors_filter)');
+            $params = array('colors_filter' => $colors_filter);
         }
 
         if (!empty($filter['min_price'])) {
@@ -602,8 +619,9 @@ class WSRepo
         // adding the WHERE clause
         $query->where($conditions);
 
+        $params['user'] = $user_id;
         // getting the query
-        $query = $query->setParameters(array('user' => $user_id))->groupBy('p.id')->getQuery();
+        $query = $query->setParameters($params)->groupBy('p.id')->getQuery();
 
         try {
             return $query->getArrayResult();
@@ -686,7 +704,7 @@ class WSRepo
             ->andWhere('p.disabled=0')
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
-            ->setParameters(array('search_text' => $search_text.'%', 'user' => $user_id))
+            ->setParameters(array('search_text' => '%'.$search_text.'%', 'user' => $user_id))
             ->getQuery();
 
         try {

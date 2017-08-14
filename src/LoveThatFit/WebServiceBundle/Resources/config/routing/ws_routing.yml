@@ -272,14 +272,17 @@ ws_get_applicablefnf_user:
    pattern: /ws/get_applicablefnf_user
    defaults: { _controller: LoveThatFitAdminBundle:FNFUser:getApplicableFNFUser}
 
+nws_get_applicablefnf_user:
+   pattern: /nws/get_applicablefnf_user
+   defaults: { _controller: LoveThatFitAdminBundle:FNFUser:nwsGetApplicableFNFUser}
 
 ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeProcessTransaction}
 
-nws_braintree_processuser_transaction:
-    pattern: /nws/braintree_processuser_transaction
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBrainTreeProcessTransaction}
+nws_braintree_save_credit_card:
+    pattern: /nws/braintree_save_credit_card
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeSaveCreditCard}
 
 ws_get_braintree_client_token:
     pattern: /ws/get_braintree_client_token
