@@ -71,6 +71,7 @@ class PodioUsersHelper
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUser($user_entity);
+        $entity->setPodioUpdated(0);
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -78,12 +79,13 @@ class PodioUsersHelper
 
 //-------------------------------------------------------
 
-    public function updatePodioUsers($id, $podio_id)
+    public function updatePodioUsers($id, $podio_id, $is_podio_updated)
     {
         $entity = $this->find($id);
         $entity->setStatus(1);
         $entity->setPodioId($podio_id);
         $entity->setUpdatedAt(new \DateTime('now'));
+        $entity->setPodioUpdated($is_podio_updated);
 
         $this->em->persist($entity);
         $this->em->flush();

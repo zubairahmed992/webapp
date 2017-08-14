@@ -121,6 +121,7 @@ security:
                     jessika: { password: 2be5e289f79698e25d784bf82398086572ddd40d, roles: 'ROLE_ADMIN' }
                     maggie: { password: 5158d4cfafa9e6c3a24fd3435d794cdba0977a84, roles: 'ROLE_ADMIN' }
                     carol: { password: e1efa602d0277a3b0fea43369345c6aef7d56598, roles: 'ROLE_ADMIN' }
+                    joe: { password: 8fa76b6b51712d2eab8722e6bac2a994cf7aabbf, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
