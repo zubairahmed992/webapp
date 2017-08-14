@@ -686,7 +686,7 @@ class WSRepo
             ->andWhere('p.disabled=0')
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
-            ->setParameters(array('search_text' => $search_text.'%', 'user' => $user_id))
+            ->setParameters(array('search_text' => '%'.$search_text.'%', 'user' => $user_id))
             ->getQuery();
 
         try {
