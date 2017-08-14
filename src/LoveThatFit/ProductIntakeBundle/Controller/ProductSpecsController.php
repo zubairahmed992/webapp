@@ -465,5 +465,35 @@ class ProductSpecsController extends Controller
         
     }
     
+    public function validateProductSpecificationAction($id) {
+        $ps = $this->get('pi.product_specification')->find($id);  
+        $parsed_data = json_decode($ps->getSpecsJson(),true);   
+        
+        //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
+        foreach ($parsed_data['sizes'] as $key => $product_size_value) {                  
+                 foreach ($product_size_value as $key1 => $value) {    
+                     
+                        $rule_one = $value['garment_dimension'] -  $value['max_actual'];
+                         if( $rule_one <= 0  ){
+                             $result['g_d-m_a'][$key1] = $rule_one;
+                         }
+                         echo "<pre>";
+                         print_R($parsed_data['sizes'][$key]);
+                         echo "<br>asif";
+                         print_R (next($parsed_data['sizes'][$key]));
+                         die;
+//                        $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+//                        $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
+//                        $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
+//                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
+            }
+        }
+            
+        echo "<pre>";
+        print_r($result);
+        die;
+        
+    }
+    
     
 }

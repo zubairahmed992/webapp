@@ -591,6 +591,7 @@
 </script>
    
 <div class="btn-group" role="group" aria-label="..." style="float:right;">
+    <a href="{{ path('product_intake_validate_product_specification', {'id': app.request.get('id')}) }}" class="btn btn-default">Validate</a> 
     <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
 </div>
 {#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}    
