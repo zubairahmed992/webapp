@@ -84,46 +84,87 @@ class PodioApiHelper
             //$view_profile = '<a href="'.$url_member_profile.'" target="_blank">View Profile</a>';
 
             //search member email exists in podio
-            $search_query = PodioSearchResult::app( $this->app_id, array('query' => ''.$user_podio['email'].'','ref_type' => 'item','search_fields' => 'title') );
             $search_results = array();
-            foreach ($search_query as $key => $value) {
-              if($value->title==$user_podio['email']) {
-                $search_results['id'] = $value->id;
-                $search_results['title'] = $value->title;
-                break;
+            try {              
+              $search_query = PodioSearchResult::app( $this->app_id, array('query' => ''.$user_podio['email'].'','ref_type' => 'item','search_fields' => 'title') );              
+              foreach ($search_query as $key => $value) {
+                if($value->title==$user_podio['email']) {
+                  $search_results['id'] = $value->id;
+                  $search_results['title'] = $value->title;
+                  break;
+                }
               }
+            } catch (PodioError $e) {
+              return $e;
             }
 
-            // Second approach - Create field collection with different fields
-            $fields = new PodioItemFieldCollection(array(
-              new PodioEmailItemField(array("external_id" => "member-email")), 
-              new PodioTextItemField(array("external_id" => "title", "values" => "".$user_podio['id']."")),
-              new PodioTextItemField(array("external_id" => "activation-date", "values" => "".$user_podio['created_at']."")),
-              new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
-              new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
-              new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
-              new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
-              new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
-            ));
-
-            // Create item and attach fields
-            $item = new PodioItem(array(
-              "app" => new PodioApp(intval($this->app_id)),
-              "fields" => $fields
-            ));
-            
-            //Attached member profile url here
-            $embed = PodioEmbed::create(array("url" => $url_member_profile));
-            $item->fields["admin-portal-url"]->values = $embed;
-
-            //Attached memeber email
-            $item->fields["member-email"]->values = array("type" => "other","value" => "".$user_podio['email']."");
-
+            $podio_results = array();
             try {
-              // Save item
-              $new_item_placeholder = $item->save();
-              $item->item_id = $new_item_placeholder->item_id;
-              return $item->item_id;
+              if(isset($search_results) && !empty($search_results)) {
+                // update item - update old member
+
+                // Second approach - Create field collection with different fields
+                $fields = new PodioItemFieldCollection(array(
+                  new PodioTextItemField(array("external_id" => "title", "values" => "".$user_podio['id']."")),
+                  new PodioTextItemField(array("external_id" => "activation-date", "values" => "".$user_podio['created_at']."")),
+                  new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
+                  new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
+                  new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
+                  new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
+                  new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
+                ));
+
+                // Create item and attach fields
+                $item = new PodioItem(array(
+                  "app" => new PodioApp(intval($this->app_id)),
+                  "fields" => $fields
+                ));
+                
+                //Attached member profile url here
+                $embed = PodioEmbed::create(array("url" => $url_member_profile));
+                $item->fields["admin-portal-url"]->values = $embed;
+
+                $podio_id = $search_results['id'];
+                $update_item_fields = PodioItem::update($podio_id, $item);
+                //return $podio_id;
+                $podio_results['podio_id'] = $podio_id;
+                $podio_results['is_podio_updated'] = 1;
+                return $podio_results;
+              } else {
+                // Save item - add new member
+
+                // Second approach - Create field collection with different fields
+                $fields = new PodioItemFieldCollection(array(
+                  new PodioEmailItemField(array("external_id" => "member-email")), 
+                  new PodioTextItemField(array("external_id" => "title", "values" => "".$user_podio['id']."")),
+                  new PodioTextItemField(array("external_id" => "activation-date", "values" => "".$user_podio['created_at']."")),
+                  new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
+                  new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
+                  new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
+                  new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
+                  new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
+                ));
+
+                // Create item and attach fields
+                $item = new PodioItem(array(
+                  "app" => new PodioApp(intval($this->app_id)),
+                  "fields" => $fields
+                ));
+                
+                //Attached member profile url here
+                $embed = PodioEmbed::create(array("url" => $url_member_profile));
+                $item->fields["admin-portal-url"]->values = $embed;
+
+                //Attached memeber email
+                $item->fields["member-email"]->values = array("type" => "other","value" => "".$user_podio['email']."");
+
+                $new_item_placeholder = $item->save();
+                $item->item_id = $new_item_placeholder->item_id;
+                //return $item->item_id;
+                $podio_results['podio_id'] = $item->item_id;
+                $podio_results['is_podio_updated'] = 0;
+                return $podio_results;
+              }
             } catch (PodioError $e) {
               return $e;
             }            

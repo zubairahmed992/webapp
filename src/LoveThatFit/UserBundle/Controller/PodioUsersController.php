@@ -37,10 +37,11 @@ class PodioUsersController extends Controller {
                 );
         		//echo "<pre>"; print_r($user_podio); 
 
-        		$podio_id = $this->container->get('user.helper.podioapi')->saveUserPodio($user_podio);
-                //echo "podio_id:".$podio_id."<br>";
-        		if($podio_id) {
-                    $data = $this->get('user.helper.podio')->updatePodioUsers($id, $podio_id);
+        		$podio_results = $this->container->get('user.helper.podioapi')->saveUserPodio($user_podio);
+        		if(isset($podio_results) && !empty($podio_results)) {
+                    $podio_id = $podio_results['podio_id'];
+                    $is_podio_updated = $podio_results['is_podio_updated'];
+                    $data = $this->get('user.helper.podio')->updatePodioUsers($id, $podio_id, $is_podio_updated);
         		}
         	}
             die(''.$total_podio_users.' Podio users added by cron job service...');
