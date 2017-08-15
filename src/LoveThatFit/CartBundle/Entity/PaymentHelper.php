@@ -65,8 +65,6 @@ class PaymentHelper
                 "customerId" => $customer->id
             ]);
 
-            echo($clientToken = $clientToken); die;
-
             return array(
                 'success'       => 0,
                 'client_token'  => $clientToken,
