@@ -1447,14 +1447,19 @@ class WebServiceHelper
         return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
     }
     
+
     public function userDetailMaskMarker($request_array)
-    {   
-        
+    { 
+
+
+        if($request_array['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&')
+        {
+            
         $data = array();
          //$user = $this->container->get('webservice.repo')->userDetailMaskMarker('1355dd07ad8b9ce1075ba919798ffe1f','afaquetest17@test.com');
          //print_r($user);
          //exit;
-         $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['auth_token'],$request_array['email']); 
+         $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
         if ($user) {
 
             $device = json_decode($user[0]['image_actions']);
@@ -1514,6 +1519,7 @@ class WebServiceHelper
        $data['mask'] ['mask_x'] =  $mask_x;
        $data['mask'] ['mask_y'] =  $mask_y; 
 
+
        
 
 
@@ -1526,6 +1532,11 @@ class WebServiceHelper
         } else {
             return $this->response_array(false, 'Member not found');
         }
+
+      }else {
+
+        return $this->response_array(false, 'Member not found');
+      }        
     }
 
 
