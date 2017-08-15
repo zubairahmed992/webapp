@@ -15,6 +15,7 @@ use LoveThatFit\AdminBundle\Entity\ProductColor;
 class ProductSpecificationHelper {
 
     protected $conf;
+    protected $size_config;
     protected $dispatcher;
 
     /**
@@ -41,6 +42,8 @@ class ProductSpecificationHelper {
         $this->repo = $em->getRepository($class);
         $conf_yml = new Parser();
         $this->conf = $conf_yml->parse(file_get_contents('../src/LoveThatFit/ProductIntakeBundle/Resources/config/specs_config.yml'));
+        $this->size_config = $conf_yml->parse(file_get_contents('../app/config/sizes_ltf.yml'));     
+
     }
 
     #---------------------------------   
@@ -122,6 +125,7 @@ class ProductSpecificationHelper {
         $entity->fill($parsed, true);
         return $this->update($entity);
     }
+    
 
     #----------------------------------------------
     #---------------------------
@@ -196,8 +200,14 @@ class ProductSpecificationHelper {
             $specs['fit_point_stretch'] = $specs_obj->getFitPointStretchArray();
         }#-----------------------------
         if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch') {
-            $specs[$decoded['name']] = $decoded['value'];
+            $specs[$decoded['name']] = $decoded['value'];           
             $specs = $this->generate_specs_for_stretch($specs, $decoded['name']); #~~~~~~~~>1
+        } elseif ($decoded['name'] == 'max_horizontal_stretch') {    #~~~~~~~~>2
+            $specs[$decoded['name']] = $decoded['value'];    
+            $specs['horizontal_stretch'] = $specs['horizontal_stretch'] == 0 ? $decoded['value'] / 3 : $specs['horizontal_stretch'];
+        } elseif( $decoded['name'] == 'max_vertical_stretch') {
+            $specs[$decoded['name']] = $decoded['value'];    
+            $specs['vertical_stretch'] = $specs['vertical_stretch'] == 0 ? $decoded['value'] / 3 : $specs['vertical_stretch'];
         } elseif (strpos($decoded['name'], 'fit_point_stretch') !== false) {    #~~~~~~~~>2
             $fit_point_stretch_array = explode('-', $decoded['name']);
             $specs['fit_point_stretch'][$fit_point_stretch_array[1]] = $decoded['value'];
@@ -215,16 +225,26 @@ class ProductSpecificationHelper {
             $specs = $this->remove_fit_point($specs, $decoded);
         } elseif (strpos($decoded['name'], 'add_new_fit_point') !== false) { #~~~~~~~~>8            
             $specs = $this->add_new_fit_point($specs, $decoded);            
+        } elseif (strpos($decoded['name'], 'remove_size') !== false) { #~~~~~~~~>7            
+            $specs = $this->remove_size($specs, $decoded);            
         }  else {
             return array(
                 'message' => 'Nothing to update!',
                 'message_type' => 'error',
-                'success' => true,
+                'success' => false,
             );
         }        
-        $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
-        $specs_obj->setSpecsJson(json_encode($specs));
-        return $this->update($specs_obj);
+        if ($specs){
+            $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
+            $specs_obj->setSpecsJson(json_encode($specs));
+            return $this->update($specs_obj);
+        }else{
+            return array(
+                'message' => 'Nothing to update!',
+                'message_type' => 'error',
+                'success' => false,
+            );
+        }
     }
 
     #------------------->1 Overall Stretch >>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -391,6 +411,16 @@ class ProductSpecificationHelper {
         }
         return $specs;
     }
+    #------------------->#------------------->
+     private function remove_size($specs, $decoded) {
+        $s = str_replace("remove_size_", "", $decoded['name']);         
+        foreach ($specs['sizes'] as $size => $fit_points) {
+            if ($size==$s) {
+                unset($specs['sizes'][$s]);
+            }
+        }
+        return $specs;
+    }
 
     #------------------->8 add new Fit Point >>>>>>>>>>>>>>>>>>>>>>>>>>>
     private function add_new_fit_point($specs, $decoded) {
@@ -424,7 +454,7 @@ class ProductSpecificationHelper {
             'original_value' => 0,
         );
     }
-
+    
     ###################################################################
 
 
@@ -775,7 +805,7 @@ class ProductSpecificationHelper {
         $product->setLayering(array_key_exists('layring', $data) ? $data['layring'] : $data['layering']);
         $product->setFitPriority(array_key_exists('fit_priority', $data) ? json_encode($data['fit_priority']) : 'NULL' );
         $product->setFabricContent(json_encode(array_key_exists('fabric_content', $data) ? $data['fabric_content'] : ''));
-        $product->setDisabled(false);
+        $product->setDisabled(true);
         $product->setDeleted(false);
         $product->setSizeTitleType($data['size_title_type']);
         #------------------------
@@ -877,7 +907,11 @@ class ProductSpecificationHelper {
     public function getExistingProductDetails( $id )
     {       
         $new_fp = array('hip' => 'low_hip', 'thigh' => 'high_thigh', 'central_front_waist' => 'cf_waist');
-        $data = $this->container->get('service.repo')->getExistingProductDetails($id);   
+        $data = $this->container->get('service.repo')->getExistingProductDetails($id); 
+//        $product_sizes_sorted = $this->product_size_sorting($data[0][0]['gender'],$data[0][0]['size_title_type'], $data[0][0]['product_sizes']);
+//        echo "<pre>";
+//        print_R($data[0][0]['product_sizes']);
+//        die;
         $data1['product_id'] = $id;
         $data1['clothing_type']=$data[0]['clothing_type'];
         $data1['brand']=$data[0]['brand'];
@@ -906,8 +940,9 @@ class ProductSpecificationHelper {
         $data1['mapping_description']=$data[0]['clothing_type'];       
         $data1['measuring_unit']='inch';       
         $data1['fit_priority'] = $this->replace_with_new_fitpoint($data1['fit_priority'], $new_fp); #replacing old fit point with new
-        
-        foreach ($data[0][0]['product_sizes'] as $key => $product_size_value) {                  
+        //------------- Return Product Sizes Sorted Form
+        $product_sizes_sorted = $this->product_size_sorting($data[0][0]['gender'],$data[0][0]['size_title_type'], $data[0][0]['product_sizes']);
+        foreach ($product_sizes_sorted as $key => $product_size_value) {                  
                  foreach ($product_size_value['product_size_measurements'] as  $value) {  
                      $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];#replacing old fit point with new
                     $stretch_percentage = ($value['garment_measurement_stretch_fit'] == 0)? 0 :(($value['garment_measurement_stretch_fit'] - $value['garment_measurement_flat'])/$value['garment_measurement_flat'])*100;
@@ -943,7 +978,7 @@ class ProductSpecificationHelper {
             $c->setBrandName($data1['brand']);
             $c->setStyleName($data1['style_name']);
             $c->setClothingType($data1['clothing_type']);
-            $c->setStyleIdNumber($data1['clothing_type']);            
+            $c->setStyleIdNumber($data1['style_id_number']);            
             $c->setCreatedAt(new \DateTime('now'));
             $this->save($c);
             return true;
@@ -970,7 +1005,8 @@ class ProductSpecificationHelper {
         
         foreach ($sizemeasurements['sizes'] as $key => $product_size_mesurements) {            
             foreach ($product_size_mesurements as $key_val => $value) { 
-                  if( array_key_exists($key_val,$size_measurements_title[$key]) ){
+                $size_measurements_title_key[] = (isset($size_measurements_title[$key])) ? $size_measurements_title[$key] : null;
+                  if( array_key_exists( $key_val,$size_measurements_title_key ) ){
                     $psm = $this->container->get('admin.helper.productsizemeasurement')->find($size_measurements_title[$key][$key_val]);
                     $psm->setGarmentMeasurementFlat($value['garment_dimension']);
                     $psm->setGarmentMeasurementStretchFit($value['garment_stretch']);
@@ -983,8 +1019,8 @@ class ProductSpecificationHelper {
                     $psm->setMinCalculated($value['min_calc']);
                     $psm->setGradeRule($value['grade_rule']);
                     $this->container->get('admin.helper.productsizemeasurement')->update($psm);
-                } else {                  
-                    $size_id = $this->container->get('admin.helper.productsizes')->find($new_fp_size_measurements[$key]);
+                } else {      
+                    $size_id = $this->container->get('admin.helper.productsizes')->findSizeByProductTitle($key,$id);
                     $psm = new ProductSizeMeasurement;                                         
                     $psm->setProductSize($size_id);
                     $psm->setTitle($key_val);
@@ -1041,6 +1077,24 @@ class ProductSpecificationHelper {
 //            }
         
         return $data1;
+    }
+    
+   //----------------- Product Sizes Sorting any formating using Config file sizes_ltf.yml based on index  
+    public function product_size_sorting($gender, $size_title, $product_size_array) {
+         $size_config = $this->size_config;
+         $gender_title = ($gender == 'f' ? 'woman':'men');
+         //return $gender_title;
+         $size_index_array =  $size_config['constants']['size_titles'][$gender_title][$size_title];
+         $product_size_title_array = array_flip(array_column($product_size_array, 'title'));
+        // return  $product_size_array;
+         $product_size_title_sorted = array_intersect_key($size_index_array, $product_size_title_array );
+      // return array_intersect_key($size_index_array, $product_size_title_array );         
+        //----------- Filter the Array baseb on array key 
+        foreach($product_size_title_sorted as $key => $size_title ){
+          $size_title_key =  array_search($size_title['title'], array_column($product_size_array, 'title'));
+          $product_sorted_size_tilte[] = $product_size_array[$size_title_key]; 
+        }
+        return $product_sorted_size_tilte;
     }
 }
 

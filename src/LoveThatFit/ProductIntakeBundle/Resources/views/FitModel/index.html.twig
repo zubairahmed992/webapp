@@ -1,38 +1,53 @@
 {% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
 
 {% block body %}
-
 <div class="p_listing">     
     <h1>Fit Model Measurement</h1>
 
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
-        <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>           
+        <a href="{{ path('product_intake_fit_model_create_new') }}" class="btn btn-default">New</a>     
+        <a href="{{ path('product_intake_fit_model_compare') }}" class="btn btn-default">Compare</a>           
     </div>
     <div class="clearfix"></div> 
 
-    <table class="table table-bordered table-striped table-hover table-condensed">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Brand</th>
-            <th></th>
-        </tr>
-        {% for fmm in fit_model_measurements %}
-        <tr>
-            <td>{{fmm.Id}}</td>            
-            <td>{{fmm.Title}}</td>
-            <td>{{fmm.Brand is not null?fmm.Brand.Name:''}}</td>
-            <td>
-                <a href="{{ path('product_intake_fit_model_show', {'id': fmm.Id}) }}" title="Show ">show</a> &nbsp;| &nbsp;
-                <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" title="Edit ">edit</a> &nbsp;| &nbsp;
-                <a href="{{ path('product_intake_fit_model_delete', {'id': fmm.Id}) }}" title="Delete {{fmm.Title}}">del</a>&nbsp;|&nbsp;
-                <a href="{{ path('product_intake_fit_model_duplicate', {'id': fmm.Id }) }}" title="Fit Model Measurement duplicate">Duplicate</a>   
-
-            </td>
-        </tr>
-         {% endfor %}
+    <table class="table table-bordered table-striped table-hover table-condensed" id="fit_model_table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Brand</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fmm in fit_model_measurements %}
+                <tr>
+                    <td>{{fmm.Id}}</td>            
+                    <td>{{fmm.Title}}</td>
+                    <td>{{fmm.Brand is not null?fmm.Brand.Name:''}}</td>
+                    <td>
+                        <a href="{{ path('product_intake_fit_model_show', {'id': fmm.Id}) }}" title="Show ">show</a> &nbsp;| &nbsp;
+                        <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" title="Edit ">edit</a> &nbsp;| &nbsp;
+                        <a href="{{ path('product_intake_fit_model_delete', {'id': fmm.Id}) }}"  data-toggle="confirmation" data-singleton="true" title="Delete {{fmm.Title}}">del</a>&nbsp;|&nbsp;
+                        <a href="{{ path('product_intake_fit_model_duplicate', {'id': fmm.Id }) }}" data-toggle="confirmation" data-singleton="true" title="Duplicate - {{fmm.Title}}">Duplicate</a>   
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table> 
 </div>
 
-
+<div class="bs-docs-grid" id="all_data_search">
+<div class="pagination"></div>  
+</div>
+ <script type="text/javascript">
+        jQuery(document).ready(function () {             
+           $('#fit_model_table').DataTable( {
+             "columnDefs": [ {
+                "targets": 3,
+                "orderable": false
+                } ]
+        });
+        });
+ </script>
 {% endblock %}

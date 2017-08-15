@@ -1,0 +1,57 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+
+{% block body %}
+
+<div class="p_listing">     
+    <h1>Fit Model Measurement</h1>  
+        <form action="{{ path('product_intake_fit_model_compare_with_brand')}}" method="post" class="form-horizontal"  >
+            <div class="container">   
+                <div class="form-group required">
+                    <label class="control-label col-sm-2" for=""> Select Brand: </label>                  
+                    <div class="col-sm-4">
+                        <select name="brand" id="sel_clothing_type"  class="form-control">
+                            <option value="">Select</option>
+                            {% set array_brand_id = {} %}
+                            {% for val in fit_model_measurements %}
+                                {% if val.Brand.id in array_brand_id %}                        
+                                    {% else %}
+                                        <option value="{{ val.Brand.id }}" {{ val.Brand.id == brand_id ? 'selected':'' }}  >{{ val.Brand.Name }}</option>
+                                {% endif%}                       
+                               {% set array_brand_id = array_brand_id|merge({ (val.Brand.id):val.Brand.id }) %}
+                            {% endfor %}
+                       </select>   
+                    </div>
+                <div class="col-sm-4">
+                   <button type="submit" class="btn btn-default">Compare</button>
+                </div>
+             </div>
+            </div>
+        </form>
+                       
+    <div class="clearfix"></div> 
+
+    <table class="table table-bordered table-striped table-hover table-condensed">
+        <tr>
+            <th>Fit-Model</th>
+             {% for key, val in fit_points_array %}
+                <th> {{ key }} </th>
+            {% endfor %}
+        </tr>
+        
+        {% for fmm in fit_model_measurements_fp %}
+            <tr>
+                <td>
+                    <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" target="_blank" title="Edit Fit Model new Tab">  {{fmm.Title}}  </a>              
+                </td>
+                {% for key, val in fmm.reurnJsonToArray %}    
+                   {% if key in fit_points_array|keys %}
+                   <td> {{ val }} </td>     
+                   {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table> 
+</div>
+
+
+{% endblock %}

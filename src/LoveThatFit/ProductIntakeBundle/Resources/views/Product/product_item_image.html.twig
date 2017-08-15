@@ -1,0 +1,39 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
+ <h1>Product Item missing images </h1>    
+<div>Total Number of Items: {{total_items}}</div>
+<div>Number of missing Images: {{missing_images}}</div>
+
+<div class="p_listing">     
+     <table class="table table-bordered table-striped table-hover table-condensed">
+        <tr>
+            <th>ProductId</th>
+            <th>ItemId</th>
+            <th>Style ID</th>            
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Image</th>
+        </tr>
+        {% for p in products %}
+        <tr>
+            <td>{{p.product_id}}</td>
+            <td>{{p.item_id}}</td>
+            <td>{{p.style_id_number}}</td>            
+            <td>{{p.product}}</td>
+            <td>{{p.brand}}</td>
+            <td>{{p.color}}</td>
+            <td>{{p.size}}</td>
+            <td><a href="{{asset(p.web_path)}}">{{p.image}}</a></td>
+        </tr>
+         {% endfor %}
+    </table> 
+    
+    
+    
+    
+</div>
+
+{% endblock %}

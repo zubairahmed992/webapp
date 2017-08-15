@@ -1923,6 +1923,7 @@ class ProductRepository extends EntityRepository
             ->where('p.disabled=0')
             ->andWhere('p.deleted=0')
             ->andWhere('p.item_name IS NOT NULL ')
+            ->andWhere('p.item_name != :empty')->setParameter('empty', '')
             ->groupBy('p.id')
             ->getQuery()
             ->getResult();

@@ -17,6 +17,7 @@ class UserMeasurementType extends AbstractType
         $builder->add('bust', 'number', array('precision' => 2,'required'=>false));
         $builder->add('waist', 'number', array('precision' => 2,'required'=>false));
         $builder->add('chest', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('abdomen', 'number', array('precision' => 2,'required'=>false));        
         $builder->add('hip', 'number', array('precision' => 2,'required'=>false));        
         $builder->add('low_hip', 'number', array('precision' => 2,'required'=>false));
         $builder->add('high_hip', 'number', array('precision' => 2,'required'=>false));
@@ -26,6 +27,8 @@ class UserMeasurementType extends AbstractType
         $builder->add('shoulder_length', 'number', array('precision' => 2,'required'=>false));
         $builder->add('weight', 'number', array('precision' => 2,'required'=>false));       
         $builder->add('thigh', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('low_thigh', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('high_thigh', 'number', array('precision' => 2,'required'=>false));
         $builder->add('shoulder_across_front', 'number', array('precision' => 2,'required'=>false));
         $builder->add('shoulder_across_back', 'number', array('precision' => 2,'required'=>false));
         $builder->add('bicep', 'number', array('precision' => 2,'required'=>false));
