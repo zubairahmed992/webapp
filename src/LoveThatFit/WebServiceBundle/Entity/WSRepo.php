@@ -630,7 +630,7 @@ class WSRepo
         }
     }
 
-    public function userDetailMaskMarker($token,$email)
+    public function userDetailMaskMarker($email)
     {
         return $this->em
             ->createQueryBuilder()
@@ -653,9 +653,8 @@ class WSRepo
                       )
             ->from('LoveThatFitUserBundle:User', 'u')
             ->innerJoin('u.user_archives', 'ua')           
-            ->where('u.authToken=:token')
-            ->andWhere('u.email=:email')
-            ->setParameters(array('token' => $token,'email' => $email))
+            ->Where('u.email=:email')
+            ->setParameters(array('email' => $email))
             ->getQuery()
             ->getResult();
     }
