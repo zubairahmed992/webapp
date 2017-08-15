@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\CartBundle\Entity;
 
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,6 +64,8 @@ class PaymentHelper
             $clientToken = Braintree_ClientToken::generate([
                 "customerId" => $customer->id
             ]);
+
+            echo($clientToken = $clientToken); die;
 
             return array(
                 'success'       => 0,
@@ -414,5 +417,204 @@ class PaymentHelper
             );
         }
     }
+
+    public function registeredUserCreditCard(User $user, $decoded)
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse[$this->env]["environment"]);
+        Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
+        Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+
+        try{
+            $customer = Braintree_Customer::find($user->getId());
+            $result = Braintree_PaymentMethod::create([
+                'customerId' => $customer->id,
+                'paymentMethodNonce' => $decoded['payment_method_nonce']
+            ]);
+
+            if($result->success){
+                $data = array(
+                    'success' => 0,
+                    'token' => $result->paymentMethod->token,
+                    'customerId' => $customer->id,
+                    'cardType' => $result->paymentMethod->cardType,
+                    'default' => $result->paymentMethod->default,
+                    'result' => $result
+                );
+            }else{
+                $data = array(
+                    'success' => -1,
+                    'token' => "",
+                    'customerId' => 0,
+                    'cardType' => "",
+                    'default' => "",
+                    'message' => $result->message,
+                    'result' => $result
+                );
+            }
+        }catch (\Braintree_Exception $exception) {
+            $result = Braintree_Customer::create([
+                'id'            => $user->getId(),
+                'firstName'     => $user->getFirstName(),
+                'lastName'      => $user->getLastName(),
+                'phone'         => $user->getPhoneNumber(),
+                'email'         => $user->getEmail()
+            ]);
+
+            if($result->success){
+                $paymentMethodCreate = Braintree_PaymentMethod::create([
+                    'customerId' => $result->customer->id,
+                    'paymentMethodNonce' => $decoded['payment_method_nonce']
+                ]);
+
+                if($paymentMethodCreate->success){
+                    $data = array(
+                        'success' => 0,
+                        'token' => $paymentMethodCreate->paymentMethod->token,
+                        'customerId' => $result->customer->id,
+                        'cardType' => $paymentMethodCreate->paymentMethod->cardType,
+                        'default' => $paymentMethodCreate->paymentMethod->default,
+                        'result' => $paymentMethodCreate
+                    );
+                }else{
+                    $data = array(
+                        'success' => -1,
+                        'token' => "",
+                        'customerId' => 0,
+                        'cardType' => "",
+                        'default' => "",
+                        'message' => $paymentMethodCreate->message,
+                        'result' => $paymentMethodCreate
+                    );
+                }
+            }else{
+                $data = array(
+                    'success' => -1,
+                    'token' => "",
+                    'customerId' => 0,
+                    'cardType' => "",
+                    'default' => "",
+                    'message' => $result->message,
+                    'result' => $result
+                );
+            }
+
+        }
+
+        return $data;
+    }
+
+    public function getUserCreditCards(User $user)
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse[$this->env]["environment"]);
+        Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
+        Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+
+        try {
+            $customer = Braintree_Customer::find($user->getId());
+            $creditCrads = $customer->creditCards;
+            $customerCards = array(
+                'success' => 0
+            );
+
+            foreach ( $creditCrads as $card){
+                $customerCards['cards'][] = array(
+                    'maskedNumber' => $card->maskedNumber,
+                    'token'     => $card->token,
+                    'default' => $card->default,
+                    'cardType' => $card->cardType,
+                    'expirationMonth' => $card->expirationMonth,
+                    'expirationYear' => $card->expirationYear,
+                    'cardholderName' => $card->cardholderName,
+                    'uniqueNumberIdentifier' => $card->uniqueNumberIdentifier
+                );
+            }
+
+        }catch (\Braintree_Exception $exception) {
+            $customerCards = array(
+                'success' => -1,
+                'cards'     => array()
+            );
+        }
+
+        return $customerCards;
+    }
+
+    public function deleteUserPaymentMethod( User $user, $decode )
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse[$this->env]["environment"]);
+        Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
+        Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+
+        try{
+            $paymentMethod = Braintree_PaymentMethod::find($decode['braintreeToken']);
+            $result = Braintree_PaymentMethod::delete($decode['braintreeToken']);
+            if($result->success){
+                $data = array(
+                    'success' => 0,
+                    'message' => "Payment remove successfully"
+                );
+            }else{
+                $data = array(
+                    'success' => -1,
+                    'message' => "Unable to remove payment method try again later"
+                );
+            }
+        }catch (\Braintree_Exception_NotFound $exception)
+        {
+            $data = array(
+                'success' => -1,
+                'message' => "No payment method fround"
+            );
+        }
+
+        return $data;
+    }
+
+    public function updateUserPaymentMethod(User $user, $decoded)
+    {
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+        Braintree_Configuration::environment($parse[$this->env]["environment"]);
+        Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
+        Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
+        Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+
+        try{
+            $paymentMethod = Braintree_PaymentMethod::find($decoded['token']);
+            $result = Braintree_PaymentMethod::update($decoded['token'],array(
+                'paymentMethodNonce' => $decoded['payment_method_nonce']
+            ));
+            if($result->success){
+                $data = array(
+                    'success' => 0,
+                    'message' => "Payment method update successfully"
+                );
+            }else{
+                $data = array(
+                    'success' => -1,
+                    'message' => "Unable to update payment method try again later"
+                );
+            }
+
+        }catch (\Braintree_Exception_NotFound $exception)
+        {
+            $data = array(
+                'success' => -1,
+                'message' => "No payment method fround"
+            );
+        }
+
+        return $data;
+    }
+
 #------------------------------------- End of Braintree Transaction ------------#
 }

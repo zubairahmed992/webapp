@@ -3,22 +3,24 @@
         height: 5%;
     }
 </style>
-    <form id="checkout" action="/nws/braintree_save_credit_card" method="post">
-        <input data-braintree-name="number" value="4111111111111111">
-        <input data-braintree-name="cvv" value="100">
+<form id="checkout" action="/nws/braintree_update_credit_card" method="post">
+    <input data-braintree-name="number" value="4111111111111111">
+    <input data-braintree-name="cvv" value="100">
 
-        <input data-braintree-name="expiration_date" value="10/20">
 
-        <!-- you can also split expiration date into two fields -->
-        {#<input data-braintree-name="expiration_month" value="10">
-        <input data-braintree-name="expiration_year" value="2020">#}
+    <input data-braintree-name="expiration_date" value="10/20">
 
-        <input data-braintree-name="postal_code" value="94107">
-        <input data-braintree-name="cardholder_name" value="John Smith">
-        <input type="text" name="auth_token" value="59201b5b43b61">
+    <!-- you can also split expiration date into two fields -->
+    {#<input data-braintree-name="expiration_month" value="10">
+    <input data-braintree-name="expiration_year" value="2020">#}
 
-        <input type="submit" id="submit" value="Pay">
-    </form>
+    <input data-braintree-name="postal_code" value="94107">
+    <input data-braintree-name="cardholder_name" value="John Smith">
+    <input type="text" name="auth_token" value="59201b5b43b61">
+    <input type="text" name="token" value="77hy3d">
+
+    <input type="submit" id="submit" value="Pay">
+</form>
 
 <!-- Load the Client component. -->
 <script src="https://js.braintreegateway.com/js/braintree-2.32.1.min.js"></script>
