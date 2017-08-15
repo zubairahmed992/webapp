@@ -35,12 +35,13 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $tab){   
-        $ps = $this->get('pi.product_specification')->find($id);  
+        $ps = $this->get('pi.product_specification')->find($id);      
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
+        
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
-        $parsed_data['horizontal_stretch']=  intval($parsed_data['horizontal_stretch']);
-        $parsed_data['vertical_stretch']=intval($parsed_data['vertical_stretch']);
+        $parsed_data['horizontal_stretch']=  $parsed_data['horizontal_stretch'];
+        $parsed_data['vertical_stretch']=$parsed_data['vertical_stretch'];
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
         $drop_down_values['fit_model_size'] = array_flip($fms);      
@@ -59,6 +60,12 @@ class ProductSpecsController extends Controller
             }
             break;
         }      
+        $product_id =0;
+        if(array_key_exists('style_id_number', $parsed_data) && array_key_exists('brand', $parsed_data) ){
+            $product_array = $this->get('service.repo')->getProductDetailOnly($parsed_data['brand'], $parsed_data['style_id_number']); 
+            $product_id = is_array($product_array) && array_key_exists(0, $product_array) ? $product_array[0]['id'] : 0;
+        }
+        
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:edit.html.twig', array(
                     'product_specs'=>$ps,
                     'parsed_data' => $parsed_data,
@@ -70,6 +77,7 @@ class ProductSpecsController extends Controller
                     'clothing_types' => $clothing_types,
                     'size_attribute' => $size_attribute,
                     'tab' => $tab,
+                    'searched_product_id'=>$product_id,
                 ));
     }
 
@@ -100,14 +108,14 @@ class ProductSpecsController extends Controller
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification();
         $ps = $this->get('pi.product_specification')->find($id);
         if ($json) {
-            if($ps){
-            return new response($ps->getSpecsJson());
-            }else{
+            if ($ps) {
+                return new response($ps->getSpecsJson());
+            } else {
                 return new response('false');
             }
         }
         $parsed_data = json_decode($ps->getSpecsJson(), true);
-        if (isset($parsed_data['fit_model_size'])) {
+        if (isset($parsed_data['fit_model_size']) && strlen($parsed_data['fit_model_size']) > 0) {
             $fit_model_selected_size = $parsed_data['fit_model_size'] == null ? null : $this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size->getSize();
         } else {
@@ -179,32 +187,48 @@ class ProductSpecsController extends Controller
         $parsed_data = $this->get('admin.helper.product.specification')->getStructure();
         $parsed_data['gender'] = $product_specs_mapping->getGender();
         $parsed_data['size_title_type'] = $product_specs_mapping->getSizeTitleType();
-
+        foreach ($map['fabric_content'] as $fabric_content_k => $fabric_content_v) {  
+            $f_c = $this->extracts_coordinates($fabric_content_v);
+            $parsed_data['fabric_content'][$fabric_content_k] = count($f_c) > 1 ? $csv_array[$f_c['r']][$f_c['c']] : $fabric_content_v;
+        }   
+        unset($map['fabric_content']);
         #----------------- fill array with csv data
-        foreach ($map as $specs_k => $specs_v) {
+        foreach ($map as $specs_k => $specs_v) {           
             if ($specs_k != 'formula') {
                 if (is_array($specs_v) || is_object($specs_v)) {
                     foreach ($specs_v as $size_key => $fit_points) {
                         foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
                             $coordins = $this->extracts_coordinates($fit_model_measurement);
                             $fmm_value = $this->fraction_to_number(floatval($csv_array[$coordins['r']][$coordins['c']]));
-                            $original_value = $fmm_value;
-                            #~~~~~~>convert to measuring unit
-                            if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
-                                $fmm_value = $fmm_value * 0.393700787;
-                            }
-                            $unit_converted_value = $fmm_value;
-                            #~~~~~~>calculate formula
-                            if (array_key_exists('formula', $map)) {
-                                $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
-                            }
-                            #----------------------* parsed data array calculate fit modle values for fit model size
-                            $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
-                                'original_value' => $original_value,
-                                'unit_converted_value' => $unit_converted_value,
-                            );
+                                if($fmm_value != 0){
+                                    $original_value = $fmm_value;
+                                    #~~~~~~>convert to measuring unit
+                                    if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
+                                        $fmm_value = $fmm_value * 0.393700787;
+                                    }
+                                    $unit_converted_value = $fmm_value;
+
+                                    #~~~~~~>calculate formula
+                                    if (array_key_exists('formula', $map)) {
+                                        $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
+                                    }
+
+                                    #----------------------* parsed data array calculate fit modle values for fit model size
+                                    $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
+                                        'original_value' => $original_value,
+                                        'unit_converted_value' => $unit_converted_value,
+                                    );
+                                }
                         }
                     }
+                } else if($specs_k == 'max_horizontal_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;                                
+                    $parsed_data['horizontal_stretch'] =  ($parsed_data[$specs_k]/3);
+                } else if( $specs_k == 'max_vertical_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;                  
+                    $parsed_data['vertical_stretch'] = ($parsed_data[$specs_k]/3);
                 } else {#----------------------* if not related to measurements add as a field
                     $cdns = $this->extracts_coordinates($specs_v);
                     $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
@@ -342,7 +366,7 @@ class ProductSpecsController extends Controller
     public function createProductSpecificationAction(Request $request) {
         $product_id =  $request->get('product_id');
         $data = $this->get('pi.product_specification')->getExistingProductDetails($product_id);
-         $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
+        $this->get('session')->setFlash('success', 'Successfully Create Product Specification From Existing Product');  
         return $this->indexAction();
         return new JsonResponse($data);
     }
@@ -363,12 +387,12 @@ class ProductSpecsController extends Controller
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $brand = $this->container->get('admin.helper.brand')->findOneByName( $parsed_data['brand'] );
-        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByName( $parsed_data['clothing_type'] );
+        $clothing_type = $this->container->get("admin.helper.clothingtype")->findOneByGenderName($parsed_data['gender'], $parsed_data['clothing_type'] );
         $product->setBrand($brand);
         $product->setClothingType($clothing_type);
         $product->setName(array_key_exists('style_name', $parsed_data) ? $parsed_data['style_name'] : '');
         $product->setControlNumber(array_key_exists('style_id_number', $parsed_data) ? $parsed_data['style_id_number'] : '');
-        $product->setDescription(array_key_exists('description', $parsed_data) ? $parsed_data['description'] : '');
+        #$product->setDescription(array_key_exists('description', $parsed_data) ? $parsed_data['description'] : '');        
         $product->setStretchType(array_key_exists('stretch_type', $parsed_data) ? $parsed_data['stretch_type'] : '');
         $product->setHorizontalStretch($parsed_data['horizontal_stretch']);
         $product->setVerticalStretch($parsed_data['vertical_stretch']);
@@ -402,4 +426,116 @@ class ProductSpecsController extends Controller
         $session->set('opt_specs_'.$request->get('id'), $request->get('value'));        
         return new Response(json_encode($session->get('opt_specs_'.$request->get('id'), $request->get('value'))));
     }
+    
+    //------------------ run checks 
+    public function runChecksAction($id) { 
+         $ps = $this->get('pi.product_specification')->find($id);  
+        $parsed_data = json_decode($ps->getSpecsJson(),true);    
+        //$size =   $this->get('pi.product_specification')->getProductSizeMeasurments($parsed_data['product_id], $id);
+         $data = $this->container->get('service.repo')->getExistingProductDetails($parsed_data['product_id']); 
+         
+          foreach ($product_sizes_sorted as $key => $product_size_value) {                  
+                 foreach ($product_size_value['product_size_measurements'] as  $value) {  
+                     $fp = array_key_exists($value['title'], $new_fp) ? $new_fp[$value['title']] : $value['title'];#replacing old fit point with new
+                    $stretch_percentage = ($value['garment_measurement_stretch_fit'] == 0)? 0 :(($value['garment_measurement_stretch_fit'] - $value['garment_measurement_flat'])/$value['garment_measurement_flat'])*100;
+                    $data1['sizes'][$product_size_value['title']][$fp]['fit_model'] = $value['fit_model_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_dimension'] = $value['garment_measurement_flat'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['garment_stretch'] = $value['garment_measurement_stretch_fit'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['grade_rule'] = $value['grade_rule'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['horizontal_stretch'];
+                    #$data1['sizes'][$product_size_value['title']][$fp]['grade_rule_stretch'] = $value['vertical_stretch'];                
+                    $data1['sizes'][$product_size_value['title']][$fp]['stretch_percentage'] = $stretch_percentage;//$value['stretch_type_percentage'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_high'] = $value['ideal_body_size_high'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['ideal_low'] = $value['ideal_body_size_low'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_actual'] = $value['max_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['max_calc'] = $value['max_calculated'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_actual'] = $value['min_body_measurement'];
+                    $data1['sizes'][$product_size_value['title']][$fp]['min_calc'] = $value['min_calculated'];
+                    $data1['body_type'] = $product_size_value['body_type'];
+                    $data1['fit_point_stretch'][$fp] = $stretch_percentage;
+                }
+             }
+         
+         
+        echo "<pre>";
+        print_r($data[0][0]['product_sizes']);
+         print_r($parsed_data['sizes']);
+        echo $id;
+        die;
+        
+    }
+    
+    public function validateProductSpecificationAction($id) {
+        $ps = $this->get('pi.product_specification')->find($id);
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $result = array();
+        foreach ($parsed_data['sizes'] as $key => $product_size_value) {
+            $size_title = array_keys($parsed_data['sizes']);
+            $size_count = count($size_title);
+            foreach ($product_size_value as $key1 => $value) {
+                //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
+                $rule_one = $value['garment_dimension'] - $value['max_actual'];
+                if ($rule_one <= 0) {
+                    $result['size'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
+                }
+                //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
+                //return  new Response(json_encode($result));
+                $find_next_elements = array_search($key, $size_title) + 1;
+                $next_size_title = ($find_next_elements < $size_count) ? $size_title[$find_next_elements] : null;
+                $next_array_elements = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
+                if ($next_array_elements) {
+                    if ($value['garment_dimension'] > $next_array_elements[$key1]['garment_dimension']) {
+                        $result['sequential'][$key][$key1] = $value['garment_dimension'] . ' ~~ Garment Dimensions grather than next Size';
+                    }
+                    if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+                        $result['sequential'][$key][$key1] = $value['fit_model'] . ' ~~ Fit Model Dimension grather than next Size';
+                    }
+                    if ($value['min_actual'] > $next_array_elements[$key1]['min_actual']) {
+                        $result['sequential'][$key][$key1] = $value['min_actual'] . ' ~~ Min Actual grather than next Size';
+                    }
+                    if ($value['max_actual'] > $next_array_elements[$key1]['max_actual']) {
+                        $result['sequential'][$key][$key1] = $value['max_actual'] . ' ~~ Max Actual grather than next Size';
+                    }
+                    if ($value['ideal_high'] > $next_array_elements[$key1]['ideal_high']) {
+                        $result['sequential'][$key][$key1] = $value['ideal_high'] . ' ~~ Ideal High grather than next Size';
+                    }
+                    if ($value['ideal_low'] > $next_array_elements[$key1]['ideal_low']) {
+                        $result['sequential'][$key][$key1] = $value['ideal_low'] . ' ~~ Ideal Low grather than next Size';
+                    }
+                    // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
+                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
+                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
+                    }
+                    //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+                    if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
+                        $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+                    }
+                    //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust' ) {
+                        $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
+                            if( $bust_waist > 11 ){
+                                $result['bust_to_waist_ratio'][$key][$key1] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
+                            }
+                    }
+                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip' ) {
+                        $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
+                            if( $bust_hip > 12 ){
+                                $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                            }
+                    }
+                } else {
+                    
+                }
+                // print_r($next_array_elements);
+                //print_R ($next_array_elements[$key1]);
+                // die;
+//                        $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+//                        $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
+//                        $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
+//                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
+            }
+        }
+        return new Response(json_encode($result));
+    }
+
 }

@@ -70,6 +70,12 @@
                                 <div class="form_vld_error"> {{ form_errors(form.waist) }}</div>
                             </div>
                             <div class="clr_bth"></div>
+                            <div id='frm_waist'>
+                                {{ form_label(form.abdomen) }}
+                                {{ form_widget(form.abdomen) }} &nbsp;<b>"</b>
+                                <div class="form_vld_error"> {{ form_errors(form.abdomen) }}</div>
+                            </div>
+                            <div class="clr_bth"></div>
                             <div id='frm_hip'>
                                 {{ form_label(form.hip) }}
                                 {{ form_widget(form.hip) }} &nbsp;<b>"</b>
@@ -131,6 +137,20 @@
                                 {{ form_widget(form.thigh) }} &nbsp;<b>"</b>
                                 <div class="form_vld_error">{{ form_errors(form.thigh) }}</div>
                             </div>
+                            
+                            <div class="clr_bth"></div>
+                            <div id='frm_thigh' class="more">
+                                {{ form_label(form.low_thigh) }}
+                                {{ form_widget(form.low_thigh) }} &nbsp;<b>"</b>
+                                <div class="form_vld_error">{{ form_errors(form.low_thigh) }}</div>
+                            </div>
+                            <div class="clr_bth"></div>
+                            <div id='frm_thigh' class="more">
+                                {{ form_label(form.high_thigh) }}
+                                {{ form_widget(form.high_thigh) }} &nbsp;<b>"</b>
+                                <div class="form_vld_error">{{ form_errors(form.high_thigh) }}</div>
+                            </div>
+
 
                             <div class="clr_bth"></div>
 

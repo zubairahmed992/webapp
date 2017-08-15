@@ -831,6 +831,16 @@ new_register_device_token:
     auth_token: 121c421783cd4d71d871ec16a1296091
     device_token: 11223344556677889900112233445566778899000
 
+    
+pi_ws_product_fitting_room_image_upload:
+    pattern: /pi/ws/product_fitting_room_image_upload
+    title: pi_ws_product_fitting_room_image_upload
+    file_upload: true
+    params:         
+      request_type: post
+    
+
+
 #______________________
 mcp_get_user_mask_marker_details:
     pattern:  /mcp/get_user_mask_marker_details
@@ -839,7 +849,7 @@ mcp_get_user_mask_marker_details:
           auth_token: 00000000000000000000000000000
           email: ovais.rafique@centricsource.com
     request_type: post
-    description: return user mask markder details against user token
+    description: return user mask markder details against user token 
 
 nws_get_brand_style:
     pattern:  /nws/get_brand_style

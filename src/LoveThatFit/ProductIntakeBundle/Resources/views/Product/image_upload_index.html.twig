@@ -1,0 +1,48 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+<script>
+    
+    $(function() {
+        var myDropzone = new Dropzone(".dropzone");
+        myDropzone.on("success", function(file, response){   
+           $(file.previewTemplate).find('.dz-details').text(response.message);
+           var str = response.success;
+           if(response.success){
+               $(file.previewTemplate).find('.dz-image').css({"border-color": "green", 
+                 "border-width":"4px", 
+                 "border-style":"solid"});          
+           } else {
+               $(file.previewTemplate).find('.dz-image').css({"border-color": "red", 
+                 "border-width":"3px", 
+                 "border-style":"solid"});
+           }
+
+        });
+    });
+
+</script>
+    
+<div class="p_listing">     
+    <h1>Product Image Upload</h1>    
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">        
+        <a href="{{ path('product_intake_product_specs_new') }}" class="btn  btn-default">Add New</a>     
+    </div>
+    
+    <div class="clearfix"></div>   
+</div>
+    <div class="container">  
+        <div id="dropzone">
+            <form id="upload" method="post" action="{{ path('pi_ws_product_image_upload')}}"  enctype="multipart/form-data" class="dropzone needsclick dz-clickable">
+                <div class="dz-message needsclick">
+                  Drop files here or click to upload.
+                 </div>
+                <div class="fallback">
+                     <input name="file" type="file" multiple />
+                </div>
+            </form>
+        </div> 
+    </div>                 
+
+    
+       
+{% endblock %}

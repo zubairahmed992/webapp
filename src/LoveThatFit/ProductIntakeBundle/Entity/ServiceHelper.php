@@ -21,7 +21,7 @@ class ServiceHelper {
     
     public function getResultFormat($result){
          if($result != null){
-                $data_array = array('clothing_type','brand','style_name','style_id_number'); 
+                $data_array = array('clothing_type','brand','style_name','style_id_number','colors'); 
                 $size_array = array('garment_dimension','grade_rule');
                 $result_data = json_decode($result[0]['specs_json']);                
                 foreach ($result_data as $key => $value) {
@@ -43,6 +43,8 @@ class ServiceHelper {
             }
             return $data;        
     } 
+    
+    
     public function getProductDetails($id){
          $product = $this->container->get('admin.helper.product')->find($id);         
          $result = $this->container->get('service.repo')->getProductDetail($id);         

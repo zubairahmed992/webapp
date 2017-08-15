@@ -241,6 +241,10 @@
             }           
         })  
         //--------------- Check Fabric Content Already Added
+        
+        $('#copy_product_id').click(function () {           
+            $('#product_id').val($('#spn_product_id').text());
+        });
       {#  $('.add_fabric_content').click(function () {                     
             var fabric_content_val = $.trim($('.fabric_content_value').val()); 
             $(".fabric_content > .singleField > input[type='number']").each(function() {                 
@@ -357,14 +361,17 @@
                 //$(this).val(value);                
             },
             success: function(response, newValue) {                  
-            //     $(this).val(response);                     
-                //fill_table(response);
-                //var url = window.location.href; 
-                reload_page();
-                //location.reload();
-                //console.log(response);
-                //alert(response);
-            }    
+               data = $.parseJSON(response);                     
+                //fill_table(response);                
+                reload_page();  
+                if(data.message_type == 'error'){
+                    alert("Please Add Unique Fit Point Title!")
+                }              
+            } ,
+            error: function () {
+                alert("Error in Ajax");
+            }
+
         });
             //-------- Drop Down X- Editable    
            $('.fit_model_size').editable({      
@@ -432,35 +439,55 @@
         }
         //alert($(this).attr("id"));
         });
+          //--------------- Check garment detail Already Added
+        $('.remove_size').click(function (event) {                     
+        event.preventDefault();
+        var res =  $(this).attr("id").replace("remove_size_",'') ;        
+        if (confirm('Are you sure you want to completely Remove Size ' + res + ' ?')) {
+                $.post(get_service_relative_url(),{
+                    value: 0,    
+                    name: $(this).attr("id"),                    
+                    pk: {{ product_specs.id }}                    
+                },
+                function(data, status){
+                    reload_page();
+                    //alert(data);
+                });
+        } else {
+            // Do nothing!
+        }
+        //alert($(this).attr("id"));
+        });
           // ------- Min Max Values Comparation 
           
             $(document).on("focus", ".input-sm", function(){
-               var  min_max_calc_name = $(this).attr('name');
-              // console.log(min_max_calc_name);
-               if('sizes-M-bust-min_actual' == min_max_calc_name){                  
+               var  min_max_calc_name = $(this).attr('name');              
+               console.log(min_max_calc_name);
+               if('min_actual' == min_max_calc_name.slice(-10)){                  
                     min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
                     min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
-                   // console.log(min_max_calc_val);
+                    console.log(min_max_calc_val);
                }
-               if('sizes-M-bust-max_actual' == min_max_calc_name){                  
+               if('max_actual' == min_max_calc_name.slice(-10)){                  
                     min_max_calc = $.trim($(this).closest('td').next().find('input').attr('name').substr(-8,8));
                     min_max_calc_val = $.trim( $(this).closest('td').next().find('input').val() );
-                   // console.log(min_max_calc_val);
+                    console.log(min_max_calc_val);
                }
             });
-            $(document).on("change", ".input-sm", function(){
+            $(document).on("keyup", ".input-mini", function(){
                 var min_max_calc_actual_val = $.trim( $(this).val() );
+                console.log(min_max_calc)
               if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
                   console.log()                  
               } else if(min_max_calc.match('min_calc')) {
                   alert("Must Be Equal or Grater than Value "+ min_max_calc)
-                  $(this).val('')
+                  $(this).val(min_max_calc_val)
               }
               if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
                   console.log()                  
               } else if(min_max_calc.match('max_calc')) {
                   alert("Must Be Equal or Less than Value "+ min_max_calc)
-                  $(this).val('')
+                 $(this).val(min_max_calc_val)
               }    
             });
             
@@ -564,6 +591,7 @@
 </script>
    
 <div class="btn-group" role="group" aria-label="..." style="float:right;">
+    <a href="{{ path('product_intake_validate_product_specification', {'id': app.request.get('id')}) }}" class="btn btn-default">Validate</a> 
     <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
 </div>
 {#    <span id='product_specs_json' hidden="true">{{product_specs_json}}</span>#}    
@@ -616,7 +644,16 @@
                 <input type="text" class="form-control" value="{{ parsed_data.style_id_number is defined? parsed_data.style_id_number: ''}}"  name="style_id_number" placeholder="Enter Style Id Number Name">
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-sm-2" for=""> Product Id: </label>
+            <div class="col-sm-4">                
+                <input type="text" name="product_id" id="product_id" value="{{ parsed_data.product_id is defined?parsed_data.product_id:null }}"  class="form-control">                                
+            </div>
+            
+            <span id="spn_product_id" hidden>{{searched_product_id}} </span>
+            <a id='copy_product_id' href="#">copy Id</a>
+            
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Gender: </label>
             <div class="col-sm-4">
@@ -627,7 +664,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="description"> Description : </label>
             <div class="col-sm-4">
-                <input type="text" name="description" class="form-control" value="{{ parsed_data.description }}" >
+                <input type="text" name="description" class="form-control" value="{{ parsed_data.description }}" >                
             </div>
         </div>         
 
@@ -637,7 +674,7 @@
                 <select name="styling_type" class="styling_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['styling_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.styling_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.styling_type|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.styling_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.styling_type|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>                
             </div>
@@ -649,7 +686,7 @@
                 <select name="hem_length" class="hem_length form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['hem_length'] %}
-                       <option value="{{ val }}"{{ parsed_data.neckline|trim|replace({' ':'_'}) == '' and key == 0 ? '' : (val == parsed_data.hem_length|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val }}"{{ parsed_data.hem_length|trim|replace({' ':'_'}) == '' and key == 0 ? '' : (val == parsed_data.hem_length|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>             
             </div>
@@ -671,7 +708,7 @@
                 <select name="sleeve_styling" class="sleeve_styling form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['sleeve_styling'] %}
-                       <option value="{{ val }}"{{ parsed_data.sleeve_styling|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.sleeve_styling|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ val|lower  }}"{{ parsed_data.sleeve_styling|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.sleeve_styling|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>  
             </div>
@@ -717,7 +754,7 @@
                 <select name="layering" class="stretch_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['layering'] %}
-                       <option value="{{ val }}"{{ parsed_data.layering == '' and val == 0? '' : (val == parsed_data.layering ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ key }}"{{ parsed_data.layering == '' and key == 0? '' : (key == parsed_data.layering ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -729,7 +766,7 @@
                 <select name="structural_detail" class="structural_detail form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['structural_detail'] %}
-                       <option value="{{ val }}"{{ parsed_data.structural_detail|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.structural_detail|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ key }}"{{ parsed_data.structural_detail|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (key == parsed_data.structural_detail|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -741,7 +778,7 @@
                   <select name="fit_type" class="fit_type form-control" >
                     <option>Select</option>
                     {% for key,val in drop_down_values['fit_type'] %}
-                       <option value="{{ val }}"{{ parsed_data.fit_type == '' and val == 0? '' : (val == parsed_data.fit_type ? ' selected ' : '')}}  >{{ key }}</option>
+                       <option value="{{ key }}"{{ parsed_data.fit_type == '' and key == 0? '' : (key == parsed_data.fit_type ? ' selected ' : '')}}  >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -777,7 +814,7 @@
                 <div class="fit_priority">    
                     {% for key,val in size_attribute %} 
                         {{ key }} :
-                          <input type="number" min="0" max="100" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
+                          <input type="number" step="any" value="{{ parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:'' }}" id="{{val}}"  name="fit_priority[{{val}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -811,7 +848,7 @@
                 <div class="fabric_content">    
                     {% for key,val in drop_down_values['fabric_content'] %}
                         {{ key }} :
-                        <input type="number" min="0" max="100"  id="{{key}}"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{key}}]" style="width:70px">
+                        <input type="number" step="any"  id="{{key}}"  value="{{ parsed_data['fabric_content'][key] is defined?parsed_data['fabric_content'][key]:'' }}" name="fabric_content[{{key}}]" style="width:70px">
                     {% endfor %}
                 </div> 
             </div>
@@ -877,17 +914,36 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="horizontal_stretch">Horizontal stretch : </label>
             <div class="col-sm-4">
-                <input value="{{parsed_data.horizontal_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
+                <input value="{{parsed_data.horizontal_stretch|number_format(2, '.', ',')}}" type="text" class="form-control edit_inline" readonly="ture" name="horizontal_stretch" id="horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="max_horizontal_stretch">Max Horizontal stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.max_horizontal_stretch is defined?parsed_data.max_horizontal_stretch:0}}" type="text" class="form-control edit_inline" readonly="ture" name="max_horizontal_stretch" id="max_horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="vertical_stretch">Vertical stretch : </label>
             <div class="col-sm-4">
-                <input value="{{parsed_data.vertical_stretch}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter vertical stretch">
+                <input value="{{parsed_data.vertical_stretch is defined?parsed_data.vertical_stretch|number_format(2, '.', ','):0}}" type="text" class="form-control edit_inline" readonly="ture" name="vertical_stretch" id="vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter max_vertical stretch">
             </div>
         </div>       
-      
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="max_vertical_stretch">Max Vertical stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.max_vertical_stretch is defined? parsed_data.max_vertical_stretch:0}}" type="text" class="form-control edit_inline" readonly="ture" name="max_vertical_stretch" id="max_vertical_stretch" data-type="text"  data-title="Enter vertical stretch" placeholder="Enter max_vertical stretch">
+            </div>
+        </div>    
+        
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="max_waistband_stretch">Max Waistband Stretch : </label>
+            <div class="col-sm-4">
+                <input value="{{parsed_data.max_waistband_stretch is defined? parsed_data.max_waistband_stretch:0}}" type="text" class="form-control"  name="max_waistband_stretch" id="max_waistband_stretch"  placeholder="Enter max_waistband_stretch">
+            </div>
+        </div>     
+
+            
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Fit model: </label>
             <div class="col-sm-4">
@@ -952,21 +1008,45 @@
                             </tbody>
                     </table>   
                </div> 
+                <div id="dv_fit_point_stretch_show" style="display: none">
+                         <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                            <thead>
+                        <tr>
+                            {% for fp, fpv in fit_point_stretch %}                
+                                {%if((fpv |number_format(2, '.', ','))>0)%}
+                                    <th>{{fp|replace('_',' ') |capitalize}}</th>                                    
+                                {% endif%}
+                            {% endfor %}
+                        </tr>      
+                            </thead>
+                                <tbody>
+                        <tr>
+                            {% for fp, fpv in fit_point_stretch %}         
+                                    {%if((fpv |number_format(2, '.', ','))>0)%}
+                                        <td>{{fpv|number_format(2, '.', ',')}}</td>                                    
+                                    {% endif%}
+                            {% endfor %}
+                        </tr>
+                            </tbody>
+                    </table>   
+               </div>                         
  
-               <div id="dv_fit_priority">
-                       <b>Fit Priority</b><br>
-                    <table class="table table-bordered " id='tbl_fit_point_stretch'>
-                    <tr>
-                        {% for key,val in size_attribute %} 
-                            <td><b>{{ key }}</b> : {{parsed_data['fit_priority'][key] is defined?parsed_data['fit_priority'][key]:''}}% </td>
-                        {% endfor %}
-                    </tr>                                        
-                    </table>
-                       
-               <br>
-               </div>   
+                            <div id="dv_fit_priority">
+                                <b>Fit Priority</b><br>
+                                <table class="table table-bordered " id='tbl_fit_point_stretch'>
+                                    <tr>
+                                        {% for key,val in size_attribute %} 
+                                            {%if(parsed_data['fit_priority'][key] is defined and (parsed_data['fit_priority'][key] |number_format(2, '.', ','))>0)%}
+                                                <td><b>{{ key }}</b> : {{parsed_data['fit_priority'][key]}}% </td>
+                                            {% endif%}
+                                        {% endfor %}
+                                    </tr>                                        
+                                </table>                       
+                                <br>
+                            </div>   
                 <br>                
-                <div class="form-group">
+                
+                <div class="form-group">                  
                     <label class="control-label col-sm-2" for="new_fit_point">Add new Fit Point : </label>
                     <div class="col-sm-4">
                         <input value="" type="text" class="form-control edit_inline" readonly="ture" name="add_new_fit_point" id="add_new_fit_point" data-type="text"  data-title="Enter New Fit Point" placeholder="Enter New Fit Point">
@@ -983,7 +1063,11 @@
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
                                     <tr class="{{ size }} Active grid_headers">
-                                        <th >{{size}}</th>
+                                        <th >
+                                            {% if(fit_model_selected_size | trans is not same as (size | trans)) %}
+                                            <a href="#" class="remove_size" id="remove_size_{{ size }}" name="remove_size_{{ size }}" title="Remove {{ size }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                                            {% endif %}
+                                            {{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_percentage</th>
                                         <th >garment_stretch</th>                                        

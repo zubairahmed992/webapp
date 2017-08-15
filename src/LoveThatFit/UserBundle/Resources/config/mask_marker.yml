@@ -105,6 +105,20 @@ masked_marker:
       s1:
         a: 17
         b: 51  
+  belt_waist: 
+    axis: x 
+    type: single
+    segments: 
+      s1:
+        a: 19
+        b: 51 
+  abdomen: 
+    axis: x 
+    type: single
+    segments: 
+      s1:
+        a: 19
+        b: 51     
   waist_to_hip:  
     axis: y
     type: pair 
@@ -122,13 +136,21 @@ masked_marker:
       s1: 
         a: 20
         b: 48  
-  low_hip: 
+  high_hip: 
     axis: x 
     type: single 
     segments: 
       s1: 
         a: 20
-        b: 48        
+        b: 50
+  low_hip: 
+    axis: x 
+    type: single 
+    segments: 
+      s1: 
+        a: 21
+        b: 49        
+
   inseam: 
     axis: y
     type: pair
@@ -149,6 +171,26 @@ masked_marker:
       s2: 
         a: 35
         b: 47      
+  high_thigh: 
+    axis: x 
+    type: pair
+    segments: 
+      s1:
+        a: 22
+        b: 34
+      s2: 
+        a: 36
+        b: 48
+  low_thigh: 
+    axis: x 
+    type: pair
+    segments: 
+      s1:
+        a: 22
+        b: 34
+      s2: 
+        a: 36
+        b: 48  
   knee: 
     axis: x 
     type: pair

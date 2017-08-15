@@ -40,4 +40,12 @@ product_intake_fit_model_delete:
     
 product_intake_fit_model_duplicate:
     pattern:  /product_intake/fit_model/duplicate/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:duplicate }     
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:duplicate } 
+    
+product_intake_fit_model_compare:
+    pattern:  /product_intake/fit_model/compare
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:compareFitModelView }     
+
+product_intake_fit_model_compare_with_brand:
+    pattern:  /product_intake/fit_model/compare_with_brand
+    defaults: { _controller: LoveThatFitProductIntakeBundle:FitModel:compareFitModelWithBrand }        
