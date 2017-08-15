@@ -284,6 +284,18 @@ nws_braintree_save_credit_card:
     pattern: /nws/braintree_save_credit_card
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeSaveCreditCard}
 
+nws_braintree_get_all_credit_cards:
+    pattern: /nws/braintree_get_credit_cards
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeGetCreditCards}
+
+nws_braintree_delete_credit_card:
+    pattern: /nws/braintree_delete_credit_card
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeDeleteCreditCard}
+
+nws_braintree_update_credit_card:
+    pattern: /nws/braintree_update_credit_card
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeUpdateCreditCard}
+
 ws_get_braintree_client_token:
     pattern: /ws/get_braintree_client_token
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeGetClientToker}
