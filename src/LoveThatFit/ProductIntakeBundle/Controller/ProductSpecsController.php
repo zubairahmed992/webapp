@@ -523,6 +523,19 @@ class ProductSpecsController extends Controller
                                 $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
                             }
                     }
+                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
+                    if ( $value['min_actual'] < $value['min_calc'] ) {
+                        $result['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+                    }
+                     if ( $value['min_actual'] > $value['ideal_low'] ) {
+                        $result['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
+                    }
+                    if ( $value['max_actual'] > $value['max_calc'] ) {
+                        $result['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
+                    }
+                    if ( $value['max_actual'] < $value['ideal_high'] ) {
+                        $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
+                    }
                 } else {
                     
                 }
