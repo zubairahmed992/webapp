@@ -457,6 +457,15 @@ class BannerHelper
                 if (!empty($results[$key]['banner_filter'])) {
                     $filter =  json_decode($results[$key]['banner_filter'], true);
                     $results[$key]['product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
+                    foreach ($results[$key]['product_list'] as $keyed => $valprod) {
+                        if (($valprod['uf_user'] != null) && ($valprod['uf_user'] == $user_id)) {
+                            $results[$key]['product_list'][$keyed]['fitting_room_status'] = true;
+                            $results[$key]['product_list'][$keyed]['qty'] = $results[$key]['product_list'][$keyed]['uf_qty'];
+                        } else {
+                            $results[$key]['product_list'][$keyed]['fitting_room_status'] = false;
+                            $results[$key]['product_list'][$keyed]['qty'] = 0;
+                        }
+                    }
                 }
             }
 
