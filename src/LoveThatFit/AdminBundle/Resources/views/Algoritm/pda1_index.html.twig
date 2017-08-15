@@ -9,28 +9,28 @@
             function fill_preference_controls(product_id){
              var compare_url = "../../pi/product/" + product_id + "/fit_points";
              $("#pref_ctrl").empty();
-                $.ajax({
-                    url: compare_url
-                    , success: function (response) {
-                        $("#preference_json").val(response);
-                        var str='';
-                        var obj = jQuery.parseJSON(response);                        
-                        var pref = ["default", "very_loose", "loose", "tight", "very_tight"];
-                                            $.each(obj, function (key, value) {
-                                                var newDiv = document.createElement('div');
-                                                var s = $("<select id='pref_" + key + "' class='pref_ctrl' name='pref_" + key + "' />");
-                                                var label = $("<label>").text(key);
-                                                for (var val in pref) {
-                                                    $("<option />", {value: val, text: pref[val]}).appendTo(s);
-                                                }
-                                                label.appendTo("#pref_ctrl");
-                                                s.appendTo("#pref_ctrl");
-                                            });
-                        
-                        
+                        $.ajax({
+                            url: compare_url
+                            , success: function (response) {
+                                $("#preference_json").val(response);
+                                var obj = jQuery.parseJSON(response);
+                                var pref = ["default", "very_loose", "loose", "tight", "very_tight"];
+                                $.each(obj, function (key, value) {
+                                    if (value > 0) {                                        
+                                        var s = $("<select id='pref_" + key + "' class='pref_ctrl' name='pref_" + key + "' />");
+                                        var label = $("<label>").text(key);
+                                        for (var val in pref) {
+                                            $("<option />", {value: val, text: pref[val]}).appendTo(s);
+                                        }
+                                        label.appendTo("#pref_ctrl");
+                                        s.appendTo("#pref_ctrl");
+                                    }
+                                });
+
+
+                            }
+                        });
                     }
-                });   
-            }
 
             $("select[id='algorithm_User']").change(function () {
                 $("#user_id").val(this.value);
@@ -189,9 +189,9 @@
                 {{ form_rest(productForm) }}
             </form>      
         </div>
-        <a id='compare' class='compare' href="#">Compare</a> | 
+      {#  <a id='compare' class='compare' href="#">Compare</a> | 
         <a id='json' class='json' href="#">JSON</a> | 
-        <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
+        <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>#}
         
         
         <input type="hidden"  id="user_id">

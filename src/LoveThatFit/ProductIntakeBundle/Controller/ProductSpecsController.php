@@ -465,5 +465,77 @@ class ProductSpecsController extends Controller
         
     }
     
-    
+    public function validateProductSpecificationAction($id) {
+        $ps = $this->get('pi.product_specification')->find($id);
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $result = array();
+        foreach ($parsed_data['sizes'] as $key => $product_size_value) {
+            $size_title = array_keys($parsed_data['sizes']);
+            $size_count = count($size_title);
+            foreach ($product_size_value as $key1 => $value) {
+                //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
+                $rule_one = $value['garment_dimension'] - $value['max_actual'];
+                if ($rule_one <= 0) {
+                    $result['size'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
+                }
+                //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
+                //return  new Response(json_encode($result));
+                $find_next_elements = array_search($key, $size_title) + 1;
+                $next_size_title = ($find_next_elements < $size_count) ? $size_title[$find_next_elements] : null;
+                $next_array_elements = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
+                if ($next_array_elements) {
+                    if ($value['garment_dimension'] > $next_array_elements[$key1]['garment_dimension']) {
+                        $result['sequential'][$key][$key1] = $value['garment_dimension'] . ' ~~ Garment Dimensions grather than next Size';
+                    }
+                    if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+                        $result['sequential'][$key][$key1] = $value['fit_model'] . ' ~~ Fit Model Dimension grather than next Size';
+                    }
+                    if ($value['min_actual'] > $next_array_elements[$key1]['min_actual']) {
+                        $result['sequential'][$key][$key1] = $value['min_actual'] . ' ~~ Min Actual grather than next Size';
+                    }
+                    if ($value['max_actual'] > $next_array_elements[$key1]['max_actual']) {
+                        $result['sequential'][$key][$key1] = $value['max_actual'] . ' ~~ Max Actual grather than next Size';
+                    }
+                    if ($value['ideal_high'] > $next_array_elements[$key1]['ideal_high']) {
+                        $result['sequential'][$key][$key1] = $value['ideal_high'] . ' ~~ Ideal High grather than next Size';
+                    }
+                    if ($value['ideal_low'] > $next_array_elements[$key1]['ideal_low']) {
+                        $result['sequential'][$key][$key1] = $value['ideal_low'] . ' ~~ Ideal Low grather than next Size';
+                    }
+                    // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
+                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
+                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
+                    }
+                    //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+                    if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
+                        $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+                    }
+                    //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust' ) {
+                        $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
+                            if( $bust_waist > 11 ){
+                                $result['bust_to_waist_ratio'][$key][$key1] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
+                            }
+                    }
+                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip' ) {
+                        $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
+                            if( $bust_hip > 12 ){
+                                $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                            }
+                    }
+                } else {
+                    
+                }
+                // print_r($next_array_elements);
+                //print_R ($next_array_elements[$key1]);
+                // die;
+//                        $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
+//                        $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
+//                        $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
+//                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
+            }
+        }
+        return new Response(json_encode($result));
+    }
+
 }
