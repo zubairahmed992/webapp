@@ -668,6 +668,7 @@ nws_add_update_fitting_room:
      product_item_id: 4082
      product_id: 506
      qty: 1
+     update_product_item_id: 4083
 
 nws_delete_fitting_room_item:
    pattern:  /nws/delete_fitting_room_item
@@ -855,6 +856,8 @@ nws_search_brand_style:
    params:
      auth_token: 56565656566
      text: "505"
+     page_no: 1
+     text: "search text"
      page_no: 1
 
 nws_braintree_save_credit_card:
