@@ -432,7 +432,7 @@ class FNFUserController extends Controller
                 }else if( $fnfUser['group_type'] == 2 )
                 {
                     $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
-                        'discount_amount' => $this->getUserDiscountAmount($fnfUser['discount'], $fnfUser['token']),
+                        'discount_amount' => (string) $this->getUserDiscountAmount($fnfUser['discount'], $fnfUser['token']),
                         'min_amount'      => 0,
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => $fnfUser['discount'],

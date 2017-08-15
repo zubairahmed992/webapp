@@ -120,6 +120,7 @@ class WSCategoryController extends Controller {
     {
 
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
         //Find the user against token id
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
