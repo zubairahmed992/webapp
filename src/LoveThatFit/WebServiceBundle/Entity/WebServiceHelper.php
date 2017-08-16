@@ -459,7 +459,7 @@ class WebServiceHelper
             #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
-                @mkdir($user->getUploadRootDir(), 0700);
+                @mkdir($user->getUploadRootDir(), 0775);
             }
             #______________________________________> Fitting Room image
 
@@ -594,7 +594,7 @@ class WebServiceHelper
             $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
             $file = 'logs.txt';
             if (!is_dir($user->getUploadRootDir())) {
-                @mkdir($user->getUploadRootDir(), 0700);
+                @mkdir($user->getUploadRootDir(), 0775);
             }
             if ($ext == 'txt') {
                 $path = $user->getUploadRootDir();
@@ -1447,7 +1447,17 @@ class WebServiceHelper
 
     public function getProductListBannerFilter($filter, $user_id)
     {
-        return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
+        $filtered_products = $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id);
+        foreach ($filtered_products as $keyed => $valprod) {
+            if (($valprod['uf_user'] != null) && ($valprod['uf_user'] == $user_id)) {
+                $filtered_products[$keyed]['fitting_room_status'] = true;
+                $filtered_products[$keyed]['qty'] = $filtered_products[$keyed]['uf_qty'];
+            } else {
+                $filtered_products[$keyed]['fitting_room_status'] = false;
+                $filtered_products[$keyed]['qty'] = 0;
+            }
+        }
+        return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $filtered_products));
     }
     
 
