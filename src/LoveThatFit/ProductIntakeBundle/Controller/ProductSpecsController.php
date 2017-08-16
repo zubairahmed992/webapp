@@ -469,6 +469,19 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);
         $parsed_data = json_decode($ps->getSpecsJson(), true);
         $result = array();
+          //2. Flag when fit priority for a fit point is assigned to an incorrect garment:
+        //--Tops, dresses, and skirts should not have thigh assigned fit priority
+        //--Skirts, pants, and shorts should not have bust assigned fit priority    
+        $clothing_type = ["blouse","tunic","tee_knit","tank_knit","jackets","sweater","skirt","dress","coat","shirt"];
+        if ( in_array($parsed_data['clothing_type'],$clothing_type) ) {           
+            if( array_key_exists('thigh', $parsed_data['fit_priority']) ){                
+               $result['fit_priority_assigned_to_an_incorrect_garment'] = " ~~ Clothing Type ".$parsed_data['clothing_type']. " of fit point tigh is assigned to an incorrect garment";
+            }
+        } else{
+            if( array_key_exists('bust', $parsed_data['fit_priority']) ){
+               $result['fit_priority_assigned_to_an_incorrect_garment'] = " ~~  Clothing Type ". $parsed_data['clothing_type'] . "  of fit point bust is assigned to an incorrect garment";
+            }
+        }       
         foreach ($parsed_data['sizes'] as $key => $product_size_value) {
             $size_title = array_keys($parsed_data['sizes']);
             $size_count = count($size_title);
@@ -548,6 +561,7 @@ class ProductSpecsController extends Controller
 //                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
             }
         }
+           
         return new Response(json_encode($result));
     }
 
