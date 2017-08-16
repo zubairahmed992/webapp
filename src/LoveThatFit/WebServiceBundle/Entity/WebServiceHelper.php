@@ -459,7 +459,7 @@ class WebServiceHelper
             #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
-                @mkdir($user->getUploadRootDir(), 0700);
+                @mkdir($user->getUploadRootDir(), 0775);
             }
             #______________________________________> Fitting Room image
 
@@ -594,7 +594,7 @@ class WebServiceHelper
             $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
             $file = 'logs.txt';
             if (!is_dir($user->getUploadRootDir())) {
-                @mkdir($user->getUploadRootDir(), 0700);
+                @mkdir($user->getUploadRootDir(), 0775);
             }
             if ($ext == 'txt') {
                 $path = $user->getUploadRootDir();

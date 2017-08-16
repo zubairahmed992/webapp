@@ -21,7 +21,7 @@ class ShopLookController extends Controller
         $directory_path = __DIR__ . '/../../../../web/uploads/ltf/shop_look/';
         if (!is_dir($directory_path)) {
             try {
-                @mkdir($directory_path, 0700);
+                @mkdir($directory_path, 0775);
             } catch (\Exception $e) {
                 $e->getMessage();
             }

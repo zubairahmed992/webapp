@@ -273,7 +273,7 @@ class UserDevices  {
       $this->updated_at = new \DateTime('now');
       
       if (!is_dir($this->getUploadRootDir())) {
-                @mkdir($this->getUploadRootDir(), 0700);
+                @mkdir($this->getUploadRootDir(), 0775);
             }
         move_uploaded_file($this->file["tmp_name"], $this->getAbsolutePath());
       #$this->file->move($this->getUploadRootDir(), $this->device_image);
