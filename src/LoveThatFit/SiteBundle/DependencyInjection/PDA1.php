@@ -213,7 +213,8 @@ class PDA1 {
                             $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
                         }
                  }
-                 $fb[$size_identifier]['message'] =$this->get_fitting_alert_message($fb[$size_identifier]['status']);
+                 $fb[$size_identifier]['message'] = $this->get_fitting_alert_message($fb[$size_identifier]['status']);
+                 $fb[$size_identifier]['simplified_message'] = $this->simplify_fit_area_messaging($fb[$size_identifier]);
                  $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
                  if ($hem_bits) {
                         $fb[$size_identifier]['hem_advice'] = $hem_bits;
@@ -839,7 +840,71 @@ class PDA1 {
             return false;
         }
     }
-    
+    ##################################################################################
+   
+    private function simplify_fit_area_messaging($size){
+        $target=$this->product->getClothingType()->getTarget();
+        $sm=array();
+        if (array_key_exists('bust', $size)) {
+            $sm['bust'] = $size['bust']['message'];
+        }
+        if (array_key_exists('thigh', $size)) {
+            $sm['thigh'] = $size['thigh']['message'];
+        }        
+        #-------------- inseam/hem length        
+        if (array_key_exists('inseam', $size)) {
+            $sm['inseam'] = $size['inseam']['message'];
+        }
+        #--------------
+        if (array_key_exists('high_hip', $size) && array_key_exists('low_hip', $size)) {
+            $sm['hip'] = $this->simplify_messaging($size['low_hip'], $size['high_hip']);
+        } else {
+            if (array_key_exists('high_hip', $size)) {
+                $sm['hip'] = $size['high_hip']['message'];
+            }
+            if (array_key_exists('low_hip', $size)) {
+                $sm['hip'] = $size['low_hip']['message'];
+            }
+        }
+        #--------------
+        if (array_key_exists('waist', $size) && array_key_exists('abdomen', $size)) {            
+            $sm['waist'] = $this->simplify_messaging($size['waist'], $size['abdomen']);
+        } else {
+            if (array_key_exists('waist', $size)) {
+                $sm['waist'] = $size['waist']['message'];
+            }
+            if (array_key_exists('abdomen', $size)) {
+                $sm['waist'] = $size['abdomen']['message'];
+            }
+        }
+        return $sm;
+    }
+   
+    private function simplify_messaging($fp1, $fp2){
+        #If messaging is not the same, does one fit point prevent someone from fitting into a size? If so, display messaging for that fit point        
+        if ($fp1['status'] <= -4 || $fp2['status'] <= -4) {
+            return $fp1['message'];
+        }else{
+            #4.     If both fit points have the same fit priority and neither prevents someone from fitting into a size, report the fit point with the lower fit index. 
+            if ($fp1['fit_priority'] == $fp2['fit_priority']) {
+                $diff = $fp1['body_fx'] < $fp2['body_fx'] ? $fp2['body_fx'] - $fp1['body_fx'] : $fp1['body_fx'] - $fp2['body_fx'];
+                #5.	In the rare case that both fit points have same fit priority and fit index—in this case we are counting two fit indexes as the same if they are within + or - .5 of each other—
+                if ($diff > 0.5) {
+                    return $fp1['fit_priority'] < $fp2['fit_priority'] ? $fp1['message']: $fp2['message'];
+                } else {
+                    # report messaging for fit point with the least difference between body dimension and garment dimension.                    
+                    if (($fp1['garment_measurement_stretch_fit'] - $fp1['body_measurement']) > ($fp2['garment_measurement_stretch_fit'] - $fp2['body_measurement'])) {
+                        return $fp2['message'];
+                    }else{
+                        return $fp1['message'];
+                    }
+                }
+                #return $fp1['fit_priority'] < $fp2['fit_priority'] ? $fp1['message']: $fp2['message'];                
+            } else {
+              return $fp1['fit_priority'] < $fp2['fit_priority'] ? $fp2['message']: $fp1['message'];
+            }
+        }
+    }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~> Hem Bits
     #------------------------------------------------     
