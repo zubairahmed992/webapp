@@ -476,7 +476,7 @@ class ProductSpecsController extends Controller
                 //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
                 $rule_one = $value['garment_dimension'] - $value['max_actual'];
                 if ($rule_one <= 0) {
-                    $result['size'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
+                    $result['garment_dimension_minus_max_actual'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
                 }
                 //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
                 //return  new Response(json_encode($result));
