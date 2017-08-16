@@ -151,7 +151,7 @@ class SaveLook
 
         if (!is_dir($this->getUploadRootDir())) {
             try {
-                @mkdir($this->getUploadRootDir(), 0700);
+                @mkdir($this->getUploadRootDir(), 0775);
             }catch (\Exception $e)
             { $e->getMessage();}
         }
