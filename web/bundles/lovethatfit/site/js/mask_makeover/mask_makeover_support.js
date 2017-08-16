@@ -3,6 +3,7 @@ paper.install(window);
 var dom_event_interaction_s1;
 $(document).ready(function() {
     paper.setup('canv_mask_makeover');
+    
     dom_event_interaction_s1 = new Tool();
    dom_event_interaction_s1.onMouseDown = onMouseDown;
    dom_event_interaction_s1.onMouseDrag = onMouseDrag;
@@ -36,6 +37,16 @@ $(document).ready(function() {
     });
     h_indi.visible = false;
   
+  
+    pathLine =  new Path({
+        segments:[[480, 0], [480, 1280]],
+        strokeColor:'red',
+        strokeWidth:2,
+        opacity:0.6
+    });
+   pathLine.visible = false;
+  
+        
    lyr_misc = new Layer();
    lyr_misc.activate();
    
@@ -94,14 +105,22 @@ var maskConfig = {
 }
 
 
-
-
-
-
 /////////////////////////////// from mask generation pca file ///////////////////////////
+  
+   
+ 
+     
+    
+
 
 function overall_mask(){
     pre_init();
+   
+     
+        
+  
+       
+        
     function pre_init(){
       var liquid_mask = {
             user_height: parseFloat($('#user_height_frm_3').attr('value')),
@@ -294,7 +313,9 @@ function overall_mask(){
  /////////////////////////////////////////////////////
 
 
-
+function showLine(){
+    pathLine.visible=true;
+}
 function canvas_area_hldr(){
     canvas_area_hldr = new Path.Rectangle({
         from: [0, 0],
@@ -446,7 +467,7 @@ function load_user_masks(){
     //Setting Position    
         //full_mask.scale(required_mask_ratio);
         full_mask.pivot = new Point(full_mask.bounds.bottomCenter.x,full_mask.bounds.bottomCenter.y);
-        full_mask.position = new Point(maskConfig.dv_scr_w/2 + 4,maskConfig.dv_scr_h - maskConfig.globle_pivot);
+        full_mask.position = new Point(maskConfig.dv_scr_w/2,maskConfig.dv_scr_h - maskConfig.globle_pivot);
       
         
         
@@ -537,6 +558,7 @@ function set_out_update(){
     //alert($('#image_actions').attr('value'));
     view.update();
 }
+ 
 
 
 function move_left(){
@@ -673,17 +695,20 @@ function getPathArrayJson(){
     return JSON.stringify(mp_array);
 }
 function onKeyDown(event) {
-     //if(Key.isDown('control') || Key.isDown('i')){
-      //  show_index_numbers();
-       
-    //}
+//     if(event.modifires.option && Key.isDown('c')){alert("dChal nikal");
+//      if(Key.isDown('r')){
+//          alert("Chal nikal");
+//      }
+//    }
     // if(event.modifiers.shift){
      //       remove_index_numbers();
       //   }
 }
 function onKeyUp(){
 }
+
 function onMouseDown(event) {
+    
     if(event.modifiers.control && event.modifiers.space && event.modifiers.option){
         if(current_status.zoom_level > current_status.min_zoom_level){
             zoom_out();
@@ -857,6 +882,15 @@ function canv_settings_before_save(){
    full_mask.visible = false;
    view.update();
 }
+ function showLine(){
+    pathLine.visible = true;
+    view.update();
+    }
+
+ function removeLine(){
+        pathLine.visible = false;
+        view.update();
+   }
 function canv_settings_after_save(){
     sub_can_area.remove();
     canvas_raster.remove();
