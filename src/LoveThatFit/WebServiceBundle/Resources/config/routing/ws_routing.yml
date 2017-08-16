@@ -280,6 +280,10 @@ ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeProcessTransaction}
 
+nws_braintree_processuser_transaction:
+    pattern: /nws/braintree_processuser_transaction
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBrainTreeProcessTransactionAction}
+
 nws_braintree_save_credit_card:
     pattern: /nws/braintree_save_credit_card
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeSaveCreditCard}
