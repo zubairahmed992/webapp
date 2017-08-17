@@ -464,7 +464,7 @@ class ProductSpecsController extends Controller
         die;
         
     }
-    
+    //~~~~Validate product specification sizes---------product_intake/validate_product_specification 
     public function validateProductSpecificationAction($id) {
         $ps = $this->get('pi.product_specification')->find($id);
         $parsed_data = json_decode($ps->getSpecsJson(), true);
@@ -549,16 +549,12 @@ class ProductSpecsController extends Controller
                     if ( $value['max_actual'] < $value['ideal_high'] ) {
                         $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
                     }
-                } else {
-                    
+                    //-Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
+                     $garment_dimension_difference = $next_array_elements[$key1]['garment_dimension'] - $value['garment_dimension'] ;
+                    if ( !( $garment_dimension_difference <=  ($value['grade_rule']+0.25) && $garment_dimension_difference >=  ($value['grade_rule']-0.25) )) {
+                        $result['tolerance'][$key][$key1] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
+                    }
                 }
-                // print_r($next_array_elements);
-                //print_R ($next_array_elements[$key1]);
-                // die;
-//                        $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
-//                        $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
-//                        $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
-//                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
             }
         }
            
