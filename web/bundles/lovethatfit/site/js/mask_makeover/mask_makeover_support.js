@@ -880,6 +880,7 @@ function canv_settings_before_save(){
    circle_in.visible = false;
    circle_out.visible = false;
    full_mask.visible = false;
+   removeLine();
    view.update();
 }
  function showLine(){
