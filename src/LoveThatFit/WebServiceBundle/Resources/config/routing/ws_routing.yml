@@ -373,6 +373,10 @@ render_user_image:
     pattern: /render/image/{ref}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: null}
 
+render_user_avatar:
+    pattern: /render/avatar/{ref}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderAvatarBySessionId, ref: null}
+
 nws_get_brand_style:
     pattern:  /nws/get_brand_style
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBrandStyleList}

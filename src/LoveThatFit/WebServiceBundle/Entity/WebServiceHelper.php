@@ -90,6 +90,7 @@ class WebServiceHelper
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
                     $response_array['user']['image_path'] = "/render/image/";
+                    $response_array['user']['avatar_path'] = "/render/avatar/";
                     $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
                     $response_array['user']['defaultProduct'] = $defaultProducts;
                 }
@@ -127,6 +128,7 @@ class WebServiceHelper
             $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
             $data['user']['defaultProduct'] = $defaultProducts;
             $data['user']['image_path'] = "/render/image/";
+            $data['user']['avatar_path'] = "/render/avatar/";
 
             return $this->response_array(true, 'member found', true, $data);
         } else {
