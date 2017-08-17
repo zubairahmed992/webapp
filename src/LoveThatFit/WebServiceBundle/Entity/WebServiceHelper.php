@@ -1590,7 +1590,7 @@ class WebServiceHelper
         $ar = array(
             'data' => $data,
             'count' => $data['product_list'] ? count($data['product_list']) : 0,
-            'message' => 'Product List',
+            'message' => $data['product_list'] ? 'Product List' : 'Uh oh! There are no items for this brand currently in stock. Tap here to go back to shop',
             'success' => true,
         );
         return json_encode($ar);
