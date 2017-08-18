@@ -1477,9 +1477,19 @@ class WebServiceHelper
          $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
         if ($user) {
 
+
+
             $device = json_decode($user[0]['image_actions']);
             $measurement = json_decode($user[0]['measurement_json']);
             $markers = json_decode($user[0]['marker_params']);
+
+            //$measurementArchive = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement, $user);
+            $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape(strtolower($measurement->bra_size),$measurement->body_shape);
+
+           
+
+           
+
 
             $mask_x =  '';
             $mask_y =  ''; 
@@ -1511,13 +1521,14 @@ class WebServiceHelper
 
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
-        $data['user'] ['dm_body_parts_details_json'] = $measurement->body_shape; 
+        $data['user'] ['dm_body_parts_details_json'] = serialize($bra_size_body_shape); 
         $data['user'] ['default_user_path'] =  $user[0]['default_marker_svg'];
         $data['user'] ['user_hip_px'] =  "424";
         $data['user'] ['user_bust_px'] = "392";
         $data['user'] ['user_waist_px'] = "319"; 
         $data['user'] ['default_user_mask_height_px'] = "430"; 
         $data['user'] ['head_percent'] = "12"; 
+        $data['user'] ['gender'] =  $user[0]['gender']; 
 
         $data['user'] ['neck_percent'] =  "4";
         $data['user'] ['torso_percent'] = "42";
@@ -1533,6 +1544,9 @@ class WebServiceHelper
 
        $data['mask'] ['mask_x'] =  $mask_x;
        $data['mask'] ['mask_y'] =  $mask_y; 
+
+       //print_r($data);
+       //exit;
 
 
        

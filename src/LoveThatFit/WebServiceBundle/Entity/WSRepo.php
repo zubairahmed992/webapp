@@ -637,6 +637,7 @@ class WSRepo
             ->select('u.id,
                       u.email,
                       u.authToken,
+                      u.gender,
                       ua.id as archive_id',
                       'ua.image_actions',
                       'ua.measurement_json',
