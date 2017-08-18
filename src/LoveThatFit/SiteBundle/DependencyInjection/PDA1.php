@@ -213,8 +213,9 @@ class PDA1 {
                             $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
                         }
                  }
-                 $fb[$size_identifier]['message'] = $this->get_fitting_alert_message($fb[$size_identifier]['status']);
-                 $fb[$size_identifier]['simplified_message'] = $this->simplify_fit_area_messaging($fb[$size_identifier]);
+                 $fb[$size_identifier]['message'] = $this->get_fitting_alert_message($fb[$size_identifier]['status']);                 
+                 $fb[$size_identifier]['simplified_messages'] = $this->simplify_fit_area_messaging($fb[$size_identifier]['fit_points']);                 
+                 $fb[$size_identifier]['simplified_message_text'] = $this->message_to_text($fb[$size_identifier]['simplified_messages']);
                  $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
                  if ($hem_bits) {
                         $fb[$size_identifier]['hem_advice'] = $hem_bits;
@@ -841,7 +842,16 @@ class PDA1 {
         }
     }
     ##################################################################################
-   
+    private function message_to_text($fp) {
+        $str = '';
+        if (is_array($fp)) {
+            foreach ($fp as $k => $v) {
+                $str = $str . ', ' . $k . ': ' . $v;
+            }
+        }
+        return $str;
+    }
+
     private function simplify_fit_area_messaging($size){
         $target=$this->product->getClothingType()->getTarget();
         $sm=array();
