@@ -92,6 +92,8 @@ class WSMiscController extends Controller {
                     'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     'Ibrahim'=>array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                     'Babar'=>array('build_type'=>'babar','url'=>'192.168.0.119'),
+                    'Saddam'=>array('build_type'=>'saddam','url'=>'192.168.0.223'),
+                    'Kamran'=>array('build_type'=>'kamran','url'=>'192.168.0.182'),
                     'Riaz'=>array('build_type'=>'riaz','url'=>'192.168.0.121'),
                     'Ibrahim-laptop'=>array('build_type'=>'Ibrahim-laptop','url'=>'192.168.0.169'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
