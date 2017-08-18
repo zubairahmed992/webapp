@@ -4,6 +4,7 @@ namespace LoveThatFit\WebServiceBundle\Entity;
 
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\UserBundle\Entity\User;
+use sandeepshetty\shopify_api\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 use LoveThatFit\WebServiceBundle\Event\CalibrationEvent;
@@ -171,6 +172,14 @@ class WebServiceHelper
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array);
 
+            try{
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
+                $detail_array['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                $detail_array['image_path'] = "/render/image/";
+                $detail_array['avatar_path'] = "/render/avatar/";
+
+            }catch (Exception $e){}
+
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
@@ -211,6 +220,14 @@ class WebServiceHelper
 
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array);
+
+            try{
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
+                $detail_array['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                $detail_array['image_path'] = "/render/image/";
+                $detail_array['avatar_path'] = "/render/avatar/";
+
+            }catch (Exception $e){}
 
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
@@ -277,7 +294,7 @@ class WebServiceHelper
     {
 
         $user = $this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
-        if ($request_array['imc'] == "true") {
+        if (isset($request_array['imc']) && $request_array['imc'] == "true") {
             $user->setVersion(1);
         } else {
             $user->setVersion(0);
