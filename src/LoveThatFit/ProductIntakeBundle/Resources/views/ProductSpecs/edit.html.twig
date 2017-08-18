@@ -26,6 +26,13 @@
         font-weight: bold;
     }
 </style>
+
+{# Mutiple slect Drop Down JS and CSS #}
+  <link href="https://silviomoreto.github.io/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+  <script src="https://silviomoreto.github.io/bootstrap-select/dist/js/bootstrap-select.min.js"> </script>
+
+
+  
 <script>
     var fit_array=[];
     var fabric_array = [];
@@ -503,42 +510,49 @@
                 });
                 
                 
-                $("#sel_clothing_type").change(function() {                   
-                   
-                    var clothing_type = this.value;                 
+                $("#sel_clothing_type").change(function() {   
+                    var clothing_type = this.value; 
                     $.ajax({
                         type: "POST",                        
                         url: "../get_clothing_type",
                         data: {clothing_type:clothing_type},
                         dataType: "json",
-                        success: function (response) {    
-                           // console.log(response); 
-                            $('.styling_type').empty();
-                            var option = '<option value="">Select styling Type</option>';
-                            $.each(response[0], function(val, text) {
-                                option += '<option value="'+ val + '">' + text + '</option>';
+                        success: function (response) {   
+                             $('.styling_types').empty();
+                                var option = '<option value="">Select styling Type</option>';
+                                if(typeof response['style_type'] !== 'undefined'){
+                                    $.each(response['style_type'], function(val, text) {
+                                        option += '<option value="'+ val + '">' + text + '</option>';
                                     });
-                            $('.styling_type').append(option);     
+                                }                                  
+                            $('.styling_types').append(option);   
+                            
                           // hem length
-                          $('.hem_length').empty();
-                            var option = '<option value="">Select Hem Length</option>';
-                            $.each(response[1], function(val, text) {
-                                option += '<option value="'+ val + '">' + text + '</option>';
+                            $('.hem_length').empty();
+                                var option = '<option value="">Select Hem Length</option>';
+                                if(typeof response['hem_length'] !== 'undefined'){
+                                        $.each(response['hem_length'], function(val, text) {
+                                        option += '<option value="'+ val + '">' + text + '</option>';
                                     });
+                                }
                             $('.hem_length').append(option); 
                             // neckline
-                          $('.neckline').empty(); 
-                            var option = '<option value="">Select Neck Line</option>';
-                            $.each(response[2], function(val, text) {
-                                option += '<option value="'+ val + '">' + text + '</option>';
-                                    });
+                            $('.neckline').empty(); 
+                                var option = '<option value="">Select Neck Line</option>';
+                                if(typeof response['neckline'] !== 'undefined'){
+                                   $.each(response['neckline'], function(val, text) {
+                                       option += '<option value="'+ val + '">' + text + '</option>';
+                                   });
+                                }
                             $('.neckline').append(option); 
                               // sleeve_styling 
                           $('.sleeve_styling').empty(); 
                             var option = '<option value="">Select Sleeve Styling </option>';
-                            $.each(response[3], function(val, text) {
-                                option += '<option value="'+ val + '">' + text + '</option>';
-                                    });
+                            if(typeof response['sleeve_styling'] !== 'undefined'){
+                                $.each(response['sleeve_styling'], function(val, text) {
+                                    option += '<option value="'+ val + '">' + text + '</option>';
+                                });
+                            }
                             $('.sleeve_styling').append(option); 
                         },
                         failure: function (errMsg) {
@@ -613,7 +627,8 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for=""> Clothing Type: </label>
             <div class="col-sm-4">                
-{#                <input type="text" name="clothing_type" id="sel_clothing_type"  value="{{ parsed_data.clothing_type }}"  class="form-control">                    #}
+{#                <input type="text" name="clothing_type" id="sel_clothing_type"  value="{{ parsed_data.clothing_type }}"  class="form-control">                   #}
+                      
                 <select name="clothing_type" id="sel_clothing_type"  class="form-control">
                     <option>Select</option>
                     {% for key,val in clothing_types %}
@@ -670,8 +685,8 @@
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="styling_title">Styling type : </label>
-            <div class="col-sm-4"> 
-                <select name="styling_type" class="styling_type form-control" >
+            <div class="col-sm-4">   
+                <select name="styling_type" class="styling_types form-control">
                     <option>Select</option>
                     {% for key,val in drop_down_values['styling_type'] %}
                        <option value="{{ val }}"{{ parsed_data.styling_type|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|lower == parsed_data.styling_type|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
@@ -763,10 +778,16 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="structural_detail">Structural detail : </label>
             <div class="col-sm-4">
-                <select name="structural_detail" class="structural_detail form-control" >
+                <select name="structural_detail[]" class="structural_detail selectpicker form-control" data-size="8"  data-actions-box="true" multiple >                     
                     <option>Select</option>
                     {% for key,val in drop_down_values['structural_detail'] %}
-                       <option value="{{ key }}"{{ parsed_data.structural_detail|lower|trim|replace({' ':'_'}) == '' and key == 0? '' : (key == parsed_data.structural_detail|lower|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ val }}</option>
+                        {% if parsed_data.structural_detail is defined %}                        
+                            {% set selected = key in parsed_data.structural_detail|default  ? ' selected' : '' %}
+                            {% else %}
+                               {% set selected =  '' %}
+                        {% endif %}
+                        
+                       <option value="{{ key }}"{{ selected }} >{{ val }}</option>
                     {% endfor %}
                 </select>
             </div>

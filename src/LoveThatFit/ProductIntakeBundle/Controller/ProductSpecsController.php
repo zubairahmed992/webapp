@@ -38,15 +38,16 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);      
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        
+        $gender = ($parsed_data['gender'] == 'f')?'women':'man';
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
         $parsed_data['horizontal_stretch']=  $parsed_data['horizontal_stretch'];
         $parsed_data['vertical_stretch']=$parsed_data['vertical_stretch'];
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+        $drop_down_values['styling_type'] = $this->get('admin.helper.product.specification')->getStylingType($parsed_data['clothing_type']);         
         $drop_down_values['fit_model_size'] = array_flip($fms);      
-//        $drop_down_values['fit_model_size'] = $fms;      
-         $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);
+        //  $drop_down_values['fit_model_size'] = $fms;      
+        $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);       
         if(isset($parsed_data['fit_model_size'])){ 
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size?$fit_model_selected_size->getSize():null; 
