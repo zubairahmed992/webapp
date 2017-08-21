@@ -1494,9 +1494,19 @@ class WebServiceHelper
          $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
         if ($user) {
 
+
+
             $device = json_decode($user[0]['image_actions']);
             $measurement = json_decode($user[0]['measurement_json']);
             $markers = json_decode($user[0]['marker_params']);
+
+            //$measurementArchive = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement, $user);
+            $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape(strtolower($measurement->bra_size),$measurement->body_shape);
+
+           
+
+           
+
 
             $mask_x =  '';
             $mask_y =  ''; 
@@ -1521,20 +1531,23 @@ class WebServiceHelper
         $data['device'] ['dv_scr_w'] =  "960";
         $data['device'] ['dv_scr_h_st'] = "1280"; 
 
+        $data['img'] ['image_actions'] =  $user[0]['image_actions'];
         $data['img'] ['img_path_json'] =  $user[0]['marker_json'];
         $data['img'] ['img_path_paper'] =  $user[0]['svg_paths'];
-        $data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+        //$data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+        $data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image'];
 
 
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
-        $data['user'] ['dm_body_parts_details_json'] = $measurement->body_shape; 
-        $data['user'] ['default_user_path'] =  $user[0]['default_marker_svg'];
+        $data['user'] ['dm_body_parts_details_json'] = json_encode($bra_size_body_shape); 
+        $data['user'] ['default_user_path'] =  $user[0]['svg_paths'];
         $data['user'] ['user_hip_px'] =  "424";
         $data['user'] ['user_bust_px'] = "392";
         $data['user'] ['user_waist_px'] = "319"; 
         $data['user'] ['default_user_mask_height_px'] = "430"; 
         $data['user'] ['head_percent'] = "12"; 
+        $data['user'] ['gender'] =  $user[0]['gender']; 
 
         $data['user'] ['neck_percent'] =  "4";
         $data['user'] ['torso_percent'] = "42";
@@ -1542,7 +1555,7 @@ class WebServiceHelper
         $data['user'] ['arm_percent'] =  "46";
 
         $data['marker'] ['marker_update_url'] =  "/admin/archive/save_marker";
-        $data['marker'] ['default_marker_json'] =  $user[0]['marker_json'];
+        $data['marker'] ['default_marker_json'] =  $user[0]['default_marker_json'];
         $data['marker'] ['default_marker_svg'] =  $user[0]['default_marker_svg'];
 
         $data['ids'] ['hdn_archive_id'] = $user[0]['archive_id']; 
@@ -1550,6 +1563,9 @@ class WebServiceHelper
 
        $data['mask'] ['mask_x'] =  $mask_x;
        $data['mask'] ['mask_y'] =  $mask_y; 
+
+       //print_r($data);
+       //exit;
 
 
        
