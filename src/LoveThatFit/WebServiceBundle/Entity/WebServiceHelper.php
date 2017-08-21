@@ -1541,7 +1541,7 @@ class WebServiceHelper
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
         $data['user'] ['dm_body_parts_details_json'] = json_encode($bra_size_body_shape); 
-        $data['user'] ['default_user_path'] =  $user[0]['default_marker_svg'];
+        $data['user'] ['default_user_path'] =  $user[0]['svg_paths'];
         $data['user'] ['user_hip_px'] =  "424";
         $data['user'] ['user_bust_px'] = "392";
         $data['user'] ['user_waist_px'] = "319"; 
@@ -1555,7 +1555,7 @@ class WebServiceHelper
         $data['user'] ['arm_percent'] =  "46";
 
         $data['marker'] ['marker_update_url'] =  "/admin/archive/save_marker";
-        $data['marker'] ['default_marker_json'] =  $user[0]['marker_json'];
+        $data['marker'] ['default_marker_json'] =  $user[0]['default_marker_json'];
         $data['marker'] ['default_marker_svg'] =  $user[0]['default_marker_svg'];
 
         $data['ids'] ['hdn_archive_id'] = $user[0]['archive_id']; 

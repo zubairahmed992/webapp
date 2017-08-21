@@ -649,11 +649,13 @@ class WSRepo
                       'ua.updated_at',                                                                                     
                       'ua.status',                                                                                     
                       'ua.image',  
+                      'um.default_marker_json',
                       'ua.version'                                                                                                                                                                                                   
 
                       )
             ->from('LoveThatFitUserBundle:User', 'u')
             ->innerJoin('u.user_archives', 'ua')           
+            ->innerJoin('u.user_marker', 'um')           
             ->Where('u.email=:email')
             ->setParameters(array('email' => $email))
             ->getQuery()
