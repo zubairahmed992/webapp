@@ -67,7 +67,8 @@ class ClothingTypeController extends Controller {
 //----------------------------------------Edit Clothing Type--------------------------------------------------
     public function editAction($id) {
 
-        $entity = $this->get('admin.helper.ClothingType')->find($id);      
+        $entity = $this->get('admin.helper.ClothingType')->find($id);
+        $isDefaultClothing = $this->get('admin.helper.ClothingType')->checkClothingTypeForDefaultClothing( $entity );
         if(!$entity){       
         $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
         }else{

@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\AdminBundle\Entity;
 
+use Proxies\__CG__\LoveThatFit\AdminBundle\Entity\ClothingType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -387,5 +388,13 @@ class ClothingTypeHelper
     public function getProductByClothingTypeId( $clothing_id)
     {
         return $this->repo->getProductByClothingTypeId( $clothing_id );
+    }
+
+    public function checkClothingTypeForDefaultClothing(\LoveThatFit\AdminBundle\Entity\ClothingType $entity)
+    {
+        if(is_object($entity))
+        {
+            var_dump($entity); die;
+        }
     }
 }
