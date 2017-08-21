@@ -386,7 +386,9 @@ class WSCartController extends Controller
             if ($result['success'] == 0) {
                 if($discount_amount > 0){
                     $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
-                    $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                    if(is_object($fnfUser)){
+                        $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                    }
                 }
 
                 $this->sendEmailToUser( $user, $decoded, $result);
