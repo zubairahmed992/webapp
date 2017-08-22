@@ -375,6 +375,12 @@ class WSCartController extends Controller
         // var_dump( $decoded ); die;
 
         if ($user) {
+            $user_cart = $this->get('cart.helper.cart')->getFormattedCart($user);
+            if(empty($user_cart)){
+                $res = $this->get('webservice.helper')->response_array(false, 'User cart is empty.');
+                return new Response( $res );
+            }
+
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
             if(is_array($fnfUser) && !empty($fnfUser))
             {
@@ -382,11 +388,15 @@ class WSCartController extends Controller
                 $decoded['groupId'] = $fnfGroupId;
             }
 
-            $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
+             $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
             if ($result['success'] == 0) {
                 if($discount_amount > 0){
                     $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
-                    $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                    if(is_object($fnfUser)){
+                        if($decoded['group_type'] == 1) {
+                            $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                        }
+                    }
                 }
 
                 $this->sendEmailToUser( $user, $decoded, $result);
@@ -658,7 +668,7 @@ class WSCartController extends Controller
 
             if($billingObject)
             {
-                $res = $this->get('webservice.helper')->response_array(true, 'user address successfully saved', true, array(
+                $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
                     "billing_address_id" => $billingObject->getId()
                 ));
             }else{
@@ -686,7 +696,7 @@ class WSCartController extends Controller
 
             if($shippingObject)
             {
-                $res = $this->get('webservice.helper')->response_array(true, 'user address successfully saved', true, array(
+                $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
                     "shipping_address_id" => $shippingObject->getId()
                 ));
             }else{
@@ -871,6 +881,82 @@ class WSCartController extends Controller
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $response = $stampsDotCom->getRates( $decoded );
+    }
+
+    public function nwsBraintreeSaveCreditCardAction( Request $request ){
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $data = $this->get('cart.helper.payment')->registeredUserCreditCard( $user, $decoded);
+            if($data['success'] == 0){
+                $res = $this->get('webservice.helper')->response_array(true, 'User payment save successfully', true, $data);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, $data['message'], true, $data);
+            }
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
+    public function nwsBraintreeDeleteCreditCardAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $data = $this->get('cart.helper.payment')->deleteUserPaymentMethod( $user, $decoded );
+            if($data['success'] == 0){
+                $res = $this->get('webservice.helper')->response_array(true, 'Successfully remove user payment methods', true, $data);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, $data['message'], true, $data);
+            }
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+
+    }
+
+    public function nwsBraintreeGetCreditCardsAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $data = $this->get('cart.helper.payment')->getUserCreditCards( $user );
+            if($data['success'] == 0){
+                $res = $this->get('webservice.helper')->response_array(true, 'User credits cards found', true, $data);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, "no card found", true, $data);
+            }
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
+    }
+
+    public function nwsBraintreeUpdateCreditCardAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        var_dump($decoded);
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $data = $this->get('cart.helper.payment')->updateUserPaymentMethod( $user, $decoded );
+            if($data['success'] == 0){
+                $res = $this->get('webservice.helper')->response_array(true, 'User credits cards found', true, $data);
+            }else{
+                $res = $this->get('webservice.helper')->response_array(false, "no card found", true, $data);
+            }
+        }else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response( $res );
     }
 
 }

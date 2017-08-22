@@ -445,6 +445,10 @@ class BannerHelper
             if ($results[$key]['banner_type'] == 7) {
                 if (empty($brands_list)) {
                     $brands_list = $this->container->get('admin.helper.brand')->getBrandsArray();
+                    $brand_path = "http://" . $_SERVER['HTTP_HOST'] . '/uploads/ltf/brands/iphone/';
+                    foreach($brands_list as $brand_key => $brand) {
+                        $brands_list[$brand_key]['image'] = $brand_path . $brand['image'];
+                    }
                 }
                 $results[$key]['brand_list'] = $brands_list;
             }
@@ -453,6 +457,15 @@ class BannerHelper
                 if (!empty($results[$key]['banner_filter'])) {
                     $filter =  json_decode($results[$key]['banner_filter'], true);
                     $results[$key]['product_list'] = $this->container->get('webservice.helper')->getFilterProductList(json_decode($filter, true), $user_id);
+                    foreach ($results[$key]['product_list'] as $keyed => $valprod) {
+                        if (($valprod['uf_user'] != null) && ($valprod['uf_user'] == $user_id)) {
+                            $results[$key]['product_list'][$keyed]['fitting_room_status'] = true;
+                            $results[$key]['product_list'][$keyed]['qty'] = $results[$key]['product_list'][$keyed]['uf_qty'];
+                        } else {
+                            $results[$key]['product_list'][$keyed]['fitting_room_status'] = false;
+                            $results[$key]['product_list'][$keyed]['qty'] = 0;
+                        }
+                    }
                 }
             }
 

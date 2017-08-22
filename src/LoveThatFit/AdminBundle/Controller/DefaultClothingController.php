@@ -48,7 +48,13 @@ class DefaultClothingController extends Controller
 
     public function markDefaultClothingProductAction( Request $request ){
         $data = $request->request->all();
+
+        if($data['default_clothing'] == 0 || $data['product'] == 0){
+            $this->get('session')->setFlash('warning', 'You either forget to select clothing type or product.');
+            return $this->redirect($this->generateUrl('admin_default_clothing_new'));
+        }
         $entity = $this->get('admin.helper.product')->find($data['product']);
+
         $clothing_type = $this->get('admin.helper.clothingtype')->find( $data['default_clothing'] );
         $this->get('admin.helper.product')->markOtherProductDefaultToZero( $clothing_type );
 

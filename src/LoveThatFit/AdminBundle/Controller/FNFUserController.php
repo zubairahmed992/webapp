@@ -411,6 +411,51 @@ class FNFUserController extends Controller
         return new Response($res);
     }
 
+    public function nwsGetApplicableFNFUserAction()
+    {
+        $res = "";
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user    = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
+
+            if(is_array($fnfUser)){
+                if( $fnfUser['group_type'] == 1 ){
+                    $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
+                        'discount_amount' => $fnfUser['discount'],
+                        'min_amount'      => $fnfUser['minAmount'],
+                        'group_type'      => $fnfUser['group_type'],
+                        'percentage_amount' => 0,
+                        'applicable'        => true
+                    ));
+                }else if( $fnfUser['group_type'] == 2 )
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
+                        'discount_amount' => (string) $this->getUserDiscountAmount($fnfUser['discount'], $fnfUser['token']),
+                        'min_amount'      => 0,
+                        'group_type'      => $fnfUser['group_type'],
+                        'percentage_amount' => $fnfUser['discount'],
+                        'applicable'        => true
+                    ));
+                }
+
+            }else{
+                $res = $this->get('webservice.helper')->response_array(true, 'user in not applicable for discount.', true, array(
+                    'discount_amount' => 0,
+                    'min_amount'      => 0,
+                    'group_type'      => 0,
+                    'percentage_amount' => 0,
+                    'applicable'        => false
+                ));
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+
+        return new Response($res);
+    }
+
     public function getUserDiscountAmount( $discount, $token)
     {
         $amount = 0;

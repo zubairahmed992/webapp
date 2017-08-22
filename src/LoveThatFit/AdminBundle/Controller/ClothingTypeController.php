@@ -67,7 +67,8 @@ class ClothingTypeController extends Controller {
 //----------------------------------------Edit Clothing Type--------------------------------------------------
     public function editAction($id) {
 
-        $entity = $this->get('admin.helper.ClothingType')->find($id);      
+        $entity = $this->get('admin.helper.ClothingType')->find($id);
+        $isDefaultClothing = $this->get('admin.helper.ClothingType')->checkClothingTypeForDefaultClothing( $entity );
         if(!$entity){       
         $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
         }else{
@@ -79,7 +80,8 @@ class ClothingTypeController extends Controller {
         return $this->render('LoveThatFitAdminBundle:ClothingType:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'isDefaultClothing' => $isDefaultClothing));
     }
 
 //------------------------------------Update Clothing Type------------------------------------------------------
@@ -94,12 +96,17 @@ class ClothingTypeController extends Controller {
         $form->get('target')->setData($entity->getTarget());
         $form->bind($request);
 
+        $isDefaultCloting      = $request->request->get("defaultClothing");
+
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.ClothingType')->update($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-            if ($message_array['success'] == true) {              
-                return $this->redirect($this->generateUrl('admin_clothing_types'));
+            if ($message_array['success'] == true) {
+                if($isDefaultCloting == 1)
+                    return $this->redirect($this->generateUrl('default_clothings'));
+                else
+                    return $this->redirect($this->generateUrl('admin_clothing_types'));
             }
         } else {
             $this->get('session')->setFlash('warning', 'Unable to update Clothing Type!');

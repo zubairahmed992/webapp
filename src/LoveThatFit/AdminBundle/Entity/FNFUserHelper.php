@@ -134,6 +134,7 @@ class FNFUserHelper
 
         foreach ($finalData as $fData) {
             $discount = "$".$fData["discount"];
+            $availibility = ($fData["is_available"]) ? "available" : "not available";
             if($fData['group_type'] == 2)
                 $discount = $fData["discount"]. "%";
             $output['data'][] = [
@@ -144,7 +145,7 @@ class FNFUserHelper
                 'email' => $fData["email"],
                 'group_title' => $fData['group_title'],
                 'discount' => $discount,
-                'availability' => ($fData["is_available"]) ? "available" : "not available",
+                'availability' => ($fData['group_type'] == 1) ? $availibility : "available",
                 'original_user_id' => $fData["original_user_id"],
             ];
         }

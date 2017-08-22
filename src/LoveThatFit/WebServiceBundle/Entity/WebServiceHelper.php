@@ -4,6 +4,7 @@ namespace LoveThatFit\WebServiceBundle\Entity;
 
 use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\UserBundle\Entity\User;
+use sandeepshetty\shopify_api\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Yaml\Parser;
 use LoveThatFit\WebServiceBundle\Event\CalibrationEvent;
@@ -90,6 +91,7 @@ class WebServiceHelper
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
                     $response_array['user']['image_path'] = "/render/image/";
+                    $response_array['user']['avatar_path'] = "/render/avatar/";
                     $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
                     $response_array['user']['defaultProduct'] = $defaultProducts;
                 }
@@ -127,6 +129,7 @@ class WebServiceHelper
             $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
             $data['user']['defaultProduct'] = $defaultProducts;
             $data['user']['image_path'] = "/render/image/";
+            $data['user']['avatar_path'] = "/render/avatar/";
 
             return $this->response_array(true, 'member found', true, $data);
         } else {
@@ -169,6 +172,14 @@ class WebServiceHelper
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array);
 
+            try{
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
+                $detail_array['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                $detail_array['image_path'] = "/render/image/";
+                $detail_array['avatar_path'] = "/render/avatar/";
+
+            }catch (Exception $e){}
+
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
@@ -209,6 +220,14 @@ class WebServiceHelper
 
             #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']); 
             $detail_array = $this->user_array($user, $request_array);
+
+            try{
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
+                $detail_array['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                $detail_array['image_path'] = "/render/image/";
+                $detail_array['avatar_path'] = "/render/avatar/";
+
+            }catch (Exception $e){}
 
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
@@ -275,7 +294,7 @@ class WebServiceHelper
     {
 
         $user = $this->setUserWithParams($this->container->get('user.helper.user')->createNewUser(), $request_array);
-        if ($request_array['imc'] == "true") {
+        if (isset($request_array['imc']) && $request_array['imc'] == "true") {
             $user->setVersion(1);
         } else {
             $user->setVersion(0);
@@ -459,7 +478,7 @@ class WebServiceHelper
             #----get file name & create dir            
             $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
-                @mkdir($user->getUploadRootDir(), 0700);
+                @mkdir($user->getUploadRootDir(), 0775);
             }
             #______________________________________> Fitting Room image
 
@@ -594,7 +613,7 @@ class WebServiceHelper
             $ext = pathinfo($files["file"]["name"], PATHINFO_EXTENSION);
             $file = 'logs.txt';
             if (!is_dir($user->getUploadRootDir())) {
-                @mkdir($user->getUploadRootDir(), 0700);
+                @mkdir($user->getUploadRootDir(), 0775);
             }
             if ($ext == 'txt') {
                 $path = $user->getUploadRootDir();
@@ -1433,33 +1452,6 @@ class WebServiceHelper
         return $shippmentType;
     }
 
-    public function getProductListByBrand($gender, array $id, $user_id, $page_no = 1)
-    {
-        $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
-        $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
-        $limit = $records_per_page * $page_no;
-        $offset = $limit - $records_per_page;
-        $productlist = $this->container->get('webservice.repo')->productListCategory($gender, $id, $user_id);
-        $page_count = (int)(count($productlist) / $records_per_page);
-        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1 : $page_count;
-        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
-            return $this->response_array(false, 'Invalid Page No');
-        }
-        $productlist = array_slice($productlist, $offset, $records_per_page);
-        foreach ($productlist as $key => $product) {
-            if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
-                $productlist[$key]['fitting_room_status'] = true;
-                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
-            } else {
-                $productlist[$key]['fitting_room_status'] = false;
-                $productlist[$key]['qty'] = 0;
-            }
-        }
-        return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
-
-    }
-
     #--------------Get Product list By Category and Gender -----------------------------------------------------
     public function getBannerBrandProduct($brand_id, $user_id)
     {
@@ -1474,22 +1466,47 @@ class WebServiceHelper
 
     public function getProductListBannerFilter($filter, $user_id)
     {
-        return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id)));
+        $filtered_products = $this->container->get('webservice.repo')->productListBannerFilter($filter, $user_id);
+        foreach ($filtered_products as $keyed => $valprod) {
+            if (($valprod['uf_user'] != null) && ($valprod['uf_user'] == $user_id)) {
+                $filtered_products[$keyed]['fitting_room_status'] = true;
+                $filtered_products[$keyed]['qty'] = $filtered_products[$keyed]['uf_qty'];
+            } else {
+                $filtered_products[$keyed]['fitting_room_status'] = false;
+                $filtered_products[$keyed]['qty'] = 0;
+            }
+        }
+        return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $filtered_products));
     }
     
+
     public function userDetailMaskMarker($request_array)
-    {   
-        
+    { 
+
+
+        if($request_array['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&')
+        {
+            
         $data = array();
          //$user = $this->container->get('webservice.repo')->userDetailMaskMarker('1355dd07ad8b9ce1075ba919798ffe1f','afaquetest17@test.com');
          //print_r($user);
          //exit;
-         $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['auth_token'],$request_array['email']); 
+         $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
         if ($user) {
+
+
 
             $device = json_decode($user[0]['image_actions']);
             $measurement = json_decode($user[0]['measurement_json']);
             $markers = json_decode($user[0]['marker_params']);
+
+            //$measurementArchive = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement, $user);
+            $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape(strtolower($measurement->bra_size),$measurement->body_shape);
+
+           
+
+           
+
 
             $mask_x =  '';
             $mask_y =  ''; 
@@ -1508,26 +1525,32 @@ class WebServiceHelper
         $data['device'] ['dv_px_per_inch_ratio'] = "15.29166666666667";  
         $data['device'] ['globle_pivot'] =  "64";
         $data['device'] ['dv_model'] =  $device->device_model;
-        $data['device'] ['dv_edit_type'] = 'null'; 
+        $data['device'] ['dv_edit_type'] = 'registration'; 
         $data['device'] ['hdn_serverpath'] = "/";
         $data['device'] ['dv_scr_h'] =  $device->height_per_inch;
         $data['device'] ['dv_scr_w'] =  "960";
         $data['device'] ['dv_scr_h_st'] = "1280"; 
 
+        $data['img'] ['image_actions'] =  $user[0]['image_actions'];
         $data['img'] ['img_path_json'] =  $user[0]['marker_json'];
         $data['img'] ['img_path_paper'] =  $user[0]['svg_paths'];
-        $data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+        //$data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+        
+       
+        $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+       
 
 
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
-        $data['user'] ['dm_body_parts_details_json'] = $measurement->body_shape; 
-        $data['user'] ['default_user_path'] =  $user[0]['default_marker_svg'];
+        $data['user'] ['dm_body_parts_details_json'] = json_encode($bra_size_body_shape); 
+        $data['user'] ['default_user_path'] =  $user[0]['svg_paths'];
         $data['user'] ['user_hip_px'] =  "424";
         $data['user'] ['user_bust_px'] = "392";
         $data['user'] ['user_waist_px'] = "319"; 
         $data['user'] ['default_user_mask_height_px'] = "430"; 
         $data['user'] ['head_percent'] = "12"; 
+        $data['user'] ['gender'] =  $user[0]['gender']; 
 
         $data['user'] ['neck_percent'] =  "4";
         $data['user'] ['torso_percent'] = "42";
@@ -1535,7 +1558,7 @@ class WebServiceHelper
         $data['user'] ['arm_percent'] =  "46";
 
         $data['marker'] ['marker_update_url'] =  "/admin/archive/save_marker";
-        $data['marker'] ['default_marker_json'] =  $user[0]['marker_json'];
+        $data['marker'] ['default_marker_json'] =  $user[0]['default_marker_json'];
         $data['marker'] ['default_marker_svg'] =  $user[0]['default_marker_svg'];
 
         $data['ids'] ['hdn_archive_id'] = $user[0]['archive_id']; 
@@ -1543,6 +1566,10 @@ class WebServiceHelper
 
        $data['mask'] ['mask_x'] =  $mask_x;
        $data['mask'] ['mask_y'] =  $mask_y; 
+
+       //print_r($data);
+       //exit;
+
 
        
 
@@ -1556,6 +1583,55 @@ class WebServiceHelper
         } else {
             return $this->response_array(false, 'Member not found');
         }
+
+      }else {
+
+        return $this->response_array(false, 'Member not found');
+      }        
+    }
+
+
+    public function getProductListByBrand($search_text, $user_id, $page_no = 1)
+    {
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
+        $limit = $records_per_page * $page_no;
+        $offset = $limit - $records_per_page;
+
+        /* Search text on brand to fetch products */
+        $productlist = $this->container->get('webservice.repo')->getProductListByBrand($search_text, $user_id);
+
+        /* Search text on Products style name */
+        if(count($productlist) == 0 ){
+            $productlist = $this->container->get('webservice.repo')->getProductListByStyleText($search_text, $user_id);
+        }
+
+        $page_count = (int)(count($productlist) / $records_per_page);
+        $page_count = (count($productlist) % $records_per_page != 0) ? $page_count + 1 : $page_count;
+        if (($page_count != 0 && $page_no < 1) || ($page_count != 0 && $page_no > $page_count)) {
+            return $this->response_array(false, 'Invalid Page No');
+        }
+        $productlist = array_slice($productlist, $offset, $records_per_page);
+        foreach ($productlist as $key => $product) {
+            if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
+                $productlist[$key]['fitting_room_status'] = true;
+                $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
+            } else {
+                $productlist[$key]['fitting_room_status'] = false;
+                $productlist[$key]['qty'] = 0;
+            }
+        }
+
+
+        $data = array('product_list' => $productlist, 'page_count' => $page_count);
+        $ar = array(
+            'data' => $data,
+            'count' => $data['product_list'] ? count($data['product_list']) : 0,
+            'message' => $data['product_list'] ? 'Product List' : 'Uh oh! There are no items for this brand currently in stock. Tap here to go back to shop',
+            'success' => true,
+        );
+        return json_encode($ar);
     }
 
 }

@@ -1910,4 +1910,23 @@ class ProductRepository extends EntityRepository
         return $count;
     }
 
+    public function getStyleListEnable()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+
+        return $query
+            ->select('p.id id, p.item_name')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.product_items', 'pi')
+            ->where('p.disabled=0')
+            ->andWhere('p.deleted=0')
+            ->andWhere('p.item_name IS NOT NULL ')
+            ->andWhere('p.item_name != :empty')->setParameter('empty', '')
+            ->groupBy('p.id')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

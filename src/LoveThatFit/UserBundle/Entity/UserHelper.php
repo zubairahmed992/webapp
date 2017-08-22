@@ -1124,7 +1124,7 @@ class UserHelper
     private function copyImages($user, $duplicate_user)
     {
         if (!is_dir($user->getUploadRootDir())) {
-            mkdir($user->getUploadRootDir(), 0700);
+            mkdir($user->getUploadRootDir(), 0775);
             if (file_exists($duplicate_user->getAbsolutePath())) {
                 copy($duplicate_user->getAbsolutePath(), $user->getAbsolutePath());
             }
@@ -1340,6 +1340,11 @@ class UserHelper
         }
 
         else false;
+    }
+
+    public function getActivityLog()
+    {
+        return $this->repo->getActivityLog();
     }
 
 }
