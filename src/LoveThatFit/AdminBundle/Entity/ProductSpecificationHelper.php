@@ -556,7 +556,24 @@ private function merge_sub($arr){
      return $ma;
 }
 
+
+public function getStylingType($style_type){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"][$style_type];
+}
+ #--------------Get Styling Type ------------------------#
  
+public function getStyleType($style_type){
+    if(isset($this->conf["constants"]["product_specification"]["women"]["style_type"][$style_type]))
+    $style_type_attributes['style_type'] = $this->conf["constants"]["product_specification"]["women"]["style_type"][$style_type];
+    if(isset($this->conf["constants"]["product_specification"]["women"]["hem_length"][$style_type]))
+    $style_type_attributes["hem_length"] = $this->conf["constants"]["product_specification"]["women"]["hem_length"][$style_type];
+    if(isset($this->conf["constants"]["product_specification"]["women"]["neck_line"][$style_type]))
+    $style_type_attributes["neckline"] = $this->conf["constants"]["product_specification"]["women"]["neck_line"][$style_type];
+    if(isset($this->conf["constants"]["product_specification"]["women"]["sleeve_styling"][$style_type]))
+    $style_type_attributes["sleeve_styling"] = $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"][$style_type];
+    return $style_type_attributes;
+
+}
 
 
 

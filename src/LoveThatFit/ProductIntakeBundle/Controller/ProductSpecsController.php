@@ -38,15 +38,16 @@ class ProductSpecsController extends Controller
         $ps = $this->get('pi.product_specification')->find($id);      
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
-        
+        $gender = ($parsed_data['gender'] == 'f')?'women':'man';
         $fms=$this->get('productIntake.fit_model_measurement')->getTitleArray($parsed_data['brand']);  
         $parsed_data['horizontal_stretch']=  $parsed_data['horizontal_stretch'];
         $parsed_data['vertical_stretch']=$parsed_data['vertical_stretch'];
         $gen_specs = $this->get('admin.helper.product.specification')->getProductSpecification(); 
         $drop_down_values = $this->get('admin.helper.product.specification')->getIndividuals(); 
+        $drop_down_values['styling_type'] = $this->get('admin.helper.product.specification')->getStylingType($parsed_data['clothing_type']);         
         $drop_down_values['fit_model_size'] = array_flip($fms);      
-//        $drop_down_values['fit_model_size'] = $fms;      
-         $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);
+        //  $drop_down_values['fit_model_size'] = $fms;      
+        $clothing_types = ($parsed_data['gender'] == 'f'? $product_specs['women']['clothing_types']:$product_specs['man']['clothing_type']);       
         if(isset($parsed_data['fit_model_size'])){ 
             $fit_model_selected_size= $parsed_data['fit_model_size']==null?null:$this->get('productIntake.fit_model_measurement')->find($parsed_data['fit_model_size']);
             $fit_model_selected = $fit_model_selected_size?$fit_model_selected_size->getSize():null; 
@@ -405,7 +406,7 @@ class ProductSpecsController extends Controller
         $product->setRise($parsed_data['rise']);
         $product->setHemLength($parsed_data['hem_length']);
         $product->setFabricWeight($parsed_data['fabric_weight']);
-        $product->setStructuralDetail($parsed_data['structural_detail']);
+        $product->setStructuralDetail(json_encode($parsed_data['structural_detail']));
         $product->setFitType($parsed_data['fit_type']);
         $product->setLayering(array_key_exists('layring', $parsed_data) ? $parsed_data['layring'] : $parsed_data['layering']);
         $product->setFitPriority(array_key_exists('fit_priority', $parsed_data) ? json_encode($parsed_data['fit_priority']) : 'NULL' );
@@ -464,11 +465,24 @@ class ProductSpecsController extends Controller
         die;
         
     }
-    
+    //~~~~Validate product specification sizes---------product_intake/validate_product_specification 
     public function validateProductSpecificationAction($id) {
         $ps = $this->get('pi.product_specification')->find($id);
         $parsed_data = json_decode($ps->getSpecsJson(), true);
         $result = array();
+          //2. Flag when fit priority for a fit point is assigned to an incorrect garment:
+        //--Tops, dresses, and skirts should not have thigh assigned fit priority
+        //--Skirts, pants, and shorts should not have bust assigned fit priority    
+        $clothing_type = ["blouse","tunic","tee_knit","tank_knit","jackets","sweater","skirt","dress","coat","shirt"];
+        if ( in_array($parsed_data['clothing_type'],$clothing_type) ) {           
+            if( array_key_exists('thigh', $parsed_data['fit_priority']) ){                
+               $result['fit_priority_assigned_to_an_incorrect_garment'] = " ~~ Clothing Type ".$parsed_data['clothing_type']. " of fit point tigh is assigned to an incorrect garment";
+            }
+        } else{
+            if( array_key_exists('bust', $parsed_data['fit_priority']) ){
+               $result['fit_priority_assigned_to_an_incorrect_garment'] = " ~~  Clothing Type ". $parsed_data['clothing_type'] . "  of fit point bust is assigned to an incorrect garment";
+            }
+        }       
         foreach ($parsed_data['sizes'] as $key => $product_size_value) {
             $size_title = array_keys($parsed_data['sizes']);
             $size_count = count($size_title);
@@ -476,7 +490,7 @@ class ProductSpecsController extends Controller
                 //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
                 $rule_one = $value['garment_dimension'] - $value['max_actual'];
                 if ($rule_one <= 0) {
-                    $result['size'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
+                    $result['garment_dimension_minus_max_actual'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
                 }
                 //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
                 //return  new Response(json_encode($result));
@@ -523,18 +537,28 @@ class ProductSpecsController extends Controller
                                 $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
                             }
                     }
-                } else {
-                    
+                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
+                    if ( $value['min_actual'] < $value['min_calc'] ) {
+                        $result['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+                    }
+                     if ( $value['min_actual'] > $value['ideal_low'] ) {
+                        $result['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
+                    }
+                    if ( $value['max_actual'] > $value['max_calc'] ) {
+                        $result['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
+                    }
+                    if ( $value['max_actual'] < $value['ideal_high'] ) {
+                        $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
+                    }
+                    //-Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
+                     $garment_dimension_difference = $next_array_elements[$key1]['garment_dimension'] - $value['garment_dimension'] ;
+                    if ( !( $garment_dimension_difference <=  ($value['grade_rule']+0.25) && $garment_dimension_difference >=  ($value['grade_rule']-0.25) )) {
+                        $result['tolerance'][$key][$key1] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
+                    }
                 }
-                // print_r($next_array_elements);
-                //print_R ($next_array_elements[$key1]);
-                // die;
-//                        $result[$product_size_value['title']][$value['title']]['garment_dimension'] = $value['garment_measurement_flat'];
-//                        $result[$product_size_value['title']][$value['title']]['max_actual'] = $value['max_body_measurement'];         
-//                        $result[$product_size_value['title']][$value['title']]['garment_stretch_dimension'] = $value['garment_measurement_stretch_fit'];
-//                        $result[$product_size_value['title']][$value['title']]['fit_model_measurement'] = $value['fit_model_measurement'];
             }
         }
+           
         return new Response(json_encode($result));
     }
 
