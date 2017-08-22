@@ -375,6 +375,12 @@ class WSCartController extends Controller
         // var_dump( $decoded ); die;
 
         if ($user) {
+            $user_cart = $this->get('cart.helper.cart')->getFormattedCart($user);
+            if(empty($user_cart)){
+                $res = $this->get('webservice.helper')->response_array(false, 'User cart is empty.');
+                return new Response( $res );
+            }
+
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
             if(is_array($fnfUser) && !empty($fnfUser))
             {
@@ -387,7 +393,9 @@ class WSCartController extends Controller
                 if($discount_amount > 0){
                     $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
                     if(is_object($fnfUser)){
-                        $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                        $userGroup = $fnfUser->getGroups();
+                        if(is_object($userGroup) && $userGroup[0]->getGroupType() == 1)
+                            $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
                     }
                 }
 
