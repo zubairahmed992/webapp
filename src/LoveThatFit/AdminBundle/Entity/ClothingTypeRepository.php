@@ -333,6 +333,43 @@ class ClothingTypeRepository extends EntityRepository
 
     }
 
+    public function checkForDefaultClothing( $clothingtype_id = 0, $getResult = true ){
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query
+            ->select('
+                p.id,
+                p.name,
+                p.control_number,
+                p.gender,
+                b.name as BName,
+                ct.name as cloting_type,
+                p.created_at,
+                p.disabled,
+				p.description,
+				p.item_name,				
+				p.country_origin,
+				p.item_details,								
+				p.care_label,				
+                p.status,
+                ct.target
+            ')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->join('p.brand', 'b')
+            ->join('p.clothing_type', 'ct')
+            ->join('p.product_colors', 'pc')
+            ->andWhere('p.deleted=0')
+            ->andWhere('p.default_clothing = 1')
+            ->andWhere("ct.id = :clothingType_id")
+            ->andWhere("ct.disabled = 0")
+            ->groupBy('p.id')
+            ->setParameter(":clothingType_id", $clothingtype_id);
+
+
+        $preparedQuery = $query->getQuery();
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
+
+    }
+
     public function findDefaultClothing($data, $page = 0, $max = NULL, $order, $getResult = true)
     {
         $query = $this->getEntityManager()->createQueryBuilder();
@@ -362,6 +399,7 @@ class ClothingTypeRepository extends EntityRepository
             ->join('p.product_colors', 'pc')
             ->andWhere('p.deleted=0')
             ->andWhere('p.default_clothing = 1')
+            ->andWhere('ct.disabled = 0')
             ->groupBy('p.id');
 
         if ($search) {
