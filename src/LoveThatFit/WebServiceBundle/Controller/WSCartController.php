@@ -388,14 +388,14 @@ class WSCartController extends Controller
                 $decoded['groupId'] = $fnfGroupId;
             }
 
-            $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
+             $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
             if ($result['success'] == 0) {
                 if($discount_amount > 0){
                     $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
                     if(is_object($fnfUser)){
-                        $userGroup = $fnfUser->getGroups();
-                        if(is_object($userGroup) && $userGroup[0]->getGroupType() == 1)
+                        if($decoded['group_type'] == 1) {
                             $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
+                        }
                     }
                 }
 
