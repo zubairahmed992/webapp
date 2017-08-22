@@ -406,7 +406,7 @@ class ProductSpecsController extends Controller
         $product->setRise($parsed_data['rise']);
         $product->setHemLength($parsed_data['hem_length']);
         $product->setFabricWeight($parsed_data['fabric_weight']);
-        $product->setStructuralDetail($parsed_data['structural_detail']);
+        $product->setStructuralDetail(json_encode($parsed_data['structural_detail']));
         $product->setFitType($parsed_data['fit_type']);
         $product->setLayering(array_key_exists('layring', $parsed_data) ? $parsed_data['layring'] : $parsed_data['layering']);
         $product->setFitPriority(array_key_exists('fit_priority', $parsed_data) ? json_encode($parsed_data['fit_priority']) : 'NULL' );
