@@ -1525,7 +1525,7 @@ class WebServiceHelper
         $data['device'] ['dv_px_per_inch_ratio'] = "15.29166666666667";  
         $data['device'] ['globle_pivot'] =  "64";
         $data['device'] ['dv_model'] =  $device->device_model;
-        $data['device'] ['dv_edit_type'] = 'null'; 
+        $data['device'] ['dv_edit_type'] = 'registration'; 
         $data['device'] ['hdn_serverpath'] = "/";
         $data['device'] ['dv_scr_h'] =  $device->height_per_inch;
         $data['device'] ['dv_scr_w'] =  "960";
@@ -1535,7 +1535,10 @@ class WebServiceHelper
         $data['img'] ['img_path_json'] =  $user[0]['marker_json'];
         $data['img'] ['img_path_paper'] =  $user[0]['svg_paths'];
         //$data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
-        $data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image'];
+        
+       
+        $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+       
 
 
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
