@@ -394,7 +394,13 @@ class ClothingTypeHelper
     {
         if(is_object($entity))
         {
-            var_dump($entity); die;
+            $reusltArray = $this->repo->checkForDefaultClothing( $entity->getId() );
+            if(!empty($reusltArray))
+                return 1;
+            else
+                return 0;
         }
+
+        return 0;
     }
 }
