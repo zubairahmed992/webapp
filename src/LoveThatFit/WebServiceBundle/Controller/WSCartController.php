@@ -394,7 +394,6 @@ class WSCartController extends Controller
                     $fnfUser            = $this->get('fnfuser.helper.fnfuser')->getFNFUserById($user);
                     if(is_object($fnfUser)){
                         if($decoded['group_type'] == 1) {
-                            echo "!"; die;
                             $fnfUserAfterUpdate = $this->get('fnfuser.helper.fnfuser')->setIsAvailable($fnfUser);
                         }
                     }
