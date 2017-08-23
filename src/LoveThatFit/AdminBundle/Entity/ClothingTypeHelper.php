@@ -2,7 +2,7 @@
 
 namespace LoveThatFit\AdminBundle\Entity;
 
-use Proxies\__CG__\LoveThatFit\AdminBundle\Entity\ClothingType;
+use LoveThatFit\AdminBundle\Entity\ClothingType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;

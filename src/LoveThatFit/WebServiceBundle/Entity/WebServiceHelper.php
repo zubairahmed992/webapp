@@ -1531,7 +1531,7 @@ class WebServiceHelper
         $data['device'] ['dv_scr_w'] =  "960";
         $data['device'] ['dv_scr_h_st'] = "1280"; 
 
-        $data['img'] ['image_actions'] =  $user[0]['image_actions'];
+        $data['img'] ['image_actions'] =  json_decode($user[0]['image_actions']);
         $data['img'] ['img_path_json'] =  $user[0]['marker_json'];
         $data['img'] ['img_path_paper'] =  $user[0]['svg_paths'];
         //$data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
@@ -1543,7 +1543,7 @@ class WebServiceHelper
 
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
-        $data['user'] ['dm_body_parts_details_json'] = json_encode($bra_size_body_shape); 
+        $data['user'] ['dm_body_parts_details_json'] = $bra_size_body_shape; 
         $data['user'] ['default_user_path'] =  $user[0]['svg_paths'];
         $data['user'] ['user_hip_px'] =  "424";
         $data['user'] ['user_bust_px'] = "392";

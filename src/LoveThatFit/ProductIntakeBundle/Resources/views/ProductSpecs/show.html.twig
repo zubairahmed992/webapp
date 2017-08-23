@@ -46,10 +46,19 @@
                                         {% endfor %}
                                         {% elseif specs_k == 'fit_model_size'  %}
                                             {{ fit_model_selected_size }}
-                                     {% else %}
+                                          {% elseif specs_k == 'structural_detail' %}
+                                              {% if  specs_v is iterable %}
+                                                {% for key,val in parsed_data[specs_k] %}
+                                                     <b>{{ val }},&nbsp;                                                    
+                                                {% endfor %}
+                                             {% else %}
+                                             <span>{{ specs_v }}</span>
+                                            {% endif %}
+                                        {% else %}  
                                         {% if specs_k != 'fit_point_stretch' %}
                                                 <span>{{ specs_v }}</span>
                                         {% endif %}   
+                                        
                                     {% endif %}   
                                 </td>
                             </tr>
