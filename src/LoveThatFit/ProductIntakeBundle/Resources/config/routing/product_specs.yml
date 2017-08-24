@@ -79,5 +79,9 @@ product_intake_product_specs_run_checks:
     
 product_intake_validate_product_specification:
     pattern:  /product_intake/validate_product_specification/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:validateProductSpecification }       
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:validateProductSpecification }   
+    
+product_intake_mapping_update_product_specification:
+    pattern:  /product_intake/mapping_update_product_specification/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:mappingUpdateProductSpecification }      
         

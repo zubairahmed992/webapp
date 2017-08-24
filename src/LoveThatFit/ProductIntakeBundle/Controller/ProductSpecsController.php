@@ -561,5 +561,10 @@ class ProductSpecsController extends Controller
            
         return new Response(json_encode($result));
     }
+    
+     //~~~~ Update product specification sizes---------product_intake/update_product_specification 
+    public function mappingUpdateProductSpecificationAction($id) {
+        return new Response(json_encode("result"));
+    }
 
 }

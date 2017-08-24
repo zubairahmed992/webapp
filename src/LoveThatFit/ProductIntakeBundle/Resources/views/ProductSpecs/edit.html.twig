@@ -26,12 +26,6 @@
         font-weight: bold;
     }
 </style>
-
-{# Mutiple slect Drop Down JS and CSS #}
-  <link href="https://silviomoreto.github.io/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-  <script src="https://silviomoreto.github.io/bootstrap-select/dist/js/bootstrap-select.min.js"> </script>
-
-
   
 <script>
     var fit_array=[];
@@ -605,6 +599,7 @@
 </script>
    
 <div class="btn-group" role="group" aria-label="..." style="float:right;">
+    <a href="{{ path('product_intake_mapping_update_product_specification', {'id': app.request.get('id')}) }}" class="btn btn-default">Update</a>
     <a href="{{ path('product_intake_validate_product_specification', {'id': app.request.get('id')}) }}" class="btn btn-default">Validate</a> 
     <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
 </div>
