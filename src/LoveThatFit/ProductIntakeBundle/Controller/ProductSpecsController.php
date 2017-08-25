@@ -35,7 +35,7 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $tab){   
-        $ps = $this->get('pi.product_specification')->find($id);      
+        $ps = $this->get('pi.product_specification')->find($id);
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         $gender = ($parsed_data['gender'] == 'f')?'women':'man';
@@ -79,6 +79,7 @@ class ProductSpecsController extends Controller
                     'size_attribute' => $size_attribute,
                     'tab' => $tab,
                     'searched_product_id'=>$product_id,
+                    'cs_file'      =>  $this->get('pi.product_specification')->csvDownloads($ps),
                 ));
     }
 
@@ -563,8 +564,113 @@ class ProductSpecsController extends Controller
     }
     
      //~~~~ Update product specification sizes---------product_intake/update_product_specification 
-    public function mappingUpdateProductSpecificationAction($id) {
-        return new Response(json_encode("result"));
+    public function mappingUpdateProductSpecificationAction($mapping_title, $specs_id)
+    {
+        $product_specs_mapping = $this->get('productIntake.product_specification_mapping')->findOneByTitle($mapping_title);
+       // $ps = $this->get('productIntake.product_specification_mapping')->find($product_specs_mapping->getId());
+       // $csv_file = $this->get('pi.product_specification')->csvDownloads($ps);
+
+      //  $csv_array = $this->csv_to_array($csv_file);
+
+        $i=0;
+        if( file_exists($product_specs_mapping->getAbsolutePath()) ){
+            if (($handle = fopen($product_specs_mapping->getAbsolutePath(), "r")) !== FALSE) {
+                while(($row = fgetcsv($handle)) !== FALSE) {
+                    for ($j=0;$j<count($row);$j++){
+                        $csv_array[$i][$j] = $row[$j];
+                    }
+                    $i++;
+                }
+            }
+        }
+
+        #------------------------ get mapping
+      //  $product_specs_mapping = $this->get('product_intake.product_specification_mapping')->find($request->request->get('sel_mapping'));
+        $map = json_decode($product_specs_mapping->getMappingJson(), true);
+        #-------------->
+        $parsed_data = $this->get('admin.helper.product.specification')->getStructure();
+        $parsed_data['gender'] = $product_specs_mapping->getGender();
+        $parsed_data['size_title_type'] = $product_specs_mapping->getSizeTitleType();
+        foreach ($map['fabric_content'] as $fabric_content_k => $fabric_content_v) {
+            $f_c = $this->extracts_coordinates($fabric_content_v);
+            $parsed_data['fabric_content'][$fabric_content_k] = count($f_c) > 1 ? $csv_array[$f_c['r']][$f_c['c']] : $fabric_content_v;
+        }
+        unset($map['fabric_content']);
+        #----------------- fill array with csv data
+        foreach ($map as $specs_k => $specs_v) {
+            if ($specs_k != 'formula') {
+                if (is_array($specs_v) || is_object($specs_v)) {
+                    foreach ($specs_v as $size_key => $fit_points) {
+                        foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
+                            $coordins = $this->extracts_coordinates($fit_model_measurement);
+                            $fmm_value = $this->fraction_to_number(floatval($csv_array[$coordins['r']][$coordins['c']]));
+                            if($fmm_value != 0){
+                                $original_value = $fmm_value;
+                                #~~~~~~>convert to measuring unit
+                                if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
+                                    $fmm_value = $fmm_value * 0.393700787;
+                                }
+                                $unit_converted_value = $fmm_value;
+
+                                #~~~~~~>calculate formula
+                                if (array_key_exists('formula', $map)) {
+                                    $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
+                                }
+
+                                #----------------------* parsed data array calculate fit modle values for fit model size
+                                $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
+                                    'original_value' => $original_value,
+                                    'unit_converted_value' => $unit_converted_value,
+                                );
+                            }
+                        }
+                    }
+                } else if($specs_k == 'max_horizontal_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
+                    $parsed_data['horizontal_stretch'] =  ($parsed_data[$specs_k]/3);
+                } else if( $specs_k == 'max_vertical_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
+                    $parsed_data['vertical_stretch'] = ($parsed_data[$specs_k]/3);
+                } else {#----------------------* if not related to measurements add as a field
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
+                }
+            }
+        }
+
+        #--------------------- calculate fit model measrements & ratio
+        if (!array_key_exists('sizes', $parsed_data)) {
+            return new Response('Measurements & sizes are missing');
+        }
+        #------------------------ Grade Rule calculation + sorting of sizes
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+        $prev_size_key = null;
+        $ordered_sizes = array();
+        $size_no = 0;
+        foreach ($size_specs['sizes'][$parsed_data['gender'] == 'm' ? 'man' : 'woman'][$parsed_data['size_title_type']] as $size_key => $size_title) {
+            if (array_key_exists($size_key, $parsed_data['sizes'])) {
+                $ordered_sizes['sizes'][$size_key] = $parsed_data['sizes'][$size_key];
+            }
+        }
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];
+        #---------> Save to DB
+       // $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), $parsed_data);
+      //  $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
+      //  $this->container->get('pi.product_specification')->save($specs);
+      //  move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());
+
+        $msg_ar = $this->get('pi.product_specification')->updateAndFill($specs_id, $parsed_data);
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs_id)));
+
+        $this->get('session')->setFlash('success', 'New Product specification added!');
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs->getId())));
+
+
+
+        return new Response($mapping->getTitle());
     }
 
 }
