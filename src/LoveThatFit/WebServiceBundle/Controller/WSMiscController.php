@@ -75,8 +75,9 @@ class WSMiscController extends Controller {
                     array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
                     array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
+                    array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
                 ),
-                'count'=>5,
+                'count'=>6,
                 'message' => 'configuration for build deployment',
                 'success' => true,
             );
@@ -106,7 +107,7 @@ class WSMiscController extends Controller {
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
                     'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
                 ),
-                'count'=>14,
+                'count'=>22,
                 'message' => 'configuration for build deployment',
                 'success' => 'true',
             );
