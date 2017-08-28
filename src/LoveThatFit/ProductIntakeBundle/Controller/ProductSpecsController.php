@@ -567,11 +567,7 @@ class ProductSpecsController extends Controller
     public function mappingUpdateProductSpecificationAction($mapping_title, $specs_id)
     {
         $product_specs_mapping = $this->get('productIntake.product_specification_mapping')->findOneByTitle($mapping_title);
-       // $ps = $this->get('productIntake.product_specification_mapping')->find($product_specs_mapping->getId());
-       // $csv_file = $this->get('pi.product_specification')->csvDownloads($ps);
-
-      //  $csv_array = $this->csv_to_array($csv_file);
-
+        //-------------------- Read CSV File
         $i=0;
         if( file_exists($product_specs_mapping->getAbsolutePath()) ){
             if (($handle = fopen($product_specs_mapping->getAbsolutePath(), "r")) !== FALSE) {
@@ -585,7 +581,6 @@ class ProductSpecsController extends Controller
         }
 
         #------------------------ get mapping
-      //  $product_specs_mapping = $this->get('product_intake.product_specification_mapping')->find($request->request->get('sel_mapping'));
         $map = json_decode($product_specs_mapping->getMappingJson(), true);
         #-------------->
         $parsed_data = $this->get('admin.helper.product.specification')->getStructure();
@@ -655,22 +650,16 @@ class ProductSpecsController extends Controller
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
-        #---------> Save to DB
-       // $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), $parsed_data);
-      //  $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
-      //  $this->container->get('pi.product_specification')->save($specs);
-      //  move_uploaded_file($_FILES["csv_file"]["tmp_name"], $specs->getAbsolutePath());
+        #---------> Update product Specs
 
-        $msg_ar = $this->get('pi.product_specification')->updateAndFill($specs_id, $parsed_data);
+        $specs_obj  = $this->get('pi.product_specification')->find($specs_id);
+        $specs = json_decode($specs_obj->getSpecsJson(), true);
+        // Update Size Assign
+        $specs['sizes'] = $parsed_data['sizes'];
+        $specs_obj->setSpecsJson(json_encode($specs));
+        $msg_ar =  $this->get('pi.product_specification')->update($specs_obj);
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs_id)));
-
-        $this->get('session')->setFlash('success', 'New Product specification added!');
-        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs->getId())));
-
-
-
-        return new Response($mapping->getTitle());
     }
 
 }
