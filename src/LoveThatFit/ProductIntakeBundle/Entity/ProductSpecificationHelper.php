@@ -294,6 +294,7 @@ class ProductSpecificationHelper {
         #--------- calculate grade rule
         foreach ($specs['sizes'] as $size => $fit_points) {
             $specs['sizes'][$size][$fp][$attrib] = $ratio * $fit_points[$fp]['fit_model'];
+            #$specs['sizes'][$size][$fp][$attrib] = $fp_specs['fit_model'] + (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
         }
         return $specs;
     }

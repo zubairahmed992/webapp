@@ -440,6 +440,30 @@
         }
         //alert($(this).attr("id"));
         });
+
+
+        //--------------- Recalculate min actual
+        $('.min_actual-recalculate').click(function (event) {                     
+        event.preventDefault();
+        var res =  $(this).attr("id").split("-") ;        
+        var ctrl =  $(this).attr("id").replace("-recalculate", "") ;        
+        
+        if (confirm('Are you sure you want to Recalculate Min Actual for ' + res[2] + ' ?')) {
+                $.post(get_service_relative_url(),{
+                    value: $('#'+ctrl).val(),    
+                    name: $(this).attr("id"),                    
+                    pk: {{ product_specs.id }}                    
+                },
+                function(data, status){
+                    //document.write(data);                    
+                    reload_page();
+                });                                
+        } else {
+            alert('no');
+        }
+        //alert($(this).attr("id"));
+        });
+
           //--------------- Check garment detail Already Added
         $('.remove_size').click(function (event) {                     
         event.preventDefault();
@@ -1137,6 +1161,7 @@
                                                 <td class="body_measurements">                                                    
                                                     {#<input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:80px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
+                                                    <a href="#" class="min_actual-recalculate" id="sizes-{{ size }}-{{ measurement_k }}-min_actual-recalculate" name="sizes-{{ size }}-{{ measurement_k }}-min_actual-recalculate" title="Recalculate min actual for {{ measurement_k }}"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>    
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
