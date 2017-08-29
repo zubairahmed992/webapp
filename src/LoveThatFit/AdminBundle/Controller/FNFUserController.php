@@ -13,6 +13,8 @@ use LoveThatFit\AdminBundle\Form\Type\FNFUserForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Yaml\Parser;
+use TaxJar;
 
 class FNFUserController extends Controller
 {
@@ -421,13 +423,40 @@ class FNFUserController extends Controller
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
 
             if(is_array($fnfUser)){
+
+                //order line items
+                $order_line_items = [
+                  'quantity' => 1,
+                  'unit_price' => 15.0
+                ];
+                //order salex tax
+                $data_order_sales = array(
+                    'from_country' => 'US',
+                    'from_zip' => '07001',
+                    'from_state' => 'NJ',
+                    'to_country' => 'US',
+                    'to_zip' => '07446',
+                    'to_state' => 'NJ',
+                    'amount' => 16.50,
+                    'shipping' => 0,
+                    'order_line_items' => $order_line_items
+                );
+                $order_sales_tax = 0;
+                try {
+                    //get order sales tax
+                    $order_sales_tax = $this->createOrderSalesTax($data_order_sales);
+                } catch(\Exception $e) {
+                    // log $e->getMessage()
+                }
+
                 if( $fnfUser['group_type'] == 1 ){
                     $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
                         'discount_amount' => $fnfUser['discount'],
                         'min_amount'      => $fnfUser['minAmount'],
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => 0,
-                        'applicable'        => true
+                        'applicable'        => true,
+                        'sales_tax' => $order_sales_tax
                     ));
                 }else if( $fnfUser['group_type'] == 2 )
                 {
@@ -436,7 +465,8 @@ class FNFUserController extends Controller
                         'min_amount'      => 0,
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => $fnfUser['discount'],
-                        'applicable'        => true
+                        'applicable'        => true,
+                        'sales_tax' => $order_sales_tax
                     ));
                 }
 
@@ -446,7 +476,8 @@ class FNFUserController extends Controller
                     'min_amount'      => 0,
                     'group_type'      => 0,
                     'percentage_amount' => 0,
-                    'applicable'        => false
+                    'applicable'        => false,
+                    'sales_tax' => 0
                 ));
             }
         } else {
@@ -468,5 +499,33 @@ class FNFUserController extends Controller
         $dicount_amount = ($discount / 100) * $amount;
 
         return $dicount_amount;
+    }
+
+    private function createOrderSalesTax($data){
+        ## calculate sales tax order
+        if (isset($data) && !empty($data)) {
+            //Authentication
+            $yaml   =   new Parser();
+            $taxjar_api_key    =   $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['taxjar_api_key'];
+            $client_taxjar = TaxJar\Client::withApiKey($taxjar_api_key);
+
+            //Calculate sales tax for an order
+            $order_taxes_taxjar = $client_taxjar->taxForOrder([
+              'from_country' => $data['from_country'],
+              'from_zip' => $data['from_zip'],
+              'from_state' => $data['from_state'],
+              'to_country' => $data['to_country'],
+              'to_zip' => $data['to_zip'],
+              'to_state' => $data['to_state'],
+              'amount' => $data['amount'],
+              'shipping' => $data['shipping'],
+              'line_items' => [
+                $data['order_line_items']
+              ]
+            ]);
+            //echo "<pre>"; print_r($order_taxes_taxjar);
+            //echo $order_taxes_taxjar->amount_to_collect;
+            return $order_taxes_taxjar->amount_to_collect;
+        }
     }
 }
