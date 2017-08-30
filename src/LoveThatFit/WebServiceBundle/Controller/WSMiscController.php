@@ -317,7 +317,7 @@ class WSMiscController extends Controller {
         $params = $request->request->all();
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->saveArchivesCalibration($archive, $params);
-        return new Response('archive updated');
+        return new Response(json_encode('archive updated'));
     }
 }
 
