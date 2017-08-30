@@ -629,7 +629,7 @@ class UserArchivesHelper {
     }
 
     ##### calibration save marker #################
-    public function saveArchivesCalibration($user_archives, $data)
+    public function mcpSaveArchives($user_archives, $data)
     {
         if (array_key_exists('measurement', $data)) {
             if (strlen($user_archives->getMeasurementJson()) > 0) {

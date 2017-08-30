@@ -319,10 +319,10 @@ class WSMiscController extends Controller {
     }
 
     #----------------------- calibration save marker ------------------------------------------
-    public function saveMarkerAction(Request $request) {
+    public function mcpSaveMarkerAction(Request $request) {
         $params = $request->request->all();
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
-        $this->get('user.helper.userarchives')->saveArchivesCalibration($archive, $params);
+        $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
         return new Response(json_encode('archive updated'));
     }
 }

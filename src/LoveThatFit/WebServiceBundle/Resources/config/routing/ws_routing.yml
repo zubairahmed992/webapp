@@ -1,7 +1,3 @@
-nws_save_marker:
-    pattern: /nws/save_marker
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:saveMarker }
-
 ws_change_user_status:
     pattern:  /ws/change_user_status/{token}/{status}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:changeUserStatus }
@@ -389,3 +385,6 @@ nws_search_brand_style:
     pattern:  /nws/search_brand_style
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:searchBrandStyle }
 
+mcp_save_marker:
+    pattern: /mcp/save_marker
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:mcpSaveMarker }

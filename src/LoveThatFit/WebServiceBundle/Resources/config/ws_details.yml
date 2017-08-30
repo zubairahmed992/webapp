@@ -899,9 +899,9 @@ nws_braintree_delete_credit_card:
     auth_token: 00000000000000000000000000000
     braintreeToken: ktkbxd
 
-nws_save_marker:
-  pattern: /nws/save_marker
-  title: nws_save_marker
+mcp_save_marker:
+  pattern: /mcp/save_marker
+  title: mcp_save_marker
   request_type: post
   description: save marker for calibration.
   params:
