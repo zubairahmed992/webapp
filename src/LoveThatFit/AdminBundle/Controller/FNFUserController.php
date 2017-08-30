@@ -444,7 +444,8 @@ class FNFUserController extends Controller
                 $order_sales_tax = 0;
                 try {
                     //get order sales tax
-                    $order_sales_tax = $this->createOrderSalesTax($data_order_sales);
+                    //$order_sales_tax = $this->createOrderSalesTax($data_order_sales);
+                    $order_sales_tax = $this->container->get('taxjar.helper.salestaxapi')->createOrderSalesTax($data_order_sales);
                 } catch(\Exception $e) {
                     // log $e->getMessage()
                 }
