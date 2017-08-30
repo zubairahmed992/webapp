@@ -529,7 +529,10 @@ class PaymentHelper
                     'expirationMonth' => $card->expirationMonth,
                     'expirationYear' => $card->expirationYear,
                     'cardholderName' => $card->cardholderName,
-                    'uniqueNumberIdentifier' => $card->uniqueNumberIdentifier
+                    'uniqueNumberIdentifier' => $card->uniqueNumberIdentifier,
+                    'imageUrl'      => $card->imageUrl,
+                    'bin'           => $card->bin,
+                    'last4'         => $card->last4
                 );
             }
 

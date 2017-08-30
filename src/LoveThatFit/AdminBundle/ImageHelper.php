@@ -73,7 +73,7 @@ class ImageHelper {
         $previous_image=$this->image;
         
         if (!is_dir($this->getUploadRootDir())) {
-                    mkdir($this->getUploadRootDir(), 0700);
+                    mkdir($this->getUploadRootDir(), 0775);
                 }
                 
         $destination_path=$this->getUploadRootDir().'/'. $new_name;
@@ -105,7 +105,7 @@ class ImageHelper {
             $this->image = uniqid() . '.' . $ext;
             
               if (!is_dir($this->getUploadRootDir())) {
-                    mkdir($this->getUploadRootDir(), 0700);
+                    mkdir($this->getUploadRootDir(), 0775);
                 }
                 
             $dest = $this->getUploadRootDir() .'/'. $this->image;
@@ -171,7 +171,7 @@ class ImageHelper {
                 imagecopyresampled($img_new, $source, 0, 0, 0, 0, $resize_dimention[$key]['width'], $resize_dimention[$key]['height'], imagesx($source), imagesy($source));
 
                 if (!is_dir($value['dir'])) {
-                    @mkdir($value['dir'], 0700);
+                    @mkdir($value['dir'], 0775);
                 }
 
                 switch ($image_type) {

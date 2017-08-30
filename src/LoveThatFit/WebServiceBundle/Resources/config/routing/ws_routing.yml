@@ -284,6 +284,10 @@ ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:brainTreeProcessTransaction}
 
+nws_braintree_processuser_transaction:
+    pattern: /nws/braintree_processuser_transaction
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBrainTreeProcessTransaction}
+
 nws_braintree_save_credit_card:
     pattern: /nws/braintree_save_credit_card
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeSaveCreditCard}
@@ -372,6 +376,10 @@ mcp_get_user_mask_marker_details:
 render_user_image:
     pattern: /render/image/{ref}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: null}
+
+render_user_avatar:
+    pattern: /render/avatar/{ref}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderAvatarBySessionId, ref: null}
 
 nws_get_brand_style:
     pattern:  /nws/get_brand_style

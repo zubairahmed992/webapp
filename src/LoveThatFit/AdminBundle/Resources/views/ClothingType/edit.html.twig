@@ -107,6 +107,7 @@
                                 <div class="span3">&nbsp;</div>
                                 <div class="span3">
                                     <div style="margin:0px 0px 0px 0px;">
+                                        <input name="defaultClothing" value="{{ isDefaultClothing }}" type="hidden">
                                         <input type="submit" value="SAVE"class="btn btn-primary"/>
                                         <a href="{{ path('admin_clothing_types') }}" class="btn btn-primary">Cancel </a>
                                     </div>
@@ -144,6 +145,8 @@
         $( "#clothyingForm" ).submit(function(event) {
             avg_wt = $( "#ClothingType_average_weight" ).val();
             hvy_wt = $( "#ClothingType_heaviest_weight" ).val();
+            isdefaultClothing = $("input[name=defaultClothing]").val();
+            clothingDisable = $("#ClothingType_disabled").is(":checked");
             error  = 0;
             if (avg_wt < 0) {
                 $("#avg").remove();
@@ -168,7 +171,16 @@
                     scrollTop: $("body").offset().top
                 }, 1000);
                 return false;
-            } else {
+            }
+            if(isdefaultClothing == 1 && clothingDisable){
+                var confirmation = confirm("You are disabling a Clothing Type which is added as the Default Clothing, so are you sure you want to continue?");
+                if (confirmation == true ) {
+                    return true;
+                }else
+                    return false;
+
+            }
+            else {
                 $( "#clothyingForm" ).submit();
             }
         });

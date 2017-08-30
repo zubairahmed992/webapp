@@ -637,6 +637,7 @@ class WSRepo
             ->select('u.id,
                       u.email,
                       u.authToken,
+                      u.gender,
                       ua.id as archive_id',
                       'ua.image_actions',
                       'ua.measurement_json',
@@ -648,11 +649,13 @@ class WSRepo
                       'ua.updated_at',                                                                                     
                       'ua.status',                                                                                     
                       'ua.image',  
+                      'um.default_marker_json',
                       'ua.version'                                                                                                                                                                                                   
 
                       )
             ->from('LoveThatFitUserBundle:User', 'u')
             ->innerJoin('u.user_archives', 'ua')           
+            ->innerJoin('u.user_marker', 'um')           
             ->Where('u.email=:email')
             ->setParameters(array('email' => $email))
             ->getQuery()
@@ -688,6 +691,8 @@ class WSRepo
 
     public function getProductListByStyleText($search_text, $user_id)
     {
+        $search_text = str_ireplace(' ', '%', $search_text);
+
         $query = $this->em
             ->createQueryBuilder()
             ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')

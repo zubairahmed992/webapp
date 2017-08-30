@@ -60,7 +60,8 @@
      </div>
 </div>
 <div class="navigation1">
-    <a id="showHide">Index Show/Hide</a>
+    <a id="centerline">Center Line</a>
+    <a id="showHide">Index</a>
     <a onClick="move_left();">Left</a>
     <a onClick="move_right();">Right</a>
     <a onClick="move_up();">Up</a>
@@ -325,6 +326,11 @@ $(document).ready(function(){
  $("#showHide").click(function() { 
         return (this.tog = !this.tog) ? show_index_numbers() :  remove_index_numbers();
     });
+    
+    $("#centerline").click(function() { 
+        return (this.tog = !this.tog) ? showLine() :  removeLine();
+    });
+    
  $( "#btn_confirm" ).click(function() {
    var strconfirm = confirm("Are you sure mask is saved?");
    if (strconfirm == true)

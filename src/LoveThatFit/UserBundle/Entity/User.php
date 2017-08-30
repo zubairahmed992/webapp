@@ -1504,7 +1504,7 @@ class User implements UserInterface, \Serializable {
         $this->image='cropped.png';
         
         if (!is_dir($this->getUploadRootDir())) {
-                    mkdir($this->getUploadRootDir(), 0700);
+                    mkdir($this->getUploadRootDir(), 0775);
                 }
         copy($this->getDummyUserImageRootPath($device_type), $this->getAbsolutePath());        
     }
@@ -1513,7 +1513,7 @@ class User implements UserInterface, \Serializable {
         //umer 1
         $this->image='cropped.png';
         if (!is_dir($this->getUploadRootDir())) {
-            mkdir($this->getUploadRootDir(), 0700);
+            mkdir($this->getUploadRootDir(), 0775);
         }
         copy($this->getDummyUserImageRootPathSupport($device_type), $this->getAbsolutePath());        
     }
