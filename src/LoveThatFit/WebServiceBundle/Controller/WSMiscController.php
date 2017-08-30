@@ -311,5 +311,13 @@ class WSMiscController extends Controller {
                             
         return new Response($res);
     }
+
+    #----------------------- calibration save marker ------------------------------------------
+    public function saveMarkerAction(Request $request) {
+        $params = $request->request->all();
+        $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+        $this->get('user.helper.userarchives')->saveArchivesCalibration($archive, $params);
+        return new Response('archive updated');
+    }
 }
 
