@@ -28,4 +28,8 @@ product_intake_specs_mapping_delete:
     
 product_intake_specs_mapping_duplicate:
     pattern:  /product_intake/specs_mapping/duplicate/{id}
-    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:duplicate }    
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:duplicate }
+
+product_intake_specs_mapping_specs_list:
+    pattern:  /product_intake/specs_mapping/specs_list/{title}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Mapping:getSpecsList }
