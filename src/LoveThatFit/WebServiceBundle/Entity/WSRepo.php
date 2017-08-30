@@ -561,6 +561,22 @@ class WSRepo
             return null;
         }*/
 
+        if (!empty($filter['color'])) {
+            $query = $this->em
+                ->createQueryBuilder()
+                ->select('pc.id')
+                ->from('LoveThatFitAdminBundle:ProductColor', 'pc')
+                ->andWhere('pc.title IN (:title)')
+                ->setParameters(array('title' => $filter['color']))
+                ->getQuery();
+            $colors = $query->getArrayResult();
+            $colors_filter = [];
+            foreach($colors as $key => $val) {
+                $colors_filter[] = $val['id'];
+            }
+        }
+
+        $params = [];
         // first, creating the query builder
         $query = $this->em
             ->createQueryBuilder()
@@ -583,12 +599,13 @@ class WSRepo
             $query->expr()->in('c.id', $filter['category'])
         );
 
-        if (isset($filter['brand'])) {
+        if (!empty($filter['brand'])) {
             $conditions[] = $query->expr()->in('b.id', $filter['brand']);
         }
 
-        if (isset($filter['color'])) {
-            $conditions[] = $query->expr()->in('p.displayProductColor', $filter['color']);
+        if (!empty($colors_filter)) {
+            $query->innerJoin('pi.product_color', 'pf', 'WITH', 'pf.id IN (:colors_filter)');
+            $params = array('colors_filter' => $colors_filter);
         }
 
         if (!empty($filter['min_price'])) {
@@ -602,8 +619,9 @@ class WSRepo
         // adding the WHERE clause
         $query->where($conditions);
 
+        $params['user'] = $user_id;
         // getting the query
-        $query = $query->setParameters(array('user' => $user_id))->groupBy('p.id')->getQuery();
+        $query = $query->setParameters($params)->groupBy('p.id')->getQuery();
 
         try {
             return $query->getArrayResult();
@@ -612,13 +630,14 @@ class WSRepo
         }
     }
 
-    public function userDetailMaskMarker($token,$email)
+    public function userDetailMaskMarker($email)
     {
         return $this->em
             ->createQueryBuilder()
             ->select('u.id,
                       u.email,
                       u.authToken,
+                      u.gender,
                       ua.id as archive_id',
                       'ua.image_actions',
                       'ua.measurement_json',
@@ -630,15 +649,72 @@ class WSRepo
                       'ua.updated_at',                                                                                     
                       'ua.status',                                                                                     
                       'ua.image',  
+                      'um.default_marker_json',
                       'ua.version'                                                                                                                                                                                                   
 
                       )
             ->from('LoveThatFitUserBundle:User', 'u')
             ->innerJoin('u.user_archives', 'ua')           
-            ->where('u.authToken=:token')
-            ->andWhere('u.email=:email')
-            ->setParameters(array('token' => $token,'email' => $email))
+            ->innerJoin('u.user_marker', 'um')           
+            ->Where('u.email=:email')
+            ->setParameters(array('email' => $email))
             ->getQuery()
             ->getResult();
+    }
+
+    public function getProductListByBrand($search_text, $user_id)
+    {
+        $query = $this->em
+            ->createQueryBuilder()
+            ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi')
+            ->where('b.name=:search_text')
+            ->andWhere("p.displayProductColor!=''")
+            ->andWhere('p.disabled=0')
+            ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
+            ->groupBy('p.id')
+            ->setParameters(array('search_text' => $search_text, 'user' => $user_id))
+            ->getQuery();
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function getProductListByStyleText($search_text, $user_id)
+    {
+        $search_text = str_ireplace(' ', '%', $search_text);
+
+        $query = $this->em
+            ->createQueryBuilder()
+            ->select('p.id product_id,p.name,p.item_name,p.description,c.name as catogry_name, ct.target as target,ct.name as clothing_type ,pc.image as product_image, b.id as brand_id, b.name as brand_name, pi.price as price, IDENTITY(uf.user) as uf_user, IDENTITY(uf.product_id) as uf_product_id, uf.qty as uf_qty')
+            ->from('LoveThatFitAdminBundle:Product', 'p')
+            ->leftJoin('p.categories', 'c')
+            ->leftJoin('p.user_fitting_room_ittem', 'uf', 'WITH', 'uf.user = :user')
+            ->innerJoin('p.displayProductColor', 'pc')
+            ->innerJoin('p.clothing_type', 'ct')
+            ->innerJoin('p.brand', 'b')
+            ->innerJoin('p.product_items', 'pi')
+            ->where("p.item_name LIKE :search_text")
+            ->andWhere("p.displayProductColor!=''")
+            ->andWhere('p.disabled=0')
+            ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
+            ->groupBy('p.id')
+            ->setParameters(array('search_text' => '%'.$search_text.'%', 'user' => $user_id))
+            ->getQuery();
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 }

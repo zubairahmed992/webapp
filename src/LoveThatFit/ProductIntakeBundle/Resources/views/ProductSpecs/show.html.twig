@@ -6,10 +6,11 @@
      });
     </script>
     <div class="btn-group" role="group" aria-label="..." style="float:right;">
+         <a href="{{ path('product_intake_product_specs_run_checks', {'id': app.request.get('id')}) }}" class="btn btn-default">Run Checks</a> 
         <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
-        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" class="btn btn-default">Create Product</a> 
+        <a href="{{ path('product_intake_product_create', {'id': app.request.get('id')}) }}" data-toggle="confirmation" data-singleton="true" data-placement="left" class="btn btn-default">Create Product</a> 
         {% if parsed_data.product_id is defined  %}
-        <a href="{{ path('exisiting_product_update_from_specification_intake', {'specification_id': app.request.get('id'),'product_id':parsed_data.product_id }) }}" class="btn btn-default">Update Product</a>
+        <a href="{{ path('exisiting_product_update_from_specification_intake', {'specification_id': app.request.get('id'),'product_id':parsed_data.product_id }) }}" data-toggle="confirmation" data-singleton="true" data-placement="left" class="btn btn-default">Update Product</a>
         {% endif %}
     </div>
     <div class="col-sm-6" role="group" aria-label="..." style="float:right;">        
@@ -43,10 +44,21 @@
                                         {% for key,val in parsed_data[specs_k] %}
                                             {{ key }}:<b>{{ val }}%</b>&nbsp;&nbsp;|&nbsp;&nbsp;                                                    
                                         {% endfor %}
-                                     {% else %}
+                                        {% elseif specs_k == 'fit_model_size'  %}
+                                            {{ fit_model_selected_size }}
+                                          {% elseif specs_k == 'structural_detail' %}
+                                              {% if  specs_v is iterable %}
+                                                {% for key,val in parsed_data[specs_k] %}
+                                                     <b>{{ val }},&nbsp;                                                    
+                                                {% endfor %}
+                                             {% else %}
+                                             <span>{{ specs_v }}</span>
+                                            {% endif %}
+                                        {% else %}  
                                         {% if specs_k != 'fit_point_stretch' %}
                                                 <span>{{ specs_v }}</span>
                                         {% endif %}   
+                                        
                                     {% endif %}   
                                 </td>
                             </tr>
@@ -67,8 +79,11 @@
                         <div id="dv_measurement_table">
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
-                                {% if (size == fit_model_selected_size) %}
+                                {% if(fit_model_selected_size | trans is same as (size | trans)) %}
                                     <tr class="Active fit_modle">
+                                {% else %}
+                                    <tr class="Active">    
+                                {% endif %}
                                         <th >{{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_value</th>
@@ -82,46 +97,14 @@
                                         <th >ideal_high</th>                                        
                                         <th >max_actual</th>
                                         <th >max_calc</th>
-                                    </tr>
-                                    {% else %}
-                                      <tr class="Active">
-                                        <th >{{size}}</th>
-                                        <th >garment_dimension</th>
-                                        <th >stretch_value</th>
-                                        <th >garment_stretch</th>
-                                        <th >grade rule</th>
-                                        <th >grade rule stretch</th>
-                                        <th >min_calc</th>
-                                        <th >min_actual</th>
-                                        <th >ideal_low</th>
-                                        <th >fit_model</th>
-                                        <th >ideal_high</th>                                        
-                                        <th >max_actual</th>
-                                        <th >max_calc</th>
-                                    </tr>
-                                {%endif %}
+                                    </tr>                                
                                 {% for measurement_k, measurement_v in fit_point %}
 {#                                    {% if (measurement_v.garment_dimension>0) %}#}
-                                         {% if (size == fit_model_selected_size) %}
-                                             M
+                                         {% if(fit_model_selected_size | trans is same as (size | trans)) %}
                                              <tr class='fit_modle'>
-                                                <th>{{measurement_k}}</th>
-                                                <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
-                                                <td>{{measurement_v.garment_stretch | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.grade_rule | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.grade_rule_stretch is defined?measurement_v.grade_rule_stretch | number_format(2, '.', ''):0}}</td>
-                                                <td>{{measurement_v.min_calc | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.min_actual | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.ideal_low | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.fit_model | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.ideal_high | number_format(2, '.', '')}}</td>                                                
-                                                <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
-                                                <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
-
-                                            </tr>
-                                         {% else %}
+                                        {% else %} 
                                              <tr>
+                                        {% endif %}
                                                 <th>{{measurement_k}}</th>
                                                 <td>{{measurement_v.garment_dimension | number_format(2, '.', '')}}</td>
                                                 <td>{{measurement_v.stretch_percentage is defined ? measurement_v.stretch_percentage | number_format(2, '.', ''):0}}%</td>
@@ -136,9 +119,7 @@
                                                 <td>{{measurement_v.max_actual | number_format(2, '.', '')}}</td>
                                                 <td>{{measurement_v.max_calc | number_format(2, '.', '')}}</td>
 
-                                            </tr>
-                                
-                                    {% endif %}
+                                            </tr>                                         
 {#                                    {% endif %}#}
                                 {% endfor %}
                             {% endfor %}

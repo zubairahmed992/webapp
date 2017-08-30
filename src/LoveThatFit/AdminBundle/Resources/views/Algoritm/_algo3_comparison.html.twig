@@ -11,6 +11,10 @@
   <b>Recommendation</b> 
     {{data.recommendation.description}}
   </p>
+  <p>
+  <b>Optimum Fit</b> 
+    {{data.optimum_fit.description}}
+  </p>
   <b>Layer</b> 
     {{data.layering}}
   </p>
@@ -50,6 +54,9 @@
                                         <th>FX</th>                                                                             
                                         <th>GR	</th>
                                         <th>GD</th>	
+                                        <th>92%GD</th>	
+                                        <th>85%GD</th>	
+                                        <th>75%GD</th>	
                                         <th>G Stretch </th>
                                         <th>MIN Calc</th>
                                         <th>MIN Actual</th>                                        
@@ -59,8 +66,8 @@
                                         <th>Max Actual</th>
                                         <th>MAX Calc</th>
                                         <th>message</th>
-                                        <th>variance</th>
-                                        <th>fitting</th>
+                                        <th>variance<span style="float: right;">(∑)</span></th>
+                                                                              
                                     </tr>
                                 
                             {% for fp, fp_specs in size_specs.fit_points %} 
@@ -91,6 +98,9 @@
                                         
                                         <td>{{fp_specs.grade_rule}}</td>
                                         <td>{{fp_specs.garment_measurement_flat}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat * 0.92}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat * 0.85}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat * 0.75}}</td>
                                         <td>{{fp_specs.garment_measurement_stretch_fit}}</td>
                                         
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
@@ -102,14 +112,11 @@
                                         <td>{{fp_specs.max_body_measurement}}</td>                                
                                         <td>{{fp_specs.calc_max_body_measurement}}</td>
                                         <td> <span  style="font-size:11px;">{{fp_specs.status_text}}
-                                        ({{fp_specs.status}})
-                                        
-                                        
-                                        {{fp_specs.fitting_alert}}
+                                        : {{fp_specs.fitting_alert}}
                                         </span>
                                         </td>
                                         <td>{{fp_specs.variance}}</td>
-                                        <td>{{fp_specs.fitting}}</td>
+                                        
                                     </tr>
 
                             {% endfor %}
@@ -117,6 +124,9 @@
                                         <td></td>                                        
                                         <td></td>                                        
                                         <td>{{size_specs.fit_index}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>	
                                         <td></td>
@@ -129,16 +139,17 @@
                                         <td></td>       
                                         <td></td>
                                         <td> <span  style="font-size:11px;">
-                                            {{size_specs.message}}
-                                            ({{size_specs.status}})
+                                                {{size_specs.message}}
                                             </span>   
-                                                </td>                                                                                
-                                        <td>{{size_specs.variance}}</td>                
-                                        <td></td>
+                                        </td>                                                                                
+                                        <td>{{size_specs.variance}} <span style="float: right;font-size: 10px;">({{size_specs.variance_sum}})</span></td>                
+                                        
+                                        
+                                        
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
                                     <tr  style="background-color: #F2F2F2">
-                                        <td colspan="15">
+                                        <td colspan="20">
                                             <span  style="font-size:12px;">
                                             <b>Hem Advice :</b> {{size_specs.hem_advice.message}}
                                             </span>

@@ -11,15 +11,6 @@
 
 {% block body %}
 
-    <style type="text/css">
-        .categoryerror {
-            border-color: #e9322d;
-            -webkit-box-shadow: 0 0 6px #f8b9b7;
-            -moz-box-shadow: 0 0 6px #f8b9b7;
-            box-shadow: 0 0 6px #f8b9b7;
-        }
-    </style>
-
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link href="{{ asset('bundles/chosen/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/chosen/chosen.css') }}" rel="stylesheet" type="text/css" />
@@ -35,7 +26,12 @@
         function submitform() {
 
             if (parseInt(selected_banner_type_var) == 8) {
-                if (isNaN($("#banner_price_min").val())) {
+                if ($(".chosen-select").chosen().val() == null) {
+                    alert('here');
+                    $('#category_id_multi_chosen').addClass('categoryerror');
+                    event.preventDefault();
+                }
+                /*if (isNaN($("#banner_price_min").val())) {
                     $('#banner_price_min').addClass('categoryerror');
                     event.preventDefault();
                     return false;
@@ -44,7 +40,7 @@
                     $('#banner_price_max').addClass('categoryerror');
                     event.preventDefault();
                     return false;
-                }
+                }*/
             }
 
             if (parseInt(selected_banner_type_var) != 4 && parseInt(selected_banner_type_var) != 5
@@ -121,13 +117,11 @@
                     case '3':
                         document.getElementById("banner_image_position").required = true;
                         $('#banner-name-div').show();
-                        $('#banner-name-div').show();
                         $('#banner-description-div').show();
                         $('#banner-pricemin-div').show();
                         $('#banner-pricemax-div').show();
                         $('#banner-imagepoistion-div').show();
                         break;
-
                 }
             });
 
@@ -147,35 +141,35 @@
             $("#banner_banner_type").on("change", function(index){
                 selected_banner_type_var = $(this).find(":selected").val();
                 if (selected_banner_type_var == 4) {
-                    $("#shop_look").css("visibility", "visible");
-                    $("#banner_level_div").css("visibility", "hidden");
-                    $("#category_level_div").css("visibility", "hidden");
-                    $("#banner-pro_img-div").css("visibility", "visible");
-                    $("#banner_file").parent().css("visibility", "visible");
+                    $("#shop_look").css("display", "block");
+                    $("#banner_level_div").css("display", "block");
+                    $("#category_level_div").css("display", "block");
+                    $("#banner-pro_img-div").css("display", "block");
+                    $("#banner_file").parent().css("display", "block");
                     $("#banner_file").attr('required', true);
                     $("#product_div").hide();
                 } else if (selected_banner_type_var == 5) {
-                    $("#shop_look").css("visibility", "visible");
-                    $("#banner_level_div").css("visibility", "hidden");
-                    $("#category_level_div").css("visibility", "hidden");
+                    $("#shop_look").css("display", "block");
+                    $("#banner_level_div").css("display", "none");
+                    $("#category_level_div").css("display", "none");
                     $("#banner_file").attr('required', false);
                     /*$("#category_id").attr('required', false);*/
-                    $("#banner-pro_img-div").css("visibility", "hidden");
-                    $("#banner_file").parent().css("visibility", "hidden");
+                    $("#banner-pro_img-div").css("display", "none");
+                    $("#banner_file").parent().css("display", "none");
                     $("#product_div").hide();
                 } else if (selected_banner_type_var == 6) {
-                    $("#shop_look").css("visibility", "hidden");
-                    $("#banner_level_div").css("visibility", "hidden");
-                    $("#category_level_div").css("visibility", "hidden");
-                    $("#banner-pro_img-div").css("visibility", "visible");
-                    $("#banner_file").parent().css("visibility", "visible");
+                    $("#shop_look").css("display", "none");
+                    $("#banner_level_div").css("display", "none");
+                    $("#category_level_div").css("display", "none");
+                    $("#banner-pro_img-div").css("display", "block");
+                    $("#banner_file").parent().css("display", "block");
                     $("#banner_file").attr('required', true);
                     $("#product_div").show();
                 } else if (selected_banner_type_var == 7) {
-                    $("#banner_level_div").css("visibility", "hidden");
-                    $("#category_level_div").css("visibility", "hidden");
-                    $("#banner-pro_img-div").css("visibility", "visible");
-                    $("#banner_file").parent().css("visibility", "visible");
+                    $("#banner_level_div").css("display", "none");
+                    $("#category_level_div").css("display", "none");
+                    $("#banner-pro_img-div").css("display", "block");
+                    $("#banner_file").parent().css("display", "block");
                     $("#product_div").hide();
                 } else if (selected_banner_type_var == 8) {
                     document.getElementById("banner_image_position").required = true;
@@ -187,20 +181,20 @@
                     $('#banner-pricemin-div').show();
                     $('#banner-pricemax-div').val('');
                     $('#banner-pricemax-div').show();
-                    $("#shop_look").css("visibility", "hidden");
-                    $("#banner_level_div").css("visibility", "visible");
-                    $("#category_level_div").css("visibility", "hidden");
-                    $("#category_level_div_chosen").css("visibility", "visible");
-                    $("#banner-pro_img-div").css("visibility", "visible");
-                    $("#banner_file").parent().css("visibility", "visible");
+                    $("#shop_look").css("display", "none");
+                    $("#banner_level_div").css("display", "block");
+                    $("#category_level_div").css("display", "none");
+                    $("#category_level_div_chosen").css("display", "block");
+                    $("#banner-pro_img-div").css("display", "block");
+                    $("#banner_file").parent().css("display", "block");
                     $("#banner_file").attr('required', true);
                     $('#category_id_multi').prop('disabled', false).trigger("liszt:updated");
                 } else {
-                    $("#shop_look").css("visibility", "hidden");
-                    $("#banner_level_div").css("visibility", "visible");
-                    $("#category_level_div").css("visibility", "visible");
-                    $("#banner-pro_img-div").css("visibility", "visible");
-                    $("#banner_file").parent().css("visibility", "visible");
+                    $("#shop_look").css("display", "none");
+                    $("#banner_level_div").css("display", "block");
+                    $("#category_level_div").css("display", "block");
+                    $("#banner-pro_img-div").css("display", "block");
+                    $("#banner_file").parent().css("display", "block");
                     $("#banner_file").attr('required', true);
                     $("#product_div").hide();
                 }
@@ -226,7 +220,7 @@
             $('#banner_price_max').val('');
             $('#banner_image_position').val('0');
             document.getElementById("banner_image_position").required = false;
-            $("#category_level_div_chosen").css("visibility", "hidden");
+            $("#category_level_div_chosen").css("display", "none");
             $("#brand_div").hide();
             $("#color_div").hide();
             $('#category_id_multi').prop('disabled', true).trigger("liszt:updated");
@@ -284,7 +278,7 @@
                                 <div class="span3">{{ form_widget(form.banner_type) }}{{ form_errors(form.banner_type) }}</div>
                             </div>
 
-                            <div class="row-fluid show-grid" id="shop_look" style="visibility: hidden;">
+                            <div class="row-fluid show-grid" id="shop_look" style="display: none;">
                                 <div class="span3">Shop Look</div>
                                 <div class="span3">
                                     <select name="shop_look">
@@ -382,8 +376,8 @@
                                  style="margin-bottom:10px !important;">
                                 <div class="span3" style="padding-top:0px !important;">Select Targeted Category</div>
                                 <div class="span3" style="padding-top:0px !important;">
-                                    <select data-placeholder="Choose Category(s)..." id="category_id_multi" name="category_id_multi"
-                                            required="required" class="chosen-select" multiple>
+                                    <select data-placeholder="Choose Category(s)..." id="category_id_multi" name="category_id_multi[]"
+                                             class="chosen-select" multiple>
                                         {% for category in getcategoriestreeview %}
                                             <option value="{{ category.id }}">{{ category.name }}</option>
                                             {% if loop.last %}
@@ -402,7 +396,7 @@
                                 <div class="span3" style="padding-top:0px !important;">Select Brand</div>
                                 <div class="span3" style="padding-top:0px !important;">
                                     <select data-placeholder="Choose Brand(s)..."  id="brand_id" name="brand_id[]"
-                                            class="chosen-select" multiple>
+                                            class="chosen-select1" multiple>
                                         {% for brand in brand_list %}
                                             <option value="{{ brand.id }}">{{ brand.name }}</option>
                                         {% endfor %}

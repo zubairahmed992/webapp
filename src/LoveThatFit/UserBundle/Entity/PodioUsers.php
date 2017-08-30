@@ -41,6 +41,12 @@ class PodioUsers {
      * @ORM\Column(type="datetime")
      */
     protected $updated_at;
+
+    /**
+     * @ORM\Column(type="integer", length=4, nullable=false)
+     */
+    protected $is_podio_updated;
+
     /**
      * Get id
      *
@@ -151,5 +157,26 @@ class PodioUsers {
      */
     public function getUpdatedAt() {
         return $this->updated_at;
+    }
+
+    /**
+     * Set is_podio_updated
+     *
+     * @param integer $is_podio_updated
+     * @return is_podio_updated
+     */
+    public function setPodioUpdated($is_podio_updated) {
+        $this->is_podio_updated = $is_podio_updated;
+
+        return $this;
+    }
+
+    /**
+     * Get is_podio_updated
+     *
+     * @return integer 
+     */
+    public function getPodioUpdated() {
+        return $this->is_podio_updated;
     }
 }

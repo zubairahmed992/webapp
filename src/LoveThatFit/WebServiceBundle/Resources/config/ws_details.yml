@@ -493,6 +493,13 @@ ws_get_applicablefnf_user:
     params:
       auth_token: 121c421783cd4d71d871ec16a1296091
 
+nws_get_applicablefnf_user:
+    pattern: /nws/get_applicablefnf_user
+    title: get_applicablefnf_user
+    params:
+      auth_token: 121c421783cd4d71d871ec16a1296091
+
+
 ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
     title: process_payment_and_add_item
@@ -661,6 +668,7 @@ nws_add_update_fitting_room:
      product_item_id: 4082
      product_id: 506
      qty: 1
+     update_product_item_id: 4083
 
 nws_delete_fitting_room_item:
    pattern:  /nws/delete_fitting_room_item
@@ -823,6 +831,16 @@ new_register_device_token:
     auth_token: 121c421783cd4d71d871ec16a1296091
     device_token: 11223344556677889900112233445566778899000
 
+    
+pi_ws_product_fitting_room_image_upload:
+    pattern: /pi/ws/product_fitting_room_image_upload
+    title: pi_ws_product_fitting_room_image_upload
+    file_upload: true
+    params:         
+      request_type: post
+    
+
+
 #______________________
 mcp_get_user_mask_marker_details:
     pattern:  /mcp/get_user_mask_marker_details
@@ -832,3 +850,51 @@ mcp_get_user_mask_marker_details:
           email: ovais.rafique@centricsource.com
     request_type: post
     description: return user mask markder details against user token 
+
+nws_get_brand_style:
+    pattern:  /nws/get_brand_style
+    title: banner_style
+    params:
+          auth_token: 56565656566
+    request_type: post
+    description: return Brand and Styles
+
+
+nws_search_brand_style:
+   pattern:  /nws/search_brand_style
+   title: search_brand_style
+   params:
+     auth_token: 56565656566
+     text: "505"
+     page_no: 1
+     text: "search text"
+     page_no: 1
+
+nws_braintree_save_credit_card:
+  pattern: /nws/braintree_save_credit_card
+  title: Save user payment method
+  params:
+    auth_token: 00000000000000000000000000000
+    paymentMethodNonce: 00000-00000000-00000000000-000000
+
+nws_braintree_update_credit_card:
+  pattern: /nws/braintree_update_credit_card
+  title: Update user payment method
+  params:
+    auth_token: 00000000000000000000000000000
+    paymentMethodNonce: 00000-00000000-00000000000-000000
+    braintreeToken: ktkbxd
+
+nws_braintree_get_all_credit_cards:
+  pattern: /nws/braintree_get_credit_cards
+  title: Get credit cards
+  params:
+    auth_token: 00000000000000000000000000000
+
+
+nws_braintree_delete_credit_card:
+  pattern: /nws/braintree_delete_credit_card
+  title: delete user payment method
+  params:
+    auth_token: 00000000000000000000000000000
+    braintreeToken: ktkbxd

@@ -1,0 +1,40 @@
+<style>
+    #checkout-form .hosted-field iframe {
+        height: 5%;
+    }
+</style>
+<form id="checkout" action="/nws/braintree_update_credit_card" method="post">
+    <input data-braintree-name="number" value="4111111111111111">
+    <input data-braintree-name="cvv" value="100">
+
+
+    <input data-braintree-name="expiration_date" value="10/20">
+
+    <!-- you can also split expiration date into two fields -->
+    {#<input data-braintree-name="expiration_month" value="10">
+    <input data-braintree-name="expiration_year" value="2020">#}
+
+    <input data-braintree-name="postal_code" value="94107">
+    <input data-braintree-name="cardholder_name" value="John Smith">
+    <input type="text" name="auth_token" value="59201b5b43b61">
+    <input type="text" name="token" value="77hy3d">
+
+    <input type="submit" id="submit" value="Pay">
+</form>
+
+<!-- Load the Client component. -->
+<script src="https://js.braintreegateway.com/js/braintree-2.32.1.min.js"></script>
+
+<!-- Load the Hosted Fields component. -->
+{#<script src="https://js.braintreegateway.com/web/3.6.3/js/hosted-fields.min.js"></script>#}
+
+<script>
+    // We generated a client token for you so you can test out this code
+    // immediately. In a production-ready integration, you will need to
+    // generate a client token on your server (see section below).
+    var authorization = 'eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIwZTg3NmVhNTgwZDI2ZGU2YTU0NGFkZTJmNjUzYTJhOTYwOThhNzg3NDFhM2QyYTE5MDE2MDljZWQ4Y2UyMDI3fGNyZWF0ZWRfYXQ9MjAxNy0wOC0xNFQxNDoxODozMS4yNTY4MTM5NDMrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTk5OXh0YnFjMnM1NWJ4OWNcdTAwMjZwdWJsaWNfa2V5PWpnMno3N3QzamtwNDNqOGciLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvOTk5eHRicWMyczU1Yng5Yy9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbImN2diJdLCJlbnZpcm9ubWVudCI6InNhbmRib3giLCJjbGllbnRBcGlVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvOTk5eHRicWMyczU1Yng5Yy9jbGllbnRfYXBpIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhdXRoVXJsIjoiaHR0cHM6Ly9hdXRoLnZlbm1vLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhbmFseXRpY3MiOnsidXJsIjoiaHR0cHM6Ly9jbGllbnQtYW5hbHl0aWNzLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20vOTk5eHRicWMyczU1Yng5YyJ9LCJ0aHJlZURTZWN1cmVFbmFibGVkIjpmYWxzZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiYWJjIiwiY2xpZW50SWQiOiJBWkhHei1KdVkzaGxHM0gtRFk2ZTNOVDJpMlNHREk2a0hKenQ3d2lWbmhEU01aYTBPQlFLVnFMYjk4RjdRSmVxejdyb2l5TEJZRnFUbllVciIsInByaXZhY3lVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vcHAiLCJ1c2VyQWdyZWVtZW50VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3RvcyIsImJhc2VVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFzc2V0c1VybCI6Imh0dHBzOi8vY2hlY2tvdXQucGF5cGFsLmNvbSIsImRpcmVjdEJhc2VVcmwiOm51bGwsImFsbG93SHR0cCI6dHJ1ZSwiZW52aXJvbm1lbnROb05ldHdvcmsiOmZhbHNlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFiYyIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJtZXJjaGFudElkIjoiOTk5eHRicWMyczU1Yng5YyIsInZlbm1vIjoib2ZmIn0=';
+    var form = document.querySelector('#checkout-form');
+    var submit = document.querySelector('input[type="submit"]');
+
+    braintree.setup(authorization, 'custom', {id: 'checkout'});
+</script>

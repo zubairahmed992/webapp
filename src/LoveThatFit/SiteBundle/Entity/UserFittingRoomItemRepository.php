@@ -158,6 +158,18 @@ class UserFittingRoomItemRepository extends EntityRepository {
         return $result_query;
     }
 
+    //Delete by Product ID
+    public function updateUserFittingRoomItemWithProductId($user_id, $product_id, $product_item_id, $update_product_item_id) {
 
+        $total_record = $this->getEntityManager()
+            ->createQuery("UPDATE LoveThatFitSiteBundle:UserFittingRoomItem ut SET ut.productitem = :update_product_item_id
+                        WHERE ut.user = :user_id AND ut.product_id = :product_id AND ut.productitem = :product_item_id"
+            )->setParameters(array('user_id' => $user_id, 'product_id' => $product_id, 'product_item_id' => $product_item_id, 'update_product_item_id' => $update_product_item_id ));
+        try {
+            return $total_record->execute();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
 }

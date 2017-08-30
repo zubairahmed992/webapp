@@ -115,6 +115,48 @@ class WSCategoryController extends Controller {
 
         return new Response($res);
     }
+
+    public function getBrandStyleListAction()
+    {
+
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        //Find the user against token id
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+
+        if ($user) {
+            $brandList = $this->get('admin.helper.Brand')->getBrandListEnable();
+            $styleList = $this->get('admin.helper.Product')->getStyleListEnable();
+
+            $brandconf= array(
+                'data' => $brandList,
+                'count'=> count($brandList),
+                'message' => 'Brand list',
+                'success' => 'true',
+            );
+
+            $styleconf= array(
+                'data' => $styleList,
+                'count'=> count($styleList),
+                'message' => 'Style list',
+                'success' => 'true',
+            );
+
+            $data = array(
+                'count'=> 2,
+                'message' => 'Success Result',
+                'success' => 1,
+            );
+            $data['brand'] = $brandconf;
+            $data['style'] = $styleconf;
+
+            return new Response(json_encode($data));
+
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+    }
     
 }
 

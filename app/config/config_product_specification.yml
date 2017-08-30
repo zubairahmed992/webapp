@@ -24,6 +24,8 @@ constants:
     waist_to_hip  : Waist to Hip  
     hip: Hip
     abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   blouses:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -41,6 +43,8 @@ constants:
     waist_to_hip  : Waist to Hip  
     hip: Hip
     abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   tunic:
     tee_knit:
     neck: Neck
@@ -60,6 +64,8 @@ constants:
     waist_to_hip  : Waist to Hip  
     hip: Hip
     abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   tee_knit:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -78,6 +84,8 @@ constants:
     waist_to_hip  : Waist to Hip  
     hip: Hip
     abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   tank_knit:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -92,6 +100,8 @@ constants:
     waist_to_hip: Waist to Hip
     hip: Hip
     abdomen: Abdomen
+    high_hip: High Hip
+    low_hip: Low Hip
   jacket:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -370,6 +380,8 @@ constants:
      waist_to_hip  : Waist to Hip  
      hip: Hip   
      abdomen: Abdomen
+     high_hip: High Hip
+     low_hip: Low Hip
 
  product_specification:
   fit_priority:

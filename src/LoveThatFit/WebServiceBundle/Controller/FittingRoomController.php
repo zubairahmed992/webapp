@@ -26,6 +26,8 @@ class FittingRoomController extends Controller {
 
             $item_id = $decoded["product_item_id"];
             $product_id = $decoded["product_id"];
+            $update_product_item_id = $decoded["update_product_item_id"];
+
             $qty = 1;
             if(isset($decoded["qty"])){
                 $qty = $decoded["qty"];
@@ -55,7 +57,7 @@ class FittingRoomController extends Controller {
             $get_qty = 0;
             if($verified_entry[0][1] != "0"){
                 $get_qty = $verified_entry[0]['qty'];
-                $qty = $qty + $get_qty;
+                $qty = $qty;
             }
 
             if($qty < 1){
@@ -63,6 +65,33 @@ class FittingRoomController extends Controller {
                 $res = $this->get('webservice.helper')->response_array(false, $resp);
                 return new Response($res);
             }
+
+
+            /* If Product item will update_product_item then update product_item with update_product_item_id*/
+            if(!empty($update_product_item_id)){
+
+                //Check Update Product item id on the product
+                $updatedProductItem = $this->get('admin.helper.productitem')->getProductItemById($update_product_item_id);
+                if($updatedProductItem == null){
+                    $resp = 'Updated Product Item not entered Properly';
+                    $res = $this->get('webservice.helper')->response_array(false, $resp);
+                    return new Response($res);
+                }
+                $updatedProduct = $updatedProductItem->getProduct();
+                $updated_product_id_for_verification = $updatedProduct->getId();
+
+                if($updated_product_id_for_verification != $product_id){
+                    $resp = 'Updated Product Item not Match with Product Id';
+                    $res = $this->get('webservice.helper')->response_array(false, $resp);
+                    return new Response($res);
+                }
+
+                //Add entry in userfittingroom table
+                $this->get('site.helper.userfittingroomitem')->updateUserFittingRoomItemWithProductId($user, $product_id, $product_item_id, $update_product_item_id);
+                $res = $this->get('webservice.helper')->response_array(true, 'Product Item has been updated');
+                return new Response($res);
+            }
+
 
             //Checked that item is already then remove this
             $this->get('site.helper.userfittingroomitem')->deleteByUserItemByProduct($user, $product_id, $product_item_id);
@@ -199,7 +228,8 @@ class FittingRoomController extends Controller {
                     $get_qty = 0;
                     if($verified_entry[0][1] != "0"){
                         $get_qty = $verified_entry[0]['qty'];
-                        $qty = $qty + $get_qty;
+                        //$qty = $qty + $get_qty;
+                        $qty = $qty;
                     }
 
                     if($qty < 1){

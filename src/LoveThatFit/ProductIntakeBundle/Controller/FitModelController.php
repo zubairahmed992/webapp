@@ -123,8 +123,10 @@ class FitModelController extends Controller {
         unset($fit_point_values['hip']);        
         unset($fit_point_values['hem_length']);
         unset($fit_points['thigh']);
+        $fit_points['txt_title'] = '';
         !array_key_exists('abdomen', $fit_point_values)?$fit_point_values['abdomen']=0:'';
         $required_fields = array('txt_title');
+    
         return $this->render('LoveThatFitProductIntakeBundle:FitModel:edit.html.twig', array(
                     'fit_model_measurement' => $fit_model_measurement,
                     'fit_point_values' => $fit_point_values,
@@ -185,6 +187,37 @@ class FitModelController extends Controller {
         $this->get('session')->setFlash('info', 'Duplicate Fit Model Measurement created.');  
         return $this->redirect($this->generateUrl('product_intake_fit_model_index'));
     
+    }
+    //------------ compare Fit Model Veiw load
+    public function compareFitModelViewAction(Request $request) {
+        
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:compare.html.twig', array(
+                'fit_model_measurements' => $this->get('productIntake.fit_model_measurement')->findAll(),
+                'fit_model_measurements_fp' => 0,
+                'brand_id'  => 0,
+                'fit_points_array' => 0,
+        ));       
+    }
+    
+    //------------ compare Fit Model With Brand load
+    public function compareFitModelWithBrandAction(Request $request) {
+        $brand_id = $request->get('brand');  
+        if(!empty($brand_id) ){ 
+        $fit_points = $this->get('admin.helper.product.specification')->getFitPoints();        
+        unset($fit_points['hip']);
+        unset($fit_points['hem_length']);
+        unset($fit_points['thigh']);   
+        $fit_model_measurements = $this->get('productIntake.fit_model_measurement')->findAll();
+        $brand = $this->get('admin.helper.brand')->find($brand_id);
+        return $this->render('LoveThatFitProductIntakeBundle:FitModel:compare.html.twig', array(
+                    'fit_model_measurements' => $fit_model_measurements,
+                    'fit_model_measurements_fp' => $brand->getFitModelMeasurements(),
+                    'brand_id'  => $brand_id,
+                    'fit_points_array' => $fit_points,
+                ));
+        }       
+        $this->get('session')->setFlash('info','Please Select Brand.');  
+        return $this->redirect($this->generateUrl('product_intake_fit_model_compare'));
     }
 
 }

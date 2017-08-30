@@ -208,6 +208,7 @@
                     $("#product_keyword").val( ui.item.name);
                     $("#product_id").val( ui.item.id );
                     $('#algorithm_Product option[value='+ui.item.id+']').attr('selected','selected');
+                    $('#algorithm_Product').trigger('change');
                     var url= '../productdetail/'+ui.item.id+'';
                     $('#product_edit_link').attr("href", url);
                     return false;

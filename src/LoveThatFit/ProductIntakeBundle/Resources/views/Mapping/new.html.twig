@@ -128,13 +128,48 @@ color: #FFF;
                     </div>
                 </div>
                 <br>
-                   <div class="form-group">
-                    <label class="control-label col-sm-2" for="select_size">Measuring Unit: </label>
+                <div class="form-group">
+                 <label class="control-label col-sm-2" for="select_size">Measuring Unit: </label>
                     <div class="col-sm-4">
                         <select name="measuring_unit" id="measuring_unit"  class="form-control">
                             <option value="inch"> inch </option>                                            
                             <option value="centimeter"> centimeter </option>                                            
                         </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="name_title">Style ID Number : </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control"  id="style_id_number" name="style_id_number" placeholder="Enter Style Id Number Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="max_horizontal_stretch">Max Horizontal stretch : </label>
+                    <div class="col-sm-4">
+                        <input  type="text" class="form-control" name="max_horizontal_stretch" id="max_horizontal_stretch"  data-type="text"  data-title="Enter horizontal stretch" placeholder="Enter horizontal stretch">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="max_vertical_stretch">Max Vertical stretch : </label>
+                    <div class="col-sm-4">
+                        <input  type="text" class="form-control" name="max_vertical_stretch" id="vertical_stretch"   data-title="Enter vertical stretch" placeholder="Enter max_vertical stretch">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="max_waistband_stretch">Max Waistband Stretch : </label>
+                    <div class="col-sm-4">
+                        <input  type="text" class="form-control"  name="max_waistband_stretch" id="max_waistband_stretch"  placeholder="Enter max_waistband_stretch">
+                    </div>
+                </div>    
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="fabric_content">Fabric Content : </label>
+                    <div class="col-sm-4"> 
+                        <div class="fabric_content">    
+                            {% for key,val in drop_down_values['fabric_content'] %}
+                                {{ key }} :
+                                <input type="text" id="{{key|lower|trim|replace({'/':'_'})}}" id="fabric_content"  name="fabric_content[{{key}}]" style="width:70px">
+                            {% endfor %}
+                        </div> 
                     </div>
                 </div>
                 <br>

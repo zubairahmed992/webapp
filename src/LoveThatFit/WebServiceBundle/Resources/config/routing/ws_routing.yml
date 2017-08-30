@@ -272,6 +272,9 @@ ws_get_applicablefnf_user:
    pattern: /ws/get_applicablefnf_user
    defaults: { _controller: LoveThatFitAdminBundle:FNFUser:getApplicableFNFUser}
 
+nws_get_applicablefnf_user:
+   pattern: /nws/get_applicablefnf_user
+   defaults: { _controller: LoveThatFitAdminBundle:FNFUser:nwsGetApplicableFNFUser}
 
 ws_braintree_processuser_transaction:
     pattern: /ws/braintree_processuser_transaction
@@ -280,6 +283,22 @@ ws_braintree_processuser_transaction:
 nws_braintree_processuser_transaction:
     pattern: /nws/braintree_processuser_transaction
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBrainTreeProcessTransaction}
+
+nws_braintree_save_credit_card:
+    pattern: /nws/braintree_save_credit_card
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeSaveCreditCard}
+
+nws_braintree_get_all_credit_cards:
+    pattern: /nws/braintree_get_credit_cards
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeGetCreditCards}
+
+nws_braintree_delete_credit_card:
+    pattern: /nws/braintree_delete_credit_card
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeDeleteCreditCard}
+
+nws_braintree_update_credit_card:
+    pattern: /nws/braintree_update_credit_card
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:nwsBraintreeUpdateCreditCard}
 
 ws_get_braintree_client_token:
     pattern: /ws/get_braintree_client_token
@@ -353,3 +372,15 @@ mcp_get_user_mask_marker_details:
 render_user_image:
     pattern: /render/image/{ref}
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderImageBySessionId, ref: null}
+
+render_user_avatar:
+    pattern: /render/avatar/{ref}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderAvatarBySessionId, ref: null}
+
+nws_get_brand_style:
+    pattern:  /nws/get_brand_style
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCategory:getBrandStyleList}
+
+nws_search_brand_style:
+    pattern:  /nws/search_brand_style
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:searchBrandStyle }
