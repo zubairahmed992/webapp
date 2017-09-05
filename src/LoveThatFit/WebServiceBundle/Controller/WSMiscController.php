@@ -75,8 +75,9 @@ class WSMiscController extends Controller {
                     array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
                     array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
+                    array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
                 ),
-                'count'=>5,
+                'count'=>6,
                 'message' => 'configuration for build deployment',
                 'success' => true,
             );
@@ -94,16 +95,19 @@ class WSMiscController extends Controller {
                     'Babar'=>array('build_type'=>'babar','url'=>'192.168.0.119'),
                     'Saddam'=>array('build_type'=>'saddam','url'=>'192.168.0.223'),
                     'Kamran'=>array('build_type'=>'kamran','url'=>'192.168.0.182'),
+                    'Raghib'=>array('build_type'=>'raghib','url'=>'192.168.0.103'),
+                    'Umer'=>array('build_type'=>'umer','url'=>'192.168.0.188'),
                     'Riaz'=>array('build_type'=>'riaz','url'=>'192.168.0.121'),
                     'Ibrahim-laptop'=>array('build_type'=>'Ibrahim-laptop','url'=>'192.168.0.169'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
                     'V3QA Server'=>array('build_type'=>'v3qa','url'=>'v3qa.selfiestyler.com'),
                     'testing Server for 2.8'=>array('build_type'=>'testing for 2.8','url'=>'asif.selfiestyler.com'),
+                    'dba-dev'=>array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
                     'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
                 ),
-                'count'=>14,
+                'count'=>22,
                 'message' => 'configuration for build deployment',
                 'success' => 'true',
             );
@@ -312,6 +316,14 @@ class WSMiscController extends Controller {
         $res = $this->get('webservice.helper')->response_array(true, 'list of marketing tiles', true, $results_marketingtiles);
                             
         return new Response($res);
+    }
+
+    #----------------------- calibration save marker ------------------------------------------
+    public function mcpSaveMarkerAction(Request $request) {
+        $params = $request->request->all();
+        $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+        $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
+        return new Response(json_encode('archive updated'));
     }
 }
 

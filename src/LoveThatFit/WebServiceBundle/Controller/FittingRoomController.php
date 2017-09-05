@@ -88,7 +88,7 @@ class FittingRoomController extends Controller {
 
                 //Add entry in userfittingroom table
                 $this->get('site.helper.userfittingroomitem')->updateUserFittingRoomItemWithProductId($user, $product_id, $product_item_id, $update_product_item_id);
-                $res = $this->get('webservice.helper')->response_array(false, 'Product Item has been updated');
+                $res = $this->get('webservice.helper')->response_array(true, 'Product Item has been updated');
                 return new Response($res);
             }
 
