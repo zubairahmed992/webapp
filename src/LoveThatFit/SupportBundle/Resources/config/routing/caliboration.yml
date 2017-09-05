@@ -31,6 +31,10 @@ support_archive_to_live:
   
     #   Archive Access ~~~~~~~~~~>*
 
+support_user_retouch_image:
+    pattern:  /support/user_profile_archives/{user_id}/{archive_id}/uploadretouchimage
+    defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:uploadRetouchImage }
+
 support_user_profile_archives:
     pattern:  /support/user_profile_archives/{user_id}/{archive_id}/{mode}
     defaults: { _controller: LoveThatFitSupportBundle:UserMaskAdjustment:profileArchives,archive_id: null, mode: null }

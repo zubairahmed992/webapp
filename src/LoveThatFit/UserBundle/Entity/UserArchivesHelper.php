@@ -628,4 +628,30 @@ class UserArchivesHelper {
         return $output;
     }
 
+    public function saveretouchimage($param, $file)
+    {
+        //Uploaded Achieved Retouch email.
+        $temp_name = $file['tmp_name'];
+        $target_path = $this->getUploadRootDir($param['upl_entity_id']);
+
+        $count_retouch = $param['count_retouch'];
+        $count_retouch_increament = $count_retouch + 1;
+        $original_image = $param['upl_user_original_image_url'];
+        $break_file = substr($original_image, strripos($original_image,"/")+1, -(strlen($original_image) - strripos($original_image,".")));
+        $saved_retouch = str_ireplace('original', 'retouch',$break_file);
+        $fileName = $file['name'];
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        move_uploaded_file($temp_name, $target_path.'/'.$saved_retouch."_".$count_retouch_increament.".".$ext);
+
+        return true;
+    }
+
+    public function getUploadRootDir($id) {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir($id);
+    }
+
+    public function getUploadDir($id) {
+        return 'uploads/ltf/users/' . $id;
+    }
+
 }

@@ -132,7 +132,7 @@
             <div><span>
                     <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
                     {% if (a.status==-1)%}
-                        <img class="img-thumb" src="{{ asset(a.getWebPath('original'))}}"/>
+                        <img class="img-thumb active" src="{{ asset(a.getWebPath('original'))}}"/>
                     {%else%}
                         <img class="img-thumb" src="{{ asset(a.getWebPath('cropped'))}}"/>
                     {%endif%}
@@ -145,10 +145,47 @@
         <a class="rest-mask" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
+
+
+
+    <hr class="black">
+    <h5>Retouch Images:</h5>
+    <div>
+        <div style="padding-left:0px !important; margin-bottom: 5px;clear:both;"><span><h7>Download Original Image:</h7></span></div>
+        <span><img class="img-thumb" src="{{ asset(archive.getWebPath('original'))}}"/></span><span style="margin-left:5px;"><a href="{{ asset(archive.getWebPath('original'))}}" target="_blank" style="display: inline-block !important; padding: 5px 8px; cursor: pointer; color: #fff; background: #000; text-decoration: none;">Download Image</a></span>
+        <div style="margin-bottom: 10px;clear:both;"></div>
+
+        <div style="padding-left:0px !important; margin-bottom: 10px;clear:both;"><span><h7>Upload Retouch Image:</h7></span></div>
+        <form id="frmUploadImage" name="frmUploadImage" action="{{ path('support_user_retouch_image', {'user_id':entity.id, 'archive_id': archive.id})}}" method="post" enctype="multipart/form-data"  class="form-horizontal">
+            <input type="file" id="upl_user_retouch" name="upl_user_retouch" accept=".png" required>
+            <input type="hidden" id="upl_image_update_url" name="upl_image_update_url" value="{{ path('support_archive_image_update')}}"/>
+            <input type="hidden" id="upl_user_original_image_url" name="upl_user_original_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
+            <input type="hidden" id="upl_entity_id" name="upl_entity_id" value="{{entity.id}}"/>
+            <input type="hidden" id="count_retouch" name="count_retouch" value="{{retouch_filecount}}"/>
+            <input type="hidden" id="upl_archive_id" name="upl_archive_id" value="{{archive.id}}"/>
+            <input type="submit" id="upl_submit" name="upl_submit" value="Upload">
+        </form>
+
+        <div style="margin-bottom: 10px;clear:both;"></div>
+
+        <span>
+            {% if(retouch_filecount) %}
+                {% for retouch_count in 1..retouch_filecount %}
+                    <a href="" title="Adjust Mass Marker">
+                        <img class="img-thumb" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}"/>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </span>
+
+    </div>
 </div>
 {% else%}
 <div>image info not available</div>
 {% endif %}
+
+
+
   <!-- left panel-->
 
 <!-- svg path saved two times???-->
@@ -276,6 +313,7 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
+
     $("#comment_btn").click(function(){
         var $mem_email = $("#entity_email").val();
         var $member_comments = $("#rej_comments").val();
