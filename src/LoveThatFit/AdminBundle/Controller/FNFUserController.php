@@ -420,14 +420,14 @@ class FNFUserController extends Controller
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
 
-            if(is_array($fnfUser)){
+            try {
+                //get order sales tax
+                $order_sales_tax = $this->getOrderSalesTaxUserAction(1);
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+            }
 
-                try {
-                    //get order sales tax
-                    $order_sales_tax = $this->getOrderSalesTaxUserAction(1);
-                } catch(\Exception $e) {
-                    // log $e->getMessage()
-                }
+            if(is_array($fnfUser)){
 
                 if( $fnfUser['group_type'] == 1 ){
                     $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
@@ -457,7 +457,7 @@ class FNFUserController extends Controller
                     'group_type'      => 0,
                     'percentage_amount' => 0,
                     'applicable'        => false,
-                    'sales_tax'        => 0
+                    'sales_tax'        => $order_sales_tax
                 ));
             }
         } else {
