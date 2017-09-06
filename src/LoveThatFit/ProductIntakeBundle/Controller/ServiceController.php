@@ -402,4 +402,32 @@ class ServiceController extends Controller {
         }
     }
 
+    // Image Name Validation {"image_name":"AG-Jeans_LSS1288_SBA_R_25","name_format":"Brand_StyleID#_Color_Size-Range_Size"}
+    public function imageNameValidationAction($file_name)
+    {
+        $parsed_details = $this->breakFileNameProductImageUplaodNewFormat($file_name);
+        #--------------------------------------------------------------
+        if ($parsed_details['success'] == 'false') {
+            return new Response(json_encode($this->responseArray($parsed_details['message'])));
+        } else {
+            $image_name_break = explode('_', $file_name);
+            $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-', ' ', $image_name_break[0]), $image_name_break[1]);
+            if (count($data)==0) {
+                return new Response(json_encode( $this->responseArray('Product not found')));#------------------------------------------>
+            }
+            $parsed_details['product_id'] = $data[0]['id'];
+            $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
+            $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+            $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitleBodyType(strtolower($parsed_details['size_title']),($parsed_details['body_type']), $parsed_details['product_id']);
+
+            if (count($product_color) == 0) {
+                return new Response(json_encode( $this->responseArray($parsed_details['color_title'] . ' color not found')));#------------------------------------------>
+            }
+            if(count($product_size) == 0){
+                return new Response(json_encode($this->responseArray($parsed_details['size_title'] . ' size not found'))) ;#------------------------------------------>
+            }
+            //return new JsonResponse('Image Name is Validate');
+            return new Response(json_encode( Array('success' => 'True', 'message' => 'Image name is Valid')));
+        }
+    }
 }
