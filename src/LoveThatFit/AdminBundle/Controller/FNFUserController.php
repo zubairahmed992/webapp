@@ -13,8 +13,6 @@ use LoveThatFit\AdminBundle\Form\Type\FNFUserForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Yaml\Parser;
-use TaxJar;
 
 class FNFUserController extends Controller
 {
