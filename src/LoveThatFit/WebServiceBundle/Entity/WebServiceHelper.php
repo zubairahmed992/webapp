@@ -1557,7 +1557,7 @@ class WebServiceHelper
         $data['user'] ['inseam_percent'] = "42"; 
         $data['user'] ['arm_percent'] =  "46";
 
-        $data['marker'] ['marker_update_url'] =  "//".$_SERVER['HTTP_HOST']."/admin/archive/save_marker";
+        $data['marker'] ['marker_update_url'] =  "//".$_SERVER['HTTP_HOST']."/mcp/save_marker";
         $data['marker'] ['default_marker_json'] =  $user[0]['default_marker_json'];
         $data['marker'] ['default_marker_svg'] =  $user[0]['default_marker_svg'];
 
