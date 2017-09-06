@@ -1634,4 +1634,68 @@ class WebServiceHelper
         return json_encode($ar);
     }
 
+    public function getOrderSalesTaxUserAction($callby=0,$decoded) {
+        //$decoded = $this->processRequest($this->getRequest());
+        $user    = array_key_exists('auth_token', $decoded) ? $this->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            if(isset($decoded['shipment_address']) && !empty($decoded['shipment_address'])) {
+                //user cart items
+                $amount = 0;
+                $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
+                $order_line_items = array();
+                $c=0;
+                foreach($user_cart as $cart){
+                    $amount = ($cart['qty']*$cart['price']) + $amount;
+                    $order_line_items[$c]['qty'] = $cart['qty'];
+                    $order_line_items[$c]['price'] = ($cart['qty']*$cart['price']);
+                    $c++;
+                }
+
+                //order line items
+                //$order_line_items = [['quantity' => 1,'unit_price' => 15.0],['quantity' => 1,'unit_price' => 10.0]];
+                
+                //order salex tax
+                $yaml = new Parser();
+                $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+                //$from_country = $parse["stamps_com_dev"]["fromcountry"];
+                //$from_zip = $parse["stamps_com_dev"]["fromzipcode"];
+                //$from_state = $parse["stamps_com_dev"]["fromstate"];
+                //$shippment = $parse["stamps_com_dev"]["shippment"];
+                $from_country = 'US';
+                $from_zip = '07001';
+                $from_state = 'NJ';
+                $shippment = 0;
+                $data_order_sales = array(
+                    'from_country' => ($from_country) ? $from_country : '',
+                    'from_zip' => ($from_zip) ? $from_zip : '',
+                    'from_state' => ($from_state) ? $from_state : '',
+                    'to_country' => ($decoded['shipment_address']['to_country']) ? $decoded['shipment_address']['to_country'] : '',
+                    'to_zip' => ($decoded['shipment_address']['to_zip']) ? $decoded['shipment_address']['to_zip'] : '',
+                    'to_state' => ($decoded['shipment_address']['to_state']) ? $decoded['shipment_address']['to_state'] : '',
+                    'amount' => ($amount) ? $amount : 0,
+                    'shipping' => $shippment,
+                    'order_line_items' => $order_line_items
+                );
+                $order_sales_tax = $this->container->get('taxjar.helper.salestaxapi')->createOrderSalesTax($data_order_sales);
+
+                if($callby == 1){
+                    return $order_sales_tax;
+                }
+
+                return $this->response_array(true, 'Order sales tax', true, array(
+                    'sales_tax' => $order_sales_tax
+                ));
+            } else {
+                if($callby == 1){
+                    return 0;
+                }
+                return $this->response_array(true, 'Order sales tax', true, array(
+                    'sales_tax' => 0
+                ));
+            }
+        } else {
+            return $this->response_array(false, 'User not authenticated.');
+        }
+    }
+
 }
