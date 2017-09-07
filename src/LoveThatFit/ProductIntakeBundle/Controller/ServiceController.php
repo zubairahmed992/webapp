@@ -371,31 +371,47 @@ class ServiceController extends Controller {
     
     
     #-------------------------------product_image_upload_new_format -----------------------------------------
-     private function breakFileNameProductImageUplaodNewFormat($request_array) {       
-        #Format New : Brand_StyleID_ColorShot_SizeRange_VerticalMeasurement_SizeShot.png
-        # 0 brand
-        # 1 Style_id
-        # 2 Color title
-        # 3 Size Range / Biody Type
-        # 4 Vertical Measurement
-        # 5 Size Title       
+     private function breakFileNameProductImageUplaodNewFormat($request_array) {                      
         $body_range_array = array('wc' => 'Contemporary', "wr" => "Regular", "wp" => "Petite", "wpl" => "Plus", "jr" => "Regular", "jp" => "Plus", "mr" => "Regular", "mbt" => "B&T", "ms" => "Slim"); 
         $_exploded = explode("_", strtolower($request_array));                
         
-        if(!array_key_exists($_exploded[3], $body_range_array)){
-            return array('message' => 'Invalid Body Range ' . strtoupper($_exploded[3]) . ', (valid ranges: WC, WR, WP, WPL, JR, JP, MR, MR, MBT, MS)', 'success' => 'false');
-        }
-        
         if (count($_exploded) == 6) {
+              if(!array_key_exists($_exploded[3], $body_range_array)){
+                return array('message' => 'Invalid Body Range ' . strtoupper($_exploded[3]) . ', (valid ranges: WC, WR, WP, WPL, JR, JP, MR, MR, MBT, MS)', 'success' => 'false');
+              }
+            #Format New : Brand_StyleID_ColorShot_SizeRange_VerticalMeasurement_SizeShot.png
+            # 0 brand
+            # 1 Style_id
+            # 2 Color title
+            # 3 Size Range / Biody Type
+            # 4 Vertical Measurement
+            # 5 Size Title
             $a['brand'] = str_replace("-", " ", $_exploded[0]);
             $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
             $a['color_title'] = str_replace("-", " ", $_exploded[2]);
             $a['body_type'] = strtolower($body_range_array[$_exploded[3]]);
             $a['vertical_measurement'] = $_exploded[4];
             #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
-            $_file_name = explode(".", $_exploded[5]);              
+            $_file_name = explode(".", $_exploded[5]);
             $a['size_title'] = strtoupper($_file_name[0]);
             $a['success'] = 'true';
+            return $a;
+        } elseif (count($_exploded) == 5) {                
+            #Format: 
+            #Citizens-of-Humanity_001n-001_brown_Regular_26
+            #Karen Kane_L09190W_Black_P_22.png 
+            # 0 Brand
+            # 1 style Id
+            # 2 Body Type
+            # 3 Size Tilte
+            # 4 Color Title and file Extention                
+            $a['brand'] = str_replace("-", " ", $_exploded[0]);
+            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            $a['body_type'] = strtolower($_exploded[3]) == 'p' ? 'plus' : 'regular';            
+            $_file_name = explode(".", $_exploded[4]);
+            $a['size_title'] = str_replace("-", "_", $_file_name[0]);
+            $a['success'] = 'true';            
             return $a;
         } else {
             return array('message' => 'Invalid Naming Format!', 'success' => 'false');
@@ -406,28 +422,37 @@ class ServiceController extends Controller {
     public function imageNameValidationAction($file_name)
     {
         $parsed_details = $this->breakFileNameProductImageUplaodNewFormat($file_name);
+        
+        
         #--------------------------------------------------------------
+        #4 --- Body Type (women regular, etc.)
+        
         if ($parsed_details['success'] == 'false') {
             return new Response(json_encode($this->responseArray($parsed_details['message'])));
         } else {
-            $image_name_break = explode('_', $file_name);
-            $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-', ' ', $image_name_break[0]), $image_name_break[1]);
-            if (count($data)==0) {
-                return new Response(json_encode( $this->responseArray('Product not found')));#------------------------------------------>
+            #1----- get brand by name
+            $brand = $this->get('admin.helper.brand')->findOneByName($parsed_details['brand']);    
+            if(!$brand){
+                return new Response(json_encode( $this->responseArray($parsed_details['brand'] . ' Brand name dose not exists')));#------------------------------------------>
             }
-            $parsed_details['product_id'] = $data[0]['id'];
-            $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
+            #2----- get product by style id & brand name
+            $data = $this->get('service.repo')->getProductDetailOnly($parsed_details['brand'], $parsed_details['style_id_number']);
+            if (count($data)==0) {
+                return new Response(json_encode( $this->responseArray('Style id for Product dose not exists')));#------------------------------------------>
+            }            
+            $parsed_details['product_id'] = $data[0]['id'];            
             $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
             $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitleBodyType(strtolower($parsed_details['size_title']),($parsed_details['body_type']), $parsed_details['product_id']);
-
+            #3 - -- check color
             if (count($product_color) == 0) {
                 return new Response(json_encode( $this->responseArray($parsed_details['color_title'] . ' color not found')));#------------------------------------------>
             }
+            #6 - -- check sise
             if(count($product_size) == 0){
                 return new Response(json_encode($this->responseArray($parsed_details['size_title'] . ' size not found'))) ;#------------------------------------------>
             }
-            //return new JsonResponse('Image Name is Validate');
-            return new Response(json_encode( Array('success' => 'True', 'message' => 'Image name is Valid')));
+            #-- vertical body type?? not decided            
+            return new Response(json_encode( Array('success' => true, 'message' => 'Image name is Valid')));
         }
     }
 }
