@@ -1280,6 +1280,7 @@ class WebServiceHelper
             foreach ($entity->getSaveLookItem() as $saveLookItem) {
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
+                $temp['product_image'] = $saveLookItem->getItems()->getProduct()->getDisplayProductColor()->getImage();
                 $temp['title'] = $saveLookItem->getItems()->getProduct()->getName();
                 $temp['item_name'] = $saveLookItem->getItems()->getProduct()->getItemName();
                 $temp['description'] = $saveLookItem->getItems()->getProduct()->getDescription();
