@@ -899,6 +899,13 @@ nws_braintree_delete_credit_card:
     auth_token: 00000000000000000000000000000
     braintreeToken: ktkbxd
 
+nws_get_order_sales_tax_user:
+    pattern: /nws/get_order_sales_tax_user
+    title: get_order_sales_tax_user
+    params:
+      auth_token: 121c421783cd4d71d871ec16a1296091
+      shipment_address: {"to_country":"US","to_zip":"07446","to_state":"NJ"}
+
 mcp_save_marker:
   pattern: /mcp/save_marker
   title: mcp_save_marker

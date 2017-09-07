@@ -420,14 +420,23 @@ class FNFUserController extends Controller
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
 
+            try {
+                //get order sales tax
+                $order_sales_tax = $this->getOrderSalesTaxUserAction(1);
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+            }
+
             if(is_array($fnfUser)){
+
                 if( $fnfUser['group_type'] == 1 ){
                     $res = $this->get('webservice.helper')->response_array(true, 'applicable for discount', true, array(
                         'discount_amount' => $fnfUser['discount'],
                         'min_amount'      => $fnfUser['minAmount'],
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => 0,
-                        'applicable'        => true
+                        'applicable'        => true,
+                        'sales_tax'        => $order_sales_tax
                     ));
                 }else if( $fnfUser['group_type'] == 2 )
                 {
@@ -436,7 +445,8 @@ class FNFUserController extends Controller
                         'min_amount'      => 0,
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => $fnfUser['discount'],
-                        'applicable'        => true
+                        'applicable'        => true,
+                        'sales_tax'        => $order_sales_tax
                     ));
                 }
 
@@ -446,7 +456,8 @@ class FNFUserController extends Controller
                     'min_amount'      => 0,
                     'group_type'      => 0,
                     'percentage_amount' => 0,
-                    'applicable'        => false
+                    'applicable'        => false,
+                    'sales_tax'        => $order_sales_tax
                 ));
             }
         } else {
@@ -468,5 +479,10 @@ class FNFUserController extends Controller
         $dicount_amount = ($discount / 100) * $amount;
 
         return $dicount_amount;
+    }
+
+    public function getOrderSalesTaxUserAction($callby=0) {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        return $this->get('webservice.helper')->getOrderSalesTaxUserAction($callby, $decoded);
     }
 }

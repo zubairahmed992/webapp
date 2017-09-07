@@ -325,5 +325,12 @@ class WSMiscController extends Controller {
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
         return new Response(json_encode('archive updated'));
     }
+
+    #----------------------- get order sales tax ------------------------------------------
+    public function getOrderSalesTaxUserAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $res = $this->get('webservice.helper')->getOrderSalesTaxUserAction($callby=0, $decoded);
+        return new Response($res);
+    }
 }
 
