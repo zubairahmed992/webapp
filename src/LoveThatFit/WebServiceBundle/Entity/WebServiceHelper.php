@@ -1544,7 +1544,7 @@ class WebServiceHelper
 
         $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
 
-         $data['img'] ['hdn_inner_site_index_url'] = "//".$_SERVER['HTTP_HOST']."/admin/inner_site/index";    
+         $data['img'] ['hdn_inner_site_index_url'] = "//".$_SERVER['HTTP_HOST']."/inner_site/index";    
          
          $data['img'] ['hdn_post_update_url'] = "//".$_SERVER['HTTP_HOST']."/registration/step_four_create/".$user[0]['id'];       
 
