@@ -658,10 +658,14 @@ class ProductSpecsController extends Controller
         $specs['sizes'] = $parsed_data['sizes'];
         $specs_obj->setSpecsJson(json_encode($specs));
         $msg_ar =  $this->get('pi.product_specification')->update($specs_obj);
-        $decode['pk'] = $specs_id;
-        $decode['name'] = 'fit_model_size';
-        $decode['value'] = $map['fit_model_size'];
-        $this->get('pi.product_specification')->dynamicCalculations($decode);
+        //-------------- Fill Size Calculation
+        if(isset($map['fit_model_size'])) {
+            $decode['pk'] = $specs_id;
+            $decode['name'] = 'fit_model_size';
+            $decode['value'] = $map['fit_model_size'];
+            $this->get('pi.product_specification')->dynamicCalculations($decode);
+        }
+
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs_id)));
     }
