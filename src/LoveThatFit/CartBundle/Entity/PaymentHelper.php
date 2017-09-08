@@ -195,10 +195,12 @@ class PaymentHelper
         Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
         Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
         Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+        $sales_tax  =   (isset($decoded['sales_tax']) ? $decoded['sales_tax'] : 0);
 
         $billing = $decoded["billing"];
         $saleObject = array(
             "amount" => $decoded['total_amount'],
+            "taxAmount" => $sales_tax,
             "paymentMethodNonce" => $decoded['payment_method_nonce'],
             'billing' => [
                 'firstName' => $billing['billing_first_name'],
