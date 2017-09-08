@@ -49,13 +49,16 @@ class OrderController extends Controller {
             $tracking_number = $shipping_information->TrackingNumber;
         }
 
+        $sales_tax = ($entity->getSalesTax()) ? $entity->getSalesTax() : 0;
+
         return $this->render('LoveThatFitAdminBundle:Order:show.html.twig', array(
                 'order' => $entity,
                 'trackingNumber' => $tracking_number,
                 'link'      => $postages_link,
                 'order_id' => $id,
                 'page_number' => $page_number,
-                'user_order' => $user_order
+                'user_order' => $user_order,
+                'sales_tax' => $sales_tax
             )
         );
     }

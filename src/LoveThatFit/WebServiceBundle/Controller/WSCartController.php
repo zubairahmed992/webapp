@@ -505,7 +505,7 @@ class WSCartController extends Controller
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
-        $salesTax = $decode['sales_tax'];
+        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -568,7 +568,7 @@ class WSCartController extends Controller
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
-        $salesTax = $decode['sales_tax'];
+        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 

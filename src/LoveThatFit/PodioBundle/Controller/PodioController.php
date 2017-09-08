@@ -113,7 +113,8 @@ class PodioController extends Controller {
                    'style_id' => $style_id,
                    'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : '',
                    'full_address_shipping' => ($full_address_shipping) ? $full_address_shipping : '',
-                   'user_email' => ($user_email) ? $user_email : ''
+                   'user_email' => ($user_email) ? $user_email : '',
+                   'sales_tax' => ($orders['sales_tax'] && $orders['sales_tax']>0) ? $orders['sales_tax'] : '0.00'
                 ); 
               //save podio order data
               $podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
