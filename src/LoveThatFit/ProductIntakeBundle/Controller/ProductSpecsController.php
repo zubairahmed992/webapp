@@ -151,14 +151,14 @@ class ProductSpecsController extends Controller
     }
     
     #----------------------- /product_intake/Prod_specs/update    
-    public function updateAction($id){  
+    public function updateAction($id){
         $msg_ar = $this->get('pi.product_specification')->updateAndFill($id, $_POST);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));        
     }
      #------------------------------------- /product_intake/Prod_specs/update_foo 
-    public function updateDynamicAction(){  
-        $decoded = $this->getRequest()->request->all();        
+    public function updateDynamicAction(){
+        $decoded = $this->getRequest()->request->all();
         $sizes_json = $this->get('pi.product_specification')->dynamicCalculations($decoded);
         return new Response(json_encode($sizes_json));
         return new Response(json_encode($decoded));
@@ -658,6 +658,10 @@ class ProductSpecsController extends Controller
         $specs['sizes'] = $parsed_data['sizes'];
         $specs_obj->setSpecsJson(json_encode($specs));
         $msg_ar =  $this->get('pi.product_specification')->update($specs_obj);
+        $decode['pk'] = $specs_id;
+        $decode['name'] = 'fit_model_size';
+        $decode['value'] = $map['fit_model_size'];
+        $this->get('pi.product_specification')->dynamicCalculations($decode);
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs_id)));
     }
