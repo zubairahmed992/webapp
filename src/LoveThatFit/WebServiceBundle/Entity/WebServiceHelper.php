@@ -1068,6 +1068,9 @@ class WebServiceHelper
     {
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
         $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
         $limit = $records_per_page * $page_no;
         $offset = $limit - $records_per_page;
@@ -1079,6 +1082,20 @@ class WebServiceHelper
         }
         $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach ($productlist as $key => $product) {
+
+            /* Selected Layer Name */
+            $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product['product_id']);
+            $selectedcategories = array_column($getselectedcategories, 'id');
+            $selectedlayername = "";
+            foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+                if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                    $selectedlayername = $value_withlayer['layer_name'];
+                    break;
+                }
+
+            }
+            /* Selected Layer Name */
+
             if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
                 $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
@@ -1086,6 +1103,12 @@ class WebServiceHelper
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
+
+            /* Selected Layer Name */
+            if(!empty($selectedlayername)){
+                $productlist[$key]['layer_name'] = (int)$selectedlayername;
+            }
+            /* Selected Layer Name */
         }
         return array('product_list' => $productlist, 'page_count' => $page_count);
     }
@@ -1095,6 +1118,9 @@ class WebServiceHelper
     {
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
         $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
         $limit = $records_per_page * $page_no;
         $offset = $limit - $records_per_page;
@@ -1106,6 +1132,20 @@ class WebServiceHelper
         }
         $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach ($productlist as $key => $product) {
+
+            /* Selected Layer Name */
+            $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product['product_id']);
+            $selectedcategories = array_column($getselectedcategories, 'id');
+            $selectedlayername = "";
+            foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+                if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                    $selectedlayername = $value_withlayer['layer_name'];
+                    break;
+                }
+
+            }
+            /* Selected Layer Name */
+
             if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
                 $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
@@ -1113,7 +1153,14 @@ class WebServiceHelper
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
+
+            /* Selected Layer Name */
+            if(!empty($selectedlayername)){
+                $productlist[$key]['layer_name'] = (int)$selectedlayername;
+            }
+            /* Selected Layer Name */
         }
+
         return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
 
     }
@@ -1129,6 +1176,10 @@ class WebServiceHelper
     public function productDetailWithImages($id, $user)
     {
         $product = $this->container->get('admin.helper.product')->find($id);
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
+
         if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
@@ -1245,6 +1296,20 @@ class WebServiceHelper
             }
         }
 
+
+        /* Selected Layer Name */
+        $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product->getId());
+        $selectedcategories = array_column($getselectedcategories, 'id');
+        $selectedlayername = "";
+        foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+            if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                $selectedlayername = $value_withlayer['layer_name'];
+                break;
+            }
+
+        }
+        /* Selected Layer Name */
+
         $p['item_details'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['item_details']);
         $p['item_details'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['item_details'].'</span>';
 
@@ -1252,6 +1317,9 @@ class WebServiceHelper
         $p['care_label'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['care_label']);
         $p['care_label'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['care_label'].'</span>';
         $p['title'] = $product->getName();
+        if(!empty($selectedlayername)){
+            $p['layer_name'] = (int)$selectedlayername;
+        }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
 
@@ -1303,6 +1371,10 @@ class WebServiceHelper
     public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user)
     {
         $product = $this->container->get('admin.helper.product')->find($id);
+
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
         if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
@@ -1381,9 +1453,25 @@ class WebServiceHelper
             );
         }
 
+        /* Selected Layer Name */
+        $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product->getId());
+        $selectedcategories = array_column($getselectedcategories, 'id');
+        $selectedlayername = "";
+        foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+            if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                $selectedlayername = $value_withlayer['layer_name'];
+                break;
+            }
+
+        }
+        /* Selected Layer Name */
+        $p['categories'] = $selectedcategories;
         $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
+        if(!empty($selectedlayername)){
+            $p['layer_name'] = (int)$selectedlayername;
+        }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
         return $p;
