@@ -1614,7 +1614,12 @@ class WebServiceHelper
         $data['device'] ['dv_px_per_inch_ratio'] = "15.29166666666667";  
         $data['device'] ['globle_pivot'] =  "64";
         $data['device'] ['dv_model'] =  $device->device_model;
-        $data['device'] ['dv_edit_type'] = 'registration'; 
+        if (!empty($user[0]['svg_paths'])) {
+            $data['device'] ['dv_edit_type'] = 'edit';
+        }else{
+            $data['device'] ['dv_edit_type'] = 'registration';     
+        }    
+        
         $data['device'] ['hdn_serverpath'] = "/";
         $data['device'] ['dv_scr_h'] =  $device->height_per_inch;
         $data['device'] ['dv_scr_w'] =  "960";
