@@ -111,6 +111,15 @@ class Categories
     protected $top_id;
 
     /**
+     * @var string $layer_name
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $layer_name;
+
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -316,6 +325,32 @@ class Categories
     public function getParentId() {
         return $this->parent_id;
     }
+
+
+
+    /**
+     * Set layer name
+     *
+     * @param string $layer_name
+     * @return Categories
+     */
+    public function setLayerName($layer_name)
+    {
+        $this->layer_name = $layer_name;
+
+        return $this;
+    }
+
+    /**
+     * Get layer name
+     *
+     * @return string
+     */
+    public function getLayerName()
+    {
+        return $this->layer_name;
+    }
+
 
     //-------------------------------------------------
     //-------------- Image Upload ---------------------

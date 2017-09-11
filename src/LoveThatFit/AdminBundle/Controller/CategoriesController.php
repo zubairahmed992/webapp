@@ -58,6 +58,15 @@ class CategoriesController extends Controller {
 
             /*Set Parent Id*/
             $selected_category_id = $request->request->get('category_id');
+            $layer_name= $request->request->get('layer_name');
+
+            /* Save Layer Name*/
+            if(!empty($layer_name)){
+                $entity->setLayerName($layer_name);
+            }else{
+                $entity->setLayerName(null);
+            }
+
             $selected_category_gender = $this->get('admin.helper.Categories')->findById($selected_category_id);
 
             if($selected_category_id != 0)
@@ -138,6 +147,14 @@ class CategoriesController extends Controller {
             $default_category_id = $request->request->get('selected_id');
             $selected_category_id = $request->request->get('category_id');
             $category_option = $request->request->get('category_option');
+            $layer_name= $request->request->get('layer_name');
+
+            /* Save Layer Name*/
+            if(!empty($layer_name)){
+                $entity->setLayerName($layer_name);
+            }else{
+                $entity->setLayerName(null);
+            }
 
             $message_array = $this->get('admin.helper.Categories')->update($entity, $selected_category_id);
 
