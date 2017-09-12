@@ -32,22 +32,23 @@ class TaxJarApiHelper
         if (isset($data) && !empty($data)) {
             //Authentication
             $this->client = TaxJar\Client::withApiKey($this->api_key);
-
-            //Calculate sales tax for an order
-            $order_taxes_taxjar = $this->client->taxForOrder([
-              'from_country' => $data['from_country'],
-              'from_zip' => $data['from_zip'],
-              'from_state' => $data['from_state'],
-              'to_country' => $data['to_country'],
-              'to_zip' => $data['to_zip'],
-              'to_state' => $data['to_state'],
-              'amount' => $data['amount'],
-              'shipping' => $data['shipping'],
-              'line_items' => $data['order_line_items']
-            ]);
-            //echo "<pre>"; print_r($order_taxes_taxjar);
-            //echo $order_taxes_taxjar->amount_to_collect;
-            return $order_taxes_taxjar->amount_to_collect;
+            try {
+              //Calculate sales tax for an order
+              $order_taxes_taxjar = $this->client->taxForOrder([
+                'from_country' => $data['from_country'],
+                'from_zip' => $data['from_zip'],
+                'from_state' => $data['from_state'],
+                'to_country' => $data['to_country'],
+                'to_zip' => $data['to_zip'],
+                'to_state' => $data['to_state'],
+                'amount' => $data['amount'],
+                'shipping' => $data['shipping'],
+                'line_items' => $data['order_line_items']
+              ]);
+              return $order_taxes_taxjar->amount_to_collect;
+            } catch (TaxJar\Exception $e) {
+                return array('error_code' => $e->getStatusCode(), 'error_message' => ''.$e->getMessage().'');
+            }
         }
     }
 }
