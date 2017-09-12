@@ -478,23 +478,23 @@
                     console.log(min_max_calc_val);
                }
             });
-            $(document).on("keyup", ".input-mini", function(){
+            $(document).on("focusout", ".input-mini", function(){
                 var min_max_calc_actual_val = $.trim( $(this).val() );
                 console.log(min_max_calc)
               if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
-                  console.log()                  
+                  console.log()
               } else if(min_max_calc.match('min_calc')) {
                   alert("Must Be Equal or Grater than Value "+ min_max_calc)
                   $(this).val(min_max_calc_val)
               }
               if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
-                  console.log()                  
+                  console.log()
               } else if(min_max_calc.match('max_calc')) {
                   alert("Must Be Equal or Less than Value "+ min_max_calc)
                  $(this).val(min_max_calc_val)
-              }    
+              }
             });
-            
+
               // --- Stay Page Position same when Reload Page 
                 $(window).scroll(function() {
                     sessionStorage.scrollTop = $(this).scrollTop();
