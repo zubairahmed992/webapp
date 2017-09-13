@@ -1787,6 +1787,27 @@ class WebServiceHelper
                     'order_line_items' => $order_line_items
                 );
                 $order_sales_tax = $this->container->get('taxjar.helper.salestaxapi')->createOrderSalesTax($data_order_sales);
+                if(is_float($order_sales_tax) || is_numeric($order_sales_tax)) {
+                    $order_sales_tax = $order_sales_tax;
+                } else {
+                    $taxjar_error_messages = array(400 => 'Bad Request – Your request format is bad.', 
+                                        401 => 'Unauthorized – Your API key is wrong.', 
+                                        403 => 'Forbidden – The resource requested is not authorized for use.',
+                                        404 => 'Not Found – The specified resource could not be found.',
+                                        405 => 'Method Not Allowed – You tried to access a resource with an invalid method.',
+                                        406 => 'Not Acceptable – Your request is not acceptable.',
+                                        410 => 'Gone – The resource requested has been removed from our servers.',
+                                        422 => 'Unprocessable Entity – Your request could not be processed.',
+                                        429 => 'Too Many Requests – You’re requesting too many resources! Slow down!',
+                                        500 => 'Internal Server Error – We had a problem with our server. Try again later.',
+                                        503 => 'Service Unavailable – We’re temporarily offline for maintenance. Try again later.');
+
+                    return $this->response_array(false, ''.htmlspecialchars($taxjar_error_messages[$order_sales_tax['error_code']]).'', true, array(
+                        'sales_tax' => 0,
+                        'error' => ''.htmlspecialchars($order_sales_tax['error_message']).'',
+                        'code' => $order_sales_tax['error_code']
+                    ));
+                }
 
                 if($callby == 1){
                     return $order_sales_tax;

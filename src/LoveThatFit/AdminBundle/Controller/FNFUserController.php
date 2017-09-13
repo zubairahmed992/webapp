@@ -420,9 +420,22 @@ class FNFUserController extends Controller
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
 
+            $order_sales_tax = 0;
+            $error_sales_tax = NULL;
             try {
                 //get order sales tax
                 $order_sales_tax = $this->getOrderSalesTaxUserAction(1);
+                if(is_float($order_sales_tax) || is_numeric($order_sales_tax)) {
+                    $order_sales_tax = $order_sales_tax;
+                } else {
+                    $data_sales = json_decode($order_sales_tax);
+                    $order_sales_tax = $data_sales->data->sales_tax;
+                    $error_sales_tax = array(
+                                        'error' => $data_sales->data->error,
+                                        'code' => $data_sales->data->code,
+                                        'message' => $data_sales->message
+                                    );
+                }
             } catch(\Exception $e) {
                 // log $e->getMessage()
             }
@@ -436,7 +449,8 @@ class FNFUserController extends Controller
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => 0,
                         'applicable'        => true,
-                        'sales_tax'        => $order_sales_tax
+                        'sales_tax'        => $order_sales_tax,
+                        'error_sales_tax'  => $error_sales_tax
                     ));
                 }else if( $fnfUser['group_type'] == 2 )
                 {
@@ -446,7 +460,8 @@ class FNFUserController extends Controller
                         'group_type'      => $fnfUser['group_type'],
                         'percentage_amount' => $fnfUser['discount'],
                         'applicable'        => true,
-                        'sales_tax'        => $order_sales_tax
+                        'sales_tax'        => $order_sales_tax,
+                        'error_sales_tax'  => $error_sales_tax
                     ));
                 }
 
@@ -457,7 +472,8 @@ class FNFUserController extends Controller
                     'group_type'      => 0,
                     'percentage_amount' => 0,
                     'applicable'        => false,
-                    'sales_tax'        => $order_sales_tax
+                    'sales_tax'        => $order_sales_tax,
+                    'error_sales_tax'  => $error_sales_tax
                 ));
             }
         } else {
