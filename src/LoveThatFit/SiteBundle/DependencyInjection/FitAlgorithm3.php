@@ -210,6 +210,11 @@ class FitAlgorithm3 {
                         }
                  }
                  $fb[$size_identifier]['message'] =$this->get_fitting_alert_message($fb[$size_identifier]['status']);
+                 
+                 $fb[$size_identifier]['simplified_messages'] = $this->simplify_fit_area_messaging($fb[$size_identifier]);                 
+                 $fb[$size_identifier]['simplified_message_text'] = $this->message_to_text($fb[$size_identifier]['simplified_messages']);
+                 
+                 
                  $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
                  if ($hem_bits) {
                         $fb[$size_identifier]['hem_advice'] = $hem_bits;
@@ -805,6 +810,89 @@ class FitAlgorithm3 {
         }
     }
     
+    #-------------------------- Simplified Messaging Bits 
+    ############################################################
+     private function message_to_text($fp) {
+        $str = '';
+        if (is_array($fp)) {
+            foreach ($fp as $k => $v) {
+                if($str == ''){
+                    $str = $k . ': ' . $v;
+                }else{
+                    $str = $str . ', ' . $k . ': ' . $v;
+                }
+            }
+        }
+        return $str;
+    }
+    #-------------------------------------------------------->
+     private function simplify_fit_area_messaging($size, $hem_advice=false){
+        #$target=$this->product->getClothingType()->getTarget();
+        $sm=array();
+        if (array_key_exists('bust', $size['fit_points'])) {
+            $sm['bust'] = $size['fit_points']['bust']['message'];
+        }
+        if (array_key_exists('thigh', $size['fit_points'])) {
+            $sm['thigh'] = $size['fit_points']['thigh']['message'];
+        }        
+        #-------------- inseam/hem length        
+        if (array_key_exists('inseam', $size['fit_points'])) {
+            $sm['inseam'] = $size['fit_points']['inseam']['message'];
+        }
+        #--------------
+        if (array_key_exists('high_hip', $size['fit_points']) && array_key_exists('low_hip', $size['fit_points'])) {
+            $sm['hip'] = $this->simplify_messaging($size['fit_points']['low_hip'], $size['fit_points']['high_hip']);
+        } else {
+            if (array_key_exists('high_hip', $size['fit_points'])) {
+                $sm['hip'] = $size['fit_points']['high_hip']['message'];
+            }
+            if (array_key_exists('low_hip', $size['fit_points'])) {
+                $sm['hip'] = $size['fit_points']['low_hip']['message'];
+            }
+        }
+        #--------------
+        if (array_key_exists('waist', $size['fit_points']) && array_key_exists('abdomen', $size['fit_points'])) {            
+            $sm['waist'] = $this->simplify_messaging($size['fit_points']['waist'], $size['fit_points']['abdomen']);
+        } else {
+            if (array_key_exists('waist', $size['fit_points'])) {
+                $sm['waist'] = $size['fit_points']['waist']['message'];
+            }
+            if (array_key_exists('abdomen', $size['fit_points'])) {
+                $sm['waist'] = $size['fit_points']['abdomen']['message'];
+            }
+        }
+        
+        if(array_key_exists('hem_advice', $size) && $hem_advice){
+                $sm['hem'] =$size['hem_advice']['message'];
+        }
+        return $sm;
+    }
+   
+    private function simplify_messaging($fp1, $fp2){
+        #If messaging is not the same, does one fit point prevent someone from fitting into a size? If so, display messaging for that fit point        
+        if ($fp1['status'] <= -4 || $fp2['status'] <= -4) {
+            return $fp1['message'];
+        }else{
+            #4.     If both fit points have the same fit priority and neither prevents someone from fitting into a size, report the fit point with the lower fit index. 
+            if ($fp1['fit_priority'] == $fp2['fit_priority']) {
+                $diff = $fp1['body_fx'] < $fp2['body_fx'] ? $fp2['body_fx'] - $fp1['body_fx'] : $fp1['body_fx'] - $fp2['body_fx'];
+                #5.	In the rare case that both fit points have same fit priority and fit index—in this case we are counting two fit indexes as the same if they are within + or - .5 of each other—
+                if ($diff > 0.5) {
+                    return $fp1['fit_priority'] < $fp2['fit_priority'] ? $fp1['message']: $fp2['message'];
+                } else {
+                    # report messaging for fit point with the least difference between body dimension and garment dimension.                    
+                    if (($fp1['garment_measurement_stretch_fit'] - $fp1['body_measurement']) > ($fp2['garment_measurement_stretch_fit'] - $fp2['body_measurement'])) {
+                        return $fp2['message'];
+                    }else{
+                        return $fp1['message'];
+                    }
+                }
+                #return $fp1['fit_priority'] < $fp2['fit_priority'] ? $fp1['message']: $fp2['message'];                
+            } else {
+              return $fp1['fit_priority'] < $fp2['fit_priority'] ? $fp2['message']: $fp1['message'];
+            }
+        }
+    }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~> Hem Bits
     #------------------------------------------------     
@@ -1078,7 +1166,6 @@ class FitAlgorithm3 {
         return null;
     }
     # -----------------------------------------------------
-
     private function strip_for_services($sizes, $recommendation) {
         $product_id=$this->product->getId();
         $brand_name = $this->product->getBrand()->getName();
@@ -1088,6 +1175,8 @@ class FitAlgorithm3 {
             $sizes[$key]['product_id']=$product_id;
             $sizes[$key]['brand']=$brand_name;
             $sizes[$key]['style']=$style;            
+            unset($sizes[$key]['simplified_messages']);
+            unset($sizes[$key]['simplified_message_text']);
             unset($sizes[$key]['min_fx']);
             unset($sizes[$key]['max_fx']);
             unset($sizes[$key]['high_fx']);
@@ -1107,8 +1196,8 @@ class FitAlgorithm3 {
             }
             $sizes[$key]['price'] = 0;
             if (array_key_exists('fit_points', $sizes[$key])) {
-                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
-                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
+                $sizes[$key]['fitting_alerts'] =$this->simplify_fit_area_messaging($sizes[$key], true); 
+                $sizes[$key]['summary'] = $this->message_to_text($sizes[$key]['fitting_alerts']);
             }else{
                 $sizes[$key]['fitting_alerts'] = null;
                 $sizes[$key]['summary'] = null;
@@ -1122,6 +1211,50 @@ class FitAlgorithm3 {
 
         return $sizes;
     }
+    
+//    private function strip_for_services($sizes, $recommendation) {
+//        $product_id=$this->product->getId();
+//        $brand_name = $this->product->getBrand()->getName();
+//        $style = $this->product->getName()?$this->product->getName():'';
+//        foreach ($sizes as $key => $value) {
+//            $sizes[$key]['size_id']=$sizes[$key]['id'];
+//            $sizes[$key]['product_id']=$product_id;
+//            $sizes[$key]['brand']=$brand_name;
+//            $sizes[$key]['style']=$style;            
+//            unset($sizes[$key]['min_fx']);
+//            unset($sizes[$key]['max_fx']);
+//            unset($sizes[$key]['high_fx']);
+//            unset($sizes[$key]['low_fx']);
+//            unset($sizes[$key]['avg_fx']);
+//            
+//            unset($sizes[$key]['variance']);
+//            unset($sizes[$key]['description']);
+//            if ($recommendation!=null && array_key_exists('id', $recommendation)){
+//                if ($recommendation['id']==$sizes[$key]['id']){
+//                    $sizes[$key]['recommended'] = true;
+//                }else{
+//                    $sizes[$key]['recommended'] = false;
+//                }
+//            }else{
+//                    $sizes[$key]['recommended'] = false;
+//            }
+//            $sizes[$key]['price'] = 0;
+//            if (array_key_exists('fit_points', $sizes[$key])) {
+//                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
+//                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
+//            }else{
+//                $sizes[$key]['fitting_alerts'] = null;
+//                $sizes[$key]['summary'] = null;
+//            }
+//            if (array_key_exists('hem_advice', $sizes[$key])) {
+//                unset($sizes[$key]['hem_advice']);                
+//            }
+//            
+//            unset($sizes[$key]['fit_points']);
+//        }
+//
+//        return $sizes;
+//    }
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

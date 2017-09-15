@@ -173,8 +173,26 @@
                                                     {{ (size_specs.hem_advice.item_inseam is defined) ? 'hem length:'~size_specs.hem_advice.item_inseam~' , '}}                                             
                                                     &nbsp;)
                                             </span>
+                                            <span  style="font-size:12px; float: right;">
+                                                    <b>Simplified Message:</b> &nbsp;
+                                                    (&nbsp;
+                                                    {{size_specs.simplified_message_text}}                                            
+                                                    &nbsp;)
+                                            </span>        
                                         </td>            
                                     </tr>
+                                     {% else %}
+                                         <tr  style="background-color: #F2F2F2">
+                                        <td colspan="20">
+                                            <span  style="font-size:12px; float: right;">
+                                                    <b>Simplified Message:</b> &nbsp;
+                                                    (&nbsp;
+                                                    {{size_specs.simplified_message_text}}                                            
+                                                    &nbsp;)
+                                            </span>
+                                        </td>            
+                                    </tr>
+                            
                             {% endif %}
                             </table>
                         </td>   
