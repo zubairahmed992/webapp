@@ -76,6 +76,7 @@ class WSMiscController extends Controller {
                     array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                     array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
+                    array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com'),
                 ),
                 'count'=>6,
                 'message' => 'configuration for build deployment',
@@ -109,7 +110,8 @@ class WSMiscController extends Controller {
                     'dba-dev'=>array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
-                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
+                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
+                    'rnd'=>array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com')
                 ),
                 'count'=>22,
                 'message' => 'configuration for build deployment',
