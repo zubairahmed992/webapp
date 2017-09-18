@@ -946,7 +946,6 @@ class WSCartController extends Controller
     public function nwsBraintreeUpdateCreditCardAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        var_dump($decoded);
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {
