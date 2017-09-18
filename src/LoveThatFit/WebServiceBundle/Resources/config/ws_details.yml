@@ -876,15 +876,15 @@ nws_braintree_save_credit_card:
   title: Save user payment method
   params:
     auth_token: 00000000000000000000000000000
-    paymentMethodNonce: 00000-00000000-00000000000-000000
+    payment_method_nonce: 00000-00000000-00000000000-000000
 
 nws_braintree_update_credit_card:
   pattern: /nws/braintree_update_credit_card
   title: Update user payment method
   params:
     auth_token: 00000000000000000000000000000
-    paymentMethodNonce: 00000-00000000-00000000000-000000
-    braintreeToken: ktkbxd
+    payment_method_nonce: 00000-00000000-00000000000-000000
+    token: ktkbxd
 
 nws_braintree_get_all_credit_cards:
   pattern: /nws/braintree_get_credit_cards
@@ -898,7 +898,7 @@ nws_braintree_delete_credit_card:
   title: delete user payment method
   params:
     auth_token: 00000000000000000000000000000
-    braintreeToken: ktkbxd
+    token: ktkbxd
 
 nws_get_order_sales_tax_user:
   pattern: /nws/get_order_sales_tax_user
