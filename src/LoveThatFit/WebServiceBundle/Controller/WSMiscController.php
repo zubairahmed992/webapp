@@ -76,6 +76,7 @@ class WSMiscController extends Controller {
                     array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                     array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
+                    array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com'),
                 ),
                 'count'=>6,
                 'message' => 'configuration for build deployment',
@@ -92,11 +93,15 @@ class WSMiscController extends Controller {
                     'lab'=>array('build_type'=>'lab','url'=>'lab.selfiestyler.com'),
                     'Local Server'=>array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     'Ibrahim'=>array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
-                    'Babar'=>array('build_type'=>'babar','url'=>'192.168.0.119'),
-                    'Saddam'=>array('build_type'=>'saddam','url'=>'192.168.0.223'),
+                    'Babar'=>array('build_type'=>'babar','url'=>'babar.selfiestyler.com'),
+                    'Haris'=>array('build_type'=>'haris','url'=>'haris.selfiestyler.com'),
+                    'ovais'=>array('build_type'=>'ovais','url'=>'ovais.selfiestyler.com'),
+                    'shakeel'=>array('build_type'=>'shakeel','url'=>'shakeel.selfiestyler.com'),
+                    'aijaz'=>array('build_type'=>'aijaz','url'=>'aijaz.selfiestyler.com'),
+                    'Saddam'=>array('build_type'=>'saddam','url'=>'sadam.selfiestyler.com'),
                     'Kamran'=>array('build_type'=>'kamran','url'=>'192.168.0.182'),
-                    'Raghib'=>array('build_type'=>'raghib','url'=>'192.168.0.103'),
-                    'Umer'=>array('build_type'=>'umer','url'=>'192.168.0.188'),
+                    'Raghib'=>array('build_type'=>'raghib','url'=>'raghib.selfiestyler.com'),
+                    'Umer'=>array('build_type'=>'umer','url'=>'umer.selfiestyler.com'),
                     'Riaz'=>array('build_type'=>'riaz','url'=>'192.168.0.121'),
                     'Ibrahim-laptop'=>array('build_type'=>'Ibrahim-laptop','url'=>'192.168.0.169'),
                     'QA Server'=>array('build_type'=>'qa','url'=>'qa.selfiestyler.com'),
@@ -105,7 +110,8 @@ class WSMiscController extends Controller {
                     'dba-dev'=>array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
-                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
+                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
+                    'rnd'=>array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com')
                 ),
                 'count'=>22,
                 'message' => 'configuration for build deployment',
@@ -279,6 +285,7 @@ class WSMiscController extends Controller {
                     $product = $this->get('admin.helper.product')->find($product_information[$product_key]['product_id']);
                     $product_information[$product_key]['target'] = $product->getClothingType()->getTarget();
                     $product_images = $this->get('webservice.helper')->productImageById($product_information[$product_key]['product_id']);
+
                     if (!empty($product_images)) {
                         $product_information[$product_key]['product_image'] = $product_images[0]['product_image'];
                     }
@@ -324,6 +331,13 @@ class WSMiscController extends Controller {
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
         return new Response(json_encode('archive updated'));
+    }
+
+    #----------------------- get order sales tax ------------------------------------------
+    public function getOrderSalesTaxUserAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $res = $this->get('webservice.helper')->getOrderSalesTaxUserAction($callby=0, $decoded);
+        return new Response($res);
     }
 }
 

@@ -505,6 +505,7 @@ class WSCartController extends Controller
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
+        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -535,7 +536,8 @@ class WSCartController extends Controller
             'shipping_state' => $billing['shipping_state'],
             'billing_first_name' => $billing['billing_first_name']. " ". $billing['billing_last_name'],
             'billing_phone_no'  => $billing['billing_phone'],
-            'billing_address1'  => $billing['billing_address1']
+            'billing_address1'  => $billing['billing_address1'],
+            'sales_tax'  => $salesTax
         );
 
         $this->get('mail_helper')->sendSuccessPurchaseEmail($user, $dataArray);
@@ -566,6 +568,7 @@ class WSCartController extends Controller
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
+        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -595,7 +598,8 @@ class WSCartController extends Controller
             'shipping_country' => $billing['shipping_country'],
             'shipping_state' => $billing['shipping_state'],
             'billing_first_name' => $billing['billing_first_name']. " ". $billing['billing_last_name'],
-            'billing_phone_no'  => $billing['billing_phone']
+            'billing_phone_no'  => $billing['billing_phone'],
+            'sales_tax'  => $salesTax
         );
 
         $this->get('mail_helper')->sendPurchaseEmailToAdmin($user, $dataArray);

@@ -443,4 +443,9 @@ class CategoriesHelper {
         return $this->repo->findOneByGenderNameCategory($gender, $name, $cat_id);
     }
 
+    #-----------------Get Selected Categories pull from category_product---------------------------------#
+    public function getAllCategoriesWithLayerName(){
+        return $this->repo->getAllCategoriesWithLayerName();
+    }
+
 }

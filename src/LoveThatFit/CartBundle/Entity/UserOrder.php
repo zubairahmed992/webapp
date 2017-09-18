@@ -276,6 +276,12 @@ class UserOrder
      */
     private $shipment_json;
 
+    /**
+     * @ORM\Column(type="float")
+     *
+     */
+    private $sales_tax = 0;
+
 
     /**
      * Get id
@@ -1186,5 +1192,28 @@ class UserOrder
         $this->podio_orders = $podioOrders;
     
         return $this;
+    }
+
+    /**
+     * Set sales_tax
+     *
+     * @param float $salesTax
+     * @return UserOrder
+     */
+    public function setSalesTax($salesTax)
+    {
+        $this->sales_tax = $salesTax;
+    
+        return $this;
+    }
+
+    /**
+     * Get sales_tax
+     *
+     * @return float 
+     */
+    public function getSalesTax()
+    {
+        return $this->sales_tax;
     }
 }

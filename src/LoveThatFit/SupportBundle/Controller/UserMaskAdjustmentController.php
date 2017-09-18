@@ -321,6 +321,15 @@ class UserMaskAdjustmentController extends Controller {
         ##### new code from im branch
         $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
 
+        /* Get all Retouch images */
+        $original_filename = $archive->getImageName('original');
+        $retouch_filename = str_ireplace("original", "retouch", $original_filename);
+        $retouch_filename = substr($retouch_filename, 0, -4);
+        $user_id = $user->getId();
+        $directory_path = $archive->getUploadRootDir();
+        $retouch_files = glob($directory_path."/".$retouch_filename."*.*");
+        $retouch_filecount = count($retouch_files);
+
         return $this->render('LoveThatFitSupportBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
                     'entity' => $user, #------>
@@ -341,6 +350,8 @@ class UserMaskAdjustmentController extends Controller {
                     'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                     'pivot_position' => $pivot_position,
                     'bra_size_body_shape' => json_encode($bra_size_body_shape),
+                    'retouch_filename' => $retouch_filename,
+                    'retouch_filecount' => $retouch_filecount,
                 ));
     }
 
@@ -449,5 +460,19 @@ class UserMaskAdjustmentController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
         $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
         return $decoded;        
+    }
+
+    public function uploadRetouchImageAction(Request $request) {
+        $params = $request->request->all();
+        $user_id = $params['upl_entity_id'];
+        $archive_id = $params['upl_archive_id'];
+        $file = $_FILES["upl_user_retouch"];
+
+        /* Save Touch image*/
+        $this->get('user.helper.userarchives')->saveretouchimage($params,$file);
+
+        return $this->redirect($this->generateUrl('support_user_profile_archives', array('user_id' => $user_id,
+            'archive_id' => $archive_id)));
+
     }
 }
