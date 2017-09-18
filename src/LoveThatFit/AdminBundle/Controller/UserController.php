@@ -274,13 +274,21 @@ class UserController extends Controller
     }
 
 //----------------------User profile update-------------------------------------------------------------
-    public function updateUserProfileAction($id)
+    public function updateUserProfileAction(Request $request, $id)
     {
         $entity          = $this->get('user.helper.user')->find($id);
         $measurement     = $entity->getMeasurement();
         $measurementForm = $this->createForm(new UserMeasurementType(), $measurement);
         $userForm        = $this->createForm(new UserProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
+
+        $selected_account_type = $request->request->get('acct_type');
+        if(!empty($selected_account_type)){
+            $entity->setAcctType($selected_account_type);
+        }else{
+            $entity->setAcctType(null);
+        }
+        $password_form   = $this->password_update_form($entity);
         $this->get('user.helper.user')->saveUser($entity);
         $this->get('session')->setFlash('success', 'Updated Successfuly');
         return $this->render('LoveThatFitAdminBundle:User:edit.html.twig', array(
@@ -288,6 +296,7 @@ class UserController extends Controller
             'userform'    => $userForm->createView(),
             'measurement' => $measurement,
             'entity'      => $entity,
+            'password_form' => $password_form->createView(),
         ));
     }
 
