@@ -315,7 +315,7 @@ class FitAlgorithm3 {
             'ideal_body_size_high' => $this->to_frac($fp_specs['ideal_body_size_high']),
             'max_body_measurement' => $this->to_frac($fp_specs['max_body_measurement']),            
             'calc_max_body_measurement' => $this->to_frac($fp_specs['max_calculated']),
-            'grade_rule' => $fp_specs['grade_rule'],
+            'grade_rule' => $this->to_frac($fp_specs['grade_rule']),
             'fit_priority' => $fp,
             'body_measurement' => $body,                 
             'min_fx' => $this->scale['between_min_low']['start'] * $fp,
@@ -323,8 +323,8 @@ class FitAlgorithm3 {
             'high_fx' => $this->scale['between_mid_high']['start'] * $fp,
             'low_fx' => $this->scale['between_low_mid']['start'] * $fp,
             'avg_fx' => $fp,
-            'garment_measurement_flat' => $fp_specs['garment_measurement_flat'],
-            'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],
+            'garment_measurement_flat' => $this->to_frac($fp_specs['garment_measurement_flat']),
+            'garment_measurement_stretch_fit' => $this->to_frac($fp_specs['garment_measurement_stretch_fit']),
         );
         $message_array = $this->calculate_fitindex($fp_measurements);
         $fp_measurements['fits'] = $message_array['fits'];
