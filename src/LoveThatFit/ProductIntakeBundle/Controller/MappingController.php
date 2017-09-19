@@ -255,6 +255,15 @@ class MappingController extends Controller
         return $this->redirect($this->generateUrl('product_intake_specs_mapping_index'));
     
     }
-    
+   /*
+   *    Get Specs List of which have Mapping Title
+   */
+    public function getSpecsListAction($title)
+    {
+        $ps = $this->get('pi.product_specification')->findOneByTitle($title);
+        return $this->render('LoveThatFitProductIntakeBundle:Mapping:specs_list.html.twig', array(
+            'specs' => $ps
+        ));
+    }
     
 }

@@ -234,6 +234,7 @@ class ProductSpecificationHelper {
                 'success' => false,
             );
         }        
+        
         if ($specs){
             $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
             $specs_obj->setSpecsJson(json_encode($specs));
@@ -288,13 +289,26 @@ class ProductSpecificationHelper {
         $fm_size = $str[1];
         $attrib = $str[3];
 
-        $specs['sizes'][$fm_size][$fp][$attrib] = $value;
+        #$specs['sizes'][$fm_size][$fp][$attrib] = $value;
+        $attrib_calc = str_replace("actual", "calc", $attrib);
         $ratio = $value / $specs['sizes'][$fm_size][$fp]['fit_model'];
-
+        
         #--------- calculate grade rule
-        foreach ($specs['sizes'] as $size => $fit_points) {
-            $specs['sizes'][$size][$fp][$attrib] = $ratio * $fit_points[$fp]['fit_model'];
+        if (number_format((float) $specs['sizes'][$fm_size][$fp][$attrib_calc], 2, '.', '') == number_format((float) $value, 2, '.', '')) {
+            foreach ($specs['sizes'] as $size => $fit_points) {
+                $specs['sizes'][$size][$fp][$attrib] = $specs['sizes'][$size][$fp][$attrib_calc];
+            }
+        } else {
+            foreach ($specs['sizes'] as $size => $fit_points) {
+                $specs['sizes'][$size][$fp][$attrib] = $ratio * $fit_points[$fp]['fit_model'];
+            }
         }
+//                  if (strpos(strtolower($attrib), 'min') !== false) {
+//                    $specs['sizes'][$size][$fp][$attrib] = $fit_points[$fp]['fit_model'] - (2.5 * ($fit_points[$fp]['ideal_high'] - $fit_points[$fp]['ideal_low']));
+//                } else {
+//                    $specs['sizes'][$size][$fp][$attrib] = $fit_points[$fp]['fit_model'] + (2.5 * ($fit_points[$fp]['ideal_high'] - $fit_points[$fp]['ideal_low']));
+//                }
+
         return $specs;
     }
 
@@ -886,9 +900,13 @@ class ProductSpecificationHelper {
     #---------------------- CSV File Downlod Links
     public function csvDownloads($csv_files) {
         $csv_file_path = array();
-        foreach ($csv_files as $k => $v) {
-            $csv_file = $this->find($v->getId());
-            $csv_file_path[$v->getId()] = $csv_file->getWebPath();
+        if(count($csv_files) == 1){
+             $csv_file_path[$csv_files->getId()] = $csv_files->getWebPath();
+        } else {
+            foreach ($csv_files as $k => $v) {
+                $csv_file = $this->find($v->getId());
+                $csv_file_path[$v->getId()] = $csv_file->getWebPath();
+            }
         }
         return $csv_file_path;
     }

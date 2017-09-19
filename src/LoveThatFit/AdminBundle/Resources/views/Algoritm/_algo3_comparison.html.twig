@@ -98,10 +98,11 @@
                                         
                                         <td>{{fp_specs.grade_rule}}</td>
                                         <td>{{fp_specs.garment_measurement_flat}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat * 0.92}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat * 0.85}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat * 0.75}}</td>
                                         <td>{{fp_specs.garment_measurement_stretch_fit}}</td>
+                                        <td>{{fp_specs.garment_measurement_stretch_fit * 0.92}}</td>
+                                        <td>{{fp_specs.garment_measurement_stretch_fit * 0.85}}</td>
+                                        <td>{{fp_specs.garment_measurement_stretch_fit * 0.75}}</td>
+                                        
                                         
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
                                         <td>{{fp_specs.min_body_measurement}}</td>                                        
@@ -172,8 +173,26 @@
                                                     {{ (size_specs.hem_advice.item_inseam is defined) ? 'hem length:'~size_specs.hem_advice.item_inseam~' , '}}                                             
                                                     &nbsp;)
                                             </span>
+                                            <span  style="font-size:12px; float: right;">
+                                                    <b>Simplified Message:</b> &nbsp;
+                                                    (&nbsp;
+                                                    {{size_specs.simplified_message_text}}                                            
+                                                    &nbsp;)
+                                            </span>        
                                         </td>            
                                     </tr>
+                                     {% else %}
+                                         <tr  style="background-color: #F2F2F2">
+                                        <td colspan="20">
+                                            <span  style="font-size:12px; float: right;">
+                                                    <b>Simplified Message:</b> &nbsp;
+                                                    (&nbsp;
+                                                    {{size_specs.simplified_message_text}}                                            
+                                                    &nbsp;)
+                                            </span>
+                                        </td>            
+                                    </tr>
+                            
                             {% endif %}
                             </table>
                         </td>   

@@ -1631,7 +1631,7 @@ class ProductRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery("
      SELECT p.id,p.name FROM LoveThatFitAdminBundle:Product p
-     WHERE p.name LIKE :term"
+     WHERE p.name LIKE :term AND p.deleted !=1 "
             )->setParameters(array('term' => $term . '%'));
 
         try {

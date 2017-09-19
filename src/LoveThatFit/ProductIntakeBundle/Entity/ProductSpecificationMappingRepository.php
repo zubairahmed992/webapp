@@ -16,4 +16,15 @@ class ProductSpecificationMappingRepository extends EntityRepository{
         }
     }
 
+    public function findOneByTitle($title) {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT psm FROM LoveThatFitProductIntakeBundle:ProductSpecificationMapping psm WHERE psm.title = :title")
+            ->setParameters(array('title' => $title));
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+
 }
