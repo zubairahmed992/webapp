@@ -37,6 +37,12 @@ pi_ws_item_image_exists:
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:itemImageExists}
     requirements:
         _method:  get
+
+pi_ws_imagename_validation:
+    pattern: /pi/ws/imagename_validation/{file_name}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:imageNameValidation}
+    requirements:
+        _method:  get
         
         
       

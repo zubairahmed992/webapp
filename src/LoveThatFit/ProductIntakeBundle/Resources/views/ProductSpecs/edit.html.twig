@@ -26,12 +26,6 @@
         font-weight: bold;
     }
 </style>
-
-{# Mutiple slect Drop Down JS and CSS #}
-  <link href="https://silviomoreto.github.io/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-  <script src="https://silviomoreto.github.io/bootstrap-select/dist/js/bootstrap-select.min.js"> </script>
-
-
   
 <script>
     var fit_array=[];
@@ -339,7 +333,7 @@
         })  
        #}
            //----------------------------------------
-            function reload_page(){
+            function reload_page(){                
                 tab_id=$('#default_tab').val();
                 url = window.location.href; 
                 var str = url.split("/");                
@@ -446,6 +440,9 @@
         }
         //alert($(this).attr("id"));
         });
+
+
+        
           //--------------- Check garment detail Already Added
         $('.remove_size').click(function (event) {                     
         event.preventDefault();
@@ -481,23 +478,23 @@
                     console.log(min_max_calc_val);
                }
             });
-            $(document).on("keyup", ".input-mini", function(){
+            $(document).on("focusout", ".input-mini", function(){
                 var min_max_calc_actual_val = $.trim( $(this).val() );
                 console.log(min_max_calc)
               if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
-                  console.log()                  
+                  console.log()
               } else if(min_max_calc.match('min_calc')) {
                   alert("Must Be Equal or Grater than Value "+ min_max_calc)
                   $(this).val(min_max_calc_val)
               }
               if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
-                  console.log()                  
+                  console.log()
               } else if(min_max_calc.match('max_calc')) {
                   alert("Must Be Equal or Less than Value "+ min_max_calc)
                  $(this).val(min_max_calc_val)
-              }    
+              }
             });
-            
+
               // --- Stay Page Position same when Reload Page 
                 $(window).scroll(function() {
                     sessionStorage.scrollTop = $(this).scrollTop();
@@ -605,6 +602,10 @@
 </script>
    
 <div class="btn-group" role="group" aria-label="..." style="float:right;">
+   
+    {% if cs_file[app.request.get('id')] != '' %}
+        <a href="{{ path('product_intake_mapping_update_product_specification', {'mapping_title': parsed_data.mapping_title, 'specs_id' :  app.request.get('id') }) }}" class="btn btn-default">Update</a>
+    {% endif %}
     <a href="{{ path('product_intake_validate_product_specification', {'id': app.request.get('id')}) }}" class="btn btn-default">Validate</a> 
     <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
 </div>
@@ -1139,6 +1140,7 @@
                                                 <td class="body_measurements">                                                    
                                                     {#<input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.min_actual | number_format(2, '.', '')}}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:80px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
+                                                    
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.ideal_low | number_format(2, '.', '')}}
