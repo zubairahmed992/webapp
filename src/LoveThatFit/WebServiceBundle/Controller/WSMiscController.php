@@ -333,6 +333,22 @@ class WSMiscController extends Controller {
         return new Response(json_encode('archive updated'));
     }
 
+    public function archiveImageUpdateMcpAction(Request $request) {
+        $params = $request->request->all();
+        $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+
+        $image_actions = json_decode($archive->getImageActions());
+        $device_type = $image_actions->device_type;
+        if (!$archive) {
+            throw $this->createNotFoundException('Unable to find archive.');
+        }
+        $response = $archive->writeImageFromCanvas($_POST['imageData']);
+        #if not from mask marker adjustment interface then resize
+        $archive->resizeImage($device_type); # image is being resized to 320x568
+        #$this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+        return new Response($response);
+    }
+
     #----------------------- get order sales tax ------------------------------------------
     public function getOrderSalesTaxUserAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());

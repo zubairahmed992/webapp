@@ -392,3 +392,7 @@ mcp_save_marker:
 nws_get_order_sales_tax_user:
    pattern: /nws/get_order_sales_tax_user
    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:getOrderSalesTaxUser}
+
+mcp_save_marker_image:
+    pattern: /mcp/save_marker_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:archiveImageUpdateMcp}   
