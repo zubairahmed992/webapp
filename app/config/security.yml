@@ -123,6 +123,8 @@ security:
                     carol: { password: e1efa602d0277a3b0fea43369345c6aef7d56598, roles: 'ROLE_ADMIN' }
                     joe: { password: 8fa76b6b51712d2eab8722e6bac2a994cf7aabbf, roles: 'ROLE_ADMIN' }
                     ilya: { password: 2af60fe5ec83b29f89ea5fd6af70199b11e8db20, roles: 'ROLE_ADMIN' }
+                    tony: { password: 5d4df5c9af984118b0fa32234475bf7cb03b4ba8, roles: 'ROLE_ADMIN' }
+                    ron: { password: 6e77b328ec7c624ebdd5189d4d32666407e29ab6, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         

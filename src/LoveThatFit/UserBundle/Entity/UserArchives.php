@@ -672,4 +672,8 @@ class UserArchives
                 break;
         }
     }
+
+    public function getRetouchWebPath() {
+        return $this->getUploadDir();
+    }
 }

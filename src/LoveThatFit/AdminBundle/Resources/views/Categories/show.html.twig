@@ -46,6 +46,13 @@
                                         </div>
                                     {% endif %}
 
+                                    {% if categories.layername != ''  %}
+                                         <div class="span8">
+                                            <div class="span3">Layer Name</div>
+                                            <div class="span3">Layer {{categories.layername }}</div>
+                                        </div>
+                                    {% endif %}
+
                                     </div>
                                     <div>
                                     {% if categories.image != ''  %}

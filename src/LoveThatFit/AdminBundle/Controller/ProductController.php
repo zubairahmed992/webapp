@@ -1613,6 +1613,7 @@ class ProductController extends Controller {
         $products_with_categories = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->listProductsAndCategories();
+
         if (!empty($products_with_categories)) {
             $count = 0;
             foreach ($products_with_categories as $row) {

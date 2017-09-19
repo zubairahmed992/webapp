@@ -628,4 +628,82 @@ class UserArchivesHelper {
         return $output;
     }
 
+    public function saveretouchimage($param, $file)
+    {
+        //Uploaded Achieved Retouch email.
+        $temp_name = $file['tmp_name'];
+        $target_path = $this->getUploadRootDir($param['upl_entity_id']);
+
+        $count_retouch = $param['count_retouch'];
+        $count_retouch_increament = $count_retouch + 1;
+        $original_image = $param['upl_user_original_image_url'];
+        $break_file = substr($original_image, strripos($original_image,"/")+1, -(strlen($original_image) - strripos($original_image,".")));
+        $saved_retouch = str_ireplace('original', 'retouch',$break_file);
+        $fileName = $file['name'];
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        move_uploaded_file($temp_name, $target_path.'/'.$saved_retouch."_".$count_retouch_increament.".".$ext);
+
+        return true;
+    }
+
+    public function getUploadRootDir($id) {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir($id);
+    }
+
+    public function getUploadDir($id) {
+        return 'uploads/ltf/users/' . $id;
+    }
+
+    public function mcpSaveArchives($user_archives, $data)
+    {
+        if (array_key_exists('measurement', $data)) {
+            if (strlen($user_archives->getMeasurementJson()) > 0) {
+                $arc = json_decode($data['measurement']);
+                $meas = json_decode($user_archives->getMeasurementJson());
+                if (is_array($meas)&& is_array($arc)){
+                    $user_archives->setMeasurementJson(json_encode(array_merge_recursive($meas, $arc)));
+                }
+            } else {
+                $user_archives->setMeasurementJson($data['measurement']);
+            }
+        } else {
+            $user_archives->setMeasurementJson($this->extractMeasurements($data, $user_archives->getMeasurementJson()));
+        }
+        if (array_key_exists('image_actions', $data)) {
+            if (strlen($user_archives->getImageActions()) > 0) {
+                $param = json_decode($data['image_actions'],true);
+                $arch = json_decode($user_archives->getImageActions(),true);
+                if (is_array($param)&& is_array($arch)){
+                    $user_archives->setImageActions(json_encode(array_merge($arch, $param)));
+                }
+            } else {
+                $user_archives->setImageActions($data['image_actions']);
+            }
+        }
+        if (array_key_exists('marker_params', $data)) {
+            $user_archives->setMarkerParams($data['marker_params']);
+        } else {
+            $user_archives->setMarkerParams($this->extractMarkerParams($data));
+        }
+        if (array_key_exists('svg_path', $data)) {
+            $user_archives->setSvgPaths($data['svg_path']);
+        }
+        if (array_key_exists('marker_json', $data)) {
+            $user_archives->setMarkerJson($data['marker_json']);
+            #--------------------------
+            $image_actions_archive_array =json_decode($user_archives->getImageActions(),true);
+            $predicted_measurement = $this->container->get('user.marker.helper')->getPredictedMeasurementSupport($data['marker_json'], $image_actions_archive_array['device_type']);
+            $measurement_archive_array  = json_decode($user_archives->getMeasurementJson(),true);
+            $measurement_archive_array['mask']=$predicted_measurement;
+            $user_archives->setMeasurementJson(json_encode($measurement_archive_array));
+        }
+        if (array_key_exists('default_marker_svg', $data)) {
+            $user_archives->setDefaultMarkerSvg($data['default_marker_svg']);
+        }
+        if (array_key_exists('version', $data)) {
+            $user_archives->setVersion($data['version']);
+        }
+        return $this->save($user_archives);
+    }
+
 }
