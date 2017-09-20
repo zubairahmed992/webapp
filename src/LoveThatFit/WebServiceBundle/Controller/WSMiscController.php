@@ -328,9 +328,33 @@ class WSMiscController extends Controller {
     #----------------------- calibration save marker ------------------------------------------
     public function mcpSaveMarkerAction(Request $request) {
         $params = $request->request->all();
+        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
-        return new Response(json_encode('archive updated'));
+            return new Response(json_encode('archive updated'));
+        }else{
+            return new Response(json_encode('Authentication Token Required'));
+        }
+        
+    }
+
+    public function archiveImageUpdateMcpAction(Request $request) {
+        $params = $request->request->all();
+        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
+            $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+            $image_actions = json_decode($archive->getImageActions());
+            $device_type = $image_actions->device_type;
+            if (!$archive) {
+                throw $this->createNotFoundException('Unable to find archive.');
+            }
+            $response = $archive->writeImageFromCanvas($_POST['imageData']);
+            #if not from mask marker adjustment interface then resize
+            $archive->resizeImage($device_type); # image is being resized to 320x568
+            #$this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+            return new Response($response);
+         }else{
+           return new Response(json_encode('Authentication Token Required'));
+         }   
     }
 
     #----------------------- get order sales tax ------------------------------------------
