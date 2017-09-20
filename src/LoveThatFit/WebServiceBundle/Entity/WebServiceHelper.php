@@ -84,7 +84,7 @@ class WebServiceHelper
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
-                $userLogs = $this->container->get('userlog.helper.userlog')->findUserLogsByUserId($user);
+                $userLogs = $this->container->get('userlog.helper.userlog')->findUserIsLoginBefore($user, $request_array);
                 $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
