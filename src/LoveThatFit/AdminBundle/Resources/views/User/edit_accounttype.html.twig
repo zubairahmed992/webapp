@@ -23,7 +23,7 @@
 
 
         <div id="detail_wrapper">
-            <div id="p_hd">Edit User Account ({{ entity.email }})</div>
+            <div id="p_hd">Edit User Account Type ({{ entity.email }})</div>
             <div id="product_content">
                 <div id="pro_detail">
                     <div class="edt_container">
@@ -32,7 +32,7 @@
                               method="post" enctype="multipart/form-data">
 
                             <div id='frm_height'>
-                                <label for="acct_type">Accout Type</label>
+                                <label for="acct_type">Account Type</label>
                                 <select id="acct_type" name="acct_type">
                                     <option value="" >Null</option>
                                     <option value="EMPL"  {{ (entity.accttype == "EMPL") ? 'selected' : '' }} >Employee</option>
