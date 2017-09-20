@@ -489,7 +489,8 @@ class FNFUserController extends Controller
         $user = $this->get('webservice.helper')->findUserByAuthToken($token);
         $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
         foreach($user_cart as $cart){
-            $amount = $cart['price'] + $amount;
+            //$amount = $cart['price'] + $amount;
+            $amount = ($cart['qty']*$cart['price']) + $amount;
         }
 
         $dicount_amount = ($discount / 100) * $amount;

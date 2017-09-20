@@ -386,6 +386,7 @@ class WSCartController extends Controller
             {
                 $fnfGroupId = $fnfUser['group_id'];
                 $decoded['groupId'] = $fnfGroupId;
+                $decoded['discount'] = $fnfUser['discount'];
             }
 
              $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
@@ -429,6 +430,7 @@ class WSCartController extends Controller
             {
                 $fnfGroupId = $fnfUser['group_id'];
                 $decoded['groupId'] = $fnfGroupId;
+                $decoded['discount'] = $fnfUser['discount'];
             }
 
             if(!empty($decoded['items'])) {
@@ -521,6 +523,7 @@ class WSCartController extends Controller
             'order_amount'  => $orderAmount,
             'total_amount'  => $totalAmount,
             'discount'  => $discount,
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? $decode['discount']."%" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -584,6 +587,7 @@ class WSCartController extends Controller
             'order_amount'  => $orderAmount,
             'total_amount'  => $totalAmount,
             'discount'  => $discount,
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? $decode['discount']."%" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -946,7 +950,6 @@ class WSCartController extends Controller
     public function nwsBraintreeUpdateCreditCardAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        var_dump($decoded);
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {

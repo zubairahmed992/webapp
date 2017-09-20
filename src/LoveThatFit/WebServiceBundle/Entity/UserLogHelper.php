@@ -131,4 +131,15 @@ class UserLogHelper
         );
         return $userLogObject;
     }
+
+    public function findUserIsLoginBefore( User $user, $decode)
+    {
+        $userLogObject = $this->repo->findBy(
+            array(
+                "users" => $user->getId(),
+                "appName" => array($decode['appname'], strtolower($decode['appname']))
+            ) /*, array('price' => 'ASC')*/
+        );
+        return $userLogObject;
+    }
 }

@@ -513,6 +513,15 @@ class User implements UserInterface, \Serializable {
 
 
     /**
+     * @var string $acct_type
+     *
+     * @ORM\Column(name="acct_type", type="string", length=6, nullable=true)
+     *
+     */
+    private $acct_type;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -2290,6 +2299,7 @@ class User implements UserInterface, \Serializable {
                 'name' => $this->getFullName(),
                 'first_name' => $this->getFirstName(),
                 'last_name' => $this->getLastName(),
+                'acct_type' => $this->getAcctType(),
                 'zipcode' => $this->getZipcode(),
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
@@ -2423,6 +2433,7 @@ class User implements UserInterface, \Serializable {
                 'name' => $this->getFullName(),
                 'first_name' => $this->getFirstName(),
                 'last_name' => $this->getLastName(),
+                'acct_type' => $this->getAcctType(),
                 'zipcode' => $this->getZipcode(),
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
@@ -2996,5 +3007,24 @@ class User implements UserInterface, \Serializable {
     public function getPodioUsers()
     {
         return $this->podio_users;
+    }
+
+    /**
+     * Set acct_type
+     *
+     * @param string $acct_type
+     * @return User
+     */
+    public function setAcctType($acct_type) {
+        $this->acct_type = $acct_type;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAcctType() {
+        return $this->acct_type;
     }
 }

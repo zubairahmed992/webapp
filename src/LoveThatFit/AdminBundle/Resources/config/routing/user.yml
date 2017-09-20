@@ -30,9 +30,17 @@ admin_edit_user_email:
     pattern:  /admin/user/email/{id}/edit
     defaults: { _controller: LoveThatFitAdminBundle:User:editEmail}
 
+admin_edit_user_account_type:
+    pattern:  /admin/user/account_type/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:User:editAccountType}
+
 admin_update_user_email:
     pattern:  /admin/user/email/update
     defaults: { _controller: LoveThatFitAdminBundle:User:updateEmail}
+
+admin_update_user_account_type:
+    pattern:  /admin/user/account_type/update
+    defaults: { _controller: LoveThatFitAdminBundle:User:updateAccountType}
 
 admin_user_detail_update:
     pattern:  /admin/user/{id}/update

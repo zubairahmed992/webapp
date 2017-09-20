@@ -11,8 +11,8 @@
 <div>Order {{ dataArray['order_numnber'] }} was placed at {{ dataArray['purchase_date'] }}</div> <br><br>
 
 <div>Order for:  </div><br>
-<div>Customer Name:{{ dataArray['billing_first_name'] }}</div>
-<div>Customer Email:{{ dataArray['email'] }}</div>
+<div>Customer Name: {{ dataArray['billing_first_name'] }}</div>
+<div>Customer Email: {{ dataArray['email'] }}</div>
 <div>Phone Number: {{ dataArray['billing_phone_no'] }}</div><br><br>
 
 <div>Order details:</div><br>
@@ -36,7 +36,7 @@
 </div>
 <br>
 <div>Order amount: ${{ dataArray['order_amount'] }}</div> <br><br>
-<div>Discount amount: ${{ dataArray['discount'] }}</div> <br><br>
+<div>Discount amount({{ dataArray['discountType'] }}): ${{ dataArray['discount'] }}</div> <br><br>
 <div>TAX amount: ${{ dataArray['sales_tax'] }}</div> <br><br>
 <div>Total amount: ${{ dataArray['total_amount'] }}</div> <br><br>
 
