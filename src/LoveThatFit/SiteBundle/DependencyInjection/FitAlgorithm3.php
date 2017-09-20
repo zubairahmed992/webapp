@@ -317,7 +317,7 @@ class FitAlgorithm3 {
             'calc_max_body_measurement' => $this->to_frac($fp_specs['max_calculated']),
             'grade_rule' => $this->to_frac($fp_specs['grade_rule']),
             'fit_priority' => $fp,
-            'body_measurement' => $body,                 
+            'body_measurement' => $this->to_frac($body),                 
             'min_fx' => $this->scale['between_min_low']['start'] * $fp,
             'max_fx' => $this->scale['between_high_max']['start'] * $fp,
             'high_fx' => $this->scale['between_mid_high']['start'] * $fp,
@@ -413,8 +413,12 @@ class FitAlgorithm3 {
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;                            
                             $seventy_five_GD = 0.75 * $fp_specs['garment_measurement_stretch_fit'];  #--> 75%GD                            
+                            
                             if ($fp_specs['body_measurement'] <= $seventy_five_GD) {
-                                $fp_scale['message'] = 'OK Fit';
+                                #$fp_scale['message'] = 'OK Fit';
+                                #From Ideal High to 1/2 the range to 75% of the garment stretch dimension "ok fit"/ 2nd half "Poor fit"
+                                $half_high_75GD = $fp_specs['ideal_body_size_high'] + (($seventy_five_GD - $fp_specs['ideal_body_size_high'])/2);
+                                $fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_75GD? 'OK Fit' : 'Poor Fit';                                                            
                             } else {
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
@@ -462,7 +466,10 @@ class FitAlgorithm3 {
                             $fp_fx = 0;
                             $eighty_five_GD = 0.85 * $fp_specs['garment_measurement_stretch_fit']; #--> 85%GD
                             if ($fp_specs['body_measurement'] <= $eighty_five_GD) {                            
-                                $fp_scale['message'] = 'OK Fit';
+                                #$fp_scale['message'] = 'OK Fit';
+                                #From Ideal High to 1/2 the range to 85% of the garment stretch dimension "ok fit"/ 2nd half "Poor fit"
+                                $half_high_85GD = $fp_specs['ideal_body_size_high'] + (($eighty_five_GD - $fp_specs['ideal_body_size_high'])/2);
+                                $fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_85GD ? 'OK Fit' : 'Poor Fit';
                             } else {                            
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
@@ -473,7 +480,8 @@ class FitAlgorithm3 {
             }
         }
 
-        $fx = $this->limit_num($fp_fx);
+        #$fx = $this->limit_num($fp_fx);
+        $fx = $this->to_frac($fp_fx);
         return array('body_fx' => $fx, 'message' => $fp_scale['message'], 'status' => $fp_scale['status'],
             'fits' => $fits, 'status_text' => $fp_scale['status_text'],
         );
@@ -1126,7 +1134,7 @@ class FitAlgorithm3 {
     #------------------------------------------------------------------
     
     function to_frac($number, $denominator = 16) {
-        $x = floor($number * $denominator);
+        $x = intval($number * $denominator);
         return $x / $denominator;         
     }
 
