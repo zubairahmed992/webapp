@@ -1750,7 +1750,7 @@ class WebServiceHelper
         //$decoded = $this->processRequest($this->getRequest());
         $user    = array_key_exists('auth_token', $decoded) ? $this->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            if(isset($decoded['shipment_address']) && !empty($decoded['shipment_address'])) {
+            if(isset($decoded['billing_address']) && !empty($decoded['billing_address'])) {
                 //user cart items
                 $amount = 0;
                 $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
@@ -1773,17 +1773,17 @@ class WebServiceHelper
                 //$from_zip = $parse["stamps_com_dev"]["fromzipcode"];
                 //$from_state = $parse["stamps_com_dev"]["fromstate"];
                 //$shippment = $parse["stamps_com_dev"]["shippment"];
-                $from_country = 'US';
-                $from_zip = '07001';
-                $from_state = 'NJ';
+                //$from_country = 'US';
+                //$from_zip = '53202';
+                //$from_state = 'WI';
                 $shippment = 0;
                 $data_order_sales = array(
-                    'from_country' => ($from_country) ? $from_country : '',
-                    'from_zip' => ($from_zip) ? $from_zip : '',
-                    'from_state' => ($from_state) ? $from_state : '',
-                    'to_country' => ($decoded['shipment_address']['to_country']) ? $decoded['shipment_address']['to_country'] : '',
-                    'to_zip' => ($decoded['shipment_address']['to_zip']) ? $decoded['shipment_address']['to_zip'] : '',
-                    'to_state' => ($decoded['shipment_address']['to_state']) ? $decoded['shipment_address']['to_state'] : '',
+                    //'from_country' => ($from_country) ? $from_country : '',
+                    //'from_zip' => ($from_zip) ? $from_zip : '',
+                    //'from_state' => ($from_state) ? $from_state : '',
+                    'to_country' => ($decoded['billing_address']['to_country']) ? $decoded['billing_address']['to_country'] : '',
+                    'to_zip' => ($decoded['billing_address']['to_zip']) ? $decoded['billing_address']['to_zip'] : '',
+                    'to_state' => ($decoded['billing_address']['to_state']) ? $decoded['billing_address']['to_state'] : '',
                     'amount' => ($amount) ? $amount : 0,
                     'shipping' => $shippment,
                     'order_line_items' => $order_line_items
