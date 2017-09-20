@@ -2299,6 +2299,7 @@ class User implements UserInterface, \Serializable {
                 'name' => $this->getFullName(),
                 'first_name' => $this->getFirstName(),
                 'last_name' => $this->getLastName(),
+                'acct_type' => $this->getAcctType(),
                 'zipcode' => $this->getZipcode(),
                 'phone_number' => $this->getPhoneNumber(),
                 'gender' => $this->getGender(),
