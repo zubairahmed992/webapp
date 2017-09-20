@@ -137,7 +137,7 @@ class UserLogHelper
         $userLogObject = $this->repo->findBy(
             array(
                 "users" => $user->getId(),
-                "appName" => $decode['appname']
+                "appName" => array($decode['appname'], strtolower($decode['appname']))
             ) /*, array('price' => 'ASC')*/
         );
         return $userLogObject;
