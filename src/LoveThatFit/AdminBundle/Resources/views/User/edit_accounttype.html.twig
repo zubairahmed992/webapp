@@ -1,0 +1,54 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('admin_users') }}">Users</a> <span class="divider">/</span></li>
+    <li class="active">Update</li>
+{% endblock %}
+
+{% block h1 %}Users{% endblock %}
+
+{% block title %}Users{% endblock %}
+
+
+{% block body %}
+
+    <div>
+        <h1 style="float:left;">Update Account Type</h1>
+        <div class="clearfix"></div>
+
+    <div class="btn_wrapper">
+        <a href="{{ path('admin_users') }}" class="btn">back</a>
+    </div>
+    <div class="clearfix"></div>
+
+
+        <div id="detail_wrapper">
+            <div id="p_hd">Edit User Account ({{ entity.email }})</div>
+            <div id="product_content">
+                <div id="pro_detail">
+                    <div class="edt_container">
+
+                        <form action="{{ path('admin_update_user_account_type') }}"
+                              method="post" enctype="multipart/form-data">
+
+                            <div id='frm_height'>
+                                <label for="acct_type">Accout Type</label>
+                                <select id="acct_type" name="acct_type">
+                                    <option value="" >Null</option>
+                                    <option value="EMPL"  {{ (entity.accttype == "EMPL") ? 'selected' : '' }} >Employee</option>
+                                    <option value="MEMB" {{ (entity.accttype == "MEMB") ? 'selected' : '' }}>Member</option>
+                                    <option value="TEST" {{ (entity.accttype == "TEST") ? 'selected' : '' }}>TEST</option>
+                                </select>
+                            </div>
+
+                            <input type="hidden" name="id" value="{{ entity.getId }}">
+                            <input type="submit" class="btn" value="Update"/>
+                            <a href="{{ path('admin_users') }}" class="btn">Cancel</a>
+                        </form>
+                </div><!-- End pro_detail -->
+            </div><!-- End product_content -->
+        </div> <!-- End detail_wrapper -->
+
+    </div>
+
+{% endblock %}

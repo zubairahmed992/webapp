@@ -1342,6 +1342,21 @@ class UserHelper
         else false;
     }
 
+    public function updateAccountType(User $user, $acct_type){
+
+        if(is_object($user)){
+            if(!empty($acct_type)){
+                $user->setAcctType($acct_type);
+            }else{
+                $user->setAcctType(null);
+            }
+            $this->saveUser($user);
+            return true;
+        }
+
+        else false;
+    }
+
     public function getActivityLog()
     {
         return $this->repo->getActivityLog();

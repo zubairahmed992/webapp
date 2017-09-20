@@ -189,6 +189,14 @@ class UserController extends Controller
         ));
     }
 
+    public function editAccountTypeAction($id){
+        $entity          = $this->get('user.helper.user')->find($id);
+        return $this->render('LoveThatFitAdminBundle:User:edit_accounttype.html.twig', array(
+            'entity'        => $entity,
+        ));
+    }
+
+
     public function updateEmailAction(Request $request){
         $data       = $request->request->all();
         $user       = $this->get('user.helper.user')->find($data['id']);
@@ -202,6 +210,22 @@ class UserController extends Controller
 
 
         return $this->redirect($this->generateUrl('admin_edit_user_email', array('id' => $data['id'])));
+
+    }
+
+    public function updateAccountTypeAction(Request $request){
+        $data       = $request->request->all();
+        $user       = $this->get('user.helper.user')->find($data['id']);
+
+        $updated    = $this->get('user.helper.user')->updateAccountType( $user, $data['acct_type'] );
+        if($updated){
+            $this->get('session')->setFlash('success', 'Account Type Updated Successfully');
+        }else{
+            $this->get('session')->setFlash('error', 'Some thing went wrong try again later!');
+        }
+
+
+        return $this->redirect($this->generateUrl('admin_edit_user_account_type', array('id' => $data['id'])));
 
     }
 
@@ -282,12 +306,6 @@ class UserController extends Controller
         $userForm        = $this->createForm(new UserProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
 
-        $selected_account_type = $request->request->get('acct_type');
-        if(!empty($selected_account_type)){
-            $entity->setAcctType($selected_account_type);
-        }else{
-            $entity->setAcctType(null);
-        }
         $password_form   = $this->password_update_form($entity);
         $this->get('user.helper.user')->saveUser($entity);
         $this->get('session')->setFlash('success', 'Updated Successfuly');
