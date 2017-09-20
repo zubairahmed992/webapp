@@ -319,17 +319,6 @@
                                 </div>
                                 <div class="clr_bth"></div>
 
-                                <div>
-                                    Accout Type
-                                    <select id="acct_type" name="acct_type">
-                                        <option value="" >Null</option>
-                                        <option value="EMPL"  {{ (entity.accttype == "EMPL") ? 'selected' : '' }} >Employee</option>
-                                        <option value="MEMB" {{ (entity.accttype == "MEMB") ? 'selected' : '' }}>Member</option>
-                                        <option value="TEST" {{ (entity.accttype == "TEST") ? 'selected' : '' }}>TEST</option>
-                                    </select>
-                                </div>
-                                <div class="clr_bth"></div>
-
                                 <input type="submit" value="Update"/>
                                 <a href="{{ path('admin_users') }}" class="btn">Cancel</a>
                                 </div>

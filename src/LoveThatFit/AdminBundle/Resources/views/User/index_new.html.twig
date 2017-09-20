@@ -187,7 +187,7 @@
                         "data": null,
                         "orderable": false,
                         "searchable": false,
-                        "defaultContent": DetailPageButton + " " + EditButton + " " + GoSecureButton + " " + jsonButton + " " + DuplicateUser + "<br><br><span style='margin-left:10px;'></span>" + archiveButton +" "+ EditEmail,
+                        "defaultContent": DetailPageButton + " " + EditButton + " " + GoSecureButton + " " + jsonButton + " " + DuplicateUser + "<br><br><span style='margin-left:10px;'></span>" + archiveButton +" "+ EditEmail +" "+ EditAccountType,
                         "width": "40%"
                     },
                     {
@@ -251,6 +251,12 @@
 
                 if(dataAction == 'edit_email'){
                     var url = '{{ path('admin_edit_user_email', {'id': ":id"}) }}';
+                    url = url.replace(':id', data.id);
+                    window.top.location = url;
+                }
+
+                if(dataAction == 'edit_account_type'){
+                    var url = '{{ path('admin_edit_user_account_type', {'id': ":id"}) }}';
                     url = url.replace(':id', data.id);
                     window.top.location = url;
                 }
