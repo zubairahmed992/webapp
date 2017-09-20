@@ -328,7 +328,7 @@ class WSMiscController extends Controller {
     #----------------------- calibration save marker ------------------------------------------
     public function mcpSaveMarkerAction(Request $request) {
         $params = $request->request->all();
-        if($params['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
+        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
             return new Response(json_encode('archive updated'));
@@ -340,7 +340,7 @@ class WSMiscController extends Controller {
 
     public function archiveImageUpdateMcpAction(Request $request) {
         $params = $request->request->all();
-        if($params['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
+        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
             $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
             $image_actions = json_decode($archive->getImageActions());
             $device_type = $image_actions->device_type;
