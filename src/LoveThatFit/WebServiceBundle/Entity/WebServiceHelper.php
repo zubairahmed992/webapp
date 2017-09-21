@@ -1635,7 +1635,7 @@ class WebServiceHelper
        
         $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
 
-        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/admin/archive/image_update";
+        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/mcp/save_marker_image";
 
         $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
 
