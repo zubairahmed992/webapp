@@ -1,0 +1,8 @@
+#---------------------------------------- Misc data update ---------------------
+admin_misc_setting_index:
+    pattern:  /admin/misc_setting
+    defaults: { _controller: LoveThatFitAdminBundle:MiscSetting:index }
+
+admin_misc_setting_update:
+    pattern:  /admin/update_miscsetting
+    defaults: { _controller: LoveThatFitAdminBundle:MiscSetting:update }
