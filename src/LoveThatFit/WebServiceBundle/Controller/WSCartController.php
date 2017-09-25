@@ -204,7 +204,7 @@ class WSCartController extends Controller
             $qty = $decoded["quantity"];
             $requested_screen = $decoded["display_screen"];
 
-            /* IOSV3-252 - From the Product Detail page, if product item already exist then quantity not change */
+            /* IOSV3-252 - From the Product Detail page, if product item already exist then quantity not change  */
             if($requested_screen == "detail_page"){
                 $product_item = $this->container->get('admin.helper.productitem')->find($item_id);
                 $find_item_against_user = $this->container->get('cart.helper.cart')->findCartByUserId($user, $product_item);
