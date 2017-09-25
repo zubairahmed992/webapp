@@ -62,16 +62,19 @@ padding-right: 0px!important;
     padding: 1px 0px 1px 20px;
     margin-bottom: 2px;
     font-size: 0.95em;
-   
-    
 }
 
 .container_pending .span3 div span:first-child{
     display: inline-block;   
-    min-width: 150px;
+    /*min-width: 150px;*/
     font-weight: bold;
-     
     
+}
+
+.container_pending .span3 div span{
+    padding: 1px 0px 1px 10px;
+    margin-bottom: 2px;
+    font-size: 0.95em;
 }
 
 .container_pending h5{

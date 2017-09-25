@@ -76,6 +76,7 @@ class WSMiscController extends Controller {
                     array('build_type'=>'localserver','url'=>'192.168.0.5'),
                     array('build_type'=>'ibrahim','url'=>'192.168.0.209'),
                     array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
+                    array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com'),
                 ),
                 'count'=>6,
                 'message' => 'configuration for build deployment',
@@ -98,6 +99,7 @@ class WSMiscController extends Controller {
                     'shakeel'=>array('build_type'=>'shakeel','url'=>'shakeel.selfiestyler.com'),
                     'aijaz'=>array('build_type'=>'aijaz','url'=>'aijaz.selfiestyler.com'),
                     'Saddam'=>array('build_type'=>'saddam','url'=>'sadam.selfiestyler.com'),
+                    'Aijaz'=>array('build_type'=>'aijaz','url'=>'aijaz.selfiestyler.com'),
                     'Kamran'=>array('build_type'=>'kamran','url'=>'192.168.0.182'),
                     'Raghib'=>array('build_type'=>'raghib','url'=>'raghib.selfiestyler.com'),
                     'Umer'=>array('build_type'=>'umer','url'=>'umer.selfiestyler.com'),
@@ -109,7 +111,8 @@ class WSMiscController extends Controller {
                     'dba-dev'=>array('build_type'=>'dba-dev','url'=>'dba-dev.selfiestyler.com'),
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
-                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com')
+                    'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
+                    'rnd'=>array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com')
                 ),
                 'count'=>22,
                 'message' => 'configuration for build deployment',
@@ -326,9 +329,33 @@ class WSMiscController extends Controller {
     #----------------------- calibration save marker ------------------------------------------
     public function mcpSaveMarkerAction(Request $request) {
         $params = $request->request->all();
+        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
-        return new Response(json_encode('archive updated'));
+            return new Response(json_encode('archive updated'));
+        }else{
+            return new Response(json_encode('Authentication Token Required'));
+        }
+        
+    }
+
+    public function archiveImageUpdateMcpAction(Request $request) {
+        $params = $request->request->all();
+        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
+            $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
+            $image_actions = json_decode($archive->getImageActions());
+            $device_type = $image_actions->device_type;
+            if (!$archive) {
+                throw $this->createNotFoundException('Unable to find archive.');
+            }
+            $response = $archive->writeImageFromCanvas($_POST['imageData']);
+            #if not from mask marker adjustment interface then resize
+            $archive->resizeImage($device_type); # image is being resized to 320x568
+            #$this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+            return new Response($response);
+         }else{
+           return new Response(json_encode('Authentication Token Required'));
+         }   
     }
 
     #----------------------- get order sales tax ------------------------------------------

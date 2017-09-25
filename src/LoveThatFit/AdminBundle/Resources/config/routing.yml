@@ -105,9 +105,14 @@ admin_user_download_access_logs:
     pattern:  /download_access_logs/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:downloadAccessLogs }
 
-#---------- YML Data ----------------------
+#---------- Setting Data ----------------------
 admin_yml_setting_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/yml_setting.yml"
+    prefix:   /
+    
+#---------- Misc Data ----------------------
+admin_misc_setting_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/misc_setting.yml"
     prefix:   /
 
 #---------- Copy User Data ----------------------

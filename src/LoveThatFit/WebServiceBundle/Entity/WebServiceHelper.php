@@ -84,12 +84,14 @@ class WebServiceHelper
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
+                $userLogs = $this->container->get('userlog.helper.userlog')->findUserIsLoginBefore($user, $request_array);
                 $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                    $response_array['user']['isNewUser'] = (empty($userLogs)) ? 1 : 0;
                     $response_array['user']['image_path'] = "/render/image/";
                     $response_array['user']['avatar_path'] = "/render/avatar/";
                     $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
@@ -1627,13 +1629,13 @@ class WebServiceHelper
 
         $data['img'] ['image_actions'] =  json_decode($user[0]['image_actions']);
         $data['img'] ['img_path_json'] =  $user[0]['marker_json'];
-        $data['img'] ['img_path_paper'] =  "M102.392,24.025c0,0,16.59-1.163,20.406,12.111c0.345,1.421,2.077,9.006-1.332,14.761c0.354-0.228,3.276-1.272,0.601,6.495c-0.387,1.095-1.709,7.72-3.608,5.927c-0.232,0.798-2.658,11.141-3.769,12.784c0.176,3.167,0.142,12.125,3.133,14.179c6.26,4.575,9.329,4.888,28.991,10.57c11.753,3.33,11.383,22.141,14.962,48.269c0.523,3.559,0.811,10.811,3.926,26.468c2.568,24.191,4.297,18.982,4.571,65.666c3.014,12.91,12.935,25.821-2.017,35.107c-1.756,1.131-13.129,11.084-4.68-10.356c-0.65-2.259-5.317-14.769-2.377-24.778c-0.454-1.316-6.086-15.189-14.012-62.175c-2.641-19.414-2.148-18.767-2.986-26.381c-0.148-1.718-3.127-21.49-4.414-21.489c-0.643,0-1.084,7.895-1.68,12.409c-2.938,18.076-4.521,16.995-4.201,31.974c0.612,8.435,0.879,9.343,3.043,15.195c2.421,5.449,2.566,5.617,5.194,18.94c1.319,16.194,1.497,17.492,2.259,33.075c-0.939,17.015-0.982,13.214-4.728,37.965c-5.173,26.979-6.212,28.829-7.669,52.354c0.246,10.49-0.678,0.254,0.637,15.576c1.332,18.734,1.33,19.";//$user[0]['svg_paths'];
+        $data['img'] ['img_path_paper'] = $user[0]['svg_paths'];
         //$data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
         
        
         $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
 
-        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/admin/archive/image_update";
+        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/mcp/save_marker_image";
 
         $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
 
@@ -1654,7 +1656,7 @@ class WebServiceHelper
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
         $data['user'] ['dm_body_parts_details_json'] = $bra_size_body_shape; 
-        $data['user'] ['default_user_path'] =  "M102.392,24.025c0,0,16.59-1.163,20.406,12.111c0.345,1.421,2.077,9.006-1.332,14.761c0.354-0.228,3.276-1.272,0.601,6.495c-0.387,1.095-1.709,7.72-3.608,5.927c-0.232,0.798-2.658,11.141-3.769,12.784c0.176,3.167,0.142,12.125,3.133,14.179c6.26,4.575,9.329,4.888,28.991,10.57c11.753,3.33,11.383,22.141,14.962,48.269c0.523,3.559,0.811,10.811,3.926,26.468c2.568,24.191,4.297,18.982,4.571,65.666c3.014,12.91,12.935,25.821-2.017,35.107c-1.756,1.131-13.129,11.084-4.68-10.356c-0.65-2.259-5.317-14.769-2.377-24.778c-0.454-1.316-6.086-15.189-14.012-62.175c-2.641-19.414-2.148-18.767-2.986-26.381c-0.148-1.718-3.127-21.49-4.414-21.489c-0.643,0-1.084,7.895-1.68,12.409c-2.938,18.076-4.521,16.995-4.201,31.974c0.612,8.435,0.879,9.343,3.043,15.195c2.421,5.449,2.566,5.617,5.194,18.94c1.319,16.194,1.497,17.492,2.259,33.075c-0.939,17.015-0.982,13.214-4.728,37.965c-5.173,26.979-6.212,28.829-7.669,52.354c0.246,10.49-0.678,0.254,0.637,15.576c1.332,18.734,1.33,19.";//$user[0]['svg_paths'];
+        $data['user'] ['default_user_path'] =  $user[0]['svg_paths'];
         $data['user'] ['user_hip_px'] =  "424";
         $data['user'] ['user_bust_px'] = "392";
         $data['user'] ['user_waist_px'] = "319"; 
@@ -1748,7 +1750,7 @@ class WebServiceHelper
         //$decoded = $this->processRequest($this->getRequest());
         $user    = array_key_exists('auth_token', $decoded) ? $this->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            if(isset($decoded['shipment_address']) && !empty($decoded['shipment_address'])) {
+            if(isset($decoded['billing_address']) && !empty($decoded['billing_address'])) {
                 //user cart items
                 $amount = 0;
                 $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
@@ -1771,17 +1773,17 @@ class WebServiceHelper
                 //$from_zip = $parse["stamps_com_dev"]["fromzipcode"];
                 //$from_state = $parse["stamps_com_dev"]["fromstate"];
                 //$shippment = $parse["stamps_com_dev"]["shippment"];
-                $from_country = 'US';
-                $from_zip = '07001';
-                $from_state = 'NJ';
+                //$from_country = 'US';
+                //$from_zip = '53202';
+                //$from_state = 'WI';
                 $shippment = 0;
                 $data_order_sales = array(
-                    'from_country' => ($from_country) ? $from_country : '',
-                    'from_zip' => ($from_zip) ? $from_zip : '',
-                    'from_state' => ($from_state) ? $from_state : '',
-                    'to_country' => ($decoded['shipment_address']['to_country']) ? $decoded['shipment_address']['to_country'] : '',
-                    'to_zip' => ($decoded['shipment_address']['to_zip']) ? $decoded['shipment_address']['to_zip'] : '',
-                    'to_state' => ($decoded['shipment_address']['to_state']) ? $decoded['shipment_address']['to_state'] : '',
+                    //'from_country' => ($from_country) ? $from_country : '',
+                    //'from_zip' => ($from_zip) ? $from_zip : '',
+                    //'from_state' => ($from_state) ? $from_state : '',
+                    'to_country' => ($decoded['billing_address']['to_country']) ? $decoded['billing_address']['to_country'] : '',
+                    'to_zip' => ($decoded['billing_address']['to_zip']) ? $decoded['billing_address']['to_zip'] : '',
+                    'to_state' => ($decoded['billing_address']['to_state']) ? $decoded['billing_address']['to_state'] : '',
                     'amount' => ($amount) ? $amount : 0,
                     'shipping' => $shippment,
                     'order_line_items' => $order_line_items

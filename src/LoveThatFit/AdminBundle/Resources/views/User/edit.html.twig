@@ -249,7 +249,7 @@
                         <div><h3>Edit User Detail</h3></div>
 
                         <form action="{{ path('admin_user_profile_detail_update', {'id': entity.Id}) }}"
-                              method="post" {{ form_enctype(userform) }}>
+                              method="post" {{ form_enctype(userform) }} >
 
                             <div>
                                 First Name
@@ -317,14 +317,11 @@
                                     <div class="radio_ele"> {{ form_label(userform.gender) }}  {{ form_widget(userform.gender) }} </div>
 
                                 </div>
-
-
                                 <div class="clr_bth"></div>
 
                                 <input type="submit" value="Update"/>
                                 <a href="{{ path('admin_users') }}" class="btn">Cancel</a>
-
-
+                                </div>
                         </form>
 
 

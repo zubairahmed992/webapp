@@ -389,11 +389,36 @@ class WSUserController extends Controller
                 'session_id' => $ref,
             ));
 
+
             $file = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
             $type = 'image/png';
             header('Content-Type:'.$type);
             header('Content-Length: ' . filesize($file));
             readfile($file);
+
+
+
+            // Create image instances
+            /*$ufile = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
+            $bfile = getcwd()."/uploads/ltf/background/fitting_background.png";
+            $user_image = imagecreatefrompng($ufile);
+            $background_image = imagecreatefrompng($bfile);
+            list($width, $height) = getimagesize($ufile);
+            // Copy
+            $dest = imagecreatetruecolor($width, $height);
+            imagecopy($dest, $background_image, 0, 0, 0, 0, $width, $height);
+            imagecopy($dest, $user_image, 0, 0, 0, 0, $width, $height);
+
+            // Output and free from memory
+            header('Content-Type: image/png');
+            imagepng($dest);
+            header('Content-Length: ' . filesize($dest));
+
+            imagedestroy($dest);
+            imagedestroy($user_image);
+            imagedestroy($background_image);*/
+
+
         }else{
             throw new NotFoundHttpException('Sorry not existing!');
         }
