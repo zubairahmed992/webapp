@@ -27,6 +27,11 @@
 
                 <div id="product_content">
                     <div id="pro_detail">
+                        {% if (userInPreviousGroup) %}
+                        <div>
+                            <span style="color:red">These userids already assigned in other groups. Please remove those ids to upload the sheet OR remove these user to previously assigned groups {{ userInPreviousGroup }}</span>    
+                        </div>
+                        {% endif %}
                         <br>
                         
                         <div>

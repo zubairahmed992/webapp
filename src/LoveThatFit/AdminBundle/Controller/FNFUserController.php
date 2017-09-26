@@ -158,6 +158,13 @@ class FNFUserController extends Controller
 
     public function getCsvFnfImportAction(Request $request)
     {
+ 
+
+  //$userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserToUniqueGroup('3011,3016',1);
+
+ 
+        $userWithPreviousGroup = "";
+        $userWithPreviousGroup = array();
         $fnfCsvform = $this->createFormBuilder()
             ->add('submitFile', 'file', array('label' => 'Upload CSV file'))
             ->getForm();
@@ -241,12 +248,14 @@ class FNFUserController extends Controller
                         $groupInfoNew['group_type'] = $group_type;
 
                         //Check if any group exists. Then make is it archive
-                        $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord($group_type);
+                        //$groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord($group_type);
                         //Iterate each group
-                        foreach ($groupToArchive as $groupInfo) {
+
+                        //Committed by Shakeel
+                        //foreach ($groupToArchive as $groupInfo) {
                             //make group archived
-                            $this->get('fnfgroup.helper.fnfgroup')->markedGroupAsArchived($groupInfo);
-                        }
+                        //    $this->get('fnfgroup.helper.fnfgroup')->markedGroupAsArchived($groupInfo);
+                        //}
 
                         //Add new group
                         $newGroup = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupInfoNew);
@@ -255,23 +264,59 @@ class FNFUserController extends Controller
                         if (is_array($userInfo) && count($userInfo) > 0) {
 
                             $userID = array_keys($userInfo);
+
+                            $userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserToUniqueGroup(implode($userID, ","),$group_type);
+
+
+
+
+                            if(count($userWithPreviousGroup) == 0)
+                            {   
+
+
+
                             //Assign user to group
                             $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userID);
 
-                            //Update user first & last name
-                            foreach ($userInfo as $userToUpdateKey => $userToUpdateValue) {
+                                //Update user first & last name
+                                foreach ($userInfo as $userToUpdateKey => $userToUpdateValue) {
 
-                                $updateUserInfo = $this->get('user.helper.user')->find($userToUpdateKey);
-                                //Validate if value is given
-                                if ($updateUserInfo && isset($userToUpdateValue['first_name'])
-                                    && isset($userToUpdateValue['last_name'])
-                                    && $userToUpdateValue['first_name'] != ""
-                                    && $userToUpdateValue['last_name'] != ""
-                                ) {
-                                    $this->get('user.helper.user')->updateUserFirstAndLastName($updateUserInfo, $userToUpdateValue['first_name'], $userToUpdateValue['last_name']);
+                                    $updateUserInfo = $this->get('user.helper.user')->find($userToUpdateKey);
+                                    //Validate if value is given
+                                    if ($updateUserInfo && isset($userToUpdateValue['first_name'])
+                                        && isset($userToUpdateValue['last_name'])
+                                        && $userToUpdateValue['first_name'] != ""
+                                        && $userToUpdateValue['last_name'] != ""
+                                    ) {
+                                        $this->get('user.helper.user')->updateUserFirstAndLastName($updateUserInfo, $userToUpdateValue['first_name'], $userToUpdateValue['last_name']);
+                                    }
+
                                 }
+                            } 
+                           /* else
+                            {
 
-                            }
+
+
+                                if(count($userWithPreviousGroup)==1)
+                                {
+
+    print_r($userWithPreviousGroup);
+                          
+                                   
+                                    $this->get('session')->setFlash('warning', 'This userid ('.implode($userWithPreviousGroup,",").') already have previously assigned group');
+                                     return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
+
+                                    exit;  
+
+                                }
+                                else
+                                {    
+
+                                 $this->get('session')->setFlash('warning', 'These userids already have previously assigned group ('.implode($userWithPreviousGroup,",").') already have previous group');
+                                     return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
+                                }
+                            } */  
                         }
                     }
                     else {
@@ -279,8 +324,12 @@ class FNFUserController extends Controller
                         return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
                     }
 
+                    if(count($userWithPreviousGroup) == 0)
+                    { 
+
                     $this->get('session')->setFlash('success', 'Group created successfully');
                     return $this->redirect($this->generateUrl('fnf_users'));
+                    }
 
                 }
 
@@ -291,8 +340,22 @@ class FNFUserController extends Controller
 
         }
 
+                          
+
+        $existids = "";    
+        foreach($userWithPreviousGroup as $rs)
+        {
+            $existids .= $rs['user_id'].", ";
+
+        }    
+
+
+        //echo $ss = implode($userWithPreviousGroup[0],",");
+      
+
         return $this->render('LoveThatFitAdminBundle:FNFUser:fnf-upload.html.twig', array(
             'fvfImportform' => $fnfCsvform->createView(),
+            'userInPreviousGroup' => trim($existids,", "),
         )
         );
 
