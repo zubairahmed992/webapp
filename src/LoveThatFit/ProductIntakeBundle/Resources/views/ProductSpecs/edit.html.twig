@@ -369,8 +369,13 @@
                     alert("Please Add Unique Fit Point Title!")
                 }              
             } ,
-            error: function () {
-                alert("Error in Ajax");
+            error: function(response, newValue) {
+                if(response.status === 500) {
+                    return response.responseText;
+                    return 'Service unavailable. Please try later.';
+                } else {
+                    return response.responseText;
+                }
             }
 
         });
@@ -465,34 +470,49 @@
           // ------- Min Max Values Comparation 
           
             $(document).on("focus", ".input-sm", function(){
-               var  min_max_calc_name = $(this).attr('name');              
-               console.log(min_max_calc_name);
+               var  min_max_calc_name = $(this).attr('name');
                if('min_actual' == min_max_calc_name.slice(-10)){                  
                     min_max_calc = $.trim($(this).closest('td').prev().find('input').attr('name').substr(-8,8));
                     min_max_calc_val = $.trim( $(this).closest('td').prev().find('input').val() );
-                    console.log(min_max_calc_val);
+                    min_max_ideal_low_val = $.trim( $(this).closest('td').next().find('input').val() );
                }
                if('max_actual' == min_max_calc_name.slice(-10)){                  
                     min_max_calc = $.trim($(this).closest('td').next().find('input').attr('name').substr(-8,8));
                     min_max_calc_val = $.trim( $(this).closest('td').next().find('input').val() );
-                    console.log(min_max_calc_val);
+                    min_max_ideal_high_val = $.trim( $(this).closest('td').prev().find('input').val() );
                }
             });
+
+           //--------------------- Min_Actual and Max_Actual Validation
             $(document).on("focusout", ".input-mini", function(){
                 var min_max_calc_actual_val = $.trim( $(this).val() );
-                console.log(min_max_calc)
-              if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val) ){
-                  console.log()
-              } else if(min_max_calc.match('min_calc')) {
-                  alert("Must Be Equal or Grater than Value "+ min_max_calc)
-                  $(this).val(min_max_calc_val)
-              }
-              if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
-                  console.log()
-              } else if(min_max_calc.match('max_calc')) {
-                  alert("Must Be Equal or Less than Value "+ min_max_calc)
-                 $(this).val(min_max_calc_val)
-              }
+                  if( min_max_calc.match('min_calc')  && parseFloat(min_max_calc_actual_val) >= parseFloat(min_max_calc_val ) ){
+                      console.log()
+                  } else if(min_max_calc.match('min_calc')) {
+                      alert("Must Be Equal or Grater than Value "+ min_max_calc)
+                      $(this).val(min_max_calc_val)
+                  }
+                   //--------  ideal_low > min_actual > min_clac
+                    if( min_max_calc.match('min_calc')  && parseFloat(min_max_ideal_low_val) >= parseFloat(min_max_calc_actual_val) ){
+                        console.log()
+                    } else if(min_max_calc.match('min_calc')) {
+                        alert( min_max_calc+ " Must Be Equal or Less than Ideal Low")
+                        $(this).val(min_max_calc_val)
+                    }
+
+                  if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
+                      console.log()
+                  } else if(min_max_calc.match('max_calc')) {
+                      alert("Must Be Equal or Less than Value "+ min_max_calc)
+                     $(this).val(min_max_calc_val)
+                  }
+                  //--------  ideal_high < max_actual < max_clac
+                    if( min_max_calc.match('max_calc')  && parseFloat(min_max_ideal_high_val) <= parseFloat(min_max_calc_actual_val) ){
+                        console.log()
+                    } else if(min_max_calc.match('max_calc')) {
+                        alert( min_max_calc+ " Must Be Equal or Greater than Ideal High ")
+                        $(this).val(min_max_calc_val)
+                    }
             });
 
               // --- Stay Page Position same when Reload Page 

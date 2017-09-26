@@ -193,6 +193,10 @@ class ProductSpecificationHelper {
     
     #-------------------> Dynamic calculations     
     public function dynamicCalculations($decoded) {
+//        $validation = $this->validateProdoctValues($decoded, $specs_value=null);
+//           if(!$validation['status']) {
+//               return $validation;
+//           }
         $specs_obj = $this->find($decoded['pk']);
         $specs = json_decode($specs_obj->getSpecsJson(), true);
         #-----------------------------        
@@ -233,8 +237,15 @@ class ProductSpecificationHelper {
                 'message_type' => 'error',
                 'success' => false,
             );
-        }        
-        
+        }
+//        $specs['status'] = false;
+//        $specs['error'] = $specs;
+//        return  $specs;
+        $validate_specs = $this->validateProdoctValues($decoded, $specs);
+        if(!$validate_specs['status']) {
+            return $validate_specs;
+        }
+
         if ($specs){
             $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
             $specs_obj->setSpecsJson(json_encode($specs));
@@ -247,7 +258,54 @@ class ProductSpecificationHelper {
             );
         }
     }
+    //------------------------- Validation Product Specification values
 
+    private function validateProdoctValues($decoded, $specs_value){
+        $validation['status'] = true;
+        $fit_point_explode = explode("-", $decoded['name']);
+        $fit_model_selected = '';
+        $specs_obj = $this->find($decoded['pk']);
+        $specs = json_decode($specs_obj->getSpecsJson(), true);
+        if(isset($specs['fit_model_size'])){
+            $fit_model_selected_size= $specs['fit_model_size']==null?null:$this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size?$fit_model_selected_size->getSize():null;
+        }
+
+        //------------ Apply Ac # 1 and AC # 2 Validation Rule
+        if(count($fit_point_explode) == 4){
+            if ($fit_point_explode[3] == 'max_actual' || $fit_point_explode[3] == 'garment_dimension') {
+                if( $specs_value[$fit_point_explode[0]][$fit_point_explode[1]][$fit_point_explode[2]]['max_actual'] > $specs_value[$fit_point_explode[0]][$fit_point_explode[1]][$fit_point_explode[2]]['garment_stretch']){
+                    $validation['error'] = ' Max_actual it must be less than Garment Stretch Dimension';
+                    $validation['status'] = false;
+                }
+            }
+        }
+
+        //------------- Apply AC # 3 Validation Rule
+        if ($decoded['name'] == 'horizontal_stretch'){
+            foreach($specs_value['sizes'][$fit_model_selected] as $fit_point_key => $fit_point_name){
+                $axis = $decoded['name'] == 'horizontal_stretch' ? 'x' : 'y';
+                $fpa = $this->getFitPointArray();
+                if (array_key_exists($fit_point_key, $fpa[$axis])) {#--------> for over all horiz stretch
+                    if ($specs_value['sizes'][$fit_model_selected][$fit_point_key]['max_actual'] > $specs_value['sizes'][$fit_model_selected][$fit_point_key]['garment_dimension']) {
+                        $validation['error'] = $fit_point_key . ' Max Actual cannot be greater than Garment Stretch Dimension';
+                        $validation['status'] = false;
+                    }
+                }
+//                foreach($fit_point_name as $key => $value){
+//                    if($specs_value['sizes'][$fit_model_selected][$fit_point_key]['max_actual']  > $specs_value['sizes'][$fit_model_selected][$fit_point_key]['garment_dimension']){
+//                        $validation['error'] = $fit_point_key . ' Max Actual cannot be greater than Garment Stretch Dimension';
+//                        $validation['status'] = false;
+//                    }
+//                }
+            }
+
+        }
+
+        return $validation;
+
+
+    }
     #------------------->1 Overall Stretch >>>>>>>>>>>>>>>>>>>>>>>>>>>
     private function generate_specs_for_stretch($specs, $stretch_type) {
         $axis = $stretch_type == 'horizontal_stretch' ? 'x' : 'y';
