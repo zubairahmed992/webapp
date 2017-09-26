@@ -1134,7 +1134,7 @@ class FitAlgorithm3 {
     #------------------------------------------------------------------
     
     function to_frac($number, $denominator = 16) {
-        $x = intval($number * $denominator);
+        $x = floor($number * $denominator);
         return $x / $denominator;         
     }
 
