@@ -27,6 +27,10 @@ class MiscSettingController extends Controller {
 		//Uploaded Achieved Retouch email.
 		$temp_name = $file['tmp_name'];
 		$target_path = __DIR__.'/../../../../web/uploads/ltf/background/';
+		if(!is_dir($target_path)){
+			mkdir($target_path, 0777, true);
+		}
+
 		$fileName = $file['name'];
 		$saved_retouch = 'fitting_background';
 		$ext = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -35,6 +39,17 @@ class MiscSettingController extends Controller {
 			$this->get('session')->setFlash('success', 'Background Image uploaded');
 		}else{
 			$this->get('session')->setFlash('warning', 'Image Must be in Png Format');
+		}
+		return $this->redirect($this->generateUrl('admin_misc_setting_index'));
+	}
+
+	public function removeAction(Request $request) {
+
+		$target_path = __DIR__.'/../../../../web/uploads/ltf/background/fitting_background.png';
+		if(unlink($target_path)){
+			$this->get('session')->setFlash('success', 'Background Image successfully deleted');
+		}else{
+			$this->get('session')->setFlash('warning', 'Something wrong on server, kindly retry');
 		}
 		return $this->redirect($this->generateUrl('admin_misc_setting_index'));
 	}

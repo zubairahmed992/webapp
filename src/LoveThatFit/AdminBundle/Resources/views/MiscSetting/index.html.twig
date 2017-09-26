@@ -9,61 +9,6 @@
 {% endblock %}
 
 {% block body %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script>
-    /*
-    function show(key){
-
-        $("#txtval_iphone5s_1"  ).css('display','block');
-        $("#txtval_iphone5s_2"  ).css('display','block');
-        $("#txtval_iphone5s_3"  ).css('display','block');
-
-        $("#txtval_iphone5c_1"  ).css('display','block');
-        $("#txtval_iphone5c_2"  ).css('display','block');
-        $("#txtval_iphone5c_3"  ).css('display','block');
-
-        $("#txtval_iphone6s_1"  ).css('display','block');
-        $("#txtval_iphone6s_2"  ).css('display','block');
-        $("#txtval_iphone6s_3"  ).css('display','block');
-
-        $("#txtval_iphone6c_1"  ).css('display','block');
-        $("#txtval_iphone6c_2"  ).css('display','block');
-        $("#txtval_iphone6c_3"  ).css('display','block');
-
-        $("#txttext_iphone5s_1"  ).css('display','none');
-        $("#txttext_iphone5s_2"  ).css('display','none');
-        $("#txttext_iphone5s_3"  ).css('display','none');
-
-        $("#txttext_iphone5c_1"  ).css('display','none');
-        $("#txttext_iphone5c_2"  ).css('display','none');
-        $("#txttext_iphone5c_3"  ).css('display','none');
-
-        $("#txttext_iphone6c_1"  ).css('display','none');
-        $("#txttext_iphone6c_2"  ).css('display','none');
-        $("#txttext_iphone6c_3"  ).css('display','none');
-
-        $("#txttext_iphone6s_1"  ).css('display','none');
-        $("#txttext_iphone6s_2"  ).css('display','none');
-        $("#txttext_iphone6s_3"  ).css('display','none');
-
-
-        $("#txtval_"+key+"_1" ).css('display','none');
-        $("#txttext_"+key+"_1"  ).css('display','block');
-        $("#txtval_"+key+"_2" ).css('display','none');
-        $("#txttext_"+key+"_2" ).css('display','block');
-        $("#txtval_"+key+"_3" ).css('display','none');
-        $("#txttext_"+key+"_3" ).css('display','block');
-        $("#val_type" ).val(key);
-
-    }*/
- </script>
- <style>
-
-
-     </style>
-
-
-
     <div>
         <h1 style="float:left;">Misc Settings</h1>
 
@@ -89,7 +34,10 @@
                                 <div class="span2" style="max-height: 100px !important;">
                                     <input type="file" id="background_file" name="background_file" required="required" accept=".png">
                                     <br />
-                                    <input type="submit" value="Upload" class="btn btn-large btn-primary"/>
+                                    <input type="submit" value="Upload" class="btn btn-small btn-primary"/>
+                                    {% if (image) %}
+                                        <a href="#myModal" role="button" data-toggle="modal" class="btn btn-small btn-primary">Delete</a>
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -100,19 +48,25 @@
                             </div>
                             </form>
                         </div>
-
-
-
-
                     </div>
                 </div><!-- End pro_detail -->
             </div><!-- End product_content -->
-
     </div>
 
-
-
-
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Fitting room Background Image</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to Delete this Background Image?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="{{ path('admin_misc_setting_remove') }}"  class="btn btn-primary">Delete</a>
+    </div>
+</div>
 
 
 
