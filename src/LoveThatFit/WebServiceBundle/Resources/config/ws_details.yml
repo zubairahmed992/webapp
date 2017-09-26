@@ -597,6 +597,7 @@ nws_cart_item_add_to_cart:
      auth_token: 121c421783cd4d71d871ec16a1296091
      quantity: 1
      item_id: 4126
+     display_screen: detail_page
    request_type: post
 
 

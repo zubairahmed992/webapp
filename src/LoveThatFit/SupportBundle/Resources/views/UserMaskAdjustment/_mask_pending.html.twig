@@ -127,26 +127,26 @@
     {% if (archives is defined)%}
         <hr class="black">
    <h5>Archives:</h5>
-  
-    {% for a in archives %}
-            <div><span>
-                    <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
-                    {% if (a.status==-1)%}
-                        <img class="img-thumb active" src="{{ asset(a.getWebPath('original'))}}"/>
-                    {%else%}
-                        <img class="img-thumb" src="{{ asset(a.getWebPath('cropped'))}}"/>
-                    {%endif%}
-                    </a>
-
-                </span></div>
-    {% endfor %}
+        <div>
+            {% for a in archives %}
+                    <span>
+                            <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
+                            {% if (a.status==-1)%}
+                                <img class="img-thumb active" src="{{ asset(a.getWebPath('original'))}}"/>
+                            {%else%}
+                                <img class="img-thumb" src="{{ asset(a.getWebPath('cropped'))}}"/>
+                            {%endif%}
+                            </a>
+                        </span>
+            {% endfor %}
+        </div>
     {%else%}
     <div>
         <a class="rest-mask" href="{{ path('support_pending_user_show', {'archive_id': archive.id, 'mode': 'refresh'}) }}" title="refresh mask">Reset Mask</a>
     </div>
     {% endif %}
 
-{# -- Hide Retouch image work
+
 
     <hr class="black">
     <h5>Retouch Images:</h5>
@@ -168,18 +168,19 @@
 
         <div style="margin-bottom: 10px;clear:both;"></div>
 
-        <span>
+
             {% if(retouch_filecount) %}
                 {% for retouch_count in 1..retouch_filecount %}
-                    <a href="" title="Adjust Mass Marker">
-                        <img class="img-thumb" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}"/>
-                    </a>
+                    <span>
+                        <a href="" title="Adjust Mass Marker">
+                            <img class="img-thumb" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}"/>
+                        </a>
+                    </span>
                 {% endfor %}
             {% endif %}
-        </span>
 
     </div>
-   -- Hide Retouch image work  #}
+
 </div>
 {% else%}
 <div>image info not available</div>
