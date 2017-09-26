@@ -27,6 +27,10 @@ class MiscSettingController extends Controller {
 		//Uploaded Achieved Retouch email.
 		$temp_name = $file['tmp_name'];
 		$target_path = __DIR__.'/../../../../web/uploads/ltf/background/';
+		if(!is_dir($target_path)){
+			mkdir($target_path, 0777, true);
+		}
+
 		$fileName = $file['name'];
 		$saved_retouch = 'fitting_background';
 		$ext = pathinfo($fileName, PATHINFO_EXTENSION);
