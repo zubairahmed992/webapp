@@ -192,7 +192,8 @@ class FNFUserRepository extends EntityRepository
             $orderByColumn = $order[0]['column'];
             $orderByDirection = $order[0]['dir'];
             if ($orderByColumn == 0) {
-                $orderByColumn = "u.id";
+                //$orderByColumn = "u.id";
+                $orderByColumn = "fnfg.id";
             } elseif ($orderByColumn == 1) {
                 $orderByColumn = "group_title";
             } elseif ($orderByColumn == 2) {
@@ -216,5 +217,41 @@ class FNFUserRepository extends EntityRepository
 
         // echo $preparedQuery->getSQL(); die;
         return $getResult ? $preparedQuery->getResult() : $preparedQuery;
+    }
+
+    public function getUsersGroupData()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('
+                fnf.id as fnfid,
+                fnfg.groupTitle as group_title,
+                fnfg.id as group_id,
+                fnfg.discount,
+                fnf.is_available,
+                u.id,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.gender,
+                u.createdAt,
+                fnfg.group_type,
+                IDENTITY(u.original_user) as original_user_id'
+            )
+            ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
+            ->join('fnf.groups', 'fnfg')
+            ->join('fnf.users', 'u')
+            ->andWhere('fnfg.isArchive = 0')
+            ->groupBy('u.id,fnfg.group_type')
+            ->OrderBy('fnfg.id', 'desc');
+
+        $preparedQuery = $query->getQuery();
+
+        try {
+            return $preparedQuery->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 }
