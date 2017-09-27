@@ -131,7 +131,7 @@ class FNFUserController extends Controller
                 /**End Code By babar*/
                 // var_dump( $groupData ); die;
 
-                $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode($userData, ","));
+                $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userData));
 
                 $newGroup    = $groups    = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupData);
                 $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userData);
