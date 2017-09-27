@@ -223,8 +223,14 @@
 
                         //jQuery('#FNFUser_users_chosen > ul > li')
                         var currentSelectedElement = jQuery(this).val();
-                        $('#FNFUser_users_chosen li:contains('+currentSelectedElement+')').remove();
-
+                        if(currentSelectedElement) {
+                            var arraycurrentSelectedElement = currentSelectedElement.toString().split(",");
+                            var lastcurrentSelectedElement = arraycurrentSelectedElement[arraycurrentSelectedElement.length-1];
+                            //console.log('lastcurrentSelectedElement:'+lastcurrentSelectedElement);
+                            $('#FNFUser_users_chosen li:contains('+lastcurrentSelectedElement+')').remove();
+                            //$('.chosen-drop li:contains('+lastcurrentSelectedElement+')').addClass("active-result");
+                            //$('.chosen-results li:contains('+lastcurrentSelectedElement+')').find('.result-selected');
+                        }
                     }
 
                 }
