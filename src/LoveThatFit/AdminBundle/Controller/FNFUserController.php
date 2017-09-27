@@ -76,11 +76,15 @@ class FNFUserController extends Controller
         $user_list = $this->get('user.helper.user')->getListWithPagination(0, 'email');
         $groups    = $this->get('fnfgroup.helper.fnfgroup')->getGroups();
 
+        $get_users_group = $this->get('fnfuser.helper.fnfuser')->getUsersGroupData();
+        //echo "<pre>"; print_r($get_users_group); die();
+
         return $this->render('LoveThatFitAdminBundle:FNFUser:new.html.twig',
             array(
                 'users'  => $user_list['users'],
                 'form'   => $form->createView(),
                 'groups' => $groups,
+                'user_groups' => $get_users_group,
             ));
 
     }
@@ -118,14 +122,16 @@ class FNFUserController extends Controller
             if ($selectedGroup == 0) {
                 /**Code By babar*/
                 //Check if any group exists. Then make is it archive
-                $groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord($group_typ);
+                //$groupToArchive = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord($group_typ);
                 //Iterate each group
-                foreach ($groupToArchive as $groupInfo) {
+                /*foreach ($groupToArchive as $groupInfo) {
                     //make group archived
                     $this->get('fnfgroup.helper.fnfgroup')->markedGroupAsArchived($groupInfo);
-                }
+                }*/
                 /**End Code By babar*/
                 // var_dump( $groupData ); die;
+
+                $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userData));
 
                 $newGroup    = $groups    = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupData);
                 $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userData);
