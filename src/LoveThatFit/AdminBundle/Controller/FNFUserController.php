@@ -293,30 +293,6 @@ class FNFUserController extends Controller
 
                                 }
                             } 
-                           /* else
-                            {
-
-
-
-                                if(count($userWithPreviousGroup)==1)
-                                {
-
-    print_r($userWithPreviousGroup);
-                          
-                                   
-                                    $this->get('session')->setFlash('warning', 'This userid ('.implode($userWithPreviousGroup,",").') already have previously assigned group');
-                                     return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
-
-                                    exit;  
-
-                                }
-                                else
-                                {    
-
-                                 $this->get('session')->setFlash('warning', 'These userids already have previously assigned group ('.implode($userWithPreviousGroup,",").') already have previous group');
-                                     return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
-                                }
-                            } */  
                         }
                     }
                     else {
@@ -340,18 +316,13 @@ class FNFUserController extends Controller
 
         }
 
-                          
 
         $existids = "";    
         foreach($userWithPreviousGroup as $rs)
         {
-            $existids .= $rs['user_id'].", ";
+            $existids .= $rs['user_id']." ( ".$rs['groupTitle']." ), ";
 
         }    
-
-
-        //echo $ss = implode($userWithPreviousGroup[0],",");
-      
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:fnf-upload.html.twig', array(
             'fvfImportform' => $fnfCsvform->createView(),

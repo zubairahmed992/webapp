@@ -95,6 +95,11 @@ class FNFGroupHelper
         return $this->repo->countAllFNFGroupRecord( $group_type );
     }
 
+    public function countAllFNFGroupCountRecord( $group_type = 1)
+    {
+        return $this->repo->countAllFNFGroupCountRecord( $group_type );
+    }
+
     public function searchFNFGroup( $data )
     {
         $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;

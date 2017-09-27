@@ -19,7 +19,7 @@ class FNFGroupController extends Controller
 {
     public function indexAction()
     {
-        $totalGroupRecords = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupRecord();
+        $totalGroupRecords = $this->get('fnfgroup.helper.fnfgroup')->countAllFNFGroupCountRecord();
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:index_group.html.twig',
             array(

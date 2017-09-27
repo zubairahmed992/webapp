@@ -24,17 +24,17 @@ class FNFGroupRepository extends EntityRepository
          }
      }
 
-    /*public function countAllFNFGroupRecord($group_type = 1)
+    public function countAllFNFGroupCountRecord($group_type = 1)
     {
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('COUNT(fnfg)')->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')
-            ->andWhere('fnfg.isArchive = 0')
-            ->andWhere('fnfg.group_type = :group_type')
-            ->setParameter("group_type", $group_type);
+            ->andWhere('fnfg.isArchive = 0');
+           // ->andWhere('fnfg.group_type = :group_type')
+           // ->setParameter("group_type", $group_type);
         $count = $query->getQuery()->getSingleScalarResult();
 
         return $count;
-    }*/
+    }
 
     public function getGroupDataById( $groupId )
     {
