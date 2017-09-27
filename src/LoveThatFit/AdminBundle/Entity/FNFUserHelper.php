@@ -225,4 +225,34 @@ class FNFUserHelper
 
         return;
     }
+
+    public function getUsersGroupData()
+    {
+        $output = array();
+
+        $finalData = $this->repo->getUsersGroupData();
+
+        foreach ($finalData as $fData) {
+            $discount = "$".$fData["discount"];
+            $group_type_name = "Fixed Amount";
+            if($fData['group_type'] == 2) {
+                $discount = $fData["discount"]. "%";
+                $group_type_name = "Flat Rate";
+            }
+            $output[$fData['group_type']][$fData["id"]] = [
+                'id' => $fData["id"],
+                'fnfid' => $fData["fnfid"],
+                'group_id' => $fData["group_id"],
+                'full_name' => ($fData["firstName"] . ' ' . $fData["lastName"]),
+                'email' => $fData["email"],
+                'group_title' => $fData['group_title'],
+                'discount' => $discount,
+                'group_type_name' => $group_type_name,
+                'group_type' => $fData['group_type'],
+                'original_user_id' => $fData["original_user_id"],
+            ];
+        }
+
+        return $output;
+    }
 }
