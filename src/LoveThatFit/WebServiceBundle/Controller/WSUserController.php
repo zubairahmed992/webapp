@@ -444,5 +444,36 @@ class WSUserController extends Controller
             throw new NotFoundHttpException('Sorry not existing!');
         }
     }
+
+    public function selfieshareCreateV3Action()
+    {
+        $ra = $this->process_request();
+        #return new Response(json_encode($ra));
+        if (!array_key_exists('auth_token', $ra)) {
+            return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
+        }
+
+        $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
+
+        if (count($user) > 0) {
+            $ss = $this->get('user.selfieshare.helper')->createWithParam($ra, $user);
+            if (array_key_exists('message_type', $ra) && $ra['message_type'] == 'sms') {
+                $baseurl = "http://" . $this->getRequest()->getHost();
+                $share_url = array();
+                $share_url["url"] = $baseurl . $this->generateUrl('selfieshare_provide_feedback_v3', array('ref' => $ss->getRef()));
+                $share_url_response = json_encode($share_url);
+                return new Response($share_url_response);
+            } else {
+                $ss_ar['to_email'] = $ss->getFriendEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/selfieshare_friend.html.twig';
+                $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'SelfieStyler friend share';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+                return new Response($this->get('webservice.helper')->response_array(true, 'selfieshare created'));
+            }
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+        }
+    }
 }
 
