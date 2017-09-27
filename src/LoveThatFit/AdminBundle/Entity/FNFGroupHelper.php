@@ -86,9 +86,23 @@ class FNFGroupHelper
         return $this->repo->findOneBy( array( 'id' => $id ));
     }
 
+    public function checkFnfUserToUniqueGroup( $ids ,$group_type)
+    {
+        return $this->repo->checkFnfUserToUniqueGroup($ids,$group_type);
+    }
     public function countAllFNFGroupRecord( $group_type = 1)
     {
         return $this->repo->countAllFNFGroupRecord( $group_type );
+    }
+
+    public function checkFnfUserUpdate( $userids )
+    {
+        return $this->repo->checkFnfUserUpdate( $userids );
+    }
+
+    public function countAllFNFGroupCountRecord( $group_type = 1)
+    {
+        return $this->repo->countAllFNFGroupCountRecord( $group_type );
     }
 
     public function searchFNFGroup( $data )
