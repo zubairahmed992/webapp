@@ -264,7 +264,7 @@ class FNFUserController extends Controller
                         //}
 
                         //Add new group
-                        $newGroup = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupInfoNew);
+                        
 
                         //Insert Users in group
                         if (is_array($userInfo) && count($userInfo) > 0) {
@@ -278,6 +278,8 @@ class FNFUserController extends Controller
 
                             if(count($userWithPreviousGroup) == 0)
                             {   
+
+                                $newGroup = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupInfoNew);
 
                                  $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userID));
 
