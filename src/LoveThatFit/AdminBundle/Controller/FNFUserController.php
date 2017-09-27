@@ -265,7 +265,7 @@ class FNFUserController extends Controller
 
                             $userID = array_keys($userInfo);
 
-                            $userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserToUniqueGroup(implode($userID, ","),$group_type);
+                            $userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserToUniqueGroup(implode(",",$userID),$group_type);
 
 
 
@@ -273,7 +273,7 @@ class FNFUserController extends Controller
                             if(count($userWithPreviousGroup) == 0)
                             {   
 
-                                 $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode($userID, ","));
+                                 $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userID));
 
 
 
