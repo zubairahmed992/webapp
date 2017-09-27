@@ -95,6 +95,11 @@ class FNFGroupHelper
         return $this->repo->countAllFNFGroupRecord( $group_type );
     }
 
+    public function checkFnfUserUpdate( $userids )
+    {
+        return $this->repo->checkFnfUserUpdate( $userids );
+    }
+
     public function countAllFNFGroupCountRecord( $group_type = 1)
     {
         return $this->repo->countAllFNFGroupCountRecord( $group_type );

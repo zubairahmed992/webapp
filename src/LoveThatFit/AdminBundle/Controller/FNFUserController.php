@@ -273,6 +273,8 @@ class FNFUserController extends Controller
                             if(count($userWithPreviousGroup) == 0)
                             {   
 
+                                 $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode($userID, ","));
+
 
 
                             //Assign user to group

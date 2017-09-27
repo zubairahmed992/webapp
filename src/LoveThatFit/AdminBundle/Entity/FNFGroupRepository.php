@@ -36,6 +36,15 @@ class FNFGroupRepository extends EntityRepository
         return $count;
     }
 
+    public function checkFnfUserUpdate($userIds)
+    {
+         $sql = 'Update fnf_user set is_available = 1 
+                    WHERE `user_id` IN ('.$userIds.')';
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
     public function getGroupDataById( $groupId )
     {
         $query     = $this->getEntityManager()->createQueryBuilder();
