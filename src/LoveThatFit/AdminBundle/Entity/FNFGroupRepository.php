@@ -73,28 +73,6 @@ class FNFGroupRepository extends EntityRepository
         return $preparedQuery->getResult();
     }
 
-
-
-   public function getGroupDataByName( $groupName )
-    {
-        $query = $this->getEntityManager()->createQueryBuilder();
-
-        $query
-            ->select('
-                fnfg.id as fnfgroup_id'                                  
-            )
-            ->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')
-            ->andWhere('fnfg.isArchive = 0')
-            ->andWhere('fnfg.groupTitle = :groupName')
-            ->setParameter("groupName", $groupName);
-            
-        return $query->getQuery()->getSingleScalarResult();
-    }
-
-
-
-
-
      public function checkFnfUserToUniqueGroup( $userIds, $group_type )
     {
 
