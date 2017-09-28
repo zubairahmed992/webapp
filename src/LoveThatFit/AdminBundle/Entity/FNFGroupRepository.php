@@ -73,6 +73,12 @@ class FNFGroupRepository extends EntityRepository
         return $preparedQuery->getResult();
     }
 
+   
+
+
+
+
+
      public function checkFnfUserToUniqueGroup( $userIds, $group_type )
     {
 
@@ -181,5 +187,23 @@ class FNFGroupRepository extends EntityRepository
             ->setParameter("groupName", $groupName);
 
         return $query->getQuery()->getSingleScalarResult();
+    }
+
+    public function getExixtGroupDataByName( $groupName )
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('
+                fnfg.id as fnfid'               
+                   
+            )
+            ->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')            
+            ->andWhere('fnfg.isArchive = 0')
+            ->andWhere('fnfg.groupTitle = :groupName')
+            ->setParameter("groupName", $groupName);
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
     }
 }

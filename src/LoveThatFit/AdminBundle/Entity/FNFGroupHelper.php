@@ -92,6 +92,12 @@ class FNFGroupHelper
         return $this->repo->findOneBy( array( 'id' => $id ));
     }
 
+    public function find($id)
+    {
+        return $this->repo->findOneBy(array('isArchive' => 0,'id' => $id));
+    }
+
+
     public function checkFnfUserToUniqueGroup( $ids ,$group_type)
     {
         return $this->repo->checkFnfUserToUniqueGroup($ids,$group_type);
@@ -167,6 +173,36 @@ class FNFGroupHelper
         }
 
         return $returnArray;
+    }
+
+
+    public function UpdateExistingGroup( $groupData = array(),$gorupid)
+    {
+        if(!empty( $groupData )){
+            $groupEntity = $this->find($gorupid);
+            if($groupData['group_type'] == 2){
+                $groupEntity->setDiscount($groupData['discount']);
+                $groupEntity->setGroupTitle($groupData['groupTitle']);
+                $groupEntity->setMinAmount($groupData['min_amount']);
+                $groupEntity->setGroupType($groupData['group_type']);
+            }else{
+
+                $groupEntity->setDiscount($groupData['discount']);
+                $groupEntity->setGroupTitle($groupData['groupTitle']);
+                $groupEntity->setMinAmount($groupData['min_amount']);
+                $groupEntity->setGroupType($groupData['group_type']);
+                $groupEntity->setStartAt( new \DateTime($groupData['start_at']));
+                $groupEntity->setEndAt( new \DateTime($groupData['end_at']));
+            }
+            
+            return $groupEntity;
+        }
+    }
+
+    public function getExixtGroupDataByName( $groupName )
+    {       
+
+        return $this->repo->getExixtGroupDataByName( $groupName );
     }
 
      public function getGroupDataByName( $groupName )
