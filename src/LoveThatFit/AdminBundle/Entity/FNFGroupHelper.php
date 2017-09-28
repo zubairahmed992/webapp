@@ -58,6 +58,12 @@ class FNFGroupHelper
         return $this->repo->findBy(array('isArchive' => 0));
     }
 
+
+    public function getExistingFnfGroups($groupName)
+    {
+        return $this->repo->findBy(array('isArchive' => 0,'groupTitle' => $groupName));
+    }
+
     public function addNewGroup( $groupData = array())
     {
         if(!empty( $groupData )){
@@ -161,6 +167,12 @@ class FNFGroupHelper
         }
 
         return $returnArray;
+    }
+
+     public function getGroupDataByName( $groupName )
+    {       
+
+        return $this->repo->getGroupDataByName( $groupName );
     }
 
     public function getAllGroupUsers(FNFGroup $group)

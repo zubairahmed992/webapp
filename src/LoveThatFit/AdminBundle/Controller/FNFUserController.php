@@ -174,13 +174,12 @@ class FNFUserController extends Controller
 
     public function getCsvFnfImportAction(Request $request)
     {
- 
 
-  //$userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserToUniqueGroup('3011,3016',1);
-
- 
-        $userWithPreviousGroup = "";
+        
+        $ExistingGroup = array();
         $userWithPreviousGroup = array();
+        $groupTitle = "";
+        $existGroup = "";
         $fnfCsvform = $this->createFormBuilder()
             ->add('submitFile', 'file', array('label' => 'Upload CSV file'))
             ->getForm();
@@ -283,13 +282,24 @@ class FNFUserController extends Controller
 
                             $userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserToUniqueGroup(implode(",",$userID),$group_type);
 
+                            $ExistingGroup =  $this->get('fnfgroup.helper.fnfgroup')->getExistingFnfGroups($groupTitle);
+
+                            
+
+                            
+
+                            
+                            if(count($userWithPreviousGroup) == 0 && count($ExistingGroup)==0)
+                            {  
 
 
 
-                            if(count($userWithPreviousGroup) == 0)
-                            {   
+                                //$userWithPreviousGroup = $this->get('fnfgroup.helper.fnfgroup')->getGroupDataByName($groupTitle);
+
+                            
 
                                 $newGroup = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupInfoNew);
+                             
 
                                  $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userID));
 
@@ -320,7 +330,7 @@ class FNFUserController extends Controller
                         return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
                     }
 
-                    if(count($userWithPreviousGroup) == 0)
+                    if(count($userWithPreviousGroup) == 0 && count($ExistingGroup)==0)
                     { 
 
                     $this->get('session')->setFlash('success', 'Group created successfully');
@@ -330,6 +340,8 @@ class FNFUserController extends Controller
                 }
 
             } catch (\Exception $e) {
+                echo $e;
+                exit;
                 $this->get('session')->setFlash('warning', 'Invalid File');
                 return $this->redirect($this->generateUrl('admin_csv_fnf_create_user'));
             }
@@ -342,11 +354,21 @@ class FNFUserController extends Controller
         {
             $existids .= $rs['user_id']." ( ".$rs['groupTitle']." ), ";
 
-        }    
+        }
+
+        $existGroup = ""; 
+       if(count($ExistingGroup) > 0)
+        {
+
+                $existGroup = 'Group Name ( '.$groupTitle.' ) already exist. Please change the group name to procced.';
+
+          
+        }   
 
         return $this->render('LoveThatFitAdminBundle:FNFUser:fnf-upload.html.twig', array(
             'fvfImportform' => $fnfCsvform->createView(),
             'userInPreviousGroup' => trim($existids,", "),
+            'existGroup' => $existGroup,
         )
         );
 
