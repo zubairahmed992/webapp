@@ -192,4 +192,9 @@ class FNFGroupHelper
         return $group;
     }
 
+    public function getGroupDataByName( $groupName )
+    {       
+        return $this->repo->getGroupDataByName( $groupName );
+    }
+
 }
