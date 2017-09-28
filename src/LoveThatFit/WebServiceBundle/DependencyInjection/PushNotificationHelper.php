@@ -307,7 +307,9 @@ class PushNotificationHelper
 
         $directory = dirname(__FILE__);
         if($env == "v3qa" || $env == "qa" ){
-            return $directory. "/Production-QA-Certificate.pem";
+            // return $directory. "/Production-QA-Certificate.pem"; In V3qa, this certificate is working
+            return $directory. "/SelfieStyler3-QA.pem";
+
         }else if($env == "dev"){
             return $directory. "/SelfieStyler3-QA.pem";
         }else if( $env == "prod" ){
