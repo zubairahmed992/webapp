@@ -190,7 +190,7 @@ class FNFUserHelper
 
                         $this->save( $fnfuserEntity );
                     }
-                    $this->removeUsers($fnfGroup, $groupUsers);
+                    //$this->removeUsers($fnfGroup, $groupUsers);
                     unset( $fnfuserEntity );
                 }
             }
