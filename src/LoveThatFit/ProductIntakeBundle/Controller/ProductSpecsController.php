@@ -256,6 +256,8 @@ class ProductSpecsController extends Controller
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
+        $parsed_data['brand'] = $map['brand'];
+
         #---------> Save to DB
         $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), $parsed_data);
         $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
