@@ -44,8 +44,14 @@
           <a id="ss_like" href="javascript:void(0);">
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
           </a>
+          <a id="ss_like_active" href="javascript:void(0);">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_up.png') }}" />
+          </a>
           <a id="ss_dislike" href="javascript:void(0);">
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_down.png') }}" />
+          </a>
+          <a id="ss_dislike_active" href="javascript:void(0);">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_down.png') }}" />
           </a>
         </div>
         <label for="comment" class="">COMMENT</label>
@@ -82,14 +88,42 @@
     $( document ).ready(function() {
         $( ".comment_div" ).hide();
         $( ".thankyou" ).hide();
+        $( "#ss_like_active" ).hide();
+        $( "#ss_dislike_active" ).hide();
     });
 
     $( "#ss_like" ).click(function () {
+      var like_input = $("#like_status").val();
+      $( "#ss_like" ).hide();
+      $( "#ss_like_active" ).show();
       $( "#like_status" ).attr( "value", '1' );
+      if (like_input == "0") {
+        $( "#ss_dislike_active" ).hide();
+        $( "#ss_dislike" ).show();
+      }
     });
     
     $( "#ss_dislike" ).click(function () {
+      var like_input = $("#like_status").val();
+      $( "#ss_dislike" ).hide();
+      $( "#ss_dislike_active" ).show();
       $( "#like_status" ).attr( "value", '0' );
+      if (like_input == "1") {
+        $( "#ss_like_active" ).hide();
+        $( "#ss_like" ).show();
+      }
+    });
+
+    $( "#ss_like_active" ).click(function () {
+      $( "#ss_like" ).show();
+      $( "#ss_like_active" ).hide();
+      $( "#like_status" ).attr( "value", '' );
+    });
+
+    $( "#ss_dislike_active" ).click(function () {
+      $( "#like_status" ).attr( "value", '' );
+      $( "#ss_dislike_active" ).hide();
+      $( "#ss_dislike" ).show();
     });
 
     $( "#login" ).click(function() {

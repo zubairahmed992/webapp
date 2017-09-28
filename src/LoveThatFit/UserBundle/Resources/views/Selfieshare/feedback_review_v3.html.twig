@@ -22,14 +22,19 @@
     <div class="container">
       <form class="form-share">
         {% for sf in selfieshare.selfieshare %}
+        <label for="inputEmail" class="">FRIEND</label>
+        <input type="text" class="form-control" readonly="" value="{{sf.name}}" style="border-color: #e0ca89;">
+        <div class="error error_name"></div>
         <div class="like_share">Love it or leave it? 
           {% if(sf.favourite is null) %}          
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_down.png') }}" />
           {% elseif (sf.favourite==1) %}
-            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
-          {% elseif(sf.favourite==0)%}
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_up.png') }}" />
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_down.png') }}" />
+          {% elseif(sf.favourite==0)%}
+          <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_down.png') }}" />
           {%endif%}
 
         </div>
