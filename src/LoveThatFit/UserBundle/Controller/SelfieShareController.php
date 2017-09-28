@@ -118,9 +118,9 @@ class SelfieShareController extends Controller {
         return new Response($selfieshare->getFriendName().'provided feedback updated.');
     }
     #----------------------------------------------
-    public function feedbackReviewNewAction($ref=null) {
+    public function feedbackReviewV3Action($ref=null)
+    {
         $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ref);
-        #return new Response($selfieshare->getFriendName());
         return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_review_v3.html.twig', array('selfieshare' => $selfieshare));
     }
 }
