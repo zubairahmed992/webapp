@@ -131,16 +131,26 @@ class FNFUserController extends Controller
                 /**End Code By babar*/
                 // var_dump( $groupData ); die;
 
-                $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userData));
+                $checkGroupAlreadyExist = $this->get('fnfgroup.helper.fnfgroup')->getGroupDataByName($groupData['groupTitle']);
 
-                $newGroup    = $groups    = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupData);
-                $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userData);
-                if ($userCreated) {
-                    $this->get('session')->setFlash('success', 'User created and added to group!');
-                    return $this->redirect($this->generateUrl('fnf_users'));
+                if($checkGroupAlreadyExist) {
+                    //group title already exists
+                    $this->get('session')->setFlash('warning', 'Group title is already exists!');
+                    return $this->redirect($this->generateUrl('add_fnf_user'));
+                } else {
+                    //new group
+                    $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userData));
+
+                    $newGroup    = $groups    = $this->get('fnfgroup.helper.fnfgroup')->addNewGroup($groupData);
+                    $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($newGroup, $userData);
+                    if ($userCreated) {
+                        $this->get('session')->setFlash('success', 'User created and added to group!');
+                        return $this->redirect($this->generateUrl('fnf_users'));
+                    }
                 }
             } else if ($selectedGroup > 0) {
                 // var_dump( $userData ); die;
+                $this->get('fnfgroup.helper.fnfgroup')->checkFnfUserUpdate(implode(",",$userData));
                 $fnfGroup    = $groups    = $this->get('fnfgroup.helper.fnfgroup')->findById($selectedGroup);
                 $userCreated = $this->get('fnfuser.helper.fnfuser')->saveFNFUsers($fnfGroup, $userData);
 
