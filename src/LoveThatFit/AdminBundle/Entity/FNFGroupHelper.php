@@ -158,20 +158,39 @@ class FNFGroupHelper
 
     public function getGroupDataById( $groupId )
     {
+
         $data = $this->repo->getGroupDataById( $groupId );
+       
         $returnArray = array();
+        $temp = array();
 
-        foreach ($data as $row){
-            $returnArray['discount']            = $row['discount'];
-            $returnArray['min_amount']          = $row['min_amount'];
-            $returnArray['start_at']            = $row['startAt'];
-            $returnArray['end_at']              = $row['endAt'];
-            $temp['id']                         = $row['id'];
-            $temp['email']                      = $row['email'];
-            $returnArray['group_type']          = $row['group_type'];
-            $returnArray['users'][]             = $temp;
-        }
+        if(count($data) > 0){
 
+            foreach ($data as $row){
+                $returnArray['discount']            = $row['discount'];
+                $returnArray['min_amount']          = $row['min_amount'];
+                $returnArray['start_at']            = $row['startAt'];
+                $returnArray['end_at']              = $row['endAt'];
+                $temp['id']                         = $row['id'];
+                $temp['email']                      = $row['email'];
+                $returnArray['group_type']          = $row['group_type'];
+                $returnArray['users'][]             = $temp;
+            }
+        }else{
+
+            $groupData = $this->repo->getOnlyGroupDataById( $groupId );
+
+            foreach ($groupData as $row){
+                $returnArray['discount']            = $row['discount'];
+                $returnArray['min_amount']          = $row['min_amount'];
+                $returnArray['start_at']            = $row['startAt'];
+                $returnArray['end_at']              = $row['endAt'];
+                $returnArray['group_type']          = $row['group_type'];
+                $returnArray['users'][]             = "";
+            } 
+
+        }    
+        
         return $returnArray;
     }
 
