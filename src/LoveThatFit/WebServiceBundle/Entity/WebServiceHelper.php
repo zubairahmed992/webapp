@@ -1792,7 +1792,7 @@ class WebServiceHelper
                 if(is_float($order_sales_tax) || is_numeric($order_sales_tax)) {
                     $order_sales_tax = $order_sales_tax;
                 } else {
-                    $taxjar_error_messages = array(400 => 'Bad Request – Your request format is bad.', 
+                    $taxjar_error_messages = array(400 => 'Please enter a valid zip code.', 
                                         401 => 'Unauthorized – Your API key is wrong.', 
                                         403 => 'Forbidden – The resource requested is not authorized for use.',
                                         404 => 'Not Found – The specified resource could not be found.',
