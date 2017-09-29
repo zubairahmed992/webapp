@@ -73,6 +73,32 @@ class FNFGroupRepository extends EntityRepository
         return $preparedQuery->getResult();
     }
 
+    
+
+
+     public function getOnlyGroupDataById( $groupId )
+    {       
+        $query     = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('                
+                fnfg.discount,
+                fnfg.min_amount,               
+                fnfg.startAt,
+                fnfg.endAt,
+                fnfg.group_type   
+                '
+
+            )
+            ->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')            
+            ->andWhere('fnfg.isArchive = 0')
+            ->andWhere('fnfg.id = :groupId')
+            ->setParameter("groupId", $groupId);
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
+    }
+
    
 
 
@@ -115,8 +141,6 @@ class FNFGroupRepository extends EntityRepository
                     )
                     WHERE fnf_group.is_archive = 0 AND fnf_user.is_available = 1 AND fnf_group.`group_type` = '.$group_type.'  AND fnf_user.`user_id` IN ('.$userIds.')';
 
-                       // ->andWhere('v.workingHours IN (:workingHours)')
-    //->setParameter('workingHours', $workingHours);
 
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);

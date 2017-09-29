@@ -38,47 +38,47 @@
             var group_typ = $("#FNFUser_groups_0_group_type").find(':selected').val();
             if ($('#FNFUser_users :selected').length == 0) {
                 $("#FNFUser_users_chosen").addClass('categoryerror');
-                event.preventDefault();
+                return false;
+                //event.preventDefault();
             }
 
             if ($("#groupTitle").css('visibility') === "visible") {
                 if ($("#FNFUser_groups_0_groupTitle").val() == "") {
                     $("#FNFUser_groups_0_groupTitle").addClass('categoryerror');
-                    event.preventDefault();
-                }
+                 return false;                }
             }
 
             if ($("#FNFUser_groups_0_discount").val() == "") {
                 $("#FNFUser_groups_0_discount").addClass('categoryerror');
-                event.preventDefault();
+                return false; 
             }
 
             var value = $("#FNFUser_groups_0_discount").val();
             if (isNaN(value) || value < 0) {
                 $("#FNFUser_groups_0_discount").addClass('categoryerror');
-                event.preventDefault();
+                return false; 
             }
 
             if(group_typ == 1){
                 if ($("#FNFUser_groups_0_min_amount").val() == "") {
                     $("#FNFUser_groups_0_min_amount").addClass('categoryerror');
-                    event.preventDefault();
+                    return false; 
                 }
 
                 var value = $("#FNFUser_groups_0_min_amount").val();
                 if (isNaN(value) || value < 0) {
                     $("#FNFUser_groups_0_min_amount").addClass('categoryerror');
-                    event.preventDefault();
+                    return false; 
                 }
 
                 if ($("#FNFUser_groups_0_start_at").val() == "") {
                     $("#FNFUser_groups_0_start_at").addClass('categoryerror');
-                    event.preventDefault();
+                    return false; 
                 }
 
                 if ($("#FNFUser_groups_0_end_at").val() == "") {
                     $("#FNFUser_groups_0_end_at").addClass('categoryerror');
-                    event.preventDefault();
+                    return false; 
                 }
             }
 
@@ -104,7 +104,7 @@
             <a href="{{ path('fnf_users') }}" class="btn">back</a>
         </div>
         <div class="clearfix"></div>
-        <form action="{{ path('admin_fnfuser_create') }}" method="post" {{ form_enctype(form) }} onsubmit="submitform()"
+        <form action="{{ path('admin_fnfuser_create') }}" method="post" {{ form_enctype(form) }} onsubmit="return submitform()"
               id="groupForm" novalidate>
             <div id="detail_wrapper">
                 <div id="p_hd">FNFUser Detail</div>
