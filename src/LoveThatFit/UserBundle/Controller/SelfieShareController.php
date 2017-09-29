@@ -107,7 +107,7 @@ class SelfieShareController extends Controller {
         $user = $this->container->get('user.helper.user')->find($selfieshare->getUser()->getId());
         $push_notification = array();
         $baseurl = $this->getRequest()->getHost();
-        $url = $baseurl . $this->generateUrl('selfieshare_feedback_review', array('ref' => $ra["ref"]));
+        $url = $baseurl . $this->generateUrl('selfieshare_feedback_review_v3', array('ref' => $ra["ref"]));
         $push_notification["url"] = $url;
         $push_notification["notification_type"] = "friends_feedback";
         $json_data = json_encode($push_notification);
