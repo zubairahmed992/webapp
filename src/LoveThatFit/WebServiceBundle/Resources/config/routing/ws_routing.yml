@@ -400,3 +400,7 @@ nws_get_order_sales_tax_user:
 mcp_save_marker_image:
     pattern: /mcp/save_marker_image
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:archiveImageUpdateMcp}
+   
+mcp_get_user_mask_marker_details:
+    pattern: /mcp/mcp_pending_users_reverted_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:pendingUsersRevertedImage} 
