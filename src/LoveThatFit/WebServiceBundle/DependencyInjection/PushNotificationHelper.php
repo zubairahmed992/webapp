@@ -307,8 +307,8 @@ class PushNotificationHelper
 
         $directory = dirname(__FILE__);
         if($env == "v3qa" || $env == "qa" ){
-            // return $directory. "/Production-QA-Certificate.pem"; In V3qa, this certificate is working
-            return $directory. "/SelfieStyler3-QA.pem";
+            return $directory. "/Production-QA-Certificate.pem"; //In V3qa, Now prod environment certificate is working
+            //return $directory. "/SelfieStyler3-QA.pem";
 
         }else if($env == "dev"){
             return $directory. "/SelfieStyler3-QA.pem";
@@ -324,8 +324,8 @@ class PushNotificationHelper
         $env  = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['push_envior'];
 
         if($env == "v3qa" || $env == "qa" ){
-            //return "ssl://gateway.push.apple.com:2195"; V3Qa is also dev environment so this will be sandbox
-            return "ssl://gateway.sandbox.push.apple.com:2195";
+            return "ssl://gateway.push.apple.com:2195"; //V3Qa is also prod environment
+            //return "ssl://gateway.sandbox.push.apple.com:2195";
         }else if($env == "dev"){
             return "ssl://gateway.sandbox.push.apple.com:2195";
         }else if( $env == "prod" ){
