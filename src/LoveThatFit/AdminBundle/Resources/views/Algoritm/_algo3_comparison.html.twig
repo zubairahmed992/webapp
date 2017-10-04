@@ -121,7 +121,7 @@
                                         {#<td>{{fp_specs.variance}}</td>#}
                                         <td>
                                             <table>
-                                                <tr>
+                                                <tr   style=" font-family:monospace;font-size:10px;">
                                                     <td {{(fp_specs.box==1) ? 'style="background-color: red"' : 'style="background-color: #B3B6B7"'}}>1</td>
                                                     <td {{(fp_specs.box==2) ? 'style="background-color: orange"' : 'style="background-color: #ECF0F1"'}}>2</td>
                                                     <td {{(fp_specs.box==3) ? 'style="background-color: yellow"' : 'style="background-color: #F4F6F7"'}}>3</td>
@@ -159,7 +159,19 @@
                                             </span>   
                                         </td>                                                                                
                                         {#<td>{{size_specs.variance}} <span style="float: right;font-size: 10px;">({{size_specs.variance_sum}})</span></td>#}                
-                                        <td></td>
+                                        <td>
+                                            <table>
+                                                <tr  style="font-size:10px;">
+                                                    <td {{(size_specs.box==1) ? 'style="background-color: red"' : 'style="background-color: #B3B6B7"'}}>1</td>
+                                                    <td {{(size_specs.box==2) ? 'style="background-color: orange"' : 'style="background-color: #ECF0F1"'}}>2</td>
+                                                    <td {{(size_specs.box==3) ? 'style="background-color: yellow"' : 'style="background-color: #F4F6F7"'}}>3</td>
+                                                    <td {{(size_specs.box==4) ? 'style="background-color: green"' : 'style="background-color: #E5E8E8"'}}>4</td>
+                                                    <td {{(size_specs.box==5) ? 'style="background-color: yellow"' : 'style="background-color: #F4F6F7"'}}>5</td>
+                                                    <td {{(size_specs.box==6) ? 'style="background-color: orange"' : 'style="background-color: #ECF0F1"'}}>6</td>
+                                                    <td {{(size_specs.box==7) ? 'style="background-color: red"' : 'style="background-color: #B3B6B7"'}}>7</td>
+                                                </tr>
+                                            </table>                                                
+                                        </td>
                                         
                                         
                                         
