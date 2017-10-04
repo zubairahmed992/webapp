@@ -302,28 +302,26 @@ class UserArchivesHelper {
 	}
  }
 
-public function updateRevertedImageStatus($user_id,$hash) {
-  $user = $this->container->get('user.helper.user')->find($user_id);
+public function updateRevertedImageStatus($user_id,$hash) {    
+  $user = $this->container->get('user.helper.user')->find($user_id);    
   $result = $this->getPendingArchive($user);
   $id = $result->getId();
   if($result->getStatus() == '-1'){
-    $user_cropped_image = "cropped_".$result->getImage();
+    $user_cropped_image = "cropped_".$result->getImage();    
     $user_original_image = "original_".$result->getImage();
-    //echo $result->getImage();die;
-    #$result_user = $this->container->get('user.helper.user')->find($user_id);
     $user->setStatus(0);
     $user->setUpdatedAt(new \DateTime('now'));
     $this->em->persist($user);
     $this->em->flush();
-    $this->delete($id);
+    $this->delete($id);      
     if (file_exists("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image))
-    {
-      copy("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image, "../web/uploads/ltf/users/".$user_id."/mcp_".$hash.".png");
+    {        
+      copy("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image, "../web/uploads/ltf/users/".$user_id."/mcpc_".$hash.".png");
       unlink ("../web/uploads/ltf/users/".$user_id."/".$user_cropped_image);
-    }
+    }    
     if (file_exists("../web/uploads/ltf/users/".$user_id."/".$user_original_image))
     {
-      copy("../web/uploads/ltf/users/".$user_id."/".$user_original_image, "../web/uploads/ltf/users/".$user_id."/mcp_".$hash.".png");
+      copy("../web/uploads/ltf/users/".$user_id."/".$user_original_image, "../web/uploads/ltf/users/".$user_id."/mcpo_".$hash.".png");
       unlink ("../web/uploads/ltf/users/".$user_id."/".$user_original_image);
     }
   }

@@ -947,5 +947,6 @@ mcp_pending_users_reverted_image:
     request_type: post
     description: reverted image of pending users
     params:
-        user_id: 00000000000000000000000000000
-        mcp_auth_token: 00000000000000000000000000000
+        user_id: ""
+        mcp_auth_token: ""
+        image_hash: ""

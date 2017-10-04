@@ -379,13 +379,13 @@ class WSUserController extends Controller
     }    
     
     public function pendingUsersRevertedImageAction()
-    {
+    {     
         $decoded = $this->process_request();
         if($decoded['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&') {                  
-            $this->get('user.helper.userarchives')->updateRevertedImageStatus($decoded,'asdfasdfasfd');
-            return new Response(json_encode(array("Image status has been Reverted")));
+            $this->get('user.helper.userarchives')->updateRevertedImageStatus($decoded['user_id'],$decoded['image_hash']);
+            return new Response(json_encode(array("success" => 1,"description" => "Image status has been Reverted")));
         } else {
-            return new Response(json_encode(array("Invaild Token")));
+            return new Response(json_encode(array("success" => "0","description" => "Invaild Token")));
         }    
     }    
 
