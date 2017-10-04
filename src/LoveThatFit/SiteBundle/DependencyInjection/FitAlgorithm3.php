@@ -213,7 +213,7 @@ class FitAlgorithm3 {
                  
                  $fb[$size_identifier]['simplified_messages'] = $this->simplify_fit_area_messaging($fb[$size_identifier]);                 
                  $fb[$size_identifier]['simplified_message_text'] = $this->message_to_text($fb[$size_identifier]['simplified_messages']);
-                 $fb[$size_identifier]['box'] = $this->size_accumulated_box($fb[$size_identifier]['fit_points']); 
+                 #$fb[$size_identifier]['box'] = $this->size_accumulated_box($fb[$size_identifier]['fit_points']); 
                  
                  $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
                  if ($hem_bits) {
@@ -861,15 +861,15 @@ class FitAlgorithm3 {
     }
     #------------------------------------------------
     
-    private function size_accumulated_box($fit_points) {
-        $sb = 0;
-        foreach ($fit_points as $fpk => $fpv) {
-            if ($sb == 0 || $fpv['box'] == 7 || ($sb < $fpv['box'] && $sb >= 4) || ($sb > $fpv['box'] && $sb <= 4)) {#-too tight
-                $sb = $fpv['box'];
-            }
-        }
-        return $sb;
-    }
+//    private function size_accumulated_box($fit_points) {
+//        $sb = 0;
+//        foreach ($fit_points as $fpk => $fpv) {
+//            if ($sb == 0 || $fpv['box'] == 7 || ($sb < $fpv['box'] && $sb >= 4) || ($sb > $fpv['box'] && $sb <= 4)) {#-too tight
+//                $sb = $fpv['box'];
+//            }
+//        }
+//        return $sb;
+//    }
 
     #-------------------------- Simplified Messaging Bits 
     ############################################################
