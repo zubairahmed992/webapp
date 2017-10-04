@@ -864,7 +864,7 @@ class FitAlgorithm3 {
     private function size_accumulated_box($fit_points) {
         $sb = 0;
         foreach ($fit_points as $fpk => $fpv) {
-            if ($sb == 0 || $fpv['box'] == 7 || ($sb < $fpv['box'] && $sb >= 4) || ($sb > $fpv['box'] && $sb < 4)) {#-too tight
+            if ($sb == 0 || $fpv['box'] == 7 || ($sb < $fpv['box'] && $sb >= 4) || ($sb > $fpv['box'] && $sb <= 4)) {#-too tight
                 $sb = $fpv['box'];
             }
         }
