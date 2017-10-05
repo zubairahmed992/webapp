@@ -1931,4 +1931,16 @@ class ProductRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getProductIdName()
+    {
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('p.id, p.name')
+            ->from('LoveThatFitAdminBundle:Product', 'p');
+        try {
+          return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
+    }
+
 }
