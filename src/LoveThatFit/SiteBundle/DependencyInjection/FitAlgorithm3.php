@@ -336,6 +336,9 @@ class FitAlgorithm3 {
         $fp_measurements['body_fx'] = $message_array['body_fx'];   
         $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);        
         $fp_measurements['box'] = $message_array['box'];
+        $fp_measurements['halfway_min_low'] = $message_array['halfway_min_low'];
+        $fp_measurements['halfway_high_max'] = $message_array['halfway_high_max'];
+
         return $fp_measurements;
     }
 #---------------------------------------------------
@@ -526,6 +529,8 @@ class FitAlgorithm3 {
         $fx = $this->to_frac($fp_fx);
         return array('body_fx' => $fx, 'message' => $fp_scale['message'], 'status' => $fp_scale['status'],
             'fits' => $fits, 'status_text' => $fp_scale['status_text'], 'box' => $box, 
+            'halfway_min_low' => $fp_specs['min_body_measurement'] + (($fp_specs['min_body_measurement'] - $fp_specs['ideal_body_size_low']) / 2),
+            'halfway_high_max' => $fp_specs['ideal_body_size_high'] + (($fp_specs['max_body_measurement'] - $fp_specs['ideal_body_size_high']) / 2),
         );
     }
     #------------>
