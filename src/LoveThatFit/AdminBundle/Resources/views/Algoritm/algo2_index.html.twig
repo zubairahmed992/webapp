@@ -142,12 +142,12 @@ $('a.strip_json').click(function (event){
                     <option value="{{user['id']}}">{{user['email']}}</option>
                 {% endfor %}
             </select>
-            <input type="text" placeholder="Search Users" id="keyword">
+            Or <input type="text" placeholder="Search Users" id="keyword">
             <input type="hidden" id="user_id">
         </form>
         <!--umer work-->
     </div>
-    <div style="float: left">
+    <div style="float: left; margin-left: 20px;">
         <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
         {# <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
         {{ form_errors(productForm) }}
@@ -163,15 +163,21 @@ $('a.strip_json').click(function (event){
                     <option value="{{product['id']}}">{{product['name']}}</option>
                 {% endfor %}
             </select>
-            <input type="text" placeholder="Search Product" id="product_keyword">
+            Or <input type="text" placeholder="Search Product" id="product_keyword">
             <input type="hidden" id="product_id">
         </form>
         <!--umer work-->
     </div>
-    <a id='compare' class='compare' href="#">Compare</a> | 
-    <a id='json' class='json' href="#">JSON</a> | 
-    <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
-    <br>
+    <div class="clearfix"></div>
+    <div class="row-fluid" style="border:none !important">
+        <div  class="col-md-4"> 
+            <b> Add Preference </b> 
+            <a id='compare' class='compare' href="#">Compare</a> | 
+            <a id='json' class='json' href="#">JSON</a> | 
+            <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
+            <br>
+        </div>
+    </div>
     <div id="summary_ajax" style="float: none">
     </div>
     {#<div class="ui-widget" style="clear:both">#}

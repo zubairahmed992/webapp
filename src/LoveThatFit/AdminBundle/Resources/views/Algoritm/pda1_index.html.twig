@@ -169,39 +169,57 @@
     <span id='size_id' style="display: none"></span>
     <span id='user_id' style="display: block"></span>
 
-    <div  class="row-fluid"> 
+    <div class="row-fluid" style="border:none !important"> 
         <h3>Preference Driven Algorithm</h3>
+        
         <div style="float: left">
-            <a id="user_edit_link" class="user_edit_link" href="#">User</a>
-            <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+            {# <form id="userForm" method="post" {{ form_enctype(userForm) }}>
                 {{ form_errors(userForm) }}
                 {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
                 Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
                 {{ form_rest(userForm) }}
-            </form>                 
+            </form>   #}
+            <a id="user_edit_link" class="user_edit_link" href="#">User</a>
+            <br>
+            <select id="algorithm_User" name="algorithm[User]">
+                <option value="">Select User</option>
+                {% for user in users %}
+                    <option value="{{user['id']}}">{{user['email']}}</option>
+                {% endfor %}
+            </select>
+             Or <input type="text" placeholder="Search Users" id="keyword">
+             <input type="hidden" id="user_id">
         </div>
-        <div style="float: left">
-            <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
-            <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
+        
+        <div style="float: left;margin-left: 20px;">
+            {# <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
                 {{ form_errors(productForm) }}
                 &nbsp;{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}
                 Or <input type="text" placeholder="Search Product" id="product_keyword"><input type="hidden" id="product_id">
                 {{ form_rest(productForm) }}
-            </form>      
+            </form> #}      
+            <form id="productForm" action="" method="post">
+                <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
+                <br>
+                <select id="algorithm_Product"  method="post" name="algorithm[Product]" required="required">
+                    <option value="">Select Product</option>
+                    {% for product in products %}
+                        <option value="{{product['id']}}">{{product['name']}}</option>
+                    {% endfor %}
+                </select>
+                Or <input type="text" placeholder="Search Product" id="product_keyword">
+                <input type="hidden" id="product_id">
+            </form>
         </div>
       {#  <a id='compare' class='compare' href="#">Compare</a> | 
         <a id='json' class='json' href="#">JSON</a> | 
         <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>#}
-        
-        
+    </div> 
         <input type="hidden"  id="user_id">
         <input type="hidden" id="product_id">
-
-    </div> 
-<div class="clearfix"></div>
-    <div class="row-fluid">                    
+    <div class="clearfix"></div>
+    <div class="row-fluid" style="border:none !important">                    
         <div  class="col-md-4"> 
-            
             <b> Add Preference </b> 
             <input class="form-control col-md-10" type="hidden" id="preference_json" name="preference_json" value=''>
             <a id='go_pda' class='go_pda' href="#">Compare</a> &nbsp;|&nbsp;
@@ -209,8 +227,8 @@
             <a id='pda_strip_json' class='pda_strip_json' href="#">Stripped JSON</a>
         </div>
         <div class="clearfix"></div>
-<div id="preference_div" class="row-fluid">                    
-        <div  id="pref_ctrl"> 
+        <div id="preference_div" class="row-fluid" style="border:none !important">
+        <div  id="pref_ctrl" style="margin-left:10px"> 
         </div>
 
     </div>
