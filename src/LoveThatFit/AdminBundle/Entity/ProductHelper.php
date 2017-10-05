@@ -1841,4 +1841,8 @@ class ProductHelper
     public function getStyleListEnable() {
         return $this->repo->getStyleListEnable();
     }
+
+    public function getProductIdName(){
+        return $this->repo->getProductIdName();   
+    }
 }
