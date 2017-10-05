@@ -73,6 +73,37 @@ class FNFGroupRepository extends EntityRepository
         return $preparedQuery->getResult();
     }
 
+    
+
+
+     public function getOnlyGroupDataById( $groupId )
+    {       
+        $query     = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('                
+                fnfg.discount,
+                fnfg.min_amount,               
+                fnfg.startAt,
+                fnfg.endAt,
+                fnfg.group_type   
+                '
+
+            )
+            ->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')            
+            ->andWhere('fnfg.isArchive = 0')
+            ->andWhere('fnfg.id = :groupId')
+            ->setParameter("groupId", $groupId);
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
+    }
+
+   
+
+
+
+
 
      public function checkFnfUserToUniqueGroup( $userIds, $group_type )
     {
@@ -108,10 +139,8 @@ class FNFGroupRepository extends EntityRepository
                     ON (
                       fnf_group.`id` = fnfusers_groups.`fnfgroup_id`
                     )
-                    WHERE fnf_group.is_archive = 0 AND fnf_group.`group_type` = '.$group_type.'  AND fnf_user.`user_id` IN ('.$userIds.')';
+                    WHERE fnf_group.is_archive = 0 AND fnf_user.is_available = 1 AND fnf_group.`group_type` = '.$group_type.'  AND fnf_user.`user_id` IN ('.$userIds.')';
 
-                       // ->andWhere('v.workingHours IN (:workingHours)')
-    //->setParameter('workingHours', $workingHours);
 
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
@@ -166,5 +195,39 @@ class FNFGroupRepository extends EntityRepository
             $preparedQuery = $query->getQuery();
         }
         return $getResult?$preparedQuery->getResult():$preparedQuery;
+    }
+
+    public function getGroupDataByName( $groupName )
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('
+                count(fnfg.id) as fnfgroup_id'                                  
+            )
+            ->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')
+            ->andWhere('fnfg.isArchive = 0')
+            ->andWhere('fnfg.groupTitle = :groupName')
+            ->setParameter("groupName", $groupName);
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    public function getExixtGroupDataByName( $groupName )
+    {
+        $query     = $this->getEntityManager()->createQueryBuilder();
+
+        $query
+            ->select('
+                fnfg.id as fnfid'               
+                   
+            )
+            ->from('LoveThatFitAdminBundle:FNFGroup', 'fnfg')            
+            ->andWhere('fnfg.isArchive = 0')
+            ->andWhere('fnfg.groupTitle = :groupName')
+            ->setParameter("groupName", $groupName);
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
     }
 }

@@ -107,20 +107,20 @@ class SelfieShareController extends Controller {
         $user = $this->container->get('user.helper.user')->find($selfieshare->getUser()->getId());
         $push_notification = array();
         $baseurl = $this->getRequest()->getHost();
-        $url = $baseurl . $this->generateUrl('selfieshare_feedback_review', array('ref' => $ra["ref"]));
+        $url = $baseurl . $this->generateUrl('selfieshare_feedback_review_v3', array('ref' => $ra["ref"]));
         $push_notification["url"] = $url;
         $push_notification["notification_type"] = "friends_feedback";
         $json_data = json_encode($push_notification);
         $this->get('user.selfiesharefeedback.helper')->createWithParam($ra,$selfieshare);
-        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedback($user, $json_data);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedbackV3($user, $json_data);
 
 
         return new Response($selfieshare->getFriendName().'provided feedback updated.');
     }
     #----------------------------------------------
-    public function feedbackReviewNewAction($ref=null) {
+    public function feedbackReviewV3Action($ref=null)
+    {
         $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ref);
-        #return new Response($selfieshare->getFriendName());
         return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_review_v3.html.twig', array('selfieshare' => $selfieshare));
     }
 }

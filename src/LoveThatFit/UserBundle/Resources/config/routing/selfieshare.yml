@@ -31,5 +31,5 @@ selfieshare_submit_feedback_v3:
     defaults: { _controller: LoveThatFitUserBundle:SelfieShare:submitFeedbackV3 }
 
 selfieshare_feedback_review_v3:
-    pattern:   /selfieshare/feedback_review_new/{ref}
+    pattern:   /selfieshare/feedback_review_v3/{ref}
     defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackReviewV3, ref: null }

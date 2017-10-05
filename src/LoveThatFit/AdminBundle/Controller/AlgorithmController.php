@@ -20,11 +20,15 @@ class AlgorithmController extends Controller {
 ################################################################
 
     public function pda1IndexAction() {
-        $userForm = $this->createForm(new AlgoritumTestlType());
-        $productForm = $this->createForm(new AlgoritumProductTestlType());
+        // $userForm = $this->createForm(new AlgoritumTestlType());
+        // $productForm = $this->createForm(new AlgoritumProductTestlType());
+        $users    = $this->get("user.helper.user")->getActivityLog();
+        $products = $this->get("admin.helper.product")->getProductIdName();
         return $this->render('LoveThatFitAdminBundle:Algoritm:pda1_index.html.twig', array(
-                    'userForm' => $userForm->createView(),
-                    'productForm' => $productForm->createView(),
+                    // 'userForm' => $userForm->createView(),
+                    // 'productForm' => $productForm->createView(),
+                    'users'    => $users,
+                    'products' => $products,
                     'user' => '',
                 ));
     }
@@ -83,13 +87,19 @@ class AlgorithmController extends Controller {
 #   Fit Algorithm 3    
 ################################################################
 
-    public function fitAlgorithm3IndexAction() {
-        $userForm = $this->createForm(new AlgoritumTestlType());
-        $productForm = $this->createForm(new AlgoritumProductTestlType());
+    public function fitAlgorithm3IndexAction()
+    {
+        // $userForm = $this->createForm(new AlgoritumTestlType());
+        // $productForm = $this->createForm(new AlgoritumProductTestlType());
+        $users    = $this->get("user.helper.user")->getActivityLog();
+        $products = $this->get("admin.helper.product")->getProductIdName();
+        
         return $this->render('LoveThatFitAdminBundle:Algoritm:algo3_index.html.twig', array(
-                    'userForm' => $userForm->createView(),
-                    'productForm' => $productForm->createView(),
-                    'user' => '',
+                    // 'userForm' => $userForm->createView(),
+                    // 'productForm' => $productForm->createView(),
+                    'users'    => $users,
+                    'products' => $products,
+                    'user'     => '',
                 ));
     }
 
@@ -116,12 +126,17 @@ class AlgorithmController extends Controller {
 ################################################################
 
     public function fitAlgorithmIndexAction() {
-        $userForm = $this->createForm(new AlgoritumTestlType());
-        $productForm = $this->createForm(new AlgoritumProductTestlType());
+
+        $users    = $this->get("user.helper.user")->getActivityLog();
+        $products = $this->get("admin.helper.product")->getProductIdName();
+        // $userForm = $this->createForm(new AlgoritumTestlType());
+        // $productForm = $this->createForm(new AlgoritumProductTestlType());
         return $this->render('LoveThatFitAdminBundle:Algoritm:algo2_index.html.twig', array(
-                    'userForm' => $userForm->createView(),
-                    'productForm' => $productForm->createView(),
-                    'user' => '',
+                    //'userForm' => $userForm->createView(),
+                    //'productForm' => $productForm->createView(),
+                    'users'     => $users,
+                    'products'  => $products,
+                    'user'      => '',
                 ));
     }
 
@@ -422,8 +437,8 @@ class AlgorithmController extends Controller {
     
     #--------------------------------------------------
     public function fooAction($user_id) {
-         $user = $this->get('user.helper.user')->find($user_id);
-         $cart=$user->getCart();
+        $user = $this->get('user.helper.user')->find($user_id);
+        $cart=$user->getCart();
         
         $pa= array();
 
