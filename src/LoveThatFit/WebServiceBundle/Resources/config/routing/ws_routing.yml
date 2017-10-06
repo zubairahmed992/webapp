@@ -401,6 +401,6 @@ mcp_save_marker_image:
     pattern: /mcp/save_marker_image
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:archiveImageUpdateMcp}
    
-mcp_get_user_mask_marker_details:
+mcp_pending_users_reverted_image:
     pattern: /mcp/mcp_pending_users_reverted_image
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:pendingUsersRevertedImage} 
