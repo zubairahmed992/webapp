@@ -802,6 +802,9 @@ ws_brand_retailer_big:
    pattern:  /ws/brand_retailer_big
    title: brand_retailer_big
 
+ws_brand_n_deviceconfig:
+   pattern:  /ws/brand_n_deviceconfig
+   title: brand_n_deviceconfig
 
 #______________________
 nws_selfieshare_create:
