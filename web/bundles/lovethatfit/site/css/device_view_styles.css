@@ -282,6 +282,7 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
         color:#fff;
         background: #000;
         text-decoration: none;
+        font-size:12px;
 
     }
     .navigation1 a:hover {
