@@ -353,6 +353,10 @@ nws_shop_the_look:
     pattern:  /nws/shop_the_look
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLookV3 }
 
+ws_brand_n_deviceconfig:
+    pattern:  /ws/brand_n_deviceconfig
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandAndDevice }
+
 ws_brand_retailer_big:
     pattern:  /ws/brand_retailer_big
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailerBig }
