@@ -333,7 +333,7 @@ class WSMiscController extends Controller {
          $yaml   = new Parser();
         $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
 
-        if($params['auth_token']==$mcp_auth_token) {
+        if($params['success_token']==$mcp_auth_token) {
          
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
@@ -349,7 +349,7 @@ class WSMiscController extends Controller {
          $yaml   = new Parser();
         $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
 
-        if($params['auth_token']==$mcp_auth_token) {
+        if($params['success_token']==$mcp_auth_token) {
             $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
             $image_actions = json_decode($archive->getImageActions());
             $device_type = $image_actions->device_type;
