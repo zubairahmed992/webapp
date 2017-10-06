@@ -802,6 +802,9 @@ ws_brand_retailer_big:
    pattern:  /ws/brand_retailer_big
    title: brand_retailer_big
 
+ws_brand_n_deviceconfig:
+   pattern:  /ws/brand_n_deviceconfig
+   title: brand_n_deviceconfig
 
 #______________________
 nws_selfieshare_create:
@@ -863,10 +866,10 @@ mcp_get_user_mask_marker_details:
     pattern:  /mcp/get_user_mask_marker_details
     title: get_user_mask_marker_details
     params:
-          auth_token: 00000000000000000000000000000
+          auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
           email: ovais.rafique@centricsource.com
     request_type: post
-    description: return user mask markder details against user token 
+    description: return user mask markder details against user token
 
 nws_get_brand_style:
     pattern:  /nws/get_brand_style
@@ -948,5 +951,25 @@ mcp_pending_users_reverted_image:
     description: reverted image of pending users
     params:
         user_id: ""
-        mcp_auth_token: ""
+        mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
         image_hash: ""
+        
+mcp_get_original_image:
+    pattern:  /mcp/mcp_get_original_image
+    title: mcp_get_original_image
+    request_type: post
+    description: get original image of user for calibration
+    params:
+          mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
+          email: ovais.rafique@centricsource.com
+          
+mcp_update_archive_status:
+    pattern:  /mcp/mcp_update_archive_status
+    title: mcp_update_archive_status
+    request_type: post
+    description: Update member calibration archive status
+    params:
+          mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
+          archive_id: 1
+    
+    

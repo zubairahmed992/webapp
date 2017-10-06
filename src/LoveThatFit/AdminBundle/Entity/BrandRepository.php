@@ -364,6 +364,37 @@ class BrandRepository extends EntityRepository {
     }
 
 
+    #---------------------------Get all retailer brand list for web service---------#
+
+    public function getBrandAndDevice($date_format = Null) {
+        if ($date_format) {
+            $query = $this->getEntityManager()
+                ->createQuery("
+ SELECT DISTINCT b.id as brand_id,b.name as brand_name,b.image as brand_image
+ FROM LoveThatFitAdminBundle:Brand b
+ JOIN b.products p
+ WHERE b.disabled=0 and p.disabled=0 and p.deleted=0 and  b.updated_at>=:date_format")->setParameters(array('date_format' => $date_format));
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        } else {
+
+            $query = $this->getEntityManager()
+                ->createQuery("
+  SELECT DISTINCT b.id as brand_id,b.name as brand_name,b.image as brand_image
+ FROM LoveThatFitAdminBundle:Brand b
+ JOIN b.products p
+ WHERE b.disabled=0 and p.disabled=0 and p.deleted=0
+");
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        }
+    }
 
 
     #---------------------------Get all retailer brand list for web service---------#
@@ -425,7 +456,7 @@ class BrandRepository extends EntityRepository {
     public function getBrandListEnable()
     {
         $query = $this->getEntityManager()
-            ->createQuery("SELECT b.id as id ,b.name as name FROM LoveThatFitAdminBundle:Brand b JOIN b.products p Where b.disabled = 0 ORDER BY name asc");
+            ->createQuery("SELECT b.id as id ,b.name as name FROM LoveThatFitAdminBundle:Brand b Where b.disabled = 0 ORDER BY name asc");
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

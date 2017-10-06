@@ -282,6 +282,7 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
         color:#fff;
         background: #000;
         text-decoration: none;
+        font-size:12px;
 
     }
     .navigation1 a:hover {
@@ -301,4 +302,4 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
     text-transform: uppercase;
     display: none}
             
-    .img-thumb{width: 35px; height:40px}
+ 
