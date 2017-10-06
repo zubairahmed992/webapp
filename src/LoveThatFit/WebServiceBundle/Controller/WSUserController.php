@@ -398,7 +398,7 @@ class WSUserController extends Controller
             try {
                 $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($decoded['archive_id']);               
                 //update podio user member calibrated to yes
-                $this->updatePodioUserMemberCalibrated($archive->getUser()->getId());
+                //$this->updatePodioUserMemberCalibrated($archive->getUser()->getId());
                 return new Response(json_encode(array("success"=>'1',"Description"=>'archive status updated')));
             } catch(\Exception $e) {
                 // log $e->getMessage()
