@@ -105,17 +105,24 @@ $(document).ready(function(){
 
 <div class="p_listing"> 
     <div style="float: left">
-
-        <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+        <form id="userForm" method="post">
+            <select id="algorithm_User" name="algorithm[User]">
+                <option value="">Select User</option>
+                {% for user in users %}
+                    <option value="{{user['id']}}">{{user["email"]}}</option>
+                {% endfor %}
+            </select>
+            Or <input type="text"  placeholder="Search Users" id="keyword">
+            <input type="hidden" id="user_id">
+        </form>
+        {# <form id="userForm" method="post" {{ form_enctype(userForm) }}>
         {{ form_errors(userForm) }}
         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
            Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
         {{ form_rest(userForm) }}
-        </form>                 
-        </div>
-
+      </form>       #}           
+    </div>
     <div style="float: left">
-    
         Limit:
         <select id="sel_limit" name="sel_limit">
 

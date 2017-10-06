@@ -22,6 +22,7 @@ class AlgorithmController extends Controller {
     public function pda1IndexAction() {
         // $userForm = $this->createForm(new AlgoritumTestlType());
         // $productForm = $this->createForm(new AlgoritumProductTestlType());
+        //by umer for improve loading speed
         $users    = $this->get("user.helper.user")->getActivityLog();
         $products = $this->get("admin.helper.product")->getProductIdName();
         return $this->render('LoveThatFitAdminBundle:Algoritm:pda1_index.html.twig', array(
@@ -91,6 +92,7 @@ class AlgorithmController extends Controller {
     {
         // $userForm = $this->createForm(new AlgoritumTestlType());
         // $productForm = $this->createForm(new AlgoritumProductTestlType());
+        //by umer for improve loading speed
         $users    = $this->get("user.helper.user")->getActivityLog();
         $products = $this->get("admin.helper.product")->getProductIdName();
         
@@ -126,7 +128,7 @@ class AlgorithmController extends Controller {
 ################################################################
 
     public function fitAlgorithmIndexAction() {
-
+        //by umer for improve loading speed
         $users    = $this->get("user.helper.user")->getActivityLog();
         $products = $this->get("admin.helper.product")->getProductIdName();
         // $userForm = $this->createForm(new AlgoritumTestlType());
@@ -162,12 +164,15 @@ class AlgorithmController extends Controller {
     
     #--------------------------------------------------
     public function productListAction() {
-        $userForm = $this->createForm(new AlgoritumTestlType());
-        $users = $this->get('user.helper.user')->findAll();
+        // $userForm = $this->createForm(new AlgoritumTestlType());
+        // $users = $this->get('user.helper.user')->findAll();
+        //by umer for improve loading speed
+        $users = $this->get("user.helper.user")->getActivityLog();
         return $this->render('LoveThatFitAdminBundle:Algoritm:product_list_index.html.twig', array(
-                    'userForm' => $userForm->createView(),        
-                    'users' => $users,
-                ));
+                //'userForm' => $userForm->createView(),
+                'users' => $users
+                )
+            );
     }
     
 
