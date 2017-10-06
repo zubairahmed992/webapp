@@ -329,6 +329,8 @@ class UserMaskAdjustmentController extends Controller {
         $directory_path = $archive->getUploadRootDir();
         $retouch_files = glob($directory_path."/".$retouch_filename."*.*");
         $retouch_filecount = count($retouch_files);
+        $original_file_code_image = str_ireplace("original_", "", $original_filename);
+        $original_file_code = substr($original_file_code_image, 0, -4);
 
         return $this->render('LoveThatFitSupportBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
@@ -352,6 +354,7 @@ class UserMaskAdjustmentController extends Controller {
                     'bra_size_body_shape' => json_encode($bra_size_body_shape),
                     'retouch_filename' => $retouch_filename,
                     'retouch_filecount' => $retouch_filecount,
+                    'original_file_code' => $original_file_code,
                 ));
     }
 
