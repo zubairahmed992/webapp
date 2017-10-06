@@ -12,11 +12,16 @@ use LoveThatFit\UserBundle\Form\Type\MeasurementHorizantalPositionFormType;
 
 class MaskMarkerInspectController extends Controller {
 
-    public function indexAction(){
-        $form=$this->createForm(new \LoveThatFit\UserBundle\Form\Type\UserDropdownType());
-        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:index.html.twig', array(
-                    'form' => $form->createView(),                    
-                ));
+    public function indexAction()
+    {
+        //$form=$this->createForm(new \LoveThatFit\UserBundle\Form\Type\UserDropdownType());
+        $users = $this->get("user.helper.user")->getActivityLog();
+        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:index.html.twig', 
+                array(
+                    //'form' => $form->createView()
+                    "users" => $users
+                )
+            );
     }   
     #-----------------------------------------------------------------------------
     public function userAction($id, $mode=null){
