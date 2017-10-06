@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\MaskMarker;
+use LoveThatFit\UserBundle\Entity\SelfieshareFeedback;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\UserBundle\Event\UserEvent;
@@ -106,6 +107,13 @@ class SelfieshareFeedbackHelper {
     #----------------------------
     public function findByRef($ref) {
         return $this->repo->findByRef(array('ref' => $ref));
+    }
+
+    public function findByShareId($selfieshare)
+    {
+        return $this->repo->getCountByShareId($selfieshare);
+        
+        //return $this->repo->findBySelfieshare(array('selfieshare' => $selfieshare));
     }
     
 }

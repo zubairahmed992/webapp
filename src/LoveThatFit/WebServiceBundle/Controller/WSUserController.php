@@ -377,6 +377,17 @@ class WSUserController extends Controller
         $json_data = $this->get('webservice.helper')->userDetailMaskMarker($decoded);
         return new Response($json_data);
     }    
+    
+    public function pendingUsersRevertedImageAction()
+    {     
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&') {                  
+            $this->get('user.helper.userarchives')->updateRevertedImageStatus($decoded['user_id'],$decoded['image_hash']);
+            return new Response(json_encode(array("success" => 1,"description" => "Image status has been Reverted")));
+        } else {
+            return new Response(json_encode(array("success" => "0","description" => "Invaild Token")));
+        }    
+    }    
 
     public function renderImageBySessionIdAction($ref = null)
     {
@@ -389,11 +400,36 @@ class WSUserController extends Controller
                 'session_id' => $ref,
             ));
 
-            $file = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
-            $type = 'image/png';
-            header('Content-Type:'.$type);
-            header('Content-Length: ' . filesize($file));
-            readfile($file);
+            // IOSV3-350 - Create image instances, If background available then background will be set.
+            // Otherwise without Background
+            $ufile = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
+            $bfile = getcwd()."/uploads/ltf/background/fitting_background.png";
+
+            if(file_exists($bfile)){
+                $user_image = imagecreatefrompng($ufile);
+                $background_image = imagecreatefrompng($bfile);
+                list($width, $height) = getimagesize($ufile);
+                // Copy
+                $dest = imagecreatetruecolor($width, $height);
+                imagecopy($dest, $background_image, 0, 0, 0, 0, $width, $height);
+                imagecopy($dest, $user_image, 0, 0, 0, 0, $width, $height);
+
+                // Output and free from memory
+                header('Content-Type: image/png');
+                imagepng($dest);
+                header('Content-Length: ' . filesize($dest));
+
+                imagedestroy($dest);
+                imagedestroy($user_image);
+                imagedestroy($background_image);
+            }else{
+                $file = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
+                $type = 'image/png';
+                header('Content-Type:'.$type);
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+            }
+
         }else{
             throw new NotFoundHttpException('Sorry not existing!');
         }
@@ -417,6 +453,37 @@ class WSUserController extends Controller
             readfile($file);
         }else{
             throw new NotFoundHttpException('Sorry not existing!');
+        }
+    }
+
+    public function selfieshareCreateV3Action()
+    {
+        $ra = $this->process_request();
+        #return new Response(json_encode($ra));
+        if (!array_key_exists('auth_token', $ra)) {
+            return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
+        }
+
+        $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
+
+        if (count($user) > 0) {
+            $ss = $this->get('user.selfieshare.helper')->createWithParam($ra, $user);
+            if (array_key_exists('message_type', $ra) && $ra['message_type'] == 'sms') {
+                $baseurl = "http://" . $this->getRequest()->getHost();
+                $share_url = array();
+                $share_url["url"] = $baseurl . $this->generateUrl('selfieshare_provide_feedback_v3', array('ref' => $ss->getRef()));
+                $share_url_response = json_encode($share_url);
+                return new Response($share_url_response);
+            } else {
+                $ss_ar['to_email'] = $ss->getFriendEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/selfieshare_friend.html.twig';
+                $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'SelfieStyler friend share';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+                return new Response($this->get('webservice.helper')->response_array(true, 'selfieshare created'));
+            }
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
         }
     }
 }

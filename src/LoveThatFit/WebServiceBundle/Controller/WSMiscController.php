@@ -99,6 +99,7 @@ class WSMiscController extends Controller {
                     'shakeel'=>array('build_type'=>'shakeel','url'=>'shakeel.selfiestyler.com'),
                     'aijaz'=>array('build_type'=>'aijaz','url'=>'aijaz.selfiestyler.com'),
                     'Saddam'=>array('build_type'=>'saddam','url'=>'sadam.selfiestyler.com'),
+                    'Aijaz'=>array('build_type'=>'aijaz','url'=>'aijaz.selfiestyler.com'),
                     'Kamran'=>array('build_type'=>'kamran','url'=>'192.168.0.182'),
                     'Raghib'=>array('build_type'=>'raghib','url'=>'raghib.selfiestyler.com'),
                     'Umer'=>array('build_type'=>'umer','url'=>'umer.selfiestyler.com'),

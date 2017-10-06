@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width">
+<title>V3 Selfieshare :: Feedback</title>
+<!-- Bootstrap core CSS -->
+  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/bootstrap.css') }}" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template -->
+  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/signin.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/custom.css') }}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/jquery-3.2.1.min.js') }}"></script>
+  <script src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/tether.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/bootstrap.js') }}"></script>
+</head>
+<body>
+  <div class="container login_div">
+    <form class="form-signin">
+      <h2>Log in with your email address</h2>
+      {# <img src='{{ asset("/uploads/ltf/users/"~selfieshare.user.id~"/"~image) }}' class="user_pic_small"/> #}
+     {#  <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/logo_black_3x.png') }}" class="user_pic_small"/> #}
+      <div class="txt1">
+        <p>{{ name }} would like your opinion,<br /> share your
+          feedback to let {{ name }}<br /> know what you think.
+        </p>
+      </div>
+      <label for="inputEmail" class="">NAME</label>
+      <input type="text" name="name" class="form-control" placeholder="Name" required autofocus>
+      <div class="error error_name"></div>
+      <label for="inputPassword" class="">EMAIL</label>
+      <input type="email" name="email" class="form-control" placeholder="Email" required>
+      <div class="error error_email"></div>
+      <button class="btn btn-md btn-primary btn-block" id="login" type="button">Log in</button>
+    </form>
+  </div>
+  <div class="comment_div">
+    <div class="container">
+      <img src="{{ asset(selfieshare.webPath) }}" class="share_pic" />
+    </div> <!-- /container -->
+    <div class="share_screen txt1"></div>
+    <div class="container">
+      <form class="form-share">
+        <div class="like_share">Love it or leave it? 
+          <a id="ss_like" href="javascript:void(0);">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
+          </a>
+          <a id="ss_like_active" href="javascript:void(0);">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_up.png') }}" />
+          </a>
+          <a id="ss_dislike" href="javascript:void(0);">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_down.png') }}" />
+          </a>
+          <a id="ss_dislike_active" href="javascript:void(0);">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_down.png') }}" />
+          </a>
+        </div>
+        <label for="comment" class="">COMMENT</label>
+        <textarea class="form-control" id="comment" placeholder="Share your feedback to let {{ name }} know what you think."></textarea>
+        <div class="error error_comment"></div>
+        <button class="btn btn-md btn-primary btn-block" type="button" id="comment_button">Submit feedback</button>
+      </form>
+      <div style="margin-bottom:30px;">&nbsp;</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="thankyou">
+      <h2>Thank You</h2>
+      <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/checkedimage.png') }}" class="checked_small" />
+      <div class="txt1">
+        <p>Your feedback has been send to <br />{{ name }}, <br />Get the app now and start shopping with your friends now!</p>
+      </div>
+    </div>
+  </div> <!-- /container -->
+  <input id="name" type="hidden" value="">
+  <input id="email" type="hidden" value="">
+  <input id="auth_ref" type="hidden" value="{{ selfieshare.ref }}"/>
+  <input id="ss_web_path" type="hidden" value="{{ asset(selfieshare.webPath) }}"/>
+  <input id="like_status" type="hidden" value=""/>
+  <input id="comments" type="hidden" value=""/>
+ <footer>
+    <div class="container">
+        <div class="foot_logo">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/logo_black_2x.png') }}" />Get the SelfieStyler app! 
+            <a href="#"> Sign up</a>
+        </div>
+    </div>
+ </footer>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $( ".comment_div" ).hide();
+        $( ".thankyou" ).hide();
+        $( "#ss_like_active" ).hide();
+        $( "#ss_dislike_active" ).hide();
+    });
+
+    $( "#ss_like" ).click(function () {
+      var like_input = $("#like_status").val();
+      $( "#ss_like" ).hide();
+      $( "#ss_like_active" ).show();
+      $( "#like_status" ).attr( "value", '1' );
+      if (like_input == "0") {
+        $( "#ss_dislike_active" ).hide();
+        $( "#ss_dislike" ).show();
+      }
+    });
+    
+    $( "#ss_dislike" ).click(function () {
+      var like_input = $("#like_status").val();
+      $( "#ss_dislike" ).hide();
+      $( "#ss_dislike_active" ).show();
+      $( "#like_status" ).attr( "value", '0' );
+      if (like_input == "1") {
+        $( "#ss_like_active" ).hide();
+        $( "#ss_like" ).show();
+      }
+    });
+
+    $( "#ss_like_active" ).click(function () {
+      $( "#ss_like" ).show();
+      $( "#ss_like_active" ).hide();
+      $( "#like_status" ).attr( "value", '' );
+    });
+
+    $( "#ss_dislike_active" ).click(function () {
+      $( "#like_status" ).attr( "value", '' );
+      $( "#ss_dislike_active" ).hide();
+      $( "#ss_dislike" ).show();
+    });
+
+    $( "#login" ).click(function() {
+        var name  = $( "input[name=name]" ).val();
+        var email = $( "input[name=email]" ).val();
+        var error = 0;
+        
+        if ($.trim(name) == "") {
+          error = 1;
+          $(".error_name").text("Name is required");
+        } else {
+          $(".error_name").text("");
+        }
+        if ($.trim(email) == "") {
+          error = 1;
+          $(".error_email").text("Email is required");
+        } else {
+           var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (testEmail.test(email)) {
+              $(".error_email").text("");
+            } else { 
+              error = 1;
+              $(".error_email").text("Email is invalid");
+            }
+        }
+
+        if (error == 1) {
+          return false;
+        } else {
+          $( "#name" ).val(name);
+          $( "#email" ).val(email );
+          $( ".login_div" ).hide();
+          $( ".comment_div" ).show();
+        }
+
+    });
+    
+    $( "#comment_button" ).click(function() {
+        var comment  = $( "#comment" ).val();
+        if ($.trim(comment) == "") {
+          $(".error_comment").text("Comment is required");
+        } else {
+          $(".error_comment").text("");
+
+          $( "#comments" ).val(comment);
+          $( ".comment_div" ).hide();
+          hit_update_service_v3();
+          $( ".thankyou" ).show();
+        }
+    });
+    
+    function hit_update_service_v3() {
+        var value_ar = {
+            ref: $("#auth_ref").val(),
+            comments: $("#comments").val(),
+            favourite: $("#like_status").val(),
+            name: $("#name").val(),
+            email: $("#email").val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "{{ path('selfieshare_submit_feedback_v3') }}",
+            data: value_ar,
+            success: function (data) {
+                //$( ".thankyou" ).show();
+            },
+            failure: function (errMsg) {
+                //$( ".thankyou" ).show();
+            }
+        });
+        
+    }
+</script>  
+</body>
+</html>

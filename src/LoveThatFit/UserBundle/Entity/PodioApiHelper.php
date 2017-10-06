@@ -86,9 +86,11 @@ class PodioApiHelper
             //search member email exists in podio
             $search_results = array();
             try {              
-              $search_query = PodioSearchResult::app( $this->app_id, array('query' => ''.$user_podio['email'].'','ref_type' => 'item','search_fields' => 'title') );              
+              $search_query = PodioSearchResult::app( $this->app_id, array('query' => ''.$user_podio['email'].'','ref_type' => 'item','search_fields' => 'title') );  
+              $email_user_db  = $user_podio['email'];             
               foreach ($search_query as $key => $value) {
-                if($value->title==$user_podio['email']) {
+                $podio_workspace_email = $value->title; 
+                if(strstr($podio_workspace_email, $email_user_db)) {
                   $search_results['id'] = $value->id;
                   $search_results['title'] = $value->title;
                   break;
