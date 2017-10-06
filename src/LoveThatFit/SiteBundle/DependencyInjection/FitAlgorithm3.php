@@ -366,7 +366,7 @@ class FitAlgorithm3 {
                 $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                 $fp_scale = $this->scale['between_min_low'];                
                 # halfway between low & min for Fit Indicator Positioning -->
-                $halfway_min_low = $fp_specs['min_body_measurement'] + (($fp_specs['min_body_measurement'] - $fp_specs['ideal_body_size_low']) / 2);
+                $halfway_min_low = $fp_specs['min_body_measurement'] + (($fp_specs['ideal_body_size_low'] - $fp_specs['min_body_measurement']) / 2);
                 $box = $fp_specs['body_measurement'] < $halfway_min_low ? 3 : 2;
             }else{
                 $fp_scale = $this->scale['below_min'];                
@@ -529,7 +529,7 @@ class FitAlgorithm3 {
         $fx = $this->to_frac($fp_fx);
         return array('body_fx' => $fx, 'message' => $fp_scale['message'], 'status' => $fp_scale['status'],
             'fits' => $fits, 'status_text' => $fp_scale['status_text'], 'box' => $box, 
-            'halfway_min_low' => $fp_specs['min_body_measurement'] + (($fp_specs['min_body_measurement'] - $fp_specs['ideal_body_size_low']) / 2),
+            'halfway_min_low' => $fp_specs['min_body_measurement'] + (($fp_specs['ideal_body_size_low'] - $fp_specs['min_body_measurement']) / 2),
             'halfway_high_max' => $fp_specs['ideal_body_size_high'] + (($fp_specs['max_body_measurement'] - $fp_specs['ideal_body_size_high']) / 2),
         );
     }
