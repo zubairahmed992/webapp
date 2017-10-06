@@ -165,9 +165,8 @@ class AlgorithmController extends Controller {
     #--------------------------------------------------
     public function productListAction() {
         // $userForm = $this->createForm(new AlgoritumTestlType());
-        // $users = $this->get('user.helper.user')->findAll();
         //by umer for improve loading speed
-        $users = $this->get("user.helper.user")->getActivityLog();
+        $users = $this->get('user.helper.user')->findAll();
         return $this->render('LoveThatFitAdminBundle:Algoritm:product_list_index.html.twig', array(
                 //'userForm' => $userForm->createView(),
                 'users' => $users
