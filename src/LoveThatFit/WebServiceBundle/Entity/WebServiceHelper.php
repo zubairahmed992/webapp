@@ -1701,6 +1701,27 @@ class WebServiceHelper
         return $this->response_array(false, 'Member not found');
       }        
     }
+    
+    
+    public function userOriginalImage($request_array)
+    {
+        
+        if($request_array['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){
+        $data = array();
+        $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
+            if ($user) {
+                $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+                $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
+                return $this->response_array(true, 'member found', true, $data);
+            } else {
+                return $this->response_array(false, 'Member not found');
+            }
+          } else {
+            return $this->response_array(false, 'Member not found');
+          }         
+     }
+     
+     
 
 
     public function getProductListByBrand($search_text, $user_id, $page_no = 1)

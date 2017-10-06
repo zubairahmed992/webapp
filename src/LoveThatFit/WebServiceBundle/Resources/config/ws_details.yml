@@ -951,5 +951,25 @@ mcp_pending_users_reverted_image:
     description: reverted image of pending users
     params:
         user_id: ""
-        mcp_auth_token: ""
+        mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
         image_hash: ""
+        
+mcp_get_original_image:
+    pattern:  /mcp/mcp_get_original_image
+    title: mcp_get_original_image
+    request_type: post
+    description: get original image of user for calibration
+    params:
+          mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
+          email: ovais.rafique@centricsource.com
+          
+mcp_update_archive_status:
+    pattern:  /mcp/mcp_update_archive_status
+    title: mcp_update_archive_status
+    request_type: post
+    description: Update member calibration archive status
+    params:
+          mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
+          archive_id: 1
+    
+    
