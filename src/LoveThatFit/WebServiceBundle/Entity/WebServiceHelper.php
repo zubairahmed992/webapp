@@ -1574,8 +1574,10 @@ class WebServiceHelper
     public function userDetailMaskMarker($request_array)
     { 
 
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
 
-        if($request_array['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&')
+        if($request_array['auth_token']==$mcp_auth_token)
         {
             
         $data = array();
@@ -1705,8 +1707,10 @@ class WebServiceHelper
     
     public function userOriginalImage($request_array)
     {
-        
-        if($request_array['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+      
+        if($request_array['mcp_auth_token']==$mcp_auth_token){
         $data = array();
         $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
             if ($user) {
