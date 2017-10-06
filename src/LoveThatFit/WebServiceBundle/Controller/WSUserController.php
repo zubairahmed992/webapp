@@ -381,8 +381,10 @@ class WSUserController extends Controller
     public function userOriginalImageAction()
     {
        
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
         $decoded = $this->process_request();
-        if($decoded['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {       
             $json_data = $this->get('webservice.helper')->userOriginalImage($decoded);
             return new Response($json_data);
         }
@@ -393,8 +395,10 @@ class WSUserController extends Controller
     }
     
     public function mcpArchiveToLiveAction() {
-         $decoded  = $this->process_request();  
-        if($decoded['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {       
             try {
                 $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($decoded['archive_id']);               
                 //update podio user member calibrated to yes
@@ -420,8 +424,11 @@ class WSUserController extends Controller
     
     public function pendingUsersRevertedImageAction()
     {     
+        
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
         $decoded = $this->process_request();
-        if($decoded['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&') {                  
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {                  
             $this->get('user.helper.userarchives')->updateRevertedImageStatus($decoded['user_id'],$decoded['image_hash']);
             return new Response(json_encode(array("success" => 1,"description" => "Image status has been Reverted")));
         } else {

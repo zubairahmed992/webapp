@@ -863,10 +863,10 @@ mcp_get_user_mask_marker_details:
     pattern:  /mcp/get_user_mask_marker_details
     title: get_user_mask_marker_details
     params:
-          auth_token: 00000000000000000000000000000
+          auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
           email: ovais.rafique@centricsource.com
     request_type: post
-    description: return user mask markder details against user token 
+    description: return user mask markder details against user token
 
 nws_get_brand_style:
     pattern:  /nws/get_brand_style
