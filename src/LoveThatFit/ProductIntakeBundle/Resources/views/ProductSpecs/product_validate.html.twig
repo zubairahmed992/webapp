@@ -1,0 +1,16 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
+
+    <h1>Disble Validation Rule of Product  Specification </h1>
+
+<form action="{{ path('product_intake_update_validate_product_specification',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data" id="form1"  class="form-horizontal">
+    {#{{ dump(validation_error) }}#}
+    {% for key,value in validation_error %}
+        <input type="checkbox" name="{{ key }}" value="{{ key }}"> {{ key }}
+        {{ dump(value) }}
+    {% endfor %}
+    <input type="submit" value="Diable">
+</form>
+    <br/><p></p>
+{% endblock %}

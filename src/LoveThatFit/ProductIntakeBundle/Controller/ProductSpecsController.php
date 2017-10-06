@@ -475,11 +475,14 @@ class ProductSpecsController extends Controller
     public function validateProductSpecificationAction($id) {
         $ps = $this->get('pi.product_specification')->find($id);
         $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $validation_rule = json_decode($ps->getValidationJson(), true);
         $result = array();
-          //2. Flag when fit priority for a fit point is assigned to an incorrect garment:
+         //2. Flag when fit priority for a fit point is assigned to an incorrect garment:
         //--Tops, dresses, and skirts should not have thigh assigned fit priority
         //--Skirts, pants, and shorts should not have bust assigned fit priority    
         $clothing_type = ["blouse","tunic","tee_knit","tank_knit","jackets","sweater","skirt","dress","coat","shirt"];
+        // Disable Rule Conditaion
+        if(! (isset($validation_rule) && array_key_exists('fit_priority_assigned_to_an_incorrect_garment', $validation_rule)) )
         if ( in_array($parsed_data['clothing_type'],$clothing_type) ) {           
             if( array_key_exists('thigh', $parsed_data['fit_priority']) ){                
                $result['fit_priority_assigned_to_an_incorrect_garment'] = " ~~ Clothing Type ".$parsed_data['clothing_type']. " of fit point tigh is assigned to an incorrect garment";
@@ -493,16 +496,18 @@ class ProductSpecsController extends Controller
             $size_title = array_keys($parsed_data['sizes']);
             $size_count = count($size_title);
             foreach ($product_size_value as $key1 => $value) {
-                //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
-                $rule_one = $value['garment_dimension'] - $value['max_actual'];
-                if ($rule_one <= 0) {
-                    $result['garment_dimension_minus_max_actual'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
-                }
+//                //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
+//                $rule_one = $value['garment_dimension'] - $value['max_actual'];
+//                if ($rule_one <= 0) {
+//                    $result['garment_dimension_minus_max_actual'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
+//                }
                 //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
                 //return  new Response(json_encode($result));
                 $find_next_elements = array_search($key, $size_title) + 1;
                 $next_size_title = ($find_next_elements < $size_count) ? $size_title[$find_next_elements] : null;
                 $next_array_elements = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
+                // Disable Rule Conditaion
+                if(! (isset($validation_rule) && array_key_exists('sequential', $validation_rule)) )
                 if ($next_array_elements) {
                     if ($value['garment_dimension'] > $next_array_elements[$key1]['garment_dimension']) {
                         $result['sequential'][$key][$key1] = $value['garment_dimension'] . ' ~~ Garment Dimensions grather than next Size';
@@ -522,50 +527,82 @@ class ProductSpecsController extends Controller
                     if ($value['ideal_low'] > $next_array_elements[$key1]['ideal_low']) {
                         $result['sequential'][$key][$key1] = $value['ideal_low'] . ' ~~ Ideal Low grather than next Size';
                     }
-                    // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
-                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
-                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
-                    }
-                    //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
-                    if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
-                        $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
-                    }
-                    //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
-                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust' ) {
-                        $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
-                            if( $bust_waist > 11 ){
+//                    // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
+//                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
+//                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
+//                    }
+//                    //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+//                    if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
+//                        $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+//                    }
+
+//                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
+//                    if ( $value['min_actual'] < $value['min_calc'] ) {
+//                        $result['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+//                    }
+//                     if ( $value['min_actual'] > $value['ideal_low'] ) {
+//                        $result['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
+//                    }
+//                    if ( $value['max_actual'] > $value['max_calc'] ) {
+//                        $result['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
+//                    }
+//                    if ( $value['max_actual'] < $value['ideal_high'] ) {
+//                        $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
+//                    }
+
+                }
+                if(! (isset($validation_rule) && array_key_exists('bust_to_waist_ratio', $validation_rule) ) )
+                    if ($next_array_elements) {
+                        //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+                        if (isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust') {
+                            $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
+                            if ($bust_waist > 11) {
                                 $result['bust_to_waist_ratio'][$key][$key1] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
                             }
-                    }
-                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip' ) {
-                        $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
-                            if( $bust_hip > 12 ){
-                                $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                        }
+                        if(! (isset($validation_rule) &&  array_key_exists('bust_to_hip_ratio', $validation_rule)) )
+                            if ($next_array_elements) {
+                                if (isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip') {
+                                    $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
+                                    if ($bust_hip > 12) {
+                                        $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                                    }
+                                }
                             }
                     }
-                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
-                    if ( $value['min_actual'] < $value['min_calc'] ) {
-                        $result['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+                if(! (isset($validation_rule) && array_key_exists('tolerance', $validation_rule) ))
+                    if ($next_array_elements) {
+
+                        //-Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
+                        $garment_dimension_difference = $next_array_elements[$key1]['garment_dimension'] - $value['garment_dimension'];
+                        if (!($garment_dimension_difference <= ($value['grade_rule'] + 0.25) && $garment_dimension_difference >= ($value['grade_rule'] - 0.25))) {
+                            $result['tolerance'][$key][$key1] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
+                        }
                     }
-                     if ( $value['min_actual'] > $value['ideal_low'] ) {
-                        $result['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
-                    }
-                    if ( $value['max_actual'] > $value['max_calc'] ) {
-                        $result['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
-                    }
-                    if ( $value['max_actual'] < $value['ideal_high'] ) {
-                        $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
-                    }
-                    //-Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
-                     $garment_dimension_difference = $next_array_elements[$key1]['garment_dimension'] - $value['garment_dimension'] ;
-                    if ( !( $garment_dimension_difference <=  ($value['grade_rule']+0.25) && $garment_dimension_difference >=  ($value['grade_rule']-0.25) )) {
-                        $result['tolerance'][$key][$key1] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
-                    }
-                }
+
             }
         }
-           
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+            'validation_error' => $result,
+
+        ));
+
         return new Response(json_encode($result));
+    }
+
+    //---------------------- Update Validation Product
+    public function updateValidationProductSpecificationAction(Request $request) {
+        $specification_id =  $request->get('id');
+        $ps = $this->get('pi.product_specification')->find($specification_id);
+        $exist_rule = json_decode($ps->getValidationJson(),true);
+            $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
+        $ps->setValidationJson(json_encode($update_rule));
+        $msg_ar = $this->get('pi.product_specification')->update($ps);
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit',array ('id'=>$specification_id)));
+        echo $specification_id;
+        echo "done";
+        die;
+
     }
     
      //~~~~ Update product specification sizes---------product_intake/update_product_specification 
