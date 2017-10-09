@@ -386,7 +386,7 @@ class UserAddressesHelper
                         'phone' => $address->getPhone(),
                         'city' => $address->getCity(),
                         'country' =>$address->getCountry(),
-                        'postcode' => ''.$address->getPostCode().'',
+                        'postcode' => (string) $address->getPostCode(),
                         'state' => $address->getState(),
                         'default' => $address->getShippingDefault(),
                         'id'       => $address->getId()
@@ -400,7 +400,7 @@ class UserAddressesHelper
                         'phone' => $address->getPhone(),
                         'city' => $address->getCity(),
                         'country' => $address->getCountry(),
-                        'postcode' => ''.$address->getPostCode().'',
+                        'postcode' => (string) $address->getPostCode(),
                         'state' => $address->getState(),
                         'default' => $address->getBillingDefault(),
                         'id' => $address->getId()
