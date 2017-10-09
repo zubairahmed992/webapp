@@ -59,7 +59,7 @@
         <img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" />
      </div>
 </div>
-<div class="navigation1">
+<div class="navigation1" id="cavnas_nav">
     <a id="centerline">Center Line</a>
     <a id="showHide">Index</a>
     <a onClick="move_left();">Left</a>
@@ -81,7 +81,7 @@
          <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
      {% endif %}
     </span>
-    <a id="compare">Compare Image</a>
+   
    {##}
     {#<a id="retuchImage">Toggle Image</a>#}
 </div>
@@ -99,7 +99,7 @@
     </div>
     <div class="row">
 {% if (user_image_spec)%}
-        <div class="span3 firstnav bs-docs-sidebar sidebar_inline" style="min-height:820px;">
+        <div class="span3 firstnav bs-docs-sidebar sidebar_inline" style="min-height:900px;">
             <!-- left panel-->
             <div>
                 <div class="admin_logo"><img src="{{ asset('bundles/lovethatfit/site/images/logo_admin.png') }}" title="SelfieStyler"></div>
@@ -172,8 +172,9 @@
         <div style="margin-bottom: 10px;clear:both;"></div>
         <style>
             ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
-            .oprangsldr{ width: 100px;display:inline; height:2px !important; background:#666666!important; margin-top:25px; }
-            .oprangsldr span{ background: #000000 !important; border:none; width: 4px; height:4px; border-radius:100%; top:-9px !important; }
+           
+            .oprangsldr{ width: 100px;display:inline-block; height:2px !important; background:#666666!important; margin-top:25px; }
+            .oprangsldr span{ background: #000000 !important; border:none; width:2px; height:2px; border-radius:100%; top:-9px !important; }
             .img-thumb{width: 50px; height:55px;}
              .archives img.active {
                 padding-bottom:3px;
@@ -279,11 +280,12 @@
      
         <div style="text-align: right;padding-right: 25%;"><i class="fa fa-clock-o clk_img" aria-hidden="true"></i></div>
 <div class="txt_center canv_hldr_2">
-
-    <div id="tools">
-         <a onClick="toggleimg()">Toggle Image</a>
-      <div id="opSlider" class="oprangsldr"></div>
-      <span id="opacityShow"><span>
+    
+    <div style="text-align:left;">
+        <button type="button" id="compare" class="black_btn" disabled>Compare</button>
+        <button type="button" id="toggleimg" class="black_btn tools">Toggle</button>
+      <div id="opSlider" class="oprangsldr tools"></div>
+      
      </div>
     <canvas id="canv_mask_makeover" class="mask-marker-canvas" width="960" height="1280"></canvas>
    
@@ -376,9 +378,20 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
-    $("#tools").hide();
+    
+        $('#toggleimg').click(function(){
+             toggleimg();
+             $("#opSlider, #cavnas_nav").toggle();
+             
+        });
+    
+       
+    
+    $("#compare").prop('disabled', true);
+    $(".tools").hide();
     $("#compare").on('click',function(){
-        $("#tools").show();
+        $(".tools").show();
+        $("#cavnas_nav").hide();
     });
     
     $("#comment_btn").click(function(){
@@ -431,16 +444,30 @@ $(document).ready(function(){
  $("#showHide").click(function() { 
         return (this.tog = !this.tog) ? show_index_numbers() :  remove_index_numbers();
     });
+  var baseUrl = window.location.origin;
+var imgUrl;
+$("#retouchImages li img").each(function(){
+       $(this).click(function(){
+                $("#retouchImages li").removeClass("active");
+                retuch_url = $(this).parent().find('input').attr("value");
+                var imgUrl = baseUrl+retuch_url;
+               showImag(imgUrl);
+                $("#compare").prop('disabled', false);
+                $(this).closest('li').addClass("active");
+           });
+        });
+        
+  
 var tooltip = $('<div class="optooltip" id="tooltip" />').css({
     position: 'absolute',
     top: -34,
     left: -5
-}).hide();
+}).html('0.8').hide();
  $('#opSlider').slider({ 
         min: 0, 
         max: 1, 
         step: 0.1, 
-        value: 1, 
+        value:0.8, 
         animate: true,
         slide: function( event, ui) {
                    //console.log(ui.value);
@@ -458,19 +485,6 @@ var tooltip = $('<div class="optooltip" id="tooltip" />').css({
     $( "#opSlider" ).slider();
     });#}
   
-var baseUrl = window.location.origin;
-var imgUrl;
-$("#retouchImages li img").each(function(){
-   
-        $(this).click(function(){
-                $("#retouchImages li").removeClass("active");
-                retuch_url = $(this).parent().find('input').attr("value");
-                var imgUrl = baseUrl+retuch_url;
-               showImag(imgUrl);
-                $(this).closest('li').addClass("active");
-           });
-        });
-        
 
     
     $("#centerline").click(function() { 

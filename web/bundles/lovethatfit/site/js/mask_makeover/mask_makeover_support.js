@@ -51,36 +51,37 @@ $(document).ready(function() {
    lyr_misc = new Layer();
    lyr_misc.activate();
    
- retuch_img = new Layer();
-   
-   console.log("lyr_area_hldr: "+lyr_area_hldr.position);
-   console.log("lyr_stage_coor: "+lyr_stage_coor.position);
-   console.log("canvas_area_hldr: "+canvas_area_hldr.position);
-   console.log("canv_ref_rect: "+canv_ref_rect.position);  
-   
-   
-console.log(paper.setup.raster);   
+    
+//   
+//   console.log("lyr_area_hldr: "+lyr_area_hldr.position);
+//   console.log("lyr_stage_coor: "+lyr_stage_coor.position);
+//   console.log("canvas_area_hldr: "+canvas_area_hldr.position);
+//   console.log("canv_ref_rect: "+canv_ref_rect.position);  
+//   
+//   
+//console.log(paper.setup.raster); 
+retuch_img = new Layer();
 });
 
 
 var retuchImage;    
 function showImag(retouch_image){
-       retuch_img.activate();
+        retuch_img.activate();
         retuch_img.removeChildren(); 
         show_img = new Raster(retouch_image);
         show_img.on('load', function() {
         this.position = new Point(480,640);
-        preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+        //preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
         });
        return retuchImage = show_img;
         view.update();
 }
 
 function changeOpacity(opacity){
-    if(opacity != null){
+    if(opacity !== null){
         retuchImage.opacity = opacity;
     }else{
-        opacity=1;
+        opacity=0.8;
       retuchImage.opacity = opacity;   
     }
     view.update();
@@ -96,7 +97,7 @@ function toggleimg(){
         flg=0;
     }
    // return user_image;
-     view.update();
+   view.update();
 }
 
 
@@ -617,11 +618,11 @@ function set_out_update(){
 function move_left(){
     if(current_status.zoom){
         user_image.position.x -= 0.5;
-        show_img.position.x -= 0.5;
+      
         image_actions_count.move_left_right -= 0.5;
     }else{
         user_image.position.x -= 1;
-        show_img.position.x -= 1;
+     
         image_actions_count.move_left_right -= 1;
     }
     set_out_update();
@@ -629,11 +630,11 @@ function move_left(){
 function move_right(){
     if(current_status.zoom){
         user_image.position.x += 0.5;
-        show_img.position.x += 0.5;
+      
         image_actions_count.move_left_right += 0.5;
     }else{
         user_image.position.x += 1;
-        show_img.position.x += 1;
+      
         image_actions_count.move_left_right += 1;
     }
     set_out_update();
@@ -641,11 +642,11 @@ function move_right(){
 function move_up(){
     if(current_status.zoom){
         user_image.position.y -= 0.5;
-        show_img.position.y -= 0.5;
+      
         image_actions_count.move_up_down -= 0.5;
     }else{
         user_image.position.y -= 1;
-        show_img.position.y -= 1;
+      
         image_actions_count.move_up_down -= 1;
     }
     set_out_update();
@@ -653,11 +654,11 @@ function move_up(){
 function move_down(){
     if(current_status.zoom){
         user_image.position.y += 0.5;
-        show_img.position.y += 0.5;
+       
         image_actions_count.move_up_down += 0.5;
     }else{
         user_image.position.y += 1;
-        show_img.position.y += 1;
+       
         image_actions_count.move_up_down += 1;
     }
     set_out_update();
@@ -665,11 +666,11 @@ function move_down(){
 function rotate_left(){
     if(current_status.zoom){
         user_image.rotate(-0.05);
-        show_img.rotate(-0.05);
+       
         image_actions_count.img_rotate += -0.05;
     }else{
         user_image.rotate(-0.1);
-        show_img.rotate(-0.1);
+       
         image_actions_count.img_rotate += -0.1;
     }
     set_out_update();
@@ -677,11 +678,10 @@ function rotate_left(){
 function rotate_right(){
     if(current_status.zoom){
         user_image.rotate(0.05);
-        show_img.rotate(0.05);
+       
         image_actions_count.img_rotate += 0.05;
     }else{
         user_image.rotate(0.1);
-        show_img.rotate(0.1);
         image_actions_count.img_rotate += 0.1;
     }
     set_out_update();
