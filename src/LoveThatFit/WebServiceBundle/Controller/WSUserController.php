@@ -376,12 +376,59 @@ class WSUserController extends Controller
         $decoded = $this->process_request();
         $json_data = $this->get('webservice.helper')->userDetailMaskMarker($decoded);
         return new Response($json_data);
-    }    
+    }  
+    
+    public function userOriginalImageAction()
+    {
+       
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {       
+            $json_data = $this->get('webservice.helper')->userOriginalImage($decoded);
+            return new Response($json_data);
+        }
+        else
+        {            
+           return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid token')));
+        }    
+    }
+    
+    public function mcpArchiveToLiveAction() {
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {       
+            try {
+                $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($decoded['archive_id']);               
+                //update podio user member calibrated to yes
+                $this->updatePodioUserMemberCalibrated($archive->getUser()->getId());
+                return new Response(json_encode(array("success"=>'1',"Description"=>'archive status updated')));
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+                return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid archive id')));
+            }
+        }    
+        else
+        {
+          return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid token')));  
+        }    
+        
+        
+    }
+    
+    private function updatePodioUserMemberCalibrated($user_id){
+        ##send update to podio that the user is activated
+        $data = $this->container->get('user.helper.podioapi')->updateUserPodio($user_id);
+    }
     
     public function pendingUsersRevertedImageAction()
     {     
+        
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
         $decoded = $this->process_request();
-        if($decoded['mcp_auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&') {                  
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {                  
             $this->get('user.helper.userarchives')->updateRevertedImageStatus($decoded['user_id'],$decoded['image_hash']);
             return new Response(json_encode(array("success" => 1,"description" => "Image status has been Reverted")));
         } else {

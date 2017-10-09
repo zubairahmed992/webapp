@@ -1574,8 +1574,10 @@ class WebServiceHelper
     public function userDetailMaskMarker($request_array)
     { 
 
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
 
-        if($request_array['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&')
+        if($request_array['auth_token']==$mcp_auth_token)
         {
             
         $data = array();
@@ -1701,6 +1703,29 @@ class WebServiceHelper
         return $this->response_array(false, 'Member not found');
       }        
     }
+    
+    
+    public function userOriginalImage($request_array)
+    {
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+      
+        if($request_array['mcp_auth_token']==$mcp_auth_token){
+        $data = array();
+        $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
+            if ($user) {
+                $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+                $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
+                return $this->response_array(true, 'member found', true, $data);
+            } else {
+                return $this->response_array(false, 'Member not found');
+            }
+          } else {
+            return $this->response_array(false, 'Member not found');
+          }         
+     }
+     
+     
 
 
     public function getProductListByBrand($search_text, $user_id, $page_no = 1)
