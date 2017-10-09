@@ -84,8 +84,8 @@ class UserAddresses
     private $state;
 
     /**
-     * @var integer
-     * @ORM\Column(name="postcode", type="integer", length=20)
+     * @var string
+     * @ORM\Column(name="postcode", type="string", length=20)
      * @Assert\Range(
      * min = "4",
      * max = "6",
@@ -309,7 +309,7 @@ class UserAddresses
     /**
      * Set postcode
      *
-     * @param integer $postcode
+     * @param string $postcode
      * @return UserAddresses
      */
     public function setPostcode($postcode)
