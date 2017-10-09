@@ -282,7 +282,7 @@ class ProductSpecificationHelper {
         }
 
         //------------- Apply AC # 3 Validation Rule
-        if ($decoded['name'] == 'horizontal_stretch'){
+        if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch' || $fit_point_explode[0] == 'fit_point_stretch' ){
             foreach($specs_value['sizes'][$fit_model_selected] as $fit_point_key => $fit_point_name){
                 $axis = $decoded['name'] == 'horizontal_stretch' ? 'x' : 'y';
                 $fpa = $this->getFitPointArray();
