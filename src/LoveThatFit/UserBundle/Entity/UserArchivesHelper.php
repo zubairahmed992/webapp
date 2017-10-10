@@ -103,6 +103,11 @@ class UserArchivesHelper {
     }
     #----------------------------------------
     #----------------------------------------
+    public function getArchiveId($user_id) {
+     return $this->repo->getArchiveId($user_id);
+
+    }  
+    
     public function createFromExistingData($user) {
         $archive =  $this->createNew($user);
         $marker = $user->getUserMarker();
