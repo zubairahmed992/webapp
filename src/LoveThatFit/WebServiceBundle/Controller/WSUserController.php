@@ -400,13 +400,17 @@ class WSUserController extends Controller
         $decoded = $this->process_request();
         if($decoded['mcp_auth_token']==$mcp_auth_token) {       
             try {
-                $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($decoded['archive_id']);               
+
+                $archiveData=$this->get('user.helper.userarchives')->getArchiveId($decoded['user_id']);     
+               
+
+                $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($archiveData['id']);               
                 //update podio user member calibrated to yes
                 $this->updatePodioUserMemberCalibrated($archive->getUser()->getId());
                 return new Response(json_encode(array("success"=>'1',"Description"=>'archive status updated')));
             } catch(\Exception $e) {
                 // log $e->getMessage()
-                return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid archive id')));
+                return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid user id')));
             }
         }    
         else
