@@ -1823,7 +1823,7 @@ class ProductRepository extends EntityRepository
                  p.item_details,
                  p.care_label,
                 GROUP_CONCAT(DISTINCT c.name order by c.id) as categories_name,
-                 i.image,
+                GROUP_CONCAT(DISTINCT i.image_title order by i.id) as image_title,
                  p.description as description FROM product p
 
                 JOIN brand b on b.id = p.brand_id
