@@ -50,6 +50,7 @@
 <input id="hip_height" type="hidden" value="" />
 <input id="image_actions" type="hidden" value="{{marker.imageActions}}" />
 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
+<input type="hidden" id="archive_active_img_url" value=""/>
 
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
 
@@ -62,12 +63,12 @@
 <div class="navigation1" id="cavnas_nav">
     <a id="centerline">Center Line</a>
     <a id="showHide">Index</a>
-    <a onClick="move_left();">Left</a>
-    <a onClick="move_right();">Right</a>
-    <a onClick="move_up();">Up</a>
-    <a onClick="move_down();">Down</a>
-    <a onClick="rotate_left();">Rotate Left</a>
-    <a onClick="rotate_right();">Rotate Right</a>
+    <a class="nav_menu" onClick="move_left();">Left</a>
+    <a class="nav_menu" onClick="move_right();">Right</a>
+    <a class="nav_menu" onClick="move_up();">Up</a>
+    <a class="nav_menu" onClick="move_down();">Down</a>
+    <a class="nav_menu" onClick="rotate_left();">Rotate Left</a>
+    <a class="nav_menu" onClick="rotate_right();">Rotate Right</a>
     <a onClick="zoom_in();">Zoom In</a>
     <a onClick="zoom_out();">Zoom Out</a>
     <a id="end"  onClick="save();">Save</a>
@@ -381,7 +382,7 @@ $(document).ready(function(){
     
         $('#toggleimg').click(function(){
              toggleimg();
-             $("#opSlider, #cavnas_nav").toggle();
+             $("#opSlider, .nav_menu").toggle();
              
         });
     
@@ -391,7 +392,7 @@ $(document).ready(function(){
     $(".tools").hide();
     $("#compare").on('click',function(){
         $(".tools").show();
-        $("#cavnas_nav").hide();
+        $(".nav_menu").hide();
     });
     
     $("#comment_btn").click(function(){
@@ -445,19 +446,37 @@ $(document).ready(function(){
         return (this.tog = !this.tog) ? show_index_numbers() :  remove_index_numbers();
     });
   var baseUrl = window.location.origin;
-var imgUrl;
+ var imgUrl;
+ var $activeImg = $("#archive_active_img_url");
+ if($activeImg.val() !=""){
+    var actUrl = baseUrl+$activeImg.val();
+        showImag(actUrl);
+         $("#compare").prop('disabled', false);
+         $(".nav_menu").hide();
+         } 
+          
 $("#retouchImages li img").each(function(){
        $(this).click(function(){
+                zoom_out();
                 $("#retouchImages li").removeClass("active");
                 retuch_url = $(this).parent().find('input').attr("value");
+                $activeImg.val(retuch_url);
                 var imgUrl = baseUrl+retuch_url;
-               showImag(imgUrl);
+                showImag(imgUrl);
                 $("#compare").prop('disabled', false);
                 $(this).closest('li').addClass("active");
+                $(".nav_menu").hide();
            });
         });
-        
-  
+          
+$("#retouchImages li input").each(function(){
+               $chkUrl = $(this).val();
+               if($chkUrl == $activeImg.val()){
+                  $(this).closest('li').addClass("active");
+               }
+        });        
+
+         
 var tooltip = $('<div class="optooltip" id="tooltip" />').css({
     position: 'absolute',
     top: -34,

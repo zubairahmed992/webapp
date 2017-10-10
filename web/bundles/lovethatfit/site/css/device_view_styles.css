@@ -276,7 +276,7 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
    .navigation1{position: fixed !important; color:#fff; top: 60px; left: 25%; z-index: 2000 !important;}
     .navigation1 a,
     .navigation1 a:visited {
-        display: inline-block !important;
+        display: inline-block;
         padding:5px 8px;
         cursor: pointer;
         color:#fff;
