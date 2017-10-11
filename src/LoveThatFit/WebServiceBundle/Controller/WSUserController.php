@@ -393,6 +393,39 @@ class WSUserController extends Controller
            return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid token')));
         }    
     }
+
+     public function mcpArchiveSaveMarkerAction() {
+        $params = $this->process_request();   
+        $params['image_actions'] = json_encode($params['image_actions']);     
+        $params['mask_y'] = json_encode($params['mask_y']);     
+        $params['mask_x'] = json_encode($params['mask_x']);     
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        if($params['mcp_auth_token']==$mcp_auth_token) {       
+        $archiveData=$this->get('user.helper.userarchives')->getArchiveId($params['user_id']);
+        $archive = $this->get('user.helper.userarchives')->find($archiveData['id']);
+        $this->get('user.helper.userarchives')->saveArchivesSupport($archive, $params);
+
+            if(!empty($_POST['imageData'])){
+
+                $image_actions = json_decode($archive->getImageActions());
+                $device_type = $image_actions->device_type;
+                if (!$archive) {
+                    throw $this->createNotFoundException('Unable to find archive.');
+                }
+                $response = $archive->writeImageFromCanvas($_POST['imageData']);
+                #if not from mask marker adjustment interface then resize
+                $archive->resizeImageSupport($device_type); 
+
+            }
+             return new Response(json_encode(array("success"=>'1',"Description"=>'archive saved')));
+        }else{
+
+            return new Response(json_encode(array("success"=>'0',"error"=>'Invalid token or user id')));
+        }    
+
+       
+    }
     
     public function mcpArchiveToLiveAction() {
         $yaml   = new Parser();

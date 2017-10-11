@@ -416,3 +416,7 @@ mcp_get_user_image:
 mcp_approve_complete:
     pattern: /mcp/mcp_approve_complete
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveToLive}
+
+mcp_get_user_save:
+    pattern: /mcp/mcp_get_user_save
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}    

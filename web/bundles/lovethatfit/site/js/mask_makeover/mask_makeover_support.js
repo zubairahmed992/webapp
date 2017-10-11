@@ -913,7 +913,14 @@ function upload(){
     }else{
         $("#hip_height").attr("value", bottom_right);
     }
-    
+
+    var selected_retouch_img_path = $("#retouchImages li.active img").attr('src');
+    var selected_retouch_img_filename = null;
+    if(selected_retouch_img_path != undefined){
+        var selected_retouch_img_filename_index = selected_retouch_img_path.lastIndexOf('/');
+        selected_retouch_img_filename = selected_retouch_img_path.substring(selected_retouch_img_filename_index  + 1)
+    }
+
     var $url=$('#marker_update_url').attr('value');
     var value_ar = {
         archive_id:$('#hdn_archive_id').attr('value'),
@@ -930,7 +937,8 @@ function upload(){
         shoulder_height: ($("#shoulder_height").attr("value") * 1.0421875) / 2,
         hip_height: ($("#hip_height").attr("value") * 1.0421875) / 2,
         svg_path:$('#img_path_paper').attr('value'),
-        image_actions:$('#image_actions').attr('value')};
+        image_actions:$('#image_actions').attr('value'),
+        retouch_image:selected_retouch_img_filename};
     
     $.ajax({
         type: "POST",

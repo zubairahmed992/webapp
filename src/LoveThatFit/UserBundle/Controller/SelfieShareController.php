@@ -113,10 +113,21 @@ class SelfieShareController extends Controller {
         $json_data = json_encode($push_notification);
         $this->get('user.selfiesharefeedback.helper')->createWithParam($ra,$selfieshare);
         $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedbackV3($user, $json_data);
-
-
-        return new Response($selfieshare->getFriendName().'provided feedback updated.');
+        
+        return new Response($selfieshare->getFriendName().' provided feedback updated.');
     }
+
+    #----------------------------------------------provide thankyou page
+    public function submitFeedbackThankyouV3Action($userid=null)
+    {
+        $user  =$this->container->get('user.helper.user')->find($userid);
+        $name  = $user->getFullName();
+        if(trim($name) == ''){
+            $name = $user->getEmail();
+        }
+        return $this->render('LoveThatFitUserBundle:Selfieshare:v3provide_thankyou.html.twig', array('name' => $name));
+    }
+
     #----------------------------------------------
     public function feedbackReviewV3Action($ref=null)
     {
@@ -124,5 +135,4 @@ class SelfieShareController extends Controller {
         return $this->render('LoveThatFitUserBundle:Selfieshare:feedback_review_v3.html.twig', array('selfieshare' => $selfieshare));
     }
 }
-
 ?>
