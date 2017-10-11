@@ -282,25 +282,28 @@ class ProductSpecificationHelper {
         }
 
         //------------- Apply AC # 3 Validation Rule
-        if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch' || $fit_point_explode[0] == 'fit_point_stretch' ){
+        
+        if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch'){
+            $axis = $decoded['name'] == 'horizontal_stretch' ? 'x' : 'y';
+            $fpa = $this->getFitPointArray();
             foreach($specs_value['sizes'][$fit_model_selected] as $fit_point_key => $fit_point_name){
-                $axis = $decoded['name'] == 'horizontal_stretch' ? 'x' : 'y';
-                $fpa = $this->getFitPointArray();
                 if (array_key_exists($fit_point_key, $fpa[$axis])) {#--------> for over all horiz stretch
-                    if ($specs_value['sizes'][$fit_model_selected][$fit_point_key]['max_actual'] > $specs_value['sizes'][$fit_model_selected][$fit_point_key]['garment_dimension']) {
+                    if ($specs_value['sizes'][$fit_model_selected][$fit_point_key]['max_actual'] > $specs_value['sizes'][$fit_model_selected][$fit_point_key]['garment_stretch']) {
                         $validation['error'] = $fit_point_key . ' Max Actual cannot be greater than Garment Stretch Dimension';
                         $validation['status'] = false;
                     }
                 }
-//                foreach($fit_point_name as $key => $value){
-//                    if($specs_value['sizes'][$fit_model_selected][$fit_point_key]['max_actual']  > $specs_value['sizes'][$fit_model_selected][$fit_point_key]['garment_dimension']){
-//                        $validation['error'] = $fit_point_key . ' Max Actual cannot be greater than Garment Stretch Dimension';
-//                        $validation['status'] = false;
-//                    }
-//                }
             }
-
         }
+        #---------------------------------
+        if($fit_point_explode[0] == 'fit_point_stretch'){            
+            if ($specs_value['sizes'][$fit_model_selected][$fit_point_explode[1]]['max_actual'] > $specs_value['sizes'][$fit_model_selected][$fit_point_explode[1]]['garment_stretch']) {
+                        $validation['error'] = $fit_point_explode[0] . ' Max Actual cannot be greater than Garment Stretch Dimension';
+                        $validation['status'] = false;
+            }            
+        }
+        
+        #--------------------------------------------------------------------------
         if(count($fit_point_explode) == 4) {
             //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
             if ($fit_point_explode[3] == 'min_actual' || $fit_point_explode[3] == 'max_actual') {
