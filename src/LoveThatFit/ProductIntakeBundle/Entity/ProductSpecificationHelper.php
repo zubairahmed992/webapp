@@ -321,36 +321,37 @@ class ProductSpecificationHelper {
                                 $validation['error'][$key1] = ' ~~Max Actual for ' . $key . ' for ' . $key1 . ' is less than Min Actual for ' . $next_size_title . ' for ' . $key1;
                                 $validation['status'] = false;
                             }
-                            //---------- AC # 12   Fit Model
-                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
-                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
-                                $validation['status'] = false;
-                            }
-                            //---------- AC # 12   Min Actual
-                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
-                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
-                                $validation['status'] = false;
-                            }
-                            //---------- AC # 12   Max Actual
-                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
-                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
-                                $validation['status'] = false;
-                            }
-                            //---------- AC # 12   Ideal High
-                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
-                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
-                                $validation['status'] = false;
-                            }
-                            //---------- AC # 12   Ideal Low
-                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
-                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
-                                $validation['status'] = false;
-                            }
-                            //---------- AC # 12   Garment Dimensions
-                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
-                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
-                                $validation['status'] = false;
-                            }
+//                            //---------- AC # 12   Fit Model
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Min Actual
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Max Actual
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Ideal High
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Ideal Low
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Garment Dimensions
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            _________________________________________
 //                        // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
 //                        if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
 //                            $validation['error']['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
