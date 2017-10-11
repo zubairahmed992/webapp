@@ -104,8 +104,6 @@ class UserMaskAdjustmentController extends Controller {
                     'device_screen_height' => $device_screen_height['pixel_height'], #------>
                     'archive' => $archive, #------>
                     'mode' => $mode, #------>
-                    
-'retouch_filecount' => 0,
                     'device_model' => array_key_exists('device_model',$image_actions_archive)?$image_actions_archive['device_model']:'', #------>
                     'pivot_position' => $pivot_position,
                     'bra_size_body_shape' => json_encode($bra_size_body_shape),
