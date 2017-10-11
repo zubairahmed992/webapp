@@ -518,6 +518,7 @@ class WSCartController extends Controller
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
         $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
+        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -531,9 +532,9 @@ class WSCartController extends Controller
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
-            'total_amount'  => $totalAmount,
+            'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
             'discount'  => ($discount > 0 ? "-$".$discount : 0),
-            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$decode['discount']."%)" : ""),
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -582,6 +583,7 @@ class WSCartController extends Controller
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
         $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
+        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -595,9 +597,10 @@ class WSCartController extends Controller
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
-            'total_amount'  => $totalAmount,
+            //'total_amount'  => $totalAmount,
+            'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
             'discount'  => ($discount > 0 ? "-$".$discount : 0),
-            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$decode['discount']."%)" : ""),
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
