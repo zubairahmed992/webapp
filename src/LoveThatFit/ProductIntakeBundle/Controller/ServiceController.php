@@ -444,12 +444,12 @@ class ServiceController extends Controller {
             #1----- get brand by name
             $brand = $this->get('admin.helper.brand')->findOneByName($parsed_details['brand']);    
             if(!$brand){
-                return new Response(json_encode( $this->responseArray($parsed_details['brand'] . ' Brand name dose not exists')));#------------------------------------------>
+                return new Response(json_encode( $this->responseArray($parsed_details['brand'] . ' Brand name does not exist.')));#------------------------------------------>
             }
             #2----- get product by style id & brand name
             $data = $this->get('service.repo')->getProductDetailOnly($parsed_details['brand'], $parsed_details['style_id_number']);
             if (count($data)==0) {
-                return new Response(json_encode( $this->responseArray('Style id for Product dose not exists')));#------------------------------------------>
+                return new Response(json_encode( $this->responseArray('Style id for Product dose not exist.')));#------------------------------------------>
             }            
             $parsed_details['product_id'] = $data[0]['id'];            
             $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
