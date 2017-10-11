@@ -454,7 +454,12 @@ $(document).ready(function(){
          $("#compare").prop('disabled', false);
          $(".nav_menu").hide();
          } 
-          
+   var tooltip = $('<div class="optooltip" id="tooltip" />').css({
+    position: 'absolute',
+    top: -34,
+    left: -5
+}).html('1').hide();
+
 $("#retouchImages li img").each(function(){
        $(this).click(function(){
                 zoom_out();
@@ -466,30 +471,30 @@ $("#retouchImages li img").each(function(){
                 $("#compare").prop('disabled', false);
                 $(this).closest('li').addClass("active");
                 $(".nav_menu").hide();
+                // change opacity on click and show slider
+                $("#opSlider").slider('value', $("#opSlider").slider('value') + 1);
+                $("#tooltip").html(1);
+                return false;
            });
+       
         });
+          
           
 $("#retouchImages li input").each(function(){
                $chkUrl = $(this).val();
                if($chkUrl == $activeImg.val()){
                   $(this).closest('li').addClass("active");
+                  
                }
-        });        
+              
 
-         
-var tooltip = $('<div class="optooltip" id="tooltip" />').css({
-    position: 'absolute',
-    top: -34,
-    left: -5
-}).html('0.8').hide();
  $('#opSlider').slider({ 
         min: 0, 
         max: 1, 
         step: 0.1, 
-        value:0.8, 
+        value:1, 
         animate: true,
         slide: function( event, ui) {
-                   //console.log(ui.value);
                   changeOpacity(ui.value);
                   tooltip.text(ui.value);
                },
@@ -500,6 +505,7 @@ var tooltip = $('<div class="optooltip" id="tooltip" />').css({
         }, function() {
             tooltip.hide();
         });
+    });       
 {#$( function() {
     $( "#opSlider" ).slider();
     });#}

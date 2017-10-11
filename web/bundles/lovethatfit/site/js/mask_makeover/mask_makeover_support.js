@@ -68,9 +68,10 @@ var retuchImage;
 function showImag(retouch_image){
         retuch_img.activate();
         retuch_img.removeChildren(); 
-        show_img = new Raster(retouch_image);
+        var show_img = new Raster(retouch_image);
         show_img.on('load', function() {
         this.position = new Point(480,640);
+        this.opacity=1;
         //preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
         });
        return retuchImage = show_img;
@@ -691,6 +692,7 @@ function zoom_in(){
         current_status.zoom_level *= 2;
         lyr_area_hldr.scale(2);
         lyr_stage_coor.scale(2);
+        retuch_img.scale(2);
         current_status.zoom = true;
         view.update();
         
@@ -705,12 +707,16 @@ function zoom_out(){
         current_status.zoom_level /= 2;
         lyr_area_hldr.scale(0.5);
         lyr_stage_coor.scale(0.5);
-        
+         retuch_img.scale(0.5);
        
         lyr_x = 480 - parseFloat(lyr_area_hldr.position.x);
         lyr_y = 640 - parseFloat(lyr_area_hldr.position.y);
         stage_x = 480 - parseFloat(lyr_stage_coor.position.x);
         stage_y = 640 - parseFloat(lyr_stage_coor.position.y);
+        
+        retuch_img_x = 480 - parseFloat(retuch_img.position.x);
+        retuch_img_y = 640 - parseFloat(retuch_img.position.y);
+        
         
         console.log("lyr_area_hldr: " + lyr_x + "----" + lyr_y);
         console.log("lyr_stage_coor: " + stage_x + "----" + stage_y);
@@ -720,6 +726,10 @@ function zoom_out(){
         
         lyr_stage_coor.position.x += stage_x;
         lyr_stage_coor.position.y += stage_y;
+        
+        retuch_img.position.x += stage_x;
+        retuch_img.position.y += stage_y;
+        
 
         console.log("lyr_area_hldr: "+lyr_area_hldr.position);
         console.log("lyr_stage_coor: "+lyr_stage_coor.position);
@@ -852,11 +862,13 @@ function onMouseDrag(event) {
     }
       if(current_status.control_indi){  
         if(lyr_area_hldr.position.x + event.delta.x >= 0 && lyr_area_hldr.position.x + event.delta.x <= 960){
+                retuch_img.position.x+= event.delta.x;
                 lyr_area_hldr.position.x += event.delta.x;
                 lyr_stage_coor.position.x += event.delta.x;
                 change_x_pos_diff += event.delta.x;
             }   
         if(lyr_area_hldr.position.y + event.delta.y >= 0 && lyr_area_hldr.position.y + event.delta.y <= 1280){
+                retuch_img.position.y+= event.delta.y;
                 lyr_area_hldr.position.y += event.delta.y;
                 lyr_stage_coor.position.y += event.delta.y;
                 change_y_pos_diff += event.delta.y;
