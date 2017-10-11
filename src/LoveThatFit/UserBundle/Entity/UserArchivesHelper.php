@@ -543,6 +543,13 @@ public function updateRevertedImageStatus($user_id,$hash) {
         if (array_key_exists('version', $data)) {
             $user_archives->setVersion($data['version']);
         }
+        if($data['retouch_image']!=''){
+            $user_archives->setRetouchImage($data['retouch_image']);
+        }else{
+            $user_archives->setRetouchImage(null);
+        }
+
+
         return $this->save($user_archives);
     }
 
