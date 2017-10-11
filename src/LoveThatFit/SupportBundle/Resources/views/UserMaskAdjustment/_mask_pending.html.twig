@@ -135,9 +135,19 @@
                     <span>
                             <a href="{{ path('support_user_profile_archives', {'user_id': entity.id, 'archive_id': a.id}) }}" title="Adjust Mass Marker">
                             {% if (a.status==-1)%}
-                                <img class="img-thumb active" src="{{ asset(a.getWebPath('original'))}}"/>
+                                {% set image_name = asset(a.getWebPath('original')) %}
+                                {%  if(original_file_code in image_name) %}
+                                    <img class="img-thumb active" src="{{ asset(a.getWebPath('original'))}}"/>
+                                {%else%}
+                                    <img class="img-thumb" src="{{ asset(a.getWebPath('original'))}}"/>
+                                {%endif%}
                             {%else%}
-                                <img class="img-thumb" src="{{ asset(a.getWebPath('cropped'))}}"/>
+                                {% set image_name = asset(a.getWebPath('cropped')) %}
+                                {%  if(original_file_code in image_name) %}
+                                    <img class="img-thumb active" src="{{ asset(a.getWebPath('cropped'))}}"/>
+                                {%else%}
+                                    <img class="img-thumb" src="{{ asset(a.getWebPath('cropped'))}}"/>
+                                {%endif%}
                             {%endif%}
                             </a>
                         </span>
@@ -218,14 +228,16 @@
     }#}
     
     
-        </style>    
+        </style>
+        <input type="hidden" id="selected_retouch_image" name="selected_retouch_image" value="{{ archive.getRetouchImage() }}" />
         <ul id="retouchImages" class="retouch_imgs">   
             {% if(retouch_filecount) %}
                 {% for retouch_count in 1..retouch_filecount %}
-                    <li>
+                    <li {% if(archive.getRetouchImage() == retouch_filename ~ '_' ~ retouch_count ~ '.png') %} class='active' {% endif %}>
                       <input type="hidden" value="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}">
                         {#<a href="" title="Adjust Mass Marker">#}
-                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}"/>
+                        {% set filename = retouch_filename ~ '_' ~ retouch_count %}
+                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}"  data-time="{{ retouch_file_time[filename] }}" />
 {#                        </a>#}
                     </li>
                 {% endfor %}
