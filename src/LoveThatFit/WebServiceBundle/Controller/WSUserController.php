@@ -395,7 +395,10 @@ class WSUserController extends Controller
     }
 
      public function mcpArchiveSaveMarkerAction() {
-        $params = $this->process_request();        
+        $params = $this->process_request();   
+        $params['image_actions'] = json_encode($params['image_actions']);     
+        $params['mask_y'] = json_encode($params['mask_y']);     
+        $params['mask_x'] = json_encode($params['mask_x']);     
         $yaml   = new Parser();
         $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
         if($params['mcp_auth_token']==$mcp_auth_token) {       
