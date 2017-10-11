@@ -393,6 +393,28 @@ class WSUserController extends Controller
            return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid token')));
         }    
     }
+
+     public function mcpArchiveSaveMarkerAction() {
+        $params = $this->process_request();        
+        $archiveData=$this->get('user.helper.userarchives')->getArchiveId($params['user_id']);
+        $archive = $this->get('user.helper.userarchives')->find($archiveData['id']);
+        $this->get('user.helper.userarchives')->saveArchivesSupport($archive, $params);
+
+        if(!empty($_POST['imageData'])){
+
+            $image_actions = json_decode($archive->getImageActions());
+            $device_type = $image_actions->device_type;
+            if (!$archive) {
+                throw $this->createNotFoundException('Unable to find archive.');
+            }
+            $response = $archive->writeImageFromCanvas($_POST['imageData']);
+            #if not from mask marker adjustment interface then resize
+            $archive->resizeImageSupport($device_type); 
+
+        }
+
+        return new Response('archive updated');
+    }
     
     public function mcpArchiveToLiveAction() {
         $yaml   = new Parser();
