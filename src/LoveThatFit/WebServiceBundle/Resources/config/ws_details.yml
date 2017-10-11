@@ -972,4 +972,26 @@ mcp_approve_complete:
           mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
           user_id: 1
     
-    
+mcp_get_user_save:
+    pattern:  /mcp/mcp_get_user_save
+    title: mcp_get_user_save
+    request_type: post
+    description: get user calibrated image save
+    params:
+          mcp_auth_token: "1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&"
+          user_id: 2243
+          auth_token: 21b112a25f2a13832c07ee8cdc40e190
+          rect_x: 32
+          rect_y: 52.5
+          rect_height: 400
+          rect_width: 300
+          mask_x: {+x:+277.58597,+y:+833.39156+}
+          mask_y: {+x:+277.58597,+y:+833.39156+}
+          marker_json: [[480.0611909709347,482.975949…809709348,482.9759499999999]]
+          default_marker_json: 
+          default_marker_svg:  
+          shoulder_height: 323.05262788281243
+          hip_height: 430.5457434140625
+          svg_path: M480.06119,482.97595c22.25562,…-31.78895+34.92148,-31.78895z
+          image_actions: {move_up_down:0,move_left_right:0,img_rotate:0}
+          imageData: ""
