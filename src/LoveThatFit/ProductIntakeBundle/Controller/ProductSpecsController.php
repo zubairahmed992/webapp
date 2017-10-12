@@ -472,7 +472,17 @@ class ProductSpecsController extends Controller
         
     }
     //~~~~Validate product specification sizes---------product_intake/validate_product_specification 
+    
     public function validateProductSpecificationAction($id) {
+        $result = $this->get('pi.product_specification')->validateSpecification($id);
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+            'validation_error' => $result,
+
+        ));
+        
+    }
+    #--------------------------------------------------
+    public function _validateProductSpecificationAction($id) {
         $ps = $this->get('pi.product_specification')->find($id);
         $parsed_data = json_decode($ps->getSpecsJson(), true);
         $validation_rule = json_decode($ps->getValidationJson(), true);
@@ -531,10 +541,10 @@ class ProductSpecsController extends Controller
 //                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
 //                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
 //                    }
-//                    //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
-//                    if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
-//                        $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
-//                    }
+                    //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+                    if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
+                        $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+                    }
 
 //                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
 //                    if ( $value['min_actual'] < $value['min_calc'] ) {

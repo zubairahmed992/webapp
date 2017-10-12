@@ -937,6 +937,102 @@ class ProductSpecificationHelper {
     }
 
     ########################################################################
+    ############################## Specification Validation ########################
+    ########################################################################
+
+    public function validateSpecification($id) {
+        $ps = $this->find($id);
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $validation_rule = json_decode($ps->getValidationJson(), true);
+        $result = array();
+        $size_title = array_keys($parsed_data['sizes']);
+        $size_count = count($size_title);
+
+        foreach ($parsed_data['sizes'] as $current_size_title => $current_size) {
+            $next_index = array_search($current_size_title, $size_title) + 1;
+            $next_size_title = ($next_index < $size_count) ? $size_title[$next_index] : null;
+            $next_size = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
+            foreach ($current_size as $fp_title => $fp) {
+                #-------- AC#12 Range Sequence ----------
+                if ($next_size) {
+                if (!(isset($validation_rule) && array_key_exists('sequential', $validation_rule))) {
+                    
+                        if ($fp['garment_dimension'] > $next_size[$fp_title]['garment_dimension']) {
+                            $result['sequential'][$current_size_title][$fp_title] = 'Garment Dimensions ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['min_actual'] . ') should be greater than Garment Dimensions ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['min_actual'] . ')';
+                        }
+                        if ($fp['fit_model'] > $next_size[$fp_title]['fit_model']) {
+                            $result['sequential'][$current_size_title][$fp_title] = 'Fit Model ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['fit_model'] . ') should be greater than Fit Model ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['fit_model'] . ')';
+                        }
+                        if ($fp['min_actual'] > $next_size[$fp_title]['min_actual']) {
+                            $result['sequential'][$current_size_title][$fp_title] = 'Min Actual ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['min_actual'] . ') should be greater than min actual ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['min_actual'] . ')';
+                        }
+                        
+                        if ($fp['max_actual'] > $next_size[$fp_title]['max_actual']) {
+                            $result['sequential'][$current_size_title][$fp_title] = 'Max Actual ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['max_actual'] . ') should be greater than Max Actual ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['max_actual'] . ')';
+                        }
+                        if ($fp['ideal_high'] > $next_size[$fp_title]['ideal_high']) {
+                            $result['sequential'][$current_size_title][$fp_title] = 'Ideal High ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['ideal_high'] . ') should be greater than Ideal High ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['ideal_high'] . ')';
+                        }
+                        if ($fp['ideal_low'] > $next_size[$fp_title]['ideal_low']) {
+                            $result['sequential'][$current_size_title][$fp_title] = 'Ideal Low ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['ideal_low'] . ') should be greater than Ideal Low ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['ideal_low'] . ')';
+                        }
+                    
+                    # AC# 15 & 16 Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+                    if ($fp['grade_rule'] > $next_size[$fp_title]['grade_rule']) {
+                        $result['grade_rules_become_generally_larger'][$current_size_title][$fp_title] = $fp['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+                    }
+
+                    }
+                  
+                
+                  #-------- Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+                #------------ AC# 17 & 18
+                    if (!(isset($validation_rule) && array_key_exists('bust_to_waist_ratio', $validation_rule) )) {
+                        if (isset($current_size["waist"]['fit_model']) && $fp_title == 'bust') {
+                            $bust_waist = $fp["fit_model"] - $current_size["waist"]['fit_model'];
+                            if ($bust_waist > 11) {
+                                $result['bust_to_waist_ratio'][$key][$fp_title] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
+                            }
+                        }
+                    }
+                    #--------------------- AC# 19 & 20
+                    if (!(isset($validation_rule) && array_key_exists('bust_to_hip_ratio', $validation_rule))) {
+                        if (isset($current_size["waist"]['fit_model']) && $fp_title == 'hip') {
+                            $bust_hip = $current_size["waist"]['fit_model'] - $fp["fit_model"];
+                            if ($bust_hip > 12) {
+                                $result['bust_to_hip_ratio'][$key][$fp_title] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                            }
+                        }
+                    }
+
+                    #------------------AC# 21
+                    #Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
+                    
+                    if(! (isset($validation_rule) && array_key_exists('tolerance', $validation_rule) )){                        
+                        $garment_dimension_difference = $next_size[$fp_title]['garment_dimension'] - $fp['garment_dimension'];
+                        if (!($garment_dimension_difference <= ($fp['grade_rule'] + 0.25) && $garment_dimension_difference >= ($fp['grade_rule'] - 0.25))) {
+                            $result['tolerance'][$current_size_title][$fp_title] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
+                        }
+                    }
+                }
+                
+                        }
+        }
+        return $result;
+
+        return new Response(json_encode($result));
+    }
+#--------------------------------------------------
+    public function range_validation_message($range, $fp, $current, $next, $specs) {
+        #if ($specs[$current][$fp][$range] > $specs[$next][$fp][$range]) {
+           return $this->snake_camel($range) . ' ' . $this->snake_camel($fp) . ' of size ' . $current . ' (' . $specs[$current][$fp][$range] . ') should be greater than ' . $this->snake_camel($range) . ' ' . $this->snake_camel($fp) . ' of size ' . $next . ' (' . $specs[$next][$fp][$range] . ')';
+        #}
+    }
+
+    private function snake_camel($str){
+        return str_replace(' ', '', ucwords(str_replace('-', ' ', $str)));
+    }
+    ########################################################################
     ############################## Product Creation ########################
     ########################################################################
 
