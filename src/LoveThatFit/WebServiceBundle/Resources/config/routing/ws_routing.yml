@@ -353,6 +353,10 @@ nws_shop_the_look:
     pattern:  /nws/shop_the_look
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLookV3 }
 
+ws_brand_n_deviceconfig:
+    pattern:  /ws/brand_n_deviceconfig
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandAndDevice }
+
 ws_brand_retailer_big:
     pattern:  /ws/brand_retailer_big
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailerBig }
@@ -401,6 +405,18 @@ mcp_save_marker_image:
     pattern: /mcp/save_marker_image
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:archiveImageUpdateMcp}
    
-mcp_pending_users_reverted_image:
-    pattern: /mcp/mcp_pending_users_reverted_image
+mcp_reject_user_image:
+    pattern: /mcp/mcp_reject_user_image
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:pendingUsersRevertedImage} 
+
+mcp_get_user_image:
+    pattern: /mcp/mcp_get_user_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:userOriginalImage}
+
+mcp_approve_complete:
+    pattern: /mcp/mcp_approve_complete
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveToLive}
+
+mcp_get_user_save:
+    pattern: /mcp/mcp_get_user_save
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}    

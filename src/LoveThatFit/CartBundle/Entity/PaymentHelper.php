@@ -256,11 +256,14 @@ class PaymentHelper
             $datetimeObj = new \DateTime('now');
             $fnfGroup = null;
             $payment_json = json_encode($result);
-            $shipping_amount    = $decoded['shipping_amount'];
+            $shipping_amount    = $decoded['rates']['shipping_rate_amount'];
             $order_amount       = $decoded['order_amount'];
             $discount_amount    = $decoded['discount_amount'];
             $total_amount       = $decoded['total_amount'];
             $order_date         = (isset($decoded['order_date']) ? $decoded['order_date'] : $datetimeObj->format('Y-m-d H:i:s'));
+
+            $decoded['rates']['amount'] = $decoded['rates']['shipping_rate_amount']; //assign your rate variable
+
             $rates              = (isset($decoded['rates']) ? $decoded['rates'] : "");
             $sales_tax          = (isset($decoded['sales_tax']) ? $decoded['sales_tax'] : 0);
 
