@@ -64,7 +64,7 @@ retuch_img = new Layer();
 });
 
 
-var retuchImage;    
+var retuchImage;
 function showImag(retouch_image){
         retuch_img.activate();
         retuch_img.removeChildren(); 
@@ -82,7 +82,7 @@ function changeOpacity(opacity){
     if(opacity !== null){
         retuchImage.opacity = opacity;
     }else{
-        opacity=0.8;
+   
       retuchImage.opacity = opacity;   
     }
     view.update();
@@ -92,10 +92,23 @@ var flg =0;
 function toggleimg(){
    if(flg==0){
        retuchImage.visible=false;
+       $("#retouchImages li").each(function(){
+           if($(this).hasClass('active')){ 
+               $(this).removeClass('active');
+               $(this).addClass('notActive');
+           }
+       });
+      
         flg=1;
     }else{
         retuchImage.visible=true;
         flg=0;
+        if($(this).hasClass('notActive')){ 
+               $(this).removeClass('active');
+               $(this).addClass('notActive');
+           }
+        
+        
     }
    // return user_image;
    view.update();
@@ -742,9 +755,13 @@ function zoom_out(){
     }
 }
 function save(){
+    // change opacity 1 for image cropping 
+    if(retuchImage !=null){
+        retuchImage.opacity = 1;
+    }
     if(current_status.zoom_level > 1){
         zoom_out();
-        
+       
         $("#img_path_json").attr("value", getPathArrayJson());
         $("#page_wrap").fadeIn(160);
         //image_export_layer = new Layer();
@@ -892,6 +909,8 @@ function upload(){
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);    
     $('#img_path_paper').attr('value', full_mask.pathData);    
+    
+  
     
     var sholder_left =  full_mask.segments[7].point.y;
     var sholder_right = full_mask.segments[63].point.y;
