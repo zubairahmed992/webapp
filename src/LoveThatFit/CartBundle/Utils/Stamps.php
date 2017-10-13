@@ -169,7 +169,8 @@ class Stamps
                 'Urbanization' => '',
                 'PhoneNumber' => $shippingAddress->getPhone(),
                 'Extension' => '',
-                'CleanseHash' => (isset($shipping_data->CleanseHash) ? $shipping_data->CleanseHash : "")
+                'CleanseHash' => (isset($shipping_data->CleanseHash) ? $shipping_data->CleanseHash : ""),
+                'OverrideHash' => (isset($shipping_data->OverrideHash) ? $shipping_data->OverrideHash : "")
             ),
         );
 
