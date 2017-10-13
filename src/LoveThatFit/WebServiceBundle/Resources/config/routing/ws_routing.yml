@@ -423,4 +423,8 @@ mcp_approve_complete:
 
 mcp_get_user_save:
     pattern: /mcp/mcp_get_user_save
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}    
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}
+
+ws_email_order_detail_show:
+    pattern:  /ws/order/detail/{order_number}/show
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showEmailDetail}

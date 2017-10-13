@@ -373,4 +373,9 @@ class OrderHelper
         return $this->repo->findUserByOrderId($order_id);
     }
 
+    public function findByOrderNo($order_number)
+    {
+        return $this->repo->findByOrderNo($order_number);   
+    }
+
 }
