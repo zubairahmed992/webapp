@@ -671,6 +671,19 @@ class WSCartController extends Controller
         return new Response($res);
     }
 
+    #----------------------------------------------------Order Detail Services -------------------------#
+    public function basicOrderInfoAction( Request $request)
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $orders = $this->get('cart.helper.order')->findBasicOrderListByUserID($user->getId());
+            $res = $this->get('webservice.helper')->response_array(true, null, true,$orders);
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+    }
 
     #---------------------------------------------- User address Services ---------------------------#
 

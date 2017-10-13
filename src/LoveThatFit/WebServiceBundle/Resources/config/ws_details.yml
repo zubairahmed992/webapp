@@ -724,6 +724,12 @@ ws_order_detail:
   params:
     auth_token: 56565656566
 
+ws_basic_order_info:
+  pattern: /ws/basic_order_info
+  title:  basic_order_info
+  params:
+    auth_token: 56565656566
+
 nws_save_user_billing_address:
   pattern: /nws/save_user_billing_address
   title: save_user_billing_address

@@ -312,6 +312,10 @@ ws_order_detail:
    pattern: /ws/order_detail
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:orderDetail}
 
+ws_basic_order_info:
+   pattern: /ws/basic_order_info
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:basicOrderInfo}
+
 nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}

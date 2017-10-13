@@ -346,6 +346,11 @@ class OrderHelper
         return $this->repo->findOrderListByUserID($user_id);
     }
 
+    public function findBasicOrderListByUserID($user_id)
+    {
+        return $this->repo->findBasicOrderListByUserID($user_id);
+    }
+
     public function findOrderList()
     {
         return $this->repo->findOrderList();
