@@ -51,14 +51,20 @@ class WSCategoryController extends Controller {
         }
 
         $i = 1;
+        $flag = true;
         foreach($bannerList as $value){
             if($i==$static_category_banner['sorting'])
             {
-             $arrBannerList[] = $static_category_banner;         
+             $arrBannerList[] = $static_category_banner;  
+             $flag = false;       
             }   
             $arrBannerList[] = $value; 
           $i++;      
         }
+        if($flag){
+          $arrBannerList[] = $static_category_banner;  
+        }
+
         $bannerconf= array(
             'data' => $arrBannerList,
             'count'=> count($arrBannerList),

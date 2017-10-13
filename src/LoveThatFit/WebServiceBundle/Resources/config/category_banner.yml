@@ -1,7 +1,7 @@
 category_banner:
   banner_type: 9
   display_screen: shop
-  sorting: 4
+  sorting: 100
   type: banner
   object: 
     0:
