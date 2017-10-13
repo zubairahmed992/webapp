@@ -735,7 +735,7 @@
                 <select name="neckline" class="neckline form-control" >
                     <option  >Select</option>
                     {% for key,val in drop_down_values['neckline'] %}
-                       <option value="{{ val }}"{{ parsed_data.neckline|trim|replace({' ':'_'}) == '' and key == 0? '' : (val == parsed_data.neckline|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
+                        <option value="{{ val|trim|replace({' ':'_'}) }}"{{ parsed_data.neckline|trim|replace({' ':'_'}) == '' and key == 0? '' : (val|trim|replace({' ':'_'}) == parsed_data.neckline|trim|replace({' ':'_'}) ? ' selected ' : '')}}  >{{ key }}</option>
                     {% endfor %}
                 </select>   
             </div>
