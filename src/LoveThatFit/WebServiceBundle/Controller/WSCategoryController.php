@@ -50,18 +50,18 @@ class WSCategoryController extends Controller {
             $bannerList = $this->get('admin.helper.Banner')->getBannerListForService($base_path, 'shop');
         }
 
-        $i = 0;
+        $i = 1;
         foreach($bannerList as $value){
-            if($i==2)
+            if($i==$static_category_banner['sorting'])
             {
-             $arr[] = $static_category_banner;         
+             $arrBannerList[] = $static_category_banner;         
             }   
-            $arr[] = $value; 
+            $arrBannerList[] = $value; 
           $i++;      
         }
         $bannerconf= array(
-            'data' => $arr,
-            'count'=> count($arr),
+            'data' => $arrBannerList,
+            'count'=> count($arrBannerList),
             'message' => 'Banner list',
             'success' => 'true',
         );
