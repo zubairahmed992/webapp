@@ -419,4 +419,8 @@ mcp_approve_complete:
 
 mcp_get_user_save:
     pattern: /mcp/mcp_get_user_save
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}    
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}
+
+nws_update_term_conditions:
+    pattern: /nws/update_term_conditions
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdateTermConditions}        
