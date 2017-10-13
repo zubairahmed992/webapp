@@ -267,9 +267,12 @@ class ServiceController extends Controller {
         
         $_exploded = explode("_", strtolower($request_array));                
         if (count($_exploded) == 5) {
-            $a['brand'] = str_replace("-", " ", $_exploded[0]);
-            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
-            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+//            $a['brand'] = str_replace("-", " ", $_exploded[0]);
+//            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+//            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            $a['brand'] = $_exploded[0];
+            $a['style_id_number'] = $_exploded[1];
+            $a['color_title'] = $_exploded[2];
             $a['body_type'] = strtolower($_exploded[3]) == 'p' ? 'plus' : 'regular';
             #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
             $_file_name = explode(".", $_exploded[4]);
