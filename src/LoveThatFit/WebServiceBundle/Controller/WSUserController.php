@@ -570,5 +570,19 @@ class WSUserController extends Controller
             return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
         }
     }
+
+
+    public function nwsUpdateTermConditionsAction()
+    {     
+                
+        $decoded = $this->process_request();
+         $user = $this->container->get('user.helper.user')->findByEmail($decoded['email']);
+        if($user) {                  
+            $this->get('user.helper.user')->saveTermAndCondtions($user,$decoded['term_status']);
+            return new Response(json_encode(array("success" => 1,"description" => "Term & Conditon updated successfully")));
+        } else {
+            return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
+        }    
+    }    
 }
 

@@ -74,6 +74,13 @@ class UserHelper
         $this->em->flush();
     }
 
+    public function saveTermAndCondtions(User $user,$term_status)
+    {
+        $user->setTermAndConditions($term_status);
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
 //-------------------------------------------------------
 
     public function updateUserFirstAndLastName(User $user, $firstname, $lastname)

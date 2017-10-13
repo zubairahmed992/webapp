@@ -222,7 +222,7 @@ class Stamps
                 'Rate' => array(
                     'FromZIPCode'   => $this->fromZipCode,
                     'ToZIPCode'     => $postData['tozipcode'],
-                    /*'ServiceType'   => $this->serviceType,*/
+                    'ServiceType'   => $this->serviceType,
                     'DeliverDays'   => $this->deliverDays,
                     'WeightOz'      => $weightInOz,
                     'PackageType'   => $this->packageType,
