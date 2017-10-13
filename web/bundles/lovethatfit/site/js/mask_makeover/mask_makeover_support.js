@@ -70,14 +70,20 @@ function showImag(retouch_image){
         retuch_img.removeChildren(); 
         var show_img = new Raster(retouch_image);
         show_img.on('load', function() {
-        this.position = new Point(480,640);
+        this.position = user_image.position;
+        this.rotate(image_actions_count.img_rotate);
         this.opacity=1;
         //preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+        user_image.visible = false;
         });
        return retuchImage = show_img;
         view.update();
 }
-
+function init_compare(){
+    user_image.visible = true;
+    retuch_img.blendMode = "multiply";
+    view.update();
+}
 function changeOpacity(opacity){
     if(opacity !== null){
         retuchImage.opacity = opacity;
@@ -498,10 +504,10 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
     user_image.rotate(img_rotate); // -0.1 for left, 0.1 for right
 }
 
-function preset_user_img(userImage,move_up_down, move_left_right, img_rotate) {
-    userImage.position.y = user_image.position.y += move_up_down;
-    userImage.position.x = user_image.position.x += move_left_right;
-    userImage.rotate(img_rotate); // -0.1 for left, 0.1 for right
+function preset_user_img(userImage, move_up_down, move_left_right, img_rotate) {
+//    userImage.position.y = user_image.position.y += move_up_down;
+//    userImage.position.x = user_image.position.x += move_left_right;
+//    userImage.rotate(img_rotate); // -0.1 for left, 0.1 for right
 }
 
 function load_user_masks(){
