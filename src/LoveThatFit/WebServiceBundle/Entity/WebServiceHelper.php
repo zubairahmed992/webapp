@@ -1111,6 +1111,10 @@ class WebServiceHelper
                 $productlist[$key]['layer_name'] = (int)$selectedlayername;
             }
             /* Selected Layer Name */
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
         return array('product_list' => $productlist, 'page_count' => $page_count);
     }
@@ -1161,6 +1165,10 @@ class WebServiceHelper
                 $productlist[$key]['layer_name'] = (int)$selectedlayername;
             }
             /* Selected Layer Name */
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
 
         return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
