@@ -1,5 +1,5 @@
 category_banner:
-  banner_type: 2
+  banner_type: 9
   display_screen: shop
   sorting: 10
   type: banner
@@ -11,7 +11,7 @@ category_banner:
       title: Denim
       banner_image: http://dev.selfiestyler.com/uploads/ltf/banner/iphone/5877631388064.png
       image_position: right
-      banner_type: 2
+      banner_type: 27
       description: Hey we're adding plus sizes soon
       sorting: 3
       price_min: null
