@@ -27,6 +27,10 @@ class WSCategoryController extends Controller {
     #---------------------------------- /ltf_ws/get_category_list ------------------------------------------
     public function getBannerCategoryListAction()
     {
+
+        $yaml   = new Parser();
+        $static_category_banner = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/category_banner.yml'))['category_banner'];       
+
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
 
@@ -46,9 +50,18 @@ class WSCategoryController extends Controller {
             $bannerList = $this->get('admin.helper.Banner')->getBannerListForService($base_path, 'shop');
         }
 
+        $i = 1;
+        foreach($bannerList as $value){
+            if($i==$static_category_banner['sorting'])
+            {
+             $arrBannerList[] = $static_category_banner;         
+            }   
+            $arrBannerList[] = $value; 
+          $i++;      
+        }
         $bannerconf= array(
-            'data' => $bannerList,
-            'count'=> count($bannerList),
+            'data' => $arrBannerList,
+            'count'=> count($arrBannerList),
             'message' => 'Banner list',
             'success' => 'true',
         );
