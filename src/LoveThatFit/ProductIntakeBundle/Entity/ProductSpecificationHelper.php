@@ -948,6 +948,20 @@ class ProductSpecificationHelper {
         $size_title = array_keys($parsed_data['sizes']);
         $size_count = count($size_title);
 
+        $clothing_type = ["blouse","tunic","tee_knit","tank_knit","jackets","sweater","skirt","dress","coat","shirt"];
+        #----------------- AC#13 & 14 Wrong Fit Perority
+        if(! (isset($validation_rule) && array_key_exists('fit_priority_assigned_to_an_incorrect_garment', $validation_rule)) ) {
+            if (in_array($parsed_data['clothing_type'], $clothing_type)) {
+                if (array_key_exists('thigh', $parsed_data['fit_priority'])) {
+                    $result['fit_priority_assigned_to_an_incorrect_garment'][$parsed_data['clothing_type']]  = "Clothing Type " . $parsed_data['clothing_type'] . " of fit point tigh is assigned to an incorrect garment";
+                }
+            } else {
+                if (array_key_exists('bust', $parsed_data['fit_priority'])) {
+                    $result['fit_priority_assigned_to_an_incorrect_garment'][$parsed_data['clothing_type']] = "Clothing Type " . $parsed_data['clothing_type'] . " of fit point bust is assigned to an incorrect garment";
+                }
+            }
+        }
+
         foreach ($parsed_data['sizes'] as $current_size_title => $current_size) {
             $next_index = array_search($current_size_title, $size_title) + 1;
             $next_size_title = ($next_index < $size_count) ? $size_title[$next_index] : null;
@@ -979,7 +993,7 @@ class ProductSpecificationHelper {
                     
                     # AC# 15 & 16 Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
                     if ($fp['grade_rule'] > $next_size[$fp_title]['grade_rule']) {
-                        $result['grade_rules_become_generally_larger'][$current_size_title][$fp_title] = $fp['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+                        $result['grade_rules_become_generally_larger'][$current_size_title][$fp_title] = 'Grade rules for ' .$fp_title.' ('.$fp['grade_rule'].')'. ' decrease from sizes '.$next_size_title .' ('.$next_size[$fp_title]['grade_rule'].')';
                     }
 
                     }
