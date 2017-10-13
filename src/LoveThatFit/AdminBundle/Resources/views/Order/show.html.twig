@@ -56,7 +56,7 @@
                                 <div class="span3">${{ order.orderAmount| number_format(2) }}</div>
                             </div>
                             {% if(order.ShippingAmount != '') %}
-                                {% set total = order.ShippingAmount + order.OrderAmount %}
+                                {% set total = order.ShippingAmount + order.OrderAmount + sales_tax %}
                                 {% set shipping_amount = order.ShippingAmount %}
                             {% else %}
                                 {% set total='0' %}

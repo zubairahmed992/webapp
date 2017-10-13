@@ -256,7 +256,7 @@ class PaymentHelper
             $datetimeObj = new \DateTime('now');
             $fnfGroup = null;
             $payment_json = json_encode($result);
-            $shipping_amount    = $decoded['shipping_amount'];
+            $shipping_amount    = $decoded['rates']['shipping_rate_amount'];
             $order_amount       = $decoded['order_amount'];
             $discount_amount    = $decoded['discount_amount'];
             $total_amount       = $decoded['total_amount'];
