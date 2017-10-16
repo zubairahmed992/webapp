@@ -1332,7 +1332,8 @@ class WebServiceHelper
         }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
-
+        $p['disabled'] = $product->getDisabled();
+        $p['deleted'] = $product->getDeleted();
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
@@ -1484,6 +1485,8 @@ class WebServiceHelper
         }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
+        $p['disabled'] = $product->getDisabled();
+        $p['deleted'] = $product->getDeleted();
         return $p;
     }
 
