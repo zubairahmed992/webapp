@@ -961,12 +961,14 @@ class ProductSpecificationHelper {
                 }
             }
         }
-
+        
+        
         foreach ($parsed_data['sizes'] as $current_size_title => $current_size) {
             $next_index = array_search($current_size_title, $size_title) + 1;
             $next_size_title = ($next_index < $size_count) ? $size_title[$next_index] : null;
             $next_size = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
             foreach ($current_size as $fp_title => $fp) {
+                if(array_key_exists($fp_title, $parsed_data['fit_priority']) && $parsed_data['fit_priority'][$fp_title]>0){
                 #-------- AC#12 Range Sequence ----------
                 if ($next_size) {
                 if (!(isset($validation_rule) && array_key_exists('sequential', $validation_rule))) {
@@ -1031,6 +1033,7 @@ class ProductSpecificationHelper {
                 }
                 
                         }
+            }
         }
         return $result;
 
