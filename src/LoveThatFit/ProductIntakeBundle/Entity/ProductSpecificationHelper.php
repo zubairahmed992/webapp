@@ -993,7 +993,7 @@ class ProductSpecificationHelper {
                     
                     # AC# 15 & 16 Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
                     if ($fp['grade_rule'] > $next_size[$fp_title]['grade_rule']) {
-                        $result['grade_rules_become_generally_larger'][$current_size_title][$fp_title] = 'Grade rules for ' .$fp_title.' ('.$fp['grade_rule'].')'. ' decrease from sizes '.$next_size_title .' ('.$next_size[$fp_title]['grade_rule'].')';
+                        $result['grade_rules_become_generally_larger'][$current_size_title][$fp_title] = 'Grade rules for ' .$fp_title. ' of size ' . $current_size_title .' ('.$fp['grade_rule'].')'. ' decrease in size '.$next_size_title .' ('.$next_size[$fp_title]['grade_rule'].')';
                     }
 
                     }
