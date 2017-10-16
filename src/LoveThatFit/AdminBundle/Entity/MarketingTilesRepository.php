@@ -38,7 +38,11 @@ class MarketingTilesRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('mt.id,mt.title,mt.description,mt.image,mt.button_title,mt.button_action,mt.created_at')
+            ->select('
+                mt.id, mt.title, mt.description, 
+                mt.image, mt.button_title, 
+                mt.button_action, mt.target_url,
+                mt.created_at')
             ->from('LoveThatFitAdminBundle:MarketingTiles', 'mt')
             ->where('mt.disabled = :disabled')
             ->setParameter('disabled', $disabled)

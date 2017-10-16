@@ -313,7 +313,7 @@ class WSMiscController extends Controller {
         $results_marketingtiles=array();
 
         $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
-        
+
         if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
             foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
                 $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];

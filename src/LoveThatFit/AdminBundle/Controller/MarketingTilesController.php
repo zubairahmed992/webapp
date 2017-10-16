@@ -22,7 +22,6 @@ class MarketingTilesController extends Controller {
     
     public function showAction($id) {
         $marketing_tiles = $this->get('admin.helper.marketingtiles')->findWithMarketingTilesId($id);
-        //echo "<pre>"; print_r($marketing_tiles); die();
         $marketing_tiles_limit = $this->get('admin.helper.marketingtiles')->getRecordsCountWithCurrentMarketingTilesLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($marketing_tiles_limit[0]['id']));
         $page_number = ($page_number == 0) ? 1 : $page_number;

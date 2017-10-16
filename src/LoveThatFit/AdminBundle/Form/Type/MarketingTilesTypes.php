@@ -22,6 +22,7 @@ class MarketingTilesTypes extends AbstractType {
         $builder->add('button_title', 'text',array('required'=>false));
         $builder->add('button_action', 'text',array('required'=>false,'data' => $this->button_action));
         $builder->add('sorting', 'integer', array('required' => false, 'data' => $this->sorting, 'attr' => array('min' => 1)));
+        $builder->add('target_url', 'text',array('required'=>false));
         $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));
     }
 
