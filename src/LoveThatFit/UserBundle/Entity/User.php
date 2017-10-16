@@ -520,15 +520,6 @@ class User implements UserInterface, \Serializable {
      */
     private $acct_type;
 
-     /**
-     * @var string $term_and_conditions
-     *
-     * @ORM\Column(name="term_and_conditions", type="integer", length=1, nullable=false,options={"default":"0"})
-     *
-     */
-    private $term_and_conditions;
-
-
     /**
      * Get id
      *
@@ -3036,22 +3027,5 @@ class User implements UserInterface, \Serializable {
         return $this->acct_type;
     }
 
-    /**
-     * Set term_and_conditions
-     *
-     * @param string $term_and_conditions
-     * @return User
-     */
-    public function setTermAndConditions($term_and_conditions) {
-        $this->term_and_conditions = $term_and_conditions;
 
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTermAndConditions() {
-        return $this->term_and_conditions;
-    }
 }
