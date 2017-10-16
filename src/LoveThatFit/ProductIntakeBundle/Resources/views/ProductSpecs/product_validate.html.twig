@@ -1,0 +1,53 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+    <style>
+        tr:nth-child(even){
+            background-color: #4dd0e1;
+        }
+table{
+    width: 50%;
+}
+    </style>
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
+
+    <h1>Disble Validation Rule of Product  Specification </h1>
+
+<form action="{{ path('product_intake_update_validate_product_specification',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data" id="form1"  class="form-horizontal">
+    {#{{ dump(validation_error) }}#}
+    {% for key,fp in validation_error %}
+        <input type="checkbox" name="{{ key }}" value="{{ key }}"> {{ key }}
+        {#{{ dump(fp) }}#}
+        {% for fp_title,fp_error in fp %}
+            {% if fp_error is iterable %}
+            {% else %}
+            <table border="2px">
+                <tr>
+                    <th style="padding: 10px">
+                        {{ fp_title }}
+                    </th>
+                    <td>
+                        {{ fp_error }}
+                    </td>
+                </tr>
+            </table>
+            {% endif %}
+
+            <table border="2px">
+            {% for fp_key,fp_size_error in fp_error %}
+                    <tr>
+                        <th style="padding: 10px">
+                            {{ fp_title }}
+                        </th>
+                        <td>
+                            {{ fp_size_error }}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        {% endfor %}
+    {% endfor %}
+    <input type="submit" value="Diable">
+</form>
+    <br/><p></p>
+{% endblock %}

@@ -267,9 +267,12 @@ class ServiceController extends Controller {
         
         $_exploded = explode("_", strtolower($request_array));                
         if (count($_exploded) == 5) {
-            $a['brand'] = str_replace("-", " ", $_exploded[0]);
-            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
-            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+//            $a['brand'] = str_replace("-", " ", $_exploded[0]);
+//            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+//            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            $a['brand'] = $_exploded[0];
+            $a['style_id_number'] = $_exploded[1];
+            $a['color_title'] = $_exploded[2];
             $a['body_type'] = strtolower($_exploded[3]) == 'p' ? 'plus' : 'regular';
             #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
             $_file_name = explode(".", $_exploded[4]);
@@ -386,9 +389,14 @@ class ServiceController extends Controller {
             # 3 Size Range / Biody Type
             # 4 Vertical Measurement
             # 5 Size Title
-            $a['brand'] = str_replace("-", " ", $_exploded[0]);
-            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
-            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            //$a['brand'] = str_replace("-", " ", $_exploded[0]);
+            //$a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+            //$a['color_title'] = str_replace("-", " ", $_exploded[2]);
+
+            $a['brand'] =  $_exploded[0];
+            $a['style_id_number'] = $_exploded[1];
+            $a['color_title'] =  $_exploded[2];
+
             $a['body_type'] = strtolower($body_range_array[$_exploded[3]]);
             $a['vertical_measurement'] = $_exploded[4];
             #$a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[2])) ? "regular" : $_exploded[2];
@@ -405,12 +413,18 @@ class ServiceController extends Controller {
             # 2 Body Type
             # 3 Size Tilte
             # 4 Color Title and file Extention                
-            $a['brand'] = str_replace("-", " ", $_exploded[0]);
-            $a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
-            $a['color_title'] = str_replace("-", " ", $_exploded[2]);
+            //$a['brand'] = str_replace("-", " ", $_exploded[0]);
+            //$a['style_id_number'] = str_replace("-", " ", $_exploded[1]);
+            //$a['color_title'] = str_replace("-", " ", $_exploded[2]);
+
+            $a['brand'] =  $_exploded[0];
+            $a['style_id_number'] = $_exploded[1];
+            $a['color_title'] = $_exploded[2];
+
             $a['body_type'] = strtolower($_exploded[3]) == 'p' ? 'plus' : 'regular';            
             $_file_name = explode(".", $_exploded[4]);
-            $a['size_title'] = str_replace("-", "_", $_file_name[0]);
+            //$a['size_title'] = str_replace("-", "_", $_file_name[0]);
+            $a['size_title'] =  $_file_name[0];
             $a['success'] = 'true';            
             return $a;
         } else {
@@ -433,12 +447,12 @@ class ServiceController extends Controller {
             #1----- get brand by name
             $brand = $this->get('admin.helper.brand')->findOneByName($parsed_details['brand']);    
             if(!$brand){
-                return new Response(json_encode( $this->responseArray($parsed_details['brand'] . ' Brand name dose not exists')));#------------------------------------------>
+                return new Response(json_encode( $this->responseArray($parsed_details['brand'] . ' Brand name does not exist.')));#------------------------------------------>
             }
             #2----- get product by style id & brand name
             $data = $this->get('service.repo')->getProductDetailOnly($parsed_details['brand'], $parsed_details['style_id_number']);
             if (count($data)==0) {
-                return new Response(json_encode( $this->responseArray('Style id for Product dose not exists')));#------------------------------------------>
+                return new Response(json_encode( $this->responseArray('Style id for Product does not exist.')));#------------------------------------------>
             }            
             $parsed_details['product_id'] = $data[0]['id'];            
             $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
