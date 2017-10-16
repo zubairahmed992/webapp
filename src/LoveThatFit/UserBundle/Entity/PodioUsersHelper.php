@@ -128,4 +128,22 @@ class PodioUsersHelper
         return $this->repo->findPodioUserByUserId($user_id);   
     }
 
+
+    public function updatePriamryEmaril($id, $podio_id, $is_primary_email_updated)
+    {
+        $entity = $this->find($id);
+        $entity->setStatus(1);
+        $entity->setPodioId($podio_id);
+        $entity->setPrimaryEmailUpdatedAt(new \DateTime('now'));
+        $entity->setPrimaryEmailUpdated($is_primary_email_updated);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function findPrimaryKeybyPodioId($podio_id)
+    {
+        return $this->repo->findPrimaryKeybyPodioId($podio_id);
+    }
+
 }

@@ -521,6 +521,16 @@ class User implements UserInterface, \Serializable {
     private $acct_type;
 
     /**
+     * @var string $archive_email
+     *
+     * @ORM\Column(name="archive_email", type="string", length=60, nullable=true)
+     *
+     */
+    private $archive_email;
+
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -3026,6 +3036,27 @@ class User implements UserInterface, \Serializable {
     public function getAcctType() {
         return $this->acct_type;
     }
+
+
+    /**
+     * Set archive_email
+     *
+     * @param string $archive_email
+     * @return User
+     */
+    public function setArchiveEmail($archive_email) {
+        $this->archive_email = $archive_email;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getArchiveEmail() {
+        return $this->archive_email;
+    }
+
 
 
 }
