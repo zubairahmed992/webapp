@@ -1026,9 +1026,10 @@ class ProductSpecificationHelper {
                     
                     if(! (isset($validation_rule) && array_key_exists('tolerance', $validation_rule) )){                        
                         $garment_dimension_difference = $next_size[$fp_title]['garment_dimension'] - $fp['garment_dimension'];
+                        
                         if (!($garment_dimension_difference <= ($fp['grade_rule'] + 0.25) && $garment_dimension_difference >= ($fp['grade_rule'] - 0.25))) {
-                            $result['tolerance'][$current_size_title][$fp_title] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
-                        }
+                            $result['tolerance'][$current_size_title][$fp_title] = 'Fit Model ' . $fp_title . ' did not increase by 2.25" from size ' . $current_size_title . ' to ' . $next_size_title;
+                            }
                     }
                 }
                 
