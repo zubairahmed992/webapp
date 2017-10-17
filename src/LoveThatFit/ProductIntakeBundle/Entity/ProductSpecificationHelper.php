@@ -948,21 +948,21 @@ class ProductSpecificationHelper {
         $size_title = array_keys($parsed_data['sizes']);
         $size_count = count($size_title);
 
-        $clothing_type = ["blouse","tunic","tee_knit","tank_knit","jackets","sweater","skirt","dress","coat","shirt"];
-        #----------------- AC#13 & 14 Wrong Fit Perority
-        if(! (isset($validation_rule) && array_key_exists('fit_priority_assigned_to_an_incorrect_garment', $validation_rule)) ) {
-            if (in_array($parsed_data['clothing_type'], $clothing_type)) {
-                if (array_key_exists('thigh', $parsed_data['fit_priority'])) {
-                    $result['fit_priority_assigned_to_an_incorrect_garment'][$parsed_data['clothing_type']]  = "Clothing Type " . $parsed_data['clothing_type'] . " of fit point tigh is assigned to an incorrect garment";
+        #----------------- AC#13 & 14 Wrong Fit Priority
+        if (!(isset($validation_rule) && array_key_exists('fit_priority_assigned_to_an_incorrect_garment', $validation_rule))) {                                        
+            # clothing type & attributes array --------->
+            $clothing_type_attributes = $this->container->get('admin.helper.product.specification')->getAttributesFor($parsed_data['clothing_type']);
+            if (is_array($clothing_type_attributes)) {
+                foreach ($parsed_data['fit_priority'] as $fp => $fpp) {
+                    if ($fpp > 0 && is_array($clothing_type_attributes) && !array_key_exists($fp, $clothing_type_attributes)) {
+                        $result['fit_priority_assigned_to_an_incorrect_garment'][$fp] = $parsed_data['clothing_type'] . " should not have " . $fp . " (".$fpp."%) in the fit priority";
+                    }
                 }
-            } else {
-                if (array_key_exists('bust', $parsed_data['fit_priority'])) {
-                    $result['fit_priority_assigned_to_an_incorrect_garment'][$parsed_data['clothing_type']] = "Clothing Type " . $parsed_data['clothing_type'] . " of fit point bust is assigned to an incorrect garment";
-                }
+            }else{
+                $result['fit_priority_assigned_to_an_incorrect_garment']['clothing_type'] = "Clothing Type '". $parsed_data['clothing_type'] . "' dose not match any attribute lists";
             }
         }
-        
-        
+        #---------------------------------- 
         foreach ($parsed_data['sizes'] as $current_size_title => $current_size) {
             $next_index = array_search($current_size_title, $size_title) + 1;
             $next_size_title = ($next_index < $size_count) ? $size_title[$next_index] : null;
