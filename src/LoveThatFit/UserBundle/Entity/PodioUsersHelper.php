@@ -72,6 +72,8 @@ class PodioUsersHelper
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUser($user_entity);
         $entity->setPodioUpdated(0);
+        $entity->setPrimaryEmailUpdated(0);
+        $entity->setPrimaryEmailUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -86,6 +88,8 @@ class PodioUsersHelper
         $entity->setPodioId($podio_id);
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setPodioUpdated($is_podio_updated);
+        $entity->setPrimaryEmailUpdated(0);
+        $entity->setPrimaryEmailUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -126,6 +130,24 @@ class PodioUsersHelper
     public function findPodioUserByUserId($user_id)
     {
         return $this->repo->findPodioUserByUserId($user_id);   
+    }
+
+
+    public function updatePriamryEmaril($id, $podio_id, $is_primary_email_updated)
+    {
+        $entity = $this->find($id);
+        $entity->setStatus(1);
+        $entity->setPodioId($podio_id);
+        $entity->setPrimaryEmailUpdatedAt(new \DateTime('now'));
+        $entity->setPrimaryEmailUpdated($is_primary_email_updated);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function findPrimaryKeybyPodioId($podio_id)
+    {
+        return $this->repo->findPrimaryKeybyPodioId($podio_id);
     }
 
 }

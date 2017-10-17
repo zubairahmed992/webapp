@@ -1261,6 +1261,8 @@ class WebServiceHelper
                 'fitting_room_status' => $fitting_room_status,
                 'qty' => $qty,
                 'color_image' => $pi->getProductColor()->getImage(),
+                'disabled' => $product->getDisabled(),
+                'deleted' => $product->getDeleted(),
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -1366,6 +1368,8 @@ class WebServiceHelper
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
+                $temp['disabled'] = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $temp['deleted'] = $saveLookItem->getItems()->getProduct()->getDeleted();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
                 array_push($items, $temp);
@@ -1449,6 +1453,8 @@ class WebServiceHelper
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
+                'disabled' => $product->getDisabled(),
+                'deleted' => $product->getDeleted(),
             );
         }
 
