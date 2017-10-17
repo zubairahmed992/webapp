@@ -127,6 +127,13 @@ security:
                     ron: { password: 6e77b328ec7c624ebdd5189d4d32666407e29ab6, roles: 'ROLE_ADMIN' }
                     ovais: { password: 72fce8aa33a63401b0914fdd6bc72cf28a768c99, roles: 'ROLE_ADMIN' }
                     raghib: { password: 1c3946c944801ab0a52bd9804d577c55638e69fd, roles: 'ROLE_ADMIN' }
+                    babar: { password: 8eec114907fbca3fb5fad712ce18b18fbc96b962, roles: 'ROLE_ADMIN' }
+                    aijaz: { password: c1d53441fa20bffbb90dc5e2b300e97ce034e64a, roles: 'ROLE_ADMIN' }
+                    umer: { password: 8170811ceaa03f19110cd0be27c6ad786536a091, roles: 'ROLE_ADMIN' }
+                    haris: { password: 8339db391ac94d8176421a5223ddfa825bba3ee3, roles: 'ROLE_ADMIN' }
+                    saddam: { password: 2f534bf3839f3b375e5ff249c9161c31444c01fe, roles: 'ROLE_ADMIN' }
+                    alinawaz: { password: 31a19d33be7892ecf88200e55102cc86605191e7, roles: 'ROLE_ADMIN' }
+                    shakeel: { password: f4d17ee09adb30f65b47aa638dfb5865813341c2, roles: 'ROLE_ADMIN' }
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
