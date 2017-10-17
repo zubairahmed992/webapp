@@ -2288,9 +2288,17 @@ class User implements UserInterface, \Serializable {
             }
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
             ##$this->measurement->bottom_placement + 10.5;
-            
+
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
+
+            /*Set user status for IOSv3-435*/
+            $status = $this->status;
+            $user_status = $this->status;
+            if($status === null){
+                $user_status = 1;
+            }
+
             return array(
                 'id' => $this->getId(),
                 'user_id' => $this->getId(),
@@ -2364,6 +2372,7 @@ class User implements UserInterface, \Serializable {
                 'device_type' => $device_type,
                 'default_user' => $this->user_marker ? $this->user_marker->getDefaultUser() : false,
                 'status' => $this->status ? $this->status : 0,
+                'user_status' => $user_status,
                 'measurement_json' => $measurement_json,
             );
         } else {
@@ -2422,9 +2431,17 @@ class User implements UserInterface, \Serializable {
             $bottom_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
             $bottom_exclusion_px = $bottom_exclusion_ratio * $device_config['actual_bottom_prod_empty_area']; 
             $this->measurement->bottom_placement = $this->measurement->bottom_placement - $bottom_exclusion_px;
-            
+
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
+
+            /*Set user status for IOSv3-435*/
+            $status = $this->status;
+            $user_status = $this->status;
+            if($status === null){
+                $user_status = 1;
+            }
+
             return array(
                 'id' => $this->getId(),
                 'user_id' => $this->getId(),
@@ -2498,6 +2515,7 @@ class User implements UserInterface, \Serializable {
                 'device_type' => $device_type,
                 'default_user' => $this->user_marker ? $this->user_marker->getDefaultUser() : false,
                 'status' => $this->status ? $this->status : 0,
+                'user_status' => $user_status,
                 'measurement_json' => $measurement_json,
             );
         } else {
