@@ -1368,6 +1368,8 @@ class WebServiceHelper
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
+                $temp['disabled'] = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $temp['deleted'] = $saveLookItem->getItems()->getProduct()->getDeleted();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
                 array_push($items, $temp);
