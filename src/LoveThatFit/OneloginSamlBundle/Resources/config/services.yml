@@ -1,0 +1,27 @@
+parameters:
+
+services:
+    onelogin_auth:
+        class: OneLogin_Saml2_Auth
+        arguments: [ "%onelogin_saml.settings%"]
+
+    onelogin_saml.user_provider:
+        class: LoveThatFit\OneloginSamlBundle\Security\User\SamlUserProvider
+
+    onelogin_saml.saml_provider:
+        class: LoveThatFit\OneloginSamlBundle\Security\Authentication\Provider\SamlProvider
+        arguments: [""]
+
+    onelogin_saml.saml_token_factory:
+        class: LoveThatFit\OneloginSamlBundle\Security\Authentication\Token\SamlTokenFactory
+
+    onelogin_saml.saml_listener:
+        class: LoveThatFit\OneloginSamlBundle\Security\Firewall\SamlListener
+        parent: security.authentication.listener.abstract
+        abstract: true
+        calls:
+            - [setOneLoginAuth, ["@onelogin_auth"]]
+    onelogin_saml.saml_logout:
+        class: LoveThatFit\OneloginSamlBundle\Security\Logout\SamlLogoutHandler
+        arguments:
+            - "@onelogin_auth"
