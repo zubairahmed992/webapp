@@ -1675,7 +1675,7 @@ class ProductRepository extends EntityRepository
                 join `product_size` s on s.id=pit.product_size_id
                 join `clothing_type` ct on ct.id=p.clothing_type_id
                 JOIN product_color pc ON p.id = pc.product_id
-                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id';
+                LEFT JOIN ltf_retailer pretail ON p.retailer_id = pretail.id';
         $conn = $this->getEntityManager()->getConnection();
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -1828,7 +1828,7 @@ class ProductRepository extends EntityRepository
 
                 JOIN brand b on b.id = p.brand_id
                 JOIN clothing_type ct on ct.id=p.clothing_type_id
-                JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
+                LEFT JOIN ltf_retailer pretail ON p.retailer_id = pretail.id
                 JOIN product_color pc ON p.id = pc.product_id
                 LEFT JOIN category_products cp ON cp.product_id = p.id
                 LEFT JOIN categories c on c.id = cp.categories_id
@@ -1929,6 +1929,18 @@ class ProductRepository extends EntityRepository
             ->groupBy('p.id')
             ->getQuery()
             ->getResult();
+    }
+
+    public function getProductIdName()
+    {
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('p.id, p.name')
+            ->from('LoveThatFitAdminBundle:Product', 'p');
+        try {
+          return $query->getQuery()->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
     }
 
 }

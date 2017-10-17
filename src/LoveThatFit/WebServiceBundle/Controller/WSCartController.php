@@ -202,6 +202,16 @@ class WSCartController extends Controller
         if ($user) {
             $item_id = $decoded["item_id"];
             $qty = $decoded["quantity"];
+            $requested_screen = $decoded["display_screen"];
+
+            /* IOSV3-252 - From the Product Detail page, if product item already exist then quantity not change  */
+            if($requested_screen == "detail_page"){
+                $product_item = $this->container->get('admin.helper.productitem')->find($item_id);
+                $find_item_against_user = $this->container->get('cart.helper.cart')->findCartByUserId($user, $product_item);
+                if(!empty($find_item_against_user["qty"])){
+                    $qty = $find_item_against_user["qty"];
+                }
+            }
 
             /*Remove Item from wishlist */
             $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
@@ -386,6 +396,7 @@ class WSCartController extends Controller
             {
                 $fnfGroupId = $fnfUser['group_id'];
                 $decoded['groupId'] = $fnfGroupId;
+                $decoded['discount'] = $fnfUser['discount'];
             }
 
              $result = $this->get('cart.helper.payment')->webServiceBrainTreeProcessUserTransaction($user, $decoded);
@@ -429,6 +440,7 @@ class WSCartController extends Controller
             {
                 $fnfGroupId = $fnfUser['group_id'];
                 $decoded['groupId'] = $fnfGroupId;
+                $decoded['discount'] = $fnfUser['discount'];
             }
 
             if(!empty($decoded['items'])) {
@@ -520,7 +532,8 @@ class WSCartController extends Controller
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
             'total_amount'  => $totalAmount,
-            'discount'  => $discount,
+            'discount'  => ($discount > 0 ? "-$".$discount : 0),
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$decode['discount']."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -583,7 +596,8 @@ class WSCartController extends Controller
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
             'total_amount'  => $totalAmount,
-            'discount'  => $discount,
+            'discount'  => ($discount > 0 ? "-$".$discount : 0),
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$decode['discount']."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -946,7 +960,6 @@ class WSCartController extends Controller
     public function nwsBraintreeUpdateCreditCardAction()
     {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-        var_dump($decoded);
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
 
         if ($user) {

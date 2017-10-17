@@ -17,6 +17,7 @@ use Braintree_ClientToken;
 use Braintree_Transaction;
 use Braintree_Customer;
 use Braintree_PaymentMethod;
+use Braintree_PaymentMethodNonce;
 
 class PaymentHelper
 {
@@ -199,7 +200,7 @@ class PaymentHelper
 
         $billing = $decoded["billing"];
         $saleObject = array(
-            "amount" => $decoded['total_amount'],
+            "amount" => round($decoded['total_amount'],2),
             "taxAmount" => $sales_tax,
             "paymentMethodNonce" => $decoded['payment_method_nonce'],
             'billing' => [
@@ -524,6 +525,14 @@ class PaymentHelper
             );
 
             foreach ( $creditCrads as $card){
+                try{
+                    $result = Braintree_PaymentMethodNonce::create($card->token);
+                    $payment_method_nonce =  $result->paymentMethodNonce->nonce;
+                }catch (\Braintree_Exception_NotFound $exception){
+                    $payment_method_nonce = "";
+                }
+
+
                 $customerCards['cards'][] = array(
                     'maskedNumber' => $card->maskedNumber,
                     'token'     => $card->token,
@@ -535,7 +544,8 @@ class PaymentHelper
                     'uniqueNumberIdentifier' => $card->uniqueNumberIdentifier,
                     'imageUrl'      => $card->imageUrl,
                     'bin'           => $card->bin,
-                    'last4'         => $card->last4
+                    'last4'         => $card->last4,
+                    'payment_method_nonce' => $payment_method_nonce
                 );
             }
 

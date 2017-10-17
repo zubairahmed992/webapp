@@ -84,12 +84,14 @@ class WebServiceHelper
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
+                $userLogs = $this->container->get('userlog.helper.userlog')->findUserIsLoginBefore($user, $request_array);
                 $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                    $response_array['user']['isNewUser'] = (empty($userLogs)) ? 1 : 0;
                     $response_array['user']['image_path'] = "/render/image/";
                     $response_array['user']['avatar_path'] = "/render/avatar/";
                     $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
@@ -1633,7 +1635,7 @@ class WebServiceHelper
        
         $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
 
-        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/admin/archive/image_update";
+        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/mcp/save_marker_image";
 
         $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
 
@@ -1748,7 +1750,7 @@ class WebServiceHelper
         //$decoded = $this->processRequest($this->getRequest());
         $user    = array_key_exists('auth_token', $decoded) ? $this->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
-            if(isset($decoded['shipment_address']) && !empty($decoded['shipment_address'])) {
+            if(isset($decoded['billing_address']) && !empty($decoded['billing_address'])) {
                 //user cart items
                 $amount = 0;
                 $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
@@ -1771,17 +1773,17 @@ class WebServiceHelper
                 //$from_zip = $parse["stamps_com_dev"]["fromzipcode"];
                 //$from_state = $parse["stamps_com_dev"]["fromstate"];
                 //$shippment = $parse["stamps_com_dev"]["shippment"];
-                $from_country = 'US';
-                $from_zip = '07001';
-                $from_state = 'NJ';
+                //$from_country = 'US';
+                //$from_zip = '53202';
+                //$from_state = 'WI';
                 $shippment = 0;
                 $data_order_sales = array(
-                    'from_country' => ($from_country) ? $from_country : '',
-                    'from_zip' => ($from_zip) ? $from_zip : '',
-                    'from_state' => ($from_state) ? $from_state : '',
-                    'to_country' => ($decoded['shipment_address']['to_country']) ? $decoded['shipment_address']['to_country'] : '',
-                    'to_zip' => ($decoded['shipment_address']['to_zip']) ? $decoded['shipment_address']['to_zip'] : '',
-                    'to_state' => ($decoded['shipment_address']['to_state']) ? $decoded['shipment_address']['to_state'] : '',
+                    //'from_country' => ($from_country) ? $from_country : '',
+                    //'from_zip' => ($from_zip) ? $from_zip : '',
+                    //'from_state' => ($from_state) ? $from_state : '',
+                    'to_country' => ($decoded['billing_address']['to_country']) ? $decoded['billing_address']['to_country'] : '',
+                    'to_zip' => ($decoded['billing_address']['to_zip']) ? $decoded['billing_address']['to_zip'] : '',
+                    'to_state' => ($decoded['billing_address']['to_state']) ? $decoded['billing_address']['to_state'] : '',
                     'amount' => ($amount) ? $amount : 0,
                     'shipping' => $shippment,
                     'order_line_items' => $order_line_items
@@ -1790,7 +1792,7 @@ class WebServiceHelper
                 if(is_float($order_sales_tax) || is_numeric($order_sales_tax)) {
                     $order_sales_tax = $order_sales_tax;
                 } else {
-                    $taxjar_error_messages = array(400 => 'Bad Request – Your request format is bad.', 
+                    $taxjar_error_messages = array(400 => 'Please enter a valid zip code.', 
                                         401 => 'Unauthorized – Your API key is wrong.', 
                                         403 => 'Forbidden – The resource requested is not authorized for use.',
                                         404 => 'Not Found – The specified resource could not be found.',

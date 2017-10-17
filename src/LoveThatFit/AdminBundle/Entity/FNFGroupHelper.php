@@ -58,6 +58,12 @@ class FNFGroupHelper
         return $this->repo->findBy(array('isArchive' => 0));
     }
 
+
+    public function getExistingFnfGroups($groupName)
+    {
+        return $this->repo->findBy(array('isArchive' => 0,'groupTitle' => $groupName));
+    }
+
     public function addNewGroup( $groupData = array())
     {
         if(!empty( $groupData )){
@@ -86,9 +92,29 @@ class FNFGroupHelper
         return $this->repo->findOneBy( array( 'id' => $id ));
     }
 
+    public function find($id)
+    {
+        return $this->repo->findOneBy(array('isArchive' => 0,'id' => $id));
+    }
+
+
+    public function checkFnfUserToUniqueGroup( $ids ,$group_type)
+    {
+        return $this->repo->checkFnfUserToUniqueGroup($ids,$group_type);
+    }
     public function countAllFNFGroupRecord( $group_type = 1)
     {
         return $this->repo->countAllFNFGroupRecord( $group_type );
+    }
+
+    public function checkFnfUserUpdate( $userids )
+    {
+        return $this->repo->checkFnfUserUpdate( $userids );
+    }
+
+    public function countAllFNFGroupCountRecord( $group_type = 1)
+    {
+        return $this->repo->countAllFNFGroupCountRecord( $group_type );
     }
 
     public function searchFNFGroup( $data )
@@ -132,21 +158,76 @@ class FNFGroupHelper
 
     public function getGroupDataById( $groupId )
     {
+
         $data = $this->repo->getGroupDataById( $groupId );
+       
         $returnArray = array();
+        $temp = array();
 
-        foreach ($data as $row){
-            $returnArray['discount']            = $row['discount'];
-            $returnArray['min_amount']          = $row['min_amount'];
-            $returnArray['start_at']            = $row['startAt'];
-            $returnArray['end_at']              = $row['endAt'];
-            $temp['id']                         = $row['id'];
-            $temp['email']                      = $row['email'];
-            $returnArray['group_type']          = $row['group_type'];
-            $returnArray['users'][]             = $temp;
-        }
+        if(count($data) > 0){
 
+            foreach ($data as $row){
+                $returnArray['discount']            = $row['discount'];
+                $returnArray['min_amount']          = $row['min_amount'];
+                $returnArray['start_at']            = $row['startAt'];
+                $returnArray['end_at']              = $row['endAt'];
+                $temp['id']                         = $row['id'];
+                $temp['email']                      = $row['email'];
+                $returnArray['group_type']          = $row['group_type'];
+                $returnArray['users'][]             = $temp;
+            }
+        }else{
+
+            $groupData = $this->repo->getOnlyGroupDataById( $groupId );
+
+            foreach ($groupData as $row){
+                $returnArray['discount']            = $row['discount'];
+                $returnArray['min_amount']          = $row['min_amount'];
+                $returnArray['start_at']            = $row['startAt'];
+                $returnArray['end_at']              = $row['endAt'];
+                $returnArray['group_type']          = $row['group_type'];
+                $returnArray['users'][]             = "";
+            } 
+
+        }    
+        
         return $returnArray;
+    }
+
+
+    public function UpdateExistingGroup( $groupData = array(),$gorupid)
+    {
+        if(!empty( $groupData )){
+            $groupEntity = $this->find($gorupid);
+            if($groupData['group_type'] == 2){
+                $groupEntity->setDiscount($groupData['discount']);
+                $groupEntity->setGroupTitle($groupData['groupTitle']);
+                $groupEntity->setMinAmount($groupData['min_amount']);
+                $groupEntity->setGroupType($groupData['group_type']);
+            }else{
+
+                $groupEntity->setDiscount($groupData['discount']);
+                $groupEntity->setGroupTitle($groupData['groupTitle']);
+                $groupEntity->setMinAmount($groupData['min_amount']);
+                $groupEntity->setGroupType($groupData['group_type']);
+                $groupEntity->setStartAt( new \DateTime($groupData['start_at']));
+                $groupEntity->setEndAt( new \DateTime($groupData['end_at']));
+            }
+            
+            return $groupEntity;
+        }
+    }
+
+    public function getExixtGroupDataByName( $groupName )
+    {       
+
+        return $this->repo->getExixtGroupDataByName( $groupName );
+    }
+
+     public function getGroupDataByName( $groupName )
+    {       
+
+        return $this->repo->getGroupDataByName( $groupName );
     }
 
     public function getAllGroupUsers(FNFGroup $group)

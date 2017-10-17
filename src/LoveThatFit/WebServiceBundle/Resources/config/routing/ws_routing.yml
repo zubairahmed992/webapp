@@ -81,6 +81,10 @@ ws_user_default_values:
 ws_selfieshare_create:
     pattern:  /ws/selfieshare/create
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreate}
+
+ws_selfieshare_create_v3:
+    pattern:  /ws/selfieshare/create_v3
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateV3}
     
 #------------------------------------------------------------------------------------
 
@@ -392,3 +396,11 @@ mcp_save_marker:
 nws_get_order_sales_tax_user:
    pattern: /nws/get_order_sales_tax_user
    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:getOrderSalesTaxUser}
+
+mcp_save_marker_image:
+    pattern: /mcp/save_marker_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:archiveImageUpdateMcp}
+   
+mcp_get_user_mask_marker_details:
+    pattern: /mcp/mcp_pending_users_reverted_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:pendingUsersRevertedImage} 

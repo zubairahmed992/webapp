@@ -22,3 +22,4 @@ ProductDescription   = '<button class="btn btn-cyan btn-xs description" data-act
 ProductWeight     = '<button class="btn btn-cyan btn-xs productweight" data-action="ProductWeight" title="Product Weight"><i class="icon-pweight"></i></button>';
 ProductStatus   = '<button class="btn btn-cyan btn-xs productstatus" data-action="product_status" title="Product Status"><i class="icon-pstatus"></i></button>';
 EditEmail   = '<button class="btn btn-cyan btn-xs editEmail" data-action="edit_email" title="Edit Email"><i class="icon-envelope"></i></button>';
+EditAccountType   = '<button class="btn btn-cyan btn-xs editEmail" data-action="edit_account_type" title="Edit Account Type"><i class="icon-user"></i></button>';

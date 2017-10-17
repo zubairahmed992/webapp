@@ -35,9 +35,9 @@ class TaxJarApiHelper
             try {
               //Calculate sales tax for an order
               $order_taxes_taxjar = $this->client->taxForOrder([
-                'from_country' => $data['from_country'],
-                'from_zip' => $data['from_zip'],
-                'from_state' => $data['from_state'],
+                //'from_country' => $data['from_country'],
+                //'from_zip' => $data['from_zip'],
+                //'from_state' => $data['from_state'],
                 'to_country' => $data['to_country'],
                 'to_zip' => $data['to_zip'],
                 'to_state' => $data['to_state'],

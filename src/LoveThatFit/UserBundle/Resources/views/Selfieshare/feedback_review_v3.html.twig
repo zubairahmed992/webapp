@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width">
+<title>V3 Selfieshare :: Feedback</title>
+<!-- Bootstrap core CSS -->
+  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/bootstrap.css') }}" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template -->
+  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/signin.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/custom.css') }}" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/jquery-3.2.1.min.js') }}"></script>
+  <script src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/tether.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/bootstrap.js') }}"></script>
+</head>
+<body>
+  <div class="comment_div">
+    <div class="container">
+      <img src="{{ asset(selfieshare.webPath) }}" class="share_pic" />
+    </div> <!-- /container -->
+    <div class="share_screen txt1"></div>
+    <div class="container">
+      <form class="form-share">
+        {% for sf in selfieshare.selfieshare %}
+        <label for="inputEmail" class="">FRIEND</label>
+        <input type="text" class="form-control" readonly="" value="{{sf.name}}" style="border-color: #e0ca89;">
+        <div class="error error_name"></div>
+        <div class="like_share">Love it or leave it? 
+          {% if(sf.favourite is null) %}          
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_down.png') }}" />
+          {% elseif (sf.favourite==1) %}
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_up.png') }}" />
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_down.png') }}" />
+          {% elseif(sf.favourite==0)%}
+          <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/thumbs_up.png') }}" />
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/active_thumbs_down.png') }}" />
+          {%endif%}
+
+        </div>
+        <label for="comment" class="">COMMENT</label>
+        <textarea class="form-control" style="border-color: #e0ca89;" readonly="">{{sf.comments}}</textarea>
+        <div class="error error_comment"></div>
+       {% endfor %}
+      </form>
+    </div>
+  </div>
+ {#<footer>
+    <div class="container">
+         <div class="foot_logo">
+            <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/logo_black_2x.png') }}" />Get the SelfieStyler app! 
+            <a href="#"> Sign up</a>
+        </div> 
+    </div>
+ </footer> #}
+</body>
+</html>
