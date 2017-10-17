@@ -724,6 +724,12 @@ ws_order_detail:
   params:
     auth_token: 56565656566
 
+ws_basic_order_info:
+  pattern: /ws/basic_order_info
+  title:  basic_order_info
+  params:
+    auth_token: 56565656566
+
 nws_save_user_billing_address:
   pattern: /nws/save_user_billing_address
   title: save_user_billing_address
@@ -995,3 +1001,12 @@ mcp_get_user_save:
           svg_path: M480.06119,482.97595c22.25562,…-31.78895+34.92148,-31.78895z
           image_actions: {move_up_down:0,move_left_right:0,img_rotate:0}
           imageData: ""
+
+nws_update_term_conditions:
+    pattern:  /nws/update_term_conditions
+    title: update_term_conditions
+    request_type: post
+    description: Update term and condition in user table
+    params: 
+          term_status: 1
+          email: ovais.rafique@centricsource.com         

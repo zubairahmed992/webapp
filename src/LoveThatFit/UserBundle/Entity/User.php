@@ -520,7 +520,6 @@ class User implements UserInterface, \Serializable {
      */
     private $acct_type;
 
-
     /**
      * Get id
      *
@@ -3027,4 +3026,6 @@ class User implements UserInterface, \Serializable {
     public function getAcctType() {
         return $this->acct_type;
     }
+
+
 }

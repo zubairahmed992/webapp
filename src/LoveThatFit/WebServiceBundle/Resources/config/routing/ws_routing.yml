@@ -312,6 +312,10 @@ ws_order_detail:
    pattern: /ws/order_detail
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:orderDetail}
 
+ws_basic_order_info:
+   pattern: /ws/basic_order_info
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:basicOrderInfo}
+
 nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
@@ -419,4 +423,12 @@ mcp_approve_complete:
 
 mcp_get_user_save:
     pattern: /mcp/mcp_get_user_save
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}    
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}
+
+ws_email_order_detail_show:
+    pattern:  /ws/order/detail/{order_number}/show
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showEmailDetail}
+
+nws_update_term_conditions:
+    pattern: /nws/update_term_conditions
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdateTermConditions}
