@@ -72,7 +72,7 @@
     <a onClick="zoom_in();">Zoom In</a>
     <a onClick="zoom_out();">Zoom Out</a>
     <a id="end"  onClick="save();">Save</a>
-    <a href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
+    <a class="reset_mask" href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
     <span id="activate_btn">
         <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
     <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
@@ -183,6 +183,46 @@
 
         <div style="margin-bottom: 10px;clear:both;"></div>
         <style>
+.ui-tooltip {
+    text-align: center;
+    padding: 0;
+    margin:0;
+     background:#000 !important;
+     font-size:11px;
+    border:none !important;
+    box-shadow:none;
+   
+}
+.ui-tooltip-content {
+    position: relative;
+    background:#000 !important;
+    color:#ffffff;
+    padding:2px;
+     -webkit-border-radius:8px;
+     -moz-border-radius:8px;
+     border-radius:8px;
+     border:1px solid #000000;
+     font-size:11px;
+}
+.ui-tooltip-content::after, .ui-tooltip-content::before {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    display: block;
+    left: 70px;
+    
+}
+.bottom .ui-tooltip-content::before {
+    bottom: -18px;
+    border-color: #000000 transparent;
+    border-width: 10px 10px 0;
+}
+.bottom .ui-tooltip-content::after {
+    bottom: -7px;
+    border-color: #000 transparent;
+    border-width: 10px 10px 0;
+}
+
             ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
             .archives span{ padding:0 !important; margin:0 !important;}
             .oprangsldr{ width: 100px;display:inline-block; height:2px !important; background:#666666!important; margin-top:25px; }
@@ -247,7 +287,7 @@
                       <input type="hidden" value="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}">
                         {#<a href="" title="Adjust Mass Marker">#}
                         {% set filename = retouch_filename ~ '_' ~ retouch_count %}
-                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}"  data-time="{{ retouch_file_time[filename] }}" />
+                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}" data-toggle="tooltip"   title="{{ retouch_file_time[filename] }}" />
 {#                        </a>#}
                     </li>
                 {% endfor %}
@@ -303,8 +343,9 @@
 <div class="txt_center canv_hldr_2">
     
     <div style="text-align:left;text-align: left;display: flex;">
+       <button type="button" id="editOriginal" class="black_btn tools" style="display:none;">Edit Original</button>
         <button type="button" id="compare" class="black_btn tools" style="display:none;">Compare</button>
-        <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle</button>
+        <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle Image</button>
       <div id="opSlider" class="oprangsldr tools" ></div>
       
      </div>
@@ -399,16 +440,47 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
+    //archive show date and time on Mouseover
+     $('[data-toggle="tooltip"]').tooltip({
+         position: {
+        my: "center bottom",
+        at: "center top-10",
+        collision: "flip",
+        using: function( position, feedback ) {
+            $( this ).addClass( feedback.vertical )
+                .css( position );
+        }
+    }
+     }); 
+   {# $("#retouchImages li img").each(function(){
+        $(this).on('mosueover',function(){
+            var retouchDateTime = $(this).attr("data-time").val();
+                alert(retouchDateTime);
+        });
+    });#}
     
+    
+    //archive toggle function trigger on click of selector
         $('#toggleimg').click(function(){
              toggleimg();
              $("#opSlider, .nav_menu").toggle();
-             //#retouchImages
-             
         });
-    
-       
-    
+   //archive show original images and hide some selectors  
+  $("#editOriginal").on('click',function(){
+       showOriginal();
+       $(".nav_menu, #end, #btn_confirm, .reset_mask").show();
+        //$("#end, #btn_confirm, .reset_mask").show();
+        $("#toggleimg, #opSlider, #editOriginal, #compare").hide();
+      
+        $("#compare").text("Compare").removeClass("yes_compare");
+        $("#retouchImages li").each(function(){
+           if($(this).hasClass('active')){ 
+               $(this).removeClass('active');
+               $(this).addClass('notActive');
+           }
+       });
+    });      
+    //archive hide compare button and  and some elements with tool class
     $("#compare").hide();
     $(".tools").hide();
     $("#compare").on('click',function(){
@@ -416,7 +488,8 @@ $(document).ready(function(){
         $(".nav_menu").hide();
         init_compare();
     });
-    
+  //archive end
+  
     $("#comment_btn").click(function(){
         var $mem_email = $("#entity_email").val();
         var $member_comments = $("#rej_comments").val();
@@ -467,12 +540,12 @@ $(document).ready(function(){
  $("#showHide").click(function() { 
         return (this.tog = !this.tog) ? show_index_numbers() :  remove_index_numbers();
     });
- 
+
 var baseUrl = window.location.origin;
 var imgUrl;
 var $activeImg = $("#archive_active_img_url");
- if($activeImg.val() !=""){
-     $("#compare").show();
+ if($activeImg.val() != ""){
+     $("#compare, #editOriginal").show();
     var actUrl = baseUrl+$activeImg.val();
         showImag(actUrl);
          $(".nav_menu").hide();
@@ -482,10 +555,38 @@ var $activeImg = $("#archive_active_img_url");
     top: -34,
     left: -5
 }).html('1').hide();
+$("#end, #btn_confirm").show();
+
+$("#compare").click(function(){
+    $("#compare").toggleClass("yes_compare");
+        if($(this).hasClass("yes_compare")){
+            $(this).html("Exit Compare");
+            $("#end, #btn_confirm, .reset_mask").hide();
+            $("#toggleimg, #opSlider").show();
+        }else{
+            $(this).html("Compare");
+            $("#end, #btn_confirm, .reset_mask").show();
+            $("#toggleimg, #opSlider").hide();
+            changeOpacity(opacity=1);
+            $("#opSlider").slider('value', $("#opSlider").slider('value') + 1);
+            $("#tooltip").html(1);
+        }
+  
+ {#  if($(this).haseClass("compare")){
+       $(this).html("Exit Compare");
+       $("#end, #btn_confirm").hide();
+   }else{
+       $(this).html("Compare");
+       $("#end, #btn_confirm").show(); 
+   }
+   #}
+ //
+// 
+});
 
 $("#retouchImages li img").each(function(){
        $(this).click(function(){
-                $("#compare").show();
+                $("#compare, #editOriginal").show();
                 zoom_out();
                 $("#retouchImages li").removeClass("active");
                 retuch_url = $(this).parent().find('input').attr("value");

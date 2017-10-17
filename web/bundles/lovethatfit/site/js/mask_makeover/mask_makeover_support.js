@@ -38,7 +38,8 @@ $(document).ready(function() {
     });
     h_indi.visible = false;
   
-  
+   
+    
     pathLine =  new Path({
         segments:[[480, 0], [480, 1280]],
         strokeColor:'red',
@@ -47,43 +48,41 @@ $(document).ready(function() {
     });
    pathLine.visible = false;
   
-        
+   
    lyr_misc = new Layer();
    lyr_misc.activate();
    
-    
-//   
-//   console.log("lyr_area_hldr: "+lyr_area_hldr.position);
-//   console.log("lyr_stage_coor: "+lyr_stage_coor.position);
-//   console.log("canvas_area_hldr: "+canvas_area_hldr.position);
-//   console.log("canv_ref_rect: "+canv_ref_rect.position);  
-//   
-//   
-//console.log(paper.setup.raster); 
+ 
+//archives: on this layer we saved retouch image
 retuch_img = new Layer();
+
 });
 
-
+// archives show image function
 var retuchImage;
 function showImag(retouch_image){
-        retuch_img.activate();
+   
+    retuch_img.activate();
         retuch_img.removeChildren(); 
         var show_img = new Raster(retouch_image);
         show_img.on('load', function() {
-        this.position = user_image.position;
-        this.rotate(image_actions_count.img_rotate);
         this.opacity=1;
-        //preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+        user_image.position = new Point(480,640);
+        preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
         user_image.visible = false;
         });
        return retuchImage = show_img;
         view.update();
 }
+
+//Archives user image compare function
 function init_compare(){
     user_image.visible = true;
-    retuch_img.blendMode = "multiply";
+    //retuch_img.blendMode = "multiply";
     view.update();
 }
+
+//Change opacity on canvas using archive feature
 function changeOpacity(opacity){
     if(opacity !== null){
         retuchImage.opacity = opacity;
@@ -94,10 +93,11 @@ function changeOpacity(opacity){
     view.update();
 }
 
+//Archives Toggle image on canvas
 var flg =0;
 function toggleimg(){
    if(flg==0){
-       retuchImage.visible=false;
+       retuchImage.opacity=0;
        $("#retouchImages li").each(function(){
            if($(this).hasClass('active')){ 
                $(this).removeClass('active');
@@ -107,7 +107,7 @@ function toggleimg(){
       
         flg=1;
     }else{
-        retuchImage.visible=true;
+        retuchImage.opacity=1;
         flg=0;
         if($(this).hasClass('notActive')){ 
                $(this).removeClass('active');
@@ -116,10 +116,15 @@ function toggleimg(){
         
         
     }
-   // return user_image;
    view.update();
 }
 
+// arvhies images hide retouch image and show  user image
+function showOriginal(){
+     retuchImage.visible=false;
+      user_image.visible = true;
+     view.update();
+}
 
 var toe_shape_px=42;
 var maskConfig = {
@@ -505,9 +510,9 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
 }
 
 function preset_user_img(userImage, move_up_down, move_left_right, img_rotate) {
-//    userImage.position.y = user_image.position.y += move_up_down;
-//    userImage.position.x = user_image.position.x += move_left_right;
-//    userImage.rotate(img_rotate); // -0.1 for left, 0.1 for right
+    userImage.position.y = user_image.position.y += move_up_down;
+    userImage.position.x = user_image.position.x += move_left_right;
+    userImage.rotate(img_rotate); // -0.1 for left, 0.1 for right
 }
 
 function load_user_masks(){
