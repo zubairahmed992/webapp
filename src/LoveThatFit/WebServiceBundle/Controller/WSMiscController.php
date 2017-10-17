@@ -313,7 +313,7 @@ class WSMiscController extends Controller {
         $results_marketingtiles=array();
 
         $results_marketingtiles = $this->get('admin.helper.marketingtiles')->findMarketingTiles();
-        
+
         if(isset($results_marketingtiles) && !empty($results_marketingtiles)) {
             foreach ($results_marketingtiles as $key_marketingtiles => $value_marketingtiles) {
                 $results_marketingtiles[$key_marketingtiles]['image'] = $decoded_path["base_path"].'uploads/ltf/marketing_tiles/iphone/'.$value_marketingtiles['image'];
@@ -329,7 +329,12 @@ class WSMiscController extends Controller {
     #----------------------- calibration save marker ------------------------------------------
     public function mcpSaveMarkerAction(Request $request) {
         $params = $request->request->all();
-        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
+        
+         $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+
+        if($params['success_token']==$mcp_auth_token) {
+         
         $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
         $this->get('user.helper.userarchives')->mcpSaveArchives($archive, $params);
             return new Response(json_encode('archive updated'));
@@ -341,7 +346,10 @@ class WSMiscController extends Controller {
 
     public function archiveImageUpdateMcpAction(Request $request) {
         $params = $request->request->all();
-        if($params['success_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&'){   
+         $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+
+        if($params['success_token']==$mcp_auth_token) {
             $archive = $this->get('user.helper.userarchives')->find($params['archive_id']);
             $image_actions = json_decode($archive->getImageActions());
             $device_type = $image_actions->device_type;

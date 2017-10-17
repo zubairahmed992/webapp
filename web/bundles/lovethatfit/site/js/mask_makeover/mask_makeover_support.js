@@ -1,6 +1,7 @@
 window.devicePixelRatio = 1;
 paper.install(window);
 var dom_event_interaction_s1;
+
 $(document).ready(function() {
     paper.setup('canv_mask_makeover');
     
@@ -22,7 +23,7 @@ $(document).ready(function() {
    lyr_area_hldr = new Layer();
    lyr_area_hldr.activate();
    
-
+   
    
    init();
    load_user_masks();
@@ -50,13 +51,55 @@ $(document).ready(function() {
    lyr_misc = new Layer();
    lyr_misc.activate();
    
- 
+ retuch_img = new Layer();
    
    console.log("lyr_area_hldr: "+lyr_area_hldr.position);
    console.log("lyr_stage_coor: "+lyr_stage_coor.position);
    console.log("canvas_area_hldr: "+canvas_area_hldr.position);
    console.log("canv_ref_rect: "+canv_ref_rect.position);  
+   
+   
+console.log(paper.setup.raster);   
 });
+
+
+var retuchImage;    
+function showImag(retouch_image){
+       retuch_img.activate();
+        retuch_img.removeChildren(); 
+        show_img = new Raster(retouch_image);
+        show_img.on('load', function() {
+        this.position = new Point(480,640);
+        preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+        });
+       return retuchImage = show_img;
+        view.update();
+}
+
+function changeOpacity(opacity){
+    if(opacity != null){
+        retuchImage.opacity = opacity;
+    }else{
+        opacity=1;
+      retuchImage.opacity = opacity;   
+    }
+    view.update();
+}
+
+var flg =0;
+function toggleimg(){
+   if(flg==0){
+       retuchImage.visible=false;
+        flg=1;
+    }else{
+        retuchImage.visible=true;
+        flg=0;
+    }
+   // return user_image;
+     view.update();
+}
+
+
 var toe_shape_px=42;
 var maskConfig = {
     dv_scr_h: 1280,
@@ -326,8 +369,11 @@ function canvas_area_hldr(){
     
     canvas_area_hldr.style = {
         fillColor: '#eeeeee',
-        opacity: 0.1
+        opacity: 0.1,
+        
     };
+   // canvas_area_hldr.visible=false;
+    
     
     canvas_area_hldr.pivot = new Point(480,640);
     canvas_area_hldr.position = new Point(480,640);
@@ -345,6 +391,7 @@ function canvas_ref_rect(){
         fillColor: 'red',
         opacity: 0.1
     };
+     //canv_ref_rect.visible=false;
     canv_ref_rect.pivot = new Point(480,640);
     canv_ref_rect.position = new Point(480,640);
 }
@@ -434,6 +481,12 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
     user_image.position.y = user_image.position.y += move_up_down;
     user_image.position.x = user_image.position.x += move_left_right;
     user_image.rotate(img_rotate); // -0.1 for left, 0.1 for right
+}
+
+function preset_user_img(userImage,move_up_down, move_left_right, img_rotate) {
+    userImage.position.y = user_image.position.y += move_up_down;
+    userImage.position.x = user_image.position.x += move_left_right;
+    userImage.rotate(img_rotate); // -0.1 for left, 0.1 for right
 }
 
 function load_user_masks(){
@@ -564,9 +617,11 @@ function set_out_update(){
 function move_left(){
     if(current_status.zoom){
         user_image.position.x -= 0.5;
+        show_img.position.x -= 0.5;
         image_actions_count.move_left_right -= 0.5;
     }else{
         user_image.position.x -= 1;
+        show_img.position.x -= 1;
         image_actions_count.move_left_right -= 1;
     }
     set_out_update();
@@ -574,9 +629,11 @@ function move_left(){
 function move_right(){
     if(current_status.zoom){
         user_image.position.x += 0.5;
+        show_img.position.x += 0.5;
         image_actions_count.move_left_right += 0.5;
     }else{
         user_image.position.x += 1;
+        show_img.position.x += 1;
         image_actions_count.move_left_right += 1;
     }
     set_out_update();
@@ -584,9 +641,11 @@ function move_right(){
 function move_up(){
     if(current_status.zoom){
         user_image.position.y -= 0.5;
+        show_img.position.y -= 0.5;
         image_actions_count.move_up_down -= 0.5;
     }else{
         user_image.position.y -= 1;
+        show_img.position.y -= 1;
         image_actions_count.move_up_down -= 1;
     }
     set_out_update();
@@ -594,9 +653,11 @@ function move_up(){
 function move_down(){
     if(current_status.zoom){
         user_image.position.y += 0.5;
+        show_img.position.y += 0.5;
         image_actions_count.move_up_down += 0.5;
     }else{
         user_image.position.y += 1;
+        show_img.position.y += 1;
         image_actions_count.move_up_down += 1;
     }
     set_out_update();
@@ -604,9 +665,11 @@ function move_down(){
 function rotate_left(){
     if(current_status.zoom){
         user_image.rotate(-0.05);
+        show_img.rotate(-0.05);
         image_actions_count.img_rotate += -0.05;
     }else{
         user_image.rotate(-0.1);
+        show_img.rotate(-0.1);
         image_actions_count.img_rotate += -0.1;
     }
     set_out_update();
@@ -614,9 +677,11 @@ function rotate_left(){
 function rotate_right(){
     if(current_status.zoom){
         user_image.rotate(0.05);
+        show_img.rotate(0.05);
         image_actions_count.img_rotate += 0.05;
     }else{
         user_image.rotate(0.1);
+        show_img.rotate(0.1);
         image_actions_count.img_rotate += 0.1;
     }
     set_out_update();
@@ -836,7 +901,14 @@ function upload(){
     }else{
         $("#hip_height").attr("value", bottom_right);
     }
-    
+
+    var selected_retouch_img_path = $("#retouchImages li.active img").attr('src');
+    var selected_retouch_img_filename = null;
+    if(selected_retouch_img_path != undefined){
+        var selected_retouch_img_filename_index = selected_retouch_img_path.lastIndexOf('/');
+        selected_retouch_img_filename = selected_retouch_img_path.substring(selected_retouch_img_filename_index  + 1)
+    }
+
     var $url=$('#marker_update_url').attr('value');
     var value_ar = {
         archive_id:$('#hdn_archive_id').attr('value'),
@@ -853,7 +925,8 @@ function upload(){
         shoulder_height: ($("#shoulder_height").attr("value") * 1.0421875) / 2,
         hip_height: ($("#hip_height").attr("value") * 1.0421875) / 2,
         svg_path:$('#img_path_paper').attr('value'),
-        image_actions:$('#image_actions').attr('value')};
+        image_actions:$('#image_actions').attr('value'),
+        retouch_image:selected_retouch_img_filename};
     
     $.ajax({
         type: "POST",

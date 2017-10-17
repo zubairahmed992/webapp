@@ -117,6 +117,17 @@ class WSProductController extends Controller {
         $res = $this->get('webservice.helper')->response_array(true, 'list of brand & retailers', true, $brand_retailer);                    
         return new Response($res);
     }
+
+    #------------------------------------------------------------------------
+    public function brandAndDeviceAction() {
+        $decoded['base_path'] = $this->getRequest();
+        #return new Response(json_encode($decoded) );
+        $brand_retailer = $this->get('admin.helper.brand')->getBrandAndDevice();
+        $brand_retailer['device_config'] = $this->get('admin.helper.device_support')->getDeviceConfig();
+        $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+        $res = $this->get('webservice.helper')->response_array(true, 'list of brand & retailers', true, $brand_retailer);
+        return new Response($res);
+    }
     #----------------------------------------------------
     public function productDetailAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());

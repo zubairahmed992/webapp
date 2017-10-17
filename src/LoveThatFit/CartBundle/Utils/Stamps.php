@@ -169,7 +169,8 @@ class Stamps
                 'Urbanization' => '',
                 'PhoneNumber' => $shippingAddress->getPhone(),
                 'Extension' => '',
-                'CleanseHash' => (isset($shipping_data->CleanseHash) ? $shipping_data->CleanseHash : "")
+                'CleanseHash' => (isset($shipping_data->CleanseHash) ? $shipping_data->CleanseHash : ""),
+                'OverrideHash' => (isset($shipping_data->OverrideHash) ? $shipping_data->OverrideHash : "")
             ),
         );
 
@@ -222,7 +223,7 @@ class Stamps
                 'Rate' => array(
                     'FromZIPCode'   => $this->fromZipCode,
                     'ToZIPCode'     => $postData['tozipcode'],
-                    /*'ServiceType'   => $this->serviceType,*/
+                    'ServiceType'   => $this->serviceType,
                     'DeliverDays'   => $this->deliverDays,
                     'WeightOz'      => $weightInOz,
                     'PackageType'   => $this->packageType,
@@ -234,7 +235,8 @@ class Stamps
             $rates = $responseRates->Rates->Rate;
 
             if(is_object($rates)){
-                $temp['amount'] = $rates->Amount;
+                $temp['shipping_rate_amount'] = $rates->Amount; //new variable here
+                $temp['amount'] = 0; //reset to zero
                 $temp['deliverDays'] = (isset($rates->DeliverDays)) ? $rates->DeliverDays : "";;
                 $temp['shipDate'] = $rates->ShipDate;
                 $temp['deliveryDate'] = (isset($rates->DeliveryDate)) ? $rates->DeliveryDate : "";;
@@ -249,8 +251,8 @@ class Stamps
                 array_push( $returnResponse, $temp);
             }else if(is_array($rates)){
                 foreach ($rates as $rate){
-
-                    $temp['amount'] = $rate->Amount;
+                    $temp['shipping_rate_amount'] = $rate->Amount; //new variable here
+                    $temp['amount'] = 0; //reset to zero
                     $temp['deliverDays'] = (isset($rate->DeliverDays)) ? $rate->DeliverDays : "";
                     $temp['shipDate'] = $rate->ShipDate;
                     $temp['deliveryDate'] = (isset($rate->DeliveryDate)) ? $rate->DeliveryDate : "";
