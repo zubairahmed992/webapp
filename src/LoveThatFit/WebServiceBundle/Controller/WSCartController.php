@@ -381,9 +381,6 @@ class WSCartController extends Controller
             $decoded['rates']['billing_id'] = $decoded['billing_id'];
         if(isset($decoded['shipping_id']))
             $decoded['rates']['shipping_id'] = $decoded['shipping_id'];
-
-        // var_dump( $decoded ); die;
-
         if ($user) {
             $user_cart = $this->get('cart.helper.cart')->getFormattedCart($user);
             if(empty($user_cart)){
@@ -431,9 +428,6 @@ class WSCartController extends Controller
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         $decoded = $this->addItemsToPostArray($user, $decoded);
-
-        // var_dump( $decoded ); die;
-
         if ($user) {
             $fnfUser = $this->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
             if(is_array($fnfUser) && !empty($fnfUser))
@@ -518,6 +512,7 @@ class WSCartController extends Controller
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
         $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
+        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -531,9 +526,9 @@ class WSCartController extends Controller
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
-            'total_amount'  => $totalAmount,
+            'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
             'discount'  => ($discount > 0 ? "-$".$discount : 0),
-            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$decode['discount']."%)" : ""),
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -582,6 +577,7 @@ class WSCartController extends Controller
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
         $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
+        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -595,9 +591,10 @@ class WSCartController extends Controller
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
             'order_amount'  => $orderAmount,
-            'total_amount'  => $totalAmount,
+            //'total_amount'  => $totalAmount,
+            'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
             'discount'  => ($discount > 0 ? "-$".$discount : 0),
-            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$decode['discount']."%)" : ""),
+            'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
             'cardholderName' => $creditCard['cardholderName'],
@@ -668,6 +665,19 @@ class WSCartController extends Controller
         return new Response($res);
     }
 
+    #----------------------------------------------------Order Detail Services -------------------------#
+    public function basicOrderInfoAction( Request $request)
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $orders = $this->get('cart.helper.order')->findBasicOrderListByUserID($user->getId());
+            $res = $this->get('webservice.helper')->response_array(true, null, true,$orders);
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+    }
 
     #---------------------------------------------- User address Services ---------------------------#
 
@@ -974,6 +984,62 @@ class WSCartController extends Controller
         }
 
         return new Response( $res );
+    }
+
+    public function showEmailDetailAction()
+    {
+        $decode = $this->container->get('request')->attributes->get('_route_params');
+        $order_number = $decode['order_number'];
+        #get order data
+        $orders = $this->container->get('cart.helper.order')->findByOrderNo( $order_number );
+        $ordersDetail=$this->container->get('cart.helper.orderDetail')->findByOrderID( $orders["id"] );
+        $itemsArray = array();
+        foreach ($ordersDetail as $detail) {
+            $entity = $this->container->get('admin.helper.productitem')->find($detail['item_id']);
+            $itemsArray[] = array(
+                'pname'      => $entity->getProduct()->getName(),
+                'quantity'   => $detail['qty'],
+                'item_price' => $entity->getPrice(),
+                'price'      => $entity->getPrice() * $detail['qty'],
+                'sku'        => $entity->getProduct()->getControlNumber(),
+                'size'       => $entity->getProductSize()->getTitle(),
+                'color'      => $entity->getProductColor()->getTitle()
+            );
+        }
+        $creditCard   = json_decode($orders['payment_json'])->transaction->_attributes->creditCard;
+        $d_discount   = (isset($orders['discount']) ? $orders['discount'] : 0);
+        $dataArray = array(
+            'purchase_date' => $orders['user_order_date']->format('Y-m-d H:i:s'),
+            'items'         => $itemsArray,
+            'order_numnber' => $orders['order_number'],
+            'card_type'     => $creditCard->cardType,
+            'last_four_number' => $creditCard->last4,
+            'contact_number'   => '262-391-3403',
+            'email'         => $orders['email'],
+            'frist_name'    => $orders['firstName'] . " " . $orders['lastName'],
+            'order_amount'  => $orders['order_amount'],
+            'total_amount'  => number_format((float)$orders['total_amount'], 2, '.', ''),
+            'discount'      => ($orders['discount_amount'] > 0 ? "-$".$orders['discount_amount'] : 0),
+            'discountType' => (isset($orders['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
+            'expirate_date' => $creditCard->expirationMonth. "/". $creditCard->expirationYear,
+            'shipping_first_name' => $orders['shipping_first_name'],
+            'shipping_last_name' => $orders['shipping_last_name'],
+            'shipping_address1' => $orders['shipping_address1'],
+            'shipping_address2' => $orders['shipping_address2'],
+            'shipping_phone' => $orders['shipping_phone'],
+            'shipping_city' => $orders['shipping_city'],
+            'shipping_postcode' => $orders['shipping_postcode'],
+            'shipping_country' => $orders['shipping_country'],
+            'shipping_state' => $orders['shipping_state'],
+            'billing_first_name' => $orders['billing_first_name']. " ". $orders['billing_last_name'],
+            'billing_phone_no'  => $orders['billing_phone'],
+            'billing_address1'  => $orders['billing_address1'],
+            'sales_tax'  => $orders['sales_tax']
+        );
+
+        return $this->render('LoveThatFitWebServiceBundle:Order:user_purchase.html.twig',
+            array('dataArray'   => $dataArray)
+        );
     }
 
 }

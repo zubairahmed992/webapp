@@ -79,6 +79,12 @@ class MarketingTiles
     protected $button_action;
 
     /**
+     * 
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $target_url;
+
+    /**
      * Get id
      *
      * @return integer
@@ -307,6 +313,29 @@ class MarketingTiles
         return $this->button_action;
     }
     
+    /**
+     * Set target_url
+     *
+     * @param string $target_url
+     * @return MarketingTiles
+     */
+    public function setTargetUrl($target_url)
+    {
+        $this->target_url = $target_url;
+
+        return $this;
+    }
+
+    /**
+     * Get target_url
+     *
+     * @return string
+     */
+    public function getTargetUrl()
+    {
+        return $this->target_url;
+    }
+
     //-------------------------------------------------
     //-------------- Image Upload ---------------------
     //-------------------------------------------------

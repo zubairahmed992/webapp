@@ -1111,6 +1111,10 @@ class WebServiceHelper
                 $productlist[$key]['layer_name'] = (int)$selectedlayername;
             }
             /* Selected Layer Name */
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
         return array('product_list' => $productlist, 'page_count' => $page_count);
     }
@@ -1161,6 +1165,10 @@ class WebServiceHelper
                 $productlist[$key]['layer_name'] = (int)$selectedlayername;
             }
             /* Selected Layer Name */
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
 
         return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
@@ -1253,6 +1261,8 @@ class WebServiceHelper
                 'fitting_room_status' => $fitting_room_status,
                 'qty' => $qty,
                 'color_image' => $pi->getProductColor()->getImage(),
+                'disabled' => $product->getDisabled(),
+                'deleted' => $product->getDeleted(),
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -1324,7 +1334,8 @@ class WebServiceHelper
         }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
-
+        $p['disabled'] = $product->getDisabled();
+        $p['deleted'] = $product->getDeleted();
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
@@ -1357,6 +1368,8 @@ class WebServiceHelper
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
+                $temp['disabled'] = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $temp['deleted'] = $saveLookItem->getItems()->getProduct()->getDeleted();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
                 array_push($items, $temp);
@@ -1440,6 +1453,8 @@ class WebServiceHelper
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
+                'disabled' => $product->getDisabled(),
+                'deleted' => $product->getDeleted(),
             );
         }
 
@@ -1476,6 +1491,8 @@ class WebServiceHelper
         }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
+        $p['disabled'] = $product->getDisabled();
+        $p['deleted'] = $product->getDeleted();
         return $p;
     }
 
@@ -1574,8 +1591,10 @@ class WebServiceHelper
     public function userDetailMaskMarker($request_array)
     { 
 
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
 
-        if($request_array['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&')
+        if($request_array['auth_token']==$mcp_auth_token)
         {
             
         $data = array();
@@ -1701,6 +1720,29 @@ class WebServiceHelper
         return $this->response_array(false, 'Member not found');
       }        
     }
+    
+    
+    public function userOriginalImage($request_array)
+    {
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+      
+        if($request_array['mcp_auth_token']==$mcp_auth_token){
+        $data = array();
+        $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
+            if ($user) {
+                $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+                $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
+                return $this->response_array(true, 'member found', true, $data);
+            } else {
+                return $this->response_array(false, 'Member not found');
+            }
+          } else {
+            return $this->response_array(false, 'Member not found');
+          }         
+     }
+     
+     
 
 
     public function getProductListByBrand($search_text, $user_id, $page_no = 1)
