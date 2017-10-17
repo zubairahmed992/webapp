@@ -310,23 +310,23 @@ class PDA1 {
         
         $fp_measurements = array('fit_point' => $fp_specs['fit_point'],
             'label' => $this->getFitPointLabel($fp_specs['fit_point']),
-            'calc_min_body_measurement' => $fp_specs['min_calculated'],
-            'min_body_measurement' => $fp_specs['min_body_measurement'],
-            'ideal_body_size_low' => $fp_specs['ideal_body_size_low'],
-            'fit_model' => $fp_specs['fit_model'],
-            'ideal_body_size_high' => $fp_specs['ideal_body_size_high'],
-            'max_body_measurement' => $fp_specs['max_body_measurement'],            
-            'calc_max_body_measurement' => $fp_specs['max_calculated'],
-            'grade_rule' => $fp_specs['grade_rule'],
+            'calc_min_body_measurement' => $this->to_frac($fp_specs['min_calculated']),
+            'min_body_measurement' => $this->to_frac($fp_specs['min_body_measurement']),
+            'ideal_body_size_low' => $this->to_frac($fp_specs['ideal_body_size_low']),
+            'fit_model' => $this->to_frac($fp_specs['fit_model']),
+            'ideal_body_size_high' => $this->to_frac($fp_specs['ideal_body_size_high']),
+            'max_body_measurement' => $this->to_frac($fp_specs['max_body_measurement']),            
+            'calc_max_body_measurement' => $this->to_frac($fp_specs['max_calculated']),
+            'grade_rule' => $this->to_frac($fp_specs['grade_rule']),
             'fit_priority' => $fp,
-            'body_measurement' => $body,                 
+            'body_measurement' => $this->to_frac($body),                 
             'min_fx' => $this->scale['between_min_low']['start'] * $fp,
             'max_fx' => $this->scale['between_high_max']['start'] * $fp,
             'high_fx' => $this->scale['between_mid_high']['start'] * $fp,
             'low_fx' => $this->scale['between_low_mid']['start'] * $fp,
             'avg_fx' => $fp,
-            'garment_measurement_flat' => $fp_specs['garment_measurement_flat'],
-            'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],            
+            'garment_measurement_flat' => $this->to_frac($fp_specs['garment_measurement_flat']),
+            'garment_measurement_stretch_fit' => $this->to_frac($fp_specs['garment_measurement_stretch_fit']),            
         );
         $message_array = $this->calculate_fitindex($fp_measurements);
         $fp_measurements['fits'] = $message_array['fits'];
@@ -452,7 +452,10 @@ class PDA1 {
                             $fp_fx = 0;                            
                             $seventy_five_GD = 0.75 * $fp_specs['garment_measurement_stretch_fit'];  #--> 75%GD                            
                             if ($fp_specs['body_measurement'] <= $seventy_five_GD) {
-                                $fp_scale['message'] = 'OK Fit';
+                                #$fp_scale['message'] = 'OK Fit';
+                                #From Ideal High to 1/2 the range to 75% of the garment stretch dimension "ok fit"/ 2nd half "Poor fit"
+                                $half_high_75GD = $fp_specs['ideal_body_size_high'] + (($seventy_five_GD - $fp_specs['ideal_body_size_high'])/2);
+                                $fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_75GD? 'OK Fit' : 'Poor Fit';
                             } else {
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
@@ -500,7 +503,10 @@ class PDA1 {
                             $fp_fx = 0;
                             $eighty_five_GD = 0.85 * $fp_specs['garment_measurement_stretch_fit']; #--> 85%GD
                             if ($fp_specs['body_measurement'] <= $eighty_five_GD) {                            
-                                $fp_scale['message'] = 'OK Fit';
+                                #$fp_scale['message'] = 'OK Fit';
+                                #From Ideal High to 1/2 the range to 85% of the garment stretch dimension "ok fit"/ 2nd half "Poor fit"
+                                $half_high_85GD = $fp_specs['ideal_body_size_high'] + (($eighty_five_GD - $fp_specs['ideal_body_size_high'])/2);
+                                $fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_85GD ? 'OK Fit' : 'Poor Fit';
                             } else {                            
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
@@ -511,7 +517,8 @@ class PDA1 {
             }
         }
 
-        $fx = $this->limit_num($fp_fx);
+        #$fx = $this->limit_num($fp_fx);
+        $fx = $this->to_frac($fp_fx);
         return array('body_fx' => $fx, 'message' => $fp_scale['message'], 'status' => $fp_scale['status'],
             'fits' => $fits, 'status_text' => $fp_scale['status_text'],
         );
@@ -546,7 +553,7 @@ class PDA1 {
              if (($fp_specs['fit_model']-$fp_specs['calc_min_body_measurement'])<=0){
                 $findex=0;
             }else{
-                $findex   =$fp_specs['avg_fx']-((($fp_specs['fit_model']-$fp_specs['body_measurement'])/($fp_specs['fit_model']-$fp_specs['calc_min_body_measurement']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
+                $findex   = $fp_specs['avg_fx']-((($fp_specs['fit_model']-$fp_specs['body_measurement'])/($fp_specs['fit_model']-$fp_specs['calc_min_body_measurement']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
             }            
         }else{
             $findex   = $fp_specs['avg_fx'];   
@@ -562,6 +569,13 @@ class PDA1 {
         }else{
         return number_format($n, 2, '.', '');
         }
+    }
+     #------------------------------------------------------------------
+    
+    function to_frac($number, $denominator = 16) {
+        return $number;
+        $x = intval($number * $denominator);
+        return $x / $denominator;         
     }
 # -----------------------------------------------------
     private function array_sort($sizes) {

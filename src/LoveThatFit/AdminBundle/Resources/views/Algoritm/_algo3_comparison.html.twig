@@ -54,19 +54,23 @@
                                         <th>FX</th>                                                                             
                                         <th>GR	</th>
                                         <th>GD</th>	
-                                        <th>92%GD</th>	
-                                        <th>85%GD</th>	
-                                        <th>75%GD</th>	
                                         <th>G Stretch </th>
+                                        <th>92% GDS</th>	
+                                        <th>85% GDS</th>	
+                                        <th>75% GDS</th>	
+                                        
                                         <th>MIN Calc</th>
                                         <th>MIN Actual</th>                                        
+                                        <th>half</th>
                                         <th>Low</th>             
                                         <th>FM</th>
                                         <th>High</th>
+                                        <th>half</th>
                                         <th>Max Actual</th>
                                         <th>MAX Calc</th>
                                         <th>message</th>
-                                        <th>variance<span style="float: right;">(∑)</span></th>
+                                        {#<th>variance<span style="float: right;">(∑)</span></th>#}
+                                        <th></th>
                                                                               
                                     </tr>
                                 
@@ -96,27 +100,42 @@
                                             <td>{{fp_specs.body_fx}}</td>
                                         {% endif %}
                                         
-                                        <td>{{fp_specs.grade_rule}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat}}</td>
-                                        <td>{{fp_specs.garment_measurement_stretch_fit}}</td>
-                                        <td>{{fp_specs.garment_measurement_stretch_fit * 0.92}}</td>
-                                        <td>{{fp_specs.garment_measurement_stretch_fit * 0.85}}</td>
-                                        <td>{{fp_specs.garment_measurement_stretch_fit * 0.75}}</td>
+                                        <td> {{fp_specs.grade_rule}}</td>
+                                        <td> {{fp_specs.garment_measurement_flat}}</td>
+                                        <td> {{fp_specs.garment_measurement_stretch_fit}}</td>
+                                        <td> {{ ((fp_specs.garment_measurement_stretch_fit * 0.92 * 16) | round(0, 'floor'))/16 }}</td>
+                                        <td> {{((fp_specs.garment_measurement_stretch_fit * 0.85 * 16) | round(0, 'floor'))/16 }}</td>
+                                        <td> {{ ((fp_specs.garment_measurement_stretch_fit * 0.75 * 16) | round(0, 'floor'))/16 }}</td>
                                         
                                         
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
                                         <td>{{fp_specs.min_body_measurement}}</td>                                        
+                                        <td   style="color:#000000; font-family:monospace;font-size:10px;">{{fp_specs.halfway_min_low}}</td>
                                         <td>{{fp_specs.ideal_body_size_low}}</td>                                        
                                         
                                         <td><b>{{fp_specs.fit_model}}</b></td>
                                         <td>{{fp_specs.ideal_body_size_high}}</td>
+                                        <td   style="color:#000000; font-family:monospace;font-size:10px;">{{fp_specs.halfway_high_max}}</td>
                                         <td>{{fp_specs.max_body_measurement}}</td>                                
                                         <td>{{fp_specs.calc_max_body_measurement}}</td>
                                         <td> <span  style="font-size:11px;">{{fp_specs.status_text}}
                                         : {{fp_specs.fitting_alert}}
                                         </span>
                                         </td>
-                                        <td>{{fp_specs.variance}}</td>
+                                        {#<td>{{fp_specs.variance}}</td>#}
+                                        <td>
+                                            <table>
+                                                <tr   style=" font-family:monospace;font-size:10px;">
+                                                    <td {{(fp_specs.box==1) ? 'style="background-color: red"' : 'style="background-color: #B3B6B7"'}}>1</td>
+                                                    <td {{(fp_specs.box==2) ? 'style="background-color: orange"' : 'style="background-color: #ECF0F1"'}}>2</td>
+                                                    <td {{(fp_specs.box==3) ? 'style="background-color: yellow"' : 'style="background-color: #F4F6F7"'}}>3</td>
+                                                    <td {{(fp_specs.box==4) ? 'style="background-color: green"' : 'style="background-color: #E5E8E8"'}}>4</td>
+                                                    <td {{(fp_specs.box==5) ? 'style="background-color: yellow"' : 'style="background-color: #F4F6F7"'}}>5</td>
+                                                    <td {{(fp_specs.box==6) ? 'style="background-color: orange"' : 'style="background-color: #ECF0F1"'}}>6</td>
+                                                    <td {{(fp_specs.box==7) ? 'style="background-color: red"' : 'style="background-color: #B3B6B7"'}}>7</td>
+                                                </tr>
+                                            </table>                                                
+                                        </td>
                                         
                                     </tr>
 
@@ -136,6 +155,8 @@
                                         <td></td> 
                                         
                                         <td></td> 
+                                        <td></td>
+                                        <td></td> 
                                         <td></td>                                        
                                         <td></td>       
                                         <td></td>
@@ -143,7 +164,10 @@
                                                 {{size_specs.message}}
                                             </span>   
                                         </td>                                                                                
-                                        <td>{{size_specs.variance}} <span style="float: right;font-size: 10px;">({{size_specs.variance_sum}})</span></td>                
+                                        {#<td>{{size_specs.variance}} <span style="float: right;font-size: 10px;">({{size_specs.variance_sum}})</span></td>#}                
+                                        <td>
+                                                                                       
+                                        </td>
                                         
                                         
                                         

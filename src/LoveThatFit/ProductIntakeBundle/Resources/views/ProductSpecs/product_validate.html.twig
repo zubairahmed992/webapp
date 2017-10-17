@@ -1,0 +1,68 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+    <style>
+        tr:nth-child(even){
+            background-color: #E5E7E9;
+        }
+table{
+
+}
+.validation_key{
+    font-size: 14px;    
+    color: red;
+}
+    </style>
+{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>#}
+<div class="btn-group" role="group" aria-label="..." style="float:right;">
+   
+    <a href="{{ path('product_intake_product_specs_edit', {'id': app.request.get('id')}) }}" class="btn btn-default">Edit</a> 
+    <a href="{{ path('product_intake_product_specs_show', {'id': app.request.get('id')}) }}" class="btn btn-default">preview</a> 
+</div>
+
+
+    <h1>Disable Validation Rule of Product  Specification </h1>
+    <br><br><br><br>
+<form action="{{ path('product_intake_update_validate_product_specification',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data" id="form1"  class="form-horizontal">
+ <div class="container">       
+        
+        {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
+               
+    {#{{ dump(validation_error) }}#}
+    {% for key,fp in validation_error %}
+        <input type="checkbox" name="{{ key }}" value="{{ key }}"> <span class="validation_key"> {{ key }}</span>
+        {#{{ dump(fp) }}#}
+        {% for fp_title,fp_error in fp %}
+            {% if fp_error is iterable %}
+            {% else %}
+            <table  class="table table-bordered ">
+                <tr>
+                    <th>
+                        {{ fp_title }}
+                    </th>
+                    <td>
+                        {{ fp_error }}
+                    </td>
+                </tr>
+            </table>
+            {% endif %}
+
+            <table  class="table table-bordered " >
+            {% for fp_key,fp_size_error in fp_error %}
+                    <tr>
+                        <th>
+                            {{ fp_title }}
+                        </th>
+                        <td>
+                            {{ fp_size_error }}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        {% endfor %}
+    {% endfor %}
+    <input type="submit" value="Acknowledge">
+    </div>
+</form>
+    <br/><p></p>
+{% endblock %}

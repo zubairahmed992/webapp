@@ -54,10 +54,11 @@
                                         <th>FX</th>                                                                             
                                         <th>GR	</th>
                                         <th>GD</th>	
-                                        <th>92%GD</th>	
-                                        <th>85%GD</th>	
-                                        <th>75%GD</th>	
                                         <th>G Stretch </th>
+                                        <th>92% GDS</th>	
+                                        <th>85% GDS</th>	
+                                        <th>75% GDS</th>	
+                                        
                                         <th>MIN Calc</th>
                                         <th>MIN Actual</th>                                        
                                         <th>Low</th>             
@@ -98,10 +99,11 @@
                                         
                                         <td>{{fp_specs.grade_rule}}</td>
                                         <td>{{fp_specs.garment_measurement_flat}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat * 0.92}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat * 0.85}}</td>
-                                        <td>{{fp_specs.garment_measurement_flat * 0.75}}</td>
                                         <td>{{fp_specs.garment_measurement_stretch_fit}}</td>
+                                        <td> {{ ((fp_specs.garment_measurement_stretch_fit * 0.92 * 16) | round(0, 'floor'))/16 }}</td>
+                                        <td> {{((fp_specs.garment_measurement_stretch_fit * 0.85 * 16) | round(0, 'floor'))/16 }}</td>
+                                        <td> {{ ((fp_specs.garment_measurement_stretch_fit * 0.75 * 16) | round(0, 'floor'))/16 }}</td>
+                                        
                                         
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
                                         <td>{{fp_specs.min_body_measurement}}</td>                                        
