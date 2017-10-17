@@ -429,6 +429,6 @@ ws_email_order_detail_show:
     pattern:  /ws/order/detail/{order_number}/show
     defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showEmailDetail}
 
-nws_update_term_conditions:
-    pattern: /nws/update_term_conditions
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdateTermConditions}
+nws_update_primary_email:
+    pattern: /nws/update_primary_email
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdatePrimaryEmail}
