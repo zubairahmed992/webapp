@@ -93,6 +93,7 @@ class PodioLibHelper
               new PodioTextItemField(array("external_id" => "braintree-status", "values" => "".$order_podio['transaction_status']."")),                            
               new PodioTextItemField(array("external_id" => "shipping-address", "values" => "".$order_podio['full_address_shipping']."")),
               new PodioTextItemField(array("external_id" => "member-email", "values" => "".$order_podio['user_email']."")),
+              new PodioTextItemField(array("external_id" => "order-tax-amt", "values" => "".$order_podio['sales_tax']."")),
             ));
             // Create item and attach fields
             $item = new PodioItem(array(

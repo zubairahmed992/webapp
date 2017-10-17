@@ -105,8 +105,17 @@ class UserArchives
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
      * )
      */
-    private $image;        
-    
+    private $image;
+
+
+    /**
+     * @var string $retouchimage
+     *
+     * @ORM\Column(name="retouchimage", type="string", length=255, nullable=true)
+     * )
+     */
+    private $retouchimage;
+
     /**
      * @Assert\File()
      */
@@ -368,7 +377,7 @@ class UserArchives
 
     #----------------------------------------
         
-          /**
+      /**
      * Set image
      *
      * @param string $image
@@ -387,6 +396,28 @@ class UserArchives
      */
     public function getImage() {
         return $this->image;
+    }
+    #----------------------------------------
+
+    /**
+     * Set retouchimage
+     *
+     * @param string $retouchimage
+     * @return User
+     */
+    public function setRetouchImage($retouchimage) {
+        $this->retouchimage = $retouchimage;
+
+        return $this;
+    }
+
+    /**
+     * Get retouchimage
+     *
+     * @return string
+     */
+    public function getRetouchImage() {
+        return $this->retouchimage;
     }
     #----------------------------------------
 	  /**
@@ -671,5 +702,9 @@ class UserArchives
                 imagepng($img_new, $filename);
                 break;
         }
+    }
+
+    public function getRetouchWebPath() {
+        return $this->getUploadDir();
     }
 }

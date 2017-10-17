@@ -364,6 +364,37 @@ class BrandRepository extends EntityRepository {
     }
 
 
+    #---------------------------Get all retailer brand list for web service---------#
+
+    public function getBrandAndDevice($date_format = Null) {
+        if ($date_format) {
+            $query = $this->getEntityManager()
+                ->createQuery("
+ SELECT DISTINCT b.id as brand_id,b.name as brand_name,b.image as brand_image
+ FROM LoveThatFitAdminBundle:Brand b
+ JOIN b.products p
+ WHERE b.disabled=0 and p.disabled=0 and p.deleted=0 and  b.updated_at>=:date_format")->setParameters(array('date_format' => $date_format));
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        } else {
+
+            $query = $this->getEntityManager()
+                ->createQuery("
+  SELECT DISTINCT b.id as brand_id,b.name as brand_name,b.image as brand_image
+ FROM LoveThatFitAdminBundle:Brand b
+ JOIN b.products p
+ WHERE b.disabled=0 and p.disabled=0 and p.deleted=0
+");
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        }
+    }
 
 
     #---------------------------Get all retailer brand list for web service---------#
@@ -401,8 +432,9 @@ class BrandRepository extends EntityRepository {
     public function getBrandsArray()
     {
         $query = $this->getEntityManager()
-            ->createQuery('SELECT b.id as brand_id, b.name as name,\'brand\' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
-                WHERE b.disabled = 0 ORDER BY name asc');
+            ->createQuery('SELECT DISTINCT b.id as brand_id, b.name as name,\'brand\' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
+                JOIN b.products p
+                WHERE b.disabled = 0 and p.disabled=0 and p.deleted=0 ORDER BY name asc');
         try {
             return $query->getArrayResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

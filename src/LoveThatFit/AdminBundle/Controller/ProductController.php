@@ -1613,6 +1613,7 @@ class ProductController extends Controller {
         $products_with_categories = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->listProductsAndCategories();
+
         if (!empty($products_with_categories)) {
             $count = 0;
             foreach ($products_with_categories as $row) {
@@ -1622,7 +1623,7 @@ class ProductController extends Controller {
                 $count++;
             }
         } else {
-            $products_with_categories = array('product_id' => '', 'product_name' => '', 'status' => '', 'gender' => '', 'brand_name' => '', 'clothing_type' => '', 'color' => '', 'retailer' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '', 'styling_type' => '', 'categories_name' => '');
+            $products_with_categories = array('product_id' => '', 'product_name' => '', 'status' => '', 'gender' => '', 'brand_name' => '', 'clothing_type' => '', 'color' => '', 'retailer' => '', 'created_at' => '', 'control_number' => '', 'hem_length' => '', 'neckline' => '', 'sleeve_styling' => '', 'rise' => '', 'fabric_weight' => '', 'size_title_type' => '', 'fit_type' => '', 'horizontal_stretch' => '', 'vertical_stretch' => '', 'styling_type' => '', 'categories_name' => '', 'image_title', '');
         }
         $this->get('admin.helper.utility')->exportToCSV($products_with_categories, 'product_with_categories');
         return new Response('');

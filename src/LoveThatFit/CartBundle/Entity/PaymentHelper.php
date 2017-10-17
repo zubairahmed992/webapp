@@ -17,6 +17,7 @@ use Braintree_ClientToken;
 use Braintree_Transaction;
 use Braintree_Customer;
 use Braintree_PaymentMethod;
+use Braintree_PaymentMethodNonce;
 
 class PaymentHelper
 {
@@ -195,10 +196,12 @@ class PaymentHelper
         Braintree_Configuration::merchantId($parse[$this->env]["merchant_id"]);
         Braintree_Configuration::publicKey($parse[$this->env]["public_key"]);
         Braintree_Configuration::privateKey($parse[$this->env]["private_key"]);
+        $sales_tax  =   (isset($decoded['sales_tax']) ? $decoded['sales_tax'] : 0);
 
         $billing = $decoded["billing"];
         $saleObject = array(
-            "amount" => $decoded['total_amount'],
+            "amount" => round($decoded['total_amount'],2),
+            "taxAmount" => $sales_tax,
             "paymentMethodNonce" => $decoded['payment_method_nonce'],
             'billing' => [
                 'firstName' => $billing['billing_first_name'],
@@ -253,12 +256,16 @@ class PaymentHelper
             $datetimeObj = new \DateTime('now');
             $fnfGroup = null;
             $payment_json = json_encode($result);
-            $shipping_amount    = $decoded['shipping_amount'];
+            $shipping_amount    = $decoded['rates']['shipping_rate_amount'];
             $order_amount       = $decoded['order_amount'];
             $discount_amount    = $decoded['discount_amount'];
             $total_amount       = $decoded['total_amount'];
             $order_date         = (isset($decoded['order_date']) ? $decoded['order_date'] : $datetimeObj->format('Y-m-d H:i:s'));
+
+            $decoded['rates']['amount'] = $decoded['rates']['shipping_rate_amount']; //assign your rate variable
+
             $rates              = (isset($decoded['rates']) ? $decoded['rates'] : "");
+            $sales_tax          = (isset($decoded['sales_tax']) ? $decoded['sales_tax'] : 0);
 
             $transaction_id = $result->transaction->id;
             $transaction_status = $result->transaction->status;
@@ -278,7 +285,7 @@ class PaymentHelper
             $order_number = $order_id . rand(100, 100000);
             $user_cart = $this->container->get('cart.helper.cart')->getFormattedCart($user);
             $response = $this->container->get('cart.helper.orderDetail')->saveOrderDetail($user_cart, $entity);
-            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, json_encode($rates));
+            $save_transaction = $this->container->get('cart.helper.order')->updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, json_encode($rates), $sales_tax);
 
             try {
                 //create podio orders entity
@@ -521,6 +528,14 @@ class PaymentHelper
             );
 
             foreach ( $creditCrads as $card){
+                try{
+                    $result = Braintree_PaymentMethodNonce::create($card->token);
+                    $payment_method_nonce =  $result->paymentMethodNonce->nonce;
+                }catch (\Braintree_Exception_NotFound $exception){
+                    $payment_method_nonce = "";
+                }
+
+
                 $customerCards['cards'][] = array(
                     'maskedNumber' => $card->maskedNumber,
                     'token'     => $card->token,
@@ -532,7 +547,8 @@ class PaymentHelper
                     'uniqueNumberIdentifier' => $card->uniqueNumberIdentifier,
                     'imageUrl'      => $card->imageUrl,
                     'bin'           => $card->bin,
-                    'last4'         => $card->last4
+                    'last4'         => $card->last4,
+                    'payment_method_nonce' => $payment_method_nonce
                 );
             }
 

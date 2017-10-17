@@ -84,12 +84,14 @@ class WebServiceHelper
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
             if ($this->container->get('user.helper.user')->matchPassword($user, $request_array['password'])) {
+                $userLogs = $this->container->get('userlog.helper.userlog')->findUserIsLoginBefore($user, $request_array);
                 $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
                     #$response_array['user'] = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
                     $response_array['user'] = $this->user_array($user, $request_array);
                     $response_array['user']['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                    $response_array['user']['isNewUser'] = (empty($userLogs)) ? 1 : 0;
                     $response_array['user']['image_path'] = "/render/image/";
                     $response_array['user']['avatar_path'] = "/render/avatar/";
                     $defaultProducts = $this->container->get('admin.helper.product')->findDefaultProduct();
@@ -1068,6 +1070,9 @@ class WebServiceHelper
     {
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
         $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
         $limit = $records_per_page * $page_no;
         $offset = $limit - $records_per_page;
@@ -1079,6 +1084,20 @@ class WebServiceHelper
         }
         $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach ($productlist as $key => $product) {
+
+            /* Selected Layer Name */
+            $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product['product_id']);
+            $selectedcategories = array_column($getselectedcategories, 'id');
+            $selectedlayername = "";
+            foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+                if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                    $selectedlayername = $value_withlayer['layer_name'];
+                    break;
+                }
+
+            }
+            /* Selected Layer Name */
+
             if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
                 $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
@@ -1086,6 +1105,16 @@ class WebServiceHelper
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
+
+            /* Selected Layer Name */
+            if(!empty($selectedlayername)){
+                $productlist[$key]['layer_name'] = (int)$selectedlayername;
+            }
+            /* Selected Layer Name */
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
         return array('product_list' => $productlist, 'page_count' => $page_count);
     }
@@ -1095,6 +1124,9 @@ class WebServiceHelper
     {
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/products.yml'));
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
         $records_per_page = $conf['nws_products_list_pagination']['records_per_page'];
         $limit = $records_per_page * $page_no;
         $offset = $limit - $records_per_page;
@@ -1106,6 +1138,20 @@ class WebServiceHelper
         }
         $productlist = array_slice($productlist, $offset, $records_per_page);
         foreach ($productlist as $key => $product) {
+
+            /* Selected Layer Name */
+            $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product['product_id']);
+            $selectedcategories = array_column($getselectedcategories, 'id');
+            $selectedlayername = "";
+            foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+                if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                    $selectedlayername = $value_withlayer['layer_name'];
+                    break;
+                }
+
+            }
+            /* Selected Layer Name */
+
             if (($productlist[$key]['uf_user'] != null) && ($productlist[$key]['uf_user'] == $user_id)) {
                 $productlist[$key]['fitting_room_status'] = true;
                 $productlist[$key]['qty'] = $productlist[$key]['uf_qty'];
@@ -1113,7 +1159,18 @@ class WebServiceHelper
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
+
+            /* Selected Layer Name */
+            if(!empty($selectedlayername)){
+                $productlist[$key]['layer_name'] = (int)$selectedlayername;
+            }
+            /* Selected Layer Name */
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
+
         return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
 
     }
@@ -1129,6 +1186,10 @@ class WebServiceHelper
     public function productDetailWithImages($id, $user)
     {
         $product = $this->container->get('admin.helper.product')->find($id);
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
+
         if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
@@ -1200,6 +1261,8 @@ class WebServiceHelper
                 'fitting_room_status' => $fitting_room_status,
                 'qty' => $qty,
                 'color_image' => $pi->getProductColor()->getImage(),
+                'disabled' => $product->getDisabled(),
+                'deleted' => $product->getDeleted(),
             );
 
             if ($default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id) {
@@ -1245,6 +1308,20 @@ class WebServiceHelper
             }
         }
 
+
+        /* Selected Layer Name */
+        $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product->getId());
+        $selectedcategories = array_column($getselectedcategories, 'id');
+        $selectedlayername = "";
+        foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+            if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                $selectedlayername = $value_withlayer['layer_name'];
+                break;
+            }
+
+        }
+        /* Selected Layer Name */
+
         $p['item_details'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['item_details']);
         $p['item_details'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['item_details'].'</span>';
 
@@ -1252,9 +1329,13 @@ class WebServiceHelper
         $p['care_label'] = str_ireplace('<li>','<li style="font-family:lato !important;font-size:12px !important;">', $p['care_label']);
         $p['care_label'] = '<span style="font-family:lato !important;font-size:12px !important;">'.$p['care_label'].'</span>';
         $p['title'] = $product->getName();
+        if(!empty($selectedlayername)){
+            $p['layer_name'] = (int)$selectedlayername;
+        }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
-
+        $p['disabled'] = $product->getDisabled();
+        $p['deleted'] = $product->getDeleted();
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
@@ -1280,12 +1361,15 @@ class WebServiceHelper
             foreach ($entity->getSaveLookItem() as $saveLookItem) {
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
+                $temp['product_image'] = $saveLookItem->getItems()->getProduct()->getDisplayProductColor()->getImage();
                 $temp['title'] = $saveLookItem->getItems()->getProduct()->getName();
                 $temp['item_name'] = $saveLookItem->getItems()->getProduct()->getItemName();
                 $temp['description'] = $saveLookItem->getItems()->getProduct()->getDescription();
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
+                $temp['disabled'] = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $temp['deleted'] = $saveLookItem->getItems()->getProduct()->getDeleted();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
                 array_push($items, $temp);
@@ -1302,6 +1386,10 @@ class WebServiceHelper
     public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user)
     {
         $product = $this->container->get('admin.helper.product')->find($id);
+
+        /* Get all Categies with Layer name */
+        $getcategorieswithlayername = $this->container->get('admin.helper.Categories')->getAllCategoriesWithLayerName();
+
         if (count($product) == 0) {
             return $this->response_array(false, 'Product Coming Soon');
         }
@@ -1365,6 +1453,8 @@ class WebServiceHelper
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
+                'disabled' => $product->getDisabled(),
+                'deleted' => $product->getDeleted(),
             );
         }
 
@@ -1380,11 +1470,29 @@ class WebServiceHelper
             );
         }
 
+        /* Selected Layer Name */
+        $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product->getId());
+        $selectedcategories = array_column($getselectedcategories, 'id');
+        $selectedlayername = "";
+        foreach($getcategorieswithlayername as $key_withlayer => $value_withlayer){
+            if(( (in_array($value_withlayer['id'], $selectedcategories)) && (in_array($value_withlayer['parent_id'], $selectedcategories)) )){
+                $selectedlayername = $value_withlayer['layer_name'];
+                break;
+            }
+
+        }
+        /* Selected Layer Name */
+        $p['categories'] = $selectedcategories;
         $p['model_height'] = "Height of model: " . $product->getProductModelHeight();
         $p['description'] = $product->getDescription();
         $p['title'] = $product->getName();
+        if(!empty($selectedlayername)){
+            $p['layer_name'] = (int)$selectedlayername;
+        }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
+        $p['disabled'] = $product->getDisabled();
+        $p['deleted'] = $product->getDeleted();
         return $p;
     }
 
@@ -1483,8 +1591,10 @@ class WebServiceHelper
     public function userDetailMaskMarker($request_array)
     { 
 
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
 
-        if($request_array['auth_token']=='1355dd07ad8b9ce1075ba919798ffe1f#EDWS%^&')
+        if($request_array['auth_token']==$mcp_auth_token)
         {
             
         $data = array();
@@ -1525,7 +1635,12 @@ class WebServiceHelper
         $data['device'] ['dv_px_per_inch_ratio'] = "15.29166666666667";  
         $data['device'] ['globle_pivot'] =  "64";
         $data['device'] ['dv_model'] =  $device->device_model;
-        $data['device'] ['dv_edit_type'] = 'registration'; 
+        if (!empty($user[0]['svg_paths'])) {
+            $data['device'] ['dv_edit_type'] = 'edit';
+        }else{
+            $data['device'] ['dv_edit_type'] = 'registration';     
+        }    
+        
         $data['device'] ['hdn_serverpath'] = "/";
         $data['device'] ['dv_scr_h'] =  $device->height_per_inch;
         $data['device'] ['dv_scr_w'] =  "960";
@@ -1533,13 +1648,29 @@ class WebServiceHelper
 
         $data['img'] ['image_actions'] =  json_decode($user[0]['image_actions']);
         $data['img'] ['img_path_json'] =  $user[0]['marker_json'];
-        $data['img'] ['img_path_paper'] =  $user[0]['svg_paths'];
+        $data['img'] ['img_path_paper'] = $user[0]['svg_paths'];
         //$data['img'] ['hdn_user_cropped_image_url'] = "/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
         
        
         $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+
+        $data['img'] ['hdn_image_update_url'] = "//".$_SERVER['HTTP_HOST']."/mcp/save_marker_image";
+
+        $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
+
+         $data['img'] ['hdn_inner_site_index_url'] = "//".$_SERVER['HTTP_HOST']."/inner_site/index";    
+         
+         $data['img'] ['hdn_post_update_url'] = "//".$_SERVER['HTTP_HOST']."/registration/step_four_create/".$user[0]['id'];       
+
+         $data['img'] ['hdn_entity_id'] = $user[0]['id'];
+
+
+
+        
        
 
+
+        
 
         $data['user'] ['user_height_frm_3'] = $measurement->height; 
         $data['user'] ['user_auth_token'] =  $user[0]['authToken'];
@@ -1557,7 +1688,7 @@ class WebServiceHelper
         $data['user'] ['inseam_percent'] = "42"; 
         $data['user'] ['arm_percent'] =  "46";
 
-        $data['marker'] ['marker_update_url'] =  "/admin/archive/save_marker";
+        $data['marker'] ['marker_update_url'] =  "//".$_SERVER['HTTP_HOST']."/mcp/save_marker";
         $data['marker'] ['default_marker_json'] =  $user[0]['default_marker_json'];
         $data['marker'] ['default_marker_svg'] =  $user[0]['default_marker_svg'];
 
@@ -1589,6 +1720,29 @@ class WebServiceHelper
         return $this->response_array(false, 'Member not found');
       }        
     }
+    
+    
+    public function userOriginalImage($request_array)
+    {
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+      
+        if($request_array['mcp_auth_token']==$mcp_auth_token){
+        $data = array();
+        $user = $this->container->get('webservice.repo')->userDetailMaskMarker($request_array['email']); 
+            if ($user) {
+                $data['img'] ['hdn_user_cropped_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original_".$user[0]['image']."?rand=".$user[0]['image'];
+                $data['img'] ['hdn_user_original_image_url'] = "//".$_SERVER['HTTP_HOST']."/uploads/ltf/users/".$user[0]['id']."/original.png";
+                return $this->response_array(true, 'member found', true, $data);
+            } else {
+                return $this->response_array(false, 'Member not found');
+            }
+          } else {
+            return $this->response_array(false, 'Member not found');
+          }         
+     }
+     
+     
 
 
     public function getProductListByBrand($search_text, $user_id, $page_no = 1)
@@ -1632,6 +1786,91 @@ class WebServiceHelper
             'success' => true,
         );
         return json_encode($ar);
+    }
+
+    public function getOrderSalesTaxUserAction($callby=0,$decoded) {
+        //$decoded = $this->processRequest($this->getRequest());
+        $user    = array_key_exists('auth_token', $decoded) ? $this->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            if(isset($decoded['billing_address']) && !empty($decoded['billing_address'])) {
+                //user cart items
+                $amount = 0;
+                $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
+                $order_line_items = array();
+                $c=0;
+                foreach($user_cart as $cart){
+                    $amount = ($cart['qty']*$cart['price']) + $amount;
+                    $order_line_items[$c]['qty'] = $cart['qty'];
+                    $order_line_items[$c]['price'] = ($cart['qty']*$cart['price']);
+                    $c++;
+                }
+
+                //order line items
+                //$order_line_items = [['quantity' => 1,'unit_price' => 15.0],['quantity' => 1,'unit_price' => 10.0]];
+                
+                //order salex tax
+                $yaml = new Parser();
+                $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+                //$from_country = $parse["stamps_com_dev"]["fromcountry"];
+                //$from_zip = $parse["stamps_com_dev"]["fromzipcode"];
+                //$from_state = $parse["stamps_com_dev"]["fromstate"];
+                //$shippment = $parse["stamps_com_dev"]["shippment"];
+                //$from_country = 'US';
+                //$from_zip = '53202';
+                //$from_state = 'WI';
+                $shippment = 0;
+                $data_order_sales = array(
+                    //'from_country' => ($from_country) ? $from_country : '',
+                    //'from_zip' => ($from_zip) ? $from_zip : '',
+                    //'from_state' => ($from_state) ? $from_state : '',
+                    'to_country' => ($decoded['billing_address']['to_country']) ? $decoded['billing_address']['to_country'] : '',
+                    'to_zip' => ($decoded['billing_address']['to_zip']) ? $decoded['billing_address']['to_zip'] : '',
+                    'to_state' => ($decoded['billing_address']['to_state']) ? $decoded['billing_address']['to_state'] : '',
+                    'amount' => ($amount) ? $amount : 0,
+                    'shipping' => $shippment,
+                    'order_line_items' => $order_line_items
+                );
+                $order_sales_tax = $this->container->get('taxjar.helper.salestaxapi')->createOrderSalesTax($data_order_sales);
+                if(is_float($order_sales_tax) || is_numeric($order_sales_tax)) {
+                    $order_sales_tax = $order_sales_tax;
+                } else {
+                    $taxjar_error_messages = array(400 => 'Please enter a valid zip code.', 
+                                        401 => 'Unauthorized – Your API key is wrong.', 
+                                        403 => 'Forbidden – The resource requested is not authorized for use.',
+                                        404 => 'Not Found – The specified resource could not be found.',
+                                        405 => 'Method Not Allowed – You tried to access a resource with an invalid method.',
+                                        406 => 'Not Acceptable – Your request is not acceptable.',
+                                        410 => 'Gone – The resource requested has been removed from our servers.',
+                                        422 => 'Unprocessable Entity – Your request could not be processed.',
+                                        429 => 'Too Many Requests – You’re requesting too many resources! Slow down!',
+                                        500 => 'Internal Server Error – We had a problem with our server. Try again later.',
+                                        503 => 'Service Unavailable – We’re temporarily offline for maintenance. Try again later.');
+
+                    return $this->response_array(false, ''.htmlspecialchars($taxjar_error_messages[$order_sales_tax['error_code']]).'', true, array(
+                        'sales_tax' => 0,
+                        'error' => ''.htmlspecialchars($order_sales_tax['error_message']).'',
+                        'code' => $order_sales_tax['error_code']
+                    ));
+                }
+
+                if($callby == 1){
+                    return $order_sales_tax;
+                }
+
+                return $this->response_array(true, 'Order sales tax', true, array(
+                    'sales_tax' => $order_sales_tax
+                ));
+            } else {
+                if($callby == 1){
+                    return 0;
+                }
+                return $this->response_array(true, 'Order sales tax', true, array(
+                    'sales_tax' => 0
+                ));
+            }
+        } else {
+            return $this->response_array(false, 'User not authenticated.');
+        }
     }
 
 }

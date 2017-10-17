@@ -81,6 +81,10 @@ ws_user_default_values:
 ws_selfieshare_create:
     pattern:  /ws/selfieshare/create
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreate}
+
+ws_selfieshare_create_v3:
+    pattern:  /ws/selfieshare/create_v3
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateV3}
     
 #------------------------------------------------------------------------------------
 
@@ -308,6 +312,10 @@ ws_order_detail:
    pattern: /ws/order_detail
    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:orderDetail}
 
+ws_basic_order_info:
+   pattern: /ws/basic_order_info
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:basicOrderInfo}
+
 nws_save_user_shipping_address:
   pattern: /nws/save_user_shipping_address
   defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:saveUserShippingAddress}
@@ -349,6 +357,10 @@ nws_shop_the_look:
     pattern:  /nws/shop_the_look
     defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:shopTheLookV3 }
 
+ws_brand_n_deviceconfig:
+    pattern:  /ws/brand_n_deviceconfig
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandAndDevice }
+
 ws_brand_retailer_big:
     pattern:  /ws/brand_retailer_big
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:brandRetailerBig }
@@ -384,3 +396,39 @@ nws_get_brand_style:
 nws_search_brand_style:
     pattern:  /nws/search_brand_style
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:searchBrandStyle }
+
+mcp_save_marker:
+    pattern: /mcp/save_marker
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:mcpSaveMarker }
+
+nws_get_order_sales_tax_user:
+   pattern: /nws/get_order_sales_tax_user
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:getOrderSalesTaxUser}
+
+mcp_save_marker_image:
+    pattern: /mcp/save_marker_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSMisc:archiveImageUpdateMcp}
+   
+mcp_reject_user_image:
+    pattern: /mcp/mcp_reject_user_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:pendingUsersRevertedImage} 
+
+mcp_get_user_image:
+    pattern: /mcp/mcp_get_user_image
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:userOriginalImage}
+
+mcp_approve_complete:
+    pattern: /mcp/mcp_approve_complete
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveToLive}
+
+mcp_get_user_save:
+    pattern: /mcp/mcp_get_user_save
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:mcpArchiveSaveMarker}
+
+ws_email_order_detail_show:
+    pattern:  /ws/order/detail/{order_number}/show
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:showEmailDetail}
+
+nws_update_term_conditions:
+    pattern: /nws/update_term_conditions
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdateTermConditions}

@@ -167,6 +167,25 @@ class UserArchivesRepository extends EntityRepository
         // return $query->getQuery()->getSingleResult();
     }
 
+    public function getArchiveId($user_id)
+    {
+
+        $query  = $this->getEntityManager()->createQueryBuilder();
+        $query->select('ua.id')
+            ->from('LoveThatFitUserBundle:UserArchives', 'ua')
+            ->Where('ua.user =:user_id')
+            ->setParameter('user_id', $user_id)
+            ->OrderBy("ua.id", "desc")
+            ->setMaxResults(1);
+
+        try {
+          return $query->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+          return "null";
+        } 
+        // return $query->getQuery()->getSingleResult();
+    }
+
     public function searchSupport(
         $data,
         $page = 0,

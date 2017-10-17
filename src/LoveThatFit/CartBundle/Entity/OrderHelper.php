@@ -153,7 +153,7 @@ class OrderHelper
 
 
     //-------- update Payment transaction status of order ----------------------------------------////////////
-    public function updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rate)
+    public function updateUserTransaction($order_id, $transaction_id, $transaction_status, $payment_method, $payment_json, $order_number, $order_date, $rate, $sales_tax)
     {
         $order = $this->findOrderById($order_id);
         $order->setTransactionId($transaction_id);
@@ -162,6 +162,7 @@ class OrderHelper
         $order->setPaymentJson($payment_json);
         $order->setOrderNumber($order_number);
         $order->setRateJson($rate);
+        $order->setSalesTax($sales_tax);
 
         $order->setUserOrderDate(new \DateTime($order_date));
         $this->save($order);
@@ -345,6 +346,11 @@ class OrderHelper
         return $this->repo->findOrderListByUserID($user_id);
     }
 
+    public function findBasicOrderListByUserID($user_id)
+    {
+        return $this->repo->findBasicOrderListByUserID($user_id);
+    }
+
     public function findOrderList()
     {
         return $this->repo->findOrderList();
@@ -365,6 +371,11 @@ class OrderHelper
     public function findUserByOrderId($order_id)
     {
         return $this->repo->findUserByOrderId($order_id);
+    }
+
+    public function findByOrderNo($order_number)
+    {
+        return $this->repo->findByOrderNo($order_number);   
     }
 
 }

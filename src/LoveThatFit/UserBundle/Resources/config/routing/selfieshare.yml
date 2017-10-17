@@ -21,3 +21,19 @@ selfieshare_submit_feedback:
 selfieshare_feedback_review:
     pattern:   /selfieshare/feedback_review/{ref}
     defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackReview, ref: null }
+
+selfieshare_provide_feedback_v3:
+    pattern:   /selfieshare/provide_feedback_v3/{ref}
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:provideFeedbackV3, ref: null }
+
+selfieshare_submit_feedback_v3:
+    pattern:   /selfieshare/submit_feedback_v3
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:submitFeedbackV3 }
+
+selfieshare_feedback_review_v3:
+    pattern:   /selfieshare/feedback_review_v3/{ref}
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:feedbackReviewV3, ref: null }
+
+selfieshare_feedback_submit_thankyou_v3:
+    pattern:   /selfieshare/thankyou_v3/{userid}
+    defaults: { _controller: LoveThatFitUserBundle:SelfieShare:submitFeedbackThankyouV3, userid: null}

@@ -87,6 +87,25 @@ class UserMaskAdjustmentController extends Controller {
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
         ##new code from im branch
         $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
+
+        /* Get all Retouch images */
+        $original_filename = $archive->getImageName('original');
+        $retouch_filename = str_ireplace("original", "retouch", $original_filename);
+        $retouch_filename = substr($retouch_filename, 0, -4);
+        $user_id = $user->getId();
+        $directory_path = $archive->getUploadRootDir();
+        $retouch_files = glob($directory_path."/".$retouch_filename."*.*");
+
+        $retouch_file_time = array();
+        foreach($retouch_files as $file){
+            $filetime_unix =  filemtime($file);
+            $filename = substr($file, strrpos($file, '/') + 1);
+            $filename = str_ireplace(".png", "", $filename);
+            $retouch_file_time[$filename] = date("m/d/Y h:i:s",$filetime_unix);
+        }
+        $retouch_filecount = count($retouch_files);
+        $original_file_code_image = str_ireplace("original_", "", $original_filename);
+        $original_file_code = substr($original_file_code_image, 0, -4);
         
         return $this->render('LoveThatFitSupportBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
@@ -107,6 +126,10 @@ class UserMaskAdjustmentController extends Controller {
                     'device_model' => array_key_exists('device_model',$image_actions_archive)?$image_actions_archive['device_model']:'', #------>
                     'pivot_position' => $pivot_position,
                     'bra_size_body_shape' => json_encode($bra_size_body_shape),
+                    'retouch_filename' => $retouch_filename,
+                    'retouch_filecount' => $retouch_filecount,
+                    'original_file_code' => $original_file_code,
+                    'retouch_file_time' => $retouch_file_time,
                 ));
     }
 
@@ -321,6 +344,25 @@ class UserMaskAdjustmentController extends Controller {
         ##### new code from im branch
         $bra_size_body_shape = $this->container->get('admin.helper.size')->getWomanBraSizeBodyShape($measurement->getBrasize(),$measurement->getBodyShape($user->getGender(),true));
 
+        /* Get all Retouch images */
+        $original_filename = $archive->getImageName('original');
+        $retouch_filename = str_ireplace("original", "retouch", $original_filename);
+        $retouch_filename = substr($retouch_filename, 0, -4);
+        $user_id = $user->getId();
+        $directory_path = $archive->getUploadRootDir();
+        $retouch_files = glob($directory_path."/".$retouch_filename."*.*");
+
+        $retouch_file_time = array();
+        foreach($retouch_files as $file){
+            $filetime_unix =  filemtime($file);
+            $filename = substr($file, strrpos($file, '/') + 1);
+            $filename = str_ireplace(".png", "", $filename);
+            $retouch_file_time[$filename] = date("m/d/Y h:i:s",$filetime_unix);
+        }
+        $retouch_filecount = count($retouch_files);
+        $original_file_code_image = str_ireplace("original_", "", $original_filename);
+        $original_file_code = substr($original_file_code_image, 0, -4);
+
         return $this->render('LoveThatFitSupportBundle:UserMaskAdjustment:_mask_pending.html.twig', array(
                     'form' => $form->createView(), #------>
                     'entity' => $user, #------>
@@ -341,6 +383,10 @@ class UserMaskAdjustmentController extends Controller {
                     'device_model' => is_array($image_actions_archive) && array_key_exists('device_model', $image_actions_archive) ? $image_actions_archive['device_model'] : '', #------>
                     'pivot_position' => $pivot_position,
                     'bra_size_body_shape' => json_encode($bra_size_body_shape),
+                    'retouch_filename' => $retouch_filename,
+                    'retouch_filecount' => $retouch_filecount,
+                    'original_file_code' => $original_file_code,
+                    'retouch_file_time' => $retouch_file_time,
                 ));
     }
 
@@ -449,5 +495,19 @@ class UserMaskAdjustmentController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());        
         $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
         return $decoded;        
+    }
+
+    public function uploadRetouchImageAction(Request $request) {
+        $params = $request->request->all();
+        $user_id = $params['upl_entity_id'];
+        $archive_id = $params['upl_archive_id'];
+        $file = $_FILES["upl_user_retouch"];
+
+        /* Save Touch image*/
+        $this->get('user.helper.userarchives')->saveretouchimage($params,$file);
+
+        return $this->redirect($this->generateUrl('support_user_profile_archives', array('user_id' => $user_id,
+            'archive_id' => $archive_id)));
+
     }
 }

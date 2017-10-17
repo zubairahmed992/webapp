@@ -376,6 +376,101 @@ class WSUserController extends Controller
         $decoded = $this->process_request();
         $json_data = $this->get('webservice.helper')->userDetailMaskMarker($decoded);
         return new Response($json_data);
+    }  
+    
+    public function userOriginalImageAction()
+    {
+       
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {       
+            $json_data = $this->get('webservice.helper')->userOriginalImage($decoded);
+            return new Response($json_data);
+        }
+        else
+        {            
+           return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid token')));
+        }    
+    }
+
+     public function mcpArchiveSaveMarkerAction() {
+        $params = $this->process_request();   
+        $params['image_actions'] = json_encode($params['image_actions']);     
+        $params['mask_y'] = json_encode($params['mask_y']);     
+        $params['mask_x'] = json_encode($params['mask_x']);     
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        if($params['mcp_auth_token']==$mcp_auth_token) {       
+        $archiveData=$this->get('user.helper.userarchives')->getArchiveId($params['user_id']);
+        $archive = $this->get('user.helper.userarchives')->find($archiveData['id']);
+        $this->get('user.helper.userarchives')->saveArchivesSupport($archive, $params);
+
+            if(!empty($_POST['imageData'])){
+
+                $image_actions = json_decode($archive->getImageActions());
+                $device_type = $image_actions->device_type;
+                if (!$archive) {
+                    throw $this->createNotFoundException('Unable to find archive.');
+                }
+                $response = $archive->writeImageFromCanvas($_POST['imageData']);
+                #if not from mask marker adjustment interface then resize
+                $archive->resizeImageSupport($device_type); 
+
+            }
+             return new Response(json_encode(array("success"=>'1',"Description"=>'archive saved')));
+        }else{
+
+            return new Response(json_encode(array("success"=>'0',"error"=>'Invalid token or user id')));
+        }    
+
+       
+    }
+    
+    public function mcpArchiveToLiveAction() {
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {       
+            try {
+
+                $archiveData=$this->get('user.helper.userarchives')->getArchiveId($decoded['user_id']);     
+               
+
+                $archive=$this->get('user.helper.userarchives')->makeArchiveToCurrentSupport($archiveData['id']);               
+                //update podio user member calibrated to yes
+                $this->updatePodioUserMemberCalibrated($archive->getUser()->getId());
+                return new Response(json_encode(array("success"=>'1',"Description"=>'archive status updated')));
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+                return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid user id')));
+            }
+        }    
+        else
+        {
+          return new Response(json_encode(array("success"=>'0',"Error"=>'Invalid token')));  
+        }    
+        
+        
+    }
+    
+    private function updatePodioUserMemberCalibrated($user_id){
+        ##send update to podio that the user is activated
+        $data = $this->container->get('user.helper.podioapi')->updateUserPodio($user_id);
+    }
+    
+    public function pendingUsersRevertedImageAction()
+    {     
+        
+        $yaml   = new Parser();
+        $mcp_auth_token = $yaml->parse(file_get_contents('../src/LoveThatFit/WebServiceBundle/Resources/config/mcp_token.yml'))['mcp_token']['token'];
+        $decoded = $this->process_request();
+        if($decoded['mcp_auth_token']==$mcp_auth_token) {                  
+            $this->get('user.helper.userarchives')->updateRevertedImageStatus($decoded['user_id'],$decoded['image_hash']);
+            return new Response(json_encode(array("success" => 1,"description" => "Image status has been Reverted")));
+        } else {
+            return new Response(json_encode(array("success" => "0","description" => "Invaild Token")));
+        }    
     }    
 
     public function renderImageBySessionIdAction($ref = null)
@@ -389,11 +484,36 @@ class WSUserController extends Controller
                 'session_id' => $ref,
             ));
 
-            $file = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
-            $type = 'image/png';
-            header('Content-Type:'.$type);
-            header('Content-Length: ' . filesize($file));
-            readfile($file);
+            // IOSV3-350 - Create image instances, If background available then background will be set.
+            // Otherwise without Background
+            $ufile = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
+            $bfile = getcwd()."/uploads/ltf/background/fitting_background.png";
+
+            if(file_exists($bfile)){
+                $user_image = imagecreatefrompng($ufile);
+                $background_image = imagecreatefrompng($bfile);
+                list($width, $height) = getimagesize($ufile);
+                // Copy
+                $dest = imagecreatetruecolor($width, $height);
+                imagecopy($dest, $background_image, 0, 0, 0, 0, $width, $height);
+                imagecopy($dest, $user_image, 0, 0, 0, 0, $width, $height);
+
+                // Output and free from memory
+                header('Content-Type: image/png');
+                imagepng($dest);
+                header('Content-Length: ' . filesize($dest));
+
+                imagedestroy($dest);
+                imagedestroy($user_image);
+                imagedestroy($background_image);
+            }else{
+                $file = getcwd()."/uploads/ltf/users/".$user->getId()."/cropped.png";
+                $type = 'image/png';
+                header('Content-Type:'.$type);
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+            }
+
         }else{
             throw new NotFoundHttpException('Sorry not existing!');
         }
@@ -419,5 +539,50 @@ class WSUserController extends Controller
             throw new NotFoundHttpException('Sorry not existing!');
         }
     }
+
+    public function selfieshareCreateV3Action()
+    {
+        $ra = $this->process_request();
+        #return new Response(json_encode($ra));
+        if (!array_key_exists('auth_token', $ra)) {
+            return new Response($this->get('webservice.helper')->response_array(false, 'Auth token Not provided.'));
+        }
+
+        $user = $this->get('webservice.helper')->findUserByAuthToken($ra['auth_token']);
+
+        if (count($user) > 0) {
+            $ss = $this->get('user.selfieshare.helper')->createWithParam($ra, $user);
+            if (array_key_exists('message_type', $ra) && $ra['message_type'] == 'sms') {
+                $baseurl = "http://" . $this->getRequest()->getHost();
+                $share_url = array();
+                $share_url["url"] = $baseurl . $this->generateUrl('selfieshare_provide_feedback_v3', array('ref' => $ss->getRef()));
+                $share_url_response = json_encode($share_url);
+                return new Response($share_url_response);
+            } else {
+                $ss_ar['to_email'] = $ss->getFriendEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/selfieshare_friend.html.twig';
+                $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'SelfieStyler friend share';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+                return new Response($this->get('webservice.helper')->response_array(true, 'selfieshare created'));
+            }
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+        }
+    }
+
+
+    public function nwsUpdateTermConditionsAction()
+    {     
+                
+        $decoded = $this->process_request();
+         $user = $this->container->get('user.helper.user')->findByEmail($decoded['email']);
+        if($user) {                  
+            $this->get('user.helper.user')->saveTermAndCondtions($user,$decoded['term_status']);
+            return new Response(json_encode(array("success" => 1,"description" => "Term & Conditon updated successfully")));
+        } else {
+            return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
+        }    
+    }    
 }
 

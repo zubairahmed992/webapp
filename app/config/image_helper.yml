@@ -33,14 +33,14 @@ image_category:
       dir:  'uploads/ltf/brands'  
 
     web:
-      height: 126
-      width: 126
+      height: 175
+      width: 280
       prefix:  
       dir:  'uploads/ltf/brands/web'  
 
     iphone:
-      height: 126
-      width: 126
+      height: 175
+      width: 280
       prefix:  
       dir:  'uploads/ltf/brands/iphone'
 

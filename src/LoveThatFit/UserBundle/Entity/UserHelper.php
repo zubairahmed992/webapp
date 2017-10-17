@@ -74,6 +74,13 @@ class UserHelper
         $this->em->flush();
     }
 
+    public function saveTermAndCondtions(User $user,$term_status)
+    {
+        $user->setTermAndConditions($term_status);
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
 //-------------------------------------------------------
 
     public function updateUserFirstAndLastName(User $user, $firstname, $lastname)
@@ -1336,6 +1343,21 @@ class UserHelper
             $user->setEmail($email);
             $this->saveUser($user);
 
+            return true;
+        }
+
+        else false;
+    }
+
+    public function updateAccountType(User $user, $acct_type){
+
+        if(is_object($user)){
+            if(!empty($acct_type)){
+                $user->setAcctType($acct_type);
+            }else{
+                $user->setAcctType(null);
+            }
+            $this->saveUser($user);
             return true;
         }
 

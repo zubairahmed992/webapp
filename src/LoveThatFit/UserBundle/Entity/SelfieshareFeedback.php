@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * LoveThatFit\UserBundle\Entity\SelfieshareFeedback
  *  
  * @ORM\Table(name="selfieshare_feedback")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="LoveThatFit\UserBundle\Entity\SelfieshareFeedbackRepository")
  */
 class SelfieshareFeedback  {
     

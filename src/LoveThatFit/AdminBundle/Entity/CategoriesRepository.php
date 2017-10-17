@@ -446,4 +446,14 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
+
+    #--------------Find Categories By ID---------------------------------#
+    public function getAllCategoriesWithLayerName() {
+
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT c.id, c.parent_id, c.layer_name from LoveThatFitAdminBundle:Categories c
+                            where c.disabled=0 and c.layer_name IS NOT NULL");
+        return $query->getResult();
+    }
 }

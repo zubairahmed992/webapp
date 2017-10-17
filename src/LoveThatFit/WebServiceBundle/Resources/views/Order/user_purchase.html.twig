@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SelfieStyler - Order Confirmation</title>
+    <style>
+        img{
+            display:block;
+        }
+    </style>
+</head>
+
+<body>
+<table border="0" cellspacing="0" cellpadding="0" align="center" width="720">
+    <tr>
+        <td align="center"><img src="/bundles/lovethatfit/miscellaneous/emails/images/logo.png" alt="Logo" width="100"/></td>
+    </tr>
+    <tr>
+        <td height="10"></td>
+    </tr>
+
+    <tr>
+        <td align="center"><h1><font size="15" face="Arial, Helvetica, sans-serif">THANK YOU!</font></h1></td>
+    </tr>
+    <tr>
+        <td height="2"></td>
+    </tr>
+    <tr>
+        <td align="center"><font size="3" face="Arial, Helvetica, sans-serif">YOUR ORDER HAS BEEN RECEIVED</font></td>
+    </tr>
+    <tr>
+        <td height="50"></td>
+    </tr>
+
+
+
+    <td>
+        <table border="0" cellspacing="0" cellpadding="5" align="center" width="80%">
+            <tbody>
+            <tr>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">ORDER #</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">DATE</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">ORDER AMOUNT</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">DISCOUNT</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">TOTAL</font></strong></th>
+                <th><strong><font size="2" face="Arial, Helvetica, sans-serif">PAYMENT METHOD</font></strong></th>
+            </tr>
+            <tr>
+                <td align="center">{{ dataArray['order_numnber'] }}</td>
+                <td align="center">{{ dataArray['purchase_date'] }}</td>
+                <td align="center">${{ dataArray['order_amount'] }}</td>
+                <td align="center">${{ dataArray['discount'] }}</td>
+                <td align="center">${{ dataArray['total_amount'] }}</td>
+                <td align="center">{{ dataArray['card_type'] }} *{{ dataArray['last_four_number'] }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+    </tr>
+    <tr>
+        <td height="30"></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+
+                <tr>
+                    <td colspan="4" height="30"><hr /></td>
+                </tr>
+
+
+
+                <tr>
+                    <th width="0" align="left"><strong><font size="3" face="Arial, Helvetica, sans-serif">PRODUCT</font></strong></th>
+                    <th width="0"><strong><font size="3" face="Arial, Helvetica, sans-serif">PRICE</font></strong></th>
+                    <th width="0" align="center"><strong><font size="3" face="Arial, Helvetica, sans-serif">QUANTITY</font></strong></th>
+                    <th width="0"><strong><font size="3" face="Arial, Helvetica, sans-serif">TOTAL</font></strong></th>
+                </tr>
+                <tr>
+                    <td colspan="4" height="30"><hr /></td>
+                </tr>
+                <tr>
+                    <td colspan="4" height="8"></td>
+                </tr>
+                {% for key in  dataArray['items'] %}
+                    <tr>
+                        <td width="0"><font size="2" face="Arial, Helvetica, sans-serif">{{ key['pname'] }}</font></td>
+                        <td width="0" align="center"><font size="2" face="Arial, Helvetica, sans-serif">${{ key['item_price'] }}</font></td>
+                        <td width="0" align="center"><font size="2" face="Arial, Helvetica, sans-serif">{{ key['quantity'] }}</font></td>
+                        <td width="0" align="center"><font size="2" face="Arial, Helvetica, sans-serif">${{ key['price'] }}</font></td>
+                    </tr>
+                {%endfor%}
+                <tr>
+
+                </tr>
+                <tr>
+                    <td colspan="4" height="8"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><hr /></td>
+                </tr>
+
+                </tbody>
+            </table></td>
+    </tr>
+    <tr>
+        <td height="20"></td>
+    </tr>
+    <tr>
+        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <th width="38%" align="left" valign="top"><font size="3" face="Arial, Helvetica, sans-serif">BILLING ADDRESS</font></th>
+                    <th width="33%" align="left" valign="top"><font size="3" face="Arial, Helvetica, sans-serif">SHIPPING ADDRESS</font></th>
+                    <th width="29%" align="left" valign="top"><font size="3" face="Arial, Helvetica, sans-serif">CART TOTALS</font></th>
+                </tr>
+                <tr>
+                    <th colspan="3" align="left" height="5"></th>
+                </tr>
+                <tr>
+                    <td valign="top" width="25%"><font size="2" face="Arial, Helvetica, sans-serif">{{ dataArray['billing_first_name'] }}<br />
+                            {{ dataArray['billing_address1'] }}</td>
+                    <td valign="top" width="30%"><font size="2" face="Arial, Helvetica, sans-serif">{{ dataArray['shipping_first_name'] }} {{ dataArray['shipping_last_name'] }}<br />
+                        {{ dataArray['shipping_address1'] }}</td>
+                    <td valign="top" width="45%">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                            <tbody>
+                            <tr>
+                                <td valign="middle"><font size="2" face="Arial, Helvetica, sans-serif">SUBTOTAL</font></td>
+                                <td valign="middle" align="right"><font size="2" face="Arial, Helvetica, sans-serif">${{ dataArray['order_amount'] }}</font></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" height="5"><hr /></td>
+                            </tr>
+                            <tr>
+                                <td valign="middle"><font size="2" face="Arial, Helvetica, sans-serif">DISCOUNT {{ dataArray['discountType'] }}</font></td>
+                                <td valign="middle" align="right"><font size="2" face="Arial, Helvetica, sans-serif">{{ dataArray['discount'] }}</font></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" height="5"><hr /></td>
+                            </tr>
+                            <tr>
+                                <td valign="middle"><font size="2" face="Arial, Helvetica, sans-serif">TAX</font></td>
+                                <td valign="middle" align="right"><font size="2" face="Arial, Helvetica, sans-serif">${{ dataArray['sales_tax'] }}</font></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" height="5"><hr /></td>
+                            </tr>
+                            <tr>
+                                <td valign="middle"><font size="2" face="Arial, Helvetica, sans-serif">SHIPPING</font></td>
+                                <td valign="middle" align="right"><font size="2" face="Arial, Helvetica, sans-serif">$0</font></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" height="5"><hr /></td>
+                            </tr>
+                            <tr>
+                                <th valign="middle" align="left"><font size="3" face="Arial, Helvetica, sans-serif"><strong>TOTAL</strong></font></th>
+                                <th valign="middle" align="right"><font size="3" face="Arial, Helvetica, sans-serif"><strong>${{ dataArray['total_amount'] }}</strong></font></th>
+                            </tr>
+                            </tbody>
+                        </table></td>
+                </tr>
+
+                </tbody>
+            </table></td>
+    </tr>
+
+
+    <tr>
+        <td height="50"><hr /></td>
+    </tr>
+
+
+
+    <tr>
+        <td align="center"><font size="2" face="Arial, Helvetica, sans-serif">If you have questions, call us anytime at {{ dataArray['contact_number'] }} and reference your unique <br /><br />order #{{ dataArray['order_numnber'] }}</font></td>
+    </tr>
+    <tr>
+        <td align="center"><font size="2" face="Arial, Helvetica, sans-serif">Thank you for hanging out with us at Selfiestyler!</font></td>
+    </tr>
+    <tr>
+        <td height="30"></td>
+    </tr>
+</table>
+
+
+
+
+</body>
+</html>
+
