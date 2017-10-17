@@ -72,6 +72,8 @@ class PodioUsersHelper
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUser($user_entity);
         $entity->setPodioUpdated(0);
+        $entity->setPrimaryEmailUpdated(0);
+        $entity->setPrimaryEmailUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -86,6 +88,8 @@ class PodioUsersHelper
         $entity->setPodioId($podio_id);
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setPodioUpdated($is_podio_updated);
+        $entity->setPrimaryEmailUpdated(0);
+        $entity->setPrimaryEmailUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
         $this->em->flush();
