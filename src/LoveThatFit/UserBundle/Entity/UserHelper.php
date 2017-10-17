@@ -82,6 +82,12 @@ class UserHelper
         $this->em->flush();
     }
 
+    public function sendUpdatedPrimaryEmailToUser( User $user, $decoded)
+    {         
+        $this->container->get('mail_helper')->sendPrimaryKeyUpdateEmail($user, $decoded);
+        return;
+    }  
+
 //-------------------------------------------------------
 
     public function updateUserFirstAndLastName(User $user, $firstname, $lastname)

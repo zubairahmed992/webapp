@@ -585,15 +585,13 @@ class WSUserController extends Controller
             }else{
 
                 $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
-                //$this->sendUpdatedPrimaryEmailToUser($user,$decoded);
+                $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded);
                 $user_podio = array(
                     'current_email' => ($decoded['email']) ? $decoded['email'] : '',
                     'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
                 );                   
 
                 $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
-
-                // echo "<pre>";print_r($podio_results);
 
                 if(count($podio_results) > 0){
 
@@ -609,13 +607,6 @@ class WSUserController extends Controller
             return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
         }    
     }  
-
-
-    private function sendUpdatedPrimaryEmailToUser( User $user, $decode)
-    {
-              
-        $this->get('mail_helper')->sendPrimaryKeyUpdateEmail($user, $decode);
-        return;
-    }  
+  
 }
 

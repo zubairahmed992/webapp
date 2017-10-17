@@ -70,8 +70,6 @@ class MailHelper {
             ->setBody(
                 $this->templating->render($body, array( 'dataArray' => $dataArray)));
 
-            echo $body;
-            exit;
             //Enable BCC for user order
             //Configure email through app/config/parameters.yml
         if($enableBCC 
