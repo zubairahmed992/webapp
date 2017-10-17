@@ -69,6 +69,7 @@ class MailHelper {
             ->setContentType("text/html")
             ->setBody(
                 $this->templating->render($body, array( 'dataArray' => $dataArray)));
+
             //Enable BCC for user order
             //Configure email through app/config/parameters.yml
         if($enableBCC 
@@ -123,6 +124,18 @@ class MailHelper {
 
         $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
         $subject = 'SelfieStyler: Thank you very much for your order. ';
+        //Enable BBC
+        $enableBCC = true;
+        return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
+    }
+
+     public function sendPrimaryKeyUpdateEmail( $user, $dataArray )
+    {
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $dataArray['email'];
+
+        $body = "LoveThatFitAdminBundle::email/update_primary_email.html";
+        $subject = 'SelfieStyler: Your Primary email has been changed. ';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);

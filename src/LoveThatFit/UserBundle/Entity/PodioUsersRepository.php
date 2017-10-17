@@ -13,6 +13,11 @@ class PodioUsersRepository extends EntityRepository
         return $this->findOneBy(array('user_id' => $user_id));
     }
 
+    public function findPrimaryKeybyPodioId($PodioId)
+    {
+        return $this->findOneBy(array('podio_id' => $PodioId));
+    }
+
     public function findUserByStatus($status)
     {
         $query = $this->getEntityManager()
