@@ -2305,8 +2305,9 @@ class User implements UserInterface, \Serializable {
 
             /*Set user status for IOSv3-435*/
             $status = $this->status;
+
             $user_status = $this->status;
-            if($status === null){
+            if(count($this->getUserArchives()) === 0){
                 $user_status = 1;
             }
 
@@ -2449,7 +2450,8 @@ class User implements UserInterface, \Serializable {
             /*Set user status for IOSv3-435*/
             $status = $this->status;
             $user_status = $this->status;
-            if($status === null){
+
+            if(count($this->getUserArchives()) === 0){
                 $user_status = 1;
             }
 
