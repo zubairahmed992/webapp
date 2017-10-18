@@ -678,13 +678,13 @@ constants:
             shoulder_across_front_px: 344
             bust_px: 339
             waist_px:
-                h: 272
-                p: 291
-                a: 310
-                r: 378
+                a: 136
+                b: 146
+                c: 155
             hip_px:
-                p: 406
-                t: 350
+                a: 189
+                b: 203
+                c: 175
         30dd:
             index_value: 23
             title: 30dd
@@ -698,13 +698,13 @@ constants:
             shoulder_across_front_px: 350
             bust_px: 350
             waist_px:
-                h: 282
-                p: 300
-                a: 319
-                r: 387
+                a: 141
+                b: 150
+                c: 160
             hip_px:
-                p: 415
-                t: 360
+                a: 194
+                b: 207
+                c: 180
         30ddd:
             index_value: 24
             title: 30ddd
