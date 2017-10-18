@@ -38,7 +38,8 @@ $(document).ready(function() {
     });
     h_indi.visible = false;
   
-  
+   
+    
     pathLine =  new Path({
         segments:[[480, 0], [480, 1280]],
         strokeColor:'red',
@@ -47,58 +48,83 @@ $(document).ready(function() {
     });
    pathLine.visible = false;
   
-        
+   
    lyr_misc = new Layer();
    lyr_misc.activate();
    
- retuch_img = new Layer();
-   
-   console.log("lyr_area_hldr: "+lyr_area_hldr.position);
-   console.log("lyr_stage_coor: "+lyr_stage_coor.position);
-   console.log("canvas_area_hldr: "+canvas_area_hldr.position);
-   console.log("canv_ref_rect: "+canv_ref_rect.position);  
-   
-   
-console.log(paper.setup.raster);   
+ 
+//archives: on this layer we saved retouch image
+retuch_img = new Layer();
+
 });
 
-
-var retuchImage;    
+// archives show image function
+var retuchImage;
 function showImag(retouch_image){
-       retuch_img.activate();
+   
+    retuch_img.activate();
         retuch_img.removeChildren(); 
-        show_img = new Raster(retouch_image);
+        var show_img = new Raster(retouch_image);
         show_img.on('load', function() {
-        this.position = new Point(480,640);
-        preset_user_img(show_img ,parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+        this.opacity=1;
+        user_image.position = new Point(480,640);
+        preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
+        user_image.visible = false;
         });
        return retuchImage = show_img;
         view.update();
 }
 
+//Archives user image compare function
+function init_compare(){
+    user_image.visible = true;
+    //retuch_img.blendMode = "multiply";
+    view.update();
+}
+
+//Change opacity on canvas using archive feature
 function changeOpacity(opacity){
-    if(opacity != null){
+    if(opacity !== null){
         retuchImage.opacity = opacity;
     }else{
-        opacity=1;
+   
       retuchImage.opacity = opacity;   
     }
     view.update();
 }
 
+//Archives Toggle image on canvas
 var flg =0;
 function toggleimg(){
    if(flg==0){
-       retuchImage.visible=false;
+       retuchImage.opacity=0;
+       $("#retouchImages li").each(function(){
+           if($(this).hasClass('active')){ 
+               $(this).removeClass('active');
+               $(this).addClass('notActive');
+           }
+       });
+      
         flg=1;
     }else{
-        retuchImage.visible=true;
+        retuchImage.opacity=1;
         flg=0;
+        if($(this).hasClass('notActive')){ 
+               $(this).removeClass('active');
+               $(this).addClass('notActive');
+           }
+        
+        
     }
-   // return user_image;
-     view.update();
+   view.update();
 }
 
+// arvhies images hide retouch image and show  user image
+function showOriginal(){
+     retuchImage.visible=false;
+      user_image.visible = true;
+     view.update();
+}
 
 var toe_shape_px=42;
 var maskConfig = {
@@ -483,7 +509,7 @@ function preset_user_image(move_up_down, move_left_right, img_rotate) {
     user_image.rotate(img_rotate); // -0.1 for left, 0.1 for right
 }
 
-function preset_user_img(userImage,move_up_down, move_left_right, img_rotate) {
+function preset_user_img(userImage, move_up_down, move_left_right, img_rotate) {
     userImage.position.y = user_image.position.y += move_up_down;
     userImage.position.x = user_image.position.x += move_left_right;
     userImage.rotate(img_rotate); // -0.1 for left, 0.1 for right
@@ -617,11 +643,11 @@ function set_out_update(){
 function move_left(){
     if(current_status.zoom){
         user_image.position.x -= 0.5;
-        show_img.position.x -= 0.5;
+      
         image_actions_count.move_left_right -= 0.5;
     }else{
         user_image.position.x -= 1;
-        show_img.position.x -= 1;
+     
         image_actions_count.move_left_right -= 1;
     }
     set_out_update();
@@ -629,11 +655,11 @@ function move_left(){
 function move_right(){
     if(current_status.zoom){
         user_image.position.x += 0.5;
-        show_img.position.x += 0.5;
+      
         image_actions_count.move_left_right += 0.5;
     }else{
         user_image.position.x += 1;
-        show_img.position.x += 1;
+      
         image_actions_count.move_left_right += 1;
     }
     set_out_update();
@@ -641,11 +667,11 @@ function move_right(){
 function move_up(){
     if(current_status.zoom){
         user_image.position.y -= 0.5;
-        show_img.position.y -= 0.5;
+      
         image_actions_count.move_up_down -= 0.5;
     }else{
         user_image.position.y -= 1;
-        show_img.position.y -= 1;
+      
         image_actions_count.move_up_down -= 1;
     }
     set_out_update();
@@ -653,11 +679,11 @@ function move_up(){
 function move_down(){
     if(current_status.zoom){
         user_image.position.y += 0.5;
-        show_img.position.y += 0.5;
+       
         image_actions_count.move_up_down += 0.5;
     }else{
         user_image.position.y += 1;
-        show_img.position.y += 1;
+       
         image_actions_count.move_up_down += 1;
     }
     set_out_update();
@@ -665,11 +691,11 @@ function move_down(){
 function rotate_left(){
     if(current_status.zoom){
         user_image.rotate(-0.05);
-        show_img.rotate(-0.05);
+       
         image_actions_count.img_rotate += -0.05;
     }else{
         user_image.rotate(-0.1);
-        show_img.rotate(-0.1);
+       
         image_actions_count.img_rotate += -0.1;
     }
     set_out_update();
@@ -677,11 +703,10 @@ function rotate_left(){
 function rotate_right(){
     if(current_status.zoom){
         user_image.rotate(0.05);
-        show_img.rotate(0.05);
+       
         image_actions_count.img_rotate += 0.05;
     }else{
         user_image.rotate(0.1);
-        show_img.rotate(0.1);
         image_actions_count.img_rotate += 0.1;
     }
     set_out_update();
@@ -691,6 +716,7 @@ function zoom_in(){
         current_status.zoom_level *= 2;
         lyr_area_hldr.scale(2);
         lyr_stage_coor.scale(2);
+        retuch_img.scale(2);
         current_status.zoom = true;
         view.update();
         
@@ -705,12 +731,16 @@ function zoom_out(){
         current_status.zoom_level /= 2;
         lyr_area_hldr.scale(0.5);
         lyr_stage_coor.scale(0.5);
-        
+         retuch_img.scale(0.5);
        
         lyr_x = 480 - parseFloat(lyr_area_hldr.position.x);
         lyr_y = 640 - parseFloat(lyr_area_hldr.position.y);
         stage_x = 480 - parseFloat(lyr_stage_coor.position.x);
         stage_y = 640 - parseFloat(lyr_stage_coor.position.y);
+        
+        retuch_img_x = 480 - parseFloat(retuch_img.position.x);
+        retuch_img_y = 640 - parseFloat(retuch_img.position.y);
+        
         
         console.log("lyr_area_hldr: " + lyr_x + "----" + lyr_y);
         console.log("lyr_stage_coor: " + stage_x + "----" + stage_y);
@@ -720,6 +750,10 @@ function zoom_out(){
         
         lyr_stage_coor.position.x += stage_x;
         lyr_stage_coor.position.y += stage_y;
+        
+        retuch_img.position.x += stage_x;
+        retuch_img.position.y += stage_y;
+        
 
         console.log("lyr_area_hldr: "+lyr_area_hldr.position);
         console.log("lyr_stage_coor: "+lyr_stage_coor.position);
@@ -732,9 +766,13 @@ function zoom_out(){
     }
 }
 function save(){
+    // change opacity 1 for image cropping 
+    if(retuchImage !=null){
+        retuchImage.opacity = 1;
+    }
     if(current_status.zoom_level > 1){
         zoom_out();
-        
+       
         $("#img_path_json").attr("value", getPathArrayJson());
         $("#page_wrap").fadeIn(160);
         //image_export_layer = new Layer();
@@ -852,11 +890,13 @@ function onMouseDrag(event) {
     }
       if(current_status.control_indi){  
         if(lyr_area_hldr.position.x + event.delta.x >= 0 && lyr_area_hldr.position.x + event.delta.x <= 960){
+                retuch_img.position.x+= event.delta.x;
                 lyr_area_hldr.position.x += event.delta.x;
                 lyr_stage_coor.position.x += event.delta.x;
                 change_x_pos_diff += event.delta.x;
             }   
         if(lyr_area_hldr.position.y + event.delta.y >= 0 && lyr_area_hldr.position.y + event.delta.y <= 1280){
+                retuch_img.position.y+= event.delta.y;
                 lyr_area_hldr.position.y += event.delta.y;
                 lyr_stage_coor.position.y += event.delta.y;
                 change_y_pos_diff += event.delta.y;
@@ -880,6 +920,8 @@ function upload(){
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);    
     $('#img_path_paper').attr('value', full_mask.pathData);    
+    
+  
     
     var sholder_left =  full_mask.segments[7].point.y;
     var sholder_right = full_mask.segments[63].point.y;

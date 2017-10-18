@@ -1008,8 +1008,9 @@ class WSCartController extends Controller
         }
         $creditCard   = json_decode($orders['payment_json'])->transaction->_attributes->creditCard;
         $d_discount   = (isset($orders['discount']) ? $orders['discount'] : 0);
+
         $dataArray = array(
-            'purchase_date' => $orders['user_order_date']->format('Y-m-d H:i:s'),
+            'purchase_date' => ($orders['user_order_date'] != "") ? $orders['user_order_date']->format('Y-m-d H:i:s'): "",
             'items'         => $itemsArray,
             'order_numnber' => $orders['order_number'],
             'card_type'     => $creditCard->cardType,
