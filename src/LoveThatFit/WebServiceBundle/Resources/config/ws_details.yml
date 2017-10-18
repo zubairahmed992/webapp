@@ -1008,7 +1008,7 @@ nws_update_primary_email:
     request_type: post
     description: Update primary email and add previous email in archive_email field in user table
     params: 
-          email: ovais.rafique@centricsource.com
+          email: dummy@dummy.com
           auth_token: 121c421783cd4d71d871ec16a1296091
-          new_primary_email: ovais.rafique11@centricsource.com
+          new_primary_email: dummy@dummy.com
                    
