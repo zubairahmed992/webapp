@@ -34,7 +34,7 @@ class WSCategoryController extends Controller {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $base_path = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
 
-
+        $static_category_banner['object'][0]['banner_image'] = $base_path.$static_category_banner['object'][0]['banner_image'];
 
         if (array_key_exists('gender', $decoded)) {
             $categoryList = $this->get('admin.helper.Categories')->getCategoryListForService($base_path, $decoded['gender']);
