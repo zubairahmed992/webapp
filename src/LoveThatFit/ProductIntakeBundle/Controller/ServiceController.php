@@ -310,7 +310,7 @@ class ServiceController extends Controller {
         //return new JsonResponse([count($array_format)]);
         $accesstoken = $this->getRequest()->headers->get('accesstoken');
         $file_name = $_FILES['file']['name'];
-        $_exploded = explode("_", strtolower($file_name));
+        $_exploded = explode("_", $file_name);
         $access_token_password = sha1("SSIMV2020".$_exploded[1]);
         if($access_token_password == $accesstoken) {
             try {
