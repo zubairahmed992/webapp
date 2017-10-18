@@ -308,10 +308,11 @@ class ServiceController extends Controller {
     public function productFittingRoomImageUploadAction(Request $request) {    
         // $array_format = explode("_", strtolower('Champion_7791_black_WR_20_XXL.jpg')); 
         //return new JsonResponse([count($array_format)]);
+        $accesstoken = $this->getRequest()->headers->get('accesstoken');
         $file_name = $_FILES['file']['name'];
         $_exploded = explode("_", strtolower($file_name));
         $access_token_password = sha1("SSIMV2020".$_exploded[1]);
-        if($access_token_password == $_POST['access_token']) {
+        if($access_token_password == $accesstoken) {
             try {
                 $imageFile = $request->files->get('file');
                 $response = $this->imageUploadProductItemSizeNewFormat($_FILES, $imageFile);
