@@ -7,9 +7,9 @@ saml_acs:
     defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:assertionConsumerService }
 
 saml_login:
-    pattern:     /saml/login
+    pattern:     /admin/login
     defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:login }
 
 saml_logout:
-    pattern:     /saml/logout
+    pattern:     /admin/logout
     defaults: { _controller: LoveThatFitOneloginSamlBundle:Saml:singleLogoutService }

@@ -9,8 +9,8 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: "%kernel.debug%"
-#        http_port: 80
-#        https_port: 443
+
+
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: true }
@@ -100,7 +100,7 @@ love_that_fit_onelogin_saml:
             url: 'http://localserver.webapp/admin/acs'
             binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
         singleLogoutService:
-            url: 'http://localserver.webapp/saml/logout'
+            url: 'http://localserver.webapp/admin/logout'
             binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
     # Optional settings
     security:

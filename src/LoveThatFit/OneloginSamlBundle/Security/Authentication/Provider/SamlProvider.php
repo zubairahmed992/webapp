@@ -48,8 +48,10 @@ class SamlProvider implements AuthenticationProviderInterface
     {
         $user = $this->retrieveUser($token);
 
+        $assignRole = $this->findRoleAdminInArray($token->getAttribute('RoleInfo'));
+
         if ($user) {
-            $authenticatedToken = $this->tokenFactory->createToken($user, $token->getAttributes(), $user->getRoles());
+            $authenticatedToken = $this->tokenFactory->createToken($user, $token->getAttributes(), array($assignRole));
             $authenticatedToken->setAuthenticated(true);
 
             if ($user instanceof SamlUserInterface) {
@@ -60,6 +62,18 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         throw new AuthenticationException('The authentication failed.');
+    }
+
+    public function findRoleAdminInArray( array $userRoles)
+    {
+        foreach ($userRoles as $role){
+            if($role == 'ROLE_ADMIN')
+                return 'ROLE_ADMIN';
+            elseif ($role == 'ROLE_SUPPORT')
+                return 'ROLE_SUPPORT';
+        }
+
+        return 'ROLE_USER';
     }
 
     public function supports(TokenInterface $token)

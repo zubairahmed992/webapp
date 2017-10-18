@@ -1,8 +1,7 @@
-love_that_fit_onelogin_saml:
-    resource: "@LoveThatFitOneloginSamlBundle/Controller/"
-    type:     annotation
+saml_sp:
+    resource: "@LoveThatFitOneloginSamlBundle/Resources/config/routing.yml"
     prefix:   /
-
+    
 love_that_fit_product_intake:
     resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing.yml"
     prefix:   /
@@ -41,10 +40,6 @@ love_that_fit_site:
 
 love_that_fit_admin:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing.yml"
-    prefix:   /
-
-saml_sp:
-    resource: "@LoveThatFitOneloginSamlBundle/Resources/config/routing.yml"
     prefix:   /
 
 love_that_fit_podio:

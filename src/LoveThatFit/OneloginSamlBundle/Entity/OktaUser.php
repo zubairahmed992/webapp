@@ -67,6 +67,11 @@ class OktaUser implements SamlUserInterface
         // TODO: Implement getPassword() method.
     }
 
+    public function setRoles(array $roles) 
+    {
+        $this->roles = $roles;
+    }
+
     /**
      * Returns the salt that was originally used to encode the password.
      *
