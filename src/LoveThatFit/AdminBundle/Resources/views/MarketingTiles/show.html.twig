@@ -41,8 +41,8 @@
                                     {% endif %}
                                     {% if marketing_tiles.description != ''  %}
                                         <div class="span8">
-                                            <div class="span3">Description</div>
-                                            <div class="span3">{{marketing_tiles.description }}</div>
+                                            <div class="span3" style="border-bottom:none !important;">Description</div>
+                                            <div class="span5" style="border-bottom:none !important;">{{marketing_tiles.description }}</div>
                                         </div>
                                     {% endif %}
                                     {% if marketing_tiles.button_title != ''  %}
@@ -61,6 +61,12 @@
                                         <div class="span8">
                                             <div class="span3">Sorting</div>
                                             <div class="span3">{{marketing_tiles.sorting }}</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if marketing_tiles.target_url != ''  %}
+                                        <div class="span8">
+                                            <div class="span3">Target URL</div>
+                                            <div class="span3">{{marketing_tiles.target_url }}</div>
                                         </div>
                                     {% endif %}
                                     </div>
