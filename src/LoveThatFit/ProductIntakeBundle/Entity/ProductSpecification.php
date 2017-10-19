@@ -567,6 +567,23 @@ class ProductSpecification {
         $this->undo_specs_json = $this->specs_json;
         $this->specs_json =  json_encode($specs);
     }
-
+#------------------------------------------------------------
+    public function roundUp(){
+       $specs = json_decode($this->specs_json, true);
+       foreach ($specs['sizes'] as $size => $fit_points) {
+           foreach ($fit_points as $fp => $ranges) {
+               foreach ($ranges as $k => $v) {
+                   $specs['sizes'][$size][$fp][$k]=$this->to_frac($v);
+               }
+           }
+       }
+       $this->specs_json = json_encode($specs);
+    }
+     #------------------------------------------------------------------
+    
+     function to_frac($number, $denominator = 16) {
+        $x = floor($number * $denominator);
+        return $x / $denominator;         
+    }
     
 }

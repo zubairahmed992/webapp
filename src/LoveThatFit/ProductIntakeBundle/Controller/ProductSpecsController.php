@@ -36,6 +36,12 @@ class ProductSpecsController extends Controller
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $tab){   
         $ps = $this->get('pi.product_specification')->find($id);
+         if ($tab == 'r') {
+            $ps->roundUp();
+            $this->get('pi.product_specification')->save($ps);
+            $tab = 'b';
+        }
+        
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         $gender = ($parsed_data['gender'] == 'f')?'women':'man';
