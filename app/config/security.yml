@@ -144,6 +144,9 @@ security:
 #                    ron: { password: 6e77b328ec7c624ebdd5189d4d32666407e29ab6, roles: 'ROLE_ADMIN' }
 #                    ovais: { password: 72fce8aa33a63401b0914fdd6bc72cf28a768c99, roles: 'ROLE_ADMIN' }
 #                    raghib: { password: 1c3946c944801ab0a52bd9804d577c55638e69fd, roles: 'ROLE_ADMIN' }
+        support_db:
+            entity: { class: LoveThatFit\AdminBundle\Entity\SupportAdminUser, property: user_name }
+            
         saml_provider:
             saml:
                 user_class: 'LoveThatFit\OneloginSamlBundle\Entity\OktaUser'
@@ -151,8 +154,7 @@ security:
         user_db:
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
-        support_db:
-            entity: { class: LoveThatFit\AdminBundle\Entity\SupportAdminUser, property: user_name }            
+                    
     #encoders:
         #
         #Symfony\Component\Security\Core\User\User: plaintext
