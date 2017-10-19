@@ -135,7 +135,7 @@ class MailHelper {
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/update_primary_email.html.twig";
-        $subject = 'SelfieStyler: Your Primary email has been changed. ';
+        $subject = 'Your email has been changed in SelfieStyler';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
