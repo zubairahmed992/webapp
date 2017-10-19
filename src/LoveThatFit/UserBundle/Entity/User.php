@@ -529,6 +529,23 @@ class User implements UserInterface, \Serializable {
     private $archive_email;
 
 
+    /**
+     * @var string $friend_name
+     *
+     * @ORM\Column(name="friend_name", type="string", length=255, nullable=true)
+     * )
+     */
+    private $friend_name;
+
+
+    /**
+     * @var string $friend_email
+     *
+     * @ORM\Column(name="friend_email", type="string", length=60, nullable=true)
+     *
+     */
+    private $friend_email;
+
 
     /**
      * Get id
@@ -3076,6 +3093,47 @@ class User implements UserInterface, \Serializable {
      */
     public function getArchiveEmail() {
         return $this->archive_email;
+    }
+
+
+
+    /**
+     * Set friend_email
+     *
+     * @param string $friend_email
+     * @return User
+     */
+    public function setFriendEmail($friend_email) {
+        $this->friend_email = $friend_email;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFriendEmail() {
+        return $this->friend_email;
+    }
+
+
+    /**
+     * Set friend_name
+     *
+     * @param string $friend_name
+     * @return User
+     */
+    public function setFriendName($friend_name) {
+        $this->friend_name = $friend_name;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFriendName() {
+        return $this->friend_name;
     }
 
 
