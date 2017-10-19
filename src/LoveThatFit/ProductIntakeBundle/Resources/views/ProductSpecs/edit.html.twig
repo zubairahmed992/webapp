@@ -625,7 +625,8 @@
    
 <div class="btn-group" role="group" aria-label="..." style="float:right;">
    
-    {% if cs_file[app.request.get('id')] != '' %}
+    
+    {% if cs_file is iterable and cs_file[app.request.get('id')] is defined and cs_file[app.request.get('id')] != '' %}
         <a href="{{ path('product_intake_mapping_update_product_specification', {'mapping_title': parsed_data.mapping_title, 'specs_id' :  app.request.get('id') }) }}" class="btn btn-default">Update</a>
     {% endif %}
     <a href="{{ path('product_intake_validate_product_specification', {'id': app.request.get('id')}) }}" class="btn btn-default">Validate</a> 
