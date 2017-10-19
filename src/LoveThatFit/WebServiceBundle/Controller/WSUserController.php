@@ -580,30 +580,38 @@ class WSUserController extends Controller
         if($user) {
             $email_auth_token = $user->getAuthToken();
             if($email_auth_token==$decoded['auth_token'])
-            {    
+            { 
+                if($decoded['email']==$decoded['new_primary_email']){
+
+                    return new Response(json_encode(array("success" => "0","description" => "Both emails are same.")));    
+
+                } else {    
+
+
         
-                $newUser = $this->container->get('user.helper.user')->findByEmail($decoded['new_primary_email']);
-                if($newUser){
-                    return new Response(json_encode(array("success" => "0","description" => "This email already assigned to other member.")));    
-                }else{
+                    $newUser = $this->container->get('user.helper.user')->findByEmail($decoded['new_primary_email']);
+                    if($newUser){
+                        return new Response(json_encode(array("success" => "0","description" => "This email already assigned to other member.")));    
+                    }else{
 
-                    $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
-                    $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded);
-                    $user_podio = array(
-                        'current_email' => ($decoded['email']) ? $decoded['email'] : '',
-                        'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
-                    );                   
+                        $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
+                        $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded);
+                        $user_podio = array(
+                            'current_email' => ($decoded['email']) ? $decoded['email'] : '',
+                            'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
+                        );                   
 
-                    $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
+                        $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
 
-                    if($podio_results['podio_id'] > 0){
-                       
-                        $podioData = $this->container->get('user.helper.podio')->findPrimaryKeybyPodioId($podio_results['podio_id']);
-                        $id = $podioData->getId();
-                        $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
+                        if($podio_results['podio_id'] > 0){
+                           
+                            $podioData = $this->container->get('user.helper.podio')->findPrimaryKeybyPodioId($podio_results['podio_id']);
+                            $id = $podioData->getId();
+                            $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
+                        }
+                      
+                        return new Response(json_encode(array("success" => 1,"description" => "Your email has been successfully changed! <Perfect, thanks!>")));
                     }
-                  
-                    return new Response(json_encode(array("success" => 1,"description" => "Your email has been successfully changed! <Perfect, thanks!>")));
                 }
 
             } else {

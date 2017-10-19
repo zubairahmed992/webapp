@@ -675,8 +675,9 @@ constants:
             average: 34
             shoulder_across_back: 14.625
             shoulder_across_front: 13.875
-            shoulder_across_front_px: 344
-            bust_px: 339
+            shoulder_across_front_px: 172
+            suny_test_shoulder_px: 176
+            bust_px: 169.5
             waist_px:
                 a: 136
                 b: 146
@@ -695,8 +696,9 @@ constants:
             average: 35
             shoulder_across_back: 14.875
             shoulder_across_front: 14.125
-            shoulder_across_front_px: 350
-            bust_px: 350
+            shoulder_across_front_px: 175
+            suny_test_shoulder_px: 178
+            bust_px: 175
             waist_px:
                 a: 141
                 b: 150
