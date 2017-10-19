@@ -38,8 +38,7 @@ $(document).ready(function() {
     });
     h_indi.visible = false;
   
-   
-    
+       
     pathLine =  new Path({
         segments:[[480, 0], [480, 1280]],
         strokeColor:'red',
@@ -55,7 +54,6 @@ $(document).ready(function() {
  
 //archives: on this layer we saved retouch image
 retuch_img = new Layer();
-
 });
 
 // archives show image function
@@ -69,7 +67,7 @@ function showImag(retouch_image){
         this.opacity=1;
         user_image.position = new Point(480,640);
         preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
-        user_image.visible = false;
+        //user_image.visible = false;
         });
        return retuchImage = show_img;
         view.update();
@@ -78,10 +76,14 @@ function showImag(retouch_image){
 //Archives user image compare function
 function init_compare(){
     user_image.visible = true;
-    //retuch_img.blendMode = "multiply";
     view.update();
 }
 
+function blendMode(param){
+     user_image.visible = true;
+     retuch_img.blendMode = param;
+     view.update();
+}
 //Change opacity on canvas using archive feature
 function changeOpacity(opacity){
     if(opacity !== null){
@@ -98,6 +100,8 @@ var flg =0;
 function toggleimg(){
    if(flg==0){
        retuchImage.opacity=0;
+       //if need edit mask on toggle original image
+        //retuchImage.visible=false;
        $("#retouchImages li").each(function(){
            if($(this).hasClass('active')){ 
                $(this).removeClass('active');
@@ -108,6 +112,8 @@ function toggleimg(){
         flg=1;
     }else{
         retuchImage.opacity=1;
+         //if need edit mask on toggle original image
+       retuchImage.visible=true;
         flg=0;
         if($(this).hasClass('notActive')){ 
                $(this).removeClass('active');
