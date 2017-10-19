@@ -1564,7 +1564,17 @@ class WebServiceHelper
     #--------------Get Product list By Category and Gender -----------------------------------------------------
     public function getBannerBrandProduct($brand_id, $user_id)
     {
-        return $this->response_array(true, 'Product List By Brand', true, array('brand_product_list' => $this->container->get('webservice.repo')->productListBrand($brand_id, $user_id)));
+        $productlist = $this->container->get('webservice.repo')->productListBrand($brand_id, $user_id);
+
+        foreach ($productlist as $key => $product) {
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
+        }
+
+
+        return $this->response_array(true, 'Product List By Brand', true, array('brand_product_list' => $productlist));
     }
 
 
