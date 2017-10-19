@@ -47,6 +47,16 @@ class PodioUsers {
      */
     protected $is_podio_updated;
 
+     /**
+     * @ORM\Column(type="integer", length=4, nullable=true)
+     */
+    protected $is_primary_email_updated;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $primary_email_updated_at;
+
     /**
      * Get id
      *
@@ -178,5 +188,47 @@ class PodioUsers {
      */
     public function getPodioUpdated() {
         return $this->is_podio_updated;
+    }
+
+    /**
+     * Set is_primary_email_updated
+     *
+     * @param integer $is_primary_email_updated
+     * @return is_primary_email_updated
+     */
+    public function setPrimaryEmailUpdated($is_primary_email_updated) {
+        $this->is_primary_email_updated = $is_primary_email_updated;
+
+        return $this;
+    }
+
+    /**
+     * Get is_primary_email_updated
+     *
+     * @return integer 
+     */
+    public function getPrimaryEmailUpdated() {
+        return $this->is_primary_email_updated;
+    }
+
+
+     /**
+     * Set primary_email_updated_at
+     *
+     * @param \DateTime $updatedAt
+     * @return Brand
+     */
+    public function setPrimaryEmailUpdatedAt($PrimaryEmailUpdatedAt) {
+        $this->primary_email_updated_at = $PrimaryEmailUpdatedAt;
+        return $this;
+    }
+
+    /**
+     * Get primary_email_updated_at
+     *
+     * @return \DateTime 
+     */
+    public function getPrimaryEmailUpdatedAt() {
+        return $this->primary_email_updated_at;
     }
 }
