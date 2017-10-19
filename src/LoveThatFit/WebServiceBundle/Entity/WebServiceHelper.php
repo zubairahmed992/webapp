@@ -1336,6 +1336,7 @@ class WebServiceHelper
         $p['item_name'] = $product->getItemName();
         $p['disabled'] = $product->getDisabled();
         $p['deleted'] = $product->getDeleted();
+
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
@@ -1583,6 +1584,10 @@ class WebServiceHelper
                 $filtered_products[$keyed]['fitting_room_status'] = false;
                 $filtered_products[$keyed]['qty'] = 0;
             }
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($valprod['product_id']);
+            $filtered_products[$keyed]['color_count'] = count($color_count);
         }
         return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $filtered_products));
     }
@@ -1741,9 +1746,6 @@ class WebServiceHelper
             return $this->response_array(false, 'Member not found');
           }         
      }
-     
-     
-
 
     public function getProductListByBrand($search_text, $user_id, $page_no = 1)
     {
@@ -1775,6 +1777,10 @@ class WebServiceHelper
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
 
 
