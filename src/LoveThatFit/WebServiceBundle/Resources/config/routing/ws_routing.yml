@@ -85,7 +85,15 @@ ws_selfieshare_create:
 ws_selfieshare_create_v3:
     pattern:  /ws/selfieshare/create_v3
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateV3}
-    
+
+nws_web_invitefriend_create:
+    pattern:  /nws/invitefriend/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:invitefriendCreate}
+
+nws_web_register_male_users:
+    pattern:  /nws/registermaleusers/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registermaleusersCreate}
+
 #------------------------------------------------------------------------------------
 
 nws_products:
@@ -432,3 +440,7 @@ ws_email_order_detail_show:
 nws_update_primary_email:
     pattern: /nws/update_primary_email
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdatePrimaryEmail}
+
+nws_web_user_registration:
+    pattern: /nws/web_user_registration
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registrationFromWeb }
