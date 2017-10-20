@@ -81,8 +81,8 @@ class InviteFriendHelper {
         return $this->repo->find($id);
     } 
     #----------------------------
-    public function findByRef($ref) {
-        return $this->repo->findOneBy(array('ref' => $ref));
+    public function findByFriendEmail($friend_email) {
+        return $this->repo->findOneBy(array('friend_email' => $friend_email));
     } 
     
 }

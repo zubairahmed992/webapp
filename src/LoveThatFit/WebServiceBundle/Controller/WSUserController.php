@@ -645,7 +645,11 @@ class WSUserController extends Controller
         $user=$this->get('user.helper.user')->findByEmail($ra['email']);
 
         if (count($user) > 0) {
-            $ss = $this->get('user.invitefriend.helper')->createWithParam($ra, $user);
+
+            $check_friend_email = $this->get('user.invitefriend.helper')->findByFriendEmail($ra['friend_email']);
+            if(count($check_friend_email) === 0 ) {
+                $ss = $this->get('user.invitefriend.helper')->createWithParam($ra, $user);
+            }
 
             $ss_ar['to_email'] = $ss->getFriendEmail();
             $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
