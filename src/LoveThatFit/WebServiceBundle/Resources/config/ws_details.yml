@@ -270,6 +270,13 @@ ws_user_forgot_password:
      email: kamran@ltf.com
    request_type: post
 #______________________
+nws_web_user_forgot_password:
+   pattern:  /nws/web_user_forgot_password
+   title: web_forgot_password
+   params:
+     email: kamran@ltf.com
+   request_type: post
+#______________________
 ws_user_forgot_password_token_auth:
    pattern:  /ws/user_forgot_password_token_auth
    title: user_forgot_password_token_auth

@@ -54,6 +54,10 @@ nws_user_forgot_password:
     pattern:  /ws/user_forgot_password
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:forgotPassword }
 
+nws_web_user_forgot_password:
+    pattern:  /nws/web_user_forgot_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:forgotPasswordWeb }
+
 nws_user_forgot_password_token_auth:
     pattern:  /ws/user_forgot_password_token_auth
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:forgotPasswordTokenAuth }
