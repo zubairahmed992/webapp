@@ -432,3 +432,7 @@ ws_email_order_detail_show:
 nws_update_primary_email:
     pattern: /nws/update_primary_email
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdatePrimaryEmail}
+
+nws_web_user_registration:
+    pattern: /nws/web_user_registration
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registrationFromWeb }

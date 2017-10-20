@@ -622,7 +622,20 @@ class WSUserController extends Controller
         } else {
             return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
         }    
-    }  
+    }
+
+#~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
+
+    public function registrationFromWebAction()
+    {
+        $decoded = $this->process_request();
+        $decoded['imc'] = true;
+        $decoded['device_type'] = 'iphone6';
+        $decoded['create_default_user'] = true;
+        $json_data = $this->get('webservice.helper')->registrationWithDefaultValuesSupportWeb($decoded);
+
+        return new Response($json_data);
+    }
   
 }
 
