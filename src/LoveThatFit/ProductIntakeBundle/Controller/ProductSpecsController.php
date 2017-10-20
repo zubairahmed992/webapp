@@ -41,6 +41,7 @@ class ProductSpecsController extends Controller
             $this->get('pi.product_specification')->save($ps);
             $tab = 'b';
         }
+        $validation = $this->get('pi.product_specification')->validateSpecification($id);
         
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
@@ -86,6 +87,7 @@ class ProductSpecsController extends Controller
                     'tab' => $tab,
                     'searched_product_id'=>$product_id,
                     'cs_file'      =>  $this->get('pi.product_specification')->csvDownloads($ps),
+                    'validation'   => $validation,
                 ));
     }
 

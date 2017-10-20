@@ -977,7 +977,7 @@ class ProductSpecificationHelper {
                             $result['sequential'][$current_size_title][$fp_title] = 'Garment Dimensions ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['min_actual'] . ') should be greater than Garment Dimensions ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['min_actual'] . ')';
                         }
                         if ($fp['fit_model'] > $next_size[$fp_title]['fit_model']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'Fit Model ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['fit_model'] . ') should be greater than Fit Model ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['fit_model'] . ')';
+                            $result['sequential'][$current_size_title][$fp_title] = 'fit_model ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['fit_model'] . ') should be greater than Fit Model ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['fit_model'] . ')';
                         }
                         if ($fp['min_actual'] > $next_size[$fp_title]['min_actual']) {
                             $result['sequential'][$current_size_title][$fp_title] = 'Min Actual ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['min_actual'] . ') should be greater than min actual ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['min_actual'] . ')';
@@ -1007,7 +1007,7 @@ class ProductSpecificationHelper {
                         if (isset($current_size["waist"]['fit_model']) && $fp_title == 'bust') {
                             $bust_waist = $fp["fit_model"] - $current_size["waist"]['fit_model'];
                             if ($bust_waist > 11) {
-                                $result['bust_to_waist_ratio'][$key][$fp_title] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
+                                $result['bust_to_waist_ratio'][$key][$fp_title] = $bust_waist . ' bust to waist ratio is more than 11';
                             }
                         }
                     }
@@ -1016,7 +1016,7 @@ class ProductSpecificationHelper {
                         if (isset($current_size["waist"]['fit_model']) && $fp_title == 'hip') {
                             $bust_hip = $current_size["waist"]['fit_model'] - $fp["fit_model"];
                             if ($bust_hip > 12) {
-                                $result['bust_to_hip_ratio'][$key][$fp_title] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                                $result['bust_to_hip_ratio'][$key][$fp_title] = $bust_hip . ' waist to hip is more than 12';
                             }
                         }
                     }

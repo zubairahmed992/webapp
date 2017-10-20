@@ -1141,7 +1141,9 @@
                                                 <td>
                                                     {#<input type="number" value="{{measurement_v.garment_dimension }}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" > #}
                                                     <input type="number" value="{{measurement_v.garment_dimension }}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px" class="0 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" data-title="Enter Garment Dimension for {{measurement_k}} " >
-                                                </td>
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}                                                </td>
+                                                    {% if validation['bust_to_waist_ratio'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['bust_to_waist_ratio'][size][measurement_k] }}"></i> {% endif %}
+                                                    {% if validation['bust_to_hip_ratio'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['bust_to_hip_ratio'][size][measurement_k] }}"></i> {% endif %}
                                                 <td>
                                                     <span style="font-size:10px">
                                                         <input type="number"  hidden readonly value="{{measurement_v.stretch_percentage }}" name="sizes-{{ size }}-{{ measurement_k }}-stretch_percentage" >
@@ -1156,6 +1158,7 @@
                                                     {#<input type="number" value="{{measurement_v.grade_rule }}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
                                                     <input type="hidden"  value="{{measurement_v.grade_rule }}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
                                                     {{measurement_v.grade_rule is defined? measurement_v.grade_rule :0}}
+                                                    {% if validation['grade_rules_become_generally_larger'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['grade_rules_become_generally_larger'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch :0}}
@@ -1168,23 +1171,27 @@
                                                 <td class="body_measurements">                                                    
                                                     {#<input type="number" value="{{measurement_v.min_actual }}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.min_actual }}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:80px" class="6 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-min_actual" data-title="Enter Min Actual for {{measurement_k}} ">
-                                                    
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.ideal_low }}
                                                     <input class="7" type="number" hidden value="{{measurement_v.ideal_low }}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
-                                                    {{measurement_v.fit_model }}
+                                                    {{measurement_v.fit_model }} --  {% if validation['tolerance'][size][measurement_k] is defined %} {{ validation['tolerance']['30']['low_hip'] }} {% endif %}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model }}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.ideal_high }}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high }}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {#<input type="number" value="{{measurement_v.max_actual }}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.max_actual }}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:80px" class="10 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-max_actual" data-title="Enter Max Actual for {{measurement_k}} ">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.max_calc }}
@@ -1200,7 +1207,11 @@
                                                 {{measurement_k}}</th>
                                                 <td>
                                                     {{measurement_v.garment_dimension }}
-                                                    <input class="0" type="number" hidden value="{{measurement_v.garment_dimension }}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px"> 
+                                                    <input class="0" type="number" hidden value="{{measurement_v.garment_dimension }}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
+                                                    {% if validation['bust_to_waist_ratio'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['bust_to_waist_ratio'][size][measurement_k] }}"></i> {% endif %}
+                                                    {% if validation['bust_to_hip_ratio'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['bust_to_hip_ratio'][size][measurement_k] }}"></i> {% endif %}
+
                                                 </td>
                                                 <td>
                                                     <span style="font-size:10px">
@@ -1215,6 +1226,8 @@
                                                 <td>
                                                     {#<input class="3" type="number"  value="{{measurement_v.grade_rule }}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:50px">#}
                                                     <input type="number" value="{{measurement_v.grade_rule }}" name="sizes-{{ size }}-{{ measurement_k }}-grade_rule" style="width:80px" class="3 form-control  edit_inline input-sm" readonly="ture" placeholder="%" id="sizes-{{ size }}-{{ measurement_k }}-grade_rule" data-title="Enter Grade Rule for {{measurement_k}} ">
+                                                    {% if validation['grade_rules_become_generally_larger'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['grade_rules_become_generally_larger'][size][measurement_k] }}"></i> {% endif %}
+
                                                 </td>
                                                 <td>
                                                     {{measurement_v.grade_rule_stretch is defined? measurement_v.grade_rule_stretch :0}}
@@ -1227,22 +1240,27 @@
                                                 <td class="body_measurements">
                                                     {{measurement_v.min_actual }}
                                                     <input class="6" type="number" hidden value="{{measurement_v.min_actual }}" name="sizes-{{ size }}-{{ measurement_k }}-min_actual" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.ideal_low }}
                                                     <input class="7" type="number" hidden value="{{measurement_v.ideal_low }}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_low" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
-                                                    {{measurement_v.fit_model }}
+                                                    {{measurement_v.fit_model }}   {% if validation['tolerance'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['tolerance'][size][measurement_k] }}"></i> {% endif %}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model }}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.ideal_high }}
                                                     <input class="9" type="number" hidden value="{{measurement_v.ideal_high }}" name="sizes-{{ size }}-{{ measurement_k }}-ideal_high" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>                                                
                                                 <td class="body_measurements">
                                                     {{measurement_v.max_actual }}
                                                     <input class="10" type="number" hidden value="{{measurement_v.max_actual }}" name="sizes-{{ size }}-{{ measurement_k }}-max_actual" style="width:50px">
+                                                    {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
                                                     {{measurement_v.max_calc }}
