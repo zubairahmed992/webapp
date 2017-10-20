@@ -177,3 +177,8 @@ admin_visitors:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/visitors.yml"
     prefix:   /    
 
+#-------------- App Store Link ------------------------
+admin_appstorelink_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/appstorelink.yml"
+    prefix:   /
+
