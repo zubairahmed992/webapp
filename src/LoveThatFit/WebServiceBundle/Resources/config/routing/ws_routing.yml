@@ -90,6 +90,10 @@ nws_web_invitefriend_create:
     pattern:  /nws/invitefriend/create
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:invitefriendCreate}
 
+nws_web_register_male_users:
+    pattern:  /nws/registermaleusers/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registermaleusersCreate}
+
 #------------------------------------------------------------------------------------
 
 nws_products:
