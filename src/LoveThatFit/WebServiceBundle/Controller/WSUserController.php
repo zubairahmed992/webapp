@@ -662,6 +662,32 @@ class WSUserController extends Controller
             return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
         }
     }
+
+    public function registermaleusersCreateAction()
+    {
+        $ra = $this->process_request();
+
+        $user=$this->get('user.helper.user')->findByEmail($ra['email']);
+
+        if (count($user) === 0) {
+            $check_in_registered_male_user = $this->get('user.registermaleusers.helper')->findByEmail($ra['email']);
+            if(count($check_in_registered_male_user) === 0 ) {
+                $ss = $this->get('user.registermaleusers.helper')->createWithParam($ra);
+
+                /*$ss_ar['to_email'] = $ss->getEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/register_maleusers.html.twig';
+                $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);*/
+                return new Response($this->get('webservice.helper')->response_array(true, 'Register Male User added'));
+            }else {
+                return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist in register male table'));
+            }
+
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist as an Female'));
+        }
+    }
   
 }
 

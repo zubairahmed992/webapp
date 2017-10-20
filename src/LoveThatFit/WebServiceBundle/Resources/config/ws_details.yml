@@ -251,6 +251,16 @@ nws_web_invitefriend_create:
      friend_email: mc@ss.com
    request_type: post
    description:
+
+#______________________
+nws_web_register_male_users:
+   pattern:  /nws/registermaleusers/create
+   title: web_register_male_users
+   params:
+     email: mc@ss.com
+     name: mycroft
+   request_type: post
+   description:
 #______________________
 
 ws_selfieshare_feedback_update:
