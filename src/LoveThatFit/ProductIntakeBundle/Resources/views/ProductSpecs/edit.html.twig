@@ -1102,6 +1102,7 @@
                     </div>
                 </div>
                <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary">More</button>
+               <button type="button" id='show_error' name='show_error' class="btn btn-primary">Show Errors</button>
 
 
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
@@ -1288,7 +1289,8 @@
   <script>
   
       //-----------------------------------
-$(document).ready(function(){     
+$(document).ready(function(){
+    $('.glyphicon-warning-sign').hide();
   var someVarName = '';
   someVarName = sessionStorage.getItem("someVarName");
   if(someVarName == "Few")
@@ -1309,7 +1311,14 @@ $("#show_extended_fp").click(function (event) {
             cols[i].style.display = cols[i].style.display == 'table-row'?'none':'table-row';
           }
     });
+
+    $("#show_error").click(function() {
+        $("#show_error").html($("#show_error").html() == 'Show Errors' ? 'Hide Errors' : 'Show Errors');
+        $('.glyphicon-warning-sign').toggle();
     });
+
+
+});
   </script>
   
 {% endblock %}
