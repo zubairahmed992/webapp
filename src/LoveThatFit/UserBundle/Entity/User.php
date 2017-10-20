@@ -225,6 +225,12 @@ class User implements UserInterface, \Serializable {
     private $version;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="InviteFriend", mappedBy="user", orphanRemoval=true)
+     */
+    protected $invitefriend;
+
+
 //---------------------------------------  implement the UserInterface
     public function __construct() {
         $this->isActive = true;
@@ -1845,7 +1851,41 @@ class User implements UserInterface, \Serializable {
     {
         return $this->selfieshare;
     }
-#---------------------------------------------------------------------------------    
+#---------------------------------------------------------------------------------
+
+    /**
+     * Add invitefriend
+     *
+     * @param \LoveThatFit\UserBundle\Entity\InviteFriend $invitefriend
+     * @return User
+     */
+    public function addInviteFriend(\LoveThatFit\UserBundle\Entity\Selfieshare $invitefriend)
+    {
+        $this->invitefriend[] = $invitefriend;
+        return $this;
+    }
+
+    /**
+     * Remove invitefriend
+     *
+     * @param \LoveThatFit\UserBundle\Entity\InviteFriend $invitefriend
+     */
+    public function removeInviteFriend(\LoveThatFit\UserBundle\Entity\Selfieshare $invitefriend)
+    {
+        $this->invitefriend->removeElement($invitefriend);
+    }
+
+    /**
+     * Get invitefriend
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInviteFriend()
+    {
+        return $this->invitefriend;
+    }
+#---------------------------------------------------------------------------------
+
     /**
      * Add user_feedback
      *
