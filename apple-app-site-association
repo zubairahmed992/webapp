@@ -1,0 +1,15 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "5BBUDM5XDN.com.SelfieStyler.SelfieStyler3-QA",
+                "paths": [ "/forgot_password_reset_form_web/*" ]
+            },
+            {
+                "appID": "5BBUDM5XDN.com.SelfieStyler.SelfieStyler3",
+                "paths": [ "/forgot_password_reset_form_web/*" ]
+            }
+        ]
+    }
+}
