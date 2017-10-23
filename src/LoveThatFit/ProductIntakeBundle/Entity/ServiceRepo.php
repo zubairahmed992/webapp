@@ -154,5 +154,21 @@ class ServiceRepo
         }
         
     }
+
+
+    //-------------- 10/23/2017  Get User Marker Json
+    public function getUserMArkerJson($user_id)
+    {
+        $query = $this->em
+            ->createQuery("SELECT um.marker_json FROM LoveThatFitUserBundle:UserMarker um
+                                       WHERE um.user=:user_id")
+            ->setParameters(array('user_id' => $user_id));
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     
 }

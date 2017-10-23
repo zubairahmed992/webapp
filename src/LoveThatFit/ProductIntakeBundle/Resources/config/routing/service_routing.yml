@@ -43,6 +43,13 @@ pi_ws_imagename_validation:
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:imageNameValidation}
     requirements:
         _method:  get
+
+
+pi_ws_user_marker_json:
+    pattern: /pi/ws/user_marker_json/{user_id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:userMarkerJson}
+    requirements:
+        _method:  get
         
         
       
