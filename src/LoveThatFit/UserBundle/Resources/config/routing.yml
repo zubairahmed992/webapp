@@ -251,3 +251,9 @@ go_secure:
 podio_users:
     pattern:  /podio_users
     defaults: { _controller: LoveThatFitUserBundle:PodioUsers:index }
+
+#-------------------------- App User Singup -------------------------------------
+
+appuser_routes:
+    resource: "@LoveThatFitUserBundle/Resources/config/routing/sign_up.yml"
+    prefix:   /    
