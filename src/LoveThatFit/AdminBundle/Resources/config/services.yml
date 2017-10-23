@@ -289,3 +289,10 @@ services:
         class: LoveThatFit\AdminBundle\Entity\TaxJarApiHelper
         arguments:
             container: "@service_container"
+
+     admin.helper.appstorelink:
+        class: LoveThatFit\AdminBundle\Entity\AppStoreLinkHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\AppStoreLink

@@ -447,4 +447,4 @@ nws_update_primary_email:
 
 nws_web_user_registration:
     pattern: /nws/web_user_registration
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registrationFromWeb }
+    defaults: { _controller: LoveThatFitWebServiceBundle:SignUp:registration }

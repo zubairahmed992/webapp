@@ -242,19 +242,6 @@ lost_account_secret_answer:
    pattern:   /secret_question_answer
    defaults:  { _controller: LoveThatFitUserBundle:Security:secretQuestionAnswer }
 
-#----------------------------------------------- Password Reset Web ----------------------------------
-forgot_password_reset_form_web:
-    pattern:   /forgot_password_reset_form_web/{email_auth_token}
-    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb }
-
-forgot_password_update_web:
-    pattern:   /forgot_password_update_web
-    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdateWeb }
-
-forgot_password_thanks_web:
-    pattern:   /forgot_password_thanks_web
-    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordThanksWeb }
-
 
 #----------------------------------------  Dev/Testing ------------------------------------------------  
 go_secure:
@@ -264,3 +251,9 @@ go_secure:
 podio_users:
     pattern:  /podio_users
     defaults: { _controller: LoveThatFitUserBundle:PodioUsers:index }
+
+#-------------------------- App User Singup -------------------------------------
+
+appuser_registration:
+    pattern:   appuser/registration
+    defaults: { _controller: LoveThatFitUserBundle:Registration:registrationFromWeb } 

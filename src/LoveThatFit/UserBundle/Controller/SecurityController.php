@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SecurityController extends Controller {
 
@@ -153,10 +154,10 @@ class SecurityController extends Controller {
             if ($user &&  $hourdiff <= 2) {
                 return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
             } else {
-                return $this->redirect($this->generateUrl('login'));
+                throw new NotFoundHttpException("Page not found");
             }
         } else {
-            return $this->redirect($this->generateUrl('login'));
+            throw new NotFoundHttpException("Page not found");
         }
     }
 
