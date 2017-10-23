@@ -1010,7 +1010,7 @@ class WSCartController extends Controller
         $d_discount   = (isset($orders['discount']) ? $orders['discount'] : 0);
 
         $dataArray = array(
-            'purchase_date' => ($orders['user_order_date'] != "") ? $orders['user_order_date']->format('Y-m-d H:i:s'): "",
+            'purchase_date' => ($orders['user_order_date'] != "") ? $orders['user_order_date']->format('F d, Y'): "",
             'items'         => $itemsArray,
             'order_numnber' => $orders['order_number'],
             'card_type'     => $creditCard->cardType,
@@ -1021,7 +1021,7 @@ class WSCartController extends Controller
             'order_amount'  => $orders['order_amount'],
             'total_amount'  => number_format((float)$orders['total_amount'], 2, '.', ''),
             'discount'      => ($orders['discount_amount'] > 0 ? "-$".$orders['discount_amount'] : 0),
-            'discountType' => (isset($orders['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
+            'discountType' => (isset($orders['group_type']) && $orders['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'expirate_date' => $creditCard->expirationMonth. "/". $creditCard->expirationYear,
             'shipping_first_name' => $orders['shipping_first_name'],
             'shipping_last_name' => $orders['shipping_last_name'],
@@ -1035,7 +1035,10 @@ class WSCartController extends Controller
             'billing_first_name' => $orders['billing_first_name']. " ". $orders['billing_last_name'],
             'billing_phone_no'  => $orders['billing_phone'],
             'billing_address1'  => $orders['billing_address1'],
-            'sales_tax'  => $orders['sales_tax']
+            'billing_city'      => $orders['billing_city'],
+            'billing_state'     => $orders['billing_state'],
+            'billing_postcode'  => $orders['billing_postcode'],
+            'sales_tax'         => $orders['sales_tax']
         );
 
         return $this->render('LoveThatFitWebServiceBundle:Order:user_purchase.html.twig',

@@ -193,6 +193,31 @@ class WSUserController extends Controller
         return new Response($res);
     }
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+#    WEB_FORGET_PASSWORD_SENDEMAIL  /ws/web_user_forgot_password
+    public function forgotPasswordWebAction()
+    {
+        $decoded = $this->process_request();
+        $res = '';
+        $user = $this->get('user.helper.user')->findByEmail($decoded['email']);
+        if ($user) {
+            $user->setAuthToken(uniqid());
+            $this->get('user.helper.user')->saveUser($user);
+            $baseurl = $this->getRequest()->getHost();
+            $link = $baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
+            $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmailWeb($user, $link);
+            if ($defaultData[0]) {
+                $res = $this->get('webservice.helper')->response_array(true, " Email has been sent with reset password link (" . $link . ") to " . $user->getEmail());
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, " Email not sent due to some problem, please try again later.");
+            }
+
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, " User not found.");
+        }
+        return new Response($res);
+    }
+
 #----------------------------------------------------------
     public function forgotPasswordTokenAuthAction()
     {
@@ -580,30 +605,38 @@ class WSUserController extends Controller
         if($user) {
             $email_auth_token = $user->getAuthToken();
             if($email_auth_token==$decoded['auth_token'])
-            {    
+            { 
+                if($decoded['email']==$decoded['new_primary_email']){
+
+                    return new Response(json_encode(array("success" => "0","description" => "Both emails are same.")));    
+
+                } else {    
+
+
         
-                $newUser = $this->container->get('user.helper.user')->findByEmail($decoded['new_primary_email']);
-                if($newUser){
-                    return new Response(json_encode(array("success" => "0","description" => "This email already assigned to other member.")));    
-                }else{
+                    $newUser = $this->container->get('user.helper.user')->findByEmail($decoded['new_primary_email']);
+                    if($newUser){
+                        return new Response(json_encode(array("success" => "0","description" => "This email already assigned to other member.")));    
+                    }else{
 
-                    $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
-                    $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded);
-                    $user_podio = array(
-                        'current_email' => ($decoded['email']) ? $decoded['email'] : '',
-                        'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
-                    );                   
+                        $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
+                        $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded);
+                        $user_podio = array(
+                            'current_email' => ($decoded['email']) ? $decoded['email'] : '',
+                            'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
+                        );                   
 
-                    $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
+                        $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
 
-                    if($podio_results['podio_id'] > 0){
-                       
-                        $podioData = $this->container->get('user.helper.podio')->findPrimaryKeybyPodioId($podio_results['podio_id']);
-                        $id = $podioData->getId();
-                        $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
+                        if($podio_results['podio_id'] > 0){
+                           
+                            $podioData = $this->container->get('user.helper.podio')->findPrimaryKeybyPodioId($podio_results['podio_id']);
+                            $id = $podioData->getId();
+                            $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
+                        }
+                      
+                        return new Response(json_encode(array("success" => 1,"description" => "Your email has been successfully changed! <Perfect, thanks!>")));
                     }
-                  
-                    return new Response(json_encode(array("success" => 1,"description" => "Your email has been successfully changed! <Perfect, thanks!>")));
                 }
 
             } else {
@@ -614,7 +647,72 @@ class WSUserController extends Controller
         } else {
             return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
         }    
-    }  
+    }
+
+#~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
+
+    public function registrationFromWebAction()
+    {
+        $decoded = $this->process_request();
+        $decoded['imc'] = true;
+        $decoded['device_type'] = 'iphone6';
+        $decoded['create_default_user'] = true;
+        $json_data = $this->get('webservice.helper')->registrationWithDefaultValuesSupportWeb($decoded);
+
+        return new Response($json_data);
+    }
+
+
+    public function invitefriendCreateAction()
+    {
+        $ra = $this->process_request();
+
+        $user=$this->get('user.helper.user')->findByEmail($ra['email']);
+
+        if (count($user) > 0) {
+
+            $check_friend_email = $this->get('user.invitefriend.helper')->findByFriendEmail($ra['friend_email']);
+            if(count($check_friend_email) === 0 ) {
+                $ss = $this->get('user.invitefriend.helper')->createWithParam($ra, $user);
+            }
+
+            $ss_ar['to_email'] = $ss->getFriendEmail();
+            $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
+            $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+            $ss_ar['subject'] = 'Check out SelfieStyler';
+            $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+            return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));
+
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+        }
+    }
+
+    public function registermaleusersCreateAction()
+    {
+        $ra = $this->process_request();
+
+        $user=$this->get('user.helper.user')->findByEmail($ra['email']);
+
+        if (count($user) === 0) {
+            $check_in_registered_male_user = $this->get('user.registermaleusers.helper')->findByEmail($ra['email']);
+            if(count($check_in_registered_male_user) === 0 ) {
+                $ss = $this->get('user.registermaleusers.helper')->createWithParam($ra);
+
+                /*$ss_ar['to_email'] = $ss->getEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/register_maleusers.html.twig';
+                $ss_ar['template_array'] = array('user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);*/
+                return new Response($this->get('webservice.helper')->response_array(true, 'Register Male User added'));
+            }else {
+                return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist in register male table'));
+            }
+
+        } else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist as an Female'));
+        }
+    }
   
 }
 

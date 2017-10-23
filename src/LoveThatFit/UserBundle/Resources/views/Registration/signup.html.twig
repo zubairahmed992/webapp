@@ -1,0 +1,1093 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width">
+<title>Create an Account</title>
+
+    <link href="{{ asset('bundles/lovethatfit/web_registration/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="{{ asset('bundles/lovethatfit/web_registration/css/custom.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/jquery.min.js') }}"></script>
+        
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/bootstrap.min.js') }}"></script>
+       
+      
+
+<!-- Bootstrap core CSS -->
+
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+
+
+<script>
+
+	/*jQuery(document).ready(function(e) {
+        jQuery(".error_box").click(function(){
+			$(this).hide();	
+		});
+    });*/
+
+
+	function validate_form(){
+
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		var flag = true;
+		
+		if($( "#screen_slide_0" ).hasClass( "show" )) {				
+				
+				jQuery('#screen_slide_0').removeClass("show");			
+				jQuery('#screen_slide_0').addClass("hide");			
+				jQuery('#screen_slide_1').removeClass("hide");			
+				jQuery('#screen_slide_1	').addClass("show");			
+				
+		} else {
+		
+		if(jQuery('#first_name').val()==''){
+			
+			
+            jQuery('#error_first_name').html("*Required");
+			jQuery('#error_first_name').removeClass("hide");
+			jQuery('#error_bar_1').removeClass("hide");  			 
+		 	flag = false;
+			
+        } else {
+			
+			jQuery('#error_first_name').html("");
+            jQuery('#error_first_name').addClass("hide");
+			jQuery('#error_bar_1').addClass("hide");
+        }
+		
+		
+		if(jQuery('#last_name').val()==''){
+			
+            jQuery('#error_last_name').html("*Required");           
+            jQuery('#error_last_name').removeClass("hide"); 
+			jQuery('#error_bar_1').removeClass("hide");  	      			
+		 	flag = false;
+			
+        } else {
+			
+            jQuery('#error_last_name').html("");
+			jQuery('#error_last_name').addClass("hide");
+			jQuery('#error_bar_1').addClass("hide");
+			       
+        }
+		
+			if(flag){
+			
+			if($( "#screen_slide_1" ).hasClass( "show" )) {				
+				
+				jQuery('#screen_slide_1').removeClass("show");			
+				jQuery('#screen_slide_1').addClass("hide");			
+				jQuery('#screen_slide_2').removeClass("hide");			
+				jQuery('#screen_slide_2').addClass("show");			
+				
+			} else {
+				
+				if(jQuery('#mem_email').val()==''){
+				
+				
+					jQuery('#error_mem_email').html("*Required");
+					jQuery('#error_mem_email').removeClass("hide");  
+					jQuery('#error_bar_2').removeClass("hide");         
+					flag = false;
+				
+				} else if(reg.test(jQuery('#mem_email').val()) == false) {
+					
+					jQuery('#error_mem_email').html("*Invalid Email");
+					jQuery('#error_mem_email').removeClass("hide"); 
+					jQuery('#error_bar_2').removeClass("hide");         
+					flag = false;
+
+				} else {
+					
+					jQuery('#error_mem_email').html("");
+					jQuery('#error_mem_email').addClass("hide");
+					jQuery('#error_bar_2').addClass("hide");
+				}
+				
+				
+				if(jQuery('#confirm_mem_email').val()==''){
+					
+					jQuery('#error_confirm_mem_email').html("*Required");           
+					jQuery('#error_confirm_mem_email').removeClass("hide");
+					jQuery('#error_bar_2').removeClass("hide");         			
+					flag = false;
+					
+				} else if(reg.test(jQuery('#confirm_mem_email').val()) == false) {
+					
+					jQuery('#error_confirm_mem_email').html("*Invalid Email");
+					jQuery('#error_confirm_mem_email').removeClass("hide"); 
+					jQuery('#error_bar_2').removeClass("hide");         
+					flag = false;				
+					
+				} else {
+					
+					jQuery('#error_confirm_mem_email').html("");
+					jQuery('#error_confirm_mem_email').addClass("hide"); 
+					jQuery('#error_bar_2').addClass("hide");       
+				}
+				
+				if(flag){
+					
+					if(jQuery('#mem_email').val()!=jQuery('#confirm_mem_email').val()){
+						jQuery('#confirm_mem_email').val('');
+						jQuery('#error_confirm_mem_email').html("*Emails do not match");           
+						jQuery('#error_confirm_mem_email').removeClass("hide");  
+						jQuery('#error_bar_2').removeClass("hide");        			
+						flag = false;
+						
+					} else {
+						
+						jQuery('#error_confirm_mem_email').html("");
+						jQuery('#error_confirm_mem_email').addClass("hide");
+						jQuery('#error_bar_2').addClass("hide");       
+					}
+					
+				}
+				
+				
+				if(flag) {
+			
+					if($( "#screen_slide_2" ).hasClass( "show" )) {
+						
+						jQuery('#screen_slide_2').removeClass("show");			
+						jQuery('#screen_slide_2').addClass("hide");			
+						jQuery('#screen_slide_3').removeClass("hide");			
+
+						jQuery('#screen_slide_3').addClass("show");			
+						
+					} else {
+
+						if(jQuery('#mem_password').val()==''){
+						
+						
+						jQuery('#error_mem_password').html("*Requirements not met");
+						jQuery('#error_mem_password').removeClass("hide");
+						jQuery('#error_bar_3').removeClass("hide");          
+						flag = false;
+						} else if(passwordValidate(jQuery('#mem_password').val())) {
+							jQuery('#error_mem_password').html("*Requirements not met");
+							jQuery('#error_mem_password').removeClass("hide");  
+							jQuery('#error_bar_3').removeClass("hide");        
+							flag = false;
+						} else {
+							
+							jQuery('#error_mem_password').html("");
+							jQuery('#error_mem_password').addClass("hide");
+							jQuery('#error_bar_3').addClass("hide");
+						}
+						
+						
+						if(jQuery('#confirm_mem_password').val()==''){
+							
+							jQuery('#error_confirm_mem_password').html("*Required");           
+							jQuery('#error_confirm_mem_password').removeClass("hide"); 
+							jQuery('#error_bar_3').removeClass("hide");        			
+							flag = false;
+							
+						} else {
+							
+							jQuery('#error_confirm_mem_password').html("");
+							jQuery('#error_confirm_mem_password').addClass("hide");
+							jQuery('#error_bar_3').addClass("hide");      
+						}
+						
+						if(flag){
+					
+							if(jQuery('#mem_password').val()!=jQuery('#confirm_mem_password').val()){
+								jQuery('#confirm_mem_password').val('');
+								jQuery('#error_confirm_mem_password').html("*Passwords do not match");           
+								jQuery('#error_confirm_mem_password').removeClass("hide"); 
+								jQuery('#error_bar_3').removeClass("hide");         			
+								flag = false;
+								
+							} else {
+								
+								jQuery('#error_confirm_mem_password').html("");
+								jQuery('#error_confirm_mem_password	').addClass("hide");
+								jQuery('#error_bar_3').addClass("hide");       
+							}
+							
+						}
+						
+						//   Setup  zip and code slide stated here
+							
+							if(flag) {
+			
+								if($( "#screen_slide_3" ).hasClass( "show" )) {
+									
+									jQuery('#screen_slide_3').removeClass("show");			
+									jQuery('#screen_slide_3').addClass("hide");			
+									jQuery('#screen_slide_4').removeClass("hide");			
+									jQuery('#screen_slide_4').addClass("show");			
+									
+								} else {
+									
+									if(jQuery('#phone').val()==''){
+									
+									jQuery('#error_phone').html("*Required");
+									jQuery('#error_phone').removeClass("hide"); 
+									jQuery('#error_bar_4').removeClass("hide");         
+									flag = false;
+									
+									} else {
+										
+										jQuery('#error_phone').html("");
+										jQuery('#error_phone').addClass("hide");
+										jQuery('#error_bar_4').addClass("hide");
+									}
+									
+									
+									if(jQuery('#zip').val()==''){
+										
+										jQuery('#error_zip').html("*Required");           
+										jQuery('#error_zip').removeClass("hide"); 
+										jQuery('#error_bar_4').removeClass("hide");       			
+										flag = false;
+										
+									} else {
+										
+										jQuery('#error_zip').html("");
+										jQuery('#error_zip').addClass("hide");
+										jQuery('#error_bar_4').addClass("hide");        
+									}
+									
+									
+									
+									
+									// start  firend email 
+									
+									if(flag){
+			
+											if($( "#screen_slide_4" ).hasClass( "show" )) {				
+												
+												jQuery('#screen_slide_4').removeClass("show");			
+												jQuery('#screen_slide_4').addClass("hide");			
+												jQuery('#screen_slide_5').removeClass("hide");			
+												jQuery('#screen_slide_5').addClass("show");			
+												
+											} else {
+												
+												if(jQuery('#friend_name').val()==''){
+												
+												
+													jQuery('#error_friend_name').html("*Required");
+													jQuery('#error_friend_name').removeClass("hide");
+													jQuery('#error_bar_5').removeClass("hide");        
+													flag = false;
+												
+												} else {
+													
+													jQuery('#error_friend_name').html("");
+													jQuery('#error_friend_name').addClass("hide");
+													jQuery('#error_bar_5').addClass("hide"); 
+												}
+												
+												
+												if(jQuery('#friend_email').val()==''){
+													
+													jQuery('#error_friend_email').html("*Required");           
+													jQuery('#error_friend_email').removeClass("hide"); 
+													jQuery('#error_bar_5').removeClass("hide");         			
+													flag = false;
+													
+												} else if(reg.test(jQuery('#friend_email').val()) == false) {
+													
+													jQuery('#error_friend_email').html("*Invalid Email");
+													jQuery('#error_friend_email').removeClass("hide"); 
+													jQuery('#error_bar_5').removeClass("hide");          
+													flag = false;				
+													
+												} else {
+													
+													jQuery('#error_friend_email').html("");
+													jQuery('#error_friend_email').addClass("hide"); 
+													jQuery('#error_bar_5').addClass("hide");        
+												}
+												
+												if(flag){
+													if($( "#screen_slide_5" ).hasClass( "show" )) {																
+															
+																		jQuery('#screen_slide_5').removeClass("show");			
+																		jQuery('#screen_slide_5').addClass("hide");			
+																		jQuery('#screen_slide_6').removeClass("hide");			
+																		jQuery('#screen_slide_6').addClass("show");			
+																		
+																	} 
+												}
+												
+												if(false){
+													if($( "#screen_slide_5" ).hasClass( "show" )) {																
+															
+																		jQuery('#screen_slide_5').removeClass("show");			
+																		jQuery('#screen_slide_5').addClass("hide");			
+																		jQuery('#screen_slide_6').removeClass("hide");			
+																		jQuery('#screen_slide_6').addClass("show");			
+																		
+																	} 
+													
+														first_name = jQuery('#first_name').val();
+														last_name = jQuery('#last_name').val();
+														email = jQuery('#mem_email').val();
+														password = jQuery('#mem_password').val();
+														gender = 'f';
+														phone_number = jQuery('#phone').val();
+														zipcode = jQuery('#zip').val();
+														birth_date = '0000-00-00';
+														friend_name = jQuery('#friend_name').val();
+														friend_email = jQuery('#friend_email').val();
+														
+														if(friend_email.length > 0) {
+													
+															$.ajax({
+																  type: "POST",
+																  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+																  data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date+"&friend_name="+friend_name+"&friend_email="+friend_email,
+																  success: function (data) {
+																	
+																		if($( "#screen_slide_5" ).hasClass( "show" )) {																
+															
+																		jQuery('#screen_slide_5').removeClass("show");			
+																		jQuery('#screen_slide_5').addClass("hide");			
+																		jQuery('#screen_slide_6').removeClass("hide");			
+																		jQuery('#screen_slide_6').addClass("show");			
+																		
+																	} 
+																  },
+																  failure: function (errMsg) {
+																	console.log(errMsg);
+																  }
+															  });
+														} else {
+															
+															$.ajax({
+																  type: "POST",
+																  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+																 data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date,
+																  success: function (data) {
+																	
+																		if($( "#screen_slide_5" ).hasClass( "show" )) {																
+															
+																		jQuery('#screen_slide_5').removeClass("show");			
+																		jQuery('#screen_slide_5').addClass("hide");			
+																		jQuery('#screen_slide_6').removeClass("hide");			
+																		jQuery('#screen_slide_6').addClass("show");			
+																		
+																	} 
+																  },
+																  failure: function (errMsg) {
+																	console.log(errMsg);
+																  }
+															  });
+																										
+														
+														
+													}
+													
+													
+												}
+												
+												
+												
+										  }
+									 } 
+									
+									
+
+									
+									// end freind email
+									
+									
+									
+								}
+							}	
+						
+						
+						//  End zip and code Here
+						
+					}
+				}
+			}
+		}
+		
+		}
+		
+	
+	//return flag;
+	return false;
+}
+
+function invite_friend()
+{
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	
+	if($( "#screen_slide_6" ).hasClass( "show" )) {																
+															
+		jQuery('#screen_slide_6').removeClass("show");			
+		jQuery('#screen_slide_6').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("show");			
+		
+	}
+	else if($( "#screen_slide_8" ).hasClass( "show" )) {																
+															
+		jQuery('#screen_slide_8').removeClass("show");			
+		jQuery('#screen_slide_8').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("show");	
+		jQuery('#invite_friend_name').val('');	
+		jQuery('#invite_friend_email').val('');	
+		
+	}
+	
+	 else { 
+	
+	if(jQuery('#invite_friend_name').val()==''){
+		
+			jQuery('#error_invite_friend_name').html("*Required");
+			jQuery('#error_invite_friend_name').removeClass("hide");
+			jQuery('#error_bar_7').removeClass("hide");           
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_invite_friend_name').html("");
+			jQuery('#error_invite_friend_name').addClass("hide");
+			jQuery('#error_bar_7').addClass("hide"); 
+		}
+		
+		
+		if(jQuery('#invite_friend_email').val()==''){
+			
+			jQuery('#error_invite_friend_email').html("*Required");           
+			jQuery('#error_invite_friend_email').removeClass("hide");
+			jQuery('#error_bar_7').removeClass("hide");         			
+			flag = false;
+			
+		} else if(reg.test(jQuery('#invite_friend_email').val()) == false) {
+			
+			jQuery('#error_invite_friend_email').html("*Invalid Email");
+			jQuery('#error_invite_friend_email').removeClass("hide"); 
+			jQuery('#error_bar_7').removeClass("hide");         
+			flag = false;				
+			
+		} else {
+			
+			jQuery('#error_invite_friend_email').html("");
+			jQuery('#error_invite_friend_email').addClass("hide"); 
+			jQuery('#error_bar_7').addClass("hide");       
+		}
+		
+		if(flag)
+		{
+			if($( "#screen_slide_7" ).hasClass( "show" )) {	
+				jQuery('#screen_slide_7').removeClass("show");			
+				jQuery('#screen_slide_7').addClass("hide");			
+				jQuery('#screen_slide_8').removeClass("hide");			
+				jQuery('#screen_slide_8').addClass("show");			
+			} 	
+		}
+		
+		if(false){
+			email = jQuery('#mem_email').val();
+			friend_name = jQuery('#invite_friend_name').val();
+			friend_email = jQuery('#invite_friend_email').val();
+			$.ajax({
+					  type: "POST",
+					  url: "http://dev.selfiestyler.com/nws/invitefriend/create",
+					  data: "email="+email+"friend_name="+friend_name+"friend_email="+friend_email,
+					  success: function (data) {
+						
+							if($( "#screen_slide_7" ).hasClass( "show" )) {	
+								jQuery('#screen_slide_7').removeClass("show");			
+								jQuery('#screen_slide_7').addClass("hide");			
+								jQuery('#screen_slide_8').removeClass("hide");			
+								jQuery('#screen_slide_8').addClass("show");			
+							} 
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+
+			
+		}
+		
+	}
+}
+
+
+function male_registration()
+{
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	
+	if($( "#screen_slide_0" ).hasClass( "show" )) {																
+															
+		jQuery('#screen_slide_0').removeClass("show");			
+		jQuery('#screen_slide_0').addClass("hide");			
+		jQuery('#screen_slide_10').removeClass("hide");			
+		jQuery('#screen_slide_10').addClass("show");			
+		
+	}
+	else if($( "#screen_slide_8" ).hasClass( "show" ) && false) {																
+															
+		jQuery('#screen_slide_8').removeClass("show");			
+		jQuery('#screen_slide_8').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("show");	
+		jQuery('#invite_friend_name').val('');	
+		jQuery('#invite_friend_email').val('');	
+		
+	}
+	
+	 else { 
+	
+	if(jQuery('#male_name').val()==''){
+		
+			jQuery('#error_male_name').html("*Required");
+			jQuery('#error_male_name').removeClass("hide"); 
+			jQuery('#error_bar_10').removeClass("hide");        
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_male_name').html("");
+			jQuery('#error_male_name').addClass("hide");
+			jQuery('#error_bar_10').addClass("hide");
+		}
+		
+		
+		if(jQuery('#male_email').val()==''){
+			
+			jQuery('#error_male_email').html("*Required");           
+			jQuery('#error_male_email').removeClass("hide"); 
+			jQuery('#error_bar_10').removeClass("hide");         			
+			flag = false;
+			
+		} else if(reg.test(jQuery('#male_email').val()) == false) {
+			
+			jQuery('#error_male_email').html("*Invalid Email");
+			jQuery('#error_male_email').removeClass("hide");
+			jQuery('#error_bar_10').removeClass("hide");           
+			flag = false;				
+			
+		} else {
+			
+			jQuery('#error_male_email').html("");
+			jQuery('#error_male_email').addClass("hide"); 
+			jQuery('#error_bar_10').addClass("hide");        
+		}
+		if(flag){
+			jQuery('#screen_slide_10').removeClass("show");			
+			jQuery('#screen_slide_10').addClass("hide");			
+			jQuery('#screen_slide_11').removeClass("hide");			
+			jQuery('#screen_slide_11').addClass("show");
+		}
+		
+		
+		if(false){
+			
+			email = jQuery('#mem_email').val();
+			friend_name = jQuery('#male_name').val();
+			friend_email = jQuery('#male_email').val();
+			
+			$.ajax({
+					  type: "POST",
+					  url: "http://dev.selfiestyler.com/nws/registermaleusers/create",
+					  data: "email="+email+"friend_name="+friend_name+"friend_email="+friend_email,
+					  success: function (data) {
+						
+							if($( "#screen_slide_10" ).hasClass( "show" )) {	
+													
+				
+								jQuery('#screen_slide_10').removeClass("show");			
+								jQuery('#screen_slide_10').addClass("hide");			
+								jQuery('#screen_slide_11').removeClass("hide");			
+								jQuery('#screen_slide_11').addClass("show");			
+							} 
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+
+			
+		}
+		
+	}
+}
+
+function passwordValidate(pswd)
+  {
+	 // alert(pswd);
+    var error = 0;
+    //validate the length
+	var htmltag = 'Required:';
+    if ( pswd.length < 8 ) {
+      error = 1;
+      htmltag += '</br>8 Characters';
+    }
+  /*  //validate letter
+    if ( pswd.match(/[A-z]/) ) {
+        $('#letter').removeClass('red_color').addClass('green_color');
+    } else {
+      error = 1;
+      $('#letter').removeClass('green_color').addClass('red_color');
+    }*/
+    //validate capital letter
+    if ( !pswd.match(/[A-Z]/) ) {
+		 error = 1;
+       htmltag += '</br>1 Capital Letter';
+    }
+    //validate number
+    if ( !pswd.match(/\d/) ) {
+		error = 1;
+       htmltag += '</br>1 Number';
+    }
+
+    if (error == 1) {
+		jQuery("#pwd_hint").html(htmltag);
+      return true;
+    } else {
+	  jQuery("#pwd_hint").html('');
+      return false;
+    }
+
+  }
+  
+function invite_friend_user_skip()
+{
+	
+		first_name = jQuery('#first_name').val();
+		last_name = jQuery('#last_name').val();
+		email = jQuery('#mem_email').val();
+		password = jQuery('#mem_password').val();
+		gender = 'f';
+		phone_number = jQuery('#phone').val();
+		zipcode = jQuery('#zip').val();
+		birth_date = '0000-00-00';
+		friend_name = jQuery('#friend_name').val();
+		friend_email = jQuery('#friend_email').val();
+		
+							jQuery('#screen_slide_5').removeClass("show");			
+							jQuery('#screen_slide_5').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");	
+		
+		/*if(friend_email.length > 0) {
+	
+			$.ajax({
+				  type: "POST",
+				  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+				  data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date+"&friend_name="+friend_name+"&friend_email="+friend_email,
+				  success: function (data) {
+					
+							jQuery('#screen_slide_5').removeClass("show");			
+							jQuery('#screen_slide_5').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");	
+				  },
+				  failure: function (errMsg) {
+					console.log(errMsg);
+				  }
+			  });
+		} else {
+			
+			$.ajax({
+				  type: "POST",
+				  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+				 data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date,
+				  success: function (data) {
+					
+							jQuery('#screen_slide_5').removeClass("show");			
+							jQuery('#screen_slide_5').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");	
+				  },
+				  failure: function (errMsg) {
+					console.log(errMsg);
+				  }
+			  });
+														
+		
+		
+	}*/
+												
+} 
+
+function invite_friend_skip()
+{
+	
+	jQuery('#screen_slide_7').removeClass("show");			
+							jQuery('#screen_slide_7').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");	
+	
+	
+			/*email = jQuery('#mem_email').val();
+			friend_name = jQuery('#invite_friend_name').val();
+			friend_email = jQuery('#invite_friend_email').val();
+			$.ajax({
+					  type: "POST",
+					  url: "http://dev.selfiestyler.com/nws/invitefriend/create",
+					  data: "email="+email+"friend_name="+friend_name+"friend_email="+friend_email,
+					  success: function (data) {
+						
+							jQuery('#screen_slide_7').removeClass("show");			
+							jQuery('#screen_slide_7').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");	
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+*/
+		
+} 
+
+function step_back(id)
+{
+	if(id==1){
+		jQuery('#screen_slide_0').addClass("show");			
+		jQuery('#screen_slide_0').removeClass("hide");			
+		jQuery('#screen_slide_1').addClass("hide");			
+		jQuery('#screen_slide_1').removeClass("show");
+	}else if(id==2){
+		jQuery('#screen_slide_1').addClass("show");			
+		jQuery('#screen_slide_1').removeClass("hide");			
+		jQuery('#screen_slide_2').addClass("hide");			
+		jQuery('#screen_slide_2').removeClass("show");
+	}else if(id==3){
+		jQuery('#screen_slide_2').addClass("show");			
+		jQuery('#screen_slide_2').removeClass("hide");			
+		jQuery('#screen_slide_3').addClass("hide");			
+		jQuery('#screen_slide_3').removeClass("show");
+	}else if(id==4){
+		jQuery('#screen_slide_3').addClass("show");			
+		jQuery('#screen_slide_3').removeClass("hide");			
+		jQuery('#screen_slide_4').addClass("hide");			
+		jQuery('#screen_slide_4').removeClass("show");
+
+	}else if(id==5){
+		jQuery('#screen_slide_4').addClass("show");			
+		jQuery('#screen_slide_4').removeClass("hide");			
+		jQuery('#screen_slide_5').addClass("hide");			
+		jQuery('#screen_slide_5').removeClass("show");
+	}else if(id==7){
+		jQuery('#screen_slide_6').addClass("show");			
+		jQuery('#screen_slide_6').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");
+	}else if(id==10){
+		
+		jQuery('#screen_slide_0').addClass("show");			
+		jQuery('#screen_slide_0').removeClass("hide");			
+		jQuery('#screen_slide_10').addClass("hide");			
+		jQuery('#screen_slide_10').removeClass("show");
+	
+	}
+}
+
+$(document).ready(function(e) {
+   $( "#phone" ).keyup(function() {
+  
+
+     $(this).val(function(i, text) {
+        text = text.replace(/(\d\d\d)(\d\d\d)(\d\d\d\d)/, "($1) $2-$3");
+        return text;
+    })
+  
+}); 
+});
+
+
+</script>
+
+</head>
+
+
+
+
+<!-- screen_1 --> 
+<body class="formbg">
+
+
+
+
+<div class="screen_600 show" id="screen_slide_0">
+<div class="container">
+
+    <div class="gap_4"></div>
+    <div class="Get_activated">
+      <p>Hey there, let’s get started!</p>
+    </div>
+    <div><img src="img/profile_picture.png" alt="Circle" class="profile_pic" /></div>    
+    <div class="gap_2"></div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">I am a Woman</button>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="male_registration();">I am a Man</button>
+   <!-- <a class="anchor_text" href="#signin">I am a Woman</a>
+    <div class="gap_4"></div>
+   <a class="anchor_text" href="#signin">I am a Man</a>-->
+   
+    <div class="privacy">
+      <p>I already have an account <a href="#signin">Sign in</a></p>
+    </div>
+</div>
+</div>
+<form class="form-signin" action="" method="post">
+  <div class="screen_6 hide" id="screen_slide_1">
+
+<div class="create_acc">
+  <div class="arrow"><a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+  <p>Create  Account </p>
+  <div class="error_red hide" id="error_bar_1"></div>
+</div>
+<div class="container">
+    <div class="Get_activated">
+      <p>First things first. Please introduce yourself.</p>
+    </div>
+    <div class="gap_5"></div>
+    <label for="first_name" class="">FIRST NAME</label>
+     <div class="error_box hide" id="error_first_name"></div>
+    <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control" autofocus>
+    <label for="last_name" class="">LAST NAME</label>
+     <div class="error_box hide" id="error_last_name"></div>
+    <input type="text" autocomplete="off" name="last_name" id="last_name" class="form-control">
+    <div class="privacy">
+      <p>By signing up, you agree to the our <a href="https://www.selfiestyler.com/main/terms-conditions/">terms and 
+conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/privacypolicy/">privacy policy.</a></p>
+    </div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Next</button>    
+      <div class="privacy">
+      <p>I already have an account <a href="#signin">Sign in</a></p>
+    </div>
+
+</div>
+</div>
+
+<!-- screen_4 --> 
+<div class="screen_4 hide" id="screen_slide_2">
+<div class="create_acc">
+  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(2);" /></div>
+  <p>Create  Account </p>
+  <div class="error_red hide" id="error_bar_2"></div>
+</div>
+<div class="container">
+    <div class="Get_activated">
+      <p>Next, what's your email address? It will be your login.</p>
+    </div>
+    <div class="gap_5"></div>
+    <label for="inputpassword" class="">EMAIL</label>
+    <div class="error_box hide" id="error_mem_email"></div>
+    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control"  autofocus>
+    <label for="inputpass" class="">CONFIRM EMAIL</label>
+    <div class="error_box hide" id="error_confirm_mem_email"></div>
+    <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
+    <div class="gap_4"></div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Next</button>
+    <div class="privacy">
+      <p>I already have an account <a href="#signin">Sign in</a></p>
+    </div>
+</div>
+</div>
+
+<!-- screen_5 --> 
+<div class="screen_500 hide" id="screen_slide_3">
+<div class="create_acc">
+  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(3);" /></div>
+  <p>Reset Password</p>
+  <div class="error_red hide" id="error_bar_3"></div>
+</div>
+<div class="container">
+    <div class="Get_activated">
+      <p>Pick a password that is easy to remember.</p>
+    </div>
+    <div class="gap_2"></div>
+    <label for="inputfirstname" class="">PASSWORD</label>
+    <div class="error_box hide" id="error_mem_password"></div>
+    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);"  autofocus>
+    <div class="error" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    <label for="inputzip" class="">CONFIRM PASSWORD</label>
+    <div class="error_box hide" id="error_confirm_mem_password"></div>
+    <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Create new password</button>
+</div>
+</div>
+
+
+<div class="screen_100 hide" id="screen_slide_4">
+<div class="create_acc">
+  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(4);" /></div>
+  <p>Create an Account </p>
+  <div class="error_red hide" id="error_bar_4"></div>
+</div>
+<div class="container">  
+    <div class="Get_activated">
+      <p>Get activated!</p>
+    </div>
+    <div class="Get_text">
+      <p>To ensure we have your most accurate measurements on file, 
+        you'll need to get sized at an activation event. To learn when 
+        we'll be in your area, please fill out the fields below.</p>
+    </div>
+    <label for="inputphone" class="">PHONE</label>
+    <div class="error_box hide" id="error_phone"></div>
+    <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone"  autofocus>
+    <label for="inputzip" class="">ZIP</label>
+    <div class="error_box hide" id="error_zip"></div>
+    <input type="text" autocomplete="off" id="zip" name="zip" class="form-control" autofocus>
+    <div class="gap_4"></div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Submit</button>
+</div>
+</div>
+
+
+
+<!-- screen_2 --> 
+
+
+<div class="screen_7 hide" id="screen_slide_5">
+    <div class="create_acc">
+    <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(5);" /></div>
+      <p>Invite a friend</p>
+      <div class="error_red hide" id="error_bar_5"></div>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>Shopping is always more fun with friends.</p>
+    </div>
+    <div class="Get_text"><p>Invite a friends to download the app to share styles 
+and outfit ideas. If your friend signs up you get a bonus.</p></div>
+ <label for="inputname" class="">FRIEND'S FIRST NAME</label>
+ <div class="error_box hide" id="error_friend_name"></div>
+    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control"  autofocus>
+    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    <div class="error_box hide" id="error_friend_email"></div>
+    <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control"  autofocus>
+    <div class="gap_4"></div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Send</button>
+       <div class="privacy">
+      <p><a href="javascript:void" onclick="invite_friend_user_skip();">Skip</a></p>
+    </div>
+</div>
+</div>
+
+
+<div class="screen_3000 hide" id="screen_slide_6">
+<div class="container">
+    <div class="request">
+      <p>Congratulations!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p>You’re all set up lets get stylin!</p>
+    </div>
+    <a class="anchor_text" href="#signin">I'am ready let's go</a>
+    <div class="gap_4"></div>
+    <button class="btn btn-md btn-outline btn-block" type="button" onclick="invite_friend();">Invite a friend</button>
+ 
+</div>
+</div>
+ </form>
+
+
+  <form class="form-signin" id="friend-form" name="friend-form" action="#">
+<div class="screen_700 hide" id="screen_slide_7">
+    <div class="create_acc">
+    <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(7);" /></div>
+      <p>Invite a friend</p>
+      <div class="error_red hide" id="error_bar_7"></div>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>Shopping is always more fun with friends.</p>
+    </div>
+    <div class="Get_text"><p>Invite a friends to download the app to share styles 
+and outfit ideas. If your friend signs up you get a bonus.</p></div>
+<label for="inputname" class="">FRIEND'S FIRST NAME</label>
+ <div class="error_box hide" id="error_invite_friend_name"></div>
+    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control"  autofocus>
+    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    <div class="error_box hide" id="error_invite_friend_email"></div>
+    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control"  autofocus>
+    <div class="gap_4"></div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="invite_friend();">Send</button>
+       <div class="privacy">
+      <p><a href="javascript:void" onclick="invite_friend_skip();">Skip</a></p>
+    </div>
+  
+</div>
+</div>
+</form>
+
+<!-- screen_9 --> 
+<div class="screen_9 hide" id="screen_slide_8">
+<div class="container"> 
+    <div class="request">
+      <p>Request sent!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p>Your invite has been sent, you can invite another 
+        <br />
+        friend or start styling.</p>
+    </div>
+    <button class="btn btn-md btn-primary btn-block" type="button">I'am ready let's go</button>
+    <button class="btn btn-md btn-outline btn-block" type="button" onclick="invite_friend();">Invite a friend</button>
+</div>
+</div>
+
+  <form class="form-signin" id="mem-registration-form" action="">
+<div class="screen_7000 hide" id="screen_slide_10">
+    <div class="create_acc">
+    <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(10);" /></div>
+      <p>Stay in the loop</p>
+      <div class="error_red hide" id="error_bar_10"></div>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>Sorry, guys! We're not ready for you yet.</p>
+    </div>
+    <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>
+<label for="inputname" class="">FULL NAME</label>
+ <div class="error_box hide" id="error_male_name"></div>
+    <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control"  autofocus>
+    <label for="inputzip" class="">EMAIL</label>
+    <div class="error_box hide" id="error_male_email"></div>
+    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control"  autofocus>
+    <div class="gap_4"></div>
+    <button class="btn btn-md btn-primary btn-block" type="button" onclick="male_registration();">Send</button>
+      
+ 
+</div>
+</div>
+ </form>
+
+<!-- screen_9 --> 
+<div class="screen_11 hide" id="screen_slide_11">
+<div class="container"> 
+    <div class="request">
+      <p>Request sent!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p>Your information has been saved.</p>
+    </div>
+<!--    <button class="btn btn-md btn-primary btn-block" type="button">I'am ready let's go</button>
+    <button class="btn btn-md btn-outline btn-block" type="button" onclick="invite_friend();">Invite a friend</button>-->
+</div>
+</div>
+
+</body>
+</html>
