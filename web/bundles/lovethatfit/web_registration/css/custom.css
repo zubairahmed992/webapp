@@ -500,8 +500,6 @@ text-decoration:none;
 	font-size: 14px !important;
 	display: none;
 }
-<<<<<<< HEAD
-=======
 
 .loading {
 	margin-left: auto;
@@ -520,14 +518,7 @@ text-decoration:none;
 }
 
 .overlay {
-/*	width: 100%;
-	height:100%;
-	background-color:#000;
-	overflow:auto;
-	position:absolute;
-	top:0px;
-	left:0px;
-	opacity:0.4;*/
+
 
 	width: 100%;
     height: 100%;
@@ -543,6 +534,3 @@ text-decoration:none;
 	
 }
 
-
-
->>>>>>> 1d6a12e03174ac9c952cd24b8e174c8efe6fb8de
