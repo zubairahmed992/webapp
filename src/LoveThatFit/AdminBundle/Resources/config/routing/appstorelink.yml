@@ -1,7 +1,3 @@
-admin_appstorelink_add:
-    pattern:  /admin/appstorelink/add
-    defaults: { _controller: LoveThatFitAdminBundle:AppStoreLink:add }
-
 admin_appstorelink_edit:
     pattern:  /admin/appstorelink/{id}/edit
     defaults: { _controller: LoveThatFitAdminBundle:AppStoreLink:edit }

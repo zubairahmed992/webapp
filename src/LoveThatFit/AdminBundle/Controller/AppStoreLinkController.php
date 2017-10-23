@@ -10,12 +10,6 @@ use LoveThatFit\AdminBundle\Form\Type\AppStoreLinkTypes;
 
 class AppStoreLinkController extends Controller {
 
-    public function addAction() {
-        $app_link = "https://www.selfiestyler.com/";
-        $this->get('admin.helper.appstorelink')->save($app_link);
-        return $this->redirect('/admin/appstorelink/1/edit');
-    }
-
     public function editAction($id) {
 
         $entity = $this->get('admin.helper.appstorelink')->find($id);
