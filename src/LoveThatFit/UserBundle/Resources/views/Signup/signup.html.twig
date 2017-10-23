@@ -25,11 +25,11 @@
 
 <script>
 
-	jQuery(document).ready(function(e) {
+	/*jQuery(document).ready(function(e) {
         jQuery(".error_box").click(function(){
 			$(this).hide();	
 		});
-    });
+    });*/
 
 
 	function validate_form(){
@@ -846,7 +846,7 @@ $(document).ready(function(e) {
   <div class="screen_6 hide" id="screen_slide_1">
 
 <div class="create_acc">
-  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(1);" /></div>
+  <div class="arrow"><a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
   <p>Create  Account </p>
   <div class="error_red hide" id="error_bar_1"></div>
 </div>
