@@ -115,13 +115,28 @@ ws_user_registration_default_values:
       gender: f
       phone_number:
       zipcode:
-      birth_date:  
-      device_type: iphone6
-      create_default_user: true
-      imc: true
+      birth_date:
     request_type: post
-    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
-    backend_process: 
+    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists. (From Web)
+    backend_process:
+#______________________
+nws_web_user_registration:
+    pattern:  /nws/web_user_registration
+    title: web_user_registration
+    params:
+      first_name: example
+      last_name: example
+      friend_name: example
+      friend_email: example@gmail.com
+      email:  example@ltf.com
+      password: ltf123
+      gender: f
+      phone_number:
+      zipcode:
+      birth_date:
+    request_type: post
+    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.
+    backend_process:
 #______________________
 ws_user_measurement_update:
     pattern:  /ws/user_measurement_update
@@ -215,15 +230,36 @@ ws_selfieshare_create_v3:
    pattern:  /ws/selfieshare/create_v3
    title: selfieshare_create_v3
    params:
-     auth_token: 121c421783cd4d71d871ec16a1296091     
+     auth_token: 121c421783cd4d71d871ec16a1296091
      message_type: sms
      device_type: iphone6
-     friend_name: mycroft 
-     friend_email: mc@ss.com 
+     friend_name: mycroft
+     friend_email: mc@ss.com
      friend_phone: 89349724397428
      message: 'look at me! look at me!!'
-   request_type: post   
+   request_type: post
    file_upload: true
+   description:
+
+#______________________
+nws_web_invitefriend_create:
+   pattern:  /nws/invitefriend/create
+   title: web_invitefriend_create
+   params:
+     email: mc@ss.com
+     friend_name: mycroft
+     friend_email: mc@ss.com
+   request_type: post
+   description:
+
+#______________________
+nws_web_register_male_users:
+   pattern:  /nws/registermaleusers/create
+   title: web_register_male_users
+   params:
+     email: mc@ss.com
+     name: mycroft
+   request_type: post
    description:
 #______________________
 

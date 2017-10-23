@@ -225,6 +225,12 @@ class User implements UserInterface, \Serializable {
     private $version;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="InviteFriend", mappedBy="user", orphanRemoval=true)
+     */
+    protected $invitefriend;
+
+
 //---------------------------------------  implement the UserInterface
     public function __construct() {
         $this->isActive = true;
@@ -528,6 +534,23 @@ class User implements UserInterface, \Serializable {
      */
     private $archive_email;
 
+
+    /**
+     * @var string $friend_name
+     *
+     * @ORM\Column(name="friend_name", type="string", length=255, nullable=true)
+     * )
+     */
+    private $friend_name;
+
+
+    /**
+     * @var string $friend_email
+     *
+     * @ORM\Column(name="friend_email", type="string", length=60, nullable=true)
+     *
+     */
+    private $friend_email;
 
 
     /**
@@ -1828,7 +1851,41 @@ class User implements UserInterface, \Serializable {
     {
         return $this->selfieshare;
     }
-#---------------------------------------------------------------------------------    
+#---------------------------------------------------------------------------------
+
+    /**
+     * Add invitefriend
+     *
+     * @param \LoveThatFit\UserBundle\Entity\InviteFriend $invitefriend
+     * @return User
+     */
+    public function addInviteFriend(\LoveThatFit\UserBundle\Entity\Selfieshare $invitefriend)
+    {
+        $this->invitefriend[] = $invitefriend;
+        return $this;
+    }
+
+    /**
+     * Remove invitefriend
+     *
+     * @param \LoveThatFit\UserBundle\Entity\InviteFriend $invitefriend
+     */
+    public function removeInviteFriend(\LoveThatFit\UserBundle\Entity\Selfieshare $invitefriend)
+    {
+        $this->invitefriend->removeElement($invitefriend);
+    }
+
+    /**
+     * Get invitefriend
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInviteFriend()
+    {
+        return $this->invitefriend;
+    }
+#---------------------------------------------------------------------------------
+
     /**
      * Add user_feedback
      *
@@ -3076,6 +3133,47 @@ class User implements UserInterface, \Serializable {
      */
     public function getArchiveEmail() {
         return $this->archive_email;
+    }
+
+
+
+    /**
+     * Set friend_email
+     *
+     * @param string $friend_email
+     * @return User
+     */
+    public function setFriendEmail($friend_email) {
+        $this->friend_email = $friend_email;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFriendEmail() {
+        return $this->friend_email;
+    }
+
+
+    /**
+     * Set friend_name
+     *
+     * @param string $friend_name
+     * @return User
+     */
+    public function setFriendName($friend_name) {
+        $this->friend_name = $friend_name;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFriendName() {
+        return $this->friend_name;
     }
 
 

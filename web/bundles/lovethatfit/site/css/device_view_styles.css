@@ -304,10 +304,10 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
             
     .black_btn{
     display: inline-block;
-    padding: 5px 8px;
+    padding: 3px 9px;
     cursor: pointer;
     color: #fff;
-    background: #000;
+    background: #444;
     text-decoration: none;
     font-size: 12px;
     border:none;

@@ -60,6 +60,7 @@
         <img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" />
      </div>
 </div>
+{#     
 <div class="navigation1" id="cavnas_nav">
     <a id="centerline">Center Line</a>
     <a id="showHide">Index</a>
@@ -82,10 +83,35 @@
          <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
      {% endif %}
     </span>
-   
+     <div style="text-align:center;"> <div class="row"></div>
+         <div class="span6" style="text-align:left;">
+         <ul class="liststyle">
+            <li><button type="button" id="editOriginal" class="black_btn tools" style="display:none;">Edit Original</button></li>
+            <li><button type="button" id="compare" class="black_btn tools" style="display:none;">Compare</button></li>
+            <li> <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle Image</button></li>
+            <li><div id="opSlider" class="oprangsldr tools" ></div></li>
+            <li><select id="blendMode">
+                    <option value="normal">Blend-Normal</option> 
+                    <option value="multiply">Multiply</option> 
+                    <option value="color-burn">Color Burn</option>
+                    <option value="difference">Difference</option>
+                    <option value="exclusion">Exclusion</option>
+                    <option value="subtract">Subtract</option>
+                    <option value="destination-out">White</option>
+                </select>
+           </li>
+        </ul> 
+         </div>
+         <div class="span4">
+    
+     
+     </div>
+      <div style="clear:both;"></div>  
+     </div>
    {##}
-    {#<a id="retuchImage">Toggle Image</a>#}
+    {#<a id="retuchImage">Toggle Image</a>
 </div>
+#}
 <div class="container_pending">
     <div id="dimpop"></div>
     <div id="rej_popup">
@@ -183,6 +209,7 @@
 
         <div style="margin-bottom: 10px;clear:both;"></div>
         <style>
+            .navigation1{ padding:5px 5px 10px 5px;}
 .ui-tooltip {
     text-align: center;
     padding: 0;
@@ -225,7 +252,7 @@
 
             ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
             .archives span{ padding:0 !important; margin:0 !important;}
-            .oprangsldr{ width: 100px;display:inline-block; height:2px !important; background:#666666!important; margin-top:25px; }
+            .oprangsldr{ width:70px;display:inline-block; height:2px !important; background:#666666!important; margin-top:16px; }
             .oprangsldr span{ background: #000000 !important; border:none; width:2px; height:2px; border-radius:100%; top:-9px !important; }
             .img-thumb{width: 50px; height:55px;}
              .archives span.active {
@@ -265,6 +292,33 @@
              }
              .retouch_box{ background:#dddddd; margin:-4px 0 0px 5px; border-top:1px solid #000000; }
              .black_btn{ margin:4px;}
+             .blend_mode{
+                 margin-top:10px;
+                 text-align:left;
+             }
+             ul.liststyle select{ width:130px; margin:2px 0px 0 17px;}
+             {# .blend_mode select{font-size:12px; width:140px;margin-left:10px;}#}
+              ul.liststyle{margin:0; padding:2px 7px;}
+              ul.liststyle li{
+                  list-style:none;
+                  float:left;
+                  
+              }
+              ul.liststyle li a{ background:none; border:none;}
+              .canvas_navigation{margin-top:20px; background:rgba(204,204,204,0.8); padding:10px;}
+              .canvas_navigation a{text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
+                .canvas_navigation a:hover{background:#000000;color:#ffffff;}
+                .archive_nave{ background:rgba(241,241,241,0.8);}
+                .fixed {
+                    position: fixed;
+                    top: 38px;
+                    left: 14%;
+                    width: 964px;
+                    z-index: 1;
+                    right: 0%;
+                    margin: auto;
+                }
+           
     {#img:before{
         position: absolute; 
         top:0; 
@@ -314,9 +368,9 @@
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
                 </form>
-              
-<div class="span8 maindiv" style="position:relative; top:80px;">
-<div class="span8">
+           
+<div class="span10 maindiv" style="position:relative;">
+<div>
 
 {% if (device_type == "iphone5")%}
 <div class="txt_center"><canvas id="canv_mask" style="width:960px; height: 1280px; position: relative;"></canvas>
@@ -330,28 +384,78 @@
 </div>
 {% endif %}
 {% if (device_type == "iphone6")%}
-     <div style="position:relative; text-align:center; min-height:42px;float:right;">
+     <div>
         <!--clock !-->
-        <ul class="imagemenu">
-            <li><div class="rej_img"><a href="#">Reject Image</a></div></li>
-            <li><div class="approve_img"><a href="#">Approve Image</a></div></li>
-        </ul> 
+       
         
     </div>
      
         <div style="text-align: right;padding-right: 25%;"><i class="fa fa-clock-o clk_img" aria-hidden="true"></i></div>
-<div class="txt_center canv_hldr_2">
-    
-    <div style="text-align:left;text-align: left;display: flex;">
-       <button type="button" id="editOriginal" class="black_btn tools" style="display:none;">Edit Original</button>
-        <button type="button" id="compare" class="black_btn tools" style="display:none;">Compare</button>
-        <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle Image</button>
-      <div id="opSlider" class="oprangsldr tools" ></div>
-      
+<div class="canv_hldr_2" style="margin-left:30px;">
+    <div style="text-align:center;"> <div class="row"></div>
+         <div class="span6" style="text-align:left;">
+         </div>
+         <div class="span4">
+        <ul class="liststyle" style="float:right;">
+           <li><div class="rej_img black_btn"><a href="#">Reject Image</a></div></li>
+            <li><div class="approve_img black_btn"><a href="#">Approve Image</a></div></li> 
+        </ul>    
+      <div style="clear:both;"></div>
      </div>
+         </div>
+    <div style="display: inline-block;text-align: position:relative;">
+        <div id="sticky">
+        <div class="canvas_navigation">
+    <a id="centerline">Center Line</a>
+    <a id="showHide">Index</a>
+    <a class="nav_menu" onClick="move_left();">Left</a>
+    <a class="nav_menu" onClick="move_right();">Right</a>
+    <a class="nav_menu" onClick="move_up();">Up</a>
+    <a class="nav_menu" onClick="move_down();">Down</a>
+    <a class="nav_menu" onClick="rotate_left();">Rotate Left</a>
+    <a class="nav_menu" onClick="rotate_right();">Rotate Right</a>
+    <a onClick="zoom_in();">Zoom In</a>
+    <a onClick="zoom_out();">Zoom Out</a>
+    <a id="end"  onClick="save();">Save</a>
+    <a class="reset_mask" href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
+    <span id="activate_btn">
+        <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+    <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+     {% if (archives is defined)%}
+         <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+     {% else %}
+         <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
+     {% endif %}
+    </span>
+      </div>
+         <div class="archive_nave">
+         <ul class="liststyle">
+            <li><button type="button" id="editOriginal" class="black_btn tools" style="display:none;">Edit Original</button></li>
+            <li><button type="button" id="compare" class="black_btn tools" style="display:none;">Compare</button></li>
+            <li> <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle Image</button></li>
+            <li><div id="opSlider" class="oprangsldr tools" ></div></li>
+            <li><select id="blendMode">
+                    <option value="normal">Blend-Normal</option> 
+                    <option value="multiply">Multiply</option> 
+                    <option value="color-burn">Color Burn</option>
+                    <option value="difference">Difference</option>
+                    <option value="exclusion">Exclusion</option>
+                    <option value="subtract">Subtract</option>
+                    <option value="destination-out">White</option>
+                </select>
+           </li>
+        </ul>
+             <div style="clear:both"></div>
+              </div>
+         <div style="clear:both"></div>
+        </div>
+   {##}
+    {#<a id="retuchImage">Toggle Image</a>#}
+
+         {#<ul class="imagemenu">#}
     <canvas id="canv_mask_makeover" class="mask-marker-canvas" width="960" height="1280"></canvas>
    
-</div>
+    </div>
 {% endif %}
 </div>
 </div>
@@ -440,6 +544,27 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
+    
+ $(window).scroll(function(){
+  var sticky = $('#sticky');
+      scroll = $(window).scrollTop();
+  if (scroll >= 100){
+        sticky.addClass('fixed');
+        }
+  else {
+        sticky.removeClass('fixed');
+        
+       
+  }
+});
+
+    //archive: select menu change blend mode 
+        $('#blendMode').on('change', function() {
+             var optionSelected = $("option:selected", this);
+             var valueSelected = this.value;
+             blendMode(valueSelected);
+        });
+        
     //archive show date and time on Mouseover
      $('[data-toggle="tooltip"]').tooltip({
          position: {
@@ -461,16 +586,18 @@ $(document).ready(function(){
     
     
     //archive toggle function trigger on click of selector
+    $("#blendMode").hide().prop('selectedIndex',0);;
         $('#toggleimg').click(function(){
              toggleimg();
-             $("#opSlider, .nav_menu").toggle();
+             $("#opSlider, .nav_menu, #blendMode").toggle();
         });
    //archive show original images and hide some selectors  
   $("#editOriginal").on('click',function(){
        showOriginal();
+       $("#blendMode").prop('selectedIndex',0);
        $(".nav_menu, #end, #btn_confirm, .reset_mask").show();
         //$("#end, #btn_confirm, .reset_mask").show();
-        $("#toggleimg, #opSlider, #editOriginal, #compare").hide();
+        $("#toggleimg, #opSlider, #editOriginal, #compare, #blendMode").hide();
       
         $("#compare").text("Compare").removeClass("yes_compare");
         $("#retouchImages li").each(function(){
@@ -484,7 +611,7 @@ $(document).ready(function(){
     $("#compare").hide();
     $(".tools").hide();
     $("#compare").on('click',function(){
-        $(".tools").show();
+        $(".tools, #blendMode").show();
         $(".nav_menu").hide();
         init_compare();
     });
@@ -556,17 +683,20 @@ var $activeImg = $("#archive_active_img_url");
     left: -5
 }).html('1').hide();
 $("#end, #btn_confirm").show();
-
 $("#compare").click(function(){
     $("#compare").toggleClass("yes_compare");
         if($(this).hasClass("yes_compare")){
             $(this).html("Exit Compare");
             $("#end, #btn_confirm, .reset_mask").hide();
             $("#toggleimg, #opSlider").show();
+          
         }else{
             $(this).html("Compare");
+            
             $("#end, #btn_confirm, .reset_mask").show();
-            $("#toggleimg, #opSlider").hide();
+            $("#toggleimg, #opSlider, #blendMode").hide();
+            blendMode('normal');
+             $('#blendMode').prop('selectedIndex',0);
             changeOpacity(opacity=1);
             $("#opSlider").slider('value', $("#opSlider").slider('value') + 1);
             $("#tooltip").html(1);
@@ -588,6 +718,8 @@ $("#retouchImages li img").each(function(){
        $(this).click(function(){
                 $("#compare, #editOriginal").show();
                 zoom_out();
+                blendMode('normal');
+                $('#blendMode').prop('selectedIndex',0);
                 $("#retouchImages li").removeClass("active");
                 retuch_url = $(this).parent().find('input').attr("value");
                 $activeImg.val(retuch_url);
