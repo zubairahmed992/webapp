@@ -483,10 +483,10 @@ class ServiceController extends Controller {
 
     //----------- 10-23-2017---------- User Marker Json return user marker json
 
-    public function userMarkerJsonAction($user_id)
+    public function userMaskMarkerJsonAction($user_id)
     {
         try {
-            $response = $this->get('service.repo')->getUserMArkerJson($user_id);
+            $response = $this->get('service.repo')->getuserMaskMarkerJson($user_id);
             return new JsonResponse([
                 'success' => true,
                 'data'    => $response

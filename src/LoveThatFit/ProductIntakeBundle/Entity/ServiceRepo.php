@@ -157,7 +157,7 @@ class ServiceRepo
 
 
     //-------------- 10/23/2017  Get User Marker Json
-    public function getUserMArkerJson($user_id)
+    public function getuserMaskMarkerJson($user_id)
     {
         $query = $this->em
             ->createQuery("SELECT um.marker_json FROM LoveThatFitUserBundle:UserMarker um
