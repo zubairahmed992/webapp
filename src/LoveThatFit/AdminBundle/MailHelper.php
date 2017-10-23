@@ -166,7 +166,6 @@ class MailHelper {
         
     }
     
-    
     public function sendPasswordResetLinkEmail($user, $reset_link) {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
@@ -174,7 +173,16 @@ class MailHelper {
         $subject = 'SelfieStyler: Password Reset';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
-        
+    }
+
+    public function sendPasswordResetLinkEmailWeb($user, $reset_link)
+    {
+        $from    = $this->conf['parameters']['mailer_user'];
+        $to      = $user->getEmail();
+        $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
+        $subject = 'SelfieStyler: Password Reset';
+        //return 'emailing is currently disabled';
+        return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
     }
 
 	public function sendOrderConfirmationEmail($user,$order,$cart) {
