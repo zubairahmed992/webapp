@@ -198,9 +198,14 @@ admin:
 
 admin_login_check:
     pattern:   /admin/login_check
+    defaults:  { _controller: LoveThatFitUserBundle:Security:adminLogin }
 
 admin_logout:
     pattern:   /admin/logout
+
+login_admin:
+    pattern:   /admin/
+    defaults:  { _controller: LoveThatFitUserBundle:Security:adminLogin }
     
 login:
     pattern:   /login

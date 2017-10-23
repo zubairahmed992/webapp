@@ -75,7 +75,7 @@
               <li><a href="{{ path('admin_marketingtiles') }}">Marketing Tiles</a></li>
               <li><a href="{{ path('admin_misc_setting_index') }}">Misc Setting</a></li>
               <li><a href="{{ path('admin_appstorelink_edit', {'id': '1'}) }}">App Store Link</a></li>
-              <li><a href="{{ path('admin_logout') }}">Logout</a></li>
+              <li><a href="{{ okta_logout }}{{ okta_app_url|url_encode }}">Logout</a></li>
             </ul>
              <!-- Top Navigation End -->
           </div><!--/.nav-collapse -->

@@ -43,6 +43,7 @@ security:
                   success_handler: app.authentication_success_handler
               logout:
                   path: /admin/logout
+                  success_handler: app.logout_success_handler
                
         support:
               provider: support_db

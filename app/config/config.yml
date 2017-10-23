@@ -37,6 +37,8 @@ twig:
             facebook:
               app_id: 314138425462684
               web_link: 'http://stack.selfiestyler.com/'
+        okta_logout: "https://selfiestyler-admin.okta.com/login/admin/signout?fromURI="
+        okta_app_url: "/app/selfiestyler_symfonywebapp_1/exk255c4tb2dRHscM1t7/sso/saml"
        #"%LoveThatFitUserBundle:Form:fields.html.twig%"
            
            
