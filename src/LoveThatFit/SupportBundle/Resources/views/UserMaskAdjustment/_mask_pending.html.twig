@@ -60,6 +60,7 @@
         <img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" />
      </div>
 </div>
+{#     
 <div class="navigation1" id="cavnas_nav">
     <a id="centerline">Center Line</a>
     <a id="showHide">Index</a>
@@ -108,8 +109,9 @@
       <div style="clear:both;"></div>  
      </div>
    {##}
-    {#<a id="retuchImage">Toggle Image</a>#}
+    {#<a id="retuchImage">Toggle Image</a>
 </div>
+#}
 <div class="container_pending">
     <div id="dimpop"></div>
     <div id="rej_popup">
@@ -207,7 +209,7 @@
 
         <div style="margin-bottom: 10px;clear:both;"></div>
         <style>
-            .navigation1{background:rgba(255,255,255,0.7); padding:5px 5px 10px 5px;}
+            .navigation1{ padding:5px 5px 10px 5px;}
 .ui-tooltip {
     text-align: center;
     padding: 0;
@@ -250,7 +252,7 @@
 
             ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
             .archives span{ padding:0 !important; margin:0 !important;}
-            .oprangsldr{ width:70px;display:inline-block; height:2px !important; background:#666666!important; margin-top:25px; }
+            .oprangsldr{ width:70px;display:inline-block; height:2px !important; background:#666666!important; margin-top:16px; }
             .oprangsldr span{ background: #000000 !important; border:none; width:2px; height:2px; border-radius:100%; top:-9px !important; }
             .img-thumb{width: 50px; height:55px;}
              .archives span.active {
@@ -294,15 +296,29 @@
                  margin-top:10px;
                  text-align:left;
              }
-             ul.liststyle select{ width:130px; margin:7px 0px 0 17px;}
+             ul.liststyle select{ width:130px; margin:2px 0px 0 17px;}
              {# .blend_mode select{font-size:12px; width:140px;margin-left:10px;}#}
-              ul.liststyle{padding:0; margin:0;}
+              ul.liststyle{margin:0; padding:2px 7px;}
               ul.liststyle li{
                   list-style:none;
                   float:left;
                   
               }
               ul.liststyle li a{ background:none; border:none;}
+              .canvas_navigation{margin-top:20px; background:rgba(204,204,204,0.8); padding:10px;}
+              .canvas_navigation a{text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
+                .canvas_navigation a:hover{background:#000000;color:#ffffff;}
+                .archive_nave{ background:rgba(241,241,241,0.8);}
+                .fixed {
+                    position: fixed;
+                    top: 38px;
+                    left: 14%;
+                    width: 964px;
+                    z-index: 1;
+                    right: 0%;
+                    margin: auto;
+                }
+           
     {#img:before{
         position: absolute; 
         top:0; 
@@ -353,7 +369,7 @@
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
                 </form>
            
-<div class="span10 maindiv" style="position:relative; top:80px;">
+<div class="span10 maindiv" style="position:relative;">
 <div>
 
 {% if (device_type == "iphone5")%}
@@ -387,11 +403,59 @@
       <div style="clear:both;"></div>
      </div>
          </div>
-    <div>
+    <div style="display: inline-block;text-align: position:relative;">
+        <div id="sticky">
+        <div class="canvas_navigation">
+    <a id="centerline">Center Line</a>
+    <a id="showHide">Index</a>
+    <a class="nav_menu" onClick="move_left();">Left</a>
+    <a class="nav_menu" onClick="move_right();">Right</a>
+    <a class="nav_menu" onClick="move_up();">Up</a>
+    <a class="nav_menu" onClick="move_down();">Down</a>
+    <a class="nav_menu" onClick="rotate_left();">Rotate Left</a>
+    <a class="nav_menu" onClick="rotate_right();">Rotate Right</a>
+    <a onClick="zoom_in();">Zoom In</a>
+    <a onClick="zoom_out();">Zoom Out</a>
+    <a id="end"  onClick="save();">Save</a>
+    <a class="reset_mask" href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
+    <span id="activate_btn">
+        <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
+    <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
+     {% if (archives is defined)%}
+         <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
+     {% else %}
+         <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
+     {% endif %}
+    </span>
+      </div>
+         <div class="archive_nave">
+         <ul class="liststyle">
+            <li><button type="button" id="editOriginal" class="black_btn tools" style="display:none;">Edit Original</button></li>
+            <li><button type="button" id="compare" class="black_btn tools" style="display:none;">Compare</button></li>
+            <li> <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle Image</button></li>
+            <li><div id="opSlider" class="oprangsldr tools" ></div></li>
+            <li><select id="blendMode">
+                    <option value="normal">Blend-Normal</option> 
+                    <option value="multiply">Multiply</option> 
+                    <option value="color-burn">Color Burn</option>
+                    <option value="difference">Difference</option>
+                    <option value="exclusion">Exclusion</option>
+                    <option value="subtract">Subtract</option>
+                    <option value="destination-out">White</option>
+                </select>
+           </li>
+        </ul>
+             <div style="clear:both"></div>
+              </div>
+         <div style="clear:both"></div>
+        </div>
+   {##}
+    {#<a id="retuchImage">Toggle Image</a>#}
+
          {#<ul class="imagemenu">#}
     <canvas id="canv_mask_makeover" class="mask-marker-canvas" width="960" height="1280"></canvas>
    
-</div>
+    </div>
 {% endif %}
 </div>
 </div>
@@ -480,6 +544,20 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
+    
+ $(window).scroll(function(){
+  var sticky = $('#sticky');
+      scroll = $(window).scrollTop();
+  if (scroll >= 100){
+        sticky.addClass('fixed');
+        }
+  else {
+        sticky.removeClass('fixed');
+        
+       
+  }
+});
+
     //archive: select menu change blend mode 
         $('#blendMode').on('change', function() {
              var optionSelected = $("option:selected", this);
