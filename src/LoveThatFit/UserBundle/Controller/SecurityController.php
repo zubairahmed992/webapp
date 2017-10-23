@@ -147,11 +147,14 @@ class SecurityController extends Controller {
     {
         $em   = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthTokenWeb($email_auth_token);
-        $time = $user->getUpdatedAt()->format("Y-m-d H:i:s");
-        $hourdiff = round((strtotime(date("Y-m-d H:i:s")) - strtotime($time))/3600, 1);
-        $hourdiff = 1.5;
-        if ($user &&  $hourdiff <= 2) {
-            return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
+        if ($user) {
+            $time = $user->getUpdatedAt()->format("Y-m-d H:i:s");
+            $hourdiff = round((strtotime(date("Y-m-d H:i:s")) - strtotime($time))/3600, 1);
+            if ($user &&  $hourdiff <= 2) {
+                return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
+            } else {
+                return $this->redirect($this->generateUrl('login'));
+            }
         } else {
             return $this->redirect($this->generateUrl('login'));
         }
