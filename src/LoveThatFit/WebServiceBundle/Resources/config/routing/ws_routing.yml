@@ -54,6 +54,10 @@ nws_user_forgot_password:
     pattern:  /ws/user_forgot_password
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:forgotPassword }
 
+nws_web_user_forgot_password:
+    pattern:  /nws/web_user_forgot_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:forgotPasswordWeb }
+
 nws_user_forgot_password_token_auth:
     pattern:  /ws/user_forgot_password_token_auth
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:forgotPasswordTokenAuth }
@@ -85,7 +89,15 @@ ws_selfieshare_create:
 ws_selfieshare_create_v3:
     pattern:  /ws/selfieshare/create_v3
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:selfieshareCreateV3}
-    
+
+nws_web_invitefriend_create:
+    pattern:  /nws/invitefriend/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:invitefriendCreate}
+
+nws_web_register_male_users:
+    pattern:  /nws/registermaleusers/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registermaleusersCreate}
+
 #------------------------------------------------------------------------------------
 
 nws_products:
@@ -432,3 +444,7 @@ ws_email_order_detail_show:
 nws_update_primary_email:
     pattern: /nws/update_primary_email
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:nwsUpdatePrimaryEmail}
+
+nws_web_user_registration:
+    pattern: /nws/web_user_registration
+    defaults: { _controller: LoveThatFitWebServiceBundle:SignUp:registration }

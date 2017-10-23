@@ -166,7 +166,6 @@ class MailHelper {
         
     }
     
-    
     public function sendPasswordResetLinkEmail($user, $reset_link) {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
@@ -174,7 +173,16 @@ class MailHelper {
         $subject = 'SelfieStyler: Password Reset';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
-        
+    }
+
+    public function sendPasswordResetLinkEmailWeb($user, $reset_link)
+    {
+        $from    = $this->conf['parameters']['mailer_user'];
+        $to      = $user->getEmail();
+        $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
+        $subject = 'SelfieStyler: Password Reset';
+        //return 'emailing is currently disabled';
+        return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
     }
 
 	public function sendOrderConfirmationEmail($user,$order,$cart) {
@@ -210,7 +218,7 @@ class MailHelper {
 	  return $result;
 	}
 
-  public function sendFeedbackEmail($user,$content) {
+    public function sendFeedbackEmail($user,$content) {
 
 	//$from = $user->getEmail();
 	$from = $this->conf['parameters']['mailer_user'];
@@ -253,7 +261,7 @@ class MailHelper {
 	return $result;
   }
 
-   public function sendEmailWithTemplate($arr) {
+    public function sendEmailWithTemplate($arr) {
         $from = $this->conf['parameters']['mailer_user'];
         $message = \Swift_Message::newInstance()
                 ->setSubject($arr['subject'])
@@ -283,6 +291,19 @@ class MailHelper {
        );
      }
         return $result;
+    }
+
+
+    public function sendWebRegistrationEmail($user) {
+
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $user->getEmail();
+        $body = "LoveThatFitAdminBundle::email/registration-web.html.twig";
+        $subject = 'SelfieStyler: Thank you for registering with us. ';
+        //return 'emailing is currently disabled';
+        return $this->sendEmail($from, $to, $body, $user, $subject);
+
+
     }
 
 }

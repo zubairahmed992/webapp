@@ -97,6 +97,7 @@ class MarketingTilesRepository extends EntityRepository
                     mt.button_action,
                     mt.sorting,
                     mt.disabled,
+                    mt.target_url,
                     mt.created_at'
                 )
             ->from('LoveThatFitAdminBundle:MarketingTiles', 'mt')
