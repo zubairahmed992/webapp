@@ -1,4 +1,2 @@
-appuser_registration:
-    pattern:   appuser/registration
-    defaults: { _controller: LoveThatFitUserBundle:SignUp:registration }
+
 

@@ -682,6 +682,12 @@ public function stepFourTimeSpentAction(Request $request){
    $response->setContent(readfile($basename));
    return $response;
     }
+
+    public function registrationFromWebAction() {           
+
+        return $this->render('LoveThatFitUserBundle:Registration:signup.html.twig');
+    }
+
     
 #>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
       public function stepImageEditAction($edit_type=null) {
