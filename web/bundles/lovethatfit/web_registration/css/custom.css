@@ -141,9 +141,12 @@ h2 {
 .arrow {
 	margin-right: 10px;
 }
+<<<<<<< HEAD
 .arrow img{
 	cursor:pointer;
 }
+=======
+>>>>>>> 1fadee74a0fc9ff251ed80bbc02ad769518360d5
 .zipcode_text p {
 	text-align: left;
 	font-size: 14px;font-family: 'Lato', sans-serif;
@@ -385,9 +388,12 @@ footer img a {
 	color: #F00;
 	padding-left: 2px;
 	padding-top: 3px;
+<<<<<<< HEAD
 	cursor:pointer;
 /*	position: relative;
     top: 29px;*/
+=======
+>>>>>>> 1fadee74a0fc9ff251ed80bbc02ad769518360d5
 }
 .hide{
 	display:none;
@@ -395,6 +401,7 @@ footer img a {
 .show{
 	display:block;
 }
+<<<<<<< HEAD
 
 .profile_pic {
 	margin-left: auto;
@@ -479,6 +486,18 @@ text-decoration:none;
 .anchor_text a:hover{
 	text-decoration:none;
 	color:#fff;
+}
+
+.red_color {
+  color: red !important;
+}
+.green_color {
+  color: green !important;;
+}
+.c_pass {
+	color: red !important;	
+	font-size: 14px !important;
+	display: none;
 }
 
 

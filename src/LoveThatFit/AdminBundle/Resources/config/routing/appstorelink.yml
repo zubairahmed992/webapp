@@ -1,0 +1,9 @@
+admin_appstorelink_edit:
+    pattern:  /admin/appstorelink/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:AppStoreLink:edit }
+    requirements:
+        _method:  GET
+        
+admin_appstorelink_update:
+    pattern:  /admin/appstorelink/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:AppStoreLink:update }

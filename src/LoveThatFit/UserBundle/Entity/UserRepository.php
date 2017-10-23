@@ -22,6 +22,20 @@ class UserRepository extends EntityRepository
 
     #--------------------------------------------------------------
 
+    public function loadUserByAuthTokenWeb($auth_token)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT us FROM LoveThatFitUserBundle:User us WHERE us.authToken=:auth_token")
+            ->setParameter('auth_token', $auth_token);
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    #--------------------------------------------------------------
+
     public function isDuplicateEmail($id, $email)
     {
         try {
