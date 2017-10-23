@@ -39,6 +39,7 @@ h2 {
 	border-bottom: 1px solid #CCC;
 	background: none!important;
 	border-radius: none!important;
+	font-size:12px !important;
 }
 .form-control:focus {
 	border: none;
@@ -416,6 +417,10 @@ footer img a {
 	height: 45px;
 	font-size: 16px;
 	letter-spacing: 1px;
+	padding-top:13px;
+	-moz-border-radius:5px; 
+    -webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 #invite_form input:focus ~ .floating-label, #invite_form input:not(:focus):valid ~ .floating-label {
