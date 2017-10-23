@@ -204,7 +204,7 @@ class WSUserController extends Controller
             $user->setAuthToken(uniqid());
             $this->get('user.helper.user')->saveUser($user);
             $baseurl = $this->getRequest()->getHost();
-            $link = $baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
+            $link =  $baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
             $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmailWeb($user, $link);
             if ($defaultData[0]) {
                 //$link
