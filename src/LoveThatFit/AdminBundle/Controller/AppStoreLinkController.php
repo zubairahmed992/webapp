@@ -21,11 +21,14 @@ class AppStoreLinkController extends Controller {
         $entity = $this->get('admin.helper.appstorelink')->find($id);
 
         if(!$entity){       
-            $this->get('session')->setFlash('warning', 'The app store link can not be Created!');
-        }else{
-            $form = $this->createForm(new AppStoreLinkTypes('edit',$entity), $entity);
-            $deleteForm = $this->createForm(new DeleteType(), $entity);
+            $app_link = "https://www.selfiestyler.com/";
+            $this->get('admin.helper.appstorelink')->save($app_link);
+            $entity = $this->get('admin.helper.appstorelink')->find($id);
         }
+            
+        $form = $this->createForm(new AppStoreLinkTypes('edit',$entity), $entity);
+        $deleteForm = $this->createForm(new DeleteType(), $entity);
+        
         return $this->render('LoveThatFitAdminBundle:AppStoreLink:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
