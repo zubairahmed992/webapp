@@ -234,14 +234,18 @@ forgot_password_update_web:
     pattern:   /forgot_password_update_web
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdateWeb }
 
+forgot_password_thanks_web:
+    pattern:   /forgot_password_thanks_web
+    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordThanksWeb }
+
 forgot_password_update:
     pattern:   /forgot_password_update/{id}
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdate }
-    
+
 lost_user_account:
     pattern:   /lost_user_account
     defaults:  { _controller: LoveThatFitUserBundle:Security:lostUserAccount } 
-    
+
 lost_account_form:
     pattern:   /lost_account_form
     defaults:  { _controller: LoveThatFitUserBundle:Security:lostUserAccountForm }  

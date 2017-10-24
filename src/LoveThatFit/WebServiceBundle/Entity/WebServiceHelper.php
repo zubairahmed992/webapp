@@ -1384,7 +1384,7 @@ class WebServiceHelper
     }
 
     //Method is using Version 3 - Calling FitAlgo class has been removed.
-    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user)
+    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user, $fittingRoomId = 0)
     {
         $product = $this->container->get('admin.helper.product')->find($id);
 
@@ -1452,6 +1452,7 @@ class WebServiceHelper
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
+                'fitting_room_id' => (in_array($pi->getId(), $product_item) && $fittingRoomId > 0) ? $fittingRoomId : 0,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
                 'disabled' => $product->getDisabled(),
