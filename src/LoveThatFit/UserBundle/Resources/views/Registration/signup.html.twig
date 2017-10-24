@@ -25,11 +25,8 @@
 
 <script>
 
-	/*jQuery(document).ready(function(e) {
-        jQuery(".error_box").click(function(){
-			$(this).hide();	
-		});
-    });*/
+
+
 
 
 	function validate_form(){
@@ -310,26 +307,10 @@
 													jQuery('#error_bar_5').addClass("hide");        
 												}
 												
-												if(flag){
-													if($( "#screen_slide_5" ).hasClass( "show" )) {																
-															
-																		jQuery('#screen_slide_5').removeClass("show");			
-																		jQuery('#screen_slide_5').addClass("hide");			
-																		jQuery('#screen_slide_6').removeClass("hide");			
-																		jQuery('#screen_slide_6').addClass("show");			
-																		
-																	} 
-												}
 												
-												if(false){
-													if($( "#screen_slide_5" ).hasClass( "show" )) {																
-															
-																		jQuery('#screen_slide_5').removeClass("show");			
-																		jQuery('#screen_slide_5').addClass("hide");			
-																		jQuery('#screen_slide_6').removeClass("hide");			
-																		jQuery('#screen_slide_6').addClass("show");			
-																		
-																	} 
+												
+												if(flag){
+													
 													
 														first_name = jQuery('#first_name').val();
 														last_name = jQuery('#last_name').val();
@@ -343,12 +324,16 @@
 														friend_email = jQuery('#friend_email').val();
 														
 														if(friend_email.length > 0) {
-													
+															jQuery('#overlay').removeClass("hide"); 
+															jQuery('#overlay').addClass("show");
 															$.ajax({
 																  type: "POST",
-																  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+																  url: "{{ path('nws_web_user_registration') }}",
 																  data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date+"&friend_name="+friend_name+"&friend_email="+friend_email,
 																  success: function (data) {
+																	  jQuery('#overlay').removeClass("show");
+																	  jQuery('#overlay').addClass("hide"); 
+																	 
 																	
 																		if($( "#screen_slide_5" ).hasClass( "show" )) {																
 															
@@ -364,12 +349,16 @@
 																  }
 															  });
 														} else {
-															
+															jQuery('#overlay').removeClass("hide"); 
+															jQuery('#overlay').addClass("show");
 															$.ajax({
 																  type: "POST",
-																  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+																  url: "{{ path('nws_web_user_registration') }}",
 																 data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date,
 																  success: function (data) {
+																	  
+																	  jQuery('#overlay').removeClass("show");
+																	  jQuery('#overlay').addClass("hide"); 
 																	
 																		if($( "#screen_slide_5" ).hasClass( "show" )) {																
 															
@@ -484,26 +473,20 @@ function invite_friend()
 			jQuery('#error_bar_7').addClass("hide");       
 		}
 		
-		if(flag)
-		{
-			if($( "#screen_slide_7" ).hasClass( "show" )) {	
-				jQuery('#screen_slide_7').removeClass("show");			
-				jQuery('#screen_slide_7').addClass("hide");			
-				jQuery('#screen_slide_8').removeClass("hide");			
-				jQuery('#screen_slide_8').addClass("show");			
-			} 	
-		}
 		
-		if(false){
-			email = jQuery('#mem_email').val();
+		
+		if(flag){
 			friend_name = jQuery('#invite_friend_name').val();
 			friend_email = jQuery('#invite_friend_email').val();
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
-					  url: "http://dev.selfiestyler.com/nws/invitefriend/create",
-					  data: "email="+email+"friend_name="+friend_name+"friend_email="+friend_email,
+					  url: "{{ path('nws_web_invitefriend_create') }}",
+					  data: "name="+friend_name+"&email="+friend_email,
 					  success: function (data) {
-						
+						 jQuery('#overlay').removeClass("show");
+						 jQuery('#overlay').addClass("hide"); 
 							if($( "#screen_slide_7" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_7').removeClass("show");			
 								jQuery('#screen_slide_7').addClass("hide");			
@@ -545,9 +528,7 @@ function male_registration()
 		jQuery('#invite_friend_name').val('');	
 		jQuery('#invite_friend_email').val('');	
 		
-	}
-	
-	 else { 
+	} else { 
 	
 	if(jQuery('#male_name').val()==''){
 		
@@ -584,26 +565,22 @@ function male_registration()
 			jQuery('#error_male_email').addClass("hide"); 
 			jQuery('#error_bar_10').addClass("hide");        
 		}
+		
+		
+		
 		if(flag){
-			jQuery('#screen_slide_10').removeClass("show");			
-			jQuery('#screen_slide_10').addClass("hide");			
-			jQuery('#screen_slide_11').removeClass("hide");			
-			jQuery('#screen_slide_11').addClass("show");
-		}
-		
-		
-		if(false){
-			
-			email = jQuery('#mem_email').val();
+						
 			friend_name = jQuery('#male_name').val();
 			friend_email = jQuery('#male_email').val();
-			
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
-					  url: "http://dev.selfiestyler.com/nws/registermaleusers/create",
-					  data: "email="+email+"friend_name="+friend_name+"friend_email="+friend_email,
+					  url: "{{ path('nws_web_register_male_users') }}",
+					  data: "name="+friend_name+"&email="+friend_email,
 					  success: function (data) {
-						
+						 jQuery('#overlay').removeClass("show");
+						 jQuery('#overlay').addClass("hide"); 
 							if($( "#screen_slide_10" ).hasClass( "show" )) {	
 													
 				
@@ -634,13 +611,7 @@ function passwordValidate(pswd)
       error = 1;
       htmltag += '</br>8 Characters';
     }
-  /*  //validate letter
-    if ( pswd.match(/[A-z]/) ) {
-        $('#letter').removeClass('red_color').addClass('green_color');
-    } else {
-      error = 1;
-      $('#letter').removeClass('green_color').addClass('red_color');
-    }*/
+
     //validate capital letter
     if ( !pswd.match(/[A-Z]/) ) {
 		 error = 1;
@@ -676,19 +647,19 @@ function invite_friend_user_skip()
 		friend_name = jQuery('#friend_name').val();
 		friend_email = jQuery('#friend_email').val();
 		
-							jQuery('#screen_slide_5').removeClass("show");			
-							jQuery('#screen_slide_5').addClass("hide");			
-							jQuery('#screen_slide_6').removeClass("hide");			
-							jQuery('#screen_slide_6').addClass("show");	
+						
 		
-		/*if(friend_email.length > 0) {
-	
+		if(friend_email.length > 0) {
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
+
 			$.ajax({
 				  type: "POST",
-				  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+				  url: "{{ path('nws_web_user_registration') }}",
 				  data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date+"&friend_name="+friend_name+"&friend_email="+friend_email,
 				  success: function (data) {
-					
+							jQuery('#overlay').removeClass("show");
+							jQuery('#overlay').addClass("hide"); 
 							jQuery('#screen_slide_5').removeClass("show");			
 							jQuery('#screen_slide_5').addClass("hide");			
 							jQuery('#screen_slide_6').removeClass("hide");			
@@ -699,13 +670,16 @@ function invite_friend_user_skip()
 				  }
 			  });
 		} else {
-			
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
+
 			$.ajax({
 				  type: "POST",
-				  url: "http://dev.selfiestyler.com/nws/web_user_registration",
+				  url: "{{ path('nws_web_user_registration') }}",
 				 data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date,
 				  success: function (data) {
-					
+					 		jQuery('#overlay').removeClass("show");
+							jQuery('#overlay').addClass("hide"); 
 							jQuery('#screen_slide_5').removeClass("show");			
 							jQuery('#screen_slide_5').addClass("hide");			
 							jQuery('#screen_slide_6').removeClass("hide");			
@@ -718,28 +692,28 @@ function invite_friend_user_skip()
 														
 		
 		
-	}*/
+	}
 												
 } 
 
 function invite_friend_skip()
 {
 	
-	jQuery('#screen_slide_7').removeClass("show");			
-							jQuery('#screen_slide_7').addClass("hide");			
-							jQuery('#screen_slide_6').removeClass("hide");			
-							jQuery('#screen_slide_6').addClass("show");	
+
 	
-	
-			/*email = jQuery('#mem_email').val();
+			email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
 			friend_email = jQuery('#invite_friend_email').val();
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
+
 			$.ajax({
 					  type: "POST",
-					  url: "http://dev.selfiestyler.com/nws/invitefriend/create",
-					  data: "email="+email+"friend_name="+friend_name+"friend_email="+friend_email,
+					  url: "{{ path('nws_web_invitefriend_create') }}",
+					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
 					  success: function (data) {
-						
+						 	jQuery('#overlay').removeClass("show");
+							jQuery('#overlay').addClass("hide"); 
 							jQuery('#screen_slide_7').removeClass("show");			
 							jQuery('#screen_slide_7').addClass("hide");			
 							jQuery('#screen_slide_6').removeClass("hide");			
@@ -749,7 +723,7 @@ function invite_friend_skip()
 						console.log(errMsg);
 					  }
 				  });
-*/
+
 		
 } 
 
@@ -796,6 +770,16 @@ function step_back(id)
 	}
 }
 
+
+function hide_error(id)
+{
+	jQuery('#'+id).removeClass("show");	
+	jQuery('#'+id).addClass("hide");	
+	
+}
+
+
+
 $(document).ready(function(e) {
    $( "#phone" ).keyup(function() {
   
@@ -818,9 +802,9 @@ $(document).ready(function(e) {
 
 <!-- screen_1 --> 
 <body class="formbg">
-
-
-
+ <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/loading_2.gif') }}" class="loading" /></div></div>
+ 
+<!--<img src="{{ asset('bundles/lovethatfit/web_registration/img/ajax-loader.gif') }}" alt="Circle" class="profile_pic" />-->
 
 <div class="screen_600 show" id="screen_slide_0">
 <div class="container">
@@ -829,10 +813,10 @@ $(document).ready(function(e) {
     <div class="Get_activated">
       <p>Hey there, let’s get started!</p>
     </div>
-    <div><img src="img/profile_picture.png" alt="Circle" class="profile_pic" /></div>    
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/profile_picture.png') }}" alt="Circle" class="profile_pic" /></div>    
     <div class="gap_2"></div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">I am a Woman</button>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="male_registration();">I am a Man</button>
+    <a href="#screen_slide_1" class="btn btn-md btn-primary btn-block" onclick="validate_form();">I am a Female</a>
+    <a href="#screen_slide_10" class="btn btn-md btn-primary btn-block" onclick="male_registration();">I am a Male</a>
    <!-- <a class="anchor_text" href="#signin">I am a Woman</a>
     <div class="gap_4"></div>
    <a class="anchor_text" href="#signin">I am a Man</a>-->
@@ -847,25 +831,27 @@ $(document).ready(function(e) {
 
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
-  <p>Create  Account </p>
+  <p>Create an Account </p>
   <div class="error_red hide" id="error_bar_1"></div>
 </div>
+
 <div class="container">
+
     <div class="Get_activated">
       <p>First things first. Please introduce yourself.</p>
     </div>
     <div class="gap_5"></div>
     <label for="first_name" class="">FIRST NAME</label>
-     <div class="error_box hide" id="error_first_name"></div>
+     <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
     <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control" autofocus>
     <label for="last_name" class="">LAST NAME</label>
-     <div class="error_box hide" id="error_last_name"></div>
+     <div class="error_box hide" onclick="hide_error(this.id);" id="error_last_name"></div>
     <input type="text" autocomplete="off" name="last_name" id="last_name" class="form-control">
     <div class="privacy">
       <p>By signing up, you agree to the our <a href="https://www.selfiestyler.com/main/terms-conditions/">terms and 
 conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/privacypolicy/">privacy policy.</a></p>
     </div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Next</button>    
+    <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Next</a>    
       <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
     </div>
@@ -876,23 +862,23 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 <!-- screen_4 --> 
 <div class="screen_4 hide" id="screen_slide_2">
 <div class="create_acc">
-  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(2);" /></div>
-  <p>Create  Account </p>
+  <div class="arrow"><a href="#screen_slide_1" onclick="step_back(2);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+  <p>Create an Account</p>
   <div class="error_red hide" id="error_bar_2"></div>
 </div>
 <div class="container">
     <div class="Get_activated">
-      <p>Next, what's your email address? It will be your login.</p>
+      <p>Please give us your email. It will be your login name</p>
     </div>
     <div class="gap_5"></div>
     <label for="inputpassword" class="">EMAIL</label>
-    <div class="error_box hide" id="error_mem_email"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
     <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control"  autofocus>
     <label for="inputpass" class="">CONFIRM EMAIL</label>
-    <div class="error_box hide" id="error_confirm_mem_email"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
     <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
     <div class="gap_4"></div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Next</button>
+    <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Next</a>
     <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
     </div>
@@ -902,50 +888,48 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 <!-- screen_5 --> 
 <div class="screen_500 hide" id="screen_slide_3">
 <div class="create_acc">
-  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(3);" /></div>
-  <p>Reset Password</p>
+  <div class="arrow"><a href="#screen_slide_2" onclick="step_back(3);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+  <p>Create an Account</p>
   <div class="error_red hide" id="error_bar_3"></div>
 </div>
 <div class="container">
     <div class="Get_activated">
-      <p>Pick a password that is easy to remember.</p>
+      <p>Let's protect your account protected</p>
     </div>
     <div class="gap_2"></div>
     <label for="inputfirstname" class="">PASSWORD</label>
-    <div class="error_box hide" id="error_mem_password"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
     <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);"  autofocus>
     <div class="error" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
     <label for="inputzip" class="">CONFIRM PASSWORD</label>
-    <div class="error_box hide" id="error_confirm_mem_password"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
     <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Create new password</button>
+    <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Create new password</a>
 </div>
 </div>
 
 
 <div class="screen_100 hide" id="screen_slide_4">
 <div class="create_acc">
-  <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(4);" /></div>
-  <p>Create an Account </p>
+  <div class="arrow"><a href="#screen_slide_3" onclick="step_back(4);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+  <p>Create an Account</p>
   <div class="error_red hide" id="error_bar_4"></div>
 </div>
 <div class="container">  
     <div class="Get_activated">
-      <p>Get activated!</p>
+      <p>Connect with us to get started</p>
     </div>
     <div class="Get_text">
-      <p>To ensure we have your most accurate measurements on file, 
-        you'll need to get sized at an activation event. To learn when 
-        we'll be in your area, please fill out the fields below.</p>
+      <p>In order for SelfieStyler to work effectively, we need your measurements. Please sign up to attend a fitting session at a activation event. We'll notify you when we'll be in your area</p>
     </div>
     <label for="inputphone" class="">PHONE</label>
-    <div class="error_box hide" id="error_phone"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
     <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone"  autofocus>
     <label for="inputzip" class="">ZIP</label>
-    <div class="error_box hide" id="error_zip"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
     <input type="text" autocomplete="off" id="zip" name="zip" class="form-control" autofocus>
     <div class="gap_4"></div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Submit</button>
+    <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Submit</a>
 </div>
 </div>
 
@@ -956,30 +940,31 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 
 <div class="screen_7 hide" id="screen_slide_5">
     <div class="create_acc">
-    <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(5);" /></div>
-      <p>Invite a friend</p>
+    <div class="arrow"><a href="#screen_slide_4" onclick="step_back(5);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+      <p>Create an Account</p>
       <div class="error_red hide" id="error_bar_5"></div>
     </div>
 <div class="container">
 
     <div class="Get_activated">
-      <p>Shopping is always more fun with friends.</p>
+      <p>Did a friend refer you?</p>
     </div>
-    <div class="Get_text"><p>Invite a friends to download the app to share styles 
-and outfit ideas. If your friend signs up you get a bonus.</p></div>
+    <div class="Get_text"><p>Your friend get a nice little bonus when you sign up. Let us know who referred you so we can thank them.</p></div>
  <label for="inputname" class="">FRIEND'S FIRST NAME</label>
- <div class="error_box hide" id="error_friend_name"></div>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
     <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control"  autofocus>
     <label for="inputzip" class="">FRIENDS EMAIL</label>
-    <div class="error_box hide" id="error_friend_email"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
     <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control"  autofocus>
     <div class="gap_4"></div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="validate_form();">Send</button>
+    <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Send</a>
        <div class="privacy">
-      <p><a href="javascript:void" onclick="invite_friend_user_skip();">Skip</a></p>
+      <p><a href="#screen_slide_6" onclick="invite_friend_user_skip();">Skip</a></p>
     </div>
 </div>
 </div>
+
+
 
 
 <div class="screen_3000 hide" id="screen_slide_6">
@@ -991,66 +976,17 @@ and outfit ideas. If your friend signs up you get a bonus.</p></div>
     <div class="request_text">
       <p>You’re all set up lets get stylin!</p>
     </div>
-    <a class="anchor_text" href="#signin">I'am ready let's go</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">I'am ready let's go</a>
     <div class="gap_4"></div>
-    <button class="btn btn-md btn-outline btn-block" type="button" onclick="invite_friend();">Invite a friend</button>
+    <a href="#screen_slide_7" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
  
 </div>
 </div>
- </form>
+ 
 
-
-  <form class="form-signin" id="friend-form" name="friend-form" action="#">
-<div class="screen_700 hide" id="screen_slide_7">
-    <div class="create_acc">
-    <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(7);" /></div>
-      <p>Invite a friend</p>
-      <div class="error_red hide" id="error_bar_7"></div>
-    </div>
-<div class="container">
-
-    <div class="Get_activated">
-      <p>Shopping is always more fun with friends.</p>
-    </div>
-    <div class="Get_text"><p>Invite a friends to download the app to share styles 
-and outfit ideas. If your friend signs up you get a bonus.</p></div>
-<label for="inputname" class="">FRIEND'S FIRST NAME</label>
- <div class="error_box hide" id="error_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control"  autofocus>
-    <label for="inputzip" class="">FRIENDS EMAIL</label>
-    <div class="error_box hide" id="error_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control"  autofocus>
-    <div class="gap_4"></div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="invite_friend();">Send</button>
-       <div class="privacy">
-      <p><a href="javascript:void" onclick="invite_friend_skip();">Skip</a></p>
-    </div>
-  
-</div>
-</div>
-</form>
-
-<!-- screen_9 --> 
-<div class="screen_9 hide" id="screen_slide_8">
-<div class="container"> 
-    <div class="request">
-      <p>Request sent!</p>
-    </div>
-    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
-    <div class="request_text">
-      <p>Your invite has been sent, you can invite another 
-        <br />
-        friend or start styling.</p>
-    </div>
-    <button class="btn btn-md btn-primary btn-block" type="button">I'am ready let's go</button>
-    <button class="btn btn-md btn-outline btn-block" type="button" onclick="invite_friend();">Invite a friend</button>
-</div>
-</div>
-
-  <form class="form-signin" id="mem-registration-form" action="">
 <div class="screen_7000 hide" id="screen_slide_10">
     <div class="create_acc">
-    <div class="arrow"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" onclick="step_back(10);" /></div>
+    <div class="arrow"><a href="#screen_slide_0" onclick="step_back(10);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
       <p>Stay in the loop</p>
       <div class="error_red hide" id="error_bar_10"></div>
     </div>
@@ -1061,18 +997,68 @@ and outfit ideas. If your friend signs up you get a bonus.</p></div>
     </div>
     <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>
 <label for="inputname" class="">FULL NAME</label>
- <div class="error_box hide" id="error_male_name"></div>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
     <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control"  autofocus>
     <label for="inputzip" class="">EMAIL</label>
-    <div class="error_box hide" id="error_male_email"></div>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
     <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control"  autofocus>
     <div class="gap_4"></div>
-    <button class="btn btn-md btn-primary btn-block" type="button" onclick="male_registration();">Send</button>
+    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
       
  
 </div>
 </div>
- </form>
+
+ 
+
+
+
+<div class="screen_700 hide" id="screen_slide_7">
+    <div class="create_acc">
+    <div class="arrow"><a href="#screen_slide_6" onclick="step_back(4);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+      <p>Invite a friend</p>
+      <div class="error_red hide" id="error_bar_7"></div>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>Shopping is always more fun with friends.</p>
+    </div>
+    <div class="Get_text"><p>Invite a friends to download the app to share styles 
+and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
+<label for="inputname" class="">FRIEND'S FIRST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
+    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control"  autofocus>
+    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
+    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control"  autofocus>
+    <div class="gap_4"></div>
+    <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();">Send</a>
+       <div class="privacy">
+      <p><a href="#screen_slide_8" onclick="invite_friend_skip();">Skip</a></p>
+    </div>
+  
+</div>
+</div>
+</form>
+
+<!-- screen_9 --> 
+<div class="screen_9 hide" id="screen_slide_8">
+<div class="container"> 
+    <div class="request">
+      <p>Email sent!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p>We've sent your invitation. Invite another<br />friend or start shopping!
+        </p>
+    </div>
+    <a class="btn btn-md btn-primary btn-block">I'am ready let's go</a>
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
+</div>
+</div>
+
+
 
 <!-- screen_9 --> 
 <div class="screen_11 hide" id="screen_slide_11">
@@ -1084,8 +1070,8 @@ and outfit ideas. If your friend signs up you get a bonus.</p></div>
     <div class="request_text">
       <p>Your information has been saved.</p>
     </div>
-<!--    <button class="btn btn-md btn-primary btn-block" type="button">I'am ready let's go</button>
-    <button class="btn btn-md btn-outline btn-block" type="button" onclick="invite_friend();">Invite a friend</button>-->
+<!--    <button class="btn btn-md btn-primary btn-block">I'am ready let's go</button>
+    <button class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</button>-->
 </div>
 </div>
 

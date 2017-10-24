@@ -204,16 +204,17 @@ class WSUserController extends Controller
             $user->setAuthToken(uniqid());
             $this->get('user.helper.user')->saveUser($user);
             $baseurl = $this->getRequest()->getHost();
-            $link = $baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
+            $link =  $baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
             $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmailWeb($user, $link);
             if ($defaultData[0]) {
-                $res = $this->get('webservice.helper')->response_array(true, " Email has been sent with reset password link (" . $link . ") to " . $user->getEmail());
+                //$link
+                $res = $this->get('webservice.helper')->response_array(true, "Email has been sent", true, array("link" => $link));
             } else {
-                $res = $this->get('webservice.helper')->response_array(false, " Email not sent due to some problem, please try again later.");
+                $res = $this->get('webservice.helper')->response_array(false, "Email not sent due to some problem, please try again later.");
             }
 
         } else {
-            $res = $this->get('webservice.helper')->response_array(false, " User not found.");
+            $res = $this->get('webservice.helper')->response_array(false, "User not found");
         }
         return new Response($res);
     }
