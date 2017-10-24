@@ -326,7 +326,9 @@
                     right: 0%;
                     margin: auto;
                 }
-           
+           .ui-tooltip {
+                white-space: pre-line;
+            }
     {#img:before{
         position: absolute; 
         top:0; 
@@ -349,7 +351,7 @@
                       <input type="hidden" value="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}">
                         {#<a href="" title="Adjust Mass Marker">#}
                         {% set filename = retouch_filename ~ '_' ~ retouch_count %}
-                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}" data-toggle="tooltip"   title="{{ retouch_file_time[filename] }}" />
+                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}" data-toggle="tooltip"   title="{{"Retouched: " ~ retouch_count ~"\n Date: "~ retouch_file_time[filename] }}" />
 {#                        </a>#}
                     </li>
                 {% endfor %}
