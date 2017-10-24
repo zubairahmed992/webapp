@@ -84,6 +84,7 @@ class UserAddressesHelper
 
     public function saveUserBillingAddress($decoded, $user)
     {
+        $addedAddressIds = array();
         $address = $decoded["billing"];
         if(!empty($address)){
 
@@ -116,7 +117,8 @@ class UserAddressesHelper
 
                 if(isset($decoded['data']))
                     $address_info->setAddressData(json_encode($decoded['data']));
-                $this->save($address_info);
+
+                $addedAddressIds['shipping'] = $this->save($address_info);
             }
 
             $address_info = $this->createNew();
@@ -148,7 +150,9 @@ class UserAddressesHelper
 
             if(isset($decoded['data']))
                 $address_info->setAddressData(json_encode($decoded['data']));
-            return $this->save($address_info);
+            $addedAddressIds['billing'] = $this->save($address_info);
+
+            return $addedAddressIds;
         }
 
         return false;
