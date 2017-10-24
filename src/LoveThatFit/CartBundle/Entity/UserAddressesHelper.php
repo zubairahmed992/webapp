@@ -303,12 +303,12 @@ class UserAddressesHelper
 
     public function deleteUserBillingAddress( $billing_id, User $user){
         $address_info = $this->find($billing_id);
+
         if($address_info->getBillingDefault())
-            $this->setOtherAddressAsDefault( $user, 2);
+            $this->setOtherAddressAsDefault( $user, 1);
+
         $this->em->remove($address_info);
         $this->em->flush();
-
-        $this->setOtherAddressAsDefault( $user, 1);
     }
 
     public function updateUserShippingAddress($decoded, $user){
