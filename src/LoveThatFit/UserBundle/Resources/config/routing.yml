@@ -234,6 +234,10 @@ forgot_password_update_web:
     pattern:   /forgot_password_update_web
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdateWeb }
 
+forgot_password_thanks_web:
+    pattern:   /forgot_password_thanks_web
+    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordThanksWeb }
+
 forgot_password_update:
     pattern:   /forgot_password_update/{id}
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdate }

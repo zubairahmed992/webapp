@@ -91,10 +91,16 @@ class SelfieShareController extends Controller {
             $name = $user->getEmail();
         }
         $count = $this->container->get('user.selfiesharefeedback.helper')->findByShareId($selfieshare->getId());
+        $getLink = $this->container->get('admin.helper.appstorelink')->find(1);
+        $link = $getLink->getAppLink();
         if ($count == 0) {
-            return $this->render('LoveThatFitUserBundle:Selfieshare:provide_feedback_v3.html.twig', array('selfieshare' => $selfieshare , 'name' => $name, 'image' => $image));
+            return $this->render('LoveThatFitUserBundle:Selfieshare:provide_feedback_v3.html.twig', array('selfieshare' => $selfieshare , 'name' => $name, 'image' => $image, "link" => $link));
         } else {
-            return $this->render('LoveThatFitUserBundle:Selfieshare:v3thankyou.html.twig', array('name' => $name));
+            return $this->render('LoveThatFitUserBundle:Selfieshare:v3thankyou.html.twig', array(
+                'name' => $name,
+                'link' => $link,
+                )
+            );
         }
     }
 
@@ -125,7 +131,13 @@ class SelfieShareController extends Controller {
         if(trim($name) == ''){
             $name = $user->getEmail();
         }
-        return $this->render('LoveThatFitUserBundle:Selfieshare:v3provide_thankyou.html.twig', array('name' => $name));
+        $getLink = $this->container->get('admin.helper.appstorelink')->find(1);
+        $link = $getLink->getAppLink();
+        return $this->render('LoveThatFitUserBundle:Selfieshare:v3provide_thankyou.html.twig', array(
+            'name' => $name,
+            'link' => $link,
+            )
+        );
     }
 
     #----------------------------------------------
