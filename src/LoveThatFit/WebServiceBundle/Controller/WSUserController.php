@@ -714,6 +714,12 @@ class WSUserController extends Controller
             return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist as an Female'));
         }
     }
-  
+    
+    public function renderIphoneFileAction()
+    {
+        echo getcwd();
+    }
+
+
 }
 
