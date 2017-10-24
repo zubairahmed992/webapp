@@ -314,7 +314,7 @@
               }
               ul.liststyle li a{ background:none; border:none;}
               .canvas_navigation{margin-top:20px; background:rgba(204,204,204,0.8); padding:10px;}
-              .canvas_navigation a{text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
+              .canvas_navigation a{cursor:pointer; text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
                 .canvas_navigation a:hover{background:#000000;color:#ffffff;}
                 .archive_nave{ background:rgba(241,241,241,0.8);}
                 .fixed {
@@ -322,7 +322,7 @@
                     top: 38px;
                     left: 14%;
                     width: 964px;
-                    z-index: 1;
+                    z-index: 1500;
                     right: 0%;
                     margin: auto;
                 }
@@ -461,8 +461,9 @@
     {#<a id="retuchImage">Toggle Image</a>#}
 
          {#<ul class="imagemenu">#}
+         <div class="canv_hldr_3" style="position:relative;margin-bottom:70px;">   
     <canvas id="canv_mask_makeover" class="mask-marker-canvas" width="960" height="1280"></canvas>
-   
+         </div>
     </div>
 {% endif %}
 </div>
