@@ -722,5 +722,29 @@ class WSUserController extends Controller
     }
 
 
+    public function checkEmailEixstFuncAction()
+    {
+        $ra = $this->process_request();        
+        if(!empty($ra['email'])){
+             $user=$this->get('user.helper.user')->findByEmail($ra['email']);
+
+                if (count($user) > 0) {
+
+                    return new Response(json_encode(array("success" => "1"))); 
+
+                } else {
+                   
+                    return new Response(json_encode(array("success" => "0")));    
+                  
+                }    
+
+        } else {
+                   
+                    return new Response(json_encode(array("success" => "0")));    
+                  
+        } 
+    }       
+
+
 }
 

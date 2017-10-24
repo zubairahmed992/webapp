@@ -102,9 +102,28 @@
 
 				} else {
 					
+					result = jQuery.ajax({
+						type: "POST",
+						url: "{{ path('appuser_check_exist_email') }}",
+						data: "email="+jQuery('#mem_email').val(),
+						async: false
+					}).responseText.split(',');
+
+					
+					var arr = jQuery.parseJSON( result );
+					if(arr.success==1){
+						
+						jQuery('#error_mem_email').html("*Email already exist");
+						jQuery('#error_mem_email').removeClass("hide");  
+						jQuery('#error_bar_2').removeClass("hide");         
+						flag = false;
+						
+					} else {
+					
 					jQuery('#error_mem_email').html("");
 					jQuery('#error_mem_email').addClass("hide");
 					jQuery('#error_bar_2').addClass("hide");
+					}
 				}
 				
 				
@@ -507,6 +526,104 @@ function invite_friend()
 }
 
 
+
+
+function invite_friend_male()
+{
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	
+	if($( "#screen_slide_11" ).hasClass( "show" )) {																
+															
+		jQuery('#screen_slide_11').removeClass("show");			
+		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("show");			
+		
+	}
+	else if($( "#screen_slide_8" ).hasClass( "show" )) {																
+															
+		jQuery('#screen_slide_8').removeClass("show");			
+		jQuery('#screen_slide_8').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("show");	
+		jQuery('#invite_friend_name').val('');	
+		jQuery('#invite_friend_email').val('');	
+		
+	}
+	
+	 else { 
+	
+	if(jQuery('#invite_friend_name').val()==''){
+		
+			jQuery('#error_invite_friend_name').html("*Required");
+			jQuery('#error_invite_friend_name').removeClass("hide");
+			jQuery('#error_bar_7').removeClass("hide");           
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_invite_friend_name').html("");
+			jQuery('#error_invite_friend_name').addClass("hide");
+			jQuery('#error_bar_7').addClass("hide"); 
+		}
+		
+		
+		if(jQuery('#invite_friend_email').val()==''){
+			
+			jQuery('#error_invite_friend_email').html("*Required");           
+			jQuery('#error_invite_friend_email').removeClass("hide");
+			jQuery('#error_bar_7').removeClass("hide");         			
+			flag = false;
+			
+		} else if(reg.test(jQuery('#invite_friend_email').val()) == false) {
+			
+			jQuery('#error_invite_friend_email').html("*Invalid Email");
+			jQuery('#error_invite_friend_email').removeClass("hide"); 
+			jQuery('#error_bar_7').removeClass("hide");         
+			flag = false;				
+			
+		} else {
+			
+			jQuery('#error_invite_friend_email').html("");
+			jQuery('#error_invite_friend_email').addClass("hide"); 
+			jQuery('#error_bar_7').addClass("hide");       
+		}
+		
+		
+		
+		if(flag){
+			email = jQuery('#mem_email').val();
+			friend_name = jQuery('#invite_friend_name').val();
+			friend_email = jQuery('#invite_friend_email').val();
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
+			$.ajax({
+					  type: "POST",
+					  url: "{{ path('nws_web_invitefriend_create') }}",
+					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
+					  success: function (data) {
+						 jQuery('#overlay').removeClass("show");
+						 jQuery('#overlay').addClass("hide"); 
+							if($( "#screen_slide_7" ).hasClass( "show" )) {	
+								jQuery('#screen_slide_7').removeClass("show");			
+								jQuery('#screen_slide_7').addClass("hide");			
+								jQuery('#screen_slide_8').removeClass("hide");			
+								jQuery('#screen_slide_8').addClass("show");			
+							} 
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+
+			
+		}
+		
+	}
+}
+
+
 function male_registration()
 {
 	var flag = true;
@@ -696,6 +813,7 @@ function invite_friend_user_skip()
 	}
 												
 } 
+
 
 function invite_friend_skip()
 {
@@ -1072,6 +1190,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
     <div class="request_text">
       <p>Your information has been saved.</p>
     </div>
+  <!--  <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend_male();">Invite a friend</a>-->
 <!--    <button class="btn btn-md btn-primary btn-block">I'am ready let's go</button>
     <button class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</button>-->
 </div>
