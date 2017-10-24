@@ -717,7 +717,9 @@ class WSUserController extends Controller
     
     public function renderIphoneFileAction()
     {
-        echo getcwd();
+        header('Content-Type: application/pkcs7-mime');
+        echo file_get_contents(getcwd()."/uploads/apple-app-site-association");
+        die();
     }
 
 
