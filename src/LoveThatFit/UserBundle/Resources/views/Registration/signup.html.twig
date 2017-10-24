@@ -476,6 +476,7 @@ function invite_friend()
 		
 		
 		if(flag){
+			email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
 			friend_email = jQuery('#invite_friend_email').val();
 			jQuery('#overlay').removeClass("hide"); 
@@ -483,7 +484,7 @@ function invite_friend()
 			$.ajax({
 					  type: "POST",
 					  url: "{{ path('nws_web_invitefriend_create') }}",
-					  data: "name="+friend_name+"&email="+friend_email,
+					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
 					  success: function (data) {
 						 jQuery('#overlay').removeClass("show");
 						 jQuery('#overlay').addClass("hide"); 
@@ -699,9 +700,14 @@ function invite_friend_user_skip()
 function invite_friend_skip()
 {
 	
-
+jQuery('#overlay').removeClass("show");
+jQuery('#overlay').addClass("hide"); 
+jQuery('#screen_slide_7').removeClass("show");			
+jQuery('#screen_slide_7').addClass("hide");			
+jQuery('#screen_slide_6').removeClass("hide");			
+jQuery('#screen_slide_6').addClass("show");	
 	
-			email = jQuery('#mem_email').val();
+			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
 			friend_email = jQuery('#invite_friend_email').val();
 			jQuery('#overlay').removeClass("hide"); 
@@ -712,18 +718,13 @@ function invite_friend_skip()
 					  url: "{{ path('nws_web_invitefriend_create') }}",
 					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
 					  success: function (data) {
-						 	jQuery('#overlay').removeClass("show");
-							jQuery('#overlay').addClass("hide"); 
-							jQuery('#screen_slide_7').removeClass("show");			
-							jQuery('#screen_slide_7').addClass("hide");			
-							jQuery('#screen_slide_6').removeClass("hide");			
-							jQuery('#screen_slide_6').addClass("show");	
+						 	
 					  },
 					  failure: function (errMsg) {
 						console.log(errMsg);
 					  }
 				  });
-
+*/
 		
 } 
 
@@ -802,7 +803,7 @@ $(document).ready(function(e) {
 
 <!-- screen_1 --> 
 <body class="formbg">
- <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/loading_2.gif') }}" class="loading" /></div></div>
+ <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/Loading_2.gif') }}" class="loading" /></div></div>
  
 <!--<img src="{{ asset('bundles/lovethatfit/web_registration/img/ajax-loader.gif') }}" alt="Circle" class="profile_pic" />-->
 
@@ -830,7 +831,8 @@ $(document).ready(function(e) {
   <div class="screen_6 hide" id="screen_slide_1">
 
 <div class="create_acc">
-  <div class="arrow"><a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+  <div class="arrow">
+  <a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
   <p>Create an Account </p>
   <div class="error_red hide" id="error_bar_1"></div>
 </div>
