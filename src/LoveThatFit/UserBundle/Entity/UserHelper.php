@@ -866,7 +866,25 @@ class UserHelper
         return $measurement;
 
     }
+    #-------------------------------------
+    public function copyDummyUserData($user_id, $dummy){
+        $user= $this->find($user_id);
+        $conf=$this->dummyUsersData();        
+        $measurement = $user->getMeasurement();
+        $measurement->setByArray($conf[$dummy]['measurements']);
+        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+        $this->container->get('user.marker.helper')->fillMarker($user, $conf[$dummy]['mask']);        
+        copy($user->getDummyUserImageRootPath('none', $dummy), $user->getAbsolutePath());        
+        return true;
 
+    }
+#------------------------------------------------------------------------>
+    public function dummyUsersData(){
+        $conf_yml = new Parser();
+        $conf = $conf_yml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/dummy_users.yml'));        
+        return $conf['multiple'];
+    }
+    
 #------------------------------------------------------
     public function getUserDetailArrayByEmail($email)
     {

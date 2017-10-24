@@ -15,6 +15,10 @@ admin_dashboard:
 admin_user_mask_adjustment_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/user_mask_adjustment.yml"
     prefix:   /
+    
+admin_dummy_users_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/dummy_users.yml"
+    prefix:   /    
 #-------------- PRODUCT ------------------------
     
 admin_product_routes:

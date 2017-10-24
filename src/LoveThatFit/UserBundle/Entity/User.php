@@ -1612,11 +1612,16 @@ class User implements UserInterface, \Serializable {
     }
 
 //----------------------------------------------------------
-    public function getDummyUserImageRootPath($udt=null) {
-        if($udt)
-            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$udt.'_'.$this->gender.'_cropped.png';        
-        else
-            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/'.$this->gender.'_cropped.png';        
+    public function getDummyUserImageRootPath($udt = null, $dummy_name = null) {
+        if ($dummy_name) {
+            return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/' . $dummy_name . '.png';
+        } else {
+            if ($udt){
+                return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/' . $udt . '_' . $this->gender . '_cropped.png';
+            }else{
+                return __DIR__ . '../../../../../web/uploads/ltf/dummy_user/' . $this->gender . '_cropped.png';
+            }
+        }
     }
 
     public function getDummyUserImageRootPathSupport($udt=null) {
