@@ -10,12 +10,11 @@
  */
 namespace LoveThatFit\OneloginSamlBundle\Handler;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Default logout success handler will redirect users to a configured path.
@@ -25,17 +24,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
-    protected $httpUtils;
     protected $targetUrl;
 
     /**
-     * @param HttpUtils $httpUtils
      * @param string    $targetUrl
      */
-    public function __construct(HttpUtils $httpUtils, $targetUrl = '/')
+    public function __construct($targetUrl = '/')
     {
-        $this->httpUtils = $httpUtils;
-
         $this->targetUrl = $targetUrl;
     }
 
@@ -44,10 +39,16 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
      */
     public function onLogoutSuccess(Request $request)
     {
-        die('logout success handler');
-        /*if($request->getPathInfo() == '/admin/logout') {
-            $this->targetUrl = "https://selfiestyler-admin.okta.com/login/admin/signout?fromURI=%2Fapp%2Fselfiestyler_symfonywebapp_1%2Fexk255c4tb2dRHscM1t7%2Fsso%2Fsaml";
-        }*/
-        return $this->httpUtils->createRedirectResponse($request, $this->targetUrl);
+        try{
+            if($request->getPathInfo() == '/admin/logout') {
+                $yaml = new Parser();
+                $conf = $yaml->parse(file_get_contents('../app/config/config.yml'));
+                $okta_logout = $conf['twig']['globals']['okta_logout'];
+                $okta_app_url = $conf['twig']['globals']['okta_app_url'];
+                $this->targetUrl = $okta_logout.urlencode($okta_app_url);
+            }
+            
+            return new RedirectResponse($this->targetUrl);
+        }catch (\Exception $e){}
     }
 }
