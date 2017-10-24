@@ -161,7 +161,6 @@ class ProductSpecsController extends Controller
             return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
                 'validation_error' => $result,
             ));
-
         }
 
         $msg = $this->get('pi.product_specification')->create_product($id);
@@ -406,6 +405,16 @@ class ProductSpecsController extends Controller
     public function ExisitingProductUpdateSpecificationAction(Request $request) {
         $product_id =  $request->get('product_id');
         $specification_id =  $request->get('specification_id');
+        $result = $this->get('pi.product_specification')->validateSpecification($specification_id);
+        if( empty($result) ) {
+
+        } else{
+            $this->get('session')->setFlash('warning', "Product can't be created before all the validation errors get resolved or dissmissed! ");
+            return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+                'validation_error' => $result,
+            ));
+        }
+
         $ps = $this->get('pi.product_specification')->find($specification_id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);       
         $product = $this->get('admin.helper.product')->find($product_id);        
@@ -444,7 +453,7 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash('success', $productArray);
         #return  $this->showAction($specification_id);
          return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specification_id)));     
-        return new Response(json_encode($productArray));
+
     }
     #---------------------------------------------------
     public function createSessionAction(Request $request) {
@@ -623,9 +632,10 @@ class ProductSpecsController extends Controller
         $specification_id =  $request->get('id');
         $ps = $this->get('pi.product_specification')->find($specification_id);
         $exist_rule = json_decode($ps->getValidationJson(),true);
-            $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
+        $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
         $ps->setValidationJson(json_encode($update_rule));
         $msg_ar = $this->get('pi.product_specification')->update($ps);
+       // $this->get('session')->setFlash('info', $msg_ar);
         return $this->redirect($request->get('_target_path'));
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit',array ('id'=>$specification_id)));
 

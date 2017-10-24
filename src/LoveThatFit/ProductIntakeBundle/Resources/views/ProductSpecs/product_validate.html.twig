@@ -22,7 +22,7 @@ table{
 
     <h1>Disable Validation Rule of Product  Specification </h1>
     <br><br><br><br>
-<form action="{{ path('product_intake_update_validate_product_specification',{id: app.request.get('id')}) }}" method="post" enctype="multipart/form-data" id="form1"  class="form-horizontal">
+<form action="{{ path('product_intake_update_validate_product_specification',{id: (app.request.get('id')) ? app.request.get('id') : app.request.get('specification_id')   }) }}" method="post" enctype="multipart/form-data" id="form1"  class="form-horizontal">
  <div class="container">
 
         {#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
