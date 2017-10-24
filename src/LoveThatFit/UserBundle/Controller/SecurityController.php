@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SecurityController extends Controller {
 
@@ -142,6 +143,49 @@ class SecurityController extends Controller {
         }
     }
 
+    #########################  web reset ##################
+    public function forgotPasswordResetFormWebAction($email_auth_token)
+    {
+        $em   = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthTokenWeb($email_auth_token);
+        if ($user) {
+            $time = $user->getUpdatedAt()->format("Y-m-d H:i:s");
+            $hourdiff = round((strtotime(date("Y-m-d H:i:s")) - strtotime($time))/3600, 1);
+            if ($user &&  $hourdiff <= 2) {
+                return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
+            } else {
+                throw new NotFoundHttpException("Page not found");
+            }
+        } else {
+            throw new NotFoundHttpException("Page not found");
+        }
+    }
+
+    public function forgotPasswordUpdateWebAction(Request $request)
+    {
+        $decoded = $request->request->all();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($decoded["user_id"]);
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($entity);
+        $password = $encoder->encodePassword($decoded['password'], $entity->getSalt());
+        $entity->setPassword($password);
+        $entity->setPwd($decoded['password']);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+
+        return new Response('password updated.');
+    }
+
+    public function forgotPasswordThanksWebAction()
+    {
+        return $this->render('LoveThatFitSiteBundle:Home:congratulations.html.twig');
+    }
+
+
+    #########################  web reset ##################
     //---------------------------------------------------------------------------------
 
 

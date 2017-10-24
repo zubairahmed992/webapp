@@ -193,6 +193,31 @@ class WSUserController extends Controller
         return new Response($res);
     }
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+#    WEB_FORGET_PASSWORD_SENDEMAIL  /ws/web_user_forgot_password
+    public function forgotPasswordWebAction()
+    {
+        $decoded = $this->process_request();
+        $res = '';
+        $user = $this->get('user.helper.user')->findByEmail($decoded['email']);
+        if ($user) {
+            $user->setAuthToken(uniqid());
+            $this->get('user.helper.user')->saveUser($user);
+            $baseurl = $this->getRequest()->getHost();
+            $link =  "https://".$baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
+            $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmailWeb($user, $link);
+            if ($defaultData[0]) {
+                $res = $this->get('webservice.helper')->response_array(true, "Email has been sent", true, array("link" => $link));
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "Email not sent due to some problem, please try again later.");
+            }
+
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, "User not found");
+        }
+        return new Response($res);
+    }
+
 #----------------------------------------------------------
     public function forgotPasswordTokenAuthAction()
     {
@@ -688,6 +713,14 @@ class WSUserController extends Controller
             return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist as an Female'));
         }
     }
-  
+    
+    public function renderIphoneFileAction()
+    {
+        header('Content-Type: application/pkcs7-mime');
+        echo file_get_contents(getcwd()."/uploads/apple-app-site-association");
+        die();
+    }
+
+
 }
 

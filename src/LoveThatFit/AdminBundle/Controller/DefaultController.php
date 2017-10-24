@@ -37,6 +37,7 @@ class DefaultController extends Controller {
                     'totalusers'=>$totalusers,
                     'ageinyears'=>$agegopus,
                 ));
+        
     }
 
     //--------------------------------------------------------------------------

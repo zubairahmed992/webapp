@@ -1,0 +1,53 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+
+{% block h1 %}App Store Link{% endblock %}
+
+{% block title %}App Store Link{% endblock %}
+
+
+{% block body %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<div>
+    <div class="btn_wrapper">
+    </div>
+    <div class="clearfix"></div>
+
+    <form id="clothyingForm" name="clothyingForm" action="{{ path('admin_appstorelink_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+
+    <div id="detail_wrapper">
+        <div id="p_hd">App Store</div>
+
+
+        <div id="product_content">
+            <div id="pro_detail">
+                <div class="edt_container">
+                    <div class="row-fluid show-grid">
+                        <div class="span3">Link</div>
+                        <div class="span3">{{ form_widget(form.app_link) }}</div>
+                    </div>
+
+
+                    <div class="row-fluid show-grid" style="clear:both">
+
+                        <div class="span3">&nbsp;</div>
+                        <div class="span3">
+                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="Update" class="btn btn-primary"/>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End pro_detail -->
+    </div><!-- End product_content -->
+    </div> <!-- End detail_wrapper -->
+    </form>
+      
+          
+            </div> 
+
+{% endblock %}
+

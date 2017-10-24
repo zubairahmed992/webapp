@@ -88,7 +88,6 @@ security:
         - { path: /support/, roles: ROLE_SUPPORT }
         - { path: /support, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
-        
 
     providers:
         in_memory:
