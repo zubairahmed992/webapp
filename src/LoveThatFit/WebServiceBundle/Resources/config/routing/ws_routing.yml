@@ -448,3 +448,7 @@ nws_update_primary_email:
 nws_web_user_registration:
     pattern: /nws/web_user_registration
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registrationFromWeb }
+
+nws_render_iphone_file:
+    pattern: /apple-app-site-association
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderIphoneFile }
