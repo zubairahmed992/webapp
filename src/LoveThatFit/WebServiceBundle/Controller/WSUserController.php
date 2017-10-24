@@ -608,7 +608,7 @@ class WSUserController extends Controller
             { 
                 if($decoded['email']==$decoded['new_primary_email']){
 
-                    return new Response(json_encode(array("success" => "0","description" => "Both emails are same.")));    
+                    return new Response(json_encode(array("success" => false,"message" => "Both emails are same.")));    
 
                 } else {    
 
@@ -616,7 +616,7 @@ class WSUserController extends Controller
         
                     $newUser = $this->container->get('user.helper.user')->findByEmail($decoded['new_primary_email']);
                     if($newUser){
-                        return new Response(json_encode(array("success" => "0","description" => "This email already assigned to other member.")));    
+                        return new Response(json_encode(array("success" => false,"message" => "This email already assigned to other member.")));    
                     }else{
 
                         $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
@@ -635,17 +635,17 @@ class WSUserController extends Controller
                             $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
                         }
                       
-                        return new Response(json_encode(array("success" => 1,"description" => "Your email has been successfully changed! <Perfect, thanks!>")));
+                        return new Response(json_encode(array("success" => true,"message" => "Your email has been successfully changed! <Perfect, thanks!>")));
                     }
                 }
 
             } else {
 
-            return new Response(json_encode(array("success" => "0","description" => "Invalid Token")));
+            return new Response(json_encode(array("success" => false,"message" => "Invalid Token")));
             }      
 
         } else {
-            return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
+            return new Response(json_encode(array("success" => false,"message" => "Invalid Email")));
         }    
     }
 
