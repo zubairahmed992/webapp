@@ -264,12 +264,49 @@ class UserAddressesHelper
 
     public function deleteUserShippingAddress( $shipping_id, User $user){
         $address_info = $this->find($shipping_id);
+
+        if($address_info->getShippingDefault())
+            $this->setOtherAddressAsDefault( $user, 2);
+
         $this->em->remove($address_info);
         $this->em->flush();
     }
 
+    public function setOtherAddressAsDefault(User $user, $addressType){
+        $params = array();
+        if($addressType == 2){
+            $params = array(
+                'user' => $user->getId(),
+                'adress_type' => $addressType,
+                'shipping_default' => 0
+            );
+        }else{
+            $params = array(
+                'user' => $user->getId(),
+                'adress_type' => $addressType,
+                'billing_default' => 0
+            );
+        }
+        $userAddressObject = $this->repo->findOneBy($params);
+        if(is_object($userAddressObject)){
+            if($addressType == 2)
+                $userAddressObject->setShippingDefault('1');
+            else
+                $userAddressObject->setBillingDefault('1');
+
+            $this->save($userAddressObject);
+            return;
+        }
+
+        return;
+    }
+
     public function deleteUserBillingAddress( $billing_id, User $user){
         $address_info = $this->find($billing_id);
+
+        if($address_info->getBillingDefault())
+            $this->setOtherAddressAsDefault( $user, 1);
+
         $this->em->remove($address_info);
         $this->em->flush();
     }

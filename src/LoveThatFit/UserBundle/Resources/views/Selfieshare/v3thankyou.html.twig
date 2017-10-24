@@ -19,16 +19,16 @@
       <h2>Thank You</h2>
       <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/checkedimage.png') }}" class="checked_small" />
       <div class="txt1">
-        <p>Your feedback has already been sent!<br><br> Thank you, your feedback is on its way to <br />{{ name }}<br />
-          Shopping is more fun with friends - please <a href="">download the SelfieStyler app</a> and get styling!</p>
+        <p>Your feedback has already sent!<br><br>Your feedback is on its way to <br />{{ name }}<br />
+          Shopping is more fun with friends! Please <a href="{{link}}" target="_blank">download the SelfieStyler app</a> and get styling!</p>
       </div>
     </div>
   </div> <!-- /container -->
  <footer>
-    <div class="container">
+    <div class="container ft_div">
         <div class="foot_logo">
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/logo_black_2x.png') }}" />Get the SelfieStyler app from the
-            <a href="mailto:membersupport@selfiestyler.com?subject=Sign%20up%20for%20SelfieStyler"> AppStore</a>
+            <a href="{{link}}" target="_blank"> AppStore</a>
         </div>
     </div>
  </footer>

@@ -135,6 +135,7 @@ class UserFittingRoomItemRepository extends EntityRepository {
         $categories_productTableName = $this->getEntityManager()->getClassMetadata('LoveThatFitAdminBundle:Product')->getTableName();
 
         $sql = "SELECT
+                      ufri.id               AS fitting_room_id,
                       cn.id                 AS top_category_id,
                       cn.name               AS top_category_name,
                       c.id                  AS category_id,

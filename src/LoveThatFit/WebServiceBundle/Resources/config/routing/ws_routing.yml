@@ -452,3 +452,7 @@ nws_web_user_registration:
 nws_render_iphone_file:
     pattern: /apple-app-site-association
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:renderIphoneFile }
+
+appuser_check_exist_email:
+    pattern:   appuser/check_exist_email
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:checkEmailEixstFunc }      
