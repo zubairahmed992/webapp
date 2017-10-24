@@ -184,7 +184,6 @@ class SecurityController extends Controller {
         return $this->render('LoveThatFitSiteBundle:Home:congratulations.html.twig');
     }
 
-
     #########################  web reset ##################
     //---------------------------------------------------------------------------------
 
