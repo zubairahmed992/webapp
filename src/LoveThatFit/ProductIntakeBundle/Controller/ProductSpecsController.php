@@ -152,8 +152,19 @@ class ProductSpecsController extends Controller
     }
     
     #----------------------- /product_intake/product_specs/create_product
-    public function createProductAction($id){            
-        $msg = $this->get('pi.product_specification')->create_product($id);        
+    public function createProductAction($id){
+        $result = $this->get('pi.product_specification')->validateSpecification($id);
+        if( empty($result) ) {
+
+        } else{
+            $this->get('session')->setFlash('warning', "Product can't be created before all the validation errors get resolved or dissmissed! ");
+            return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+                'validation_error' => $result,
+            ));
+
+        }
+
+        $msg = $this->get('pi.product_specification')->create_product($id);
         $this->get('session')->setFlash('success', $msg['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));        
     }
@@ -485,9 +496,8 @@ class ProductSpecsController extends Controller
         $result = $this->get('pi.product_specification')->validateSpecification($id);
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
             'validation_error' => $result,
-
         ));
-        
+
     }
     #--------------------------------------------------
     public function _validateProductSpecificationAction($id) {
@@ -616,10 +626,8 @@ class ProductSpecsController extends Controller
             $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
         $ps->setValidationJson(json_encode($update_rule));
         $msg_ar = $this->get('pi.product_specification')->update($ps);
+        return $this->redirect($request->get('_target_path'));
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit',array ('id'=>$specification_id)));
-        echo $specification_id;
-        echo "done";
-        die;
 
     }
     

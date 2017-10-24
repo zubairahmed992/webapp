@@ -61,7 +61,7 @@
         </nav>
         <div class="container-fluid">
             {% if app.session.hasFlash('warning') %}
-                <div class="alert alert-error">{{ app.session.flash('warning') }}</div>   
+                <div class="alert alert-danger">{{ app.session.flash('warning') }}</div>
              {% elseif app.session.hasFlash('success')%}
                 <div class="alert alert-success">{{ app.session.flash('success') }}</div>   
             {% elseif app.session.hasFlash('info')%}
