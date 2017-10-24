@@ -102,7 +102,6 @@ security:
         - { path: ^/support/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /support/, roles: ROLE_SUPPORT }
         - { path: /support, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/apple-app-site-association, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
 
     providers:
