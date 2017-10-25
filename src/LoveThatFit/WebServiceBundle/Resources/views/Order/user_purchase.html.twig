@@ -17,7 +17,7 @@
 }
 .receipt_row_order {
 	border-bottom: 1px solid #ccc;
-	padding: 15px 0px 15px 10px;
+	padding: 15px 0px 18px 8px;
 	background: #EAEAEA;
 }
 .product_txt {
@@ -47,6 +47,7 @@
 }
 .price {
 	font-weight: bold;
+  padding-left: 34px;
 }
 .rectxt {
 	font-size: 1.3em;
@@ -109,11 +110,11 @@
   </div>
   {% for key in  dataArray['items'] %}
     <div class="row receipt_row_order">
-      <div class="col-10">
+      <div class="col-9">
         <div class="product_txt">{{ key['pname'] }}</div>
         <div class="brandtxt">Ordered on {{ dataArray['purchase_date'] }}</div>
       </div>
-      <div class="col-2">
+      <div class="col-3">
         <div class="product_txt">${{ key['price'] }}</div>
       </div>
       <div class="row product_detl col-12">
@@ -125,19 +126,19 @@
   {%endfor%}
   <div class="row receipt_row">
     <div class="row col-12 pricing">
-      <div class="col-10">Subtotal</div>
-      <div class="col-2 price">${{ dataArray['order_amount'] }}</div>
-      <div class="col-10">Tax</div>
-      <div class="col-2 price">${{ dataArray['sales_tax'] }}</div>
-      <div class="col-10">Shipping</div>
-      <div class="col-2 price">$0.00</div>
+      <div class="col-9">Subtotal</div>
+      <div class="col-3 price">${{ dataArray['order_amount'] }}</div>
+      <div class="col-9">Tax</div>
+      <div class="col-3 price">${{ dataArray['sales_tax'] }}</div>
+      <div class="col-9">Shipping</div>
+      <div class="col-3 price">$0.00</div>
     </div>
     <hr />
   </div>
   <div class="row receipt_row">
     <div class="row col-12">
-      <div class="col-10">Total</div>
-      <div class="col-2 price">${{ dataArray['total_amount'] }}</div>
+      <div class="col-9">Total</div>
+      <div class="col-3 price">${{ dataArray['total_amount'] }}</div>
     </div>
   </div>
   
