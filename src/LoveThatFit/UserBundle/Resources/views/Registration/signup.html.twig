@@ -48,7 +48,8 @@
 			
             jQuery('#error_first_name').html("*Required");
 			jQuery('#error_first_name').removeClass("hide");
-			jQuery('#error_bar_1').removeClass("hide");  			 
+			jQuery('#error_bar_1').removeClass("hide"); 
+			jQuery('#lbl_first_name').addClass("add_field_heigh"); 						 			 
 		 	flag = false;
 			
         } else {
@@ -63,7 +64,8 @@
 			
             jQuery('#error_last_name').html("*Required");           
             jQuery('#error_last_name').removeClass("hide"); 
-			jQuery('#error_bar_1').removeClass("hide");  	      			
+			jQuery('#error_bar_1').removeClass("hide"); 
+			jQuery('#lbl_last_name').addClass("add_field_heigh"); 	      			
 		 	flag = false;
 			
         } else {
@@ -75,6 +77,7 @@
         }
 		
 			if(flag){
+				
 			
 			if($( "#screen_slide_1" ).hasClass( "show" )) {				
 				
@@ -90,7 +93,8 @@
 				
 					jQuery('#error_mem_email').html("*Required");
 					jQuery('#error_mem_email').removeClass("hide");  
-					jQuery('#error_bar_2').removeClass("hide");         
+					jQuery('#error_bar_2').removeClass("hide");
+					jQuery('#lbl_mem_email').addClass("add_field_heigh");          
 					flag = false;
 				
 				} else if(reg.test(jQuery('#mem_email').val()) == false) {
@@ -98,7 +102,8 @@
 					jQuery('#error_mem_email').html("*Invalid Email");
 					jQuery('#mem_email').val('');
 					jQuery('#error_mem_email').removeClass("hide"); 
-					jQuery('#error_bar_2').removeClass("hide");         
+					jQuery('#error_bar_2').removeClass("hide"); 
+					jQuery('#lbl_mem_email').addClass("add_field_heigh");         
 					flag = false;
 
 				} else {
@@ -117,7 +122,8 @@
 						jQuery('#error_mem_email').html("*Email already exist");
 						jQuery('#error_mem_email').removeClass("hide"); 
 						jQuery('#mem_email').val(''); 
-						jQuery('#error_bar_2').removeClass("hide");         
+						jQuery('#error_bar_2').removeClass("hide");
+						jQuery('#lbl_mem_email').addClass("add_field_heigh");          
 						flag = false;
 						
 					} else {
@@ -133,14 +139,16 @@
 					
 					jQuery('#error_confirm_mem_email').html("*Required");           
 					jQuery('#error_confirm_mem_email').removeClass("hide");
-					jQuery('#error_bar_2').removeClass("hide");         			
+					jQuery('#error_bar_2').removeClass("hide");
+					jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			
 					flag = false;
 					
 				} else if(reg.test(jQuery('#confirm_mem_email').val()) == false) {
 					
 					jQuery('#error_confirm_mem_email').html("*Invalid Email");
 					jQuery('#error_confirm_mem_email').removeClass("hide"); 
-					jQuery('#error_bar_2').removeClass("hide"); 
+					jQuery('#error_bar_2').removeClass("hide");
+					jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			 
 					jQuery('#confirm_mem_email').val('');        
 					flag = false;				
 					
@@ -157,7 +165,8 @@
 						jQuery('#confirm_mem_email').val('');
 						jQuery('#error_confirm_mem_email').html("*Emails do not match");           
 						jQuery('#error_confirm_mem_email').removeClass("hide");  
-						jQuery('#error_bar_2').removeClass("hide");        			
+						jQuery('#error_bar_2').removeClass("hide");  
+						jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			      			
 						flag = false;
 						
 					} else {
@@ -190,14 +199,16 @@
 						jQuery('#pwd_hint1').addClass("hide");
 						jQuery('#pwd_hint1').removeClass("show");
 						jQuery('#pwd_hint').removeClass("hide");						
-						jQuery('#error_bar_3').removeClass("hide");          
+						jQuery('#error_bar_3').removeClass("hide");
+						jQuery('#lbl_mem_password').addClass("add_field_heigh");           
 						flag = false;
 						} else if(passwordValidate(jQuery('#mem_password').val())) {
 							jQuery('#error_mem_password').html("*Requirements not met");
 							jQuery('#error_mem_password').removeClass("hide");  
 							jQuery('#mem_password').val('');
 							var p = passwordValidate(jQuery('#mem_password').val());
-							jQuery('#error_bar_3').removeClass("hide");        
+							jQuery('#error_bar_3').removeClass("hide");  
+							jQuery('#lbl_mem_password').addClass("add_field_heigh");          			      
 							flag = false;
 						} else {
 							
@@ -210,7 +221,8 @@
 						if(jQuery('#confirm_mem_password').val()==''){							
 							jQuery('#error_confirm_mem_password').html("*Required");           
 							jQuery('#error_confirm_mem_password').removeClass("hide"); 
-							jQuery('#error_bar_3').removeClass("hide");        			
+							jQuery('#error_bar_3').removeClass("hide"); 
+							jQuery('#lbl_confirm_mem_password').addClass("add_field_heigh");       			
 							flag = false;
 							
 						} else {
@@ -226,7 +238,8 @@
 								jQuery('#confirm_mem_password').val('');
 								jQuery('#error_confirm_mem_password').html("*Passwords do not match");           
 								jQuery('#error_confirm_mem_password').removeClass("hide"); 
-								jQuery('#error_bar_3').removeClass("hide");         			
+								jQuery('#error_bar_3').removeClass("hide");
+								jQuery('#lbl_confirm_mem_password').addClass("add_field_heigh");         			
 								flag = false;
 								
 							} else {
@@ -255,7 +268,8 @@
 									
 									jQuery('#error_phone').html("*Required");
 									jQuery('#error_phone').removeClass("hide"); 
-									jQuery('#error_bar_4').removeClass("hide");         
+									jQuery('#error_bar_4').removeClass("hide"); 
+									jQuery('#lbl_phone').addClass("add_field_heigh");        
 									flag = false;
 									
 									} else {
@@ -270,7 +284,8 @@
 										
 										jQuery('#error_zip').html("*Required");           
 										jQuery('#error_zip').removeClass("hide"); 
-										jQuery('#error_bar_4').removeClass("hide");       			
+										jQuery('#error_bar_4').removeClass("hide"); 
+										jQuery('#lbl_zip').addClass("add_field_heigh");       			
 										flag = false;
 										
 									} else {
@@ -301,7 +316,8 @@
 												
 													jQuery('#error_friend_name').html("*Required");
 													jQuery('#error_friend_name').removeClass("hide");
-													jQuery('#error_bar_5').removeClass("hide");        
+													jQuery('#error_bar_5').removeClass("hide"); 
+													jQuery('#lbl_friend_name').addClass("add_field_heigh");        
 													flag = false;
 												
 												} else {
@@ -316,14 +332,16 @@
 													
 													jQuery('#error_friend_email').html("*Required");           
 													jQuery('#error_friend_email').removeClass("hide"); 
-													jQuery('#error_bar_5').removeClass("hide");         			
+													jQuery('#error_bar_5').removeClass("hide");
+													jQuery('#lbl_friend_email').addClass("add_field_heigh");         			
 													flag = false;
 													
 												} else if(reg.test(jQuery('#friend_email').val()) == false) {
 													
 													jQuery('#error_friend_email').html("*Invalid Email");
 													jQuery('#error_friend_email').removeClass("hide"); 
-													jQuery('#error_bar_5').removeClass("hide");          
+													jQuery('#error_bar_5').removeClass("hide"); 
+													jQuery('#lbl_friend_email').addClass("add_field_heigh");         
 													flag = false;				
 													
 												} else {
@@ -467,7 +485,8 @@ function invite_friend()
 		
 			jQuery('#error_invite_friend_name').html("*Required");
 			jQuery('#error_invite_friend_name').removeClass("hide");
-			jQuery('#error_bar_7').removeClass("hide");           
+			jQuery('#error_bar_7').removeClass("hide");  
+			jQuery('#lbl_invite_friend_name').addClass("add_field_heigh");         
 			flag = false;
 		
 		} else {
@@ -482,14 +501,16 @@ function invite_friend()
 			
 			jQuery('#error_invite_friend_email').html("*Required");           
 			jQuery('#error_invite_friend_email').removeClass("hide");
-			jQuery('#error_bar_7').removeClass("hide");         			
+			jQuery('#error_bar_7').removeClass("hide"); 
+			jQuery('#lbl_invite_friend_email').addClass("add_field_heigh");        			
 			flag = false;
 			
 		} else if(reg.test(jQuery('#invite_friend_email').val()) == false) {
 			
 			jQuery('#error_invite_friend_email').html("*Invalid Email");
 			jQuery('#error_invite_friend_email').removeClass("hide"); 
-			jQuery('#error_bar_7').removeClass("hide");         
+			jQuery('#error_bar_7').removeClass("hide"); 
+			jQuery('#lbl_invite_friend_email').addClass("add_field_heigh");        
 			flag = false;				
 			
 		} else {
@@ -566,7 +587,8 @@ function male_invite_friend()
 		
 			jQuery('#error_male_invite_friend_name').html("*Required");
 			jQuery('#error_male_invite_friend_name').removeClass("hide");
-			jQuery('#error_bar_12').removeClass("hide");           
+			jQuery('#error_bar_12').removeClass("hide");  
+			jQuery('#lbl_male_invite_friend_name').addClass("add_field_heigh");         
 			flag = false;
 		
 		} else {
@@ -581,14 +603,16 @@ function male_invite_friend()
 			
 			jQuery('#error_male_invite_friend_email').html("*Required");           
 			jQuery('#error_male_invite_friend_email').removeClass("hide");
-			jQuery('#error_bar_12').removeClass("hide");         			
+			jQuery('#error_bar_12').removeClass("hide"); 
+			jQuery('#lbl_male_invite_friend_email').addClass("add_field_heigh");        			
 			flag = false;
 			
 		} else if(reg.test(jQuery('#male_invite_friend_email').val()) == false) {
 			
 			jQuery('#error_male_invite_friend_email').html("*Invalid Email");
 			jQuery('#error_male_invite_friend_email').removeClass("hide"); 
-			jQuery('#error_bar_12').removeClass("hide");         
+			jQuery('#error_bar_12').removeClass("hide");  
+			jQuery('#lbl_male_invite_friend_email').addClass("add_field_heigh");      
 			flag = false;				
 			
 		} else {
@@ -663,7 +687,8 @@ function male_registration()
 		
 			jQuery('#error_male_name').html("*Required");
 			jQuery('#error_male_name').removeClass("hide"); 
-			jQuery('#error_bar_10').removeClass("hide");        
+			jQuery('#error_bar_10').removeClass("hide");
+			jQuery('#lbl_male_name').addClass("add_field_heigh");       
 			flag = false;
 		
 		} else {
@@ -678,14 +703,16 @@ function male_registration()
 			
 			jQuery('#error_male_email').html("*Required");           
 			jQuery('#error_male_email').removeClass("hide"); 
-			jQuery('#error_bar_10').removeClass("hide");         			
+			jQuery('#error_bar_10').removeClass("hide");
+			jQuery('#lbl_male_email').addClass("add_field_heigh");         			
 			flag = false;
 			
 		} else if(reg.test(jQuery('#male_email').val()) == false) {
 			
 			jQuery('#error_male_email').html("*Invalid Email");
 			jQuery('#error_male_email').removeClass("hide");
-			jQuery('#error_bar_10').removeClass("hide");           
+			jQuery('#error_bar_10').removeClass("hide");
+			jQuery('#lbl_male_email').addClass("add_field_heigh");           
 			flag = false;				
 			
 		} else {
@@ -959,9 +986,27 @@ function hide_error(id)
 	
 }
 
+function label_up(id)
+{
+
+	jQuery('#'+id).css('position','0px');
+	jQuery('#'+id).css('top','0px');	
+	jQuery('#'+id).css('opacity','0.5');
+	jQuery('#'+id).css('cursor','default');
+	
+}
+
+
 
 
 $(document).ready(function(e) {
+	
+
+	
+	
+	
+	
+	
    $( "#phone" ).keyup(function() {
   
 
@@ -977,7 +1022,8 @@ function validate_email(email){
 	
 	if(email.length > 0)
 	{
-		
+		jQuery('#overlay').removeClass("hide"); 
+		jQuery('#overlay').addClass("show");
 		result = jQuery.ajax({
 			type: "POST",
 			url: "{{ path('appuser_check_exist_email') }}",
@@ -993,6 +1039,8 @@ function validate_email(email){
 			jQuery('#error_mem_email').removeClass("hide"); 
 			jQuery('#mem_email').val(''); 
 			jQuery('#error_bar_2').removeClass("hide");         
+			jQuery('#overlay').removeClass("show");
+ 			jQuery('#overlay').addClass("hide"); 
 			flag = false;
 			
 		} else {
@@ -1000,6 +1048,8 @@ function validate_email(email){
 		jQuery('#error_mem_email').html("");
 		jQuery('#error_mem_email').addClass("hide");
 		jQuery('#error_bar_2').addClass("hide");
+		jQuery('#overlay').removeClass("show");
+ 		jQuery('#overlay').addClass("hide"); 
 		}	
 	
 	}
@@ -1016,6 +1066,7 @@ function validate_email(email){
 
 <!-- screen_1 --> 
 <body class="formbg">
+<form class="form-signin" action="" method="post">
  <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/Loading_2.gif') }}" class="loading" /></div></div>
  
 <!--<img src="{{ asset('bundles/lovethatfit/web_registration/img/ajax-loader.gif') }}" alt="Circle" class="profile_pic" />-->
@@ -1040,7 +1091,7 @@ function validate_email(email){
     </div>
 </div>
 </div>
-<form class="form-signin" action="" method="post">
+
   <div class="screen_6 hide" id="screen_slide_1">
 
 <div class="create_acc">
@@ -1056,12 +1107,21 @@ function validate_email(email){
       <p>First things first. Please introduce yourself.</p>
     </div>
     <div class="gap_5"></div>
-    <label for="first_name" class="">FIRST NAME</label>
+    
+    <div style="position:relative;">
+    <label for="first_name" class="" id="lbl_first_name" onclick="label_up(this.id);">FIRST NAME</label>
      <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
     <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control" autofocus>
-    <label for="last_name" class="">LAST NAME</label>
+    </div>
+    
+    
+    <div style="position:relative;">
+    <label for="last_name" class="" id="lbl_last_name" onclick="label_up(this.id);">LAST NAME</label>
      <div class="error_box hide" onclick="hide_error(this.id);" id="error_last_name"></div>
     <input type="text" autocomplete="off" name="last_name" id="last_name" class="form-control">
+    </div>
+    
+    
     <div class="privacy">
       <p>By signing up, you agree to the our <a href="https://www.selfiestyler.com/main/terms-conditions/">terms and 
 conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/privacypolicy/">privacy policy.</a></p>
@@ -1086,12 +1146,18 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Please give us your email. It will be your login name</p>
     </div>
     <div class="gap_5"></div>
-    <label for="inputpassword" class="">EMAIL</label>
+    
+     <div style="position:relative;">
+    <label for="inputpassword" class="" id="lbl_mem_email" onclick="label_up(this.id);">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
     <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);"  autofocus>
-    <label for="inputpass" class="">CONFIRM EMAIL</label>
+    </div>
+    
+     <div style="position:relative;">
+    <label for="inputpass" class="" id="lbl_confirm_mem_email" onclick="label_up(this.id);">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
     <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
+    </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Next</a>
     <div class="privacy">
@@ -1112,19 +1178,23 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Let's protect your account protected</p>
     </div>
     <div class="gap_2"></div>
-    <label for="inputfirstname" class="">PASSWORD</label>
+     <div style="position:relative;">
+    <label for="inputfirstname" class="" id="lbl_mem_password" onclick="label_up(this.id);">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
-    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);"  autofocus>
+    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);"  autofocus></div>
+    
+    
     <div class="req_box_div show" id="pwd_hint1">
     <div class="req_text" >Required:</div>
     <div class="req_text_1">8 Characters</br>1 Capitol Letter</br>1 Number</div>
     </div>
 <!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
     <div class="error_box_req hide" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
-    
-    <label for="inputzip" class="">CONFIRM PASSWORD</label>
+     <div style="position:relative;">
+    <label for="inputzip" class="" id="lbl_confirm_mem_password" onclick="label_up(this.id);">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
     <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
+    </div>
     <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Create new password</a>
 </div>
 </div>
@@ -1143,12 +1213,16 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div class="Get_text">
       <p>In order for SelfieStyler to work effectively, we need your measurements. Please sign up to attend a fitting session at a activation event. We'll notify you when we'll be in your area</p>
     </div>
-    <label for="inputphone" class="">PHONE</label>
+ 	<div style="position:relative;">
+    <label for="inputphone" class="" id="lbl_phone" onclick="label_up(this.id);">PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
     <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone"  autofocus>
-    <label for="inputzip" class="">ZIP CODE</label>
+    </div>
+     <div style="position:relative;">
+    <label for="inputzip" class="" id="lbl_zip" onclick="label_up(this.id);">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
     <input type="text" autocomplete="off" id="zip" name="zip" class="form-control" autofocus>
+    </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Submit</a>
 </div>
@@ -1171,12 +1245,16 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Did a friend refer you?</p>
     </div>
     <div class="Get_text"><p>Your friend get a nice little bonus when you sign up. Let us know who referred you so we can thank them.</p></div>
- <label for="inputname" class="">FRIEND'S FIRST NAME</label>
+    <div style="position:relative;"> 
+ <label for="inputname" class="" id="lbl_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
     <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control"  autofocus>
-    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    </div>
+     <div style="position:relative;">
+    <label for="inputzip" class="" id="lbl_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
     <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control"  autofocus>
+    </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Send</a>
        <div class="privacy">
@@ -1217,12 +1295,16 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Sorry, guys! We're not ready for you yet.</p>
     </div>
     <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>
-<label for="inputname" class="">FULL NAME</label>
+     <div style="position:relative;">
+<label for="inputname" class="" id="lbl_male_name" onclick="label_up(this.id);">FULL NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
     <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control"  autofocus>
-    <label for="inputzip" class="">EMAIL</label>
+    </div>
+     <div style="position:relative;">
+    <label for="inputzip" class="" id="lbl_male_email" onclick="label_up(this.id);">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
     <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control"  autofocus>
+    </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
       
@@ -1247,12 +1329,16 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     </div>
     <div class="Get_text"><p>Invite a friends to download the app to share styles 
 and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
-<label for="inputname" class="">FRIEND'S FIRST NAME</label>
+ <div style="position:relative;">
+<label for="inputname" class="" id="lbl_invite_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
     <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control"  autofocus>
-    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    </div>
+ <div style="position:relative;">
+    <label for="inputzip" class="" id="lbl_invite_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control"  autofocus>
+  </div>  
     <div class="gap_4"></div>
     <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();">Send</a>
        <div class="privacy">
@@ -1278,12 +1364,16 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
     </div>
     <div class="Get_text"><p>Invite a friends to download the app to share styles 
 and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
-<label for="inputname" class="">FRIEND'S FIRST NAME</label>
+ <div style="position:relative;">
+<label for="inputname" class="" id="lbl_male_invite_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
     <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control"  autofocus>
-    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    </div>
+     <div style="position:relative;">
+    <label for="inputzip" class="" id="lbl_male_invite_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control"  autofocus>
+    </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();">Send</a>
        <div class="privacy">
@@ -1294,7 +1384,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
 </div>
 
 
-</form>
+
 
 <!-- screen_9 --> 
 <div class="screen_9 hide" id="screen_slide_8">
@@ -1329,6 +1419,6 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
     <button class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</button>-->
 </div>
 </div>
-
+</form>
 </body>
 </html>
