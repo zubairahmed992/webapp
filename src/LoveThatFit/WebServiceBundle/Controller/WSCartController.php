@@ -1000,7 +1000,7 @@ class WSCartController extends Controller
                 'pname'      => $entity->getProduct()->getName(),
                 'quantity'   => $detail['qty'],
                 'item_price' => $entity->getPrice(),
-                'price'      => $entity->getPrice() * $detail['qty'],
+                'price'      => number_format((float)($entity->getPrice() * $detail['qty']), 2, '.', ''),
                 'sku'        => $entity->getProduct()->getControlNumber(),
                 'size'       => $entity->getProductSize()->getTitle(),
                 'color'      => $entity->getProductColor()->getTitle()
@@ -1018,7 +1018,7 @@ class WSCartController extends Controller
             'contact_number'   => '262-391-3403',
             'email'         => $orders['email'],
             'frist_name'    => $orders['firstName'] . " " . $orders['lastName'],
-            'order_amount'  => $orders['order_amount'],
+            'order_amount'  => number_format((float)$orders['order_amount'], 2, '.', ''),
             'total_amount'  => number_format((float)$orders['total_amount'], 2, '.', ''),
             'discount'      => ($orders['discount_amount'] > 0 ? "-$".$orders['discount_amount'] : 0),
             'discountType' => (isset($orders['group_type']) && $orders['group_type'] == 2 ? "(".$d_discount."%)" : ""),
@@ -1038,9 +1038,13 @@ class WSCartController extends Controller
             'billing_city'      => $orders['billing_city'],
             'billing_state'     => $orders['billing_state'],
             'billing_postcode'  => $orders['billing_postcode'],
-            'sales_tax'         => $orders['sales_tax']
+            'sales_tax'         => number_format((float)$orders['sales_tax'], 2, '.', ''),
         );
-
+        
+        // echo "<pre>";
+        // print_r($dataArray);
+    
+        // die();
         return $this->render('LoveThatFitWebServiceBundle:Order:user_purchase.html.twig',
             array('dataArray'   => $dataArray)
         );
