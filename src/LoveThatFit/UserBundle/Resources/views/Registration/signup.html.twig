@@ -340,7 +340,8 @@
 													
 													jQuery('#error_friend_email').html("*Invalid Email");
 													jQuery('#error_friend_email').removeClass("hide"); 
-													jQuery('#error_bar_5').removeClass("hide"); 
+													jQuery('#error_bar_5').removeClass("hide");
+													jQuery('#friend_email').val(''); 
 													jQuery('#lbl_friend_email').addClass("add_field_heigh");         
 													flag = false;				
 													
@@ -509,7 +510,8 @@ function invite_friend()
 			
 			jQuery('#error_invite_friend_email').html("*Invalid Email");
 			jQuery('#error_invite_friend_email').removeClass("hide"); 
-			jQuery('#error_bar_7').removeClass("hide"); 
+			jQuery('#error_bar_7').removeClass("hide");
+			jQuery('#invite_friend_email').val(''); 
 			jQuery('#lbl_invite_friend_email').addClass("add_field_heigh");        
 			flag = false;				
 			
@@ -611,7 +613,8 @@ function male_invite_friend()
 			
 			jQuery('#error_male_invite_friend_email').html("*Invalid Email");
 			jQuery('#error_male_invite_friend_email').removeClass("hide"); 
-			jQuery('#error_bar_12').removeClass("hide");  
+			jQuery('#error_bar_12').removeClass("hide"); 
+			jQuery('#male_invite_friend_email').val('');  
 			jQuery('#lbl_male_invite_friend_email').addClass("add_field_heigh");      
 			flag = false;				
 			
