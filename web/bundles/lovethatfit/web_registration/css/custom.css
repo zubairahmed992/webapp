@@ -615,5 +615,6 @@ text-decoration:none;
 	top:0px;
 	opacity:0.5;
 	cursor:default;
+	transition:0.3s ease all;
 }
 
