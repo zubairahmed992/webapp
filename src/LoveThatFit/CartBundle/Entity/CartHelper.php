@@ -283,6 +283,7 @@ class CartHelper
         $cart_array = array();
         $counter = 0;
         foreach ($user->getCart() as $ci) {
+            $cart_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
             $cart_array[$counter]['color'] = $ci->getProductItem()->getProductColor()->getTitle();
             $cart_array[$counter]['size'] = $ci->getProductItem()->getProductSize()->getTitle();
             $cart_array[$counter]['name'] = $ci->getProductItem()->getProduct()->getName();
