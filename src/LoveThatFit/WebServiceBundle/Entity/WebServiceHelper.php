@@ -1572,6 +1572,7 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+            $productlist[$key]['fitting_room_status'] = ($product['uf_user'] != null || $product['uf_user'] != "") ? true : false;
         }
 
 
