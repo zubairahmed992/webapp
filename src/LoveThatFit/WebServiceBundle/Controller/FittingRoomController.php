@@ -265,7 +265,7 @@ class FittingRoomController extends Controller {
                         $get_qty = 0;
                         if($verified_entry[0][1] != "0"){
                             $get_qty = $verified_entry[0]['qty'];
-                            $qty = $qty + $get_qty;
+                            $qty = $qty; // + $get_qty;
                         }
 
                         //Checked that item is already then remove this
