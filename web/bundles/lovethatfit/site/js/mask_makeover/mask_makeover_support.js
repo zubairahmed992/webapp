@@ -67,8 +67,8 @@ function showImag(retouch_image){
         this.opacity=1;
         user_image.position = new Point(480,640);
         preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
-        //user_image.visible = false;
         });
+       user_image.visible = false;
        return retuchImage = show_img;
         view.update();
 }
