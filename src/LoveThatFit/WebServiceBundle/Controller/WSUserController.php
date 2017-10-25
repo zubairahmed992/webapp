@@ -204,16 +204,16 @@ class WSUserController extends Controller
             $user->setAuthToken(uniqid());
             $this->get('user.helper.user')->saveUser($user);
             $baseurl = $this->getRequest()->getHost();
-            $link = $baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
+            $link =  "https://".$baseurl . $this->generateUrl('forgot_password_reset_form_web', array('email_auth_token' => $user->getAuthToken()));
             $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmailWeb($user, $link);
             if ($defaultData[0]) {
-                $res = $this->get('webservice.helper')->response_array(true, " Email has been sent with reset password link (" . $link . ") to " . $user->getEmail());
+                $res = $this->get('webservice.helper')->response_array(true, "Email has been sent", true, array("link" => $link));
             } else {
-                $res = $this->get('webservice.helper')->response_array(false, " Email not sent due to some problem, please try again later.");
+                $res = $this->get('webservice.helper')->response_array(false, "Email not sent due to some problem, please try again later.");
             }
 
         } else {
-            $res = $this->get('webservice.helper')->response_array(false, " User not found.");
+            $res = $this->get('webservice.helper')->response_array(false, "User not found");
         }
         return new Response($res);
     }
@@ -608,7 +608,7 @@ class WSUserController extends Controller
             { 
                 if($decoded['email']==$decoded['new_primary_email']){
 
-                    return new Response(json_encode(array("success" => "0","description" => "Both emails are same.")));    
+                    return new Response(json_encode(array("success" => false,"message" => "Both emails are same.")));    
 
                 } else {    
 
@@ -616,7 +616,7 @@ class WSUserController extends Controller
         
                     $newUser = $this->container->get('user.helper.user')->findByEmail($decoded['new_primary_email']);
                     if($newUser){
-                        return new Response(json_encode(array("success" => "0","description" => "This email already assigned to other member.")));    
+                        return new Response(json_encode(array("success" => false,"message" => "This email already assigned to other member.")));    
                     }else{
 
                         $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
@@ -635,17 +635,17 @@ class WSUserController extends Controller
                             $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
                         }
                       
-                        return new Response(json_encode(array("success" => 1,"description" => "Your email has been successfully changed! <Perfect, thanks!>")));
+                        return new Response(json_encode(array("success" => true,"message" => "Your email has been successfully changed! <Perfect, thanks!>")));
                     }
                 }
 
             } else {
 
-            return new Response(json_encode(array("success" => "0","description" => "Invalid Token")));
+            return new Response(json_encode(array("success" => false,"message" => "Invalid Token")));
             }      
 
         } else {
-            return new Response(json_encode(array("success" => "0","description" => "Invalid Email")));
+            return new Response(json_encode(array("success" => false,"message" => "Invalid Email")));
         }    
     }
 
@@ -713,6 +713,38 @@ class WSUserController extends Controller
             return new Response($this->get('webservice.helper')->response_array(false, 'User Already Exist as an Female'));
         }
     }
-  
+    
+    public function renderIphoneFileAction()
+    {
+        header('Content-Type: application/pkcs7-mime');
+        echo file_get_contents(getcwd()."/uploads/apple-app-site-association");
+        die();
+    }
+
+
+    public function checkEmailEixstFuncAction()
+    {
+        $ra = $this->process_request();        
+        if(!empty($ra['email'])){
+             $user=$this->get('user.helper.user')->findByEmail($ra['email']);
+
+                if (count($user) > 0) {
+
+                    return new Response(json_encode(array("success" => "1"))); 
+
+                } else {
+                   
+                    return new Response(json_encode(array("success" => "0")));    
+                  
+                }    
+
+        } else {
+                   
+                    return new Response(json_encode(array("success" => "0")));    
+                  
+        } 
+    }       
+
+
 }
 
