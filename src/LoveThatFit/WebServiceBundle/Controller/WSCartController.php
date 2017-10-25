@@ -690,18 +690,28 @@ class WSCartController extends Controller
         if ($user) {
             if($billing_id > 0){
                 $billingObject = $this->container->get('cart.helper.userAddresses')->updateUserBillingAddress($decoded, $user);
+                if($billingObject)
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
+                        "billing_address_id" => $billingObject->getId()
+                    ));
+                }else{
+                    $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
+                }
             }else{
                 $billingObject = $this->container->get('cart.helper.userAddresses')->saveUserBillingAddress($decoded, $user);
+                if($billingObject)
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
+                        "billing_address_id" => $billingObject['billing']->getId(),
+                        'shipping_address_id' => (isset($billingObject['shipping']) ? $billingObject['shipping']->getId() : 0)
+                    ));
+                }else{
+                    $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
+                }
             }
 
-            if($billingObject)
-            {
-                $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
-                    "billing_address_id" => $billingObject->getId()
-                ));
-            }else{
-                $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
-            }
+
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
