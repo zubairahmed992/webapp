@@ -82,9 +82,9 @@ class UserHelper
         $this->em->flush();
     }
 
-    public function sendUpdatedPrimaryEmailToUser( User $user, $decoded)
+    public function sendUpdatedPrimaryEmailToUser( User $user, $decoded, $base_url = "")
     {         
-        $this->container->get('mail_helper')->sendPrimaryKeyUpdateEmail($user, $decoded);
+        $this->container->get('mail_helper')->sendPrimaryKeyUpdateEmail($user, $decoded, $base_url);
         return;
     }  
 
