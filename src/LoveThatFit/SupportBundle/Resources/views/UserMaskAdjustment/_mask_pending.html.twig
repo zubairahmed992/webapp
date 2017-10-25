@@ -252,7 +252,15 @@
 
             ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
             .archives span{ padding:0 !important; margin:0 !important;}
-            .oprangsldr{ width:70px;display:inline-block; height:2px !important; background:#666666!important; margin-top:16px; }
+            .oprangsldr{ 
+                width:70px;
+                display:inline-block; 
+                height:2px !important; 
+                background:#666666!important; 
+                margin-top:16px;
+                margin-left:15px;
+                margin-right:15px;
+            }
             .oprangsldr span{ background: #000000 !important; border:none; width:2px; height:2px; border-radius:100%; top:-9px !important; }
             .img-thumb{width: 50px; height:55px;}
              .archives span.active {
@@ -272,7 +280,7 @@
                  color:#ffffff;
                  position:relative;
                  padding:3px 6px;
-                font-size:11px;
+                 font-size:11px;
                  -webkit-border-radius:5px;
                  -moz-border-radius:5px;
                   border-radius:5px;
@@ -306,7 +314,7 @@
               }
               ul.liststyle li a{ background:none; border:none;}
               .canvas_navigation{margin-top:20px; background:rgba(204,204,204,0.8); padding:10px;}
-              .canvas_navigation a{text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
+              .canvas_navigation a{cursor:pointer; text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
                 .canvas_navigation a:hover{background:#000000;color:#ffffff;}
                 .archive_nave{ background:rgba(241,241,241,0.8);}
                 .fixed {
@@ -314,11 +322,13 @@
                     top: 38px;
                     left: 14%;
                     width: 964px;
-                    z-index: 1;
+                    z-index: 1500;
                     right: 0%;
                     margin: auto;
                 }
-           
+           .ui-tooltip {
+                white-space: pre-line;
+            }
     {#img:before{
         position: absolute; 
         top:0; 
@@ -341,7 +351,7 @@
                       <input type="hidden" value="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}">
                         {#<a href="" title="Adjust Mass Marker">#}
                         {% set filename = retouch_filename ~ '_' ~ retouch_count %}
-                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}" data-toggle="tooltip"   title="{{ retouch_file_time[filename] }}" />
+                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~ retouch_filename ~ '_' ~ retouch_count ~ '.png'}}" data-toggle="tooltip"   title="{{"Retouched: " ~ retouch_count ~"\n Date: "~ retouch_file_time[filename] }}" />
 {#                        </a>#}
                     </li>
                 {% endfor %}
@@ -453,8 +463,9 @@
     {#<a id="retuchImage">Toggle Image</a>#}
 
          {#<ul class="imagemenu">#}
+         <div class="canv_hldr_3" style="position:relative;margin-bottom:70px;">   
     <canvas id="canv_mask_makeover" class="mask-marker-canvas" width="960" height="1280"></canvas>
-   
+         </div>
     </div>
 {% endif %}
 </div>

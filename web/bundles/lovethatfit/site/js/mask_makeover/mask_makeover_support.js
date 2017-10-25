@@ -629,13 +629,13 @@ function remove_index_numbers(){
 }
 function show_index_numbers(){
     for(a=0; a<full_mask.segments.length; a++){
-    $(".canv_hldr_2").prepend('<div id="i_note_'+a+'" class="index_note">' + a +'</div>');
+    $(".canv_hldr_3").prepend('<div id="i_note_'+a+'" class="index_note">' + a +'</div>');
         $("#i_note_" + a).css('position','absolute');
         $("#i_note_" + a).css('z-index','1000');
         $("#i_note_" + a).css('background-color','#ffcc00');
         $("#i_note_" + a).css('font-size','10px');
-        $("#i_note_" + a).css('top',full_mask.segments[a].point.y + 50);
-        $("#i_note_" + a).css('left', full_mask.segments[a].point.x + 100);
+        $("#i_note_" + a).css('top',full_mask.segments[a].point.y + 5);
+        $("#i_note_" + a).css('left', full_mask.segments[a].point.x + 2);
     }
 }
 function set_out_update(){
