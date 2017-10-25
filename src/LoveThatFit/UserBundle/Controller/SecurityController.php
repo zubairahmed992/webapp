@@ -46,6 +46,11 @@ class SecurityController extends Controller {
         );
     }
 
+    public function signinAction(){
+        $baseurl = "http://".$this->getRequest()->getHost();
+        return $this->redirect($baseurl);
+    }
+
 //---------------------------------------------------------------------------------
     public function goSecureAction($id) {
         $user=$this->get('user.helper.user')->find($id);

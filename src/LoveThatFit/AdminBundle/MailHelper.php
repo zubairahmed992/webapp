@@ -129,10 +129,13 @@ class MailHelper {
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
     }
 
-     public function sendPrimaryKeyUpdateEmail( $user, $dataArray )
+     public function sendPrimaryKeyUpdateEmail( $user, $dataArray, $baseurl = "" )
     {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $dataArray['email'];
+
+        $dataArray['baseurl'] = $baseurl;
+
 
         $body = "LoveThatFitAdminBundle::email/update_primary_email.html.twig";
         $subject = 'Your Email Has Been Updated';
