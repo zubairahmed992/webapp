@@ -48,6 +48,15 @@ class ProductController extends Controller
     public function productItemImageDataAction($id) {        
         $mh = new MannequenHelper();
         $m_co = $mh->getCoordinates();
+        $ar=$mh->getRawCoordinates();
+        for ($i=0;$i<count($ar);$i++) {
+            $ar[$i][0] = floor(($ar[$i][0] * 3.71142908458136) + 6);
+            $ar[$i][1] = floor(($ar[$i][1] * 3.71142908458136) + 6);
+            #$ar[$i][0] = $ar[$i][0];
+            #$ar[$i][1] = $ar[$i][1];
+        }        
+        return new Response(json_encode($ar));
+        
         $fp_coor = array();        
         $item = $this->get('admin.helper.product_item')->find($id);                
         $img = imagecreatefrompng($item->getAbsolutePath());   

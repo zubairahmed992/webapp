@@ -50,6 +50,12 @@ pi_ws_user_mask_marker_json:
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:userMaskMarkerJson}
     requirements:
         _method:  get
+
+pi_ws_product_item_image_coordinates:
+    pattern: /pi/ws/product_item_image_coordinates/{item_id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productItemImageData}
+    requirements:
+        _method:  get        
         
         
       

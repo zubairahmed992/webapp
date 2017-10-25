@@ -20,5 +20,9 @@ class MannequenHelper {
         }
         return $yco;
     }
+    #---------------------------------------------
+    public function getRawCoordinates($mann='laurie'){                
+        return $this->conf['data'][$mann];
+    }
     
 }

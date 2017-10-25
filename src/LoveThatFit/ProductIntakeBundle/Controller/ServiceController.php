@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\ProductIntakeBundle\Controller;
-
+use LoveThatFit\ProductIntakeBundle\DependencyInjection\MannequenHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -501,5 +501,37 @@ class ServiceController extends Controller {
 
 
     }
+#------------------------------------------/pi/ws/product_item_image_coordinates/{item_id}
+    public function productItemImageDataAction($item_id) {
+        $mh = new MannequenHelper();
+        $m_co = $mh->getCoordinates();
+        $fp_coor = array();        
+        $item = $this->get('admin.helper.product_item')->find($item_id);                        
+        #$path=$item->getAbsolutePath();
+        #$paths=$item->getImagePaths(true);
+        #return new Response(json_encode($paths));
+        #return new Response(json_encode(str_replace('fitting_room/web', 'fitting_room',$path)));
+        
+        $img = imagecreatefrompng($item->getAbsolutePath());   
+        $fabric=false;
+        
+        foreach ($m_co as $fp => $co) {
+            $y = $co[1];
+            $fp_coor[$fp]=array();
+            $fabric = false;                    
+            for ($x = 0; $x < imagesx($img); $x++) {
+                $rgb = imagecolorat($img, $x, $y);
+                $pixel_color = imagecolorsforindex($img, $rgb);                     
+                if ($pixel_color['alpha'] == 0 && !$fabric) {       #fill & no fab
+                        array_push($fp_coor[$fp], array($x, $y));
+                        $fabric = true;                    
+                }elseif ($pixel_color['alpha'] > 126 && $fabric) {   #empty & fab                 
+                        array_push($fp_coor[$fp], array($x, $y));
+                        $fabric = false;                    
+                }
+            }
+        }
 
+        return new Response(json_encode($fp_coor));
+    }
 }
