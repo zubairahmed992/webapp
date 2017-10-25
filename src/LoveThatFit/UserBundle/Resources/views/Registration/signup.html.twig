@@ -196,6 +196,7 @@
 							jQuery('#error_mem_password').html("*Requirements not met");
 							jQuery('#error_mem_password').removeClass("hide");  
 							jQuery('#mem_password').val('');
+							var p = passwordValidate(jQuery('#mem_password').val());
 							jQuery('#error_bar_3').removeClass("hide");        
 							flag = false;
 						} else {
@@ -600,14 +601,14 @@ function male_invite_friend()
 		
 		
 		if(flag){
-			email = jQuery('#mem_email').val();
+			email = jQuery('#male_email').val();
 			friend_name = jQuery('#male_invite_friend_name').val();
 			friend_email = jQuery('#male_invite_friend_email').val();
 			jQuery('#overlay').removeClass("hide"); 
 			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
-					  url: "{{ path('nws_web_invitefriend_create') }}",
+					  url: "{{ path('appuser_male_invite_friend_email') }}",
 					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
 					  success: function (data) {
 						 		jQuery('#overlay').removeClass("show");
@@ -731,7 +732,6 @@ function male_registration()
 
 function passwordValidate(pswd)
   {
-	 // alert(pswd);
     var error = 0;	
     //validate the length
 	var htmltag = '';
