@@ -1054,4 +1054,15 @@ nws_update_primary_email:
           email: dummy@dummy.com
           auth_token: 121c421783cd4d71d871ec16a1296091
           new_primary_email: dummy@dummy.com
+
+nws_cart_item_update_to_cart:
+   pattern:  /nws/update_item_to_cart
+   title: product_update_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     old_item_id: 3925
+     item_id: 4126
+     display_screen: detail_page
+   request_type: post
                    
