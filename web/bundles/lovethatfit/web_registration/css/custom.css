@@ -377,21 +377,63 @@ footer img a {
 
 .error_red
 {
-	background-color: #F00;
-	height: 15px;
+	background-color: #fa1632;
+	height: 30px;
 	width: 100%;
 	margin-top:-17px;
+	text-align: center;
+	color: #fff;
 }
 .error_box{
-	background-color: #FFF;
-	height: 25px;
+	background-color: #000;
+	height: 30px;
 	font-size: 13px;
 	color: #F00;
-	padding-left: 2px;
+	padding-left: 4px;
 	padding-top: 3px;
-	cursor:pointer;
+	cursor: pointer;
 	position: relative;
-    top: 25px;
+	top: 25px;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	border-right-width: 10px;
+	border-right-color: #211715;
+	border-right-style: solid;
+}
+
+.error_box_req {
+	position: relative;
+	background: #d50000;
+	font-size:12px;
+	color: #fff;
+	padding-left:10px;
+	border: 4px solid #d50000;
+	margin-bottom:10px;
+	width: 40%;
+	border-radius: 5px;
+}
+.error_box_req:after, .error_box_req:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.error_box_req:after {
+	border-color: rgba(213, 0, 0, 0);
+	border-bottom-color: #d50000;
+	border-width: 12px;
+	margin-left: -12px;
+}
+.error_box_req:before {
+	border-color: rgba(213, 0, 0, 0);
+	border-bottom-color: #d50000;
+	border-width: 18px;
+	margin-left: -18px;
 }
 .hide{
 	display:none;
@@ -533,5 +575,29 @@ text-decoration:none;
     z-index: 100;
 
 	
+}
+
+.req_text {
+	float: left;
+	width: 53px;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	color: #FFF;
+}
+.req_box_div {
+	float: left;
+	width: 52%;
+	font-size: 12px;
+	color: #FFF;
+	margin-bottom: 15px;
+}
+.req_text_1 {
+	float: left;
+	width: 50%;
+	font-size: 12px;
+	text-decoration: none;
+	color: #FFF;
 }
 
