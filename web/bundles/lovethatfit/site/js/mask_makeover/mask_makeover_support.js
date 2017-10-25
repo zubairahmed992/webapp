@@ -59,7 +59,7 @@ retuch_img = new Layer();
 // archives show image function
 var retuchImage;
 function showImag(retouch_image){
-   
+    user_image.opacity=0;
     retuch_img.activate();
         retuch_img.removeChildren(); 
         var show_img = new Raster(retouch_image);
@@ -67,8 +67,8 @@ function showImag(retouch_image){
         this.opacity=1;
         user_image.position = new Point(480,640);
         preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
-        //user_image.visible = false;
         });
+       
        return retuchImage = show_img;
         view.update();
 }
@@ -98,6 +98,7 @@ function changeOpacity(opacity){
 //Archives Toggle image on canvas
 var flg =0;
 function toggleimg(){
+    user_image.opacity=1;
    if(flg==0){
        retuchImage.opacity=0;
        //if need edit mask on toggle original image
@@ -124,11 +125,18 @@ function toggleimg(){
     }
    view.update();
 }
-
+function disableUserImage(){
+    user_image.opacity=0;
+    view.update();
+}
+function enableUserImage(){
+    user_image.opacity=1;
+    view.update();
+}
 // arvhies images hide retouch image and show  user image
 function showOriginal(){
      retuchImage.visible=false;
-      user_image.visible = true;
+      user_image.opacity = 1;
      view.update();
 }
 
@@ -400,7 +408,7 @@ function canvas_area_hldr(){
    
     
     canvas_area_hldr.style = {
-        fillColor: '#eeeeee',
+        //fillColor: '#eeeeee',
         opacity: 0.1,
         
     };
@@ -420,7 +428,7 @@ function canvas_ref_rect(){
         to: [960, 1280]
     });
     canv_ref_rect.style = {
-        fillColor: 'red',
+        //fillColor: 'red',
         opacity: 0.1
     };
      //canv_ref_rect.visible=false;
