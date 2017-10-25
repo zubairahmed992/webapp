@@ -96,6 +96,7 @@
 				} else if(reg.test(jQuery('#mem_email').val()) == false) {
 					
 					jQuery('#error_mem_email').html("*Invalid Email");
+					jQuery('#mem_email').val('');
 					jQuery('#error_mem_email').removeClass("hide"); 
 					jQuery('#error_bar_2').removeClass("hide");         
 					flag = false;
@@ -114,7 +115,8 @@
 					if(arr.success==1){
 						
 						jQuery('#error_mem_email').html("*Email already exist");
-						jQuery('#error_mem_email').removeClass("hide");  
+						jQuery('#error_mem_email').removeClass("hide"); 
+						jQuery('#mem_email').val(''); 
 						jQuery('#error_bar_2').removeClass("hide");         
 						flag = false;
 						
@@ -138,7 +140,8 @@
 					
 					jQuery('#error_confirm_mem_email').html("*Invalid Email");
 					jQuery('#error_confirm_mem_email').removeClass("hide"); 
-					jQuery('#error_bar_2').removeClass("hide");         
+					jQuery('#error_bar_2').removeClass("hide"); 
+					jQuery('#confirm_mem_email').val('');        
 					flag = false;				
 					
 				} else {
@@ -182,13 +185,17 @@
 						if(jQuery('#mem_password').val()==''){
 						
 						
-						jQuery('#error_mem_password').html("*Requirements not met");
+						jQuery('#error_mem_password').html("*Required");
 						jQuery('#error_mem_password').removeClass("hide");
+						jQuery('#pwd_hint1').addClass("hide");
+						jQuery('#pwd_hint1').removeClass("show");
+						jQuery('#pwd_hint').removeClass("hide");						
 						jQuery('#error_bar_3').removeClass("hide");          
 						flag = false;
 						} else if(passwordValidate(jQuery('#mem_password').val())) {
 							jQuery('#error_mem_password').html("*Requirements not met");
 							jQuery('#error_mem_password').removeClass("hide");  
+							jQuery('#mem_password').val('');
 							jQuery('#error_bar_3').removeClass("hide");        
 							flag = false;
 						} else {
@@ -199,8 +206,7 @@
 						}
 						
 						
-						if(jQuery('#confirm_mem_password').val()==''){
-							
+						if(jQuery('#confirm_mem_password').val()==''){							
 							jQuery('#error_confirm_mem_password').html("*Required");           
 							jQuery('#error_confirm_mem_password').removeClass("hide"); 
 							jQuery('#error_bar_3').removeClass("hide");        			
@@ -507,6 +513,8 @@ function invite_friend()
 					  success: function (data) {
 						 jQuery('#overlay').removeClass("show");
 						 jQuery('#overlay').addClass("hide"); 
+						 jQuery('#invite_friend_name').val('');
+						 jQuery('#invite_friend_email').val('');
 							if($( "#screen_slide_7" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_7').removeClass("show");			
 								jQuery('#screen_slide_7').addClass("hide");			
@@ -528,74 +536,73 @@ function invite_friend()
 
 
 
-function invite_friend_male()
+function male_invite_friend()
 {
 	var flag = true;
-	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-	
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;	
 	if($( "#screen_slide_11" ).hasClass( "show" )) {																
 															
 		jQuery('#screen_slide_11').removeClass("show");			
 		jQuery('#screen_slide_11').addClass("hide");			
-		jQuery('#screen_slide_7').removeClass("hide");			
-		jQuery('#screen_slide_7').addClass("show");			
+		jQuery('#screen_slide_12').removeClass("hide");			
+		jQuery('#screen_slide_12').addClass("show");			
 		
 	}
-	else if($( "#screen_slide_8" ).hasClass( "show" )) {																
+	else if($( "#screen_slide_11" ).hasClass( "show" )) {																
 															
-		jQuery('#screen_slide_8').removeClass("show");			
-		jQuery('#screen_slide_8').addClass("hide");			
-		jQuery('#screen_slide_7').removeClass("hide");			
-		jQuery('#screen_slide_7').addClass("show");	
-		jQuery('#invite_friend_name').val('');	
-		jQuery('#invite_friend_email').val('');	
+		jQuery('#screen_slide_11').removeClass("show");			
+		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_12').removeClass("hide");			
+		jQuery('#screen_slide_12').addClass("show");	
+		jQuery('#male_invite_friend_name').val('');	
+		jQuery('#male_invite_friend_email').val('');	
 		
 	}
 	
 	 else { 
 	
-	if(jQuery('#invite_friend_name').val()==''){
+	if(jQuery('#male_invite_friend_name').val()==''){
 		
-			jQuery('#error_invite_friend_name').html("*Required");
-			jQuery('#error_invite_friend_name').removeClass("hide");
-			jQuery('#error_bar_7').removeClass("hide");           
+			jQuery('#error_male_invite_friend_name').html("*Required");
+			jQuery('#error_male_invite_friend_name').removeClass("hide");
+			jQuery('#error_bar_12').removeClass("hide");           
 			flag = false;
 		
 		} else {
 			
-			jQuery('#error_invite_friend_name').html("");
-			jQuery('#error_invite_friend_name').addClass("hide");
-			jQuery('#error_bar_7').addClass("hide"); 
+			jQuery('#error_male_invite_friend_name').html("");
+			jQuery('#error_male_invite_friend_name').addClass("hide");
+			jQuery('#error_bar_12').addClass("hide"); 
 		}
 		
 		
-		if(jQuery('#invite_friend_email').val()==''){
+		if(jQuery('#male_invite_friend_email').val()==''){
 			
-			jQuery('#error_invite_friend_email').html("*Required");           
-			jQuery('#error_invite_friend_email').removeClass("hide");
-			jQuery('#error_bar_7').removeClass("hide");         			
+			jQuery('#error_male_invite_friend_email').html("*Required");           
+			jQuery('#error_male_invite_friend_email').removeClass("hide");
+			jQuery('#error_bar_12').removeClass("hide");         			
 			flag = false;
 			
-		} else if(reg.test(jQuery('#invite_friend_email').val()) == false) {
+		} else if(reg.test(jQuery('#male_invite_friend_email').val()) == false) {
 			
-			jQuery('#error_invite_friend_email').html("*Invalid Email");
-			jQuery('#error_invite_friend_email').removeClass("hide"); 
-			jQuery('#error_bar_7').removeClass("hide");         
+			jQuery('#error_male_invite_friend_email').html("*Invalid Email");
+			jQuery('#error_male_invite_friend_email').removeClass("hide"); 
+			jQuery('#error_bar_12').removeClass("hide");         
 			flag = false;				
 			
 		} else {
 			
-			jQuery('#error_invite_friend_email').html("");
-			jQuery('#error_invite_friend_email').addClass("hide"); 
-			jQuery('#error_bar_7').addClass("hide");       
+			jQuery('#error_male_invite_friend_email').html("");
+			jQuery('#error_male_invite_friend_email').addClass("hide"); 
+			jQuery('#error_bar_12').addClass("hide");       
 		}
 		
 		
 		
 		if(flag){
 			email = jQuery('#mem_email').val();
-			friend_name = jQuery('#invite_friend_name').val();
-			friend_email = jQuery('#invite_friend_email').val();
+			friend_name = jQuery('#male_invite_friend_name').val();
+			friend_email = jQuery('#male_invite_friend_email').val();
 			jQuery('#overlay').removeClass("hide"); 
 			jQuery('#overlay').addClass("show");
 			$.ajax({
@@ -603,13 +610,16 @@ function invite_friend_male()
 					  url: "{{ path('nws_web_invitefriend_create') }}",
 					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
 					  success: function (data) {
-						 jQuery('#overlay').removeClass("show");
-						 jQuery('#overlay').addClass("hide"); 
-							if($( "#screen_slide_7" ).hasClass( "show" )) {	
-								jQuery('#screen_slide_7').removeClass("show");			
-								jQuery('#screen_slide_7').addClass("hide");			
-								jQuery('#screen_slide_8').removeClass("hide");			
-								jQuery('#screen_slide_8').addClass("show");			
+						 		jQuery('#overlay').removeClass("show");
+								jQuery('#overlay').addClass("hide"); 
+						 	    jQuery('#male_invite_friend_name').val('');
+								jQuery('#male_invite_friend_email').val('');
+								
+							if($( "#screen_slide_12" ).hasClass( "show" )) {	
+								jQuery('#screen_slide_12').removeClass("show");			
+								jQuery('#screen_slide_12').addClass("hide");			
+								jQuery('#screen_slide_11').removeClass("hide");			
+								jQuery('#screen_slide_11').addClass("show");			
 							} 
 					  },
 					  failure: function (errMsg) {
@@ -722,9 +732,9 @@ function male_registration()
 function passwordValidate(pswd)
   {
 	 // alert(pswd);
-    var error = 0;
+    var error = 0;	
     //validate the length
-	var htmltag = 'Required:';
+	var htmltag = '';
     if ( pswd.length < 8 ) {
       error = 1;
       htmltag += '</br>8 Characters';
@@ -742,10 +752,22 @@ function passwordValidate(pswd)
     }
 
     if (error == 1) {
+		
 		jQuery("#pwd_hint").html(htmltag);
+		jQuery('#pwd_hint').addClass("error_box_req");
+		jQuery('#pwd_hint1').removeClass("show");	
+		jQuery('#pwd_hint1').addClass("hide");
+		jQuery('#pwd_hint').addClass("show");	
+		jQuery('#pwd_hint').removeClass("hide");				 		  
+		
       return true;
     } else {
+	  jQuery('#pwd_hint').removeClass("error_box_req");	
 	  jQuery("#pwd_hint").html('');
+	  jQuery('#pwd_hint1').removeClass("show")
+	  jQuery('#pwd_hint').removeClass("show")
+	  jQuery('#pwd_hint1').addClass("hide");
+	  jQuery('#pwd_hint').addClass("hide");	 
       return false;
     }
 
@@ -846,6 +868,38 @@ jQuery('#screen_slide_6').addClass("show");
 		
 } 
 
+function male_invite_friend_skip()
+{
+	
+jQuery('#overlay').removeClass("show");
+jQuery('#overlay').addClass("hide"); 
+jQuery('#screen_slide_12').removeClass("show");			
+jQuery('#screen_slide_12').addClass("hide");			
+jQuery('#screen_slide_11').removeClass("hide");			
+jQuery('#screen_slide_11').addClass("show");	
+	
+			/*email = jQuery('#mem_email').val();
+			friend_name = jQuery('#invite_friend_name').val();
+			friend_email = jQuery('#invite_friend_email').val();
+			jQuery('#overlay').removeClass("hide"); 
+			jQuery('#overlay').addClass("show");
+
+			$.ajax({
+					  type: "POST",
+					  url: "{{ path('nws_web_invitefriend_create') }}",
+					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
+					  success: function (data) {
+						 	
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+*/
+		
+} 
+
+
 function step_back(id)
 {
 	if(id==1){
@@ -887,6 +941,14 @@ function step_back(id)
 		jQuery('#screen_slide_10').removeClass("show");
 	
 	}
+	else if(id==12){
+		
+		jQuery('#screen_slide_11').addClass("show");			
+		jQuery('#screen_slide_11').removeClass("hide");			
+		jQuery('#screen_slide_12').addClass("hide");			
+		jQuery('#screen_slide_12').removeClass("show");
+	
+	}
 }
 
 
@@ -910,6 +972,39 @@ $(document).ready(function(e) {
   
 }); 
 });
+
+function validate_email(email){
+	
+	if(email.length > 0)
+	{
+		
+		result = jQuery.ajax({
+			type: "POST",
+			url: "{{ path('appuser_check_exist_email') }}",
+			data: "email="+jQuery('#mem_email').val(),
+			async: false
+		}).responseText.split(',');
+		
+		
+		var arr = jQuery.parseJSON( result );
+		if(arr.success==1){
+			
+			jQuery('#error_mem_email').html("*Email already exist");
+			jQuery('#error_mem_email').removeClass("hide"); 
+			jQuery('#mem_email').val(''); 
+			jQuery('#error_bar_2').removeClass("hide");         
+			flag = false;
+			
+		} else {
+		
+		jQuery('#error_mem_email').html("");
+		jQuery('#error_mem_email').addClass("hide");
+		jQuery('#error_bar_2').addClass("hide");
+		}	
+	
+	}
+	
+}
 
 
 </script>
@@ -952,7 +1047,7 @@ $(document).ready(function(e) {
   <div class="arrow">
   <a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
   <p>Create an Account </p>
-  <div class="error_red hide" id="error_bar_1"></div>
+  <div class="error_red hide" id="error_bar_1">oops!</div>
 </div>
 
 <div class="container">
@@ -984,7 +1079,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_1" onclick="step_back(2);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
   <p>Create an Account</p>
-  <div class="error_red hide" id="error_bar_2"></div>
+  <div class="error_red hide" id="error_bar_2">oops!</div>
 </div>
 <div class="container">
     <div class="Get_activated">
@@ -993,7 +1088,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div class="gap_5"></div>
     <label for="inputpassword" class="">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
-    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control"  autofocus>
+    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);"  autofocus>
     <label for="inputpass" class="">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
     <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
@@ -1010,7 +1105,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_2" onclick="step_back(3);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
   <p>Create an Account</p>
-  <div class="error_red hide" id="error_bar_3"></div>
+  <div class="error_red hide" id="error_bar_3">oops!</div>
 </div>
 <div class="container">
     <div class="Get_activated">
@@ -1020,7 +1115,13 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <label for="inputfirstname" class="">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
     <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);"  autofocus>
-    <div class="error" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    <div class="req_box_div show" id="pwd_hint1">
+    <div class="req_text" >Required:</div>
+    <div class="req_text_1">8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    </div>
+<!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
+    <div class="error_box_req hide" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    
     <label for="inputzip" class="">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
     <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
@@ -1033,7 +1134,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_3" onclick="step_back(4);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
   <p>Create an Account</p>
-  <div class="error_red hide" id="error_bar_4"></div>
+  <div class="error_red hide" id="error_bar_4">oops!</div>
 </div>
 <div class="container">  
     <div class="Get_activated">
@@ -1045,7 +1146,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <label for="inputphone" class="">PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
     <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone"  autofocus>
-    <label for="inputzip" class="">ZIP</label>
+    <label for="inputzip" class="">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
     <input type="text" autocomplete="off" id="zip" name="zip" class="form-control" autofocus>
     <div class="gap_4"></div>
@@ -1062,7 +1163,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_4" onclick="step_back(5);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
       <p>Create an Account</p>
-      <div class="error_red hide" id="error_bar_5"></div>
+      <div class="error_red hide" id="error_bar_5">oops!</div>
     </div>
 <div class="container">
 
@@ -1108,7 +1209,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_0" onclick="step_back(10);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
       <p>Stay in the loop</p>
-      <div class="error_red hide" id="error_bar_10"></div>
+      <div class="error_red hide" id="error_bar_10">oops!</div>
     </div>
 <div class="container">
 
@@ -1135,9 +1236,9 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 
 <div class="screen_700 hide" id="screen_slide_7">
     <div class="create_acc">
-    <div class="arrow"><a href="#screen_slide_6" onclick="step_back(4);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+    <div class="arrow"><a href="#screen_slide_6" onclick="step_back(7);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
       <p>Invite a friend</p>
-      <div class="error_red hide" id="error_bar_7"></div>
+      <div class="error_red hide" id="error_bar_7">oops</div>
     </div>
 <div class="container">
 
@@ -1160,6 +1261,39 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
   
 </div>
 </div>
+
+
+
+
+<div class="screen_700 hide" id="screen_slide_12">
+    <div class="create_acc">
+    <div class="arrow"><a href="#screen_slide_11" onclick="step_back(12);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+      <p>Invite a friend</p>
+      <div class="error_red hide" id="error_bar_12">oops</div>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>Shopping is always more fun with friends.</p>
+    </div>
+    <div class="Get_text"><p>Invite a friends to download the app to share styles 
+and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
+<label for="inputname" class="">FRIEND'S FIRST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
+    <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control"  autofocus>
+    <label for="inputzip" class="">FRIENDS EMAIL</label>
+    <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
+    <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control"  autofocus>
+    <div class="gap_4"></div>
+    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();">Send</a>
+       <div class="privacy">
+      <p><a href="#screen_slide_11" onclick="male_invite_friend_skip();">Skip</a></p>
+    </div>
+  
+</div>
+</div>
+
+
 </form>
 
 <!-- screen_9 --> 
@@ -1184,13 +1318,13 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
 <div class="screen_11 hide" id="screen_slide_11">
 <div class="container"> 
     <div class="request">
-      <p>Request sent!</p>
+      <p>Email sent!</p>
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
     <div class="request_text">
-      <p>Your information has been saved.</p>
+      <p>We send you an confirmation email. We will make sure to update you when the app is ready for you.</p>
     </div>
-  <!--  <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend_male();">Invite a friend</a>-->
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>
 <!--    <button class="btn btn-md btn-primary btn-block">I'am ready let's go</button>
     <button class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</button>-->
 </div>
