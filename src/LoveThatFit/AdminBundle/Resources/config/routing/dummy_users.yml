@@ -3,5 +3,7 @@ admin_dummy_users_index:
     defaults: { _controller: LoveThatFitAdminBundle:DummyUsers:index}
 
 admin_dummy_users_copy:
-    pattern:  /admin/dummy_users/copy/{user_id}/{dummy}
+    pattern:  /admin/dummy_users/copy
     defaults: { _controller: LoveThatFitAdminBundle:DummyUsers:copyDummyToUser}
+    requirements:
+        _method:  post

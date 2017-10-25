@@ -1,0 +1,89 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active">Users</li>
+{% endblock %}
+
+{% block body %}
+    <style>
+        .custom_search {
+            position: relative;
+            bottom: -40px;
+        }
+
+        .custom_search label, .custom_search select {
+            width: 80%;
+            padding-left: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom_search label {
+            display: inline-block;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            float: right !important;
+            margin-left: 12px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .custom_search {
+                bottom: 0px;
+            }
+        }
+
+
+    </style>
+
+    <div class="p_listing">
+        <div class="clearfix"></div>
+        {% block header_right_links %}
+            <div class="adjustment_links" style="margin-top: 20px; float:right;">
+                <!--<a href="{{ path('admin_test_demo') }}" >Test Session</a>-->
+                <a href="{{ path('admin_dummy_users_index') }}" >Copy Mannequin Data</a>
+                <a href="{{ path('admin_fit_algorithm2_product_list_index') }}">Products Fit index lists</a>
+                <a href="{{ path('admin_mask_marker_inspect_index') }}">Masked Inspection</a>
+                <a href="{{ path('admin_user_mask_compare_index') }}">Mask Visual Compare</a>
+                <a href="{{ path('admin_pending_user') }}">Pending Users</a>
+            </div>
+
+        {% endblock %}
+    </div>
+
+
+
+    <div class="bs-docs-grid">
+        <form action="{{ path('admin_dummy_users_copy') }}" method="post" enctype="multipart/form-data">
+            <div class="container">
+                <div class="row">
+                    <div class="span3">
+                        <div class="custom_search">
+                            select Dummy User:
+                            <select id="dummyuser" name="dummy_user">
+                                {% for user in users %}
+                                <option value="{{ user }}">{{ user }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="span3">
+                        <div class="custom_search">
+                            User Id:
+                         <input type="number" name="user_id" placeholder="Enter user Id!">
+                        </div>
+                    </div>
+                    <div class="span3">
+                        <div class="custom_search">
+                            <button type="submit" value="Copy"> Copy </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+
+
+{% endblock %}

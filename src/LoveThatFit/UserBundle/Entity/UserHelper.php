@@ -869,6 +869,9 @@ class UserHelper
     #-------------------------------------
     public function copyDummyUserData($user_id, $dummy){
         $user= $this->find($user_id);
+        if(empty($user)){
+            return false;
+        }
         $conf=$this->dummyUsersData();        
         $measurement = $user->getMeasurement();
         $measurement->setByArray($conf[$dummy]['measurements']);

@@ -341,7 +341,7 @@ multiple:
           shoulder_height: 170.89
           outseam:  0
           sleeve: 22.5
-          neck: 13.5  
+          neck: 13.5
           thigh: 21.10
           center_front_waist: 13.5
           shoulder_across_front: 11.29
@@ -362,7 +362,7 @@ multiple:
           waist_width: 0
           hip_width: 0
         image:
-          url: 'sarah_cropped.png'
+          url: 'sarah.png'
           device_type: iphone6
           px_inch_ratio: 7.797
         mask:
@@ -416,7 +416,7 @@ multiple:
           waist_width: 0
           hip_width: 0
         image:
-          url: 'jane_cropped.png'
+          url: 'jane.png'
           device_type: iphone6
           px_inch_ratio: 7.797
         mask:
@@ -470,7 +470,7 @@ multiple:
           waist_width: 0
           hip_width: 0
         image:
-          url: 'elsa_cropped.png'
+          url: 'elsa.png'
           device_type: iphone6
           px_inch_ratio: 7.797
         mask:
@@ -524,7 +524,7 @@ multiple:
           waist_width: 0
           hip_width: 0
         image:
-          url: 'jasmine_cropped.png'
+          url: 'jasmine.png'
           device_type: iphone6
           px_inch_ratio: 7.797
         mask:
@@ -578,7 +578,7 @@ multiple:
           waist_width: 0
           hip_width: 0
         image:
-          url: 'rapunzel_cropped.png'
+          url: 'rapunzel.png'
           device_type: iphone6
           px_inch_ratio: 7.797
         mask:
