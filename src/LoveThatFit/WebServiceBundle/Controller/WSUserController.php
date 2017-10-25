@@ -620,7 +620,8 @@ class WSUserController extends Controller
                     }else{
 
                         $this->get('user.helper.user')->saveNewPrimaryEmail($user,$decoded['email'],$decoded['new_primary_email']);
-                        $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded);
+                        $baseurl = "http://" . $this->getRequest()->getHost();
+                        $this->container->get('user.helper.user')->sendUpdatedPrimaryEmailToUser($user,$decoded, $baseurl);
                         $user_podio = array(
                             'current_email' => ($decoded['email']) ? $decoded['email'] : '',
                             'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
