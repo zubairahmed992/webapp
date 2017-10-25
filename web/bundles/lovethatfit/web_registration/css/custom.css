@@ -596,7 +596,7 @@ text-decoration:none;
 }
 .req_box_div {
 	float: left;
-	width: 52%;
+	width: 100%;
 	font-size: 12px;
 	color: #FFF;
 	margin-bottom: 15px;
@@ -615,5 +615,6 @@ text-decoration:none;
 	top:0px;
 	opacity:0.5;
 	cursor:default;
+	transition:0.3s ease all;
 }
 
