@@ -700,10 +700,10 @@ $("#compare").click(function(){
             $(this).html("Exit Compare");
             $("#end, #btn_confirm, .reset_mask").hide();
             $("#toggleimg, #opSlider").show();
-          
+            enableUserImage();
         }else{
             $(this).html("Compare");
-            
+            disableUserImage();
             $("#end, #btn_confirm, .reset_mask").show();
             $("#toggleimg, #opSlider, #blendMode").hide();
             blendMode('normal');
