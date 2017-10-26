@@ -374,3 +374,16 @@ footer img a{
 	padding-top: 20px;
 	padding-bottom: 10px;
 }
+.check_text{
+	
+}
+
+.receipt_row table tr td{
+padding-bottom:10px!important;	
+}
+
+.pric{
+	font-weight:bold;
+	padding-right:5px;
+	
+}
