@@ -69,6 +69,18 @@ class InviteFriendHelper {
         return $invitefriend;
     }  
 
+
+    #----------------------------------------------------------------------------
+     public function createmaleFriendWithParam($ra) {
+        $invitefriend=  $this->createNew();        
+        if(array_key_exists('email', $ra) && $ra['email']){$invitefriend->setEmail($ra['email']);}
+        if(array_key_exists('friend_name', $ra) && $ra['friend_name']){$invitefriend->setFriendName($ra['friend_name']);}
+        if(array_key_exists('friend_email', $ra) && $ra['friend_email']){$invitefriend->setFriendEmail($ra['friend_email']);}
+        $this->em->persist($invitefriend);
+        $this->em->flush();    
+        return $invitefriend;
+    }  
+
     #----------------------------------------------------------------------------
     public function save($invitefriend) {
         $this->em->persist($invitefriend);

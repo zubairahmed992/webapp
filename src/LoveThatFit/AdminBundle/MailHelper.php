@@ -183,7 +183,7 @@ class MailHelper {
         $from    = $this->conf['parameters']['mailer_user'];
         $to      = $user->getEmail();
         $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
-        $subject = 'SelfieStyler';
+        $subject = 'Password reset request';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
     }
@@ -271,7 +271,7 @@ class MailHelper {
                 ->setFrom($from)
                 ->setTo($arr['to_email'])
                 ->setContentType("text/html")
-                ->setBody($this->templating->render($arr['template'], $arr['template_array']));
+                ->setBody($this->templating->render($arr['template'],array( 'dataArray' => $arr['template_array'])));
      if($this->server!='local') {
        try {
          $this->mailer->send($message);
