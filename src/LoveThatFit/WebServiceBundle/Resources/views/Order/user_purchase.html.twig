@@ -11,116 +11,118 @@
 <link href="{{ asset('bundles/lovethatfit/site/css/orderhistory/custom.css') }}" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/orderhistory/bootstrap.js') }}"></script>
 <style>
-.receipt_row {
-  border-bottom: 1px solid #ccc;
-  padding: 15px 0px 15px 10px;
-}
-.receipt_row_order {
-  border-bottom: 1px solid #ccc;
-  padding: 15px 0px 15px 10px;
-  background: #EAEAEA;
-}
-.product_txt {
-  color: #000;
-  font-size: 1em;
-}
-.brandtxt {
-  color: #999;
-  font-size: 0.8em;
-}
+  .receipt_row {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0px 15px 10px;
+  }
 
-.addresst{
-  color: #444;
-  font-size: 0.8em;
-}
+  .receipt_row_order {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0px 15px 10px;
+    background: #EAEAEA;
+  }
 
-.product_detl {
-  padding-top: 15px;
-  font-size: 0.8em;
-}
-.product_detl span {
-  color: #999;
-}
-.pricing div {
-  padding-bottom: 8px;
-  font-size: 0.95em;
-}
-.price {
-  font-weight: bold;
-  padding:0px;
-  text-align:right;
-}
-.rectxt {
-  font-size: 1.3em;
-  font-weight: 500;
-  padding-bottom: 10px;
-}
+  .product_txt {
+    color: #000;
+    font-size: 1em;
+  }
 
-.addressper{
-  font-size: 1.2em;
-  font-weight: 500;
-  padding-bottom: 10px;
-}
+  .brandtxt {
+    color: #999;
+    font-size: 0.8em;
+  }
 
-.addressper2{
-  font-size: 1.2em;
-  font-weight: 500; 
-}
+  .addresst{
+    color: #444;
+    font-size: 0.8em;
+  }
 
-.shipping_text {
-  font-size: 1.3em;
-  font-weight: 500;
-  padding-bottom: 10px;
-}
+  .product_detl {
+    padding-top: 15px;
+    font-size: 0.8em;
+  }
 
-.divider{
-border-bottom:3px solid #ccc; 
-}
+  .product_detl span {
+    color: #999;
+  }
 
-.shiptitle{
-font-size:0.75em;
-font-weight:700;
-padding-bottom:20px;  
-}
+  .pricing div {
+    padding-bottom: 8px;
+    font-size: 0.95em;
+  }
 
-.nobdr{
-border-bottom:0px!important;  
-}
+  .price {
+    font-weight: bold;
+    padding:0px;
+    text-align:right;
+  }
 
-.logo{
-padding:15px 0px 15px 0px;
-border-bottom:1px solid #ccc; 
-}
-.amount {
-  text-align: right;
-}
+  .rectxt {
+    font-size: 1.3em;
+    font-weight: 500;
+    padding-bottom: 10px;
+  }
 
+  .addressper{
+    font-size: 1.2em;
+    font-weight: 500;
+    padding-bottom: 10px;
+  }
+
+  .addressper2{
+    font-size: 1.2em;
+    font-weight: 500; 
+  }
+
+  .shipping_text {
+    font-size: 1.3em;
+    font-weight: 500;
+    padding-bottom: 10px;
+  }
+
+  .divider{
+    border-bottom:3px solid #ccc; 
+  }
+
+  .shiptitle{
+    font-size:0.75em;
+    font-weight:700;
+    padding-bottom:20px;  
+  }
+
+  .nobdr{
+    border-bottom:0px!important;  
+  }
+
+  .logo{
+    padding:15px 0px 15px 0px;
+    border-bottom:1px solid #ccc; 
+  }
 </style>
 </head>
-
 <body>
-
-<div class="container">
+  <div class="container">
     <div class="row text-center logo">
         <div class="col-12"><img src="{{ asset('bundles/lovethatfit/site/images/orderhistory/logo.png') }}" width="130" height="26" /></div>
     </div>
-
-  <div class="row receipt_row">
-    <div class="col-12">
-      <div class="rectxt">Receipt</div>
-      <div class="product_txt">Order: {{ dataArray['order_numnber'] }}</div>
-      <div class="brandtxt">Ordered on {{ dataArray['purchase_date'] }}</div>
+    <div class="row receipt_row">
+      <div class="col-12">
+        <div class="rectxt">Receipt</div>
+        <div class="product_txt">Order: {{ dataArray['order_numnber'] }}</div>
+        <div class="brandtxt">Ordered on {{ dataArray['purchase_date'] }}</div>
+      </div>
     </div>
-  </div>
   {% for key in  dataArray['items'] %}
     <div class="row receipt_row_order">
-      <div class="row col-12">
-        <div class="col-10">
-          <div class="product_txt">{{ key['pname'] }}</div>
-          <div class="brandtxt">Ordered on {{ dataArray['purchase_date'] }}</div>
-        </div>
-        <div class="col-2">
-          <div class="product_txt amount">${{ key['price'] }}</div>
+      <div class="col-12">
+        <div>
+          <table border="0" width="100%">
+              <tr>
+                  <td width="80%">{{ key['pname'] }}</td>
+                  <td width="20%" class="text-right">${{ key['price'] }}</td>
+              </tr> 
+         </table>  
+         <div class="brandtxt">Ordered on {{ dataArray['purchase_date'] }}</div>
         </div>
       </div>
       <div class="row product_detl col-12">
@@ -131,25 +133,35 @@ border-bottom:1px solid #ccc;
     </div>
   {%endfor%}
   <div class="row receipt_row">
-    <div class="row col-12 pricing">
-      <div class="col-10">Subtotal</div>
-      <div class="col-2 price">${{ dataArray['order_amount'] }}</div>
-      <div class="col-10">Tax</div>
-      <div class="col-2 price">${{ dataArray['sales_tax'] }}</div>
-      <div class="col-10">Shipping</div>
-      <div class="col-2 price">$0.00</div>
+    <div class="col-12">
+    <table border="0" width="100%">
+      <tr>
+          <td width="80%">Subtotal</td>
+          <td width="20%" class="text-right pric">${{ dataArray['order_amount'] }}</td>
+      </tr>    
+      <tr>
+          <td>Tax</td>
+          <td class="text-right pric">${{ dataArray['sales_tax'] }}</td>
+      </tr>
+       <tr>
+          <td>Shipping</td>
+          <td class="text-right pric">$0.00</td>
+      </tr>
+    </table>       
     </div>
     <hr />
   </div>
   <div class="row receipt_row">
-    <div class="row col-12 pricing">
-      <div class="col-10">Total</div>
-      <div class="col-2 price">${{ dataArray['total_amount'] }}</div>
+    <div class="col-12">
+     <table border="0" width="100%">
+      <tr>
+          <td width="80%">Total</td>
+          <td width="20%" class="text-right pric">${{ dataArray['total_amount'] }}</td>
+      </tr>    
+    </table>
     </div>
   </div>
-  
   <div class="row divider"></div>
-  
    <div class="row receipt_row nobdr">
     <div class="row col-12">
       <div class="shiptitle col-12">SHIPPING ADDRESS</div>        
@@ -162,9 +174,7 @@ border-bottom:1px solid #ccc;
       {{ dataArray['shipping_phone'] }}
      </div>
     </div>
-    
   </div>
-  
    <div class="row receipt_row ">
     <div class="row col-12">
       <div class="shiptitle col-12">BILLING ADDRESS</div>        

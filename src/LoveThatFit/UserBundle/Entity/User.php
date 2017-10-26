@@ -246,6 +246,7 @@ class User implements UserInterface, \Serializable {
         $this->duplicate = new \Doctrine\Common\Collections\ArrayCollection();
         $this->save_look = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fnfusers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->invitefriend = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 //---------------------------------------------------------------------
