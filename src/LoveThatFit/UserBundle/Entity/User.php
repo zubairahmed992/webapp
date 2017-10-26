@@ -230,6 +230,12 @@ class User implements UserInterface, \Serializable {
      */
     protected $invitefriend;
 
+    /**
+     * @var integer $forget_status
+     * @ORM\Column(name="forget_status", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $forget_status;
+
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -2149,6 +2155,29 @@ class User implements UserInterface, \Serializable {
     public function getVersion()
     {
       return $this->version;
+    }
+    #----------------------------------------
+    /**
+     * Set forget_status
+     *
+     * @param integer $forget_status
+     * @return UserArchives
+     */
+    public function setForgetStatus($forget_status)
+    {
+      $this->forget_status = $forget_status;
+
+      return $this;
+    }
+
+    /**
+     * Get forget_status
+     *
+     * @return integer
+     */
+    public function getForgetStatus()
+    {
+      return $this->forget_status;
     }
 
     /**
