@@ -262,7 +262,9 @@ class WishlistHelper
         foreach ($user->getWishlist() as $ci) {
             $wishlist_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
             $wishlist_array[$counter]['color'] = $ci->getProductItem()->getProductColor()->getTitle();
+            $wishlist_array[$counter]['color_id'] = $ci->getProductItem()->getProductColor()->getId();
             $wishlist_array[$counter]['size'] = $ci->getProductItem()->getProductSize()->getTitle();
+            $wishlist_array[$counter]['size_id'] = $ci->getProductItem()->getProductSize()->getId();
             $wishlist_array[$counter]['name'] = $ci->getProductItem()->getProduct()->getName();
             $wishlist_array[$counter]['item_name'] = $ci->getProductItem()->getProduct()->getItemName();
             $wishlist_array[$counter]['description'] = $ci->getProductItem()->getProduct()->getDescription();
