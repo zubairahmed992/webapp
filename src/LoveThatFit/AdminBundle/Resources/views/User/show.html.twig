@@ -348,10 +348,39 @@
                                         Log file</a>
                                     {% endif %}
                                 </div>
-
                             </div>
 
+                            {% if(user.friendName != "") %}
+                            <div class="span8">
+                                <div class="span3">Friends Name</div>
+                                <div class="span3">{{ user.friendName }}</div>
+                            </div>
+                            {% endif %}
+                            {% if(user.friendEmail != "") %}
+                            <div class="span8">
+                                <div class="span3">Friends Email</div>
+                                <div class="span3">{{ user.friendEmail }}</div>
+                            </div>
+                            {% endif %}
 
+                            {% if user.InviteFriend is not empty %}
+                                <div class="span8">
+                                    <div class="span3">Invite Friends List</div>
+                                </div>
+                                {% set bcount = '1' %}
+                                {% for a in user.InviteFriend %}
+                                    <div class="span8">
+                                        <div class="span3">{{bcount}}. Invite Name</div>
+                                        <div class="span3">{{a.getFriendName}}</div>
+                                    </div>
+                                    <div class="span8">
+                                        <div class="span3">{{bcount}}. Invite Email</div>
+                                        <div class="span3">{{a.getFriendEmail}}</div>
+                                    </div>
+                                    {% set bcount = bcount + 1%}
+                                {% endfor %}
+                            {% endif %}
+                            
                             <div class="span8">
                                 <div class="span3">Profile completion</div>
                                 <div>
