@@ -98,12 +98,12 @@ love_that_fit_onelogin_saml:
             binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
         x509cert: 'MIIDqDCCApCgAwIBAgIGAVqBFDEaMA0GCSqGSIb3DQEBBQUAMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxFTATBgNVBAMMDHNlbGZpZXN0eWxlcjEcMBoGCSqGSIb3DQEJARYNaW5mb0Bva3RhLmNvbTAeFw0xNzAyMjcxOTM2NDhaFw0yNzAyMjcxOTM3NDhaMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxFTATBgNVBAMMDHNlbGZpZXN0eWxlcjEcMBoGCSqGSIb3DQEJARYNaW5mb0Bva3RhLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALaLZadnTYiPiuR7xX19n1S4KXEmqW2WSt8AJFHWaoDLNGQC7qmJk1dgspDwZrj+4NNmPPrup7iAvTmW6dqJZZ8vduamNkEpxWT//KSyW9/8ZgRC7BUAaWumKferLpb6QfbsjFXQZRfdqae27MI65XELyK2q7t2rqAxU0kkSxk8bgNInRc2m9zCgs35UKGdXZfKpPprTDZkxcIWClG0kVzUpfIM6c7J9WRA6WXFuCINwbkx7qGzEfKXBHbsJqrQtebBflNZGzg2hmnGMax5wAQXU7+BWjZt2s5Ro5qi4J4iP1F7GdVSQdLn6A9qvuL6PMMbh/gHJA3rhE7YVE5OYIWsCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAW5xDOJ2JrWzdMDhuzPWYOOAxDt7prA3ehzkPICdsJM+9gkuCvWMpwD3L+kL0L0Riif2dKpmzh9NAEwLw6Z45nDNvnfMEyEIBEHKwF0rorzCvUM8v11BObPm8i6GfTRLZHcqLsV3JgzjAXGmT44/ruBZz/mWqpxdzNZ/QutM3pqmNcfhfdf3anx6TlmSKhXhS1kDecgTRs/a3rMDFjlF73E9yq8NY8Q8oAWJn3Q229DkWNDlOEUjfP0g8zfiSxqBBQKU65zvIdBM27vSL2sdOooEVy21kzFSq5X+AgaQiHCqVFF337w1QHbacGVZHHniUWz0neWZ/iAdfQiExgCB34g=='
     sp:
-        entityId: 'http://dev.selfiestyler.com/admin/metadata'
+        entityId: 'https://dev.selfiestyler.com/admin/metadata'
         assertionConsumerService:
-            url: 'http://dev.selfiestyler.com/admin/acs'
+            url: 'https://dev.selfiestyler.com/admin/acs'
             binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
         singleLogoutService:
-            url: 'http://dev.selfiestyler.com/admin/logout'
+            url: 'https://dev.selfiestyler.com/admin/logout'
             binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
     # Optional settings
     security:
