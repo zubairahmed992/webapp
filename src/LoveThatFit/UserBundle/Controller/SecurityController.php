@@ -15,13 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SecurityController extends Controller {
 
-    
-        
-
-
-    
     public function loginAction() {
-        
         $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
        
         return $this->render(
@@ -154,7 +148,7 @@ class SecurityController extends Controller {
     {
         $em   = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthTokenWeb($email_auth_token);
-        if ($user) {
+        if ($user && $user->getForgetStatus() == 1) {
             $time = $user->getUpdatedAt()->format("Y-m-d H:i:s");
             $hourdiff = round((strtotime(date("Y-m-d H:i:s")) - strtotime($time))/3600, 1);
             if ($user &&  $hourdiff <= 2) {
@@ -173,6 +167,7 @@ class SecurityController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($decoded["user_id"]);
         $entity->setUpdatedAt(new \DateTime('now'));
+        $entity->setForgetStatus(0);
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($entity);
         $password = $encoder->encodePassword($decoded['password'], $entity->getSalt());
