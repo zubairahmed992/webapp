@@ -1060,4 +1060,47 @@ class WSCartController extends Controller
         );
     }
 
+    // update Single Item to Cart Version 3.0
+    public function updateItemToCartNewAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $old_item_id = $decoded["old_item_id"];
+            $item_id = $decoded["item_id"];
+            $qty = $decoded["quantity"];
+            $requested_screen = $decoded["display_screen"];
+
+            //find old item id and delete that item from cart
+            $find_old_item_against_user = $this->container->get('cart.helper.cart')->findCartByUserId($user, $old_item_id);
+            if(!empty($find_old_item_against_user)) {
+                $this->container->get('cart.helper.cart')->removeCartByItem($user, $old_item_id);
+            }
+
+            /* IOSV3-252 - From the Product Detail page, if product item already exist then quantity not change  */
+            if($requested_screen == "detail_page"){
+                $product_item = $this->container->get('admin.helper.productitem')->find($item_id);
+                $find_item_against_user = $this->container->get('cart.helper.cart')->findCartByUserId($user, $product_item);
+                if(!empty($find_item_against_user["qty"])){
+                    $qty = $find_item_against_user["qty"];
+                }
+            }
+
+            /*Remove Item from wishlist */
+            $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
+            $response = $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
+            if ($response != null) {
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+
+    }
+
 }
