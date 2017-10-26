@@ -714,6 +714,7 @@ function male_registration()
 			
 			jQuery('#error_male_email').html("*Invalid Email");
 			jQuery('#error_male_email').removeClass("hide");
+			jQuery('#male_email').val('');
 			jQuery('#error_bar_10').removeClass("hide");
 			jQuery('#lbl_male_email').addClass("add_field_heigh");           
 			flag = false;				
@@ -1115,7 +1116,7 @@ function validate_email(email){
     <div style="position:relative;">
     <label for="first_name" class="" id="lbl_first_name" onclick="label_up(this.id);">FIRST NAME</label>
      <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
-    <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control" autofocus>
+    <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control">
     </div>
     
     
@@ -1154,7 +1155,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
      <div style="position:relative;">
     <label for="inputpassword" class="" id="lbl_mem_email" onclick="label_up(this.id);">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
-    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);"  autofocus>
+    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);" >
     </div>
     
      <div style="position:relative;">
@@ -1185,7 +1186,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
      <div style="position:relative;">
     <label for="inputfirstname" class="" id="lbl_mem_password" onclick="label_up(this.id);">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
-    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);"  autofocus></div>
+    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);" ></div>
     
     
     <div class="req_box_div show" id="pwd_hint1">
@@ -1220,12 +1221,12 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
  	<div style="position:relative;">
     <label for="inputphone" class="" id="lbl_phone" onclick="label_up(this.id);">PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone"  autofocus>
+    <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone" >
     </div>
      <div style="position:relative;">
     <label for="inputzip" class="" id="lbl_zip" onclick="label_up(this.id);">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
-    <input type="text" autocomplete="off" id="zip" name="zip" class="form-control" autofocus>
+    <input type="text" autocomplete="off" id="zip" name="zip" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Submit</a>
@@ -1252,12 +1253,12 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div style="position:relative;"> 
  <label for="inputname" class="" id="lbl_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
-    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control"  autofocus>
+    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control" >
     </div>
      <div style="position:relative;">
     <label for="inputzip" class="" id="lbl_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
-    <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control"  autofocus>
+    <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control" >
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Send</a>
@@ -1302,12 +1303,12 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
      <div style="position:relative;">
 <label for="inputname" class="" id="lbl_male_name" onclick="label_up(this.id);">FULL NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
-    <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control"  autofocus>
+    <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control" >
     </div>
      <div style="position:relative;">
     <label for="inputzip" class="" id="lbl_male_email" onclick="label_up(this.id);">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
-    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control"  autofocus>
+    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control" >
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
@@ -1336,12 +1337,12 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
  <div style="position:relative;">
 <label for="inputname" class="" id="lbl_invite_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control"  autofocus>
+    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control" >
     </div>
  <div style="position:relative;">
     <label for="inputzip" class="" id="lbl_invite_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control"  autofocus>
+    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control" >
   </div>  
     <div class="gap_4"></div>
     <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();">Send</a>
@@ -1371,12 +1372,12 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
  <div style="position:relative;">
 <label for="inputname" class="" id="lbl_male_invite_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control"  autofocus>
+    <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control" >
     </div>
      <div style="position:relative;">
     <label for="inputzip" class="" id="lbl_male_invite_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control"  autofocus>
+    <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control" >
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();">Send</a>
