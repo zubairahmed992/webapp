@@ -24,13 +24,19 @@
     
 <div class="p_listing">     
     <h1>Product Image Upload</h1>    
-    <div class="btn-group" role="group" aria-label="..." style="float:right;">        
-        <a href="{{ path('product_intake_product_specs_new') }}" class="btn  btn-default">Add New</a>     
+    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+        <a href="{{ path('admin_products') }}" class="btn">back to list</a>
     </div>
     
     <div class="clearfix"></div>   
 </div>
-    <div class="container">  
+
+    <div class="container">
+       <h2> Product item format example</h2>
+        <h4>Format = BodyType_SizeTitle_Color name Example:Regular_00_Black) </h4>
+        <h4>Format = BodyType_Size-Title_Color name Example:Regular_S-M_Black)</h4>
+        <h4> Format = BodyType_Size Title_Color Name Example:Regular_S-M_Pacific Ocean)</h4>
+         <b/><h4> Blanc Noir_BLC55400_Olive Black_R_XS </h4>
         <div id="dropzone">
             <form id="upload" method="post" action="{{ path('pi_ws_product_image_upload')}}"  enctype="multipart/form-data" class="dropzone needsclick dz-clickable">
                 <div class="dz-message needsclick">
