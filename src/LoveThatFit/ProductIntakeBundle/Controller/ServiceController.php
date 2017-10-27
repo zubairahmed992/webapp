@@ -237,7 +237,7 @@ class ServiceController extends Controller {
                 $product_item->upload();
                 $this->get('admin.helper.productitem')->save($product_item);
 
-                $morphing_json = array('color'=>$parsed_details['color_title'], 'size'=>$parsed_details['size_title'] );
+                $morphing_json = array('body_type'=> $product_size->getBodyType(), 'color'=>$parsed_details['color_title'], 'size'=>$parsed_details['size_title'] );
                 $product->setMorphingDetailJson(json_encode($morphing_json));
                 $this->get('admin.helper.product')->update($product);
 
@@ -249,7 +249,7 @@ class ServiceController extends Controller {
                     $uploaded=true;
                 }
 
-                return $this->responseArray('File uploaded', $uploaded, $baseurl .'/'. $product_item->getWebPath());
+                return $this->responseArray('File uploaded for item '.$product_item->getId() , $uploaded, $baseurl .'/'. $product_item->getWebPath());
             }
         }
         return $this->responseArray('File is missing');
@@ -513,11 +513,14 @@ class ServiceController extends Controller {
         $fp_coor = array();        
         $item = $this->get('admin.helper.product_item')->find($item_id);                                
         #return new Response($item->getAbsoluteOriginalPath());        
+        if(!$item){            
+            return $this->response_str('Product Item not found!', false);
+        }
         $img = null;
         if(file_exists($item->getAbsoluteOriginalPath())){
             $img = imagecreatefrompng($item->getAbsoluteOriginalPath());   
         }else{
-            return new Response('Image file not found!');
+            return $this->response_str('Product Image file not found!', false);
         }
         $fabric=false;   
         
@@ -537,7 +540,10 @@ class ServiceController extends Controller {
                 }
             }
         }
-
-        return new Response(json_encode($fp_coor));
+        return $this->response_str('Product image fit point coordinates', true, $fp_coor);
+        
+    }
+    private function response_str($message, $success=false, $data=null){
+        return new Response(json_encode(array('message' => $message, 'success' => $success, 'data' => $data)));
     }
 }
