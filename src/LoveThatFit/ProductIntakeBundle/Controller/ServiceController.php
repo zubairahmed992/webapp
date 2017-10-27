@@ -236,6 +236,11 @@ class ServiceController extends Controller {
                 $product_item->file = $image_file;
                 $product_item->upload();
                 $this->get('admin.helper.productitem')->save($product_item);
+
+                $morphing_json = array('color'=>$parsed_details['color_title'], 'size'=>$parsed_details['size_title'] );
+                $product->setMorphingDetailJson(json_encode($morphing_json));
+                $this->get('admin.helper.product')->update($product);
+
                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
                 $baseurl .'/'. $product_item->getWebPath();
                 $uploaded=false;
