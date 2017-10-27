@@ -364,6 +364,10 @@ class ProductItem
     {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
+     //-------------------------------------------------------1
+    public function getAbsoluteOriginalPath(){
+        return null === $this->image ? null : $this->getRootDir() . 'uploads/ltf/products/fitting_room/' . $this->image;
+    }
 
 //-------------------------------------------------------2
     public function getWebPath()

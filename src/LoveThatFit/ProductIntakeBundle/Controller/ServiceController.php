@@ -511,14 +511,15 @@ class ServiceController extends Controller {
         $mh = new MannequenHelper();
         $m_co = $mh->getCoordinates();
         $fp_coor = array();        
-        $item = $this->get('admin.helper.product_item')->find($item_id);                        
-        #$path=$item->getAbsolutePath();
-        #$paths=$item->getImagePaths(true);
-        #return new Response(json_encode($paths));
-        #return new Response(json_encode(str_replace('fitting_room/web', 'fitting_room',$path)));
-        
-        $img = imagecreatefrompng($item->getAbsolutePath());   
-        $fabric=false;
+        $item = $this->get('admin.helper.product_item')->find($item_id);                                
+        #return new Response($item->getAbsoluteOriginalPath());        
+        $img = null;
+        if(file_exists($item->getAbsoluteOriginalPath())){
+            $img = imagecreatefrompng($item->getAbsoluteOriginalPath());   
+        }else{
+            return new Response('Image file not found!');
+        }
+        $fabric=false;   
         
         foreach ($m_co as $fp => $co) {
             $y = $co[1];
