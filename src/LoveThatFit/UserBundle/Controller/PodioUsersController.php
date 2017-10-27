@@ -24,14 +24,13 @@ class PodioUsersController extends Controller {
         if($podio_users) {
             $total_podio_users = count($podio_users);
         	foreach ($podio_users as $users) {
-                //echo "<pre>"; print_r($users); 
                 $id = $users['id']; //podio user log id
         		$user_podio = array(
                     'id' => $users['member_id'],
                     'email' => ($users['email']) ? $users['email'] : '',
                     'gender' => ($users['gender']=='f') ? 'Female' : 'Male',
-                    'birth_date' => ($users['birthDate']) ? $users['birthDate']->format('Y-m-d h:i:s') : '',
-                    'created_at' => ($users['member_created']) ? $users['member_created']->format('Y-m-d h:i:s') : '',
+                    'birth_date' => ($users['birthDate']) ?date('Y-m-d h:i:s',strtotime($users['birthDate'])) : '',
+                    'created_at' => ($users['member_created']) ? date('Y-m-d h:i:s',strtotime($users['member_created'])) : '',
                     'zipcode' => ($users['zipcode']) ? $users['zipcode'] : '',
                     'base_path' => ($decoded['base_path']) ? $decoded['base_path'] : ''
                 );
