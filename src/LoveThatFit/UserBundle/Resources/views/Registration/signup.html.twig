@@ -25,28 +25,25 @@
 
 <script>
 
+function validate_form0(){
+	jQuery('#screen_slide_0').removeClass("show");			
+	jQuery('#screen_slide_0').addClass("hide");			
+	jQuery('#screen_slide_1').removeClass("hide");			
+	jQuery('#screen_slide_1	').addClass("show");	
+	
+}
 
-
-
-
-	function validate_form(){
-
-        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-		var flag = true;
-		
-		if($( "#screen_slide_0" ).hasClass( "show" )) {				
-				
-				jQuery('#screen_slide_0').removeClass("show");			
-				jQuery('#screen_slide_0').addClass("hide");			
-				jQuery('#screen_slide_1').removeClass("hide");			
-				jQuery('#screen_slide_1	').addClass("show");			
-				
-		} else {
-		
-		if(jQuery('#first_name').val()==''){
+function validate_form1(){
+	
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;	
+	
+	
+	if(jQuery('#first_name').val()==''){
 			
 			
             jQuery('#error_first_name').html("*Required");
+			jQuery('#first_name').css("border-bottom","0px");			
 			jQuery('#error_first_name').removeClass("hide");
 			jQuery('#error_bar_1').removeClass("hide"); 
 			jQuery('#lbl_first_name').addClass("add_field_heigh"); 						 			 
@@ -62,7 +59,8 @@
 		
 		if(jQuery('#last_name').val()==''){
 			
-            jQuery('#error_last_name').html("*Required");           
+            jQuery('#error_last_name').html("*Required");
+			jQuery('#last_name').css("border-bottom","0px");           
             jQuery('#error_last_name').removeClass("hide"); 
 			jQuery('#error_bar_1').removeClass("hide"); 
 			jQuery('#lbl_last_name').addClass("add_field_heigh"); 	      			
@@ -76,389 +74,379 @@
 			       
         }
 		
-			if(flag){
-				
-			
-			if($( "#screen_slide_1" ).hasClass( "show" )) {				
-				
-				jQuery('#screen_slide_1').removeClass("show");			
-				jQuery('#screen_slide_1').addClass("hide");			
-				jQuery('#screen_slide_2').removeClass("hide");			
-				jQuery('#screen_slide_2').addClass("show");			
-				
-			} else {
-				
-				if(jQuery('#mem_email').val()==''){
-				
-				
-					jQuery('#error_mem_email').html("*Required");
-					jQuery('#error_mem_email').removeClass("hide");  
-					jQuery('#error_bar_2').removeClass("hide");
-					jQuery('#lbl_mem_email').addClass("add_field_heigh");          
-					flag = false;
-				
-				} else if(reg.test(jQuery('#mem_email').val()) == false) {
-					
-					jQuery('#error_mem_email').html("*Invalid Email");
-					jQuery('#mem_email').val('');
-					jQuery('#error_mem_email').removeClass("hide"); 
-					jQuery('#error_bar_2').removeClass("hide"); 
-					jQuery('#lbl_mem_email').addClass("add_field_heigh");         
-					flag = false;
-
-				} else {
-					jQuery('#overlay').removeClass("hide"); 
-					jQuery('#overlay').addClass("show");
-					result = jQuery.ajax({
-						type: "POST",
-						url: "{{ path('appuser_check_exist_email') }}",
-						data: "email="+jQuery('#mem_email').val(),
-						async: false
-					}).responseText.split(',');
-
-					
-					var arr = jQuery.parseJSON( result );
-					if(arr.success==1){
-						jQuery('#overlay').removeClass("show");
-						jQuery('#overlay').addClass("hide");
-						jQuery('#error_mem_email').html("*Email already exist");
-						jQuery('#error_mem_email').removeClass("hide"); 
-						jQuery('#mem_email').val(''); 
-						jQuery('#error_bar_2').removeClass("hide");
-						jQuery('#lbl_mem_email').addClass("add_field_heigh");          
-						flag = false;
-						
-					} else {
-					jQuery('#overlay').removeClass("show");
-					jQuery('#overlay').addClass("hide");
-					jQuery('#error_mem_email').html("");
-					jQuery('#error_mem_email').addClass("hide");
-					jQuery('#error_bar_2').addClass("hide");
-					}
-				}
-				
-				
-				if(jQuery('#confirm_mem_email').val()==''){
-					
-					jQuery('#error_confirm_mem_email').html("*Required");           
-					jQuery('#error_confirm_mem_email').removeClass("hide");
-					jQuery('#error_bar_2').removeClass("hide");
-					jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			
-					flag = false;
-					
-				} else if(reg.test(jQuery('#confirm_mem_email').val()) == false) {
-					
-					jQuery('#error_confirm_mem_email').html("*Invalid Email");
-					jQuery('#error_confirm_mem_email').removeClass("hide"); 
-					jQuery('#error_bar_2').removeClass("hide");
-					jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			 
-					jQuery('#confirm_mem_email').val('');        
-					flag = false;				
-					
-				} else {
-					
-					jQuery('#error_confirm_mem_email').html("");
-					jQuery('#error_confirm_mem_email').addClass("hide"); 
-					jQuery('#error_bar_2').addClass("hide");       
-				}
-				
-				if(flag){
-					
-					if(jQuery('#mem_email').val()!=jQuery('#confirm_mem_email').val()){
-						jQuery('#confirm_mem_email').val('');
-						jQuery('#error_confirm_mem_email').html("*Emails do not match");           
-						jQuery('#error_confirm_mem_email').removeClass("hide");  
-						jQuery('#error_bar_2').removeClass("hide");  
-						jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			      			
-						flag = false;
-						
-					} else {
-						
-						jQuery('#error_confirm_mem_email').html("");
-						jQuery('#error_confirm_mem_email').addClass("hide");
-						jQuery('#error_bar_2').addClass("hide");       
-					}
-					
-				}
-				
-				
-				if(flag) {
-			
-					if($( "#screen_slide_2" ).hasClass( "show" )) {
-						
-						jQuery('#screen_slide_2').removeClass("show");			
-						jQuery('#screen_slide_2').addClass("hide");			
-						jQuery('#screen_slide_3').removeClass("hide");			
-
-						jQuery('#screen_slide_3').addClass("show");			
-						
-					} else {
-
-						if(jQuery('#mem_password').val()==''){
-						
-						
-						jQuery('#error_mem_password').html("*Required");
-						jQuery('#error_mem_password').removeClass("hide");
-						jQuery('#pwd_hint1').addClass("hide");
-						jQuery('#pwd_hint1').removeClass("show");
-						jQuery('#pwd_hint').removeClass("hide");						
-						jQuery('#error_bar_3').removeClass("hide");
-						jQuery('#lbl_mem_password').addClass("add_field_heigh");           
-						flag = false;
-						} else if(passwordValidate(jQuery('#mem_password').val())) {
-							jQuery('#error_mem_password').html("*Requirements not met");
-							jQuery('#error_mem_password').removeClass("hide");  
-							jQuery('#mem_password').val('');
-							var p = passwordValidate(jQuery('#mem_password').val());
-							jQuery('#error_bar_3').removeClass("hide");  
-							jQuery('#lbl_mem_password').addClass("add_field_heigh");          			      
-							flag = false;
-						} else {
-							
-							jQuery('#error_mem_password').html("");
-							jQuery('#error_mem_password').addClass("hide");
-							jQuery('#error_bar_3').addClass("hide");
-						}
-						
-						
-						if(jQuery('#confirm_mem_password').val()==''){							
-							jQuery('#error_confirm_mem_password').html("*Required");           
-							jQuery('#error_confirm_mem_password').removeClass("hide"); 
-							jQuery('#error_bar_3').removeClass("hide"); 
-							jQuery('#lbl_confirm_mem_password').addClass("add_field_heigh");       			
-							flag = false;
-							
-						} else {
-							
-							jQuery('#error_confirm_mem_password').html("");
-							jQuery('#error_confirm_mem_password').addClass("hide");
-							jQuery('#error_bar_3').addClass("hide");      
-						}
-						
-						if(flag){
-					
-							if(jQuery('#mem_password').val()!=jQuery('#confirm_mem_password').val()){
-								jQuery('#confirm_mem_password').val('');
-								jQuery('#error_confirm_mem_password').html("*Passwords do not match");           
-								jQuery('#error_confirm_mem_password').removeClass("hide"); 
-								jQuery('#error_bar_3').removeClass("hide");
-								jQuery('#lbl_confirm_mem_password').addClass("add_field_heigh");         			
-								flag = false;
-								
-							} else {
-								
-								jQuery('#error_confirm_mem_password').html("");
-								jQuery('#error_confirm_mem_password	').addClass("hide");
-								jQuery('#error_bar_3').addClass("hide");       
-							}
-							
-						}
-						
-						//   Setup  zip and code slide stated here
-							
-							if(flag) {
-			
-								if($( "#screen_slide_3" ).hasClass( "show" )) {
-									
-									jQuery('#screen_slide_3').removeClass("show");			
-									jQuery('#screen_slide_3').addClass("hide");			
-									jQuery('#screen_slide_4').removeClass("hide");			
-									jQuery('#screen_slide_4').addClass("show");			
-									
-								} else {
-									
-									if(jQuery('#phone').val()==''){
-									
-									jQuery('#error_phone').html("*Required");
-									jQuery('#error_phone').removeClass("hide"); 
-									jQuery('#error_bar_4').removeClass("hide"); 
-									jQuery('#lbl_phone').addClass("add_field_heigh");        
-									flag = false;
-									
-									} else {
-										
-										jQuery('#error_phone').html("");
-										jQuery('#error_phone').addClass("hide");
-										jQuery('#error_bar_4').addClass("hide");
-									}
-									
-									
-									if(jQuery('#zip').val()==''){
-										
-										jQuery('#error_zip').html("*Required");           
-										jQuery('#error_zip').removeClass("hide"); 
-										jQuery('#error_bar_4').removeClass("hide"); 
-										jQuery('#lbl_zip').addClass("add_field_heigh");       			
-										flag = false;
-										
-									} else {
-										
-										jQuery('#error_zip').html("");
-										jQuery('#error_zip').addClass("hide");
-										jQuery('#error_bar_4').addClass("hide");        
-									}
-									
-									
-									
-									
-									// start  firend email 
-									
-									if(flag){
-			
-											if($( "#screen_slide_4" ).hasClass( "show" )) {				
-												
-												jQuery('#screen_slide_4').removeClass("show");			
-												jQuery('#screen_slide_4').addClass("hide");			
-												jQuery('#screen_slide_5').removeClass("hide");			
-												jQuery('#screen_slide_5').addClass("show");			
-												
-											} else {
-												
-												if(jQuery('#friend_name').val()==''){
-												
-												
-													jQuery('#error_friend_name').html("*Required");
-													jQuery('#error_friend_name').removeClass("hide");
-													jQuery('#error_bar_5').removeClass("hide"); 
-													jQuery('#lbl_friend_name').addClass("add_field_heigh");        
-													flag = false;
-												
-												} else {
-													
-													jQuery('#error_friend_name').html("");
-													jQuery('#error_friend_name').addClass("hide");
-													jQuery('#error_bar_5').addClass("hide"); 
-												}
-												
-												
-												if(jQuery('#friend_email').val()==''){
-													
-													jQuery('#error_friend_email').html("*Required");           
-													jQuery('#error_friend_email').removeClass("hide"); 
-													jQuery('#error_bar_5').removeClass("hide");
-													jQuery('#lbl_friend_email').addClass("add_field_heigh");         			
-													flag = false;
-													
-												} else if(reg.test(jQuery('#friend_email').val()) == false) {
-													
-													jQuery('#error_friend_email').html("*Invalid Email");
-													jQuery('#error_friend_email').removeClass("hide"); 
-													jQuery('#error_bar_5').removeClass("hide");
-													jQuery('#friend_email').val(''); 
-													jQuery('#lbl_friend_email').addClass("add_field_heigh");         
-													flag = false;				
-													
-												} else {
-													
-													jQuery('#error_friend_email').html("");
-													jQuery('#error_friend_email').addClass("hide"); 
-													jQuery('#error_bar_5').addClass("hide");        
-												}
-												
-												
-												
-												if(flag){
-													
-													
-														first_name = jQuery('#first_name').val();
-														last_name = jQuery('#last_name').val();
-														email = jQuery('#mem_email').val();
-														password = jQuery('#mem_password').val();
-														gender = 'f';
-														phone_number = jQuery('#phone').val();
-														zipcode = jQuery('#zip').val();
-														birth_date = '0000-00-00';
-														friend_name = jQuery('#friend_name').val();
-														friend_email = jQuery('#friend_email').val();
-														
-														if(friend_email.length > 0) {
-															jQuery('#overlay').removeClass("hide"); 
-															jQuery('#overlay').addClass("show");
-															$.ajax({
-																  type: "POST",
-																  url: "{{ path('nws_web_user_registration') }}",
-																  data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date+"&friend_name="+friend_name+"&friend_email="+friend_email,
-																  success: function (data) {
-																	  jQuery('#overlay').removeClass("show");
-																	  jQuery('#overlay').addClass("hide"); 
-																	 
-																	
-																		if($( "#screen_slide_5" ).hasClass( "show" )) {																
-															
-																		jQuery('#screen_slide_5').removeClass("show");			
-																		jQuery('#screen_slide_5').addClass("hide");			
-																		jQuery('#screen_slide_6').removeClass("hide");			
-																		jQuery('#screen_slide_6').addClass("show");			
-																		
-																	} 
-																  },
-																  failure: function (errMsg) {
-																	console.log(errMsg);
-																  }
-															  });
-														} else {
-															jQuery('#overlay').removeClass("hide"); 
-															jQuery('#overlay').addClass("show");
-															$.ajax({
-																  type: "POST",
-																  url: "{{ path('nws_web_user_registration') }}",
-																 data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date,
-																  success: function (data) {
-																	  
-																	  jQuery('#overlay').removeClass("show");
-																	  jQuery('#overlay').addClass("hide"); 
-																	
-																		if($( "#screen_slide_5" ).hasClass( "show" )) {																
-															
-																		jQuery('#screen_slide_5').removeClass("show");			
-																		jQuery('#screen_slide_5').addClass("hide");			
-																		jQuery('#screen_slide_6').removeClass("hide");			
-																		jQuery('#screen_slide_6').addClass("show");			
-																		
-																	} 
-																  },
-																  failure: function (errMsg) {
-																	console.log(errMsg);
-																  }
-															  });
-																										
-														
-														
-													}
-													
-													
-												}
-												
-												
-												
-										  }
-									 } 
-									
-									
-
-									
-									// end freind email
-									
-									
-									
-								}
-							}	
-						
-						
-						//  End zip and code Here
-						
-					}
-				}
-			}
-		}
 		
+		if(flag){
+				
+			jQuery('#screen_slide_1').removeClass("show");			
+			jQuery('#screen_slide_1').addClass("hide");			
+			jQuery('#screen_slide_2').removeClass("hide");			
+			jQuery('#screen_slide_2').addClass("show");			
+			
 		}
-		
 	
-	//return flag;
-	return false;
 }
 
+function validate_form2(){
+
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;	
+	
+	
+if(jQuery('#mem_email').val()==''){
+	jQuery('#error_mem_email').html("*Required");
+	jQuery('#mem_email').css("border-bottom","0px"); 
+	jQuery('#error_mem_email').removeClass("hide");  
+	jQuery('#error_bar_2').removeClass("hide");
+	jQuery('#lbl_mem_email').addClass("add_field_heigh");          
+	flag = false;
+
+} else if(reg.test(jQuery('#mem_email').val()) == false) {
+	
+	jQuery('#error_mem_email').html("*Invalid Email");
+	jQuery('#mem_email').css("border-bottom","0px");
+	jQuery('#mem_email').val('');
+	jQuery('#error_mem_email').removeClass("hide"); 
+	jQuery('#error_bar_2').removeClass("hide"); 
+	jQuery('#lbl_mem_email').addClass("add_field_heigh");         
+	flag = false;
+
+} else {
+/*	jQuery('#overlay').removeClass("hide"); 
+	jQuery('#overlay').addClass("show");
+	result = jQuery.ajax({
+		type: "POST",
+		url: "{{ path('appuser_check_exist_email') }}",
+		data: "email="+jQuery('#mem_email').val(),
+		async: false
+	}).responseText.split(',');
+
+	
+	var arr = jQuery.parseJSON( result );
+	if(arr.success==1){
+		jQuery('#overlay').removeClass("show");
+		jQuery('#overlay').addClass("hide");
+		jQuery('#error_mem_email').html("*Email already exist");
+		jQuery('#error_mem_email').removeClass("hide"); 
+		jQuery('#mem_email').val(''); 
+		jQuery('#error_bar_2').removeClass("hide");
+		jQuery('#lbl_mem_email').addClass("add_field_heigh");          
+		flag = false;
+		
+	} else {
+		jQuery('#overlay').removeClass("show");
+		jQuery('#overlay').addClass("hide");
+	}*/
+	
+	jQuery('#error_mem_email').html("");
+	jQuery('#error_mem_email').addClass("hide");
+	jQuery('#error_bar_2').addClass("hide");
+}
+
+
+if(jQuery('#confirm_mem_email').val()==''){
+	
+	jQuery('#error_confirm_mem_email').html("*Required");
+	jQuery('#confirm_mem_email').css("border-bottom","0px");           
+	jQuery('#error_confirm_mem_email').removeClass("hide");
+	jQuery('#error_bar_2').removeClass("hide");
+	jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			
+	flag = false;
+	
+} else if(reg.test(jQuery('#confirm_mem_email').val()) == false) {
+	
+	jQuery('#error_confirm_mem_email').html("*Invalid Email");
+	jQuery('#confirm_mem_email').css("border-bottom","0px");
+	jQuery('#error_confirm_mem_email').removeClass("hide"); 
+	jQuery('#error_bar_2').removeClass("hide");
+	jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			 
+	jQuery('#confirm_mem_email').val('');        
+	flag = false;				
+	
+} else {
+	
+	jQuery('#error_confirm_mem_email').html("");
+	jQuery('#error_confirm_mem_email').addClass("hide"); 
+	jQuery('#error_bar_2').addClass("hide");       
+}
+
+	if(flag){
+		
+		if(jQuery('#mem_email').val()!=jQuery('#confirm_mem_email').val()){
+			jQuery('#confirm_mem_email').val('');
+			jQuery('#error_confirm_mem_email').html("*Emails do not match");
+			jQuery('#confirm_mem_email').css("border-bottom","0px");           
+			jQuery('#error_confirm_mem_email').removeClass("hide");  
+			jQuery('#error_bar_2').removeClass("hide");  
+			jQuery('#lbl_confirm_mem_email').addClass("add_field_heigh");          			      			
+			flag = false;
+			
+		} else {
+			
+			jQuery('#error_confirm_mem_email').html("");
+			jQuery('#error_confirm_mem_email').addClass("hide");
+			jQuery('#error_bar_2').addClass("hide"); 
+			
+			jQuery('#screen_slide_2').removeClass("show");			
+			jQuery('#screen_slide_2').addClass("hide");			
+			jQuery('#screen_slide_3').removeClass("hide");			
+			jQuery('#screen_slide_3').addClass("show");		      
+		}
+		
+	}		
+	
+}
+
+function validate_form3(){
+	
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;	
+	
+	
+	if(jQuery('#mem_password').val()==''){
+						
+	jQuery('#error_mem_password').html("*Required");
+	jQuery('#mem_password').css("border-bottom","0px");           	
+	jQuery('#error_mem_password').removeClass("hide");
+	jQuery('#pwd_hint1').addClass("hide");
+	jQuery('#pwd_hint1').removeClass("show");
+	jQuery('#pwd_hint').removeClass("hide");						
+	jQuery('#error_bar_3').removeClass("hide");
+	jQuery('#lbl_mem_password').addClass("add_field_heigh");           
+	flag = false;
+	} else if(passwordValidate(jQuery('#mem_password').val())) {
+		jQuery('#mem_password').css("border-bottom","0px");           			
+		jQuery('#error_mem_password').html("*Requirements not met");
+		jQuery('#error_mem_password').removeClass("hide");  
+		jQuery('#mem_password').val('');
+		var p = passwordValidate(jQuery('#mem_password').val());
+		jQuery('#error_bar_3').removeClass("hide");  
+		jQuery('#lbl_mem_password').addClass("add_field_heigh");          			      
+		flag = false;
+	} else {
+		
+		jQuery('#error_mem_password').html("");
+		jQuery('#error_mem_password').addClass("hide");
+		jQuery('#error_bar_3').addClass("hide");
+	}
+	
+	
+	if(jQuery('#confirm_mem_password').val()==''){							
+		jQuery('#error_confirm_mem_password').html("*Required"); 
+		jQuery('#confirm_mem_password').css("border-bottom","0px");           	          
+		jQuery('#error_confirm_mem_password').removeClass("hide"); 
+		jQuery('#error_bar_3').removeClass("hide"); 
+		jQuery('#lbl_confirm_mem_password').addClass("add_field_heigh");       			
+		flag = false;
+		
+	} else {
+		
+		jQuery('#error_confirm_mem_password').html("");
+		jQuery('#error_confirm_mem_password').addClass("hide");
+		jQuery('#error_bar_3').addClass("hide");      
+	}
+	
+	if(flag){
+
+		if(jQuery('#mem_password').val()!=jQuery('#confirm_mem_password').val()){
+			jQuery('#confirm_mem_password').val('');
+			jQuery('#error_confirm_mem_password').html("*Passwords do not match");
+			jQuery('#confirm_mem_password').css("border-bottom","0px");           	          			    
+			jQuery('#error_confirm_mem_password').removeClass("hide"); 
+			jQuery('#error_bar_3').removeClass("hide");
+			jQuery('#lbl_confirm_mem_password').addClass("add_field_heigh");         			
+			flag = false;
+			
+		} else {
+			
+			jQuery('#error_confirm_mem_password').html("");
+			jQuery('#error_confirm_mem_password	').addClass("hide");
+			jQuery('#error_bar_3').addClass("hide");  
+			
+			jQuery('#screen_slide_3').removeClass("show");			
+			jQuery('#screen_slide_3').addClass("hide");			
+			jQuery('#screen_slide_4').removeClass("hide");			
+			jQuery('#screen_slide_4').addClass("show");		     
+		}
+		
+	}
+	
+
+	
+}
+
+function validate_form4(){
+	
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;	
+	
+	
+	if(jQuery('#phone').val()==''){
+									
+	jQuery('#error_phone').html("*Required");
+	jQuery('#phone').css("border-bottom","0px");           	          	
+	jQuery('#error_phone').removeClass("hide"); 
+	jQuery('#error_bar_4').removeClass("hide"); 
+	jQuery('#lbl_phone').addClass("add_field_heigh");        
+	flag = false;
+	
+	} else {
+		
+		jQuery('#error_phone').html("");
+		jQuery('#error_phone').addClass("hide");
+		jQuery('#error_bar_4').addClass("hide");
+	}
+	
+	
+	if(jQuery('#zip').val()==''){
+		
+		jQuery('#error_zip').html("*Required");  
+		jQuery('#zip').css("border-bottom","0px");		         
+		jQuery('#error_zip').removeClass("hide"); 
+		jQuery('#error_bar_4').removeClass("hide"); 
+		jQuery('#lbl_zip').addClass("add_field_heigh");       			
+		flag = false;
+		
+	} else {
+		
+		jQuery('#error_zip').html("");
+		jQuery('#error_zip').addClass("hide");
+		jQuery('#error_bar_4').addClass("hide");        
+	}
+	
+	if(flag)
+	{
+		jQuery('#screen_slide_4').removeClass("show");			
+		jQuery('#screen_slide_4').addClass("hide");			
+		jQuery('#screen_slide_5').removeClass("hide");			
+		jQuery('#screen_slide_5').addClass("show");		
+	}
+}
+
+function validate_form5(){
+	
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;		
+	
+	if(jQuery('#friend_name').val()==''){
+												
+		jQuery('#error_friend_name').html("*Required");
+		jQuery('#friend_name').css("border-bottom","0px");		         
+		jQuery('#error_friend_name').removeClass("hide");
+		jQuery('#error_bar_5').removeClass("hide"); 
+		jQuery('#lbl_friend_name').addClass("add_field_heigh");        
+		flag = false;
+	
+	} else {
+		
+		jQuery('#error_friend_name').html("");
+		jQuery('#error_friend_name').addClass("hide");
+		jQuery('#error_bar_5').addClass("hide"); 
+	}
+	
+	
+	if(jQuery('#friend_email').val()==''){
+		
+		jQuery('#error_friend_email').html("*Required"); 
+		jQuery('#friend_email').css("border-bottom","0px");		         		          
+		jQuery('#error_friend_email').removeClass("hide"); 
+		jQuery('#error_bar_5').removeClass("hide");
+		jQuery('#lbl_friend_email').addClass("add_field_heigh");         			
+		flag = false;
+		
+	} else if(reg.test(jQuery('#friend_email').val()) == false) {
+		
+		jQuery('#error_friend_email').html("*Invalid Email");
+		jQuery('#friend_email').css("border-bottom","0px");		         		          		
+		jQuery('#error_friend_email').removeClass("hide"); 
+		jQuery('#error_bar_5').removeClass("hide");
+		jQuery('#friend_email').val(''); 
+		jQuery('#lbl_friend_email').addClass("add_field_heigh");         
+		flag = false;				
+		
+	} else {
+		
+		jQuery('#error_friend_email').html("");
+		jQuery('#error_friend_email').addClass("hide"); 
+		jQuery('#error_bar_5').addClass("hide");        
+	}
+	
+	
+	
+	if(flag){
+		
+		
+			first_name = jQuery('#first_name').val();
+			last_name = jQuery('#last_name').val();
+			email = jQuery('#mem_email').val();
+			password = jQuery('#mem_password').val();
+			gender = 'f';
+			phone_number = jQuery('#phone').val();
+			zipcode = jQuery('#zip').val();
+			birth_date = '0000-00-00';
+			friend_name = jQuery('#friend_name').val();
+			friend_email = jQuery('#friend_email').val();
+			
+			if(friend_email.length > 0) {
+				jQuery('#overlay').removeClass("hide"); 
+				jQuery('#overlay').addClass("show");
+				$.ajax({
+					  type: "POST",
+					  url: "{{ path('nws_web_user_registration') }}",
+					  data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date+"&friend_name="+friend_name+"&friend_email="+friend_email,
+					  success: function (data) {
+						  jQuery('#overlay').removeClass("show");
+						  jQuery('#overlay').addClass("hide"); 
+						 
+						
+																					
+				
+							jQuery('#screen_slide_5').removeClass("show");			
+							jQuery('#screen_slide_5').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");			
+							
+						 
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+			} else {
+				jQuery('#overlay').removeClass("hide"); 
+				jQuery('#overlay').addClass("show");
+				$.ajax({
+					  type: "POST",
+					  url: "{{ path('nws_web_user_registration') }}",
+					 data: "first_name="+first_name+"&last_name="+last_name+"&email="+email+"&password="+password+"&gender="+gender+"&phone_number="+phone_number+"&zipcode="+zipcode+"&birth_date="+birth_date,
+					  success: function (data) {
+						  
+						  jQuery('#overlay').removeClass("show");
+						  jQuery('#overlay').addClass("hide"); 
+						
+																					
+				
+							jQuery('#screen_slide_5').removeClass("show");			
+							jQuery('#screen_slide_5').addClass("hide");			
+							jQuery('#screen_slide_6').removeClass("hide");			
+							jQuery('#screen_slide_6').addClass("show");			
+							
+						
+					  },
+					  failure: function (errMsg) {
+						console.log(errMsg);
+					  }
+				  });
+															
+			
+			
+		}
+		
+		
+	}
+	
+}
+
+	
 function invite_friend()
 {
 	var flag = true;
@@ -591,6 +579,7 @@ function male_invite_friend()
 	if(jQuery('#male_invite_friend_name').val()==''){
 		
 			jQuery('#error_male_invite_friend_name').html("*Required");
+			jQuery('#male_invite_friend_name').css("border-bottom","0px");		         		          
 			jQuery('#error_male_invite_friend_name').removeClass("hide");
 			jQuery('#error_bar_12').removeClass("hide");  
 			jQuery('#lbl_male_invite_friend_name').addClass("add_field_heigh");         
@@ -606,7 +595,8 @@ function male_invite_friend()
 		
 		if(jQuery('#male_invite_friend_email').val()==''){
 			
-			jQuery('#error_male_invite_friend_email').html("*Required");           
+			jQuery('#error_male_invite_friend_email').html("*Required");  
+			jQuery('#male_invite_friend_email').css("border-bottom","0px");		         		         
 			jQuery('#error_male_invite_friend_email').removeClass("hide");
 			jQuery('#error_bar_12').removeClass("hide"); 
 			jQuery('#lbl_male_invite_friend_email').addClass("add_field_heigh");        			
@@ -615,6 +605,7 @@ function male_invite_friend()
 		} else if(reg.test(jQuery('#male_invite_friend_email').val()) == false) {
 			
 			jQuery('#error_male_invite_friend_email').html("*Invalid Email");
+			jQuery('#male_invite_friend_email').css("border-bottom","0px");
 			jQuery('#error_male_invite_friend_email').removeClass("hide"); 
 			jQuery('#error_bar_12').removeClass("hide"); 
 			jQuery('#male_invite_friend_email').val('');  
@@ -692,6 +683,7 @@ function male_registration()
 	if(jQuery('#male_name').val()==''){
 		
 			jQuery('#error_male_name').html("*Required");
+			jQuery('#male_name').css("border-bottom","0px");
 			jQuery('#error_male_name').removeClass("hide"); 
 			jQuery('#error_bar_10').removeClass("hide");
 			jQuery('#lbl_male_name').addClass("add_field_heigh");       
@@ -707,7 +699,8 @@ function male_registration()
 		
 		if(jQuery('#male_email').val()==''){
 			
-			jQuery('#error_male_email').html("*Required");           
+			jQuery('#error_male_email').html("*Required");  
+			jQuery('#male_email').css("border-bottom","0px");         
 			jQuery('#error_male_email').removeClass("hide"); 
 			jQuery('#error_bar_10').removeClass("hide");
 			jQuery('#lbl_male_email').addClass("add_field_heigh");         			
@@ -716,6 +709,7 @@ function male_registration()
 		} else if(reg.test(jQuery('#male_email').val()) == false) {
 			
 			jQuery('#error_male_email').html("*Invalid Email");
+			jQuery('#male_email').css("border-bottom","0px"); 
 			jQuery('#error_male_email').removeClass("hide");
 			jQuery('#male_email').val('');
 			jQuery('#error_bar_10').removeClass("hide");
@@ -771,18 +765,18 @@ function passwordValidate(pswd)
 	var htmltag = '';
     if ( pswd.length < 8 ) {
       error = 1;
-      htmltag += '</br>8 Characters';
+      htmltag += '8 Characters</br>';
     }
 
     //validate capital letter
     if ( !pswd.match(/[A-Z]/) ) {
 		 error = 1;
-       htmltag += '</br>1 Capital Letter';
+       htmltag += '1 Capital Letter</br>';
     }
     //validate number
     if ( !pswd.match(/\d/) ) {
 		error = 1;
-       htmltag += '</br>1 Number';
+       htmltag += '1 Number</br>';
     }
 
     if (error == 1) {
@@ -988,11 +982,11 @@ function step_back(id)
 
 function hide_error(id)
 {
-	jQuery('#'+id).removeClass("show");	
-	jQuery('#'+id).addClass("hide");	
-	
+	 jQuery('#'+id).removeClass("show");
+	 jQuery('#'+id).addClass("hide");    
+	 borderid = id.replace("error_","");
+	 jQuery('#'+borderid).css("border","1px solid #fff");
 }
-
 function label_up(id)
 {
 	id = id.replace("tab_","");
@@ -1009,11 +1003,6 @@ function label_up(id)
 
 $(document).ready(function(e) {
 	
-
-	
-	
-	
-	
 	
    $( "#phone" ).keyup(function() {
   
@@ -1021,44 +1010,64 @@ $(document).ready(function(e) {
      $(this).val(function(i, text) {
         text = text.replace(/(\d\d\d)(\d\d\d)(\d\d\d\d)/, "($1) $2-$3");
         return text;
-    })
+    });
   
 }); 
 });
 
 function validate_email(email){
 	
+	var flag = true;
+	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+	
 	if(email.length > 0)
 	{
-		jQuery('#overlay').removeClass("hide"); 
-		jQuery('#overlay').addClass("show");
-		result = jQuery.ajax({
-			type: "POST",
-			url: "{{ path('appuser_check_exist_email') }}",
-			data: "email="+jQuery('#mem_email').val(),
-			async: false
-		}).responseText.split(',');
 		
-		
-		var arr = jQuery.parseJSON( result );
-		if(arr.success==1){
-			
-			jQuery('#error_mem_email').html("*Email already exist");
+		 if(reg.test(jQuery('#mem_email').val()) == false) {
+	
+			jQuery('#error_mem_email').html("*Invalid Email");
+			jQuery('#mem_email').css("border-bottom","0px");
+			jQuery('#mem_email').val('');
 			jQuery('#error_mem_email').removeClass("hide"); 
-			jQuery('#mem_email').val(''); 
-			jQuery('#error_bar_2').removeClass("hide");         
-			jQuery('#overlay').removeClass("show");
- 			jQuery('#overlay').addClass("hide"); 
+			jQuery('#error_bar_2').removeClass("hide"); 
+			jQuery('#lbl_mem_email').addClass("add_field_heigh");         
 			flag = false;
-			
+
 		} else {
 		
-		jQuery('#error_mem_email').html("");
-		jQuery('#error_mem_email').addClass("hide");
-		jQuery('#error_bar_2').addClass("hide");
-		jQuery('#overlay').removeClass("show");
- 		jQuery('#overlay').addClass("hide"); 
-		}	
+		
+				jQuery('#overlay').removeClass("hide"); 
+				jQuery('#overlay').addClass("show");
+				result = jQuery.ajax({
+					type: "POST",
+					url: "{{ path('appuser_check_exist_email') }}",
+					data: "email="+jQuery('#mem_email').val(),
+					async: false
+				}).responseText.split(',');
+				
+				
+				var arr = jQuery.parseJSON( result );
+				if(arr.success==1){
+					
+					jQuery('#error_mem_email').html("*Email already exist");
+					jQuery('#error_mem_email').removeClass("hide"); 
+					jQuery('#mem_email').val(''); 
+					jQuery('#error_bar_2').removeClass("hide");         
+					jQuery('#overlay').removeClass("show");
+					jQuery('#overlay').addClass("hide"); 
+					flag = false;
+					
+				} else {
+				
+				jQuery('#error_mem_email').html("");
+				jQuery('#error_mem_email').addClass("hide");
+				jQuery('#error_bar_2').addClass("hide");
+				jQuery('#overlay').removeClass("show");
+				jQuery('#overlay').addClass("hide"); 
+				}	
+	
+	}
 	
 	}
 	
@@ -1088,7 +1097,7 @@ function validate_email(email){
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/profile_picture.png') }}" alt="Circle" class="profile_pic" /></div>    
     <div class="gap_2"></div>
-    <a href="#screen_slide_1" class="btn btn-md btn-primary btn-block" onclick="validate_form();">I am a Female</a>
+    <a href="#screen_slide_1" class="btn btn-md btn-primary btn-block" onclick="validate_form0();">I am a Female</a>
     <a href="#screen_slide_10" class="btn btn-md btn-primary btn-block" onclick="male_registration();">I am a Male</a>
    <!-- <a class="anchor_text" href="#signin">I am a Woman</a>
     <div class="gap_4"></div>
@@ -1134,7 +1143,7 @@ function validate_email(email){
       <p>By signing up, you agree to the our <a href="https://www.selfiestyler.com/main/terms-conditions/">terms and 
 conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/privacypolicy/">privacy policy.</a></p>
     </div>
-    <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Next</a>    
+    <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();">Next</a>    
       <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
     </div>
@@ -1167,7 +1176,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Next</a>
+    <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form2();">Next</a>
     <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
     </div>
@@ -1197,13 +1206,13 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div class="req_text_1">8 Characters</br>1 Capitol Letter</br>1 Number</div>
     </div>
 <!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
-    <div class="error_box_req hide" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    <div class="error_box_req hide" id="pwd_hint">8 Characters</br>1 Capitol Letter</br>1 Number</div>
      <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
     <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
     </div>
-    <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Create new password</a>
+    <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form3();">Create new password</a>
 </div>
 </div>
 
@@ -1232,7 +1241,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <input type="text" autocomplete="off" id="zip" name="zip" maxlength="5" class="form-control">
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Submit</a>
+    <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form4();">Submit</a>
 </div>
 </div>
 
@@ -1264,7 +1273,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control" >
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Send</a>
+    <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form5();">Send</a>
        <div class="privacy">
       <p><a href="#screen_slide_6" onclick="invite_friend_user_skip();">Skip</a></p>
     </div>
