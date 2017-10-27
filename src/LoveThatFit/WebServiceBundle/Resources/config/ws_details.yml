@@ -1065,4 +1065,10 @@ nws_cart_item_update_to_cart:
      item_id: 4126
      display_screen: detail_page
    request_type: post
+
+appuser_invite_friend:
+  pattern: /appuser/invite_friend_text
+  title: invite_friend_text
+  params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
                    
