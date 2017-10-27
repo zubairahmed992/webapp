@@ -459,7 +459,11 @@ appuser_check_exist_email:
 
 appuser_male_invite_friend_email:
     pattern:   appuser/male_invite_friend_email
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:invitefriendformaleCreate }     
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:invitefriendformaleCreate }
+
+appuser_invite_friend:
+    pattern:   /appuser/invite_friend_text
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:inviteFriendCreateText }
 
 #update Single Item to Cart
 nws_update_cart_single_item:
