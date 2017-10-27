@@ -728,9 +728,7 @@ class WSUserController extends Controller
         if ($user)
         {
             $template = $this->get('twig')->render('LoveThatFitUserBundle::invite_friend.html.twig', array('app_link' => $appLink));
-            $res = $this->get('webservice.helper')->response_array(true, array(
-                'text' => $template
-            ));
+            $res = $this->get('webservice.helper')->response_array(true, $template);
 
             return new Response($res);
         }else {
