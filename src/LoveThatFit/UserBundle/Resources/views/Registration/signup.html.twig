@@ -107,7 +107,8 @@
 					flag = false;
 
 				} else {
-					
+					jQuery('#overlay').removeClass("hide"); 
+					jQuery('#overlay').addClass("show");
 					result = jQuery.ajax({
 						type: "POST",
 						url: "{{ path('appuser_check_exist_email') }}",
@@ -118,7 +119,8 @@
 					
 					var arr = jQuery.parseJSON( result );
 					if(arr.success==1){
-						
+						jQuery('#overlay').removeClass("show");
+						jQuery('#overlay').addClass("hide");
 						jQuery('#error_mem_email').html("*Email already exist");
 						jQuery('#error_mem_email').removeClass("hide"); 
 						jQuery('#mem_email').val(''); 
@@ -127,7 +129,8 @@
 						flag = false;
 						
 					} else {
-					
+					jQuery('#overlay').removeClass("show");
+					jQuery('#overlay').addClass("hide");
 					jQuery('#error_mem_email').html("");
 					jQuery('#error_mem_email').addClass("hide");
 					jQuery('#error_bar_2').addClass("hide");
@@ -992,7 +995,7 @@ function hide_error(id)
 
 function label_up(id)
 {
-
+	id = id.replace("tab_","");
 	jQuery('#'+id).css('position','0px');
 	jQuery('#'+id).css('top','0px');	
 	jQuery('#'+id).css('opacity','0.5');
@@ -1113,15 +1116,15 @@ function validate_email(email){
     </div>
     <div class="gap_5"></div>
     
-    <div style="position:relative;">
-    <label for="first_name" class="" id="lbl_first_name" onclick="label_up(this.id);">FIRST NAME</label>
+    <div style="position:relative;" id="tab_lbl_first_name" onclick="label_up(this.id);">
+    <label for="first_name" class="" id="lbl_first_name">FIRST NAME</label>
      <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
     <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control">
     </div>
     
     
-    <div style="position:relative;">
-    <label for="last_name" class="" id="lbl_last_name" onclick="label_up(this.id);">LAST NAME</label>
+    <div style="position:relative;" id="tab_lbl_last_name" onclick="label_up(this.id);">
+    <label for="last_name" class="" id="lbl_last_name">LAST NAME</label>
      <div class="error_box hide" onclick="hide_error(this.id);" id="error_last_name"></div>
     <input type="text" autocomplete="off" name="last_name" id="last_name" class="form-control">
     </div>
@@ -1152,14 +1155,14 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     </div>
     <div class="gap_5"></div>
     
-     <div style="position:relative;">
-    <label for="inputpassword" class="" id="lbl_mem_email" onclick="label_up(this.id);">EMAIL</label>
+     <div style="position:relative;" onclick="label_up(this.id);" id="tab_lbl_mem_email">
+    <label for="inputpassword" class="" id="lbl_mem_email" >EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
     <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);" >
     </div>
     
-     <div style="position:relative;">
-    <label for="inputpass" class="" id="lbl_confirm_mem_email" onclick="label_up(this.id);">CONFIRM EMAIL</label>
+     <div style="position:relative;" id="tab_lbl_confirm_mem_email" onclick="label_up(this.id);">
+    <label for="inputpass" class="" id="lbl_confirm_mem_email">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
     <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
     </div>
@@ -1183,8 +1186,8 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Let's protect your account protected</p>
     </div>
     <div class="gap_2"></div>
-     <div style="position:relative;">
-    <label for="inputfirstname" class="" id="lbl_mem_password" onclick="label_up(this.id);">PASSWORD</label>
+     <div style="position:relative;" id="tab_lbl_mem_password" onclick="label_up(this.id);">
+    <label for="inputfirstname" class="" id="lbl_mem_password">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
     <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);" ></div>
     
@@ -1195,8 +1198,8 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     </div>
 <!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
     <div class="error_box_req hide" id="pwd_hint">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>
-     <div style="position:relative;">
-    <label for="inputzip" class="" id="lbl_confirm_mem_password" onclick="label_up(this.id);">CONFIRM PASSWORD</label>
+     <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
+    <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
     <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
     </div>
@@ -1218,15 +1221,15 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     <div class="Get_text">
       <p>In order for SelfieStyler to work effectively, we need your measurements. Please sign up to attend a fitting session at a activation event. We'll notify you when we'll be in your area</p>
     </div>
- 	<div style="position:relative;">
-    <label for="inputphone" class="" id="lbl_phone" onclick="label_up(this.id);">PHONE</label>
+ 	<div style="position:relative;" id="tab_lbl_phone" onclick="label_up(this.id);">
+    <label for="inputphone" class="" id="lbl_phone" >PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="text" autocomplete="off" id="phone" name="phone" class="form-control phone" >
+    <input type="text" autocomplete="off" id="phone" maxlength="10" name="phone" class="form-control phone" >
     </div>
-     <div style="position:relative;">
-    <label for="inputzip" class="" id="lbl_zip" onclick="label_up(this.id);">ZIP CODE</label>
+     <div style="position:relative;" id="tab_lbl_zip" onclick="label_up(this.id);">
+    <label for="inputzip" class="" id="lbl_zip">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
-    <input type="text" autocomplete="off" id="zip" name="zip" class="form-control">
+    <input type="text" autocomplete="off" id="zip" name="zip" maxlength="5" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form();">Submit</a>
@@ -1250,13 +1253,13 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Did a friend refer you?</p>
     </div>
     <div class="Get_text"><p>Your friend get a nice little bonus when you sign up. Let us know who referred you so we can thank them.</p></div>
-    <div style="position:relative;"> 
- <label for="inputname" class="" id="lbl_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
+    <div style="position:relative;" id="tab_lbl_friend_name" onclick="label_up(this.id);"> 
+ <label for="inputname" class="" id="lbl_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
     <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control" >
     </div>
-     <div style="position:relative;">
-    <label for="inputzip" class="" id="lbl_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
+     <div style="position:relative;" id="tab_lbl_friend_email" onclick="label_up(this.id);">
+    <label for="inputzip" class="" id="lbl_friend_email">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
     <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control" >
     </div>
@@ -1300,13 +1303,13 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
       <p>Sorry, guys! We're not ready for you yet.</p>
     </div>
     <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>
-     <div style="position:relative;">
-<label for="inputname" class="" id="lbl_male_name" onclick="label_up(this.id);">FULL NAME</label>
+     <div style="position:relative;" id="tab_lbl_male_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_name">FULL NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
     <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control" >
     </div>
-     <div style="position:relative;">
-    <label for="inputzip" class="" id="lbl_male_email" onclick="label_up(this.id);">EMAIL</label>
+     <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
+    <label for="inputzip" class="" id="lbl_male_email" >EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
     <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control" >
     </div>
@@ -1334,13 +1337,13 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     </div>
     <div class="Get_text"><p>Invite a friends to download the app to share styles 
 and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
- <div style="position:relative;">
-<label for="inputname" class="" id="lbl_invite_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
+ <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
     <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control" >
     </div>
- <div style="position:relative;">
-    <label for="inputzip" class="" id="lbl_invite_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
+ <div style="position:relative;"id="tab_lbl_invite_friend_email" onclick="label_up(this.id);">
+    <label for="inputzip" class="" id="lbl_invite_friend_email">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control" >
   </div>  
@@ -1369,13 +1372,13 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
     </div>
     <div class="Get_text"><p>Invite a friends to download the app to share styles 
 and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
- <div style="position:relative;">
-<label for="inputname" class="" id="lbl_male_invite_friend_name" onclick="label_up(this.id);">FRIEND'S FIRST NAME</label>
+ <div style="position:relative;" id="tab_lbl_male_invite_friend_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_invite_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
     <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control" >
     </div>
-     <div style="position:relative;">
-    <label for="inputzip" class="" id="lbl_male_invite_friend_email" onclick="label_up(this.id);">FRIENDS EMAIL</label>
+     <div style="position:relative;" id="tab_lbl_male_invite_friend_email" onclick="label_up(this.id);">
+    <label for="inputzip" class="" id="lbl_male_invite_friend_email">FRIENDS EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control" >
     </div>
@@ -1419,9 +1422,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
     <div class="request_text">
       <p>We send you an confirmation email. We will make sure to update you when the app is ready for you.</p>
     </div>
-    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>
-<!--    <button class="btn btn-md btn-primary btn-block">I'am ready let's go</button>
-    <button class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</button>-->
+   <!-- <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>-->
 </div>
 </div>
 </form>
