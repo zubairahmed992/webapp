@@ -43,7 +43,8 @@ class SecurityController extends Controller {
 
     public function signinAction(){
         $baseurl = "http://".$this->getRequest()->getHost();
-        return new Response("signin page cooming soon");
+        return $this->redirect( $baseurl );
+        //return new Response("signin page cooming soon");
     }
 
 //---------------------------------------------------------------------------------
