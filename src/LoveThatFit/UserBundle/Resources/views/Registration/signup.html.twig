@@ -986,6 +986,7 @@ function hide_error(id)
 	 jQuery('#'+id).addClass("hide");    
 	 borderid = id.replace("error_","");
 	 jQuery('#'+borderid).css("border","1px solid #fff");
+	 jQuery('#'+borderid).focus();
 }
 function label_up(id)
 {
