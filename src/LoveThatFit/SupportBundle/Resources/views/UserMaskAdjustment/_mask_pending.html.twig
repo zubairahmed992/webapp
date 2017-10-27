@@ -329,6 +329,11 @@
            .ui-tooltip {
                 white-space: pre-line;
             }
+            ul.front_back_btn{padding:0; margin:10px 0 0 0;}
+            ul.front_back_btn li{cursor:pointer; display:inline-block; margin-right:3px; background:#d4d4d4;color:#000000; padding:5px 20px;}
+            ul.front_back_btn li.active{background:#717171;color:#ffffff;}
+            ul.front_back_btn li a{text-decoration:none;}
+            .canv_hldr_3{ padding:2px; border:1px solid #717171;}
     {#img:before{
         position: absolute; 
         top:0; 
@@ -463,6 +468,11 @@
     {#<a id="retuchImage">Toggle Image</a>#}
 
          {#<ul class="imagemenu">#}
+         <ul class="front_back_btn">
+             <li class="active">Front</li>
+             <li>Side 1</li>
+             <li>Side 2</li>
+         </ul>     
          <div class="canv_hldr_3" style="position:relative;margin-bottom:70px;">   
     <canvas id="canv_mask_makeover" class="mask-marker-canvas" width="960" height="1280"></canvas>
          </div>
@@ -555,7 +565,24 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
-    
+    //side view function 
+    $("ul.front_back_btn li").each(function(){
+        $(this).click(function(event){
+            $("ul.front_back_btn li").removeClass("active");
+            $(this).addClass("active");
+             $index =  $("ul.front_back_btn li").index(this);
+             if($index===0){
+                 alert('front');
+             }
+             if($index===1){
+                 alert('side one');
+             }
+             if($index===2){
+                 alert('side two');
+             }
+        });
+    });
+   
  $(window).scroll(function(){
   var sticky = $('#sticky');
       scroll = $(window).scrollTop();
