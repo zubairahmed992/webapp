@@ -1102,8 +1102,10 @@
                     </div>
                 </div>
                <button type="button" id='show_extended_fp' name='show_extended_fp' class="btn btn-primary">More</button>
-               <button type="button" id='show_error' name='show_error' class="btn btn-primary">Show Errors</button>
-
+               {#{% if((validation | length) > 0) %}
+                   <button type="button" id='show_error' name='show_error' class="btn btn-primary">Show Errors</button>
+                {% endif%}#}
+                 <button type="button" id='show_error' name='show_error' class="btn btn-primary">Show Errors</button>
 
             <input type="hidden"  value="{{ fit_model_selected_size }}" class="fit_model_selected" >
             <table>                

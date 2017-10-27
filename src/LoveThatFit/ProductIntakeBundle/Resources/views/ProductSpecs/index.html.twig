@@ -33,7 +33,8 @@
                 <a href="{{ path('product_intake_product_specs_show', {'id': sp.Id}) }}" title="Show {{sp.Title}}">show</a> &nbsp;|&nbsp;
                 <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id}) }}" title="Edit {{sp.Title}}">edit</a> &nbsp;|&nbsp;
                 <a href="{{ path('product_intake_product_specs_delete', {'id': sp.Id}) }}" data-toggle="confirmation" data-singleton="true" title="Delete {{sp.Title}}">del</a>  &nbsp;|&nbsp;
-                <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id, 'tab':'r'}) }}" title="Round values {{sp.Title}}">round</a>
+                <a href="{{ path('product_intake_product_specs_edit', {'id': sp.Id, 'tab':'r'}) }}" title="Round values {{sp.Title}}">round</a>  &nbsp;|&nbsp;
+                <a href="{{ path('product_intake_product_specs_change_dynamic', {'id': sp.Id, 'type':'double_thigh_grade_rule_min_max'}) }}" title="Double Thigh Grade rule for min & max values">thigh</a>
                 {% if cs_file[sp.Id] != '' %}
                 &nbsp;|&nbsp;
                 <a href="{{ cs_file[sp.Id] }}" target="_blank" download title="Download">Download</a> 

@@ -184,6 +184,12 @@ class ProductSpecsController extends Controller
         return new Response(json_encode("Succesfull"));
         return new Response(json_encode($decoded));
     }
+     #------------------------------------- /product_intake/Prod_specs/change_dynamic/{id}/{type}
+    public function changeDynamicAction($id, $type){
+        #return new Response($type);
+        $ps = $this->get('pi.product_specification')->find($id);
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id, 'tab' => 'b')));       
+    }
     
     #----------------------- /product_intake/Prod_specs/undo
     public function undoAction($id){  

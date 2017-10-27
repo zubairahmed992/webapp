@@ -36,6 +36,10 @@ product_intake_product_specs_update:
 product_intake_product_specs_update_dynamic:
     pattern:  /product_intake/product_specs/update_dynamic
     defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:updateDynamic }
+
+product_intake_product_specs_change_dynamic:
+    pattern:  /product_intake/product_specs/change_dynamic/{id}/{type}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:ProductSpecs:changeDynamic }
     
 product_intake_product_specs_undo:
     pattern:  /product_intake/product_specs/undo/{id}
