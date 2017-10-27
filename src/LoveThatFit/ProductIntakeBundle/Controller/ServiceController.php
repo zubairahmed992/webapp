@@ -221,7 +221,6 @@ class ServiceController extends Controller {
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
                 $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                 $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
-                $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
 
                 if (count($product_color) == 0) {
                     return $this->responseArray('color not found');#------------------------------------------>
@@ -229,6 +228,7 @@ class ServiceController extends Controller {
                 if(count($product_size) == 0){
                     return $this->responseArray('Size not found');#------------------------------------------>
                 }
+                $product_item_id = $this->get('admin.helper.productitem')->getProductItemByProductId($parsed_details['product_id'], $product_color->getId(), $product_size->getId());
                 if (count($product_item_id) == 0) {
                     $this->get('admin.helper.productitem')->addItem($product, $product_color, $product_size);
                 }
