@@ -30,14 +30,15 @@ class SecurityController extends Controller {
 //-------------------------------------------------------------------------
 
     public function AdminloginAction() {
-        $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+        return $this->redirect($this->generateUrl('saml_login'));
+        /*$security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
         return $this->render(
                         'LoveThatFitUserBundle:Security:adminLogin.html.twig', array(
                     'last_username' => $security_context['last_username'],
                     'error' => $security_context['error'],
                     
                         )
-        );
+        );*/
     }
 
     public function signinAction(){
