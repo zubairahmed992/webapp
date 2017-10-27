@@ -32,8 +32,8 @@ class RegistrationController extends Controller {
 
 #>>>>>>>>>>>>>>>>>>>>>> Replace with new registration >>>>>>>>>>>>>>>>>>
     public function registrationAction() {
-        
-        $request = $this->getRequest();
+        return $this->redirect('/');
+        /*$request = $this->getRequest();
         $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
 
         $referer = $request->headers->get('referer');
@@ -64,7 +64,7 @@ class RegistrationController extends Controller {
                     'error' => $security_context['error'],
                     'referer' => $security_context['referer'],
                     'twitters' => $twitters,
-                ));
+                ));*/
     }
 
 //----------------------------------------------------------------

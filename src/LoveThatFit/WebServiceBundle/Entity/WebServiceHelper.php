@@ -1452,7 +1452,7 @@ class WebServiceHelper
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
-                'fitting_room_id' => (in_array($pi->getId(), $product_item) && $fittingRoomId > 0) ? $fittingRoomId : 0,
+                'fitting_room_id' => (in_array($pi->getId(), $product_item) &&  (int) $fittingRoomId > 0) ? (int) $fittingRoomId : 0,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
                 'disabled' => $product->getDisabled(),
