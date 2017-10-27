@@ -717,6 +717,26 @@ class WSUserController extends Controller
         }
     }
 
+    public function inviteFriendCreateTextAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        echo $appLink = $this->get('admin.helper.appstorelink')->find(1);
+
+        if ($user)
+        {
+            $template = $this->get('twig')->render('LoveThatFitUserBundle::invite_friend.html.twig', array('app_link' => $appLink));
+            $res = $this->get('webservice.helper')->response_array(true, array(
+                'text' => $template
+            ));
+
+            return new Response($res);
+        }else {
+            return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
+        }
+    }
+
     public function registermaleusersCreateAction()
     {
         $ra = $this->process_request();
