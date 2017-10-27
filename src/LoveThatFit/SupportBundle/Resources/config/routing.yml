@@ -13,6 +13,10 @@ support:
     pattern:   /support
     defaults:  { _controller: LoveThatFitSupportBundle:Security:login }
 
+login_support:
+    pattern:   /support/
+    defaults:  { _controller: LoveThatFitSupportBundle:Security:login }
+
 support_login_check:
     pattern:   /support/login_check
 
