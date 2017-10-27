@@ -723,7 +723,7 @@ class WSUserController extends Controller
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
-        echo $appLink = $this->get('admin.helper.appstorelink')->find(1);
+        $appLink = $this->get('admin.helper.appstorelink')->find(1)->getAppLink();
 
         if ($user)
         {
