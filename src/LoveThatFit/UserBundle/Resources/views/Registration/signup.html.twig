@@ -10,8 +10,9 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link href="{{ asset('bundles/lovethatfit/web_registration/css/custom.css') }}" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/jquery.min.js') }}"></script>
-        
+         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/jquery.mask.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/bootstrap.min.js') }}"></script>
+        
        
       
 
@@ -211,7 +212,8 @@ function validate_form3(){
 	jQuery('#pwd_hint1').removeClass("show");
 	jQuery('#pwd_hint').removeClass("hide");						
 	jQuery('#error_bar_3').removeClass("hide");
-	jQuery('#lbl_mem_password').addClass("add_field_heigh");           
+	jQuery('#lbl_mem_password').addClass("add_field_heigh");    
+	jQuery('#error_displayed').val(1);    		       
 	flag = false;
 	} else if(passwordValidate(jQuery('#mem_password').val())) {
 		jQuery('#mem_password').css("border-bottom","0px");           			
@@ -220,7 +222,8 @@ function validate_form3(){
 		jQuery('#mem_password').val('');
 		var p = passwordValidate(jQuery('#mem_password').val());
 		jQuery('#error_bar_3').removeClass("hide");  
-		jQuery('#lbl_mem_password').addClass("add_field_heigh");          			      
+		jQuery('#lbl_mem_password').addClass("add_field_heigh");  
+		jQuery('#error_displayed').val(1);        			      
 		flag = false;
 	} else {
 		
@@ -778,8 +781,10 @@ function passwordValidate(pswd)
 		error = 1;
        htmltag += '1 Number</br>';
     }
+	
+	if(jQuery("#error_displayed").val()==1){	
 
-    if (error == 1) {
+    	if (error == 1) {
 		
 		jQuery("#pwd_hint").html(htmltag);
 		jQuery('#pwd_hint').addClass("error_box_req");
@@ -798,8 +803,27 @@ function passwordValidate(pswd)
 	  jQuery('#pwd_hint').addClass("hide");	 
       return false;
     }
+	
+	}else{
+		
+		if (error == 1) {
+		
+		jQuery("#req-text1").html("Required:");
+		jQuery("#req-text2").html(htmltag);
+		jQuery('#pwd_hint1').removeClass("hide");	
+		jQuery('#pwd_hint1').addClass("show");		
+      return true;
+    } else {
 
-  }
+	  jQuery('#pwd_hint1').removeClass("show")
+	  jQuery('#pwd_hint1').addClass("hide");
+
+      return false;
+    }
+		
+		
+	}
+}
   
 function invite_friend_user_skip()
 {
@@ -968,16 +992,47 @@ function step_back(id)
 		jQuery('#screen_slide_10').addClass("hide");			
 		jQuery('#screen_slide_10').removeClass("show");
 	
-	}
-	else if(id==12){
+	}else if(id==12){
 		
 		jQuery('#screen_slide_11').addClass("show");			
 		jQuery('#screen_slide_11').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("show");
 	
+	}else if(id==14){
+		
+		jQuery('#screen_slide_1').addClass("show");			
+		jQuery('#screen_slide_1').removeClass("hide");			
+		jQuery('#screen_slide_14').addClass("hide");			
+		jQuery('#screen_slide_14').removeClass("show");
+	
+	}else if(id==14){
+		
+		jQuery('#screen_slide_1').addClass("show");			
+		jQuery('#screen_slide_1').removeClass("hide");			
+		jQuery('#screen_slide_15').addClass("hide");			
+		jQuery('#screen_slide_15').removeClass("show");
+	
 	}
+
 }
+
+function show_privacy_policy()
+{
+	jQuery('#screen_slide_14').addClass("show");			
+	jQuery('#screen_slide_14').removeClass("hide");			
+	jQuery('#screen_slide_1').addClass("hide");			
+	jQuery('#screen_slide_1').removeClass("show");	
+}
+
+function show_term_and_condition()
+{
+	jQuery('#screen_slide_15').addClass("show");			
+	jQuery('#screen_slide_15').removeClass("hide");			
+	jQuery('#screen_slide_1').addClass("hide");			
+	jQuery('#screen_slide_1').removeClass("show");	
+}
+
 
 
 function hide_error(id)
@@ -1005,15 +1060,29 @@ function label_up(id)
 $(document).ready(function(e) {
 	
 	
-   $( "#phone" ).keyup(function() {
-  
+	
+	$('#phone').mask('(000) 000-0000'); 
+   /*$( "#phone" ).keyup(function() {
+	   
+	    
 
-     $(this).val(function(i, text) {
-        text = text.replace(/(\d\d\d)(\d\d\d)(\d\d\d\d)/, "($1) $2-$3");
+     $(this).val(function(i, text) {	
+	 if(text.isInteger(text))
+	 {
+		
+	 }
+	 	
+		 if(text.length == 3 ){
+        	text = text.replace(/(\d\d\d)/, "($1)-");			 
+		 } else if(text.length == 7) { 
+        	text = text.replace(/(\d\d\d)/, "$1-");		 
+		 }else{
+        	text = text.replace(/(\d\d\d\d)/, "$1");
+		 }
         return text;
     });
   
-}); 
+}); */
 });
 
 function validate_email(email){
@@ -1141,8 +1210,8 @@ function validate_email(email){
     
     
     <div class="privacy">
-      <p>By signing up, you agree to the our <a href="https://www.selfiestyler.com/main/terms-conditions/">terms and 
-conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/privacypolicy/">privacy policy.</a></p>
+      <p>By signing up, you agree to the our <a href="javascript:" onclick="show_term_and_condition();">terms and 
+conditions</a> and you have read our <a href="javascript:" onclick="show_privacy_policy();">privacy policy.</a></p>
     </div>
     <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();">Next</a>    
       <div class="privacy">
@@ -1161,7 +1230,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 </div>
 <div class="container">
     <div class="Get_activated">
-      <p>Please give us your email. It will be your login name</p>
+      <p>Please give us your email. It will be your login name.</p>
     </div>
     <div class="gap_5"></div>
     
@@ -1193,7 +1262,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 </div>
 <div class="container">
     <div class="Get_activated">
-      <p>Let's protect your account protected</p>
+      <p>Let's protect your account protected.</p>
     </div>
     <div class="gap_2"></div>
      <div style="position:relative;" id="tab_lbl_mem_password" onclick="label_up(this.id);">
@@ -1203,15 +1272,16 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     
     
     <div class="req_box_div show" id="pwd_hint1">
-    <div class="req_text" >Required:</div>
-    <div class="req_text_1">8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    <div class="req_text" id="req-text1">Required:</div>
+    <div class="req_text_1" id="req-text2">8 Characters</br>1 Capitol Letter</br>1 Number</div>
     </div>
 <!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
-    <div class="error_box_req hide" id="pwd_hint">8 Characters</br>1 Capitol Letter</br>1 Number</div>
+    <div class="error_box_req hide" id="pwd_hint">8 Characters</br>1 Capital Letter</br>1 Number</div>
      <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
     <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
+    <input type="hidden" name="error_displayed" id="error_displayed" value="0" />
     </div>
     <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form3();">Create new password</a>
 </div>
@@ -1226,15 +1296,15 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
 </div>
 <div class="container">  
     <div class="Get_activated">
-      <p>Connect with us to get started</p>
+      <p>Connect with us to get started.</p>
     </div>
     <div class="Get_text">
-      <p>In order for SelfieStyler to work effectively, we need your measurements. Please sign up to attend a fitting session at a activation event. We'll notify you when we'll be in your area</p>
+      <p>In order for SelfieStyler to work effectively, we need your measurements. Please sign up to attend a fitting session at a activation event. We'll notify you when we'll be in your area.</p>
     </div>
  	<div style="position:relative;" id="tab_lbl_phone" onclick="label_up(this.id);">
     <label for="inputphone" class="" id="lbl_phone" >PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="text" autocomplete="off" id="phone" maxlength="10" name="phone" class="form-control phone" >
+    <input type="text" autocomplete="off" id="phone" maxlength="14" name="phone" class="form-control phone" >
     </div>
      <div style="position:relative;" id="tab_lbl_zip" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_zip">ZIP CODE</label>
@@ -1291,7 +1361,7 @@ conditions</a> and you have read our <a href="https://www.selfiestyler.com/main/
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
     <div class="request_text">
-      <p>You’re all set up lets get stylin!</p>
+      <p>You're all set up lets get styling!</p>
     </div>
     <a class="btn btn-md btn-primary btn-block" href="#signin">I'am ready let's go</a>
     <div class="gap_4"></div>
@@ -1433,6 +1503,285 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>We send you an confirmation email. We will make sure to update you when the app is ready for you.</p>
     </div>
    <!-- <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>-->
+</div>
+</div>
+
+
+<style>
+.post-content p{
+ color:#fff;	
+}
+</style>
+
+<div class="screen_7000 hide" id="screen_slide_14">
+    <div class="create_acc">
+    <div class="arrow"><a href="#screen_slide_0" onclick="step_back(14);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+      <p>SelfieStyler Privacy Policy</p>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>
+        SelfieStyler Privacy Policy
+        </p>
+    </div>
+   <!-- <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>-->
+   <div class="post-content">				
+<p>Ginman Group Inc. d/b/a SelfieStyler (“SelfieStyler”). (“SelfieStyler”) considers your privacy important and is committed to protecting your online privacy. This privacy policy is intended to cover the various websites and applications through which SelfieStyler obtains information, including “mini sites” displayed through our third-party website partners and “mini applications” displayed on third-party websites (each a “site” or “application”). SelfieStyler reserves the right to update the sites, applications and privacy policy at any time and without notice. We may modify this privacy policy from time to time, and the modified privacy policy will be effective upon posting. Please return to this page frequently and check the “Updated” date above to make sure you understand and agree to the latest privacy policy. Continued access of this site or application by you will constitute your acceptance of any changes or revisions to the privacy policy.</p>
+<p>Your use of this site or application signifies your acceptance of and your agreement to the terms of this privacy policy. In addition, by your use of this site or application, you are consenting to our use of your information as described in this policy. If you have any questions or comments about our privacy policy or our use of information, please send an e-mail to membersupport@selfiestyler.com or write us at:</p>
+<p>&nbsp;</p>
+<p>Member Care Team<br>
+c/o SelfieStyler, Inc.<br>
+250 East Wisconsin Ave.<br>
+Milwaukee,&nbsp;Wisconsin&nbsp;53202<br>
+United States</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Children’s Privacy Statement</h4>
+<p>This site or application is directed to teenagers and adults and is not directed to children under the age of 13. SelfieStyler’s sites and applications are designed to fully comply with the requirements of the Children’s Online Privacy Protection Act of 1998 (“COPPA”). In accordance with COPPA, this site or application is intended only for those who are age 13 or above.</p>
+<p>We do not knowingly solicit or collect personally identifiable information from children under the age of 13 on this site or application. SelfieStyler reserves the right, by law, to send a one-time response to an e-mail sent by a child under the age of 13 if that child sent an e-mail to SelfieStyler, with or without parental consent, and identifies his or her age. If we receive an e-mail from someone who identifies themselves as being under the age of 13, we will reply to the e-mail and then delete any personally identifiable information from our database. If we discover that we have inadvertently collected or received personally identifiable information from a user under the age of 13, we will take all reasonable measures to delete such information from our records.</p>
+<p>In general, we do not collect or use any online contact information or identifiable off-line contact information about a child under the age of 13 without prior verifiable parental consent. We do not distribute personally identifiable information about children without verifiable parental consent. We do not give children the ability to post or distribute personal information without prior verifiable parental consent.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of Information Collected or Stored as you Use the Service</h4>
+<p>We may use various methods and technologies to store or collect Usage Information (“Tracking Technologies”). Tracking Technologies may set, change, alter or modify settings or configurations on your device. A few of the Tracking Technologies include, without limitation, the following (and subsequent technology and methods later developed):</p>
+<p><strong>Cookies</strong>. A cookie is a data file placed on a device when it is used to visit the site or application. A Flash cookie (or locally shared object) is a data file placed on a device via the Adobe Flash plug-in that may be built-in to or downloaded by you to your device. HTML5 cookies can be programmed through HTML5 local storage. Unlike Flash cookies, HTML5 cookies do not require a plug-in. Regular cookies may generally be disabled or removed by tools that are available as part of most commercial browsers, and in some but not all instances can be blocked in the future by selecting certain settings. Each browser you use will need to be set separately and different browsers offer different functionality and options in this regard. Also, these tools may not be effective with regard to Flash cookies or HTML5 cookies. For information on disabling Flash cookies, go to Adobe’s web site www.adobe.com. Please be aware that if you disable or remove cookies, Flash cookies, or HTML5 cookies on your device, some parts of our site or application may not function properly, and that when you revisit our site or application your ability to limit cookies is subject to your browser settings and limitations.</p>
+<p><strong>Web Beacons</strong>. Small graphic images or other web programming code called web beacons (also known as “1×1 GIFs” or “clear GIFs”) may be included in our site or application’s pages and messages. Web beacons may be invisible to you, but any electronic image or other web programming code inserted into a page or e-mail can act as a web beacon. Web beacons or similar technologies may be used for a number of purposes, including, without limitation, to count visitors to the site or application, to monitor how users navigate the site or application, to count how many e-mails that were sent were actually opened or to count how many particular articles or links were actually viewed.</p>
+<p>We may use Tracking Technologies for a variety of purposes, including:</p>
+<p><strong>Strictly Necessary</strong>. We may use cookies or other Tracking Technologies that we consider are strictly necessary to allow you to use and access our site or application, including cookies required to prevent fraudulent activity, improve security or allow you to make use of shopping cart functionality.</p>
+<p><strong>Performance Related</strong>. We may use cookies or other Tracking Technologies that are useful in order to assess the performance of the site or application, including as part of our analytic practices or otherwise to improve the content, products or services offered through the site or application.</p>
+<p><strong>Functionality Related</strong>. We may use cookies or other Tracking Technologies that are required to offer you enhanced functionality when accessing the site or application, including identifying you when you sign in to our site or application or keeping track of our specified preferences, including in terms of the presentation of content on our site or application.</p>
+<p><strong>Targeting Related</strong>. We may use Tracking Technologies to deliver content, including ads, relevant to your interests on our site or application and third-party sites based on how you interact with our advertisements or content. This includes using Tracking Technologies to understand the usefulness to you of the advertisements or content that have been delivered to you.</p>
+<p>There may be other Tracking Technologies now and later devised and used by us in connection with the site or application. Further, third parties may use Tracking Technologies in connection with our site or application, which may include the collection of information about your online activities over time and across third-party web sites or online services. We may not control those Tracking Technologies and we are not responsible for them. However, you consent to potentially encountering third party Tracking Technologies in connection with use of our site or application and accept that our statements under this Privacy Policy do not apply to the Tracking Technologies or practices of such third parties. Also, various third parties are developing or have developed signals or other mechanisms for the expression of consumer choice regarding the collection of information about an individual consumer’s online activities over time and across third-party web sites or online services (e.g., browser do not track signals). Currently, we do not monitor or take any action with respect to these signals or other mechanisms.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of Internet Protocol Address</h4>
+<p>An Internet Protocol (IP) address is a unique number automatically assigned to your computer when it accesses the Internet or another computer network. Web servers and network devices automatically identify your computer by its IP address. We may use your IP address for several reasons including to help diagnose problems with our servers, administer our site or application, help identify you and your shopping cart, compile aggregate information and gather broad demographic information.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of Registration Information</h4>
+<p>We do not require anyone to disclose personal information to merely visit one of our sites or applications. However, our sites and applications may contain special features and privileges for those who do register. The registration areas of our sites and applications require you to supply contact information which may include name, e-mail address, and demographic information, such as your ZIP or postal code, age, or income level. When you provide this information to us, you are no longer anonymous. We may use this information to send you promotional materials from our company and from some of our partners. However, users may choose to opt out of these promotional e-mail messages at any time. (See Opt Out/Opt In, below.)</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of Demographic Information</h4>
+<p>We also collect demographic and profile data that we use to tailor your experience at our sites and on our applications. We may use this data to show you products and content that we think you might be interested in and displaying products and content according to your preferences. This information may be shared with our partners on an aggregate basis only.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Placing an Order and Use of Order Information</h4>
+<p>Only adults who are 18 and over may purchase a product or service from one of our sites. When you place an order, SelfieStyler collects information such as customer’s name, billing address, shipping address, and credit card information. We may also request other demographic information. Your demographic data is collected to personalize future visits by displaying the content we feel would interest you most. The contact information provided is used to fulfill orders, as well as to send company information and promotional material from our partners. You can opt out or opt in at any time. (See Opt Out/Opt In, below.) Your credit card information is used for the sole purpose of processing the transaction for the products and/or services ordered.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Agents</h4>
+<p>We employ other companies and individuals to perform functions on our behalf. These include, but are not limited to, processing credit card transactions, fulfilling orders, delivering packages, sending postal mail and e-mail, providing marketing assistance, etc. These agents may have access to personally identifiable information, but they are contractually prohibited from using it for any other purpose.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of User Submitted/Uploaded Photos</h4>
+<p>Some of our sites and applications allow the user to make over or alter their own image. To make use of this ability to allow the user to make over or alter their own image, the user can submit/upload a personal photo for use in the application. These images and relevant product information will only be used and viewed by the user across applications, services, and devices unless the user chooses to share them. These images will not be shared with or sold to any third-party under any circumstances. Users are not permitted to submit/upload a personal image and/or photos of others.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of Information Collected in Online Surveys</h4>
+<p>From time to time, we may conduct surveys on our sites or applications. If you decide to participate in our online surveys, you will be required to supply contact and demographic information. SelfieStyler uses this data to send you information about the company. We may also use the information you submit, including your responses to the survey questions, for the purpose(s) identified to you prior to your participation in the survey. In some cases we may publish the results of a survey, but only as aggregate information.</p>
+<p>Furthermore, as we may be conducting certain surveys with our advertisers, sponsors, or other third parties, we may also share the results with them, but in no event will the results personally identify you. We may also use this information to contact you as necessary. However, you may opt out of or opt in to future mailings at any time. (See Opt Out/Opt In, below.) Demographic and profile data are also collected at our sites and on our applications. This data is used to personalize future visits by displaying the content we feel would most interest you.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Use of Information Collected in Contests</h4>
+<p>Our sites or applications may, from time to time, offer special contests. If you decide to participate, you will be required to supply contact and demographic information as well as other information that is relevant to the specific contest. SelfieStyler uses this data to send you information about the company. This information will also be used to select the winner(s), to notify you if you win one of the contests, and may be used otherwise in connection with the administration of the contest.</p>
+<p>SelfieStyler reserves the right to share this information with any of the contest sponsors/partners and to use this information for any purpose disclosed to you in the applicable contest terms and conditions or rules. We may also use this information to contact you as necessary. However, you may opt out of or opt in to future mailings at any time. (See Opt Out/Opt In, below.) Demographic and profile data are also collected at our sites and on our applications, and is used to personalize future visits by displaying the content we feel would most interest you.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Data Security</h4>
+<p>SelfieStyler takes your privacy seriously and has reasonable and appropriate security measures in place to protect against the loss, misuse, disclosure, or alteration of your personally identifiable information. However, as effective as these measures are, we cannot guarantee or warrant the security of any information you disclose or transmit to us online and cannot be responsible for the theft, destruction, or inadvertent disclosure of your personally identifiable information. Thus while we strive to protect your personal information, we also cannot absolutely guarantee the security of any information you provide to us or that the information you supply will not be intercepted while being transmitted to us over the Internet.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Opt Out / Opt In</h4>
+<p>SelfieStyler allows users to opt out of receiving e-mail from us or our partners. To opt out, send an e-mail to: <a href="mailto:membercare@selfiestyler.com?subject=Member%20Email%20Opt-Out%20Request">membercare@selfiestyler.com</a> specifying whether you wish to opt out of e-mail from us, our partners, or both. To opt in, send an e-mail to <a href="mailto:membercare@selfiestyler.com?subject=Member%20Email%20Opt-In%20Request">membercare@selfiestyler.com</a>.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Correct/Update Personal Information</h4>
+<p>SelfieStyler allows you to change or modify your personal information by sending an e-mail requesting such a change or modification to our Customer Service department at <a href="mailto:membercare@selfiestyler.com?subject=Member%20Info%20Change%20Request">membercare@selfiestyler.com</a>.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Disclaimer/Links to External Sites</h4>
+<p>Our sites or applications may contain links to other third-party sites. SelfieStyler does not control nor is it responsible for the content or privacy practices of such sites. The privacy and information collection practices of other companies collecting data are not covered by SelfieStyler’s privacy policy. Please be sure to read the privacy policies of any of these sites prior to providing any information on or to that site. As always, follow common sense when disclosing personal information on any site on the Internet.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Merger, Sale or Bankruptcy</h4>
+<p>In the event that SelfieStyler files for bankruptcy or is sold, or any of its products, including sites or applications, are sold or transferred, all lists and data which contain personally identifiable information and data, will be transferred to the new owner.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Compliance with Law</h4>
+<p>SelfieStyler reserves the right to access and disclose any personally identifiable or non-personally identifiable information if we in good faith believe that such action is necessary in order to (1) comply with applicable laws, lawful government requests and any orders of the court; (2) protect or defend our legal rights or property, this site or application, or its users; or (3) protect against misuse or unauthorized use of this website or application.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">Contact Us</h4>
+<p>If you have questions or comments about our privacy policy, or the information we collect, please contact us by sending an e-mail to <a href="mailto:membercare@selfiestyler.com?subject=Member%20Privacy%20Policy%20Questions">membercare@selfiestyler.com</a> or sending a letter to the address below.</p>
+<p>If you have any questions about SelfieStyler, please send an e-mail to <a href="mailto:membercare@selfiestyler.com?subject=Member%20General%20Question%20">membercare@selfiestyler.com</a> or call 1.844.769.7895. We may also be reached by mail at the below address.</p>
+<p>&nbsp;</p>
+<p>Member Care Team<br>
+c/o SelfieStyler, Inc.<br>
+250 East Wisconsin Ave.<br>
+Milwaukee,&nbsp;Wisconsin&nbsp;53202<br>
+United States</p>
+<p>&nbsp;</p>
+<h2 data-fontsize="72" data-lineheight="121" style="font-size: 36px; line-height: 60.5px;"></h2>
+<h2 data-fontsize="72" data-lineheight="121" style="font-size: 36px; line-height: 60.5px;">SelfieStyler Copyright and Intellectual Property Policy</h2>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">NOTIFICATION OF COPYRIGHT INFRINGEMENT</h4>
+<p>It is SelfieStyler’s policy, in appropriate circumstances and at its discretion, to disable and/or terminate the accounts of users or subscribers who repeatedly infringe or are repeatedly charged with infringing the copyrights or other intellectual property rights of others.</p>
+<p>In accordance with the Digital Millennium Copyright Act of 1998, the text of which may be found on the&nbsp;<a href="http://www.copyright.gov/legislation/dmca.pdf">U.S. Copyright Office website</a>, SelfieStyler will respond expeditiously to claims of copyright infringement that are reported to SelfieStyler’s Designated Copyright Agent, identified below.</p>
+<p>If you are a copyright owner, or are authorized to act on behalf of one, or authorized to act under any exclusive right under copyright, please report alleged copyright infringements relating to material posted to the SelfieStyler website or mobile application (the “Sites”) by completing the following DMCA Notice of Alleged Infringement and delivering it to SelfieStyler’s Designated Copyright Agent. Upon receipt of the Notice as described below, SelfieStyler will take whatever action, in its sole discretion, it deems appropriate, including removal of the challenged material from the Sites.</p>
+<h3 data-fontsize="30" data-lineheight="36"></h3>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">DMCA NOTICE OF ALLEGED INFRINGEMENT (“NOTICE”)</h4>
+<ol>
+<li>Identify the copyrighted work that you claim has been infringed, or – if multiple copyrighted works are covered by this Notice – you may provide a representative list of the copyrighted works that you claim have been infringed.</li>
+<li>Identify the material or activity that you claim is infringing (or to be the subject of infringing activity) and that is to be removed or access to which is to be disabled, and information reasonably sufficient to permit us to locate the material, including at a minimum, if applicable, the URL of the link shown on the Sites where such material may be found.</li>
+<li>Provide your mailing address, telephone number, and, if available, email address.</li>
+<li>Include both of the following statements in the body of the Notice, if they are true:</li>
+</ol>
+<p>“I hereby state that I have a good faith belief that the disputed use of the copyrighted material is not authorized by the copyright owner, its agent, or the law (e.g., as a fair use).”</p>
+<p>“I hereby state that the information in this Notice is accurate and, under penalty of perjury, that I am the owner, or authorized to act on behalf of the owner, of the copyright or of an exclusive right under the copyright that is allegedly infringed.”</p>
+<ol start="5">
+<li>Provide your full legal name and your electronic or physical signature.</li>
+<li>Deliver this Notice, with all items completed, to SelfieStyler’s Designated Copyright Agent:</li>
+</ol>
+<p>Copyright Agent</p>
+<p>c/o SelfieStyler, Inc.<br>
+250 East Wisconsin Ave.</p>
+<p>Milwaukee,&nbsp;Wisconsin&nbsp;53202</p>
+<p>United States</p>
+<p>1.844.769.7895</p>
+<p>NOTE: For faster handling of your notices, we strongly recommend that you email us at <a href="mailto:membersupport@selfiestyler.com?subject=Copyright%20Agent%20Request">membersupport@selfiestyler.com</a>.</p>
+<h3 data-fontsize="30" data-lineheight="36"></h3>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">NOTIFICATION OF TRADEMARK INFRINGEMENT</h4>
+<p>If you believe that your trademark (the “Mark”) is being used on the Sites by a user in a way that constitutes trademark infringement, please provide SelfieStyler’s Designated Copyright Agent (specified above) with the following information:</p>
+<ol>
+<li>Your full legal name and your electronic or physical signature.</li>
+<li>Information reasonably sufficient to permit SelfieStyler to contact you or your authorized agent, including a name, mailing address, telephone number and, if available, an email address.</li>
+<li>Identification of the Mark(s) alleged to have been infringed, including (i) for registered Marks, a copy of each relevant federal trademark registration certificate or (ii) for common law or other Marks, evidence sufficient to establish your claimed rights in the Mark, including the nature of your use of the Mark, and the time period and geographic area in which the Mark has been used by you.</li>
+<li>Information reasonably sufficient to permit SelfieStyler to identify the use being challenged.</li>
+<li>Include both of the following statements in the body of the Notice:</li>
+</ol>
+<p>“I hereby state that I have not authorized the challenged use, and I have a good- faith belief that the challenged use is not authorized by law.”</p>
+<p>“I hereby state under penalty of perjury that all of the information in the notification is accurate and that I am the owner of the Mark, or authorized to act on behalf of the owner of the Mark.”</p>
+<p>Upon receipt of notice as described above, SelfieStyler will seek to confirm the existence of the Mark on the Sites, notify the registered user who posted the content including the Mark, and take whatever action, in its sole discretion, it deems appropriate, including temporary or permanent removal of the Mark from the Sites.</p>
+<h3 data-fontsize="30" data-lineheight="36"></h3>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;">NOTIFICATION OF OTHER INTELLECTUAL PROPERTY (“IP”) INFRINGEMENT</h4>
+<p>If you believe that some other IP right of yours is being infringed by a user, please provide SelfieStyler’s Designated Copyright Agent (specified above) with the following information:</p>
+<ol>
+<li>Your full legal name and your electronic or physical signature.</li>
+<li>Information reasonably sufficient to permit SelfieStyler to contact you or your authorized agent, including a name, mailing address, telephone number and, if available, an email address.</li>
+<li>Identification of the IP alleged to have been infringed, including (i) a complete description or explanation of the nature of the IP, (ii) evidence that you own the IP in the relevant jurisdiction, including copies of relevant patents, registrations, certifications or other documentary evidence of your ownership, and (iii) a showing sufficient for SelfieStyler to determine without unreasonable effort that the IP has been infringed.</li>
+<li>Information reasonably sufficient to permit SelfieStyler to identify the use being challenged.</li>
+<li>Include both of the following statements in the body of the Notice:</li>
+</ol>
+<p>“I hereby state that I have not authorized the challenged use, and I have a good- faith belief that the challenged use is not authorized by law.”</p>
+<p>“I hereby state under penalty of perjury that all of the information in the notification is accurate and that I am the owner of the IP, or authorized to act on behalf of the owner of the IP.”</p>
+<p>Upon receipt of notice as described above, SelfieStyler will seek to confirm the existence of the IP on the Sites, notify the user who posted the content including the IP, and take whatever action, in its sole discretion, it deems appropriate, including temporary or permanent removal of the IP from the Sites.</p>
+<p>&nbsp;</p>
+							</div>
+      
+ 
+</div>
+</div>
+
+
+<div class="screen_7000 hide" id="screen_slide_15">
+    <div class="create_acc">
+    <div class="arrow"><a href="#screen_slide_0" onclick="step_back(15);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
+      <p>SelfieStyler Terms &amp; Conditions</p>
+    </div>
+<div class="container">
+
+    <div class="Get_activated">
+      <p>
+SelfieStyler Terms &amp; Conditions
+</p>
+    </div>
+   <!-- <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>-->
+   <div class="post-content">
+				
+<p>Ginman Group, Inc. dba “SelfieStyler” (“SelfieStyler” or “we”) provides a platform where users can share their look with a community through our website, accessible at selfiestyler.com&nbsp;(the “Site”) and as an application (the “App”) (collectively, the “Services”). Please read carefully the following terms and conditions (“Terms”) and our&nbsp;Privacy Policy [which is incorporated by reference into these Terms] because they form a legal agreement between you and SelfieStyler, for use of the Services. By using any or all of the Services you are agreeing to be bound by these Terms.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>MODIFICATION</strong></h4>
+<p>We reserve the right to modify or terminate the Services or to modify these Terms, at any time and without prior notice.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>ELIGIBILITY</strong></h4>
+<p>You must be 13 years of age or older to use SelfieStyler.</p>
+<p>We reserve the right to refuse service to anyone for any reason at any time.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>ACCOUNT REGISTRATION</strong></h4>
+<p>In order to access certain features of Services and to post any Content (defined below) on or through the Services you must register to create a SelfieStyler account.</p>
+<p>You may register directly via the Site or App or by logging into your account with certain third party social media or social networking sites (“SNS”) (including, but not limited to, Facebook) via the Site or App, as described herein. If you decide to register through an SNS, we will extract the personal information you have provided to the SNS (such as your “real” name, email address and other information you make publicly available via the SNS) from the account you have with the applicable SNS and use that information to create your account. The specific information that we extract may depend on the privacy settings you have with the SNS. You consent to our access to and collection of such personal information about you.</p>
+<p>During the registration process, you will establish a username and a password. You agree that you won’t select a user name that is the name of another person or entity with the intention of impersonating that person or entity or of causing confusion about your account. You agree to provide accurate, current and complete information during the registration process and to keep such information up to date such information to keep it accurate, current and complete, and if you don’t we reserve the right to suspend or terminate your account.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>ACCEPTABLE USE POLICY</strong></h4>
+<p>We grant you the right to use the Services, and the corresponding functionality, solely in accordance with these Terms.</p>
+<ul>
+<li>You are solely responsible for your conduct and any Content that you submit, post, and display on or through the Services.</li>
+<li>You are responsible for safeguarding your password.</li>
+<li>You are responsible for any activities or actions under your account (including under your screen name), whether or not you have authorized such activities or actions. You will immediately notify SelfieStyler of any unauthorized use of your account.</li>
+<li>You agree not to post, upload, publish, submit or transmit any Content that (i) infringes, misappropriates or violates a third party’s patent, copyright, trademark, trade secret, moral rights or other intellectual property rights, or rights of publicity or privacy; (ii) violates, or encourages any conduct that would violate, any applicable law or regulation or would give rise to civil liability; (iii) is fraudulent, false, misleading or deceptive; (iv) is defamatory, obscene, pornographic, vulgar or offensive; (v) promotes discrimination, bigotry, racism, hatred, harassment or harm against any individual or group; (vi) is violent or threatening or promotes violence or actions that are threatening to any person or entity; or (vii) promotes illegal or harmful activities or substances.</li>
+<li>You also agree not to (i) post nude, partially nude, or sexually suggestive images or other Content; (ii) abuse, harass, threaten, intimidate, impersonate, or misrepresent your affiliation with other SelfieStyler users or third parties; or (iii) use the Services for any illegal or unauthorized purpose.</li>
+<li>You must not modify, adapt or hack SelfieStyler or modify another website or application so as to falsely imply that it is associated with SelfieStyler.</li>
+<li>You must not access, tamper with, or use non-public areas of the Site or App, SelfieStyler’s computer systems, or the technical delivery systems of SelfieStyler’s providers.</li>
+<li>You must not attempt to decipher, decompile, disassemble or reverse engineer any of the software used to provide the Site, App or Content.</li>
+<li>You must not crawl, scrape, or otherwise cache, collect or store any content from SelfieStyler including but not limited to Content or personally identifiable information, including user profiles and images.</li>
+<li>You must not attempt to access or search the Services or Content or download Content from the Services through the use of any engine, software, tool, agent, device or mechanism (including spiders, robots, crawlers, data mining tools or the like) other than the software and/or search agents provided by SelfieStyler or other generally available third party web browsers.</li>
+<li>You agree not to use, display, mirror or frame the Site or App, or any individual element within the Services, SelfieStyler’s name, any SelfieStyler trademark, logo or other proprietary information, or the layout and design of any page or form contained on a page, without SelfieStyler’s express written consent.</li>
+<li>You must not send any unsolicited or unauthorized advertising, promotional materials, email, junk mail, spam, chain letters or other form of solicitation or create or submit any unwanted or inappropriate comments.</li>
+<li>You must not interfere with, or attempt to interfere with, the access of any user, host or network, including, without limitation, by transmitting any worms or viruses or any code of a destructive nature, or overloading, flooding, spamming, or mail-bombing the Services.</li>
+<li>You must not encourage or enable any other individual to do any of the foregoing.</li>
+</ul>
+<p>If you breach any of these Terms, we may suspend or disable or terminate your account, at our sole discretion and without prior notice to you. We may, but have no obligation to, remove or disable access to any Content or accounts that we determine in our sole discretion are unlawful, offensive, threatening, libelous, defamatory, obscene or otherwise objectionable or violates any party’s intellectual property or privacy rights or violate these Terms.</p>
+<p>SelfieStyler respects copyright laws and expects its users to do the same. It is SelfieStyler’s policy to terminate in appropriate circumstances subscribers or other account holders who repeatedly infringe or are believed to be repeatedly infringing the rights of copyright holders. Please see SelfieStyler’s Privacy and IP Policy at:&nbsp;<a href="http://www.selfiestyler.com/main/privacypolicy/">http://www.selfiestyler.com/main/privacypolicy/</a>, for further information.</p>
+<p>We reserve the right to prohibit, reclaim or reassign any user name that becomes inactive, violates a third party’s trademark or other intellectual property or privacy rights, or may mislead other users.</p>
+<p>While SelfieStyler prohibits certain conduct and Content on the Services, you understand and agree that SelfieStyler cannot be responsible for the conduct of persons while using the Services or the Content posted on or through the Services and you nonetheless may be exposed to such materials and that you use the Services at your own risk.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>PROPRIETARY RIGHTS IN CONTENT</strong></h4>
+<p>Our Services will allow you and other users to post, link, share and make available certain information, recommendations, comments, images, and other supported content (“Content”). SelfieStyler does NOT claim ANY ownership rights in the Content that you post on or through the Services. You are responsible for the Content that you post to the Services, including its legality, reliability, and appropriateness. By posting Content to the Services, you grant us the non-exclusive, royalty free, right and license to use, modify, publicly perform, publicly display, reproduce, and distribute such Content on and through the Services in any media formats through any media channels. You agree that this license includes the right for us to make your Content available to other users of the Services, who may also use your Content subject to these Terms. You acknowledge that SelfieStyler performs technical functions necessary to offer the Services, including but not limited to transcoding and/or reformatting Content to allow its use throughout the Services.</p>
+<p>Some of the Services are supported by advertising revenue and may display advertisements and promotions, and you agree that SelfieStyler may place such advertising and promotions on the Services or on, about, or in conjunction with your Content. The manner, mode and extent of such advertising and promotions are subject to change without specific notice to you.</p>
+<p>You represent and warrant that: (i) you own the Content or otherwise have the right to grant the license to SelfieStyler set forth in these Terms, (ii) the posting and use of your Content does not violate the privacy rights, publicity rights, copyrights, contract rights, intellectual property rights or any other rights of any person, and (iii) the posting of your Content does not result in a breach of contract between you and a third party.</p>
+<p>You will not use, copy, adapt, modify, prepare derivative works based upon, distribute, license, sell, transfer, publicly display, publicly perform, transmit, stream, broadcast or otherwise exploit the Services or Content, except as expressly permitted in these Terms. No licenses or rights are granted to you by implication or otherwise under any intellectual property rights owned or controlled by SelfieStyler or its licensors, except for the licenses and rights expressly granted in these Terms.</p>
+<p>SelfieStyler reserves the right to delete any Content for any reason, without prior notice. Consequently, SelfieStyler encourages you to maintain your own backup of your Content. You agree that SelfieStyler is not a backup service and SelfieStyler will not be liable to you for any modification, suspension, or discontinuation of the Services, or the loss of any Content.</p>
+<p>We welcome and encourage you to provide feedback, comments and suggestions for improvements to the Services (“Feedback”). You may submit Feedback by emailing us at <a href="mailto:membersupport@selfiestyler.com?subject=Member%20Feedback%20from%20T&amp;C%20Page">membersupport@selfiestyler.com</a>. You acknowledge and agree that if you submit any Feedback to us, you hereby grant to us a non-exclusive, worldwide, perpetual, irrevocable, fully-paid, royalty-free, sub-licensable and transferable license under any and all intellectual property rights that you own or control to use, copy, modify, create derivative works based upon and otherwise exploit the Feedback for any purpose.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>APP LICENSE</strong></h4>
+<p>Subject to your compliance with these Terms, SelfieStyler grants you a limited non-exclusive, non-transferable license to download and install a copy of the App on a single mobile device or computer that you own or control and to run such copy of the App solely for your own personal use. Furthermore, with respect to any App accessed through or downloaded from the Apple App Store (“App Store Sourced App”), you will use the App Store Sourced App only: (i) on an Apple-branded product that runs iOS (Apple’s proprietary operating system software); and (ii) as permitted by the “Usage Rules” set forth in the Apple App Store Terms of Service. SelfieStyler reserves all rights in and to the App not expressly granted to you under these Terms.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>ACCESSING AND DOWNLOADING THE APP FROM ITUNES</strong></h4>
+<p>The following applies to any App Store Sourced App:</p>
+<ul>
+<li>You acknowledge and agree that (i) these Terms are concluded between you and SelfieStyler only, and not Apple, and (ii) SelfieStyler, not Apple, is solely responsible for the App Store Sourced App and content thereof. Your use of the App Store Sourced App must comply with the App Store Terms of Service.</li>
+<li>You acknowledge that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the App Store Sourced App.</li>
+<li>In the event of any failure of the App Store Sourced App to conform to any applicable warranty, you may notify Apple, and Apple will refund the purchase price for the App Store Sourced App to you and to the maximum extent permitted by applicable law, Apple will have no other warranty obligation whatsoever with respect to the App Store Sourced App. As between SelfieStyler and Apple, any other claims, losses, liabilities, damages, costs or expenses attributable to any failure to conform to any warranty will be the sole responsibility of SelfieStyler.</li>
+<li>You and SelfieStyler acknowledge that, as between SelfieStyler and Apple, Apple is not responsible for addressing any claims you have or any claims of any third party relating to the App Store Sourced App or your possession and use of the App Store Sourced App, including, but not limited to: (i) product liability claims; (ii) any claim that the App Store Sourced App fails to conform to any applicable legal or regulatory requirement; and (iii) claims arising under consumer protection or similar legislation.</li>
+<li>You and SelfieStyler acknowledge that, in the event of any third party claim that the App Store Sourced App or your possession and use of that App Store Sourced App infringes that third party’s intellectual property rights, as between SelfieStyler and Apple, SelfieStyler, not Apple, will be solely responsible for the investigation, defense, settlement and discharge of any such intellectual property infringement claim to the extent required by these Terms.</li>
+<li>You and SelfieStyler acknowledge and agree that Apple, and Apple’s subsidiaries, are third party beneficiaries of these Terms as related to your license of the App Store Sourced App, and that, upon your acceptance of the terms and conditions of these Terms, Apple will have the right (and will be deemed to have accepted the right) to enforce these Terms as related to your license of the App Store Sourced App against you as a third party beneficiary thereof.</li>
+<li>Without limiting any other terms of these Terms, you must comply with all applicable third party terms of agreement when using the App Store Sourced App.</li>
+</ul>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>LINKS</strong></h4>
+<p>The Services may contain links to third-party websites or resources. You acknowledge and agree that SelfieStyler is not responsible or liable for: (i) the availability or accuracy of such websites or resources; or (ii) the Content, products, or services on or available from such websites or resources. Links to such websites or resources do not imply any endorsement by SelfieStyler of such websites or resources or the content, products, or services available from such websites or resources. You acknowledge sole responsibility for and assume all risk arising from your use of any such websites or resources or the Content, products, or services on or available from such websites or resources.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>DISCLAIMERS</strong></h4>
+<p>THE SERVICES AND CONTENT ARE PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED. WITHOUT LIMITING THE FOREGOING, SELFIESTYLER EXPLICITLY DISCLAIMS ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT, AND ANY WARRANTIES ARISING OUT OF COURSE OF DEALING OR USAGE OF TRADE. SELFIESTYLER MAKES NO WARRANTY THAT THE SERVICES OR CONTENT WILL MEET YOUR REQUIREMENTS OR BE AVAILABLE ON AN UNINTERRUPTED, SECURE, OR ERROR-FREE BASIS AND MAKES NO WARRANTY REGARDING THE QUALITY OF THE SERVICES OR CONTENT OR THE ACCURACY, TIMELINESS, TRUTHFULNESS, COMPLETENESS OR RELIABILITY OF ANY CONTENT OBTAINED THROUGH THE SERVICES.</p>
+<p>NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED FROM SELFIESTYLER OR THROUGH THE SERVICES OR CONTENT, WILL CREATE ANY WARRANTY NOT EXPRESSLY MADE HEREIN.</p>
+<p>YOU ARE SOLELY RESPONSIBLE FOR ALL OF YOUR COMMUNICATIONS AND INTERACTIONS WITH OTHER USERS OF THE SERVICES AND WITH OTHER PERSONS WITH WHOM YOU COMMUNICATE OR INTERACT AS A RESULT OF YOUR USE OF THE SERVICES. YOU UNDERSTAND THAT SELFIESTYLER DOES NOT SCREEN OR INQUIRE INTO THE BACKGROUND OF ANY USERS OF THE SERVICES, NOR DOES SELFIESTYLER MAKE ANY ATTEMPT TO VERIFY THE STATEMENTS OF USERS. SELFIESTYLER MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONDUCT OF USERS OF THE SERVICES OR THEIR COMPATIBILITY WITH ANY CURRENT OR FUTURE USERS. YOU AGREE TO TAKE REASONABLE PRECAUTIONS IN ALL COMMUNICATIONS AND INTERACTIONS WITH OTHER USERS AND WITH OTHER PERSONS WITH WHOM YOU COMMUNICATE OR INTERACT AS A RESULT OF YOUR USE OF THE SERVICES, PARTICULARLY IF YOU DECIDE TO MEET OFFLINE OR IN PERSON.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>LIMITATION OF LIABILITY</strong></h4>
+<p>YOU ACKNOWLEDGE AND AGREE THAT, TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE ENTIRE RISK ARISING OUT OF YOUR ACCESS TO AND USE OF THE SERVICES AND CONTENT REMAINS WITH YOU. NEITHER SELFIESTYLER NOR ANY OTHER PERSON OR ENTITY INVOLVED IN CREATING, PRODUCING, OR DELIVERING THE SERVICES OR CONTENT WILL BE LIABLE FOR ANY INCIDENTAL, SPECIAL, EXEMPLARY OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, LOSS OF DATA OR LOSS OF GOODWILL, SERVICE INTERRUPTION, COMPUTER DAMAGE OR SYSTEM FAILURE OR THE COST OF SUBSTITUTE PRODUCTS OR SERVICES, OR FOR ANY DAMAGES FOR PERSONAL OR BODILY INJURY OR EMOTIONAL DISTRESS ARISING OUT OF OR IN CONNECTION WITH THESE TERMS, OR FROM ANY COMMUNICATIONS, INTERACTIONS OR MEETINGS WITH OTHER USERS OF THE SERVICES OR OTHER PERSONS WITH WHOM YOU COMMUNICATE OR INTERACT AS A RESULT OF YOUR USE OF THE SERVICES WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), PRODUCT LIABILITY OR ANY OTHER LEGAL THEORY, AND WHETHER OR NOT SELFIESTYLER HAS BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGE, EVEN IF A LIMITED REMEDY SET FORTH HEREIN IS FOUND TO HAVE FAILED OF ITS ESSENTIAL PURPOSE.</p>
+<p>IN NO EVENT WILL SELFIESTYLER’S AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION WITH THESE TERMS OR FROM THE USE OF OR INABILITY TO USE THE SERVICES OR CONTENT EXCEED FIFTY DOLLARS ($50). THE LIMITATIONS OF DAMAGES SET FORTH ABOVE ARE FUNDAMENTAL ELEMENTS OF THE BASIS OF THE BARGAIN BETWEEN SELFIESTYLER AND YOU. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, SO THE ABOVE LIMITATION MAY NOT APPLY TO YOU.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>CONTROLLING LAW</strong></h4>
+<p>These Terms and any action related thereto will be governed by the laws of the State of New York without regard to its conflict of laws provisions.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>EXPORT CONTROL</strong></h4>
+<p>You agree to comply fully with all U.S. and foreign export laws and regulations to ensure that neither the App Store Sourced App nor any technical data related thereto nor any direct product thereof is exported or re-exported directly or indirectly in violation of, or used for any purposes prohibited by, such laws and regulations. By using the App Store Sourced App, you represent and warrant that: (i) you are not located in a country that is subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a “terrorist supporting” country; and (ii) you are not listed on any U.S. Government list of prohibited or restricted parties.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>DISPUTE RESOLUTION</strong></h4>
+<p>You and SelfieStyler agree that any dispute, claim or controversy arising out of or relating to these Terms or the breach, termination, enforcement, interpretation or validity thereof or the use of the Services (collectively, “Disputes”) will be settled by binding arbitration, except that each party retains the right: (i) to bring an individual action in small claims court and (ii) to seek injunctive or other equitable relief in a court of competent jurisdiction to prevent the actual or threatened infringement, misappropriation or violation of a party’s copyrights, trademarks, trade secrets, patents or other intellectual property rights (the action described in the foregoing clause (ii), an “IP Protection Action”). The exclusive jurisdiction and venue of any IP Protection Action will be the state and federal courts located in the Southern District of New York and each of the parties hereto waives any objection to jurisdiction and venue in such courts. You acknowledge and agree that you and SelfieStyler are each waiving the right to a trial by jury or to participate as a plaintiff or class member in any purported class action or representative proceeding. Further, unless both you and SelfieStyler otherwise agree in writing, the arbitrator may not consolidate more than one person’s claims, and may not otherwise preside over any form of any class or representative proceeding. If this specific paragraph is held unenforceable, then the entirety of this “Dispute Resolution” section will be deemed void. Except as provided in the preceding sentence, this “Dispute Resolution” section will survive any termination of these Terms.</p>
+<p><strong>Arbitration Rules and Governing Law.</strong>&nbsp;The arbitration will be administered by the American Arbitration Association (“AAA”) in accordance with the Commercial Arbitration Rules and the Supplementary Procedures for Consumer Related Disputes (the “AAA Rules”) then in effect, except as modified by this “Dispute Resolution” section. (The AAA Rules are available at www.adr.org/arb_med or by calling the AAA at 1-800-778-7879.) The Federal Arbitration Act will govern the interpretation and enforcement of this Section.</p>
+<p><strong>Arbitration Process.</strong>&nbsp;A party who desires to initiate arbitration must provide the other party with a written Demand for Arbitration as specified in the AAA Rules. (The AAA provides a form Demand for Arbitration at http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175 and a separate form for California residents at http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822.) The arbitrator will be either a retired judge or an attorney licensed to practice law and will be selected by the parties from the AAA’s roster of arbitrators. If the parties are unable to agree upon an arbitrator within seven (7) days of delivery of the Demand for Arbitration, then the AAA will appoint the arbitrator in accordance with the AAA Rules.</p>
+<p><strong>Arbitration Location and Procedure.</strong>&nbsp;Unless you and SelfieStyler otherwise agree, the arbitration will be conducted in the county where you reside. If your claim does not exceed $10,000, then the arbitration will be conducted solely on the basis of the documents that you and SelfieStyler submit to the arbitrator, unless you request a hearing or the arbitrator determines that a hearing is necessary. If your claim exceeds $10,000, your right to a hearing will be determined by the AAA Rules. Subject to the AAA Rules, the arbitrator will have the discretion to direct a reasonable exchange of information by the parties, consistent with the expedited nature of the arbitration.</p>
+<p><strong>Arbitrator’s Decision.</strong>&nbsp;The arbitrator will render an award within the time frame specified in the AAA Rules. The arbitrator’s decision will include the essential findings and conclusions upon which the arbitrator based the award. Judgment on the arbitration award may be entered in any court having jurisdiction thereof. The arbitrator’s award of damages must be consistent with the terms of the “Limitation of Liability” section above as to the types and amounts of damages for which a party may be held liable. The arbitrator may award declaratory or injunctive relief only in favor of the claimant and only to the extent necessary to provide relief warranted by the claimant’s individual claim. If you prevail in arbitration you will be entitled to an award of attorneys’ fees and expenses, to the extent provided under applicable law. SelfieStyler will not seek, and hereby waives all rights it may have under applicable law to recover, attorneys’ fees and expenses if it prevails in arbitration.</p>
+<p><strong>Fees.</strong>&nbsp;Your responsibility to pay any AAA filing, administrative and arbitrator fees will be solely as set forth in the AAA Rules. However, if your claim for damages does not exceed $75,000, SelfieStyler will pay all such fees unless the arbitrator finds that either the substance of your claim or the relief sought in your Demand for Arbitration was frivolous or was brought for an improper purpose (as measured by the standards set forth in Federal Rule of Civil Procedure 11(b)).</p>
+<p><strong>Changes.</strong>&nbsp;Notwithstanding the provisions of the “Modification” section above, if SelfieStyler changes this “Dispute Resolution” section after the date you first accepted these Terms (or accepted any subsequent changes to these Terms), you may reject any such change by sending us written notice (including by email to “[EMAIL ADDRESS]”) within 30 days of the date such change became effective, as indicated in the “Last Updated Date” above or in the date of SelfieStyler’s email to you notifying you of such change. By rejecting any change, you are agreeing that you will arbitrate any Dispute between you and SelfieStyler in accordance with the provisions of this “Dispute Resolution” section as of the date you first accepted these Terms (or accepted any subsequent changes to these Terms).</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>GENERAL</strong></h4>
+<p>All trademarks, service marks, logos, trade names and any other proprietary designations of SelfieStyler used herein are trademarks or registered trademarks of SelfieStyler. Any other trademarks, service marks, logos, trade names and any other proprietary designations are the trademarks or registered trademarks of their respective parties. The failure of SelfieStyler to enforce any right or provision of these Terms will not constitute a waiver of future enforcement of that right or provision. If for any reason a court of competent jurisdiction finds any provision of these Terms invalid or unenforceable, that provision will be enforced to the maximum extent permissible and the other provisions of these Terms will remain in full force and effect. These Terms constitute the entire and exclusive understanding and agreement between SelfieStyler and you regarding the Services and Content. You may not assign or transfer these Terms, by operation of law or otherwise, without SelfieStyler’s prior written consent. SelfieStyler may freely assign or transfer these Terms. Any notices or other communications permitted or required hereunder, including those regarding modifications to these Terms, will be given by SelfieStyler (i) via email (in each case to the address that you provide); or (ii) by posting to the Site or the Application. For notices made by e-mail, the date of receipt will be deemed the date on which such notice is transmitted.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>ACCOUNT CANCELLATION</strong></h4>
+<p>You may cancel your account at any time by sending an email to&nbsp;<a href="mailto:membersupport@selfiestyler.com?subject=Cancel%20Account%20Request">membersupport@selfiestyler.com</a>.</p>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"></h4>
+<h4 data-fontsize="48" data-lineheight="84" style="font-size: 36px; line-height: 63px;"><strong>CONTACTING SELFIESTYLER</strong></h4>
+<p>If you have any questions about these Terms &amp; Conditions, please contact SelfieStyler at&nbsp;<a href="mailto:membersupport@selfiestyler.com?subject=Member%20Question">membersupport@selfiestyler.com</a>.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+							</div>
+      
+ 
 </div>
 </div>
 </form>
