@@ -660,8 +660,8 @@ class ProductSpecificationHelper {
         foreach ($specs['sizes'] as $size => $fit_points ) {
             foreach ($fit_points as $fp => $measure ) {
                 if(strpos($fp,'thigh')){
-                    $specs['sizes'][$size][$fp]['min_calc'] = $specs['sizes'][$size][$fp]['fit_model'] - ($specs['sizes'][$size][$fp]['grade_rule_stretch'] * 2.5 * 2);
-                    $specs['sizes'][$size][$fp]['max_calc'] = $specs['sizes'][$size][$fp]['fit_model'] + ($specs['sizes'][$size][$fp]['grade_rule_stretch'] * 2.5 * 2);
+                    $specs['sizes'][$size][$fp]['min_calc'] = $this->to_frac($measure['fit_model'] - ($measure['grade_rule_stretch'] * 2.5 * 2));
+                    $specs['sizes'][$size][$fp]['max_calc'] = $this->to_frac($measure['fit_model'] + ($measure['grade_rule_stretch'] * 2.5 * 2));
                 }
             }
         }
@@ -1423,6 +1423,13 @@ class ProductSpecificationHelper {
           $product_sorted_size_tilte[] = $product_size_array[$size_title_key]; 
         }
         return $product_sorted_size_tilte;
+    }
+    
+     #------------------------------------------------------------------
+    
+     function to_frac($number, $denominator = 16) {
+        $x = floor($number * $denominator);
+        return $x / $denominator;         
     }
 }
 
