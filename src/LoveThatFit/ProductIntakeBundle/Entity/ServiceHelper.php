@@ -176,4 +176,14 @@ class ServiceHelper {
     {
         return $this->container->get('doctrine');
     }
+    
+    
+    #-------------------------------------------
+    
+    public function getPhotogradingOriginalItem($product){        
+        $item_id = $this->container->get('service.repo')->getPhotogradingOriginalItem($product);            
+        $item = $this->container->get('admin.helper.product_item')->find($item_id[0]);         
+        return $item;
+    }
+    
 }

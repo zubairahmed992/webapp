@@ -508,17 +508,22 @@ class ServiceController extends Controller {
     }
 #------------------------------------------/pi/ws/product_item_image_coordinates/{item_id}
     public function productItemImageDataAction($item_id) {
+        
+        #----------- get original size/color through which other size photograted
+        $item = $this->get('admin.helper.product_item')->find($item_id);                                        
+        $product = $item->getProduct();
+        $original_item = $this->get('service.helper')->getPhotogradingOriginalItem($product);
+        
         $mh = new MannequenHelper();
         $m_co = $mh->getCoordinates();
-        $fp_coor = array();        
-        $item = $this->get('admin.helper.product_item')->find($item_id);                                
+        $fp_coor = array();                
         #return new Response($item->getAbsoluteOriginalPath());        
         if(!$item){            
             return $this->response_str('Product Item not found!', false);
         }
         $img = null;
-        if(file_exists($item->getAbsoluteOriginalPath())){
-            $img = imagecreatefrompng($item->getAbsoluteOriginalPath());   
+        if(file_exists($original_item->getAbsoluteOriginalPath())){
+            $img = imagecreatefrompng($original_item->getAbsoluteOriginalPath());   
         }else{
             return $this->response_str('Product Image file not found!', false);
         }
