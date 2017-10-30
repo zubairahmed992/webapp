@@ -226,8 +226,10 @@ class OrderController extends Controller {
                                 'sales_tax' => $sales_tax,
                                 'email' => $user->getEmail()
                             );
-
-            $this->sendEmailToUserOrderShipped($data_order);
+            
+            if(!empty($tracking_number)) {
+                $this->sendEmailToUserOrderShipped($data_order);
+            }
             /*********************** send emai user to order shipped end here*********************/
 
             return new Response(json_encode(array('shipping_status' => $ship_status)), 200, ['Content-Type' => 'application/json']);
