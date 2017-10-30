@@ -627,8 +627,46 @@ class ProductSpecificationHelper {
     }
     
     ###################################################################
+#-------------------> Dynamic calculations     
+    public function dynamicChange($decoded) {
+        $specs_obj = $this->find($decoded['pk']);
+        $specs = json_decode($specs_obj->getSpecsJson(), true);
+        #----------------
+        switch ($decoded['type']) {
+            case 'double_thigh_grade_rule_min_max': #change---> 1
+                $specs = $this->double_thigh_grade_rule_min_max($specs);
+                break;
+            default:
+                $specs = null;
+                break;
+        }
+        
+        #----------------
+        if ($specs) {
+            $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
+            $specs_obj->setSpecsJson(json_encode($specs));
+            return $this->update($specs_obj);
+        } else {
+            return array(
+                'message' => 'Nothing to update!',
+                'message_type' => 'error',
+                'success' => false,
+            );
+        }
+    }
 
-
+#change---> 1
+    private function double_thigh_grade_rule_min_max($specs) {
+        foreach ($specs['sizes'] as $size => $fit_points ) {
+            foreach ($fit_points as $fp => $measure ) {
+                if(strpos($fp,'thigh')){
+                    $specs['sizes'][$size][$fp]['min_calc'] = $specs['sizes'][$size][$fp]['fit_model'] - ($specs['sizes'][$size][$fp]['grade_rule_stretch'] * 2.5 * 2);
+                    $specs['sizes'][$size][$fp]['max_calc'] = $specs['sizes'][$size][$fp]['fit_model'] + ($specs['sizes'][$size][$fp]['grade_rule_stretch'] * 2.5 * 2);
+                }
+            }
+        }
+        return $specs;
+    }
     #----------------> return array of fit model ratio to garment dimension
     private function compute_fit_model_ratio($specs, $fit_model_obj = null) {
         if ($fit_model_obj == null) {

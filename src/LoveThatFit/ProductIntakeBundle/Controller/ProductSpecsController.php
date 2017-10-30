@@ -186,8 +186,7 @@ class ProductSpecsController extends Controller
     }
      #------------------------------------- /product_intake/Prod_specs/change_dynamic/{id}/{type}
     public function changeDynamicAction($id, $type){
-        #return new Response($type);
-        $ps = $this->get('pi.product_specification')->find($id);
+        $ps = $this->get('pi.product_specification')->dynamicChange(array('pk'=>$id, 'type'=>$type ));        
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id, 'tab' => 'b')));       
     }
     
