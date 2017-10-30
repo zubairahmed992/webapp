@@ -36,7 +36,6 @@
 <input type="hidden" class="diff" value="" data-value=""  />
 
 <!-- Mask Creation with body parts -->
-
 <input id="dm_body_parts_details_json" type="hidden" value="{{ bra_size_body_shape }}" />
 <input id="user_bust_px" type="hidden" value="392" />
 <input id="user_waist_px" type="hidden" value="319" />
@@ -60,58 +59,7 @@
         <img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" />
      </div>
 </div>
-{#     
-<div class="navigation1" id="cavnas_nav">
-    <a id="centerline">Center Line</a>
-    <a id="showHide">Index</a>
-    <a class="nav_menu" onClick="move_left();">Left</a>
-    <a class="nav_menu" onClick="move_right();">Right</a>
-    <a class="nav_menu" onClick="move_up();">Up</a>
-    <a class="nav_menu" onClick="move_down();">Down</a>
-    <a class="nav_menu" onClick="rotate_left();">Rotate Left</a>
-    <a class="nav_menu" onClick="rotate_right();">Rotate Right</a>
-    <a onClick="zoom_in();">Zoom In</a>
-    <a onClick="zoom_out();">Zoom Out</a>
-    <a id="end"  onClick="save();">Save</a>
-    <a class="reset_mask" href="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id, 'mode': 'refresh'}) }} " title="refresh mask">Reset Mask</a>
-    <span id="activate_btn">
-        <a href='#' id='btn_confirm' name='btn_confirm'>Confirm & Activate</a>
-    <input type="hidden" value="{{ path('support_archive_to_live', {'archive_id': archive.id}) }}" id="archive_to_live_url">
-     {% if (archives is defined)%}
-         <input type="hidden" value="{{ path('support_user_profile_archives', {'user_id':entity.id, 'archive_id': archive.id}) }}" id="redirect_url">
-     {% else %}
-         <input type="hidden" value="{{ path('support_pending_user') }}" id="redirect_url">
-     {% endif %}
-    </span>
-     <div style="text-align:center;"> <div class="row"></div>
-         <div class="span6" style="text-align:left;">
-         <ul class="liststyle">
-            <li><button type="button" id="editOriginal" class="black_btn tools" style="display:none;">Edit Original</button></li>
-            <li><button type="button" id="compare" class="black_btn tools" style="display:none;">Compare</button></li>
-            <li> <button type="button" id="toggleimg" class="black_btn tools" style="display:none;">Toggle Image</button></li>
-            <li><div id="opSlider" class="oprangsldr tools" ></div></li>
-            <li><select id="blendMode">
-                    <option value="normal">Blend-Normal</option> 
-                    <option value="multiply">Multiply</option> 
-                    <option value="color-burn">Color Burn</option>
-                    <option value="difference">Difference</option>
-                    <option value="exclusion">Exclusion</option>
-                    <option value="subtract">Subtract</option>
-                    <option value="destination-out">White</option>
-                </select>
-           </li>
-        </ul> 
-         </div>
-         <div class="span4">
-    
-     
-     </div>
-      <div style="clear:both;"></div>  
-     </div>
-   {##}
-    {#<a id="retuchImage">Toggle Image</a>
-</div>
-#}
+
 <div class="container_pending">
     <div id="dimpop"></div>
     <div id="rej_popup">
@@ -186,10 +134,7 @@
     </div>
     {% endif %}
 
-
-
-   {#<hr class="black">#}
-   
+   {#<hr class="black">#} 
     <div class="retouch_box">
          <h5>Retouch Images:</h5>
         <div style="padding-left:0px !important; margin-bottom: 5px;clear:both;"><span><h7>Download Original Image:</h7></span></div>
@@ -334,17 +279,7 @@
             ul.front_back_btn li.active{background:#717171;color:#ffffff;}
             ul.front_back_btn li a{text-decoration:none;}
             .canv_hldr_3{ padding:2px; border:1px solid #717171;}
-    {#img:before{
-        position: absolute; 
-        top:0; 
-        content:"\f058";
-        font-size: 12px;
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-    }#}
+    
    
     
         </style>
@@ -571,7 +506,8 @@ $(document).ready(function(){
             $("ul.front_back_btn li").removeClass("active");
             $(this).addClass("active");
              $index =  $("ul.front_back_btn li").index(this);
-             if($index===0){
+        //swtiches index based, when clicked which item.     
+        if($index===0){
                  alert('front');
              }
              if($index===1){
@@ -582,7 +518,8 @@ $(document).ready(function(){
              }
         });
     });
-   
+    
+ //freez canvas header when scroll  
  $(window).scroll(function(){
   var sticky = $('#sticky');
       scroll = $(window).scrollTop();
@@ -615,13 +552,6 @@ $(document).ready(function(){
         }
     }
      }); 
-   {# $("#retouchImages li img").each(function(){
-        $(this).on('mosueover',function(){
-            var retouchDateTime = $(this).attr("data-time").val();
-                alert(retouchDateTime);
-        });
-    });#}
-    
     
     //archive toggle function trigger on click of selector
     $("#blendMode").hide().prop('selectedIndex',0);;
@@ -629,7 +559,8 @@ $(document).ready(function(){
              toggleimg();
              $("#opSlider, .nav_menu, #blendMode").toggle();
         });
-   //archive show original images and hide some selectors  
+  
+  //archive show original images and hide some selectors  
   $("#editOriginal").on('click',function(){
        showOriginal();
        $("#blendMode").prop('selectedIndex',0);
@@ -645,7 +576,8 @@ $(document).ready(function(){
            }
        });
     });      
-    //archive hide compare button and  and some elements with tool class
+  
+        //archive hide compare button and  and some elements with tool class
     $("#compare").hide();
     $(".tools").hide();
     $("#compare").on('click',function(){
@@ -740,22 +672,15 @@ $("#compare").click(function(){
             $("#tooltip").html(1);
         }
   
- {#  if($(this).haseClass("compare")){
-       $(this).html("Exit Compare");
-       $("#end, #btn_confirm").hide();
-   }else{
-       $(this).html("Compare");
-       $("#end, #btn_confirm").show(); 
-   }
-   #}
- //
-// 
+ 
 });
 
+// retouched image click function 
 $("#retouchImages li img").each(function(){
        $(this).click(function(){
                 $("#compare, #editOriginal").show();
                 zoom_out();
+                // blend mode on canvas screen
                 blendMode('normal');
                 $('#blendMode').prop('selectedIndex',0);
                 $("#retouchImages li").removeClass("active");
@@ -774,7 +699,7 @@ $("#retouchImages li img").each(function(){
        
         });
           
-          
+   // retouched image active url       
 $("#retouchImages li input").each(function(){
                $chkUrl = $(this).val();
                if($chkUrl == $activeImg.val()){
@@ -782,7 +707,7 @@ $("#retouchImages li input").each(function(){
                   
                }
               
-
+// retouched image opacity slider
  $('#opSlider').slider({ 
         min: 0, 
         max: 1, 
@@ -801,12 +726,8 @@ $("#retouchImages li input").each(function(){
             tooltip.hide();
         });
     });       
-{#$( function() {
-    $( "#opSlider" ).slider();
-    });#}
-  
-
-    
+ 
+    // center vertical line toggle function
     $("#centerline").click(function() { 
         return (this.tog = !this.tog) ? showLine() :  removeLine();
     });
@@ -817,7 +738,6 @@ $("#retouchImages li input").each(function(){
             {
                 put_archive_to_live();
             }
- //alert('hi');
 
 });
  $(".clk_img").click(function(){
@@ -826,9 +746,6 @@ $("#retouchImages li input").each(function(){
         //$(this).hide();
     });
  
-       //comment funciton copy from backup file   
-      
-
 });	
     </script>
 {% endblock %}
