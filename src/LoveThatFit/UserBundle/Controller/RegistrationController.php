@@ -683,9 +683,16 @@ public function stepFourTimeSpentAction(Request $request){
    return $response;
     }
 
-    public function registrationFromWebAction() {           
+    public function registrationFromWebAction() { 
+
+     $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
+        if ($mobile == true) {          
 
         return $this->render('LoveThatFitUserBundle:Registration:signup.html.twig');
+
+       } else {
+            throw new NotFoundHttpException("Page not found");
+        }
     }
 
     

@@ -84,8 +84,8 @@ h2 {
 	font-size: 18px;font-family: 'Lato', sans-serif;
 	color: #fff;
 	font-weight: 500;
-	height: 50px;
-	padding-top: 11px;
+	height: 40px;
+	padding-top: 6px;
 	background-color: #000;
 	vertical-align: middle;
 }
@@ -237,6 +237,8 @@ input {
 	color: #e0ca89;
 	background: none;
 	border: 2px solid #e0ca89;
+	height:45px;
+	padding-top:10px;
 }
 .btn-outline:hover, .btn-outline:active, .btn-outline:focus {
 	color: #fff;
@@ -343,7 +345,7 @@ footer img a {
 .arrow {
 	float: left;
 	padding-left: 16px;
-	padding-top: 14px;
+	padding-top: 10px;
 	padding-bottom: 10px;
 	position:absolute;	
 }
@@ -618,5 +620,26 @@ text-decoration:none;
 	opacity:0.5;
 	cursor:default;
 	transition:0.3s ease all;
+}
+
+.post-content{
+color:#fff;
+font-size:14px;
+font-family:lato; 
+}
+
+.post-content p{
+line-height:18px; 
+}
+
+.post-content h3{
+color:#fff; 
+font-size:1.5em;
+margin:25px 0px 25px 0px;
+}
+
+.post-content a{
+color:#e0ca89;
+
 }
 
