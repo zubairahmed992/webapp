@@ -84,8 +84,8 @@ h2 {
 	font-size: 18px;font-family: 'Lato', sans-serif;
 	color: #fff;
 	font-weight: 500;
-	height: 50px;
-	padding-top: 11px;
+	height: 40px;
+	padding-top: 6px;
 	background-color: #000;
 	vertical-align: middle;
 }
@@ -345,7 +345,7 @@ footer img a {
 .arrow {
 	float: left;
 	padding-left: 16px;
-	padding-top: 14px;
+	padding-top: 10px;
 	padding-bottom: 10px;
 	position:absolute;	
 }

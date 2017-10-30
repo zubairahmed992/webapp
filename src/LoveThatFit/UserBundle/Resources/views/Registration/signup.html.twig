@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width">
-<title>Create Account</title>
+<title>Create account</title>
 
     <link href="{{ asset('bundles/lovethatfit/web_registration/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -781,9 +781,38 @@ function male_registration()
 			
 		} else {
 			
-			jQuery('#error_male_email').html("");
-			jQuery('#error_male_email').addClass("hide"); 
-			jQuery('#error_bar_10').addClass("hide");        
+				jQuery('#overlay').removeClass("hide"); 
+				jQuery('#overlay').addClass("show");
+				result = jQuery.ajax({
+					type: "POST",
+					url: "{{ path('appuser_male_check_exist_email') }}",
+					data: "email="+jQuery('#male_email').val(),
+					async: false
+				}).responseText.split(',');
+				
+				
+				var arr = jQuery.parseJSON( result );
+				if(arr.success==1){
+					
+					jQuery('#error_male_email').html("*Email already exists");
+					jQuery('#error_male_email').removeClass("hide");
+					jQuery('#male_email').val('');
+					jQuery('#error_bar_10').removeClass("hide");         					
+					  
+					jQuery('#overlay').removeClass("show");
+					jQuery('#overlay').addClass("hide"); 
+					flag = false;
+					
+				} else {
+					
+					jQuery('#error_male_email').html("");
+					jQuery('#error_male_email').addClass("hide");
+					jQuery('#error_bar_10').addClass("hide");
+					jQuery('#overlay').removeClass("show");
+					jQuery('#overlay').addClass("hide"); 
+					
+				}	
+  
 		}
 		
 		
@@ -1291,7 +1320,7 @@ function validate_email_male(email){
 
     <div class="gap_4"></div>
     <div class="Get_activated">
-      <p>Hey there, let’s get started!</p>
+      <p>Hey there, let's get started!</p>
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/profile_picture.png') }}" alt="Circle" class="profile_pic" /></div>    
     <div class="gap_2"></div>
@@ -1311,8 +1340,8 @@ function validate_email_male(email){
 
 <div class="create_acc">
   <div class="arrow">
-  <a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
-  <p>Create Account </p>
+  <a href="#screen_slide_0" onclick="step_back(1);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" /></a></div>
+  <p>Create account </p>
   <div class="error_red hide" id="error_bar_1">oops!</div>
 </div>
 
@@ -1352,7 +1381,7 @@ function validate_email_male(email){
 <div class="screen_4 hide" id="screen_slide_2">
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_1" onclick="step_back(2);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
-  <p>Create Account</p>
+  <p>Create account</p>
   <div class="error_red hide" id="error_bar_2">oops!</div>
 </div>
 <div class="container">
@@ -1384,7 +1413,7 @@ function validate_email_male(email){
 <div class="screen_500 hide" id="screen_slide_3">
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_2" onclick="step_back(3);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
-  <p>Create Account</p>
+  <p>Create account</p>
   <div class="error_red hide" id="error_bar_3">oops!</div>
 </div>
 <div class="container">
@@ -1400,7 +1429,7 @@ function validate_email_male(email){
     
     <div class="req_box_div show" id="pwd_hint1">
     <div class="req_text" id="req-text1">Required:</div>
-    <div class="req_text_1" id="req-text2">8 Characters</br>1 Capitol Letter</br>1 Small Letter</br>1 Number</div>
+    <div class="req_text_1" id="req-text2">8 Characters</br>1 Capital Letter</br>1 Small Letter</br>1 Number</div>
     </div>
 <!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
     <div class="error_box_req hide" id="pwd_hint">8 Characters</br>1 Capital Letter</br>1 Small Letter</br>1 Number</div>
@@ -1418,7 +1447,7 @@ function validate_email_male(email){
 <div class="screen_100 hide" id="screen_slide_4">
 <div class="create_acc">
   <div class="arrow"><a href="#screen_slide_3" onclick="step_back(4);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
-  <p>Create Account</p>
+  <p>Create account</p>
   <div class="error_red hide" id="error_bar_4">oops!</div>
 </div>
 <div class="container">  
@@ -1451,7 +1480,7 @@ function validate_email_male(email){
 <div class="screen_7 hide" id="screen_slide_5">
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_4" onclick="step_back(5);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}" width="15" height="25" /></a></div>
-      <p>Create Account</p>
+      <p>Create account</p>
       <div class="error_red hide" id="error_bar_5">oops!</div>
     </div>
 <div class="container">
@@ -1509,7 +1538,7 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Sorry, guys! We're not ready for you yet.</p>
     </div>
-    <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's styles became available.</p></div>
+    <div class="Get_text"><p>But we'd love to stay connected. Send us your email and we'll let you know when men's styles became available.</p></div>
      <div style="position:relative;" id="tab_lbl_male_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_name">FULL NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
@@ -1518,7 +1547,7 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_male_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
-    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control" onblur="validate_email_male(this.value);">
+    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
@@ -1542,7 +1571,7 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Shopping is always more fun with friends.</p>
     </div>
-    <div class="Get_text"><p>Invite a friends to download the app to share styles 
+    <div class="Get_text"><p>Invite a friend to download the app to share styles 
 and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
  <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
@@ -1612,7 +1641,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>We've sent your invitation. Invite another<br />friend or start shopping!
         </p>
     </div>
-    <a class="btn btn-md btn-primary btn-block">I'am ready let's go</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">I'am ready let's go</a>
     <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
 </div>
 </div>
