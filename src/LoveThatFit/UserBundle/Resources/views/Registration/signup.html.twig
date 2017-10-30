@@ -781,9 +781,38 @@ function male_registration()
 			
 		} else {
 			
-			jQuery('#error_male_email').html("");
-			jQuery('#error_male_email').addClass("hide"); 
-			jQuery('#error_bar_10').addClass("hide");        
+				jQuery('#overlay').removeClass("hide"); 
+				jQuery('#overlay').addClass("show");
+				result = jQuery.ajax({
+					type: "POST",
+					url: "{{ path('appuser_male_check_exist_email') }}",
+					data: "email="+jQuery('#male_email').val(),
+					async: false
+				}).responseText.split(',');
+				
+				
+				var arr = jQuery.parseJSON( result );
+				if(arr.success==1){
+					
+					jQuery('#error_male_email').html("*Email already exists");
+					jQuery('#error_male_email').removeClass("hide");
+					jQuery('#male_email').val('');
+					jQuery('#error_bar_10').removeClass("hide");         					
+					  
+					jQuery('#overlay').removeClass("show");
+					jQuery('#overlay').addClass("hide"); 
+					flag = false;
+					
+				} else {
+					
+					jQuery('#error_male_email').html("");
+					jQuery('#error_male_email').addClass("hide");
+					jQuery('#error_bar_10').addClass("hide");
+					jQuery('#overlay').removeClass("show");
+					jQuery('#overlay').addClass("hide"); 
+					
+				}	
+  
 		}
 		
 		
@@ -1509,7 +1538,7 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Sorry, guys! We're not ready for you yet.</p>
     </div>
-    <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's styles became available.</p></div>
+    <div class="Get_text"><p>But we'd love to stay connected. Send us your email and we'll let you know when men's styles became available.</p></div>
      <div style="position:relative;" id="tab_lbl_male_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_name">FULL NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
@@ -1518,7 +1547,7 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_male_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
-    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control" onblur="validate_email_male(this.value);">
+    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
@@ -1542,7 +1571,7 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Shopping is always more fun with friends.</p>
     </div>
-    <div class="Get_text"><p>Invite a friends to download the app to share styles 
+    <div class="Get_text"><p>Invite a friend to download the app to share styles 
 and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
  <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
@@ -1612,7 +1641,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>We've sent your invitation. Invite another<br />friend or start shopping!
         </p>
     </div>
-    <a class="btn btn-md btn-primary btn-block">I'am ready let's go</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">I'am ready let's go</a>
     <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
 </div>
 </div>
