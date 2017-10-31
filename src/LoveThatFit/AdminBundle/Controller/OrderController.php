@@ -200,9 +200,7 @@ class OrderController extends Controller {
 
             $ship_status = $stamps->getShippingStatusByTrackingNumber( $stampsTxID );
 
-            /*********************** send emai user to order shipped start here*********************/
-            $user_order=$this->container->get('cart.helper.order')->find($id);
-
+            /*********************** send emai user to order shipped start here*********************/            
             $shipping_information = ($entity->getShipmentJson() != null ? json_decode($entity->getShipmentJson()) : "");
 
             $tracking_number = "";
@@ -212,22 +210,23 @@ class OrderController extends Controller {
                 $postages_link = $shipping_information->URL;
                 $tracking_number = $shipping_information->TrackingNumber;
             }
-
-            $sales_tax = ($entity->getSalesTax()) ? number_format((float)$entity->getSalesTax(), 2, '.', '') : "0.00"; 
-
-            $user = $entity->getUser();
-
-            $data_order = array(
-                                'order' => $entity,
-                                'trackingNumber' => $tracking_number,
-                                'link'      => $postages_link,
-                                'order_id' => $id,
-                                'user_order' => $user_order,
-                                'sales_tax' => $sales_tax,
-                                'email' => $user->getEmail()
-                            );
             
             if(!empty($tracking_number)) {
+                $user_order=$this->container->get('cart.helper.order')->find($id);
+                
+                $sales_tax = ($entity->getSalesTax()) ? number_format((float)$entity->getSalesTax(), 2, '.', '') : "0.00"; 
+                $user = $entity->getUser();
+
+                $data_order = array(
+                                    'order' => $entity,
+                                    'trackingNumber' => $tracking_number,
+                                    'link'      => $postages_link,
+                                    'order_id' => $id,
+                                    'user_order' => $user_order,
+                                    'sales_tax' => $sales_tax,
+                                    'email' => $user->getEmail()
+                                );
+
                 $this->sendEmailToUserOrderShipped($data_order);
             }
             /*********************** send emai user to order shipped end here*********************/
