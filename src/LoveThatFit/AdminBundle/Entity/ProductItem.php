@@ -376,7 +376,7 @@ class ProductItem
  //--------------Get Fitting Room Path -----------
     protected function getUploadOriginalImageRootDir()
     {
-        return $this->getRootDir() . $this->getRawImageUploadDir();
+        return $this->getRootDir() . $this->getOriginalImageUploadDir();
     }
 
 //----------------------Return Fitting Room Path
