@@ -191,7 +191,6 @@ class OrderController extends Controller {
             $shippingAddress = $this->container->get('cart.helper.userAddresses')->findByCriteria(array('id' => $rate_json->shipping_id));
 
             $stamps_response = $stamps->createPostages($billingAddress, $shippingAddress, $rate_json);
-            var_dump($stamps_response); die();
             if($shippingAddress == "")
                 return new Response(json_encode(array('shipping_status' => "pending")), 200, ['Content-Type' => 'application/json']);
 
