@@ -106,6 +106,17 @@ h2 {
 	padding: 0px;
 	margin-bottom: 10px;
 }
+
+.Get_activated_terms p {
+	text-align: center;
+	font-size: 24px;font-family: 'Lato', sans-serif;
+	color: #000;
+	margin-top: 38px;
+	line-height: 29px;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+
 .Get_text {
 	text-align: center;
 	font-size: 13px;font-family: 'Lato', sans-serif;
@@ -624,7 +635,7 @@ text-decoration:none;
 }
 
 .post-content{
-color:#fff;
+color:#000;
 font-size:14px;
 font-family:lato; 
 }
@@ -634,7 +645,7 @@ line-height:18px;
 }
 
 .post-content h3{
-color:#fff; 
+color:#000; 
 font-size:1.5em;
 margin:25px 0px 25px 0px;
 }
