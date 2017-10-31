@@ -494,25 +494,27 @@ class WSCartController extends Controller
         $itemsArray = array();
         foreach ($items as $detail) {
             $entity = $this->container->get('admin.helper.productitem')->find($detail['item_id']);
+            $price_sum = $entity->getPrice() * $detail['quantity'];
             $itemsArray[] = array(
                 'pname' => $entity->getProduct()->getName(),
                 'quantity' => $detail['quantity'],
                 'item_price'     => $entity->getPrice(),
-                'price'     => $entity->getPrice() * $detail['quantity'],
+                'price'     => number_format((float)$price_sum, 2, '.', ''),
                 'sku'       => $entity->getProduct()->getControlNumber(),
                 'size'      => $entity->getProductSize()->getTitle(),
-                'color'     => $entity->getProductColor()->getTitle()
+                'color'     => $entity->getProductColor()->getTitle(),
+                'brand'      => $entity->getProduct()->getBrand()->getName(),
             );
         }
         $orderNummber = $result['order_number'];
         $orderAmount = $decode['order_amount'];
         $totalAmount = $decode['total_amount'];
-        $discount   = $decode['discount_amount'];
+        $discount   = number_format((float)$decode['discount_amount'], 2, '.', ''); 
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
-        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
-        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
+        $salesTax  =   (isset($decode['sales_tax']) ? number_format((float)$decode['sales_tax'], 2, '.', '') : '0.00'); 
+        $d_discount  =   (isset($decode['discount']) ? number_format((float)$decode['discount'], 2, '.', '') : '0.00'); 
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -525,7 +527,7 @@ class WSCartController extends Controller
             'contact_number'    => '262-391-3403',
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
-            'order_amount'  => $orderAmount,
+            'order_amount'  => number_format((float)$orderAmount, 2, '.', ''),
             'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
             'discount'  => ($discount > 0 ? "-$".$discount : 0),
             'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
@@ -545,6 +547,9 @@ class WSCartController extends Controller
             'billing_first_name' => $billing['billing_first_name']. " ". $billing['billing_last_name'],
             'billing_phone_no'  => $billing['billing_phone'],
             'billing_address1'  => $billing['billing_address1'],
+            'billing_city'      => $billing['billing_city'],
+            'billing_state'     => $billing['billing_state'],
+            'billing_postcode'  => $billing['billing_postcode'],
             'sales_tax'  => $salesTax
         );
 
