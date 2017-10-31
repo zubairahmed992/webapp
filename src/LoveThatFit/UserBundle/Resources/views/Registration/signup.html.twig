@@ -1140,12 +1140,15 @@ function hide_error(id)
 }
 function label_up(id)
 {
+	borderid = id;
 	id = id.replace("tab_","");
 	jQuery('#'+id).css('position','0px');
 	jQuery('#'+id).css('top','0px');	
 	jQuery('#'+id).css('opacity','0.5');
 	jQuery('#'+id).css('cursor','default');
 	jQuery('#'+id).css('transition','0.3s ease all');
+	borderid = borderid.replace("tab_lbl_","");
+	jQuery('#'+borderid).focus();
 	
 }
 
@@ -1521,7 +1524,7 @@ function validate_email_male(email){
     <div class="request_text">
       <p>You're all set up lets get styling!</p>
     </div>
-    <a class="btn btn-md btn-primary btn-block" href="#signin">I'am ready let's go</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">I'm ready let's go</a>
     <div class="gap_4"></div>
     <a href="#screen_slide_7" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
  
@@ -1643,7 +1646,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>We've sent your invitation. Invite another<br />friend or start shopping!
         </p>
     </div>
-    <a class="btn btn-md btn-primary btn-block" href="#signin">I'am ready let's go</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">I'm ready let's go</a>
     <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
 </div>
 </div>
@@ -1665,14 +1668,14 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
 </div>
 
 
-<div class="screen_7000 hide" id="screen_slide_14">
+<div class="screen_7000 hide" id="screen_slide_14" style="background: #fff;">
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_1" onclick="step_back(14);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
       <p>SelfieStyler Privacy Policy</p>
     </div>
 <div class="container">
 
-    <div class="Get_activated">
+    <div class="Get_activated_terms">
       <p>
         SelfieStyler Privacy Policy
         </p>
@@ -1818,14 +1821,14 @@ United States<br>
  
 </div>
 </div>
-<div class="screen_7000 hide" id="screen_slide_15">
+<div class="screen_7000 hide" id="screen_slide_15" style="background: #fff;">
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_1" onclick="step_back(15);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
       <p>SelfieStyler Terms &amp; Conditions</p>
     </div>
 <div class="container">
 
-    <div class="Get_activated">
+    <div class="Get_activated_terms">
       <p>
 SelfieStyler Terms &amp; Conditions
 </p>
