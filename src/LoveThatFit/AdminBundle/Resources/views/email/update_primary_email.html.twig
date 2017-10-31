@@ -1,21 +1,86 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Your Email Has Been Updated</title>
-    <style>
-        img{
-            display:block;
-        }
-    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Your email has been updated</title>
 </head>
-
 <body>
-You have successfully updated the email associated with your SelfieStyler profile. Reminder that your new email is your <a href="{{ dataArray['baseurl'] }}/signin">login</a> name when logging in to your account. Sign in and start shopping!
-<br>
-If you did not authorize this change, please contact us at <a href="mailto:membersupport@selfiestyler.com">MemberSupport@SelfieStyler.com</a>.
-<br><br>
-Thanks for styling with SelfieStyler!
-<br><br>
+<table width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" style="height:101;padding-top:30px;"><img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images_new/Logo.png') }}" width="206" height="40" alt="selfie_style_logo" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="4" valign="top" bgcolor="#e9e9e9"></td>
+  </tr>
+  <tr>
+   <td style="font-family:'Playfair Display, serif'; font-weight:bold; font-size:28px; text-align:center; padding-top:30px;">Your email has been updated</td>
+  </tr>
+  <tr>
+    <td valign="top" style="font-family:'Lato', sans-serif; font-size:16px; text-align:center;padding-top:20px; padding-bottom:25px; padding-left:40px; padding-right:40px; line-height: 22px;">You have successfully updated the email associated with your <br />
+    SelfieStyler profile. Please use this email when logging in to your account. </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td height="10">&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td align="center"><table width="260" border="0" align="center" cellpadding="0" cellspacing="0" style="border-radius:10px;">
+      <tr>
+        <td width="260" height="45" align="center" bgcolor="#DFC988"><a href='{{ app.request.scheme ~ '://' ~ app.request.host ~ asset('/signin') }}' style="color:#000;text-decoration:none; font-family:'Lato', sans-serif; font-size:16px;">Sign in & Start Shopping!</a></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="30" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center" style="color: #000000;	font-family: Lato;	font-size: 16px;	line-height: 22px;	text-align: center;">If you did not authorize this change, please contact us at <br />
+    <a href="mailto:care@selfiestyler.com"  style="color:#1e6bcd; text-decoration:none;">care@selfiestyler.com.</a></td>
+  </tr>
+  <tr>
+    <td height="50" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td height="160" valign="top" bgcolor="#F2F2F2"><table width="600" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="30" colspan="4">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4" align="center" style="color: #000000;	font-family: Lato;	font-size: 16px;	line-height: 22px;	text-align: center;">We’re here to help. If you have any questions, <br />
+            please email us at <a href="mailto:care@selfiestyler.com" style="color:#1e6bcd; text-decoration:none;">care@selfiestyler.com</a></td>
+        </tr>
+        <tr>
+          <td colspan="4">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="256">&nbsp;</td>
+          <td width="44" align="center"><a href="https://www.facebook.com/SelfieStyler/"><img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images_new/facebook.jpg') }}" width="27" height="27" /></a></td>
+          <td width="42" align="center"><a href="https://www.instagram.com/selfiestyler/"><img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images_new/instagram.jpg') }}" width="27" height="27" /></a></td>
+          <td width="258">&nbsp;</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="30" valign="top">&nbsp;</td>
+  </tr>
+</table>
 </body>
 </html>

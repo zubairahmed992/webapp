@@ -191,6 +191,7 @@ class OrderController extends Controller {
             $shippingAddress = $this->container->get('cart.helper.userAddresses')->findByCriteria(array('id' => $rate_json->shipping_id));
 
             $stamps_response = $stamps->createPostages($billingAddress, $shippingAddress, $rate_json);
+            var_dump($stamps_response); die();
             if($shippingAddress == "")
                 return new Response(json_encode(array('shipping_status' => "pending")), 200, ['Content-Type' => 'application/json']);
 
@@ -200,10 +201,47 @@ class OrderController extends Controller {
 
             $ship_status = $stamps->getShippingStatusByTrackingNumber( $stampsTxID );
 
+            /*********************** send emai user to order shipped start here*********************/            
+            $shipping_information = ($entity->getShipmentJson() != null ? json_decode($entity->getShipmentJson()) : "");
+
+            $tracking_number = "";
+            $postages_link = "";
+            if($entity->getShipmentJson() != null)
+            {
+                $postages_link = $shipping_information->URL;
+                $tracking_number = $shipping_information->TrackingNumber;
+            }
+            
+            if(!empty($tracking_number)) {
+                $user_order=$this->container->get('cart.helper.order')->find($id);
+                
+                $sales_tax = ($entity->getSalesTax()) ? number_format((float)$entity->getSalesTax(), 2, '.', '') : "0.00"; 
+                $user = $entity->getUser();
+
+                $data_order = array(
+                                    'order' => $entity,
+                                    'trackingNumber' => $tracking_number,
+                                    'link'      => $postages_link,
+                                    'order_id' => $id,
+                                    'user_order' => $user_order,
+                                    'sales_tax' => $sales_tax,
+                                    'email' => $user->getEmail()
+                                );
+
+                $this->sendEmailToUserOrderShipped($data_order);
+            }
+            /*********************** send emai user to order shipped end here*********************/
+
             return new Response(json_encode(array('shipping_status' => $ship_status)), 200, ['Content-Type' => 'application/json']);
         }catch (\ErrorException $exception)
         {
             return new Response(json_encode(array('shipping_status' => "pending")), 200, ['Content-Type' => 'application/json']);
         }
+    }
+
+    private function sendEmailToUserOrderShipped($dataArray)
+    {
+        $this->get('mail_helper')->sendUserOrderShippedEmail($dataArray);
+        return;
     }
 }
