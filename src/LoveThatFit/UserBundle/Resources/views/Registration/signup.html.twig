@@ -1421,18 +1421,20 @@ function validate_email_male(email){
       <p>Let's protect your account.</p>
     </div>
     <div class="gap_2"></div>
-     <div style="position:relative;" id="tab_lbl_mem_password" onclick="label_up(this.id);">
+     <div style="position:relative; overflow:hidden" id="tab_lbl_mem_password" onclick="label_up(this.id);">
     <label for="inputfirstname" class="" id="lbl_mem_password">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
-    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);" ></div>
+    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);" >
     
-    
-    <div class="req_box_div show" id="pwd_hint1">
+        <div class="req_box_div show" id="pwd_hint1">
     <div class="req_text" id="req-text1">Required:</div>
     <div class="req_text_1" id="req-text2">8 Characters</br>1 Capital Letter</br>1 Small Letter</br>1 Number</div>
     </div>
-<!--    <div class="show" id="pwd_hint1">Required:</br>8 Characters</br>1 Capitol Letter</br>1 Number</div>-->
     <div class="error_box_req hide" id="pwd_hint">8 Characters</br>1 Capital Letter</br>1 Small Letter</br>1 Number</div>
+    </div>
+    
+    
+
      <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
