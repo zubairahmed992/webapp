@@ -24,7 +24,13 @@ pi_ws_product_image_upload:
     pattern: /product_intake/product_image_upload
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:ImageUploadproductSizeItem}
     requirements:
-        _method:  post  
+        _method:  post
+
+pi_ws_real_product_image_upload:
+    pattern: /product_intake/real_product_image_upload
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:RealProductImageUploadproductSizeItem}
+    requirements:
+       _method:  post
         
 pi_ws_product_fitting_room_image_upload:
     pattern: /pi/ws/product_fitting_room_image_upload

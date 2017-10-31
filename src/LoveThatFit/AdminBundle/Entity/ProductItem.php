@@ -350,6 +350,40 @@ class ProductItem
 
     }
 
+    #--------------------- Real Product Image Uplaod
+
+    public function realProductImageupload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+        $old_image_path = Null;
+        if ($this->image) {
+            $old_image_path = $this->getRawImageWebPath();        }
+
+        $this->image =  $this->getImage();
+        $this->file->move(
+            $this->getUploadOriginalImageRootDir(), $this->image, 0755
+        );
+
+        if (is_readable($old_image_path)) {
+            @unlink($old_image_path);
+        }
+        $this->file = null;
+
+    }
+
+ //--------------Get Fitting Room Path -----------
+    protected function getUploadOriginalImageRootDir()
+    {
+        return $this->getRootDir() . $this->getRawImageUploadDir();
+    }
+
+//----------------------Return Fitting Room Path
+    protected function getOriginalImageUploadDir()
+    {
+        return 'uploads/ltf/products/fitting_room/';
+    }
     //-------------------------------------------------------
 
 

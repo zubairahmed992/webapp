@@ -14,3 +14,6 @@ pi_product_item_image_data:
     pattern:  /pi/product/item_image_data/{id}
     defaults: { _controller: LoveThatFitProductIntakeBundle:Product:productItemImageData}
 
+product_intake_real_product_image_upload_idex:
+    pattern:  /product_intake/product/real_product_image_upload_index
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Product:realProductImageUploadIndex}

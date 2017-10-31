@@ -16,6 +16,12 @@ class ProductController extends Controller
     public function imageUploadIndexAction(){        
         return $this->render('LoveThatFitProductIntakeBundle:Product:image_upload_index.html.twig');
     }
+
+    #----------------------- realProductImageUploadIndexAction
+    public function realProductImageUploadIndexAction()
+    {
+        return $this->render('LoveThatFitProductIntakeBundle:Product:real_product_image_upload_index.html.twig');
+    }
     #----------------------- /product_intake/product/image_exists_check
     public function imageExistsCheckAction(){    
         $info = $this->get('admin.helper.product')->allProductItemImage();        

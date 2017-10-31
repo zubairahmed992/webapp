@@ -551,4 +551,60 @@ class ServiceController extends Controller {
     private function response_str($message, $success=false, $data=null){
         return new Response(json_encode(array('message' => $message, 'success' => $success, 'data' => $data)));
     }
+
+    #---------------  /product_intake/real_product_image_upload
+    public function RealProductImageUploadproductSizeItemAction(Request $request) {
+        try {
+            $imageFile = $request->files->get('file');
+            $response = $this->realProductImageUploadProductItemSize($_FILES, $imageFile);
+            return new JsonResponse($response);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
+    //-------------  Real Product Image Uplaod Function
+    public function realProductImageUploadProductItemSize($FILES , $image_file)    {
+        #$allowed = array('png', 'jpg');
+        $request = $this->getRequest();
+        if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
+            $file_name = $FILES['file']['name'];
+            $parsed_details = $this->breakFileNameProductImageUplaod($file_name);
+
+            #--------------------------------------------------------------
+            if ($parsed_details['success'] == 'false') {
+                return $this->responseArray('invalid file naming format');
+            } else {
+                $image_name_break = explode('_', $_FILES['file']['name']);
+                $data = $this->get('service.repo')->getProductDetailOnly(str_replace('-', ' ', $image_name_break[0]), $image_name_break[1]);
+                if (count($data)==0) {
+                    return $this->responseArray('Product not found');#------------------------------------------>
+                }
+                $parsed_details['product_id'] = $data[0]['id'];
+                $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
+                $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
+                $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
+
+                if (count($product_color) == 0) {
+                    return $this->responseArray('color not found');#------------------------------------------>
+                }
+                if(count($product_size) == 0){
+                    return $this->responseArray('Size not found');#------------------------------------------>
+                }
+
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
+                $product_item->file = $image_file;
+                $product_item->realProductImageupload();
+                $morphing_json = array('body_type'=> $product_size->getBodyType(), 'color'=>$parsed_details['color_title'], 'size'=>$parsed_details['size_title'] );
+                $product->setMorphingDetailJson(json_encode($morphing_json));
+                $this->get('admin.helper.product')->update($product);
+                return $this->responseArray('File uploaded for item',true);
+            }
+        }
+        return $this->responseArray('File is missing');
+
+    }   //------------- End Real Product Image Uplaod Function
 }
