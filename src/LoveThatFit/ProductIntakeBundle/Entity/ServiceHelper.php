@@ -187,7 +187,7 @@ class ServiceHelper {
         
         $pg = $product->getMorphingDetailJSON() ? json_decode($product->getMorphingDetailJSON(), true) : null;
         
-        if (!is_array($pg) || !array_key_exists('size', $pg) || !array_key_exists('color', $pg) || !array_key_exists('fit_type', $pg)) {
+        if (!is_array($pg) || !array_key_exists('size', $pg) || !array_key_exists('color', $pg) || !array_key_exists('body_type', $pg)) {
             return $this->response_str('Originl image detail not found!');
         }
         $item_id = $this->container->get('service.repo')->getPhotogradingOriginalItem($product);

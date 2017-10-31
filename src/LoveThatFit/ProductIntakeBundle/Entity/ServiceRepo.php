@@ -178,7 +178,7 @@ class ServiceRepo
                 AND ps.title =:size
                 AND pc.title =:color
                 AND ps.body_type =:body_type
-                ")->setParameters(array('product_id' => $product->getId(), 'size'=>$pg['size'], 'color'=>$pg['color'], 'body_type'=>$pg['fit_type'])); 
+                ")->setParameters(array('product_id' => $product->getId(), 'size'=>$pg['size'], 'color'=>$pg['color'], 'body_type'=>$pg['body_type'])); 
         
         try {
             return $query->getArrayResult();
