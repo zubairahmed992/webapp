@@ -147,8 +147,8 @@ class SecurityController extends Controller {
     #########################  web reset ##################
     public function forgotPasswordResetFormWebAction($email_auth_token)
     {
-        $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
-        if ($mobile == true) {
+        // $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
+        // if ($mobile == true) {
             $em   = $this->getDoctrine()->getManager();
             $user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthTokenWeb($email_auth_token);
             if ($user && $user->getForgetStatus() == 1) {
@@ -162,9 +162,9 @@ class SecurityController extends Controller {
             } else {
                 throw new NotFoundHttpException("Page not found");
             }
-        } else {
-            throw new NotFoundHttpException("Page not found");
-        }
+        // } else {
+        //     throw new NotFoundHttpException("Page not found");
+        // }
     }
 
     public function forgotPasswordUpdateWebAction(Request $request)
