@@ -605,7 +605,7 @@ class ServiceController extends Controller {
                 $morphing_json = array('body_type'=> $product_size->getBodyType(), 'color'=>$parsed_details['color_title'], 'size'=>$parsed_details['size_title'] );
                 $product->setMorphingDetailJson(json_encode($morphing_json));
                 $this->get('admin.helper.product')->update($product);
-                return $this->responseArray('File uploaded for item',true);
+                return $this->responseArray('File uploaded for item Id '.$product_item->getId(),true);
             }
         }
         return $this->responseArray('File is missing');
