@@ -178,7 +178,6 @@ class Stamps
             $response = $this->soapClient->CreateIndicium($callData);
             return $response;
         }catch (\SoapFault $e){
-            var_dump($e); die();
             return "";
         }
     }
