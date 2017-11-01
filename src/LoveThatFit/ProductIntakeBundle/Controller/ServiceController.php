@@ -309,19 +309,23 @@ class ServiceController extends Controller {
     }
 
 
-    //---------------------- pi_ws_product_fitting_room_image_upload
+    //---------------------- pi_ws_product_fitting_room_image_upload ------>*main
     public function productFittingRoomImageUploadAction(Request $request) {
         // $array_format = explode("_", strtolower('Champion_7791_black_WR_20_XXL.jpg')); 
         //return new JsonResponse([count($array_format)]);
-        $accesstoken = $this->getRequest()->headers->get('accesstoken');
+        $accesstoken = $this->getRequest()->headers->get('accesstoken');        
         $file_name = $_FILES['file']['name'];
         $_exploded = explode("_", $file_name);
         $access_token_password = sha1("SSIMV2020".$_exploded[1]);
         if($access_token_password == $accesstoken) {
             try {
                 $imageFile = $request->files->get('file');
-                $response = $this->imageUploadProductItemSizeNewFormat($_FILES, $imageFile);
+                $decoded=$request->request->all();
+                
+                $decoded['is_original'] = array_key_exists('is_original', $decoded) ? $decoded['is_original'] : false;
+                $response = $this->imageUploadProductItemSizeNewFormat($_FILES, $imageFile, $decoded['is_original']);
                 return new JsonResponse($response);
+                
             } catch (\Exception $exception) {
                 return new JsonResponse([
                     'success' => false,
@@ -338,7 +342,7 @@ class ServiceController extends Controller {
     }
 
      #---------------------------------------Image Uplaod New Format Function -------------------------------
-      public function imageUploadProductItemSizeNewFormat($FILES , $image_file)    {
+      public function imageUploadProductItemSizeNewFormat($FILES , $image_file, $is_original=false)    {
         #$allowed = array('png', 'jpg');        
         $request = $this->getRequest();
         if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
@@ -379,6 +383,11 @@ class ServiceController extends Controller {
 
                 if(file_exists($product_item->getAbsolutePath())) {
                     $uploaded=true;
+                    if($is_original){
+                        $morphing_json = array('color' => $product_color->getTitle(), 'size' => $product_size->getTitle(), 'body_type' => $product_size->getBodyType());
+                        $product->setMorphingDetailJson(json_encode($morphing_json));
+                        $this->get('admin.helper.product')->update($product);
+                    }
                 }
 
                 return $this->responseArray('File uploaded', $uploaded, $baseurl .'/'. $product_item->getWebPath());
