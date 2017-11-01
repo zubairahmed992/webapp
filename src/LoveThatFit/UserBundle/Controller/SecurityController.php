@@ -147,18 +147,25 @@ class SecurityController extends Controller {
     #########################  web reset ##################
     public function forgotPasswordResetFormWebAction($email_auth_token)
     {
-        $em   = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthTokenWeb($email_auth_token);
-        if ($user && $user->getForgetStatus() == 1) {
-            $time = $user->getUpdatedAt()->format("Y-m-d H:i:s");
-            $hourdiff = round((strtotime(date("Y-m-d H:i:s")) - strtotime($time))/3600, 1);
-            if ($user &&  $hourdiff <= 2) {
-                return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
+        $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
+        if ($mobile == true) {
+            $em   = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthTokenWeb($email_auth_token);
+            if ($user && $user->getForgetStatus() == 1) {
+                $time = $user->getUpdatedAt()->format("Y-m-d H:i:s");
+                $hourdiff = round((strtotime(date("Y-m-d H:i:s")) - strtotime($time))/3600, 1);
+                if ($user &&  $hourdiff <= 2) {
+                    return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
+                } else {
+                    $response = new Response('Page not found.', '404');
+                    return $response;
+                }
             } else {
-                throw new NotFoundHttpException("Page not found");
+                $response = new Response('Page not found.', '404');
+                return $response;
             }
         } else {
-            throw new NotFoundHttpException("Page not found");
+            return $this->redirect('https://www.selfiestyler.com');
         }
     }
 

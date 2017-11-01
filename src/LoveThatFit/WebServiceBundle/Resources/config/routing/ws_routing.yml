@@ -468,4 +468,8 @@ appuser_invite_friend:
 #update Single Item to Cart
 nws_update_cart_single_item:
     pattern:  /nws/update_item_to_cart
-    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:updateItemToCartNew}    
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSCart:updateItemToCartNew}   
+
+appuser_male_check_exist_email:
+    pattern:   appuser/male_check_exist_email
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:checkMaleEmailEixstFunc }  

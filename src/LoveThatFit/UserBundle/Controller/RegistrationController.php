@@ -78,7 +78,6 @@ class RegistrationController extends Controller {
         $twitter_helper = $this->get('twitter_helper');
                 $twitters = array();
                 $twitters = $twitter_helper->twitter_latest();
-              
                  $user = new User();
         try {
             $user = new User();
@@ -683,9 +682,14 @@ public function stepFourTimeSpentAction(Request $request){
    return $response;
     }
 
-    public function registrationFromWebAction() {           
+    public function registrationFromWebAction() { 
 
-        return $this->render('LoveThatFitUserBundle:Registration:signup.html.twig');
+        $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
+        if ($mobile == true) {          
+            return $this->render('LoveThatFitUserBundle:Registration:signup.html.twig');
+       } else {
+            return $this->redirect('https://www.selfiestyler.com');
+        }
     }
 
     

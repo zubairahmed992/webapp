@@ -673,17 +673,30 @@ class WSUserController extends Controller
 
         if (count($user) > 0) {
 
-            $check_friend_email = $this->get('user.invitefriend.helper')->findByFriendEmail($ra['friend_email']);
-            if(count($check_friend_email) === 0 ) {
+            $check_friend_email = $this->get('user.invitefriend.helper')->findByFriendEmail($ra['friend_email'],$user->getId());
+            if(count($check_friend_email) == 0 ) {
                 $ss = $this->get('user.invitefriend.helper')->createWithParam($ra, $user);
+
+                 $ss_ar['to_email'] = $ss->getFriendEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
+                $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
+                return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));
+            }else{
+                $ss = $this->get('user.invitefriend.helper')->updateWithParam($ra, $user);
+
+                 $ss_ar['to_email'] = $ss->getFriendEmail();
+                $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
+                $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
+                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);               
+                return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend updated'));
+
+
             }
 
-            $ss_ar['to_email'] = $ss->getFriendEmail();
-            $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
-            $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
-            $ss_ar['subject'] = 'Check out SelfieStyler';
-            $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
-            return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));
+           
 
         } else {
             return new Response($this->get('webservice.helper')->response_array(false, 'User Not found!'));
@@ -723,14 +736,12 @@ class WSUserController extends Controller
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
 
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
-        echo $appLink = $this->get('admin.helper.appstorelink')->find(1);
+        $appLink = $this->get('admin.helper.appstorelink')->find(1)->getAppLink();
 
         if ($user)
         {
             $template = $this->get('twig')->render('LoveThatFitUserBundle::invite_friend.html.twig', array('app_link' => $appLink));
-            $res = $this->get('webservice.helper')->response_array(true, array(
-                'text' => $template
-            ));
+            $res = $this->get('webservice.helper')->response_array(true, $template);
 
             return new Response($res);
         }else {
@@ -795,7 +806,30 @@ class WSUserController extends Controller
                     return new Response(json_encode(array("success" => "0")));    
                   
         } 
-    }       
+    }
+
+
+    public function checkMaleEmailEixstFuncAction()
+    {
+        $ra = $this->process_request();        
+        if(!empty($ra['email'])){
+             $user=$this->get('user.registermaleusers.helper')->findByEmail($ra['email']);
+                if (count($user) > 0) {
+
+                    return new Response(json_encode(array("success" => "1"))); 
+
+                } else {
+                   
+                    return new Response(json_encode(array("success" => "0")));    
+                  
+                }    
+
+        } else {
+                   
+                    return new Response(json_encode(array("success" => "0")));    
+                  
+        } 
+    }              
 
 
 }

@@ -70,6 +70,19 @@ class InviteFriendHelper {
     }  
 
 
+     public function updateWithParam($ra, $user) {
+        $invitefriend=  $this->UpdateFriendEmail(array('user'=>$user->getId(),'friend_email' => $ra['friend_email']));
+         
+         $invitefriend->setCreatedAt(new \DateTime('now'));
+        if(array_key_exists('email', $ra) && $ra['email']){$invitefriend->setEmail($ra['email']);}
+        if(array_key_exists('friend_name', $ra) && $ra['friend_name']){$invitefriend->setFriendName($ra['friend_name']);}
+        if(array_key_exists('friend_email', $ra) && $ra['friend_email']){$invitefriend->setFriendEmail($ra['friend_email']);}
+        $this->em->persist($invitefriend);
+        $this->em->flush();    
+        return $invitefriend;
+    }  
+
+
     #----------------------------------------------------------------------------
      public function createmaleFriendWithParam($ra) {
         $invitefriend=  $this->createNew();        
@@ -92,9 +105,15 @@ class InviteFriendHelper {
     public function find($id) {
         return $this->repo->find($id);
     } 
+
+    public function UpdateFriendEmail($arr) {
+        return $this->repo->findOneBy($arr);
+    } 
     #----------------------------
-    public function findByFriendEmail($friend_email) {
-        return $this->repo->findOneBy(array('friend_email' => $friend_email));
+    
+
+    public function findByFriendEmail($friend_email,$user_id) {
+        return $this->repo->findOneBy(array('friend_email' => $friend_email, 'user' => $user_id));
     } 
     
 }
