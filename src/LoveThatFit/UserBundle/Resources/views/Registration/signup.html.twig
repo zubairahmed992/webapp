@@ -562,7 +562,8 @@ function invite_friend()
 			
 			if(jQuery('#invite_friend_email').val()==jQuery('#mem_email').val()){
 			
-			jQuery('#error_invite_friend_email').html("*Please enter your friend's email.");           
+			jQuery('#error_invite_friend_email').html("*Please enter your friend's email."); 
+			jQuery('#invite_friend_email').val('');          
 			jQuery('#error_invite_friend_email').removeClass("hide");
 			jQuery('#error_bar_7').removeClass("hide"); 
 			jQuery('#lbl_invite_friend_email').addClass("add_field_heigh");        			
@@ -1493,14 +1494,14 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Did a friend refer you?</p>
     </div>
-    <div class="Get_text"><p>Your friend get a nice little bonus when you sign up. Let us know who referred you so we can thank them.</p></div>
+    <div class="Get_text"><p>Let us know who referred you so we can thank them.</p></div>
     <div style="position:relative;" id="tab_lbl_friend_name" onclick="label_up(this.id);"> 
- <label for="inputname" class="" id="lbl_friend_name">FRIEND'S FIRST NAME</label>
+ <label for="inputname" class="" id="lbl_friend_name">FRIEND'S NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
     <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_friend_email">FRIENDS EMAIL</label>
+    <label for="inputzip" class="" id="lbl_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
     <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control" >
     </div>
@@ -1524,7 +1525,7 @@ function validate_email_male(email){
     <div class="request_text">
       <p>You're all set up. Now let's get styling!</p>
     </div>
-    <a class="btn btn-md btn-primary btn-block" href="#signin">Start Shopping</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">Start shopping</a>
     <div class="gap_4"></div>
     <a href="#screen_slide_7" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
  
@@ -1576,15 +1577,15 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Shopping is always more fun with friends.</p>
     </div>
-    <div class="Get_text"><p>Invite a friend to download the app to share styles 
-and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
+    <div class="Get_text"><p>Invite a friend to download the app to see<br />your 
+styles and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
-<label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
+<label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
     <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control" >
     </div>
  <div style="position:relative;"id="tab_lbl_invite_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_invite_friend_email">FRIENDS EMAIL</label>
+    <label for="inputzip" class="" id="lbl_invite_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control" >
   </div>  
@@ -1612,14 +1613,14 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>Shopping is always more fun with friends.</p>
     </div>
     <div class="Get_text"><p>Invite a friends to download the app to share styles 
-and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
+and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_male_invite_friend_name" onclick="label_up(this.id);">
-<label for="inputname" class="" id="lbl_male_invite_friend_name">FRIEND'S FIRST NAME</label>
+<label for="inputname" class="" id="lbl_male_invite_friend_name">FRIEND'S NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
     <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_male_invite_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_male_invite_friend_email">FRIENDS EMAIL</label>
+    <label for="inputzip" class="" id="lbl_male_invite_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control">
     </div>
@@ -1646,8 +1647,8 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>We've sent your invitation. Invite another<br />friend or start shopping!
         </p>
     </div>
-    <a class="btn btn-md btn-primary btn-block" href="#signin">Start Shopping</a>
-    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin">Let's start shopping</a>
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite another friend</a>
 </div>
 </div>
 
