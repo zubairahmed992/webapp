@@ -185,7 +185,14 @@ class MailHelper {
         $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
         $subject = 'Password reset request';
         //return 'emailing is currently disabled';
-        return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
+        $name = "";
+        if (trim($user->getFullName()) == "") {
+            $name = $user->getEmail();
+        } else {
+            $name = $user->getFullName();
+        }
+
+        return $this->sendEmail($from, $to, $body, $name, $subject, $reset_link);
     }
 
 	public function sendOrderConfirmationEmail($user,$order,$cart) {
