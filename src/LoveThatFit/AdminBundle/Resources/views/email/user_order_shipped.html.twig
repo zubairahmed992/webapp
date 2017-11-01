@@ -3,6 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Something stylish this way comes</title>
+
+<style>
+
+@media screen {
+  @font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/Lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+  } 
+
+body {
+    font-family: "Lato";
+ }
+}
+  
+</style>
+
 </head>
 
 <body>
@@ -31,7 +49,7 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td align="center" valign="middle" style="font-family:lato; font-size:16px; color:#000000; line-height:22px;"><strong>Hi {{ order.BillingFirstName|capitalize }} {{ order.BillingLastName|capitalize }},</strong><br />
+    <td align="center" valign="middle" style="font-family:Lato; font-size:16px; color:#000000; line-height:22px;"><strong>Hi {{ order.BillingFirstName|capitalize }} {{ order.BillingLastName|capitalize }},</strong><br />
       <br />
       Yay! Your package from SelfieStyler is on its way. You can track it online<br />
       using this tracking number: <a href="https://www.stamps.com/shipstatus/?confirmation={{ trackingNumber }}" style="text-decoration:none;" target="_blank"><font color="#1e6bcd">{{ trackingNumber }}</font></a></td>
@@ -49,7 +67,7 @@
     <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td height="35" valign="top"></td>
-          <td valign="middle" style="font-family:lato; font-size:16px; color:#000000;"><strong>Here's what we shipped:</strong></td>
+          <td valign="middle" style="font-family:Lato; font-size:16px; color:#000000;"><strong>Here's what we shipped:</strong></td>
           <td align="right" valign="middle"></td>
           <td align="right" valign="middle"></td>
           <td align="right" valign="middle"></td>
@@ -61,7 +79,7 @@
           <td align="right" valign="middle"></td>
           <td width="18" align="right" valign="middle"></td>
         </tr>
-        <tr  style="font-family:lato; font-size:16px; color:#000000;">
+        <tr  style="font-family:Lato; font-size:16px; color:#000000;">
           <td width="17" valign="top"></td>
           <td width="394" valign="middle"><strong>Item</strong></td>
           <td width="81" align="right" valign="middle"><strong>Qty</strong></td>
@@ -82,10 +100,10 @@
             {% set total_price = c.productItem.price + total_price %}
             <tr>
               <td width="17" height="64" valign="middle" BORDERCOLORDARK="red" bgcolor="#F2F2F2" border="12"></td>
-              <td height="64" valign="middle" bgcolor="#F2F2F2" BORDERCOLORDARK="red" border="12" style="font-family:lato; font-size:16px; color:#000000;"><strong>{{ c.productItem.product.name|capitalize }}</strong><br />
+              <td height="64" valign="middle" bgcolor="#F2F2F2" BORDERCOLORDARK="red" border="12" style="font-family:Lato; font-size:16px; color:#000000;"><strong>{{ c.productItem.product.name|capitalize }}</strong><br />
               <font color="#646464" size="2">{{ c.productItem.product.brand.name|capitalize }}</font></td>
-              <td height="64" align="right" valign="middle" bgcolor="#F2F2F2" style="font-family:lato; font-size:16px; color:#000000;"><strong>{{ c.qty }}</strong></td>
-              <td height="64" align="right" valign="middle" bgcolor="#F2F2F2" style="font-family:lato; font-size:16px; color:#000000;">
+              <td height="64" align="right" valign="middle" bgcolor="#F2F2F2" style="font-family:Lato; font-size:16px; color:#000000;"><strong>{{ c.qty }}</strong></td>
+              <td height="64" align="right" valign="middle" bgcolor="#F2F2F2" style="font-family:Lato; font-size:16px; color:#000000;">
                 <strong>
                   {% set sub_total = c.productItem.price * c.qty %} 
                   ${{ sub_total| number_format(2) }}
@@ -117,15 +135,15 @@
           <td height="30" valign="top"></td>
           <td colspan="3" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
               <tr>
-                <td height="25" valign="top" style="font-family:lato; font-size:16px; color:#000000;"><strong>Shipping Address</strong></td>
-                <td valign="top" style="font-family:lato; font-size:16px; color:#000000;"><strong>Shipping Method</strong></td>
+                <td height="25" valign="top" style="font-family:Lato; font-size:16px; color:#000000;"><strong>Shipping Address</strong></td>
+                <td valign="top" style="font-family:Lato; font-size:16px; color:#000000;"><strong>Shipping Method</strong></td>
               </tr>
               <tr>
-                <td valign="top" style="font-family:lato;"><font color="#646464" size="3">{{ order.ShippingFirstName|capitalize }} {{ order.ShippingLastName|capitalize }}<br />
+                <td valign="top" style="font-family:Lato;"><font color="#646464" size="3">{{ order.ShippingFirstName|capitalize }} {{ order.ShippingLastName|capitalize }}<br />
                   {{ order.ShippingAddress1 }}<br />
                   {{ order.ShippingCity }}, {{ order.ShippingState }} {{ order.ShippingPostcode }}</font></td>
-                <td valign="top" style="font-family:lato;"><font color="#646464" size="3">USPS Priority Mail<br />
-                  <a href="https://www.stamps.com/shipstatus/?confirmation={{ trackingNumber }}" target="_blank" style="text-decoration:none; font-family:lato;"><font color="#1e6bcd">Track your package</font></a></font></td>
+                <td valign="top" style="font-family:Lato;"><font color="#646464" size="3">USPS Priority Mail<br />
+                  <a href="https://www.stamps.com/shipstatus/?confirmation={{ trackingNumber }}" target="_blank" style="text-decoration:none; font-family:Lato;"><font color="#1e6bcd">Track your package</font></a></font></td>
               </tr>
             </table></td>
           <td height="30" align="right" valign="middle"></td>
@@ -149,21 +167,21 @@
         </tr>
         <tr>
           <td height="23" valign="top"></td>
-          <td colspan="3" valign="top" style="font-family:lato; font-size:16px; color:#000000;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <td colspan="3" valign="top" style="font-family:Lato; font-size:16px; color:#000000;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td height="0" colspan="2" align="left" valign="middle" style="font-family:lato; font-size:16px; color:#000000;">Just a reminder:</td>
+                <td height="0" colspan="2" align="left" valign="middle" style="font-family:Lato; font-size:16px; color:#000000;">Just a reminder:</td>
               </tr>
               <tr>
-                <td width="17" height="0" align="left" valign="middle" style="font-family:lato; font-size:16px; color:#000000;">&bull;</td>
-                <td width="628" style="font-family:lato; font-size:16px; color:#000000;">It can take a few hours or even half a day for updated tracking info to appear</td>
+                <td width="17" height="0" align="left" valign="middle" style="font-family:Lato; font-size:16px; color:#000000;">&bull;</td>
+                <td width="628" style="font-family:Lato; font-size:16px; color:#000000;">It can take a few hours or even half a day for updated tracking info to appear</td>
               </tr>
               <tr>
-                <td height="0" align="left" valign="middle" style="font-family:lato; font-size:16px; color:#000000;">&bull;</td>
-                <td style="font-family:lato; font-size:16px; color:#000000;">Orders to APO/FPO may take extra delivery time</td>
+                <td height="0" align="left" valign="middle" style="font-family:Lato; font-size:16px; color:#000000;">&bull;</td>
+                <td style="font-family:Lato; font-size:16px; color:#000000;">Orders to APO/FPO may take extra delivery time</td>
               </tr>
               <tr>
-                <td height="0" align="left" valign="top" style="font-family:lato; font-size:16px; color:#000000;">&bull;</td>
-                <td valign="top" style="font-family:lato; font-size:16px; color:#000000;">Check the package status with Stamps.com: <a href="https://www.stamps.com/shipstatus/?confirmation={{ trackingNumber }}" target="_blank" style="text-decoration:none; font-family:lato;"><font color="#1e6bcd">http://www.stamps.com/<br />
+                <td height="0" align="left" valign="top" style="font-family:Lato; font-size:16px; color:#000000;">&bull;</td>
+                <td valign="top" style="font-family:Lato; font-size:16px; color:#000000;">Check the package status with Stamps.com: <a href="https://www.stamps.com/shipstatus/?confirmation={{ trackingNumber }}" target="_blank" style="text-decoration:none; font-family:Lato;"><font color="#1e6bcd">http://www.stamps.com/<br />
                   shipstatus/submit/?confirmation={{ trackingNumber }}</font></a></td>
               </tr>
             </table></td>
@@ -171,7 +189,7 @@
         </tr>
         <tr>
           <td height="0" valign="top"></td>
-          <td height="0" colspan="3" valign="top" style="font-family:lato; font-size:16px; color:#000000;"></td>
+          <td height="0" colspan="3" valign="top" style="font-family:Lato; font-size:16px; color:#000000;"></td>
           <td height="0" align="right" valign="top"></td>
         </tr>
         <tr>
@@ -186,13 +204,13 @@
         </tr>
         <tr>
           <td height="26" valign="top" bgcolor="#F2F2F2"></td>
-          <td height="26" colspan="3" align="center" valign="middle" bgcolor="#F2F2F2" style="font-family:lato; font-size:16px; line-height:22px; color:#000000;">&nbsp;</td>
+          <td height="26" colspan="3" align="center" valign="middle" bgcolor="#F2F2F2" style="font-family:Lato; font-size:16px; line-height:22px; color:#000000;">&nbsp;</td>
           <td height="26" align="right" valign="middle" bgcolor="#F2F2F2"></td>
         </tr>
         <tr>
           <td height="91" valign="top" bgcolor="#F2F2F2"></td>
-          <td colspan="3" align="center" valign="middle" bgcolor="#F2F2F2" style="font-family:lato; font-size:16px; line-height:22px; color:#000000;">We’re here to help. If you have any questions, <br />
-            please email us at <a href="mailto:care@selfiestyler.com" style="text-decoration:none; font-family:lato;"><font color="#1e6bcd">care@selfiestyler.com</font></a>
+          <td colspan="3" align="center" valign="middle" bgcolor="#F2F2F2" style="font-family:Lato; font-size:16px; line-height:22px; color:#000000;">We’re here to help. If you have any questions, <br />
+            please email us at <a href="mailto:care@selfiestyler.com" style="text-decoration:none; font-family:Lato;"><font color="#1e6bcd">care@selfiestyler.com</font></a>
             <table width="100%" height="87" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td height="27">&nbsp;</td>
