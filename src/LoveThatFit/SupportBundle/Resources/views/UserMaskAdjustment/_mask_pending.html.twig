@@ -51,6 +51,11 @@
 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(archive.getWebPath('original'))}}"/>
 <input type="hidden" id="archive_active_img_url" value="{% if (archive.getRetouchImage())%}{{ asset(archive.getRetouchWebPath()) ~ "/" ~ archive.getRetouchImage()}} {%endif%}"/>
 
+<!-- side view inputs for both sides !-->
+<input id="side_view_1" type="hidden" value="" />
+<input id="side_view_2" type="hidden" value="" />
+<!-- /side view inputs for both sides !-->
+
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
 
 
@@ -135,13 +140,19 @@
     {% endif %}
 
    {#<hr class="black">#} 
-    <div class="retouch_box">
-         <h5>Retouch Images:</h5>
-        <div style="padding-left:0px !important; margin-bottom: 5px;clear:both;"><span><h7>Download Original Image:</h7></span></div>
-        <span><img class="img-thumb" src="{{ asset(archive.getWebPath('original'))}}"/></span><span style="margin-left:5px;"><a href="{{ asset(archive.getWebPath('original'))}}" target="_blank" style="display: inline-block !important; padding: 5px 8px; cursor: pointer; color: #fff; background: #000; text-decoration: none;">Download Image</a></span>
+   <!-- fornt retouched images -->
+    <div  class="retouch_box">
+        <div id="frontRetouchImages" class="archivesInner">
+        <h5>Front Retouch Images:</h5>
+        <div style="padding-left:0px !important; margin-bottom: 5px;clear:both;">
+            <span><h7>Download Original Image:</h7></span>
+        </div>
+        <span><img class="img-thumb" src="{{ asset(archive.getWebPath('original'))}}"/></span>
+        <span style="margin-left:5px;"><a href="{{ asset(archive.getWebPath('original'))}}" target="_blank" style="display: inline-block !important; padding: 5px 8px; cursor: pointer; color: #fff; background: #000; text-decoration: none;">Download Image</a></span>
         <div style="margin-bottom: 10px;clear:both;"></div>
 
         <div style="padding-left:0px !important; margin-bottom: 10px;clear:both;"><span><h7>Upload Retouch Image:</h7></span></div>
+        <div>
         <form id="frmUploadImage" name="frmUploadImage" action="{{ path('support_user_retouch_image', {'user_id':entity.id, 'archive_id': archive.id})}}" method="post" enctype="multipart/form-data"  class="form-horizontal">
             <input type="file" id="upl_user_retouch" name="upl_user_retouch" accept=".png" required>
             <input type="hidden" id="upl_image_update_url" name="upl_image_update_url" value="{{ path('support_archive_image_update')}}"/>
@@ -151,138 +162,9 @@
             <input type="hidden" id="upl_archive_id" name="upl_archive_id" value="{{archive.id}}"/>
             <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
         </form>
-
+        </div>        
         <div style="margin-bottom: 10px;clear:both;"></div>
-        <style>
-            .navigation1{ padding:5px 5px 10px 5px;}
-.ui-tooltip {
-    text-align: center;
-    padding: 0;
-    margin:0;
-     background:#000 !important;
-     font-size:11px;
-    border:none !important;
-    box-shadow:none;
-   
-}
-.ui-tooltip-content {
-    position: relative;
-    background:#000 !important;
-    color:#ffffff;
-    padding:2px;
-     -webkit-border-radius:8px;
-     -moz-border-radius:8px;
-     border-radius:8px;
-     border:1px solid #000000;
-     font-size:11px;
-}
-.ui-tooltip-content::after, .ui-tooltip-content::before {
-    content: "";
-    position: absolute;
-    border-style: solid;
-    display: block;
-    left: 70px;
-    
-}
-.bottom .ui-tooltip-content::before {
-    bottom: -18px;
-    border-color: #000000 transparent;
-    border-width: 10px 10px 0;
-}
-.bottom .ui-tooltip-content::after {
-    bottom: -7px;
-    border-color: #000 transparent;
-    border-width: 10px 10px 0;
-}
-
-            ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
-            .archives span{ padding:0 !important; margin:0 !important;}
-            .oprangsldr{ 
-                width:70px;
-                display:inline-block; 
-                height:2px !important; 
-                background:#666666!important; 
-                margin-top:16px;
-                margin-left:15px;
-                margin-right:15px;
-            }
-            .oprangsldr span{ background: #000000 !important; border:none; width:2px; height:2px; border-radius:100%; top:-9px !important; }
-            .img-thumb{width: 50px; height:55px;}
-             .archives span.active {
-                padding-bottom:3px;
-                border:1px solid #000000;
-                position:relative;
-                padding:5px !important;
-                background:#dddddd;
-                border-bottom:none;
-             }
-             
-             ul.retouch_imgs li.active{
-                 border:2px solid #000000;
-             }  
-             .optooltip{
-                 background:#000000;
-                 color:#ffffff;
-                 position:relative;
-                 padding:3px 6px;
-                 font-size:11px;
-                 -webkit-border-radius:5px;
-                 -moz-border-radius:5px;
-                  border-radius:5px;
-             }
-             .optooltip:after{
-                content: '';
-                width: 0;
-                height: 0;
-                border-left: 5px solid transparent;
-                border-right: 5px solid transparent;
-                border-top: 5px solid #000000;
-                position: absolute;
-                bottom: -5px;
-                left: 0;
-                right: 0;
-                margin: auto;
-             }
-             .retouch_box{ background:#dddddd; margin:-4px 0 0px 5px; border-top:1px solid #000000; }
-             .black_btn{ margin:4px;}
-             .blend_mode{
-                 margin-top:10px;
-                 text-align:left;
-             }
-             ul.liststyle select{ width:130px; margin:2px 0px 0 17px;}
-             {# .blend_mode select{font-size:12px; width:140px;margin-left:10px;}#}
-              ul.liststyle{margin:0; padding:2px 7px;}
-              ul.liststyle li{
-                  list-style:none;
-                  float:left;
-                  
-              }
-              ul.liststyle li a{ background:none; border:none;}
-              .canvas_navigation{margin-top:20px; background:rgba(204,204,204,0.8); padding:10px;}
-              .canvas_navigation a{cursor:pointer; text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
-                .canvas_navigation a:hover{background:#000000;color:#ffffff;}
-                .archive_nave{ background:rgba(241,241,241,0.8);}
-                .fixed {
-                    position: fixed;
-                    top: 38px;
-                    left: 14%;
-                    width: 964px;
-                    z-index: 1500;
-                    right: 0%;
-                    margin: auto;
-                }
-           .ui-tooltip {
-                white-space: pre-line;
-            }
-            ul.front_back_btn{padding:0; margin:10px 0 0 0;}
-            ul.front_back_btn li{cursor:pointer; display:inline-block; margin-right:3px; background:#d4d4d4;color:#000000; padding:5px 20px;}
-            ul.front_back_btn li.active{background:#717171;color:#ffffff;}
-            ul.front_back_btn li a{text-decoration:none;}
-            .canv_hldr_3{ padding:2px; border:1px solid #717171;}
-    
-   
-    
-        </style>
+     
         <input type="hidden" id="selected_retouch_image" name="selected_retouch_image" value="{{ archive.getRetouchImage() }}" />
         <ul id="retouchImages" class="retouch_imgs">   
             {% if(retouch_filecount) %}
@@ -299,8 +181,49 @@
         <ul>     
             <br style="clear:both"/>
     </div>
-
+        <!-- /fornt retouched images -->
+        
+        <!-- side view retouched images -->
+        <div id="sideViewCalibration" style="display:none;">
+         <h4 style="padding:0;font-size:14px;">Side Retouched Images</h5>
+        
+         <hr/>
+         <h4 style="padding:0;font-size:14px;">Side view 1</h4>
+         <div>
+         <form id="frmSideviewone" method="post" enctype="multipart/form-data" class="form-horizontal" style>
+             	<div class="form-group">
+                    <input type="file"  name="upl_user_retouch" accept=".png" required="">
+                    <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
+             </div>
+        </form>
+         </div>     
+         
+       
+        <ul id="retouchSideviewOne" class="retouch_imgs">
+         
+            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2513/retouch_59df78253354b_5.png"/></li>
+        </ul>  
+          <hr/>
+         <h4 style="padding:0;font-size:14px;">Side view 2</h4>
+         <div>
+         <form id="frmSideviewTwo" method="post" enctype="multipart/form-data" class="form-horizontal" style>
+             	<div class="form-group">
+                    <input type="file"  name="upl_user_retouch" accept=".png" required="">
+                    <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
+             </div>
+        </form>
+         </div>     
+         
+       
+        <ul id="retouchSideviewOne" class="retouch_imgs">
+         
+            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2513/retouch_59df78253354b_5.png"/></li>
+        </ul>  
+       
+        </div>
+        <!-- /side view retouched images -->
 </div>
+            </div> 
 {% else%}
 <div>image info not available</div>
 {% endif %}
@@ -426,6 +349,12 @@
     {%endif%}
         </div>
     </div>
+   
+           <style>
+             
+    
+        </style>
+        
 <link href="{{ asset('bundles/lovethatfit/site/css/device_view_styles.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>-->
@@ -500,24 +429,28 @@ function me_triggered(){
         alert(window.location.href);
     } 
 $(document).ready(function(){
-    //side view function 
+    //side view script  
     $("ul.front_back_btn li").each(function(){
         $(this).click(function(event){
             $("ul.front_back_btn li").removeClass("active");
             $(this).addClass("active");
              $index =  $("ul.front_back_btn li").index(this);
-        //swtiches index based, when clicked which item.     
-        if($index===0){
-                 alert('front');
+             if($index===0){
+                 $("#frontRetouchImages").show();
+                 $("#sideViewCalibration").hide();
              }
              if($index===1){
-                 alert('side one');
+                 $("#frontRetouchImages").hide();
+                 $("#sideViewCalibration").show();
+                 
              }
              if($index===2){
-                 alert('side two');
+                 $("#frontRetouchImages").hide();
+                 $("#sideViewCalibration").show();
              }
         });
     });
+   //side view script  
     
  //freez canvas header when scroll  
  $(window).scroll(function(){

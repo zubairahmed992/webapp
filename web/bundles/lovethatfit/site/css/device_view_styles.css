@@ -57,9 +57,13 @@ padding-right: 0px!important;
     font-size: 0.9em;
     
 }
-
+input[type="file"]{     
+    width: 158px;
+    margin-top: 14px;
+    margin-left: -10px;
+}
 .container_pending .span3 div{    
-    padding: 1px 0px 1px 20px;
+    padding: 1px 0px 1px 10px;
     margin-bottom: 2px;
     font-size: 0.95em;
 }
@@ -315,4 +319,134 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
     
 button.black_btn[type="button"]:disabled {
     background: #cccccc;
-}    
+} 
+   /* side bar css start here */
+.archivesInner, #sideViewCalibration{ margin:0; padding:0 !important;}
+             
+/* side bar css end here */
+              
+.navigation1{ padding:5px 5px 10px 5px;}
+.ui-tooltip {
+    text-align: center;
+    padding: 0;
+    margin:0;
+     background:#000 !important;
+     font-size:11px;
+    border:none !important;
+    box-shadow:none;
+   
+}
+.ui-tooltip-content {
+    position: relative;
+    background:#000 !important;
+    color:#ffffff;
+    padding:2px;
+     -webkit-border-radius:8px;
+     -moz-border-radius:8px;
+     border-radius:8px;
+     border:1px solid #000000;
+     font-size:11px;
+}
+.ui-tooltip-content::after, .ui-tooltip-content::before {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    display: block;
+    left: 70px;
+    
+}
+.bottom .ui-tooltip-content::before {
+    bottom: -18px;
+    border-color: #000000 transparent;
+    border-width: 10px 10px 0;
+}
+.bottom .ui-tooltip-content::after {
+    bottom: -7px;
+    border-color: #000 transparent;
+    border-width: 10px 10px 0;
+}
+
+ul.retouch_imgs li{ list-style: none; display:inline-block; border:2px solid #ccc;}
+.archives span{ padding:0 !important; margin:0 !important;}
+.oprangsldr{ 
+    width:70px;
+    display:inline-block; 
+    height:2px !important; 
+    background:#666666!important; 
+    margin-top:16px;
+    margin-left:15px;
+    margin-right:15px;
+}
+.oprangsldr span{ background: #000000 !important; border:none; width:2px; height:2px; border-radius:100%; top:-9px !important; }
+.img-thumb{width: 50px; height:55px;}
+ .archives span.active {
+    padding-bottom:3px;
+    border:1px solid #000000;
+    position:relative;
+    padding:5px !important;
+    background:#dddddd;
+    border-bottom:none;
+ }
+
+ ul.retouch_imgs li.active{
+     border:2px solid #000000;
+ }  
+.optooltip{
+    background:#000000;
+    color:#ffffff;
+    position:relative;
+    padding:3px 6px;
+    font-size:11px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+     border-radius:5px;
+}
+.optooltip:after{
+   content: '';
+   width: 0;
+   height: 0;
+   border-left: 5px solid transparent;
+   border-right: 5px solid transparent;
+   border-top: 5px solid #000000;
+   position: absolute;
+   bottom: -5px;
+   left: 0;
+   right: 0;
+   margin: auto;
+}
+.retouch_box{ background:#dddddd; margin:-4px 0 0px 5px; border-top:1px solid #000000; }
+.black_btn{ margin:4px;}
+.blend_mode{
+    margin-top:10px;
+    text-align:left;
+}
+ul.liststyle select{ width:130px; margin:2px 0px 0 17px;}
+.blend_mode select{font-size:12px; width:140px;margin-left:10px;}
+ ul.liststyle{margin:0; padding:2px 7px;}
+ ul.liststyle li{
+     list-style:none;
+     float:left;
+
+ }
+ul.liststyle li a{ background:none; border:none;}
+.canvas_navigation{margin-top:20px; background:rgba(204,204,204,0.8); padding:10px;}
+.canvas_navigation a{cursor:pointer; text-decoration:none; background:#000000; font-weight:400; color:#ffffff; padding:5px 9px;font-size:13px; -webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; }
+.canvas_navigation a:hover{background:#000000;color:#ffffff;}
+.archive_nave{ background:rgba(241,241,241,0.8);}
+.fixed {
+    position: fixed;
+    top: 38px;
+    left: 14%;
+    width: 964px;
+    z-index: 1500;
+    right: 0%;
+    margin: auto;
+}
+.ui-tooltip {
+  white-space: pre-line;
+}
+ul.front_back_btn{padding:0; margin:10px 0 0 0;}
+ul.front_back_btn li{cursor:pointer; display:inline-block; margin-right:3px; background:#d4d4d4;color:#000000; padding:5px 20px;}
+ul.front_back_btn li.active{background:#717171;color:#ffffff;}
+ul.front_back_btn li a{text-decoration:none;}
+.canv_hldr_3{ padding:2px; border:1px solid #717171;}
