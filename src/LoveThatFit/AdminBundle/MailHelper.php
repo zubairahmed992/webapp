@@ -123,7 +123,7 @@ class MailHelper {
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
-        $subject = 'SelfieStyler: Thank you very much for your order. ';
+        $subject = 'SelfieStyler Order Confirmation';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
@@ -315,7 +315,7 @@ class MailHelper {
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_order_shipped.html.twig";
-        $subject = 'SelfieStyler: Your package from SelfieStyler is on its way. ';
+        $subject = 'Your Selfiestyler order has shipped!';
         //Enable BBC
         $enableBCC = true;
         return $this->sendUserOrderShippedHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
