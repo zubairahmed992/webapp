@@ -165,7 +165,7 @@ class SecurityController extends Controller {
                 return $response;
             }
         } else {
-            return $this->redirect('/');
+            return $this->redirect('https://www.selfiestyler.com');
         }
     }
 
