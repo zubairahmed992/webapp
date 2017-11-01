@@ -211,6 +211,7 @@ class UserOrderRepository extends EntityRepository
 		return $query->select('o.order_date, o.order_amount, o.order_number')
 		->from('LoveThatFitCartBundle:UserOrder', 'o')
 		->where('o.user =:user_id')->setParameter('user_id', $user_id)
+		->OrderBy('o.id', 'DESC')
 		->getQuery()
 		->getResult();
 	}
