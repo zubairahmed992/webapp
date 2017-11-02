@@ -313,7 +313,8 @@ class ServiceController extends Controller {
     public function productFittingRoomImageUploadAction(Request $request) {
         // $array_format = explode("_", strtolower('Champion_7791_black_WR_20_XXL.jpg')); 
         //return new JsonResponse([count($array_format)]);
-        $accesstoken = $this->getRequest()->headers->get('accesstoken');        
+        $accesstoken = $this->getRequest()->headers->get('accesstoken');                
+        $is_original = $this->getRequest()->headers->get('product_image_type');
         $file_name = $_FILES['file']['name'];
         $_exploded = explode("_", $file_name);
         $access_token_password = sha1("SSIMV2020".$_exploded[1]);
@@ -321,9 +322,7 @@ class ServiceController extends Controller {
             try {
                 $imageFile = $request->files->get('file');
                 $decoded=$request->request->all();
-                
-                $decoded['is_original'] = array_key_exists('is_original', $decoded) ? $decoded['is_original'] : false;
-                $response = $this->imageUploadProductItemSizeNewFormat($_FILES, $imageFile, $decoded['is_original']);
+                $response = $this->imageUploadProductItemSizeNewFormat($_FILES, $imageFile, $is_original);
                 return new JsonResponse($response);
                 
             } catch (\Exception $exception) {
@@ -342,7 +341,7 @@ class ServiceController extends Controller {
     }
 
      #---------------------------------------Image Uplaod New Format Function -------------------------------
-      public function imageUploadProductItemSizeNewFormat($FILES , $image_file, $is_original=false)    {
+      public function imageUploadProductItemSizeNewFormat($FILES , $image_file, $is_original='none')    {
         #$allowed = array('png', 'jpg');        
         $request = $this->getRequest();
         if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
@@ -383,7 +382,7 @@ class ServiceController extends Controller {
 
                 if(file_exists($product_item->getAbsolutePath())) {
                     $uploaded=true;
-                    if($is_original){
+                    if($is_original=='original'){
                         $morphing_json = array('color' => $product_color->getTitle(), 'size' => $product_size->getTitle(), 'body_type' => $product_size->getBodyType());
                         $product->setMorphingDetailJson(json_encode($morphing_json));
                         $this->get('admin.helper.product')->update($product);
