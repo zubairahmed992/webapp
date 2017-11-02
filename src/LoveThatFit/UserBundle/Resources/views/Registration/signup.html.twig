@@ -1359,14 +1359,14 @@ function validate_email_male(email){
     <div style="position:relative;" id="tab_lbl_first_name" onclick="label_up(this.id);">
     <label for="first_name" class="" id="lbl_first_name">FIRST NAME</label>
      <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
-    <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control">
+    <input  type="text" autocomplete="off" name="first_name" tabindex="1" id="first_name" class="form-control">
     </div>
     
     
     <div style="position:relative;" id="tab_lbl_last_name" onclick="label_up(this.id);">
     <label for="last_name" class="" id="lbl_last_name">LAST NAME</label>
      <div class="error_box hide" onclick="hide_error(this.id);" id="error_last_name"></div>
-    <input type="text" autocomplete="off" name="last_name" id="last_name" class="form-control">
+    <input type="text" autocomplete="off" name="last_name" tabindex="2" id="last_name" class="form-control">
     </div>
     
     
@@ -1375,7 +1375,7 @@ function validate_email_male(email){
     </div>
     <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();">Next</a>    
       <div class="privacy">
-      <p>I already have an account <a href="#signin">Sign in</a></p>
+      <p>I already have an account <a href="#signin" t>Sign in</a></p>
     </div>
 
 </div>
@@ -1397,13 +1397,13 @@ function validate_email_male(email){
      <div style="position:relative;" onclick="label_up(this.id);" id="tab_lbl_mem_email">
     <label for="inputpassword" class="" id="lbl_mem_email" >EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
-    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);" >
+    <input  type="email" autocomplete="off" id="mem_email" name="mem_email" tabindex="3" class="form-control" onblur="validate_email(this.value);"  />
     </div>
     
      <div style="position:relative;" id="tab_lbl_confirm_mem_email" onclick="label_up(this.id);">
     <label for="inputpass" class="" id="lbl_confirm_mem_email">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
-    <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
+    <input type="email" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" tabindex="4" class="form-control" />
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form2();">Next</a>
@@ -1428,7 +1428,7 @@ function validate_email_male(email){
      <div style="position:relative; overflow:hidden" id="tab_lbl_mem_password" onclick="label_up(this.id);">
     <label for="inputfirstname" class="" id="lbl_mem_password">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
-    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);" >
+    <input  type="password" id="mem_password" name="mem_password" tabindex="5" class="form-control" onkeyup="passwordValidate(this.value);" >
     
         <div class="req_box_div show" id="pwd_hint1">
     <div class="req_text" id="req-text1">Required:</div>
@@ -1442,7 +1442,7 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
-    <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
+    <input type="password" id="confirm_mem_password" tabindex="6" name="confirm_mem_password"  class="form-control" >
     <input type="hidden" name="error_displayed" id="error_displayed" value="0" />
     </div>
     <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form3();">Next</a>
@@ -1466,12 +1466,12 @@ function validate_email_male(email){
  	<div style="position:relative;" id="tab_lbl_phone" onclick="label_up(this.id);">
     <label for="inputphone" class="" id="lbl_phone" >PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="text" autocomplete="off" id="phone" maxlength="14" name="phone" class="form-control phone" >
+    <input type="tel" autocomplete="off" id="phone" tabindex="7" maxlength="14" name="phone" class="form-control phone" />
     </div>
      <div style="position:relative;" id="tab_lbl_zip" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_zip">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
-    <input type="text" autocomplete="off" id="zip" name="zip" maxlength="5" class="form-control">
+    <input type="tel" autocomplete="off" id="zip" name="zip" tabindex="8" maxlength="5" class="form-control" />
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form4();">Submit</a>
@@ -1498,12 +1498,12 @@ function validate_email_male(email){
     <div style="position:relative;" id="tab_lbl_friend_name" onclick="label_up(this.id);"> 
  <label for="inputname" class="" id="lbl_friend_name">FRIEND'S NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
-    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" tabindex="9" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_friend_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
-    <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control" >
+    <input type="text" autocomplete="off" id="friend_email" name="friend_email" tabindex="10" class="form-control" >
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form5();">Send</a>
@@ -1548,12 +1548,12 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_male_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_name">FULL NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
-    <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="male_name"  name="male_name" tabindex="13" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_male_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
-    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control">
+    <input type="text" autocomplete="off" id="male_email" name="male_email" tabindex="14" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
@@ -1582,12 +1582,12 @@ styles and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="invite_friend_name" tabindex="11" name="invite_friend_name" class="form-control" >
     </div>
  <div style="position:relative;"id="tab_lbl_invite_friend_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_invite_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control" >
+    <input type="text" autocomplete="off" id="invite_friend_email" tabindex="12" name="invite_friend_email" class="form-control" >
   </div>  
     <div class="gap_4"></div>
     <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();">Send</a>
@@ -1617,12 +1617,12 @@ and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_male_invite_friend_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_invite_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="male_invite_friend_name" tabindex="15" name="male_invite_friend_name" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_male_invite_friend_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_male_invite_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control">
+    <input type="text" autocomplete="off" id="male_invite_friend_email" tabindex="16" name="male_invite_friend_email" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();">Send</a>
