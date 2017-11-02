@@ -1375,7 +1375,7 @@ function validate_email_male(email){
     </div>
     <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();">Next</a>    
       <div class="privacy">
-      <p>I already have an account <a href="#signin">Sign in</a></p>
+      <p>I already have an account <a href="#signin" t>Sign in</a></p>
     </div>
 
 </div>
@@ -1397,13 +1397,13 @@ function validate_email_male(email){
      <div style="position:relative;" onclick="label_up(this.id);" id="tab_lbl_mem_email">
     <label for="inputpassword" class="" id="lbl_mem_email" >EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
-    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" tabindex="3" class="form-control" onblur="validate_email(this.value);" >
+    <input  type="email" autocomplete="off" id="mem_email" name="mem_email" tabindex="3" class="form-control" onblur="validate_email(this.value);"  />
     </div>
     
      <div style="position:relative;" id="tab_lbl_confirm_mem_email" onclick="label_up(this.id);">
     <label for="inputpass" class="" id="lbl_confirm_mem_email">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
-    <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" tabindex="4" class="form-control">
+    <input type="email" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" tabindex="4" class="form-control" />
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form2();">Next</a>
@@ -1466,12 +1466,12 @@ function validate_email_male(email){
  	<div style="position:relative;" id="tab_lbl_phone" onclick="label_up(this.id);">
     <label for="inputphone" class="" id="lbl_phone" >PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="number" autocomplete="off" id="phone" tabindex="7" maxlength="14" name="phone" class="form-control phone" />
+    <input type="tel" autocomplete="off" id="phone" tabindex="7" maxlength="14" name="phone" class="form-control phone" />
     </div>
      <div style="position:relative;" id="tab_lbl_zip" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_zip">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
-    <input type="number" autocomplete="off" id="zip" name="zip" tabindex="8" maxlength="5" class="form-control" />
+    <input type="tel" autocomplete="off" id="zip" name="zip" tabindex="8" maxlength="5" class="form-control" />
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form4();">Submit</a>
