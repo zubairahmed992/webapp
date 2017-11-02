@@ -24,7 +24,13 @@ pi_ws_product_image_upload:
     pattern: /product_intake/product_image_upload
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:ImageUploadproductSizeItem}
     requirements:
-        _method:  post  
+        _method:  post
+
+pi_ws_real_product_image_upload:
+    pattern: /product_intake/real_product_image_upload
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:RealProductImageUploadproductSizeItem}
+    requirements:
+       _method:  post
         
 pi_ws_product_fitting_room_image_upload:
     pattern: /pi/ws/product_fitting_room_image_upload
@@ -43,6 +49,19 @@ pi_ws_imagename_validation:
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:imageNameValidation}
     requirements:
         _method:  get
+
+
+pi_ws_user_mask_marker_json:
+    pattern: /pi/ws/user_mask_marker_json/{user_id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:userMaskMarkerJson}
+    requirements:
+        _method:  get
+
+pi_ws_product_item_image_coordinates:
+    pattern: /pi/ws/product_item_image_coordinates/{item_id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productItemImageData}
+    requirements:
+        _method:  get        
         
         
       

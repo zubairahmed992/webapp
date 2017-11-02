@@ -55,10 +55,10 @@ class ImageHelper {
         }
         
          //original image is being deleted
-        $root_image_path = $this->getUploadRootDir().'/'.$this->image;
-         if (is_readable($root_image_path)) {
-                    @unlink($root_image_path);
-                }
+//        $root_image_path = $this->getUploadRootDir().'/'.$this->image;
+//         if (is_readable($root_image_path)) {
+//                    @unlink($root_image_path);
+//                }
         
         $this->entity->file = null;
     }

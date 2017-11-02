@@ -1,0 +1,48 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+
+
+    <div class="container">    
+     
+        
+        <h2 style="float:left;">Adjustment Interface </h2>
+        </div>
+    
+    
+        <form action="{{ path('product_intake_adjustment_interface') }}" method="post"
+              enctype="multipart/form-data"  class="form-horizontal" >
+
+            <div class="container">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="hem_length">Adjustment Attribute : </label>
+                    <div class="col-sm-2">
+                        <select name="adjustment_attribute" class="hem_length form-control" >
+                                <option value="round">Round</option>
+                                <option value="thigh">Thigh</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" >from ID : </label>
+                    <div class="col-sm-4">
+                         <input type="number" name="from_id" step="any" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">To ID : </label>
+                    <div class="col-sm-4">
+                        <input type="number" name="to_id" step="any">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button type="submit" class="btn btn-default">Go!</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+{% endblock %}

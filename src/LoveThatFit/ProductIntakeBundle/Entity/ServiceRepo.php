@@ -154,5 +154,55 @@ class ServiceRepo
         }
         
     }
+    //-------- 
+    public function getPhotogradingOriginalItem($product) {
+        if (!$product) {
+            return null;
+        }
+        
+        $pg = $product->getMorphingDetailJSON() ? json_decode($product->getMorphingDetailJSON(), true) : null;
+        if (!is_array($pg)) {
+            return null;
+        }
+
+        $query = $this->em
+           ->createQuery("
+               SELECT pi.id
+                FROM LoveThatFitAdminBundle:Product p              
+                JOIN p.product_items pi                
+                JOIN pi.product_color pc
+                JOIN pi.product_size ps                                             
+                WHERE 
+                p.deleted != 1 
+                AND p.id=:product_id 
+                AND ps.title =:size
+                AND pc.title =:color
+                AND ps.body_type =:body_type
+                ")->setParameters(array('product_id' => $product->getId(), 'size'=>$pg['size'], 'color'=>$pg['color'], 'body_type'=>$pg['body_type'])); 
+        
+        try {
+            return $query->getArrayResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+
+
+    //-------------- 10/23/2017  Get User Marker Json
+    public function getuserMaskMarkerJson($user_id)
+    {
+        $query = $this->em
+            ->createQuery("SELECT um.marker_json FROM LoveThatFitUserBundle:UserMarker um
+                                       WHERE um.user=:user_id")
+            ->setParameters(array('user_id' => $user_id));
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     
 }
