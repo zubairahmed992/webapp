@@ -594,6 +594,7 @@ function invite_friend()
 						 jQuery('#overlay').addClass("hide"); 
 						 jQuery('#invite_friend_name').val('');
 						 jQuery('#invite_friend_email').val('');
+						 jQuery('#invetation_slide').val(1);
 							if($( "#screen_slide_7" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_7').removeClass("show");			
 								jQuery('#screen_slide_7').addClass("hide");			
@@ -627,10 +628,10 @@ function male_invite_friend()
 		jQuery('#screen_slide_12').addClass("show");			
 		
 	}
-	else if($( "#screen_slide_11" ).hasClass( "show" )) {																
+	else if($( "#screen_slide_16" ).hasClass( "show" )) {																
 															
-		jQuery('#screen_slide_11').removeClass("show");			
-		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_16').removeClass("show");			
+		jQuery('#screen_slide_16').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("show");	
 		jQuery('#male_invite_friend_name').val('');	
@@ -700,12 +701,13 @@ function male_invite_friend()
 								jQuery('#overlay').addClass("hide"); 
 						 	    jQuery('#male_invite_friend_name').val('');
 								jQuery('#male_invite_friend_email').val('');
+								jQuery('#male_invetation_slide').val(1);								
 								
 							if($( "#screen_slide_12" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_12').removeClass("show");			
 								jQuery('#screen_slide_12').addClass("hide");			
-								jQuery('#screen_slide_11').removeClass("hide");			
-								jQuery('#screen_slide_11').addClass("show");			
+								jQuery('#screen_slide_16').removeClass("hide");			
+								jQuery('#screen_slide_16').addClass("show");			
 							} 
 					  },
 					  failure: function (errMsg) {
@@ -988,12 +990,30 @@ function invite_friend_user_skip()
 function invite_friend_skip()
 {
 	
-jQuery('#overlay').removeClass("show");
-jQuery('#overlay').addClass("hide"); 
-jQuery('#screen_slide_7').removeClass("show");			
-jQuery('#screen_slide_7').addClass("hide");			
-jQuery('#screen_slide_6').removeClass("hide");			
-jQuery('#screen_slide_6').addClass("show");	
+if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==0) {	
+
+
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_6').removeClass("hide");			
+	jQuery('#screen_slide_6').addClass("show");
+
+} if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {	
+
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_8').removeClass("hide");			
+	jQuery('#screen_slide_8').addClass("show");
+	
+
+} else {
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_6').removeClass("hide");			
+	jQuery('#screen_slide_6').addClass("show");	
+	
+}
+
 	
 			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
@@ -1019,12 +1039,32 @@ jQuery('#screen_slide_6').addClass("show");
 function male_invite_friend_skip()
 {
 	
-jQuery('#overlay').removeClass("show");
-jQuery('#overlay').addClass("hide"); 
+//jQuery('#overlay').removeClass("show");
+//jQuery('#overlay').addClass("hide"); 
+
+if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==0) {	
+
 jQuery('#screen_slide_12').removeClass("show");			
 jQuery('#screen_slide_12').addClass("hide");			
 jQuery('#screen_slide_11').removeClass("hide");			
 jQuery('#screen_slide_11').addClass("show");	
+
+} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {	
+
+	jQuery('#screen_slide_12').removeClass("show");			
+	jQuery('#screen_slide_12').addClass("hide");			
+	jQuery('#screen_slide_16').removeClass("hide");			
+	jQuery('#screen_slide_16').addClass("show");	
+
+}
+else {
+	jQuery('#screen_slide_12').removeClass("show");			
+	jQuery('#screen_slide_12').addClass("hide");			
+	jQuery('#screen_slide_11').removeClass("hide");			
+	jQuery('#screen_slide_11').addClass("show");
+}
+
+
 	
 			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
@@ -1077,10 +1117,30 @@ function step_back(id)
 		jQuery('#screen_slide_5').addClass("hide");			
 		jQuery('#screen_slide_5').removeClass("show");
 	}else if(id==7){
+		
+		if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==0) {	
+		
 		jQuery('#screen_slide_6').addClass("show");			
 		jQuery('#screen_slide_6').removeClass("hide");			
 		jQuery('#screen_slide_7').addClass("hide");			
 		jQuery('#screen_slide_7').removeClass("show");
+		
+		} else if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {
+			
+		jQuery('#screen_slide_8').addClass("show");			
+		jQuery('#screen_slide_8').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");	
+			
+		} else {
+			
+		jQuery('#screen_slide_6').addClass("show");			
+		jQuery('#screen_slide_6').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");
+			
+		}
+		
 	}else if(id==10){
 		
 		jQuery('#screen_slide_0').addClass("show");			
@@ -1090,10 +1150,29 @@ function step_back(id)
 	
 	}else if(id==12){
 		
+		if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==0) {	
+		
 		jQuery('#screen_slide_11').addClass("show");			
 		jQuery('#screen_slide_11').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("show");
+		
+		} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {
+			
+			jQuery('#screen_slide_16').addClass("show");			
+			jQuery('#screen_slide_16').removeClass("hide");			
+			jQuery('#screen_slide_12').addClass("hide");			
+			jQuery('#screen_slide_12').removeClass("show");
+		
+		}else {
+			
+			jQuery('#screen_slide_11').addClass("show");			
+			jQuery('#screen_slide_11').removeClass("hide");			
+			jQuery('#screen_slide_12').addClass("hide");			
+			jQuery('#screen_slide_12').removeClass("show");
+				
+		}
+		
 	
 	}else if(id==14){
 		
@@ -1315,6 +1394,8 @@ function validate_email_male(email){
 <!-- screen_1 --> 
 <body class="formbg">
 <form class="form-signin" action="" method="post">
+<input type="hidden" name="male_invetation_slide" id="male_invetation_slide" value="0" />
+<input type="hidden" id="invetation_slide" name="invetation_slide" value="0" />
  <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/Loading_2.gif') }}" class="loading" /></div></div>
  
 <!--<img src="{{ asset('bundles/lovethatfit/web_registration/img/ajax-loader.gif') }}" alt="Circle" class="profile_pic" />-->
@@ -1637,6 +1718,21 @@ and outfit ideas.</p></div>
 </div>
 
 
+<div class="screen_16 hide" id="screen_slide_16">
+<div class="container"> 
+    <div class="request">
+      <p>Email sent!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p>We've sent your invitation. Invite another friend.
+        </p>
+    </div>
+    <a href="#screen_slide_12" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite another friend</a>
+</div>
+</div>
+
+
 
 
 <!-- screen_9 --> 
@@ -1667,7 +1763,7 @@ and outfit ideas.</p></div>
     <div class="request_text">
       <p>We've sent you a confirmation email. We will make sure to update you when the app is ready for you.</p>
     </div>
-   <!-- <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>-->
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>
 </div>
 </div>
 
