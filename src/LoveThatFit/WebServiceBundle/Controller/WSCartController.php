@@ -973,7 +973,7 @@ class WSCartController extends Controller
             if($data['success'] == 0){
                 $res = $this->get('webservice.helper')->response_array(true, 'User credits cards found', true, $data);
             }else{
-                $res = $this->get('webservice.helper')->response_array(false, "no card found", true, $data);
+                $res = $this->get('webservice.helper')->response_array(true, "no card found", true, $data);
             }
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
