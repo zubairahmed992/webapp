@@ -5,7 +5,6 @@ namespace LoveThatFit\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller {
-
     public function indexAction() {
         $first = strtotime('first day this month');
         $months = array();
@@ -37,6 +36,7 @@ class DefaultController extends Controller {
                     'totalusers'=>$totalusers,
                     'ageinyears'=>$agegopus,
                 ));
+        
     }
 
     //--------------------------------------------------------------------------

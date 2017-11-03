@@ -276,7 +276,7 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
    .navigation1{position: fixed !important; color:#fff; top: 60px; left: 25%; z-index: 2000 !important;}
     .navigation1 a,
     .navigation1 a:visited {
-        display: inline-block !important;
+        display: inline-block;
         padding:5px 8px;
         cursor: pointer;
         color:#fff;
@@ -302,4 +302,17 @@ ul.imagemenu li{ display:inline-block; margin-right: 10px;}
     text-transform: uppercase;
     display: none}
             
- 
+    .black_btn{
+    display: inline-block;
+    padding: 3px 9px;
+    cursor: pointer;
+    color: #fff;
+    background: #444;
+    text-decoration: none;
+    font-size: 12px;
+    border:none;
+    }
+    
+button.black_btn[type="button"]:disabled {
+    background: #cccccc;
+}    

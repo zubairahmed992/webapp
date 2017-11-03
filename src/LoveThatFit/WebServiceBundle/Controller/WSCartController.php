@@ -494,25 +494,27 @@ class WSCartController extends Controller
         $itemsArray = array();
         foreach ($items as $detail) {
             $entity = $this->container->get('admin.helper.productitem')->find($detail['item_id']);
+            $price_sum = $entity->getPrice() * $detail['quantity'];
             $itemsArray[] = array(
                 'pname' => $entity->getProduct()->getName(),
                 'quantity' => $detail['quantity'],
                 'item_price'     => $entity->getPrice(),
-                'price'     => $entity->getPrice() * $detail['quantity'],
+                'price'     => number_format((float)$price_sum, 2, '.', ''),
                 'sku'       => $entity->getProduct()->getControlNumber(),
                 'size'      => $entity->getProductSize()->getTitle(),
-                'color'     => $entity->getProductColor()->getTitle()
+                'color'     => $entity->getProductColor()->getTitle(),
+                'brand'      => $entity->getProduct()->getBrand()->getName(),
             );
         }
         $orderNummber = $result['order_number'];
         $orderAmount = $decode['order_amount'];
         $totalAmount = $decode['total_amount'];
-        $discount   = $decode['discount_amount'];
+        $discount   = number_format((float)$decode['discount_amount'], 2, '.', ''); 
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
-        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
-        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
+        $salesTax  =   (isset($decode['sales_tax']) ? number_format((float)$decode['sales_tax'], 2, '.', '') : '0.00'); 
+        $d_discount  =   (isset($decode['discount']) ? number_format((float)$decode['discount'], 2, '.', '') : '0.00'); 
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
@@ -525,7 +527,7 @@ class WSCartController extends Controller
             'contact_number'    => '262-391-3403',
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
-            'order_amount'  => $orderAmount,
+            'order_amount'  => number_format((float)$orderAmount, 2, '.', ''),
             'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
             'discount'  => ($discount > 0 ? "-$".$discount : 0),
             'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
@@ -545,6 +547,9 @@ class WSCartController extends Controller
             'billing_first_name' => $billing['billing_first_name']. " ". $billing['billing_last_name'],
             'billing_phone_no'  => $billing['billing_phone'],
             'billing_address1'  => $billing['billing_address1'],
+            'billing_city'      => $billing['billing_city'],
+            'billing_state'     => $billing['billing_state'],
+            'billing_postcode'  => $billing['billing_postcode'],
             'sales_tax'  => $salesTax
         );
 
@@ -690,18 +695,28 @@ class WSCartController extends Controller
         if ($user) {
             if($billing_id > 0){
                 $billingObject = $this->container->get('cart.helper.userAddresses')->updateUserBillingAddress($decoded, $user);
+                if($billingObject)
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
+                        "billing_address_id" => $billingObject->getId()
+                    ));
+                }else{
+                    $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
+                }
             }else{
                 $billingObject = $this->container->get('cart.helper.userAddresses')->saveUserBillingAddress($decoded, $user);
+                if($billingObject)
+                {
+                    $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
+                        "billing_address_id" => $billingObject['billing']->getId(),
+                        'shipping_address_id' => (isset($billingObject['shipping']) ? $billingObject['shipping']->getId() : 0)
+                    ));
+                }else{
+                    $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
+                }
             }
 
-            if($billingObject)
-            {
-                $res = $this->get('webservice.helper')->response_array(true, 'Thanks for updating your info! Your address has been changed.', true, array(
-                    "billing_address_id" => $billingObject->getId()
-                ));
-            }else{
-                $res = $this->get('webservice.helper')->response_array(false, 'Some thing went wrong please try again later.');
-            }
+
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
         }
@@ -958,7 +973,7 @@ class WSCartController extends Controller
             if($data['success'] == 0){
                 $res = $this->get('webservice.helper')->response_array(true, 'User credits cards found', true, $data);
             }else{
-                $res = $this->get('webservice.helper')->response_array(false, "no card found", true, $data);
+                $res = $this->get('webservice.helper')->response_array(true, "no card found", true, $data);
             }
         }else {
             $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
@@ -1000,7 +1015,7 @@ class WSCartController extends Controller
                 'pname'      => $entity->getProduct()->getName(),
                 'quantity'   => $detail['qty'],
                 'item_price' => $entity->getPrice(),
-                'price'      => $entity->getPrice() * $detail['qty'],
+                'price'      => number_format((float)($entity->getPrice() * $detail['qty']), 2, '.', ''),
                 'sku'        => $entity->getProduct()->getControlNumber(),
                 'size'       => $entity->getProductSize()->getTitle(),
                 'color'      => $entity->getProductColor()->getTitle()
@@ -1008,8 +1023,9 @@ class WSCartController extends Controller
         }
         $creditCard   = json_decode($orders['payment_json'])->transaction->_attributes->creditCard;
         $d_discount   = (isset($orders['discount']) ? $orders['discount'] : 0);
+
         $dataArray = array(
-            'purchase_date' => $orders['user_order_date']->format('Y-m-d H:i:s'),
+            'purchase_date' => ($orders['user_order_date'] != "") ? $orders['user_order_date']->format('F d, Y'): "",
             'items'         => $itemsArray,
             'order_numnber' => $orders['order_number'],
             'card_type'     => $creditCard->cardType,
@@ -1017,10 +1033,10 @@ class WSCartController extends Controller
             'contact_number'   => '262-391-3403',
             'email'         => $orders['email'],
             'frist_name'    => $orders['firstName'] . " " . $orders['lastName'],
-            'order_amount'  => $orders['order_amount'],
+            'order_amount'  => number_format((float)$orders['order_amount'], 2, '.', ''),
             'total_amount'  => number_format((float)$orders['total_amount'], 2, '.', ''),
             'discount'      => ($orders['discount_amount'] > 0 ? "-$".$orders['discount_amount'] : 0),
-            'discountType' => (isset($orders['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
+            'discountType' => (isset($orders['group_type']) && $orders['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'expirate_date' => $creditCard->expirationMonth. "/". $creditCard->expirationYear,
             'shipping_first_name' => $orders['shipping_first_name'],
             'shipping_last_name' => $orders['shipping_last_name'],
@@ -1034,12 +1050,62 @@ class WSCartController extends Controller
             'billing_first_name' => $orders['billing_first_name']. " ". $orders['billing_last_name'],
             'billing_phone_no'  => $orders['billing_phone'],
             'billing_address1'  => $orders['billing_address1'],
-            'sales_tax'  => $orders['sales_tax']
+            'billing_city'      => $orders['billing_city'],
+            'billing_state'     => $orders['billing_state'],
+            'billing_postcode'  => $orders['billing_postcode'],
+            'sales_tax'         => number_format((float)$orders['sales_tax'], 2, '.', ''),
         );
-
+        
+        // echo "<pre>";
+        // print_r($dataArray);
+    
+        // die();
         return $this->render('LoveThatFitWebServiceBundle:Order:user_purchase.html.twig',
             array('dataArray'   => $dataArray)
         );
+    }
+
+    // update Single Item to Cart Version 3.0
+    public function updateItemToCartNewAction()
+    {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $old_item_id = $decoded["old_item_id"];
+            $item_id = $decoded["item_id"];
+            $qty = $decoded["quantity"];
+            $requested_screen = $decoded["display_screen"];
+
+            //find old item id and delete that item from cart
+            $find_old_item_against_user = $this->container->get('cart.helper.cart')->findCartByUserId($user, $old_item_id);
+            if(!empty($find_old_item_against_user)) {
+                $this->container->get('cart.helper.cart')->removeCartByItem($user, $old_item_id);
+            }
+
+            /* IOSV3-252 - From the Product Detail page, if product item already exist then quantity not change  */
+            if($requested_screen == "detail_page"){
+                $product_item = $this->container->get('admin.helper.productitem')->find($item_id);
+                $find_item_against_user = $this->container->get('cart.helper.cart')->findCartByUserId($user, $product_item);
+                if(!empty($find_item_against_user["qty"])){
+                    $qty = $find_item_against_user["qty"];
+                }
+            }
+
+            /*Remove Item from wishlist */
+            $this->container->get('cart.helper.wishlist')->removeWishlistByItem($user, $item_id);
+            $response = $this->container->get('cart.helper.cart')->fillCartforService($item_id, $user, $qty);
+            if ($response != null) {
+                $resp = 'Item has been added to Cart Successfully';
+                $res = $this->get('webservice.helper')->response_array(true, $resp);
+            } else {
+                $res = $this->get('webservice.helper')->response_array(false, "some thing went wrong");
+            }
+        } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+
     }
 
 }

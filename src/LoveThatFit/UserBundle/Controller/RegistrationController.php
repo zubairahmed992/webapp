@@ -32,8 +32,8 @@ class RegistrationController extends Controller {
 
 #>>>>>>>>>>>>>>>>>>>>>> Replace with new registration >>>>>>>>>>>>>>>>>>
     public function registrationAction() {
-        
-        $request = $this->getRequest();
+        return $this->redirect('/');
+        /*$request = $this->getRequest();
         $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
 
         $referer = $request->headers->get('referer');
@@ -64,7 +64,7 @@ class RegistrationController extends Controller {
                     'error' => $security_context['error'],
                     'referer' => $security_context['referer'],
                     'twitters' => $twitters,
-                ));
+                ));*/
     }
 
 //----------------------------------------------------------------
@@ -78,7 +78,6 @@ class RegistrationController extends Controller {
         $twitter_helper = $this->get('twitter_helper');
                 $twitters = array();
                 $twitters = $twitter_helper->twitter_latest();
-              
                  $user = new User();
         try {
             $user = new User();
@@ -682,6 +681,17 @@ public function stepFourTimeSpentAction(Request $request){
    $response->setContent(readfile($basename));
    return $response;
     }
+
+    public function registrationFromWebAction() { 
+
+        $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
+        if ($mobile == true) {          
+            return $this->render('LoveThatFitUserBundle:Registration:signup.html.twig');
+       } else {
+            return $this->redirect('https://www.selfiestyler.com');
+        }
+    }
+
     
 #>>>>>>>>>>>>>>>>>>>>>> check for usage then Remove >>>>>>>>>>>>>>>>>>
       public function stepImageEditAction($edit_type=null) {

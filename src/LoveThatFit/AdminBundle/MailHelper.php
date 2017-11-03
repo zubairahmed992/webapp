@@ -69,6 +69,7 @@ class MailHelper {
             ->setContentType("text/html")
             ->setBody(
                 $this->templating->render($body, array( 'dataArray' => $dataArray)));
+
             //Enable BCC for user order
             //Configure email through app/config/parameters.yml
         if($enableBCC 
@@ -122,7 +123,22 @@ class MailHelper {
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
-        $subject = 'SelfieStyler: Thank you very much for your order. ';
+        $subject = 'SelfieStyler Order Confirmation';
+        //Enable BBC
+        $enableBCC = true;
+        return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
+    }
+
+     public function sendPrimaryKeyUpdateEmail( $user, $dataArray, $baseurl = "" )
+    {
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $dataArray['email'];
+
+        $dataArray['baseurl'] = $baseurl;
+
+
+        $body = "LoveThatFitAdminBundle::email/update_primary_email.html.twig";
+        $subject = 'Your email has been updated';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
@@ -153,7 +169,6 @@ class MailHelper {
         
     }
     
-    
     public function sendPasswordResetLinkEmail($user, $reset_link) {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
@@ -161,7 +176,16 @@ class MailHelper {
         $subject = 'SelfieStyler: Password Reset';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
-        
+    }
+
+    public function sendPasswordResetLinkEmailWeb($user, $reset_link)
+    {
+        $from    = $this->conf['parameters']['mailer_user'];
+        $to      = $user->getEmail();
+        $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
+        $subject = 'SelfieStyler password reset';
+        //return 'emailing is currently disabled';
+        return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
     }
 
 	public function sendOrderConfirmationEmail($user,$order,$cart) {
@@ -197,7 +221,7 @@ class MailHelper {
 	  return $result;
 	}
 
-  public function sendFeedbackEmail($user,$content) {
+    public function sendFeedbackEmail($user,$content) {
 
 	//$from = $user->getEmail();
 	$from = $this->conf['parameters']['mailer_user'];
@@ -240,14 +264,14 @@ class MailHelper {
 	return $result;
   }
 
-   public function sendEmailWithTemplate($arr) {
+    public function sendEmailWithTemplate($arr) {
         $from = $this->conf['parameters']['mailer_user'];
         $message = \Swift_Message::newInstance()
                 ->setSubject($arr['subject'])
                 ->setFrom($from)
                 ->setTo($arr['to_email'])
                 ->setContentType("text/html")
-                ->setBody($this->templating->render($arr['template'], $arr['template_array']));
+                ->setBody($this->templating->render($arr['template'],array( 'dataArray' => $arr['template_array'])));
      if($this->server!='local') {
        try {
          $this->mailer->send($message);
@@ -269,6 +293,83 @@ class MailHelper {
            'email not sent.'
        );
      }
+        return $result;
+    }
+
+
+    public function sendWebRegistrationEmail($user) {
+
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $user->getEmail();
+        $body = "LoveThatFitAdminBundle::email/registration-web.html.twig";
+        $subject = 'Welcome to SelfieStyler!';
+        //return 'emailing is currently disabled';
+        return $this->sendEmail($from, $to, $body, $user, $subject);
+
+
+    }
+
+    public function sendUserOrderShippedEmail( $dataArray )
+    {
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $dataArray['email'];
+
+        $body = "LoveThatFitAdminBundle::email/user_order_shipped.html.twig";
+        $subject = 'Your Selfiestyler order has shipped!';
+        //Enable BBC
+        $enableBCC = true;
+        return $this->sendUserOrderShippedHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
+    }
+
+    private function sendUserOrderShippedHtmlEmail($from, $to, $body, $subject = '', $dataArray = array(),$enableBCC = false) {
+
+        $order = $dataArray['order'];
+        $trackingNumber = $dataArray['trackingNumber'];
+        $link = $dataArray['link'];
+        $order_id = $dataArray['order_id'];
+        $user_order = $dataArray['user_order'];
+        $sales_tax = $dataArray['sales_tax'];
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom($from)
+            ->setTo($to)
+            ->setContentType("text/html")
+            ->setBody(
+                $this->templating->render($body, array( 'order' => $order,'trackingNumber' => $trackingNumber,'user_order' => $user_order,'sales_tax' => $sales_tax)));
+
+            //Enable BCC for user order
+            //Configure email through app/config/parameters.yml
+        if($enableBCC 
+            && isset($this->conf['parameters']['podio_bcc']) 
+            && filter_var($this->conf['parameters']['podio_bcc'] , FILTER_VALIDATE_EMAIL)
+            ){
+            $message->addBcc($this->conf['parameters']['podio_bcc']);
+          }
+
+        if($this->server!='local')
+        {
+            try {
+                $this->mailer->send($message);
+            } catch (\Swift_TransportException $e) {
+                $result = array(
+                    false,
+                    'There was a problem sending email: ' . $e->getMessage()
+                );
+                return $result;
+            }
+
+
+            $result = array(
+                true,
+                'email has been sent.'
+            );
+        }else{
+            $result = array(
+                true,
+                'email not sent.'
+            );
+        }
         return $result;
     }
 

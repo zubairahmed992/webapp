@@ -1,3 +1,4 @@
+app/config/config.yml
 app/config/parameters.yml
 app/config/camera_mask_specs.yml
 web/app_dev.php

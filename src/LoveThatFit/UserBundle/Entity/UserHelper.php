@@ -74,12 +74,19 @@ class UserHelper
         $this->em->flush();
     }
 
-    public function saveTermAndCondtions(User $user,$term_status)
+    public function saveNewPrimaryEmail(User $user,$email,$new_primary_email)
     {
-        $user->setTermAndConditions($term_status);
+        $user->setEmail($new_primary_email);
+        $user->setArchiveEmail($email);
         $this->em->persist($user);
         $this->em->flush();
     }
+
+    public function sendUpdatedPrimaryEmailToUser( User $user, $decoded, $base_url = "")
+    {         
+        $this->container->get('mail_helper')->sendPrimaryKeyUpdateEmail($user, $decoded, $base_url);
+        return;
+    }  
 
 //-------------------------------------------------------
 

@@ -1336,6 +1336,7 @@ class WebServiceHelper
         $p['item_name'] = $product->getItemName();
         $p['disabled'] = $product->getDisabled();
         $p['deleted'] = $product->getDeleted();
+
         $default_size_fb = array();
         $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
         $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $recommended_product_item, $default_size_fb);
@@ -1383,7 +1384,7 @@ class WebServiceHelper
     }
 
     //Method is using Version 3 - Calling FitAlgo class has been removed.
-    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user)
+    public function productDetailWithImagesForFitRoom($id, $product_item, $qty, $user, $fittingRoomId = 0)
     {
         $product = $this->container->get('admin.helper.product')->find($id);
 
@@ -1451,6 +1452,7 @@ class WebServiceHelper
                 'favourite' => in_array($pi->getId(), $favouriteItemIds),
                 //'fitting_room_status' => $product_item == $pi->getId() ? true : false,
                 'fitting_room_status' => in_array($pi->getId(), $product_item) ? true : false,
+                'fitting_room_id' => (in_array($pi->getId(), $product_item) &&  (int) $fittingRoomId > 0) ? (int) $fittingRoomId : 0,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
                 'disabled' => $product->getDisabled(),
@@ -1563,7 +1565,18 @@ class WebServiceHelper
     #--------------Get Product list By Category and Gender -----------------------------------------------------
     public function getBannerBrandProduct($brand_id, $user_id)
     {
-        return $this->response_array(true, 'Product List By Brand', true, array('brand_product_list' => $this->container->get('webservice.repo')->productListBrand($brand_id, $user_id)));
+        $productlist = $this->container->get('webservice.repo')->productListBrand($brand_id, $user_id);
+
+        foreach ($productlist as $key => $product) {
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
+            $productlist[$key]['fitting_room_status'] = ($product['uf_user'] != null || $product['uf_user'] != "") ? true : false;
+        }
+
+
+        return $this->response_array(true, 'Product List By Brand', true, array('brand_product_list' => $productlist));
     }
 
 
@@ -1583,6 +1596,10 @@ class WebServiceHelper
                 $filtered_products[$keyed]['fitting_room_status'] = false;
                 $filtered_products[$keyed]['qty'] = 0;
             }
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($valprod['product_id']);
+            $filtered_products[$keyed]['color_count'] = count($color_count);
         }
         return $this->response_array(true, 'Product List By Specific Filter', true, array('product_list' => $filtered_products));
     }
@@ -1741,9 +1758,6 @@ class WebServiceHelper
             return $this->response_array(false, 'Member not found');
           }         
      }
-     
-     
-
 
     public function getProductListByBrand($search_text, $user_id, $page_no = 1)
     {
@@ -1775,6 +1789,10 @@ class WebServiceHelper
                 $productlist[$key]['fitting_room_status'] = false;
                 $productlist[$key]['qty'] = 0;
             }
+
+            //Color Count
+            $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
+            $productlist[$key]['color_count'] = count($color_count);
         }
 
 
@@ -1871,6 +1889,103 @@ class WebServiceHelper
         } else {
             return $this->response_array(false, 'User not authenticated.');
         }
+    }
+
+
+    #------------------------ User -----------------------
+    public function registrationWithDefaultValuesSupportWeb($request_array)
+    {
+        if (!array_key_exists('email', $request_array)) {
+            return $this->response_array(false, 'Email Not provided.');
+        }
+
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+        if (count($user) > 0) {
+            return $this->response_array(false, 'Email already exists.');
+        } else {
+            $user = $this->createUserWithParamsForWeb($request_array);
+            #--- 3) default user values added
+            $measurement = $this->container->get('user.helper.user')->copyDefaultUserDataSupport($user, $request_array);
+
+            $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+
+            ##email not send if the event is available against user
+            if (!array_key_exists("event_name", $request_array)) {
+                #---- 2) send registration email ....
+                $this->container->get('mail_helper')->sendWebRegistrationEmail($user);
+            }
+
+            try {
+                //create podio users entity
+                $this->createPodioUser($user->getId());
+            } catch(\Exception $e) {
+                // log $e->getMessage()
+            }
+
+            #$detail_array = $user->toDataArray(true, $request_array['device_type'], $request_array['base_path']);
+            $detail_array = $this->user_array($user, $request_array);
+
+            try{
+                $logObject = $this->container->get('userlog.helper.userlog')->logUserLoginTime($user, $request_array);
+                $detail_array['sessionId'] = (is_object($logObject)) ? $logObject->getSessionId() : null;
+                $detail_array['image_path'] = "/render/image/";
+                $detail_array['avatar_path'] = "/render/avatar/";
+
+            }catch (Exception $e){}
+
+            unset($detail_array['per_inch_pixel_height']);
+            unset($detail_array['deviceType']);
+            unset($detail_array['auth_token_web_service']);
+            return $this->response_array(true, 'User created', true, array('user' => $detail_array));
+        }
+    }
+
+
+    #-------------------------------------------------------
+
+    private function createUserWithParamsForWeb($request_array)
+    {
+
+        $user = $this->setUserWithParamsForWeb($this->container->get('user.helper.user')->createNewUser(), $request_array);
+        if (isset($request_array['imc']) && $request_array['imc'] == "true") {
+            $user->setVersion(1);
+        } else {
+            $user->setVersion(0);
+        }
+        $user->setPassword($request_array['password']);
+        $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
+        $user->generateAuthenticationToken();
+
+        $this->container->get('user.helper.user')->saveUser($user);
+        return $user;
+    }
+
+    #-------------------------------------------------------
+
+    private function setUserWithParamsForWeb($user, $request_array)
+    {
+        array_key_exists('email', $request_array) ? $user->setEmail($request_array['email']) : null;
+        array_key_exists('gender', $request_array) ? $user->setGender($request_array['gender']) : null;
+        array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) : null;
+        array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) : null;
+        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) : null;
+        array_key_exists('release_name', $request_array) ? $user->setReleaseName($request_array['release_name']) : null;
+        array_key_exists('event_name', $request_array) ? $user->setEventName($request_array['event_name']) : null;
+        array_key_exists('friend_name', $request_array) ? $user->setFriendName($request_array['friend_name']) : null;
+        array_key_exists('friend_email', $request_array) ? $user->setFriendEmail($request_array['friend_email']) : null;
+
+        if (array_key_exists('device_token', $request_array) && array_key_exists('device_type', $request_array)) {
+            $user->addDeviceToken($request_array['device_type'], $request_array['device_token']);
+        }
+
+        #this dob line will be removed with the new build
+        $user->setBirthDate(array_key_exists('dob', $request_array) ? new \DateTime($request_array['dob']) : null);
+        array_key_exists('birth_date', $request_array) ? $user->setBirthDate(new \DateTime($request_array['birth_date'])) : null;
+
+        array_key_exists('phone_number', $request_array) ? $user->setPhoneNumber($request_array['phone_number']) : null;
+
+        return $user;
     }
 
 }

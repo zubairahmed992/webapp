@@ -309,7 +309,8 @@ class UserFittingRoomItemHelper {
 
                 //New in Array
                 $product_item_id_in_array = explode(',',$getAllCategoryByProductItem['product_item_id']);
-                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'], $product_item_id_in_array, $getAllCategoryByProductItem['qty'], $user);
+                $ar['categories'][$a]['products'][] = $this->container->get('webservice.helper')->productDetailWithImagesForFitRoom($getAllCategoryByProductItem['product_id'],
+                        $product_item_id_in_array, $getAllCategoryByProductItem['qty'], $user, $getAllCategoryByProductItem['fitting_room_id']);
                 $previous_category = $ar['categories'][$a]['name'];
             }
         }

@@ -18,14 +18,14 @@ use Doctrine\ORM\Mapping\ManyToOne;
  */
 class User implements UserInterface, \Serializable {
 
-	// ...
+    // ...
     /**
      * @ORM\OneToOne(targetEntity="PodioUsers", mappedBy="user")
      */
     protected $podio_users;
-	
-	
-	// ...
+    
+    
+    // ...
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="original_user")
      */
@@ -117,26 +117,26 @@ class User implements UserInterface, \Serializable {
      * */
     private $measurement;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Cart", mappedBy="user")
-	 */
-	private $cart;
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Cart", mappedBy="user")
+     */
+    private $cart;
 
 
-	/**
-	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Wishlist", mappedBy="user")
-	 */
-	private $wishlist;
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Wishlist", mappedBy="user")
+     */
+    private $wishlist;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserAddresses", mappedBy="user")
-	 */
-	private $user_addresses;
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserAddresses", mappedBy="user")
+     */
+    private $user_addresses;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrder", mappedBy="user")
-	 */
-	private $user_orders;
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrder", mappedBy="user")
+     */
+    private $user_orders;
 
     /**
      * Bidirectional (INVERSE SIDE)
@@ -213,10 +213,10 @@ class User implements UserInterface, \Serializable {
      * */
     private $user_image_spec;
 
-	/**
-	 * @ORM\OneToOne(targetEntity="UserAppAccessLog", mappedBy="user")
-	 * */
-	private $user_app_access_log;
+    /**
+     * @ORM\OneToOne(targetEntity="UserAppAccessLog", mappedBy="user")
+     * */
+    private $user_app_access_log;
 
     /**
      * @var integer $version
@@ -225,15 +225,28 @@ class User implements UserInterface, \Serializable {
     private $version;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="InviteFriend", mappedBy="user", orphanRemoval=true)
+     */
+    protected $invitefriend;
+
+    /**
+     * @var integer $forget_status
+     * @ORM\Column(name="forget_status", type="integer", nullable=true, options={"default":"0"})
+     */
+    private $forget_status;
+
+
 //---------------------------------------  implement the UserInterface
     public function __construct() {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->product_items = new \Doctrine\Common\Collections\ArrayCollection();
-	    $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
         $this->duplicate = new \Doctrine\Common\Collections\ArrayCollection();
         $this->save_look = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fnfusers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->invitefriend = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 //---------------------------------------------------------------------
@@ -519,6 +532,33 @@ class User implements UserInterface, \Serializable {
      *
      */
     private $acct_type;
+
+    /**
+     * @var string $archive_email
+     *
+     * @ORM\Column(name="archive_email", type="string", length=60, nullable=true)
+     *
+     */
+    private $archive_email;
+
+
+    /**
+     * @var string $friend_name
+     *
+     * @ORM\Column(name="friend_name", type="string", length=255, nullable=true)
+     * )
+     */
+    private $friend_name;
+
+
+    /**
+     * @var string $friend_email
+     *
+     * @ORM\Column(name="friend_email", type="string", length=60, nullable=true)
+     *
+     */
+    private $friend_email;
+
 
     /**
      * Get id
@@ -1025,6 +1065,7 @@ class User implements UserInterface, \Serializable {
      * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
      */
     public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems) {
+
         $this->product_items->removeElement($productItems);
     }
 
@@ -1817,7 +1858,41 @@ class User implements UserInterface, \Serializable {
     {
         return $this->selfieshare;
     }
-#---------------------------------------------------------------------------------    
+#---------------------------------------------------------------------------------
+
+    /**
+     * Add invitefriend
+     *
+     * @param \LoveThatFit\UserBundle\Entity\InviteFriend $invitefriend
+     * @return User
+     */
+    public function addInviteFriend(\LoveThatFit\UserBundle\Entity\Selfieshare $invitefriend)
+    {
+        $this->invitefriend[] = $invitefriend;
+        return $this;
+    }
+
+    /**
+     * Remove invitefriend
+     *
+     * @param \LoveThatFit\UserBundle\Entity\InviteFriend $invitefriend
+     */
+    public function removeInviteFriend(\LoveThatFit\UserBundle\Entity\Selfieshare $invitefriend)
+    {
+        $this->invitefriend->removeElement($invitefriend);
+    }
+
+    /**
+     * Get invitefriend
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInviteFriend()
+    {
+        return $this->invitefriend;
+    }
+#---------------------------------------------------------------------------------
+
     /**
      * Add user_feedback
      *
@@ -2036,27 +2111,27 @@ class User implements UserInterface, \Serializable {
         return $this->user_image_spec;
     }
 
-	/**
-	 * Set user_app_access_log
-	 *
-	 * @param \LoveThatFit\UserBundle\Entity\User $userAppAccessLog
-	 * @return User
-	 */
-	public function setUserAppAccessLog(\LoveThatFit\UserBundle\Entity\User $user_app_access_log = null)
-	{
-	  $this->user_app_access_log = $user_app_access_log;
-	  return $this;
-	}
+    /**
+     * Set user_app_access_log
+     *
+     * @param \LoveThatFit\UserBundle\Entity\User $userAppAccessLog
+     * @return User
+     */
+    public function setUserAppAccessLog(\LoveThatFit\UserBundle\Entity\User $user_app_access_log = null)
+    {
+      $this->user_app_access_log = $user_app_access_log;
+      return $this;
+    }
 
-	/**
-	 * Get user_app_access_log
-	 *
-	 * @return \LoveThatFit\UserBundle\Entity\User
-	 */
-	public function getUserAppAccessLog()
-	{
-	  return $this->user_app_access_log;
-	}
+    /**
+     * Get user_app_access_log
+     *
+     * @return \LoveThatFit\UserBundle\Entity\User
+     */
+    public function getUserAppAccessLog()
+    {
+      return $this->user_app_access_log;
+    }
 
 
     #----------------------------------------
@@ -2081,6 +2156,29 @@ class User implements UserInterface, \Serializable {
     public function getVersion()
     {
       return $this->version;
+    }
+    #----------------------------------------
+    /**
+     * Set forget_status
+     *
+     * @param integer $forget_status
+     * @return UserArchives
+     */
+    public function setForgetStatus($forget_status)
+    {
+      $this->forget_status = $forget_status;
+
+      return $this;
+    }
+
+    /**
+     * Get forget_status
+     *
+     * @return integer
+     */
+    public function getForgetStatus()
+    {
+      return $this->forget_status;
     }
 
     /**
@@ -2223,30 +2321,30 @@ class User implements UserInterface, \Serializable {
   #---------------------------------------------------
   public function toArray($all=false, $base_path=null){
 
-	$obj = array();
+    $obj = array();
 
-	$obj['id'] = $this->getId();
-	$obj['email'] = $this->getEmail();
-	$obj['first_name'] = $this->getFirstName();
-	$obj['last_name'] = $this->getLastName();
-	$obj['zipcode'] = $this->getZipcode();
+    $obj['id'] = $this->getId();
+    $obj['email'] = $this->getEmail();
+    $obj['first_name'] = $this->getFirstName();
+    $obj['last_name'] = $this->getLastName();
+    $obj['zipcode'] = $this->getZipcode();
     $obj['phone_number'] = $this->getPhoneNumber();
-	$obj['gender'] = $this->getGender();
-	$obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;
-	$obj['auth_token'] = $this->getAuthToken();
-	$obj['auth_token_web_service'] = $this->getAuthTokenWebService();
+    $obj['gender'] = $this->getGender();
+    $obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;
+    $obj['auth_token'] = $this->getAuthToken();
+    $obj['auth_token_web_service'] = $this->getAuthTokenWebService();
         $obj['path']= $base_path . $this->getDirWebPath();
-	if($all){
-	  $obj['image'] = $this->getImage();
-	  $obj['avatar'] = $this->getAvatar();
-	  $obj['web_path'] = $this->getDirWebPath();
-	  $obj['secret_question'] = $this->getSecretQuestion();
-	  $obj['secret_answer'] = $this->getSecretAnswer();
-	  $obj['created_at']=$this->getCreatedAt()?$this->getCreatedAt()->format('Y-m-d'):null;
-	  $obj['updated_at']=$this->getUpdatedAt()?$this->getUpdatedAt()->format('Y-m-d'):null;
-	  $obj['image_updated_at']=$this->getImageUpdatedAt()?$this->getImageUpdatedAt()->format('Y-m-d'):null;
-	}
-	return $obj;
+    if($all){
+      $obj['image'] = $this->getImage();
+      $obj['avatar'] = $this->getAvatar();
+      $obj['web_path'] = $this->getDirWebPath();
+      $obj['secret_question'] = $this->getSecretQuestion();
+      $obj['secret_answer'] = $this->getSecretAnswer();
+      $obj['created_at']=$this->getCreatedAt()?$this->getCreatedAt()->format('Y-m-d'):null;
+      $obj['updated_at']=$this->getUpdatedAt()?$this->getUpdatedAt()->format('Y-m-d'):null;
+      $obj['image_updated_at']=$this->getImageUpdatedAt()?$this->getImageUpdatedAt()->format('Y-m-d'):null;
+    }
+    return $obj;
 
   }
 
@@ -2288,9 +2386,18 @@ class User implements UserInterface, \Serializable {
             }
             ##added by umer on 06-10-2016 as per ibrahim bhai instructions
             ##$this->measurement->bottom_placement + 10.5;
-            
+
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
+
+            /*Set user status for IOSv3-435*/
+            $status = $this->status;
+
+            $user_status = $this->status;
+            if(count($this->getUserArchives()) === 0){
+                $user_status = 1;
+            }
+
             return array(
                 'id' => $this->getId(),
                 'user_id' => $this->getId(),
@@ -2364,6 +2471,7 @@ class User implements UserInterface, \Serializable {
                 'device_type' => $device_type,
                 'default_user' => $this->user_marker ? $this->user_marker->getDefaultUser() : false,
                 'status' => $this->status ? $this->status : 0,
+                'user_status' => $user_status,
                 'measurement_json' => $measurement_json,
             );
         } else {
@@ -2422,9 +2530,18 @@ class User implements UserInterface, \Serializable {
             $bottom_exclusion_ratio = $device_config['pixel_per_inch']/$device_config['actual_product_img_ppi'];
             $bottom_exclusion_px = $bottom_exclusion_ratio * $device_config['actual_bottom_prod_empty_area']; 
             $this->measurement->bottom_placement = $this->measurement->bottom_placement - $bottom_exclusion_px;
-            
+
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             $measurement_json = $this->measurement && $this->measurement->getJSONMeasurement('actual_user') ? $this->measurement->getJSONMeasurement('actual_user') : '';
+
+            /*Set user status for IOSv3-435*/
+            $status = $this->status;
+            $user_status = $this->status;
+
+            if(count($this->getUserArchives()) === 0){
+                $user_status = 1;
+            }
+
             return array(
                 'id' => $this->getId(),
                 'user_id' => $this->getId(),
@@ -2498,6 +2615,7 @@ class User implements UserInterface, \Serializable {
                 'device_type' => $device_type,
                 'default_user' => $this->user_marker ? $this->user_marker->getDefaultUser() : false,
                 'status' => $this->status ? $this->status : 0,
+                'user_status' => $user_status,
                 'measurement_json' => $measurement_json,
             );
         } else {
@@ -2627,9 +2745,9 @@ class User implements UserInterface, \Serializable {
    */
   public function addCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
   {
-	$this->cart[] = $cart;
+    $this->cart[] = $cart;
 
-	return $this;
+    return $this;
   }
 
   /**
@@ -2639,7 +2757,7 @@ class User implements UserInterface, \Serializable {
    */
   public function removeCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
   {
-	$this->cart->removeElement($cart);
+    $this->cart->removeElement($cart);
   }
 
   /**
@@ -2649,7 +2767,7 @@ class User implements UserInterface, \Serializable {
    */
   public function getCart()
   {
-	return $this->cart;
+    return $this->cart;
   }
 
 
@@ -2908,8 +3026,8 @@ class User implements UserInterface, \Serializable {
     {
         return $this->getId() ." (" .$this->email." )";
     }
-	
-	/**
+    
+    /**
      * Add user_item_fav_history
      *
      * @param \LoveThatFit\SiteBundle\Entity\UserItemFavHistory $userItemFavHistory
@@ -2973,7 +3091,7 @@ class User implements UserInterface, \Serializable {
     public function getUserLog()
     {
         return $this->user_log;
-    }	
+    }   
 
     /**
      * Add podio_users
@@ -3026,6 +3144,68 @@ class User implements UserInterface, \Serializable {
     public function getAcctType() {
         return $this->acct_type;
     }
+
+
+    /**
+     * Set archive_email
+     *
+     * @param string $archive_email
+     * @return User
+     */
+    public function setArchiveEmail($archive_email) {
+        $this->archive_email = $archive_email;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getArchiveEmail() {
+        return $this->archive_email;
+    }
+
+
+
+    /**
+     * Set friend_email
+     *
+     * @param string $friend_email
+     * @return User
+     */
+    public function setFriendEmail($friend_email) {
+        $this->friend_email = $friend_email;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFriendEmail() {
+        return $this->friend_email;
+    }
+
+
+    /**
+     * Set friend_name
+     *
+     * @param string $friend_name
+     * @return User
+     */
+    public function setFriendName($friend_name) {
+        $this->friend_name = $friend_name;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFriendName() {
+        return $this->friend_name;
+    }
+
 
 
 }

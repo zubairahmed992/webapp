@@ -194,4 +194,88 @@ class PodioApiHelper
           }
       }
     }
+
+    public function updateUserPrimaryEmailPodio($user_podio)
+    {        
+        //Authenticate the Podio API
+        Podio::setup($this->client_id, $this->client_secret);
+        Podio::authenticate_with_app($this->app_id, $this->app_token);
+        if (Podio::is_authenticated()) {
+            //Podio::set_debug(true);
+            //print "You were already authenticated and no authentication is needed.<br>"; 
+
+            //search member email exists in podio
+            $search_results = array();
+            try {              
+              $search_query = PodioSearchResult::app( $this->app_id, array('query' => ''.$user_podio['current_email'].'','ref_type' => 'item','search_fields' => 'title') );  
+              $email_user_db  = $user_podio['current_email'];             
+              foreach ($search_query as $key => $value) {
+                $podio_workspace_email = $value->title; 
+                if(strstr($podio_workspace_email, $email_user_db)) {
+                  $search_results['id'] = $value->id;
+                  $search_results['title'] = $value->title;
+                  break;
+                }
+              }
+            } catch (PodioError $e) {
+              return $e;
+            }
+
+            $podio_results = array();
+            $podio_results['podio_id'] = 0;
+            $podio_results['is_podio_updated'] = 0;
+            try {
+              if(isset($search_results) && !empty($search_results)) {
+                // update email on podio user
+
+                // Second approach - Create field collection with different fields
+                $fields = new PodioItemFieldCollection(array(
+                  new PodioEmailItemField(array("external_id" => "member-email"))
+                ));
+
+                // Create item and attach fields
+                $item = new PodioItem(array(
+                  "app" => new PodioApp(intval($this->app_id)),
+                  "fields" => $fields
+                ));
+
+                //Attached memeber email
+                $item->fields["member-email"]->values = array("type" => "other","value" => "".$user_podio['new_email']."");
+
+                $podio_id = $search_results['id'];
+                $update_item_fields = PodioItem::update($podio_id, $item);
+                //return $podio_id;
+                $podio_results['podio_id'] = $podio_id;
+                $podio_results['is_podio_updated'] = 1;
+                return $podio_results;
+              } else {
+                // Save item - add new member
+
+                // Second approach - Create field collection with different fields
+                $fields = new PodioItemFieldCollection(array(
+                  new PodioEmailItemField(array("external_id" => "member-email"))
+                ));
+
+                // Create item and attach fields
+                $item = new PodioItem(array(
+                  "app" => new PodioApp(intval($this->app_id)),
+                  "fields" => $fields
+                ));
+                                
+
+                //Attached memeber email
+                $item->fields["member-email"]->values = array("type" => "other","value" => "".$user_podio['new_email']."");
+
+                $new_item_placeholder = $item->save();
+                $item->item_id = $new_item_placeholder->item_id;
+                //return $item->item_id;
+                $podio_results['podio_id'] = $item->item_id;
+                $podio_results['is_podio_updated'] = 0;
+                return $podio_results;
+              }
+            } catch (PodioError $e) {
+              return $e;
+            }            
+        }    
+    }
 }

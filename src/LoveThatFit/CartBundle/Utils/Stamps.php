@@ -133,7 +133,7 @@ class Stamps
                 'WeightOz'   => $rate_json->WeightOz,
                 'WeightLb'      => 0,
                 'PackageType' => 'Package',
-                'ShipDate' => $rate_json->shipDate,
+                'ShipDate' => date('Y-m-d'),//'ShipDate' => $rate_json->shipDate,
                 'DeliveryDate' => $rate_json->deliveryDate,
                 'RectangularShaped' => $rate_json->RectangularShaped
             ),

@@ -115,13 +115,28 @@ ws_user_registration_default_values:
       gender: f
       phone_number:
       zipcode:
-      birth_date:  
-      device_type: iphone6
-      create_default_user: true
-      imc: true
+      birth_date:
     request_type: post
-    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
-    backend_process: 
+    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists. (From Web)
+    backend_process:
+#______________________
+nws_web_user_registration:
+    pattern:  /nws/web_user_registration
+    title: web_user_registration
+    params:
+      first_name: example
+      last_name: example
+      friend_name: example
+      friend_email: example@gmail.com
+      email:  example@ltf.com
+      password: ltf123
+      gender: f
+      phone_number:
+      zipcode:
+      birth_date:
+    request_type: post
+    description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.
+    backend_process:
 #______________________
 ws_user_measurement_update:
     pattern:  /ws/user_measurement_update
@@ -215,15 +230,36 @@ ws_selfieshare_create_v3:
    pattern:  /ws/selfieshare/create_v3
    title: selfieshare_create_v3
    params:
-     auth_token: 121c421783cd4d71d871ec16a1296091     
+     auth_token: 121c421783cd4d71d871ec16a1296091
      message_type: sms
      device_type: iphone6
-     friend_name: mycroft 
-     friend_email: mc@ss.com 
+     friend_name: mycroft
+     friend_email: mc@ss.com
      friend_phone: 89349724397428
      message: 'look at me! look at me!!'
-   request_type: post   
+   request_type: post
    file_upload: true
+   description:
+
+#______________________
+nws_web_invitefriend_create:
+   pattern:  /nws/invitefriend/create
+   title: web_invitefriend_create
+   params:
+     email: mc@ss.com
+     friend_name: mycroft
+     friend_email: mc@ss.com
+   request_type: post
+   description:
+
+#______________________
+nws_web_register_male_users:
+   pattern:  /nws/registermaleusers/create
+   title: web_register_male_users
+   params:
+     email: mc@ss.com
+     name: mycroft
+   request_type: post
    description:
 #______________________
 
@@ -251,6 +287,13 @@ ws_user_password_change:
 ws_user_forgot_password:
    pattern:  /ws/user_forgot_password
    title: forgot_password
+   params:
+     email: kamran@ltf.com
+   request_type: post
+#______________________
+nws_web_user_forgot_password:
+   pattern:  /nws/web_user_forgot_password
+   title: web_forgot_password
    params:
      email: kamran@ltf.com
    request_type: post
@@ -1002,11 +1045,30 @@ mcp_get_user_save:
           image_actions: {move_up_down:0,move_left_right:0,img_rotate:0}
           imageData: ""
 
-nws_update_term_conditions:
-    pattern:  /nws/update_term_conditions
-    title: update_term_conditions
+nws_update_primary_email:
+    pattern:  /nws/update_primary_email
+    title: update_primary_email
     request_type: post
-    description: Update term and condition in user table
+    description: Update primary email and add previous email in archive_email field in user table
     params: 
-          term_status: 1
-          email: ovais.rafique@centricsource.com         
+          email: dummy@dummy.com
+          auth_token: 121c421783cd4d71d871ec16a1296091
+          new_primary_email: dummy@dummy.com
+
+nws_cart_item_update_to_cart:
+   pattern:  /nws/update_item_to_cart
+   title: product_update_to_cart
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     quantity: 1
+     old_item_id: 3925
+     item_id: 4126
+     display_screen: detail_page
+   request_type: post
+
+appuser_invite_friend:
+  pattern: /appuser/invite_friend_text
+  title: invite_friend_text
+  params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+                   
