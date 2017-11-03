@@ -234,7 +234,7 @@ device_config:
     screen_available_height_px: 0
     resize_ratio_jt: 1
 
-  iphonexsimulator:
+  iphonesimulator:
     pixel_per_inch: 9.295
     max_user_height_inch: 74
     device_model: simulator

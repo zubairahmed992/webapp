@@ -165,7 +165,7 @@ device_config:
     total_screen_height_px: 667
     resize_ratio_jt: 1.131335
 
-  iphonexsimulator:
+  iphonesimulator:
     svg_mask_x: 66
     svg_mask_y: 66
     pixel_per_inch: 7.797
