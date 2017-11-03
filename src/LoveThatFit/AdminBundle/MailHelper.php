@@ -183,7 +183,7 @@ class MailHelper {
         $from    = $this->conf['parameters']['mailer_user'];
         $to      = $user->getEmail();
         $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
-        $subject = 'Password reset request';
+        $subject = 'SelfieStyler password reset';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
     }
@@ -302,7 +302,7 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration-web.html.twig";
-        $subject = 'SelfieStyler: Thank you for registering with us. ';
+        $subject = 'Welcome to SelfieStyler!';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject);
 
