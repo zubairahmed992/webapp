@@ -680,7 +680,7 @@ class WSUserController extends Controller
                  $ss_ar['to_email'] = $ss->getFriendEmail();
                 $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
                 $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
-                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $ss_ar['subject'] = 'You’re invited to join SelfieStyler';
                 $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
                 return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));
             }else{
@@ -689,7 +689,7 @@ class WSUserController extends Controller
                  $ss_ar['to_email'] = $ss->getFriendEmail();
                 $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
                 $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
-                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $ss_ar['subject'] = 'You’re invited to join SelfieStyler';
                 $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);               
                 return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend updated'));
 
@@ -721,7 +721,7 @@ class WSUserController extends Controller
             $ss_ar['to_email'] = $ra['friend_email'];
             $ss_ar['template'] = 'LoveThatFitAdminBundle::email/male_invite_friend.html.twig';
             $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'selfieshare' => $ra, 'link_type' => 'edit');
-            $ss_ar['subject'] = 'Check out SelfieStyler';
+            $ss_ar['subject'] = 'You’re invited to join SelfieStyler';
 
             $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
             return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));
