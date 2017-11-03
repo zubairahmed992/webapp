@@ -515,7 +515,7 @@ class ServiceController extends Controller {
 
     }
 #------------------------------------------/pi/ws/product_item_image_coordinates/{item_id}
-    public function productItemImageDataAction($item_id) {
+    public function productItemImageDataAction($item_id, $type=null) {
         
         #----------- get original size/color through which other size photograted
         $item = $this->get('admin.helper.product_item')->find($item_id);                                        
@@ -556,6 +556,23 @@ class ServiceController extends Controller {
                         $fabric = false;                    
                 }
             }
+        }
+        if($type){
+            #return new response($img);
+            #---------------------------------------------
+            foreach ($m_co as $fp => $co) {
+                $y = $co[1];
+                $color = imagecolorallocate ($img, 255, 0, 0); 
+                imageline($img, 0, $y, imagesx($img), $y, $color);                
+                imagestring($img, 200, 100, $y, $fp, $color);                
+            }
+            #---------------------------------------------
+            
+            header('Content-Type: image/jpeg');
+            imagejpeg($img);
+            imagedestroy($img);
+            die;
+            
         }
         return $this->response_str('Product image fit point coordinates', true, $fp_coor);
         
