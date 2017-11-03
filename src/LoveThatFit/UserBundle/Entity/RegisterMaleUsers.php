@@ -42,12 +42,19 @@ class RegisterMaleUsers  {
 
  
      /**
-     * @var string $name
+     * @var string $first_name
      *
-     * @ORM\Column(name="friend_name", type="string", length=60, nullable=true)
+     * @ORM\Column(name="first_name", type="string", length=60, nullable=true)
      */
-    private $name;
+    private $first_name;
 
+
+    /**
+     * @var string $last_name
+     *
+     * @ORM\Column(name="last_name", type="string", length=60, nullable=true)
+     */
+    private $last_name;
 
 
     /**
@@ -89,24 +96,46 @@ class RegisterMaleUsers  {
 
 
     /**
-     * Set name
+     * Set first_name
      *
-     * @param string $name
+     * @param string $first_name
      * @return RegisterMaleUsers
      */
-    public function setName($name) {
-        $this->name = $name;
+    public function setFirstName($first_name) {
+        $this->first_name = $first_name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get first_name
      *
      * @return string 
      */
-    public function getName() {
-        return $this->name;
+    public function getFirstName() {
+        return $this->first_name;
+    }
+
+
+    /**
+     * Set last_name
+     *
+     * @param string $last_name
+     * @return RegisterMaleUsers
+     */
+    public function setLastName($last_name) {
+        $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    /**
+     * Get last_name
+     *
+     * @return string
+     */
+    public function getLastName() {
+        return $this->last_name;
     }
     #------------------------------------------------   email
 
