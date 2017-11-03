@@ -58,7 +58,8 @@ class RegisterMaleUsersHelper {
      public function createWithParam($ra) {
         $registermaleusers =  $this->createNew();
         if(array_key_exists('email', $ra) && $ra['email']){$registermaleusers->setEmail($ra['email']);}
-        if(array_key_exists('name', $ra) && $ra['name']){$registermaleusers->setName($ra['name']);}
+        if(array_key_exists('first_name', $ra) && $ra['first_name']){$registermaleusers->setFirstName($ra['first_name']);}
+        if(array_key_exists('last_name', $ra) && $ra['last_name']){$registermaleusers->setLastName($ra['last_name']);}
         $this->em->persist($registermaleusers);
         $this->em->flush();    
         return $registermaleusers;
