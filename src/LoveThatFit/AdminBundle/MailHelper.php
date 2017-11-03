@@ -138,7 +138,7 @@ class MailHelper {
 
 
         $body = "LoveThatFitAdminBundle::email/update_primary_email.html.twig";
-        $subject = 'Your Email Has Been Updated';
+        $subject = 'Your email has been updated';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
