@@ -594,6 +594,7 @@ function invite_friend()
 						 jQuery('#overlay').addClass("hide"); 
 						 jQuery('#invite_friend_name').val('');
 						 jQuery('#invite_friend_email').val('');
+						 jQuery('#invetation_slide').val(1);
 							if($( "#screen_slide_7" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_7').removeClass("show");			
 								jQuery('#screen_slide_7').addClass("hide");			
@@ -627,10 +628,10 @@ function male_invite_friend()
 		jQuery('#screen_slide_12').addClass("show");			
 		
 	}
-	else if($( "#screen_slide_11" ).hasClass( "show" )) {																
+	else if($( "#screen_slide_16" ).hasClass( "show" )) {																
 															
-		jQuery('#screen_slide_11').removeClass("show");			
-		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_16').removeClass("show");			
+		jQuery('#screen_slide_16').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("show");	
 		jQuery('#male_invite_friend_name').val('');	
@@ -640,19 +641,35 @@ function male_invite_friend()
 	
 	 else { 
 	
-	if(jQuery('#male_invite_friend_name').val()==''){
+		if(jQuery('#male_invite_friend_first_name').val()==''){
 		
-			jQuery('#error_male_invite_friend_name').html("*Required");
-			jQuery('#male_invite_friend_name').css("border-bottom","0px");		         		          
-			jQuery('#error_male_invite_friend_name').removeClass("hide");
+			jQuery('#error_male_invite_friend_first_name').html("*Required");
+			jQuery('#male_invite_friend_first_name').css("border-bottom","0px");		         		          
+			jQuery('#error_male_invite_friend_first_name').removeClass("hide");
 			jQuery('#error_bar_12').removeClass("hide");  
-			jQuery('#lbl_male_invite_friend_name').addClass("add_field_heigh");         
+			jQuery('#lbl_male_invite_friend_first_name').addClass("add_field_heigh");         
 			flag = false;
 		
 		} else {
 			
-			jQuery('#error_male_invite_friend_name').html("");
-			jQuery('#error_male_invite_friend_name').addClass("hide");
+			jQuery('#error_male_invite_friend_first_name').html("");
+			jQuery('#error_male_invite_friend_first_name').addClass("hide");
+			jQuery('#error_bar_12').addClass("hide"); 
+		}
+		
+		if(jQuery('#male_invite_friend_last_name').val()==''){
+		
+			jQuery('#error_male_invite_friend_last_name').html("*Required");
+			jQuery('#male_invite_friend_last_name').css("border-bottom","0px");		         		          
+			jQuery('#error_male_invite_friend_last_name').removeClass("hide");
+			jQuery('#error_bar_12').removeClass("hide");  
+			jQuery('#lbl_male_invite_friend_last_name').addClass("add_field_heigh");         
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_male_invite_friend_last_name').html("");
+			jQuery('#error_male_invite_friend_last_name').addClass("hide");
 			jQuery('#error_bar_12').addClass("hide"); 
 		}
 		
@@ -687,25 +704,27 @@ function male_invite_friend()
 		
 		if(flag){
 			email = jQuery('#male_email').val();
-			friend_name = jQuery('#male_invite_friend_name').val();
+			friend_first_name = jQuery('#male_invite_friend_first_name').val();
+			friend_last_name = jQuery('#male_invite_friend_last_name').val();			
 			friend_email = jQuery('#male_invite_friend_email').val();
 			jQuery('#overlay').removeClass("hide"); 
 			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
 					  url: "{{ path('appuser_male_invite_friend_email') }}",
-					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
+					  data: "email="+email+"&first_name="+friend_first_name+"&last_name="+friend_last_name+"&friend_email="+friend_email,
 					  success: function (data) {
 						 		jQuery('#overlay').removeClass("show");
 								jQuery('#overlay').addClass("hide"); 
 						 	    jQuery('#male_invite_friend_name').val('');
 								jQuery('#male_invite_friend_email').val('');
+								jQuery('#male_invetation_slide').val(1);								
 								
 							if($( "#screen_slide_12" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_12').removeClass("show");			
 								jQuery('#screen_slide_12').addClass("hide");			
-								jQuery('#screen_slide_11').removeClass("hide");			
-								jQuery('#screen_slide_11').addClass("show");			
+								jQuery('#screen_slide_16').removeClass("hide");			
+								jQuery('#screen_slide_16').addClass("show");			
 							} 
 					  },
 					  failure: function (errMsg) {
@@ -744,19 +763,35 @@ function male_registration()
 		
 	} else { 
 	
-	if(jQuery('#male_name').val()==''){
+		if(jQuery('#male_first_name').val()==''){
 		
-			jQuery('#error_male_name').html("*Required");
-			jQuery('#male_name').css("border-bottom","0px");
-			jQuery('#error_male_name').removeClass("hide"); 
+			jQuery('#error_male_first_name').html("*Required");
+			jQuery('#male_first_name').css("border-bottom","0px");
+			jQuery('#error_male_first_name').removeClass("hide"); 
 			jQuery('#error_bar_10').removeClass("hide");
-			jQuery('#lbl_male_name').addClass("add_field_heigh");       
+			jQuery('#lbl_male_first_name').addClass("add_field_heigh");       
 			flag = false;
 		
 		} else {
 			
-			jQuery('#error_male_name').html("");
-			jQuery('#error_male_name').addClass("hide");
+			jQuery('#error_male_first_name').html("");
+			jQuery('#error_male_first_name').addClass("hide");
+			jQuery('#error_bar_10').addClass("hide");
+		}
+		
+		if(jQuery('#male_last_name').val()==''){
+		
+			jQuery('#error_male_last_name').html("*Required");
+			jQuery('#male_last_name').css("border-bottom","0px");
+			jQuery('#error_male_last_name').removeClass("hide"); 
+			jQuery('#error_bar_10').removeClass("hide");
+			jQuery('#lbl_male_last_name').addClass("add_field_heigh");       
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_male_last_name').html("");
+			jQuery('#error_male_last_name').addClass("hide");
 			jQuery('#error_bar_10').addClass("hide");
 		}
 		
@@ -820,14 +855,15 @@ function male_registration()
 		
 		if(flag){
 						
-			friend_name = jQuery('#male_name').val();
+			friend_first_name = jQuery('#male_first_name').val();
+			friend_last_name = jQuery('#male_last_name').val();
 			friend_email = jQuery('#male_email').val();
 			jQuery('#overlay').removeClass("hide"); 
 			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
 					  url: "{{ path('nws_web_register_male_users') }}",
-					  data: "name="+friend_name+"&email="+friend_email,
+					  data: "first_name="+friend_first_name+"&last_name="+friend_last_name+"&email="+friend_email,
 					  success: function (data) {
 						 jQuery('#overlay').removeClass("show");
 						 jQuery('#overlay').addClass("hide"); 
@@ -988,12 +1024,30 @@ function invite_friend_user_skip()
 function invite_friend_skip()
 {
 	
-jQuery('#overlay').removeClass("show");
-jQuery('#overlay').addClass("hide"); 
-jQuery('#screen_slide_7').removeClass("show");			
-jQuery('#screen_slide_7').addClass("hide");			
-jQuery('#screen_slide_6').removeClass("hide");			
-jQuery('#screen_slide_6').addClass("show");	
+if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==0) {	
+
+
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_6').removeClass("hide");			
+	jQuery('#screen_slide_6').addClass("show");
+
+} if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {	
+
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_8').removeClass("hide");			
+	jQuery('#screen_slide_8').addClass("show");
+	
+
+} else {
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_6').removeClass("hide");			
+	jQuery('#screen_slide_6').addClass("show");	
+	
+}
+
 	
 			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
@@ -1019,12 +1073,32 @@ jQuery('#screen_slide_6').addClass("show");
 function male_invite_friend_skip()
 {
 	
-jQuery('#overlay').removeClass("show");
-jQuery('#overlay').addClass("hide"); 
+//jQuery('#overlay').removeClass("show");
+//jQuery('#overlay').addClass("hide"); 
+
+if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==0) {	
+
 jQuery('#screen_slide_12').removeClass("show");			
 jQuery('#screen_slide_12').addClass("hide");			
 jQuery('#screen_slide_11').removeClass("hide");			
 jQuery('#screen_slide_11').addClass("show");	
+
+} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {	
+
+	jQuery('#screen_slide_12').removeClass("show");			
+	jQuery('#screen_slide_12').addClass("hide");			
+	jQuery('#screen_slide_16').removeClass("hide");			
+	jQuery('#screen_slide_16').addClass("show");	
+
+}
+else {
+	jQuery('#screen_slide_12').removeClass("show");			
+	jQuery('#screen_slide_12').addClass("hide");			
+	jQuery('#screen_slide_11').removeClass("hide");			
+	jQuery('#screen_slide_11').addClass("show");
+}
+
+
 	
 			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
@@ -1077,10 +1151,30 @@ function step_back(id)
 		jQuery('#screen_slide_5').addClass("hide");			
 		jQuery('#screen_slide_5').removeClass("show");
 	}else if(id==7){
+		
+		if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==0) {	
+		
 		jQuery('#screen_slide_6').addClass("show");			
 		jQuery('#screen_slide_6').removeClass("hide");			
 		jQuery('#screen_slide_7').addClass("hide");			
 		jQuery('#screen_slide_7').removeClass("show");
+		
+		} else if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {
+			
+		jQuery('#screen_slide_8').addClass("show");			
+		jQuery('#screen_slide_8').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");	
+			
+		} else {
+			
+		jQuery('#screen_slide_6').addClass("show");			
+		jQuery('#screen_slide_6').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");
+			
+		}
+		
 	}else if(id==10){
 		
 		jQuery('#screen_slide_0').addClass("show");			
@@ -1088,12 +1182,38 @@ function step_back(id)
 		jQuery('#screen_slide_10').addClass("hide");			
 		jQuery('#screen_slide_10').removeClass("show");
 	
+	}else if(id==11){
+		
+		jQuery('#screen_slide_0').addClass("show");			
+		jQuery('#screen_slide_0').removeClass("hide");			
+		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_11').removeClass("show");
+	
 	}else if(id==12){
+		
+		if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==0) {	
 		
 		jQuery('#screen_slide_11').addClass("show");			
 		jQuery('#screen_slide_11').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("show");
+		
+		} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {
+			
+			jQuery('#screen_slide_16').addClass("show");			
+			jQuery('#screen_slide_16').removeClass("hide");			
+			jQuery('#screen_slide_12').addClass("hide");			
+			jQuery('#screen_slide_12').removeClass("show");
+		
+		}else {
+			
+			jQuery('#screen_slide_11').addClass("show");			
+			jQuery('#screen_slide_11').removeClass("hide");			
+			jQuery('#screen_slide_12').addClass("hide");			
+			jQuery('#screen_slide_12').removeClass("show");
+				
+		}
+		
 	
 	}else if(id==14){
 		
@@ -1162,27 +1282,7 @@ $(document).ready(function(e) {
 	
 	$('#phone').mask('(000) 000-0000');
 	$('#zip').mask('00000'); 
-   /*$( "#phone" ).keyup(function() {
-	   
-	    
 
-     $(this).val(function(i, text) {	
-	 if(text.isInteger(text))
-	 {
-		
-	 }
-	 	
-		 if(text.length == 3 ){
-        	text = text.replace(/(\d\d\d)/, "($1)-");			 
-		 } else if(text.length == 7) { 
-        	text = text.replace(/(\d\d\d)/, "$1-");		 
-		 }else{
-        	text = text.replace(/(\d\d\d\d)/, "$1");
-		 }
-        return text;
-    });
-  
-}); */
 });
 
 function validate_email(email){
@@ -1315,6 +1415,8 @@ function validate_email_male(email){
 <!-- screen_1 --> 
 <body class="formbg">
 <form class="form-signin" action="" method="post">
+<input type="hidden" name="male_invetation_slide" id="male_invetation_slide" value="0" />
+<input type="hidden" id="invetation_slide" name="invetation_slide" value="0" />
  <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/Loading_2.gif') }}" class="loading" /></div></div>
  
 <!--<img src="{{ asset('bundles/lovethatfit/web_registration/img/ajax-loader.gif') }}" alt="Circle" class="profile_pic" />-->
@@ -1330,9 +1432,6 @@ function validate_email_male(email){
     <div class="gap_2"></div>
     <a href="#screen_slide_1" class="btn btn-md btn-primary btn-block" onclick="validate_form0();">I am a Woman</a>
     <a href="#screen_slide_10" class="btn btn-md btn-primary btn-block" onclick="male_registration();">I am a Man</a>
-   <!-- <a class="anchor_text" href="#signin">I am a Woman</a>
-    <div class="gap_4"></div>
-   <a class="anchor_text" href="#signin">I am a Man</a>-->
    
     <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
@@ -1340,7 +1439,7 @@ function validate_email_male(email){
 </div>
 </div>
 
-  <div class="screen_6 hide" id="screen_slide_1">
+<div class="screen_6 hide" id="screen_slide_1">
 
 <div class="create_acc">
   <div class="arrow">
@@ -1547,19 +1646,27 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Sorry, guys! We're not ready for you yet.</p>
     </div>
-    <div class="Get_text"><p>But we'd love to stay connected. Send us your email and we'll let you know when men's styles became available.</p></div>
-     <div style="position:relative;" id="tab_lbl_male_name" onclick="label_up(this.id);">
-<label for="inputname" class="" id="lbl_male_name">FULL NAME</label>
- <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
-    <input  type="text" autocomplete="off" id="male_name"  name="male_name" tabindex="13" class="form-control" >
+    <div class="Get_text"><p>But we'd love to stay connected. Send us your email and<br />we'll let you know when men's styles became available.</p></div>
+     <div style="position:relative;" id="tab_lbl_male_first_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_first_name">FIRST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_first_name"></div>
+    <input  type="text" autocomplete="off" id="male_first_name"  name="male_first_name" tabindex="13" class="form-control" >
     </div>
+    
+    <div style="position:relative;" id="tab_lbl_male_last_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_last_name">LAST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_last_name"></div>
+    <input  type="text" autocomplete="off" id="male_last_name"  name="male_last_name" tabindex="13" class="form-control" >
+    </div>
+
+    
      <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_male_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
     <input type="text" autocomplete="off" id="male_email" name="male_email" tabindex="14" class="form-control">
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
+    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Submit</a>
       
  
 </div>
@@ -1607,32 +1714,51 @@ styles and outfit ideas.</p></div>
 <div class="screen_700 hide" id="screen_slide_12">
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_11" onclick="step_back(12);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
-      <p>Invite a friend</p>
+      <p>Shop with friends</p>
       <div class="error_red hide" id="error_bar_12">oops</div>
     </div>
 <div class="container">
 
     <div class="Get_activated">
-      <p>Shopping is always more fun with friends.</p>
+      <p>Shopping is always more<br />fun with friends.</p>
     </div>
-    <div class="Get_text"><p>Invite a friends to download the app to share styles 
-and outfit ideas.</p></div>
- <div style="position:relative;" id="tab_lbl_male_invite_friend_name" onclick="label_up(this.id);">
-<label for="inputname" class="" id="lbl_male_invite_friend_name">FRIEND'S FIRST NAME</label>
- <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="male_invite_friend_name" tabindex="15" name="male_invite_friend_name" class="form-control" >
+    <div class="Get_text"><p>Invite a friend to download the app to see<br />your styles and outfit ideas.</p></div>
+ <div style="position:relative;" id="tab_lbl_male_invite_friend_first_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_invite_friend_first_name">FIRST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_first_name"></div>
+    <input  type="text" autocomplete="off" id="male_invite_friend_first_name" tabindex="15" name="male_invite_friend_first_name" class="form-control" >
+    </div>
+    <div style="position:relative;" id="tab_lbl_male_invite_friend_last_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_invite_friend_last_name">LAST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_last_name"></div>
+    <input  type="text" autocomplete="off" id="male_invite_friend_last_name" tabindex="15" name="male_invite_friend_last_name" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_male_invite_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_male_invite_friend_email">FRIEND'S EMAIL</label>
+    <label for="inputzip" class="" id="lbl_male_invite_friend_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
     <input type="text" autocomplete="off" id="male_invite_friend_email" tabindex="16" name="male_invite_friend_email" class="form-control">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();">Send invitation</a>
-       <div class="privacy">
+       <!--<div class="privacy">
       <p><a href="#screen_slide_11" onclick="male_invite_friend_skip();">Skip</a></p>
-    </div>
+    </div>-->
   
+</div>
+</div>
+
+
+<div class="screen_16 hide" id="screen_slide_16">
+<div class="container"> 
+    <div class="request">
+      <p>Invitation Sent!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p class="privacy">We've sent your invitation.<br />Learn more about <a href="https://www.selfiestyler.com">Selfiestyler</a>.
+        </p>
+    </div>
+    <a href="#screen_slide_12" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite another friend</a>
 </div>
 </div>
 
@@ -1659,15 +1785,19 @@ and outfit ideas.</p></div>
 
 <!-- screen_9 --> 
 <div class="screen_11 hide" id="screen_slide_11">
+<div class="create_acc">
+    <div class="arrow"><a href="#screen_slide_0" onclick="step_back(11);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
+      <p>Stay in the loop</p>
+    </div>
 <div class="container"> 
     <div class="request">
-      <p>Email sent!</p>
+      <p>Thank you!</p>
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
     <div class="request_text">
-      <p>We've sent you a confirmation email. We will make sure to update you when the app is ready for you.</p>
+      <p class="privacy">We will update you when the app is ready for you.<br />We have a lot of exciting features in store.<br />Learn more about <a href="https://www.selfiestyler.com">Selfiestyler</a>.</p>
     </div>
-   <!-- <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>-->
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>
 </div>
 </div>
 
