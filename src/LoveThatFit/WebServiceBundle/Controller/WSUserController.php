@@ -626,18 +626,30 @@ class WSUserController extends Controller
                         $user_podio = array(
                             'current_email' => ($decoded['email']) ? $decoded['email'] : '',
                             'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
-                        );                   
+                        ); 
+
+                 try {                       
 
                         $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
-
+                      
                         if($podio_results['podio_id'] > 0){
                            
                             $podioData = $this->container->get('user.helper.podio')->findPrimaryKeybyPodioId($podio_results['podio_id']);
+                          if(count($podioData) > 0){    
                             $id = $podioData->getId();
                             $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
+                           }
                         }
+
+                         return new Response(json_encode(array("success" => true,"message" => "Your email has been successfully changed! <Perfect, thanks!>")));
+
+                     } catch (Exception $e) {
+
+                    return new Response(json_encode(array("success" => false,"message" => $e)));
+                    
+                     }
                       
-                        return new Response(json_encode(array("success" => true,"message" => "Your email has been successfully changed! <Perfect, thanks!>")));
+                       
                     }
                 }
 
