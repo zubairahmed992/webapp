@@ -114,8 +114,8 @@ class WSMiscController extends Controller {
                     'devservices for 2.8'=>array('build_type'=>'devservices for 2.8','url'=>'devservices.selfiestyler.com'),
                     'qaservices for 2.8'=>array('build_type'=>'qaservices for 2.8','url'=>'qaservices.selfiestyler.com'),
                     'v3stack services'=>array('build_type'=>'v3stack','url'=>'v3stack.selfiestyler.com'),
-                    'rnd'=>array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com')
-                    'v3staging'=>array('build_type'=>'v3staging','url'=>'v3staging.selfiestyler.com')
+                    'rnd'=>array('build_type'=>'rnd','url'=>'rnd.selfiestyler.com'),
+                    'v3staging'=>array('build_type'=>'v3staging','url'=>'v3staging.selfiestyler.com'),
                 ),
                 'count'=>22,
                 'message' => 'configuration for build deployment',
