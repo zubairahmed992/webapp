@@ -52,8 +52,8 @@
 <input type="hidden" id="archive_active_img_url" value="{% if (archive.getRetouchImage())%}{{ asset(archive.getRetouchWebPath()) ~ "/" ~ archive.getRetouchImage()}} {%endif%}"/>
 
 <!-- side view inputs for both sides !-->
-<input id="side_view_1" type="hidden" value="" />
-<input id="side_view_2" type="hidden" value="" />
+<input id="side_view_1" type="hidden" value="http://localserver.webapp/uploads/ltf/users/2516/side_5818cd1f1369c.png" />
+<input id="side_view_2" type="hidden" value="http://localserver.webapp/uploads/ltf/users/2516/side_5818c29c3e7e0.png" />
 <!-- /side view inputs for both sides !-->
 
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
@@ -201,7 +201,7 @@
        
         <ul id="retouchSideviewOne" class="retouch_imgs">
          
-            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2513/retouch_59df78253354b_5.png"/></li>
+            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2516/side_5818cd1f1369c.png"/></li>
         </ul>  
           <hr/>
          <h4 style="padding:0;font-size:14px;">Side view 2</h4>
@@ -217,7 +217,7 @@
        
         <ul id="retouchSideviewOne" class="retouch_imgs">
          
-            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2513/retouch_59df78253354b_5.png"/></li>
+            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2516/side_5818c29c3e7e0.png"/></li>
         </ul>  
        
         </div>
@@ -438,15 +438,20 @@ $(document).ready(function(){
              if($index===0){
                  $("#frontRetouchImages").show();
                  $("#sideViewCalibration").hide();
+                 restoreFrontTab();
              }
              if($index===1){
                  $("#frontRetouchImages").hide();
                  $("#sideViewCalibration").show();
+                 var sideOneUrl = $("#side_view_1").val();
+                 loadSideViewImag(sideOneUrl);
                  
              }
              if($index===2){
                  $("#frontRetouchImages").hide();
                  $("#sideViewCalibration").show();
+                 var sideTwoUrl = $("#side_view_2").val();
+                 loadSideViewImag(sideTwoUrl);
              }
         });
     });

@@ -46,7 +46,7 @@ $(document).ready(function() {
          strokeWidth:1,
          opacity:0.6
      });
-     edge_grabber.visible = true;
+     edge_grabber.visible = false;
      get_additional_pos();
 /****** - /Get additional points - ******/
 
@@ -79,6 +79,36 @@ $(document).ready(function() {
 
 //archives: on this layer we saved retouch image
 retuch_img = new Layer();
+sideviewLayer = new Layer();
+
+    var shoulder_line = new Path({
+        segments:[[400, 433], [600, 433]],
+        selected: true
+    });
+    shoulder_line.data = {
+        type: 'side_view_line',
+        name: 'shoulder_line'
+    };
+    
+    var bust_line = new Path({
+        segments:[[400, 500], [600, 500]],
+        selected: true
+    });
+    bust_line.data = {
+        type: 'side_view_line',
+        name: 'bust_line'
+    };
+    
+    var waist_line = new Path({
+        segments:[[400, 560], [600, 560]],
+        selected: true
+    });
+    waist_line.data = {
+        type: 'side_view_line',
+        name: 'waist_line'
+    };
+    
+
 });
 
 // archives show image function
@@ -97,6 +127,56 @@ function showImag(retouch_image){
        return retuchImage = show_img;
         view.update();
 }
+
+// side view load
+function restoreFrontTab(){
+ sideviewLayer.visible=false;
+ full_mask.visible=true;
+ body_part_area.visible = false;
+  view.update(); 
+}
+function loadSideViewImag(sideImageurl){
+    sideviewLayer.activate();
+    sideviewLayer.visible=true;
+     var sideImage = new Raster(sideImageurl);
+     sideImage.position = new Point(480, 640);
+    //hide mask and interse
+     full_mask.visible=false;
+     body_part_area.visible = false;
+//    drawSidePath(63, 600);
+//    drawSidePath(53, 600);
+//    drawSidePath(61, 600);
+//    drawSidePath(57, 600);
+//    drawSidePath(58, 600);
+//    drawSidePath(46, 600);
+//    drawSidePath(45, 600);
+//    drawSidePath(44, 600);
+
+
+    view.update(); 
+}
+
+
+
+function drawSidePath(segmentIndex, linewidth){
+   var indexPositona = full_mask.segments[segmentIndex].point.x;
+   var indexPositonb = full_mask.segments[segmentIndex].point.y;
+   var indexWide = linewidth;
+    var bustA = new Segment({
+       point: [indexPositona, indexPositonb],
+   });
+    var bustB = new Segment({
+        point: [linewidth, indexPositonb],
+    });
+    var line_path = new Path({
+        segments: [bustA, bustB],
+        strokeColor: 'black',
+            selected:true
+    });
+}
+
+// side view load
+
 
 //Archives user image compare function
 function init_compare(){
@@ -869,21 +949,32 @@ function onMouseDown(event) {
     }
 
     var hitResult = paper.project.hitTest(event.point, hitOptions);
-
+        
+        
+        
     if (!hitResult){
             return;
         }
 
     if(hitResult.type == "segment"){
         active_items.drag = true;
+        
+        curr_obj_line = hitResult.item;
+        if(curr_obj_line.data.type){
+            active_items.segment = hitResult.segment;
+        }
+        
         if(hitResult.segment.point != active_items.segment.point){
             active_items.segment.selected = false;
         }
+        
         for(i=0; i<full_mask.segments.length; i++){
+            
             if(full_mask.segments[i].point == hitResult.segment.point){
                 active_items.segment = full_mask.segments[i];
                 h_indi.visible = true;
                 h_indi.position.y = full_mask.segments[i].point.y;
+              
                 //active_items.segment.selected = true;
                 circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
                 circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
@@ -912,6 +1003,7 @@ function onMouseDown(event) {
 function onMouseDrag(event) {
     if(active_items.drag){
         active_items.segment.point = event.point;
+        
         h_indi.position.y = active_items.segment.point.y;
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
         circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
@@ -969,7 +1061,7 @@ function body_part_max_width(){
 
   body_part_area.selected = true;
   body_part_area.closed = true;
-  body_part_area.visible = true;
+  body_part_area.visible = false;
   function get_lower_seg(seg_1_y, seg_2_y){
     //alert(seg_1_y + " ---- " + seg_2_y);
     if(seg_1_y <= seg_2_y){
@@ -1055,7 +1147,7 @@ function get_additional_pos(){
     	all_additional_points_y_pos[incr]= get_additional_points_y_pos(full_mask, edge_grabber);
     	//var intersection_current = showIntersections(imc, path_line);
     	//console.log(intersection_current[1].index);
-    }alert(all_additional_points_y_pos);
+    }
     }
 
 }
