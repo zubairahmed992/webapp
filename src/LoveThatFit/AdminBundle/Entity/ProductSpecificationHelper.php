@@ -417,7 +417,9 @@ public function getAllAttribute(){
 }
 #---Get Clothing type attribute----------------------#
 public function getAttributesFor($clothing_type){
-    return $this->conf["constants"]["clothing_type_attributes"][$clothing_type];
+    if(array_key_exists($clothing_type, $this->conf["constants"]["clothing_type_attributes"])){
+        return $this->conf["constants"]["clothing_type_attributes"][$clothing_type];    
+    }
 }
 #---Get Blouse Clothing type attribute----------------------#
 public function getBlouseAttribute(){
