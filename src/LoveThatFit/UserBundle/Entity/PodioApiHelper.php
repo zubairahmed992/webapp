@@ -54,6 +54,8 @@ class PodioApiHelper
             $this->env = "podio_dev_credentials";
         } else if($env == 'v3qa') {
             $this->env = "podio_v3qa_credentials";
+        } else if($env == 'v3staging') {
+            $this->env = "podio_v3staging_credentials";
         } else {
             $this->env  = "podio_local_credentials";
         }
