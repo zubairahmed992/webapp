@@ -90,6 +90,7 @@ class Product {
 
     protected $product_banner;
 
+
     /////////////////////////////////////////////////////////////////////////////////  
 
     public function __construct() {
@@ -291,6 +292,12 @@ class Product {
      * @ORM\Column(name="care_label", type="text", nullable=true)
      */
     private $care_label;
+
+    /**
+     * @var string morphing_detail_json
+     * @ORM\Column(name="morphing_detail_json", type="text", nullable=true)
+     */
+    private $morphing_detail_json;
 
     //----------------------------------------------------------
     /**
@@ -1808,4 +1815,29 @@ class Product {
     {
         return $this->default_clothing;
     }
+
+    #------------------------------------------------
+    /**
+     * Set morphing_detail_json
+     *
+     * @param string $morphing_detail_json
+     * @return Product
+     */
+
+    public function setMorphingDetailJson($morphing_detail_json) {
+        $this->morphing_detail_json = $morphing_detail_json;
+        return $this;
+    }
+
+    /**
+     * Get morphing_detail_json
+     *
+     * @return string
+     */
+    public function getMorphingDetailJson() {
+        return $this->morphing_detail_json;
+    }
+
+
+
 }

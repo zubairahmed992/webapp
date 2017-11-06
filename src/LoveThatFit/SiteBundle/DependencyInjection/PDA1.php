@@ -213,9 +213,12 @@ class PDA1 {
                             $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
                         }
                  }
-                 $fb[$size_identifier]['message'] = $this->get_fitting_alert_message($fb[$size_identifier]['status']);                 
-                 $fb[$size_identifier]['simplified_messages'] = $this->simplify_fit_area_messaging($fb[$size_identifier]['fit_points']);                 
+                 $fb[$size_identifier]['message'] =$this->get_fitting_alert_message($fb[$size_identifier]['status']);
+                 
+                 $fb[$size_identifier]['simplified_messages'] = $this->simplify_fit_area_messaging($fb[$size_identifier]);                 
                  $fb[$size_identifier]['simplified_message_text'] = $this->message_to_text($fb[$size_identifier]['simplified_messages']);
+                 #$fb[$size_identifier]['box'] = $this->size_accumulated_box($fb[$size_identifier]['fit_points']); 
+                 
                  $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
                  if ($hem_bits) {
                         $fb[$size_identifier]['hem_advice'] = $hem_bits;
@@ -337,6 +340,10 @@ class PDA1 {
         $fp_measurements['status_text'] = $message_array['status_text'];        
         $fp_measurements['body_fx'] = $message_array['body_fx'];   
         $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);        
+        $fp_measurements['box'] = $message_array['box'];
+        $fp_measurements['halfway_min_low'] = $message_array['halfway_min_low'];
+        $fp_measurements['halfway_high_max'] = $message_array['halfway_high_max'];
+
         return $fp_measurements;
     }
     #--------------------------------------------------------
@@ -380,6 +387,7 @@ class PDA1 {
     private function calculate_fitindex($fp_specs) {
         #5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -6, -7, -74, -75, -76, -84, -85, -86, -91, -92, -93, -99, -100, -101
         $fp_fx = 0;
+        $box=0;
         $fp_scale = array();
         $fits = false;
         $arr = array();
@@ -388,23 +396,31 @@ class PDA1 {
             $fp_scale = $this->scale['at_mid'];
             $fp_fx = $fp_specs['avg_fx'];
             $fits = true;
+            $box=4;
         } elseif ($fp_specs['fit_model'] > $fp_specs['body_measurement']) {#below mid                        
             $fits = true;
             if ($fp_specs['body_measurement'] > $fp_specs['ideal_body_size_low']) {#low-mid      
                 $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                 $fp_scale = $this->scale['between_low_mid'];                
-            } elseif ($fp_specs['body_measurement'] > $fp_specs['calc_min_body_measurement'] || $fp_specs['body_measurement'] > $fp_specs['min_body_measurement']) {#min-low (also compare with min actual)
+                $box=4;
+            } elseif ($fp_specs['body_measurement'] > $fp_specs['calc_min_body_measurement'] || 
+                    $fp_specs['body_measurement'] > $fp_specs['min_body_measurement']) {#min-low (also compare with min actual)
                 $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                 $fp_scale = $this->scale['between_min_low'];                
+                # halfway between low & min for Fit Indicator Positioning -->
+                $halfway_min_low = $fp_specs['min_body_measurement'] + (($fp_specs['ideal_body_size_low'] - $fp_specs['min_body_measurement']) / 2);
+                $box = $fp_specs['body_measurement'] < $halfway_min_low ? 2 : 3;
             }else{
                 $fp_scale = $this->scale['below_min'];                
                 $fp_fx = 0;
+                $box=1;
             }
         } elseif ($fp_specs['fit_model'] < $fp_specs['body_measurement']) {#above mid            
             if ($fp_specs['body_measurement'] < $fp_specs['ideal_body_size_high']) {#mid-high
                 $fp_fx = $this->grade_to_scale($fp_specs);
                 $fp_scale = $this->scale['between_mid_high'];
                 $fits = true;
+                $box=4;
                 #--------------------------->
             } else {#high-above
                 #--------------------------->
@@ -418,11 +434,15 @@ class PDA1 {
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'Close Fitting';
                             $fp_fx = $this->grade_to_scale($fp_specs);
+                            # halfway between low & min for Fit Indicator Positioning -->
+                            $halfway_high_max = $fp_specs['ideal_body_size_high'] + (($fp_specs['max_body_measurement'] - $fp_specs['ideal_body_size_high']) / 2);
+                            $box = $fp_specs['body_measurement'] < $halfway_high_max ? 5 : 6;                            
                         } else {
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_scale['message'] = 'Too Small';
                             $fits = false; #---?Not Fits
                             $fp_fx = 0;
+                            $box = 7;
                         }
                     } elseif ($max_gd_ratio >= 0.75) {#Relax fitting ------------------------>
                         if ($fp_specs['body_measurement'] < $fp_specs['calc_max_body_measurement'] && 
@@ -430,15 +450,18 @@ class PDA1 {
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
                             $fp_fx = $this->grade_to_scale($fp_specs);
+                            $box = 5;
                         } else { # above max status=-5 or -8
                             $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_stretch_fit'];  #--> 92%GD
                             $fp_fx = 0;#$this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                             $fp_scale = $this->scale['beyond_max'];
                             if ($fp_specs['body_measurement'] <= $ninety_two_GD) {                                
                                 $fp_scale['message'] = 'Poor Fit';
+                                $box=6;
                             } else {                                
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
+                                $box=7;
                             }
                         }
                     } elseif ($max_gd_ratio < 0.75) {#Loose fitting ------------------------>
@@ -447,18 +470,28 @@ class PDA1 {
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
                             $fp_fx = $this->grade_to_scale($fp_specs);
+                            $box = 5;
                         } else { #------>beyond                            
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;                            
                             $seventy_five_GD = 0.75 * $fp_specs['garment_measurement_stretch_fit'];  #--> 75%GD                            
+                            
                             if ($fp_specs['body_measurement'] <= $seventy_five_GD) {
                                 #$fp_scale['message'] = 'OK Fit';
                                 #From Ideal High to 1/2 the range to 75% of the garment stretch dimension "ok fit"/ 2nd half "Poor fit"
                                 $half_high_75GD = $fp_specs['ideal_body_size_high'] + (($seventy_five_GD - $fp_specs['ideal_body_size_high'])/2);
-                                $fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_75GD? 'OK Fit' : 'Poor Fit';
+                                #$fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_75GD? 'OK Fit' : 'Poor Fit';                                                            
+                                if ($fp_specs['body_measurement'] < $half_high_75GD) {
+                                    $fp_scale['message'] = 'OK Fit';
+                                    $box = 5;
+                            } else {
+                                    $fp_scale['message'] = 'Poor Fit';
+                                    $box = 6;
+                                }
                             } else {
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
+                                $box = 7;
                             }
                         }
                     }
@@ -469,11 +502,16 @@ class PDA1 {
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'Close Fitting';
                             $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
+                             # halfway between low & min for Fit Indicator Positioning -->
+                            $halfway_high_max = $fp_specs['ideal_body_size_high'] + (($fp_specs['max_body_measurement'] - $fp_specs['ideal_body_size_high']) / 2);
+                            $box = $fp_specs['body_measurement'] < $halfway_high_max ? 5 : 6;    
+                            
                         } else {#---?Beyond max-Not Fits
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_scale['message'] = 'Too Small';
                             $fits = false; #---?Not Fits
                             $fp_fx = 0;
+                            $box = 7;
                         }
                     } elseif ($max_gd_ratio >= 0.85) {#Relax fitting
                         if ($fp_specs['body_measurement'] < $fp_specs['calc_max_body_measurement'] && 
@@ -481,15 +519,18 @@ class PDA1 {
                             $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
+                            $box = 5;
                         } else { # above max status=-5 or -8                            
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;
                             $ninety_two_GD = 0.92 * $fp_specs['garment_measurement_stretch_fit'];  #--> 92%GD
                             if ($fp_specs['body_measurement'] <= $ninety_two_GD) {                                
                                 $fp_scale['message'] = 'Poor Fit';                                
+                                $box = 6;
                             } else {                                
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits                                
+                                $box = 7;
                             }
                         }
                     } elseif ($max_gd_ratio < 0.85) {#Loose fitting
@@ -498,6 +539,7 @@ class PDA1 {
                             $fp_fx = $this->grade_to_scale($fp_specs); #%%%%> calculate fit index
                             $fp_scale = $this->scale['between_high_max'];
                             $fp_scale['message'] = 'OK Fit';
+                            $box = 5;
                         } else {                            
                             $fp_scale = $this->scale['beyond_max'];
                             $fp_fx = 0;
@@ -506,10 +548,18 @@ class PDA1 {
                                 #$fp_scale['message'] = 'OK Fit';
                                 #From Ideal High to 1/2 the range to 85% of the garment stretch dimension "ok fit"/ 2nd half "Poor fit"
                                 $half_high_85GD = $fp_specs['ideal_body_size_high'] + (($eighty_five_GD - $fp_specs['ideal_body_size_high'])/2);
-                                $fp_scale['message'] = $fp_specs['body_measurement'] < $half_high_85GD ? 'OK Fit' : 'Poor Fit';
+                                
+                                if($fp_specs['body_measurement'] < $half_high_85GD){
+                                    $fp_scale['message'] = 'OK Fit';
+                                    $box = 5;
+                                }else{
+                                    $fp_scale['message'] = 'Poor Fit';
+                                    $box = 6;
+                                }
                             } else {                            
                                 $fp_scale['message'] = 'Too Small';
                                 $fits = false; #---?Not Fits
+                                $box = 7;
                             }
                         }
                     }
@@ -520,7 +570,9 @@ class PDA1 {
         #$fx = $this->limit_num($fp_fx);
         $fx = $this->to_frac($fp_fx);
         return array('body_fx' => $fx, 'message' => $fp_scale['message'], 'status' => $fp_scale['status'],
-            'fits' => $fits, 'status_text' => $fp_scale['status_text'],
+            'fits' => $fits, 'status_text' => $fp_scale['status_text'], 'box' => $box, 
+            'halfway_min_low' => $this->to_frac($fp_specs['min_body_measurement'] + (($fp_specs['ideal_body_size_low'] - $fp_specs['min_body_measurement']) / 2)),
+            'halfway_high_max' => $this->to_frac($fp_specs['ideal_body_size_high'] + (($fp_specs['max_body_measurement'] - $fp_specs['ideal_body_size_high']) / 2)),
         );
     }
     #------------>
@@ -570,13 +622,7 @@ class PDA1 {
         return number_format($n, 2, '.', '');
         }
     }
-     #------------------------------------------------------------------
-    
-    function to_frac($number, $denominator = 16) {
-        return $number;
-        $x = intval($number * $denominator);
-        return $x / $denominator;         
-    }
+   
 # -----------------------------------------------------
     private function array_sort($sizes) {
         if ($this->product){
@@ -866,46 +912,54 @@ class PDA1 {
         $str = '';
         if (is_array($fp)) {
             foreach ($fp as $k => $v) {
+                if($str == ''){
+                    $str = $k . ': ' . $v;
+                }else{
                 $str = $str . ', ' . $k . ': ' . $v;
             }
         }
+        }
         return $str;
     }
-
-    private function simplify_fit_area_messaging($size){
-        $target=$this->product->getClothingType()->getTarget();
+    #-------------------------------------------------------->
+     private function simplify_fit_area_messaging($size, $hem_advice=false){
+        #$target=$this->product->getClothingType()->getTarget();
         $sm=array();
-        if (array_key_exists('bust', $size)) {
-            $sm['bust'] = $size['bust']['message'];
+        if (array_key_exists('bust', $size['fit_points'])) {
+            $sm['bust'] = $size['fit_points']['bust']['message'];
         }
-        if (array_key_exists('thigh', $size)) {
-            $sm['thigh'] = $size['thigh']['message'];
+        if (array_key_exists('thigh', $size['fit_points'])) {
+            $sm['thigh'] = $size['fit_points']['thigh']['message'];
         }        
         #-------------- inseam/hem length        
-        if (array_key_exists('inseam', $size)) {
-            $sm['inseam'] = $size['inseam']['message'];
+        if (array_key_exists('inseam', $size['fit_points'])) {
+            $sm['inseam'] = $size['fit_points']['inseam']['message'];
         }
         #--------------
-        if (array_key_exists('high_hip', $size) && array_key_exists('low_hip', $size)) {
-            $sm['hip'] = $this->simplify_messaging($size['low_hip'], $size['high_hip']);
+        if (array_key_exists('high_hip', $size['fit_points']) && array_key_exists('low_hip', $size['fit_points'])) {
+            $sm['hip'] = $this->simplify_messaging($size['fit_points']['low_hip'], $size['fit_points']['high_hip']);
         } else {
-            if (array_key_exists('high_hip', $size)) {
-                $sm['hip'] = $size['high_hip']['message'];
+            if (array_key_exists('high_hip', $size['fit_points'])) {
+                $sm['hip'] = $size['fit_points']['high_hip']['message'];
             }
-            if (array_key_exists('low_hip', $size)) {
-                $sm['hip'] = $size['low_hip']['message'];
+            if (array_key_exists('low_hip', $size['fit_points'])) {
+                $sm['hip'] = $size['fit_points']['low_hip']['message'];
             }
         }
         #--------------
-        if (array_key_exists('waist', $size) && array_key_exists('abdomen', $size)) {            
-            $sm['waist'] = $this->simplify_messaging($size['waist'], $size['abdomen']);
+        if (array_key_exists('waist', $size['fit_points']) && array_key_exists('abdomen', $size['fit_points'])) {            
+            $sm['waist'] = $this->simplify_messaging($size['fit_points']['waist'], $size['fit_points']['abdomen']);
         } else {
-            if (array_key_exists('waist', $size)) {
-                $sm['waist'] = $size['waist']['message'];
+            if (array_key_exists('waist', $size['fit_points'])) {
+                $sm['waist'] = $size['fit_points']['waist']['message'];
             }
-            if (array_key_exists('abdomen', $size)) {
-                $sm['waist'] = $size['abdomen']['message'];
+            if (array_key_exists('abdomen', $size['fit_points'])) {
+                $sm['waist'] = $size['fit_points']['abdomen']['message'];
             }
+        }
+        
+        if(array_key_exists('hem_advice', $size) && $hem_advice){
+                $sm['hem'] =$size['hem_advice']['message'];
         }
         return $sm;
     }
@@ -1165,7 +1219,13 @@ class PDA1 {
         }
         return $str;
     }
+    #------------------------------------------------------------------
     
+     function to_frac($number, $denominator = 16) {
+        $x = floor($number * $denominator);
+        return $x / $denominator;         
+    }
+
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~> Devices Bits
     #------------------------------------------------    
@@ -1212,6 +1272,8 @@ class PDA1 {
             $sizes[$key]['product_id']=$product_id;
             $sizes[$key]['brand']=$brand_name;
             $sizes[$key]['style']=$style;            
+            unset($sizes[$key]['simplified_messages']);
+            unset($sizes[$key]['simplified_message_text']);
             unset($sizes[$key]['min_fx']);
             unset($sizes[$key]['max_fx']);
             unset($sizes[$key]['high_fx']);
@@ -1231,8 +1293,8 @@ class PDA1 {
             }
             $sizes[$key]['price'] = 0;
             if (array_key_exists('fit_points', $sizes[$key])) {
-                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
-                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
+                $sizes[$key]['fitting_alerts'] =$this->simplify_fit_area_messaging($sizes[$key], true); 
+                $sizes[$key]['summary'] = $this->message_to_text($sizes[$key]['fitting_alerts']);
             }else{
                 $sizes[$key]['fitting_alerts'] = null;
                 $sizes[$key]['summary'] = null;

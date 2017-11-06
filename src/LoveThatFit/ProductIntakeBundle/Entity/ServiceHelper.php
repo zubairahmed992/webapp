@@ -176,4 +176,37 @@ class ServiceHelper {
     {
         return $this->container->get('doctrine');
     }
+    
+    
+    #-------------------------------------------
+    
+    public function getPhotogradingOriginalItem($product) {
+        if (!$product) {
+            return $this->response_str('product not found!');
+        }
+        
+        $pg = $product->getMorphingDetailJSON() ? json_decode($product->getMorphingDetailJSON(), true) : null;
+        
+        if (!is_array($pg) || !array_key_exists('size', $pg) || !array_key_exists('color', $pg) || !array_key_exists('body_type', $pg)) {
+            return $this->response_str('Originl image detail not found!');
+        }
+        $item_id = $this->container->get('service.repo')->getPhotogradingOriginalItem($product);
+        
+        if ($item_id) {
+            $item = $this->container->get('admin.helper.product_item')->find($item_id[0]);
+            if ($item) {
+                return $this->response_str('', true, $item);
+            } else {
+                return $this->response_str('original image item not available!');
+            }
+        } else {
+            return $this->response_str('original image item not available!');
+        }
+    }
+
+    #--------------------------------
+     private function response_str($message, $success=false, $obj=null){
+        return array('message' => $message, 'success' => $success, 'obj' => $obj);
+    }
+
 }

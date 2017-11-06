@@ -36,6 +36,13 @@ class ProductSpecsController extends Controller
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $tab){   
         $ps = $this->get('pi.product_specification')->find($id);
+         if ($tab == 'r') {
+            $ps->roundUp();
+            $this->get('pi.product_specification')->save($ps);
+            $tab = 'b';
+        }
+        $validation = $this->get('pi.product_specification')->validateSpecification($id);
+        
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         $gender = ($parsed_data['gender'] == 'f')?'women':'man';
@@ -80,6 +87,7 @@ class ProductSpecsController extends Controller
                     'tab' => $tab,
                     'searched_product_id'=>$product_id,
                     'cs_file'      =>  $this->get('pi.product_specification')->csvDownloads($ps),
+                    'validation'   => $validation,
                 ));
     }
 
@@ -144,8 +152,18 @@ class ProductSpecsController extends Controller
     }
     
     #----------------------- /product_intake/product_specs/create_product
-    public function createProductAction($id){            
-        $msg = $this->get('pi.product_specification')->create_product($id);        
+    public function createProductAction($id){
+        $result = $this->get('pi.product_specification')->validateSpecification($id);
+        if( empty($result) ) {
+
+        } else{
+            $this->get('session')->setFlash('warning', "Product can't be created before all the validation errors get resolved or dissmissed! ");
+            return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+                'validation_error' => $result,
+            ));
+        }
+
+        $msg = $this->get('pi.product_specification')->create_product($id);
         $this->get('session')->setFlash('success', $msg['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));        
     }
@@ -165,6 +183,11 @@ class ProductSpecsController extends Controller
         return new JsonResponse(array('message' =>$validate['error']), 500);
         return new Response(json_encode("Succesfull"));
         return new Response(json_encode($decoded));
+    }
+     #------------------------------------- /product_intake/Prod_specs/change_dynamic/{id}/{type}
+    public function changeDynamicAction($id, $type){
+        $ps = $this->get('pi.product_specification')->dynamicChange(array('pk'=>$id, 'type'=>$type ));        
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id, 'tab' => 'b')));       
     }
     
     #----------------------- /product_intake/Prod_specs/undo
@@ -387,6 +410,16 @@ class ProductSpecsController extends Controller
     public function ExisitingProductUpdateSpecificationAction(Request $request) {
         $product_id =  $request->get('product_id');
         $specification_id =  $request->get('specification_id');
+        $result = $this->get('pi.product_specification')->validateSpecification($specification_id);
+        if( empty($result) ) {
+
+        } else{
+            $this->get('session')->setFlash('warning', "Product can't be created before all the validation errors get resolved or dissmissed! ");
+            return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+                'validation_error' => $result,
+            ));
+        }
+
         $ps = $this->get('pi.product_specification')->find($specification_id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);       
         $product = $this->get('admin.helper.product')->find($product_id);        
@@ -425,7 +458,7 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash('success', $productArray);
         #return  $this->showAction($specification_id);
          return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specification_id)));     
-        return new Response(json_encode($productArray));
+
     }
     #---------------------------------------------------
     public function createSessionAction(Request $request) {
@@ -477,9 +510,8 @@ class ProductSpecsController extends Controller
         $result = $this->get('pi.product_specification')->validateSpecification($id);
         return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
             'validation_error' => $result,
-
         ));
-        
+
     }
     #--------------------------------------------------
     public function _validateProductSpecificationAction($id) {
@@ -605,13 +637,12 @@ class ProductSpecsController extends Controller
         $specification_id =  $request->get('id');
         $ps = $this->get('pi.product_specification')->find($specification_id);
         $exist_rule = json_decode($ps->getValidationJson(),true);
-            $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
+        $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
         $ps->setValidationJson(json_encode($update_rule));
         $msg_ar = $this->get('pi.product_specification')->update($ps);
+       // $this->get('session')->setFlash('info', $msg_ar);
+        return $this->redirect($request->get('_target_path'));
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit',array ('id'=>$specification_id)));
-        echo $specification_id;
-        echo "done";
-        die;
 
     }
     
@@ -722,4 +753,70 @@ class ProductSpecsController extends Controller
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs_id)));
     }
 
+
+    //--------------------   adjustment_interface_index
+    public function AdjustmentInterfaceIndexAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+
+    }
+
+    //--------------------   adjustment_interface_index
+    public function AdjustmentInterfaceAction(Request $request) {
+        $adjustment =   $request->request->all();
+
+       #------------------------- Add Round  and Thigh Function
+
+           if ( ($adjustment['from_id'] !=""  && $adjustment['to_id'] !="") && $adjustment['from_id'] < $adjustment['to_id'] ) {
+
+               if ($adjustment['adjustment_attribute'] == 'round') {
+                   for ($i = $adjustment['from_id']; $adjustment['to_id'] <= $adjustment['from_id']; $i++) {
+                       $ps = $this->get('pi.product_specification')->find($i);
+                       $ps->roundUp();
+                       $this->get('pi.product_specification')->save($ps);
+                   }
+                   $this->get('session')->setFlash('success', 'Successfully Roud Product Specification!');
+                   return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+               }
+                else if ($adjustment['adjustment_attribute'] == 'thigh') {
+                   for ($i = $adjustment['from_id']; $adjustment['to_id'] <= $adjustment['from_id']; $i++) {
+                       $decoded['pk'] = $i;
+                       $decoded['type'] = 'double_thigh_grade_rule_min_max';
+                       $this->get('pi.product_specification')->dynamicChange($decoded);
+                   }
+                   $this->get('session')->setFlash('success', 'Successfully thigh Product Specification!' );
+                   return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+
+               }
+        }  else if ( $adjustment['to_id'] !='' ) {
+               $this->get('session')->setFlash('warning', 'Enter ' . $adjustment['adjustment_attribute'] . ' from id and to id Specification ID\'s Proper !');
+               return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+           }
+
+        if ( isset($adjustment['from_id']) ) {
+            if ($adjustment['adjustment_attribute'] == 'round') {
+                $ps = $this->get('pi.product_specification')->find($adjustment['from_id']);
+                if(!empty($ps)) {
+                    $ps->roundUp();
+                    $this->get('pi.product_specification')->save($ps);
+                    $this->get('session')->setFlash('success', 'Successfully Roud Product Specification!');
+                } else {
+                    $this->get('session')->setFlash('warning', 'Round Product Specification not Found !');
+                }
+                return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+            } else {
+                $ps = $this->get('pi.product_specification')->find($adjustment['from_id']);
+                if(!empty($ps)) {
+                    $decoded['pk'] = $adjustment['from_id'];
+                    $decoded['type'] = 'double_thigh_grade_rule_min_max';
+                    $this->get('pi.product_specification')->dynamicChange($decoded);
+                    $this->get('session')->setFlash('success', 'Successfully thigh Product Specification!');
+                } else {
+                    $this->get('session')->setFlash('warning', 'Thigh Product Specification not Found !');
+                }
+                return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+            }
+
+        }
+
+    }
 }
