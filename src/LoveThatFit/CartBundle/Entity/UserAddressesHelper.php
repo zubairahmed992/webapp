@@ -106,12 +106,18 @@ class UserAddressesHelper
 
                 //$this->markedPreviousShippingAddressNonDefault($user);
 
-                $isDefault = 0;
-                if(!$this->getUserAddress( $user )){
-                    $isDefault = 1;
+                if( $address["shipping_default"] == 1)
+                {
+                    $this->markedPreviousShippingAddressNonDefault($user);
+                    $address_info->setShippingDefault('1');
+                }else {
+                    $isDefault = 0;
+                    if(!$this->getUserAddress( $user, 2)){
+                        $isDefault = 1;
+                    }
+                    $address_info->setShippingDefault($isDefault);
                 }
-
-                $address_info->setShippingDefault($isDefault);
+                
                 $address_info->setBillingDefault('0');
                 $address_info->setAddressType('2');
 

@@ -115,6 +115,7 @@ h2 {
 	line-height: 29px;
 	padding: 0px;
 	margin-bottom: 10px;
+	font-weight:900;
 }
 
 .Get_text {
@@ -641,6 +642,7 @@ font-family:lato;
 }
 
 .post-content p{
+font-family:lato;
 line-height:18px; 
 }
 
@@ -648,10 +650,14 @@ line-height:18px;
 color:#000; 
 font-size:1.5em;
 margin:25px 0px 25px 0px;
+font-family: Lato;
+font-weight: 900;	
 }
 
 .post-content a{
 color:#e0ca89;
 
 }
+
+
 
