@@ -107,7 +107,7 @@ class UserAddressesHelper
                 //$this->markedPreviousShippingAddressNonDefault($user);
 
                 $isDefault = 0;
-                if(!$this->getUserAddress( $user )){
+                if(!$this->getUserAddress( $user, 2 )){
                     $isDefault = 1;
                 }
 
