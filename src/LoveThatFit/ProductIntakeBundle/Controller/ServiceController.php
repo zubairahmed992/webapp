@@ -604,8 +604,6 @@ class ServiceController extends Controller {
             #$parsed_details = $this->breakFileNameProductImageUplaod($file_name);
             $parsed_details = $this->breakFileNameProductImageUplaodNewFormat($file_name);
             
-
-            return $this->responseArray(json_encode($parsed_details));
             #--------------------------------------------------------------
             if ($parsed_details['success'] == 'false') {
                 return $this->responseArray('invalid file naming format');
