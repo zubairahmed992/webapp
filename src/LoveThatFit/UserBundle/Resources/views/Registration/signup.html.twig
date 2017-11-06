@@ -562,7 +562,8 @@ function invite_friend()
 			
 			if(jQuery('#invite_friend_email').val()==jQuery('#mem_email').val()){
 			
-			jQuery('#error_invite_friend_email').html("*Please enter your friend's email.");           
+			jQuery('#error_invite_friend_email').html("*Please enter your friend's email."); 
+			jQuery('#invite_friend_email').val('');          
 			jQuery('#error_invite_friend_email').removeClass("hide");
 			jQuery('#error_bar_7').removeClass("hide"); 
 			jQuery('#lbl_invite_friend_email').addClass("add_field_heigh");        			
@@ -593,6 +594,7 @@ function invite_friend()
 						 jQuery('#overlay').addClass("hide"); 
 						 jQuery('#invite_friend_name').val('');
 						 jQuery('#invite_friend_email').val('');
+						 jQuery('#invetation_slide').val(1);
 							if($( "#screen_slide_7" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_7').removeClass("show");			
 								jQuery('#screen_slide_7').addClass("hide");			
@@ -626,32 +628,49 @@ function male_invite_friend()
 		jQuery('#screen_slide_12').addClass("show");			
 		
 	}
-	else if($( "#screen_slide_11" ).hasClass( "show" )) {																
+	else if($( "#screen_slide_16" ).hasClass( "show" )) {																
 															
-		jQuery('#screen_slide_11').removeClass("show");			
-		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_16').removeClass("show");			
+		jQuery('#screen_slide_16').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("show");	
-		jQuery('#male_invite_friend_name').val('');	
+		jQuery('#male_invite_friend_first_name').val('');	
+		jQuery('#male_invite_friend_last_name').val('');
 		jQuery('#male_invite_friend_email').val('');	
 		
 	}
 	
 	 else { 
 	
-	if(jQuery('#male_invite_friend_name').val()==''){
+		if(jQuery('#male_invite_friend_first_name').val()==''){
 		
-			jQuery('#error_male_invite_friend_name').html("*Required");
-			jQuery('#male_invite_friend_name').css("border-bottom","0px");		         		          
-			jQuery('#error_male_invite_friend_name').removeClass("hide");
+			jQuery('#error_male_invite_friend_first_name').html("*Required");
+			jQuery('#male_invite_friend_first_name').css("border-bottom","0px");		         		          
+			jQuery('#error_male_invite_friend_first_name').removeClass("hide");
 			jQuery('#error_bar_12').removeClass("hide");  
-			jQuery('#lbl_male_invite_friend_name').addClass("add_field_heigh");         
+			jQuery('#lbl_male_invite_friend_first_name').addClass("add_field_heigh");         
 			flag = false;
 		
 		} else {
 			
-			jQuery('#error_male_invite_friend_name').html("");
-			jQuery('#error_male_invite_friend_name').addClass("hide");
+			jQuery('#error_male_invite_friend_first_name').html("");
+			jQuery('#error_male_invite_friend_first_name').addClass("hide");
+			jQuery('#error_bar_12').addClass("hide"); 
+		}
+		
+		if(jQuery('#male_invite_friend_last_name').val()==''){
+		
+			jQuery('#error_male_invite_friend_last_name').html("*Required");
+			jQuery('#male_invite_friend_last_name').css("border-bottom","0px");		         		          
+			jQuery('#error_male_invite_friend_last_name').removeClass("hide");
+			jQuery('#error_bar_12').removeClass("hide");  
+			jQuery('#lbl_male_invite_friend_last_name').addClass("add_field_heigh");         
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_male_invite_friend_last_name').html("");
+			jQuery('#error_male_invite_friend_last_name').addClass("hide");
 			jQuery('#error_bar_12').addClass("hide"); 
 		}
 		
@@ -686,25 +705,27 @@ function male_invite_friend()
 		
 		if(flag){
 			email = jQuery('#male_email').val();
-			friend_name = jQuery('#male_invite_friend_name').val();
+			friend_first_name = jQuery('#male_invite_friend_first_name').val();
+			friend_last_name = jQuery('#male_invite_friend_last_name').val();			
 			friend_email = jQuery('#male_invite_friend_email').val();
 			jQuery('#overlay').removeClass("hide"); 
 			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
 					  url: "{{ path('appuser_male_invite_friend_email') }}",
-					  data: "email="+email+"&friend_name="+friend_name+"&friend_email="+friend_email,
+					  data: "email="+email+"&first_name="+friend_first_name+"&last_name="+friend_last_name+"&friend_email="+friend_email,
 					  success: function (data) {
 						 		jQuery('#overlay').removeClass("show");
 								jQuery('#overlay').addClass("hide"); 
 						 	    jQuery('#male_invite_friend_name').val('');
 								jQuery('#male_invite_friend_email').val('');
+								jQuery('#male_invetation_slide').val(1);								
 								
 							if($( "#screen_slide_12" ).hasClass( "show" )) {	
 								jQuery('#screen_slide_12').removeClass("show");			
 								jQuery('#screen_slide_12').addClass("hide");			
-								jQuery('#screen_slide_11').removeClass("hide");			
-								jQuery('#screen_slide_11').addClass("show");			
+								jQuery('#screen_slide_16').removeClass("hide");			
+								jQuery('#screen_slide_16').addClass("show");			
 							} 
 					  },
 					  failure: function (errMsg) {
@@ -743,19 +764,35 @@ function male_registration()
 		
 	} else { 
 	
-	if(jQuery('#male_name').val()==''){
+		if(jQuery('#male_first_name').val()==''){
 		
-			jQuery('#error_male_name').html("*Required");
-			jQuery('#male_name').css("border-bottom","0px");
-			jQuery('#error_male_name').removeClass("hide"); 
+			jQuery('#error_male_first_name').html("*Required");
+			jQuery('#male_first_name').css("border-bottom","0px");
+			jQuery('#error_male_first_name').removeClass("hide"); 
 			jQuery('#error_bar_10').removeClass("hide");
-			jQuery('#lbl_male_name').addClass("add_field_heigh");       
+			jQuery('#lbl_male_first_name').addClass("add_field_heigh");       
 			flag = false;
 		
 		} else {
 			
-			jQuery('#error_male_name').html("");
-			jQuery('#error_male_name').addClass("hide");
+			jQuery('#error_male_first_name').html("");
+			jQuery('#error_male_first_name').addClass("hide");
+			jQuery('#error_bar_10').addClass("hide");
+		}
+		
+		if(jQuery('#male_last_name').val()==''){
+		
+			jQuery('#error_male_last_name').html("*Required");
+			jQuery('#male_last_name').css("border-bottom","0px");
+			jQuery('#error_male_last_name').removeClass("hide"); 
+			jQuery('#error_bar_10').removeClass("hide");
+			jQuery('#lbl_male_last_name').addClass("add_field_heigh");       
+			flag = false;
+		
+		} else {
+			
+			jQuery('#error_male_last_name').html("");
+			jQuery('#error_male_last_name').addClass("hide");
 			jQuery('#error_bar_10').addClass("hide");
 		}
 		
@@ -819,14 +856,15 @@ function male_registration()
 		
 		if(flag){
 						
-			friend_name = jQuery('#male_name').val();
+			friend_first_name = jQuery('#male_first_name').val();
+			friend_last_name = jQuery('#male_last_name').val();
 			friend_email = jQuery('#male_email').val();
 			jQuery('#overlay').removeClass("hide"); 
 			jQuery('#overlay').addClass("show");
 			$.ajax({
 					  type: "POST",
 					  url: "{{ path('nws_web_register_male_users') }}",
-					  data: "name="+friend_name+"&email="+friend_email,
+					  data: "first_name="+friend_first_name+"&last_name="+friend_last_name+"&email="+friend_email,
 					  success: function (data) {
 						 jQuery('#overlay').removeClass("show");
 						 jQuery('#overlay').addClass("hide"); 
@@ -987,12 +1025,30 @@ function invite_friend_user_skip()
 function invite_friend_skip()
 {
 	
-jQuery('#overlay').removeClass("show");
-jQuery('#overlay').addClass("hide"); 
-jQuery('#screen_slide_7').removeClass("show");			
-jQuery('#screen_slide_7').addClass("hide");			
-jQuery('#screen_slide_6').removeClass("hide");			
-jQuery('#screen_slide_6').addClass("show");	
+if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==0) {	
+
+
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_6').removeClass("hide");			
+	jQuery('#screen_slide_6').addClass("show");
+
+} if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {	
+
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_8').removeClass("hide");			
+	jQuery('#screen_slide_8').addClass("show");
+	
+
+} else {
+	jQuery('#screen_slide_7').removeClass("show");			
+	jQuery('#screen_slide_7').addClass("hide");			
+	jQuery('#screen_slide_6').removeClass("hide");			
+	jQuery('#screen_slide_6').addClass("show");	
+	
+}
+
 	
 			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
@@ -1018,12 +1074,32 @@ jQuery('#screen_slide_6').addClass("show");
 function male_invite_friend_skip()
 {
 	
-jQuery('#overlay').removeClass("show");
-jQuery('#overlay').addClass("hide"); 
+//jQuery('#overlay').removeClass("show");
+//jQuery('#overlay').addClass("hide"); 
+
+if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==0) {	
+
 jQuery('#screen_slide_12').removeClass("show");			
 jQuery('#screen_slide_12').addClass("hide");			
 jQuery('#screen_slide_11').removeClass("hide");			
 jQuery('#screen_slide_11').addClass("show");	
+
+} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {	
+
+	jQuery('#screen_slide_12').removeClass("show");			
+	jQuery('#screen_slide_12').addClass("hide");			
+	jQuery('#screen_slide_16').removeClass("hide");			
+	jQuery('#screen_slide_16').addClass("show");	
+
+}
+else {
+	jQuery('#screen_slide_12').removeClass("show");			
+	jQuery('#screen_slide_12').addClass("hide");			
+	jQuery('#screen_slide_11').removeClass("hide");			
+	jQuery('#screen_slide_11').addClass("show");
+}
+
+
 	
 			/*email = jQuery('#mem_email').val();
 			friend_name = jQuery('#invite_friend_name').val();
@@ -1076,10 +1152,30 @@ function step_back(id)
 		jQuery('#screen_slide_5').addClass("hide");			
 		jQuery('#screen_slide_5').removeClass("show");
 	}else if(id==7){
+		
+		if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==0) {	
+		
 		jQuery('#screen_slide_6').addClass("show");			
 		jQuery('#screen_slide_6').removeClass("hide");			
 		jQuery('#screen_slide_7').addClass("hide");			
 		jQuery('#screen_slide_7').removeClass("show");
+		
+		} else if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {
+			
+		jQuery('#screen_slide_8').addClass("show");			
+		jQuery('#screen_slide_8').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");	
+			
+		} else {
+			
+		jQuery('#screen_slide_6').addClass("show");			
+		jQuery('#screen_slide_6').removeClass("hide");			
+		jQuery('#screen_slide_7').addClass("hide");			
+		jQuery('#screen_slide_7').removeClass("show");
+			
+		}
+		
 	}else if(id==10){
 		
 		jQuery('#screen_slide_0').addClass("show");			
@@ -1087,12 +1183,38 @@ function step_back(id)
 		jQuery('#screen_slide_10').addClass("hide");			
 		jQuery('#screen_slide_10').removeClass("show");
 	
+	}else if(id==11){
+		
+		jQuery('#screen_slide_0').addClass("show");			
+		jQuery('#screen_slide_0').removeClass("hide");			
+		jQuery('#screen_slide_11').addClass("hide");			
+		jQuery('#screen_slide_11').removeClass("show");
+	
 	}else if(id==12){
+		
+		if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==0) {	
 		
 		jQuery('#screen_slide_11').addClass("show");			
 		jQuery('#screen_slide_11').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("show");
+		
+		} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {
+			
+			jQuery('#screen_slide_16').addClass("show");			
+			jQuery('#screen_slide_16').removeClass("hide");			
+			jQuery('#screen_slide_12').addClass("hide");			
+			jQuery('#screen_slide_12').removeClass("show");
+		
+		}else {
+			
+			jQuery('#screen_slide_11').addClass("show");			
+			jQuery('#screen_slide_11').removeClass("hide");			
+			jQuery('#screen_slide_12').addClass("hide");			
+			jQuery('#screen_slide_12').removeClass("show");
+				
+		}
+		
 	
 	}else if(id==14){
 		
@@ -1161,27 +1283,7 @@ $(document).ready(function(e) {
 	
 	$('#phone').mask('(000) 000-0000');
 	$('#zip').mask('00000'); 
-   /*$( "#phone" ).keyup(function() {
-	   
-	    
 
-     $(this).val(function(i, text) {	
-	 if(text.isInteger(text))
-	 {
-		
-	 }
-	 	
-		 if(text.length == 3 ){
-        	text = text.replace(/(\d\d\d)/, "($1)-");			 
-		 } else if(text.length == 7) { 
-        	text = text.replace(/(\d\d\d)/, "$1-");		 
-		 }else{
-        	text = text.replace(/(\d\d\d\d)/, "$1");
-		 }
-        return text;
-    });
-  
-}); */
 });
 
 function validate_email(email){
@@ -1314,6 +1416,8 @@ function validate_email_male(email){
 <!-- screen_1 --> 
 <body class="formbg">
 <form class="form-signin" action="" method="post">
+<input type="hidden" name="male_invetation_slide" id="male_invetation_slide" value="0" />
+<input type="hidden" id="invetation_slide" name="invetation_slide" value="0" />
  <div class="overlay hide" id="overlay">  <div class=""><img src="{{ asset('bundles/lovethatfit/web_registration/img/Loading_2.gif') }}" class="loading" /></div></div>
  
 <!--<img src="{{ asset('bundles/lovethatfit/web_registration/img/ajax-loader.gif') }}" alt="Circle" class="profile_pic" />-->
@@ -1327,11 +1431,8 @@ function validate_email_male(email){
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/profile_picture.png') }}" alt="Circle" class="profile_pic" /></div>    
     <div class="gap_2"></div>
-    <a href="#screen_slide_1" class="btn btn-md btn-primary btn-block" onclick="validate_form0();">I am a Female</a>
-    <a href="#screen_slide_10" class="btn btn-md btn-primary btn-block" onclick="male_registration();">I am a Male</a>
-   <!-- <a class="anchor_text" href="#signin">I am a Woman</a>
-    <div class="gap_4"></div>
-   <a class="anchor_text" href="#signin">I am a Man</a>-->
+    <a href="#screen_slide_1" class="btn btn-md btn-primary btn-block" onclick="validate_form0();">I am a Woman</a>
+    <a href="#screen_slide_10" class="btn btn-md btn-primary btn-block" onclick="male_registration();">I am a Man</a>
    
     <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
@@ -1339,7 +1440,7 @@ function validate_email_male(email){
 </div>
 </div>
 
-  <div class="screen_6 hide" id="screen_slide_1">
+<div class="screen_6 hide" id="screen_slide_1">
 
 <div class="create_acc">
   <div class="arrow">
@@ -1358,21 +1459,21 @@ function validate_email_male(email){
     <div style="position:relative;" id="tab_lbl_first_name" onclick="label_up(this.id);">
     <label for="first_name" class="" id="lbl_first_name">FIRST NAME</label>
      <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
-    <input  type="text" autocomplete="off" name="first_name" id="first_name" class="form-control">
+    <input  type="text" autocomplete="off" name="first_name" tabindex="1" id="first_name" class="form-control">
     </div>
     
     
     <div style="position:relative;" id="tab_lbl_last_name" onclick="label_up(this.id);">
     <label for="last_name" class="" id="lbl_last_name">LAST NAME</label>
      <div class="error_box hide" onclick="hide_error(this.id);" id="error_last_name"></div>
-    <input type="text" autocomplete="off" name="last_name" id="last_name" class="form-control">
+    <input type="text" autocomplete="off" name="last_name" tabindex="2" id="last_name" class="form-control">
     </div>
     
     
     <div class="privacy">
       <p>By signing up, you agree to the our <a href="javascript:" onclick="show_term_and_condition();">terms and conditions</a><br />and you have read our <a href="javascript:" onclick="show_privacy_policy();">privacy policy.</a></p>
     </div>
-    <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();">Next</a>    
+    <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();" tabindex="3">Next</a>    
       <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
     </div>
@@ -1396,16 +1497,16 @@ function validate_email_male(email){
      <div style="position:relative;" onclick="label_up(this.id);" id="tab_lbl_mem_email">
     <label for="inputpassword" class="" id="lbl_mem_email" >EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
-    <input  type="text" autocomplete="off" id="mem_email" name="mem_email" class="form-control" onblur="validate_email(this.value);" >
+    <input  type="email" autocomplete="off" id="mem_email" name="mem_email" tabindex="4" class="form-control" onblur="validate_email(this.value);"  />
     </div>
     
      <div style="position:relative;" id="tab_lbl_confirm_mem_email" onclick="label_up(this.id);">
     <label for="inputpass" class="" id="lbl_confirm_mem_email">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
-    <input type="text" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" class="form-control">
+    <input type="email" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" tabindex="5" class="form-control" />
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form2();">Next</a>
+    <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form2();" tabindex="6">Next</a>
     <div class="privacy">
       <p>I already have an account <a href="#signin">Sign in</a></p>
     </div>
@@ -1427,7 +1528,7 @@ function validate_email_male(email){
      <div style="position:relative; overflow:hidden" id="tab_lbl_mem_password" onclick="label_up(this.id);">
     <label for="inputfirstname" class="" id="lbl_mem_password">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
-    <input  type="password" id="mem_password" name="mem_password" class="form-control" onkeyup="passwordValidate(this.value);" >
+    <input  type="password" id="mem_password" name="mem_password" tabindex="7" class="form-control" onkeyup="passwordValidate(this.value);" >
     
         <div class="req_box_div show" id="pwd_hint1">
     <div class="req_text" id="req-text1">Required:</div>
@@ -1441,10 +1542,13 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
-    <input type="password" id="confirm_mem_password" name="confirm_mem_password"  class="form-control" >
+    <input type="password" id="confirm_mem_password" tabindex="8" name="confirm_mem_password"  class="form-control" >
     <input type="hidden" name="error_displayed" id="error_displayed" value="0" />
     </div>
-    <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form3();">Next</a>
+    <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form3();" tabindex="9">Next</a>
+    <div class="privacy">
+      <p>I already have an account <a href="#signin">Sign in</a></p>
+    </div>
 </div>
 </div>
 
@@ -1465,15 +1569,15 @@ function validate_email_male(email){
  	<div style="position:relative;" id="tab_lbl_phone" onclick="label_up(this.id);">
     <label for="inputphone" class="" id="lbl_phone" >PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="text" autocomplete="off" id="phone" maxlength="14" name="phone" class="form-control phone" >
+    <input type="tel" autocomplete="off" id="phone" tabindex="10" maxlength="14" name="phone" class="form-control phone" />
     </div>
      <div style="position:relative;" id="tab_lbl_zip" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_zip">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
-    <input type="text" autocomplete="off" id="zip" name="zip" maxlength="5" class="form-control">
+    <input type="tel" autocomplete="off" id="zip" name="zip" tabindex="11" maxlength="5" class="form-control" />
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form4();">Submit</a>
+    <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form4();" tabindex="12">Submit</a>
 </div>
 </div>
 
@@ -1493,21 +1597,21 @@ function validate_email_male(email){
     <div class="Get_activated">
       <p>Did a friend refer you?</p>
     </div>
-    <div class="Get_text"><p>Your friend get a nice little bonus when you sign up. Let us know who referred you so we can thank them.</p></div>
+    <div class="Get_text"><p>Let us know who referred you so we can thank them.</p></div>
     <div style="position:relative;" id="tab_lbl_friend_name" onclick="label_up(this.id);"> 
- <label for="inputname" class="" id="lbl_friend_name">FRIEND'S FIRST NAME</label>
+ <label for="inputname" class="" id="lbl_friend_name">FRIEND'S NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
-    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" tabindex="13" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_friend_email">FRIENDS EMAIL</label>
+    <label for="inputzip" class="" id="lbl_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
-    <input type="text" autocomplete="off" id="friend_email" name="friend_email" class="form-control" >
+    <input type="email" autocomplete="off" id="friend_email" name="friend_email" tabindex="14" class="form-control" >
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form5();">Send</a>
+    <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form5();" tabindex="15">Send</a>
        <div class="privacy">
-      <p><a href="#screen_slide_6" onclick="invite_friend_user_skip();">Skip</a></p>
+      <p><a href="#screen_slide_6" onclick="invite_friend_user_skip();" tabindex="16">Skip</a></p>
     </div>
 </div>
 </div>
@@ -1524,9 +1628,9 @@ function validate_email_male(email){
     <div class="request_text">
       <p>You're all set up. Now let's get styling!</p>
     </div>
-    <a class="btn btn-md btn-primary btn-block" href="#signin">Start Shopping</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin" tabindex="17">Start shopping</a>
     <div class="gap_4"></div>
-    <a href="#screen_slide_7" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
+    <a href="#screen_slide_7" class="btn btn-md btn-outline btn-block" onclick="invite_friend();" tabindex="18">Invite a friend</a>
  
 </div>
 </div>
@@ -1541,21 +1645,29 @@ function validate_email_male(email){
 <div class="container">
 
     <div class="Get_activated">
-      <p>Sorry, guys! We're not ready for you yet.</p>
+      <p>Sorry, guys! We're not ready<br />for you yet.</p>
     </div>
-    <div class="Get_text"><p>But we'd love to stay connected. Send us your email and we'll let you know when men's styles became available.</p></div>
-     <div style="position:relative;" id="tab_lbl_male_name" onclick="label_up(this.id);">
-<label for="inputname" class="" id="lbl_male_name">FULL NAME</label>
- <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_name"></div>
-    <input  type="text" autocomplete="off" id="male_name" name="male_name" class="form-control" >
+    <div class="Get_text"><p>But we'd love to stay connected. Send us your email and<br />we'll let you know when men's styles become available.</p></div>
+     <div style="position:relative;" id="tab_lbl_male_first_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_first_name">FIRST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_first_name"></div>
+    <input  type="text" autocomplete="off" id="male_first_name"  name="male_first_name" tabindex="30" class="form-control" >
     </div>
+    
+    <div style="position:relative;" id="tab_lbl_male_last_name" onclick="label_up(this.id);">
+<label for="inputlastname" class="" id="lbl_male_last_name">LAST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_last_name"></div>
+    <input  type="text" autocomplete="off" id="male_last_name"  name="male_last_name" tabindex="31" class="form-control" >
+    </div>
+
+    
      <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_male_email">EMAIL</label>
+    <label for="inputemail" class="" id="lbl_male_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
-    <input type="text" autocomplete="off" id="male_email" name="male_email" class="form-control">
+    <input type="email" autocomplete="off" id="male_email" name="male_email" tabindex="32" class="form-control">
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();">Send</a>
+    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();" tabindex="33">Submit</a>
       
  
 </div>
@@ -1574,24 +1686,24 @@ function validate_email_male(email){
 <div class="container">
 
     <div class="Get_activated">
-      <p>Shopping is always more fun with friends.</p>
+      <p>Shopping is always more<br />fun with friends.</p>
     </div>
-    <div class="Get_text"><p>Invite a friend to download the app to share styles 
-and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
+    <div class="Get_text"><p>Invite a friend to download the app to see<br />your 
+styles and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="invite_friend_name" name="invite_friend_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="invite_friend_name" tabindex="19" name="invite_friend_name" class="form-control" >
     </div>
  <div style="position:relative;"id="tab_lbl_invite_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_invite_friend_email">FRIENDS EMAIL</label>
+    <label for="inputzip" class="" id="lbl_invite_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="invite_friend_email" name="invite_friend_email" class="form-control" >
+    <input type="email" autocomplete="off" id="invite_friend_email" tabindex="20" name="invite_friend_email" class="form-control" >
   </div>  
     <div class="gap_4"></div>
-    <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();">Send</a>
+    <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();" tabindex="21">Send invitation</a>
        <div class="privacy">
-      <p><a href="#screen_slide_8" onclick="invite_friend_skip();">Skip</a></p>
+      <p><a href="#screen_slide_8" onclick="invite_friend_skip();" tabindex="22">Skip</a></p>
     </div>
   
 </div>
@@ -1603,32 +1715,51 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
 <div class="screen_700 hide" id="screen_slide_12">
     <div class="create_acc">
     <div class="arrow"><a href="#screen_slide_11" onclick="step_back(12);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
-      <p>Invite a friend</p>
+      <p>Shop with friends</p>
       <div class="error_red hide" id="error_bar_12">oops</div>
     </div>
 <div class="container">
 
     <div class="Get_activated">
-      <p>Shopping is always more fun with friends.</p>
+      <p>Shopping is always more<br />fun with friends.</p>
     </div>
-    <div class="Get_text"><p>Invite a friends to download the app to share styles 
-and outfit ideas. Bonus: you'll get a gift for every friend who downloads the app.</p></div>
- <div style="position:relative;" id="tab_lbl_male_invite_friend_name" onclick="label_up(this.id);">
-<label for="inputname" class="" id="lbl_male_invite_friend_name">FRIEND'S FIRST NAME</label>
- <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="male_invite_friend_name" name="male_invite_friend_name" class="form-control" >
+    <div class="Get_text"><p>Invite a friend to finally find the best fit in shopping.</p></div>
+ <div style="position:relative;" id="tab_lbl_male_invite_friend_first_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_invite_friend_first_name">FIRST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_first_name"></div>
+    <input  type="text" autocomplete="off" id="male_invite_friend_first_name" tabindex="26" name="male_invite_friend_first_name" class="form-control" >
+    </div>
+    <div style="position:relative;" id="tab_lbl_male_invite_friend_last_name" onclick="label_up(this.id);">
+<label for="inputname" class="" id="lbl_male_invite_friend_last_name">LAST NAME</label>
+ <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_last_name"></div>
+    <input  type="text" autocomplete="off" id="male_invite_friend_last_name" tabindex="27" name="male_invite_friend_last_name" class="form-control" >
     </div>
      <div style="position:relative;" id="tab_lbl_male_invite_friend_email" onclick="label_up(this.id);">
-    <label for="inputzip" class="" id="lbl_male_invite_friend_email">FRIENDS EMAIL</label>
+    <label for="inputzip" class="" id="lbl_male_invite_friend_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
-    <input type="text" autocomplete="off" id="male_invite_friend_email" name="male_invite_friend_email" class="form-control">
+    <input type="email" autocomplete="off" id="male_invite_friend_email" tabindex="28" name="male_invite_friend_email" class="form-control">
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();">Send</a>
-       <div class="privacy">
+    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();" tabindex="29">Send invitation</a>
+       <!--<div class="privacy">
       <p><a href="#screen_slide_11" onclick="male_invite_friend_skip();">Skip</a></p>
-    </div>
+    </div>-->
   
+</div>
+</div>
+
+
+<div class="screen_16 hide" id="screen_slide_16">
+<div class="container"> 
+    <div class="request">
+      <p>Invitation sent!</p>
+    </div>
+    <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
+    <div class="request_text">
+      <p class="privacy">We've sent your invitation.<br />Learn more about finding your best fit<br /> on <a href="https://www.selfiestyler.com">SelfieStyler.com</a>.
+        </p>
+    </div>
+    <a href="#screen_slide_12" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();" tabindex="34">Invite another friend</a>
 </div>
 </div>
 
@@ -1646,8 +1777,8 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
       <p>We've sent your invitation. Invite another<br />friend or start shopping!
         </p>
     </div>
-    <a class="btn btn-md btn-primary btn-block" href="#signin">Start Shopping</a>
-    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();">Invite a friend</a>
+    <a class="btn btn-md btn-primary btn-block" href="#signin" tabindex="24">Let's start shopping</a>
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();" tabindex="25">Invite another friend</a>
 </div>
 </div>
 
@@ -1655,15 +1786,19 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
 
 <!-- screen_9 --> 
 <div class="screen_11 hide" id="screen_slide_11">
+<div class="create_acc">
+    <div class="arrow"><a href="#screen_slide_0" onclick="step_back(11);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
+      <p>Stay in the loop</p>
+    </div>
 <div class="container"> 
     <div class="request">
-      <p>Email sent!</p>
+      <p>Thank you!</p>
     </div>
     <div><img src="{{ asset('bundles/lovethatfit/web_registration/img/circle_arrow.png') }}" alt="Circle" class="circle" /></div>
     <div class="request_text">
-      <p>We've sent you a confirmation email. We will make sure to update you when the app is ready for you.</p>
+      <p class="privacy">We will update you when the app is ready for you.<br />We have a lot of exciting features in store. Learn more<br />about finding your best fit on <a href="https://www.selfiestyler.com">SelfieStyler.com</a>.</p>
     </div>
-   <!-- <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();">Invite a friend</a>-->
+    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();" tabindex="35">Invite a friend</a>
 </div>
 </div>
 
@@ -1684,7 +1819,7 @@ and outfit ideas. Bonus: you'll get a gift for every friend who downloads the ap
    <!-- <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>-->
    <div class="post-content">				
 <p>Ginman Group Inc. d/b/a SelfieStyler ("SelfieStyler"). ("SelfieStyler") considers your privacy important and is committed to protecting your online privacy. This privacy policy is intended to cover the various websites and applications through which SelfieStyler obtains information, including "mini sites" displayed through our third-party website partners and "mini applications" displayed on third-party websites (each a "site" or "application"). SelfieStyler reserves the right to update the sites, applications and privacy policy at any time and without notice. We may modify this privacy policy from time to time, and the modified privacy policy will be effective upon posting. Please return to this page frequently and check the "Updated" date above to make sure you understand and agree to the latest privacy policy. Continued access of this site or application by you will constitute your acceptance of any changes or revisions to the privacy policy.</p>
-<p>Your use of this site or application signifies your acceptance of and your agreement to the terms of this privacy policy. In addition, by your use of this site or application, you are consenting to our use of your information as described in this policy. If you have any questions or comments about our privacy policy or our use of information, please send an e-mail to membersupport@selfiestyler.com or write us at:</p>
+<p>Your use of this site or application signifies your acceptance of and your agreement to the terms of this privacy policy. In addition, by your use of this site or application, you are consenting to our use of your information as described in this policy. If you have any questions or comments about our privacy policy or our use of information, please send an e-mail to <a href="mailto:membersupport@selfiestyler.com">membersupport@selfiestyler.com</a> or write us at:</p>
 
 <p>Member Care Team<br>
 c/o SelfieStyler, Inc.<br>
@@ -1699,7 +1834,7 @@ United States</p>
 
 <h3>Use of Information Collected or Stored as you Use the Service</h3>
 <p>We may use various methods and technologies to store or collect Usage Information ("Tracking Technologies"). Tracking Technologies may set, change, alter or modify settings or configurations on your device. A few of the Tracking Technologies include, without limitation, the following (and subsequent technology and methods later developed):</p>
-<p><strong>Cookies</strong>. A cookie is a data file placed on a device when it is used to visit the site or application. A Flash cookie (or locally shared object) is a data file placed on a device via the Adobe Flash plug-in that may be built-in to or downloaded by you to your device. HTML5 cookies can be programmed through HTML5 local storage. Unlike Flash cookies, HTML5 cookies do not require a plug-in. Regular cookies may generally be disabled or removed by tools that are available as part of most commercial browsers, and in some but not all instances can be blocked in the future by selecting certain settings. Each browser you use will need to be set separately and different browsers offer different functionality and options in this regard. Also, these tools may not be effective with regard to Flash cookies or HTML5 cookies. For information on disabling Flash cookies, go to Adobe’s web site www.adobe.com. Please be aware that if you disable or remove cookies, Flash cookies, or HTML5 cookies on your device, some parts of our site or application may not function properly, and that when you revisit our site or application your ability to limit cookies is subject to your browser settings and limitations.</p>
+<p><strong>Cookies</strong>. A cookie is a data file placed on a device when it is used to visit the site or application. A Flash cookie (or locally shared object) is a data file placed on a device via the Adobe Flash plug-in that may be built-in to or downloaded by you to your device. HTML5 cookies can be programmed through HTML5 local storage. Unlike Flash cookies, HTML5 cookies do not require a plug-in. Regular cookies may generally be disabled or removed by tools that are available as part of most commercial browsers, and in some but not all instances can be blocked in the future by selecting certain settings. Each browser you use will need to be set separately and different browsers offer different functionality and options in this regard. Also, these tools may not be effective with regard to Flash cookies or HTML5 cookies. For information on disabling Flash cookies, go to Adobe’s web site <a href="http://www.adobe.com/">www.adobe.com</a>. Please be aware that if you disable or remove cookies, Flash cookies, or HTML5 cookies on your device, some parts of our site or application may not function properly, and that when you revisit our site or application your ability to limit cookies is subject to your browser settings and limitations.</p>
 <p><strong>Web Beacons</strong>. Small graphic images or other web programming code called web beacons (also known as "1×1 GIFs" or "clear GIFs") may be included in our site or application’s pages and messages. Web beacons may be invisible to you, but any electronic image or other web programming code inserted into a page or e-mail can act as a web beacon. Web beacons or similar technologies may be used for a number of purposes, including, without limitation, to count visitors to the site or application, to monitor how users navigate the site or application, to count how many e-mails that were sent were actually opened or to count how many particular articles or links were actually viewed.</p>
 <p>We may use Tracking Technologies for a variety of purposes, including:</p>
 <p><strong>Strictly Necessary</strong>. We may use cookies or other Tracking Technologies that we consider are strictly necessary to allow you to use and access our site or application, including cookies required to prevent fraudulent activity, improve security or allow you to make use of shopping cart functionality.</p>
@@ -1835,7 +1970,7 @@ SelfieStyler Terms &amp; Conditions
     </div>
    <!-- <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>-->
    <div class="post-content">				
-<p>Ginman Group, Inc. dba &ldquo;SelfieStyler&rdquo; (&ldquo;SelfieStyler&rdquo; or &ldquo;we&rdquo;) provides a platform where users can share their look with a community through our website, accessible at selfiestyler.com (the &ldquo;Site&rdquo;) and as an application (the &ldquo;App&rdquo;) (collectively, the &ldquo;Services&rdquo;). Please read carefully the following terms and conditions (&ldquo;Terms&rdquo;) and our Privacy Policy [which is incorporated by reference into these Terms] because they form a legal agreement between you and SelfieStyler, for use of the Services. By using any or all of the Services you are agreeing to be bound by these Terms.</p>
+<p>Ginman Group, Inc. dba &ldquo;SelfieStyler&rdquo; (&ldquo;SelfieStyler&rdquo; or &ldquo;we&rdquo;) provides a platform where users can share their look with a community through our website, accessible at <a href="https://www.selfiestyler.com/">selfiestyler.com</a> (the &ldquo;Site&rdquo;) and as an application (the &ldquo;App&rdquo;) (collectively, the &ldquo;Services&rdquo;). Please read carefully the following terms and conditions (&ldquo;Terms&rdquo;) and our Privacy Policy [which is incorporated by reference into these Terms] because they form a legal agreement between you and SelfieStyler, for use of the Services. By using any or all of the Services you are agreeing to be bound by these Terms.</p>
 
 <h3><strong>MODIFICATION</strong></h3>
 <p>We reserve the right to modify or terminate the Services or to modify these Terms, at any time and without prior notice.</p>
@@ -1915,8 +2050,8 @@ SelfieStyler Terms &amp; Conditions
 
 <h3><strong>DISPUTE RESOLUTION</strong></h3>
 <p>You and SelfieStyler agree that any dispute, claim or controversy arising out of or relating to these Terms or the breach, termination, enforcement, interpretation or validity thereof or the use of the Services (collectively, &ldquo;Disputes&rdquo;) will be settled by binding arbitration, except that each party retains the right: (i) to bring an individual action in small claims court and (ii) to seek injunctive or other equitable relief in a court of competent jurisdiction to prevent the actual or threatened infringement, misappropriation or violation of a party&rsquo;s copyrights, trademarks, trade secrets, patents or other intellectual property rights (the action described in the foregoing clause (ii), an &ldquo;IP Protection Action&rdquo;). The exclusive jurisdiction and venue of any IP Protection Action will be the state and federal courts located in the Southern District of New York and each of the parties hereto waives any objection to jurisdiction and venue in such courts. You acknowledge and agree that you and SelfieStyler are each waiving the right to a trial by jury or to participate as a plaintiff or class member in any purported class action or representative proceeding. Further, unless both you and SelfieStyler otherwise agree in writing, the arbitrator may not consolidate more than one person&rsquo;s claims, and may not otherwise preside over any form of any class or representative proceeding. If this specific paragraph is held unenforceable, then the entirety of this &ldquo;Dispute Resolution&rdquo; section will be deemed void. Except as provided in the preceding sentence, this &ldquo;Dispute Resolution&rdquo; section will survive any termination of these Terms.</p>
-<p><strong>Arbitration Rules and Governing Law.</strong> The arbitration will be administered by the American Arbitration Association (&ldquo;AAA&rdquo;) in accordance with the Commercial Arbitration Rules and the Supplementary Procedures for Consumer Related Disputes (the &ldquo;AAA Rules&rdquo;) then in effect, except as modified by this &ldquo;Dispute Resolution&rdquo; section. (The AAA Rules are available at www.adr.org/arb_med or by calling the AAA at 1-800-778-7879.) The Federal Arbitration Act will govern the interpretation and enforcement of this Section.</p>
-<p><strong>Arbitration Process.</strong> A party who desires to initiate arbitration must provide the other party with a written Demand for Arbitration as specified in the AAA Rules. (The AAA provides a form Demand for Arbitration at http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175 and a separate form for California residents at http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822.) The arbitrator will be either a retired judge or an attorney licensed to practice law and will be selected by the parties from the AAA&rsquo;s roster of arbitrators. If the parties are unable to agree upon an arbitrator within seven (7) days of delivery of the Demand for Arbitration, then the AAA will appoint the arbitrator in accordance with the AAA Rules.</p>
+<p><strong>Arbitration Rules and Governing Law.</strong> The arbitration will be administered by the American Arbitration Association (&ldquo;AAA&rdquo;) in accordance with the Commercial Arbitration Rules and the Supplementary Procedures for Consumer Related Disputes (the &ldquo;AAA Rules&rdquo;) then in effect, except as modified by this &ldquo;Dispute Resolution&rdquo; section. (The AAA Rules are available at <a href="https://www.adr.org/arb_med">www.adr.org/arb_med</a> or by calling the AAA at 1-800-778-7879.) The Federal Arbitration Act will govern the interpretation and enforcement of this Section.</p>
+<p><strong>Arbitration Process.</strong> A party who desires to initiate arbitration must provide the other party with a written Demand for Arbitration as specified in the AAA Rules. (The AAA provides a form Demand for Arbitration at <a href="https://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175">http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175</a> and a separate form for California residents at <a href="https://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822">http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822</a>.) The arbitrator will be either a retired judge or an attorney licensed to practice law and will be selected by the parties from the AAA&rsquo;s roster of arbitrators. If the parties are unable to agree upon an arbitrator within seven (7) days of delivery of the Demand for Arbitration, then the AAA will appoint the arbitrator in accordance with the AAA Rules.</p>
 <p><strong>Arbitration Location and Procedure.</strong> Unless you and SelfieStyler otherwise agree, the arbitration will be conducted in the county where you reside. If your claim does not exceed $10,000, then the arbitration will be conducted solely on the basis of the documents that you and SelfieStyler submit to the arbitrator, unless you request a hearing or the arbitrator determines that a hearing is necessary. If your claim exceeds $10,000, your right to a hearing will be determined by the AAA Rules. Subject to the AAA Rules, the arbitrator will have the discretion to direct a reasonable exchange of information by the parties, consistent with the expedited nature of the arbitration.</p>
 <p><strong>Arbitrator&rsquo;s Decision.</strong> The arbitrator will render an award within the time frame specified in the AAA Rules. The arbitrator&rsquo;s decision will include the essential findings and conclusions upon which the arbitrator based the award. Judgment on the arbitration award may be entered in any court having jurisdiction thereof. The arbitrator&rsquo;s award of damages must be consistent with the terms of the &ldquo;Limitation of Liability&rdquo; section above as to the types and amounts of damages for which a party may be held liable. The arbitrator may award declaratory or injunctive relief only in favor of the claimant and only to the extent necessary to provide relief warranted by the claimant&rsquo;s individual claim. If you prevail in arbitration you will be entitled to an award of attorneys&rsquo; fees and expenses, to the extent provided under applicable law. SelfieStyler will not seek, and hereby waives all rights it may have under applicable law to recover, attorneys&rsquo; fees and expenses if it prevails in arbitration.</p>
 <p><strong>Fees.</strong> Your responsibility to pay any AAA filing, administrative and arbitrator fees will be solely as set forth in the AAA Rules. However, if your claim for damages does not exceed $75,000, SelfieStyler will pay all such fees unless the arbitrator finds that either the substance of your claim or the relief sought in your Demand for Arbitration was frivolous or was brought for an improper purpose (as measured by the standards set forth in Federal Rule of Civil Procedure 11(b)).</p>

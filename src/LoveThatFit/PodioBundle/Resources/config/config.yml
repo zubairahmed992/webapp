@@ -22,6 +22,12 @@ podio_v3qa_credentials:
   app_id: 17819011
   app_token: 59a6cbc3d08248509b1e648ae793bed1
 
+podio_v3staging_credentials:
+  client_id: member-info-1f8mm9
+  client_secret: FDzIKAejzzJby5UTMX0RcQwJeddeoCAZXOhYhXIWSHOpBf7urAbD7HKFu0HXEWuL
+  app_id: 17819011
+  app_token: 59a6cbc3d08248509b1e648ae793bed1
+
 podio_prod_credentials:
   client_id: member-info-bznqg6
   client_secret: ZqAMZ1dcFJ9wvS4fSu8ayZm2yqmyqI1VnRBlQO4kxpC1e1VthEBgy4000QkkGk65

@@ -626,18 +626,30 @@ class WSUserController extends Controller
                         $user_podio = array(
                             'current_email' => ($decoded['email']) ? $decoded['email'] : '',
                             'new_email' => ($decoded['new_primary_email']) ? $decoded['new_primary_email']: ''
-                        );                   
+                        ); 
+
+                 try {                       
 
                         $podio_results = $this->container->get('user.helper.podioapi')->updateUserPrimaryEmailPodio($user_podio);
-
+                      
                         if($podio_results['podio_id'] > 0){
                            
                             $podioData = $this->container->get('user.helper.podio')->findPrimaryKeybyPodioId($podio_results['podio_id']);
+                          if(count($podioData) > 0){    
                             $id = $podioData->getId();
                             $this->container->get('user.helper.podio')->updatePriamryEmaril($id,$podio_results['podio_id'],$podio_results['is_podio_updated']);
+                           }
                         }
+
+                         return new Response(json_encode(array("success" => true,"message" => "Your email has been successfully changed! <Perfect, thanks!>")));
+
+                     } catch (Exception $e) {
+
+                    return new Response(json_encode(array("success" => false,"message" => $e)));
+                    
+                     }
                       
-                        return new Response(json_encode(array("success" => true,"message" => "Your email has been successfully changed! <Perfect, thanks!>")));
+                       
                     }
                 }
 
@@ -680,7 +692,7 @@ class WSUserController extends Controller
                  $ss_ar['to_email'] = $ss->getFriendEmail();
                 $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
                 $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
-                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $ss_ar['subject'] = 'You’re invited to join SelfieStyler';
                 $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
                 return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));
             }else{
@@ -689,7 +701,7 @@ class WSUserController extends Controller
                  $ss_ar['to_email'] = $ss->getFriendEmail();
                 $ss_ar['template'] = 'LoveThatFitAdminBundle::email/invite_friend.html.twig';
                 $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'user' => $user, 'selfieshare' => $ss, 'link_type' => 'edit');
-                $ss_ar['subject'] = 'Check out SelfieStyler';
+                $ss_ar['subject'] = 'You’re invited to join SelfieStyler';
                 $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);               
                 return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend updated'));
 
@@ -721,7 +733,7 @@ class WSUserController extends Controller
             $ss_ar['to_email'] = $ra['friend_email'];
             $ss_ar['template'] = 'LoveThatFitAdminBundle::email/male_invite_friend.html.twig';
             $ss_ar['template_array'] = array('appLink' => $appLink->getAppLink(),'selfieshare' => $ra, 'link_type' => 'edit');
-            $ss_ar['subject'] = 'Check out SelfieStyler';
+            $ss_ar['subject'] = 'You’re invited to join SelfieStyler';
 
             $this->get('mail_helper')->sendEmailWithTemplate($ss_ar);
             return new Response($this->get('webservice.helper')->response_array(true, 'Invited friend added'));

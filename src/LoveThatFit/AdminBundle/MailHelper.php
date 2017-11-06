@@ -123,7 +123,7 @@ class MailHelper {
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
-        $subject = 'SelfieStyler: Thank you very much for your order. ';
+        $subject = 'SelfieStyler Order Confirmation';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
@@ -138,7 +138,7 @@ class MailHelper {
 
 
         $body = "LoveThatFitAdminBundle::email/update_primary_email.html.twig";
-        $subject = 'Your Email Has Been Updated';
+        $subject = 'Your email has been updated';
         //Enable BBC
         $enableBCC = true;
         return $this->sendHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);
@@ -183,7 +183,7 @@ class MailHelper {
         $from    = $this->conf['parameters']['mailer_user'];
         $to      = $user->getEmail();
         $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
-        $subject = 'Password reset request';
+        $subject = 'SelfieStyler password reset';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject, $reset_link);
     }
@@ -302,7 +302,7 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration-web.html.twig";
-        $subject = 'SelfieStyler: Thank you for registering with us. ';
+        $subject = 'Welcome to SelfieStyler!';
         //return 'emailing is currently disabled';
         return $this->sendEmail($from, $to, $body, $user, $subject);
 
@@ -315,7 +315,7 @@ class MailHelper {
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_order_shipped.html.twig";
-        $subject = 'SelfieStyler: Your package from SelfieStyler is on its way. ';
+        $subject = 'Your Selfiestyler order has shipped!';
         //Enable BBC
         $enableBCC = true;
         return $this->sendUserOrderShippedHtmlEmail($from, $to, $body, $subject, $dataArray,$enableBCC);

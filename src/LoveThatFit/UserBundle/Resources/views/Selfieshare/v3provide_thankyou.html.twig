@@ -1,37 +1,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width">
-<title>V3 Selfieshare :: Feedback</title>
-<!-- Bootstrap core CSS -->
-  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/bootstrap.css') }}" rel="stylesheet" type="text/css">
-  <!-- Custom styles for this template -->
-  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/signin.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/custom.css') }}" rel="stylesheet" type="text/css">
-  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/jquery-3.2.1.min.js') }}"></script>
-  <script src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/tether.min.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/bootstrap.js') }}"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>V3 Selfieshare :: Feedback</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/signin.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('bundles/lovethatfit/site/css/selfieshare_v3/custom.css') }}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/tether.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/selfieshare_v3/bootstrap.js') }}"></script>
+    <style>
+
+        @media screen {
+            @font-face {
+                font-family: 'Playfair Display';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Playfair Display'), url(https://huo53.com/PlayfairDisplay-Bold.woff) format('woff');
+            }
+
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+            }
+
+            p {
+                font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <div class="thankyou">
-      <h2>Thank You</h2>
-      <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/checkedimage.png') }}" class="checked_small" />
-      <div class="txt1">
-        <p>Your feedback has been sent!<br><br>Your feedback is on its way to <br />{{ name }}.<br />
-          Shopping is more fun with friends! Please <a href="{{link}}" target="_blank">download the SelfieStyler app</a> and get styling!</p>
-      </div>
+        <h2>Thank You</h2>
+        <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/checkedimage.png') }}" class="checked_small" />
+        <div class="txt1">
+            <p style="font-family: Lato;">Your feedback has been sent!<br><br>Your feedback is on its way to <br />{{ name }}.<br />
+                Shopping is more fun with friends! Please <a href="{{link}}" target="_blank">download the SelfieStyler app</a> and get styling!</p>
+        </div>
     </div>
-  </div> <!-- /container -->
- <footer>
+</div> <!-- /container -->
+<footer>
     <div class="container ft_div">
         <div class="foot_logo">
             <img src="{{ asset('bundles/lovethatfit/site/images/selfieshare_v3/logo_black_2x.png') }}" />Get the SelfieStyler app from the
             <a href="{{link}}" target="_blank"> App Store</a>
         </div>
     </div>
- </footer>
+</footer>
 
 </body>
 </html>

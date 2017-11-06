@@ -157,13 +157,15 @@ class SecurityController extends Controller {
                 if ($user &&  $hourdiff <= 2) {
                     return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetFormWeb.html.twig', array("user" => $user));
                 } else {
-                    throw new NotFoundHttpException("Page not found");
+                    $response = new Response('Page not found.', '404');
+                    return $response;
                 }
             } else {
-                throw new NotFoundHttpException("Page not found");
+                $response = new Response('Page not found.', '404');
+                return $response;
             }
         } else {
-            return $this->redirect('/');
+            return $this->redirect('https://www.selfiestyler.com');
         }
     }
 
