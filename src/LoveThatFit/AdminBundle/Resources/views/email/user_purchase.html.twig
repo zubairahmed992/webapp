@@ -71,12 +71,12 @@ body {
           <td style=" color:#000000; font-family:Lato; font-size: 16px;font-weight: bold;">Billing Address<br /></td>
         </tr>
         <tr>
-          <td style="color: #646464;font-family:Lato;font-size: 16px;line-height: 22px;">{{ dataArray['shipping_first_name']|capitalize }} {{ dataArray['shipping_last_name'] }}<br />
-            {{ dataArray['shipping_address1'] }}<br />
-            {{ dataArray['shipping_city'] }}, {{ dataArray['shipping_state'] }} {{ dataArray['shipping_postcode'] }}</td>
-          <td style="color: #646464;font-family: Lato;font-size: 16px;line-height: 22px;">{{ dataArray['billing_first_name']|capitalize }}<br />
-            {{ dataArray['billing_address1'] }}<br />
-            {{ dataArray['billing_city'] }}, {{ dataArray['billing_state'] }} {{ dataArray['billing_postcode'] }}</td>
+          <td style="color: #646464;font-family:Lato;font-size: 16px;line-height: 22px;">{{ dataArray['shipping_first_name']|title }} {{ dataArray['shipping_last_name']|title }}<br />
+            {{ dataArray['shipping_address1']|title }}<br />
+            {{ dataArray['shipping_city']|title }}, {{ dataArray['shipping_state']|upper }} {{ dataArray['shipping_postcode'] }}</td>
+          <td style="color: #646464;font-family: Lato;font-size: 16px;line-height: 22px;">{{ dataArray['billing_first_name']|title }}<br />
+            {{ dataArray['billing_address1']|title }}<br />
+            {{ dataArray['billing_city']|title }}, {{ dataArray['billing_state']|upper }} {{ dataArray['billing_postcode'] }}</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -108,7 +108,7 @@ body {
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="5" valign="middle" style="color:#000000; font-family:Lato; font-size:16px; font-weight:bold;	line-height:22px;">Here's what we shipped:</td>
+          <td colspan="5" valign="middle" style="color:#000000; font-family:Lato; font-size:16px; font-weight:bold;	line-height:22px;">Here's what you ordered:</td>
         </tr>
         <tr>
           <td height="35" valign="top"></td>
@@ -154,12 +154,16 @@ body {
                 <td style="	height:18px; width:255.44px; color:#000000;	font-family:Lato; font-size:14px; line-height:18px;" width="73%" valign="middle">Subtotal ({{ dataArray['items']|length }} items) </td>
                 <td style="height: 18px; width:85.91px;	color:#000000; font-family:Lato; font-size:14px; font-weight:bold;	line-height:18px; text-align:right;" width="27%" align="right" valign="middle"> ${{ dataArray['order_amount'] }}</td>
               </tr>
-			  {% if dataArray['discount'] %}
+			  {#% if dataArray['discount'] %#}
+        <tr>
+                <td height="10" valign="top"></td>
+                <td height="10" valign="top"></td>
+              </tr>
 			  <tr>
                 <td style=" height:18px; width:255.44px; color:#000000;	font-family:Lato; font-size:14px; line-height:18px;" width="73%" valign="middle">DISCOUNT {{ dataArray['discountType'] }}</td>
                 <td style="height: 18px; width: 85.91px;	color: #000000;	font-family:Lato;	font-size: 14px;	font-weight: bold;	line-height: 18px; text-align: right;" width="27%" align="right" valign="middle"> ${{ dataArray['discount'] }}</td>
               </tr>
-			  {% endif %}
+			  {#% endif %#}
               <tr>
                 <td height="10" valign="top"></td>
                 <td height="10" valign="top"></td>
