@@ -217,16 +217,3 @@ input:disabled {
 .regshow{
 	display:none;
 }
-
-.post-content a{
-color:#e0ca89;
-}
-
-.post-content p{
-font-family:lato;
-}
-
-.post-content h3{
-    font-family: Lato;
-    font-weight: 900;	
-}
