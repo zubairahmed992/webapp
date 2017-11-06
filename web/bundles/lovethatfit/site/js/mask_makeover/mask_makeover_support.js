@@ -11,9 +11,8 @@ $(document).ready(function() {
    dom_event_interaction_s1.onMouseUp = onMouseUp;
    dom_event_interaction_s1.onKeyDown = onKeyDown;
    dom_event_interaction_s1.onKeyUp = onKeyUp;
-
-
-   lyr_ref_rect = new Layer();
+ 
+    lyr_ref_rect = new Layer();
    lyr_ref_rect.activate();
    canvas_ref_rect();
 
@@ -38,7 +37,9 @@ $(document).ready(function() {
         opacity:0.6
     });
     h_indi.visible = false;
-
+    
+    
+    
 /****** - Get additional points - ******/
     edge_grabber =  new Path({
          segments:[[0, 40], [960, 40]],
@@ -70,45 +71,25 @@ $(document).ready(function() {
     });
    pathLine.visible = false;
 
-
-
+   
+      
+//archives: on this layer we saved retouch image
+retuch_img = new Layer();
+sideviewLayer = new Layer();
+ 
+    
+    txtlabel = new PointText({
+            point:[300, 300],
+            fillColor: 'yellow',
+            fontFamily: 'arial',
+            fontSize: 14
+    });
+   
 
    lyr_misc = new Layer();
    lyr_misc.activate();
 
-
-//archives: on this layer we saved retouch image
-retuch_img = new Layer();
-sideviewLayer = new Layer();
-
-    var shoulder_line = new Path({
-        segments:[[400, 433], [600, 433]],
-        selected: true
-    });
-    shoulder_line.data = {
-        type: 'side_view_line',
-        name: 'shoulder_line'
-    };
-    
-    var bust_line = new Path({
-        segments:[[400, 500], [600, 500]],
-        selected: true
-    });
-    bust_line.data = {
-        type: 'side_view_line',
-        name: 'bust_line'
-    };
-    
-    var waist_line = new Path({
-        segments:[[400, 560], [600, 560]],
-        selected: true
-    });
-    waist_line.data = {
-        type: 'side_view_line',
-        name: 'waist_line'
-    };
-    
-
+  
 });
 
 // archives show image function
@@ -156,7 +137,59 @@ function loadSideViewImag(sideImageurl){
     view.update(); 
 }
 
+//horizontal lines for side view 
 
+function sideViewLines(){
+     var shoulder_line = new Path({
+        segments:[[400, 433], [600, 433]],
+        selected: true
+    });
+    shoulder_line.data = {
+        type: 'side_view_line',
+        name: 'shoulder_line'
+    };
+    
+    var bust_line = new Path({
+        segments:[[400, 500], [600, 500]],
+        selected: true
+    });
+    bust_line.data = {
+        type: 'side_view_line',
+        name: 'bust_line'
+    };
+    
+    var waist_line = new Path({
+        segments:[[400, 560], [600, 560]],
+        selected: true
+    });
+    waist_line.data = {
+        type: 'side_view_line',
+        name: 'waist_line'
+    };
+   
+   var thigh_line = new Path({
+        segments:[[400, 750], [600, 750]],
+        selected: true,
+    });
+    thigh_line.data = {
+        type: 'side_view_line',
+        name: 'waist_line'
+    }; 
+     view.update();
+}
+   
+  
+//function sideViewlabels(txtLabel, positionX, positionY){
+//   
+//     var txtlabel = new PointText({
+//        point :[positionX, positionY],
+//        fillColor: 'yellow',
+//        fontFamily: 'arial',
+//        fontSize: 14,
+//        content:txtLabel
+//      });
+//    view.update();
+//}
 
 function drawSidePath(segmentIndex, linewidth){
    var indexPositona = full_mask.segments[segmentIndex].point.x;
@@ -958,10 +991,12 @@ function onMouseDown(event) {
 
     if(hitResult.type == "segment"){
         active_items.drag = true;
-        
         curr_obj_line = hitResult.item;
         if(curr_obj_line.data.type){
             active_items.segment = hitResult.segment;
+            //sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
+           // sideViewlabels(curr_obj_line.data.name);
+         
         }
         
         if(hitResult.segment.point != active_items.segment.point){
@@ -1001,6 +1036,13 @@ function onMouseDown(event) {
 
 
 function onMouseDrag(event) {
+
+    txtlabel.content = active_items.segment.path.data.name;
+    
+        //active_items.segment.path.data.name
+        //console.log(active_items.segment.point.y);
+        //console.log(active_items.segment.point.x);
+       // sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
     if(active_items.drag){
         active_items.segment.point = event.point;
         
@@ -1047,7 +1089,7 @@ function onMouseUp(event) {
     active_items.cir_in = false;
     active_items.cir_out = false;
     h_indi.visible = false;
-
+  
 }
 
 ////////////////////////********* Hip Max ******** //////////////////
