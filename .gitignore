@@ -1,3 +1,5 @@
+src/LoveThatFit/OneloginSamlBundle/Resources/config/routing.yml
+app/config/security.yml
 app/config/config.yml
 app/config/parameters.yml
 app/config/camera_mask_specs.yml
