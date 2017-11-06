@@ -22,6 +22,12 @@ podio_v3qa_credentials:
   app_id: 18595333
   app_token: d20f7c05553547dab552d30887a16112
 
+podio_v3staging_credentials:
+  client_id: order-history-h48n17
+  client_secret: mHbiCvFyjyrtLxYzZ2X18ptE7PJax4heTKuCYrxLQEKu4m0gvTwf48pNoblKVbCQ
+  app_id: 18595333
+  app_token: d20f7c05553547dab552d30887a16112
+
 podio_prod_credentials:
   client_id: order-history-z8xco4
   client_secret: 0m9onebtcPYHgGSJzLF7KHaEut1t5BqQ4A8qCEOXrsZnTRkUDwijjoD95x9wDH6G
