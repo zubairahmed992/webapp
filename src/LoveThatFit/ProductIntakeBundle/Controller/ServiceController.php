@@ -601,8 +601,11 @@ class ServiceController extends Controller {
         $request = $this->getRequest();
         if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
             $file_name = $FILES['file']['name'];
-            $parsed_details = $this->breakFileNameProductImageUplaod($file_name);
+            #$parsed_details = $this->breakFileNameProductImageUplaod($file_name);
+            $parsed_details = $this->breakFileNameProductImageUplaodNewFormat($file_name);
+            
 
+            return $this->responseArray(json_encode($parsed_details));
             #--------------------------------------------------------------
             if ($parsed_details['success'] == 'false') {
                 return $this->responseArray('invalid file naming format');
@@ -616,7 +619,7 @@ class ServiceController extends Controller {
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
                 $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                 $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
-
+                
                 if (count($product_color) == 0) {
                     return $this->responseArray('color not found');#------------------------------------------>
                 }
