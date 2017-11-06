@@ -217,3 +217,7 @@ input:disabled {
 .regshow{
 	display:none;
 }
+
+.post-content a{
+color:#e0ca89;
+}

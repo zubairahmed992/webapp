@@ -53,6 +53,21 @@ class InviteFriend  {
      */
     private $friend_name;
 
+
+    /**
+     * @var string $first_name
+     *
+     * @ORM\Column(name="first_name", type="string", length=60, nullable=true)
+     */
+    private $first_name;
+
+    /**
+     * @var string $last_name
+     *
+     * @ORM\Column(name="last_name", type="string", length=60, nullable=true)
+     */
+    private $last_name;
+
      /**
      * @var string $friend_email
      *
@@ -143,6 +158,56 @@ class InviteFriend  {
      */
     public function getFriendName() {
         return $this->friend_name;
+    }
+
+
+    #------------------------------------------------   message
+
+
+    /**
+     * Set first_name
+     *
+     * @param string $first_name
+     * @return InviteFriend
+     */
+    public function setFirstName($first_name) {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    /**
+     * Get first_name
+     *
+     * @return string
+     */
+    public function getFirstName() {
+        return $this->first_name;
+    }
+
+
+    #------------------------------------------------   message
+
+
+    /**
+     * Set last_name
+     *
+     * @param string $last_name
+     * @return InviteFriend
+     */
+    public function setLastName($last_name) {
+        $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    /**
+     * Get last_name
+     *
+     * @return string
+     */
+    public function getLastName() {
+        return $this->last_name;
     }
     #------------------------------------------------   email
     /**
