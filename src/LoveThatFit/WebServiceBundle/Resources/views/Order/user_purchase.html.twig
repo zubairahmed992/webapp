@@ -143,10 +143,16 @@
           <td>Tax</td>
           <td class="text-right pric">${{ dataArray['sales_tax'] }}</td>
       </tr>
-       <tr>
+      <tr>
           <td>Shipping</td>
           <td class="text-right pric">$0.00</td>
       </tr>
+      {% if dataArray['discount'] != "0.00" %}
+        <tr>
+            <td>Discount</td>
+            <td class="text-right pric">- ${{ dataArray['discount'] }}</td>
+        </tr>
+      {% endif %}
     </table>       
     </div>
     <hr />
