@@ -217,11 +217,11 @@ device_config:
     resize_ratio_jt: 1
 
   iphonex:
-    pixel_per_inch: 10.255
+    pixel_per_inch: 9.497
     max_user_height_inch: 74
     device_model: iphonex
     product_px_per_inch: 17
-    total_screen_height_px: 812
+    total_screen_height_px: 752
     actual_product_img_ppi: 60
     actual_top_prod_empty_area: 795
     actual_bottom_prod_empty_area: 1958
@@ -235,11 +235,11 @@ device_config:
     resize_ratio_jt: 1
 
   simulator:
-    pixel_per_inch: 10.255
+    pixel_per_inch: 9.497
     max_user_height_inch: 74
     device_model: simulator
     product_px_per_inch: 17
-    total_screen_height_px: 812
+    total_screen_height_px: 752
     actual_product_img_ppi: 60
     actual_top_prod_empty_area: 795
     actual_bottom_prod_empty_area: 1958
