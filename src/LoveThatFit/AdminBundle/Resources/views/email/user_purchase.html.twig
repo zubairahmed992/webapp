@@ -43,7 +43,7 @@ body {
      Thank you for your order </td>
   </tr>
   <tr>
-    <td style="font-family: Lato; font-size:16px; text-align:center;padding-top:25px; padding-bottom:25px;">Thanks for your order, {{ dataArray['billing_first_name']|capitalize }}! We’re getting your items <br />
+    <td style="font-family: Lato; font-size:16px; text-align:center;padding-top:25px; padding-bottom:25px;">Thanks for your order, {{ dataArray['billing_first_name']|title }}! We’re getting your items <br />
       ready and will notify you once your package has shipped.</td>
   </tr>
   <tr>
@@ -73,10 +73,10 @@ body {
         <tr>
           <td style="color: #646464;font-family:Lato;font-size: 16px;line-height: 22px;">{{ dataArray['shipping_first_name']|title }} {{ dataArray['shipping_last_name']|title }}<br />
             {{ dataArray['shipping_address1']|title }}<br />
-            {{ dataArray['shipping_city']|title }}, {{ dataArray['shipping_state']|upper }} {{ dataArray['shipping_postcode'] }}</td>
+            {{ dataArray['shipping_city']|title }}, {{ dataArray['shipping_state']|title }} {{ dataArray['shipping_postcode'] }}</td>
           <td style="color: #646464;font-family: Lato;font-size: 16px;line-height: 22px;">{{ dataArray['billing_first_name']|title }}<br />
             {{ dataArray['billing_address1']|title }}<br />
-            {{ dataArray['billing_city']|title }}, {{ dataArray['billing_state']|upper }} {{ dataArray['billing_postcode'] }}</td>
+            {{ dataArray['billing_city']|title }}, {{ dataArray['billing_state']|title }} {{ dataArray['billing_postcode'] }}</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -160,8 +160,8 @@ body {
                 <td height="10" valign="top"></td>
               </tr>
 			  <tr>
-                <td style=" height:18px; width:255.44px; color:#000000;	font-family:Lato; font-size:14px; line-height:18px;" width="73%" valign="middle">DISCOUNT {{ dataArray['discountType'] }}</td>
-                <td style="height: 18px; width: 85.91px;	color: #000000;	font-family:Lato;	font-size: 14px;	font-weight: bold;	line-height: 18px; text-align: right;" width="27%" align="right" valign="middle"> ${{ dataArray['discount'] }}</td>
+                <td style=" height:18px; width:255.44px; color:#000000;	font-family:Lato; font-size:14px; line-height:18px;" width="73%" valign="middle">Discount {{ dataArray['discountType'] }}</td>
+                <td style="height: 18px; width: 85.91px;	color: #000000;	font-family:Lato;	font-size: 14px;	font-weight: bold;	line-height: 18px; text-align: right;" width="27%" align="right" valign="middle"> {{ dataArray['discount'] }}</td>
               </tr>
 			  {#% endif %#}
               <tr>
