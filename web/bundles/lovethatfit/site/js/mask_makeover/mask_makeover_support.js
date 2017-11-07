@@ -1,7 +1,7 @@
 window.devicePixelRatio = 1;
 paper.install(window);
 var dom_event_interaction_s1;
-
+var txtlabel;
 $(document).ready(function() {
     paper.setup('canv_mask_makeover');
 
@@ -51,6 +51,7 @@ $(document).ready(function() {
      get_additional_pos();
 /****** - /Get additional points - ******/
 
+    
 /****** - Get max hip - ******/
     edge_grabber_1 =  new Path({
          segments:[[0, 600], [960, 600]],
@@ -75,21 +76,13 @@ $(document).ready(function() {
       
 //archives: on this layer we saved retouch image
 retuch_img = new Layer();
-sideviewLayer = new Layer();
- 
-    
-    txtlabel = new PointText({
-            point:[300, 300],
-            fillColor: 'yellow',
-            fontFamily: 'arial',
-            fontSize: 14
-    });
-   
 
+sideviewLayer = new Layer();
+
+ 
    lyr_misc = new Layer();
    lyr_misc.activate();
 
-  
 });
 
 // archives show image function
@@ -119,27 +112,28 @@ function restoreFrontTab(){
 function loadSideViewImag(sideImageurl){
     sideviewLayer.activate();
     sideviewLayer.visible=true;
+    
      var sideImage = new Raster(sideImageurl);
      sideImage.position = new Point(480, 640);
+    
     //hide mask and interse
      full_mask.visible=false;
      body_part_area.visible = false;
-//    drawSidePath(63, 600);
-//    drawSidePath(53, 600);
-//    drawSidePath(61, 600);
-//    drawSidePath(57, 600);
-//    drawSidePath(58, 600);
-//    drawSidePath(46, 600);
-//    drawSidePath(45, 600);
-//    drawSidePath(44, 600);
-
-
+    
     view.update(); 
 }
 
 //horizontal lines for side view 
 
 function sideViewLines(){
+    
+     txtlabel = new PointText({
+        fillColor: 'yellow',
+        fontFamily: 'arial',
+        fontSize: 14,
+      });
+      txtlabel.visible = false;
+      
      var shoulder_line = new Path({
         segments:[[400, 433], [600, 433]],
         selected: true
@@ -175,10 +169,10 @@ function sideViewLines(){
         type: 'side_view_line',
         name: 'waist_line'
     }; 
-     view.update();
+    
 }
    
-  
+ 
 //function sideViewlabels(txtLabel, positionX, positionY){
 //   
 //     var txtlabel = new PointText({
@@ -186,7 +180,7 @@ function sideViewLines(){
 //        fillColor: 'yellow',
 //        fontFamily: 'arial',
 //        fontSize: 14,
-//        content:txtLabel
+//        content:txtLabel,
 //      });
 //    view.update();
 //}
@@ -966,7 +960,8 @@ function onKeyUp(){
 }
 
 function onMouseDown(event) {
-
+    txtlabel.visible = true;
+    
     if(event.modifiers.control && event.modifiers.space && event.modifiers.option){
         if(current_status.zoom_level > current_status.min_zoom_level){
             zoom_out();
@@ -996,7 +991,8 @@ function onMouseDown(event) {
             active_items.segment = hitResult.segment;
             //sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
            // sideViewlabels(curr_obj_line.data.name);
-         
+            
+            txtlabel.content=active_items.segment.path.data.name;
         }
         
         if(hitResult.segment.point != active_items.segment.point){
@@ -1037,12 +1033,13 @@ function onMouseDown(event) {
 
 function onMouseDrag(event) {
 
-    txtlabel.content = active_items.segment.path.data.name;
+   
     
         //active_items.segment.path.data.name
         //console.log(active_items.segment.point.y);
         //console.log(active_items.segment.point.x);
        // sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
+       txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
     if(active_items.drag){
         active_items.segment.point = event.point;
         
@@ -1089,7 +1086,7 @@ function onMouseUp(event) {
     active_items.cir_in = false;
     active_items.cir_out = false;
     h_indi.visible = false;
-  
+   txtlabel.visible = false;
 }
 
 ////////////////////////********* Hip Max ******** //////////////////
