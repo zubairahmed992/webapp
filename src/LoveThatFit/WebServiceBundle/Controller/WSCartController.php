@@ -529,7 +529,7 @@ class WSCartController extends Controller
             'frist_name'    => $user->getFullName(),
             'order_amount'  => number_format((float)$orderAmount, 2, '.', ''),
             'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
-            'discount'  => ($discount > 0 ? "-$".$discount : '0.00'),
+            'discount'  => ($discount > 0 ? "-$".$discount : '$0.00'),
             'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
@@ -1035,7 +1035,8 @@ class WSCartController extends Controller
             'frist_name'    => $orders['firstName'] . " " . $orders['lastName'],
             'order_amount'  => number_format((float)$orders['order_amount'], 2, '.', ''),
             'total_amount'  => number_format((float)$orders['total_amount'], 2, '.', ''),
-            'discount'      => ($orders['discount_amount'] > 0 ? "-$".$orders['discount_amount'] : 0),
+            'discount'      => number_format((float)$orders['discount_amount'], 2, '.', ''),
+            //'discount'      => ($orders['discount_amount'] > 0 ? "- $".$orders['discount_amount'] : 0),
             'discountType' => (isset($orders['group_type']) && $orders['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'expirate_date' => $creditCard->expirationMonth. "/". $creditCard->expirationYear,
             'shipping_first_name' => $orders['shipping_first_name'],
@@ -1056,10 +1057,6 @@ class WSCartController extends Controller
             'sales_tax'         => number_format((float)$orders['sales_tax'], 2, '.', ''),
         );
         
-        // echo "<pre>";
-        // print_r($dataArray);
-    
-        // die();
         return $this->render('LoveThatFitWebServiceBundle:Order:user_purchase.html.twig',
             array('dataArray'   => $dataArray)
         );
