@@ -299,7 +299,7 @@ class MailHelper {
 
     public function sendWebRegistrationEmail($user) {
 
-        $from = $this->conf['parameters']['mailer_user'];
+        $from = "care@selfiestyler.com";
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration-web.html.twig";
         $subject = 'Welcome to SelfieStyler!';
