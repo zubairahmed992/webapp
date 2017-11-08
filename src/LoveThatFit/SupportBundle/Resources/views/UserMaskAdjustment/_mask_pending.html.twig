@@ -276,7 +276,7 @@
       <div style="clear:both;"></div>
      </div>
          </div>
-    <div style="display: inline-block;text-align: position:relative;">
+    <div style="display: inline-block;text-align: position: relative;">
         <div id="sticky">
         <div class="canvas_navigation">
     <a id="centerline">Center Line</a>
@@ -395,7 +395,7 @@ function endtimer(){
                                     //questionText = questionText.replace(/[0-9]/g, '');
 
                                     curr_url_array = curr_url.split('/');                                    
-                                    if(curr_url_array[curr_url_array.length - 1] == 'refresh#' || curr_url_array[curr_url_array.length - 1] == 'refresh'){                                        
+                                    if(curr_url_array[curr_url_array.length - 1] === 'refresh#' || curr_url_array[curr_url_array.length - 1] === 'refresh'){                                        
                                             curr_url = curr_url.split('/refresh#')[0];
                                             var reload_url = curr_url.slice(0, curr_url.lastIndexOf('/'));
                                             window.location.assign(reload_url);
@@ -445,8 +445,6 @@ $(document).ready(function(){
                  $("#sideViewCalibration").show();
                  var sideOneUrl = $("#side_view_1").val();
                  loadSideViewImag(sideOneUrl);
-                 
-                 
              }
              if($index===2){
                  $("#frontRetouchImages").hide();
@@ -454,8 +452,6 @@ $(document).ready(function(){
                  var sideTwoUrl = $("#side_view_2").val();
                  loadSideViewImag(sideTwoUrl);
              }
-             
-                 
         });
     });
    //side view script  

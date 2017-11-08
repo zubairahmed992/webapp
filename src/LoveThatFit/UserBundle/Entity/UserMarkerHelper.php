@@ -358,8 +358,61 @@ class UserMarkerHelper
         }
         return $pred_measurements;
     }
-    #----------------------------------------------------------------------------
+    #---------------------------  calculate_distance -------------------------------------------------
+
     private function calculate_distance($mms_v, $mm_array)
+    {
+        if (is_array($mm_array)) {
+            $dst_px1 = 0;
+            $dst_px2 = 0;
+            $p1      = $mms_v['segments']['s1']['a'];
+            $p2      = $mms_v['segments']['s1']['b'];
+
+            if (array_key_exists('association', $mms_v) && $mms_v['association'] == 'top') {
+                if (array_key_exists($p1, $mm_array) && array_key_exists($p2, $mm_array)) {
+                    $dst_px1 = ($mm_array[$p1][1] + $mm_array[$p2][1]) / 2;
+                }
+                if ($mms_v['type'] == 'pair') {
+                    $p3 = $mms_v['segments']['s2']['a'];
+                    $p4 = $mms_v['segments']['s2']['b'];
+                    if (array_key_exists($p3, $mm_array) && array_key_exists($p4, $mm_array)) {
+                        $dst_px2 = ($mm_array[$p3][1] + $mm_array[$p4][1]) / 2;
+                    }
+                }
+            } else {
+                if (array_key_exists($p1, $mm_array) && array_key_exists($p2, $mm_array)) {
+                    $dst_px1 = $this->distance_between_points($mm_array[$p1][0], $mm_array[$p1][1], $mm_array[$p2][0], $mm_array[$p2][1]);
+                }
+                if ($mms_v['type'] == 'pair') {
+                    $p3 = $mms_v['segments']['s2']['a'];
+                    $p4 = $mms_v['segments']['s2']['b'];
+                    if (array_key_exists($p3, $mm_array) && array_key_exists($p4, $mm_array)) {
+                        $dst_px2 = $this->distance_between_points($mm_array[$p3][0], $mm_array[$p3][1], $mm_array[$p4][0], $mm_array[$p4][1]);
+                    }
+                }
+            }
+
+
+            #--------------
+            $dst_avg = 0;
+            if ($dst_px2 == 0) {
+                $dst_avg = $dst_px1;
+            } else {
+                $dst_avg = ($dst_px1 + $dst_px2) / 2;
+            }
+
+            #--------------------
+            return array('s1' => $dst_px1, 's2' => $dst_px2, 'avg' => $dst_avg); # 'avg' => $dst_avg * 2
+        } else {
+            return array('s1' => 0, 's2' => 0, 'avg' => 0);
+        }
+    }
+
+    private function distance_between_points($x1, $y1, $x2, $y2) {
+        return sqrt(pow((round($x2, 2) - round($x1, 2)), 2) + pow((round($y2, 2) - round($y1, 2)), 2));
+    }
+    #----------------------------------------------------------------------------
+    private function _calculate_distance($mms_v, $mm_array)
     {
         if (is_array($mm_array)) {
             $dst_px1 = 0;

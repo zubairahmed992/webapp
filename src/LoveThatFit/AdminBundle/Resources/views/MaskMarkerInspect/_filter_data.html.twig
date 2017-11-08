@@ -2,7 +2,11 @@
     <b>Users:</b> {{users_count}}&nbsp;|&nbsp;<b>Men:</b> {{male_count}}&nbsp;|&nbsp; <b>Women:</b>{{female_count}}
 </div>
 <br>
-<table  class="table table-bordered table-hover">
+{#columns are now correct#}
+<style>
+.tablehead{ text-transform:capitalize;}
+</style>
+<table  class="table table-bordered table-hover tablehead">
        <tr>
            <th>id</th>   
            <th>Gender</th>
@@ -14,6 +18,7 @@
            <th>waist</th>
            <th>belt</th>
            <th>hip</th>
+            <th>hip-px</th>
            <th>bust</th>
            <th>chest</th>
            <th>arm</th>
@@ -66,22 +71,38 @@
            <th>torso-inches</th>
            <th>neck-px	</th>
            <th>neck-inches</th>
-           
-
+           {#<th>Neck_Height-px</th>#}
+           <th>chest_top_height-px</th>
+            <th>shoulder_top-height</th>
+            <th>bust_top_height-px</th>
+            <th>belt_top_height_px</th>
+            <th>waist_top_height-px</th>
+            <th>hip_top_height-px</th>
+            <th>hip_top_lower-px</th>
+            <th>bicep_top_height_px</th>
+             {#new values#}
+            <th>thigh_top_height_px</th>
+            <th>knee_top_height_px</th>
+            <th>calf_top_height_px</th>
+            <th>ankle_top_height_px</th>
+            <th>elbow_top_height_px</th>
+            <th>wrist_top_height_px</th>
+            <th>crotch_top_height_px</th>
+            <!-- bicep added in !-->
        </tr>
        {% for user in users %} 
-       <tr>
-             <td>{{user.id}}</td>
-           <td>{{user.gender}}</td>
-           <td>{{user.email}}</td>
-           <td>{{user.zipcode}}</td>
-           <td>{{user.birth_date|date("m/d/Y", false)}}</td>           
-
+<tr>
+<td>{{user.id}}</td>
+<td>{{user.gender}}</td>
+<td>{{user.email}}</td>
+<td>{{user.zipcode}}</td>
+<td>{{user.birth_date|date("m/d/Y", false)}}</td>           
 <td>{{user.weight}}</td>
 <td>{{user.height}}</td>
 <td>{{user.waist}}</td>
 <td>{{user.belt}}</td>
 <td>{{user.hip}}</td>
+<td>{{user.hip_px}}</td>
 <td>{{user.bust}}</td>
 <td>{{user.chest}}</td>
 <td>{{user.arm}}</td>
@@ -104,8 +125,8 @@
 <td>{{user.ankle}}</td>
 <td>{{user.bust_px}}</td>
 <td>{{user.bust_inch}}</td>
-<td>{{user.chest_px}}</td>
 <td>{{user.chest_inch}}</td>
+<td>{{user.chest_top_height_px}}</td>
 <td>{{user.shoulder_across_front_px}}</td>
 <td>{{user.shoulder_across_front_inch}}</td>	
 <td>{{user.waist_px}}</td>	
@@ -117,7 +138,7 @@
 <td>{{user.thigh_px}}</td>	
 <td>{{user.thigh_inch}}</td>	
 <td>{{user.shoulder_height_px}}</td>	
-<td>{{user.shoulder_height_inch}}</td>	
+<td>{{user.shoulder_height_inch}}</td>
 <td>{{user.bicep_px}}</td>	
 <td>{{user.bicep_inch}}</td>	
 <td>{{user.wrist_px}}</td>	
@@ -131,10 +152,30 @@
 <td>{{user.elbow_px}}</td>	
 <td>{{user.elbow_inch}}</td>	
 <td>{{user.torso_px}}</td>	
-<td>{{user.torso_inch}}</td>	
+<td>{{user.torso_inch}}</td>
 <td>{{user.neck_px}}</td>	
-<td>{{user.neck_inch}}</td>	
+<td>{{user.neck_inch}}</td>
 
-       </tr>
+<td>{{user.chest_px}}</td>
+<td>{{user.shoulder_top_height_px}}</td>
+<td>{{user.bust_top_height_px}}</td>
+<td>{{user.belt_abdomen_top_height_px}}</td>
+<td>{{user.waist_top_height_px}}</td>
+<td>{{user.hip_top_height_px}}</td>
+<td>{{user.low_hip_top_height_px}}</td>
+<td>{{user.bicep_top_height_px}}</td>
+
+ {#new values#}
+<td>{{user.thigh_top_height_px}}</td>
+<td>{{user.knee_top_height_px}}</td>
+<td>{{user.calf_top_height_px}}</td>
+<td>{{user.ankle_top_height_px}}</td>
+<td>{{user.elbow_top_height_px}}</td>
+<td>{{user.wrist_top_height_px}}</td>
+<td>{{user.inseam_top_height_px}}</td>
+ 
+</tr>
+{#test#}
        {% endfor %}
    </table>
+

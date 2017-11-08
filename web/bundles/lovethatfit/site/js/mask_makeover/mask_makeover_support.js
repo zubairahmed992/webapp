@@ -29,7 +29,7 @@ $(document).ready(function() {
    load_user_masks();
    full_mask.insertAbove(set_circle_in());
    full_mask.insertAbove(set_circle_out());
-
+  
    h_indi =  new Path({
         segments:[[0, 0], [960, 0]],
         strokeColor:'red',
@@ -79,10 +79,16 @@ retuch_img = new Layer();
 
 sideviewLayer = new Layer();
 
- 
+// sideviewPath layer created for sideview calibartion path 
+sideviewPath  = new Layer();
+sideviewPath.activate();
+sideviewPath.visible = false;
+sideViewLines();
+     
    lyr_misc = new Layer();
    lyr_misc.activate();
 
+       
 });
 
 // archives show image function
@@ -92,14 +98,19 @@ function showImag(retouch_image){
     retuch_img.activate();
         retuch_img.removeChildren();
         var show_img = new Raster(retouch_image);
+        
         show_img.on('load', function() {
         this.opacity=1;
+        
+        // comment below line if mask need edited
+        this.insertBelow(full_mask);
         user_image.position = new Point(480,640);
         preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
         });
-
+        
        return retuchImage = show_img;
-        view.update();
+      
+    view.update();
 }
 
 // side view load
@@ -107,6 +118,7 @@ function restoreFrontTab(){
  sideviewLayer.visible=false;
  full_mask.visible=true;
  body_part_area.visible = false;
+ sideviewPath.visible = false;
   view.update(); 
 }
 function loadSideViewImag(sideImageurl){
@@ -119,6 +131,8 @@ function loadSideViewImag(sideImageurl){
     //hide mask and interse
      full_mask.visible=false;
      body_part_area.visible = false;
+     
+    sideviewPath.visible = true;
     
     view.update(); 
 }
@@ -126,7 +140,7 @@ function loadSideViewImag(sideImageurl){
 //horizontal lines for side view 
 
 function sideViewLines(){
-    
+  
      txtlabel = new PointText({
         fillColor: 'yellow',
         fontFamily: 'arial',
@@ -136,7 +150,7 @@ function sideViewLines(){
       
      var shoulder_line = new Path({
         segments:[[400, 433], [600, 433]],
-        selected: true
+        selected: true,
     });
     shoulder_line.data = {
         type: 'side_view_line',
@@ -169,7 +183,7 @@ function sideViewLines(){
         type: 'side_view_line',
         name: 'waist_line'
     }; 
-    
+   
 }
    
  
@@ -960,7 +974,7 @@ function onKeyUp(){
 }
 
 function onMouseDown(event) {
-    txtlabel.visible = true;
+    
     
     if(event.modifiers.control && event.modifiers.space && event.modifiers.option){
         if(current_status.zoom_level > current_status.min_zoom_level){
@@ -991,9 +1005,11 @@ function onMouseDown(event) {
             active_items.segment = hitResult.segment;
             //sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
            // sideViewlabels(curr_obj_line.data.name);
-            
+            txtlabel.visible = true;
             txtlabel.content=active_items.segment.path.data.name;
         }
+        
+        
         
         if(hitResult.segment.point != active_items.segment.point){
             active_items.segment.selected = false;
@@ -1032,22 +1048,21 @@ function onMouseDown(event) {
 
 
 function onMouseDrag(event) {
-
-   
+    txtlabel.visible=true;
+   txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
     
         //active_items.segment.path.data.name
         //console.log(active_items.segment.point.y);
         //console.log(active_items.segment.point.x);
        // sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
-       txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
+// text lable hide due to segment drag was noo
+              
     if(active_items.drag){
         active_items.segment.point = event.point;
-        
         h_indi.position.y = active_items.segment.point.y;
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
         circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
 
-               // horlinepath(event);
     }
     if(active_items.cir_in){
         active_items.cir_out = false;
@@ -1075,18 +1090,20 @@ function onMouseDrag(event) {
                 change_y_pos_diff += event.delta.y;
 
         }
-
+        //text lable for side view added
+        
         console.log("lyr_area_hldr: " + lyr_area_hldr.position);
         console.log("lyr_stage_coor" +  lyr_stage_coor.position);
         console.log(canvas_area_hldr.position);
     }
 }
 function onMouseUp(event) {
+     txtlabel.visible = false;
     active_items.drag = false;
     active_items.cir_in = false;
     active_items.cir_out = false;
     h_indi.visible = false;
-   txtlabel.visible = false;
+   
 }
 
 ////////////////////////********* Hip Max ******** //////////////////

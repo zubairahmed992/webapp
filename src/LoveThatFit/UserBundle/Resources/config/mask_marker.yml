@@ -1,187 +1,287 @@
-
 masked_marker:
   neck:  
    axis: x 
    type: single
    segments: 
      s1:
-       a: 4
-       b: 64  
+       a: 6
+       b: 64 
+       
   bust: 
     axis: x
     type: single
     segments: 
       s1:  
-        a: 16
-        b: 52    
+        a: 17
+        b: 53    
+
+  bust_top_height: 
+    axis: x
+    type: single
+    association: top
+    segments: 
+      s1:  
+        a: 17
+        b: 53
+        
   chest:  
     axis: x
     type: single
     segments: 
       s1: 
-        a: 16
-        b: 52      
+        a: 17
+        b: 53
+        
+  chest_top_height:  
+    axis: x
+    type: single
+    association: top
+    segments: 
+      s1: 
+        a: 17
+        b: 53 
+        
   shoulder_across_front: 
     axis: x 
     type: single
     segments: 
       s1:
-        a: 6
-        b: 62            
-  shoulder_height: 
+        a: 7
+        b: 63
+        
+  shoulder_top_height: 
+    axis: x 
+    type: single
+    association: top
+    segments: 
+      s1:
+        a: 7
+        b: 63 
+        
+  shoulder_height:
     axis: y 
     type: pair
     segments: 
       s1:
-        a: 6
-        b: 29
+        a: 7
+        b: 30
       s2:
-        a: 62
-        b: 39        
+        a: 63
+        b: 40 
+        
   torso:  
     axis: y 
     type: pair
     segments: 
       s1:
-        a: 6
-        b: 34
+        a: 7
+        b: 35
       s2:
-        a: 62
-        b: 34        
+        a: 63
+        b: 35 
+        
   center_front_waist:
         axis: y 
         type: pair
         segments: 
           s1:
-            a: 5
-            b: 17
+            a: 7
+            b: 18
           s2:
             a: 63
-            b: 51
+            b: 52
+   
+            
+            
   sleeve:  
     axis: y 
     type: pair 
     segments: 
       s1:
-        a: 6
-        b: 9
+        a: 7
+        b: 10
       s2:
-        a: 59
-        b: 62        
+        a: 60
+        b: 63 
+        
   bicep:  
     axis: x 
     type: pair 
     segments: 
       s1:
-        a: 7
-        b: 14
+        a: 8
+        b: 15
       s2:
-        a: 54
-        b: 61        
+        a: 55
+        b: 62 
+        
+  bicep_top_height:  
+    axis: x 
+    type: pair 
+    association: top
+    segments: 
+      s1:
+        a: 8
+        b: 15
+      s2:
+        a: 55
+        b: 62       
+        
   elbow:  
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 8
-        b: 13
+        a: 9
+        b: 14
       s2:
-        a: 55
-        b: 60
+        a: 56
+        b: 61
+
+  elbow_top_height:  
+    axis: x 
+    type: pair
+    association: top
+    segments: 
+      s1:
+        a: 9
+        b: 14
+      s2:
+        a: 56
+        b: 61
+
   wrist:  
     axis: x 
     type: pair 
     segments: 
       s1:
-        a: 9
-        b: 12
+        a: 10
+        b: 13
       s2:
-        a: 56
-        b: 59        
+        a: 57
+        b: 60  
+
+  wrist_top_height:  
+    axis: x 
+    type: pair
+    association: top
+    segments: 
+      s1:
+        a: 10
+        b: 13
+      s2:
+        a: 57
+        b: 60
+        
   waist: 
     axis: x 
     type: single
     segments: 
       s1:
-        a: 17
-        b: 51  
-  belt_waist: 
+        a: 18
+        b: 52
+        
+  waist_top_height: 
+    axis: x 
+    type: single
+    association: top
+    segments: 
+      s1:
+        a: 18
+        b: 52
+        
+  belt_abdomen: 
     axis: x 
     type: single
     segments: 
       s1:
         a: 19
-        b: 51 
-  abdomen: 
+        b: 51
+        
+  belt_abdomen_top_height: 
     axis: x 
     type: single
+    association: top
     segments: 
       s1:
         a: 19
-        b: 51     
+        b: 51
+        
   waist_to_hip:  
     axis: y
     type: pair 
     segments: 
       s1:
-        a: 17
-        b: 19
+        a: 18
+        b: 21
       s2:
-        a: 51
-        b: 49    
+        a: 52
+        b: 49   
+        
   hip: 
     axis: x 
     type: single 
     segments: 
       s1: 
         a: 20
-        b: 48  
-  high_hip: 
+        b: 50  
+        
+  hip_top_height: 
     axis: x 
-    type: single 
+    type: single
+    association: top
     segments: 
       s1: 
         a: 20
-        b: 50
+        b: 50  
+        
   low_hip: 
     axis: x 
     type: single 
     segments: 
       s1: 
         a: 21
-        b: 49        
-
+        b: 49 
+        
+  low_hip_top_height: 
+    axis: x 
+    type: single
+    association: top
+    segments: 
+      s1: 
+        a: 21
+        b: 49    
+ 
+    armpit_top_height: 
+    axis: x 
+    type: single
+    association: top
+    segments: 
+      s1: 
+        a: 16
+        b: 54 
+        
   inseam: 
     axis: y
     type: pair
     segments: 
       s1:
-        a: 34
-        b: 29
-      s2:
-        a: 34
-        b: 39        
-  thigh: 
-    axis: x 
-    type: pair
-    segments: 
-      s1:
-        a: 21
-        b: 33
-      s2: 
         a: 35
-        b: 47      
-  high_thigh: 
+        b: 30
+      s2:
+        a: 35
+        b: 40 
+        
+  inseam_top_height: 
     axis: x 
-    type: pair
+    type: single
+    association: top
     segments: 
-      s1:
-        a: 22
-        b: 34
-      s2: 
-        a: 36
-        b: 48
-  low_thigh: 
+      s1: 
+        a: 35
+        b: 35  
+        
+  thigh: 
     axis: x 
     type: pair
     segments: 
@@ -191,37 +291,87 @@ masked_marker:
       s2: 
         a: 36
         b: 48  
+   
+  thigh_top_height: 
+    axis: x 
+    type: pair
+    association: top
+    segments: 
+      s1:
+        a: 22
+        b: 34
+      s2: 
+        a: 36
+        b: 48        
+        
   knee: 
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 23
-        b: 32
+        a: 24
+        b: 33
       s2:
-        a: 36
-        b: 45    
+        a: 37
+        b: 46
+        
+  knee_top_height: 
+    axis: x 
+    type: pair
+    association: top
+    segments: 
+      s1:
+        a: 24
+        b: 33
+      s2:
+        a: 37
+        b: 46
+        
   calf: 
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 24
-        b: 31
+        a: 25
+        b: 32
       s2:
-        a: 37
-        b: 44    
+        a: 38
+        b: 45   
+  
+  calf_top_height: 
+    axis: x 
+    type: pair
+    association: top
+    segments: 
+      s1:
+        a: 25
+        b: 32
+      s2:
+        a: 38
+        b: 45   
+      
   ankle:  
     axis: x 
     type: pair
     segments: 
       s1:
         a: 26
-        b: 30
+        b: 31
       s2:
-        a: 38
-        b: 42
-                      
+        a: 39
+        b: 44
+
+  ankle_top_height:  
+    axis: x 
+    type: pair
+    association: top
+    segments: 
+      s1:
+        a: 26
+        b: 31
+      s2:
+        a: 39
+        b: 44  
         
 mask_type:
   woman:
