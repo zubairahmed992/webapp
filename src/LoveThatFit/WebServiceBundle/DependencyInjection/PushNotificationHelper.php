@@ -341,7 +341,7 @@ class PushNotificationHelper
     public function sendPushNotificationFeedbackV3($user, $dataMsg)
     {
         $pass = '';
-        $message = 'You received the feedback';
+        $message = 'You have received feedback!';
 
         $badge = 1;
         $sound = 'default';
