@@ -107,7 +107,7 @@ class MailHelper {
 
     public function sendRegistrationEmail($user) {
 
-        $from = $this->conf['parameters']['mailer_user'];
+        $from = "care@selfiestyler.com";
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration.html.twig";
         $subject = 'SelfieStyler: Thank you for registering with us. ';
@@ -131,7 +131,7 @@ class MailHelper {
 
      public function sendPrimaryKeyUpdateEmail( $user, $dataArray, $baseurl = "" )
     {
-        $from = $this->conf['parameters']['mailer_user'];
+         $from = "care@selfiestyler.com";
         $to = $dataArray['email'];
 
         $dataArray['baseurl'] = $baseurl;
@@ -160,7 +160,7 @@ class MailHelper {
 
     public function sendParentRegistrationEmail($user) {
 
-        $from = $this->conf['parameters']['mailer_user'];
+         $from = "care@selfiestyler.com";
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/parent_registration.html.twig";
         $subject = 'SelfieStyler: Thank you for registering parent email. ';
@@ -170,7 +170,7 @@ class MailHelper {
     }
     
     public function sendPasswordResetLinkEmail($user, $reset_link) {
-        $from = $this->conf['parameters']['mailer_user'];
+        $from = "care@selfiestyler.com";
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/password_reset.html.twig";
         $subject = 'SelfieStyler: Password Reset';
@@ -180,7 +180,7 @@ class MailHelper {
 
     public function sendPasswordResetLinkEmailWeb($user, $reset_link)
     {
-        $from    = $this->conf['parameters']['mailer_user'];
+        $from = "care@selfiestyler.com";
         $to      = $user->getEmail();
         $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
         $subject = 'SelfieStyler password reset';
@@ -191,8 +191,8 @@ class MailHelper {
 	public function sendOrderConfirmationEmail($user,$order,$cart) {
 
 	  $from = $this->conf['parameters']['mailer_user'];
-	  //$to = $user->getEmail();
-	  $to = "ovais.rafique@centricsource.com";
+	  $to = $user->getEmail();
+	  //$to = "ovais.rafique@centricsource.com";
 	  $body = "LoveThatFitAdminBundle::email/order_receipt.html.twig";
 	  $subject = 'SelfieStyler: Thank you for the order. ';
 	  //return 'emailing is currently disabled';
@@ -224,7 +224,7 @@ class MailHelper {
     public function sendFeedbackEmail($user,$content) {
 
 	//$from = $user->getEmail();
-	$from = $this->conf['parameters']['mailer_user'];
+	 $from = "care@selfiestyler.com";
 	//$to = $user->getEmail();
 	$to = "membersupport@selfiestyler.com";
 	$body = "Following feedback sent by ".$user->getEmail()."<br><br>".$content;
