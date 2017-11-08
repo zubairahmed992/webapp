@@ -56,7 +56,7 @@
                                 <div class="span3">${{ order.orderAmount| number_format(2) }}</div>
                             </div>
                             {% if(order.ShippingAmount != '') %}
-                                {% set total = order.ShippingAmount + order.OrderAmount + sales_tax %}
+                                {% set total = order.ShippingAmount + order.OrderAmount + sales_tax - order.discountAmount %}
                                 {% set shipping_amount = order.ShippingAmount %}
                             {% else %}
                                 {% set total='0' %}
@@ -69,6 +69,10 @@
                             <div class="span8">
                                 <div class="span3">Sales Tax</div>
                                 <div class="span3">${{ sales_tax| number_format(2) }}</div>
+                            </div>
+                            <div class="span8">
+                                <div class="span3">Discount Amount</div>
+                                <div class="span3">{% if(order.discountAmount > 0) %}-{% endif %}${{ order.discountAmount| number_format(2) }}</div>
                             </div>
                             <div class="span8">
                                 <div class="span3">Grand Total Charges</div>
