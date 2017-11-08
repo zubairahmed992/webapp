@@ -576,18 +576,18 @@ class WSCartController extends Controller
         $orderNummber = $result['order_number'];
         $orderAmount = $decode['order_amount'];
         $totalAmount = $decode['total_amount'];
-        $discount   = $decode['discount_amount'];
+        $discount   = number_format((float)$decode['discount_amount'], 2, '.', '');
 
         $creditCard = $result['result']->transaction->creditCard;
         $billing    = $decode['billing'];
         $order_id = $result['order_id'];
-        $salesTax  =   (isset($decode['sales_tax']) ? $decode['sales_tax'] : 0);
-        $d_discount  =   (isset($decode['discount']) ? $decode['discount'] : 0);
+        $salesTax  =   (isset($decode['sales_tax']) ? number_format((float)$decode['sales_tax'], 2, '.', '') : '0.00');
+        $d_discount  =   (isset($decode['discount']) ? number_format((float)$decode['discount'], 2, '.', '') : '0.00');
 
         $orderEntity = $this->container->get('cart.helper.order')->findOrderById( $order_id );
 
         $dataArray = array(
-            'purchase_date' => $orderEntity->getUserOrderDate()->format('Y-m-d H:i:s'),
+            'purchase_date' => $orderEntity->getUserOrderDate()->format('F j, Y'),
             'items'         => $itemsArray,
             'order_numnber' => $orderNummber,
             'card_type'     => $creditCard['cardType'],
@@ -595,10 +595,10 @@ class WSCartController extends Controller
             'contact_number'    => '262-391-3403',
             'email'         => $user->getEmail(),
             'frist_name'    => $user->getFullName(),
-            'order_amount'  => $orderAmount,
+            'order_amount'  => number_format((float)$orderAmount, 2, '.', ''),
             //'total_amount'  => $totalAmount,
             'total_amount'  => number_format((float)$totalAmount, 2, '.', ''),
-            'discount'  => ($discount > 0 ? "-$".$discount : 0),
+            'discount'  => ($discount > 0 ? "-$".$discount : '0.00'),
             'discountType' => (isset($decode['group_type']) && $decode['group_type'] == 2 ? "(".$d_discount."%)" : ""),
             'phone_number'  => $user->getPhoneNumber(),
             'expirate_date' => $creditCard['expirationMonth']. "/". $creditCard['expirationYear'],
