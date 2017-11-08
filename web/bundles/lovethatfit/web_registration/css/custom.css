@@ -659,5 +659,16 @@ color:#e0ca89;
 
 }
 
+.term_privacy{
+	position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
+}
+
+.padding35{
+	padding-top:35px;
+}
+
 
 
