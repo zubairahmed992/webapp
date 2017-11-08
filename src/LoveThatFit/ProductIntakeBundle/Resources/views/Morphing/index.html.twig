@@ -1,0 +1,91 @@
+{% extends 'LoveThatFitProductIntakeBundle::base.html.twig' %}
+{% block body %}
+
+<div class="container">
+    <h2>Morph Image testing</h2>
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+    <div class="form-group">
+            <label class="control-label col-sm-2" for="user"> User: </label>
+            <div class="col-sm-4">                    
+                <select name="user"  id="user_name" class="form-control">
+                    {% for u in users %}
+                        <option value="{{ u.id }}"> {{ u.email }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="product"> Product: </label>
+            <div class="col-sm-4">                    
+                <select name="user"  id="ddl_products" class="form-control">
+                    {% for p in products %}
+                        <option value="{{ p.id }}"> {{ p.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="size"> Size: </label>
+            <div class="col-sm-4">                    
+                <select name="size"  id="ddl_size" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="color"> Color: </label>
+            <div class="col-sm-4">                    
+                <select name="color"  id="ddl_color" class="form-control">                    
+                </select>
+            </div>
+        </div>        
+                
+            <div class="form-group">        
+                    <div class="col-sm-offset-5 col-sm-10">
+                        <button type="submit" class="btn btn-default">Morph service</button>
+                    </div>
+            </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {         
+            //-----------------------------------
+            $('#ddl_products').on('change', function(){     
+                var val = $(this).val();
+                $.ajax({
+                     url: '../morphing/product_detail/' + val,
+                     success: function (response) {                          
+                         data = jQuery.parseJSON(response);                
+                         fill(data['size'], 'ddl_size');
+                         fill(data['color'], 'ddl_color');
+                     }
+                 });
+            });
+            //-----------------------------------
+
+            function fill(obj, ctrl){                
+                document.getElementById(ctrl).options.length = 0;
+                var option = '<option value="0">Select</option>';
+                $.each(obj,function(index, value){                        
+                              option += '<option value="'+ index + '">' + value + '</option>';
+                          });     
+                $('#'+ctrl).append(option);
+            }
+            //-----------------------------------
+            $('#ddl_size').on('change', function(){     
+                var val = $(this).val();
+                alert(val);
+            });
+            //-----------------------------------
+            $('#ddl_color').on('change', function(){     
+                var val = $(this).val();
+                alert(val);
+            });
+            //-----------------------------------
+            function load_image(){
+                
+            }
+
+        });
+    </script>
+    
+
+{% endblock %}
