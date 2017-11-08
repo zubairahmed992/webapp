@@ -659,5 +659,17 @@ color:#e0ca89;
 
 }
 
+.nav_top{
+position:fixed; 
+bottom:3%; 
+right:10px; 
+background:#000; 
+opacity:0.7; 
+border-radius:200px; 
+padding:14px 10px 14px 10px; 
+color:#fff; 
+text-decoration:none; 
+}
+
 
 
