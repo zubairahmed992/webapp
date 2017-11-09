@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <link href="{{ asset('bundles/lovethatfit/web_registration/css/custom.css?v=2') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/web_registration/css/custom.css?v=3') }}" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/jquery.min.js') }}"></script>
          <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/jquery.mask.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/web_registration/js/bootstrap.min.js') }}"></script>
@@ -1284,6 +1284,14 @@ $(document).ready(function(e) {
 	
 	$('#phone').mask('(000) 000-0000');
 	$('#zip').mask('00000'); 
+	
+	 $('#moveup').click(function(){
+	  $('html, body').animate({scrollTop: '0px'}, 400);
+	 });
+	 
+	 $('#moveup1').click(function(){
+	  $('html, body').animate({scrollTop: '0px'}, 400);
+	 });
 
 });
 
@@ -1472,7 +1480,7 @@ function validate_email_male(email){
     
     
     <div class="privacy">
-      <p>By signing up, you agree to the our <a href="javascript:" onclick="show_term_and_condition();">terms and conditions</a><br />and you have read our <a href="javascript:" onclick="show_privacy_policy();">privacy policy.</a></p>
+      <p>By signing up, you agree to our <a href="javascript:" onclick="show_term_and_condition();">terms and conditions</a><br />and you have read our <a href="javascript:" onclick="show_privacy_policy();">privacy policy.</a></p>
     </div>
     <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();" tabindex="3">Next</a>    
       <div class="privacy">
@@ -1818,7 +1826,10 @@ styles and outfit ideas.</p></div>
         <br />
     </div>
    <!-- <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>-->
-   <div class="post-content">				
+   <div class="post-content">
+   <a href="#top" id="moveup">
+   <div class="nav_top"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow_top.png') }}" /></div>
+   </a>				
 <p>Ginman Group Inc. d/b/a SelfieStyler ("SelfieStyler"). ("SelfieStyler") considers your privacy important and is committed to protecting your online privacy. This privacy policy is intended to cover the various websites and applications through which SelfieStyler obtains information, including "mini sites" displayed through our third-party website partners and "mini applications" displayed on third-party websites (each a "site" or "application"). SelfieStyler reserves the right to update the sites, applications and privacy policy at any time and without notice. We may modify this privacy policy from time to time, and the modified privacy policy will be effective upon posting. Please return to this page frequently and check the "Updated" date above to make sure you understand and agree to the latest privacy policy. Continued access of this site or application by you will constitute your acceptance of any changes or revisions to the privacy policy.</p>
 <p>Your use of this site or application signifies your acceptance of and your agreement to the terms of this privacy policy. In addition, by your use of this site or application, you are consenting to our use of your information as described in this policy. If you have any questions or comments about our privacy policy or our use of information, please send an e-mail to <a href="mailto:membersupport@selfiestyler.com">membersupport@selfiestyler.com</a> or write us at:</p>
 
@@ -1970,7 +1981,10 @@ SelfieStyler Terms &amp; Conditions
 </p><br />
     </div>
    <!-- <div class="Get_text"><p>But we'd lov to stay connected. Send us your email and we'll let you know when men's style became available.</p></div>-->
-   <div class="post-content">				
+   <div class="post-content">
+   <a href="#top1" id="moveup1">
+   <div class="nav_top"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow_top.png') }}" /></div>
+   </a>					
 <p>Ginman Group, Inc. dba &ldquo;SelfieStyler&rdquo; (&ldquo;SelfieStyler&rdquo; or &ldquo;we&rdquo;) provides a platform where users can share their look with a community through our website, accessible at <a href="https://www.selfiestyler.com/">selfiestyler.com</a> (the &ldquo;Site&rdquo;) and as an application (the &ldquo;App&rdquo;) (collectively, the &ldquo;Services&rdquo;). Please read carefully the following terms and conditions (&ldquo;Terms&rdquo;) and our Privacy Policy [which is incorporated by reference into these Terms] because they form a legal agreement between you and SelfieStyler, for use of the Services. By using any or all of the Services you are agreeing to be bound by these Terms.</p>
 
 <h3><strong>MODIFICATION</strong></h3>

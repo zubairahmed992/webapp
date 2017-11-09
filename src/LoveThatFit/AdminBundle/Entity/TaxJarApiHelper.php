@@ -42,8 +42,8 @@ class TaxJarApiHelper
                 'to_zip' => $data['to_zip'],
                 'to_state' => $data['to_state'],
                 'amount' => $data['amount'],
-                'shipping' => $data['shipping'],
-                'line_items' => $data['order_line_items']
+                'shipping' => $data['shipping']/*,
+                'line_items' => $data['order_line_items']*/
               ]);
               return $order_taxes_taxjar->amount_to_collect;
             } catch (TaxJar\Exception $e) {
