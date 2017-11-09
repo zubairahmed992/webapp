@@ -139,6 +139,7 @@ function restoreFrontTab(){
   view.update(); 
 }
 function loadSideViewImag(sideImageurl){
+    if(sideImageurl !=''){
     sideviewLayer.activate();
     sideviewLayer.visible=true;
     
@@ -150,7 +151,9 @@ function loadSideViewImag(sideImageurl){
      body_part_area.visible = false;
      
     sideviewPath.visible = true;
-    
+    }else{
+        alert("Please upload Side Image");
+    }
     view.update(); 
 }
 
@@ -1078,10 +1081,8 @@ function onMouseDown(event) {
 
 
 function onMouseDrag(event) {
- 
-   txtlabel.visible=true;
-   txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
-  
+    txtlabel.visible=true;
+    
         //active_items.segment.path.data.name
         //console.log(active_items.segment.point.y);
         //console.log(active_items.segment.point.x);
@@ -1089,7 +1090,7 @@ function onMouseDrag(event) {
 // text lable hide due to segment drag was noo
               
     if(active_items.drag){
-      
+      txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
         active_items.segment.point = event.point;
         h_indi.position.y = active_items.segment.point.y;
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
@@ -1101,6 +1102,8 @@ function onMouseDrag(event) {
         circle_in.position = event.point;
         active_items.segment.handleIn.x = circle_in.position.x - active_items.segment.point.x;
         active_items.segment.handleIn.y = circle_in.position.y - active_items.segment.point.y;
+        
+        
     }
     if(active_items.cir_out){
         active_items.cir_in = false;
