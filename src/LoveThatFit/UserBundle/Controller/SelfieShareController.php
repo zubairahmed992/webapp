@@ -59,6 +59,9 @@ class SelfieShareController extends Controller {
     public function submitFeedbackAction() {
         $ra=$this->getRequest()->request->all();
         $selfieshare=$this->get('user.selfieshare.helper')->findByRef($ra["ref"]);
+
+        $friendName = ($selfieshare->getFriendName() != "" ? $selfieshare->getFriendName() : $selfieshare->getFriendEmail());
+
         $user=$this->container->get('user.helper.user')->find($selfieshare->getUser()->getId());
         $push_notification = array();
         $baseurl = $this->getRequest()->getHost();
@@ -67,7 +70,7 @@ class SelfieShareController extends Controller {
         $push_notification["notification_type"] = "friends_feedback";
         $json_data = json_encode($push_notification);
         $this->get('user.selfiesharefeedback.helper')->createWithParam($ra,$selfieshare);
-        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedback($user, $json_data);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedback($user, $json_data, $friendName);
 
 
         return new Response($selfieshare->getFriendName().'provided feedback updated.');
@@ -110,6 +113,9 @@ class SelfieShareController extends Controller {
     {
         $ra=$this->getRequest()->request->all();
         $selfieshare = $this->get('user.selfieshare.helper')->findByRef($ra["ref"]);
+
+        $friendName = ($selfieshare->getFriendName() != "" ? $selfieshare->getFriendName() : $selfieshare->getFriendEmail());
+
         $user = $this->container->get('user.helper.user')->find($selfieshare->getUser()->getId());
         $push_notification = array();
         $baseurl = $this->getRequest()->getHost();
@@ -118,7 +124,7 @@ class SelfieShareController extends Controller {
         $push_notification["notification_type"] = "friends_feedback";
         $json_data = json_encode($push_notification);
         $this->get('user.selfiesharefeedback.helper')->createWithParam($ra,$selfieshare);
-        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedbackV3($user, $json_data);
+        $push_response = $this->get('pushnotification.helper')->sendPushNotificationFeedbackV3($user, $json_data, $friendName);
         
         return new Response($selfieshare->getFriendName().' provided feedback updated.');
     }
