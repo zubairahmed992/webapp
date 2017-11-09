@@ -43,14 +43,19 @@ class ServiceController extends Controller {
             $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //
 
             $morphing_detail_json = json_decode( $data[0][0]['morphing_detail_json'], true);
+
             if($morphing_detail_json !="") {
                 $item_detail = array('product_id' => $data[0][0]['id'], 'color_title' => $morphing_detail_json['color'], 'body_type' => $morphing_detail_json['body_type'], 'size_title' => $morphing_detail_json['size']);
                 $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
-                $morphing_detail_json['URL'] = $product_item->getWebPath();
+                $morphing_detail_json['URL'] = '/webapp/web/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
                 $result['original_image'] = $morphing_detail_json;
             } else{
                 $result['original_iamge']  = "";
             }
+            return new JsonResponse([
+                'success' => '',
+                'data'    => $morphing_detail_json
+            ]);
             if($data){
             $result['product_colors'] = '';
             $clothingType = $data[0][0]['clothing_type']['name'];
