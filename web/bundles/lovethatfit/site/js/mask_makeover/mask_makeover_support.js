@@ -1,11 +1,11 @@
 window.devicePixelRatio = 1;
 paper.install(window);
 var dom_event_interaction_s1;
-var txtlabel;
+var txtlabel, vline;
 $(document).ready(function() {
     paper.setup('canv_mask_makeover');
 
-    dom_event_interaction_s1 = new Tool();
+   dom_event_interaction_s1 = new Tool();
    dom_event_interaction_s1.onMouseDown = onMouseDown;
    dom_event_interaction_s1.onMouseDrag = onMouseDrag;
    dom_event_interaction_s1.onMouseUp = onMouseUp;
@@ -29,7 +29,8 @@ $(document).ready(function() {
    load_user_masks();
    full_mask.insertAbove(set_circle_in());
    full_mask.insertAbove(set_circle_out());
-  
+    
+    
    h_indi =  new Path({
         segments:[[0, 0], [960, 0]],
         strokeColor:'red',
@@ -71,9 +72,12 @@ $(document).ready(function() {
         opacity:0.6
     });
    pathLine.visible = false;
-
    
-      
+   
+   
+   
+
+//    
 //archives: on this layer we saved retouch image
 retuch_img = new Layer();
 
@@ -84,12 +88,24 @@ sideviewPath  = new Layer();
 sideviewPath.activate();
 sideviewPath.visible = false;
 sideViewLines();
-     
+
+    vLine =  new Path({
+    segments:[[480, 0], [480, 1280]],
+    strokeColor:'green',
+    strokeWidth:3
+   });
+   
+ vLine.onMouseDrag = function(event) {
+     vLine.position.x += event.delta.x;
+ };
+
+
    lyr_misc = new Layer();
    lyr_misc.activate();
 
        
 });
+
 
 // archives show image function
 var retuchImage;
@@ -112,6 +128,7 @@ function showImag(retouch_image){
       
     view.update();
 }
+
 
 // side view load
 function restoreFrontTab(){
@@ -185,8 +202,21 @@ function sideViewLines(){
     }; 
    
 }
-   
- 
+// var verticalLine;
+// function vline(eventdelta){
+//    var  verticalLine =  new Path({
+//        segments:[[480, 0], [480, 1280]],
+//        strokeColor:'green',
+//        strokeWidth:3,
+//        opacity:0.6
+//    });
+//    verticalLine.position.x += 100;
+//   view.update();
+//   }
+//    verticalLine.onMouseDrag = function(event) {
+//        verticalLine.position.x += eventdelta;
+//    };
+// 
 //function sideViewlabels(txtLabel, positionX, positionY){
 //   
 //     var txtlabel = new PointText({
@@ -1048,9 +1078,10 @@ function onMouseDown(event) {
 
 
 function onMouseDrag(event) {
-    txtlabel.visible=true;
+ 
+   txtlabel.visible=true;
    txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
-    
+  
         //active_items.segment.path.data.name
         //console.log(active_items.segment.point.y);
         //console.log(active_items.segment.point.x);
@@ -1058,6 +1089,7 @@ function onMouseDrag(event) {
 // text lable hide due to segment drag was noo
               
     if(active_items.drag){
+      
         active_items.segment.point = event.point;
         h_indi.position.y = active_items.segment.point.y;
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
@@ -1082,6 +1114,7 @@ function onMouseDrag(event) {
                 lyr_area_hldr.position.x += event.delta.x;
                 lyr_stage_coor.position.x += event.delta.x;
                 change_x_pos_diff += event.delta.x;
+                
             }
         if(lyr_area_hldr.position.y + event.delta.y >= 0 && lyr_area_hldr.position.y + event.delta.y <= 1280){
                 retuch_img.position.y+= event.delta.y;
@@ -1091,11 +1124,13 @@ function onMouseDrag(event) {
 
         }
         //text lable for side view added
+       
         
         console.log("lyr_area_hldr: " + lyr_area_hldr.position);
         console.log("lyr_stage_coor" +  lyr_stage_coor.position);
         console.log(canvas_area_hldr.position);
     }
+    
 }
 function onMouseUp(event) {
      txtlabel.visible = false;
