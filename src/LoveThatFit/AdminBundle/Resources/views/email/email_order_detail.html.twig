@@ -48,12 +48,12 @@
 <div>First Name: {{ dataArray['shipping_first_name']|title }}</div>
 <div>Last Name: {{ dataArray['shipping_last_name']|title }}</div>
 <div>Phone Number: {{ dataArray['shipping_phone'] }}</div>
-<div>Country: {{ dataArray['shipping_country']|title }}</div>
-<div>State: {{ dataArray['shipping_state']|title }}</div>
-<div>City: {{ dataArray['shipping_city']|title }}</div>
-<div>Zip Code: {{ dataArray['shipping_postcode'] }}</div>
-<div>Shipping Address #1: {{ dataArray['shipping_address1']|title }}</div>
+<div>Address #1: {{ dataArray['shipping_address1']|title }}</div>
 {% if dataArray['shipping_address2'] is not empty %}
-    <div>Shipping Address #2: {{ dataArray['shipping_address2']|title }}</div>
+    <div>Address #2: {{ dataArray['shipping_address2']|title }}</div>
 {% endif %}
+<div>City: {{ dataArray['shipping_city']|title }}</div>
+<div>State: {{ dataArray['shipping_state']|title }}</div>
+<div>Zip Code: {{ dataArray['shipping_postcode'] }}</div>
+<div>Country: {{ dataArray['shipping_country']|title }}</div>
 <br>
