@@ -200,8 +200,8 @@ class PaymentHelper
 
         $billing = $decoded["billing"];
         $saleObject = array(
-            "amount" => round($decoded['total_amount'],2),
-            "taxAmount" => $sales_tax,
+            "amount" => number_format((float)$decoded['total_amount'], 2, '.', ''),
+            "taxAmount" => number_format((float)$sales_tax, 2, '.', ''),
             "paymentMethodNonce" => $decoded['payment_method_nonce'],
             'billing' => [
                 'firstName' => $billing['billing_first_name'],
