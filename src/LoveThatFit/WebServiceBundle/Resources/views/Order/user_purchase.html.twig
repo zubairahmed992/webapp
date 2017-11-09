@@ -118,8 +118,8 @@
         <div>
           <table border="0" width="100%">
               <tr>
-                  <td width="80%">{{ key['pname'] }}</td>
-                  <td width="20%" class="text-right">${{ key['price'] }}</td>
+                  <td width="70%">{{ key['pname'] }}</td>
+                  <td width="30%" class="text-right">${{ key['price'] }}</td>
               </tr> 
          </table>  
          <div class="brandtxt">Ordered on {{ dataArray['purchase_date'] }}</div>
@@ -136,13 +136,9 @@
     <div class="col-12">
     <table border="0" width="100%">
       <tr>
-          <td width="80%">Subtotal</td>
-          <td width="20%" class="text-right pric">${{ dataArray['order_amount'] }}</td>
-      </tr>    
-      <tr>
-          <td>Tax</td>
-          <td class="text-right pric">${{ dataArray['sales_tax'] }}</td>
-      </tr>
+          <td width="70%">Subtotal</td>
+          <td width="30%" class="text-right pric">${{ dataArray['order_amount'] }}</td>
+      </tr>  
       <tr>
           <td>Shipping</td>
           <td class="text-right pric">$0.00</td>
@@ -152,7 +148,11 @@
             <td>Discount</td>
             <td class="text-right pric">- ${{ dataArray['discount'] }}</td>
         </tr>
-      {% endif %}
+      {% endif %}  
+      <tr>
+          <td>Tax</td>
+          <td class="text-right pric">${{ dataArray['sales_tax'] }}</td>
+      </tr>
     </table>       
     </div>
     <hr />
@@ -161,8 +161,8 @@
     <div class="col-12">
      <table border="0" width="100%">
       <tr>
-          <td width="80%">Total</td>
-          <td width="20%" class="text-right pric">${{ dataArray['total_amount'] }}</td>
+          <td width="70%">Total</td>
+          <td width="30%" class="text-right pric">${{ dataArray['total_amount'] }}</td>
       </tr>    
     </table>
     </div>

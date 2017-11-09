@@ -1825,6 +1825,17 @@ class WebServiceHelper
 
                 //order line items
                 //$order_line_items = [['quantity' => 1,'unit_price' => 15.0],['quantity' => 1,'unit_price' => 10.0]];
+
+                //get fnf user discount if exists
+                $fnfUser = $this->container->get('fnfuser.helper.fnfuser')->getApplicableFNFUser($user);
+                if(is_array($fnfUser)){
+                    if( $fnfUser['group_type'] == 1 ){
+                        $amount = $amount - $fnfUser['discount'];
+                    } else if( $fnfUser['group_type'] == 2 ){                        
+                        $discount_amount = (string) $this->getUserDiscountAmount($fnfUser['discount'], $fnfUser['token']);
+                        $amount = $amount - $discount_amount;
+                    }
+                }
                 
                 //order salex tax
                 $yaml = new Parser();
@@ -1844,10 +1855,11 @@ class WebServiceHelper
                     'to_country' => ($decoded['billing_address']['to_country']) ? $decoded['billing_address']['to_country'] : '',
                     'to_zip' => ($decoded['billing_address']['to_zip']) ? $decoded['billing_address']['to_zip'] : '',
                     'to_state' => ($decoded['billing_address']['to_state']) ? $decoded['billing_address']['to_state'] : '',
-                    'amount' => ($amount) ? $amount : 0,
-                    'shipping' => $shippment,
-                    'order_line_items' => $order_line_items
+                    'amount' => ($amount) ? number_format((float)$amount, 2, '.', '') : '0.00',
+                    'shipping' => $shippment/*,
+                    'order_line_items' => $order_line_items*/
                 );
+                
                 $order_sales_tax = $this->container->get('taxjar.helper.salestaxapi')->createOrderSalesTax($data_order_sales);
                 if(is_float($order_sales_tax) || is_numeric($order_sales_tax)) {
                     $order_sales_tax = $order_sales_tax;
@@ -1986,6 +1998,21 @@ class WebServiceHelper
         array_key_exists('phone_number', $request_array) ? $user->setPhoneNumber($request_array['phone_number']) : null;
 
         return $user;
+    }
+
+    public function getUserDiscountAmount( $discount, $token)
+    {
+        $amount = 0;
+        $user = $this->container->get('webservice.helper')->findUserByAuthToken($token);
+        $user_cart = $this->container->get('cart.helper.cart')->getUserCart($user);
+        foreach($user_cart as $cart){
+            //$amount = $cart['price'] + $amount;
+            $amount = ($cart['qty']*$cart['price']) + $amount;
+        }
+
+        $dicount_amount = ($discount / 100) * $amount;
+
+        return $dicount_amount;
     }
 
 }
