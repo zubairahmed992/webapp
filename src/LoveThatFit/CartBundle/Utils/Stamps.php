@@ -24,6 +24,7 @@ class Stamps
     private $packageType;
 
     private $wsdl = "https://swsim.testing.stamps.com/swsim/swsimv57.asmx?wsdl";
+    private $proWsdl = "https://swsim.stamps.com/swsim/swsimv58.asmx?wsdl";
 
     private $soapClient;
 
@@ -34,8 +35,14 @@ class Stamps
         $yaml   = new Parser();
         $env    = $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['enviorment'];
         $parse  = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
-        if($env == 'dev')
+        if($env == 'dev') {
             $envKey = 'stamps_com_dev';
+            $this->soapClient = new \SoapClient($this->wsdl, array('trace' => 1));
+        }
+        else{
+            $envKey = 'stamps_com_pro';
+            $this->soapClient = new \SoapClient($this->proWsdl, array('trace' => 1));
+        }
 
         $this->integrarionId    = $parse[$envKey]["integrarionId"];
         $this->userName         = $parse[$envKey]["userName"];
@@ -45,8 +52,6 @@ class Stamps
         $this->weightOz         = $parse[$envKey]["weightOz"];
         $this->deliverDays      = $parse[$envKey]["deliverydays"];
         $this->packageType      = $parse[$envKey]["packagetype"];
-
-        $this->soapClient = new \SoapClient($this->wsdl, array('trace' => 1));
     }
 
     private function authenticateUser()
