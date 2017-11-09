@@ -40,7 +40,17 @@ class ServiceController extends Controller {
     public function getExistingProductSpecificationAction($brand_name, $style_id_number) {
 
         try {
-            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //  
+            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //
+
+            $morphing_detail_json = json_decode( $data[0][0]['morphing_detail_json'], true);
+            if($morphing_detail_json !="") {
+                $item_detail = array('product_id' => $data[0][0]['id'], 'color_title' => $morphing_detail_json['color'], 'body_type' => $morphing_detail_json['body_type'], 'size_title' => $morphing_detail_json['size']);
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
+                $morphing_detail_json['URL'] = $product_item->getWebPath();
+                $result['original_image'] = $morphing_detail_json;
+            } else{
+                $result['original_iamge']  = "";
+            }
             if($data){
             $result['product_colors'] = '';
             $clothingType = $data[0][0]['clothing_type']['name'];
