@@ -107,7 +107,7 @@ class MailHelper {
 
     public function sendRegistrationEmail($user) {
 
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration.html.twig";
         $subject = 'SelfieStyler: Thank you for registering with us. ';
@@ -119,7 +119,7 @@ class MailHelper {
 
     public function sendSuccessPurchaseEmail( $user, $dataArray )
     {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_purchase.html.twig";
@@ -131,7 +131,7 @@ class MailHelper {
 
      public function sendPrimaryKeyUpdateEmail( $user, $dataArray, $baseurl = "" )
     {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $dataArray['email'];
 
         $dataArray['baseurl'] = $baseurl;
@@ -146,7 +146,7 @@ class MailHelper {
 
     public function sendPurchaseEmailToAdmin( $user, $dataArray )
     {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         // $to = $dataArray['email'];
 
         $to = $this->admin_email;
@@ -160,7 +160,7 @@ class MailHelper {
 
     public function sendParentRegistrationEmail($user) {
 
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/parent_registration.html.twig";
         $subject = 'SelfieStyler: Thank you for registering parent email. ';
@@ -170,7 +170,7 @@ class MailHelper {
     }
     
     public function sendPasswordResetLinkEmail($user, $reset_link) {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/password_reset.html.twig";
         $subject = 'SelfieStyler: Password Reset';
@@ -180,7 +180,7 @@ class MailHelper {
 
     public function sendPasswordResetLinkEmailWeb($user, $reset_link)
     {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to      = $user->getEmail();
         $body    = "LoveThatFitAdminBundle::email/password_reset_web.html.twig";
         $subject = 'SelfieStyler password reset';
@@ -190,7 +190,7 @@ class MailHelper {
 
 	public function sendOrderConfirmationEmail($user,$order,$cart) {
 
-      $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+      $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
 	  //$to = $user->getEmail();
 	  $to = "ovais.rafique@centricsource.com";
 	  $body = "LoveThatFitAdminBundle::email/order_receipt.html.twig";
@@ -224,7 +224,7 @@ class MailHelper {
     public function sendFeedbackEmail($user,$content) {
 
 	//$from = $user->getEmail();
-    $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+    $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
 	//$to = $user->getEmail();
 	$to = "membersupport@selfiestyler.com";
 	$body = "Following feedback sent by ".$user->getEmail()."<br><br>".$content;
@@ -265,7 +265,7 @@ class MailHelper {
   }
 
     public function sendEmailWithTemplate($arr) {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $message = \Swift_Message::newInstance()
                 ->setSubject($arr['subject'])
                 ->setFrom($from)
@@ -299,7 +299,7 @@ class MailHelper {
 
     public function sendWebRegistrationEmail($user) {
 
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration-web.html.twig";
         $subject = 'Welcome to SelfieStyler!';
@@ -311,7 +311,7 @@ class MailHelper {
 
     public function sendUserOrderShippedEmail( $dataArray )
     {
-        $from = array($this->conf['parameters']['mailer_user'], "SelfieStyler Care");
+        $from = array($this->conf['parameters']['mailer_user'] => "SelfieStyler Care");
         $to = $dataArray['email'];
 
         $body = "LoveThatFitAdminBundle::email/user_order_shipped.html.twig";
