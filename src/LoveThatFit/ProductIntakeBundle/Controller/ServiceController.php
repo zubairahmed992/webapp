@@ -651,7 +651,8 @@ class ServiceController extends Controller {
         
         $item_detail = array('product_id' => $product_id, 'color_title' => $ar['color'], 'body_type' => $ar['body_type'], 'size_title' => $ar['size']);
         $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
-        $ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $product_item->getOriginalImage();
+        #$ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $product_item->getOriginalImage();
+        $ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath().'/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
          
         return $this->response_str('Product morphing detail found', true, $ar);
     }
