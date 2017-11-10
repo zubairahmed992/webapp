@@ -492,7 +492,7 @@ class UserRepository extends EntityRepository
     public function findAllUsersAsc()
     {
         $query = $this->getEntityManager()
-            ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us ORDER BY us.email ASC');
+            ->createQuery('SELECT us.email, us.id, us.authToken FROM LoveThatFitUserBundle:User us ORDER BY us.email ASC');
         //echo $query->getSql();
         return $query->getResult();
     }
