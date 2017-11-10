@@ -38,7 +38,7 @@ class ServiceRepo
         $query = $this->em
             ->createQuery("
                 SELECT ct.id as clothing_type_id, b.id as brand_id, r.id as retailer_id,
-                partial p.{id, name ,gender, styling_type, description, disabled, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, control_number, product_model_height }
+                partial p.{id, name ,gender, styling_type, description, disabled, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, control_number, product_model_height, morphing_detail_json }
                 ,partial ct.{id, name, target}                
                 ,partial pc.{id, title, pattern, image}
                 ,partial pz.{id, title, body_type, index_value}

@@ -40,7 +40,22 @@ class ServiceController extends Controller {
     public function getExistingProductSpecificationAction($brand_name, $style_id_number) {
 
         try {
-            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //  
+            $data = $this->get('service.repo')->getProductDetail($brand_name, $style_id_number); //
+
+            $morphing_detail_json = json_decode( $data[0][0]['morphing_detail_json'], true);
+
+            if($morphing_detail_json !="") {
+                $item_detail = array('product_id' => $data[0][0]['id'], 'color_title' => $morphing_detail_json['color'], 'body_type' => $morphing_detail_json['body_type'], 'size_title' => $morphing_detail_json['size']);
+                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
+                $morphing_detail_json['URL'] = '/webapp/web/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
+                $result['original_image'] = $morphing_detail_json;
+            } else{
+                $result['original_iamge']  = "";
+            }
+            return new JsonResponse([
+                'success' => '',
+                'data'    => $morphing_detail_json
+            ]);
             if($data){
             $result['product_colors'] = '';
             $clothingType = $data[0][0]['clothing_type']['name'];
@@ -601,8 +616,9 @@ class ServiceController extends Controller {
         $request = $this->getRequest();
         if (isset($FILES['file']) && $_FILES['file']['error'] == 0) {
             $file_name = $FILES['file']['name'];
-            $parsed_details = $this->breakFileNameProductImageUplaod($file_name);
-
+            #$parsed_details = $this->breakFileNameProductImageUplaod($file_name);
+            $parsed_details = $this->breakFileNameProductImageUplaodNewFormat($file_name);
+            
             #--------------------------------------------------------------
             if ($parsed_details['success'] == 'false') {
                 return $this->responseArray('invalid file naming format');
@@ -616,7 +632,7 @@ class ServiceController extends Controller {
                 $product = $this->get('admin.helper.product')->find($parsed_details['product_id']);
                 $product_color = $this->get('admin.helper.productcolor')->findColorByProductTitle(strtolower($parsed_details['color_title']), $parsed_details['product_id']);
                 $product_size = $this->get('admin.helper.productsizes')->findSizeByProductTitle(strtolower($parsed_details['size_title']), $parsed_details['product_id']);
-
+                
                 if (count($product_color) == 0) {
                     return $this->responseArray('color not found');#------------------------------------------>
                 }
@@ -635,5 +651,22 @@ class ServiceController extends Controller {
         }
         return $this->responseArray('File is missing');
 
-    }   //------------- End Real Product Image Uplaod Function
+    }   
+    //-------------  /pi/ws/product_morphing_detail/{product_id}
+    public function productMorphingDetailAction($product_id)    {        
+        $product = $this->get('admin.helper.product')->find($product_id);
+        if (!$product) {
+            return $this->response_str('Product not found!', false);
+        }
+        $ar = json_decode($product->getMorphingDetailJson(),true);
+        if (!is_array($ar)) {
+            return $this->response_str('Product morphing detail not found!', false);
+        }
+        
+        $item_detail = array('product_id' => $product_id, 'color_title' => $ar['color'], 'body_type' => $ar['body_type'], 'size_title' => $ar['size']);
+        $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
+        $ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath().'/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
+         
+        return $this->response_str('Product morphing detail found', true, $ar);
+    }
 }

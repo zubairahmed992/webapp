@@ -1,0 +1,9 @@
+
+pi_morphing_index:
+    pattern: /pi/morphing/index
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Morphing:index}
+
+pi_morphing_product_detail:
+    pattern: /pi/morphing/product_detail/{id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Morphing:productDetail}
+      
