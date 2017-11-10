@@ -651,5 +651,22 @@ class ServiceController extends Controller {
         }
         return $this->responseArray('File is missing');
 
-    }   //------------- End Real Product Image Uplaod Function
+    }   
+    //-------------  /pi/ws/product_morphing_detail/{product_id}
+    public function productMorphingDetailAction($product_id)    {        
+        $product = $this->get('admin.helper.product')->find($product_id);
+        if (!$product) {
+            return $this->response_str('Product not found!', false);
+        }
+        $ar = json_decode($product->getMorphingDetailJson(),true);
+        if (!is_array($ar)) {
+            return $this->response_str('Product morphing detail not found!', false);
+        }
+        
+        $item_detail = array('product_id' => $product_id, 'color_title' => $ar['color'], 'body_type' => $ar['body_type'], 'size_title' => $ar['size']);
+        $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
+        $ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath().'/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
+         
+        return $this->response_str('Product morphing detail found', true, $ar);
+    }
 }

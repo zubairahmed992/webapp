@@ -61,7 +61,13 @@ pi_ws_product_item_image_coordinates:
     pattern: /pi/ws/product_item_image_coordinates/{item_id}/{type}
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productItemImageData, type: null}
     requirements:
-        _method:  get        
+        _method:  get 
+
+pi_ws_product_morphing_detail:
+    pattern: /pi/ws/product_morphing_detail/{product_id}
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productMorphingDetail}
+    requirements:
+        _method:  get         
         
         
       
