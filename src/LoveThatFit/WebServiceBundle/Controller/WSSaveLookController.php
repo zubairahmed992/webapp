@@ -125,7 +125,7 @@ class WSSaveLookController extends Controller
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
         $base_path      = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
 
-        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('user.helper.user')->findUserById($decoded['auth_token']) : null;
         //$user = $this->get('webservice.helper')->findUserByAuthToken('dbef83d286d8848b45672798c9a3ff1d');
         if ($user){
             $user_id    = $user->getId();
