@@ -380,7 +380,7 @@ class ProductItem
     }
 
 //----------------------Return Fitting Room Path
-    protected function getOriginalImageUploadDir()
+    public function getOriginalImageUploadDir()
     {
         return 'uploads/ltf/products/fitting_room/';
     }
