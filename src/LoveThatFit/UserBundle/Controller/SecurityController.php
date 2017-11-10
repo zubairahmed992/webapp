@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Yaml\Parser;
 
 class SecurityController extends Controller {
 
@@ -30,15 +31,20 @@ class SecurityController extends Controller {
 //-------------------------------------------------------------------------
 
     public function AdminloginAction() {
-        return $this->redirect($this->generateUrl('saml_login'));
-        /*$security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
-        return $this->render(
-                        'LoveThatFitUserBundle:Security:adminLogin.html.twig', array(
-                    'last_username' => $security_context['last_username'],
-                    'error' => $security_context['error'],
-                    
-                        )
-        );*/
+        $yaml   =   new Parser();
+        $okta_environment    =   $yaml->parse(file_get_contents('../app/config/parameters.yml'))['parameters']['okta_environment'];
+        if($okta_environment == 'local') {
+            $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+            return $this->render(
+                            'LoveThatFitUserBundle:Security:adminLogin.html.twig', array(
+                        'last_username' => $security_context['last_username'],
+                        'error' => $security_context['error'],
+                        
+                            )
+            );
+        } else {
+            return $this->redirect($this->generateUrl('saml_login'));
+        }                
     }
 
     public function signinAction(){

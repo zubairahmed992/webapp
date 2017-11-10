@@ -165,7 +165,7 @@ class PushNotificationHelper
 
     //-------------------------------------------------------
 
-    public function sendPushNotificationFeedback($user, $msg = '')
+    public function sendPushNotificationFeedback($user, $msg = '', $friendName = "")
     {
         //echo "test";
         //print_r($deviceToken);die;
@@ -185,7 +185,10 @@ class PushNotificationHelper
         */
         //echo $deviceToken;
         //die;
-        $message = 'You received the feedback';
+        if($friendName != "")
+            $message = $friendName.' sent you feedback.';
+        else
+            $message = 'You have received feedback!';
         //$message=$msg;
         $badge = 1;
         $sound = 'default';
@@ -338,10 +341,13 @@ class PushNotificationHelper
 
 
 
-    public function sendPushNotificationFeedbackV3($user, $dataMsg)
+    public function sendPushNotificationFeedbackV3($user, $dataMsg, $friendName)
     {
         $pass = '';
-        $message = 'You received the feedback';
+        if($friendName != "")
+            $message = $friendName.' sent you feedback.';
+        else
+            $message = 'You have received feedback!';
 
         $badge = 1;
         $sound = 'default';
