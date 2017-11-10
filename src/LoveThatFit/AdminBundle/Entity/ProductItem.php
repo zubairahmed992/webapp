@@ -380,12 +380,17 @@ class ProductItem
     }
 
 //----------------------Return Fitting Room Path
-    public function getOriginalImageUploadDir()
+    protected function getOriginalImageUploadDir()
     {
         return 'uploads/ltf/products/fitting_room/';
     }
     //-------------------------------------------------------
 
+    //-------------------- Original Image Get-----
+    public function getOriginalImage(){
+        return '/webapp/web/uploads/ltf/products/fitting_room/'. $this->image;;
+
+    }
 
     public function getImagePaths()
     {

@@ -1011,24 +1011,24 @@ class ProductSpecificationHelper {
                 if ($next_size) {
                 if (!(isset($validation_rule) && array_key_exists('sequential', $validation_rule))) {
                     
-                        if ($fp['garment_dimension'] > $next_size[$fp_title]['garment_dimension']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'Garment Dimensions ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['min_actual'] . ') should be greater than Garment Dimensions ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['min_actual'] . ')';
+                        if ($fp['garment_dimension'] > $next_size[$fp_title]['garment_dimension']) {                            
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Garment Dimension', $fp_title, $current_size_title, $next_size_title);                                                                                    
                         }
                         if ($fp['fit_model'] > $next_size[$fp_title]['fit_model']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'fit_model ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['fit_model'] . ') should be greater than Fit Model ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['fit_model'] . ')';
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Fit Model', $fp_title, $current_size_title, $next_size_title);                            
                         }
                         if ($fp['min_actual'] > $next_size[$fp_title]['min_actual']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'Min Actual ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['min_actual'] . ') should be greater than min actual ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['min_actual'] . ')';
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Min Actual', $fp_title, $current_size_title, $next_size_title);
                         }
                         
                         if ($fp['max_actual'] > $next_size[$fp_title]['max_actual']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'Max Actual ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['max_actual'] . ') should be greater than Max Actual ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['max_actual'] . ')';
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Max Actual', $fp_title, $current_size_title, $next_size_title);
                         }
                         if ($fp['ideal_high'] > $next_size[$fp_title]['ideal_high']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'Ideal High ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['ideal_high'] . ') should be greater than Ideal High ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['ideal_high'] . ')';
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Ideal High', $fp_title, $current_size_title, $next_size_title);
                         }
                         if ($fp['ideal_low'] > $next_size[$fp_title]['ideal_low']) {
-                            $result['sequential'][$current_size_title][$fp_title] = 'Ideal Low ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['ideal_low'] . ') should be greater than Ideal Low ' . $fp_title . ' of size ' . $next_size_title . ' (' . $fp['ideal_low'] . ')';
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Ideal low', $fp_title, $current_size_title, $next_size_title);
                         }
 
                     }
@@ -1078,6 +1078,9 @@ class ProductSpecificationHelper {
         return $result;
 
         return new Response(json_encode($result));
+    }
+    private function ac12Msg($range, $fp, $cs, $ns) {
+        return $range . ' for size ' . $cs . '  ' . $fp . ' is less than size ' . $ns;
     }
 #--------------------------------------------------
     public function range_validation_message($range, $fp, $current, $next, $specs) {
