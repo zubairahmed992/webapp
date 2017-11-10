@@ -62,9 +62,12 @@ class Stamps
                 "Username"          => $this->userName,
                 "Password"          => $this->password
             ));
-
-        $auth = $this->soapClient->AuthenticateUser($authData);
-        return $auth->Authenticator;
+        try{
+            $auth = $this->soapClient->AuthenticateUser($authData);
+            return $auth->Authenticator;
+        } catch(\SoapFault $exception){
+            return;
+        }        
     }
 
     public function addressVerification( $postData = array())
