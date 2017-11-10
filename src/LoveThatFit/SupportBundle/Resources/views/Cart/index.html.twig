@@ -201,11 +201,15 @@ $(document).ready(function(){
     <div style="float: left">
 
         <h6>User</h6>
-        <form id="userForm" method="post" {{ form_enctype(userForm) }}>
-        {{ form_errors(userForm) }}
-        {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
-           Or <input type="text"  placeholder="Search Users" id="keyword"><input type="hidden" id="user_id">
-        {{ form_rest(userForm) }}
+        <form id="userForm" method="post">
+            <select id="algorithm_User" name="algorithm[User]">
+                <option value="">Select User</option>
+                {% for user in users %}
+                    <option value="{{user.id}}">{{user.email}}</option>
+                {% endfor %}
+            </select>
+            Or <input type="text"  placeholder="Search Users" id="keyword">
+            <input type="hidden" id="user_id">
         </form>                 
     </div>
     <div style="float: left">

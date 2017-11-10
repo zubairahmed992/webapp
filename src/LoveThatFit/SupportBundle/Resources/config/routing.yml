@@ -82,6 +82,16 @@ support_auto_complete_product:
     pattern:  /support/autocomplete_product/index
     defaults: { _controller: LoveThatFitSupportBundle:Autocomplete:AutoCompleteProductIndex}
 
+user_saved_looks:
+    pattern:  /support/user_looks
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:getUserLooksByEmailId}
+
+get_user_saved_looks_show:
+    pattern:  /support/show_user_looks
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSSaveLook:getUserSaveLooksForShow}
+
+
+
 support_auto_product_search_result:
     pattern:  /support/autocomplete_product/autocomplete_product_search_result
     defaults: { _controller: LoveThatFitSupportBundle:Autocomplete:AutoCompleteProductSearchResult}
