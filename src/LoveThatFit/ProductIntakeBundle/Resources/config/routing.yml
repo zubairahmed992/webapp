@@ -17,4 +17,8 @@ product_intake_specs_pss_routes:
 product_intake_product:
     resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/product.yml"
     prefix:   /
+
+product_intake_morphing_routes:
+    resource: "@LoveThatFitProductIntakeBundle/Resources/config/routing/morphing.yml"
+    prefix:   /
     

@@ -766,22 +766,27 @@ class ProductSpecsController extends Controller
 
        #------------------------- Add Round  and Thigh Function
 
-           if ( ($adjustment['from_id'] !=""  && $adjustment['to_id'] !="") && $adjustment['from_id'] < $adjustment['to_id'] ) {
+           if ( ($adjustment['from_id'] !=""  && $adjustment['to_id'] !="") && ( $adjustment['from_id'] < $adjustment['to_id'] ) ) {
 
                if ($adjustment['adjustment_attribute'] == 'round') {
-                   for ($i = $adjustment['from_id']; $adjustment['to_id'] <= $adjustment['from_id']; $i++) {
+                   for ($i = $adjustment['from_id']; $i<= $adjustment['to_id']; $i++) {
                        $ps = $this->get('pi.product_specification')->find($i);
-                       $ps->roundUp();
-                       $this->get('pi.product_specification')->save($ps);
+                       if(!empty($ps)) {
+                           $ps->roundUp();
+                           $this->get('pi.product_specification')->save($ps);
+                       }
                    }
-                   $this->get('session')->setFlash('success', 'Successfully Roud Product Specification!');
+                   $this->get('session')->setFlash('success', 'Successfully Roud Product Specification !');
                    return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
                }
                 else if ($adjustment['adjustment_attribute'] == 'thigh') {
-                   for ($i = $adjustment['from_id']; $adjustment['to_id'] <= $adjustment['from_id']; $i++) {
-                       $decoded['pk'] = $i;
-                       $decoded['type'] = 'double_thigh_grade_rule_min_max';
-                       $this->get('pi.product_specification')->dynamicChange($decoded);
+                   for ($i = $adjustment['from_id']; $i <= $adjustment['to_id']; $i++) {
+                       $ps = $this->get('pi.product_specification')->find($i);  
+                       if(!empty($ps)) {
+                           $decoded['pk'] = $i;
+                           $decoded['type'] = 'double_thigh_grade_rule_min_max';
+                           $this->get('pi.product_specification')->dynamicChange($decoded);
+                       }
                    }
                    $this->get('session')->setFlash('success', 'Successfully thigh Product Specification!' );
                    return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
@@ -792,7 +797,7 @@ class ProductSpecsController extends Controller
                return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
            }
 
-        if ( isset($adjustment['from_id']) ) {
+        if ( $adjustment['from_id'] != "" ) {
             if ($adjustment['adjustment_attribute'] == 'round') {
                 $ps = $this->get('pi.product_specification')->find($adjustment['from_id']);
                 if(!empty($ps)) {
