@@ -114,9 +114,9 @@ class WSSaveLookController extends Controller
 
     public function getUserLooksByEmailIdAction()
     {
-        $user_list = $this->get('user.helper.user')->getListWithPagination(0,'email');
+        $user_list = $users = $this->get('user.helper.user')->findAllUsersAsc();
         return $this->render('LoveThatFitSupportBundle:SaveLook:usersavedlook.html.twig', array(
-            'users'=>$user_list['users']
+            'users'=>$user_list
         ));
     }
 
