@@ -125,6 +125,11 @@
                         </a></li>
                     {% endif %}
                 {% endif %}
+                <li>
+                    <a href="{{ path('user_saved_looks') }}">
+                        <span class='{% if (app.request.attributes.get("_route") == "user_saved_looks") %} support-tabs-open {% endif %}'>User Saved Looks</span>
+                    </a>
+                </li>
                 <li><a href="{{ path('support_logout') }}"><span>Logout</span></a></li>
             </ul>
              <!-- Top Navigation End -->
