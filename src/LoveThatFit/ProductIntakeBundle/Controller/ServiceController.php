@@ -638,9 +638,9 @@ class ServiceController extends Controller {
         return $this->responseArray('File is missing');
 
     }   
-    //-------------  /pi/ws/product_morphing_detail/{product_id}
-    public function productMorphingDetailAction($product_id)    {        
-        $product = $this->get('admin.helper.product')->find($product_id);
+    //-------------  /pi/ws/product_morphing_detail/brand/style_id_number
+    public function productMorphingDetailAction($brand, $style_id_number)    {        
+        $product = $this->get('service.repo')->findProductByStyleId($brand, $style_id_number);
         if (!$product) {
             return $this->response_str('Product not found!', false);
         }
@@ -649,11 +649,14 @@ class ServiceController extends Controller {
             return $this->response_str('Product morphing detail not found!', false);
         }
         
-        $item_detail = array('product_id' => $product_id, 'color_title' => $ar['color'], 'body_type' => $ar['body_type'], 'size_title' => $ar['size']);
+        $item_detail = array('product_id' => $product->getId(), 'color_title' => $ar['color'], 'body_type' => $ar['body_type'], 'size_title' => $ar['size']);
         $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($item_detail);
         #$ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $product_item->getOriginalImage();
-        $ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath().'/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
-         
+        if($product_item){
+            $ar['URL'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath().'/'.$product_item->getOriginalImageUploadDir().$product_item->getImage();
+        }else{
+            $ar['URL'] = null;
+        }
         return $this->response_str('Product morphing detail found', true, $ar);
     }
     
