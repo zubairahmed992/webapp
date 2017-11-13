@@ -671,5 +671,14 @@ color:#fff;
 text-decoration:none; 
 }
 
+.fixedfooter{
+	position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background: #fff;   
+    width: 100%;
+    height: 10%;
+}
+
 
 
