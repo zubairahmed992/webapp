@@ -1275,6 +1275,18 @@ function label_up(id)
 	
 }
 
+function label_up_on_focus(id)
+{
+	borderid = id;
+	jQuery('#lbl_'+id).css('position','0px');
+	jQuery('#lbl_'+id).css('top','0px');	
+	jQuery('#lbl_'+id).css('opacity','0.5');
+	jQuery('#lbl_'+id).css('cursor','default');
+	jQuery('#lbl_'+id).css('transition','0.3s ease all');
+	jQuery('#'+borderid).focus();
+	
+}
+
 
 
 
@@ -1468,14 +1480,14 @@ function validate_email_male(email){
     <div style="position:relative;" id="tab_lbl_first_name" onclick="label_up(this.id);">
     <label for="first_name" class="" id="lbl_first_name">FIRST NAME</label>
      <div class="error_box hide" id="error_first_name" onclick="hide_error(this.id);"></div>
-    <input  type="text" autocomplete="off" name="first_name" tabindex="1" id="first_name" class="form-control">
+    <input  type="text" autocomplete="off" name="first_name" tabindex="1" id="first_name" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     
     
     <div style="position:relative;" id="tab_lbl_last_name" onclick="label_up(this.id);">
     <label for="last_name" class="" id="lbl_last_name">LAST NAME</label>
      <div class="error_box hide" onclick="hide_error(this.id);" id="error_last_name"></div>
-    <input type="text" autocomplete="off" name="last_name" tabindex="2" id="last_name" class="form-control">
+    <input type="text" autocomplete="off" name="last_name" tabindex="2" id="last_name" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     
     
@@ -1506,13 +1518,13 @@ function validate_email_male(email){
      <div style="position:relative;" onclick="label_up(this.id);" id="tab_lbl_mem_email">
     <label for="inputpassword" class="" id="lbl_mem_email" >EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_email"></div>
-    <input  type="email" autocomplete="off" id="mem_email" name="mem_email" tabindex="4" class="form-control" onblur="validate_email(this.value);"  />
+    <input  type="email" autocomplete="off" id="mem_email" name="mem_email" tabindex="4" class="form-control" onblur="validate_email(this.value);" onfocus="label_up_on_focus(this.id);"  />
     </div>
     
      <div style="position:relative;" id="tab_lbl_confirm_mem_email" onclick="label_up(this.id);">
     <label for="inputpass" class="" id="lbl_confirm_mem_email">CONFIRM EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_email"></div>
-    <input type="email" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" tabindex="5" class="form-control" />
+    <input type="email" autocomplete="off" id="confirm_mem_email" name="confirm_mem_email" tabindex="5" class="form-control" onfocus="label_up_on_focus(this.id);" />
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_3" class="btn btn-md btn-primary btn-block" onclick="validate_form2();" tabindex="6">Next</a>
@@ -1537,7 +1549,7 @@ function validate_email_male(email){
      <div style="position:relative; overflow:hidden" id="tab_lbl_mem_password" onclick="label_up(this.id);">
     <label for="inputfirstname" class="" id="lbl_mem_password">PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_mem_password"></div>
-    <input  type="password" id="mem_password" name="mem_password" tabindex="7" class="form-control" onkeyup="passwordValidate(this.value);" >
+    <input  type="password" id="mem_password" name="mem_password" tabindex="7" class="form-control" onkeyup="passwordValidate(this.value);" onfocus="label_up_on_focus(this.id);">
     
         <div class="req_box_div show" id="pwd_hint1">
     <div class="req_text" id="req-text1">Required:</div>
@@ -1551,7 +1563,7 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_confirm_mem_password" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_confirm_mem_password">CONFIRM PASSWORD</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_confirm_mem_password"></div>
-    <input type="password" id="confirm_mem_password" tabindex="8" name="confirm_mem_password"  class="form-control" >
+    <input type="password" id="confirm_mem_password" tabindex="8" name="confirm_mem_password"  class="form-control" onfocus="label_up_on_focus(this.id);">
     <input type="hidden" name="error_displayed" id="error_displayed" value="0" />
     </div>
     <a href="#screen_slide_4" class="btn btn-md btn-primary btn-block" onclick="validate_form3();" tabindex="9">Next</a>
@@ -1578,12 +1590,12 @@ function validate_email_male(email){
  	<div style="position:relative;" id="tab_lbl_phone" onclick="label_up(this.id);">
     <label for="inputphone" class="" id="lbl_phone" >PHONE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_phone"></div>
-    <input type="tel" autocomplete="off" id="phone" tabindex="10" maxlength="14" name="phone" class="form-control phone" />
+    <input type="tel" autocomplete="off" id="phone" tabindex="10" maxlength="14" name="phone" class="form-control phone" onfocus="label_up_on_focus(this.id);" />
     </div>
      <div style="position:relative;" id="tab_lbl_zip" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_zip">ZIP CODE</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_zip"></div>
-    <input type="tel" autocomplete="off" id="zip" name="zip" tabindex="11" maxlength="5" class="form-control" />
+    <input type="tel" autocomplete="off" id="zip" name="zip" tabindex="11" maxlength="5" class="form-control" onfocus="label_up_on_focus(this.id);" />
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_5" class="btn btn-md btn-primary btn-block" onclick="validate_form4();" tabindex="12">Submit</a>
@@ -1610,12 +1622,12 @@ function validate_email_male(email){
     <div style="position:relative;" id="tab_lbl_friend_name" onclick="label_up(this.id);"> 
  <label for="inputname" class="" id="lbl_friend_name">FRIEND'S NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_name"></div>
-    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" tabindex="13" class="form-control" >
+    <input  type="text" autocomplete="off" id="friend_name" name="friend_name" tabindex="13" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
      <div style="position:relative;" id="tab_lbl_friend_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_friend_email"></div>
-    <input type="email" autocomplete="off" id="friend_email" name="friend_email" tabindex="14" class="form-control" >
+    <input type="email" autocomplete="off" id="friend_email" name="friend_email" tabindex="14" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_6" class="btn btn-md btn-primary btn-block" onclick="validate_form5();" tabindex="15">Send</a>
@@ -1660,20 +1672,20 @@ function validate_email_male(email){
      <div style="position:relative;" id="tab_lbl_male_first_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_first_name">FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_first_name"></div>
-    <input  type="text" autocomplete="off" id="male_first_name"  name="male_first_name" tabindex="30" class="form-control" >
+    <input  type="text" autocomplete="off" id="male_first_name"  name="male_first_name" tabindex="30" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     
     <div style="position:relative;" id="tab_lbl_male_last_name" onclick="label_up(this.id);">
 <label for="inputlastname" class="" id="lbl_male_last_name">LAST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_last_name"></div>
-    <input  type="text" autocomplete="off" id="male_last_name"  name="male_last_name" tabindex="31" class="form-control" >
+    <input  type="text" autocomplete="off" id="male_last_name"  name="male_last_name" tabindex="31" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
 
     
      <div style="position:relative;" id="tab_lbl_male_email" onclick="label_up(this.id);">
     <label for="inputemail" class="" id="lbl_male_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_email"></div>
-    <input type="email" autocomplete="off" id="male_email" name="male_email" tabindex="32" class="form-control">
+    <input type="email" autocomplete="off" id="male_email" name="male_email" tabindex="32" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_registration();" tabindex="33">Submit</a>
@@ -1702,12 +1714,12 @@ styles and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_invite_friend_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_invite_friend_name">FRIEND'S FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_name"></div>
-    <input  type="text" autocomplete="off" id="invite_friend_name" tabindex="19" name="invite_friend_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="invite_friend_name" tabindex="19" name="invite_friend_name" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
  <div style="position:relative;"id="tab_lbl_invite_friend_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_invite_friend_email">FRIEND'S EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_invite_friend_email"></div>
-    <input type="email" autocomplete="off" id="invite_friend_email" tabindex="20" name="invite_friend_email" class="form-control" >
+    <input type="email" autocomplete="off" id="invite_friend_email" tabindex="20" name="invite_friend_email" class="form-control" onfocus="label_up_on_focus(this.id);">
   </div>  
     <div class="gap_4"></div>
     <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();" tabindex="21">Send invitation</a>
@@ -1736,17 +1748,17 @@ styles and outfit ideas.</p></div>
  <div style="position:relative;" id="tab_lbl_male_invite_friend_first_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_invite_friend_first_name">FIRST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_first_name"></div>
-    <input  type="text" autocomplete="off" id="male_invite_friend_first_name" tabindex="26" name="male_invite_friend_first_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="male_invite_friend_first_name" tabindex="26" name="male_invite_friend_first_name" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     <div style="position:relative;" id="tab_lbl_male_invite_friend_last_name" onclick="label_up(this.id);">
 <label for="inputname" class="" id="lbl_male_invite_friend_last_name">LAST NAME</label>
  <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_last_name"></div>
-    <input  type="text" autocomplete="off" id="male_invite_friend_last_name" tabindex="27" name="male_invite_friend_last_name" class="form-control" >
+    <input  type="text" autocomplete="off" id="male_invite_friend_last_name" tabindex="27" name="male_invite_friend_last_name" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
      <div style="position:relative;" id="tab_lbl_male_invite_friend_email" onclick="label_up(this.id);">
     <label for="inputzip" class="" id="lbl_male_invite_friend_email">EMAIL</label>
     <div class="error_box hide" onclick="hide_error(this.id);" id="error_male_invite_friend_email"></div>
-    <input type="email" autocomplete="off" id="male_invite_friend_email" tabindex="28" name="male_invite_friend_email" class="form-control">
+    <input type="email" autocomplete="off" id="male_invite_friend_email" tabindex="28" name="male_invite_friend_email" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     <div class="gap_4"></div>
     <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();" tabindex="29">Send invitation</a>
