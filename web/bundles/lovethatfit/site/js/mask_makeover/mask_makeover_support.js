@@ -82,18 +82,24 @@ $(document).ready(function() {
 retuch_img = new Layer();
 
 sideviewLayer = new Layer();
+sideviewLayer.view.center;
 
 // sideviewPath layer created for sideview calibartion path 
 sideviewPath  = new Layer();
+sideviewPath.view.center;
+
 sideviewPath.activate();
 sideviewPath.visible = false;
-sideViewLines();
 
+sideViewLines();
+console.log(sideviewPath.view.size);
     vLine =  new Path({
     segments:[[480, 0], [480, 1280]],
-    strokeColor:'green',
-    strokeWidth:3
+    strokeColor:'red',
+    strokeWidth:1
    });
+   
+ 
    
  vLine.onMouseDrag = function(event) {
      vLine.position.x += event.delta.x;
@@ -139,21 +145,19 @@ function restoreFrontTab(){
   view.update(); 
 }
 function loadSideViewImag(sideImageurl){
-    if(sideImageurl !=''){
     sideviewLayer.activate();
     sideviewLayer.visible=true;
     
      var sideImage = new Raster(sideImageurl);
      sideImage.position = new Point(480, 640);
-    
+     
+     
     //hide mask and interse
      full_mask.visible=false;
      body_part_area.visible = false;
      
     sideviewPath.visible = true;
-    }else{
-        alert("Please upload Side Image");
-    }
+    
     view.update(); 
 }
 
@@ -911,6 +915,8 @@ function zoom_in(){
         lyr_area_hldr.scale(2);
         lyr_stage_coor.scale(2);
         retuch_img.scale(2);
+        sideviewLayer.scale(2);
+        sideviewPath.scale(2);
         current_status.zoom = true;
         view.update();
 
@@ -919,6 +925,8 @@ function zoom_in(){
         console.log("canvas_area_hldr: "+canvas_area_hldr.position);
         console.log("canv_ref_rect: "+canv_ref_rect.position);
     }
+    
+     view.update();
 }
 function zoom_out(){
     if(current_status.zoom_level > 1){
@@ -926,7 +934,9 @@ function zoom_out(){
         lyr_area_hldr.scale(0.5);
         lyr_stage_coor.scale(0.5);
          retuch_img.scale(0.5);
-
+        sideviewLayer.scale(0.5);
+        sideviewPath.scale(0.5);
+        
         lyr_x = 480 - parseFloat(lyr_area_hldr.position.x);
         lyr_y = 640 - parseFloat(lyr_area_hldr.position.y);
         stage_x = 480 - parseFloat(lyr_stage_coor.position.x);
