@@ -253,11 +253,11 @@ device_config:
     resize_ratio_jt: 1
 
   ipad:
-    pixel_per_inch: 7.173
+    pixel_per_inch: 6.062
     max_user_height_inch: 74
     device_model: ipad
     product_px_per_inch: 17
-    total_screen_height_px: 568
+    total_screen_height_px: 480
     actual_product_img_ppi: 60
     actual_top_prod_empty_area: 795
     actual_bottom_prod_empty_area: 1958
@@ -269,3 +269,4 @@ device_config:
     neck_exlusion_px: 0
     screen_available_height_px: 0
     resize_ratio_jt: 1
+
