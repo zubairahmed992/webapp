@@ -18,12 +18,13 @@ class CartController extends Controller
 
     public function CartIndexAction()
     {
-        $userForm = $this->createForm(new AlgoritumTestlType());
+        /*$userForm = $this->createForm(new AlgoritumTestlType());*/
         $productForm = $this->createForm(new AlgoritumProductTestlType());
+        $users    = $this->get('user.helper.user')->findAllUsersAsc();
         return $this->render('LoveThatFitSupportBundle:Cart:index.html.twig', array(
-            'userForm' => $userForm->createView(),
+            /*'userForm' => $userForm->createView(),*/
             'productForm' => $productForm->createView(),
-            'user' => '',
+            'users'    => $users,
         ));
     }
 
