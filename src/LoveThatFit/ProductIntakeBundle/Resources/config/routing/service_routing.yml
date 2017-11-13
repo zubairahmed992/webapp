@@ -68,6 +68,12 @@ pi_ws_product_morphing_detail:
     defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productMorphingDetail}
     requirements:
         _method:  get         
+
+pi_ws_product_morphing_detail_update:
+    pattern: /pi/ws/product_morphing_detail_update
+    defaults: { _controller: LoveThatFitProductIntakeBundle:Service:productMorphingDetailUpdate}
+    requirements:
+        _method:  post
         
         
       

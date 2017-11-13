@@ -656,4 +656,26 @@ class ServiceController extends Controller {
          
         return $this->response_str('Product morphing detail found', true, $ar);
     }
+    
+    //-------------  /pi/ws/product_morphing_detail_update
+    public function productMorphingDetailUpdateAction()    {        
+        $r=$this->getRequest()->request->all();
+        if(!array_key_exists('brand', $r)){
+            return $this->response_str('parameter brand is missing!', false);
+        }
+        if(!array_key_exists('style_id_number', $r)){
+            return $this->response_str('parameter style_id_number is missing!', false);
+        }
+        
+        $p = $this->get('service.repo')->findProductByStyleId($r['brand'], $r['style_id_number']);
+        
+        if (!$p) {
+            return $this->response_str('Product not found!', false);
+        }
+        $item_detail = array('body_type' => $r['body_type'], 'color' => $r['color'], 'size' => $r['size']);
+        $p->setMorphingDetailJson(json_encode($item_detail));
+        $this->get('admin.helper.product')->save($p);
+        return $this->response_str('Product morphing detail has beeen updated', true);
+        
+    }
 }

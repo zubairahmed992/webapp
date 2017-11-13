@@ -204,5 +204,22 @@ class ServiceRepo
         }
     }
 
+      public function findProductByStyleId($brand_name, $style_id_number)
+    {                                  
+            $query = $this->em
+                ->createQuery("SELECT p
+                    FROM LoveThatFitAdminBundle:Product p              
+                    JOIN p.brand b
+                    WHERE 
+                    p.deleted =0 AND
+                    p.control_number=:style_id_number                    
+                    AND b.name = :brand_name")->setParameters(array('style_id_number' => $style_id_number, 'brand_name' => $brand_name));                    
+            try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
     
 }
