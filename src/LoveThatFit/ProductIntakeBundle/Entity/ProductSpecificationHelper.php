@@ -1043,7 +1043,7 @@ class ProductSpecificationHelper {
         $product->setClothingType($clothing_type);
         $product->setName(array_key_exists('style_name', $data) ? $data['style_name'] : '');
         $product->setControlNumber(array_key_exists('style_id_number', $data) ? $data['style_id_number'] : '');
-        $product->setDescription(array_key_exists('description', $data) ? $data['description'] : '');
+        #$product->setDescription(array_key_exists('description', $data) ? $data['description'] : ''); !!comming from podio
         $product->setStretchType(array_key_exists('stretch_type', $data) ? $data['stretch_type'] : '');
         $product->setHorizontalStretch($data['horizontal_stretch']);
         $product->setVerticalStretch($data['vertical_stretch']);
