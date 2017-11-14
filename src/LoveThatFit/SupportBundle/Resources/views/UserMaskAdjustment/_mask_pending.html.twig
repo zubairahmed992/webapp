@@ -163,6 +163,7 @@
             <input type="hidden" id="count_retouch" name="count_retouch" value="{{retouch_filecount}}"/>
             <input type="hidden" id="upl_archive_id" name="upl_archive_id" value="{{archive.id}}"/>
             <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
+            <input type="hidden" id="side_view_one" name="side_view" value=""/>
         </form>
         </div>        
         <div style="margin-bottom: 10px;clear:both;"></div>
@@ -180,7 +181,7 @@
                     </li>
                 {% endfor %}
             {% endif %}
-        <ul>     
+        </ul>
             <br style="clear:both"/>
     </div>
         <!-- /fornt retouched images -->
@@ -192,40 +193,56 @@
          <hr/>
          <h4 style="padding:0;font-size:14px;">Side view 1</h4>
          <div>
-         <form id="frmSideviewone" method="post" enctype="multipart/form-data" class="form-horizontal" style>
-             	<div class="form-group">
-                    <input type="file"  name="upl_user_retouch" accept=".png" required="">
-                    <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
-             </div>
-        </form>
-         </div>     
-         
-       
-        <ul id="retouchSideviewOne" class="retouch_imgs">
-         
-            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2516/side_5818cd1f1369c.png"/></li>
-        </ul>  
+         <form id="frmSideviewOne" name="frmUploadImage" action="{{ path('support_user_retouch_image', {'user_id':entity.id, 'archive_id': archive.id})}}" method="post" enctype="multipart/form-data"  class="form-horizontal">
+             <input type="file" id="upl_user_retouch" name="upl_user_retouch" accept=".png" required>
+             <input type="hidden" id="upl_entity_id" name="upl_entity_id" value="{{entity.id}}"/>
+             <input type="hidden" id="upl_archive_id" name="upl_archive_id" value="{{archive.id}}"/>
+             <input type="hidden" id="side_view_one" name="side_view" value="side_view_one"/>
+             <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
+         </form>
+             <div style="margin-bottom: 10px;clear:both;"></div>
+             <ul id="retouchSideviewOne" class="retouch_imgs">
+                 {% if side_view_images['one'] is defined %}
+                     {% set one = 1 %}
+                        {% for key, side_view in side_view_images['one'] %}
+                         <li>
+                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~side_view }}" data-toggle="tooltip"   title="{{ side_view }}" />
+                         </li>
+                     {% endfor %}
+                 {% endif %}
+             </ul>
+
+         </div>
+
           <hr/>
          <h4 style="padding:0;font-size:14px;">Side view 2</h4>
          <div>
-         <form id="frmSideviewTwo" method="post" enctype="multipart/form-data" class="form-horizontal" style>
-             	<div class="form-group">
-                    <input type="file"  name="upl_user_retouch" accept=".png" required="">
-                    <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
-             </div>
-        </form>
-         </div>     
-         
-       
-        <ul id="retouchSideviewOne" class="retouch_imgs">
-         
-            <li><img class="img-thumb" src="http://localserver.webapp/uploads/ltf/users/2516/side_5818c29c3e7e0.png"/></li>
-        </ul>  
-       
+         <form id="frmSideviewTwo" name="frmUploadImage" action="{{ path('support_user_retouch_image', {'user_id':entity.id, 'archive_id': archive.id})}}" method="post" enctype="multipart/form-data"  class="form-horizontal">
+             <input type="file" id="upl_user_retouch" name="upl_user_retouch" accept=".png" required>
+             <input type="hidden" id="upl_entity_id" name="upl_entity_id" value="{{entity.id}}"/>
+             <input type="hidden" id="upl_archive_id" name="upl_archive_id" value="{{archive.id}}"/>
+             <input type="hidden" id="side_view_one" name="side_view" value="side_view_two"/>
+             <input type="submit" id="upl_submit" class="black_btn" name="upl_submit" value="Upload">
+         </form>
+             <div style="margin-bottom: 10px;clear:both;"></div>
+             <ul id="retouchSideviewTwo" class="retouch_imgs">
+                 {% if side_view_images['two'] is defined  %}
+                     {% set two = 1 %}
+                     {% for key, side_view in side_view_images['two'] %}
+                         <li>
+                             <img class="img-thumb" style="cursor:pointer;" src="{{ asset(archive.getRetouchWebPath()) ~ "/" ~side_view }}" data-toggle="tooltip"   title="{{ side_view }}" />
+                         </li>
+                     {% endfor %}
+                 {% endif %}
+             </ul>
+         </div>
+
+
+
         </div>
         <!-- /side view retouched images -->
 </div>
-            </div> 
+            </div>
 {% else%}
 <div>image info not available</div>
 {% endif %}
