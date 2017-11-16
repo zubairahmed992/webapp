@@ -373,7 +373,7 @@ class BrandRepository extends EntityRepository {
  SELECT DISTINCT b.id as brand_id,b.name as brand_name,b.image as brand_image
  FROM LoveThatFitAdminBundle:Brand b
  JOIN b.products p
- WHERE b.disabled=0 and p.disabled=0 and p.deleted=0 and  b.updated_at>=:date_format")->setParameters(array('date_format' => $date_format));
+ WHERE b.disabled=0 and p.disabled=0 and p.deleted=0 and p.status='complete' and  b.updated_at>=:date_format")->setParameters(array('date_format' => $date_format));
             try {
                 return $query->getResult();
             } catch (\Doctrine\ORM\NoResultException $e) {
@@ -386,7 +386,7 @@ class BrandRepository extends EntityRepository {
   SELECT DISTINCT b.id as brand_id,b.name as brand_name,b.image as brand_image
  FROM LoveThatFitAdminBundle:Brand b
  JOIN b.products p
- WHERE b.disabled=0 and p.disabled=0 and p.deleted=0
+ WHERE b.disabled=0 and p.disabled=0 and p.deleted=0 and p.status='complete'
 ");
             try {
                 return $query->getResult();
@@ -432,9 +432,9 @@ class BrandRepository extends EntityRepository {
     public function getBrandsArray()
     {
         $query = $this->getEntityManager()
-            ->createQuery('SELECT DISTINCT b.id as brand_id, b.name as name,\'brand\' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
+            ->createQuery("SELECT DISTINCT b.id as brand_id, b.name as name,\'brand\' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
                 JOIN b.products p
-                WHERE b.disabled = 0 and p.disabled=0 and p.deleted=0 ORDER BY name asc');
+                WHERE b.disabled = 0 and p.disabled=0 and p.status='complete' and p.deleted=0 ORDER BY name asc");
         try {
             return $query->getArrayResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

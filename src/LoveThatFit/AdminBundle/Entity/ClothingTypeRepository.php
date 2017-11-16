@@ -473,7 +473,7 @@ class ClothingTypeRepository extends EntityRepository
       JOIN p.clothing_type ct
       JOIN p.brand b
       JOIN p.product_colors pc
-      WHERE ct.id = :clothing_type_id AND ct.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!='' GROUP by p.id"
+      WHERE ct.id = :clothing_type_id AND ct.disabled=0 AND p.disabled=0 AND p.deleted=0 and p.status='complete' AND p.displayProductColor!='' GROUP by p.id"
             )->setParameters(array('clothing_type_id' => $clothing_type_id));
         try {
             return $query->getResult();
