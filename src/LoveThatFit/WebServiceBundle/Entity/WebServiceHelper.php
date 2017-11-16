@@ -142,7 +142,6 @@ class WebServiceHelper
     #------------------------ User -----------------------
     public function registrationWithDefaultValues($request_array)
     {
-
         if (!array_key_exists('email', $request_array)) {
             return $this->response_array(false, 'Email Not provided.');
         }
@@ -163,7 +162,6 @@ class WebServiceHelper
                 #---- 2) send registration email ....
                 $this->container->get('mail_helper')->sendRegistrationEmail($user);
             }
-
             try {
                 //create podio users entity
                 $this->createPodioUser($user->getId());

@@ -25,6 +25,9 @@ class PodioUsersRepository extends EntityRepository
         $sql = "SELECT 
                   u.id AS member_id,
                   u.email,
+                  u.first_name,
+                  u.last_name,
+                  u.phone_number,
                   u.gender,
                   u.zipcode,
                   IF(
@@ -39,8 +42,6 @@ class PodioUsersRepository extends EntityRepository
                   INNER JOIN ltf_users u 
                     ON (pu.user_id = u.id) AND pu.status IN (:status)
                 GROUP BY u.id";
-                
-
                   $conn = $this->getEntityManager()->getConnection();
                   $stmt = $conn->prepare($sql);  
                   $stmt->bindValue('status', implode(",",$status));                  
