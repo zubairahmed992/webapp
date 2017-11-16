@@ -1056,7 +1056,7 @@ class ProductSpecificationHelper {
         $product->setRise($data['rise']);
         $product->setHemLength($data['hem_length']);
         $product->setFabricWeight($data['fabric_weight']);
-        $product->setStructuralDetail($data['structural_detail']);
+        $product->setStructuralDetail(json_encode(array_key_exists('structural_detail', $data) ? $data['structural_detail'] : ''));
         $product->setFitType($data['fit_type']);
         $product->setStatus('pending');
         $product->setLayering(array_key_exists('layring', $data) ? $data['layring'] : $data['layering']);

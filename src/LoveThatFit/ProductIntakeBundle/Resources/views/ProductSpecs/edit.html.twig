@@ -807,7 +807,7 @@
             <label class="control-label col-sm-2" for="structural_detail">Structural detail : </label>
             <div class="col-sm-4">
                 <select name="structural_detail[]" class="structural_detail selectpicker form-control" data-size="8"  data-actions-box="true" multiple >                     
-                    <option>Select</option>
+                    <option selected="selected">Select</option>
                     {% for key,val in drop_down_values['structural_detail'] %}
                         {% if parsed_data.structural_detail is defined %}                        
                             {% set selected = key in parsed_data.structural_detail|default  ? ' selected' : '' %}
@@ -1181,7 +1181,7 @@
                                                     {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
                                                 <td class="body_measurements">
-                                                    {{measurement_v.fit_model }} --  {% if validation['tolerance'][size][measurement_k] is defined %} {{ validation['tolerance']['30']['low_hip'] }} {% endif %}
+                                                    {{measurement_v.fit_model }}   {% if validation['tolerance'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['tolerance'][size][measurement_k] }}"></i> {% endif %}
                                                     <input class="8" type="number" hidden readonly value="{{measurement_v.fit_model }}" name="sizes-{{ size }}-{{ measurement_k }}-fit_model" style="width:50px">
                                                     {% if validation['sequential'][size][measurement_k] is defined %} <i class="glyphicon glyphicon-warning-sign" style="color: red;" title="{{ validation['sequential'][size][measurement_k] }}"></i> {% endif %}
                                                 </td>
