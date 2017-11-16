@@ -438,6 +438,7 @@ class UserRepository extends EntityRepository
                 u.firstName,
                 u.lastName,
                 u.email,
+                u.phoneNumber,
                 u.gender,
                 u.createdAt,
                 IDENTITY(u.original_user) as original_user_id,
@@ -532,7 +533,8 @@ class UserRepository extends EntityRepository
         }
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('u.id, u.firstName, u.lastName,
-                              u.email, u.gender,u.zipcode,
+                              u.email, u.phoneNumber, 
+                              u.gender,u.zipcode,
                               u.createdAt
                               ')
             ->from('LoveThatFitUserBundle:User', 'u');
