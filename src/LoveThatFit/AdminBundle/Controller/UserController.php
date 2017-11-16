@@ -485,18 +485,20 @@ class UserController extends Controller
                 'UserID',
                 'Name',
                 'Email',
+                'Phone No',
                 'Gender',
                 'Zip Code',
                 'Created At',
                 )
             );
             foreach ($users as $user) {
-                $csv['id']         = $user["id"];
-                $csv['user_name']  = ($user["firstName"] . " " . $user["lastName"]);
-                $csv['email']      = $user["email"];
-                $csv['gender']     = ($user["gender"] == "f" ? "Female" : "Male");
-                $csv['zipcode']    = $user["zipcode"];
-                $csv['created_at'] = ($user["createdAt"]->format('d/m/Y'));
+                $csv['id']          = $user["id"];
+                $csv['user_name']   = ($user["firstName"] . " " . $user["lastName"]);
+                $csv['email']       = $user["email"];
+                $csv['phoneNumber'] = $user["phoneNumber"];
+                $csv['gender']      = ($user["gender"] == "f" ? "Female" : "Male");
+                $csv['zipcode']     = $user["zipcode"];
+                $csv['created_at']  = ($user["createdAt"]->format('d/m/Y'));
 
                 fputcsv($output, $csv);
             }
