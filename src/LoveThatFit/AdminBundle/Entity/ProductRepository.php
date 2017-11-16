@@ -1652,8 +1652,8 @@ class ProductRepository extends EntityRepository
         $sql = 'SELECT 
                  p.id as product_id ,
                  p.name as product_name,
-                 p.disabled as status,
                  p.status as product_status,
+                 p.disabled as status,
                  p.gender,
                  b.name as brand_name,
                  ct.name AS clothing_type,
@@ -1808,8 +1808,8 @@ class ProductRepository extends EntityRepository
     {
         $sql = 'SELECT p.id as product_id ,
                  p.name as product_name,
-                 p.disabled as status,
                  p.status as product_status,
+                 p.disabled as status,
                  p.gender,
                  b.name as brand_name,
                  ct.name AS clothing_type,
