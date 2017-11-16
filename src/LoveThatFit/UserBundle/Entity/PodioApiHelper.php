@@ -114,6 +114,11 @@ class PodioApiHelper
                   new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
                   new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
                   new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
+                  
+                  new PodioTextItemField(array("external_id" => "member-name", "values" => "".$user_podio['first_name']."")),
+                  new PodioTextItemField(array("external_id" => "last-name", "values" => "".$user_podio['last_name']."")),
+                  // new PodioTextItemField(array("external_id" => "phone_number", "values" => "".$user_podio['phone_number']."")),
+                  
                   new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
                   new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
                 ));
@@ -145,6 +150,11 @@ class PodioApiHelper
                   new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
                   new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
                   new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
+
+                  new PodioTextItemField(array("external_id" => "member-name", "values" => "".$user_podio['first_name']."")),
+                  new PodioTextItemField(array("external_id" => "last-name", "values" => "".$user_podio['last_name']."")),
+                  // new PodioTextItemField(array("external_id" => "phone_number", "values" => "".$user_podio['phone_number']."")),
+                  
                   new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
                   new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
                 ));
