@@ -684,6 +684,18 @@ public function updateRevertedImageStatus($user_id,$hash) {
         return true;
     }
 
+    //--------------- Upload Side View Images
+    public function sideViewImages($param, $file){
+        $temp_name = $file['tmp_name'];
+        $target_path = $this->getUploadRootDir($param['upl_entity_id']);
+        $side_view = $param['side_view'];
+        $fileName = $file['name'];
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        move_uploaded_file($temp_name, $target_path.'/'.$side_view."_".uniqid().".".$ext);
+        return true;
+    }
+
+
     public function getUploadRootDir($id) {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir($id);
     }

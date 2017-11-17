@@ -351,6 +351,18 @@ class UserMaskAdjustmentController extends Controller {
         $user_id = $user->getId();
         $directory_path = $archive->getUploadRootDir();
         $retouch_files = glob($directory_path."/".$retouch_filename."*.*");
+        $side_view = '';
+        //------------ Get All Images of Side View -------------
+        $side_view_images =  glob($directory_path."/*.png");
+        $i = 0;
+        foreach($side_view_images as $filename){
+            if (preg_match('/side_view_two/',basename($filename))) {
+                $side_view['two'][++$i] =  basename($filename);
+            }
+            if (preg_match('/side_view_one/',basename($filename))) {
+                $side_view['one'][++$i] =  basename($filename);
+            }
+        }
 
         $retouch_file_time = array();
         foreach($retouch_files as $file){
@@ -387,6 +399,7 @@ class UserMaskAdjustmentController extends Controller {
                     'retouch_filecount' => $retouch_filecount,
                     'original_file_code' => $original_file_code,
                     'retouch_file_time' => $retouch_file_time,
+                    'side_view_images' => $side_view,
                 ));
     }
 
@@ -504,7 +517,12 @@ class UserMaskAdjustmentController extends Controller {
         $file = $_FILES["upl_user_retouch"];
 
         /* Save Touch image*/
-        $this->get('user.helper.userarchives')->saveretouchimage($params,$file);
+        if($params['side_view'] != ""){
+            $this->get('user.helper.userarchives')->sideViewImages ($params, $file);
+
+        } else {
+            $this->get('user.helper.userarchives')->saveretouchimage($params, $file);
+        }
 
         return $this->redirect($this->generateUrl('support_user_profile_archives', array('user_id' => $user_id,
             'archive_id' => $archive_id)));

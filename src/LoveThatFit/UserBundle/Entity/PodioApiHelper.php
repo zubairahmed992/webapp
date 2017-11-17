@@ -12,6 +12,7 @@ use PodioEmailItemField;
 use PodioEmbed;
 use PodioEmbedItemField;
 use PodioSearchResult;
+use PodioPhoneItemField;
 
 class PodioApiHelper
 {
@@ -114,6 +115,11 @@ class PodioApiHelper
                   new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
                   new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
                   new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
+                  
+                  new PodioTextItemField(array("external_id" => "member-name", "values" => "".$user_podio['first_name']."")),
+                  new PodioTextItemField(array("external_id" => "last-name", "values" => "".$user_podio['last_name']."")),
+                  new PodioPhoneItemField(array("external_id" => "phone")), 
+                  
                   new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
                   new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
                 ));
@@ -127,6 +133,8 @@ class PodioApiHelper
                 //Attached member profile url here
                 $embed = PodioEmbed::create(array("url" => $url_member_profile));
                 $item->fields["admin-portal-url"]->values = $embed;
+                //Attached phone
+                $item->fields["phone"]->values = array("type" => "other","value" => "".$user_podio['phone_number']."");
 
                 $podio_id = $search_results['id'];
                 $update_item_fields = PodioItem::update($podio_id, $item);
@@ -145,6 +153,10 @@ class PodioApiHelper
                   new PodioTextItemField(array("external_id" => "zip-code", "values" => "".$user_podio['zipcode']."")),
                   new PodioTextItemField(array("external_id" => "date-of-birth", "values" => "".$user_podio['birth_date']."")),
                   new PodioTextItemField(array("external_id" => "gender", "values" => "".$user_podio['gender']."")),
+
+                  new PodioTextItemField(array("external_id" => "member-name", "values" => "".$user_podio['first_name']."")),
+                  new PodioTextItemField(array("external_id" => "last-name", "values" => "".$user_podio['last_name']."")),
+                  new PodioPhoneItemField(array("external_id" => "phone")), 
                   new PodioEmbedItemField(array("external_id" => "admin-portal-url")),
                   new PodioTextItemField(array("external_id" => "member-calibrated", "values" => "No"))
                 ));
@@ -161,6 +173,8 @@ class PodioApiHelper
 
                 //Attached memeber email
                 $item->fields["member-email"]->values = array("type" => "other","value" => "".$user_podio['email']."");
+                //Attached phone
+                $item->fields["phone"]->values = array("type" => "other","value" => "".$user_podio['phone_number']."");
 
                 $new_item_placeholder = $item->save();
                 $item->item_id = $new_item_placeholder->item_id;
