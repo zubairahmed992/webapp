@@ -3,6 +3,11 @@ podio_local_credentials:
   client_secret: ADPRVudgIpTlVVx1pk0kckIt2AqZSYEIHdEoWdkGIDipxrzGRb1qYPHjPMgy4d0Y
   app_id: 18595333
   app_token: d20f7c05553547dab552d30887a16112
+  # order detail history app podio credentials for local server
+  client_id_order_detail: order-detail-history-local
+  client_secret_order_detail: ljwASL0rT55MmDBBOPLBgi0MdlT5Kti2tlCdESK0hK87DEDT5OaiKxfnfJdG6BK7
+  app_id_order_detail: 19892233
+  app_token_order_detail: 79db5c1a8b5f482aa09dc579cb371fc1
 
 podio_qa_credentials:
   client_id: order-history-dr97ri

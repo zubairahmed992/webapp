@@ -12,6 +12,7 @@ use PodioEmailItemField;
 use PodioEmbed;
 use PodioEmbedItemField;
 use PodioSearchResult;
+use PodioAppItemField;
 
 class PodioLibHelper
 {
@@ -109,6 +110,62 @@ class PodioLibHelper
               return $item->item_id;
             } catch (PodioError $e) {
               return $e;
+            }         
+        }    
+    }
+
+    public function saveOrderPodioDetail($order_podio,$podio_id)
+    {
+        echo $podio_id."<br>";
+        
+
+        //echo "<pre>"; print_r($order_podio); echo "</pre>";        
+        $yaml = new Parser();
+        $parse = $yaml->parse(file_get_contents('../src/LoveThatFit/PodioBundle/Resources/config/config_orders.yml'));        
+        //Podio API Access Variables
+        $this->client_id_order_detail = $parse[$this->env]["client_id_order_detail"];
+        $this->client_secret_order_detail = $parse[$this->env]["client_secret_order_detail"];
+        $this->app_id_order_detail = $parse[$this->env]["app_id_order_detail"];
+        $this->app_token_order_detail = $parse[$this->env]["app_token_order_detail"];        
+        //echo "<pre>"; print_r($order_podio);
+        //Authenticate the Podio API
+        Podio::setup($this->client_id_order_detail, $this->client_secret_order_detail);
+        Podio::authenticate_with_app($this->app_id_order_detail, $this->app_token_order_detail);
+        if (Podio::is_authenticated()) {
+
+            //$item = PodioItem::get_basic($podio_id);
+            //echo "<pre>"; print_r($item); echo "</pre>"; die();
+
+            //Podio::set_debug(true);
+            //print "You were already authenticated and no authentication is needed.<br>"; 
+            // Second approach - Create field collection with different fields
+            $fields = new PodioItemFieldCollection(array(
+              new PodioTextItemField(array("external_id" => "item-amount", "values" => "".$order_podio['item_amount']."")),
+              new PodioTextItemField(array("external_id" => "quantity-item-2", "values" => "".$order_podio['quantity_item']."")),
+              new PodioAppItemField(array("external_id" => "app-order-number-2")),
+            ));
+            //echo "<pre>"; print_r($fields); echo "</pre>"; 
+
+            // Create item and attach fields
+            $item = new PodioItem(array(
+              "app" => new PodioApp(intval($this->app_id_order_detail)),
+              "fields" => $fields
+            ));    
+            //echo "<pre>"; print_r($item); echo "</pre>"; 
+
+            $item->fields["app-order-number-2"]->values = array("".$order_podio['order_number']."");
+
+            try {
+              echo "no exception<br>";
+              // Save item
+              $new_item_placeholder = $item->save();
+              echo "<pre>"; print_r($new_item_placeholder); echo "</pre>"; die();
+              //$item->item_id = $new_item_placeholder->item_id;
+              //return $item->item_id;
+            } catch (PodioError $e) {
+              echo "exception<br>";
+              var_dump($e); die();
+              //return $e;
             }         
         }    
     }

@@ -118,7 +118,11 @@ class PodioController extends Controller {
                 ); 
               //save podio order data
               $podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
+              echo "<pre>"; print_r($podio_id); echo "</pre>"; 
               if($podio_id) {
+                //save podio order detail history on podio
+                $podio_id_order_id = $this->container->get('podio.helper.podiolib')->saveOrderPodioDetail($order_podio,$podio_id);
+                echo "<pre>"; print_r($podio_id_order_id); echo "</pre>"; die();
                 //podio order data is saved then add podio_id to podio_order_detail
                 $order_entity = $this->container->get('order.helper.podio')->find($id);
                 $save_order_detail = $this->get('orderdetail.helper.podio')->savePodioOrdersDetail($order_entity, $podio_id);
