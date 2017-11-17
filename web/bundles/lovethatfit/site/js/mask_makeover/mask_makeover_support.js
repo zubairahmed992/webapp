@@ -1,7 +1,7 @@
 window.devicePixelRatio = 1;
 paper.install(window);
 var dom_event_interaction_s1;
-var txtlabel, vline;
+var txtlabel;
 $(document).ready(function() {
     paper.setup('canv_mask_makeover');
 
@@ -90,21 +90,26 @@ sideviewPath.view.center;
 
 sideviewPath.activate();
 sideviewPath.visible = false;
-
 sideViewLines();
-console.log(sideviewPath.view.size);
-    vLine =  new Path({
+
+  
+  // vertical guideline for alignment 
+ 
+  vLine =  new Path({
     segments:[[480, 0], [480, 1280]],
-    strokeColor:'red',
+    strokeColor:'gray',
     strokeWidth:1
    });
+  
    
  
    
- vLine.onMouseDrag = function(event) {
-     vLine.position.x += event.delta.x;
+  vLine.onMouseDrag = function(event) {
+     if(flgg === true){
+        vLine.position.x += event.delta.x;
+    }
  };
-
+ // ---/vertical guideline for alignment  
 
    lyr_misc = new Layer();
    lyr_misc.activate();
@@ -112,6 +117,26 @@ console.log(sideviewPath.view.size);
        
 });
 
+// toggle lock and unlok guideline
+var flgg=false;
+var  msg;
+
+function lockUnlock(){
+    if(flgg === false){
+        flgg=true;
+        msg = "Guideline is Unlocked";
+        vLine.opacity=0.7;
+        vLine.strokeColor='red';
+        $("#lockunlock").text("Guidline Unlocked");
+    }else{
+        flgg=false;
+        msg = "Guideline is locked";
+        vLine.opacity=0.3;
+        vLine.strokeColor='gray';
+        $("#lockunlock").text("Guidline Locked");
+    }
+   alert(msg); 
+}
 
 // archives show image function
 var retuchImage;
