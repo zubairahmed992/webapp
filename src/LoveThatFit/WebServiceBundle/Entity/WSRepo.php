@@ -35,6 +35,7 @@ class WSRepo
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
                 ->andWhere('p.deleted=0')
+                ->andWhere("p.status='complete'")
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
@@ -55,6 +56,7 @@ class WSRepo
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
                 ->andWhere('p.deleted=0')
+                ->andWhere("p.status='complete'")
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
@@ -81,6 +83,7 @@ class WSRepo
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
                 ->andWhere('p.deleted=0')
+                ->andWhere("p.status='complete'")
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
@@ -101,6 +104,7 @@ class WSRepo
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
                 ->andWhere('p.deleted=0')
+                ->andWhere("p.status='complete'")
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
@@ -221,6 +225,7 @@ class WSRepo
                        AND useritemtryhistory.user_id = :user_id
                        AND product.display_product_color_id <> ''
                        AND product.disabled = 0
+                       AND product.status = 'complete'
                        AND product.deleted = 0
                 ORDER  BY useritemtryhistory.updated_at DESC ";
                 $params['user_id'] = $user->getId();
@@ -249,7 +254,7 @@ class WSRepo
             JOIN pi.users u
             JOIN p.clothing_type ct
             
-            WHERE u.id=:user_id AND p.displayProductColor!=''
+            WHERE u.id=:user_id AND p.displayProductColor!='' AND p.disabled = 0  AND p.status = 'complete' AND p.deleted = 0
             ORDER BY p.name"
                     )->setParameters(array('user_id' => $user->getId()));
                 break;
@@ -271,7 +276,7 @@ class WSRepo
             LEFT JOIN p.retailer r
             JOIN p.clothing_type ct
             
-            WHERE p.gender=:gender AND p.displayProductColor!=''
+            WHERE p.gender=:gender AND p.displayProductColor!='' AND p.disabled = 0 AND p.status = 'complete' AND p.deleted = 0
             GROUP BY p.id 
             ORDER BY p.id DESC"
                     )->setParameters(array('gender' => $user->getGender()))->setMaxResults(10);
@@ -299,7 +304,7 @@ class WSRepo
             LEFT JOIN p.retailer r
             JOIN p.clothing_type ct
             
-            WHERE p.id=:product_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''
+            WHERE p.id=:product_id AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''
             "
             )->setParameters(array('product_id' => $id));
         return $query->getResult();
@@ -394,6 +399,7 @@ class WSRepo
             ->andWhere('c.id IN (:id)')
             ->andWhere("p.displayProductColor!=''")
             ->andWhere('p.disabled=0')
+            ->andWhere("p.status='complete'")
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
             ->orderBy('p.id', 'desc')
@@ -496,6 +502,7 @@ class WSRepo
                 ->where('p.id=:id')
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
+                ->andWhere("p.status='complete'")
                 ->setParameters(array('id' => $product_id))
                 ->getQuery()
                 ->getResult();
@@ -517,6 +524,7 @@ class WSRepo
             ->andWhere('b.id = :id')
             ->andWhere("p.displayProductColor != ''")
             ->andWhere('p.disabled=0')
+            ->andWhere("p.status='complete'")
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
             ->setParameters(array('id' => $id, 'user' => $user_id))
@@ -593,6 +601,7 @@ class WSRepo
         // add the default condition
         $conditions = array(
             $query->expr()->eq('p.disabled', '0'),
+            $query->expr()->eq('p.status', 'complete'),
             $query->expr()->orX(
                 $query->expr()->eq('p.default_clothing', '0'),
                 $query->expr()->isNull('p.default_clothing')
@@ -658,6 +667,7 @@ class WSRepo
             ->innerJoin('u.user_archives', 'ua')           
             ->innerJoin('u.user_marker', 'um')           
             ->Where('u.email=:email')
+            ->orderBy('ua.id','DESC')
             ->setParameters(array('email' => $email))
             ->getQuery()
             ->getResult();
@@ -678,6 +688,7 @@ class WSRepo
             ->where('b.name=:search_text')
             ->andWhere("p.displayProductColor!=''")
             ->andWhere('p.disabled=0')
+            ->andWhere("p.status='complete'")
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
             ->setParameters(array('search_text' => $search_text, 'user' => $user_id))
@@ -707,6 +718,7 @@ class WSRepo
             ->where("p.item_name LIKE :search_text")
             ->andWhere("p.displayProductColor!=''")
             ->andWhere('p.disabled=0')
+            ->andWhere("p.status='complete'")
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
             ->setParameters(array('search_text' => '%'.$search_text.'%', 'user' => $user_id))

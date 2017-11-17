@@ -26,13 +26,16 @@ class PodioUsersController extends Controller {
         	foreach ($podio_users as $users) {
                 $id = $users['id']; //podio user log id
         		$user_podio = array(
-                    'id' => $users['member_id'],
-                    'email' => ($users['email']) ? $users['email'] : '',
-                    'gender' => ($users['gender']=='f') ? 'Female' : 'Male',
-                    'birth_date' => ($users['birthDate']) ?date('Y-m-d h:i:s',strtotime($users['birthDate'])) : '',
-                    'created_at' => ($users['member_created']) ? date('Y-m-d h:i:s',strtotime($users['member_created'])) : '',
-                    'zipcode' => ($users['zipcode']) ? $users['zipcode'] : '',
-                    'base_path' => ($decoded['base_path']) ? $decoded['base_path'] : ''
+                    'id'           => $users['member_id'],
+                    'email'        => ($users['email']) ? $users['email'] : '',
+                    'first_name'   => ($users['first_name']) ? $users['first_name'] : '',
+                    'last_name'    => ($users['last_name']) ? $users['last_name'] : '',
+                    'phone_number' => ($users['phone_number']) ? $users['phone_number'] : '',
+                    'gender'       => ($users['gender']=='f') ? 'Female' : 'Male',
+                    'birth_date'   => ($users['birthDate']) ?date('Y-m-d h:i:s',strtotime($users['birthDate'])) : '',
+                    'created_at'   => ($users['member_created']) ? date('Y-m-d h:i:s',strtotime($users['member_created'])) : '',
+                    'zipcode'      => ($users['zipcode']) ? $users['zipcode'] : '',
+                    'base_path'    => ($decoded['base_path']) ? $decoded['base_path'] : ''
                 );
         		//echo "<pre>"; print_r($user_podio); 
 
