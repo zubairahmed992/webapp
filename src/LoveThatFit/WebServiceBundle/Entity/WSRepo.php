@@ -667,6 +667,7 @@ class WSRepo
             ->innerJoin('u.user_archives', 'ua')           
             ->innerJoin('u.user_marker', 'um')           
             ->Where('u.email=:email')
+            ->orderBy('ua.id','DESC')
             ->setParameters(array('email' => $email))
             ->getQuery()
             ->getResult();
