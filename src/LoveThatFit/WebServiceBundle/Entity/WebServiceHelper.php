@@ -1218,13 +1218,13 @@ class WebServiceHelper
             $ps_id = $pi->getProductSize()->getId();
             # get the highest price of all the items/color for a particular size
             $s_desc = $pi->getProductSize()->getBodyType() . ' ' . $pi->getProductSize()->getTitle();
-
-            if (array_key_exists('price', $p['sizes'][$s_desc])) {
-                $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
-            } else {
-                $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
+            if($pi->getProductSize()->getDisabled() != 1) {
+                if (array_key_exists('price', $p['sizes'][$s_desc])) {
+                    $p['sizes'][$s_desc]['price'] = ($pi->getPrice() && $p['sizes'][$s_desc]['price'] < $pi->getPrice()) ? $pi->getPrice() : $p['sizes'][$s_desc]['price'];
+                } else {
+                    $p['sizes'][$s_desc]['price'] = $pi->getPrice() ? $pi->getPrice() : 0;
+                }
             }
-
             //Added new Array Sizes clone where we will add sizes_clone without Keys, We are doing this because
             //Dont want to change the Algorithem functionalities
             $p['sizes_clone'] = array_values($p['sizes']);
