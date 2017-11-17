@@ -109,13 +109,59 @@ class UserOrderRepository extends EntityRepository
 	}
   }
 
-	public function search(
-		$data,
-		$page = 0,
-		$max = NULL,
-		$order,
-		$getResult = true
-	) 
+    public function searchOrderByDiscount($data, $page = 0, $max = NULL, $order, $getResult = true, $user_id = 0, $group_id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
+        $query
+            ->select('
+		    	o.id,
+		        o.order_number,
+				o.billing_first_name,
+				o.billing_last_name,
+				o.order_date,
+				o.order_amount,
+				o.payment_json,
+                o.transaction_status,
+                o.order_status'
+            )
+            ->from('LoveThatFitCartBundle:UserOrder', 'o')
+            ->andWhere('o.user = :userId')
+            ->andWhere('o.user_group = :groupId')
+            ->setParameter('userId', $user_id)
+            ->setParameter('groupId', $group_id);
+        if ($search) {
+            $query
+                ->andWhere('o.billing_first_name like :search')
+                ->orWhere('o.billing_last_name like :search')
+                ->orWhere('o.order_number like :search')
+                ->setParameter('search', "%".$search."%");
+        }
+        if (is_array($order)) {
+            $orderByColumn    = $order[0]['column'];
+            $orderByDirection = $order[0]['dir'];
+            if ($orderByColumn == 0) {
+                $orderByColumn = "o.order_number";
+            } elseif ($orderByColumn == 1) {
+                $orderByColumn = "o.billing_first_name";
+            } elseif ($orderByColumn == 2) {
+                $orderByColumn = "o.order_date";
+            } elseif ($orderByColumn == 3) {
+                $orderByColumn = "o.order_amount";
+            }
+            $query->OrderBy($orderByColumn, $orderByDirection);
+        }
+
+        if ($max) {
+            $preparedQuery = $query->getQuery()
+                ->setMaxResults($max)
+                ->setFirstResult(($page) * $max);
+        } else {
+            $preparedQuery = $query->getQuery();
+        }
+        return $getResult?$preparedQuery->getResult():$preparedQuery;
+    }
+	public function search($data, $page = 0, $max = NULL, $order, $getResult = true)
 	{
 		$query = $this->getEntityManager()->createQueryBuilder();
 		$search = isset($data['query']) && $data['query']?$data['query']:null;
@@ -133,7 +179,7 @@ class UserOrderRepository extends EntityRepository
 		    )
 		    ->from('LoveThatFitCartBundle:UserOrder', 'o');
 		if ($search) {
-		    $query 
+		    $query
 		        ->andWhere('o.billing_first_name like :search')
                 ->orWhere('o.billing_last_name like :search')
                 ->orWhere('o.order_number like :search')
