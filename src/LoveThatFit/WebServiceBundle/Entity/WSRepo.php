@@ -601,7 +601,7 @@ class WSRepo
         // add the default condition
         $conditions = array(
             $query->expr()->eq('p.disabled', '0'),
-            $query->expr()->eq('p.status', 'complete'),
+            $query->expr()->eq('p.status', "'complete'"),
             $query->expr()->orX(
                 $query->expr()->eq('p.default_clothing', '0'),
                 $query->expr()->isNull('p.default_clothing')
