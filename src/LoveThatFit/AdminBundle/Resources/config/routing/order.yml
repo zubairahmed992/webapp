@@ -36,3 +36,7 @@ admin_order_delete:
 admin_order_old:
     pattern:  /admin/order/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Order:index ,page_number: 1, sort:id }
+
+admin_show_discount_order:
+    pattern: /admin/fnf-user-order/{user_id}/{group_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Order:fnfUserOrder }

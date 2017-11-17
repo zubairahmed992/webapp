@@ -21,7 +21,11 @@ class OrderController extends Controller {
     public function paginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
-        $output = $this->get('cart.helper.order')->search($requestData);
+
+        if(isset($requestData['view_type']))
+            $output = $this->get('cart.helper.order')->searchOrderByDiscount($requestData);
+        else
+            $output = $this->get('cart.helper.order')->search($requestData);
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
@@ -242,5 +246,13 @@ class OrderController extends Controller {
     {
         $this->get('mail_helper')->sendUserOrderShippedEmail($dataArray);
         return;
+    }
+
+    public function fnfUserOrderAction($user_id, $group_id){
+        return $this->render('LoveThatFitAdminBundle:Order:discount-ourder-index.html.twig',array(
+            'user_id' => $user_id,
+            'group_id' => $group_id,
+            'view_type' => 'discount'
+        ));
     }
 }
