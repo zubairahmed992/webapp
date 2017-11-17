@@ -432,7 +432,7 @@ class BrandRepository extends EntityRepository {
     public function getBrandsArray()
     {
         $query = $this->getEntityManager()
-            ->createQuery("SELECT DISTINCT b.id as brand_id, b.name as name,\'brand\' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
+            ->createQuery("SELECT DISTINCT b.id as brand_id, b.name as name,'brand' AS type, b.image as image, b.updated_at FROM LoveThatFitAdminBundle:Brand b
                 JOIN b.products p
                 WHERE b.disabled = 0 and p.disabled=0 and p.status='complete' and p.deleted=0 ORDER BY name asc");
         try {
