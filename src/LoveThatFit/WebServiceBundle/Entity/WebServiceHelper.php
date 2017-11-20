@@ -1478,7 +1478,7 @@ class WebServiceHelper
 
         $detail_disabled = $product->getDisabled();
         $detail_status = $product->getStatus();
-        if($status != 'complete'){
+        if($detail_status != 'complete'){
             $detail_disabled = true;
         }
         /* Selected Layer Name */
