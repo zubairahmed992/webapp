@@ -1435,6 +1435,12 @@ class WebServiceHelper
                 list($width, $height) = $info;
             }
 
+            $disabled = $product->getDisabled();
+            $status = $product->getStatus();
+            if($status != 'complete'){
+                $disabled = true;
+            }
+
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -1453,7 +1459,7 @@ class WebServiceHelper
                 'fitting_room_id' => (in_array($pi->getId(), $product_item) &&  (int) $fittingRoomId > 0) ? (int) $fittingRoomId : 0,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
-                'disabled' => $product->getDisabled(),
+                'disabled' => $disabled,
                 'deleted' => $product->getDeleted(),
             );
         }
@@ -1470,6 +1476,11 @@ class WebServiceHelper
             );
         }
 
+        $detail_disabled = $product->getDisabled();
+        $detail_status = $product->getStatus();
+        if($status != 'complete'){
+            $detail_disabled = true;
+        }
         /* Selected Layer Name */
         $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product->getId());
         $selectedcategories = array_column($getselectedcategories, 'id');
@@ -1491,7 +1502,7 @@ class WebServiceHelper
         }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
-        $p['disabled'] = $product->getDisabled();
+        $p['disabled'] = $detail_disabled;
         $p['deleted'] = $product->getDeleted();
         return $p;
     }
