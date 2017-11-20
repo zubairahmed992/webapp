@@ -577,6 +577,7 @@ class ProductSpecificationHelper {
         if ($specs) {
             $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
             $specs_obj->setSpecsJson(json_encode($specs));
+            $specs_obj->roundUp(); #rounding up all values before saving
             return $this->update($specs_obj);
         } else {
             return array(
@@ -592,8 +593,8 @@ class ProductSpecificationHelper {
         foreach ($specs['sizes'] as $size => $fit_points ) {
             foreach ($fit_points as $fp => $measure ) {
                 if(strpos($fp,'thigh')){
-                    $specs['sizes'][$size][$fp]['min_calc'] = $this->to_frac($measure['fit_model'] - ($measure['grade_rule_stretch'] * 2.5 * 2));
-                    $specs['sizes'][$size][$fp]['max_calc'] = $this->to_frac($measure['fit_model'] + ($measure['grade_rule_stretch'] * 2.5 * 2));
+                    $specs['sizes'][$size][$fp]['min_calc'] = $measure['fit_model'] - ($measure['grade_rule_stretch'] * 5);
+                    $specs['sizes'][$size][$fp]['max_calc'] = $measure['fit_model'] + ($measure['grade_rule_stretch'] * 5);
                 }
             }
         }
@@ -661,6 +662,7 @@ class ProductSpecificationHelper {
         if ($fp['garment_dimension'] == 0) {
             return $fp;
         }
+        $old_fp=$fp;
         $gr_value = $fp['grade_rule'] + ($fp['grade_rule'] * $fp['stretch_percentage'] / 100);
         $fp['grade_rule_stretch'] = $gr_value;
         $fp['ideal_low'] = $fp['fit_model'] - (0.5 * $gr_value);
@@ -675,8 +677,18 @@ class ProductSpecificationHelper {
             $fp['max_calc'] = $fp['fit_model'] + (2.5 * $gr_value);
         }
         #------------------
-        $fp['max_actual'] = $fp['max_calc'];
-        $fp['min_actual'] = $fp['min_calc'];
+        #Max/min actual is equal to max/min calc until user manually changes max/min actual.
+        #If max calc decreases to the point where it is less than what was manually entered for max actual, then max actual resets as equal to max calc until the user manually changes max actual.
+        if($old_fp['max_actual'] == $old_fp['max_calc'] || $fp['max_actual'] > $fp['max_calc']){
+            $fp['max_actual'] = $fp['max_calc'];
+        }
+       #If min calc increases to the point where it is more than what was manually entered for min actual, then min actual resets as equal to min calc until the user manually changes min actual.        
+        if($old_fp['min_actual'] == $old_fp['min_calc'] || $fp['min_actual'] < $fp['min_calc']){
+            $fp['min_actual'] = $fp['min_calc'];    
+        }
+        
+        
+        
 
         return $fp;
     }
@@ -901,6 +913,7 @@ class ProductSpecificationHelper {
     
     #------------------------------------------------------
     private function compute_ranges_for_fit_point($fp_specs, $ratio, $title) {
+        $fp_specs_old = $fp_specs;
         $fp_specs['fit_model'] = $fp_specs['garment_stretch'] * $ratio['fit_model'];
         $fp_specs['ideal_low'] = $fp_specs['fit_model'] * $ratio['ideal_low'];
         $fp_specs['ideal_high'] = $fp_specs['fit_model'] * $ratio['ideal_high'];
@@ -914,9 +927,26 @@ class ProductSpecificationHelper {
             $fp_specs['max_calc'] = $fp_specs['fit_model'] + (2.5 * ($fp_specs['ideal_high'] - $fp_specs['ideal_low']));
         }
         #------------------
+        #------------------
+        #
+        #
+        #Max/min actual is equal to max/min calc until user manually changes max/min actual.
+        #If max/min actual are manually changed and max/min calc increase/decrease (because stretch, grade rule, garment dimension is changed) max/min actual are no longer attached to max/min calc, and they stay as what was entered.
+        #If max calc decreases to the point where it is less than what was manually entered for max actual, then max actual resets as equal to max calc until the user manually changes max actual.
+        #If min calc increases to the point where it is more than what was manually entered for min actual, then min actual resets as equal to min calc until the user manually changes min actual.
+
+        #Max/min actual is equal to max/min calc until user manually changes max/min actual.
+        #If max calc decreases to the point where it is less than what was manually entered for max actual, then max actual resets as equal to max calc until the user manually changes max actual.
+        if($fp_specs_old['max_actual'] == $fp_specs_old['max_calc'] || $fp_specs['max_actual'] > $fp_specs['max_calc']){
+            $fp_specs['max_actual'] = $fp_specs['max_calc'];
+        }
+       #If min calc increases to the point where it is more than what was manually entered for min actual, then min actual resets as equal to min calc until the user manually changes min actual.        
+        if($fp_specs_old['min_actual'] == $fp_specs_old['min_calc'] || $fp_specs['min_actual'] < $fp_specs['min_calc']){
+            $fp_specs['min_actual'] = $fp_specs['min_calc'];    
+        }
         
-        $fp_specs['min_actual'] = $fp_specs['min_calc'];
-        $fp_specs['max_actual'] = $fp_specs['max_calc'];        
+        #$fp_specs['min_actual'] = $fp_specs['min_calc'];
+        #$fp_specs['max_actual'] = $fp_specs['max_calc'];        
         return $fp_specs;
     }
 

@@ -304,6 +304,14 @@ class ProductSpecification {
         return $this->specs_json;
     }
 
+    public function getSpecsJsonRounded() {
+        return $this->roundUp();        
+    }
+    
+     public function getSpecsArrayRounded() {
+        $this->roundUp();        
+        return json_decode($this->specs_json, true);
+    }
 #-------------------------Validaation Json
     /**
      * Set specs_json
