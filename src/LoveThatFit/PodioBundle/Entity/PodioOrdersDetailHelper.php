@@ -63,13 +63,14 @@ class PodioOrdersDetailHelper
 
 //-------------------------------------------------------
 
-    public function savePodioOrdersDetail($order_entity,$podio_id)
+    public function savePodioOrdersDetail($order_entity,$podio_id,$podio_item_id)
     {
         $entity = $this->createNew();
         $entity->setPodioId($podio_id);
         $entity->setCreatedAt(new \DateTime('now'));
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUserOrderDetail($order_entity);
+        $entity->setPodioItemId($podio_item_id);
 
         $this->em->persist($entity);
         $this->em->flush();

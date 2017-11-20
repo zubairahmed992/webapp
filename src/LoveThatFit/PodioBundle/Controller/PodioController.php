@@ -27,113 +27,145 @@ class PodioController extends Controller {
           //get user info
           $user_info = $this->get('cart.helper.order')->findUserByOrderId($orders['order_id']);  
           $user_email = $user_info[0]['email'];
-          //get order detail list
-          $order_details = $this->get('cart.helper.orderDetail')->findByOrderID($orders['order_id']);                
-          $id = $orders['id']; 
-          if($order_details) {
-            //if order detail list exists
-            $count_order_detail = 0;
-            $total_order_details = count($order_details);
-            foreach ($order_details as $order_detail) {
-              $style_id = '';
-              if( isset($order_detail['control_number']) ) {
-                if( isset($order_detail['brand_name']) ) {
-                  $style_id = $order_detail['brand_name'].' - '.$order_detail['control_number'];
-                } else {
-                  $style_id = $order_detail['control_number'];
-                }
-              } 
-              //city state and zip code in address
-              $full_address_shipping = '';
-              if( isset($orders['shipping_address1']) && $orders['shipping_address1']!='' ) {
-                $full_address_shipping .= $orders['shipping_address1'];
-              }
-              if( isset($orders['shipping_address2']) && $orders['shipping_address2']!='' ) {
-                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
-                  $full_address_shipping .= ', ';
-                }
-                $full_address_shipping .= $orders['shipping_address2'];
-              }
-              if( isset($orders['shipping_city']) && $orders['shipping_city']!='' ) {
-                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
-                  $full_address_shipping .= ' ';
-                }
-                $full_address_shipping .= $orders['shipping_city'];
-              }
-              if( isset($orders['shipping_state']) && $orders['shipping_state']!='' ) {
-                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
-                  $full_address_shipping .= ', ';
-                }
-                $full_address_shipping .= $orders['shipping_state'];
-              }
-              if( isset($orders['shipping_postcode']) && $orders['shipping_postcode']!='' ) {
-                if( isset($full_address_shipping) && $full_address_shipping!='' ) {
-                  $full_address_shipping .= ' ';
-                }
-                $full_address_shipping .= $orders['shipping_postcode'];
-              }                           
-              //podio orders data
-              $order_podio = array(
-                   'order_id' => $orders['order_id'],
-                   'order_number' => $orders['order_number'],
-                   'order_date' => ($orders['order_date']) ? $orders['order_date']->format('Y-m-d h:i:s') : '',
-                   'order_status' => ($orders['order_status']) ? $orders['order_status'] : '',
-                   'order_amount' => ($orders['order_amount']) ? $orders['order_amount'] : '',
-                   'billing_first_name' => ($orders['billing_first_name']) ? $orders['billing_first_name'] : '',
-                   'billing_last_name' => ($orders['billing_last_name']) ? $orders['billing_last_name'] : '',
-                   'billing_address1' => ($orders['billing_address1']) ? $orders['billing_address1'] : '',
-                   'billing_address2' => ($orders['billing_address2']) ? $orders['billing_address2'] : '',
-                   'billing_city' => ($orders['billing_city']) ? $orders['billing_city'] : '',
-                   'billing_postcode' => ($orders['billing_postcode']) ? $orders['billing_postcode'] : '',
-                   'billing_country' => ($orders['billing_country']) ? $orders['billing_country'] : '',
-                   'billing_state' => ($orders['billing_state']) ? $orders['billing_state'] : '',
-                   'billing_phone' => ($orders['billing_phone']) ? $orders['billing_phone'] : '',
-                   'shipping_first_name' => ($orders['shipping_first_name']) ? $orders['shipping_first_name'] : '',
-                   'shipping_last_name' => ($orders['shipping_last_name']) ? $orders['shipping_last_name'] : '',
-                   'shipping_address1' => ($orders['shipping_address1']) ? $orders['shipping_address1'] : '',
-                   'shipping_address2' => ($orders['shipping_address2']) ? $orders['shipping_address2'] : '',
-                   'shipping_city' => ($orders['shipping_city']) ? $orders['shipping_city'] : '',
-                   'shipping_postcode' => ($orders['shipping_postcode']) ? $orders['shipping_postcode'] : '',
-                   'shipping_country' => ($orders['shipping_country']) ? $orders['shipping_country'] : '',
-                   'shipping_state' => ($orders['shipping_state']) ? $orders['shipping_state'] : '',
-                   'shipping_phone' => ($orders['shipping_phone']) ? $orders['shipping_phone'] : '',
-                   'shipping_amount' => ($orders['shipping_amount']) ? $orders['shipping_amount'] : '',
-                   'transaction_id' => ($orders['transaction_id']) ? $orders['transaction_id'] : '',
-                   'transaction_status' => ($orders['transaction_status']) ? $orders['transaction_status'] : '',
-                   'payment_method' => ($orders['payment_method']) ? $orders['payment_method'] : '',
-                   'credit_card' => ($orders['payment_json']) ? "xxxx-xxxx-xxxx-".json_decode($orders['payment_json'])
-                    ->transaction->_attributes->creditCard->last4 : '',
-                   'user_order_date' => ($orders['user_order_date']) ? $orders['user_order_date']->format('Y-m-d h:i:s') : '', 
-                   'discount_amount' => ($orders['discount_amount']) ? $orders['discount_amount'] : '',
-                   'total_amount' => ($orders['total_amount']) ? $orders['total_amount'] : '',
-                   'item_description' => ($order_detail['item_description']) ? $order_detail['item_description'] : '',
-                   'brand_name' => ($order_detail['brand_name']) ? $order_detail['brand_name'] : '',
-                   'item_amount' => ($order_detail['amount']) ? $order_detail['amount'] : '',
-                   'control_number' => ($order_detail['control_number']) ? $order_detail['control_number'] : '',
-                   'style_id' => $style_id,
-                   'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : '',
-                   'full_address_shipping' => ($full_address_shipping) ? $full_address_shipping : '',
-                   'user_email' => ($user_email) ? $user_email : '',
-                   'sales_tax' => ($orders['sales_tax'] && $orders['sales_tax']>0) ? $orders['sales_tax'] : '0.00'
-                ); 
-              //save podio order data
-              $podio_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
-              echo "<pre>"; print_r($podio_id); echo "</pre>"; 
-              if($podio_id) {
-                //save podio order detail history on podio
-                $podio_id_order_id = $this->container->get('podio.helper.podiolib')->saveOrderPodioDetail($order_podio,$podio_id);
-                echo "<pre>"; print_r($podio_id_order_id); echo "</pre>"; die();
-                //podio order data is saved then add podio_id to podio_order_detail
-                $order_entity = $this->container->get('order.helper.podio')->find($id);
-                $save_order_detail = $this->get('orderdetail.helper.podio')->savePodioOrdersDetail($order_entity, $podio_id);
-              }
-              $count_order_detail++;
-            }
-            if($count_order_detail==$total_order_details) {
-              //update podio order status to executed
-              $save_podio_order = $this->get('order.helper.podio')->updatePodioOrders($id);
-            }
+
+          /*********add order data start here ************************/
+          //city state and zip code in address
+          $full_address_shipping = '';
+          if( isset($orders['shipping_address1']) && $orders['shipping_address1']!='' ) {
+            $full_address_shipping .= $orders['shipping_address1'];
           }
+          if( isset($orders['shipping_address2']) && $orders['shipping_address2']!='' ) {
+            if( isset($full_address_shipping) && $full_address_shipping!='' ) {
+              $full_address_shipping .= ', ';
+            }
+            $full_address_shipping .= $orders['shipping_address2'];
+          }
+          if( isset($orders['shipping_city']) && $orders['shipping_city']!='' ) {
+            if( isset($full_address_shipping) && $full_address_shipping!='' ) {
+              $full_address_shipping .= ' ';
+            }
+            $full_address_shipping .= $orders['shipping_city'];
+          }
+          if( isset($orders['shipping_state']) && $orders['shipping_state']!='' ) {
+            if( isset($full_address_shipping) && $full_address_shipping!='' ) {
+              $full_address_shipping .= ', ';
+            }
+            $full_address_shipping .= $orders['shipping_state'];
+          }
+          if( isset($orders['shipping_postcode']) && $orders['shipping_postcode']!='' ) {
+            if( isset($full_address_shipping) && $full_address_shipping!='' ) {
+              $full_address_shipping .= ' ';
+            }
+            $full_address_shipping .= $orders['shipping_postcode'];
+          }
+
+          $shipping_amount = ($orders['shipping_amount']) ? $orders['shipping_amount'] : '0.00';
+          $order_amount = ($orders['order_amount']) ? $orders['order_amount'] : '0.00';
+          $sales_tax = ($orders['sales_tax'] && $orders['sales_tax']>0) ? $orders['sales_tax'] : '0.00';
+          $discount_amount = ($orders['discount_amount']) ? $orders['discount_amount'] : '0.00';
+
+          //grand total 
+          $grand_total = ( $shipping_amount + $order_amount + $sales_tax ) - $discount_amount;   
+
+          //podio orders data
+          $order_podio = array(
+               'order_id' => $orders['order_id'],
+               'order_number' => $orders['order_number'],
+               'order_date' => ($orders['order_date']) ? $orders['order_date']->format('Y-m-d h:i:s') : '',
+               'order_status' => ($orders['order_status']) ? $orders['order_status'] : '',
+               'order_amount' => $order_amount,
+               'billing_first_name' => ($orders['billing_first_name']) ? $orders['billing_first_name'] : '',
+               'billing_last_name' => ($orders['billing_last_name']) ? $orders['billing_last_name'] : '',
+               'billing_address1' => ($orders['billing_address1']) ? $orders['billing_address1'] : '',
+               'billing_address2' => ($orders['billing_address2']) ? $orders['billing_address2'] : '',
+               'billing_city' => ($orders['billing_city']) ? $orders['billing_city'] : '',
+               'billing_postcode' => ($orders['billing_postcode']) ? $orders['billing_postcode'] : '',
+               'billing_country' => ($orders['billing_country']) ? $orders['billing_country'] : '',
+               'billing_state' => ($orders['billing_state']) ? $orders['billing_state'] : '',
+               'billing_phone' => ($orders['billing_phone']) ? $orders['billing_phone'] : '',
+               'shipping_first_name' => ($orders['shipping_first_name']) ? $orders['shipping_first_name'] : '',
+               'shipping_last_name' => ($orders['shipping_last_name']) ? $orders['shipping_last_name'] : '',
+               'shipping_address1' => ($orders['shipping_address1']) ? $orders['shipping_address1'] : '',
+               'shipping_address2' => ($orders['shipping_address2']) ? $orders['shipping_address2'] : '',
+               'shipping_city' => ($orders['shipping_city']) ? $orders['shipping_city'] : '',
+               'shipping_postcode' => ($orders['shipping_postcode']) ? $orders['shipping_postcode'] : '',
+               'shipping_country' => ($orders['shipping_country']) ? $orders['shipping_country'] : '',
+               'shipping_state' => ($orders['shipping_state']) ? $orders['shipping_state'] : '',
+               'shipping_phone' => ($orders['shipping_phone']) ? $orders['shipping_phone'] : '',
+               'shipping_amount' => $shipping_amount,
+               'transaction_id' => ($orders['transaction_id']) ? $orders['transaction_id'] : '',
+               'transaction_status' => ($orders['transaction_status']) ? $orders['transaction_status'] : '',
+               'payment_method' => ($orders['payment_method']) ? $orders['payment_method'] : '',
+               'credit_card' => ($orders['payment_json']) ? "xxxx-xxxx-xxxx-".json_decode($orders['payment_json'])
+                ->transaction->_attributes->creditCard->last4 : '',
+               'user_order_date' => ($orders['user_order_date']) ? $orders['user_order_date']->format('Y-m-d h:i:s') : '', 
+               'discount_amount' => $discount_amount,
+               'total_amount' => ($orders['total_amount']) ? $orders['total_amount'] : '',
+               //'item_description' => ($order_detail['item_description']) ? $order_detail['item_description'] : '',
+               //'brand_name' => ($order_detail['brand_name']) ? $order_detail['brand_name'] : '',
+               //'item_amount' => ($order_detail['amount']) ? $order_detail['amount'] : '',
+               //'control_number' => ($order_detail['control_number']) ? $order_detail['control_number'] : '',
+               //'style_id' => $style_id,
+               //'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : '',
+               'full_address_shipping' => ($full_address_shipping) ? $full_address_shipping : '',
+               'user_email' => ($user_email) ? $user_email : '',
+               'sales_tax' => $sales_tax,
+               'grand_total' => $grand_total
+            );
+
+            //save podio order data
+            $podio_order_id = $this->container->get('podio.helper.podiolib')->saveOrderPodio($order_podio);
+            //echo "<pre>"; print_r($podio_order_id); echo "</pre>";                             
+            /*********add order data start here ************************/
+
+            if($podio_order_id) {
+              //if order data is added to podio then add order detail to podio
+              //get order detail list
+              $order_details = $this->get('cart.helper.orderDetail')->findByOrderID($orders['order_id']);                
+              //echo "<pre>"; print_r($order_details); echo "</pre>"; 
+              $id = $orders['id']; 
+              if($order_details) {
+                //if order detail list exists
+                $count_order_detail = 0;
+                $total_order_details = count($order_details);
+                foreach ($order_details as $order_detail) {
+                  $style_id = '';
+                  if( isset($order_detail['control_number']) ) {
+                    if( isset($order_detail['brand_name']) ) {
+                      $style_id = $order_detail['brand_name'].' - '.$order_detail['control_number'];
+                    } else {
+                      $style_id = $order_detail['control_number'];
+                    }
+                  } 
+                  
+                  //podio orders detail data
+                  $order_detail_podio = array(                   
+                       'item_description' => ($order_detail['item_description']) ? $order_detail['item_description'] : '',
+                       'brand_name' => ($order_detail['brand_name']) ? $order_detail['brand_name'] : '',
+                       'item_amount' => ($order_detail['amount']) ? $order_detail['amount'] : '',
+                       'control_number' => ($order_detail['control_number']) ? $order_detail['control_number'] : '',
+                       'style_id' => $style_id,
+                       'quantity_item' => ($order_detail['qty']) ? $order_detail['qty'] : '',
+                       'item_price' => ($order_detail['item_price']) ? $order_detail['item_price'] : ''
+                    ); 
+
+                  //save podio order detail history on podio
+                  $podio_order_detail_id = $this->container->get('podio.helper.podiolib')->saveOrderPodioDetail($order_detail_podio,$podio_order_id);
+                  //echo "<pre>"; print_r($podio_order_detail_id); echo "</pre>"; 
+
+                  if($podio_order_detail_id) {                
+                    //podio order data is saved then add podio_id to podio_order_detail
+                    $order_entity = $this->container->get('order.helper.podio')->find($id);
+                    $save_order_detail = $this->get('orderdetail.helper.podio')->savePodioOrdersDetail($order_entity, $podio_order_id, $podio_order_detail_id);
+                    $count_order_detail++;
+                  }                  
+                }
+                if($count_order_detail==$total_order_details) {
+                  //update podio order status to executed
+                  $save_podio_order = $this->get('order.helper.podio')->updatePodioOrders($id);
+                }
+              }
+            }
       }
       die(''.$total_podio_orders.' Podio orders added by cron job service...');
     } else {

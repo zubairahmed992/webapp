@@ -41,6 +41,11 @@ class PodioOrdersDetail {
     protected $updated_at;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $podio_item_id;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -129,5 +134,26 @@ class PodioOrdersDetail {
      */
     public function getUpdatedAt() {
         return $this->updated_at;
+    }
+
+    /**
+     * Set podio_item_id
+     *
+     * @param string $podio_item_id
+     * @return podio_item_id
+     */
+    public function setPodioItemId($podio_item_id) {
+        $this->podio_item_id = $podio_item_id;
+
+        return $this;
+    }
+
+    /**
+     * Get podio_item_id
+     *
+     * @return string 
+     */
+    public function getPodioItemId() {
+        return $this->podio_item_id;
     }
 }
