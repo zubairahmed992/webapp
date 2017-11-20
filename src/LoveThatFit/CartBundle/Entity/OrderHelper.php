@@ -299,6 +299,50 @@ class OrderHelper
         return $this->repo->findOneByName($name);
     }
 
+    public function searchOrderByDiscount($data)
+    {
+        $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
+        $user_id = isset ( $data['user_id'] ) ? intval( $data['user_id'] ) : 0;
+        $group_id = isset ( $data['group_id'] ) ? intval( $data['group_id'] ) : 0;
+        //length
+        $length  = $data['length'];
+        $length  = $length && ($length!=-1) ? $length : 0;
+        //limit
+        $start   = $data['start'];
+        $start   = $length ? ($start && ($start!=-1) ? $start : 0) / $length : 0;
+        //order by
+        $order   = $data['order'];
+        //search data
+        $search  = $data['search'];
+        $filters = [
+            'query' => @$search['value']
+        ];
+
+        $finalData = $this->repo->searchOrderByDiscount($filters, $start, $length, $order, true, $user_id, $group_id );
+
+        $output = array(
+            "draw"            => $draw,
+            'recordsFiltered' => count($this->repo->searchOrderByDiscount($filters, 0, false, $order, true, $user_id, $group_id)),
+            'recordsTotal'    => count($this->repo->searchOrderByDiscount(array(), 0, false, $order, true, $user_id, $group_id)),
+            'data'            => array()
+        );
+        foreach ($finalData as $fData) {
+            $output['data'][] = [
+                'id'           => $fData["id"],
+                'order_number' => $fData["order_number"],
+                'user_name'    => ($fData["billing_first_name"] . " ". $fData["billing_last_name"]),
+                'order_date'   => ($fData["order_date"]->format('d-m-Y')),
+                'order_amount' => "$" . number_format((float)$fData["order_amount"], 2, '.', ''),
+                'credit_card'  => "xxxx-xxxx-xxxx-".json_decode($fData['payment_json'])
+                        ->transaction->_attributes->creditCard->last4,
+                'transaction_status' => $fData['transaction_status'],
+                'shipping_status' => $fData['order_status']
+            ];
+        }
+
+        return $output;
+    }
+
     public function search($data)
     {
         $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
@@ -320,7 +364,7 @@ class OrderHelper
 
         $output = array( 
             "draw"            => $draw,
-            'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)), 
+            'recordsFiltered' => count($this->repo->search($filters, 0, false, $order)),
             'recordsTotal'    => count($this->repo->search(array(), 0, false, $order)),
             'data'            => array()
         );

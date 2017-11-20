@@ -306,6 +306,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             WHERE p.gender = :gender
             AND p.disabled=0
+            and p.status='complete'
             AND p.deleted=0"
                 )->setParameter('gender', $gender);
         } else {
@@ -313,7 +314,7 @@ class ProductRepository extends EntityRepository
                 ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p
             WHERE p.gender = :gender
-            AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
                 )->setParameter('gender', $gender)
                 ->setFirstResult($limit * ($page_number - 1))
                 ->setMaxResults($limit);
@@ -337,7 +338,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             LEFT JOIN p.retailer r
-            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND b.disabled=0 AND p.displayProductColor!=''
+            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND b.disabled=0 AND p.displayProductColor!=''
             AND (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0)) ORDER BY p.created_at DESC"
                 )->setParameter('gender', $gender);
         } else {
@@ -346,7 +347,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             LEFT JOIN p.retailer r
-            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND b.disabled=0 AND p.brand.disabled=0 AND p.displayProductColor!=''
+            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND b.disabled=0 AND p.brand.disabled=0 AND p.displayProductColor!=''
             AND (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0)) ORDER BY p.created_at DESC"
                 )->setParameter('gender', $gender)
                 ->setFirstResult($limit * ($page_number - 1))
@@ -364,7 +365,7 @@ class ProductRepository extends EntityRepository
     public function findByGenderRandom($gender, $limit)
     {
 
-        $sql = "SELECT * FROM product p WHERE p.gender = '" . $gender . "' AND p.disabled=0 AND p.deleted=0 AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT " . $limit;
+        $sql = "SELECT * FROM product p WHERE p.gender = '" . $gender . "' AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT " . $limit;
 
         $rsm = new ResultSetMapping;
         $rsm->addEntityResult('LoveThatFit\AdminBundle\Entity\Product', 'p');
@@ -391,7 +392,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.id = :id
-            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.status='complete' AND p.displayProductColor!=''"
                 )->setParameters(array('id' => $brand_id, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
@@ -399,7 +400,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.id = :id
-            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.status='complete' AND p.displayProductColor!=''"
                 )->setParameters(array('id' => $brand_id, 'gender' => $gender))
                 ->setFirstResult($limit * ($page_number - 1))
                 ->setMaxResults($limit);
@@ -423,7 +424,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
             WHERE ct.id = :clothing_type_id
-            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
                 )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
@@ -431,7 +432,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
             WHERE ct.id = :clothing_type_id
-            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
                 )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender))
                 ->setFirstResult($limit * ($page_number - 1))
                 ->setMaxResults($limit);
@@ -452,7 +453,7 @@ class ProductRepository extends EntityRepository
             ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.clothing_type ct
-            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            WHERE p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
             )->setParameter('gender', $gender);
 
         try {
@@ -472,7 +473,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.name = :brand_name
-            AND p.title = :product_title AND p.disabled=0 AND p.deleted=0 AND p.disabled=0"
+            AND p.title = :product_title AND p.disabled=0 AND p.deleted=0 AND p.disabled=0 AND p.status='complete'"
             )->setParameters(array('brand_name' => $brand_name, 'product_title' => $product_title));
 
         try {
@@ -494,7 +495,7 @@ class ProductRepository extends EntityRepository
       JOIN p.clothing_type ct
       JOIN p.brand b
       JOIN p.product_colors pc
-      where p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''
+      where p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''
       ");
 
         try {
@@ -516,7 +517,7 @@ class ProductRepository extends EntityRepository
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
-      AND b.id = :brand_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+      AND b.id = :brand_id AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
         )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
         try {
             return $query->getResult();
@@ -538,7 +539,7 @@ class ProductRepository extends EntityRepository
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
-      AND ct.id = :clothing_type_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+      AND ct.id = :clothing_type_id AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
             )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
         try {
             return $query->getResult();
@@ -561,7 +562,7 @@ class ProductRepository extends EntityRepository
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id
-      AND b.id = :brand_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+      AND b.id = :brand_id AND p.disabled=0 AND p.deleted=0 AND p.status='complete' AND p.displayProductColor!=''"
             )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id, 'brand_id' => $brand_id));
 
         try {
@@ -680,7 +681,7 @@ class ProductRepository extends EntityRepository
            JOIN pi.product_size ps
            WHERE
            pi.image!='' AND
-           p.disabled=0 AND p.deleted=0 AND
+           p.disabled=0 AND p.deleted=0 AND p.status='complete' AND
            p.gender=:gender AND
            p.updated_at>=:date_format AND
            p.disabled=0
@@ -704,7 +705,7 @@ class ProductRepository extends EntityRepository
            JOIN pi.product_size ps
            WHERE
            pi.image!='' AND
-           p.disabled=0 AND p.deleted=0 AND
+           p.disabled=0 AND p.deleted=0 AND p.status='complete' AND
            p.gender=:gender AND
            p.disabled=0
            AND
@@ -735,6 +736,7 @@ class ProductRepository extends EntityRepository
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
                 ->andWhere('p.deleted=0')
+                ->andWhere("p.status='complete'")
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender, 'update_date' => $date_format))
                 ->getQuery()
@@ -753,6 +755,7 @@ class ProductRepository extends EntityRepository
                 ->andWhere("p.displayProductColor!=''")
                 ->andWhere('p.disabled=0')
                 ->andWhere('p.deleted=0')
+                ->andWhere("p.status='complete'")
                 ->groupBy('p.id')
                 ->setParameters(array('gender' => $gender))
                 ->getQuery()
@@ -809,6 +812,7 @@ class ProductRepository extends EntityRepository
             ->where('p.gender=:gender')
             ->andWhere('p.disabled=0')
             ->andWhere('p.deleted=0')
+            ->andWhere("p.status='complete'")
             ->andWhere("p.displayProductColor!=''")
             ->groupBy('p.id')
             ->orderBy('p.updated_at', 'desc')
@@ -832,6 +836,7 @@ class ProductRepository extends EntityRepository
             ->where('p.gender=:gender')
             ->andWhere('p.disabled=0')
             ->andWhere('p.deleted=0')
+            ->andWhere("p.status='complete'")
             ->andWhere("p.displayProductColor!=''")
             ->groupBy('uih.product')
             ->orderBy('uih.count', 'DESC')
@@ -853,7 +858,7 @@ class ProductRepository extends EntityRepository
       JOIN p.clothing_type ct
       JOIN p.brand b
       WHERE
-    p.disabled=0 AND p.deleted=0 AND
+    p.disabled=0 AND p.deleted=0 AND p.status='complete' AND
     p.id=:id AND p.disabled=0 AND p.displayProductColor!=''")->setParameter('id', $product_id);
         try {
             return $query->getResult();
@@ -884,7 +889,7 @@ class ProductRepository extends EntityRepository
       JOIN pi.product_color pc
       JOIN pi.product_size ps
       WHERE
-    p.disabled=0 AND p.deleted=0 AND
+    p.disabled=0 AND p.deleted=0 AND p.status='complete' AND
     p.id=:id AND p.disabled=0 AND p.displayProductColor!=''")->setParameter('id', $product_id);
         try {
             return $query->getResult();
@@ -963,7 +968,7 @@ class ProductRepository extends EntityRepository
         LEFT JOIN p.retailer r
         WHERE p.gender = :gender
         AND
-        p.disabled=0 AND p.deleted=0
+        p.disabled=0 AND p.deleted=0 AND p.status='complete'
         AND
         b.disabled=0
         AND
@@ -984,7 +989,7 @@ class ProductRepository extends EntityRepository
             WHERE p.gender = :gender AND
             b.disabled=0
             AND
-            p.disabled=0 AND p.deleted=0 AND
+            p.disabled=0 AND p.deleted=0 AND p.status='complete' AND
             p.displayProductColor!='' AND
             p.id in (:ids)
             ")->setParameters(array('gender' => $gender, 'ids' => $ids));
@@ -999,7 +1004,7 @@ class ProductRepository extends EntityRepository
             AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
             AND
-            p.disabled=0 AND p.deleted=0
+            p.disabled=0 AND p.deleted=0 AND p.status='complete'
             AND
             p.displayProductColor!='' AND
             p.id in (:ids)
@@ -1031,7 +1036,7 @@ class ProductRepository extends EntityRepository
         AND
         b.disabled=0
         AND
-        p.disabled=0 AND p.deleted=0
+        p.disabled=0 AND p.deleted=0 AND p.status='complete'
         AND
         (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
         GROUP BY p.id ORDER BY likedproducts DESC
@@ -1048,7 +1053,7 @@ class ProductRepository extends EntityRepository
             LEFT JOIN p.retailer r
             WHERE p.gender = :gender AND b.disabled=0
             AND
-            p.disabled=0 AND p.deleted=0 AND
+            p.disabled=0 AND p.deleted=0 AND p.status='complete' AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
             AND
             p.displayProductColor!='' AND
@@ -1076,7 +1081,7 @@ class ProductRepository extends EntityRepository
              JOIN p.brand b
             JOIN p.user_item_try_history uih
             LEFT JOIN p.retailer r
-            WHERE p.disabled=0 AND p.deleted=0 AND b.disabled=0 AND  p.displayProductColor!='' AND uih.user=:user_id
+            WHERE p.disabled=0 AND p.deleted=0 AND p.status='complete' AND b.disabled=0 AND  p.displayProductColor!='' AND uih.user=:user_id
             AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
              ORDER BY uih.updated_at DESC"
@@ -1089,7 +1094,7 @@ class ProductRepository extends EntityRepository
              JOIN p.brand b
             JOIN p.user_item_try_history uih
             LEFT JOIN p.retailer r
-            WHERE p.disabled=0 AND p.deleted=0 AND b.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            WHERE p.disabled=0 AND p.deleted=0 AND p.status='complete' AND b.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
             AND
             (r.id IS NULL OR (r.id IS NOT NULL and r.disabled=0))
             ORDER BY uih.updated_at DESC "
@@ -1113,7 +1118,7 @@ class ProductRepository extends EntityRepository
                 ->createQuery("
             SELECT p,uih FROM LoveThatFitAdminBundle:Product p
             JOIN p.user_item_try_history uih
-            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''
+            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.status='complete' AND p.deleted=0 AND p.displayProductColor!=''
 
             ORDER BY uih.count DESC"
                 )->setParameters(array('user_id' => $user_id, 'retailer_id' => $retailer_id));
@@ -1122,7 +1127,7 @@ class ProductRepository extends EntityRepository
                 ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.user_item_try_history uih
-            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''
+            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.status='complete' AND p.deleted=0 AND p.displayProductColor!=''
             ORDER BY uih.count DESC "
                 )->setParameters(array('user_id' => $user_id, 'retailer_id' => $retailer_id))
                 ->setFirstResult($limit * ($page_number - 1))
@@ -1159,7 +1164,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.name = :name
-            AND p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.displayProductColor!=''"
+            AND p.gender = :gender AND p.disabled=0 AND p.status='complete' AND p.deleted=0 AND p.displayProductColor!=''"
                 )->setParameters(array('name' => $brand, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
@@ -1167,7 +1172,7 @@ class ProductRepository extends EntityRepository
             SELECT p FROM LoveThatFitAdminBundle:Product p
             JOIN p.brand b
             WHERE b.name = :name
-            AND p.gender = :gender AND p.disabled=0 AND p.deleted=0 AND p.disabled=0 AND p.displayProductColor!=''"
+            AND p.gender = :gender AND p.disabled=0 AND p.status='complete' AND p.status='complete' AND p.deleted=0 AND p.disabled=0 AND p.displayProductColor!=''"
                 )->setParameters(array('name' => $brand, 'gender' => $gender))
                 ->setFirstResult($limit * ($page_number - 1))
                 ->setMaxResults($limit);
@@ -1647,6 +1652,7 @@ class ProductRepository extends EntityRepository
         $sql = 'SELECT 
                  p.id as product_id ,
                  p.name as product_name,
+                 p.status as product_status,
                  p.disabled as status,
                  p.gender,
                  b.name as brand_name,
@@ -1693,6 +1699,7 @@ class ProductRepository extends EntityRepository
             ->from('LoveThatFitAdminBundle:Product', 'p')
             ->Where('p.disabled=0')
             ->andWhere('p.deleted=0')
+            ->andWhere("p.status='complete'")
             ->getQuery()
             ->getResult();
     }
@@ -1702,10 +1709,10 @@ class ProductRepository extends EntityRepository
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.disabled = 0 AND p.deleted=0 ORDER BY p.' . $sort . ' ASC');
+                ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.disabled = 0 AND p.deleted=0 AND p.status='complete' ORDER BY p." . $sort . " ASC");
         } else {
             $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.disabled = 0 AND p.deleted=0 ORDER BY p.' . $sort . ' ASC')
+                ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.disabled = 0 AND p.deleted=0 AND p.status='complete' ORDER BY p." . $sort . " ASC")
                 ->setFirstResult($limit * ($page_number - 1))
                 ->setMaxResults($limit);
         }
@@ -1801,6 +1808,7 @@ class ProductRepository extends EntityRepository
     {
         $sql = 'SELECT p.id as product_id ,
                  p.name as product_name,
+                 p.status as product_status,
                  p.disabled as status,
                  p.gender,
                  b.name as brand_name,
@@ -1865,6 +1873,7 @@ class ProductRepository extends EntityRepository
             ->andWhere('p.id = :id')
             ->andWhere("p.displayProductColor!=''")
             ->andWhere('p.disabled=0')
+            ->andWhere("p.status='complete'")
             ->andWhere('p.default_clothing = 0 or p.default_clothing is null')
             ->groupBy('p.id')
             ->setParameters(array('id' => $id))
@@ -1924,6 +1933,7 @@ class ProductRepository extends EntityRepository
             ->innerJoin('p.product_items', 'pi')
             ->where('p.disabled=0')
             ->andWhere('p.deleted=0')
+            ->andWhere("p.status='complete'")
             ->andWhere('p.item_name IS NOT NULL ')
             ->andWhere('p.item_name != :empty')->setParameter('empty', '')
             ->groupBy('p.id')

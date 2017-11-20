@@ -1033,6 +1033,8 @@ if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val(
 	jQuery('#screen_slide_7').addClass("hide");			
 	jQuery('#screen_slide_6').removeClass("hide");			
 	jQuery('#screen_slide_6').addClass("show");
+	jQuery('#invite_friend_skip_iphone_tag').attr("href","#screen_slide_6");
+	
 
 } if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {	
 
@@ -1040,6 +1042,7 @@ if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val(
 	jQuery('#screen_slide_7').addClass("hide");			
 	jQuery('#screen_slide_8').removeClass("hide");			
 	jQuery('#screen_slide_8').addClass("show");
+	jQuery('#invite_friend_skip_iphone_tag').attr("href","#screen_slide_8");
 	
 
 } else {
@@ -1160,6 +1163,7 @@ function step_back(id)
 		jQuery('#screen_slide_6').removeClass("hide");			
 		jQuery('#screen_slide_7').addClass("hide");			
 		jQuery('#screen_slide_7').removeClass("show");
+		jQuery('#invite_friend_skip_iphone_tag').attr("href","#screen_slide_6");
 		
 		} else if($( "#screen_slide_7" ).hasClass( "show" ) && jQuery('#invetation_slide').val()==1) {
 			
@@ -1167,6 +1171,7 @@ function step_back(id)
 		jQuery('#screen_slide_8').removeClass("hide");			
 		jQuery('#screen_slide_7').addClass("hide");			
 		jQuery('#screen_slide_7').removeClass("show");	
+		jQuery('#invite_friend_skip_iphone_tag').attr("href","#screen_slide_8");
 			
 		} else {
 			
@@ -1199,6 +1204,7 @@ function step_back(id)
 		jQuery('#screen_slide_11').removeClass("hide");			
 		jQuery('#screen_slide_12').addClass("hide");			
 		jQuery('#screen_slide_12').removeClass("show");
+		jQuery('#male_invite_friend_skip_iphone_tag').attr("href","#screen_slide_11");
 		
 		} else if($( "#screen_slide_12" ).hasClass( "show" ) && jQuery('#male_invetation_slide').val()==1) {
 			
@@ -1206,6 +1212,7 @@ function step_back(id)
 			jQuery('#screen_slide_16').removeClass("hide");			
 			jQuery('#screen_slide_12').addClass("hide");			
 			jQuery('#screen_slide_12').removeClass("show");
+			jQuery('#male_invite_friend_skip_iphone_tag').attr("href","#screen_slide_16");
 		
 		}else {
 			
@@ -1492,7 +1499,7 @@ function validate_email_male(email){
     
     
     <div class="privacy">
-      <p>By signing up, you agree to our <a href="javascript:" onclick="show_term_and_condition();">terms and conditions</a><br />and you have read our <a href="javascript:" onclick="show_privacy_policy();">privacy policy.</a></p>
+      <p>By signing up, you agree to our <a href="#screen_slide_15" onclick="show_term_and_condition();">terms and conditions</a><br />and you have read our <a href="#screen_slide_14" onclick="show_privacy_policy();">privacy policy.</a></p>
     </div>
     <a href="#screen_slide_2" class="btn btn-md btn-primary btn-block" onclick="validate_form1();" tabindex="3">Next</a>    
       <div class="privacy">
@@ -1724,7 +1731,7 @@ styles and outfit ideas.</p></div>
     <div class="gap_4"></div>
     <a href="#screen_slide_8" class="btn btn-md btn-primary btn-block" onclick="invite_friend();" tabindex="21">Send invitation</a>
        <div class="privacy">
-      <p><a href="#screen_slide_8" onclick="invite_friend_skip();" tabindex="22">Skip</a></p>
+      <p><a href="#screen_slide_6" id="invite_friend_skip_iphone_tag" onclick="invite_friend_skip();" tabindex="22">Skip</a></p>
     </div>
   
 </div>
@@ -1735,7 +1742,7 @@ styles and outfit ideas.</p></div>
 
 <div class="screen_700 hide" id="screen_slide_12">
     <div class="create_acc">
-    <div class="arrow"><a href="#screen_slide_11" onclick="step_back(12);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
+    <div class="arrow"><a href="#screen_slide_11" id="male_invite_friend_skip_iphone_tag" onclick="step_back(12);"><img src="{{ asset('bundles/lovethatfit/web_registration/img/arrow.png') }}"  /></a></div>
       <p>Shop with friends</p>
       <div class="error_red hide" id="error_bar_12">oops</div>
     </div>
@@ -1761,7 +1768,7 @@ styles and outfit ideas.</p></div>
     <input type="email" autocomplete="off" id="male_invite_friend_email" tabindex="28" name="male_invite_friend_email" class="form-control" onfocus="label_up_on_focus(this.id);">
     </div>
     <div class="gap_4"></div>
-    <a href="#screen_slide_11" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();" tabindex="29">Send invitation</a>
+    <a href="#screen_slide_16" class="btn btn-md btn-primary btn-block" onclick="male_invite_friend();" tabindex="29">Send invitation</a>
        <!--<div class="privacy">
       <p><a href="#screen_slide_11" onclick="male_invite_friend_skip();">Skip</a></p>
     </div>-->
@@ -1799,7 +1806,7 @@ styles and outfit ideas.</p></div>
         </p>
     </div>
     <a class="btn btn-md btn-primary btn-block" href="#signin" tabindex="24">Let's start shopping</a>
-    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="invite_friend();" tabindex="25">Invite another friend</a>
+    <a href="#screen_slide_7" class="btn btn-md btn-outline btn-block" onclick="invite_friend();" tabindex="25">Invite another friend</a>
 </div>
 </div>
 
@@ -1819,7 +1826,7 @@ styles and outfit ideas.</p></div>
     <div class="request_text">
       <p class="privacy">We will update you when the app is ready for you.<br />We have a lot of exciting features in store. Learn more<br />about finding your best fit on <a href="https://www.selfiestyler.com">SelfieStyler.com</a></p>
     </div>
-    <a href="#screen_slide_10" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();" tabindex="35">Invite a friend</a>
+    <a href="#screen_slide_12" class="btn btn-md btn-outline btn-block" onclick="male_invite_friend();" tabindex="35">Invite a friend</a>
 </div>
 </div>
 
