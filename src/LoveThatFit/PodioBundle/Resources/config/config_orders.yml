@@ -3,6 +3,11 @@ podio_local_credentials:
   client_secret: ADPRVudgIpTlVVx1pk0kckIt2AqZSYEIHdEoWdkGIDipxrzGRb1qYPHjPMgy4d0Y
   app_id: 18595333
   app_token: d20f7c05553547dab552d30887a16112
+  # order detail history app podio credentials for local server
+  client_id_order_detail: order-detail-history-local
+  client_secret_order_detail: ljwASL0rT55MmDBBOPLBgi0MdlT5Kti2tlCdESK0hK87DEDT5OaiKxfnfJdG6BK7
+  app_id_order_detail: 19892233
+  app_token_order_detail: 79db5c1a8b5f482aa09dc579cb371fc1
 
 podio_qa_credentials:
   client_id: order-history-dr97ri
@@ -15,18 +20,33 @@ podio_dev_credentials:
   client_secret: v2Q5DXhNRYRc54RHCGEGyhRpa8PyOJOjZ6vpPLCScsmz5lxZaQbKDzH6dBADgcDm
   app_id: 18595333
   app_token: d20f7c05553547dab552d30887a16112
+  # order detail history app podio credentials for dev server
+  client_id_order_detail: order-detail-history-dev
+  client_secret_order_detail: bHSLRnEhUnag6k23r1n7Y7Kj6twgNel6Im0vkeef5RrPxEq4StLGaZH0v6UuvyzC
+  app_id_order_detail: 19892233
+  app_token_order_detail: 79db5c1a8b5f482aa09dc579cb371fc1
 
 podio_v3qa_credentials:
   client_id: order-history-y0xknq
   client_secret: D5R1aNEC7qAgErhq5Xg45ZcFfZUWSLcOAhaTZexA60UKLNBlYdtCNi5O5YZE1CIO
   app_id: 18595333
   app_token: d20f7c05553547dab552d30887a16112
+  # order detail history app podio credentials for v3qa server
+  client_id_order_detail: order-detail-history-v3qa
+  client_secret_order_detail: oVfKto4mDhnQcFs7Ziz3EONbHE8D187iD7oy2ftSEieA3roCfqV5NCxyjCSronry
+  app_id_order_detail: 19892233
+  app_token_order_detail: 79db5c1a8b5f482aa09dc579cb371fc1
 
 podio_v3staging_credentials:
   client_id: order-history-h48n17
   client_secret: mHbiCvFyjyrtLxYzZ2X18ptE7PJax4heTKuCYrxLQEKu4m0gvTwf48pNoblKVbCQ
   app_id: 18595333
   app_token: d20f7c05553547dab552d30887a16112
+  # order detail history app podio credentials for v3staging server
+  client_id_order_detail: order-detail-history-v3staging
+  client_secret_order_detail: u03gAnXVM8rAlkCyolO4KFQffszjfc6upYQkzEEab3pTdDUX6SLsByHsi7ok5mFS
+  app_id_order_detail: 
+  app_token_order_detail: 
 
 podio_prod_credentials:
   client_id: order-history-z8xco4
@@ -39,3 +59,8 @@ podio_v3stack_credentials:
   client_secret: mIIErbAIxf9v9FSOFwSX3SmuEnQwoE5OjcWgoUJN0uqvPVVjBsDXeMU0BOyV9JWM
   app_id: 18572379
   app_token: 32e09ae736a44db99d6c7c7ee2ba99b1
+  # order detail history app podio credentials for v3stack server
+  client_id_order_detail: order-detail-history-v3stack
+  client_secret_order_detail: HB4tvK5grVILVWl9qlAKtOiMantUat4Z4vLCnzEhfv1HTyJ8f8xoloPXKESHQsUg
+  app_id_order_detail: 
+  app_token_order_detail:
