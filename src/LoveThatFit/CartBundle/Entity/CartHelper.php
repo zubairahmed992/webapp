@@ -283,6 +283,12 @@ class CartHelper
         $cart_array = array();
         $counter = 0;
         foreach ($user->getCart() as $ci) {
+            $disabled = $ci->getProductItem()->getProduct()->getDisabled();
+            $status = $ci->getProductItem()->getProduct()->getStatus();
+            if($status != 'complete'){
+                $disabled = true;
+            }
+
             $cart_array[$counter]['product_id'] = $ci->getProductItem()->getProduct()->getId();
             $cart_array[$counter]['color'] = $ci->getProductItem()->getProductColor()->getTitle();
             $cart_array[$counter]['color_id'] = $ci->getProductItem()->getProductColor()->getId();
@@ -291,8 +297,9 @@ class CartHelper
             $cart_array[$counter]['name'] = $ci->getProductItem()->getProduct()->getName();
             $cart_array[$counter]['item_name'] = $ci->getProductItem()->getProduct()->getItemName();
             $cart_array[$counter]['description'] = $ci->getProductItem()->getProduct()->getDescription();
-            $cart_array[$counter]['disabled'] = $ci->getProductItem()->getProduct()->getDisabled();
+            $cart_array[$counter]['disabled'] = $disabled;
             $cart_array[$counter]['deleted'] = $ci->getProductItem()->getProduct()->getDeleted();
+            $cart_array[$counter]['status'] = $ci->getProductItem()->getProduct()->getStatus();
             $cart_array[$counter]['price'] = $ci->getProductItem()->getPrice();
             $cart_array[$counter]['qty'] = $ci->getQty();
             $cart_array[$counter]['item_id'] = $ci->getProductItem()->getId();
