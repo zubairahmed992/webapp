@@ -445,9 +445,10 @@ class UserMarkerHelper
                 $prev_px_measure   = $px_measure;
                 $prev_inch_measure = $inch_measure;
             }
-        } else {
-            return ($pixels / 5) * (-1);
         }
+//        else {
+//            return ($pixels / 5) * (-1);
+//        }
     }
     #----------------------------------------------------------------------------
     public function getAxisArray($user, $mm_specs)

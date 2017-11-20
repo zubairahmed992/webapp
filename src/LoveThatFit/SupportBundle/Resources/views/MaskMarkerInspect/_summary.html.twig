@@ -11,9 +11,9 @@
       <th></th>    
       <th colspan="2">Measurement 1</th>
       <th colspan="2">Measurement 2</th>
-      <th style="background-color: #CEF6F5" colspan="2">Average <span class="fixed_px">(5 px)</span></th>
+      <th style="background-color: #CEF6F5" colspan="2">Average <span class="fixed_px"><!--(5 px) --></span></th>
       <th>Actual</th>
-      <th>Difference</th>
+      {#<th>Difference</th>#}
     </tr>
     <tr style="background-color: #c4e3f3">
       <th>Fit Points</th>    
@@ -24,7 +24,7 @@
       <th>pixel</th> 
       <th>inches </th> 
       <th>inches</th> 
-      <th>inches</th> 
+      {#<th>inches</th> #}
     </tr>
     
     {% for fp, seg in specs_comparison %} 
@@ -40,25 +40,25 @@
       {% set seg2= px_dist2>0? '('~seg.segments.s2.a ~', '~ seg.segments.s2.b~')':'-' %}
       
       <tr>
-        <th>{{fp}}</th> 
+          <th>{% if fp =='bust'  %} chest/bust {%else%} {{fp}} {%endif%}</th>
         <td>{{seg1}}</td> 
         <td>{{px_dist1}}</td> 
         <td> {{seg2}} </td>
         <td>{{px_dist2}}</td> 
         <td style="background-color: #CEF6F5">{{avg}}</td>
         {%if (predictive<0)%}
-          <td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>
+          {#<td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>#}
         {%else%}
           <td style="background-color: #CEF6F5">{{predictive}}</td>
         {%endif%}
         <td>{{body}}</td>
-        <td>{{diff}}</td>
+        {#<td>{{diff}}</td>#}
       </tr>
     {% endfor %}
-    <tr><td colspan="9">
-      <span class="fixed_px">Red indicates fixed (5 px) per pixel measurement, fit points that do not have pixel to inch ratio charts
-      </span>
-    </td></tr>
+    {#<tr><td colspan="9">#}
+      {#<span class="fixed_px">Red indicates fixed (5 px) per pixel measurement, fit points that do not have pixel to inch ratio charts#}
+      {#</span>#}
+    {#</td></tr>#}
   </table>
   <table class="table table-condensed table-hover table-bordered">  
     <tr>
@@ -89,7 +89,7 @@
         {% set predictive =seg.predicted!=0?seg.predicted | number_format(2):'-' %}
         {% set body = seg.body>0?seg.body:'-' %}
         <tr>
-          <th>{{fp}}</th>
+            <th>{% if fp =='bust'  %} chest/bust {%else%} {{fp}} {%endif%}</th>
           <td style="background-color: #CEF6F5">{{avg}}</td>
           {%if (predictive<0)%}
             <td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>

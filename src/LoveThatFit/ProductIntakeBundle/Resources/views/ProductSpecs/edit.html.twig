@@ -496,28 +496,28 @@
                       console.log()
                   } else if(min_max_calc.match('min_calc')) {
                       alert("min_actual Must Be Equal or Grater than Value "+ min_max_calc)
-                      $(this).val(min_max_calc_val)
+                      //$(this).val(min_max_calc_val)
                   }
                    //--------  ideal_low > min_actual > min_clac
                     if( min_max_calc.match('min_calc')  && parseFloat(min_max_ideal_low_val) >= parseFloat(min_max_calc_actual_val) ){
                         console.log()
                     } else if(min_max_calc.match('min_calc')) {
                         alert( "min_actual Must Be Equal or Less than Ideal Low")
-                        $(this).val(min_max_calc_val)
+                      // $(this).val(min_max_calc_val)
                     }
 
                   if( min_max_calc.match('max_calc')  && parseFloat(min_max_calc_actual_val) <= parseFloat(min_max_calc_val) ){
                       console.log()
                   } else if(min_max_calc.match('max_calc')) {
                       alert("max_actual Must Be Equal or Less than Value "+ min_max_calc)
-                     $(this).val(min_max_calc_val)
+                     //$(this).val(min_max_calc_val)
                   }
                   //--------  ideal_high < max_actual < max_clac
                     if( min_max_calc.match('max_calc')  && parseFloat(min_max_ideal_high_val) <= parseFloat(min_max_calc_actual_val) ){
                         console.log()
                     } else if(min_max_calc.match('max_calc')) {
                         alert( "max_actual Must Be Equal or Greater than Ideal High ")
-                        $(this).val(min_max_calc_val)
+                        //$(this).val(min_max_calc_val)
                     }
             });
 

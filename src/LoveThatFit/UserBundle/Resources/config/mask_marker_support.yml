@@ -7,20 +7,20 @@ masked_marker:
      s1:
        a: 6
        b: 64  
-  bust: 
+  bust:
     axis: x
     type: single
-    segments: 
-      s1:  
+    segments:
+      s1:
         a: 17
-        b: 53    
-  chest:  
-    axis: x
-    type: single
-    segments: 
-      s1: 
-        a: 17
-        b: 53      
+        b: 53
+#  chest:
+#    axis: x
+#    type: single
+#    segments:
+#      s1:
+#        a: 17
+#        b: 53
   shoulder_across_front: 
     axis: x 
     type: single
@@ -28,16 +28,16 @@ masked_marker:
       s1:
         a: 7
         b: 63            
-  shoulder_height: 
-    axis: y 
-    type: pair
-    segments: 
-      s1:
-        a: 7
-        b: 27
-      s2:
-        a: 63
-        b: 43        
+#  shoulder_height:
+#    axis: y
+#    type: pair
+#    segments:
+#      s1:
+#        a: 7
+#        b: 27
+#      s2:
+#        a: 63
+#        b: 43
 
   torso_height:  
     axis: y 
@@ -79,26 +79,26 @@ masked_marker:
       s2:
         a: 53
         b: 62
-  elbow:  
-    axis: x 
-    type: pair
-    segments: 
-      s1:
-        a: 9
-        b: 14
-      s2:
-        a: 58
-        b: 61
-  wrist:  
-    axis: x 
-    type: pair 
-    segments: 
-      s1:
-        a: 10
-        b: 13
-      s2:
-        a: 57
-        b: 60        
+#  elbow:
+#    axis: x
+#    type: pair
+#    segments:
+#      s1:
+#        a: 9
+#        b: 14
+#      s2:
+#        a: 58
+#        b: 61
+#  wrist:
+#    axis: x
+#    type: pair
+#    segments:
+#      s1:
+#        a: 10
+#        b: 13
+#      s2:
+#        a: 57
+#        b: 60
   waist: 
     axis: x 
     type: single
@@ -107,13 +107,13 @@ masked_marker:
         a: 18
         b: 52  
 
-  belt_waist: 
-    axis: x 
-    type: single
-    segments: 
-      s1:
-        a: 19
-        b: 51 
+#  belt_waist:
+#    axis: x
+#    type: single
+#    segments:
+#      s1:
+#        a: 19
+#        b: 51
   abdomen: 
     axis: x 
     type: single
@@ -176,46 +176,46 @@ masked_marker:
       s2: 
         a: 36
         b: 48
-  low_thigh: 
-    axis: x 
-    type: pair
-    segments: 
-      s1:
-        a: 22
-        b: 34
-      s2: 
-        a: 36
-        b: 48
-  knee: 
-    axis: x 
-    type: pair
-    segments: 
-      s1:
-        a: 24
-        b: 33
-      s2:
-        a: 37
-        b: 46    
-  calf: 
-    axis: x 
-    type: pair
-    segments: 
-      s1:
-        a: 25
-        b: 32
-      s2:
-        a: 38
-        b: 45    
-  ankle:  
-    axis: x 
-    type: pair
-    segments: 
-      s1:
-        a: 26
-        b: 31
-      s2:
-        a: 39
-        b: 44
+#  low_thigh:
+#    axis: x
+#    type: pair
+#    segments:
+#      s1:
+#        a: 22
+#        b: 34
+#      s2:
+#        a: 36
+#        b: 48
+#  knee:
+#    axis: x
+#    type: pair
+#    segments:
+#      s1:
+#        a: 24
+#        b: 33
+#      s2:
+#        a: 37
+#        b: 46
+#  calf:
+#    axis: x
+#    type: pair
+#    segments:
+#      s1:
+#        a: 25
+#        b: 32
+#      s2:
+#        a: 38
+#        b: 45
+#  ankle:
+#    axis: x
+#    type: pair
+#    segments:
+#      s1:
+#        a: 26
+#        b: 31
+#      s2:
+#        a: 39
+#        b: 44
                       
         
 mask_type:
