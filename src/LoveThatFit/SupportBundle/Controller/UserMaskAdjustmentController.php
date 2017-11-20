@@ -353,7 +353,7 @@ class UserMaskAdjustmentController extends Controller {
         $retouch_files = glob($directory_path."/".$retouch_filename."*.*");
         $side_view = '';
         //------------ Get All Images of Side View -------------
-        $side_view_images =  glob($directory_path."/*.png");
+        $side_view_images =  glob($directory_path."{/*.jpg,/*.jpeg,/*.png}", GLOB_BRACE);
         $i = 0;
         foreach($side_view_images as $filename){
             if (preg_match('/side_view_two/',basename($filename))) {
