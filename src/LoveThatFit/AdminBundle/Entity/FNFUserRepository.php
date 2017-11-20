@@ -177,7 +177,7 @@ class FNFUserRepository extends EntityRepository
             ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
             ->join('fnf.groups', 'fnfg')
             ->join('fnf.users', 'u')
-            ->leftJoin('fnfg.user_order', 'o')
+            ->leftJoin('fnfg.user_order', 'o', 'with', 'o.user = u.id')
             ->andWhere('fnfg.isArchive = 0');
         if ($search) {
             $query
