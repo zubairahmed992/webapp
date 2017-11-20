@@ -1358,6 +1358,13 @@ class WebServiceHelper
 
 
             foreach ($entity->getSaveLookItem() as $saveLookItem) {
+
+                $disabled = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $status = $saveLookItem->getItems()->getProduct()->getStatus();
+                if($status != 'complete'){
+                    $disabled = true;
+                }
+
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['product_image'] = $saveLookItem->getItems()->getProduct()->getDisplayProductColor()->getImage();
@@ -1367,7 +1374,7 @@ class WebServiceHelper
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
-                $temp['disabled'] = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $temp['disabled'] = $disabled;
                 $temp['deleted'] = $saveLookItem->getItems()->getProduct()->getDeleted();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
