@@ -3,6 +3,7 @@ paper.install(window);
 var dom_event_interaction_s1;
 var txtlabel;
 $(document).ready(function() {
+  alert("Updated From Mac!");
     paper.setup('canv_mask_makeover');
 
    dom_event_interaction_s1 = new Tool();
@@ -11,7 +12,7 @@ $(document).ready(function() {
    dom_event_interaction_s1.onMouseUp = onMouseUp;
    dom_event_interaction_s1.onKeyDown = onKeyDown;
    dom_event_interaction_s1.onKeyUp = onKeyUp;
- 
+
     lyr_ref_rect = new Layer();
    lyr_ref_rect.activate();
    canvas_ref_rect();
@@ -29,8 +30,8 @@ $(document).ready(function() {
    load_user_masks();
    full_mask.insertAbove(set_circle_in());
    full_mask.insertAbove(set_circle_out());
-    
-    
+
+
    h_indi =  new Path({
         segments:[[0, 0], [960, 0]],
         strokeColor:'red',
@@ -38,9 +39,9 @@ $(document).ready(function() {
         opacity:0.6
     });
     h_indi.visible = false;
-    
-    
-    
+
+
+
 /****** - Get additional points - ******/
     edge_grabber =  new Path({
          segments:[[0, 40], [960, 40]],
@@ -52,7 +53,7 @@ $(document).ready(function() {
      get_additional_pos();
 /****** - /Get additional points - ******/
 
-    
+
 /****** - Get max hip - ******/
     edge_grabber_1 =  new Path({
          segments:[[0, 600], [960, 600]],
@@ -72,19 +73,19 @@ $(document).ready(function() {
         opacity:0.6
     });
    pathLine.visible = false;
-   
-   
-   
-   
 
-//    
+
+
+
+
+//
 //archives: on this layer we saved retouch image
 retuch_img = new Layer();
 
 sideviewLayer = new Layer();
 sideviewLayer.view.center;
 
-// sideviewPath layer created for sideview calibartion path 
+// sideviewPath layer created for sideview calibartion path
 sideviewPath  = new Layer();
 sideviewPath.view.center;
 
@@ -92,29 +93,29 @@ sideviewPath.activate();
 sideviewPath.visible = false;
 sideViewLines();
 
-  
-  // vertical guideline for alignment 
- 
+
+  // vertical guideline for alignment
+
   vLine =  new Path({
     segments:[[480, 0], [480, 1280]],
     strokeColor:'gray',
     strokeWidth:1
    });
-  
-   
- 
-   
+
+
+
+
   vLine.onMouseDrag = function(event) {
      if(flgg === true){
         vLine.position.x += event.delta.x;
     }
  };
- // ---/vertical guideline for alignment  
+ // ---/vertical guideline for alignment
 
    lyr_misc = new Layer();
    lyr_misc.activate();
 
-       
+
 });
 
 // toggle lock and unlok guideline
@@ -135,7 +136,7 @@ function lockUnlock(){
         vLine.strokeColor='gray';
         $("#lockunlock").text("Guidline Locked");
     }
-   alert(msg); 
+   alert(msg);
 }
 
 // archives show image function
@@ -145,18 +146,18 @@ function showImag(retouch_image){
     retuch_img.activate();
         retuch_img.removeChildren();
         var show_img = new Raster(retouch_image);
-        
+
         show_img.on('load', function() {
         this.opacity=1;
-        
+
         // comment below line if mask need edited
         this.insertBelow(full_mask);
         user_image.position = new Point(480,640);
         preset_user_img(show_img, parseFloat(image_actions_count.move_up_down),parseFloat(image_actions_count.move_left_right),parseFloat(image_actions_count.img_rotate));
         });
-        
+
        return retuchImage = show_img;
-      
+
     view.update();
 }
 
@@ -167,36 +168,36 @@ function restoreFrontTab(){
  full_mask.visible=true;
  body_part_area.visible = false;
  sideviewPath.visible = false;
-  view.update(); 
+  view.update();
 }
 function loadSideViewImag(sideImageurl){
     sideviewLayer.activate();
     sideviewLayer.visible=true;
-    
+
      var sideImage = new Raster(sideImageurl);
      sideImage.position = new Point(480, 640);
-     
-     
+
+
     //hide mask and interse
      full_mask.visible=false;
      body_part_area.visible = false;
-     
+
     sideviewPath.visible = true;
-    
-    view.update(); 
+
+    view.update();
 }
 
-//horizontal lines for side view 
+//horizontal lines for side view
 
 function sideViewLines(){
-  
+
      txtlabel = new PointText({
         fillColor: 'yellow',
         fontFamily: 'arial',
         fontSize: 14,
       });
       txtlabel.visible = false;
-      
+
      var shoulder_line = new Path({
         segments:[[400, 433], [600, 433]],
         selected: true,
@@ -205,7 +206,7 @@ function sideViewLines(){
         type: 'side_view_line',
         name: 'shoulder_line'
     };
-    
+
     var bust_line = new Path({
         segments:[[400, 500], [600, 500]],
         selected: true
@@ -214,7 +215,7 @@ function sideViewLines(){
         type: 'side_view_line',
         name: 'bust_line'
     };
-    
+
     var waist_line = new Path({
         segments:[[400, 560], [600, 560]],
         selected: true
@@ -223,7 +224,7 @@ function sideViewLines(){
         type: 'side_view_line',
         name: 'waist_line'
     };
-   
+
    var thigh_line = new Path({
         segments:[[400, 750], [600, 750]],
         selected: true,
@@ -231,8 +232,8 @@ function sideViewLines(){
     thigh_line.data = {
         type: 'side_view_line',
         name: 'waist_line'
-    }; 
-   
+    };
+
 }
 // var verticalLine;
 // function vline(eventdelta){
@@ -248,9 +249,9 @@ function sideViewLines(){
 //    verticalLine.onMouseDrag = function(event) {
 //        verticalLine.position.x += eventdelta;
 //    };
-// 
+//
 //function sideViewlabels(txtLabel, positionX, positionY){
-//   
+//
 //     var txtlabel = new PointText({
 //        point :[positionX, positionY],
 //        fillColor: 'yellow',
@@ -950,7 +951,7 @@ function zoom_in(){
         console.log("canvas_area_hldr: "+canvas_area_hldr.position);
         console.log("canv_ref_rect: "+canv_ref_rect.position);
     }
-    
+
      view.update();
 }
 function zoom_out(){
@@ -961,7 +962,7 @@ function zoom_out(){
          retuch_img.scale(0.5);
         sideviewLayer.scale(0.5);
         sideviewPath.scale(0.5);
-        
+
         lyr_x = 480 - parseFloat(lyr_area_hldr.position.x);
         lyr_y = 640 - parseFloat(lyr_area_hldr.position.y);
         stage_x = 480 - parseFloat(lyr_stage_coor.position.x);
@@ -1042,8 +1043,8 @@ function onKeyUp(){
 }
 
 function onMouseDown(event) {
-    
-    
+
+
     if(event.modifiers.control && event.modifiers.space && event.modifiers.option){
         if(current_status.zoom_level > current_status.min_zoom_level){
             zoom_out();
@@ -1059,9 +1060,9 @@ function onMouseDown(event) {
     }
 
     var hitResult = paper.project.hitTest(event.point, hitOptions);
-        
-        
-        
+
+
+
     if (!hitResult){
             return;
         }
@@ -1076,20 +1077,20 @@ function onMouseDown(event) {
             txtlabel.visible = true;
             txtlabel.content=active_items.segment.path.data.name;
         }
-        
-        
-        
+
+
+
         if(hitResult.segment.point != active_items.segment.point){
             active_items.segment.selected = false;
         }
-        
+
         for(i=0; i<full_mask.segments.length; i++){
-            
+
             if(full_mask.segments[i].point == hitResult.segment.point){
                 active_items.segment = full_mask.segments[i];
                 h_indi.visible = true;
                 h_indi.position.y = full_mask.segments[i].point.y;
-              
+
                 //active_items.segment.selected = true;
                 circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
                 circle_out.position = new Point(active_items.segment.point.x + active_items.segment.handleOut.x, active_items.segment.point.y + active_items.segment.handleOut.y);
@@ -1117,13 +1118,13 @@ function onMouseDown(event) {
 
 function onMouseDrag(event) {
     txtlabel.visible=true;
-    
+
         //active_items.segment.path.data.name
         //console.log(active_items.segment.point.y);
         //console.log(active_items.segment.point.x);
        // sideViewlabels(active_items.segment.path.data.name, active_items.segment.point.x, active_items.segment.point.y);
 // text lable hide due to segment drag was noo
-              
+
     if(active_items.drag){
       txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
         active_items.segment.point = event.point;
@@ -1137,8 +1138,8 @@ function onMouseDrag(event) {
         circle_in.position = event.point;
         active_items.segment.handleIn.x = circle_in.position.x - active_items.segment.point.x;
         active_items.segment.handleIn.y = circle_in.position.y - active_items.segment.point.y;
-        
-        
+
+
     }
     if(active_items.cir_out){
         active_items.cir_in = false;
@@ -1152,7 +1153,7 @@ function onMouseDrag(event) {
                 lyr_area_hldr.position.x += event.delta.x;
                 lyr_stage_coor.position.x += event.delta.x;
                 change_x_pos_diff += event.delta.x;
-                
+
             }
         if(lyr_area_hldr.position.y + event.delta.y >= 0 && lyr_area_hldr.position.y + event.delta.y <= 1280){
                 retuch_img.position.y+= event.delta.y;
@@ -1162,13 +1163,13 @@ function onMouseDrag(event) {
 
         }
         //text lable for side view added
-       
-        
+
+
         console.log("lyr_area_hldr: " + lyr_area_hldr.position);
         console.log("lyr_stage_coor" +  lyr_stage_coor.position);
         console.log(canvas_area_hldr.position);
     }
-    
+
 }
 function onMouseUp(event) {
      txtlabel.visible = false;
@@ -1176,7 +1177,7 @@ function onMouseUp(event) {
     active_items.cir_in = false;
     active_items.cir_out = false;
     h_indi.visible = false;
-   
+
 }
 
 ////////////////////////********* Hip Max ******** //////////////////
