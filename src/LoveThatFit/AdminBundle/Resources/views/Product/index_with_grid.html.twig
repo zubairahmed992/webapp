@@ -837,9 +837,13 @@
                 var data = dataTable.fnGetData(iPos);
 
                 if (dataAction == 'EnableDisable') {
+                    var display_status_message = 'enable';
+                    if(data.status.toLowerCase() == 'enabled'){
+                        display_status_message = 'disable';
+                    }
                     bootbox.confirm({
-                        title: "Enable/Disable Product",
-                        message: "Product status is " + data.pstatus + "! Are you sure you want to Enable/Disable this Product?",
+                        title: "Product Status",
+                        message: "Product status is " + data.pstatus + "! Are you sure you want to "+display_status_message+" the Product?",
                         buttons: {
                             confirm: {
                                 label: 'Yes',
