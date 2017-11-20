@@ -147,6 +147,7 @@ class FNFUserHelper
                 'discount' => $discount,
                 'availability' => ($fData['group_type'] == 1) ? $availibility : "available",
                 'original_user_id' => $fData["original_user_id"],
+                'order_generated' => ($fData['orderId'] == null) ? '' : "Order Created"
             ];
         }
 
