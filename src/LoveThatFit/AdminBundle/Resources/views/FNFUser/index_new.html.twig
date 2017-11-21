@@ -69,6 +69,7 @@
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Discount</th>
+                        <th>Is Order Created</th>
                         <th>Availability</th>
                         <th>Actions</th>
                     </tr>
@@ -119,21 +120,27 @@
                     },
                     {
                         "data": "group_title",
-                        "width": "20%",
+                        "width": "15%",
                     },
                     {
                         "data": "full_name",
-                        "width": "20%",
+                        "width": "10%",
                     },
                     {
                         "data": "email",
-                        "width": "25%",
+                        "width": "20%",
                     },
                     {
                         "data": "discount",
-                        "orderable": true,
+                        "orderable": false,
                         "searchable": false,
                         "width": "10%",
+                    },
+                    {
+                        "data": "order_generated",
+                        "orderable": true,
+                        "searchable": false,
+                        "width": "15%",
                     },
                     {
                         "data": "availability",
@@ -146,8 +153,8 @@
                         "data": null,
                         "orderable": false,
                         "searchable": false,
-                        "defaultContent": DeleteButton,
-                        "width": "25%"
+                        "defaultContent": DeleteButton+ " "+ DetailPageButton,
+                        "width": "30%"
                     },
                     {
                         "data": "original_user_id",
@@ -183,6 +190,18 @@
                     url = url.replace(':groupId', data.group_id);
 
                     $(".delete_url").attr("href", url);
+                }
+
+                if (dataAction == 'Detail') {
+                    if(data.order_generated == ""){
+                        alert("No order Found")
+                        return false;
+                    }
+                    
+                    var url = '{{ path('admin_show_discount_order', {'user_id': ":id", 'group_id' : ":groupId"}) }}';
+                    url = url.replace(':id', data.id);
+                    url = url.replace(':groupId', data.group_id);
+                    window.top.location = url;
                 }
             });
         });

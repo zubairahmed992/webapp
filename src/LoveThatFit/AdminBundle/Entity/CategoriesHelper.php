@@ -358,7 +358,8 @@ class CategoriesHelper {
                 'gender' => $fData["gender"],
                 'created_at' => ($fData["created_at"]->format('d-m-Y')),
                 'image' => $image_path,
-                'disabled'   => ($fData["disabled"] == 1) ? "Disabled" : "Enable"
+                'disabled'   => ($fData["disabled"] == 1) ? "Disabled" : "Enable",
+                'layer_name'   => $fData["layer_name"],
             ];
 
         }

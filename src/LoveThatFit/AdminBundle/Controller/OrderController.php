@@ -21,7 +21,11 @@ class OrderController extends Controller {
     public function paginateAction(Request $request)
     {
         $requestData = $this->get('request')->request->all();
-        $output = $this->get('cart.helper.order')->search($requestData);
+
+        if(isset($requestData['view_type']))
+            $output = $this->get('cart.helper.order')->searchOrderByDiscount($requestData);
+        else
+            $output = $this->get('cart.helper.order')->search($requestData);
 
         return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']); 
     }
@@ -177,6 +181,8 @@ class OrderController extends Controller {
     }
 
     public function updateShippingStatusAction( $id ){
+
+
         $stamps = new Stamps();
         $entity = $this->get('cart.helper.order')->find($id);
         $rate_json = ( $entity->getRateJson() != null ? json_decode($entity->getRateJson()) : null);
@@ -210,7 +216,8 @@ class OrderController extends Controller {
                 $postages_link = $shipping_information->URL;
                 $tracking_number = $shipping_information->TrackingNumber;
             }
-            
+
+
             if(!empty($tracking_number)) {
                 $user_order=$this->container->get('cart.helper.order')->find($id);
                 
@@ -228,9 +235,42 @@ class OrderController extends Controller {
                                 );
 
                 $this->sendEmailToUserOrderShipped($data_order);
+           
+
+            /********************Trancking Number Update in Podio tart**********************/
+
+
+                try {                       
+
+                         $order_results = $this->container->get('order.helper.podio')->findBYOrderNumberAndStatus($entity->getOrderNumber());
+                       
+                      
+                        if(count($order_results) > 0){
+                           
+                              $podioData = $this->container->get('podio.helper.podiolib')->updateTrackNumberInPodioOrders($entity->getOrderNumber(),$tracking_number);
+
+
+                              if(count($podioData) > 0){  
+
+                                $this->container->get('order.helper.podio')->updatePodioTrackingNumber($podioData['title']);
+                               }
+                        }
+                       
+                         return new Response(json_encode(array("success" => true)));
+
+                     } catch (Exception $e) {
+
+                    return new Response(json_encode(array("success" => false,"message" => $e)));
+                    
+                     }
+
+
+            /********************Trancking Number Update in Podio End**********************/
+
             }
             /*********************** send emai user to order shipped end here*********************/
 
+          
             return new Response(json_encode(array('shipping_status' => $ship_status)), 200, ['Content-Type' => 'application/json']);
         }catch (\ErrorException $exception)
         {
@@ -242,5 +282,13 @@ class OrderController extends Controller {
     {
         $this->get('mail_helper')->sendUserOrderShippedEmail($dataArray);
         return;
+    }
+
+    public function fnfUserOrderAction($user_id, $group_id){
+        return $this->render('LoveThatFitAdminBundle:Order:discount-ourder-index.html.twig',array(
+            'user_id' => $user_id,
+            'group_id' => $group_id,
+            'view_type' => 'discount'
+        ));
     }
 }
