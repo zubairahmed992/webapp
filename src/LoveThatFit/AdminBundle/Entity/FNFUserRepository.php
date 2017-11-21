@@ -171,13 +171,12 @@ class FNFUserRepository extends EntityRepository
                 u.gender,
                 u.createdAt,
                 fnfg.group_type,
-                IDENTITY(u.original_user) as original_user_id,
-                o.id as orderId'
+                IDENTITY(u.original_user) as original_user_id'
             )
             ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
             ->join('fnf.groups', 'fnfg')
             ->join('fnf.users', 'u')
-            ->leftJoin('fnfg.user_order', 'o', 'with', 'o.user = u.id')
+            // ->leftJoin('fnfg.user_order', 'o', 'with', 'o.user = u.id')
             ->andWhere('fnfg.isArchive = 0');
         if ($search) {
             $query
