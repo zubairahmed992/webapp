@@ -3,7 +3,7 @@ paper.install(window);
 var dom_event_interaction_s1;
 var txtlabel;
 $(document).ready(function() {
-  alert("Updated From Mac!");
+
     paper.setup('canv_mask_makeover');
 
    dom_event_interaction_s1 = new Tool();
@@ -198,42 +198,147 @@ function sideViewLines(){
       });
       txtlabel.visible = false;
 
-     var shoulder_line = new Path({
-        segments:[[400, 433], [600, 433]],
+      var head_line = new Path({
+        segments:[[400, 300], [600, 300]],
         selected: true,
     });
-    shoulder_line.data = {
+    head_line.data = {
         type: 'side_view_line',
-        name: 'shoulder_line'
+        name: 'head_line'
     };
+    
+    
+     var neck_line = new Path({
+        segments:[[400, 390], [600, 390]],
+        selected: true,
+    });
+    neck_line.data = {
+        type: 'side_view_line',
+        name: 'Neck_line'
+    };
+    
 
-    var bust_line = new Path({
-        segments:[[400, 500], [600, 500]],
-        selected: true
+     var tricep_line = new Path({
+        segments:[[400, 470], [600, 470]],
+        selected: true,
+    });
+    tricep_line.data = {
+        type: 'side_view_line',
+        name: 'tricep_line'
+    };
+    
+    var bicep_line = new Path({
+        segments:[[400, 510], [600, 510]],
+        selected: true,
+    });
+    bicep_line.data = {
+        type: 'side_view_line',
+        name: 'bicep_line'
+    };
+    
+     var bust_line = new Path({
+        segments:[[400, 540], [600, 540]],
+        selected: true,
     });
     bust_line.data = {
         type: 'side_view_line',
         name: 'bust_line'
     };
 
-    var waist_line = new Path({
-        segments:[[400, 560], [600, 560]],
-        selected: true
+ var waist_line = new Path({
+        segments:[[400, 600], [600, 600]],
+        selected: true,
     });
     waist_line.data = {
         type: 'side_view_line',
         name: 'waist_line'
     };
 
-   var thigh_line = new Path({
-        segments:[[400, 750], [600, 750]],
+ var abdominal_line = new Path({
+        segments:[[400, 670], [600, 670]],
         selected: true,
     });
-    thigh_line.data = {
+    abdominal_line.data = {
         type: 'side_view_line',
-        name: 'waist_line'
+        name: 'abdominal_line'
     };
 
+    var hip_high_line = new Path({
+        segments:[[400, 720], [600, 720]],
+        selected: true,
+    });
+    hip_high_line.data = {
+        type: 'side_view_line',
+        name: 'hip_high_line'
+    };
+   
+     var hip_low_line = new Path({
+        segments:[[400, 770], [600, 770]],
+        selected: true,
+    });
+    hip_low_line.data = {
+        type: 'side_view_line',
+        name: 'hip_low_line'
+    };
+    
+     var high_thigh_line = new Path({
+        segments:[[400, 800], [600, 800]],
+        selected: true,
+    });
+    
+    high_thigh_line.data = {
+        type: 'side_view_line',
+        name: 'high_thigh_line'
+    };
+    var mid_thigh_line = new Path({
+        segments:[[400, 830], [600, 830]],
+        selected: true,
+    });
+    
+    mid_thigh_line.data = {
+        type: 'side_view_line',
+        name: 'mid_thigh_line'
+    };
+    
+     var low_thigh_line = new Path({
+        segments:[[400, 850], [600, 850]],
+        selected: true,
+    });
+    
+    low_thigh_line.data = {
+        type: 'side_view_line',
+        name: 'low_thigh_line'
+    };
+    
+     var knee_line = new Path({
+        segments:[[400, 1000], [600, 1000]],
+        selected: true,
+    });
+    
+    knee_line.data = {
+        type: 'side_view_line',
+        name: 'knee_line'
+    };
+    
+      var calf_line = new Path({
+        segments:[[400, 1090], [600, 1090]],
+        selected: true,
+    });
+    
+    calf_line.data = {
+        type: 'side_view_line',
+        name: 'calf_line'
+    }; 
+    
+        var above_ankle = new Path({
+        segments:[[400, 1175], [600, 1175]],
+        selected: true,
+    });
+    
+    above_ankle.data = {
+        type: 'side_view_line',
+        name: 'above_ankle'
+    }; 
 }
 // var verticalLine;
 // function vline(eventdelta){
@@ -349,6 +454,78 @@ function showOriginal(){
       user_image.opacity = 1;
      view.update();
 }
+// side view json 
+var main_json= {
+    side_view_cal:{
+        body_parts:{
+                head:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+               neeck:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+               bicep:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+              bicep_2:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+              bust:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+              waist:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+             tummy:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+            high_hip:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+            low_hip:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+            high_thigh:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    }, 
+             mid_thigh:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+             low_thigh:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+              knee:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+              calf:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    },
+              above_ankle:{
+                    p1:{x:'300', y:'300'},
+                    p2:{x:'300', y:'300'}
+                    }      
+        },
+        toe_line:{x:0,  y:1}
+    }    
+ }; 
+ 
+console.log(JSON.stringify(main_json));
+// side view json 
+
 
 var toe_shape_px=42;
 var maskConfig = {
@@ -1076,6 +1253,7 @@ function onMouseDown(event) {
            // sideViewlabels(curr_obj_line.data.name);
             txtlabel.visible = true;
             txtlabel.content=active_items.segment.path.data.name;
+             
         }
 
 
@@ -1126,7 +1304,7 @@ function onMouseDrag(event) {
 // text lable hide due to segment drag was noo
 
     if(active_items.drag){
-      txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
+        txtlabel.point= new Point(active_items.segment.point.x + 30, active_items.segment.point.y);
         active_items.segment.point = event.point;
         h_indi.position.y = active_items.segment.point.y;
         circle_in.position = new Point(active_items.segment.point.x + active_items.segment.handleIn.x, active_items.segment.point.y + active_items.segment.handleIn.y);
@@ -1177,7 +1355,7 @@ function onMouseUp(event) {
     active_items.cir_in = false;
     active_items.cir_out = false;
     h_indi.visible = false;
-
+console.log(active_items.segment.path.data.name+"_"+active_items.segment.index, active_items.segment.point.x, active_items.segment.point.y);
 }
 
 ////////////////////////********* Hip Max ******** //////////////////
@@ -1337,6 +1515,7 @@ function upload(){
         svg_path:$('#img_path_paper').attr('value'),
         image_actions:$('#image_actions').attr('value'),
         widest_hip: body_part_max_width(),
+//        side_view_json: side_view_data(),
         retouch_image:selected_retouch_img_filename};
 
     $.ajax({
