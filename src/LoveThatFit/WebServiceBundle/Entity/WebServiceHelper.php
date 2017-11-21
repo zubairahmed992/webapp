@@ -1113,6 +1113,14 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+
+            //Product Model Image
+            $product_model_image = $this->container->get('admin.helper.ProductImage')->findByProductId($product['product_id']);
+            if(count($product_model_image) > 0){
+                $productlist[$key]['model_image'] = $product_model_image[0]['ProductImage'];
+            }else{
+                $productlist[$key]['model_image'] = null;
+            }
         }
         return array('product_list' => $productlist, 'page_count' => $page_count);
     }
@@ -1167,6 +1175,14 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+
+            //Product Model Image
+            $product_model_image = $this->container->get('admin.helper.ProductImage')->findByProductId($product['product_id']);
+            if(count($product_model_image) > 0){
+                $productlist[$key]['model_image'] = $product_model_image[0]['ProductImage'];
+            }else{
+                $productlist[$key]['model_image'] = null;
+            }
         }
 
         return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
@@ -1809,6 +1825,14 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+
+            //Product Model Image
+            $product_model_image = $this->container->get('admin.helper.ProductImage')->findByProductId($product['product_id']);
+            if(count($product_model_image) > 0){
+                $productlist[$key]['model_image'] = $product_model_image[0]['ProductImage'];
+            }else{
+                $productlist[$key]['model_image'] = null;
+            }
         }
 
 
