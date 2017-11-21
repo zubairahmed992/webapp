@@ -299,6 +299,11 @@ class OrderHelper
         return $this->repo->findOneByName($name);
     }
 
+    public function ordersCountByDiscount( $user_id = 0, $group_id = 0 )
+    {
+        return $this->repo->ordersCountByDiscount( $user_id , $group_id );
+    }
+
     public function searchOrderByDiscount($data)
     {
         $draw = isset ( $data['draw'] ) ? intval( $data['draw'] ) : 0;
