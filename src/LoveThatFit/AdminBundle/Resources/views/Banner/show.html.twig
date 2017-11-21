@@ -23,16 +23,29 @@
 
       </div>
       <div class="clearfix"></div>
-
-
             <div id="detail_wrapper">
                 <div id="p_hd">Banner Detail</div>
-
+                    {% set type = { 1: 'Fullsize Banner',
+                                    2: 'Image with Title',
+                                    3: 'Text, Description with Price',
+                                    4: 'Shop the look',
+                                    5: 'Shop the look fitting room',
+                                    6: 'Product Detail',
+                                    7: 'Brand Detail',
+                                    8: 'Category with specific filters',
+                                    }
+                    %}
                     <div id="product_content">
                         <div id="pro_detail">
                             <div class="edt_container">
                                 <div class="row-fluid show-grid edt_span">
                                     <div>
+                                    {% if banner.banner_type != ''  %}
+                                        <div class="span8">
+                                            <div class="span3">Banner Type</div>
+                                            <div class="span3">{{type[banner.banner_type] }}</div>
+                                        </div>
+                                    {% endif %}
                                     {% if banner.name != ''  %}
                                         <div class="span8">
                                             <div class="span3">Name</div>

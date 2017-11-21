@@ -41,6 +41,16 @@ class PodioOrders {
     protected $status;
 
     /**
+     * @ORM\Column(type="integer", length=4, nullable=false)
+     */
+    protected $tracking_number_status;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $tracking_number_updated_at;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $created_at;
@@ -121,6 +131,51 @@ class PodioOrders {
     public function getStatus() {
         return $this->status;
     }
+
+
+    /**
+     * Set tracking_number_status
+     *
+     * @param integer $tracking_number_status
+     * @return tracking_number_status
+     */
+    public function setTrackingNumberStatus($tracking_number_status) {
+        $this->tracking_number_status = $tracking_number_status;
+
+        return $this;
+    }
+
+    /**
+     * Get tracking_number_status
+     *
+     * @return integer 
+     */
+    public function getTrackingNumberStatus() {
+        return $this->tracking_number_status;
+    }
+
+
+    /**
+     * Set tracking_number_updated_at
+     *
+     * @param \DateTime $tracking_number_updated_at
+     * @return tracking_number_updated_at
+     */
+    public function setTrackingNumberUpdatedAt($tracking_number_updated_at) {
+        $this->tracking_number_updated_at = $tracking_number_updated_at;
+        return $this;
+    }
+
+    /**
+     * Get tracking_number_updated_at
+     *
+     * @return \DateTime 
+     */
+    public function getTrackingNumberUpdatedAt() {
+        return $this->tracking_number_updated_at;
+    }
+
+
 
     /**
      * Set created_at

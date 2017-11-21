@@ -15,7 +15,13 @@ class ClothingTypeController extends Controller {
     public function indexAction($page_number, $sort = 'id') {
 
         $clothing_types = $this->get('admin.helper.clothingtype')->findAllList();
-        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
+        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array(
+            'femaleProduct' => count($this->get('admin.helper.clothingtype')->findByGender('f')),
+            'maleProduct' => count($this->get('admin.helper.clothingtype')->findByGender('m')),
+            'rec_count' => count($clothing_types),
+            'clothing_types' => $clothing_types
+
+        ));
     }
 
 //-------------------------------Clothing Type display-----------------------------------------------------------
