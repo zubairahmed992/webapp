@@ -109,6 +109,32 @@ class UserOrderRepository extends EntityRepository
 	}
   }
 
+    public function ordersCountByDiscount($user_id = 0, $group_id = 0){
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $search = isset($data['query']) && $data['query']?$data['query']:null;
+        $query
+            ->select('
+		    	o.id,
+		        o.order_number,
+				o.billing_first_name,
+				o.billing_last_name,
+				o.order_date,
+				o.order_amount,
+				o.payment_json,
+                o.transaction_status,
+                o.order_status'
+            )
+            ->from('LoveThatFitCartBundle:UserOrder', 'o')
+            ->andWhere('o.user = :userId')
+            ->andWhere('o.user_group = :groupId')
+            ->setParameter('userId', $user_id)
+            ->setParameter('groupId', $group_id);
+
+
+        $preparedQuery = $query->getQuery();
+        return $preparedQuery->getResult();
+    }
+
     public function searchOrderByDiscount($data, $page = 0, $max = NULL, $order, $getResult = true, $user_id = 0, $group_id)
     {
         $query = $this->getEntityManager()->createQueryBuilder();
