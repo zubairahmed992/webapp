@@ -297,6 +297,7 @@ param:limit, page_number,limit,sort
             e.gender,
             e.image,
             e.disabled,
+            e.layer_name,
             e.created_at'
             )
             ->from('LoveThatFitAdminBundle:Categories', 'e');

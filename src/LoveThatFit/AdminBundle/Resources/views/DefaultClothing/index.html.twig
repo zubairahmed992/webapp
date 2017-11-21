@@ -39,7 +39,7 @@
         <div class="clearfix"></div>
         <h1 style="float:left;">Default Clothing</h1>
         <div class="btn_wrapper2">
-            <div class="btn-group" role="group" aria-label="..." style="float:right;">
+            <div class="btn-group" role="group" aria-label="..." style="float:right;display:none;" id="add_button">
                 <a href="{{ path('admin_default_clothing_new') }}" class="btn btn-default">Add New</a>
             </div>
         </div>
@@ -159,6 +159,13 @@
                         $('td', row).addClass('hide_grid_row');
                     }
                 },
+                "initComplete": function(settings, json) {
+                    if(json.recordsTotal < 2){
+                        $('#add_button').show();
+                    }else{
+                        $('#add_button').hide();
+                    }
+                }
             });
 
             $.fn.dataTable.ext.errMode = 'none';
