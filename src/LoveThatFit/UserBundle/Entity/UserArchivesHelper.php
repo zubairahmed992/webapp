@@ -686,15 +686,44 @@ public function updateRevertedImageStatus($user_id,$hash) {
 
     //--------------- Upload Side View Images
     public function sideViewImages($param, $file){
+        $side_view_image_uplaoded = $this->getSideViewImages($this->getUploadRootDir($param['upl_entity_id']));
         $temp_name = $file['tmp_name'];
         $target_path = $this->getUploadRootDir($param['upl_entity_id']);
         $side_view = $param['side_view'];
         $fileName = $file['name'];
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-        move_uploaded_file($temp_name, $target_path.'/'.$side_view."_".uniqid().".".$ext);
+        if(!empty($side_view_image_uplaoded)){
+            if ( $side_view == 'side_view_one' &&  !empty($side_view_image_uplaoded['one']) ) {
+                move_uploaded_file($temp_name, $target_path . '/' . implode('', $side_view_image_uplaoded['one']));
+            } else if ($side_view == 'side_view_two' &&  !empty($side_view_image_uplaoded['two']) ) {
+                move_uploaded_file($temp_name, $target_path . '/' . implode('', $side_view_image_uplaoded['two']));
+            } else {
+                move_uploaded_file($temp_name, $target_path . '/' . $side_view . "_" . uniqid() . "." . $ext);
+            }
+        }else {
+            move_uploaded_file($temp_name, $target_path . '/' . $side_view . "_" . uniqid() . "." . $ext);
+        }
         return true;
     }
 
+    //------------ Get All Images of Side View -------------
+    public function getSideViewImages($directory_path)
+    {
+        $side_view_images = glob($directory_path . "{/*.jpg,/*.jpeg,/*.png}", GLOB_BRACE);
+        $side_view = '';
+        if(!empty($side_view_images) ) {
+            $i = 0;
+            foreach ($side_view_images as $filename) {
+                if (preg_match('/side_view_two/', basename($filename))) {
+                    $side_view['two'][++$i] = basename($filename);
+                }
+                if (preg_match('/side_view_one/', basename($filename))) {
+                    $side_view['one'][++$i] = basename($filename);
+                }
+            }
+        }
+        return $side_view;
+    }
 
     public function getUploadRootDir($id) {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir($id);
