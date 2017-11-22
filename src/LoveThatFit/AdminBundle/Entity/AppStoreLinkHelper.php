@@ -50,6 +50,10 @@ class AppStoreLinkHelper {
         $this->em->flush();
     }
 
+    public function findAll() {
+        return $this->repo->findAll();
+    }
+
     public function find($id) {
         return $this->repo->find($id);
     }
