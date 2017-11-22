@@ -139,7 +139,8 @@ class PodioController extends Controller {
                   } 
                   
                   //podio orders detail data
-                  $order_detail_podio = array(                   
+                  $order_detail_podio = array( 
+                       'order_number' => $orders['order_number'],                  
                        'item_description' => ($order_detail['item_description']) ? $order_detail['item_description'] : '',
                        'brand_name' => ($order_detail['brand_name']) ? $order_detail['brand_name'] : '',
                        'item_amount' => ($order_detail['amount']) ? $order_detail['amount'] : '',
