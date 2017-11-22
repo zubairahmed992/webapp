@@ -48,10 +48,17 @@ class SecurityController extends Controller {
     }
 
     public function signinAction(){
-        /* In Signin, it will redirect on the itunes link */
-        //$baseurl = "http://".$this->getRequest()->getHost();
-        $entity = $this->get('admin.helper.appstorelink')->findAll();
-        $baseurl = "https://itunes.apple.com/us/app/selfiestyler-expo/id1188719759?ls=1&mt=8";
+
+        $mobile = isset($_SERVER['HTTP_USER_AGENT']) && preg_match('!(tablet|pad|mobile|phone|symbian|android|ipod|ios|blackberry|webos|iPhone)!i', $_SERVER['HTTP_USER_AGENT']) ? true : false;
+
+        if ($mobile == true) {
+            /* In Signin, it will redirect on the itunes link */
+            $entity = $this->get('admin.helper.appstorelink')->findAll();
+            $baseurl = $entity[0]->getAppLink();
+        }else{
+            $baseurl = "http://".$this->getRequest()->getHost();
+        }
+
         return $this->redirect( $baseurl );
         //return new Response("signin page cooming soon");
     }
