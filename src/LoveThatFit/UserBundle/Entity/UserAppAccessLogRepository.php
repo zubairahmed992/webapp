@@ -24,4 +24,18 @@ class UserAppAccessLogRepository extends EntityRepository
 	  return null;
 	}
   }
+
+  public function countUserByUserId($user_id)
+  {
+  	$query = $this->getEntityManager()->createQueryBuilder();
+  	
+  	$query
+  		->select('COUNT(a)')
+  		->from('LoveThatFitUserBundle:UserAppAccessLog', 'a')
+  		->where('a.user = :user_id')
+  		->setParameter('user_id', $user_id);
+
+  	return $query->getQuery()->getSingleScalarResult();
+  }
+
 }
