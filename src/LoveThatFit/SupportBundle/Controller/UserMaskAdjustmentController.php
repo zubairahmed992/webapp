@@ -323,6 +323,7 @@ class UserMaskAdjustmentController extends Controller {
 
         $measurement_archive = json_decode($archive->getMeasurementJson(), 1);
         $image_actions_archive = json_decode($archive->getImageActions(), 1);
+        $user_calibration_json_archive = json_decode($archive->getCoordinateJson(), 1);
 
         $device_type = $image_actions_archive['device_type'];
         $device_type=$device_type?$device_type:$user->getImageDeviceType();
@@ -387,6 +388,7 @@ class UserMaskAdjustmentController extends Controller {
                     'original_file_code' => $original_file_code,
                     'retouch_file_time' => $retouch_file_time,
                     'side_view_images' =>  $this->get('user.helper.userarchives')->getSideViewImages($directory_path),
+                    'user_calibration_json_archive' => $user_calibration_json_archive,
                 ));
     }
 

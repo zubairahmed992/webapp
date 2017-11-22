@@ -127,6 +127,13 @@ class UserArchives
      */
     private $version;
 
+    /**
+     * @var string $coordinate_json
+     *
+     * @ORM\Column(name="coordinate_json", type="text", nullable=true)
+     */
+    private $coordinate_json;
+
     #----------------------------------------
     
     /**
@@ -442,6 +449,33 @@ class UserArchives
     {
         return $this->user;
     }
+
+
+    /**
+     * Set coordinate_json
+     *
+     * @param string $coordinateJson
+     * @return UserMarker
+     */
+    public function setCoordinateJson($coordinateJson)
+    {
+        $this->coordinate_json = $coordinateJson;
+
+        return $this;
+    }
+
+    /**
+     * Get coordinate_json
+     *
+     * @return string
+     */
+    public function getCoordinateJson()
+    {
+        return $this->coordinate_json;
+    }
+
+
+
     #----------------------------------------
 
     /**

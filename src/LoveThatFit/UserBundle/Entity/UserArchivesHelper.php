@@ -533,6 +533,10 @@ public function updateRevertedImageStatus($user_id,$hash) {
         if (array_key_exists('svg_path', $data)) {
             $user_archives->setSvgPaths($data['svg_path']);
         }
+
+        if (array_key_exists('user_calibration_json', $data)) {
+            $user_archives->setCoordinateJson($data['user_calibration_json']);
+        }
         if (array_key_exists('marker_json', $data)) {
             $user_archives->setMarkerJson($data['marker_json']);
             #--------------------------
