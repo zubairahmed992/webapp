@@ -250,7 +250,7 @@ class ProductSpecificationHelper {
         if ($specs){
             $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
             $specs_obj->setSpecsJson(json_encode($specs));
-            $specs_obj->roundUp(); #rounding up all values before saving
+            #$specs_obj->roundUp(); #rounding up all values before saving
             return $this->update($specs_obj);
         }else{
             return array(
@@ -577,7 +577,7 @@ class ProductSpecificationHelper {
         if ($specs) {
             $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
             $specs_obj->setSpecsJson(json_encode($specs));
-            $specs_obj->roundUp(); #rounding up all values before saving
+            #$specs_obj->roundUp(); #rounding up all values before saving
             return $this->update($specs_obj);
         } else {
             return array(
