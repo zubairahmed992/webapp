@@ -586,12 +586,98 @@ class UserController extends Controller
 
         } elseif (isset($type) && $type == "brands") {
             $users = $this->get('user.helper.user')->findUserListExportBrands($start_date, $end_date);
+             // ==Product Tried
+            if (!empty($users)) {
+                header('Content-Type: application/csv');
+                //header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachement; filename="users.csv";');
+                $output = fopen('php://output', 'w');
+                fputcsv($output, array(
+                    'UserID', 'Name', 'Email', 'Phone No', 'Gender', 'Zip Code', 
+                    'Created At','Brands Tried', 'Brands'
+                    )
+                );
+                foreach ($users as $user) {
+                    $csv['id']           = $user["id"];
+                    $csv['user_name']    = ($user["firstName"] . " " . $user["lastName"]);
+                    $csv['email']        = $user["email"];
+                    $csv['phoneNumber']  = $user["phoneNumber"];
+                    $csv['gender']       = ($user["gender"] == "f" ? "Female" : "Male");
+                    $csv['zipcode']      = $user["zipcode"];
+                    $csv['created_at']   = ($user["createdAt"]->format('d/m/Y'));
+                    $csv['brands_tried'][] = $this->get('site.helper.usertryitemhistory')->brandsTiredExport();
+                    $csv['brands']       = count($user["zipcode"]);
+                    
+                    fputcsv($output, $csv);
+                }
+                # Close the stream off
+                fclose($output);
+                return new Response('');
+            } else {
+                $this->get('session')->setFlash('warning', 'No Record Found!');
+
+                $totalRecords = $this->get('user.helper.user')->countAllUser();
+                $femaleUsers  = $this->get('user.helper.user')->countUsersByGender('f');
+                $maleUsers    = $this->get('user.helper.user')->countUsersByGender('m');
+
+                return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
+                    array(
+                        'rec_count'   => $totalRecords,
+                        'femaleUsers' => $femaleUsers,
+                        'maleUsers'   => $maleUsers,
+                    )
+                );
+            }
         } elseif (isset($type) && $type == "products") {
             $users = $this->get('user.helper.user')->findUserListExportProducts($start_date, $end_date);
+            if (!empty($users)) {
+                header('Content-Type: application/csv');
+                //header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachement; filename="users.csv";');
+                $output = fopen('php://output', 'w');
+                fputcsv($output, array(
+                    'UserID', 'Name', 'Email', 'Phone No', 'Gender', 'Zip Code', 
+                    'Created At','Products Tried', 'Products'
+                    )
+                );
+                foreach ($users as $user) {
+                    $csv['id']             = $user["id"];
+                    $csv['user_name']      = ($user["firstName"] . " " . $user["lastName"]);
+                    $csv['email']          = $user["email"];
+                    $csv['phoneNumber']    = $user["phoneNumber"];
+                    $csv['gender']         = ($user["gender"] == "f" ? "Female" : "Male");
+                    $csv['zipcode']        = $user["zipcode"];
+                    $csv['created_at']     = ($user["createdAt"]->format('d/m/Y'));
+                    $csv['products_tried'] = $this->get('site.helper.usertryitemhistory')->productsTiredExportCount($user["id"]);
+                    $csv['products']       = $this->get('site.helper.usertryitemhistory')->productsTiredExport($user["id"]);
+                    
+                    fputcsv($output, $csv);
+                }
+                # Close the stream off
+                fclose($output);
+                return new Response('');
+            } else {
+                $this->get('session')->setFlash('warning', 'No Record Found!');
+
+                $totalRecords = $this->get('user.helper.user')->countAllUser();
+                $femaleUsers  = $this->get('user.helper.user')->countUsersByGender('f');
+                $maleUsers    = $this->get('user.helper.user')->countUsersByGender('m');
+
+                return $this->render('LoveThatFitAdminBundle:User:index_new.html.twig',
+                    array(
+                        'rec_count'   => $totalRecords,
+                        'femaleUsers' => $femaleUsers,
+                        'maleUsers'   => $maleUsers,
+                    )
+                );
+            }
+
         } elseif (isset($type) && $type == "friends_invited") {
             $users = $this->get('user.helper.user')->findUserListExportFInvited($start_date, $end_date);
+            // ==Invite Friends List - Name
         } elseif (isset($type) && $type == "reffered_member") {
             $users = $this->get('user.helper.user')->findUserListExporRMember($start_date, $end_date);
+            // ==Invite Friends List - Email
         }
     }
 
