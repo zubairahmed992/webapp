@@ -176,6 +176,7 @@ class FNFUserRepository extends EntityRepository
             ->from('LoveThatFitAdminBundle:FNFUser', 'fnf')
             ->join('fnf.groups', 'fnfg')
             ->join('fnf.users', 'u')
+            // ->leftJoin('fnfg.user_order', 'o', 'with', 'o.user = u.id')
             ->andWhere('fnfg.isArchive = 0');
         if ($search) {
             $query
@@ -200,12 +201,14 @@ class FNFUserRepository extends EntityRepository
                 $orderByColumn = "u.firstName";
             } elseif ($orderByColumn == 3) {
                 $orderByColumn = "u.email";
-            } elseif ($orderByColumn == 4) {
-                $orderByColumn = "u.is_available";
+            } elseif ($orderByColumn == 5) {
+                $orderByColumn = "orderId";
+            }elseif ($orderByColumn == 6) {
+                $orderByColumn = "fnf.is_available";
             }
             $query->OrderBy($orderByColumn, $orderByDirection);
         }
-        /*echo $query->getSQL(); die;
+            /*echo $query->getQuery()->getSql(); die;
             return $query->getResult();*/
         if ($max) {
             $preparedQuery = $query->getQuery()

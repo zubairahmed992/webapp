@@ -133,6 +133,8 @@ class FNFUserHelper
         );
 
         foreach ($finalData as $fData) {
+            $userOrders = $this->container->get('cart.helper.order')->ordersCountByDiscount($fData["id"],$fData["group_id"]);
+
             $discount = "$".$fData["discount"];
             $availibility = ($fData["is_available"]) ? "available" : "not available";
             if($fData['group_type'] == 2)
@@ -147,6 +149,7 @@ class FNFUserHelper
                 'discount' => $discount,
                 'availability' => ($fData['group_type'] == 1) ? $availibility : "available",
                 'original_user_id' => $fData["original_user_id"],
+                'order_generated' => (empty($userOrders)) ? '' : "Order Created"
             ];
         }
 

@@ -1113,6 +1113,14 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+
+            //Product Model Image
+            $product_model_image = $this->container->get('admin.helper.ProductImage')->findByProductId($product['product_id']);
+            if(count($product_model_image) > 0){
+                $productlist[$key]['model_image'] = $product_model_image[0]['ProductImage'];
+            }else{
+                $productlist[$key]['model_image'] = null;
+            }
         }
         return array('product_list' => $productlist, 'page_count' => $page_count);
     }
@@ -1167,6 +1175,14 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+
+            //Product Model Image
+            $product_model_image = $this->container->get('admin.helper.ProductImage')->findByProductId($product['product_id']);
+            if(count($product_model_image) > 0){
+                $productlist[$key]['model_image'] = $product_model_image[0]['ProductImage'];
+            }else{
+                $productlist[$key]['model_image'] = null;
+            }
         }
 
         return $this->response_array(true, 'Product List', true, array('product_list' => $productlist, 'page_count' => $page_count));
@@ -1358,6 +1374,13 @@ class WebServiceHelper
 
 
             foreach ($entity->getSaveLookItem() as $saveLookItem) {
+
+                $disabled = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $status = $saveLookItem->getItems()->getProduct()->getStatus();
+                if($status != 'complete'){
+                    $disabled = true;
+                }
+
                 $temp['image'] = $saveLookItem->getItems()->getImage();
                 $temp['product_id'] = $saveLookItem->getItems()->getProduct()->getId();
                 $temp['product_image'] = $saveLookItem->getItems()->getProduct()->getDisplayProductColor()->getImage();
@@ -1367,7 +1390,7 @@ class WebServiceHelper
                 $temp['item_id'] = $saveLookItem->getItems()->getId();
                 $temp['price'] = $saveLookItem->getItems()->getPrice();
                 $temp['color_image'] = $saveLookItem->getItems()->getProductColor()->getImage();
-                $temp['disabled'] = $saveLookItem->getItems()->getProduct()->getDisabled();
+                $temp['disabled'] = $disabled;
                 $temp['deleted'] = $saveLookItem->getItems()->getProduct()->getDeleted();
                 $totalPrice = $totalPrice + $saveLookItem->getItems()->getPrice();
 
@@ -1435,6 +1458,12 @@ class WebServiceHelper
                 list($width, $height) = $info;
             }
 
+            $disabled = $product->getDisabled();
+            $status = $product->getStatus();
+            if($status != 'complete'){
+                $disabled = true;
+            }
+
             $p['items'][] = array(
                 'item_id' => $pi->getId(),
                 'product_id' => $product->getId(),
@@ -1453,7 +1482,7 @@ class WebServiceHelper
                 'fitting_room_id' => (in_array($pi->getId(), $product_item) &&  (int) $fittingRoomId > 0) ? (int) $fittingRoomId : 0,
                 'qty' => $product_qty,
                 'color_image' => $pi->getProductColor()->getImage(),
-                'disabled' => $product->getDisabled(),
+                'disabled' => $disabled,
                 'deleted' => $product->getDeleted(),
             );
         }
@@ -1470,6 +1499,11 @@ class WebServiceHelper
             );
         }
 
+        $detail_disabled = $product->getDisabled();
+        $detail_status = $product->getStatus();
+        if($detail_status != 'complete'){
+            $detail_disabled = true;
+        }
         /* Selected Layer Name */
         $getselectedcategories = $this->container->get('admin.helper.Categories')->getSelectedCategories($product->getId());
         $selectedcategories = array_column($getselectedcategories, 'id');
@@ -1491,7 +1525,7 @@ class WebServiceHelper
         }
         $p['target'] = $product->getclothingType()->getTarget();
         $p['item_name'] = $product->getItemName();
-        $p['disabled'] = $product->getDisabled();
+        $p['disabled'] = $detail_disabled;
         $p['deleted'] = $product->getDeleted();
         return $p;
     }
@@ -1791,6 +1825,14 @@ class WebServiceHelper
             //Color Count
             $color_count = $this->container->get('admin.helper.ProductColor')->findColorByProduct($product['product_id']);
             $productlist[$key]['color_count'] = count($color_count);
+
+            //Product Model Image
+            $product_model_image = $this->container->get('admin.helper.ProductImage')->findByProductId($product['product_id']);
+            if(count($product_model_image) > 0){
+                $productlist[$key]['model_image'] = $product_model_image[0]['ProductImage'];
+            }else{
+                $productlist[$key]['model_image'] = null;
+            }
         }
 
 

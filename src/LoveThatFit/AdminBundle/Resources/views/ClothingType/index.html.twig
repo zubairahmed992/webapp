@@ -14,6 +14,18 @@
 </style>
 <div class="p_listing">
   <h1>Clothing Types</h1>
+
+  <div class="btn_wrapper2">
+      <div id="chart_figures" class="product_chart_figures">
+          <div class="facts">
+              <div><span>Total Clothing Types:</span>{{ rec_count }}</div>
+              <div><span>Female:</span>{{ femaleProduct }}</div>
+              <div><span>Male:</span>{{ maleProduct }}</div>
+          </div>
+      </div>
+  </div>
+
+
   <div class="clearfix"></div>
     {% block header_right_links %}
     <div class="adjustment_links" style="margin-top: 20px; float:right;">
@@ -32,7 +44,7 @@
         <div class="span1 hds">Heaviest Weight <br>(oz)</div>
         <div class="span1 hds">Created At</div>
         <div class="span1 hds">Image</div>
-        <div class="span1 hds"></div>
+        <div class="span1 hds">Status</div>
       </div>
       {% for ct in clothing_types %}
         <div class="row-fluid show-grid space_wrap">
@@ -46,7 +58,7 @@
           <div class="span1">{{ct.HeaviestWeight}}</div>
           <div class="span1">{{ct.createdAt|date('d-m-Y') }}</div>
           <div class="span1"><img src="{{ asset(ct.WebPath) }}"/></div>
-          <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>
+          <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%} Enabled {%endif%}</div>
         </div>
       {% endfor %}
     </div> 

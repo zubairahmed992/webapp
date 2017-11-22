@@ -71,6 +71,8 @@ class PodioOrdersHelper
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUserOrder($order_entity);
         $entity->setOrderNumber($order_number);
+        $entity->setTrackingNumberStatus(0);
+        $entity->setTrackingNumberUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -88,6 +90,17 @@ class PodioOrdersHelper
         $this->em->flush();
     }
 
+    public function updatePodioTrackingNumber($id)
+    {        
+
+        $entity = $this->findByOrderNumber($id);       
+        $entity->setTrackingNumberStatus(1);
+        $entity->setTrackingNumberUpdatedAt(new \DateTime('now'));
+
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
     #----------------------------All Find Method -------------------------------------------------------------#    
 
     public function findAll()
@@ -99,6 +112,18 @@ class PodioOrdersHelper
     public function find($id)
     {
         return $this->repo->findOneBy(array('id' => $id));
+    }
+
+     #-----------------------------------------------------------
+    public function findBYOrderNumberAndStatus($order_number)
+    {
+        return $this->repo->findOneBy(array('order_number' => $order_number,'status' => 1));
+    }
+
+     #-----------------------------------------------------------
+    public function findByOrderNumber($order_number)
+    {
+        return $this->repo->findOneBy(array('order_number' => $order_number));
     }
 
     #-----------------------------------------------------------
