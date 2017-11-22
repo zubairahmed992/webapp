@@ -725,7 +725,8 @@ class UserRepository extends EntityRepository
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
                         u.gender,u.zipcode, u.createdAt')
-            ->from('LoveThatFitUserBundle:User', 'u');
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->innerJoin('LoveThatFitSiteBundle:UserItemTryHistory', 'h', 'WITH', 'h.user = u.id');
             if ($start != "" && $end != "") {
                $query->where('u.createdAt >= :start')
                     ->andWhere('u.createdAt < :end')
@@ -752,7 +753,8 @@ class UserRepository extends EntityRepository
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
                         u.gender,u.zipcode, u.createdAt')
-            ->from('LoveThatFitUserBundle:User', 'u');
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->innerJoin('LoveThatFitSiteBundle:UserItemTryHistory', 'h', 'WITH', 'h.user = u.id');
             if ($start != "" && $end != "") {
                $query->where('u.createdAt >= :start')
                     ->andWhere('u.createdAt < :end')
