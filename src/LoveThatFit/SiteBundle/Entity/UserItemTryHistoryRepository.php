@@ -65,7 +65,7 @@ class UserItemTryHistoryRepository extends EntityRepository {
             ->from('LoveThatFitSiteBundle:UserItemTryHistory', 'h')
             ->leftJoin('LoveThatFitAdminBundle:Product', 'p', 'WITH', 'h.product = p.id')
             ->leftJoin('LoveThatFitAdminBundle:Brand', 'b', 'WITH', 'b.id = p.brand')
-            ->andWhere('h.user_id=:user_id')
+            ->andWhere('h.user=:user_id')
             ->setParameter('user_id', $user_id)
             ->groupby('b.id');
         return $query->getQuery()->getResult();

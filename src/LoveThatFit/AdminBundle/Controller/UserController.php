@@ -586,11 +586,10 @@ class UserController extends Controller
 
         } elseif (isset($type) && $type == "brands") {
             $users = $this->get('user.helper.user')->findUserListExportBrands($start_date, $end_date);
-             // ==Product Tried
             if (!empty($users)) {
                 header('Content-Type: application/csv');
                 //header('Content-Type: text/csv; charset=utf-8');
-                header('Content-Disposition: attachement; filename="users.csv";');
+                header('Content-Disposition: attachement; filename="users_brands.csv";');
                 $output = fopen('php://output', 'w');
                 fputcsv($output, array(
                     'UserID', 'Name', 'Email', 'Phone No', 'Gender', 'Zip Code', 
@@ -605,9 +604,8 @@ class UserController extends Controller
                     $csv['gender']       = ($user["gender"] == "f" ? "Female" : "Male");
                     $csv['zipcode']      = $user["zipcode"];
                     $csv['created_at']   = ($user["createdAt"]->format('d/m/Y'));
-                    $csv['brands_tried'][] = $this->get('site.helper.usertryitemhistory')->brandsTiredExport();
-                    $csv['brands']       = count($user["zipcode"]);
-                    
+                    $csv['brands_tried'] = $this->get('site.helper.usertryitemhistory')->brandsTiredExportCount($user["id"]);
+                    $csv['brands']       = $this->get('site.helper.usertryitemhistory')->brandsTiredExport($user["id"]);
                     fputcsv($output, $csv);
                 }
                 # Close the stream off
@@ -633,7 +631,7 @@ class UserController extends Controller
             if (!empty($users)) {
                 header('Content-Type: application/csv');
                 //header('Content-Type: text/csv; charset=utf-8');
-                header('Content-Disposition: attachement; filename="users.csv";');
+                header('Content-Disposition: attachement; filename="users_products.csv";');
                 $output = fopen('php://output', 'w');
                 fputcsv($output, array(
                     'UserID', 'Name', 'Email', 'Phone No', 'Gender', 'Zip Code', 

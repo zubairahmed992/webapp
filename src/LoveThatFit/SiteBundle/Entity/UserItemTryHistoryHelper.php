@@ -159,7 +159,21 @@ public function countUserTiredProducts($user){
 
     public function brandsTiredExport($user_id)
     {
-        return $this->repo->brandsTiredExport($user);
+        $finalData = $this->repo->brandsTiredExport($user_id);
+        $result    = [];
+        if (!empty($finalData)) {
+          foreach ($finalData as $data) {
+            $result[] = $data['name'];
+          }
+          return implode (", ", $result);
+        } else {
+          return '';
+        }
+    }
+
+    public function brandsTiredExportCount($user_id)
+    {
+        return count($this->repo->brandsTiredExport($user_id));
     }
 
     public function productsTiredExport($user_id)
