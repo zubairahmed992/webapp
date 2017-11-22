@@ -71,6 +71,8 @@ class PodioOrdersHelper
         $entity->setUpdatedAt(new \DateTime('now'));
         $entity->setUserOrder($order_entity);
         $entity->setOrderNumber($order_number);
+        $entity->setTrackingNumberStatus(0);
+        $entity->setTrackingNumberUpdatedAt(new \DateTime('now'));
 
         $this->em->persist($entity);
         $this->em->flush();
