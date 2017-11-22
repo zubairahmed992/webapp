@@ -58,5 +58,31 @@ class UserItemTryHistoryRepository extends EntityRepository {
         }
     }
     
+    public function brandsTiredExport($user_id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('b.name')
+            ->from('LoveThatFitSiteBundle:UserItemTryHistory', 'h')
+            ->leftJoin('LoveThatFitAdminBundle:Product', 'p', 'WITH', 'h.product = p.id')
+            ->leftJoin('LoveThatFitAdminBundle:Brand', 'b', 'WITH', 'b.id = p.brand')
+            ->andWhere('h.user=:user_id')
+            ->setParameter('user_id', $user_id)
+            ->groupby('b.id');
+        return $query->getQuery()->getResult();
+    }
+
+    public function productsTiredExport($user_id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('p.name')
+            ->from('LoveThatFitSiteBundle:UserItemTryHistory', 'h')
+            ->leftJoin('LoveThatFitAdminBundle:Product', 'p', 'WITH', 'h.product = p.id')
+            ->andWhere('h.user=:user_id')
+            ->setParameter('user_id', $user_id)
+            ->groupby('p.id');
+        
+        return $query->getQuery()->getResult();
+    }
+    
 
 }
