@@ -89,6 +89,16 @@ sideviewLayer.view.center;
 sideviewPath  = new Layer();
 sideviewPath.view.center;
 
+var side_view_json_chk = $("#side_view_json").val();
+var jsonMode;
+if(side_view_json_chk ===''){
+    jsonMode = 'new';
+}else{
+    jsonMode = 'edit';
+}
+generate_json(jsonMode);
+
+
 sideviewPath.activate();
 sideviewPath.visible = false;
 sideViewLines();
@@ -96,18 +106,14 @@ sideViewLines();
 
   // vertical guideline for alignment
 
-  vLine =  new Path({
-    segments:[[480, 0], [480, 1280]],
-    strokeColor:'gray',
-    strokeWidth:1
-   });
 
 
 
 
-  vLine.onMouseDrag = function(event) {
+
+  toe_v_line.onMouseDrag = function(event) {
      if(flgg === true){
-        vLine.position.x += event.delta.x;
+        toe_v_line.position.x += event.delta.x;
     }
  };
  // ---/vertical guideline for alignment
@@ -115,67 +121,48 @@ sideViewLines();
    lyr_misc = new Layer();
    lyr_misc.activate();
 
-
 });
 
 /////////////////////////////////// Side view Calibration JSON generation /////////////////////
 
 function get_svc_all_bp_info(){
-    get_svc_bp_info(main_json.side_view_cal.body_parts.head, head_line);
-    get_svc_bp_info(main_json.side_view_cal.body_parts.neck, neck_line);
-    get_svc_bp_info(main_json.side_view_cal.body_parts.tricep, tricep_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.bicep, bicep_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.bust, bust_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.waist, waist_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.abdomon, abdomon_line);
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.high_hip, hip_high_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.low_hip, hip_low_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.high_thigh, high_thigh_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.mid_thigh, mid_thigh_line );
-//    get_svc_bp_info(main_json.side_view_cal.body_parts.low_thigh, low_thigh_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.head, head_line);
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.neck, neck_line);
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.tricep, tricep_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.bicep, bicep_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.bust, bust_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.waist, waist_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.abdomon, abdomon_line);
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.high_hip, hip_high_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.low_hip, hip_low_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.high_thigh, high_thigh_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.mid_thigh, mid_thigh_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.low_thigh, low_thigh_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.knee, knee_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.calf, calf_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.above_ankle, above_ankle_line );
+    get_svc_bp_info(main_json.user_calibration_json.side_view_cal.toe_line, toe_v_line);
+    
+    return JSON.stringify(main_json);
+    console.log(JSON.stringify(main_json));
 }
 
 function get_svc_bp_info(json_bp, bp_obj){
-
+    console.log(json_bp.p1 + "   " + bp_obj.data.name);
+    if(json_bp.p1){
+    
     json_bp.p1.x = bp_obj.segments[0].point.x;
     json_bp.p1.y = bp_obj.segments[0].point.y;
     json_bp.p2.x = bp_obj.segments[1].point.x;
     json_bp.p2.y = bp_obj.segments[1].point.y;
-
-
-
-//    val_first_x = bp_obj.segments[0].point.x;
-//    val_first_y = bp_obj.segments[0].point.y;
-//    
-//    val_sec_x = bp_obj.segments[1].point.x;
-//    val_sec_y = bp_obj.segments[1].point.y;
-//    
-//   var bodypartsx = "main_json.side_view_cal.body_parts." + objbody + '.p1.x';
-//   var bodypartsy = "main_json.side_view_cal.body_parts." + objbody + '.p1.y';
-//       
-//        bodypartsx = val_first_x;
-//        bodypartsy = val_first_y;
-//        
-//       alert(bodypartsx + bodypartsy)
-        
-   // var bodyparts = "main_json.side_view_cal.body_parts." + json_bp;
-//            
-//    console.log(bodypartsx.json_bp.p1.y);
-//      
-//        bodyparts.p1.x = bp_obj.segments[0].point.x;  
-//        bodyparts.p1.y = bp_obj.segments[0].point.y;        
-//        bodyparts.p2.x = bp_obj.segments[1].point.x;
-//        bodyparts.p2.y = bp_obj.segments[1].point.y;
-//////       
-//    
     
-//    main_json.side_view_cal.body_parts.json_bp.p2.x = bp_obj.segments[1].point.x;
-//    main_json.side_view_cal.body_parts.json_bp.p2.y = bp_obj.segments[1].point.y;
-//////    
-   return JSON.stringify(main_json);
+    }else{
+        console.log(json_bp);
+    }
+   
 }
 
-//alert(side_view_calibration(json_bp, bp_obj));
+
 
     /////////////////////////////////// End - Side view Calibration JSON generation /////////////////////
 // toggle lock and unlok guideline
@@ -186,17 +173,17 @@ function lockUnlock(){
     if(flgg === false){
         flgg=true;
         msg = "Guideline is Unlocked";
-        vLine.opacity=0.7;
-        vLine.strokeColor='red';
+        toe_v_line.opacity=0.7;
+        toe_v_line.strokeColor='red';
         $("#lockunlock").text("Guidline Unlocked");
     }else{
         flgg=false;
         msg = "Guideline is locked";
-        vLine.opacity=0.3;
-        vLine.strokeColor='gray';
+        toe_v_line.opacity=0.3;
+        toe_v_line.strokeColor='gray';
         $("#lockunlock").text("Guidline Locked");
     }
-   alert(msg);
+  // alert(msg);
 }
 
 // archives show image function
@@ -224,11 +211,11 @@ function showImag(retouch_image){
 
 // side view load
 function restoreFrontTab(){
- sideviewLayer.visible=false;
- full_mask.visible=true;
- body_part_area.visible = false;
- sideviewPath.visible = false;
-  view.update();
+    sideviewLayer.visible=false;
+    full_mask.visible=true;
+    body_part_area.visible = false;
+    sideviewPath.visible = false;
+    view.update();
 }
 function loadSideViewImag(sideImageurl){
     sideviewLayer.activate();
@@ -258,10 +245,20 @@ function sideViewLines(){
       });
       txtlabel.visible = false;
 
+
+   toe_v_line =  new Path({
+    segments:[[main_json.user_calibration_json.side_view_cal.toe_line.p1.x, main_json.user_calibration_json.side_view_cal.toe_line.p1.y], [main_json.user_calibration_json.side_view_cal.toe_line.p2.x, main_json.user_calibration_json.side_view_cal.toe_line.p2.y]],
+    strokeColor:'gray',
+    strokeWidth:4,
+    opacity:0.3
+   });
+
+
        head_line = new Path({
-        segments:[[400, 300], [600, 300]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.head.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.head.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.head.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.head.p2.y]],
         selected: true,
     });
+    
     head_line.data = {
         type: 'side_view_line',
         name: 'head_line'
@@ -269,7 +266,7 @@ function sideViewLines(){
     
     
     neck_line = new Path({
-        segments:[[400, 390], [600, 390]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.neck.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.neck.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.neck.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.neck.p2.y]],
         selected: true,
     });
     neck_line.data = {
@@ -279,7 +276,7 @@ function sideViewLines(){
     
 
     tricep_line = new Path({
-        segments:[[400, 470], [600, 470]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.tricep.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.tricep.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.tricep.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.tricep.p2.y]],
         selected: true,
     });
     tricep_line.data = {
@@ -288,7 +285,7 @@ function sideViewLines(){
     };
     
     bicep_line = new Path({
-        segments:[[400, 510], [600, 510]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.bicep.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.bicep.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.bicep.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.bicep.p2.y]],
         selected: true,
     });
     bicep_line.data = {
@@ -297,7 +294,7 @@ function sideViewLines(){
     };
     
     bust_line = new Path({
-        segments:[[400, 540], [600, 540]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.bust.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.bust.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.bust.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.bust.p2.y]],
         selected: true,
     });
     bust_line.data = {
@@ -306,7 +303,7 @@ function sideViewLines(){
     };
 
     waist_line = new Path({
-        segments:[[400, 600], [600, 600]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.waist.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.waist.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.waist.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.waist.p2.y]],
         selected: true,
     });
     waist_line.data = {
@@ -315,16 +312,16 @@ function sideViewLines(){
     };
 
     abdomon_line = new Path({
-        segments:[[400, 670], [600, 670]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.abdomon.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.abdomon.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.abdomon.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.abdomon.p2.y]],
         selected: true,
     });
     abdomon_line.data = {
         type: 'side_view_line',
-        name: 'abdominal_line'
+        name: 'abdomon_line'
     };
 
     hip_high_line = new Path({
-        segments:[[400, 720], [600, 720]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.high_hip.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.high_hip.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.high_hip.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.high_hip.p2.y]],
         selected: true,
     });
     hip_high_line.data = {
@@ -333,7 +330,7 @@ function sideViewLines(){
     };
    
     hip_low_line = new Path({
-        segments:[[400, 770], [600, 770]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.low_hip.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.low_hip.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.low_hip.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.low_hip.p2.y]],
         selected: true,
     });
     hip_low_line.data = {
@@ -342,7 +339,7 @@ function sideViewLines(){
     };
     
     high_thigh_line = new Path({
-        segments:[[400, 800], [600, 800]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.high_thigh.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.high_thigh.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.high_thigh.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.high_thigh.p2.y]],
         selected: true,
     });
     
@@ -351,7 +348,7 @@ function sideViewLines(){
         name: 'high_thigh_line'
     };
     mid_thigh_line = new Path({
-        segments:[[400, 830], [600, 830]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.mid_thigh.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.mid_thigh.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.mid_thigh.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.mid_thigh.p2.y]],
         selected: true,
     });
     
@@ -361,7 +358,7 @@ function sideViewLines(){
     };
     
     low_thigh_line = new Path({
-        segments:[[400, 850], [600, 850]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.low_thigh.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.low_thigh.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.low_thigh.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.low_thigh.p2.y]],
         selected: true,
     });
     
@@ -371,7 +368,7 @@ function sideViewLines(){
     };
     
     knee_line = new Path({
-        segments:[[400, 1000], [600, 1000]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.knee.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.knee.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.knee.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.knee.p2.y]],
         selected: true,
     });
     
@@ -381,7 +378,7 @@ function sideViewLines(){
     };
     
     calf_line = new Path({
-        segments:[[400, 1090], [600, 1090]],
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.calf.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.calf.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.calf.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.calf.p2.y]],
         selected: true,
     });
     
@@ -390,16 +387,114 @@ function sideViewLines(){
         name: 'calf_line'
     }; 
     
-    above_ankle = new Path({
-        segments:[[400, 1175], [600, 1175]],
+    above_ankle_line = new Path({
+        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.above_ankle.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.above_ankle.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.above_ankle.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.above_ankle.p2.y]],
         selected: true,
     });
     
-    above_ankle.data = {
+    above_ankle_line.data = {
         type: 'side_view_line',
-        name: 'above_ankle'
+        name: 'above_ankle_line'
     }; 
 }
+// side view json
+var jsonMode = $("#side_view_json").val();
+function generate_json(jsonMode){
+ main_json ={};
+ function set_default_line(item_lenght, incr_val){
+     var cntr_line = 960 / 2;
+     if(incr_val === "sub"){
+        var set_p1_x = cntr_line - item_lenght / 2;
+        return set_p1_x;
+     }else if(incr_val === "add"){
+        var set_p2_x = (item_lenght / 2) + cntr_line;
+        return set_p2_x;
+     }
+ }
+    if(jsonMode=='new'){
+        main_json= {
+          user_calibration_json:{
+                    side_view_cal:{
+                                  toe_line:{
+                                            p1:{x:520, y: 0},
+                                            p2:{x:520, y: 1280}
+                                           },
+                                body_parts:{
+                                        head:{
+                                            p1:{x:set_default_line(120,"sub"), y: full_mask.segments[1].point.y},
+                                            p2:{x:set_default_line(120,"add"), y: full_mask.segments[1].point.y}
+                                            },
+                                       neck:{
+                                            p1:{x:set_default_line(60,"sub"), y: full_mask.segments[5].point.y},
+                                            p2:{x:set_default_line(60,"add"), y: full_mask.segments[5].point.y}
+                                            },
+                                       tricep:{
+                                            p1:{x:set_default_line(50,"sub"), y: full_mask.segments[8].point.y - 50},
+                                            p2:{x:set_default_line(50,"add"), y: full_mask.segments[8].point.y - 50}
+                                            },
+                                      bicep:{
+                                            p1:{x:set_default_line(50,"sub"), y: full_mask.segments[8].point.y},
+                                            p2:{x:set_default_line(50,"add"), y: full_mask.segments[8].point.y}
+                                            },
+                                      bust:{
+                                            p1:{x:set_default_line(180,"sub"), y: full_mask.segments[17].point.y},
+                                            p2:{x:set_default_line(180,"add"), y: full_mask.segments[17].point.y}
+                                            },
+                                      waist:{
+                                            p1:{x:set_default_line(140,"sub"), y: full_mask.segments[18].point.y},
+                                            p2:{x:set_default_line(140,"add"), y: full_mask.segments[18].point.y}
+                                            },
+                                     abdomon:{
+                                            p1:{x:set_default_line(146,"sub"), y: full_mask.segments[19].point.y},
+                                            p2:{x:set_default_line(146,"add"), y: full_mask.segments[19].point.y}
+                                            },
+                                    high_hip:{
+                                            p1:{x:set_default_line(150,"sub"), y: full_mask.segments[20].point.y},
+                                            p2:{x:set_default_line(150,"add"), y: full_mask.segments[20].point.y}
+                                            },
+                                    low_hip:{
+                                            p1:{x:set_default_line(154,"sub"), y: full_mask.segments[21].point.y},
+                                            p2:{x:set_default_line(154,"add"), y: full_mask.segments[21].point.y}
+                                            },
+                                    high_thigh:{
+                                            p1:{x:set_default_line(80,"sub"), y: full_mask.segments[21].point.y + 16},
+                                            p2:{x:set_default_line(80,"add"), y: full_mask.segments[21].point.y + 16}
+                                            }, 
+                                     mid_thigh:{
+                                            p1:{x:set_default_line(70,"sub"), y: full_mask.segments[22].point.y},
+                                            p2:{x:set_default_line(70,"add"), y: full_mask.segments[22].point.y}
+                                            },
+                                     low_thigh:{
+                                            p1:{x:set_default_line(66,"sub"), y: full_mask.segments[23].point.y},
+                                            p2:{x:set_default_line(66,"add"), y: full_mask.segments[23].point.y}
+                                            },
+                                      knee:{
+                                            p1:{x:set_default_line(54,"sub"), y: full_mask.segments[24].point.y},
+                                            p2:{x:set_default_line(54,"add"), y: full_mask.segments[24].point.y}
+                                            },
+                                      calf:{
+                                            p1:{x:set_default_line(60,"sub"), y: full_mask.segments[25].point.y},
+                                            p2:{x:set_default_line(60,"add"), y: full_mask.segments[25].point.y}
+                                            },
+                                      above_ankle:{
+                                            p1:{x:set_default_line(44,"sub"), y: full_mask.segments[26].point.y},
+                                            p2:{x:set_default_line(44,"add"), y: full_mask.segments[26].point.y}
+                                            }      
+                                }
+                    },  
+                    widest_point_hip: body_part_max_width()
+            }
+ }; 
+    }else if(jsonMode==='edit'){
+        main_json = JSON.stringify(jsonMode);
+
+    }
+   return main_json;
+  
+   
+ } 
+
+// side view json 
 // var verticalLine;
 // function vline(eventdelta){
 //    var  verticalLine =  new Path({
@@ -514,77 +609,7 @@ function showOriginal(){
       user_image.opacity = 1;
      view.update();
 }
-// side view json 
-var main_json= {
-    side_view_cal:{
-        body_parts:{
-                head:{
-                    p1:{x:'0', y:'0'},
-                    p2:{x:'0', y:'0'}
-                    },
-               neck:{
-                    p1:{x:'0', y:'0'},
-                    p2:{x:'0', y:'0'}
-                    },
-               tricep:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-              bicep:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-              bust:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-              waist:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-             tummy:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-            high_hip:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-            low_hip:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-            high_thigh:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    }, 
-             mid_thigh:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-             low_thigh:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-              knee:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-              calf:{
-                    p1:{x:'300', y:'300'},
-                    p2:{x:'300', y:'300'}
-                    },
-              above_ankle:{
-                    p1:{},
-                    p2:{x:'300', y:'300'}
-                    }      
-        },
-        toe_line:{x:0,  y:1}
-    }    
- }; 
- 
-console.log(JSON.stringify(main_json));
-// side view json 
+
 
 
 var toe_shape_px=42;
@@ -1089,8 +1114,8 @@ function show_index_numbers(){
         $("#i_note_" + a).css('z-index','1000');
         $("#i_note_" + a).css('background-color','#ffcc00');
         $("#i_note_" + a).css('font-size','10px');
-        $("#i_note_" + a).css('top',full_mask.segments[a].point.y + 5);
-        $("#i_note_" + a).css('left', full_mask.segments[a].point.x + 2);
+        $("#i_note_" + a).css('top',full_mask.segments[a].point.y + 80);
+        $("#i_note_" + a).css('left', full_mask.segments[a].point.x + 20);
     }
 }
 function set_out_update(){
@@ -1233,7 +1258,7 @@ function zoom_out(){
     }
 }
 function save(){
-
+    restoreFrontTab();
 
     // change opacity 1 for image cropping
     if(retuchImage !=null){
@@ -1489,7 +1514,7 @@ var max_widest;
       return rawana_info;
 
   }
-  return JSON.stringify(max_widest);
+  return max_widest;
 
 }
 
@@ -1531,14 +1556,12 @@ function get_additional_pos(){
 
 function upload(){
     get_svc_all_bp_info();
-   alert(JSON.stringify(main_json));
-    
+   console.log(get_svc_all_bp_info());
+
     $('#image_actions').attr('value',JSON.stringify(image_actions_count));
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);
     $('#img_path_paper').attr('value', full_mask.pathData);
-
-
 
     var sholder_left =  full_mask.segments[7].point.y;
     var sholder_right = full_mask.segments[63].point.y;
@@ -1585,8 +1608,8 @@ function upload(){
         hip_height: ($("#hip_height").attr("value") * 1.0421875) / 2,
         svg_path:$('#img_path_paper').attr('value'),
         image_actions:$('#image_actions').attr('value'),
-        widest_hip: body_part_max_width(),
-       // side_view_json: side_view_data(),
+        widest_hip: JSON.stringify(body_part_max_width()),
+        side_view_json: get_svc_all_bp_info(),
         retouch_image:selected_retouch_img_filename};
 
     $.ajax({
