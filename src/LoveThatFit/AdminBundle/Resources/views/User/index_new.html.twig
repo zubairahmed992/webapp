@@ -62,12 +62,20 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="adjustment_links" style="margin-right: 6%; float:right;">
+    <div class="adjustment_links"  style="margin-left: 40px;">
+        
         <form action="{{ path('admin_users_export') }}" method="post" enctype="multipart/form-data">
             From: <input type="text" id="from" name="from">
             To: <input type="text" id="to" name="to">
-            <input type="submit" name="" class="btn export_btn" value="Export Users"/>
-            {# <a href="{{ path('') }}" class="btn export_btn">Export Users</a> #}
+            <input type="hidden" id="type" name="type" value="">
+            <br>
+            <div style="margin-left: 40px;">
+                <input type="submit" data-value="single" class="btn export_btn" value="Export Users Detail"/>
+                <input type="submit" data-value="brands" class="btn export_btn" value="Export Users Brands Tried"/>
+                <input type="submit" data-value="products" class="btn export_btn" value="Export Users Products Tried"/>
+                <input type="submit" data-value="friends_invited" class="btn export_btn" value="Export Users Friends Invited"/>
+                <input type="submit" data-value="reffered_member" class="btn export_btn" value="Export Users Reffered Member"/>
+            </div>
         </form>
     </div>
     <div class="clearfix"></div>
@@ -261,6 +269,10 @@
                     url = url.replace(':id', data.id);
                     window.top.location = url;
                 }
+            });
+
+            $('.export_btn').on('click', function() {
+                $("#type").val($(this).data('value'));
             });
 
         });

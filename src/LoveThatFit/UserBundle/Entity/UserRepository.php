@@ -663,4 +663,223 @@ class UserRepository extends EntityRepository
           return "null";
         } 
     }
+
+    public function findUserListExport($start_date, $end_date)
+    {
+        $start = $end = "";
+        if ($start_date != "") {
+            $start = date("Y-m-d", strtotime($start_date) );
+        }
+        if ($end_date != "") {
+            $end = date("Y-m-d", strtotime($end_date) );
+        } else {
+            $end = date("Y-m-d");
+        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
+                        u.gender,u.zipcode, u.createdAt, u.friend_name, 
+                        u.friend_email, u.image,
+                        m.weight, m.height, m.waist, m.hip, m.high_hip,
+                        m.low_hip, m.bust, m.chest, m.arm, m.inseam, 
+                        m.outseam, m.shoulder_height, m.shoulder_across_front,
+                        m.shoulder_across_back, m.sleeve, m.neck, m.thigh,
+                        m.high_thigh, m.low_thigh, m.bicep, m.tricep,
+                        m.wrist, m.center_front_waist, m.back_waist, m.abdomen,
+                        m.waist_hip, m.knee, m.calf, m.ankle, m.body_shape, 
+                        m.body_types, m.bra_size, m.iphone_outseam,
+                        m.iphone_shoulder_height, m.iphone_foot_height,
+                        IDENTITY(m.top_brand) as top_brand, 
+                        IDENTITY(m.bottom_brand) as bottom_brand, 
+                        IDENTITY(m.dress_brand) as dress_brand, 
+                        d.device_name, d.deviceType, 
+                        d.deviceUserPerInchPixelHeight, um.id as marker_id, m.bust_height
+            ')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin('LoveThatFitUserBundle:Measurement', 'm', 'WITH', 'm.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserDevices', 'd', 'WITH', 'd.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserMarker', 'um', 'WITH', 'um.user = u.id')
+            ;
+            if ($start != "" && $end != "") {
+               $query->where('u.createdAt >= :start')
+                    ->andWhere('u.createdAt < :end')
+                    ->setParameter('start', $start)
+                    ->setParameter('end', $end);
+            }
+            $query->OrderBy('u.id', 'DESC');
+            
+            $preparedQuery = $query->getQuery();
+            return $preparedQuery->getResult();
+    }
+
+    public function findUserListExportBrands($start_date, $end_date)
+    {
+        $start = $end = "";
+        if ($start_date != "") {
+            $start = date("Y-m-d", strtotime($start_date) );
+        }
+        if ($end_date != "") {
+            $end = date("Y-m-d", strtotime($end_date) );
+        } else {
+            $end = date("Y-m-d");
+        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
+                        u.gender,u.zipcode, u.createdAt, u.friend_name, 
+                        u.friend_email, u.image,
+                        m.weight, m.height, m.waist, m.hip, m.high_hip,
+                        m.low_hip, m.bust, m.chest, m.arm, m.inseam, 
+                        m.outseam, m.shoulder_height, m.shoulder_across_front,
+                        m.shoulder_across_back, m.sleeve, m.neck, m.thigh,
+                        m.high_thigh, m.low_thigh, m.bicep, m.tricep,
+                        m.wrist, m.center_front_waist, m.back_waist, m.abdomen,
+                        m.waist_hip, m.knee, m.calf, m.ankle, m.body_shape, 
+                        m.body_types, m.bra_size, m.iphone_outseam,
+                        m.iphone_shoulder_height, m.iphone_foot_height,
+                        d.device_name, d.deviceType, d.deviceUserPerInchPixelHeight,
+                        um.id as marker_id
+            ')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin('LoveThatFitUserBundle:Measurement', 'm', 'WITH', 'm.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserDevices', 'd', 'WITH', 'd.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserMarker', 'um', 'WITH', 'um.user = u.id')
+            ;
+            if ($start != "" && $end != "") {
+               $query->where('u.createdAt BETWEEN :start AND :end')
+                    ->setParameter('start', $start)
+                    ->setParameter('end', $end);
+            }
+            $query->OrderBy('u.id', 'DESC');
+            
+            $preparedQuery = $query->getQuery();
+            return $preparedQuery->getResult();
+    }
+
+    public function findUserListExportProducts($start_date, $end_date)
+    {
+        $start = $end = "";
+        if ($start_date != "") {
+            $start = date("Y-m-d", strtotime($start_date) );
+        }
+        if ($end_date != "") {
+            $end = date("Y-m-d", strtotime($end_date) );
+        } else {
+            $end = date("Y-m-d");
+        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
+                        u.gender,u.zipcode, u.createdAt, u.friend_name, 
+                        u.friend_email, u.image,
+                        m.weight, m.height, m.waist, m.hip, m.high_hip,
+                        m.low_hip, m.bust, m.chest, m.arm, m.inseam, 
+                        m.outseam, m.shoulder_height, m.shoulder_across_front,
+                        m.shoulder_across_back, m.sleeve, m.neck, m.thigh,
+                        m.high_thigh, m.low_thigh, m.bicep, m.tricep,
+                        m.wrist, m.center_front_waist, m.back_waist, m.abdomen,
+                        m.waist_hip, m.knee, m.calf, m.ankle, m.body_shape, 
+                        m.body_types, m.bra_size, m.iphone_outseam,
+                        m.iphone_shoulder_height, m.iphone_foot_height,
+                        d.device_name, d.deviceType, d.deviceUserPerInchPixelHeight,
+                        um.id as marker_id
+            ')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin('LoveThatFitUserBundle:Measurement', 'm', 'WITH', 'm.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserDevices', 'd', 'WITH', 'd.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserMarker', 'um', 'WITH', 'um.user = u.id')
+            ;
+            if ($start != "" && $end != "") {
+               $query->where('u.createdAt BETWEEN :start AND :end')
+                    ->setParameter('start', $start)
+                    ->setParameter('end', $end);
+            }
+            $query->OrderBy('u.id', 'DESC');
+            
+            $preparedQuery = $query->getQuery();
+            return $preparedQuery->getResult();
+    }
+
+    public function findUserListExportFInvited($start_date, $end_date)
+    {
+        $start = $end = "";
+        if ($start_date != "") {
+            $start = date("Y-m-d", strtotime($start_date) );
+        }
+        if ($end_date != "") {
+            $end = date("Y-m-d", strtotime($end_date) );
+        } else {
+            $end = date("Y-m-d");
+        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
+                        u.gender,u.zipcode, u.createdAt, u.friend_name, 
+                        u.friend_email, u.image,
+                        m.weight, m.height, m.waist, m.hip, m.high_hip,
+                        m.low_hip, m.bust, m.chest, m.arm, m.inseam, 
+                        m.outseam, m.shoulder_height, m.shoulder_across_front,
+                        m.shoulder_across_back, m.sleeve, m.neck, m.thigh,
+                        m.high_thigh, m.low_thigh, m.bicep, m.tricep,
+                        m.wrist, m.center_front_waist, m.back_waist, m.abdomen,
+                        m.waist_hip, m.knee, m.calf, m.ankle, m.body_shape, 
+                        m.body_types, m.bra_size, m.iphone_outseam,
+                        m.iphone_shoulder_height, m.iphone_foot_height,
+                        d.device_name, d.deviceType, d.deviceUserPerInchPixelHeight,
+                        um.id as marker_id
+            ')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin('LoveThatFitUserBundle:Measurement', 'm', 'WITH', 'm.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserDevices', 'd', 'WITH', 'd.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserMarker', 'um', 'WITH', 'um.user = u.id')
+            ;
+            if ($start != "" && $end != "") {
+               $query->where('u.createdAt BETWEEN :start AND :end')
+                    ->setParameter('start', $start)
+                    ->setParameter('end', $end);
+            }
+            $query->OrderBy('u.id', 'DESC');
+            
+            $preparedQuery = $query->getQuery();
+            return $preparedQuery->getResult();
+    }
+
+    public function findUserListExporRMember($start_date, $end_date)
+    {
+        $start = $end = "";
+        if ($start_date != "") {
+            $start = date("Y-m-d", strtotime($start_date) );
+        }
+        if ($end_date != "") {
+            $end = date("Y-m-d", strtotime($end_date) );
+        } else {
+            $end = date("Y-m-d");
+        }
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('u.id, u.firstName, u.lastName, u.email, u.phoneNumber, 
+                        u.gender,u.zipcode, u.createdAt, u.friend_name, 
+                        u.friend_email, u.image,
+                        m.weight, m.height, m.waist, m.hip, m.high_hip,
+                        m.low_hip, m.bust, m.chest, m.arm, m.inseam, 
+                        m.outseam, m.shoulder_height, m.shoulder_across_front,
+                        m.shoulder_across_back, m.sleeve, m.neck, m.thigh,
+                        m.high_thigh, m.low_thigh, m.bicep, m.tricep,
+                        m.wrist, m.center_front_waist, m.back_waist, m.abdomen,
+                        m.waist_hip, m.knee, m.calf, m.ankle, m.body_shape, 
+                        m.body_types, m.bra_size, m.iphone_outseam,
+                        m.iphone_shoulder_height, m.iphone_foot_height,
+                        d.device_name, d.deviceType, d.deviceUserPerInchPixelHeight,
+                        um.id as marker_id
+            ')
+            ->from('LoveThatFitUserBundle:User', 'u')
+            ->leftJoin('LoveThatFitUserBundle:Measurement', 'm', 'WITH', 'm.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserDevices', 'd', 'WITH', 'd.user = u.id')
+            ->leftJoin('LoveThatFitUserBundle:UserMarker', 'um', 'WITH', 'um.user = u.id')
+            ;
+            if ($start != "" && $end != "") {
+               $query->where('u.createdAt BETWEEN :start AND :end')
+                    ->setParameter('start', $start)
+                    ->setParameter('end', $end);
+            }
+            $query->OrderBy('u.id', 'DESC');
+            
+            $preparedQuery = $query->getQuery();
+            return $preparedQuery->getResult();
+    }
 }

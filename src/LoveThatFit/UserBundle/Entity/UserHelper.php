@@ -1376,4 +1376,132 @@ class UserHelper
         return $this->repo->getActivityLog();
     }
 
+    public function findUserListExport($start_date, $end_date)
+    {
+        return $this->repo->findUserListExport($start_date, $end_date);
+    }
+
+    public function findUserListExportBrands($start_date, $end_date)
+    {
+        return $this->repo->findUserListExportBrands($start_date, $end_date);
+    }
+
+    public function findUserListExportProducts($start_date, $end_date)
+    {
+        return $this->repo->findUserListExportProducts($start_date, $end_date);
+    }
+
+    public function findUserListExportFInvited($start_date, $end_date)
+    {
+        return $this->repo->findUserListExportFInvited($start_date, $end_date);
+    }
+
+    public function findUserListExporRMember($start_date, $end_date)
+    {
+        return $this->repo->findUserListExporRMember($start_date, $end_date);
+    }
+
+
+    public function sizeExport($gender, $top_brand_id, $bottom_brand_id, $dress_brand_id)
+    {
+        $size_entered;
+        if ($gender == 'f') {
+            if ($top_brand_id == "" && $bottom_brand_id == "" && $dress_brand_id == "") {
+                $size_entered = "No Sizes Entered";
+            } elseif ($top_brand_id != "" && $bottom_brand_id != "" && $dress_brand_id == "") {
+                $size_entered = "Partial Sizes Entered";
+            } elseif ($top_brand_id != "" && $bottom_brand_id != "" && $dress_brand_id != "") {
+                $size_entered = "All sizes Entered";
+            }
+        } elseif ($gender == 'm' ) {
+            if ($top_brand_id == "" && $bottom_brand_id == "") {
+                $size_entered = "No Sizes Entered";
+            } elseif ($top_brand_id != "" && $bottom_brand_id == "") {
+                $size_entered = "Partial Sizes Entered";
+            } elseif ($top_brand_id != "" && $bottom_brand_id != "") {
+                $size_entered = "All sizes Entered";
+            }
+        }
+        return $size_entered;
+    }
+
+    public function accuracyExport(
+        $weight, $height, $bust_height, $thigh, $body_types, $body_shape, 
+        $inseam, $outseam, $neck, $sleeve, $chest, $shoulder_across_front, 
+        $shoulder_across_back, $bicep, $tricep, $wrist, $center_front_waist, 
+        $back_waist, $waist_hip,  $knee, $calf, $ankle, $bra_size
+    ) {
+        $accuracy = 0;
+        if($weight != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($height != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($bust_height != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($thigh != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($body_types != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($body_shape != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($inseam != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($outseam != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($neck != "") {
+            $accuracy = $accuracy + 1;
+        } 
+        if($sleeve != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($chest != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($shoulder_across_front != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($shoulder_across_back != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($bicep != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($tricep != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($wrist != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($center_front_waist != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($back_waist != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($waist_hip != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($knee != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($calf != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($ankle != "") {
+            $accuracy = $accuracy + 1;
+        }
+        if($bra_size != "") {
+            $accuracy = $accuracy + 1;
+        }
+        return round(($accuracy/29)*100,2);
+    }
+
 }
