@@ -98,6 +98,10 @@ class UserAppAccessLogHelper {
         return $this->repo->findMaxUserId();
     }
 #-------------------------------------------------------------------------
+    public function countUserByUserId($user_id)
+    {
+      return $this->repo->countUserByUserId($user_id);
+    }
 
 
 }

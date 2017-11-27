@@ -156,4 +156,42 @@ public function countUserTiredProducts($user){
        $entity->setFeedback($str);
        $this->save($entity);
     }
+
+    public function brandsTiredExport($user_id)
+    {
+        $finalData = $this->repo->brandsTiredExport($user_id);
+        $result    = [];
+        if (!empty($finalData)) {
+          foreach ($finalData as $data) {
+            $result[] = $data['name'];
+          }
+          return implode (", ", $result);
+        } else {
+          return '';
+        }
+    }
+
+    public function brandsTiredExportCount($user_id)
+    {
+        return count($this->repo->brandsTiredExport($user_id));
+    }
+
+    public function productsTiredExport($user_id)
+    {
+        $finalData = $this->repo->productsTiredExport($user_id);
+        $result    = [];
+        if(!empty($finalData)) {
+          foreach ($finalData as $data) {
+              $result[] = $data['name'];
+          }
+          return implode (", ", $result);
+        } else {
+          return '';
+        }
+    }
+
+    public function productsTiredExportCount($user_id)
+    {
+        return count($this->repo->productsTiredExport($user_id));
+    }
 }
