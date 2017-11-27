@@ -501,9 +501,12 @@ class ServiceController extends Controller {
     {
         try {
             $response = $this->get('service.repo')->getuserMaskMarkerJson($user_id);
+            $data['marker_json'] = $response['marker_json'];
+            $widestpointhip['widestpointhip'] = json_decode($response['coordinate_json'],true);
+            $data['widest_point_hip'] = $widestpointhip['widestpointhip']['user_calibration_json']['widest_point_hip'];
             return new JsonResponse([
                 'success' => true,
-                'data'    => $response
+                'data'    => $data
             ]);
         } catch (\Exception $exception) {
             return new JsonResponse([

@@ -194,7 +194,7 @@ class ServiceRepo
     public function getuserMaskMarkerJson($user_id)
     {
         $query = $this->em
-            ->createQuery("SELECT um.marker_json FROM LoveThatFitUserBundle:UserMarker um
+            ->createQuery("SELECT um.marker_json, um.coordinate_json FROM LoveThatFitUserBundle:UserMarker um
                                        WHERE um.user=:user_id")
             ->setParameters(array('user_id' => $user_id));
         try {

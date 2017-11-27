@@ -94,6 +94,7 @@ class UserMarkerHelper
         if (array_key_exists('default_marker_svg', $specs) && $specs['default_marker_svg']) {$user_marker->setDefaultMarkerSvg($specs['default_marker_svg']);}
         if (array_key_exists('default_user', $specs) && $specs['default_user']) {$user_marker->setDefaultUser($specs['default_user']);} else { $user_marker->setDefaultUser(false);}
         if (array_key_exists('image_actions', $specs) && $specs['image_actions']) {$user_marker->setImageActions($specs['image_actions']);}
+        if (array_key_exists('coordinate_json', $specs) && $specs['coordinate_json']) {$user_marker->setCoordinateJson($specs['coordinate_json']);}
 
     }
     #----------------------------------------------------------------------------

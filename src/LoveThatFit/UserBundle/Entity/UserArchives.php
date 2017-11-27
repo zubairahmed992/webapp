@@ -517,6 +517,8 @@ class UserArchives
         $ar['marker_json'] = $this->marker_json;
         $ar['image_actions'] = $this->image_actions;
         $ar['default_svg_paths'] = $this->default_marker_svg;
+        $ar['coordinate_json'] = $this->getCoordinateJson();
+
         
         
         $mp = json_decode($this->marker_params,true);
