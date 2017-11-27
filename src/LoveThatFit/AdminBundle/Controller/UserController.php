@@ -486,7 +486,7 @@ class UserController extends Controller
                 $output = fopen('php://output', 'w');
                 fputcsv($output, array(
                     'UserID', 'Name', 'Email', 'Phone No', 'Gender', 'Zip Code', 'Created At',
-                    'Photo Uploaded', 'Photo Marked', 'Weight', 'Height','Waist', 'Hip', 
+                    'Status', 'Weight', 'Height','Waist', 'Hip', 
                     'High Hip', 'Low Hip', 'Bust', 'Chest', 'Arm', 'Inseam', 'Outseam',
                     'Shoulder Height', 'Shoulder Across Front', 'Shoulder Across Back',
                     'Sleeve', 'Neck', 'Thigh', 'High Thigh', 'Low Thigh',
@@ -498,6 +498,7 @@ class UserController extends Controller
                     'Measurements Entered', 'Friend Name', 'Friend Email'
                     )
                 );
+                $csv = array();
                 foreach ($users as $user) {
                     $csv['id']                           = $user["id"];
                     $csv['user_name']                    = ($user["firstName"] . " " . $user["lastName"]);
@@ -506,8 +507,7 @@ class UserController extends Controller
                     $csv['gender']                       = ($user["gender"] == "f" ? "Female" : "Male");
                     $csv['zipcode']                      = $user["zipcode"];
                     $csv['created_at']                   = ($user["createdAt"]->format('d/m/Y'));
-                    $csv['image']                        = ($user["image"]== ""?"Not Uploaded":"Uploaded");
-                    $csv['marker_id']                    = ($user["marker_id"] == "" ? "Not" : "Yes");
+                    $csv['status']                       = $this->get('user.helper.user')->getUpdatedUserArchiveTime($user["id"])['status'];
                     $csv['weight']                       = $user["weight"];
                     $csv['height']                       = $user["height"];
                     $csv['waist']                        = $user["waist"];
