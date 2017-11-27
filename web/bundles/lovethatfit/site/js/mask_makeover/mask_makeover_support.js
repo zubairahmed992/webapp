@@ -423,7 +423,7 @@ function generate_json(jsonMode){
      }
  }
     if(jsonMode==='new'){
-        alert("New Json");
+      
         main_json= {
           user_calibration_json:{
                     side_view_cal:{
