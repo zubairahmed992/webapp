@@ -323,8 +323,11 @@ class UserMaskAdjustmentController extends Controller {
 
         $measurement_archive = json_decode($archive->getMeasurementJson(), 1);
         $image_actions_archive = json_decode($archive->getImageActions(), 1);
-        $user_calibration_json_archive = json_decode($archive->getCoordinateJson(), 1);
-
+        
+        
+        $user_calibration_json_archive = $archive->getCoordinateJson(); 
+        //print_r($user_calibration_json_archive);
+       // die;
         $device_type = $image_actions_archive['device_type'];
         $device_type=$device_type?$device_type:$user->getImageDeviceType();
         $measurement = $this->get('webservice.helper')->setUserMeasurementWithParams($measurement_archive, $user);

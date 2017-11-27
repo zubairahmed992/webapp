@@ -56,7 +56,9 @@
 <input id="side_view_2" type="hidden" value="" />#}
 <input id="side_view_1" type="hidden" value="" />
 <input id="side_view_2" type="hidden" value="" />
-<input id="side_view_json" type="hidden" value="" />
+{#"{{ dump(user_calibration_json_archive) }}"#}
+<input id="side_view_json" type="hidden" value="{{ user_calibration_json_archive}}" />
+
 <!-- /side view inputs for both sides !-->
 
 <div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>

@@ -93,10 +93,18 @@ var side_view_json_chk = $("#side_view_json").val();
 var jsonMode;
 if(side_view_json_chk ===''){
     jsonMode = 'new';
+    main_json = {};
+    generate_json(jsonMode);
+    console.log(generate_json(jsonMode));
 }else{
     jsonMode = 'edit';
+    
+    main_json = $("#side_view_json").val();
+    main_json = JSON.parse(main_json);
+    console.log(main_json.user_calibration_json.side_view_cal.body_parts.head.p1.x);
+   
 }
-generate_json(jsonMode);
+
 
 
 sideviewPath.activate();
@@ -126,6 +134,7 @@ sideViewLines();
 /////////////////////////////////// Side view Calibration JSON generation /////////////////////
 
 function get_svc_all_bp_info(){
+//    alert(main_json.user_calibration_json.side_view_cal.body_parts.head.p1.x);
     get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.head, head_line);
     get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.neck, neck_line);
     get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.tricep, tricep_line );
@@ -143,8 +152,10 @@ function get_svc_all_bp_info(){
     get_svc_bp_info(main_json.user_calibration_json.side_view_cal.body_parts.above_ankle, above_ankle_line );
     get_svc_bp_info(main_json.user_calibration_json.side_view_cal.toe_line, toe_v_line);
     
-    return JSON.stringify(main_json);
+    return main_json;
+    console.log('----------------testing------------');
     console.log(JSON.stringify(main_json));
+    console.log('----------------testing------------');
 }
 
 function get_svc_bp_info(json_bp, bp_obj){
@@ -247,7 +258,7 @@ function sideViewLines(){
 
 
    toe_v_line =  new Path({
-    segments:[[main_json.user_calibration_json.side_view_cal.toe_line.p1.x, main_json.user_calibration_json.side_view_cal.toe_line.p1.y], [main_json.user_calibration_json.side_view_cal.toe_line.p2.x, main_json.user_calibration_json.side_view_cal.toe_line.p2.y]],
+    segments:[[parseFloat(main_json.user_calibration_json.side_view_cal.toe_line.p1.x), parseFloat(main_json.user_calibration_json.side_view_cal.toe_line.p1.y)], [parseFloat(main_json.user_calibration_json.side_view_cal.toe_line.p2.x), parseFloat(main_json.user_calibration_json.side_view_cal.toe_line.p2.y)]],
     strokeColor:'gray',
     strokeWidth:4,
     opacity:0.3
@@ -255,7 +266,7 @@ function sideViewLines(){
 
 
        head_line = new Path({
-        segments:[[main_json.user_calibration_json.side_view_cal.body_parts.head.p1.x, main_json.user_calibration_json.side_view_cal.body_parts.head.p1.y], [main_json.user_calibration_json.side_view_cal.body_parts.head.p2.x, main_json.user_calibration_json.side_view_cal.body_parts.head.p2.y]],
+        segments:[[parseFloat(main_json.user_calibration_json.side_view_cal.body_parts.head.p1.x), parseFloat(main_json.user_calibration_json.side_view_cal.body_parts.head.p1.y)], [parseFloat(main_json.user_calibration_json.side_view_cal.body_parts.head.p2.x), parseFloat(main_json.user_calibration_json.side_view_cal.body_parts.head.p2.y)]],
         selected: true,
     });
     
@@ -398,9 +409,9 @@ function sideViewLines(){
     }; 
 }
 // side view json
-var jsonMode = $("#side_view_json").val();
+
 function generate_json(jsonMode){
- main_json ={};
+
  function set_default_line(item_lenght, incr_val){
      var cntr_line = 960 / 2;
      if(incr_val === "sub"){
@@ -411,7 +422,8 @@ function generate_json(jsonMode){
         return set_p2_x;
      }
  }
-    if(jsonMode=='new'){
+    if(jsonMode==='new'){
+        alert("New Json");
         main_json= {
           user_calibration_json:{
                     side_view_cal:{
@@ -485,14 +497,11 @@ function generate_json(jsonMode){
                     widest_point_hip: body_part_max_width()
             }
  }; 
-    }else if(jsonMode==='edit'){
-        main_json = JSON.stringify(jsonMode);
-
     }
    return main_json;
-  
+ 
    
- } 
+ }
 
 // side view json 
 // var verticalLine;
@@ -1555,9 +1564,7 @@ function get_additional_pos(){
 
 
 function upload(){
-    get_svc_all_bp_info();
-   console.log(get_svc_all_bp_info());
-
+ 
     $('#image_actions').attr('value',JSON.stringify(image_actions_count));
     $("#mask_x").attr("value", full_mask.pivot);
     $("#mask_y").attr("value", full_mask.position);
@@ -1609,7 +1616,7 @@ function upload(){
         svg_path:$('#img_path_paper').attr('value'),
         image_actions:$('#image_actions').attr('value'),
         widest_hip: JSON.stringify(body_part_max_width()),
-        side_view_json: get_svc_all_bp_info(),
+        user_calibration_json: JSON.stringify(get_svc_all_bp_info()),
         retouch_image:selected_retouch_img_filename};
 
     $.ajax({
@@ -1627,7 +1634,6 @@ function upload(){
     });
 
 //alert(JSON.stringify(value_ar));
-
 }
 
 ////////////////// Shift image
