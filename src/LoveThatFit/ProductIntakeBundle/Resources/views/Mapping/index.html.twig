@@ -32,12 +32,15 @@
                     <td>
                         <a href="{{ path('product_intake_specs_mapping_delete', {'id': sm.Id}) }}" data-toggle="confirmation" data-singleton="true" title="Delete {{sm.Title}}">del</a> &nbsp;|&nbsp;
                          <a href="{{ path('product_intake_specs_mapping_edit', {'id': sm.Id}) }}" title="Edit {{sm.Title}}">edit</a>            
-                         {% if csv_file[sm.Id] is defined %}
                          &nbsp;|&nbsp;
-                             <a href="{{ csv_file[sm.Id] }}" target="_blank" download title="Download">Download</a>                  
+                         <a href="{{ path('product_intake_specs_mapping_duplicate', {'id': sm.Id }) }}" data-toggle="confirmation" data-singleton="true" title="Duplicate - {{sm.Title}}">Duplicate</a>
+                        &nbsp;|&nbsp;
+                        <a href="{{ path('product_intake_specs_mapping_specs_list', {'title': sm.Title }) }}" title="Specs List - {{sm.Title}}">Specs List</a>
+                        {% if csv_file[sm.Id] is defined %}
+                            &nbsp;|&nbsp;
+                            <a href="{{ csv_file[sm.Id] }}" target="_blank" download title="Download">Download</a>
                         {% endif %}
-                         &nbsp;|&nbsp;
-                         <a href="{{ path('product_intake_specs_mapping_duplicate', {'id': sm.Id }) }}" data-toggle="confirmation" data-singleton="true" title="Duplicate - {{sm.Title}}">Duplicate</a>   
+
 
                     </td>
                 </tr>

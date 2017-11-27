@@ -193,6 +193,10 @@ class ProductSpecificationHelper {
     
     #-------------------> Dynamic calculations     
     public function dynamicCalculations($decoded) {
+//        $validation = $this->validateProdoctValues($decoded, $specs_value=null);
+//           if(!$validation['status']) {
+//               return $validation;
+//           }
         $specs_obj = $this->find($decoded['pk']);
         $specs = json_decode($specs_obj->getSpecsJson(), true);
         #-----------------------------        
@@ -233,7 +237,15 @@ class ProductSpecificationHelper {
                 'message_type' => 'error',
                 'success' => false,
             );
-        }        
+        }
+//        $specs['status'] = false;
+//        $specs['error'] = $specs;
+//        return  $specs;
+        $validate_specs = $this->validateProdoctValues($decoded, $specs);
+        if(!$validate_specs['status']) {
+            return $validate_specs;
+        }
+
         if ($specs){
             $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
             $specs_obj->setSpecsJson(json_encode($specs));
@@ -246,7 +258,153 @@ class ProductSpecificationHelper {
             );
         }
     }
+    //------------------------- Validation Product Specification values
 
+    private function validateProdoctValues($decoded, $specs_value){
+        $validation['status'] = true;
+        $fit_point_explode = explode("-", $decoded['name']);
+        $fit_model_selected = '';
+        $specs_obj = $this->find($decoded['pk']);
+        $specs = json_decode($specs_obj->getSpecsJson(), true);
+        if(isset($specs['fit_model_size'])){
+            $fit_model_selected_size= $specs['fit_model_size']==null?null:$this->container->get('productIntake.fit_model_measurement')->find($specs['fit_model_size']);
+            $fit_model_selected = $fit_model_selected_size?$fit_model_selected_size->getSize():null;
+        }
+
+        //------------ Apply Ac # 1 and AC # 2 Validation Rule
+        if(count($fit_point_explode) == 4){
+            if ($fit_point_explode[3] == 'max_actual' || $fit_point_explode[3] == 'garment_dimension') {
+                if( $specs_value[$fit_point_explode[0]][$fit_point_explode[1]][$fit_point_explode[2]]['max_actual'] > $specs_value[$fit_point_explode[0]][$fit_point_explode[1]][$fit_point_explode[2]]['garment_stretch']){
+                    $validation['error'] = ' Max_actual it must be less than Garment Stretch Dimension';
+                    $validation['status'] = false;
+                }
+            }
+        }
+
+        //------------- Apply AC # 3 Validation Rule
+        
+        if ($decoded['name'] == 'horizontal_stretch' || $decoded['name'] == 'vertical_stretch'){
+            $axis = $decoded['name'] == 'horizontal_stretch' ? 'x' : 'y';
+            $fpa = $this->getFitPointArray();
+            foreach($specs_value['sizes'][$fit_model_selected] as $fit_point_key => $fit_point_name){
+                if (array_key_exists($fit_point_key, $fpa[$axis])) {#--------> for over all horiz stretch
+                    if ($specs_value['sizes'][$fit_model_selected][$fit_point_key]['max_actual'] > $specs_value['sizes'][$fit_model_selected][$fit_point_key]['garment_stretch']) {
+                        $validation['error'] = $fit_point_key . ' Max Actual cannot be greater than Garment Stretch Dimension';
+                        $validation['status'] = false;
+                    }
+                }
+            }
+        }
+        #---------------------------------
+        if($fit_point_explode[0] == 'fit_point_stretch'){            
+            if ($specs_value['sizes'][$fit_model_selected][$fit_point_explode[1]]['max_actual'] > $specs_value['sizes'][$fit_model_selected][$fit_point_explode[1]]['garment_stretch']) {
+                        $validation['error'] = $fit_point_explode[0] . ' Max Actual cannot be greater than Garment Stretch Dimension';
+                        $validation['status'] = false;
+            }            
+        }
+        
+        #--------------------------------------------------------------------------
+        if(count($fit_point_explode) == 4) {
+            //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
+            if ($fit_point_explode[3] == 'min_actual' || $fit_point_explode[3] == 'max_actual') {
+                foreach ($specs_value['sizes'] as $key => $product_size_value) {
+                    $size_title = array_keys($specs_value['sizes']);
+                    $size_count = count($size_title);
+                    foreach ($product_size_value as $key1 => $value) {
+                        //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
+                        $find_next_elements = array_search($key, $size_title) + 1;
+                        $next_size_title = ($find_next_elements < $size_count) ? $size_title[$find_next_elements] : null;
+                        $next_array_elements = (in_array($next_size_title, $size_title)) ? $specs_value['sizes'][$next_size_title] : null;
+                        if ($next_array_elements) {
+                            //------------- AC # 4 and 5
+                            if (($next_array_elements[$key1]['min_actual'] - $value['max_actual']) > 0) {
+                                $validation['error'][$key1] = ' ~~Max Actual for ' . $key . ' for ' . $key1 . ' is less than Min Actual for ' . $next_size_title . ' for ' . $key1;
+                                $validation['status'] = false;
+                            }
+//                            //---------- AC # 12   Fit Model
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Min Actual
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Max Actual
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Ideal High
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Ideal Low
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            //---------- AC # 12   Garment Dimensions
+//                            if ($value['fit_model'] > $next_array_elements[$key1]['fit_model']) {
+//                                $validation['error'][$key1] = ' ~~fit_model ' . $key . ' for ' . $key1 . ' is less than fit_model for ' . $next_size_title . ' for ' . $key1;
+//                                $validation['status'] = false;
+//                            }
+//                            _________________________________________
+//                        // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
+//                        if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
+//                            $validation['error']['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
+//                            $validation['status'] = false;
+//                        }
+//                        //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+//                        if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
+//                            $validation['error']['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
+//                            $validation['status'] = false;
+//                        }
+//                        //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+//                        if (isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust') {
+//                            $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
+//                            if ($bust_waist > 11) {
+//                                $validation['error']['bust_to_waist_ratio'][$key][$key1] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
+//                                $validation['status'] = false;
+//                            }
+//                        }
+//                        if (isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip') {
+//                            $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
+//                            if ($bust_hip > 12) {
+//                                $validation['error']['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+//                                $validation['status'] = false;
+//                            }
+//                        }
+//                        //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
+//                        if ($value['min_actual'] < $value['min_calc']) {
+//                            $validation['error']['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+//                            $validation['status'] = false;
+//                        }
+//                        if ($value['min_actual'] > $value['ideal_low']) {
+//                            $validation['error']['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
+//                            $validation['status'] = false;
+//                        }
+//                        if ($value['max_actual'] > $value['max_calc']) {
+//                            $validation['error']['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
+//                            $validation['status'] = false;
+//                        }
+//                        if ($value['max_actual'] < $value['ideal_high']) {
+//                            $validation['error']['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
+//                            $validation['status'] = false;
+//                        }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return $validation;
+
+
+    }
     #------------------->1 Overall Stretch >>>>>>>>>>>>>>>>>>>>>>>>>>>
     private function generate_specs_for_stretch($specs, $stretch_type) {
         $axis = $stretch_type == 'horizontal_stretch' ? 'x' : 'y';
@@ -288,13 +446,26 @@ class ProductSpecificationHelper {
         $fm_size = $str[1];
         $attrib = $str[3];
 
-        $specs['sizes'][$fm_size][$fp][$attrib] = $value;
+        #$specs['sizes'][$fm_size][$fp][$attrib] = $value;
+        $attrib_calc = str_replace("actual", "calc", $attrib);
         $ratio = $value / $specs['sizes'][$fm_size][$fp]['fit_model'];
-
+        
         #--------- calculate grade rule
-        foreach ($specs['sizes'] as $size => $fit_points) {
-            $specs['sizes'][$size][$fp][$attrib] = $ratio * $fit_points[$fp]['fit_model'];
+        if (number_format((float) $specs['sizes'][$fm_size][$fp][$attrib_calc], 2, '.', '') == number_format((float) $value, 2, '.', '')) {
+            foreach ($specs['sizes'] as $size => $fit_points) {
+                $specs['sizes'][$size][$fp][$attrib] = $specs['sizes'][$size][$fp][$attrib_calc];
+            }
+        } else {
+            foreach ($specs['sizes'] as $size => $fit_points) {
+                $specs['sizes'][$size][$fp][$attrib] = $ratio * $fit_points[$fp]['fit_model'];
+            }
         }
+//                  if (strpos(strtolower($attrib), 'min') !== false) {
+//                    $specs['sizes'][$size][$fp][$attrib] = $fit_points[$fp]['fit_model'] - (2.5 * ($fit_points[$fp]['ideal_high'] - $fit_points[$fp]['ideal_low']));
+//                } else {
+//                    $specs['sizes'][$size][$fp][$attrib] = $fit_points[$fp]['fit_model'] + (2.5 * ($fit_points[$fp]['ideal_high'] - $fit_points[$fp]['ideal_low']));
+//                }
+
         return $specs;
     }
 
@@ -456,8 +627,46 @@ class ProductSpecificationHelper {
     }
     
     ###################################################################
+#-------------------> Dynamic calculations     
+    public function dynamicChange($decoded) {
+        $specs_obj = $this->find($decoded['pk']);
+        $specs = json_decode($specs_obj->getSpecsJson(), true);
+        #----------------
+        switch ($decoded['type']) {
+            case 'double_thigh_grade_rule_min_max': #change---> 1
+                $specs = $this->double_thigh_grade_rule_min_max($specs);
+                break;
+            default:
+                $specs = null;
+                break;
+        }
+        
+        #----------------
+        if ($specs) {
+            $specs_obj->setUndoSpecsJson($specs_obj->getSpecsJson());
+            $specs_obj->setSpecsJson(json_encode($specs));
+            return $this->update($specs_obj);
+        } else {
+            return array(
+                'message' => 'Nothing to update!',
+                'message_type' => 'error',
+                'success' => false,
+            );
+        }
+    }
 
-
+#change---> 1
+    private function double_thigh_grade_rule_min_max($specs) {
+        foreach ($specs['sizes'] as $size => $fit_points ) {
+            foreach ($fit_points as $fp => $measure ) {
+                if(strpos($fp,'thigh')){
+                    $specs['sizes'][$size][$fp]['min_calc'] = $this->to_frac($measure['fit_model'] - ($measure['grade_rule_stretch'] * 2.5 * 2));
+                    $specs['sizes'][$size][$fp]['max_calc'] = $this->to_frac($measure['fit_model'] + ($measure['grade_rule_stretch'] * 2.5 * 2));
+                }
+            }
+        }
+        return $specs;
+    }
     #----------------> return array of fit model ratio to garment dimension
     private function compute_fit_model_ratio($specs, $fit_model_obj = null) {
         if ($fit_model_obj == null) {
@@ -766,6 +975,124 @@ class ProductSpecificationHelper {
     }
 
     ########################################################################
+    ############################## Specification Validation ########################
+    ########################################################################
+
+    public function validateSpecification($id) {
+        $ps = $this->find($id);
+        $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $validation_rule = json_decode($ps->getValidationJson(), true);
+        $result = array();
+        $size_title = array_keys($parsed_data['sizes']);
+        $size_count = count($size_title);
+
+        #----------------- AC#13 & 14 Wrong Fit Priority
+        if (!(isset($validation_rule) && array_key_exists('fit_priority_assigned_to_an_incorrect_garment', $validation_rule))) {                                        
+            # clothing type & attributes array --------->
+            $clothing_type_attributes = $this->container->get('admin.helper.product.specification')->getAttributesFor($parsed_data['clothing_type']);
+            if (is_array($clothing_type_attributes)) {
+                foreach ($parsed_data['fit_priority'] as $fp => $fpp) {
+                    if ($fpp > 0 && is_array($clothing_type_attributes) && !array_key_exists($fp, $clothing_type_attributes)) {
+                        $result['fit_priority_assigned_to_an_incorrect_garment'][$fp] = $parsed_data['clothing_type'] . " should not have " . $fp . " (".$fpp."%) in the fit priority";
+                    }
+                }
+            }else{
+                $result['fit_priority_assigned_to_an_incorrect_garment']['clothing_type'] = "Clothing Type '". $parsed_data['clothing_type'] . "' dose not match any attribute lists";
+            }
+        }
+        #---------------------------------- 
+        foreach ($parsed_data['sizes'] as $current_size_title => $current_size) {
+            $next_index = array_search($current_size_title, $size_title) + 1;
+            $next_size_title = ($next_index < $size_count) ? $size_title[$next_index] : null;
+            $next_size = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
+            foreach ($current_size as $fp_title => $fp) {
+                if(array_key_exists($fp_title, $parsed_data['fit_priority']) && $parsed_data['fit_priority'][$fp_title]>0){
+                #-------- AC#12 Range Sequence ----------
+                if ($next_size) {
+                if (!(isset($validation_rule) && array_key_exists('sequential', $validation_rule))) {
+                    
+                        if ($fp['garment_dimension'] > $next_size[$fp_title]['garment_dimension']) {                            
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Garment Dimension', $fp_title, $current_size_title, $next_size_title);                                                                                    
+                        }
+                        if ($fp['fit_model'] > $next_size[$fp_title]['fit_model']) {
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Fit Model', $fp_title, $current_size_title, $next_size_title);                            
+                        }
+                        if ($fp['min_actual'] > $next_size[$fp_title]['min_actual']) {
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Min Actual', $fp_title, $current_size_title, $next_size_title);
+                        }
+                        
+                        if ($fp['max_actual'] > $next_size[$fp_title]['max_actual']) {
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Max Actual', $fp_title, $current_size_title, $next_size_title);
+                        }
+                        if ($fp['ideal_high'] > $next_size[$fp_title]['ideal_high']) {
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Ideal High', $fp_title, $current_size_title, $next_size_title);
+                        }
+                        if ($fp['ideal_low'] > $next_size[$fp_title]['ideal_low']) {
+                            $result['sequential'][$current_size_title][$fp_title] = $this->ac12Msg('Ideal low', $fp_title, $current_size_title, $next_size_title);
+                        }
+
+                    }
+                    # AC# 15 & 16 Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
+                    if (!(isset($validation_rule) && array_key_exists('grade_rules_become_generally_larger', $validation_rule) )) {
+                        if ($fp['grade_rule'] > $next_size[$fp_title]['grade_rule']) {
+                            $result['grade_rules_become_generally_larger'][$current_size_title][$fp_title] = 'Grade rules for ' . $fp_title . ' of size ' . $current_size_title . ' (' . $fp['grade_rule'] . ')' . ' decrease in size ' . $next_size_title . ' (' . $next_size[$fp_title]['grade_rule'] . ')';
+                        }
+                    }
+                  
+                
+                  #-------- Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+                #------------ AC# 17 & 18
+                    if (!(isset($validation_rule) && array_key_exists('bust_to_waist_ratio', $validation_rule) )) {
+                        if (isset($current_size["waist"]['fit_model']) && $fp_title == 'bust') {
+                            $bust_waist = $fp["fit_model"] - $current_size["waist"]['fit_model'];
+                            if ($bust_waist > 11) {
+                                $result['bust_to_waist_ratio'][$key][$fp_title] = $bust_waist . ' bust to waist ratio is more than 11';
+                            }
+                        }
+                    }
+                    #--------------------- AC# 19 & 20
+                    if (!(isset($validation_rule) && array_key_exists('bust_to_hip_ratio', $validation_rule))) {
+                        if (isset($current_size["waist"]['fit_model']) && $fp_title == 'hip') {
+                            $bust_hip = $current_size["waist"]['fit_model'] - $fp["fit_model"];
+                            if ($bust_hip > 12) {
+                                $result['bust_to_hip_ratio'][$key][$fp_title] = $bust_hip . ' waist to hip is more than 12';
+                            }
+                        }
+                    }
+
+                    #------------------AC# 21
+                    #Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
+                    
+                    if(! (isset($validation_rule) && array_key_exists('tolerance', $validation_rule) )){                        
+                        $garment_dimension_difference = $next_size[$fp_title]['garment_dimension'] - $fp['garment_dimension'];
+                        
+                        if (!($garment_dimension_difference <= ($fp['grade_rule'] + 0.25) && $garment_dimension_difference >= ($fp['grade_rule'] - 0.25))) {
+                            $result['tolerance'][$current_size_title][$fp_title] = 'Fit Model ' . $fp_title . ' did not increase by 2.25" from size ' . $current_size_title . ' to ' . $next_size_title;
+                            }
+                    }
+                }
+                
+                        }
+            }
+        }
+        return $result;
+
+        return new Response(json_encode($result));
+    }
+    private function ac12Msg($range, $fp, $cs, $ns) {
+        return $range . ' for size ' . $cs . '  ' . $fp . ' is less than size ' . $ns;
+    }
+#--------------------------------------------------
+    public function range_validation_message($range, $fp, $current, $next, $specs) {
+        #if ($specs[$current][$fp][$range] > $specs[$next][$fp][$range]) {
+           return $this->snake_camel($range) . ' ' . $this->snake_camel($fp) . ' of size ' . $current . ' (' . $specs[$current][$fp][$range] . ') should be greater than ' . $this->snake_camel($range) . ' ' . $this->snake_camel($fp) . ' of size ' . $next . ' (' . $specs[$next][$fp][$range] . ')';
+        #}
+    }
+
+    private function snake_camel($str){
+        return str_replace(' ', '', ucwords(str_replace('-', ' ', $str)));
+    }
+    ########################################################################
     ############################## Product Creation ########################
     ########################################################################
 
@@ -886,9 +1213,13 @@ class ProductSpecificationHelper {
     #---------------------- CSV File Downlod Links
     public function csvDownloads($csv_files) {
         $csv_file_path = array();
-        foreach ($csv_files as $k => $v) {
-            $csv_file = $this->find($v->getId());
-            $csv_file_path[$v->getId()] = $csv_file->getWebPath();
+        if(count($csv_files) == 1){
+             $csv_file_path[$csv_files->getId()] = $csv_files->getWebPath();
+        } else {
+            foreach ($csv_files as $k => $v) {
+                $csv_file = $this->find($v->getId());
+                $csv_file_path[$v->getId()] = $csv_file->getWebPath();
+            }
         }
         return $csv_file_path;
     }
@@ -1095,6 +1426,13 @@ class ProductSpecificationHelper {
           $product_sorted_size_tilte[] = $product_size_array[$size_title_key]; 
         }
         return $product_sorted_size_tilte;
+    }
+    
+     #------------------------------------------------------------------
+    
+     function to_frac($number, $denominator = 16) {
+        $x = floor($number * $denominator);
+        return $x / $denominator;         
     }
 }
 

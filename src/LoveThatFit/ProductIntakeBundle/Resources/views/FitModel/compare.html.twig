@@ -32,7 +32,9 @@
 
     <table class="table table-bordered table-striped table-hover table-condensed">
         <tr>
-            <th>Fit-Model</th>
+            <th>id</th>
+            <th>Title</th>            
+            <th>Size</th>
              {% for key, val in fit_points_array %}
                 <th> {{ key }} </th>
             {% endfor %}
@@ -40,9 +42,11 @@
         
         {% for fmm in fit_model_measurements_fp %}
             <tr>
+                <td>{{fmm.Id}}</td>
                 <td>
                     <a href="{{ path('product_intake_fit_model_edit', {'id': fmm.Id}) }}" target="_blank" title="Edit Fit Model new Tab">  {{fmm.Title}}  </a>              
                 </td>
+                <td>{{fmm.SizeTitleType}} ({{fmm.size}})</td>
                 {% for key, val in fmm.reurnJsonToArray %}    
                    {% if key in fit_points_array|keys %}
                    <td> {{ val }} </td>     

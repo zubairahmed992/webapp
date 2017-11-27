@@ -6,13 +6,17 @@
         
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+	<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
         <link href="{{ asset('bundles/lovethatfit/product_specification/css/bootstrap-editable.css') }}" rel="stylesheet">
         <script src="{{ asset('bundles/lovethatfit/product_specification/js/bootstrap-editable.min.js') }}"></script>
         <script src="{{ asset('bundles/lovethatfit/product_specification/js/bootstrap-confirmation.min.js') }}"></script>
         <script src="{{ asset('bundles/lovethatfit/product_specification/js/dropzone.js') }}"></script>
+        {#         Mutlipe Selection using drop down#}
+        <script src="{{ asset('bundles/lovethatfit/product_specification/js/bootstrap-select.min.js') }}"></script>
+        <link href="{{ asset('bundles/lovethatfit/product_specification/css/bootstrap-select.min.css') }}" rel="stylesheet">            
+        
         <link href="{{ asset('bundles/lovethatfit/product_specification/css/basic.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/lovethatfit/product_specification/css/dropzone.css') }}" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/lovethatfit/admin/datatable/css/jquery.dataTables.css') }}">
@@ -57,7 +61,7 @@
         </nav>
         <div class="container-fluid">
             {% if app.session.hasFlash('warning') %}
-                <div class="alert alert-error">{{ app.session.flash('warning') }}</div>   
+                <div class="alert alert-danger">{{ app.session.flash('warning') }}</div>
              {% elseif app.session.hasFlash('success')%}
                 <div class="alert alert-success">{{ app.session.flash('success') }}</div>   
             {% elseif app.session.hasFlash('info')%}

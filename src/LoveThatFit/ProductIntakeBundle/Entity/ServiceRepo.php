@@ -38,7 +38,7 @@ class ServiceRepo
         $query = $this->em
             ->createQuery("
                 SELECT ct.id as clothing_type_id, b.id as brand_id, r.id as retailer_id,
-                partial p.{id, name ,gender, styling_type, description, disabled, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, control_number, product_model_height }
+                partial p.{id, name ,gender, styling_type, description, disabled, hem_length, neckline, sleeve_styling, rise, stretch_type, horizontal_stretch, vertical_stretch, fabric_weight, layering, structural_detail, fit_type, fit_priority, fabric_content, garment_detail, size_title_type, control_number, product_model_height, morphing_detail_json }
                 ,partial ct.{id, name, target}                
                 ,partial pc.{id, title, pattern, image}
                 ,partial pz.{id, title, body_type, index_value}
@@ -154,5 +154,55 @@ class ServiceRepo
         }
         
     }
+    //-------- 
+    public function getPhotogradingOriginalItem($product) {
+        if (!$product) {
+            return null;
+        }
+        
+        $pg = $product->getMorphingDetailJSON() ? json_decode($product->getMorphingDetailJSON(), true) : null;
+        if (!is_array($pg)) {
+            return null;
+        }
+
+        $query = $this->em
+           ->createQuery("
+               SELECT pi.id
+                FROM LoveThatFitAdminBundle:Product p              
+                JOIN p.product_items pi                
+                JOIN pi.product_color pc
+                JOIN pi.product_size ps                                             
+                WHERE 
+                p.deleted != 1 
+                AND p.id=:product_id 
+                AND ps.title =:size
+                AND pc.title =:color
+                AND ps.body_type =:body_type
+                ")->setParameters(array('product_id' => $product->getId(), 'size'=>$pg['size'], 'color'=>$pg['color'], 'body_type'=>$pg['body_type'])); 
+        
+        try {
+            return $query->getArrayResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+
+
+    //-------------- 10/23/2017  Get User Marker Json
+    public function getuserMaskMarkerJson($user_id)
+    {
+        $query = $this->em
+            ->createQuery("SELECT um.marker_json FROM LoveThatFitUserBundle:UserMarker um
+                                       WHERE um.user=:user_id")
+            ->setParameters(array('user_id' => $user_id));
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     
 }

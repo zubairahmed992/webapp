@@ -64,12 +64,19 @@ class ProductSpecification {
      */
     protected $clothing_type;
     
-      /**
+     /**
      * @var string $specs_json
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $specs_json;  
-    
+    protected $specs_json;
+
+
+     /**
+     * @var string $validation_json
+     * @ORM\Column(type="text", nullable=true)
+     */
+     protected $validation_json;
+
     /**
     * @var string $undo_specs_json
     * @ORM\Column(name="undo_specs_json", type="text", nullable=true)
@@ -296,7 +303,29 @@ class ProductSpecification {
     public function getSpecsJson() {
         return $this->specs_json;
     }
-    
+
+#-------------------------Validaation Json
+    /**
+     * Set specs_json
+     *
+     * @param string validation_json
+     * @return ProductSpecification
+     */
+    public function setValidationJson($validation_json) {
+        $this->validation_json = $validation_json;
+        return $this;
+    }
+
+    /**
+     * Get validation_json
+     *
+     * @return string
+     */
+    public function getValidationJson() {
+        return $this->validation_json;
+    }
+
+
     public function getSpecsArray() {
         return json_decode($this->specs_json, true);
     }
@@ -538,6 +567,23 @@ class ProductSpecification {
         $this->undo_specs_json = $this->specs_json;
         $this->specs_json =  json_encode($specs);
     }
-
+#------------------------------------------------------------
+    public function roundUp(){
+       $specs = json_decode($this->specs_json, true);
+       foreach ($specs['sizes'] as $size => $fit_points) {
+           foreach ($fit_points as $fp => $ranges) {
+               foreach ($ranges as $k => $v) {
+                   $specs['sizes'][$size][$fp][$k]=$this->to_frac($v);
+               }
+           }
+       }
+       $this->specs_json = json_encode($specs);
+    }
+     #------------------------------------------------------------------
+    
+     function to_frac($number, $denominator = 16) {
+        $x = floor($number * $denominator);
+        return $x / $denominator;         
+    }
     
 }

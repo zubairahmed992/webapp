@@ -350,8 +350,47 @@ class ProductItem
 
     }
 
+    #--------------------- Real Product Image Uplaod
+
+    public function realProductImageupload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+        $old_image_path = Null;
+        if ($this->image) {
+            $old_image_path = $this->getRawImageWebPath();        }
+
+        $this->image =  $this->getImage();
+        $this->file->move(
+            $this->getUploadOriginalImageRootDir(), $this->image, 0755
+        );
+
+        if (is_readable($old_image_path)) {
+            @unlink($old_image_path);
+        }
+        $this->file = null;
+
+    }
+
+ //--------------Get Fitting Room Path -----------
+    protected function getUploadOriginalImageRootDir()
+    {
+        return $this->getRootDir() . $this->getOriginalImageUploadDir();
+    }
+
+//----------------------Return Fitting Room Path
+    public function getOriginalImageUploadDir()
+    {
+        return 'uploads/ltf/products/fitting_room/';
+    }
     //-------------------------------------------------------
 
+    //-------------------- Original Image Get-----
+    public function getOriginalImage(){
+        return '/webapp/web/uploads/ltf/products/fitting_room/'. $this->image;;
+
+    }
 
     public function getImagePaths()
     {
@@ -363,6 +402,10 @@ class ProductItem
     public function getAbsolutePath()
     {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+     //-------------------------------------------------------1
+    public function getAbsoluteOriginalPath(){
+        return null === $this->image ? null : $this->getRootDir() . 'uploads/ltf/products/fitting_room/' . $this->image;
     }
 
 //-------------------------------------------------------2

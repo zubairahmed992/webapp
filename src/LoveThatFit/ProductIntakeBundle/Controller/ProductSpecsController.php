@@ -35,7 +35,14 @@ class ProductSpecsController extends Controller
     
      #----------------------- /product_intake/product_specs/edit
     public function editAction($id, $tab){   
-        $ps = $this->get('pi.product_specification')->find($id);      
+        $ps = $this->get('pi.product_specification')->find($id);
+         if ($tab == 'r') {
+            $ps->roundUp();
+            $this->get('pi.product_specification')->save($ps);
+            $tab = 'b';
+        }
+        $validation = $this->get('pi.product_specification')->validateSpecification($id);
+        
         $product_specs = $this->get('admin.helper.product.specification')->getProductSpecification();      
         $parsed_data = json_decode($ps->getSpecsJson(),true);
         $gender = ($parsed_data['gender'] == 'f')?'women':'man';
@@ -79,6 +86,8 @@ class ProductSpecsController extends Controller
                     'size_attribute' => $size_attribute,
                     'tab' => $tab,
                     'searched_product_id'=>$product_id,
+                    'cs_file'      =>  $this->get('pi.product_specification')->csvDownloads($ps),
+                    'validation'   => $validation,
                 ));
     }
 
@@ -143,24 +152,42 @@ class ProductSpecsController extends Controller
     }
     
     #----------------------- /product_intake/product_specs/create_product
-    public function createProductAction($id){            
-        $msg = $this->get('pi.product_specification')->create_product($id);        
+    public function createProductAction($id){
+        $result = $this->get('pi.product_specification')->validateSpecification($id);
+        if( empty($result) ) {
+
+        } else{
+            $this->get('session')->setFlash('warning', "Product can't be created before all the validation errors get resolved or dissmissed! ");
+            return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+                'validation_error' => $result,
+            ));
+        }
+
+        $msg = $this->get('pi.product_specification')->create_product($id);
         $this->get('session')->setFlash('success', $msg['message']);   
         return $this->redirect($this->generateUrl('product_intake_product_specs_index'));        
     }
     
     #----------------------- /product_intake/Prod_specs/update    
-    public function updateAction($id){  
+    public function updateAction($id){
         $msg_ar = $this->get('pi.product_specification')->updateAndFill($id, $_POST);        
         $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);           
         return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id)));        
     }
      #------------------------------------- /product_intake/Prod_specs/update_foo 
-    public function updateDynamicAction(){  
-        $decoded = $this->getRequest()->request->all();        
-        $sizes_json = $this->get('pi.product_specification')->dynamicCalculations($decoded);
-        return new Response(json_encode($sizes_json));
+    public function updateDynamicAction(){
+        $decoded = $this->getRequest()->request->all();
+        //return new JsonResponse(array('message' =>$decoded), 500);
+        $validate = $this->get('pi.product_specification')->dynamicCalculations($decoded);
+        if(isset($validate['status']))
+        return new JsonResponse(array('message' =>$validate['error']), 500);
+        return new Response(json_encode("Succesfull"));
         return new Response(json_encode($decoded));
+    }
+     #------------------------------------- /product_intake/Prod_specs/change_dynamic/{id}/{type}
+    public function changeDynamicAction($id, $type){
+        $ps = $this->get('pi.product_specification')->dynamicChange(array('pk'=>$id, 'type'=>$type ));        
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $id, 'tab' => 'b')));       
     }
     
     #----------------------- /product_intake/Prod_specs/undo
@@ -252,6 +279,8 @@ class ProductSpecsController extends Controller
             }
         }
         $parsed_data['sizes'] = $ordered_sizes['sizes'];
+        $parsed_data['brand'] = $map['brand'];
+
         #---------> Save to DB
         $specs = $this->get('pi.product_specification')->createNew($product_specs_mapping->getTitle(), $product_specs_mapping->getDescription(), $parsed_data);
         $specs->setSpecFileName('csv_spec_' . $specs->getId() . '.csv');
@@ -381,6 +410,16 @@ class ProductSpecsController extends Controller
     public function ExisitingProductUpdateSpecificationAction(Request $request) {
         $product_id =  $request->get('product_id');
         $specification_id =  $request->get('specification_id');
+        $result = $this->get('pi.product_specification')->validateSpecification($specification_id);
+        if( empty($result) ) {
+
+        } else{
+            $this->get('session')->setFlash('warning', "Product can't be created before all the validation errors get resolved or dissmissed! ");
+            return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+                'validation_error' => $result,
+            ));
+        }
+
         $ps = $this->get('pi.product_specification')->find($specification_id);  
         $parsed_data = json_decode($ps->getSpecsJson(),true);       
         $product = $this->get('admin.helper.product')->find($product_id);        
@@ -419,7 +458,7 @@ class ProductSpecsController extends Controller
         $this->get('session')->setFlash('success', $productArray);
         #return  $this->showAction($specification_id);
          return $this->redirect($this->generateUrl('product_intake_product_specs_show', array('id' => $specification_id)));     
-        return new Response(json_encode($productArray));
+
     }
     #---------------------------------------------------
     public function createSessionAction(Request $request) {
@@ -466,14 +505,26 @@ class ProductSpecsController extends Controller
         
     }
     //~~~~Validate product specification sizes---------product_intake/validate_product_specification 
+    
     public function validateProductSpecificationAction($id) {
+        $result = $this->get('pi.product_specification')->validateSpecification($id);
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+            'validation_error' => $result,
+        ));
+
+    }
+    #--------------------------------------------------
+    public function _validateProductSpecificationAction($id) {
         $ps = $this->get('pi.product_specification')->find($id);
         $parsed_data = json_decode($ps->getSpecsJson(), true);
+        $validation_rule = json_decode($ps->getValidationJson(), true);
         $result = array();
-          //2. Flag when fit priority for a fit point is assigned to an incorrect garment:
+         //2. Flag when fit priority for a fit point is assigned to an incorrect garment:
         //--Tops, dresses, and skirts should not have thigh assigned fit priority
         //--Skirts, pants, and shorts should not have bust assigned fit priority    
         $clothing_type = ["blouse","tunic","tee_knit","tank_knit","jackets","sweater","skirt","dress","coat","shirt"];
+        // Disable Rule Conditaion
+        if(! (isset($validation_rule) && array_key_exists('fit_priority_assigned_to_an_incorrect_garment', $validation_rule)) )
         if ( in_array($parsed_data['clothing_type'],$clothing_type) ) {           
             if( array_key_exists('thigh', $parsed_data['fit_priority']) ){                
                $result['fit_priority_assigned_to_an_incorrect_garment'] = " ~~ Clothing Type ".$parsed_data['clothing_type']. " of fit point tigh is assigned to an incorrect garment";
@@ -487,16 +538,18 @@ class ProductSpecsController extends Controller
             $size_title = array_keys($parsed_data['sizes']);
             $size_count = count($size_title);
             foreach ($product_size_value as $key1 => $value) {
-                //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
-                $rule_one = $value['garment_dimension'] - $value['max_actual'];
-                if ($rule_one <= 0) {
-                    $result['garment_dimension_minus_max_actual'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
-                }
+//                //1. Garment Dimension minus max actual for each size should not be 0 or a negative number.
+//                $rule_one = $value['garment_dimension'] - $value['max_actual'];
+//                if ($rule_one <= 0) {
+//                    $result['garment_dimension_minus_max_actual'][$key][$key1] = $rule_one . " ~~ 1.Garment Dimension minus max actual for each size should not be 0 or a negative number";
+//                }
                 //3. Ranges are sequential (ex. Fit Model Dimension, Min Actual, Max Actual, Ideal High, Ideal Low, Garment Dimensions should all be smaller than the same value in the next size up. i.e. Fit Model Bust in size S should be smaller than in size M.)
                 //return  new Response(json_encode($result));
                 $find_next_elements = array_search($key, $size_title) + 1;
                 $next_size_title = ($find_next_elements < $size_count) ? $size_title[$find_next_elements] : null;
                 $next_array_elements = (in_array($next_size_title, $size_title)) ? $parsed_data['sizes'][$next_size_title] : null;
+                // Disable Rule Conditaion
+                if(! (isset($validation_rule) && array_key_exists('sequential', $validation_rule)) )
                 if ($next_array_elements) {
                     if ($value['garment_dimension'] > $next_array_elements[$key1]['garment_dimension']) {
                         $result['sequential'][$key][$key1] = $value['garment_dimension'] . ' ~~ Garment Dimensions grather than next Size';
@@ -516,50 +569,259 @@ class ProductSpecsController extends Controller
                     if ($value['ideal_low'] > $next_array_elements[$key1]['ideal_low']) {
                         $result['sequential'][$key][$key1] = $value['ideal_low'] . ' ~~ Ideal Low grather than next Size';
                     }
-                    // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
-                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
-                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
-                    }
+//                    // 4. Make sure that there is no gap between max actual of smaller size and min actual of next size up
+//                    if ($value['max_actual'] != $next_array_elements[$key1]['min_actual']) {
+//                        $result['next_size_up'][$key][$key1] = $value['max_actual'] . ' ~~ Not Equal to max actual of smaller size and min actual of next size up';
+//                    }
                     //5. Grade rules become generally larger as the sizes increase within a certain % tolerance (Ex. if there is a size run of S, M, L, XL and grade rules for S-M-L are all 2" but it changes to 1" for L-XL, this should be called out. It is possible, but we want to check it.)
                     if ($value['grade_rule'] > $next_array_elements[$key1]['grade_rule']) {
                         $result['grade_rules_become_generally_larger'][$key][$key1] = $value['grade_rule'] . ' ~~ Grade rules become generally decrease as the sizes increase within a certain ';
                     }
-                    //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
-                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust' ) {
-                        $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
-                            if( $bust_waist > 11 ){
+
+//                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
+//                    if ( $value['min_actual'] < $value['min_calc'] ) {
+//                        $result['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+//                    }
+//                     if ( $value['min_actual'] > $value['ideal_low'] ) {
+//                        $result['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
+//                    }
+//                    if ( $value['max_actual'] > $value['max_calc'] ) {
+//                        $result['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
+//                    }
+//                    if ( $value['max_actual'] < $value['ideal_high'] ) {
+//                        $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
+//                    }
+
+                }
+                if(! (isset($validation_rule) && array_key_exists('bust_to_waist_ratio', $validation_rule) ) )
+                    if ($next_array_elements) {
+                        //6. Have general guide for Fit Model Body proportions: --Flag if bust to waist ratio is more than 11" --Flag if waist to hip is more than 12"
+                        if (isset($product_size_value["waist"]['fit_model']) && $key1 == 'bust') {
+                            $bust_waist = $value["fit_model"] - $product_size_value["waist"]['fit_model'];
+                            if ($bust_waist > 11) {
                                 $result['bust_to_waist_ratio'][$key][$key1] = $bust_waist . ' ~~ Flag if bust to waist ratio is more than 11';
                             }
-                    }
-                    if ( isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip' ) {
-                        $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
-                            if( $bust_hip > 12 ){
-                                $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                        }
+                        if(! (isset($validation_rule) &&  array_key_exists('bust_to_hip_ratio', $validation_rule)) )
+                            if ($next_array_elements) {
+                                if (isset($product_size_value["waist"]['fit_model']) && $key1 == 'hip') {
+                                    $bust_hip = $product_size_value["waist"]['fit_model'] - $value["fit_model"];
+                                    if ($bust_hip > 12) {
+                                        $result['bust_to_hip_ratio'][$key][$key1] = $bust_hip . ' ~~ Flag if waist to hip is more than 12';
+                                    }
+                                }
                             }
                     }
-                    //7. Minimum Actual should be above or equal to min calc but below ideal low, and max actual should be below or equal to max calc but above ideal high.
-                    if ( $value['min_actual'] < $value['min_calc'] ) {
-                        $result['minimum_actual_should_be_above'][$key][$key1] = $value['min_actual'] . ' ~~  Minimum Actual should be above or equal to min calc but below ideal low';
+                if(! (isset($validation_rule) && array_key_exists('tolerance', $validation_rule) ))
+                    if ($next_array_elements) {
+
+                        //-Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
+                        $garment_dimension_difference = $next_array_elements[$key1]['garment_dimension'] - $value['garment_dimension'];
+                        if (!($garment_dimension_difference <= ($value['grade_rule'] + 0.25) && $garment_dimension_difference >= ($value['grade_rule'] - 0.25))) {
+                            $result['tolerance'][$key][$key1] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
+                        }
                     }
-                     if ( $value['min_actual'] > $value['ideal_low'] ) {
-                        $result['min_calc_but_below_ideal_low'][$key][$key1] = $value['ideal_low'] . ' ~~  Minimum Actual below ideal low';
-                    }
-                    if ( $value['max_actual'] > $value['max_calc'] ) {
-                        $result['max_actual_should_be_below'][$key][$key1] = $value['max_actual'] . ' ~~  max actual should be below or equal to max calc but above ideal high.';
-                    }
-                    if ( $value['max_actual'] < $value['ideal_high'] ) {
-                        $result['max_actual_should_be_above_ideal_high'][$key][$key1] = $value['ideal_high'] . ' ~~  max actual above ideal high.';
-                    }
-                    //-Need a tolerance of + or - 0.25" that if the garment dimension increased by 2" from one size to the next (i.e. has a 2" grade rule) then the fit model body dimension for that fit point should increase by 2" + or - 0.25".
-                     $garment_dimension_difference = $next_array_elements[$key1]['garment_dimension'] - $value['garment_dimension'] ;
-                    if ( !( $garment_dimension_difference <=  ($value['grade_rule']+0.25) && $garment_dimension_difference >=  ($value['grade_rule']-0.25) )) {
-                        $result['tolerance'][$key][$key1] = $garment_dimension_difference . ' ~~ garment dimension defference incoorect';
-                    }
-                }
+
             }
         }
-           
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:product_validate.html.twig', array(
+            'validation_error' => $result,
+
+        ));
+
         return new Response(json_encode($result));
     }
 
+    //---------------------- Update Validation Product
+    public function updateValidationProductSpecificationAction(Request $request) {
+        $specification_id =  $request->get('id');
+        $ps = $this->get('pi.product_specification')->find($specification_id);
+        $exist_rule = json_decode($ps->getValidationJson(),true);
+        $update_rule = ($exist_rule)?array_merge($exist_rule,$_POST):$_POST;
+        $ps->setValidationJson(json_encode($update_rule));
+        $msg_ar = $this->get('pi.product_specification')->update($ps);
+       // $this->get('session')->setFlash('info', $msg_ar);
+        return $this->redirect($request->get('_target_path'));
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit',array ('id'=>$specification_id)));
+
+    }
+    
+     //~~~~ Update product specification sizes---------product_intake/update_product_specification 
+    public function mappingUpdateProductSpecificationAction($mapping_title, $specs_id)
+    {
+        $product_specs_mapping = $this->get('productIntake.product_specification_mapping')->findOneByTitle($mapping_title);
+        //-------------------- Read CSV File
+        $i=0;
+        if( file_exists($product_specs_mapping->getAbsolutePath()) ){
+            if (($handle = fopen($product_specs_mapping->getAbsolutePath(), "r")) !== FALSE) {
+                while(($row = fgetcsv($handle)) !== FALSE) {
+                    for ($j=0;$j<count($row);$j++){
+                        $csv_array[$i][$j] = $row[$j];
+                    }
+                    $i++;
+                }
+            }
+        }
+
+        #------------------------ get mapping
+        $map = json_decode($product_specs_mapping->getMappingJson(), true);
+        #-------------->
+        $parsed_data = $this->get('admin.helper.product.specification')->getStructure();
+        $parsed_data['gender'] = $product_specs_mapping->getGender();
+        $parsed_data['size_title_type'] = $product_specs_mapping->getSizeTitleType();
+        foreach ($map['fabric_content'] as $fabric_content_k => $fabric_content_v) {
+            $f_c = $this->extracts_coordinates($fabric_content_v);
+            $parsed_data['fabric_content'][$fabric_content_k] = count($f_c) > 1 ? $csv_array[$f_c['r']][$f_c['c']] : $fabric_content_v;
+        }
+        unset($map['fabric_content']);
+        #----------------- fill array with csv data
+        foreach ($map as $specs_k => $specs_v) {
+            if ($specs_k != 'formula') {
+                if (is_array($specs_v) || is_object($specs_v)) {
+                    foreach ($specs_v as $size_key => $fit_points) {
+                        foreach ($fit_points as $fit_pont_key => $fit_model_measurement) {
+                            $coordins = $this->extracts_coordinates($fit_model_measurement);
+                            $fmm_value = $this->fraction_to_number(floatval($csv_array[$coordins['r']][$coordins['c']]));
+                            if($fmm_value != 0){
+                                $original_value = $fmm_value;
+                                #~~~~~~>convert to measuring unit
+                                if (array_key_exists('measuring_unit', $map) && $map['measuring_unit'] == 'centimeter') {
+                                    $fmm_value = $fmm_value * 0.393700787;
+                                }
+                                $unit_converted_value = $fmm_value;
+
+                                #~~~~~~>calculate formula
+                                if (array_key_exists('formula', $map)) {
+                                    $fmm_value = $this->upply_formula($map['formula'], $fit_pont_key, $fmm_value);
+                                }
+
+                                #----------------------* parsed data array calculate fit modle values for fit model size
+                                $parsed_data[$specs_k][$size_key][$fit_pont_key] = array('garment_dimension' => $fmm_value, 'stretch_percentage' => 0, 'garment_stretch' => 0, 'grade_rule' => 0, 'grade_rule_stretch' => 0, 'min_calc' => 0, 'max_calc' => 0, 'min_actual' => 0, 'max_actual' => 0, 'ideal_low' => 0, 'ideal_high' => 0, 'fit_model' => 0, 'prev_garment_dimension' => 0, 'grade_rule' => 0, 'no' => 0,
+                                    'original_value' => $original_value,
+                                    'unit_converted_value' => $unit_converted_value,
+                                );
+                            }
+                        }
+                    }
+                } else if($specs_k == 'max_horizontal_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
+                    $parsed_data['horizontal_stretch'] =  ($parsed_data[$specs_k]/3);
+                } else if( $specs_k == 'max_vertical_stretch'){
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
+                    $parsed_data['vertical_stretch'] = ($parsed_data[$specs_k]/3);
+                } else {#----------------------* if not related to measurements add as a field
+                    $cdns = $this->extracts_coordinates($specs_v);
+                    $parsed_data[$specs_k] = count($cdns) > 1 ? $csv_array[$cdns['r']][$cdns['c']] : $specs_v;
+                }
+            }
+        }
+
+        #--------------------- calculate fit model measrements & ratio
+        if (!array_key_exists('sizes', $parsed_data)) {
+            return new Response('Measurements & sizes are missing');
+        }
+        #------------------------ Grade Rule calculation + sorting of sizes
+        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
+        $prev_size_key = null;
+        $ordered_sizes = array();
+        $size_no = 0;
+        foreach ($size_specs['sizes'][$parsed_data['gender'] == 'm' ? 'man' : 'woman'][$parsed_data['size_title_type']] as $size_key => $size_title) {
+            if (array_key_exists($size_key, $parsed_data['sizes'])) {
+                $ordered_sizes['sizes'][$size_key] = $parsed_data['sizes'][$size_key];
+            }
+        }
+        $parsed_data['sizes'] = $ordered_sizes['sizes'];
+        #---------> Update product Specs
+
+        $specs_obj  = $this->get('pi.product_specification')->find($specs_id);
+        $specs = json_decode($specs_obj->getSpecsJson(), true);
+        // Update Size Assign
+        $specs['sizes'] = $parsed_data['sizes'];
+        $specs_obj->setSpecsJson(json_encode($specs));
+        $msg_ar =  $this->get('pi.product_specification')->update($specs_obj);
+        //-------------- Fill Size Calculation
+        if(isset($map['fit_model_size'])) {
+            $decode['pk'] = $specs_id;
+            $decode['name'] = 'fit_model_size';
+            $decode['value'] = $map['fit_model_size'];
+            $this->get('pi.product_specification')->dynamicCalculations($decode);
+        }
+
+        $this->get('session')->setFlash($msg_ar['message_type'], $msg_ar['message']);
+        return $this->redirect($this->generateUrl('product_intake_product_specs_edit', array('id' => $specs_id)));
+    }
+
+
+    //--------------------   adjustment_interface_index
+    public function AdjustmentInterfaceIndexAction() {
+        return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+
+    }
+
+    //--------------------   adjustment_interface_index
+    public function AdjustmentInterfaceAction(Request $request) {
+        $adjustment =   $request->request->all();
+
+       #------------------------- Add Round  and Thigh Function
+
+           if ( ($adjustment['from_id'] !=""  && $adjustment['to_id'] !="") && ( $adjustment['from_id'] < $adjustment['to_id'] ) ) {
+
+               if ($adjustment['adjustment_attribute'] == 'round') {
+                   for ($i = $adjustment['from_id']; $i<= $adjustment['to_id']; $i++) {
+                       $ps = $this->get('pi.product_specification')->find($i);
+                       if(!empty($ps)) {
+                           $ps->roundUp();
+                           $this->get('pi.product_specification')->save($ps);
+                       }
+                   }
+                   $this->get('session')->setFlash('success', 'Successfully Roud Product Specification !');
+                   return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+               }
+                else if ($adjustment['adjustment_attribute'] == 'thigh') {
+                   for ($i = $adjustment['from_id']; $i <= $adjustment['to_id']; $i++) {
+                       $ps = $this->get('pi.product_specification')->find($i);  
+                       if(!empty($ps)) {
+                           $decoded['pk'] = $i;
+                           $decoded['type'] = 'double_thigh_grade_rule_min_max';
+                           $this->get('pi.product_specification')->dynamicChange($decoded);
+                       }
+                   }
+                   $this->get('session')->setFlash('success', 'Successfully thigh Product Specification!' );
+                   return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+
+               }
+        }  else if ( $adjustment['to_id'] !='' ) {
+               $this->get('session')->setFlash('warning', 'Enter ' . $adjustment['adjustment_attribute'] . ' from id and to id Specification ID\'s Proper !');
+               return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+           }
+
+        if ( $adjustment['from_id'] != "" ) {
+            if ($adjustment['adjustment_attribute'] == 'round') {
+                $ps = $this->get('pi.product_specification')->find($adjustment['from_id']);
+                if(!empty($ps)) {
+                    $ps->roundUp();
+                    $this->get('pi.product_specification')->save($ps);
+                    $this->get('session')->setFlash('success', 'Successfully Roud Product Specification!');
+                } else {
+                    $this->get('session')->setFlash('warning', 'Round Product Specification not Found !');
+                }
+                return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+            } else {
+                $ps = $this->get('pi.product_specification')->find($adjustment['from_id']);
+                if(!empty($ps)) {
+                    $decoded['pk'] = $adjustment['from_id'];
+                    $decoded['type'] = 'double_thigh_grade_rule_min_max';
+                    $this->get('pi.product_specification')->dynamicChange($decoded);
+                    $this->get('session')->setFlash('success', 'Successfully thigh Product Specification!');
+                } else {
+                    $this->get('session')->setFlash('warning', 'Thigh Product Specification not Found !');
+                }
+                return $this->render('LoveThatFitProductIntakeBundle:ProductSpecs:adjustment_interface_index.html.twig');
+            }
+
+        }
+
+    }
 }
