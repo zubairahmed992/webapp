@@ -213,6 +213,7 @@ class PodioLibHelper
               new PodioTextItemField(array("external_id" => "item-description", "values" => "".$order_detail_podio['item_description']."")),
               new PodioTextItemField(array("external_id" => "style-id", "values" => "".$order_detail_podio['style_id']."")),
               new PodioAppItemField(array("external_id" => "app-order-number-2")),
+              new PodioTextItemField(array("external_id" => "order-number", "values" => "".$order_detail_podio['order_number']."")),
             )); 
 
             // Create item and attach fields
