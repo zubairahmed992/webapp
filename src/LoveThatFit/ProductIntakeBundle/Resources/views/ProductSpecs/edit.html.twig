@@ -453,6 +453,38 @@
         });
 
 
+
+//--------------- change grade rule for max & min 
+        $('.change_grade_rule_min_max').click(function (event) {                     
+        event.preventDefault();
+        
+        var res =  $(this).attr("id");        
+        msg =  '';                    
+        if (res.indexOf('single_grade_rule_min_max_') !== -1){
+            res =  res.replace("single_grade_rule_min_max_",'');                        
+            msg =  'Are you sure you want to calculate max & min using Original grade rule value for ' + res + ' fit point?';
+        }else{
+            res =  res.replace("double_grade_rule_min_max_",'');                        
+            msg =  'Are you sure you want to calculate max & min using Double grade rule value for ' + res + ' fit point?';
+        }
+            
+        if (confirm(msg)) {
+                $.post(get_service_relative_url(),{
+                    value: 0,    
+                    name: $(this).attr("id"),                    
+                    pk: {{ product_specs.id }}                    
+                },
+                function(data, status){
+                    reload_page();
+                });
+        } else {
+            // Do nothing!
+        }
+        //alert($(this).attr("id"));
+        });
+
+
+
         
           //--------------- Check garment detail Already Added
         $('.remove_size').click(function (event) {                     
@@ -1115,11 +1147,12 @@
                             <table class="table table-bordered ">
                             {% for size, fit_point in parsed_data.sizes %}
                                     <tr class="{{ size }} Active grid_headers">
-                                        <th >
+                                        <th>
                                             {% if(fit_model_selected_size | trans is not same as (size | trans)) %}
-                                            <a href="#" class="remove_size" id="remove_size_{{ size }}" name="remove_size_{{ size }}" title="Remove {{ size }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                                                <a href="#" class="remove_size" id="remove_size_{{ size }}" name="remove_size_{{ size }}" title="Remove {{ size }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                                             {% endif %}
-                                            {{size}}</th>
+                                        </th>
+                                        <th >{{size}}</th>
                                         <th >garment_dimension</th>
                                         <th >stretch_percentage</th>
                                         <th >garment_stretch</th>                                        
@@ -1138,6 +1171,7 @@
                                     {# if (measurement_v.garment_dimension is defined and measurement_v.garment_dimension>0) #}
                                         {% if(fit_model_selected_size | trans is same as (size | trans)) %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }} grid_fit_model_size {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
+                                                <th></th>
                                                 <th>
                                                     {{measurement_k}} </th>
                                                 <td>
@@ -1203,10 +1237,19 @@
                                             </tr>
                                         {% else %}
                                             <tr class="{{ size }} {{ size }}_{{ measurement_k }} {{(parsed_data['fit_priority'][measurement_k] is defined and parsed_data['fit_priority'][measurement_k]>0)?'':'extended_fit_points'}}" id="validation_fit_model" >
-                                            
                                                 <th>
-                                                <a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
-                                                {{measurement_k}}</th>
+                                                    <table>
+                                                        <tr>
+                                                            <td><a href="#" class="remove_fit_point" id="remove_fit_point_{{ measurement_k }}" name="remove_fit_point_{{ measurement_k }}" title="Remove {{ measurement_k }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+                                                            {% if ('thigh' in measurement_k)%}
+                                                                <td><a href="#" class="change_grade_rule_min_max" id="double_grade_rule_min_max_{{ measurement_k }}" name="double_grade_rule_min_max_{{ measurement_k }}" title="Double grade rule for {{ measurement_k }}"><i class="glyphicon glyphicon-resize-full"></i></a></td>
+                                                                <td><a href="#" class="change_grade_rule_min_max" id="single_grade_rule_min_max_{{ measurement_k }}" name="single_grade_rule_min_max_{{ measurement_k }}" title="Original grade rule for {{ measurement_k }}"><i class="glyphicon glyphicon-resize-small"></i></a> </td>
+                                                            {% endif %}
+                                                            
+                                                        </tr>
+                                                    </table>
+                                                </th>
+                                                <th>{{measurement_k}}</th>
                                                 <td>
                                                     {{measurement_v.garment_dimension }}
                                                     <input class="0" type="number" hidden value="{{measurement_v.garment_dimension }}" name="sizes-{{ size }}-{{ measurement_k }}-garment_dimension" style="width:80px">

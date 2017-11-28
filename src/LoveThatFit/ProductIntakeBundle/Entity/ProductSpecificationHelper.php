@@ -218,6 +218,10 @@ class ProductSpecificationHelper {
             $specs = $this->generate_specs_for_fit_point_stretch($specs, $fit_point_stretch_array[1]);
         } elseif (strpos($decoded['name'], 'actual') !== false) { #~~~~~~~~>3
             $specs = $this->generate_specs_for_actual($specs, $decoded['name'], $decoded['value']);
+        }elseif (strpos($decoded['name'], 'double_grade_rule_min_max_') !== false) { #~~~~~~~~>9            
+            $specs = $this->multiple_grade_rule_for_min_max($specs, 2);
+        }elseif (strpos($decoded['name'], 'single_grade_rule_min_max_') !== false) { #~~~~~~~~>10            
+            $specs = $this->multiple_grade_rule_for_min_max($specs, 1);
         } elseif (strpos($decoded['name'], 'grade_rule') !== false) {   #~~~~~~~~>4
             $specs = $this->generate_specs_for_grade_rule($specs, $decoded['name'], $decoded['value']);
         } elseif (strpos($decoded['name'], 'garment_dimension') !== false) {    #~~~~~~~~>5
@@ -229,7 +233,7 @@ class ProductSpecificationHelper {
             $specs = $this->remove_fit_point($specs, $decoded);
         } elseif (strpos($decoded['name'], 'add_new_fit_point') !== false) { #~~~~~~~~>8            
             $specs = $this->add_new_fit_point($specs, $decoded);            
-        } elseif (strpos($decoded['name'], 'remove_size') !== false) { #~~~~~~~~>7            
+        } elseif (strpos($decoded['name'], 'remove_size') !== false) { #~~~~~~~~>11            
             $specs = $this->remove_size($specs, $decoded);            
         }  else {
             return array(
@@ -595,6 +599,18 @@ class ProductSpecificationHelper {
                 if(strpos($fp,'thigh')){
                     $specs['sizes'][$size][$fp]['min_calc'] = $measure['fit_model'] - ($measure['grade_rule_stretch'] * 5);
                     $specs['sizes'][$size][$fp]['max_calc'] = $measure['fit_model'] + ($measure['grade_rule_stretch'] * 5);
+                }
+            }
+        }
+        return $specs;
+    }
+    #dynamic change ------->9 & 10
+    private function multiple_grade_rule_for_min_max($specs, $multiple) {
+        foreach ($specs['sizes'] as $size => $fit_points ) {
+            foreach ($fit_points as $fp => $measure ) {
+                if(strpos($fp,'thigh')){
+                    $specs['sizes'][$size][$fp]['min_calc'] = $measure['fit_model'] - ($measure['grade_rule_stretch'] * 2.5 * $multiple);
+                    $specs['sizes'][$size][$fp]['max_calc'] = $measure['fit_model'] + ($measure['grade_rule_stretch'] * 2.5 * $multiple);
                 }
             }
         }
